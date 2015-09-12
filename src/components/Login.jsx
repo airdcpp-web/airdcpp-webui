@@ -4,7 +4,7 @@ import LoginActions from '../actions/LoginActions'
 import LoginStore from '../stores/LoginStore'
 
 import { Icon, Message, Content } from 'react-semantify'
-import { Navigation } from 'react-router';
+import { History } from 'react-router';
 
 var ErrorBox = React.createClass({
   render: function() {
@@ -27,7 +27,7 @@ var ErrorBox = React.createClass({
 var ENTER_KEY_CODE = 13;
 
 export default React.createClass({
-  mixins: [Reflux.connect(LoginStore), Navigation ],
+  mixins: [Reflux.connect(LoginStore), History ],
   getInitialState() {
     return {
       username: '',
@@ -38,7 +38,7 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     if (nextState.socketAuthenticated) {
       var nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
-      this.replaceWith(nextPath);
+      this.history.replaceState(null, nextPath);
     }
   },
 

@@ -1,18 +1,7 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router';
-import AuthenticatedApp from './components/AuthenticatedApp'
-import Login from './components/Login';
-import Home from './components/Home';
-import Queue from './components/Queue';
-import Search from './components/Search';
-//import RouterContainer from './services/RouterContainer';
 import LoginStore from './stores/LoginStore'
 import LoginActions from './actions/LoginActions';
-
-import jQuery from 'jquery'
-
-// the histories are imported separately for smaller builds
-//import { history } from 'react-router/lib/HashHistory';
 
 // load tcomb-form without templates and i18n
 var t = require('tcomb-form/lib');
@@ -29,23 +18,28 @@ if (LoginStore.token) {
 
 function requireAuth(nextState, transition) {
 	if (!LoginStore.user) {
-	    transition('/login', null, { nextPath: nextState.location.pathname });
+	    transition({ nextPath: nextState.location.pathname }, '/login', null);
 	}
 }
 
-React.render((
-  <Router history={ Router.BrowserHistory }>
-  	<Route path="login" component={Login}/>
-    <Route component={AuthenticatedApp} onEnter={requireAuth}>
-	    <Route path="queue" component={Queue}/>
-	    <Route path="search" component={Search}/>
-	    <Route path="/" component={Home}/>
-	</Route>
-  </Router>
-), document.getElementById('content'));
+var routeConfig = [
+  { 
+  	path: '/login', 
+  	component: require('./components/Login'), 
+  }, 
+  { 
+    component: require('./components/AuthenticatedApp'),
+    onEnter: requireAuth,
+    childRoutes: [
+      require('./routes/Home'),
+      require('./routes/Queue'),
+      require('./routes/Search'),
+    ]
+  }
+]
 
 
-//router.run(function (Handler) {
- // React.render(router, document.getElementById('content'));
-//});
-
+React.render(
+  <Router history={ Router.BrowserHistory } routes={routeConfig} />,
+  document.getElementById('content')
+);

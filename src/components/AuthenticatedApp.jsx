@@ -7,7 +7,7 @@ import Footer from './Footer'
 import NavigationPanel from './Navigation'
 import SocketService from '../services/SocketService'
 import LoginActions from '../actions/LoginActions'
-import { Navigation } from 'react-router';
+import { History } from 'react-router';
 import { Dimmer, Loader } from 'react-semantify'
 
 var SocketConnectStatus = React.createClass({
@@ -33,8 +33,14 @@ var SocketConnectStatus = React.createClass({
   }
 });
 
+function onEnter(nextState, transition) {
+  if (!LoginStore.user) {
+      transition('/login', null, { nextPath: nextState.location.pathname });
+  }
+}
+
 export default React.createClass({
-  mixins: [Reflux.connect(LoginStore), Navigation],
+  mixins: [Reflux.connect(LoginStore), History],
 
   getInitialState() {
     return this.getViewState();
@@ -62,8 +68,7 @@ export default React.createClass({
       // Reconnect (but not too fast)
       setTimeout(LoginActions.connect(this.state.token), 1000);
     } else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
-      //SocketService.disconnect();
-      this.replaceWith('/login');
+      this.history.replaceState(null, '/login');
     }
   },
 

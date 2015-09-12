@@ -1,12 +1,12 @@
 import React from 'react';
-import SearchStore from '../stores/SearchStore.js';
-import VirtualTable from './table/VirtualTable'
-import SocketService from '../services/SocketService.js'
+import SearchStore from '../../../stores/SearchStore.js';
+import VirtualTable from '../../../components/table/VirtualTable'
+import SocketService from '../../../services/SocketService.js'
 import FixedDataTable from 'fixed-data-table';
 
 //import FixedDataTable from 'fixed-data-table';
 import classNames from 'classnames';
-import Formatter from '../utils/Format.js';
+import Formatter from '../../../utils/Format.js';
 //import { Dropdown } from 'react-semantify'
 
 var Column = FixedDataTable.Column;

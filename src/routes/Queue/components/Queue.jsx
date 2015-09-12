@@ -1,13 +1,14 @@
 import React from 'react';
-import QueueStore from '../stores/QueueStore.js';
-import QueueActions from '../actions/QueueActions.js';
-import VirtualTable from './table/VirtualTable'
-
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
-import Formatter from '../utils/Format.js';
+
+import QueueStore from '../../../stores/QueueStore.js';
+import QueueActions from '../../../actions/QueueActions.js';
+import VirtualTable from '../../../components/table/VirtualTable'
+
+import Formatter from '../../../utils/Format.js';
 import { Dropdown, Icon, Item } from 'react-semantify'
-import TableDropdown from './semantic/TableDropdown'
+import TableDropdown from '../../../components/semantic/TableDropdown'
 //import Modal from 'react-modal';
 
 var appElement = document.getElementById('popup-common');

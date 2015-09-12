@@ -1,40 +1,3 @@
-/*import React from 'react';
-import Portal from 'react-portal';
-import { Button, Popup, Icon } from 'react-semantify'
-
-export default React.createClass({
-  componentWillUpdate: function() {
-    //var node = React.findDOMNode(this.refs.messageList);
-    //this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
-  },
-   
-  componentDidUpdate: function() {
-    //if (this.shouldScrollBottom) {
-    //  var node = React.findDOMNode(this.refs.messageList);
-    //  node.scrollTop = node.scrollHeight
-    //}
-  },
-
-  componentWillMount() {
-    var button = $(React.findDOMNode(this.refs.overlayTrigger));
-    button.popup({
-      content: this.props.content
-    });
-
-    var tmp = button;
-  },
-
-  render: function() {
-    return (
-      <Portal {...this.props} closeOnEsc={true} closeOnOutsideClick={true}>
-        <div className="ui popup flowing top left transition visible">
-          {this.props.children}
-        </div>
-      </Portal>
-    );
-  }
-});*/
-
 import React from 'react';
 import Portal from 'react-portal';
 import { Button, Popup, Icon } from 'react-semantify'
@@ -87,7 +50,7 @@ export default React.createClass({
       offset:parentRect.left
     };
 
-    // Componenet settings
+    // Component settings
     if (this.props.settings) {
       Object.assign(settings, this.props.settings);
     }
@@ -122,20 +85,5 @@ export default React.createClass({
     return (<div>
       {this.trigger}
     </div>);
-
-    /*if (this.props.openByClickOn) {
-      return <div className="openByClickOn" onClick={this.openPortal.bind(this, this.props)}>{this.props.openByClickOn}</div>;
-    } else {
-      return null;
-    }*/
-
-
-    /*return (
-      <Portal {...this.props} ref="verycustom">
-        <div className="ui popup flowing top left transition visible">
-          {this.props.children}
-        </div>
-      </Portal>
-    );*/
   }
 });
