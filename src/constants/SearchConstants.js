@@ -1,0 +1,5 @@
+var SEARCH_MODULE_URL = 'search/v0';
+export default {
+  SEARCH_MODULE_URL: SEARCH_MODULE_URL,
+  SEARCH_QUERY_URL: SEARCH_MODULE_URL + '/query'
+}

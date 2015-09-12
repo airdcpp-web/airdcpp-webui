@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AirDC++ Web Client</title>
+  <!--  <link rel="stylesheet" type="text/css" href="build/build.css"> -->
+  
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
+ <link rel="stylesheet" type="text/css" href="/node_modules/fixed-data-table/dist/fixed-data-table.css">
+
+ 
+  <script src="semantic/dist/components/popup.js"></script>
+  <script src="semantic/dist/components/dropdown.js"></script>
+  <script src="semantic/dist/components/transition.min.js"></script>
+  <script src="zynga/Animate.js"></script>
+  <script src="zynga/Scroller.js"></script>
+
+
+</head>
+<body>
+  <style type="text/css">
+    body {
+		background: url("background.jpg") no-repeat;
+		background-size: cover;
+    }
+    .column {
+      max-width: 650px;
+    }
+	
+	section#content, .login-grid {
+		height: 100%;
+	}
+	
+	@media only screen and (min-width: 1600px) {
+	  .ui.container {
+		width: 1527px;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	  }
+
+	  .ui.grid.container {
+		width: calc( 1527px  +  2em ) !important;
+	  }
+	}
+  </style>
+
+  <!-- content section -->
+  <section class="ui dimmable" id="content"></section>
+
+  <!-- Initialize SPA -->
+  <script type="text/javascript" src="build/build.js"></script>
+</body>
+</html>
