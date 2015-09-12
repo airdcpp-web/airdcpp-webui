@@ -1,19 +1,10 @@
 import React, { findDOMNode } from 'react';
-//import ReactMixin from 'react-mixin';
 import Reflux from 'reflux';
 import LoginActions from '../actions/LoginActions'
 import LoginStore from '../stores/LoginStore'
 
-import Tcomb from 'tcomb-form';
 import { Icon, Message, Content } from 'react-semantify'
 import { Navigation } from 'react-router';
-
-var Form = Tcomb.form.Form;
-var User = Tcomb.struct({
-  username: Tcomb.Str,
-  password: Tcomb.Str
-});
-
 
 var ErrorBox = React.createClass({
   render: function() {
@@ -68,10 +59,6 @@ export default React.createClass({
     }
 
     LoginActions.login(username, password);
-    //var value = this.refs.form.getValue();
-    //if (value) {
-    //  LoginActions.login(value.username, value.password);
-    //}
   },
 
   render() {
@@ -99,42 +86,5 @@ export default React.createClass({
         <ErrorBox userLoggedIn={this.state.userLoggedIn} lastError={this.state.lastError}/>
       </div>
     </div>);
-
-    /*var options = {
-      auto: 'placeholders',
-      fields: {
-        password: {
-          type: 'password',
-          attrs: {
-            className: 'ui stacked segment password'
-          }
-        },
-        username: {
-          attrs: {
-            className: 'ui stacked segment username'
-          }
-        }
-      }
-    };
-
-
-    return (
-      <div className="ui middle aligned center aligned grid">
-        <div className="column">
-          <div className="ui stacked segment">
-          <Form ref="form"
-            type={User}
-            options={options}
-          />
-          </div>
-
-          <button className="ui fluid large teal submit button" type="submit" onClick={this.onSubmit}>Submit</button>
-
-          <ErrorBox userLoggedIn={this.state.userLoggedIn} lastError={this.state.lastError}/>
-        </div>
-      </div>
-    );*/
   }
 });
-
-//ReactMixin(Login.prototype, React.addons.LinkedStateMixin);

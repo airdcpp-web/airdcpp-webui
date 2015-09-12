@@ -34,8 +34,6 @@ class RowDataLoader {
 
     if (!equal) {
       this._data = _.map(items, _.clone);
-      //this._data = items.slice(0);
-      //this._data = Object.assign({ __proto__: obj.__proto__ }, items);
       this._onDataLoad();      
     }
   }
@@ -93,9 +91,6 @@ class RowDataLoader {
     SocketService.get(this._store.apiUrl + "/" + this._store.viewName + "/items/" + rowStart + "/" + rowEnd)
     //TableActions.getItems(this._store.apiUrl, this._store.viewName, rowStart, rowEnd)
       .then(data => {
-        //Array.prototype.splice.apply(this._data, [rowStart, 0].concat(data));
-        //Object.assign(this._data, data);
-
         for (var i=0; i < data.length; i++) {
            this._data[rowStart+i] = data[i];
         }
@@ -180,15 +175,8 @@ export default React.createClass({
   },
   componentDidMount() {
     this.unsubscribe = this.props.store.listen(this.onItemsUpdated);
-
-    // https://github.com/facebook/react-native/issues/953
-    //setTimeout(this.updateTableSettings);
   },
   updateTableSettings() {
-    //var height = React.findDOMNode(this.refs.table).offsetHeight;
-
-    //var height = this.state.contentHeight;
-
     var startRows = convertStartToRows(this._scrollPosition);
     var endRows = startRows + convertEndToRows(this.state.height, true);
 
@@ -220,7 +208,6 @@ export default React.createClass({
   },
 
   _onScrollStart(horizontal, vertical) {
-    //scrollTimer = setInterval(function () {myTimer()}, 1000);
     this._dataLoader.fetchingActive = true;
     //console.log("Scrolling started: " + vertical, this.props.store.viewName);
     TableActions.pause(this.props.store.apiUrl, this.props.store.viewName, true);
@@ -340,18 +327,6 @@ export default React.createClass({
           {children}
         </Table>
       </TouchScrollArea>
-      /*<Table
-        ref="table"
-        rowHeight={50}
-        rowGetter={this._rowGetter}
-        rowsCount={this.props.store.rowCount}
-        headerHeight={50}
-        onScrollStart={this._onScrollStart}
-        onScrollEnd={this._onScrollEnd}
-        maxHeight={600}
-        width={1000}>
-        {this.props.children}
-      </Table>*/
     );
   }
 });

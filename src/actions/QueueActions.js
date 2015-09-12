@@ -35,16 +35,3 @@ QueueActions.searchBundle.listen(function(bundleId) {
 });
 
 export default QueueActions;
-
-
-/*import AppDispatcher from '../dispatchers/AppDispatcher.js';
-import {BUNDLES_GET} from '../constants/QueueConstants.js';
-
-export default {
-  gotBundles: (json) => {
-    AppDispatcher.dispatch({
-      actionType: BUNDLES_GET,
-      bundles: json
-    })
-  }
-}*/

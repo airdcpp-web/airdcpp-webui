@@ -43,9 +43,6 @@ export default class Navigation extends React.Component {
     );
   }
 
- //           <MenuItem activeItem={this.state.activeItem} title="Search" page="search"/>
- //           <MenuItem activeItem={this.state.activeItem} title="Settings" page="settings"/>
-
   logout(e) {
     e.preventDefault();
     LoginActions.logout();

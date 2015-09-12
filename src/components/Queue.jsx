@@ -2,16 +2,13 @@ import React from 'react';
 import QueueStore from '../stores/QueueStore.js';
 import QueueActions from '../actions/QueueActions.js';
 import VirtualTable from './table/VirtualTable'
-import SocketService from '../services/SocketService.js'
 
-import FixedDataTable from 'fixed-data-table';
+import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 import Formatter from '../utils/Format.js';
 import { Dropdown, Icon, Item } from 'react-semantify'
 import TableDropdown from './semantic/TableDropdown'
 //import Modal from 'react-modal';
-
-var Column = FixedDataTable.Column;
 
 var appElement = document.getElementById('popup-common');
 
@@ -40,19 +37,7 @@ var appElement = document.getElementById('popup-common');
 );*/
 
 export default React.createClass({
-  componentWillMount() {
-  },
-
-  componentDidMount() {
-  },
-
-  componentWillUnmount() {
-   // this._onChange = this._onChange.bind(this);
-   // QueueStore.removeChangeListener(this._onChange);
-  },
-
   _onChange() {
-    //init = true;
     this.setState(this.getBundlesState());
   },
 
@@ -316,61 +301,5 @@ export default React.createClass({
         />*/}
       </VirtualTable>
     );
-
-    /*if (!init) {
-      return <div></div>
-    }
-
-    return (
-      <Table
-        rowHeight={50}
-        rowGetter={this.rowGetter.bind(this)}
-        rowsCount={Object.keys(this.state.bundles).length}
-        width={1200}
-        height={1000}
-        headerHeight={50}>
-        <Column
-          label="Name"
-          width={300}
-          dataKey="target"
-        />
-        <Column
-          label="Size"
-          width={100}
-          dataKey="size"
-          cellRenderer={ formatter.formatSize }
-        />
-        <Column
-          label="Status"
-          width={300}
-          dataKey="status"
-          cellRenderer={ this.renderStatus }
-        />
-        <Column
-          label="Speed"
-          width={100}
-          dataKey="speed"
-          cellRenderer={ formatter.formatSpeedIfRunning.bind(formatter) }
-        />
-        <Column
-          label="Priority"
-          width={150}
-          dataKey="priority"
-          cellRenderer={ this.renderPriority }
-        />
-        <Column
-          label="Time added"
-          width={100}
-          dataKey="time_added"
-          cellRenderer={ formatter.formatTime }
-        />
-        <Column
-          label="Time finished"
-          width={100}
-          dataKey="time_finished"
-          cellRenderer={ formatter.formatTime }
-        />
-      </Table>
-    );*/
   }
 });

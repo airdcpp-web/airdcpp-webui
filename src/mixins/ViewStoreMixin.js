@@ -1,13 +1,8 @@
 import Reflux from 'reflux';
 import SocketStore from '../stores/SocketStore'
-import SocketService from '../services/SocketService'
-import { TableActions } from '../actions/TableActions'
-
-//var actions = Reflux.createActions(["itemsUpdated"]);
 
 export default {
 	init() {
-		//this._items = {};
 		this._items = [];
 		this._startPos = 0;
 		this._endPos = 0;
@@ -37,12 +32,9 @@ export default {
 	  this._items = itemsObj.reduce((newViewItems, rawItem) => {
 	    var viewItem;
 	    if (rawItem == null) {
-	      // Existing item in the same position
-	      //viewItem = this._items[Object.keys(this._items)[pos]];
 	      viewItem = this._items[this._startPos + pos];
 	    } else {
 	      // Either a new item, existing one in a different position or we are updating properties
-	      //viewItem = this._items[rawItem.item];
 	      viewItem = this._findItem(rawItem.id);
 	      if (viewItem == undefined) {
 	        viewItem = {
@@ -57,7 +49,6 @@ export default {
 	      }
 	    }
 
-	    //newViewItems[viewItem.token] = viewItem;
 	    newViewItems[this._startPos + pos] = viewItem;
 	    pos++;
 

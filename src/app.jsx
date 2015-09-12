@@ -23,25 +23,6 @@ t.form.Form.i18n = en;
 t.form.Form.templates = semantic;
 React.initializeTouchEvents(true);
 
-/*var router = (
-  <Router history={ Router.HashHistory }>
-    <Route component={AuthenticatedApp}>
-	    <Route name="login" component={Login}/>
-	    <Route name="queue" component={Queue}/>
-	    <Route name="search" component={Search}/>
-	    <Route name="home" path="/" component={Home}/>
-	</Route>
-  </Router>
-);*/
-
-//var router = Router.create({routes});
-//RouterContainer.set(router);
-
-//let login = sessionStorage.getItem('login');
-//if (login && login !== undefined) {
-//  LoginActions.loginUser(login);
-//}
-
 if (LoginStore.token) {
 	LoginActions.connect(LoginStore.token);
 }

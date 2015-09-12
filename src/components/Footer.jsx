@@ -4,15 +4,13 @@ import Reflux from 'reflux';
 import TransferStatsStore from '../stores/TransferStatsStore'
 import LogStore from '../stores/LogStore'
 
+import LogActions from '../actions/LogActions';
+import SystemLog from './SystemLog'
+
 import Format from '../utils/Format.js'
 import { Button, Icon } from 'react-semantify'
 import Popup from './semantic/Popup'
-import LogActions from '../actions/LogActions';
 import StoreLoaderMixin from '../mixins/StoreLoaderMixin';
-import SystemLog from './SystemLog'
-
-var api = require('../utils/RestAPI');
-var classNames = require('classnames');
 
 
 var SpeedDisplay = React.createClass({
@@ -49,20 +47,7 @@ var LogBar = React.createClass({
   mixins: [Reflux.connect(LogStore), StoreLoaderMixin(LogStore)],
   componentDidMount: function() {
     LogActions.fetchLastMessages();
-
-    /*var button = $(React.findDOMNode(this.refs.systemLogButton));
-    button.popup({
-      popup: React.findDOMNode(this.refs.systemLogPopup),
-      on: 'click',
-      onShow: this.onShow,
-      title: 'System log'
-    });*/
   },
-
-  /*onShow: function (el) {
-    React.render(<SystemLog log_messages={ this.state.log_messages }/>, React.findDOMNode(this.refs.systemLogPopup));
-    LogActions.resetLogCounters();
-  },*/
 
   render: function() {
     var style = {
@@ -81,31 +66,6 @@ var LogBar = React.createClass({
       </div>
     );
   }
-
-  /*  render: function() {
-    return (
-      <div className="item left">
-        <Button className="syslog ui button" ref="systemLogButton">System log</Button>
-        <Popup className="flowing" ref="systemLogPopup"/>
-        <LogIcon type="blue info circle" count={ this.state.log_counters.log_info }/>
-        <LogIcon type="yellow warning sign" count={ this.state.log_counters.log_warnings }/>
-        <LogIcon type="red warning circle" count={ this.state.log_counters.log_errors }/>
-      </div>
-    );
-  }*/
-
-/*render: function() {
-    return (
-      <div className="item left">
-        <Popup ref="systemLogPopup" openByClickOn={<Button className="syslog" ref="overlayTrigger">System log</Button>}>
-          <SystemLog log_messages={ this.state.log_messages }/>
-        </Popup>
-        <LogIcon type="blue info circle" count={ this.state.log_counters.log_info }/>
-        <LogIcon type="yellow warning sign" count={ this.state.log_counters.log_warnings }/>
-        <LogIcon type="red warning circle" count={ this.state.log_counters.log_errors }/>
-      </div>
-    );
-  }*/
 });
 
 var StatisticsBar = React.createClass({

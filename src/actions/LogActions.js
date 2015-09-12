@@ -16,26 +16,3 @@ LogActions.fetchLastMessages.listen(function() {
 });
 
 export default LogActions;
-
-/*LogActions.getLastLogs.listenAndPromise(() => {
-    SocketService.get(this.apiUrl + "/logs/" + MAX_LOG_MESSAGES);
-});*/
-
-
-/*import AppDispatcher from '../dispatchers/AppDispatcher.js';
-import {RESET_LOG_COUNTERS} from '../constants/MainConstants';
-
-export default {
-  resetLogCounters: () => {
-    AppDispatcher.dispatch({
-      actionType: RESET_LOG_COUNTERS
-    })
-  },
-
-  gotBundles: (json) => {
-    AppDispatcher.dispatch({
-      actionType: BUNDLES_GET,
-      bundles: json
-    })
-  }
-}*/
