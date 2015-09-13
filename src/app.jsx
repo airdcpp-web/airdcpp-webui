@@ -32,6 +32,7 @@ var routeConfig = [
     onEnter: requireAuth,
     childRoutes: [
       require('./routes/Home'),
+      require('./routes/FavoriteHubs'),
       require('./routes/Queue'),
       require('./routes/Search'),
     ]

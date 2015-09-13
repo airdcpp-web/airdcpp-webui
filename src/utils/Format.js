@@ -80,6 +80,10 @@ module.exports = {
     return Moment.unix(time).format("HH:mm:ss");
   },
 
+  formatBool: function(value) {
+    return value ? "Yes" : "No";
+  },
+
   FileNameFormatter: React.createClass({
       typeToIcon: function(name) {
         switch(name) {
