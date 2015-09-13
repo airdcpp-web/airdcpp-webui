@@ -4,11 +4,11 @@ import {BUNDLE_URL} from '../constants/QueueConstants';
 import SocketService from '../services/SocketService'
 
 export var QueueActions = Reflux.createActions([
-  { "searchBundle": { asyncResult: true, displayName: "Search for alternates" } },
+  { "searchBundle": { asyncResult: true, displayName: "Search for alternates", icon: "search" } },
   { "setBundlePriority": { asyncResult: true, displayName: "Set priority" } },
   { "setFilePriority": { asyncResult: true, displayName: "Set priority" } },
-  { "removeBundle": { asyncResult: true, displayName: "Remove" } },
-  { "removeFile": { asyncResult: true, displayName: "Remove" } }
+  { "removeBundle": { asyncResult: true, displayName: "Remove", icon: "remove" } },
+  { "removeFile": { asyncResult: true, displayName: "Remove", icon: "remove" } }
 ]);
 
 QueueActions.setBundlePriority.listen(function(bundleId, newPrio) {

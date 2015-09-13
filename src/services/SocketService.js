@@ -17,7 +17,7 @@ class SocketService {
   disconnect() {
     if (!SocketStore.socket) {
       console.log("Disconnect for a closed socket: " + path);
-      return;
+      return Promise.reject("No socket");
     }
 
     SocketStore.socket.disconnect();
@@ -26,7 +26,7 @@ class SocketService {
   put(path, data) {
     if (!SocketStore.socket) {
       console.log("PUT for a closed socket: " + path);
-      return;
+      return Promise.reject("No socket");
     }
 
     return SocketStore.socket.sendRequest(data, path, 'PUT');
@@ -35,7 +35,7 @@ class SocketService {
   post(path, data) {
     if (!SocketStore.socket) {
       console.log("POST for a closed socket: " + path);
-      return;
+      return Promise.reject("No socket");
     }
 
     return SocketStore.socket.sendRequest(data, path, 'POST');
@@ -44,7 +44,7 @@ class SocketService {
   delete(path, data) {
     if (!SocketStore.socket) {
       console.log("DELETE for a closed socket: " + path);
-      return;
+      return Promise.reject("No socket");
     }
 
     return SocketStore.socket.sendRequest(data, path, 'DELETE');
@@ -53,7 +53,7 @@ class SocketService {
   get(path, data) {
     if (!SocketStore.socket) {
       console.log("GET for a closed socket: " + path);
-      return;
+      return Promise.reject("No socket");
     }
 
     return SocketStore.socket.sendRequest(data, path, 'GET');

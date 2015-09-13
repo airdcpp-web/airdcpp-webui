@@ -64,7 +64,9 @@ export default React.createClass({
   },
 
   onHide: function (el) {
-    React.unmountComponentAtNode(this.node);
+    if (this.node) {
+      React.unmountComponentAtNode(this.node);
+    }
   },
 
   onShow: function (el) {
@@ -78,6 +80,9 @@ export default React.createClass({
     }
 
     this.node = null;
+
+    var button = React.findDOMNode(this.refs.overlayTrigger);
+    $(button).remove();
   },
 
   render: function() {

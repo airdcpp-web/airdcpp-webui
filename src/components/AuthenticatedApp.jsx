@@ -66,14 +66,15 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
       // Reconnect (but not too fast)
-      setTimeout(LoginActions.connect(this.state.token), 1000);
+      console.log("Socket closed, attempting to reconnect in 2 seconds");
+      setTimeout(() => LoginActions.connect(this.state.token), 2000);
     } else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
       this.history.replaceState(null, '/login');
     }
   },
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.changeListener);
+    window.removeEventListener('resize', this.onViewResized);
   },
 
   render() {

@@ -95,7 +95,7 @@ export default class ApiSocket {
   sendRequest(data, path, method) {
     if (this.socket.readyState == this.socket.CLOSED || this.socket.readyState == this.socket.CLOSING) {
         console.log('Attempting to send request on a closed socket: ' + path);
-        return;
+        return Promise.reject("No socket");
     }
 
       var resolver = BlueBird.pending();
