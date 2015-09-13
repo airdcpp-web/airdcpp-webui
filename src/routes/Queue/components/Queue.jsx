@@ -180,7 +180,7 @@ export default React.createClass({
       <Formatter.FileNameFormatter type={ rowData.type.type }>
         { cellData }
       </Formatter.FileNameFormatter>);
-    return <ActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData.id }/>;
+    return <ActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
   },
 
   render() {
