@@ -11,7 +11,7 @@ import TableActions from '../../actions/TableActions'
 import { Input } from 'react-semantify'
 import _ from 'lodash';
 
-var NUMBER_OF_ROWS_PER_REQUEST = 5;
+var NUMBER_OF_ROWS_PER_REQUEST = 10;
 var TABLE_ROW_HEIGHT = 50;
 
 var {PropTypes} = React;
@@ -153,9 +153,18 @@ export default React.createClass({
     /**
      * Sort ascening by default
      */
-    defaultSortAscending: PropTypes.bool
-  },
+    defaultSortAscending: PropTypes.bool,
 
+    /**
+     * Append class names to row (takes row data as param)
+     */
+    rowClassNameGetter: PropTypes.function
+  },
+  getInitialProps() {
+    return {
+      rowClassNameGetter: null
+    };
+  },
   getInitialState() {
     return {
       sortProperty: this.props.defaultSortProperty,
@@ -276,6 +285,19 @@ export default React.createClass({
       left: left
     });
   },
+
+  rowClassNameGetter(rowIndex) {
+    if (!this.props.rowClassNameGetter) {
+      return null;
+    }
+
+    let rowData = this._dataLoader.getRowData(rowIndex);
+    if (!rowData) {
+      return null;
+    }
+
+    return this.props.rowClassNameGetter(rowData);
+  },
   
   render: function() {
     let sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
@@ -315,6 +337,7 @@ export default React.createClass({
           overflowX={controlledScrolling ? "hidden" : "auto"}
           overflowY={controlledScrolling ? "hidden" : "auto"}
 
+          rowClassNameGetter={this.rowClassNameGetter}
           footerDataGetter={this._footerDataGetter}
           rowHeight={50}
           rowGetter={this._rowGetter}

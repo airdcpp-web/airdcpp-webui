@@ -32,9 +32,31 @@ export default React.createClass({
       CSSPropertyOperations.setValueForStyles(this.node, this.props.style);
     }
     document.body.appendChild(this.node);
+  },
 
+  getInitialState: function() {
+    return {
+      active: false
+    };
+  },
 
-    // Init popup
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextState.active && !this.state.active) {
+      this.show();
+    } else if (!nextState.active && this.state.active) {
+      this.hide();
+    }
+  },
+
+  hide: function() {
+    var button = React.findDOMNode(this.refs.overlayTrigger);
+    $(button).popup('destroy');
+
+    React.unmountComponentAtNode(this.node);
+  },
+
+  show: function() {
+    React.render(this.props.children, this.node);
 
     // Trigger
     var button = React.findDOMNode(this.refs.overlayTrigger);
@@ -42,11 +64,10 @@ export default React.createClass({
 
     // Common settings
     var settings = {
+      on:'click',
       movePopup:false,
       popup:this.node,
-      on:'click',
-      onShow:this.onShow,
-      onHide:this.onHide,
+      onHidden: () => this.setState({active:false}),
       offset:parentRect.left
     };
 
@@ -60,17 +81,11 @@ export default React.createClass({
       settings["distanceAway"] = parentRect.top;
     }
 
-    $(button).popup(settings);
+    $(button).popup(settings).popup('show');
   },
 
-  onHide: function (el) {
-    if (this.node) {
-      React.unmountComponentAtNode(this.node);
-    }
-  },
-
-  onShow: function (el) {
-    React.render(this.props.children, this.node);
+  handleClick: function (el) {
+    this.setState({active: !this.state.active});
   },
 
   componentWillUnmount() {
@@ -80,13 +95,10 @@ export default React.createClass({
     }
 
     this.node = null;
-
-    var button = React.findDOMNode(this.refs.overlayTrigger);
-    $(button).remove();
   },
 
   render: function() {
-    this.trigger = React.cloneElement(this.props.trigger, {ref: "overlayTrigger", onClick: this.onShow })
+    this.trigger = React.cloneElement(this.props.trigger, {ref: "overlayTrigger", onClick: this.handleClick })
     return (<div>
       {this.trigger}
     </div>);

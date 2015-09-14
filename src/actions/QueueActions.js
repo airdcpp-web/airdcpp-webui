@@ -1,5 +1,4 @@
 'use strict';
-import React from 'react';
 import Reflux from 'reflux';
 import {BUNDLE_URL} from '../constants/QueueConstants';
 import SocketService from '../services/SocketService'
@@ -15,12 +14,12 @@ export var QueueActions = Reflux.createActions([
 ]);
 
 QueueActions.setBundlePriority.listen(function(bundleId, newPrio) {
-    var that = this;
-    return SocketService.put(BUNDLE_URL + "/" + bundleId, {
-    	priority: newPrio
-    })
-      .then(that.completed)
-      .catch(this.failed);
+  var that = this;
+  return SocketService.put(BUNDLE_URL + "/" + bundleId, {
+  	priority: newPrio
+  })
+    .then(that.completed)
+    .catch(this.failed);
 });
 
 QueueActions.removeBundle.shouldEmit = function(bundle) {
@@ -30,18 +29,18 @@ QueueActions.removeBundle.shouldEmit = function(bundle) {
 };
 
 QueueActions.removeBundle.confirmed.listen(function(bundle) {
-    var that = this;
-    console.log("Remove succeed");
-    //return SocketService.delete(BUNDLE_URL + "/" + bundleId)
-    //  .then(that.completed)
-    //  .catch(this.failed);
+  var that = this;
+  console.log("Remove succeed");
+  return SocketService.delete(BUNDLE_URL + "/" + bundleId)
+    .then(that.completed)
+    .catch(this.failed);
 });
 
 QueueActions.searchBundle.listen(function(bundle) {
-    var that = this;
-    return SocketService.post(BUNDLE_URL + "/" + bundle.id + "/search")
-      .then(that.completed)
-      .catch(this.failed);
+  var that = this;
+  return SocketService.post(BUNDLE_URL + "/" + bundle.id + "/search")
+    .then(that.completed)
+    .catch(this.failed);
 });
 
 export default QueueActions;

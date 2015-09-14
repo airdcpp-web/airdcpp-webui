@@ -31,10 +31,6 @@ export default React.createClass({
     ids: React.PropTypes.array
   },
 
-  handleClick(actionId) {
-    this.props.actions.actionId(this.props.itemData);
-  },
-
   getItem(actionId) {
     return (
       <DropdownItem key={ actionId } onClick={ () => this.props.actions[actionId](this.props.itemData) }>

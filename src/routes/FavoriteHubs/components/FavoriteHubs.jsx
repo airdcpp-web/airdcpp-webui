@@ -1,12 +1,17 @@
 import React from 'react';
+
+import FavoriteHubActions from '../../../actions/FavoriteHubActions.js'
+import { StateEnum } from '../../../constants/FavoriteHubConstants.js'
 import FavoriteHubStore from '../../../stores/FavoriteHubStore.js';
+
 import VirtualTable from '../../../components/table/VirtualTable'
 import SocketService from '../../../services/SocketService.js'
-import { Column } from 'fixed-data-table';
+import ActionMenu from '../../../components/ActionMenu'
 
+import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 import Formatter from '../../../utils/Format.js';
-//import { Dropdown } from 'react-semantify'
+import { Icon } from 'react-semantify'
 
 export default React.createClass({
   renderName(cellData, cellDataKey, rowData) {
@@ -14,19 +19,59 @@ export default React.createClass({
       return cellData;
     }
 
-    return cellData;
-    /*var formatter = (
-      <Formatter.FileNameFormatter type={ rowData.type.type }>
-        { cellData }
-      </Formatter.FileNameFormatter>);
-    return <ActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;*/
+    return <ActionMenu caption={ cellData } actions={ FavoriteHubActions } ids={[ "edit", "remove" ]} itemData={ rowData }/>;
+  },
+
+  renderConnect(cellData, cellDataKey, rowData) {
+    if (cellData === undefined) {
+      return cellData;
+    }
+
+    switch(cellData) {
+      case StateEnum.STATE_CONNECTING:
+        return (
+          <div>
+            <a><Icon className="large yellow remove" onClick={ () => FavoriteHubActions.disconnect(rowData) }/></a>
+          </div>
+          );
+      case StateEnum.STATE_CONNECTED:
+        return (
+          <div>
+            <a><Icon className="large red remove" onClick={ () => FavoriteHubActions.disconnect(rowData) }/></a>
+          </div>
+          );
+      case StateEnum.STATE_DISCONNECTED:
+        return (
+          <div>
+            <a><Icon className="large green video play" onClick={ () => FavoriteHubActions.connect(rowData) }/></a>
+          </div>
+          );
+    }
+  },
+
+  rowClassNameGetter(rowData) {
+    switch(rowData.connect_state) {
+      case StateEnum.STATE_CONNECTING:
+        return "connecting"
+      case StateEnum.STATE_CONNECTED:
+        return "connected"
+      case StateEnum.STATE_DISCONNECTED:
+        return "disconnected" 
+    }
   },
 
   render() {
     return (
       <VirtualTable
+        rowClassNameGetter={ this.rowClassNameGetter }
       	defaultSortProperty="name"
         store={ FavoriteHubStore }>
+        <Column
+          label="Connect"
+          width={70}
+          dataKey="connect_state"
+          cellRenderer={ this.renderConnect }
+        />
         <Column
           label="Name"
           width={270}
@@ -37,7 +82,7 @@ export default React.createClass({
         <Column
           label="Address"
           width={270}
-          dataKey="server"
+          dataKey="hub_url"
           flexGrow={2}
         />
         <Column
@@ -45,13 +90,6 @@ export default React.createClass({
           width={270}
           dataKey="hub_description"
           flexGrow={3}
-          //cellRenderer={ this.renderStatus }
-        />
-        <Column
-          label="Connected"
-          width={70}
-          dataKey="connected"
-          cellRenderer={ Formatter.formatBool }
         />
         <Column
           label="Auto connect"

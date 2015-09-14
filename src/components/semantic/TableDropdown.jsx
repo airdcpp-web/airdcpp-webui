@@ -31,24 +31,37 @@ export default React.createClass({
     caption: React.PropTypes.node.isRequired
   },
 
+  addCloseHandler(elem) {
+    return React.cloneElement(elem, {
+      onClick: () => {
+        this.refs.dropdownMenu.hide();
+        
+        elem.props.onClick();
+      } 
+    })
+  },
+
   render: function() {
-     var trigger = (
+    // Caption
+    let trigger = (
       <div className="table-dropdown">
         {this.props.caption}
         <i className="dropdown icon"></i>
       </div>);
 
-    var settings = {
+    // Settings
+    let settings = {
       position:'bottom left',
       lastResort:true
     };
 
-    return (<Popup className="basic" trigger={trigger} settings={ settings }>
-      <div className="ui text menu vertical">
-      <div className="ui dropdown item">
-        {this.props.children}
-      </div>
-      </div>
-    </Popup>);
-  }
+    return (
+      <Popup className="basic" trigger={trigger} settings={ settings } ref="dropdownMenu">
+        <div className="ui text menu vertical">
+        <div className="ui dropdown item">
+          { this.props.children.map(this.addCloseHandler) }
+        </div>
+        </div>
+      </Popup>);
+}
 });
