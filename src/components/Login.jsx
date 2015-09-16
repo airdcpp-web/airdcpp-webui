@@ -54,7 +54,7 @@ export default React.createClass({
     evt.preventDefault();
 
     if (username === "" || password === "") {
-      setState({ lastError: "Please enter both username and password" });
+      this.setState({ lastError: "Please enter both username and password" });
       return;
     }
 

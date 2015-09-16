@@ -44,15 +44,15 @@
 	  }
 	}
 	
-	.table-dropdown {
+	.table-dropdown, .public_fixedDataTableCell_main a {
 		color:black !important;
 	}
 	
-	.table-dropdown:hover {
+	.table-dropdown:hover, .public_fixedDataTableCell_main a:hover {
 		cursor:pointer;
 	}
 	
-	.table-dropdown:hover span {
+	.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover {
 		text-decoration:underline;
 	}
 	
@@ -60,21 +60,33 @@
 		float: left;
 	}
 	
-	.public_fixedDataTable_bodyRow.connected {
+	.public_fixedDataTable_bodyRow.connected, .public_fixedDataTable_bodyRow.connected span {
 		color: green;
 	}
 	
-	.public_fixedDataTable_bodyRow.connecting {
+	.public_fixedDataTable_bodyRow.connecting, .public_fixedDataTable_bodyRow.connecting span {
 		color: orange;
 	}
 	
 	.public_fixedDataTable_bodyRow a i:hover {
 		cursor:pointer;
 	}
+	
+	.fixedDataTableLayout_main {
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+	
+	.table-footer {
+		width: 100%;
+		padding: 5px;
+		background-color: #f6f7f8;
+		background-image: -webkit-linear-gradient(#fff, #efefef);
+		background-image: linear-gradient(#fff, #efefef);
+	}
   </style>
 
   <!-- content section -->
-  <section class="ui dimmable" id="content"></section>
+  <section class="ui dimmable pushable blurring" id="content"></section>
 
   <!-- Initialize SPA -->
   <script type="text/javascript" src="build/build.js"></script>

@@ -82,7 +82,7 @@ export default React.createClass({
       return (
         <div>
           <NavigationPanel/>
-          <div className="ui container" style={{ height: Math.max(300, this.state.viewport.height - 160) + 'px', paddingTop: '80px'}}>
+          <div className="ui container main" style={{ height: Math.max(300, this.state.viewport.height - 160) + 'px', paddingTop: '80px'}}>
            {this.props.children}
           </div>
           <Footer/>

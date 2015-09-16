@@ -4,12 +4,37 @@ import {FAVORITE_HUB_URL} from '../constants/FavoriteHubConstants';
 import SocketService from '../services/SocketService'
 import ConfirmDialog from '../components/semantic/ConfirmDialog'
 
+import History from '../utils/History'
+
 export var FavoriteHubActions = Reflux.createActions([
-  { "connect": { asyncResult: true, displayName: "Connect" } },
-  { "disconnect": { asyncResult: true, displayName: "Disconnect"} },
-  { "create": { asyncResult: true, displayName: "New" } },
-  { "edit": { asyncResult: true, displayName: "Edit", icon: "edit" } },
-  { "remove": { asyncResult: true, displayName: "Remove", icon: "red remove circle" } }
+  { "connect": { 
+  	asyncResult: true, 
+  	displayName: "Connect" } 
+  },
+  { "disconnect": { 
+  	asyncResult: true, 
+  	displayName: "Disconnect" } 
+  },
+  { "create": { 
+  	asyncResult: true, 
+  	children: ["saved"], 
+  	displayName: "New" } 
+  },
+  { "edit": { 
+  	asyncResult: true, 
+  	children: ["saved"], 
+  	displayName: "Edit", 
+  	icon: "edit" } 
+  },
+  { "update": { 
+  	asyncResult: true }
+  },
+  { "remove": { 
+  	asyncResult: true, 
+  	children: ["confirmed"], 
+  	displayName: "Remove", 
+  	icon: "red remove circle" } 
+  }
 ]);
 
 FavoriteHubActions.connect.listen(function(hub) {
@@ -34,10 +59,18 @@ FavoriteHubActions.create.listen(function(hub, data) {
 });
 
 FavoriteHubActions.edit.listen(function(hub, data) {
-    var that = this;
+	History.pushState({ modal: true, hubEntry: hub }, '/favorite-hubs/edit');
+    //var that = this;
     //return SocketService.post(FAVORITE_HUB_URL + "/" + hub.id, data)
     //  .then(that.completed)
     //  .catch(this.failed);
+});
+
+FavoriteHubActions.update.listen(function(hub, data) {
+    var that = this;
+    return SocketService.post(FAVORITE_HUB_URL + "/" + hub.id, data)
+      .then(that.completed)
+      .catch(this.failed);
 });
 
 FavoriteHubActions.remove.shouldEmit = function(hub) {
@@ -46,7 +79,7 @@ FavoriteHubActions.remove.shouldEmit = function(hub) {
   return false;
 };
 
-FavoriteHubActions.remove.listen(function(hub) {
+FavoriteHubActions.remove.confirmed.listen(function(hub) {
     var that = this;
     return SocketService.delete(FAVORITE_HUB_URL + "/" + hub.id)
       .then(that.completed)

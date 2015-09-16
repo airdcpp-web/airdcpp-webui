@@ -18,8 +18,8 @@ export default {
 	get items() {
 		return this._items;
 	},
-	get apiUrl() {
-		return this._apiUrl;
+	get viewUrl() {
+		return this._apiUrl + "/" + this._viewName;
 	},
 	get viewName() {
 		return this._viewName;

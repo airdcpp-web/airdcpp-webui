@@ -18,7 +18,7 @@ export default React.createClass({
     /**
      * Item to be passed to the actions
      */
-    itemData: React.PropTypes.node,
+    itemData: React.PropTypes.any.isRequired,
 
     /**
      * Menu item actions

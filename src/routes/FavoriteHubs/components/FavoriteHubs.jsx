@@ -8,12 +8,15 @@ import VirtualTable from '../../../components/table/VirtualTable'
 import SocketService from '../../../services/SocketService.js'
 import ActionMenu from '../../../components/ActionMenu'
 
+import ChildModalMixin from '../../../mixins/ChildModalMixin'
+
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 import Formatter from '../../../utils/Format.js';
 import { Icon } from 'react-semantify'
 
 export default React.createClass({
+  mixins: [ChildModalMixin],
   renderName(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;

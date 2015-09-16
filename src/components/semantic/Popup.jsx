@@ -17,7 +17,7 @@ export default React.createClass({
     trigger: React.PropTypes.element.isRequired
   },
 
-  componentDidMount: function() {
+  createPortal: function() {
     // Create portal
     this.node = document.createElement('div');
 
@@ -56,6 +56,8 @@ export default React.createClass({
   },
 
   show: function() {
+    this.createPortal();
+
     React.render(this.props.children, this.node);
 
     // Trigger

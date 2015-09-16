@@ -42,6 +42,7 @@ var ScrollArea = React.createClass({
 
   _handleScroll : function(left, top) {
     if (this.props.onScrollStart && this._scrollTimer === null) {
+      console.log("Touch scroll start, top: " + top);
       this.props.onScrollStart(left, top);
     }
 
@@ -51,9 +52,11 @@ var ScrollArea = React.createClass({
       }
 
       var self = this;
-      setTimeout(() => {
+      this._scrollTimer = setTimeout(() => {
+        console.log("Touch scroll end, top: " + top);
         self.props.onScrollEnd(left, top);
-      }, 100);
+        this._scrollTimer = null;
+      }, 200);
     }
 
     this.props.handleScroll(left, top);

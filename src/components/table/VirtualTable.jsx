@@ -11,7 +11,7 @@ import TableActions from '../../actions/TableActions'
 import { Input } from 'react-semantify'
 import _ from 'lodash';
 
-var NUMBER_OF_ROWS_PER_REQUEST = 10;
+var NUMBER_OF_ROWS_PER_REQUEST = 5;
 var TABLE_ROW_HEIGHT = 50;
 
 var {PropTypes} = React;
@@ -32,7 +32,7 @@ class RowDataLoader {
       return _.isEqual(element, this._data[index]);
     }, this);
 
-    if (!equal) {
+    if (!equal || this._store.rowCount < this._data.length) {
       this._data = _.map(items, _.clone);
       this._onDataLoad();      
     }
@@ -88,8 +88,7 @@ class RowDataLoader {
   }
     
   _loadDataRange(rowStart, rowEnd) {
-    SocketService.get(this._store.apiUrl + "/" + this._store.viewName + "/items/" + rowStart + "/" + rowEnd)
-    //TableActions.getItems(this._store.apiUrl, this._store.viewName, rowStart, rowEnd)
+    SocketService.get(this._store.viewUrl + "/items/" + rowStart + "/" + rowEnd)
       .then(data => {
         for (var i=0; i < data.length; i++) {
            this._data[rowStart+i] = data[i];
@@ -104,7 +103,7 @@ class RowDataLoader {
 }
 
 function convertStartToRows(pixels) {
-  return Math.min(Math.floor(pixels / TABLE_ROW_HEIGHT), 0);
+  return Math.max(Math.floor(pixels / TABLE_ROW_HEIGHT), 0);
 }
 
 function convertEndToRows(pixels) {
@@ -112,23 +111,32 @@ function convertEndToRows(pixels) {
 }
 
 var FilterBox = React.createClass({
-  componentWillMount() {
+  getInitialState: function() {
+    return {value: ''};
+  },
+
+  componentWillMount: function() {
     this._timer = null;
   },
+
+  componentWillUnmount: function () {
+    clearTimeout(this._timer);
+  },
+
   handleChange: function(event) {
-    if (this._timer != null) {
-      clearTimeout(this._timer);
-    }
+    this.setState({value: event.target.value});
+
+    clearTimeout(this._timer);
 
     this._timer = setTimeout(() => {
       this._timer = null;
-      this.props.updateFunction(event.target.value);
+      TableActions.filter(this.props.viewUrl, this.state.value);
     }, 200);
   },
 
   render: function() {
     return (
-      <Input onChange={this.handleChange} className="exampleinput" placeholder="Filter..." type="text">
+      <Input onChange={this.handleChange} value={this.state.value} placeholder="Filter..." type="text">
 
       </Input>
     );
@@ -158,7 +166,7 @@ export default React.createClass({
     /**
      * Append class names to row (takes row data as param)
      */
-    rowClassNameGetter: PropTypes.function
+    rowClassNameGetter: PropTypes.func
   },
   getInitialProps() {
     return {
@@ -190,10 +198,10 @@ export default React.createClass({
     var endRows = startRows + convertEndToRows(this.state.height, true);
 
     console.log("Settings changed, start: " + startRows + ", end: " + endRows, ", height: " + this.state.height, this.props.store.viewName);
-    TableActions.changeSettings(this.props.store.apiUrl, this.props.store.viewName, startRows, endRows, this.state.sortProperty, this.state.sortAscending);
+    TableActions.changeSettings(this.props.store.viewUrl, startRows, endRows, this.state.sortProperty, this.state.sortAscending);
   },
   componentWillUnmount() {
-    TableActions.close(this.props.store.apiUrl, this.props.store.viewName);
+    TableActions.close(this.props.store.viewUrl);
     this.unsubscribe();
   },
 
@@ -219,14 +227,16 @@ export default React.createClass({
   _onScrollStart(horizontal, vertical) {
     this._dataLoader.fetchingActive = true;
     //console.log("Scrolling started: " + vertical, this.props.store.viewName);
-    TableActions.pause(this.props.store.apiUrl, this.props.store.viewName, true);
+    TableActions.pause(this.props.store.viewUrl, true);
   },
 
   _onScrollEnd(horizontal, vertical) {
     this._scrollPosition = vertical;
     this._dataLoader.fetchingActive = false;
-    TableActions.pause(this.props.store.apiUrl, this.props.store.viewName, false);
-    this.updateTableSettings();
+    TableActions.pause(this.props.store.viewUrl, false);
+
+    clearTimeout(this._scrollTimer);
+    this._scrollTimer = setTimeout(this.updateTableSettings, 500);
     //console.log("Scrolling ended: " + vertical, this.props.store.viewName);
   },
 
@@ -256,7 +266,7 @@ export default React.createClass({
   },
 
   _setFilter(pattern) {
-    TableActions.filter(this.props.store.apiUrl, this.props.store.viewName, pattern);
+    TableActions.filter(this.props.store.viewUrl, pattern);
   },
 
   _footerDataGetter() {
@@ -319,18 +329,20 @@ export default React.createClass({
         label: label,
         flexGrow: flexGrow,
         width: width,
-        isResizable: true
+        isResizable: true,
+        allowCellsRecycling:true
       });
     }, this);
 
     var controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
     return (
+      <div>
       <TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
         <Table
           ref="table"
 
           width={this.state.width}
-          height={this.state.height} 
+          height={this.state.height-45} 
           onContentHeightChange={this._onContentHeightChange}
           scrollTop={this.state.top}
           scrollLeft={this.state.left}
@@ -350,6 +362,10 @@ export default React.createClass({
           {children}
         </Table>
       </TouchScrollArea>
+      <div className="table-footer">
+        <FilterBox viewUrl={ this.props.store.viewUrl }/>
+      </div>
+      </div>
     );
   }
 });
