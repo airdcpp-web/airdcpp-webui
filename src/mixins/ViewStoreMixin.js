@@ -15,6 +15,10 @@ export default {
 		SocketStore.removeMessageListener(this._viewName + "_updated", this._handleUpdate);
 	},
 
+	clear() {
+		this._items = [];
+	},
+
 	get items() {
 		return this._items;
 	},

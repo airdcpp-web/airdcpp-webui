@@ -6,6 +6,9 @@ module.exports = {
       cb(null, [ {
         path: 'edit', 
         component: require('./components/FavoriteHubDialog'), 
+      },{
+        path: 'new', 
+        component: require('./components/FavoriteHubDialog'), 
       } ])
     //})
   },

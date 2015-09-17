@@ -136,7 +136,7 @@ var FilterBox = React.createClass({
 
   render: function() {
     return (
-      <Input onChange={this.handleChange} value={this.state.value} placeholder="Filter..." type="text">
+      <Input className="filter" onChange={this.handleChange} value={this.state.value} placeholder="Filter..." type="text">
 
       </Input>
     );
@@ -166,7 +166,12 @@ export default React.createClass({
     /**
      * Append class names to row (takes row data as param)
      */
-    rowClassNameGetter: PropTypes.func
+    rowClassNameGetter: PropTypes.func,
+
+    /**
+     * Elements to append to the table footer
+     */
+    footerData: PropTypes.node
   },
   getInitialProps() {
     return {
@@ -363,6 +368,7 @@ export default React.createClass({
         </Table>
       </TouchScrollArea>
       <div className="table-footer">
+        { this.props.footerData }
         <FilterBox viewUrl={ this.props.store.viewUrl }/>
       </div>
       </div>

@@ -1,6 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
-import {BUNDLE_URL} from '../constants/QueueConstants';
+import {BUNDLE_URL, StatusEnum} from '../constants/QueueConstants';
 import SocketService from '../services/SocketService'
 
 import ConfirmDialog from '../components/semantic/ConfirmDialog'
@@ -23,15 +23,20 @@ QueueActions.setBundlePriority.listen(function(bundleId, newPrio) {
 });
 
 QueueActions.removeBundle.shouldEmit = function(bundle) {
-  var text = "Are you sure that you want to remove the bundle " + bundle.name + "?";
-  ConfirmDialog(this.displayName, text, this.icon, "Remove bundle", "Don't remove").then(() => this.confirmed(bundle)).catch(() => "fasfasf");
+  if (bundle.status.id >= StatusEnum.STATUS_FINISHED) {
+    // No need to confirm finished bundles
+    this.confirmed(bundle)
+  } else {
+    var text = "Are you sure that you want to remove the bundle " + bundle.name + "?";
+    ConfirmDialog(this.displayName, text, this.icon, "Remove bundle", "Don't remove").then(() => this.confirmed(bundle)).catch(() => "fasfasf");
+  }
   return false;
 };
 
 QueueActions.removeBundle.confirmed.listen(function(bundle) {
   var that = this;
   console.log("Remove succeed");
-  return SocketService.delete(BUNDLE_URL + "/" + bundleId)
+  return SocketService.delete(BUNDLE_URL + "/" + bundle.id)
     .then(that.completed)
     .catch(this.failed);
 });

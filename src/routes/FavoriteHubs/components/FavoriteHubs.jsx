@@ -13,7 +13,7 @@ import ChildModalMixin from '../../../mixins/ChildModalMixin'
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 import Formatter from '../../../utils/Format.js';
-import { Icon } from 'react-semantify'
+import { Icon, Button } from 'react-semantify'
 
 export default React.createClass({
   mixins: [ChildModalMixin],
@@ -63,11 +63,23 @@ export default React.createClass({
     }
   },
 
+  handleAddHub() {
+    FavoriteHubActions.create();
+  },
+
   render() {
+    let footerData = (
+      <Button className="small" onClick={ this.handleAddHub }>
+        <i className="plus icon"></i>
+        Add new
+      </Button>);
+    //let footerData = <ActionMenu caption="Actions..." actions={ FavoriteHubActions } ids={[ "create" ]}/>;
+
     return (
       <VirtualTable
         rowClassNameGetter={ this.rowClassNameGetter }
       	defaultSortProperty="name"
+        footerData={footerData}
         store={ FavoriteHubStore }>
         <Column
           label="Connect"

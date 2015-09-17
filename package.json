@@ -37,6 +37,7 @@
     "normalize.css": "3.0.3",
     "moment": "^2.10.6",
     "react": "^0.13",
+	"react-autosuggest": "1.18.3",
     "react-mixin": "^1.1.0",
 	"react-portal": "^0.7.0",
     "react-router": "^1.0.0-rc1",

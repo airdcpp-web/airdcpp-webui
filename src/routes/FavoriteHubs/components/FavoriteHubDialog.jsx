@@ -25,14 +25,23 @@ var Entry = t.struct({
 export default React.createClass({
   mixins: [ RouteContext ],
   getInitialState() {
-    let value = _.clone(this.props.location.state.hubEntry);
-    value["share_profile"] = value.share_profile.id;
+    this._isNew = !this.props.location.state.hubEntry;
+    if (!this._isNew) {
+      let value = _.clone(this.props.location.state.hubEntry);
+      value["share_profile"] = value.share_profile.id;
 
-    this.checkAdcHub(value.hub_url);
-    return {
-      value: value,
-      profiles: []
-    };
+      this.checkAdcHub(value.hub_url);
+      return {
+        value: value,
+        profiles: []
+      };
+    } else {
+      return {
+        value: null,
+        profiles: []
+      };
+    }
+
   },
 
   addProfile(profiles, rawItem) {
@@ -78,8 +87,11 @@ export default React.createClass({
   save() {
     var value = this.refs.form.getValue();
     if (value) {
-      SocketService.put(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
-
+      if (this._isNew) {
+        SocketService.post(FAVORITE_HUB_URL, value);
+      } else {
+        SocketService.put(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
+      }
       return true;
     }
 
@@ -102,8 +114,9 @@ export default React.createClass({
       }
     }
 
+    var title = this._isNew ? "Add favorite hub" : "Edit favorite hub";
     return (
-      <Modal className="fav-hub" title="Edit favorite hub" saveHandler={this.save} closable={false} icon="yellow star" {...this.props}>
+      <Modal className="fav-hub" title={title} saveHandler={this.save} closable={false} icon="yellow star" {...this.props}>
         <Form
           ref="form"
           type={Entry}

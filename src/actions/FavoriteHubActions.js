@@ -52,10 +52,11 @@ FavoriteHubActions.disconnect.listen(function(hub) {
 });
 
 FavoriteHubActions.create.listen(function(hub, data) {
-    var that = this;
-    return SocketService.post(FAVORITE_HUB_URL, data)
-      .then(that.completed)
-      .catch(this.failed);
+	History.pushState({ modal: true }, '/favorite-hubs/new');
+    //var that = this;
+    //return SocketService.post(FAVORITE_HUB_URL, data)
+    //  .then(that.completed)
+    //  .catch(this.failed);
 });
 
 FavoriteHubActions.edit.listen(function(hub, data) {
