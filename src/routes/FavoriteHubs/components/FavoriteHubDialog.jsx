@@ -90,7 +90,7 @@ export default React.createClass({
       if (this._isNew) {
         SocketService.post(FAVORITE_HUB_URL, value);
       } else {
-        SocketService.put(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
+        SocketService.patch(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
       }
       return true;
     }

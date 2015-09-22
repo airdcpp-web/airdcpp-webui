@@ -15,7 +15,7 @@ export var QueueActions = Reflux.createActions([
 
 QueueActions.setBundlePriority.listen(function(bundleId, newPrio) {
   var that = this;
-  return SocketService.put(BUNDLE_URL + "/" + bundleId, {
+  return SocketService.patch(BUNDLE_URL + "/" + bundleId, {
   	priority: newPrio
   })
     .then(that.completed)

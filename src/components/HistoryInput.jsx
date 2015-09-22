@@ -2,6 +2,7 @@ import React from 'react';
 import SocketService from '../services/SocketService.js'
 import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from '../constants/HistoryConstants.js'
 import Autosuggest from 'react-autosuggest'
+import classNames from 'classnames';
 
 
 export default React.createClass({
@@ -20,7 +21,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      history: []
+      history: [],
+      text:''
     }
   },
 
@@ -40,11 +42,14 @@ export default React.createClass({
 
   _onKeyDown: function(event) {
     if (event.keyCode === 13) {
-      this._handleSubmit(event.target.value);
+      if (!this._isDisabled()) {
+        this._handleSubmit();
+      }
     }
   },
 
-  _handleSubmit(text) {
+  _handleSubmit() {
+    const { text } = this.state;
     SocketService.post(HISTORY_ITEM_URL + "/" + this.props.historyId, { item: text })
       .then(data => {
       })
@@ -52,6 +57,10 @@ export default React.createClass({
         console.error("Failed to post history: " + error)
       );
     console.log("Searching");
+    this.setState({ 
+      suggestionsActive: false
+    });
+
     this._loadHistory();
     this.props.submitHandler(text);
   },
@@ -63,19 +72,47 @@ export default React.createClass({
     callback(null, suggestions);
   },
 
+  _handleChange(value) {
+    this.setState({ 
+      text: value,
+      suggestionsActive: true
+    });
+  },
+
+  // Hide suggestions after submitting input
+  _showWhen(input) {
+    return input.trim().length > 0 && this.state.suggestionsActive;
+  },
+
+  _isDisabled() {
+    return this.state.text.length === 0;
+  },
+
   render() {
     const inputAttributes = {
       placeholder: 'Enter search string...',
-      //onChange: value => console.log(`Input value changed to: ${value}`),
+      onChange: this._handleChange
       //onBlur: event => console.log('Input blurred. Event:', event),
     };
 
+    var buttonClass = classNames(
+      "ui", 
+      "button", 
+      { "disabled": this._isDisabled() },
+      { "loading": this.props.running }
+    );
+
     return (
-      <div className="ui fluid icon input" onKeyDown={this._onKeyDown}>
-        <i className="search icon"></i>
+      <div className="ui fluid action input" onKeyDown={this._onKeyDown}>
         <Autosuggest 
+          value={this.state.text}
+          showWhen={this._showWhen}
           suggestions={this._getSuggestions}
           inputAttributes={inputAttributes} />
+        <button onClick={ this._handleSubmit } className={ buttonClass }>
+          <i className="search icon"></i>
+          Search
+        </button>
       </div>
     );
   }

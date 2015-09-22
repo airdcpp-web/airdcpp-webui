@@ -7,48 +7,14 @@ import ActionMenu from '../../../components/ActionMenu'
 import QueueStore from '../../../stores/QueueStore';
 import QueueActions from '../../../actions/QueueActions';
 import VirtualTable from '../../../components/table/VirtualTable'
+import ChildModalMixin from '../../../mixins/ChildModalMixin'
 
 import Formatter from '../../../utils/Format';
 import { Dropdown, Icon, Item } from 'react-semantify'
 import TableDropdown, { DropdownItem } from '../../../components/semantic/TableDropdown'
-//import Modal from 'react-modal';
-
-var appElement = document.getElementById('popup-common');
-
-//Modal.setAppElement(appElement);
-//Modal.injectCSS();
-
-//var init = false;
-
-
-/*var modal = (
-  <Modal
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal}
-      >
-        <h2>Hello</h2>
-        <button onClick={this.closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
-      </Modal>
-);*/
 
 export default React.createClass({
-  _onChange() {
-    this.setState(this.getBundlesState());
-  },
-
-  getBundlesState() {
-    return {
-      bundles: QueueStore.bundles
-    };
-  },
+  mixins: [ChildModalMixin],
 
   rowGetter(rowIndex) {
     return this.state.bundles[Object.keys(this.state.bundles)[rowIndex]];
@@ -59,7 +25,6 @@ export default React.createClass({
       return cellData;
     }
 
-    var self = this;
     var Progress = React.createClass({
       render: function() {
         var cNames = classNames(

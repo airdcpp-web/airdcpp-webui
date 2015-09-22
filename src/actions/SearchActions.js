@@ -5,7 +5,11 @@ import SocketService from '../services/SocketService'
 
 export var SearchActions = Reflux.createActions([
   { "postSearch": { asyncResult: true} },
-    "resetLogCounters"
+  { "download": { 
+  	asyncResult: true,  
+  	displayName: "Download", 
+  	icon: "green download" } 
+  }
 ]);
 
 SearchActions.postSearch.listen(function(pattern) {
@@ -15,6 +19,15 @@ SearchActions.postSearch.listen(function(pattern) {
 	  })
       .then(that.completed)
       .catch(this.failed);
+});
+
+SearchActions.download.listen(function(id) {
+    var that = this;
+    /*return SocketService.get(SEARCH_QUERY_URL, { 
+	    pattern: pattern
+	  })
+      .then(that.completed)
+      .catch(this.failed);*/
 });
 
 export default SearchActions;

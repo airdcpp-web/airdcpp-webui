@@ -126,7 +126,7 @@ export default class ApiSocket {
       if(this.callbacks.hasOwnProperty(messageObj.callback_id)) {
         // Callback
 
-        if (messageObj.code == 200) {
+        if (messageObj.code >= 200 && messageObj.code <= 204) {
           console.log("Websocket request succeed: " + this.callbacks[messageObj.callback_id]);
           this.callbacks[messageObj.callback_id].resolver.resolve(messageObj.data);
         } else {

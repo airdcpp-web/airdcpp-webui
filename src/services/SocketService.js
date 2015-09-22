@@ -32,6 +32,15 @@ class SocketService {
     return SocketStore.socket.sendRequest(data, path, 'PUT');
   }
 
+  patch(path, data) {
+    if (!SocketStore.socket) {
+      console.log("PATCH for a closed socket: " + path);
+      return Promise.reject("No socket");
+    }
+
+    return SocketStore.socket.sendRequest(data, path, 'PATCH');
+  }
+
   post(path, data) {
     if (!SocketStore.socket) {
       console.log("POST for a closed socket: " + path);

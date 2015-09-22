@@ -2,29 +2,43 @@ import React from 'react';
 import SearchStore from '../../../stores/SearchStore';
 import VirtualTable from '../../../components/table/VirtualTable'
 import SocketService from '../../../services/SocketService'
-import { Column } from 'fixed-data-table';
+import SearchActions from '../../../actions/SearchActions'
+
 import { HistoryEnum } from '../../../constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from '../../../constants/SearchConstants'
+
 import HistoryInput from '../../../components/HistoryInput'
+import ChildModalMixin from '../../../mixins/ChildModalMixin'
 
 import classNames from 'classnames';
-import Formatter from '../../../utils/Format';
-import { Dropdown } from 'react-semantify'
-import Autosuggest from 'react-autosuggest'
+import { Column } from 'fixed-data-table';
 
+import Formatter from '../../../utils/Format';
+
+const SEARCH_PERIOD = 4000;
 
 export default React.createClass({
+  mixins: [ChildModalMixin],
   _handleSearch(text) {
     console.log("Searching");
 
     SearchStore.clear();
+    clearTimeout(this._searchTimeout);
 
     SocketService.post(SEARCH_QUERY_URL, { pattern: text })
       .then(data => {
+        this.setState({running:true});
+        this._searchTimeout = setTimeout(() => this.setState({running:false}), data.queue_time + SEARCH_PERIOD);
       })
       .catch(error => 
         console.error("Failed to post search: " + error)
       );
+  },
+
+  getInitialState() {
+    return {
+      running: false
+    }
   },
 
   renderStr(cellData, cellDataKey, rowData) {
@@ -54,8 +68,27 @@ export default React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
-    return formatter;
-    //return <ActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
+    //return formatter;
+
+    var tmp = SearchActions;
+    return <Formatter.DownloadMenu caption={ formatter } id={ rowData.id } handler={ SearchActions.download }/>
+    //return <ActionMenu caption={ formatter } actions={ SearchActions } ids={[ "download" ]} itemData={ rowData }/>;
+  },
+
+  renderIp(cellData) {
+    if (cellData === undefined) {
+      return cellData;
+    }
+
+    return <Formatter.IpFormatter item={ cellData }/>
+  },
+
+  renderUsers(cellData, cellDataKey, rowData) {
+    if (cellData === undefined) {
+      return cellData;
+    }
+
+    return <Formatter.UserFormatter user={ cellData } directory={ rowData.path }/>
   },
 
   render() {
@@ -63,7 +96,7 @@ export default React.createClass({
       <div>
         <div className="search-container">
           <div className="search-area">
-            <HistoryInput historyId={HistoryEnum.HISTORY_SEARCH} submitHandler={this._handleSearch}/>
+            <HistoryInput historyId={HistoryEnum.HISTORY_SEARCH} submitHandler={this._handleSearch} running={this.state.running}/>
           </div>
         </div>
         <VirtualTable
@@ -87,7 +120,7 @@ export default React.createClass({
             label="Relevancy"
             width={80}
             dataKey="relevancy"
-            //cellRenderer={ this.renderStatus }
+            cellRenderer={ Formatter.formatDecimal }
           />
           <Column
             label="Connection"
@@ -106,7 +139,7 @@ export default React.createClass({
             width={150}
             dataKey="users"
             flexGrow={3}
-            //cellRenderer={ Formatter.formatDateTime }
+            cellRenderer={ this.renderUsers }
           />
           <Column
             label="Date"
@@ -119,6 +152,13 @@ export default React.createClass({
             width={70}
             dataKey="slots"
             cellRenderer={ this.renderStr }
+          />
+          <Column
+            label="IP"
+            width={70}
+            dataKey="ip"
+            cellRenderer={ this.renderIp }
+            flexGrow={3}
           />
         </VirtualTable>
       </div>

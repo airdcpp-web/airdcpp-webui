@@ -9,6 +9,8 @@ export default {
   BUNDLE_UPDATED: 'BUNDLE_UPDATED',
   BUNDLES_GET: 'BUNDLES_GET',
 
+  FILELIST_URL: QUEUE_MODULE_URL + '/filelist',
+
   StatusEnum: {
     STATUS_QUEUED: 1,
     STATUS_RECHECK: 2,

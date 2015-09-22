@@ -1,6 +1,10 @@
 import React from 'react';
 import Moment from 'moment';
-import { Icon } from 'react-semantify'
+import { Icon, Flag } from 'react-semantify'
+
+import ActionMenu from '../components/ActionMenu'
+import UserActions from '../actions/UserActions'
+import DownloadActions from '../actions/DownloadActions'
 
 module.exports = {
   formatSize: function(fileSizeInBytes) {
@@ -48,9 +52,9 @@ module.exports = {
     var i = 0;
     var bitUnits = [' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit'];
     do {
-        bits = bits / 1024;
+        bits = bits / 1000;
         i++;
-    } while (bits > 1024);
+    } while (bits > 1000);
 
     return Math.max(bits, 0.0).toFixed(2) + bitUnits[i] + "/s";
   },
@@ -84,6 +88,14 @@ module.exports = {
     return value ? "Yes" : "No";
   },
 
+  formatDecimal: function(value) {
+    if (!value) {
+      return undefined;
+    }
+
+    return parseFloat(Math.round(value * 100) / 100).toFixed(2);
+  },
+
   FileNameFormatter: React.createClass({
       typeToIcon: function(name) {
         switch(name) {
@@ -105,6 +117,83 @@ module.exports = {
           { this.props.children }
           </div>
         );
+      }
+    }),
+
+  IpFormatter: React.createClass({
+      render: function() {
+        const { country_id } = this.props.item;
+        return (
+          <div>
+          <Icon className={ country_id.length === 0 ? "icon grey flag" : "flag " + country_id.toLowerCase() }/>
+          { this.props.item.str }
+          </div>
+        );
+      }
+    }),
+
+    UserFormatter: React.createClass({
+      propTypes: {
+
+        /**
+         * Filelist directory to use for browsing the list
+         */
+        directory: React.PropTypes.string,
+
+        /**
+         * Hinted user
+         */
+        user: React.PropTypes.shape({
+          cid: React.PropTypes.string,
+          hub_url: React.PropTypes.string
+        }).isRequired
+      },
+
+      getDefaultProps() {
+        return {
+          directory: '/'
+        }
+      },
+
+      render: function() {
+        const { directory, user } = this.props;
+        const data = {
+          user: user,
+          directory: directory
+        }
+
+        var caption = (
+          <div>
+            <Icon className="blue user"/>
+            { user.nicks }
+          </div>);
+
+        return <ActionMenu caption={ caption } actions={ UserActions } ids={[ "browse", "message" ]} itemData={ data }/>;
+      }
+    }),
+
+  DownloadMenu: React.createClass({
+      propTypes: {
+
+        /**
+         * Item ID to be passed to the handler
+         */
+        id: React.PropTypes.number,
+
+        /**
+         * Function for handling the download
+         */
+        handler: React.PropTypes.func.isRequired
+      },
+
+      render: function() {
+        const { handler, id } = this.props;
+        const data = {
+          id: id,
+          handler: handler
+        }
+
+        return <ActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data }/>;
       }
     })
 };

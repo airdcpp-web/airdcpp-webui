@@ -13,11 +13,13 @@ import ChildModalMixin from '../../../mixins/ChildModalMixin'
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 import Formatter from '../../../utils/Format.js';
+import Checkbox from '../../../components/semantic/Checkbox'
+
 import { Icon, Button } from 'react-semantify'
 
 export default React.createClass({
   mixins: [ChildModalMixin],
-  renderName(cellData, cellDataKey, rowData) {
+  _renderName(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
     }
@@ -25,7 +27,7 @@ export default React.createClass({
     return <ActionMenu caption={ cellData } actions={ FavoriteHubActions } ids={[ "edit", "remove" ]} itemData={ rowData }/>;
   },
 
-  renderConnect(cellData, cellDataKey, rowData) {
+  _renderConnect(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
     }
@@ -40,7 +42,7 @@ export default React.createClass({
       case StateEnum.STATE_CONNECTED:
         return (
           <div>
-            <a><Icon className="large red remove" onClick={ () => FavoriteHubActions.disconnect(rowData) }/></a>
+            <a><Icon className="large grey remove" onClick={ () => FavoriteHubActions.disconnect(rowData) }/></a>
           </div>
           );
       case StateEnum.STATE_DISCONNECTED:
@@ -52,7 +54,7 @@ export default React.createClass({
     }
   },
 
-  rowClassNameGetter(rowData) {
+  _rowClassNameGetter(rowData) {
     switch(rowData.connect_state) {
       case StateEnum.STATE_CONNECTING:
         return "connecting"
@@ -61,6 +63,14 @@ export default React.createClass({
       case StateEnum.STATE_DISCONNECTED:
         return "disconnected" 
     }
+  },
+
+  _renderAutoConnect(cellData, cellDataKey, rowData) {
+    if (cellData === undefined) {
+      return cellData;
+    }
+
+    return <Checkbox checked={cellData}/>;
   },
 
   handleAddHub() {
@@ -77,7 +87,7 @@ export default React.createClass({
 
     return (
       <VirtualTable
-        rowClassNameGetter={ this.rowClassNameGetter }
+        rowClassNameGetter={ this._rowClassNameGetter }
       	defaultSortProperty="name"
         footerData={footerData}
         store={ FavoriteHubStore }>
@@ -85,14 +95,14 @@ export default React.createClass({
           label="Connect"
           width={70}
           dataKey="connect_state"
-          cellRenderer={ this.renderConnect }
+          cellRenderer={ this._renderConnect }
         />
         <Column
           label="Name"
           width={270}
           dataKey="name"
           flexGrow={3}
-          cellRenderer={ this.renderName }
+          cellRenderer={ this._renderName }
         />
         <Column
           label="Address"
@@ -110,7 +120,7 @@ export default React.createClass({
           label="Auto connect"
           width={70}
           dataKey="auto_connect"
-          cellRenderer={ Formatter.formatBool }
+          cellRenderer={ this._renderAutoConnect }
         />
         <Column
           label="Nick"
