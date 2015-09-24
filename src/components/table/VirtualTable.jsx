@@ -11,7 +11,7 @@ import TableActions from '../../actions/TableActions'
 import { Input } from 'react-semantify'
 import _ from 'lodash';
 
-var NUMBER_OF_ROWS_PER_REQUEST = 5;
+var NUMBER_OF_ROWS_PER_REQUEST = 10;
 var TABLE_ROW_HEIGHT = 50;
 
 var {PropTypes} = React;
@@ -21,21 +21,23 @@ class RowDataLoader {
   constructor(store, onDataLoad) {
     this._onDataLoad = onDataLoad;
     this._store = store;
-    this._queue = [];
+    this._requestQueue = [];
     this._data = [];
+    this._pendingRequest = [];
     this._fetchingActive = false;
   }
 
   set items(items) {
-    // Don't force update if nothing has changed in the array
-    let equal = items.every((element, index, array) => {
-      return _.isEqual(element, this._data[index]);
+    items.forEach((obj, index) => {
+      let old = this._data[index];
+      if (this._data[index]) {
+        this._data[index] = React.addons.update(old, {$merge: obj});
+      } else {
+        this._data[index] = React.addons.update(old, {$set: obj});
+      }
     }, this);
 
-    if (!equal || this._store.rowCount < this._data.length) {
-      this._data = _.map(items, _.clone);
-      this._onDataLoad();      
-    }
+    this._onDataLoad();
   }
 
   set fetchingActive(value) {
@@ -52,14 +54,26 @@ class RowDataLoader {
     
     return this._data[rowIndex];
   }
-  
-  clearRowData(rowIndex) {
-    delete this._data[rowIndex];
-    this._onDataLoad();
+
+  _hasPendingRequest(rowIndex) {
+    let index = this._pendingRequest.find((startRow) => {
+      return startRow <= rowIndex && startRow + NUMBER_OF_ROWS_PER_REQUEST >= rowIndex;
+    });
+
+    return index;
+  }
+
+  _removeRequest(startRow) {
+    let index = this._pendingRequest.indexOf(startRow);
+    this._pendingRequest.splice(index, 1);
   }
   
   _queueRequestFor(rowIndex) {
-    this._queue.push(rowIndex);
+    if (this._hasPendingRequest(rowIndex)) {
+      return;
+    }
+
+    this._requestQueue.push(rowIndex);
     
     if (!this._queueFlushID) {
       this._queueFlushID = setTimeout(this._flushRequestQueue.bind(this), 0);
@@ -67,7 +81,7 @@ class RowDataLoader {
   }
   
   _flushRequestQueue() {
-    var sectionsToLoad = this._queue.reduce((requestSections, rowIndex) => {
+    var sectionsToLoad = this._requestQueue.reduce((requestSections, rowIndex) => {
       var rowBase = rowIndex - (rowIndex % NUMBER_OF_ROWS_PER_REQUEST);
       if (requestSections.indexOf(rowBase) === -1) {
         return requestSections.concat(rowBase);
@@ -83,21 +97,25 @@ class RowDataLoader {
       );    
     }, this);
     
-    this._queue = [];
+    this._requestQueue = [];
     this._queueFlushID = null;
   }
     
   _loadDataRange(rowStart, rowEnd) {
+    this._pendingRequest.push(rowStart);
     SocketService.get(this._store.viewUrl + "/items/" + rowStart + "/" + rowEnd)
       .then(data => {
+        this._removeRequest(rowStart);
         for (var i=0; i < data.length; i++) {
            this._data[rowStart+i] = data[i];
         }
 
         this._onDataLoad();
       }.bind(this))
-      .catch(error => 
-        console.log("Failed to load data: " + error, this.props.viewName)
+      .catch(error => {
+          this._removeRequest(rowStart);
+          console.log("Failed to load data: " + error, this.props.viewName)
+        }
       );
   }
 }
@@ -334,8 +352,7 @@ export default React.createClass({
         label: label,
         flexGrow: flexGrow,
         width: width,
-        isResizable: true,
-        allowCellsRecycling:true
+        isResizable: true
       });
     }, this);
 

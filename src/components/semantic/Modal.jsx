@@ -4,6 +4,8 @@ import { Button, Popup, Icon } from 'react-semantify'
 import { Lifecycle } from 'react-router'
 import { History } from 'react-router'
 
+import classNames from 'classnames';
+
 export default React.createClass({
   mixins: [ Lifecycle ],
   propTypes: {
@@ -36,6 +38,12 @@ export default React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      saving: false
+    }
+  },
+
   routerWillLeave(nextLocation) {
     this.hide();
   },
@@ -61,7 +69,10 @@ export default React.createClass({
   onApprove: function (el) {
     let { saveHandler } = this.props;
     if (saveHandler) {
-      return saveHandler();
+      this.setState({ saving: true });
+      let promise = saveHandler();
+      promise.then(this.hide).catch(() => this.setState({ saving: false }));
+      return false;
     }
   },
 
@@ -75,6 +86,13 @@ export default React.createClass({
   },
 
   render: function() {
+   /* var saveButtonClass = classNames(
+      "ui", 
+      "button", 
+      { "disabled": this._isDisabled() },
+      { "loading": this.props.running }
+    );*/
+
     return (
       <div className="ui long modal">
         <div className="header">
@@ -87,7 +105,7 @@ export default React.createClass({
 
         {this.props.saveHandler ? (
           <div className="actions">
-            <div className="ui ok green basic button">
+            <div className={ "ui ok green basic button " + (this.state.saving ? "loading" : "") }>
               <i className="checkmark icon"></i>
               Save
             </div>

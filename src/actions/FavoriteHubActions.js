@@ -69,7 +69,7 @@ FavoriteHubActions.edit.listen(function(hub, data) {
 
 FavoriteHubActions.update.listen(function(hub, data) {
     var that = this;
-    return SocketService.post(FAVORITE_HUB_URL + "/" + hub.id, data)
+    return SocketService.patch(FAVORITE_HUB_URL + "/" + hub.id, data)
       .then(that.completed)
       .catch(this.failed);
 });

@@ -125,7 +125,7 @@ module.exports = {
         const { country_id } = this.props.item;
         return (
           <div>
-          <Icon className={ country_id.length === 0 ? "icon grey flag" : "flag " + country_id.toLowerCase() }/>
+          <Flag className={ country_id.length === 0 ? "icon grey " : country_id.toLowerCase() }/>
           { this.props.item.str }
           </div>
         );

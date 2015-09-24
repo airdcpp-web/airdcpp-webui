@@ -15,14 +15,6 @@ export default class ApiSocket {
         this.callbacks = {};
     }
 
-    /*isOpen() {
-        return this.socket.readyState == this.socket.OPEN;
-    }*/
-
-    isConnecting() {
-        return this.socket.readyState == this.socket.CONNECTING;
-    }
-
   connect(reconnectOnFailure) {
     SocketActions.state.connecting(self);
 
@@ -35,15 +27,6 @@ export default class ApiSocket {
   }
 
   connectInternal(reconnectOnFailure, resolve, reject, self) {
-    /*var failed = false;
-    var handleReconnect = function(){
-        self._reconnectTimer = setTimeout(() => {
-            failed = false;
-            console.log("Socket reconnecting");
-            self.connectInternal(reconnectOnFailure, resolve, reject, self);
-        }, 3000);
-    };*/
-
     self.socket = new WebSocket((window.location.protocol == 'https:' ? 'wss://' : 'ws://') + window.location.host + '/');
 
     self.socket.onopen = function(){
@@ -87,7 +70,6 @@ export default class ApiSocket {
         SocketActions.state.disconnected(self, event.reason);
     }
     this.socket.onmessage = function(event){
-        console.log("Websocket data received: " + event.data);
         self.listener(event);
     }
   }
@@ -106,7 +88,7 @@ export default class ApiSocket {
         resolver:resolver
       };
 
-      console.log('Sending request', path, data);
+      console.log('Sending request', path, data, method);
 
     var request = {
       path: path,
@@ -121,22 +103,22 @@ export default class ApiSocket {
 
     listener(event) {
       var messageObj = JSON.parse(event.data);
-      console.log("Received data from websocket: ", messageObj);
 
       if(this.callbacks.hasOwnProperty(messageObj.callback_id)) {
         // Callback
 
         if (messageObj.code >= 200 && messageObj.code <= 204) {
-          console.log("Websocket request succeed: " + this.callbacks[messageObj.callback_id]);
+          console.log("Websocket request " + messageObj.callback_id + " succeed: " + event.data);
           this.callbacks[messageObj.callback_id].resolver.resolve(messageObj.data);
         } else {
-          console.log("Websocket request " + this.callbacks[messageObj.callback_id] + " failed with code " + messageObj.code + ": " + messageObj.error);
-          this.callbacks[messageObj.callback_id].resolver.reject({ reason: messageObj.error, code: messageObj.code});
+          console.log("Websocket request " + messageObj.callback_id + " failed with code " + messageObj.code + ": " + messageObj.error.message);
+          this.callbacks[messageObj.callback_id].resolver.reject({ reason: messageObj.error.message, code: messageObj.code, json: messageObj.error });
         }
 
         delete this.callbacks[messageObj.callback_id];
       } else {
         // Listener message
+        console.log("Received listener message from websocket: ", event.data);
         SocketActions.message(this, messageObj);
       }
     }

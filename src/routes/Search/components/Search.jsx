@@ -68,11 +68,7 @@ export default React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
-    //return formatter;
-
-    var tmp = SearchActions;
     return <Formatter.DownloadMenu caption={ formatter } id={ rowData.id } handler={ SearchActions.download }/>
-    //return <ActionMenu caption={ formatter } actions={ SearchActions } ids={[ "download" ]} itemData={ rowData }/>;
   },
 
   renderIp(cellData) {

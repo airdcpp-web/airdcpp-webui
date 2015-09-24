@@ -70,20 +70,19 @@ export default React.createClass({
       return cellData;
     }
 
-    return <Checkbox checked={cellData}/>;
+    return <Checkbox checked={cellData} onChange={ checked => FavoriteHubActions.update(rowData, { auto_connect: checked }) }/>;
   },
 
-  handleAddHub() {
+  _handleAddHub() {
     FavoriteHubActions.create();
   },
 
   render() {
     let footerData = (
-      <Button className="small" onClick={ this.handleAddHub }>
+      <Button className="small" onClick={ this._handleAddHub }>
         <i className="plus icon"></i>
         Add new
       </Button>);
-    //let footerData = <ActionMenu caption="Actions..." actions={ FavoriteHubActions } ids={[ "create" ]}/>;
 
     return (
       <VirtualTable

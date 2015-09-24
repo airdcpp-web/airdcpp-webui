@@ -1,6 +1,7 @@
 
 
-var detectResize   = require('./detect-element-resize.js');
+//var detectResize   = require('./detect-element-resize.js');
+import _ from 'lodash';
 
 var SetContainerSize = {
 	getInitialState: function(){
@@ -11,18 +12,35 @@ var SetContainerSize = {
 	},
 
 	componentDidMount : function(){
-		this._resizeTimer = null;
-		this._updateDimensions();
-		detectResize.addResizeListener(this.getDOMNode().parentNode, this._onResize);
+	    var win = window;
+	    if (win.addEventListener) {
+	      win.addEventListener('resize', _.throttle(this._update, 250), false);
+	    } else if (win.attachEvent) {
+	      win.attachEvent('onresize', _.throttle(this._update, 250));
+	    } else {
+	      win.onresize = this._update;
+	    }
+	    this._update();
 	},
 
-	componentWillUnmount : function(){
-		this._clearTimer();
-		detectResize.removeResizeListener(this.getDOMNode().parentNode, this._onResize);
+	componentWillReceiveProps(props) {
+		this._update();
 	},
 
-	_updateDimensions() {
-		var node = this.getDOMNode();
+	componentWillUnmount() {
+		var win = window;
+		if(win.removeEventListener) {
+		  win.removeEventListener('resize', _.throttle(this._update, 250), false);
+		} else if(win.removeEvent) {
+		  win.removeEvent('onresize', _.throttle(this._update, 250), false);
+		} else {
+		  win.onresize = null;
+		}
+	},
+
+	_update() {
+		if (this.isMounted()) {
+		  var node = this.getDOMNode();
 
 		var borderWidth = node.offsetWidth - node.clientWidth;
 		var borderHeight = node.offsetHeight - node.clientHeight;
@@ -30,22 +48,12 @@ var SetContainerSize = {
 		var width = node.parentNode.offsetWidth - borderWidth;
 		var height = node.parentNode.offsetHeight - borderHeight;
 
-		this.setState({
-			width:width,
-			height:height
-		});
-	},
-
-	_clearTimer() {
-		if (this._resizeTimer !== null) {
-			clearTimeout(this._resizeTimer);
+		  this.setState({
+		    width  : width,
+		    height : height
+		  });
 		}
 	},
-
-	_onResize : function() {
-		this._clearTimer();
-		this._resizeTimer = setTimeout(this._updateDimensions, 50);
-	}
 };
 
 module.exports = SetContainerSize;

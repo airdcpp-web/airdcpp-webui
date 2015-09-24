@@ -5,6 +5,8 @@ import { FAVORITE_HUB_URL } from '../../../constants/FavoriteHubConstants'
 import SocketService from '../../../services/SocketService'
 import { RouteContext } from 'react-router'
 
+import BlueBird from 'bluebird';
+
 import t from 'tcomb-form';
 import _ from 'lodash';
 
@@ -25,47 +27,48 @@ var Entry = t.struct({
 export default React.createClass({
   mixins: [ RouteContext ],
   getInitialState() {
+    let value = null;
     this._isNew = !this.props.location.state.hubEntry;
     if (!this._isNew) {
-      let value = _.clone(this.props.location.state.hubEntry);
+      value = _.clone(this.props.location.state.hubEntry, true);
       value["share_profile"] = value.share_profile.id;
 
       this.checkAdcHub(value.hub_url);
-      return {
-        value: value,
-        profiles: []
-      };
-    } else {
-      return {
-        value: null,
-        profiles: []
-      };
     }
 
+    return {
+      error: null,
+      value: value,
+      profiles: []
+    };
   },
 
   addProfile(profiles, rawItem) {
-    if (rawItem.id != HIDDEN_PROFILE_ID) {
-      if (rawItem.default) {
-        this.defaultId = rawItem.id;
-      }
-
-      profiles.push({
-        value:rawItem.id,
-        text:rawItem.str
-      });
+    if (rawItem.default) {
+      this.defaultId = rawItem.id;
     }
+
+    profiles.push({
+      value:rawItem.id,
+      text:rawItem.str
+    });
     return profiles;
   },
 
   componentDidMount() {
+    this.allProfiles = [];
     SocketService.get(PROFILES_GET_URL)
       .then(data => {
-        this.setState({ profiles: data.reduce(this.addProfile, this.state.profiles) });
+        data.reduce(this.addProfile, this.allProfiles);
+        this._setProfiles();
       })
       .catch(error => 
         console.error("Failed to load profiles: " + error)
       );
+  },
+
+  _setProfiles() {
+    this.setState({ profiles: this.allProfiles.filter(p => this.isAdcHub || (p.value === this.defaultId || p.value === HIDDEN_PROFILE_ID), []) });
   },
 
   checkAdcHub(hubUrl) {
@@ -78,40 +81,62 @@ export default React.createClass({
       if (!this.isAdcHub) {
         value.share_profile = this.defaultId;
       }
+
+      this._setProfiles();
     }
 
     this.refs.form.getComponent(path).validate();
     this.setState({value});
   },
 
+  _handleError(error) {
+    if (error.code === 422) {
+      this.setState({ error: error.json });
+    } else {
+      // ?
+    }
+  },
+
   save() {
-    var value = this.refs.form.getValue();
+    let value = this.refs.form.getValue();
     if (value) {
+      let promise;
       if (this._isNew) {
-        SocketService.post(FAVORITE_HUB_URL, value);
+        promise = SocketService.post(FAVORITE_HUB_URL, value);
       } else {
-        SocketService.patch(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
+        promise = SocketService.patch(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
       }
-      return true;
+
+      promise.catch(this._handleError);
+      return promise;
     }
 
-    return false;
+    return Promise.reject();
   },
 
   render: function() {
-    var options = {
+    let options = {
       fields: {
         share_profile: {
           factory: t.form.Select,
           options: this.state.profiles,
           nullOption: false,
-          disabled: !this.isAdcHub,
+          help: "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
           transformer: {
             format: v => String(v),
             parse: v => parseInt(v, 10)
           }
         }
       }
+    }
+
+    const { error } = this.state;
+    if (!!error) {
+      options.fields[error.field] = options.fields[error.field] || {};
+      Object.assign(options.fields[error.field], {
+        error: error.message,
+        hasError: true
+      })
     }
 
     var title = this._isNew ? "Add favorite hub" : "Edit favorite hub";
