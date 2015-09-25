@@ -21,7 +21,7 @@ export default React.createClass({
     // Create portal
     this.node = document.createElement('div');
 
-    var className = "ui flowing popup ";
+    let className = "ui flowing popup ";
     if (this.props.className) {
       className += this.props.className;
     }
@@ -49,7 +49,7 @@ export default React.createClass({
   },
 
   hide: function() {
-    var button = React.findDOMNode(this.refs.overlayTrigger);
+    let button = React.findDOMNode(this.refs.overlayTrigger);
     $(button).popup('destroy');
 
     React.unmountComponentAtNode(this.node);
@@ -61,11 +61,11 @@ export default React.createClass({
     React.render(this.props.children, this.node);
 
     // Trigger
-    var button = React.findDOMNode(this.refs.overlayTrigger);
-    var parentRect = button.parentElement.getBoundingClientRect();
+    let button = React.findDOMNode(this.refs.overlayTrigger);
+    const parentRect = button.parentElement.getBoundingClientRect();
 
     // Common settings
-    var settings = {
+    let settings = {
       on:'click',
       movePopup:false,
       popup:this.node,

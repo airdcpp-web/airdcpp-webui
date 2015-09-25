@@ -10,9 +10,9 @@ import LoginActions from '../actions/LoginActions'
 import { History } from 'react-router';
 import { Dimmer, Loader } from 'react-semantify'
 
-var SocketConnectStatus = React.createClass({
+const SocketConnectStatus = React.createClass({
   render() {
-    var message;
+    let message;
     if (this.props.lastError !== null) {
       message = this.props.lastError + ". Reconnecting...";
     } else {

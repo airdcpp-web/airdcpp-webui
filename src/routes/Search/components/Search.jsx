@@ -55,7 +55,7 @@ export default React.createClass({
       return cellData;
     }
 
-    var formatter = (
+    const formatter = (
       <Formatter.FileNameFormatter type={ rowData.type.type }>
         { cellData }
       </Formatter.FileNameFormatter>);

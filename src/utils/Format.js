@@ -12,8 +12,8 @@ module.exports = {
       return undefined;
     }
 
-    var i = 0;
-    var byteUnits = [' b', ' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
+    let i = 0;
+    const byteUnits = [' b', ' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
     do {
         fileSizeInBytes = fileSizeInBytes / 1024;
         i++;
@@ -47,10 +47,10 @@ module.exports = {
       return undefined;
     }
 
-    var bits = bytes*8;
+    let bits = bytes*8;
+    let i = 0;
 
-    var i = 0;
-    var bitUnits = [' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit'];
+    const bitUnits = [' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit'];
     do {
         bits = bits / 1000;
         i++;
@@ -162,7 +162,7 @@ module.exports = {
           directory: directory
         }
 
-        var caption = (
+        const caption = (
           <div>
             <Icon className="blue user"/>
             { user.nicks }

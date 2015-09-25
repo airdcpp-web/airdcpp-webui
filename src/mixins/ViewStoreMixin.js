@@ -32,9 +32,9 @@ export default {
 		return this._rowCount;
 	},
 	_addItems(itemsObj) {
-	  var pos = 0;
+	  let pos = 0;
 	  this._items = itemsObj.reduce((newViewItems, rawItem) => {
-	    var viewItem;
+	    let viewItem;
 	    if (rawItem == null) {
 	      viewItem = this._items[this._startPos + pos];
 	    } else {
@@ -61,12 +61,12 @@ export default {
 	},
 
 	_findItem(id) {
-		//return this._items.find(value => value.token == token);
+		return this._items.find(value => value.token == token);
 		/*for (let i of this._items) {
 	    	if (i.token == token) {
 	    		return i;
 	    	}
-	   	}*/
+	   	}
 
 		for (let i in this._items) {
 	    	if (this._items[i].id == id) {
@@ -74,7 +74,7 @@ export default {
 	    	}
 	   	}
 
-	   	return undefined;
+	   	return undefined;*/
 	},
 
 	_addProperties(item, properties) {

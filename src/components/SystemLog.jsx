@@ -3,9 +3,9 @@ import Format from '../utils/Format.js'
 import LogActions from '../actions/LogActions'
 import { Icon, Header, Grid, Row, Column } from 'react-semantify'
 
-var LogMessage = React.createClass({
+const LogMessage = React.createClass({
   render: function() {
-    var iconClass;
+    let iconClass;
     switch(this.props.message.severity) {
       case 0: iconClass = 'blue info circle'; break;
       case 1: iconClass = 'yellow warning sign'; break;
@@ -34,19 +34,19 @@ export default React.createClass({
   },
 
   componentWillUpdate: function() {
-    var node = React.findDOMNode(this.refs.messageList);
+    let node = React.findDOMNode(this.refs.messageList);
     this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
   },
    
   componentDidUpdate: function() {
     if (this.shouldScrollBottom) {
-      var node = React.findDOMNode(this.refs.messageList);
+      let node = React.findDOMNode(this.refs.messageList);
       node.scrollTop = node.scrollHeight
     }
   },
 
   render: function() {
-    var messageList = this.props.log_messages.map(function (message) {
+    const messageList = this.props.log_messages.map(function (message) {
       return (
         <LogMessage key={ message.id } message={message}/>
       );

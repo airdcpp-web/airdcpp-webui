@@ -14,7 +14,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    var MenuItem = React.createClass({
+    const MenuItem = React.createClass({
       render: function() {
         return (
           <Link to={this.props.page} className="item">

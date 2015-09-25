@@ -11,10 +11,10 @@ import TableActions from '../../actions/TableActions'
 import { Input } from 'react-semantify'
 import _ from 'lodash';
 
-var NUMBER_OF_ROWS_PER_REQUEST = 10;
-var TABLE_ROW_HEIGHT = 50;
+const NUMBER_OF_ROWS_PER_REQUEST = 10;
+const TABLE_ROW_HEIGHT = 50;
 
-var {PropTypes} = React;
+const {PropTypes} = React;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
@@ -56,7 +56,7 @@ class RowDataLoader {
   }
 
   _hasPendingRequest(rowIndex) {
-    let index = this._pendingRequest.find((startRow) => {
+    const index = this._pendingRequest.find((startRow) => {
       return startRow <= rowIndex && startRow + NUMBER_OF_ROWS_PER_REQUEST >= rowIndex;
     });
 
@@ -64,7 +64,7 @@ class RowDataLoader {
   }
 
   _removeRequest(startRow) {
-    let index = this._pendingRequest.indexOf(startRow);
+    const index = this._pendingRequest.indexOf(startRow);
     this._pendingRequest.splice(index, 1);
   }
   
@@ -81,8 +81,8 @@ class RowDataLoader {
   }
   
   _flushRequestQueue() {
-    var sectionsToLoad = this._requestQueue.reduce((requestSections, rowIndex) => {
-      var rowBase = rowIndex - (rowIndex % NUMBER_OF_ROWS_PER_REQUEST);
+    const sectionsToLoad = this._requestQueue.reduce((requestSections, rowIndex) => {
+      const rowBase = rowIndex - (rowIndex % NUMBER_OF_ROWS_PER_REQUEST);
       if (requestSections.indexOf(rowBase) === -1) {
         return requestSections.concat(rowBase);
       }
@@ -106,7 +106,7 @@ class RowDataLoader {
     SocketService.get(this._store.viewUrl + "/items/" + rowStart + "/" + rowEnd)
       .then(data => {
         this._removeRequest(rowStart);
-        for (var i=0; i < data.length; i++) {
+        for (let i=0; i < data.length; i++) {
            this._data[rowStart+i] = data[i];
         }
 
@@ -128,7 +128,7 @@ function convertEndToRows(pixels) {
   return Math.ceil(pixels / TABLE_ROW_HEIGHT);
 }
 
-var FilterBox = React.createClass({
+const FilterBox = React.createClass({
   getInitialState: function() {
     return {value: ''};
   },
@@ -217,8 +217,8 @@ export default React.createClass({
     this.unsubscribe = this.props.store.listen(this.onItemsUpdated);
   },
   updateTableSettings() {
-    var startRows = convertStartToRows(this._scrollPosition);
-    var endRows = startRows + convertEndToRows(this.state.height, true);
+    const startRows = convertStartToRows(this._scrollPosition);
+    const endRows = startRows + convertEndToRows(this.state.height, true);
 
     console.log("Settings changed, start: " + startRows + ", end: " + endRows, ", height: " + this.state.height, this.props.store.viewName);
     TableActions.changeSettings(this.props.store.viewUrl, startRows, endRows, this.state.sortProperty, this.state.sortAscending);
@@ -301,7 +301,7 @@ export default React.createClass({
   // Fitted-table
   _onContentHeightChange : function(contentHeight) {
     setTimeout(() => {
-      var width = 0;
+      let width = 0;
       React.Children.forEach(this.props.children, function(child){
         if ('width' in child.props){
           width = width + child.props.width;
@@ -324,7 +324,7 @@ export default React.createClass({
       return null;
     }
 
-    let rowData = this._dataLoader.getRowData(rowIndex);
+    const rowData = this._dataLoader.getRowData(rowIndex);
     if (!rowData) {
       return null;
     }
@@ -333,10 +333,10 @@ export default React.createClass({
   },
   
   render: function() {
-    let sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
+    const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
 
     // Update and insert generic columns props
-    let children = React.Children.map(this.props.children, (column) => {
+    const children = React.Children.map(this.props.children, (column) => {
       let label = column.props.label + ((this.state.sortProperty === column.props.dataKey) ? sortDirArrow : '');
       let flexGrow = undefined;
       let width = undefined;
@@ -356,7 +356,7 @@ export default React.createClass({
       });
     }, this);
 
-    var controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
+    const controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
     return (
       <div>
       <TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>

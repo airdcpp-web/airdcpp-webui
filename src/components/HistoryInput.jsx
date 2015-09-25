@@ -95,7 +95,7 @@ export default React.createClass({
       //onBlur: event => console.log('Input blurred. Event:', event),
     };
 
-    var buttonClass = classNames(
+    const buttonClass = classNames(
       "ui", 
       "button", 
       { "disabled": this._isDisabled() },

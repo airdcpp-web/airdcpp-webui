@@ -55,7 +55,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    var settings = {
+    const settings = {
       onHidden: this.onHidden,
       movePopup:false,
       onApprove: this.onApprove,
@@ -66,7 +66,7 @@ export default React.createClass({
       //observeChanges: true
     };
 
-    var dom = React.findDOMNode(this);
+    let dom = React.findDOMNode(this);
     $(dom).modal(settings).modal('show');
   },
 
@@ -84,7 +84,7 @@ export default React.createClass({
   },
 
   hide() {
-    var dom = React.findDOMNode(this);
+    let dom = React.findDOMNode(this);
     $(dom).modal('hide');
   },
 

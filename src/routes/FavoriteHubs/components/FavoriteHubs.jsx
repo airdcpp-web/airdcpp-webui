@@ -102,7 +102,7 @@ export default React.createClass({
   },
 
   render() {
-    let footerData = (
+    const footerData = (
       <Button className="small" onClick={ this._handleAddHub }>
         <i className="plus icon"></i>
         Add new

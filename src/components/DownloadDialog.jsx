@@ -8,7 +8,7 @@ import { FAVORITE_DIRECTORIES_URL } from '../constants/FavoriteDirectoryConstant
 import SocketService from '../services/SocketService'
 import { RouteContext } from 'react-router'
 
-var MenuItem = React.createClass({
+const MenuItem = React.createClass({
   render: function() {
     return (
       <a className={ "item " + (this.props.active ? "active" : "")  } onClick={this.props.onClick}>
@@ -22,7 +22,7 @@ var MenuItem = React.createClass({
   }
 });
 
-var PathItem = React.createClass({
+const PathItem = React.createClass({
   render: function() {
     return (
       <div className="item">
@@ -37,7 +37,7 @@ var PathItem = React.createClass({
   }
 });
 
-var PathList = React.createClass({
+const PathList = React.createClass({
   propTypes: {
     /**
      * Function handling the path selection. Receives the selected path as argument.
@@ -63,7 +63,7 @@ var PathList = React.createClass({
   }
 });
 
-var AccordionTargets = React.createClass({
+const AccordionTargets = React.createClass({
   propTypes: {
     /**
      * Function handling the path selection. Receives the selected path as argument.
@@ -77,12 +77,8 @@ var AccordionTargets = React.createClass({
   },
 
   componentDidMount() {
-    var settings = {
-
-    };
-
-    var dom = React.findDOMNode(this);
-    $(dom).accordion(settings);
+    let dom = React.findDOMNode(this);
+    $(dom).accordion();
   },
 
   formatParent(parent) {

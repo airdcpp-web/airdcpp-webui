@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 
 import History from '../utils/History'
 
-export var DownloadActions = Reflux.createActions([
+export const DownloadActions = Reflux.createActions([
   { "download": { 
   	asyncResult: true,  
   	displayName: "Download", 

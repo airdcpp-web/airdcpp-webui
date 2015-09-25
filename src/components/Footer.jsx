@@ -13,7 +13,7 @@ import Popup from './semantic/Popup'
 import StoreLoaderMixin from '../mixins/StoreLoaderMixin';
 
 
-var SpeedDisplay = React.createClass({
+const SpeedDisplay = React.createClass({
   render: function() {
     return (
       <div className="item">
@@ -26,7 +26,7 @@ var SpeedDisplay = React.createClass({
   }
 });
 
-var LogIcon = React.createClass({
+const LogIcon = React.createClass({
   render: function() {
     if (this.props.count == 0) {
       return null;
@@ -43,14 +43,14 @@ var LogIcon = React.createClass({
   }
 });
 
-var LogBar = React.createClass({
+const LogBar = React.createClass({
   mixins: [Reflux.connect(LogStore), StoreLoaderMixin(LogStore)],
   componentDidMount: function() {
     LogActions.fetchLastMessages();
   },
 
   render: function() {
-    var style = {
+    const style = {
       maxHeight: 300 + 'px', 
       overflowY: 'auto'
     };
@@ -68,7 +68,7 @@ var LogBar = React.createClass({
   }
 });
 
-var StatisticsBar = React.createClass({
+const StatisticsBar = React.createClass({
   mixins: [Reflux.connect(TransferStatsStore), StoreLoaderMixin(TransferStatsStore)],
   render: function() {
     return (

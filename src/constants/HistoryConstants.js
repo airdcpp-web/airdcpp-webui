@@ -1,4 +1,4 @@
-var HISTORY_MODULE_URL = 'histories/v0';
+const HISTORY_MODULE_URL = 'histories/v0';
 export default {
   HISTORY_MODULE_URL: HISTORY_MODULE_URL,
   HISTORY_ITEMS_URL: HISTORY_MODULE_URL + '/items',

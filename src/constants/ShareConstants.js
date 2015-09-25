@@ -1,4 +1,4 @@
-var SHARE_MODULE_URL = 'share/v0';
+const SHARE_MODULE_URL = 'share/v0';
 export default {
   SHARE_MODULE_URL: SHARE_MODULE_URL,
   PROFILES_GET_URL: SHARE_MODULE_URL + '/profiles',

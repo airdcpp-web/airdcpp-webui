@@ -84,8 +84,8 @@ export default class ApiSocket {
         return Promise.reject("No socket");
     }
 
-      var resolver = BlueBird.pending();
-      var callbackId = this.getCallbackId();
+      let resolver = BlueBird.pending();
+      const callbackId = this.getCallbackId();
       
       this.callbacks[callbackId] = {
         time: new Date(),
@@ -94,7 +94,7 @@ export default class ApiSocket {
 
       console.log('Sending request', path, data, method);
 
-    var request = {
+    const request = {
       path: path,
       method: method,
       data: data,
@@ -106,7 +106,7 @@ export default class ApiSocket {
     }
 
     listener(event) {
-      var messageObj = JSON.parse(event.data);
+      const messageObj = JSON.parse(event.data);
 
       if(this.callbacks.hasOwnProperty(messageObj.callback_id)) {
         // Callback

@@ -5,12 +5,12 @@ import ApiSocket from '../utils/ApiSocket';
 class SocketService {
 
   connect() {
-    var socket = new ApiSocket();
+    let socket = new ApiSocket();
     return socket.connect(false);
   }
 
   reconnect() {
-    var socket = new ApiSocket();
+    let socket = new ApiSocket();
     return socket.connect(true);
   }
 

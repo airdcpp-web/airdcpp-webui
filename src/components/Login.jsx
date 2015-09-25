@@ -6,13 +6,13 @@ import LoginStore from '../stores/LoginStore'
 import { Icon, Message, Content } from 'react-semantify'
 import { History } from 'react-router';
 
-var ErrorBox = React.createClass({
+const ErrorBox = React.createClass({
   render: function() {
     if (this.props.lastError === null) {
       return null;
     }
 
-    var errorMessage = "Authentication failed: " + this.props.lastError;
+    const errorMessage = "Authentication failed: " + this.props.lastError;
 
     return (
       <Message className="error">
@@ -24,7 +24,7 @@ var ErrorBox = React.createClass({
   }
 });
 
-var ENTER_KEY_CODE = 13;
+const ENTER_KEY_CODE = 13;
 
 export default React.createClass({
   mixins: [Reflux.connect(LoginStore), History ],
@@ -37,7 +37,7 @@ export default React.createClass({
 
   componentWillUpdate(nextProps, nextState) {
     if (nextState.socketAuthenticated) {
-      var nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
+      const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
       this.history.replaceState(null, nextPath);
     }
   },
@@ -49,8 +49,8 @@ export default React.createClass({
   },
 
   onSubmit(evt) {
-    var username = findDOMNode(this.refs.username).value;
-    var password = findDOMNode(this.refs.password).value;
+    const username = findDOMNode(this.refs.username).value;
+    const password = findDOMNode(this.refs.password).value;
     evt.preventDefault();
 
     if (username === "" || password === "") {

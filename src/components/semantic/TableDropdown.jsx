@@ -9,7 +9,7 @@ import classNames from 'classnames';
 
 export var DropdownItem = React.createClass({
   render() {
-    let className = classNames(
+    const className = classNames(
       "item",
       this.props.className,
       { "active": this.props.active  }
@@ -43,14 +43,14 @@ export default React.createClass({
 
   render: function() {
     // Caption
-    let trigger = (
+    const trigger = (
       <div className="table-dropdown">
         {this.props.caption}
         <i className="dropdown icon"></i>
       </div>);
 
     // Settings
-    let settings = {
+    const settings = {
       position:'bottom left',
       lastResort:true
     };

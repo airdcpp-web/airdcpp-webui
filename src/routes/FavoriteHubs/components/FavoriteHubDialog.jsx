@@ -13,8 +13,8 @@ import _ from 'lodash';
 var semantic = require('tcomb-form/lib/templates/semantic');
 t.form.Form.templates = semantic;
 
-var Form = t.form.Form;
-var Entry = t.struct({
+const Form = t.form.Form;
+const Entry = t.struct({
   name: t.Str,
   hub_url: t.Str,
   hub_description: t.maybe(t.Str),
@@ -139,7 +139,7 @@ export default React.createClass({
       })
     }
 
-    var title = this._isNew ? "Add favorite hub" : "Edit favorite hub";
+    const title = this._isNew ? "Add favorite hub" : "Edit favorite hub";
     return (
       <Modal className="fav-hub" title={title} saveHandler={this.save} closable={false} icon="yellow star" {...this.props}>
         <Form

@@ -25,9 +25,9 @@ export default React.createClass({
       return cellData;
     }
 
-    var Progress = React.createClass({
+    const Progress = React.createClass({
       render: function() {
-        var cNames = classNames(
+        const cNames = classNames(
           "ui", 
           "progress", 
           { "grey": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
@@ -36,7 +36,7 @@ export default React.createClass({
           { "error": cellData.id == StatusEnum.STATUS_FAILED_MISSING || cellData.id == StatusEnum.STATUS_SHARING_FAILED || cellData.id == StatusEnum.STATUS_HASH_FAILED }
         );
 
-        var percent = (rowData.downloaded_bytes*100) / rowData.size;
+        const percent = (rowData.downloaded_bytes*100) / rowData.size;
         return (
           <div className={ cNames } data-percent= { percent }>
             <div className="bar" style={{transitionDuration: 300 + 'ms'}, { width: percent + '%'}}>
@@ -60,7 +60,7 @@ export default React.createClass({
       return ''
     }
 
-    var PriorityListItem = React.createClass({
+    const PriorityListItem = React.createClass({
       handleClick: function() {
         QueueActions.setBundlePriority(this.props.item.id, this.props.priority.id);
       },
@@ -72,10 +72,10 @@ export default React.createClass({
       }
     });
 
-    var PriorityCell = React.createClass({
+    const PriorityCell = React.createClass({
       render: function() {
-        var self = this;
-        var trigger = (<div>
+        let self = this;
+        const trigger = (<div>
           { this.props.itemPrio.str }
           <i className="dropdown icon"></i>
         </div>);
@@ -141,7 +141,7 @@ export default React.createClass({
       return cellData;
     }
 
-    var formatter = (
+    const formatter = (
       <Formatter.FileNameFormatter type={ rowData.type.type }>
         { cellData }
       </Formatter.FileNameFormatter>);

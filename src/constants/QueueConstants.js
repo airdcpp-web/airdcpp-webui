@@ -1,4 +1,4 @@
-var QUEUE_MODULE_URL = 'queue/v0';
+const QUEUE_MODULE_URL = 'queue/v0';
 export default {
   QUEUE_MODULE_URL: QUEUE_MODULE_URL,
   BUNDLES_URL: QUEUE_MODULE_URL + '/bundles',

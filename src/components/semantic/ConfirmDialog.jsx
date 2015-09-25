@@ -4,7 +4,7 @@ import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 
 import BlueBird from 'bluebird';
 
-var ConfirmDialog = React.createClass({
+const ConfirmDialog = React.createClass({
   propTypes: {
 
     /**
@@ -24,7 +24,7 @@ var ConfirmDialog = React.createClass({
   },
 
   componentDidMount() {
-    var settings = {
+    const settings = {
       movePopup:false,
       onHidden:this.onHidden,
       onApprove: this.onApprove,
@@ -34,7 +34,7 @@ var ConfirmDialog = React.createClass({
       allowMultiple: true
     };
 
-    var dom = React.findDOMNode(this);
+    let dom = React.findDOMNode(this);
     $(dom).modal(settings).modal('show');
   },
 
@@ -83,9 +83,9 @@ var ConfirmDialog = React.createClass({
 });
 
 export default function (title, text, icon, acceptText="Yes", rejectText="No") {
-  var resolver = BlueBird.pending();
-  var node = document.createElement('div');
-  var dialog = <ConfirmDialog node={node} title={title} resolver={ resolver } text={ text } icon={ icon } acceptText={acceptText} rejectText={rejectText}/>
+  let resolver = BlueBird.pending();
+  let node = document.createElement('div');
+  const dialog = <ConfirmDialog node={node} title={title} resolver={ resolver } text={ text } icon={ icon } acceptText={acceptText} rejectText={rejectText}/>
 
   document.body.appendChild(node);
 

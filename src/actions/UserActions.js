@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import {FILELIST_URL} from '../constants/QueueConstants';
 import SocketService from '../services/SocketService'
 
-export var UserActions = Reflux.createActions([
+export const UserActions = Reflux.createActions([
    { "message": { 
   	asyncResult: true, 
   	displayName: "Send message", 
@@ -17,7 +17,7 @@ export var UserActions = Reflux.createActions([
 ]);
 
 UserActions.message.listen(function(pattern) {
-    var that = this;
+    let that = this;
     /*return SocketService.get(SEARCH_QUERY_URL, { 
 	    pattern: pattern
 	  })
@@ -26,7 +26,7 @@ UserActions.message.listen(function(pattern) {
 });
 
 UserActions.browse.listen(function(data) {
-    var that = this;
+    let that = this;
     return SocketService.post(FILELIST_URL, data)
       .then(that.completed)
       .catch(this.failed);
