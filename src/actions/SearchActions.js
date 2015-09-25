@@ -21,10 +21,10 @@ SearchActions.postSearch.listen(function(pattern) {
       .catch(this.failed);
 });
 
-SearchActions.download.listen(function(id) {
+SearchActions.download.listen((resultId, target) => {
     var that = this;
-    /*return SocketService.get(SEARCH_QUERY_URL, { 
-	    pattern: pattern
+    /*return SocketService.post(SEARCH_QUERY_URL, { 
+	    target: target
 	  })
       .then(that.completed)
       .catch(this.failed);*/

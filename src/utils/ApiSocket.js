@@ -3,6 +3,10 @@ import SocketActions from '../actions/SocketActions';
 
 import BlueBird from 'bluebird';
 
+const ignoredConsoleEvents = [
+  'statistics'
+]
+
 export default class ApiSocket {
     constructor() {
         this.socket = null;
@@ -118,7 +122,10 @@ export default class ApiSocket {
         delete this.callbacks[messageObj.callback_id];
       } else {
         // Listener message
-        console.log("Received listener message from websocket: ", event.data);
+        if (ignoredConsoleEvents.indexOf(messageObj.event) == -1) {
+          console.log("Received listener message from websocket: ", messageObj.data);
+        }
+
         SocketActions.message(this, messageObj);
       }
     }

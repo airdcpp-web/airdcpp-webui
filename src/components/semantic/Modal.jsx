@@ -29,7 +29,13 @@ export default React.createClass({
      * Function to call when the dialog is saved
      * If no handler is supplied, there will only be a plain close button
      */
-    saveHandler: React.PropTypes.func
+    saveHandler: React.PropTypes.func,
+
+    /**
+     * Removes portal from DOM and redirects previous path
+     * Should usually be passed from ChildModalMixin
+     */
+    closeHandler: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -56,7 +62,8 @@ export default React.createClass({
       onDeny: this.onDeny,
       closable: this.props.closable,
       detachable: false,
-      allowMultiple: false
+      allowMultiple: false,
+      //observeChanges: true
     };
 
     var dom = React.findDOMNode(this);
@@ -86,15 +93,8 @@ export default React.createClass({
   },
 
   render: function() {
-   /* var saveButtonClass = classNames(
-      "ui", 
-      "button", 
-      { "disabled": this._isDisabled() },
-      { "loading": this.props.running }
-    );*/
-
     return (
-      <div className="ui long modal">
+      <div className={ "ui modal " + this.props.className }>
         <div className="header">
           <i className={ this.props.icon + " icon" }></i>
           { this.props.title }
@@ -115,8 +115,8 @@ export default React.createClass({
             </div>
         </div>) : (
           <div className="actions">
-            <div className="ui green basic button">
-              <i className="checkmark icon"></i>
+            <div className="ui close basic button">
+              <i className="remove icon"></i>
               Close
             </div>
           </div>

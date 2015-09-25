@@ -53,18 +53,10 @@ FavoriteHubActions.disconnect.listen(function(hub) {
 
 FavoriteHubActions.create.listen(function(hub, data) {
 	History.pushState({ modal: true }, '/favorite-hubs/new');
-    //var that = this;
-    //return SocketService.post(FAVORITE_HUB_URL, data)
-    //  .then(that.completed)
-    //  .catch(this.failed);
 });
 
 FavoriteHubActions.edit.listen(function(hub, data) {
 	History.pushState({ modal: true, hubEntry: hub }, '/favorite-hubs/edit');
-    //var that = this;
-    //return SocketService.post(FAVORITE_HUB_URL + "/" + hub.id, data)
-    //  .then(that.completed)
-    //  .catch(this.failed);
 });
 
 FavoriteHubActions.update.listen(function(hub, data) {

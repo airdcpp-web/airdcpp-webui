@@ -17,6 +17,49 @@ import Checkbox from '../../../components/semantic/Checkbox'
 
 import { Icon, Button } from 'react-semantify'
 
+const ConnectState = React.createClass({
+  getTitle() {
+    switch(this.props.item.connect_state) {
+      case StateEnum.STATE_CONNECTING:
+        return 'Connecting';
+      case StateEnum.STATE_CONNECTED:
+        return 'Connected';
+      case StateEnum.STATE_DISCONNECTED:
+        return 'Disconnected';
+    }
+  },
+
+  getIcon() {
+    switch(this.props.item.connect_state) {
+      case StateEnum.STATE_CONNECTING:
+        return 'yellow remove';
+      case StateEnum.STATE_CONNECTED:
+        return 'grey remove';
+      case StateEnum.STATE_DISCONNECTED:
+        return 'green video play';
+    }
+  },
+
+  getClickAction() {
+    switch(this.props.item.connect_state) {
+      case StateEnum.STATE_CONNECTING:
+      case StateEnum.STATE_CONNECTED:
+        return () => FavoriteHubActions.disconnect(this.props.item);
+      case StateEnum.STATE_DISCONNECTED:
+        return () => FavoriteHubActions.connect(this.props.item);
+    }
+  },
+
+  render: function() {
+    return (
+      <div>
+        <Icon className={ "large link " + this.getIcon() } onClick={ this.getClickAction() }/>
+        { this.getTitle() }
+      </div>
+    );
+  }
+});
+
 export default React.createClass({
   mixins: [ChildModalMixin],
   _renderName(cellData, cellDataKey, rowData) {
@@ -32,26 +75,7 @@ export default React.createClass({
       return cellData;
     }
 
-    switch(cellData) {
-      case StateEnum.STATE_CONNECTING:
-        return (
-          <div>
-            <a><Icon className="large yellow remove" onClick={ () => FavoriteHubActions.disconnect(rowData) }/></a>
-          </div>
-          );
-      case StateEnum.STATE_CONNECTED:
-        return (
-          <div>
-            <a><Icon className="large grey remove" onClick={ () => FavoriteHubActions.disconnect(rowData) }/></a>
-          </div>
-          );
-      case StateEnum.STATE_DISCONNECTED:
-        return (
-          <div>
-            <a><Icon className="large green video play" onClick={ () => FavoriteHubActions.connect(rowData) }/></a>
-          </div>
-          );
-    }
+    return <ConnectState item={ rowData }/>;
   },
 
   _rowClassNameGetter(rowData) {
@@ -91,8 +115,8 @@ export default React.createClass({
         footerData={footerData}
         store={ FavoriteHubStore }>
         <Column
-          label="Connect"
-          width={70}
+          label="State"
+          width={150}
           dataKey="connect_state"
           cellRenderer={ this._renderConnect }
         />
@@ -108,12 +132,6 @@ export default React.createClass({
           width={270}
           dataKey="hub_url"
           flexGrow={2}
-        />
-        <Column
-          label="Hub description"
-          width={270}
-          dataKey="hub_description"
-          flexGrow={3}
         />
         <Column
           label="Auto connect"

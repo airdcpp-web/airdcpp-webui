@@ -8,6 +8,7 @@
  <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
  <link rel="stylesheet" type="text/css" href="/node_modules/fixed-data-table/dist/fixed-data-table.css">
 
+  <script src="semantic/dist/components/accordion.js"></script>
   <script src="semantic/dist/components/checkbox.js"></script>
   <script src="semantic/dist/components/dimmer.js"></script>
   <script src="semantic/dist/components/modal.js"></script>
@@ -147,9 +148,21 @@
 		border-right-color: transparent!important;
 	}
 	
+	.search-area button {
+		display: inline-block !important;
+	}
+	
 	.fixedDataTableCellLayout_main .ui.checkbox {
 	    display: flex;
 		justify-content: center;
+	}
+	
+	.public_fixedDataTable_bodyRow.dupe.queue, .public_fixedDataTable_bodyRow.dupe.queue span {
+		color: orange;
+	}
+	
+	.public_fixedDataTable_bodyRow.dupe.share, .public_fixedDataTable_bodyRow.dupe.share span {
+		color: deeppink;
 	}
   </style>
 

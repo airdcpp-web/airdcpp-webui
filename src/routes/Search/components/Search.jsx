@@ -4,6 +4,7 @@ import VirtualTable from '../../../components/table/VirtualTable'
 import SocketService from '../../../services/SocketService'
 import SearchActions from '../../../actions/SearchActions'
 
+import { DupeEnum, DupeStyle } from '../../../constants/DupeConstants'
 import { HistoryEnum } from '../../../constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from '../../../constants/SearchConstants'
 
@@ -41,24 +42,15 @@ export default React.createClass({
     }
   },
 
-  renderStr(cellData, cellDataKey, rowData) {
+  _renderStr(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
     }
 
-    //if (rowData.type.type !== "directory") {
-      return cellData.str;
-    //}
-
-    /*return (
-      <div>
-        <a onClick={this.openModal}>
-          { cellData.str }
-        </a>
-    </div>);*/
+    return cellData.str;
   },
 
-  renderName(cellData, cellDataKey, rowData) {
+  _renderName(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
     }
@@ -71,7 +63,7 @@ export default React.createClass({
     return <Formatter.DownloadMenu caption={ formatter } id={ rowData.id } handler={ SearchActions.download }/>
   },
 
-  renderIp(cellData) {
+  _renderIp(cellData) {
     if (cellData === undefined) {
       return cellData;
     }
@@ -79,12 +71,16 @@ export default React.createClass({
     return <Formatter.IpFormatter item={ cellData }/>
   },
 
-  renderUsers(cellData, cellDataKey, rowData) {
+  _renderUsers(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
     }
 
     return <Formatter.UserFormatter user={ cellData } directory={ rowData.path }/>
+  },
+
+  _rowClassNameGetter(rowData) {
+    return DupeStyle(rowData.dupe);
   },
 
   render() {
@@ -96,6 +92,7 @@ export default React.createClass({
           </div>
         </div>
         <VirtualTable
+          rowClassNameGetter={ this._rowClassNameGetter }
         	defaultSortProperty="relevancy"
           store={ SearchStore }
           defaultSortAscending={false}>
@@ -103,7 +100,7 @@ export default React.createClass({
             label="Name"
             width={270}
             dataKey="name"
-            cellRenderer={ this.renderName }
+            cellRenderer={ this._renderName }
             flexGrow={5}
           />
           <Column
@@ -128,14 +125,14 @@ export default React.createClass({
             label="Type"
             width={100}
             dataKey="type"
-            cellRenderer={ this.renderStr }
+            cellRenderer={ this._renderStr }
           />
           <Column
             label="Users"
             width={150}
             dataKey="users"
             flexGrow={3}
-            cellRenderer={ this.renderUsers }
+            cellRenderer={ this._renderUsers }
           />
           <Column
             label="Date"
@@ -147,13 +144,13 @@ export default React.createClass({
             label="Slots"
             width={70}
             dataKey="slots"
-            cellRenderer={ this.renderStr }
+            cellRenderer={ this._renderStr }
           />
           <Column
             label="IP"
             width={70}
             dataKey="ip"
-            cellRenderer={ this.renderIp }
+            cellRenderer={ this._renderIp }
             flexGrow={3}
           />
         </VirtualTable>

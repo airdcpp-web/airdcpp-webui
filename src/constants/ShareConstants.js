@@ -2,6 +2,7 @@ var SHARE_MODULE_URL = 'share/v0';
 export default {
   SHARE_MODULE_URL: SHARE_MODULE_URL,
   PROFILES_GET_URL: SHARE_MODULE_URL + '/profiles',
+  ROOTS_GET_URL: SHARE_MODULE_URL + '/roots',
 
   HIDDEN_PROFILE_ID: 1
 }

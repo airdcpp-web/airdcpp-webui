@@ -39,9 +39,6 @@ var routeConfig = [
   }
 ]
 
-var tmp = History;
-var tmp2 = Router.BrowserHistory;
-
 React.render(
   <Router history={ History } routes={routeConfig} />,
   document.getElementById('content')
