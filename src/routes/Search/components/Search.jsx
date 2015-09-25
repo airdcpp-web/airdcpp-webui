@@ -4,7 +4,7 @@ import VirtualTable from '../../../components/table/VirtualTable'
 import SocketService from '../../../services/SocketService'
 import SearchActions from '../../../actions/SearchActions'
 
-import { DupeEnum, DupeStyle } from '../../../constants/DupeConstants'
+import { DupeEnum, DupeName } from '../../../constants/DupeConstants'
 import { HistoryEnum } from '../../../constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from '../../../constants/SearchConstants'
 
@@ -60,7 +60,7 @@ export default React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
-    return <Formatter.DownloadMenu caption={ formatter } id={ rowData.id } handler={ SearchActions.download }/>
+    return <Formatter.DownloadMenu caption={ formatter } id={ rowData.id } itemInfo={ rowData } handler={ SearchActions.download }/>
   },
 
   _renderIp(cellData) {
@@ -80,7 +80,7 @@ export default React.createClass({
   },
 
   _rowClassNameGetter(rowData) {
-    return DupeStyle(rowData.dupe);
+    return DupeName(rowData.dupe);
   },
 
   render() {

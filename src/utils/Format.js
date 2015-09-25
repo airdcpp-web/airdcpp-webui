@@ -187,10 +187,11 @@ module.exports = {
       },
 
       render: function() {
-        const { handler, id } = this.props;
+        const { handler, id, itemInfo } = this.props;
         const data = {
           id: id,
-          handler: handler
+          handler: handler,
+          itemInfo: itemInfo
         }
 
         return <ActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data }/>;

@@ -1,6 +1,9 @@
 const QUEUE_MODULE_URL = 'queue/v0';
 export default {
   QUEUE_MODULE_URL: QUEUE_MODULE_URL,
+
+  QUEUE_DUPE_PATHS_URL: QUEUE_MODULE_URL + '/find_dupe_paths',
+
   BUNDLES_URL: QUEUE_MODULE_URL + '/bundles',
   BUNDLE_URL: QUEUE_MODULE_URL + '/bundle',
 

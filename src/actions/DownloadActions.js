@@ -24,7 +24,8 @@ DownloadActions.download.listen(function(data) {
 DownloadActions.downloadTo.listen(function(data, parentRoute) {
     History.pushState({ 
       modal: true,
-      downloadHandler: path => data.handler(data.id, path)
+      downloadHandler: data => data.handler(data.id, data),
+      itemInfo:data.itemInfo
     }, '/search/download');
 });
 

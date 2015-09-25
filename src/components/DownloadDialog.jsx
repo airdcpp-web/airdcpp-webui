@@ -1,7 +1,10 @@
 import React from 'react';
 import Modal from './semantic/Modal'
 
-import { ROOTS_GET_URL } from '../constants/ShareConstants'
+import { DupeEnum, DupeName } from '../constants/DupeConstants'
+import { PriorityEnum } from '../constants/QueueConstants'
+import { QUEUE_DUPE_PATHS_URL } from '../constants/QueueConstants'
+import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from '../constants/ShareConstants'
 import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL, HistoryEnum } from '../constants/HistoryConstants.js'
 import { FAVORITE_DIRECTORIES_URL } from '../constants/FavoriteDirectoryConstants.js'
 
@@ -24,12 +27,13 @@ const MenuItem = React.createClass({
 
 const PathItem = React.createClass({
   render: function() {
+    const { path } = this.props;
     return (
       <div className="item">
         <i className="yellow folder icon"></i>
         <div className="content">
-          <a key={this.props.path} onClick={path => this.props.downloadHandler(path)}>
-            {this.props.path}
+          <a key={path} onClick={evt => this.props.downloadHandler(path)}>
+            {path}
           </a>
         </div>
       </div>
@@ -119,8 +123,18 @@ export default React.createClass({
     }
   },
 
-  fetchPaths(path, stateId) {
-    SocketService.get(path).then(data => this.setState({ [stateId]: data })).catch(error => console.error("Failed to fetch paths", path));
+  fetchPaths(requestPath, stateId) {
+    SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error("Failed to fetch paths", requestPath, error.message));
+  },
+
+  fetchDupePaths(requestPath) {
+    const data = {
+      path: this.props.location.state.itemInfo.path
+    };
+
+    SocketService.post(requestPath, data).then(data => this.setState({ 
+      dupe_paths: this.state.dupe_paths.concat(data)
+    })).catch(error => console.error("Failed to fetch dupe paths", requestPath, error.message));
   },
 
   componentDidMount() {
@@ -128,12 +142,26 @@ export default React.createClass({
     this.fetchPaths(FAVORITE_DIRECTORIES_URL, "favorite_paths");
     this.fetchPaths(HISTORY_ITEMS_URL + "/" + HistoryEnum.HISTORY_DOWNLOAD_DIR, "history_paths");
 
+    const { itemInfo } = this.props.location.state;
+    const dupeName = DupeName(itemInfo.dupe);
+    if (dupeName.indexOf("queue") > -1) {
+      this.fetchDupePaths(QUEUE_DUPE_PATHS_URL);
+    }
+
+    if (dupeName.indexOf("share") > -1) {
+      this.fetchDupePaths(SHARE_DUPE_PATHS_URL);
+    }
+
     //SocketService.get(ROOTS_GET_URL).then(data => this.setState({ share_paths: data }));
     //SocketService.get(HISTORY_ITEMS_URL + "/" + HistoryEnum.HISTORY_DOWNLOAD_DIR).then(data => this.setState({ history_paths: data }));
   },
 
   handleDownload(path) {
-    this.props.location.state.downloadHandler(path);
+    this.props.location.state.downloadHandler({ 
+      target: path,
+      target_type: 0,
+      priority: PriorityEnum.DEFAULT
+    });
   },
 
   getComponent() {
@@ -181,7 +209,7 @@ export default React.createClass({
     }, this);
 
     return (
-      <Modal className="download-dialog" title="Download" closable={true} icon="green download" {...this.props}>
+      <Modal className="download-dialog long" title="Download" closable={true} icon="green download" {...this.props}>
         <div className="ui grid">
           <div className="four wide column">
             <div className="ui vertical fluid tabular menu">

@@ -8,7 +8,7 @@ export const DupeEnum = {
   SHARE_QUEUE: 6,
 }
 
-export const DupeStyle = val => {
+export const DupeName = val => {
   switch(val) {
     case DupeEnum.SHARE_PARTIAL: return 'dupe share partial';
     case DupeEnum.SHARE_FULL: return 'dupe share full';

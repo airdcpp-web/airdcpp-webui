@@ -26,6 +26,12 @@ export default React.createClass({
     }
   },
 
+  getDefaultProps() {
+    return {
+      autoFocus: true
+    }
+  },
+
   componentDidMount() {
     this._loadHistory();
   },
@@ -91,8 +97,8 @@ export default React.createClass({
   render() {
     const inputAttributes = {
       placeholder: 'Enter search string...',
-      onChange: this._handleChange
-      //onBlur: event => console.log('Input blurred. Event:', event),
+      onChange: this._handleChange,
+      autoFocus: this.props.autoFocus
     };
 
     const buttonClass = classNames(
@@ -105,6 +111,7 @@ export default React.createClass({
     return (
       <div className="ui fluid action input" onKeyDown={this._onKeyDown}>
         <Autosuggest 
+          ref='historyInput'
           value={this.state.text}
           showWhen={this._showWhen}
           suggestions={this._getSuggestions}

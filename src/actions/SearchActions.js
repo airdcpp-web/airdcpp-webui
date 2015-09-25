@@ -1,9 +1,9 @@
 'use strict';
 import Reflux from 'reflux';
-import {SEARCH_QUERY_URL} from '../constants/SearchConstants';
+import {SEARCH_QUERY_URL, SEARCH_RESULT_URL} from '../constants/SearchConstants';
 import SocketService from '../services/SocketService'
 
-export var SearchActions = Reflux.createActions([
+export const SearchActions = Reflux.createActions([
   { "postSearch": { asyncResult: true} },
   { "download": { 
   	asyncResult: true,  
@@ -13,7 +13,7 @@ export var SearchActions = Reflux.createActions([
 ]);
 
 SearchActions.postSearch.listen(function(pattern) {
-    var that = this;
+    let that = this;
     return SocketService.get(SEARCH_QUERY_URL, { 
 	    pattern: pattern
 	  })
@@ -21,13 +21,11 @@ SearchActions.postSearch.listen(function(pattern) {
       .catch(this.failed);
 });
 
-SearchActions.download.listen((resultId, target) => {
-    var that = this;
-    /*return SocketService.post(SEARCH_QUERY_URL, { 
-	    target: target
-	  })
+SearchActions.download.listen((resultId, data) => {
+    let that = this;
+    return SocketService.post(SEARCH_RESULT_URL + '/' + resultId + '/download', data)
       .then(that.completed)
-      .catch(this.failed);*/
+      .catch(this.failed);
 });
 
 export default SearchActions;

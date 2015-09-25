@@ -20,6 +20,11 @@ export default {
     }
   },
 
+  componentWillUnmount() {
+    // For cases where the socket connection was lost (modal would override the dimmer)
+    this.removeModal();
+  },
+
   componentDidUpdate() {
     if (this.node) {
       let children = React.cloneElement(this.props.children, { closeHandler: this.removeModal });
