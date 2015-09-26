@@ -1,11 +1,11 @@
 import Reflux from 'reflux';
 
-import {LOG_MODULE_URL, MAX_LOG_MESSAGES, LOG_MESSAGE} from '../constants/LogConstants';
+import {LOG_MODULE_URL, MAX_LOG_MESSAGES, LOG_MESSAGE} from 'constants/LogConstants';
 
 import SocketStore from './SocketStore'
-import SocketService from '../services/SocketService'
-import StorageMixin from '../mixins/StorageMixin'
-import { LogActions } from '../actions/LogActions'
+import SocketService from 'services/SocketService'
+import StorageMixin from 'mixins/StorageMixin'
+import { LogActions } from 'actions/LogActions'
 
 export default Reflux.createStore({
   listenables: LogActions,

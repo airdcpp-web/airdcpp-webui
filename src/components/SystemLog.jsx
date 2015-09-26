@@ -1,6 +1,6 @@
 import React from 'react';
-import Format from '../utils/Format.js'
-import LogActions from '../actions/LogActions'
+import Format from 'utils/Format.js'
+import LogActions from 'actions/LogActions'
 import { Icon, Header, Grid, Row, Column } from 'react-semantify'
 
 const LogMessage = React.createClass({

@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import SocketStore from '../stores/SocketStore'
+import SocketStore from 'stores/SocketStore'
 
 export default {
 	init() {

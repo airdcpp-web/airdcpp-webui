@@ -1,6 +1,6 @@
-import SocketActions from '../actions/SocketActions';
-import SocketStore from '../stores/SocketStore.js';
-import ApiSocket from '../utils/ApiSocket';
+import SocketActions from 'actions/SocketActions';
+import SocketStore from 'stores/SocketStore.js';
+import ApiSocket from 'utils/ApiSocket';
 
 class SocketService {
 

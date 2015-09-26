@@ -1,7 +1,7 @@
 'use strict';
 import Reflux from 'reflux';
-import {LOG_GET_URL, MAX_LOG_MESSAGES} from '../constants/LogConstants';
-import SocketService from '../services/SocketService'
+import {LOG_GET_URL, MAX_LOG_MESSAGES} from 'constants/LogConstants';
+import SocketService from 'services/SocketService'
 
 export const LogActions = Reflux.createActions([
   { "fetchLastMessages": { asyncResult: true} },

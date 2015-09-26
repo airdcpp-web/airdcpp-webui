@@ -1,7 +1,7 @@
 import React, { findDOMNode } from 'react';
 import Reflux from 'reflux';
-import LoginActions from '../actions/LoginActions'
-import LoginStore from '../stores/LoginStore'
+import LoginActions from 'actions/LoginActions'
+import LoginStore from 'stores/LoginStore'
 
 import { Icon, Message, Content } from 'react-semantify'
 import { History } from 'react-router';

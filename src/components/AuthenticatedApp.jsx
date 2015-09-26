@@ -1,12 +1,12 @@
 'use strict';
 
 import React from 'react';
-import LoginStore from '../stores/LoginStore'
+import LoginStore from 'stores/LoginStore'
 import Reflux from 'reflux';
 import Footer from './Footer'
 import NavigationPanel from './Navigation'
-import SocketService from '../services/SocketService'
-import LoginActions from '../actions/LoginActions'
+import SocketService from 'services/SocketService'
+import LoginActions from 'actions/LoginActions'
 import { History } from 'react-router';
 import { Dimmer, Loader } from 'react-semantify'
 

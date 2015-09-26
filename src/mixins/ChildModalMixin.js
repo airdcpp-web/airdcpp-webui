@@ -22,7 +22,9 @@ export default {
 
   componentWillUnmount() {
     // For cases where the socket connection was lost (modal would override the dimmer)
-    this.removeModal();
+    if (this.node) {
+      this.removeModal();
+    }
   },
 
   componentDidUpdate() {

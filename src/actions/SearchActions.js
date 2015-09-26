@@ -1,7 +1,7 @@
 'use strict';
 import Reflux from 'reflux';
-import {SEARCH_QUERY_URL, SEARCH_RESULT_URL} from '../constants/SearchConstants';
-import SocketService from '../services/SocketService'
+import {SEARCH_QUERY_URL, SEARCH_RESULT_URL} from 'constants/SearchConstants';
+import SocketService from 'services/SocketService'
 
 export const SearchActions = Reflux.createActions([
   { "postSearch": { asyncResult: true} },

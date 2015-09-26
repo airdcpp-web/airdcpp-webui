@@ -1,5 +1,5 @@
-import {FAVORITE_HUB_MODULE_URL} from '../constants/FavoriteHubConstants';
-import ViewStoreMixin from '../mixins/ViewStoreMixin'
+import {FAVORITE_HUB_MODULE_URL} from 'constants/FavoriteHubConstants';
+import ViewStoreMixin from 'mixins/ViewStoreMixin'
 import Reflux from 'reflux';
 
 export default Reflux.createStore({

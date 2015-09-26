@@ -1,5 +1,5 @@
-import LoginStore from '../stores/LoginStore';
-import SocketActions from '../actions/SocketActions';
+import LoginStore from 'stores/LoginStore';
+import SocketActions from 'actions/SocketActions';
 
 import BlueBird from 'bluebird';
 

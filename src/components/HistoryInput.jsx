@@ -1,6 +1,6 @@
 import React from 'react';
-import SocketService from '../services/SocketService.js'
-import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from '../constants/HistoryConstants.js'
+import SocketService from 'services/SocketService.js'
+import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from 'constants/HistoryConstants.js'
 import Autosuggest from 'react-autosuggest'
 import classNames from 'classnames';
 

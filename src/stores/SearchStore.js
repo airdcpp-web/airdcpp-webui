@@ -1,4 +1,4 @@
-import ViewStoreMixin from '../mixins/ViewStoreMixin'
+import ViewStoreMixin from 'mixins/ViewStoreMixin'
 import Reflux from 'reflux';
 
 export default Reflux.createStore({

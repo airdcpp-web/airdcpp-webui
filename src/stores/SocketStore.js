@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
-import {SOCKET_DISCONNECTED, SOCKET_CONNECTING, SOCKET_CONNECTED, SOCKET_MESSAGE} from '../constants/SocketConstants';
-import SocketActions from '../actions/SocketActions';
-import SocketService from '../services/SocketService';
+import {SOCKET_DISCONNECTED, SOCKET_CONNECTING, SOCKET_CONNECTED, SOCKET_MESSAGE} from 'constants/SocketConstants';
+import SocketActions from 'actions/SocketActions';
+import SocketService from 'services/SocketService';
 import { EventEmitter } from 'events';
 
 export default Reflux.createStore({

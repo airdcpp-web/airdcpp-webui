@@ -1,8 +1,8 @@
 'use strict';
 import Reflux from 'reflux';
-import SocketService from '../services/SocketService'
-import SocketStore from '../stores/SocketStore'
-import {LOGIN_URL, CONNECT_URL, LOGOUT_URL} from '../constants/LoginConstants';
+import SocketService from 'services/SocketService'
+import SocketStore from 'stores/SocketStore'
+import {LOGIN_URL, CONNECT_URL, LOGOUT_URL} from 'constants/LoginConstants';
 
 export const LoginActions = Reflux.createActions([
   { "login": { asyncResult: true} },

@@ -2,9 +2,9 @@ import React from 'react';
 import Moment from 'moment';
 import { Icon, Flag } from 'react-semantify'
 
-import ActionMenu from '../components/ActionMenu'
-import UserActions from '../actions/UserActions'
-import DownloadActions from '../actions/DownloadActions'
+import ActionMenu from 'components/ActionMenu'
+import UserActions from 'actions/UserActions'
+import DownloadActions from 'actions/DownloadActions'
 
 module.exports = {
   formatSize: function(fileSizeInBytes) {

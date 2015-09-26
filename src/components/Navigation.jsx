@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import LoginActions from '../actions/LoginActions'
+import LoginActions from 'actions/LoginActions'
 import { Link } from 'react-router';
 
 export default class Navigation extends React.Component {

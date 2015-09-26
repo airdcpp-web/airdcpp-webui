@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import SocketService from '../services/SocketService'
+import SocketService from 'services/SocketService'
 
 const TableActions = Reflux.createActions([
 	{ "changeSettings": { asyncResult: true} },

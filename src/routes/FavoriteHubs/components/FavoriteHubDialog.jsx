@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../../components/semantic/Modal'
-import { PROFILES_GET_URL, HIDDEN_PROFILE_ID } from '../../../constants/ShareConstants'
-import { FAVORITE_HUB_URL } from '../../../constants/FavoriteHubConstants'
-import SocketService from '../../../services/SocketService'
+import Modal from 'components/semantic/Modal'
+import { PROFILES_GET_URL, HIDDEN_PROFILE_ID } from 'constants/ShareConstants'
+import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants'
+import SocketService from 'services/SocketService'
 import { RouteContext } from 'react-router'
 
 import BlueBird from 'bluebird';

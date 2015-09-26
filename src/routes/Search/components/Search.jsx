@@ -1,20 +1,20 @@
 import React from 'react';
-import SearchStore from '../../../stores/SearchStore';
-import VirtualTable from '../../../components/table/VirtualTable'
-import SocketService from '../../../services/SocketService'
-import SearchActions from '../../../actions/SearchActions'
+import SearchStore from 'stores/SearchStore';
+import VirtualTable from 'components/table/VirtualTable'
+import SocketService from 'services/SocketService'
+import SearchActions from 'actions/SearchActions'
 
-import { DupeEnum, DupeName } from '../../../constants/DupeConstants'
-import { HistoryEnum } from '../../../constants/HistoryConstants'
-import { SEARCH_QUERY_URL } from '../../../constants/SearchConstants'
+import { DupeEnum, DupeName } from 'constants/DupeConstants'
+import { HistoryEnum } from 'constants/HistoryConstants'
+import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
 
-import HistoryInput from '../../../components/HistoryInput'
-import ChildModalMixin from '../../../mixins/ChildModalMixin'
+import HistoryInput from 'components/HistoryInput'
+import ChildModalMixin from 'mixins/ChildModalMixin'
 
 import classNames from 'classnames';
 import { Column } from 'fixed-data-table';
 
-import Formatter from '../../../utils/Format';
+import Formatter from 'utils/Format';
 
 const SEARCH_PERIOD = 4000;
 

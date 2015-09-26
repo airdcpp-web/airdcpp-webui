@@ -1,7 +1,7 @@
 'use strict';
 import Reflux from 'reflux';
-import {FILELIST_URL} from '../constants/QueueConstants';
-import SocketService from '../services/SocketService'
+import {FILELIST_URL} from 'constants/QueueConstants';
+import SocketService from 'services/SocketService'
 
 export const UserActions = Reflux.createActions([
    { "message": { 

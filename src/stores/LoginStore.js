@@ -1,9 +1,9 @@
 import Reflux from 'reflux';
 
-import StorageMixin from '../mixins/StorageMixin'
+import StorageMixin from 'mixins/StorageMixin'
 
-import LoginActions from '../actions/LoginActions'
-import SocketActions from '../actions/SocketActions'
+import LoginActions from 'actions/LoginActions'
+import SocketActions from 'actions/SocketActions'
 
 
 export default Reflux.createStore({

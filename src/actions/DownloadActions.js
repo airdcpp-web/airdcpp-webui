@@ -1,8 +1,8 @@
 'use strict';
 import Reflux from 'reflux';
-//import SocketService from '../services/SocketService'
+//import SocketService from 'services/SocketService'
 
-import History from '../utils/History'
+import History from 'utils/History'
 
 export const DownloadActions = Reflux.createActions([
   { "download": { 

@@ -1,9 +1,9 @@
 'use strict';
 import Reflux from 'reflux';
-import {BUNDLE_URL, StatusEnum} from '../constants/QueueConstants';
-import SocketService from '../services/SocketService'
+import {BUNDLE_URL, StatusEnum} from 'constants/QueueConstants';
+import SocketService from 'services/SocketService'
 
-import ConfirmDialog from '../components/semantic/ConfirmDialog'
+import ConfirmDialog from 'components/semantic/ConfirmDialog'
 
 export const QueueActions = Reflux.createActions([
   { "searchBundle": { asyncResult: true, displayName: "Search for alternates", icon: "search" } },

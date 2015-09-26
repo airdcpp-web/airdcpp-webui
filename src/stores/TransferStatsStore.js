@@ -1,9 +1,9 @@
 import Reflux from 'reflux';
 
-import {TRANSFER_MODULE_URL, STATISTICS} from '../constants/TransferConstants';
+import {TRANSFER_MODULE_URL, STATISTICS} from 'constants/TransferConstants';
 
 import SocketStore from './SocketStore'
-import StorageMixin from '../mixins/StorageMixin'
+import StorageMixin from 'mixins/StorageMixin'
 
 export default Reflux.createStore({
   mixins: [StorageMixin],

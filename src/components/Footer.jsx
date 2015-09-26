@@ -1,16 +1,16 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import TransferStatsStore from '../stores/TransferStatsStore'
-import LogStore from '../stores/LogStore'
+import TransferStatsStore from 'stores/TransferStatsStore'
+import LogStore from 'stores/LogStore'
 
-import LogActions from '../actions/LogActions';
+import LogActions from 'actions/LogActions';
 import SystemLog from './SystemLog'
 
-import Format from '../utils/Format.js'
+import Format from 'utils/Format.js'
 import { Button, Icon } from 'react-semantify'
 import Popup from './semantic/Popup'
-import StoreLoaderMixin from '../mixins/StoreLoaderMixin';
+import StoreLoaderMixin from 'mixins/StoreLoaderMixin';
 
 
 const SpeedDisplay = React.createClass({

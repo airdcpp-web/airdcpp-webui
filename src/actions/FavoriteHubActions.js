@@ -1,10 +1,10 @@
 'use strict';
 import Reflux from 'reflux';
-import {FAVORITE_HUB_URL} from '../constants/FavoriteHubConstants';
-import SocketService from '../services/SocketService'
-import ConfirmDialog from '../components/semantic/ConfirmDialog'
+import {FAVORITE_HUB_URL} from 'constants/FavoriteHubConstants';
+import SocketService from 'services/SocketService'
+import ConfirmDialog from 'components/semantic/ConfirmDialog'
 
-import History from '../utils/History'
+import History from 'utils/History'
 
 export const FavoriteHubActions = Reflux.createActions([
   { "connect": { 

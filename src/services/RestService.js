@@ -1,4 +1,4 @@
-import LoginStore from '../stores/LoginStore';
+import LoginStore from 'stores/LoginStore';
 
 var request = require('superagent');
 

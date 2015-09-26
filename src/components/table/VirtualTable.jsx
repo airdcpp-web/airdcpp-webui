@@ -4,9 +4,9 @@ import FixedDataTable, { Table, Column } from 'fixed-data-table'
 import SetContainerSize from './SetContainerSize'
 import TouchScrollArea  from './TouchScrollArea';
 
-import SocketService from '../../services/SocketService'
-import SocketStore from '../../stores/SocketStore'
-import TableActions from '../../actions/TableActions'
+import SocketService from 'services/SocketService'
+import SocketStore from 'stores/SocketStore'
+import TableActions from 'actions/TableActions'
 
 import { Input } from 'react-semantify'
 import _ from 'lodash';

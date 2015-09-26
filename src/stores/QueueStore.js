@@ -1,5 +1,5 @@
-import {QUEUE_MODULE_URL} from '../constants/QueueConstants';
-import ViewStoreMixin from '../mixins/ViewStoreMixin'
+import {QUEUE_MODULE_URL} from 'constants/QueueConstants';
+import ViewStoreMixin from 'mixins/ViewStoreMixin'
 import Reflux from 'reflux';
 
 export default Reflux.createStore({

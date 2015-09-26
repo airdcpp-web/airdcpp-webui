@@ -1,14 +1,14 @@
 import React from 'react';
 import Modal from './semantic/Modal'
 
-import { DupeEnum, DupeName } from '../constants/DupeConstants'
-import { PriorityEnum } from '../constants/QueueConstants'
-import { QUEUE_DUPE_PATHS_URL } from '../constants/QueueConstants'
-import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from '../constants/ShareConstants'
-import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL, HistoryEnum } from '../constants/HistoryConstants.js'
-import { FAVORITE_DIRECTORIES_URL } from '../constants/FavoriteDirectoryConstants.js'
+import { DupeEnum, DupeName } from 'constants/DupeConstants'
+import { PriorityEnum } from 'constants/QueueConstants'
+import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants'
+import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants'
+import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js'
+import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js'
 
-import SocketService from '../services/SocketService'
+import SocketService from 'services/SocketService'
 import { RouteContext } from 'react-router'
 
 const MenuItem = React.createClass({
