@@ -1,0 +1,34 @@
+.table-footer {
+	width: 100%;
+	padding: 5px;
+	background-color: #f6f7f8;
+	background-image: -webkit-linear-gradient(#fff, #efefef);
+	background-image: linear-gradient(#fff, #efefef);
+	display:flex;
+	align-items: center;
+}
+
+.table-footer .filter {
+	margin-left: auto;
+}
+
+.fixedDataTableCellLayout_main .ui.checkbox {
+	display: flex;
+	justify-content: center;
+}
+
+.public_fixedDataTable_bodyRow.dupe.queue, .public_fixedDataTable_bodyRow.dupe.queue span {
+	color: orange;
+}
+
+.public_fixedDataTable_bodyRow.dupe.share, .public_fixedDataTable_bodyRow.dupe.share span {
+	color: deeppink;
+}
+
+.public_fixedDataTable_bodyRow a i:hover {
+	cursor:pointer;
+}
+
+.fixedDataTableLayout_main {
+	background-color: rgba(255, 255, 255, 0.8);
+}

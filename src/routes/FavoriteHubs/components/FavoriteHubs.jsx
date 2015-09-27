@@ -15,6 +15,8 @@ import classNames from 'classnames';
 import Formatter from 'utils/Format.js';
 import Checkbox from 'components/semantic/Checkbox'
 
+import '../style.css'
+
 import { Icon, Button } from 'react-semantify'
 
 const ConnectState = React.createClass({

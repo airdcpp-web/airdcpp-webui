@@ -11,7 +11,8 @@ export default {
     if ((
       !this.node &&
       nextProps.location.state &&
-      nextProps.location.state.modal
+      nextProps.location.state.modal &&
+      nextProps.location.pathname !== this.props.location.pathname // Hmm..
     )) {
       this.returnTo = this.props.location.pathname;
 

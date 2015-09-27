@@ -32,7 +32,7 @@ const PathItem = React.createClass({
       <div className="item">
         <i className="yellow folder icon"></i>
         <div className="content">
-          <a key={path} onClick={evt => this.props.downloadHandler(path)}>
+          <a onClick={evt => this.props.downloadHandler(path)}>
             {path}
           </a>
         </div>
@@ -56,7 +56,7 @@ const PathList = React.createClass({
 
   render: function() {
     const pathItems = this.props.paths.map(path => {
-      return <PathItem path={path} downloadHandler={ this.props.downloadHandler }/>
+      return <PathItem key={path} path={path} downloadHandler={ this.props.downloadHandler }/>
     }, this);
 
     return (

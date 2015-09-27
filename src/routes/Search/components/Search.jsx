@@ -16,6 +16,8 @@ import { Column } from 'fixed-data-table';
 
 import Formatter from 'utils/Format';
 
+import '../style.css'
+
 const SEARCH_PERIOD = 4000;
 
 export default React.createClass({

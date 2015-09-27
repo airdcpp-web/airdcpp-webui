@@ -1,7 +1,9 @@
 var React = require('react');
 
-var ZyngaScroller = require('./ZyngaScroller.jsx');
+var Scroller = require('./ZyngaScroller.jsx');
 var TouchableArea = require('./TouchableArea.jsx');
+
+//var Scroller = require('imports?global=>{}!exports?global.Scroller!zynga/Scroller.js');
 
 var PropTypes = React.PropTypes;
 
@@ -16,7 +18,7 @@ function isTouchDevice() {
 var ScrollArea = React.createClass({
 
   componentWillMount : function() {
-    this.scroller = new ZyngaScroller(isTouchDevice() ? this._handleScroll : this._doNothing);
+    this.scroller = new Scroller(isTouchDevice() ? this._handleScroll : this._doNothing);
     this._scrollTimer = null;
   },
 

@@ -9,7 +9,9 @@ import SocketStore from 'stores/SocketStore'
 import TableActions from 'actions/TableActions'
 
 import { Input } from 'react-semantify'
-import _ from 'lodash';
+
+import './style.css'
+import '../../../node_modules/fixed-data-table/dist/fixed-data-table.css'
 
 const NUMBER_OF_ROWS_PER_REQUEST = 10;
 const TABLE_ROW_HEIGHT = 50;

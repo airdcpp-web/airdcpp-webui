@@ -1,6 +1,37 @@
 var path = require('path');
 var webpack = require('webpack');
 
+const release = (process.env.NODE_ENV === 'production');
+
+var plugins = [
+	new webpack.ProvidePlugin({
+		$: "jquery",
+		jQuery: "jquery",
+		"window.jQuery": "jquery",
+	}),
+];
+
+var releasePlugin = [
+  new webpack.DefinePlugin({
+    "process.env": {
+      "NODE_ENV": JSON.stringify("production"),
+    },
+  }),
+  
+  new webpack.optimize.UglifyJsPlugin({
+		compress: {
+			warnings: false
+		}
+  }),
+  
+  new webpack.optimize.OccurenceOrderPlugin(),
+  new webpack.optimize.DedupePlugin(),
+]
+
+if (release)  {
+  plugins = plugins.concat(releasePlugins);
+}
+
 module.exports = {
   entry: "./src/app.jsx",
 
@@ -11,6 +42,7 @@ module.exports = {
     publicPath: '/build/'
   },
 
+  devtool: !release && "inline-source-map",
   module: {
     loaders: [
       { 
@@ -19,9 +51,23 @@ module.exports = {
 		  loader: 'babel'
 	  }, {
 		  test: /\.css$/,
-		  include: /src/, 
-		  loader: "style!css" 
-	  }
+		  include: [
+		    path.resolve(__dirname, "src"),
+		    path.resolve(__dirname, "node_modules/semantic-ui/dist"),
+			path.resolve(__dirname, "node_modules/fixed-data-table/dist")
+		  ],
+		  loader: 'style-loader!css-loader' 
+	  }, {
+		  test: /\.jpg$/, 
+		  loader: 'file-loader'
+	  }, {
+		  test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+		  include: [
+		    path.resolve(__dirname, "src"),
+		    path.resolve(__dirname, "node_modules/semantic-ui/dist")
+		  ],
+		  loader: 'url-loader?limit=100000'
+	  },
     ]
   },
 
@@ -32,26 +78,10 @@ module.exports = {
   resolve: {
 	extensions: ['', '.js', '.jsx'],
 	root: path.resolve('./src'),
+	alias: {
+		'semantic-ui' : path.join(__dirname, 'node_modules/semantic-ui/dist')
+	}
   },
 
-  plugins: [
-    //new webpack.optimize.CommonsChunkPlugin('shared.js'),
-    new webpack.optimize.OccurenceOrderPlugin(),
-	new webpack.optimize.DedupePlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-	new webpack.ProvidePlugin({
-		$: "jquery",
-		jQuery: "jquery",
-		"window.jQuery": "jquery",
-		//Scroller: "zynga/Scroller.js"
-	}),
-	/*new webpack.optimize.UglifyJsPlugin({
-		compress: {
-			warnings: false
-		}
-	})*/
-  ]
-
+  plugins: plugins
 };

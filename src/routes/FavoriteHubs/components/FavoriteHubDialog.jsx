@@ -7,11 +7,8 @@ import { RouteContext } from 'react-router'
 
 import BlueBird from 'bluebird';
 
-import t from 'tcomb-form';
+import t from 'utils/tcomb-form';
 import _ from 'lodash';
-
-var semantic = require('tcomb-form/lib/templates/semantic');
-t.form.Form.templates = semantic;
 
 const Form = t.form.Form;
 const Entry = t.struct({

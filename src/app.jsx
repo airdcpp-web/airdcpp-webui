@@ -4,34 +4,8 @@ import LoginStore from './stores/LoginStore'
 import LoginActions from './actions/LoginActions'
 import History from './utils/History'
 
-//import $ from 'jquery'
-//window.$ = window.jQuery = require('jquery')
-//var $ = jQuery = require('jQuery')
-
-//require('semantic-ui')($)
-
-/*let $ = require('jquery');
-$.fn.accordion = require('semantic-ui/dist/components/accordion')
-$.fn.checkbox = require('semantic-ui/dist/components/checkbox')
-$.fn.dimmer = require('semantic-ui/dist/components/dimmer')
-$.fn.dropdown = require('semantic-ui/dist/components/dropdown')
-$.fn.modal = require('semantic-ui/dist/components/modal')
-$.fn.popup = require('semantic-ui/dist/components/popup')
-$.fn.transition = require('semantic-ui/dist/components/transition')*/
-
-import SemanticAccordion from 'semantic-ui/dist/components/accordion'
-import SemanticCheckbox from 'semantic-ui/dist/components/checkbox'
-import SemanticDimmer from 'semantic-ui/dist/components/dimmer'
-import SemanticDropdown from 'semantic-ui/dist/components/dropdown'
-import SemanticModal from 'semantic-ui/dist/components/modal'
-import SemanticPopup from 'semantic-ui/dist/components/popup'
-import SemanticTransition from 'semantic-ui/dist/components/transition'
-
-// load tcomb-form without templates and i18n
-var t = require('tcomb-form/lib');
-
-var semantic = require('tcomb-form/lib/templates/semantic');
-t.form.Form.templates = semantic;
+import semantic from './utils/semantic'
+import 'style.css'
 
 React.initializeTouchEvents(true);
 
