@@ -6,7 +6,7 @@ import FavoriteHubStore from 'stores/FavoriteHubStore.js';
 
 import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService.js'
-import ActionMenu from 'components/ActionMenu'
+import { ActionMenu } from 'components/Menu'
 
 import ChildModalMixin from 'mixins/ChildModalMixin'
 

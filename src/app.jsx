@@ -20,22 +20,24 @@ function requireAuth(nextState, replaceState) {
 }
 
 var routeConfig = [
-  { 
-  	path: '/login', 
-  	component: require('./components/Login'), 
-  }, 
-  { 
-    component: require('./components/AuthenticatedApp'),
-    onEnter: requireAuth,
-    childRoutes: [
-      require('./routes/Home'),
-      require('./routes/FavoriteHubs'),
-      require('./routes/Queue'),
-      require('./routes/Search'),
-    ]
-  }
+    { 
+    	path: 'login', 
+    	component: require('./components/Login'), 
+    }, 
+    { 
+      component: require('./components/AuthenticatedApp'),
+      path: '/',
+      onEnter: requireAuth,
+      childRoutes: [
+        require('./routes/Home'),
+        require('./routes/FavoriteHubs'),
+        require('./routes/Queue'),
+        require('./routes/Search'),
+      ]
+    }
 ]
 
+var tmp = History;
 React.render(
   <Router history={ History } routes={routeConfig} />,
   document.getElementById('content')

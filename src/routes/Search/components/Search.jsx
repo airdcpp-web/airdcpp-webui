@@ -16,6 +16,8 @@ import { Column } from 'fixed-data-table';
 
 import Formatter from 'utils/Format';
 
+import { DownloadMenu, UserMenu } from 'components/Menu'
+
 import '../style.css'
 
 const SEARCH_PERIOD = 4000;
@@ -62,7 +64,7 @@ export default React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
-    return <Formatter.DownloadMenu caption={ formatter } id={ rowData.id } itemInfo={ rowData } handler={ SearchActions.download }/>
+    return <DownloadMenu caption={ formatter } id={ rowData.id } itemInfo={ rowData } handler={ SearchActions.download }/>
   },
 
   _renderIp(cellData) {
@@ -78,7 +80,7 @@ export default React.createClass({
       return cellData;
     }
 
-    return <Formatter.UserFormatter user={ cellData } directory={ rowData.path }/>
+    return <UserMenu user={ cellData } directory={ rowData.path }/>
   },
 
   _rowClassNameGetter(rowData) {

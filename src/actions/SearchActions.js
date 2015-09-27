@@ -22,10 +22,9 @@ SearchActions.postSearch.listen(function(pattern) {
 });
 
 SearchActions.download.listen((resultId, data) => {
-    let that = this;
     return SocketService.post(SEARCH_RESULT_URL + '/' + resultId + '/download', data)
-      .then(that.completed)
-      .catch(this.failed);
+      .then(SearchActions.download.completed)
+      .catch(SearchActions.download.failed);
 });
 
 export default SearchActions;

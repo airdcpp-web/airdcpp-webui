@@ -22,7 +22,7 @@
  * rendering. This eases a lot of cases where it might be pretty complex to break down a state
  * based on the pure time difference.
  */
-(function(global) {
+(function() {
 	var time = Date.now || function() {
 		return +new Date();
 	};
@@ -32,13 +32,7 @@
 	var counter = 1;
 
 	// Create namespaces
-	if (!global.core) {
-		global.core = { effect : {} };
-
-	} else if (!core.effect) {
-		core.effect = {};
-	}
-
+	var core = module.exports = { effect : {} };
 	core.effect.Animate = {
 
 		/**

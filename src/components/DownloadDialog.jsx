@@ -55,10 +55,6 @@ const PathList = React.createClass({
   },
 
   render: function() {
-    const pathItems = this.props.paths.map(path => {
-      return <PathItem key={path} path={path} downloadHandler={ this.props.downloadHandler }/>
-    }, this);
-
     return (
       <div className="ui relaxed list">
         { this.props.paths.map(path => <PathItem path={path} downloadHandler={ this.props.downloadHandler }/>) }
@@ -151,9 +147,6 @@ export default React.createClass({
     if (dupeName.indexOf("share") > -1) {
       this.fetchDupePaths(SHARE_DUPE_PATHS_URL);
     }
-
-    //SocketService.get(ROOTS_GET_URL).then(data => this.setState({ share_paths: data }));
-    //SocketService.get(HISTORY_ITEMS_URL + "/" + HistoryEnum.HISTORY_DOWNLOAD_DIR).then(data => this.setState({ history_paths: data }));
   },
 
   handleDownload(path) {

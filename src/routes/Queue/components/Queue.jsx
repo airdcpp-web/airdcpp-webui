@@ -3,7 +3,7 @@ import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 
 import { PriorityEnum, StatusEnum } from 'constants/QueueConstants';
-import ActionMenu from 'components/ActionMenu'
+import { ActionMenu } from 'components/Menu'
 import QueueStore from 'stores/QueueStore';
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable'

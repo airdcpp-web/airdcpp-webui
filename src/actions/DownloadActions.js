@@ -21,11 +21,11 @@ DownloadActions.download.listen(function(data) {
     return data.handler(data.id);
 });
 
-DownloadActions.downloadTo.listen(function(data, parentRoute) {
+DownloadActions.downloadTo.listen(function(handlerData, parentRoute) {
     History.pushState({ 
       modal: true,
-      downloadHandler: data => data.handler(data.id, data),
-      itemInfo:data.itemInfo
+      downloadHandler: downloadData => handlerData.handler(handlerData.id, downloadData),
+      itemInfo:handlerData.itemInfo
     }, '/search/download');
 });
 

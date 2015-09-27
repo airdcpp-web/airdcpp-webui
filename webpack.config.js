@@ -11,11 +11,9 @@ var plugins = [
 	}),
 ];
 
-var releasePlugin = [
+var releasePlugins = [
   new webpack.DefinePlugin({
-    "process.env": {
-      "NODE_ENV": JSON.stringify("production"),
-    },
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   }),
   
   new webpack.optimize.UglifyJsPlugin({
@@ -32,14 +30,16 @@ if (release)  {
   plugins = plugins.concat(releasePlugins);
 }
 
+console.log("Release: " + release);
+
 module.exports = {
   entry: "./src/app.jsx",
 
   output: {
-    path: __dirname + '/build/',
+    path: path.resolve(__dirname, "build"),
     filename: '[name].entry.js',
     chunkFilename: '[name].chunk.js',
-    publicPath: '/build/'
+    publicPath: "/build/",
   },
 
   devtool: !release && "inline-source-map",
@@ -58,10 +58,10 @@ module.exports = {
 		  ],
 		  loader: 'style-loader!css-loader' 
 	  }, {
-		  test: /\.jpg$/, 
+		  test: /\.(jpg|png)$/, 
 		  loader: 'file-loader'
 	  }, {
-		  test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+		  test: /\.(woff|woff2|eot|ttf|svg)$/, 
 		  include: [
 		    path.resolve(__dirname, "src"),
 		    path.resolve(__dirname, "node_modules/semantic-ui/dist")

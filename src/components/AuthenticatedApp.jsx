@@ -33,12 +33,6 @@ const SocketConnectStatus = React.createClass({
   }
 });
 
-function onEnter(nextState, transition) {
-  if (!LoginStore.user) {
-      transition('/login', null, { nextPath: nextState.location.pathname });
-  }
-}
-
 export default React.createClass({
   mixins: [Reflux.connect(LoginStore), History],
 

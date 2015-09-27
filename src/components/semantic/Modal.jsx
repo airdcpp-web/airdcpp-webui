@@ -63,6 +63,8 @@ export default React.createClass({
       closable: this.props.closable,
       detachable: false,
       allowMultiple: false,
+      //debug:true,
+      //verbose:true,
       //observeChanges: true
     };
 
@@ -115,7 +117,7 @@ export default React.createClass({
             </div>
         </div>) : (
           <div className="actions">
-            <div className="ui close basic button">
+            <div className="ui button">
               <i className="remove icon"></i>
               Close
             </div>
