@@ -21,12 +21,14 @@ DownloadActions.download.listen(function(data) {
     return data.handler(data.id);
 });
 
-DownloadActions.downloadTo.listen(function(handlerData, parentRoute) {
+DownloadActions.downloadTo.listen(function(handlerData) {
+  const { pathname } = handlerData.location;
     History.pushState({ 
       modal: true,
       downloadHandler: downloadData => handlerData.handler(handlerData.id, downloadData),
-      itemInfo:handlerData.itemInfo
-    }, '/search/download');
+      itemInfo:handlerData.itemInfo,
+      returnTo: pathname
+    }, pathname + '/download');
 });
 
 export default DownloadActions;

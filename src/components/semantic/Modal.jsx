@@ -117,7 +117,7 @@ export default React.createClass({
             </div>
         </div>) : (
           <div className="actions">
-            <div className="ui button">
+            <div className="ui cancel button">
               <i className="remove icon"></i>
               Close
             </div>

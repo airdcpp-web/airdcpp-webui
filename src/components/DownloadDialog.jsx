@@ -155,6 +155,8 @@ export default React.createClass({
       target_type: 0,
       priority: PriorityEnum.DEFAULT
     });
+
+    this.refs.modal.hide();
   },
 
   getComponent() {
@@ -202,7 +204,7 @@ export default React.createClass({
     }, this);
 
     return (
-      <Modal className="download-dialog long" title="Download" closable={true} icon="green download" {...this.props}>
+      <Modal ref="modal" className="download-dialog long" title="Download" closable={true} icon="green download" {...this.props}>
         <div className="ui grid">
           <div className="four wide column">
             <div className="ui vertical fluid tabular menu">

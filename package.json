@@ -15,7 +15,7 @@
     "lint": "eslint src",
     "start": "node devServer.js",
     "build:webpack": "NODE_ENV=production webpack --progress",
-	"build": "npm run clean && npm run build:webpack",
+	"build": "npm run clean && npm run build:webpack"
   },
   "dependencies": {
     "bluebird": "^2.9.34",
@@ -26,8 +26,9 @@
     "normalize.css": "3.0.3",
     "moment": "^2.10.6",
     "react": "^0.13",
-	"react-autosuggest": "1.18.3",
+	"react-autosuggest": "^1.18.3",
     "react-mixin": "^1.1.0",
+	"react-notification-system": "^0.1.14",
     "react-router": "^1.0.0-rc1",
     "react-semantify": "^0.3.1",
     "reflux": "^0.2.12",

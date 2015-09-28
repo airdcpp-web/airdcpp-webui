@@ -101,15 +101,21 @@ export const DownloadMenu = React.createClass({
     /**
      * Function for handling the download
      */
-    handler: React.PropTypes.func.isRequired
+    handler: React.PropTypes.func.isRequired,
+
+    /**
+     * Location from component props
+     */
+    location: React.PropTypes.object.isRequired
   },
 
   render: function() {
-    const { handler, id, itemInfo } = this.props;
+    const { handler, id, itemInfo, location } = this.props;
     const data = {
       id: id,
       handler: handler,
-      itemInfo: itemInfo
+      itemInfo: itemInfo,
+      location: location
     }
 
     return <ActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data }/>;

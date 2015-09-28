@@ -64,7 +64,12 @@ export default React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
-    return <DownloadMenu caption={ formatter } id={ rowData.id } itemInfo={ rowData } handler={ SearchActions.download }/>
+    return <DownloadMenu 
+      caption={ formatter } 
+      id={ rowData.id } 
+      itemInfo={ rowData } 
+      handler={ SearchActions.download } 
+      location={ this.props.location }/>
   },
 
   _renderIp(cellData) {

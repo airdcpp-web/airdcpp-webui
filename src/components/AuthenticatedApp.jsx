@@ -7,6 +7,8 @@ import Footer from './Footer'
 import NavigationPanel from './Navigation'
 import SocketService from 'services/SocketService'
 import LoginActions from 'actions/LoginActions'
+import Notifications from './Notifications'
+
 import { History } from 'react-router';
 import { Dimmer, Loader } from 'react-semantify'
 
@@ -75,6 +77,7 @@ export default React.createClass({
     if (this.state.socketAuthenticated) {
       return (
         <div>
+          <Notifications/>
           <NavigationPanel/>
           <div className="ui container main" style={{ height: Math.max(300, this.state.viewport.height - 160) + 'px', paddingTop: '80px'}}>
            {this.props.children}

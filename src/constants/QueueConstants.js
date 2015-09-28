@@ -7,10 +7,10 @@ export default {
   BUNDLES_URL: QUEUE_MODULE_URL + '/bundles',
   BUNDLE_URL: QUEUE_MODULE_URL + '/bundle',
 
-  BUNDLE_ADDED: 'BUNDLE_ADDED',
-  BUNDLE_REMOVED: 'BUNDLE_REMOVED',
-  BUNDLE_UPDATED: 'BUNDLE_UPDATED',
-  BUNDLES_GET: 'BUNDLES_GET',
+  BUNDLE_ADDED: 'bundle_added',
+  BUNDLE_REMOVED: 'bundle_removed',
+  BUNDLE_UPDATED: 'bundle_updated',
+  BUNDLE_STATUS: 'bundle_status',
 
   FILELIST_URL: QUEUE_MODULE_URL + '/filelist',
 

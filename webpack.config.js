@@ -53,7 +53,7 @@ module.exports = {
     publicPath: "/build/",
   },
 
-  devtool: !release && "eval",
+  devtool: !release && "cheap-module-source-map",
   module: {
     loaders: [
       { 

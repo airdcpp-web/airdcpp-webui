@@ -6,6 +6,8 @@ import { History } from 'react-router'
 
 export default {
   mixins: [ History ],
+  
+  
   componentWillUnmount() {
     // For cases where the socket connection was lost (modal would override the dimmer)
     if (this.node) {
@@ -29,10 +31,6 @@ export default {
       this.props.location.state &&
       this.props.location.state.modal
     )) {
-      if (!this.returnTo) {
-        this.returnTo = this.props.location.pathname;
-      }
-
       this.node = document.createElement('div');
       document.body.appendChild(this.node);
 
@@ -44,9 +42,8 @@ export default {
   removeModal() {
 	  React.unmountComponentAtNode(this.node);
 	  document.body.removeChild(this.node);
-	  this.history.replaceState(null, this.returnTo);
+	  this.history.replaceState(null, this.props.location.state.returnTo);
 
     this.node = null;
-    this.returnTo = null;
   }
 };

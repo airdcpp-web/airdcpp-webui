@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import {FAVORITE_HUB_URL} from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService'
 import ConfirmDialog from 'components/semantic/ConfirmDialog'
+import NotificationActions from 'actions/NotificationActions'
 
 import History from 'utils/History'
 
@@ -52,11 +53,11 @@ FavoriteHubActions.disconnect.listen(function(hub) {
 });
 
 FavoriteHubActions.create.listen(function(hub, data) {
-	History.pushState({ modal: true }, '/favorite-hubs/new');
+	History.pushState({ modal: true, returnTo: '/favorite-hubs' }, '/favorite-hubs/new');
 });
 
 FavoriteHubActions.edit.listen(function(hub, data) {
-	History.pushState({ modal: true, hubEntry: hub }, '/favorite-hubs/edit');
+	History.pushState({ modal: true, hubEntry: hub, returnTo: '/favorite-hubs' }, '/favorite-hubs/edit');
 });
 
 FavoriteHubActions.update.listen(function(hub, data) {
@@ -68,15 +69,28 @@ FavoriteHubActions.update.listen(function(hub, data) {
 
 FavoriteHubActions.remove.shouldEmit = function(hub) {
   const text = "Are you sure that you want to remove the favorite hub " + hub.name + "?";
-  ConfirmDialog(this.displayName, text, this.icon, "Remove favorite hub", "Don't remove").then(() => this.confirmed(hub)).catch(() => "fasfasf");
+  ConfirmDialog(this.displayName, text, this.icon, "Remove favorite hub", "Don't remove")
+    .then(() => FavoriteHubActions.remove.confirmed(hub))
+    .catch(() => {});
   return false;
 };
 
 FavoriteHubActions.remove.confirmed.listen(function(hub) {
   let that = this;
   return SocketService.delete(FAVORITE_HUB_URL + "/" + hub.id)
-    .then(that.completed)
-    .catch(this.failed);
+    .then(() => 
+      FavoriteHubActions.remove.completed(hub))
+    .catch((error) => 
+      FavoriteHubActions.remove.failed(hub, error)
+    );
+});
+
+FavoriteHubActions.remove.completed.listen(function(hub) {
+  NotificationActions.success("The hub " + hub.name + " has been removed successfully");
+});
+
+FavoriteHubActions.remove.failed.listen(function(hub, error) {
+  NotificationActions.error("Failed to remove the hub " + hub.name + ": " + error.message);
 });
 
 export default FavoriteHubActions;

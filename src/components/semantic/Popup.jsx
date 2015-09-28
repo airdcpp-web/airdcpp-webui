@@ -1,5 +1,4 @@
 import React from 'react';
-import Portal from 'react-portal';
 import { Button, Popup, Icon } from 'react-semantify'
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 
