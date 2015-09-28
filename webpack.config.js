@@ -3,6 +3,8 @@ var webpack = require('webpack');
 
 const release = (process.env.NODE_ENV === 'production');
 
+
+// PLUGINS
 var plugins = [
 	new webpack.ProvidePlugin({
 		$: "jquery",
@@ -26,14 +28,23 @@ var releasePlugins = [
   new webpack.optimize.DedupePlugin(),
 ]
 
-if (release)  {
-  plugins = plugins.concat(releasePlugins);
+var debugPlugins = [
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NoErrorsPlugin()
+]
+
+plugins = plugins.concat(release ? releasePlugins : debugPlugins);
+
+// ENTRY
+var entries = [ './src/app.jsx' ]; 
+if (!release) {
+	entries.push('webpack-hot-middleware/client');
 }
 
-console.log("Release: " + release);
+console.log("[webpack] Release: " + release);
 
 module.exports = {
-  entry: "./src/app.jsx",
+  entry: entries,
 
   output: {
     path: path.resolve(__dirname, "build"),
@@ -42,7 +53,7 @@ module.exports = {
     publicPath: "/build/",
   },
 
-  devtool: !release && "inline-source-map",
+  devtool: !release && "eval",
   module: {
     loaders: [
       { 
@@ -71,9 +82,9 @@ module.exports = {
     ]
   },
 
-  node: {
+  /*node: {
     Buffer: false
-  },
+  },*/
   
   resolve: {
 	extensions: ['', '.js', '.jsx'],
