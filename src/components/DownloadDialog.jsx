@@ -125,7 +125,7 @@ export default React.createClass({
 
   fetchDupePaths(requestPath) {
     const data = {
-      path: this.props.location.state.itemInfo.path
+      path: this.props.itemInfo.path
     };
 
     SocketService.post(requestPath, data).then(data => this.setState({ 
@@ -138,7 +138,7 @@ export default React.createClass({
     this.fetchPaths(FAVORITE_DIRECTORIES_URL, "favorite_paths");
     this.fetchPaths(HISTORY_ITEMS_URL + "/" + HistoryEnum.HISTORY_DOWNLOAD_DIR, "history_paths");
 
-    const { itemInfo } = this.props.location.state;
+    const { itemInfo } = this.props;
     const dupeName = DupeName(itemInfo.dupe);
     if (dupeName.indexOf("queue") > -1) {
       this.fetchDupePaths(QUEUE_DUPE_PATHS_URL);
@@ -150,7 +150,7 @@ export default React.createClass({
   },
 
   handleDownload(path) {
-    this.props.location.state.downloadHandler({ 
+    this.props.downloadHandler({ 
       target: path,
       target_type: 0,
       priority: PriorityEnum.DEFAULT

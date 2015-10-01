@@ -4,14 +4,12 @@ import Reflux from 'reflux';
 import {QUEUE_MODULE_URL, BUNDLE_STATUS, StatusEnum} from 'constants/QueueConstants';
 
 import SocketStore from './SocketStore'
-import StorageMixin from 'mixins/StorageMixin'
 import History from 'utils/History'
 
 import NotificationActions from 'actions/NotificationActions'
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 
-export default Reflux.createStore({
-  mixins: [SocketSubscriptionMixin],
+const NotificationStore = Reflux.createStore({
   listenables: NotificationActions,
   init: function() {
 
@@ -33,8 +31,8 @@ export default Reflux.createStore({
     this.trigger("error", ...props);
   },
 
-  onSocketConnected() {
-    this.addSocketListener(QUEUE_MODULE_URL, BUNDLE_STATUS, this._onBundleStatus);
+  onSocketConnected(addSocketListener) {
+    addSocketListener(QUEUE_MODULE_URL, BUNDLE_STATUS, this._onBundleStatus);
   },
 
   _onBundleStatus: function(bundle) {
@@ -78,3 +76,5 @@ export default Reflux.createStore({
     }
   }
 });
+
+export default SocketSubscriptionDecorator(NotificationStore)

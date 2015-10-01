@@ -25,9 +25,9 @@ export default React.createClass({
   mixins: [ RouteContext ],
   getInitialState() {
     let value = null;
-    this._isNew = !this.props.location.state.hubEntry;
+    this._isNew = !this.props.hubEntry;
     if (!this._isNew) {
-      value = _.clone(this.props.location.state.hubEntry, true);
+      value = _.clone(this.props.hubEntry, true);
       value["share_profile"] = value.share_profile.id;
 
       this.checkAdcHub(value.hub_url);
@@ -101,7 +101,7 @@ export default React.createClass({
       if (this._isNew) {
         promise = SocketService.post(FAVORITE_HUB_URL, value);
       } else {
-        promise = SocketService.patch(FAVORITE_HUB_URL + "/" + this.props.location.state.hubEntry.id, value);
+        promise = SocketService.patch(FAVORITE_HUB_URL + "/" + this.props.hubEntry.id, value);
       }
 
       promise.catch(this._handleError);

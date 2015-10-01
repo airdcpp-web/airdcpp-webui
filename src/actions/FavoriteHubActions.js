@@ -1,9 +1,10 @@
 'use strict';
 import Reflux from 'reflux';
-import {FAVORITE_HUB_URL} from 'constants/FavoriteHubConstants';
+import {FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService'
 import ConfirmDialog from 'components/semantic/ConfirmDialog'
 import NotificationActions from 'actions/NotificationActions'
+import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
 
 import History from 'utils/History'
 
@@ -52,12 +53,12 @@ FavoriteHubActions.disconnect.listen(function(hub) {
     .catch(this.failed);
 });
 
-FavoriteHubActions.create.listen(function(hub, data) {
-	History.pushState({ modal: true, returnTo: '/favorite-hubs' }, '/favorite-hubs/new');
+FavoriteHubActions.create.listen(function(hub) {
+	History.pushOverlay('/favorite-hubs', '/new', FAVORITE_MODAL_ID);
 });
 
 FavoriteHubActions.edit.listen(function(hub, data) {
-	History.pushState({ modal: true, hubEntry: hub, returnTo: '/favorite-hubs' }, '/favorite-hubs/edit');
+  History.pushOverlay('/favorite-hubs', '/edit', FAVORITE_MODAL_ID, { hubEntry: hub });
 });
 
 FavoriteHubActions.update.listen(function(hub, data) {

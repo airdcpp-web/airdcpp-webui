@@ -7,15 +7,12 @@ import { ActionMenu } from 'components/Menu'
 import QueueStore from 'stores/QueueStore';
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable'
-import ChildModalMixin from 'mixins/ChildModalMixin'
 
 import Formatter from 'utils/Format';
 import { Dropdown, Icon, Item } from 'react-semantify'
 import TableDropdown, { DropdownItem } from 'components/semantic/TableDropdown'
 
 export default React.createClass({
-  mixins: [ChildModalMixin],
-
   rowGetter(rowIndex) {
     return this.state.bundles[Object.keys(this.state.bundles)[rowIndex]];
   },

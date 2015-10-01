@@ -9,12 +9,13 @@ import { HistoryEnum } from 'constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
 
 import HistoryInput from 'components/HistoryInput'
-import ChildModalMixin from 'mixins/ChildModalMixin'
+import OverlayDecorator from 'decorators/OverlayDecorator'
 
 import classNames from 'classnames';
 import { Column } from 'fixed-data-table';
 
 import Formatter from 'utils/Format';
+import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
 
 import { DownloadMenu, UserMenu } from 'components/Menu'
 
@@ -22,8 +23,7 @@ import '../style.css'
 
 const SEARCH_PERIOD = 4000;
 
-export default React.createClass({
-  mixins: [ChildModalMixin],
+const Search = React.createClass({
   _handleSearch(text) {
     console.log("Searching");
 
@@ -167,3 +167,5 @@ export default React.createClass({
     );
   }
 });
+
+export default OverlayDecorator(Search, DOWNLOAD_MODAL_ID);

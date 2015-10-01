@@ -7,8 +7,9 @@ import FavoriteHubStore from 'stores/FavoriteHubStore.js';
 import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService.js'
 import { ActionMenu } from 'components/Menu'
+import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
 
-import ChildModalMixin from 'mixins/ChildModalMixin'
+import OverlayDecorator from 'decorators/OverlayDecorator'
 
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
@@ -62,8 +63,7 @@ const ConnectState = React.createClass({
   }
 });
 
-export default React.createClass({
-  mixins: [ChildModalMixin],
+const FavoriteHubs = React.createClass({
   _renderName(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
@@ -157,3 +157,5 @@ export default React.createClass({
     );
   }
 });
+
+export default OverlayDecorator(FavoriteHubs, FAVORITE_MODAL_ID);

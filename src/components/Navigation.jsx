@@ -10,11 +10,7 @@ export default class Navigation extends React.Component {
   constructor() {
     super()
   }
-
-  setActiveMenuItem(uid) {
-    this.setState({activeItem: uid});
-  }
-
+  
   render() {
     const MenuItem = React.createClass({
       render: function() {

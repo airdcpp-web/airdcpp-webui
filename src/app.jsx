@@ -33,11 +33,12 @@ var routeConfig = [
         require('./routes/FavoriteHubs'),
         require('./routes/Queue'),
         require('./routes/Search'),
+        require('./routes/Sidebar'),
       ]
     }
 ]
 
 React.render(
   <Router history={ History } routes={routeConfig} />,
-  document.getElementById('content')
+  document.getElementById('container-main')
 );

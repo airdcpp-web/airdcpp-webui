@@ -6,7 +6,7 @@ body {
   max-width: 650px;
 }
 
-section#content, .login-grid {
+section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	height: 100%;
 }
 

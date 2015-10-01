@@ -35,7 +35,7 @@ export default React.createClass({
      * Removes portal from DOM and redirects previous path
      * Should usually be passed from ChildModalMixin
      */
-    closeHandler: React.PropTypes.func
+    closeHandler: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
