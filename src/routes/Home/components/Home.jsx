@@ -2,6 +2,8 @@ import React from 'react';
 
 export default class Home extends React.Component {
   render() {
-    return null;
+    return (<div id="home">
+    		KOTI
+    	</div>);
   }
 };

@@ -9,7 +9,7 @@ import SocketService from 'services/SocketService'
 import LoginActions from 'actions/LoginActions'
 import Notifications from './Notifications'
 import SideMenu from './SideMenu'
-import OverlayDecorator from 'decorators/OverlayDecorator'
+import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 import { SIDEBAR_ID } from 'constants/OverlayConstants'
 
 import { History } from 'react-router';
@@ -39,69 +39,51 @@ const SocketConnectStatus = React.createClass({
   }
 });
 
-const MainLayout = React.createClass({
-  getInitialState() {
-    return this.getViewState();
+let MainLayout = React.createClass({
+  showSideBar(props) {
+    return props.location.state &&
+      props.location.state[SIDEBAR_ID];
   },
 
-  getViewState() {
-    return { 
-      viewport: {
-        width: window.innerWidth, 
-        height: window.innerHeight
+  componentWillReceiveProps(nextProps) {
+    if (this.showSideBar(nextProps)) {
+      if (!this.previousChildren) {
+        // save the old children (just like animation)
+        this.previousChildren = this.props.children
       }
+    } else {
+      this.previousChildren = null;
     }
   },
 
-  onViewResized() {
-    this.setState(this.getViewState());
-  },
-
-  componentDidMount() {
-    window.addEventListener('resize', this.onViewResized);
-  },
-
   render() {
-    let tmp = this.props;
+    let sidebar = null;
+    if (this.showSideBar(this.props)) {
+      sidebar = this.props.getOverlay(this.props);
+    }
+
     return (
       <div className={this.props.className} id={this.props.id}>
-        <div id="sidebar" className="ui right vertical overlay sidebar"/>
+          { sidebar }
         <div className="pusher">
           <Notifications/>
           <NavigationPanel/>
-          <div className="ui container main" style={{ height: Math.max(300, this.state.viewport.height) + 'px', paddingTop: '80px', paddingBottom: '80px'}}>
-           {this.props.children}
+          <div className="ui container main" style={{ height: '100%', paddingTop: '80px'}}>
+            {sidebar ?
+              this.previousChildren :
+              this.props.children
+            }
           </div>
-          <Footer/>
         </div>
       </div>
     );
   }
 });
 
+MainLayout = OverlayParentDecorator(MainLayout, SIDEBAR_ID, false);
+
 const AuthenticatedApp = React.createClass({
   mixins: [Reflux.connect(LoginStore), History, RouteContext],
-
-  /*getInitialState() {
-    return this.getViewState();
-  },
-
-  getViewState() {
-    return { 
-      viewport: {
-        width: window.innerWidth, 
-        height: window.innerHeight
-      }
-    }
-  },
-
-  onViewResized() {
-    this.setState(this.getViewState());
-  },
-
-  componentDidMount() {
-    window.addEventListener('resize', this.onViewResized);
-  },*/
 
   componentWillUpdate(nextProps, nextState) {
     if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
@@ -109,43 +91,19 @@ const AuthenticatedApp = React.createClass({
       console.log("Socket closed, attempting to reconnect in 2 seconds");
       setTimeout(() => LoginActions.connect(this.state.token), 2000);
     } else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
+      // Logged out
       this.history.replaceState(null, '/login');
     }
   },
 
-  componentWillReceiveProps(nextProps) {
-    // if we changed routes...
-    if ((
-      nextProps.location.key !== this.props.location.key &&
-      nextProps.location.state &&
-      nextProps.location.state[SIDEBAR_ID]
-    )) {
-      // save the old children (just like animation)
-      this.previousChildren = this.props.children
-    }
-  },
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onViewResized);
-  },
-
   render() {
     if (this.state.socketAuthenticated) {
-      let isSidebar = (
-        this.props.location.state &&
-        this.props.location.state[SIDEBAR_ID] &&
-        this.previousChildren
-      )
-
       return (
         <div id="authenticated-app">
           
           <SideMenu id="side-menu" location={ this.props.location }/>
           <MainLayout id="main-layout" className="pushable" location={ this.props.location }>
-            {isSidebar ?
-              this.previousChildren :
-              this.props.children
-            }
+            { this.props.children }
           </MainLayout>
         </div>
       );
@@ -158,4 +116,4 @@ const AuthenticatedApp = React.createClass({
   }
 });
 
-export default OverlayDecorator(AuthenticatedApp, SIDEBAR_ID, "sidebar");
+export default AuthenticatedApp;

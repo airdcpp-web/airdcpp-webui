@@ -1,9 +1,12 @@
 import React from 'react';
 
-export default React.createClass({
+const Filelists = React.createClass({
+  displayName: "Filelists",
   render() {
     return (<div>
-    	Testing
+    	Filelists
     </div>);
   }
 });
+
+export default Filelists;

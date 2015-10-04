@@ -1,61 +1,62 @@
+'use strict';
+
 import React from 'react';
+import LoginActions from 'actions/LoginActions'
 
-import History from 'utils/History'
+import { Link } from 'react-router';
+import { Lifecycle } from 'react-router'
 
-// Pass the wrapped component, an unique ID for it (use OverlayConstants)
-// If no DOM ID is provided, a new one will be created in body
-export default function(Component, overlayId, elementId = null) {
-  let node;
+import '../style.css'
 
-  const removeModal = (props) => {
-    React.unmountComponentAtNode(node);
-    if (!elementId) {
-      document.body.removeChild(node);
-    }
-
-    // Remove overlay from the location state
-    const { returnTo } = props.location.state[overlayId];
-    delete props.location.state[overlayId];
-    History.replaceState(props.location.state, returnTo);
-
-    node = null;
-  };
-
-  const checkCreateModal = (props) => {
-    if ((
-      !node &&
-      props.location.state &&
-      props.location.state[overlayId]
-    )) {
-      if (elementId) {
-        node = document.getElementById(elementId);
-        if (!node) {
-          return;
-        }
-      } else {
-        node = document.createElement('div');
-        document.body.appendChild(node);
-      }
-
-      // Pass the overlay props and close handler
-      const { state } = props.location;
-      let children = React.cloneElement(props.children, { 
-        closeHandler: removeModal,
-        ...((state && state[overlayId]) ? state[overlayId].data : null)
-      });
-      React.render(children, node);
-    }
-  };
-  
+export default function(Component, semanticModuleName, semanticModuleSettings) {
   const OverlayDecorator = React.createClass({
-    componentDidMount() {
-      // Reloading page?
-      checkCreateModal(this.props);
+    displayName: "OverlayDecorator",
+    mixins: [ Lifecycle ],
+
+    changeHistoryState: true,
+    routerWillLeave(nextLocation) {
+      this.changeHistoryState = false;
+
+      let dom = React.findDOMNode(this);
+      $(dom)[semanticModuleName]('hide');
     },
 
-    componentDidUpdate() {
-      // Opening new?
-      checkCreateModal(this.props);
+    propTypes: {
+      /**
+       * Removes portal from DOM
+       */
+      removeHandler: React.PropTypes.func.isRequired,
+
+      /**
+       * Returns to the location that was active before opening the overlay
+       */
+      restoreState: React.PropTypes.func.isRequired
+    },
+
+    componentDidMount() {
+      const settings = Object.assign({
+        onHidden: this.onHidden,
+        onHide: this.onHide,
+      }, semanticModuleSettings(this.props));
+
+
+
+      let dom = React.findDOMNode(this);
+      $(dom)[semanticModuleName](settings)[semanticModuleName]('show');
+    },
+
+    onHide() {
+      //if (this.changeHistoryState) {
+      //  this.props.restoreState();
+      //}
+    },
+
+    onHidden() {
+      if (this.changeHistoryState) {
+        this.props.restoreState();
+      }
+
+      this.props.removeHandler(this.changeHistoryState);
     },
 
     render() {
@@ -64,4 +65,4 @@ export default function(Component, overlayId, elementId = null) {
   });
 
   return OverlayDecorator;
-};
+}

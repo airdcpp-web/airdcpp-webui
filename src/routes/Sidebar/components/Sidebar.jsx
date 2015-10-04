@@ -4,43 +4,17 @@ import React from 'react';
 import LoginActions from 'actions/LoginActions'
 
 import { Link } from 'react-router';
-import { Lifecycle } from 'react-router'
+
+import OverlayDecorator from 'decorators/OverlayDecorator'
 
 import '../style.css'
 
-export default React.createClass({
-  mixins: [ Lifecycle ],
-  routerWillLeave(nextLocation) {
-    this.hide();
-  },
+const settings = {
+  context: '#main-layout'
+};
 
-  propTypes: {
-    /**
-     * Removes portal from DOM and redirects previous path
-     * Should usually be passed from ChildModalMixin
-     */
-    closeHandler: React.PropTypes.func.isRequired
-  },
-
-  componentDidMount() {
-    const settings = {
-      onHidden: this.onHidden,
-      context: '#main-layout'
-    };
-
-    let dom = React.findDOMNode(this);
-    $('#authenticated-app .sidebar').sidebar(settings).sidebar('show');
-  },
-
-  hide() {
-    let dom = React.findDOMNode(this);
-    $('#authenticated-app .sidebar').sidebar('hide');
-  },
-
-  onHidden() {
-    this.props.closeHandler();
-  },
-
+const Sidebar = React.createClass({
+  displayName: "Sidebar",
   render() {
     /*const MenuItem = React.createClass({
       render: function() {
@@ -54,9 +28,27 @@ export default React.createClass({
     });*/
 
     return (
-      <div>
-        { this.props.children }
+      <div id="sidebar" className="ui right vertical overlay sidebar">
+        <div id="sidebar-container">
+          <div>
+            { this.props.children }
+          </div>
+        </div>
       </div>
     );
+  },
+
+  getOverlaySettings() {
+    return {
+      context: '#main-layout'
+    }
   }
 });
+
+const getOverlaySettings = () => {
+  return {
+    context: '#main-layout'
+  }
+}
+
+export default OverlayDecorator(Sidebar, "sidebar", getOverlaySettings)

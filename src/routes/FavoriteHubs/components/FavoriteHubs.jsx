@@ -9,7 +9,7 @@ import SocketService from 'services/SocketService.js'
 import { ActionMenu } from 'components/Menu'
 import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
 
-import OverlayDecorator from 'decorators/OverlayDecorator'
+import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
@@ -64,6 +64,7 @@ const ConnectState = React.createClass({
 });
 
 const FavoriteHubs = React.createClass({
+  displayName: "Favorite hubs",
   _renderName(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
@@ -158,4 +159,4 @@ const FavoriteHubs = React.createClass({
   }
 });
 
-export default OverlayDecorator(FavoriteHubs, FAVORITE_MODAL_ID);
+export default OverlayParentDecorator(FavoriteHubs, FAVORITE_MODAL_ID);

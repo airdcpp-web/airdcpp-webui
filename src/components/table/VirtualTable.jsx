@@ -366,7 +366,7 @@ export default React.createClass({
           ref="table"
 
           width={this.state.width}
-          height={this.state.height-45} 
+          height={this.state.height-45-100} 
           onContentHeightChange={this._onContentHeightChange}
           scrollTop={this.state.top}
           scrollLeft={this.state.left}

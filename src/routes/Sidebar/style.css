@@ -2,4 +2,15 @@
 	background-color: white;
 	z-index: 10;
 	width:800px;
+	background-color: #1b1c1d;
+	padding: 10px;
+	padding-right: 100px;
+}
+
+#sidebar-container {
+	height: 100%;
+	background-color: white;
+	/*border-radius: .28571429rem;*/
+	border-top-left-radius: .28571429rem;
+	border-bottom-left-radius: .28571429rem;
 }

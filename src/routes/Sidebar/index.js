@@ -7,7 +7,9 @@ module.exports = {
   getChildRoutes (location, cb) {
     require.ensure([], (require) => {
       cb(null, [
+		require('./routes/Hubs'),
         require('./routes/Filelists'), 
+		require('./routes/Messages'), 
       ])
     }, "sidebar-children")
   },

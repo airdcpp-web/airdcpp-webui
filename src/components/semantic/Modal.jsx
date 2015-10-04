@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button, Popup, Icon } from 'react-semantify'
 
-import { Lifecycle } from 'react-router'
-import { History } from 'react-router'
-
 import classNames from 'classnames';
 
-export default React.createClass({
-  mixins: [ Lifecycle ],
+import OverlayDecorator from 'decorators/OverlayDecorator'
+
+let settingCallback;
+
+const Modal = {
+  displayName: "Modal",
   propTypes: {
 
     /**
@@ -45,31 +46,11 @@ export default React.createClass({
   },
 
   getInitialState() {
+    settingCallback = this.getOverlaySettings
+
     return {
       saving: false
     }
-  },
-
-  routerWillLeave(nextLocation) {
-    this.hide();
-  },
-
-  componentDidMount() {
-    const settings = {
-      onHidden: this.onHidden,
-      movePopup:false,
-      onApprove: this.onApprove,
-      onDeny: this.onDeny,
-      closable: this.props.closable,
-      detachable: false,
-      allowMultiple: false,
-      //debug:true,
-      //verbose:true,
-      //observeChanges: true
-    };
-
-    let dom = React.findDOMNode(this);
-    $(dom).modal(settings).modal('show');
   },
 
   onDeny: function (el) {
@@ -83,15 +64,6 @@ export default React.createClass({
       promise.then(this.hide).catch(() => this.setState({ saving: false }));
       return false;
     }
-  },
-
-  hide() {
-    let dom = React.findDOMNode(this);
-    $(dom).modal('hide');
-  },
-
-  onHidden() {
-    this.props.closeHandler();
   },
 
   render: function() {
@@ -124,5 +96,18 @@ export default React.createClass({
           </div>
         )}
       </div>);
+  },
+
+  getOverlaySettings(props) {
+    return {
+      movePopup:false,
+      onApprove: this.onApprove,
+      onDeny: this.onDeny,
+      closable: props.closable,
+      detachable: false,
+      allowMultiple: false
+    }
   }
-});
+};
+
+export default OverlayDecorator(React.createClass(Modal), "modal", Modal.getOverlaySettings.bind(Modal))

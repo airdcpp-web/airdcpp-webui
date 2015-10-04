@@ -28,8 +28,8 @@ var routeConfig = [
       component: require('./components/AuthenticatedApp'),
       path: '/',
       onEnter: requireAuth,
+      indexRoute: require('./routes/Home'),
       childRoutes: [
-        require('./routes/Home'),
         require('./routes/FavoriteHubs'),
         require('./routes/Queue'),
         require('./routes/Search'),
