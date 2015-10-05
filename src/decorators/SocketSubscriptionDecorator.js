@@ -11,7 +11,10 @@ export default function(store) {
     return subscription;
   };
 
-  const removeSocketListeners = () => socketSubscriptions.forEach(f => f())
+  const removeSocketListeners = () => { 
+    socketSubscriptions.forEach(f => f())
+    socketSubscriptions = [];
+  };
 
   const _loginStoreListener = (loginState) => {
   	if (loginState.socketAuthenticated) {
@@ -38,6 +41,9 @@ export default function(store) {
   };
 
   store.listenTo(LoginStore, _loginStoreListener);
-  return store;
-  //return Object.assign(store, addSocketListener, removeSocketListeners);
+  //return store;
+  return Object.assign(store,  {
+    addSocketListener: addSocketListener,
+    removeSocketListeners: removeSocketListeners
+  });
 };

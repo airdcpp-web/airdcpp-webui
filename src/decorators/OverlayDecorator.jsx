@@ -25,12 +25,12 @@ export default function(Component, semanticModuleName, semanticModuleSettings) {
       /**
        * Removes portal from DOM
        */
-      removeHandler: React.PropTypes.func.isRequired,
+      onHidden: React.PropTypes.func.isRequired,
 
       /**
        * Returns to the location that was active before opening the overlay
        */
-      restoreState: React.PropTypes.func.isRequired
+      onHide: React.PropTypes.func.isRequired
     },
 
     componentDidMount() {
@@ -46,17 +46,14 @@ export default function(Component, semanticModuleName, semanticModuleSettings) {
     },
 
     onHide() {
+      this.props.onHide();
       //if (this.changeHistoryState) {
       //  this.props.restoreState();
       //}
     },
 
     onHidden() {
-      if (this.changeHistoryState) {
-        this.props.restoreState();
-      }
-
-      this.props.removeHandler(this.changeHistoryState);
+      this.props.onHidden(this.changeHistoryState);
     },
 
     render() {

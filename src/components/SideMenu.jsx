@@ -3,28 +3,27 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import History from 'utils/History'
 import LoginActions from 'actions/LoginActions'
 import { Link } from 'react-router';
 import TransferStats from 'components/TransferStats'
-
-import { SIDEBAR_ID } from 'constants/OverlayConstants'
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
 
 const MenuItem = React.createClass({
-  render: function() {
-    let state = this.props.location[SIDEBAR_ID];
-    if (!state) {
-      state = {
-          [SIDEBAR_ID]: {
-            returnTo: this.props.location.pathname
-          }
-      };
-    }
+  onClick: function(evt) {
+    evt.preventDefault();
 
+    History.pushSidebar(this.props.location, this.props.page);
+  },
+
+  render: function() {
     return (
-      <Link to={this.props.page} className="item" state={state}>
+      <Link to={this.props.page} className="item" onClick={this.onClick}>
+        { this.props.labelCount > 0 ? (
+          <div className={ "ui mini label " + this.props.labelColor}> { this.props.labelCount } </div>
+          ) : null }
         <i className={ this.props.icon + " icon" }></i>
         {this.props.title}
       </Link>
@@ -56,9 +55,9 @@ export default React.createClass({
       <div id="side-menu">
         <div className="content">
           <div className="ui labeled icon vertical inverted menu">
-            <MenuItem location={this.props.location} icon="blue sitemap" title="Hubs" page="/sidebar/hubs"/>
-            <MenuItem location={this.props.location} icon="blue comments" title="Messages" page="/sidebar/messages"/>
-            <MenuItem location={this.props.location} icon="blue browser" title="Filelists" page="/sidebar/filelists"/>
+            <MenuItem labelCount={ 0 } labelColor="red" location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
+            <MenuItem labelCount={ PrivateChatSessionStore.countUnreadSessions() } labelColor="red" location={this.props.location} icon="blue comments" title="Messages" page="messages"/>
+            <MenuItem labelCount={ 0 } location={this.props.location} icon="blue browser" title="Filelists" page="filelists"/>
           </div>
         </div>
         <div>

@@ -22,14 +22,20 @@ export const ActionMenu = React.createClass({
     /**
      * Action ids to filter from all actions
      */
-    ids: React.PropTypes.array
+    ids: React.PropTypes.array,
+
+    /**
+     * Router location
+     */
+    location: React.PropTypes.object,
   },
 
   getItem(actionId) {
+    const action = this.props.actions[actionId];
     return (
-      <DropdownItem key={ actionId } onClick={ () => this.props.actions[actionId](this.props.itemData) }>
-        <i className={ this.props.actions[actionId].icon + " icon" }></i>
-        { this.props.actions[actionId].displayName }
+      <DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
+        <i className={ action.icon + " icon" }></i>
+        { action.displayName }
       </DropdownItem>);
   },
 
@@ -64,7 +70,12 @@ export const UserMenu = React.createClass({
     user: React.PropTypes.shape({
       cid: React.PropTypes.string,
       hub_url: React.PropTypes.string
-    }).isRequired
+    }).isRequired,
+
+    /**
+     * Router location
+     */
+    location: React.PropTypes.object.isRequired,
   },
 
   getDefaultProps() {
@@ -86,7 +97,7 @@ export const UserMenu = React.createClass({
         { user.nicks }
       </div>);
 
-    return <ActionMenu caption={ caption } actions={ UserActions } ids={[ "browse", "message" ]} itemData={ data }/>;
+    return <ActionMenu location={this.props.location} caption={ caption } actions={ UserActions } ids={[ "browse", "message" ]} itemData={ data }/>;
   }
 });
 

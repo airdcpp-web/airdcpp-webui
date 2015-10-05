@@ -104,3 +104,7 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 .react-autosuggest__suggestion--focused, .react-autosuggest li:hover {
 	background: #f9fafb;
 }
+
+#side-menu .item>.label {
+	margin-left: 0px !important;
+}

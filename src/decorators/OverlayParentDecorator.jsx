@@ -6,6 +6,7 @@ import History from 'utils/History'
 // If no DOM ID is provided, a new one will be created in body
 export default function(Component, overlayId, createPortal = true) {
   let node = null;
+  let closing = false;
 
   const replaceState = (props) => {
     const { returnTo } = props.location.state[overlayId];
@@ -19,15 +20,23 @@ export default function(Component, overlayId, createPortal = true) {
       document.body.removeChild(node);
       node = null;
     }
+
+    closing = false;
   };
 
   const getOverlay = (props) => {
-      const { state } = props.location;
-      return React.cloneElement(props.children, { 
-        removeHandler: removeNode,
-        restoreState: () => replaceState(props),
-        ...((state && state[overlayId]) ? state[overlayId].data : null)
-      });
+    if (closing)
+      return null;
+
+    const { state } = props.location;
+    return React.cloneElement(props.children, { 
+      onHide: () => { closing = true },
+      onHidden: () => {
+        replaceState(props);
+        removeNode()
+      },
+      ...((state && state[overlayId]) ? state[overlayId].data : null)
+    });
   };
 
   const OverlayParentDecorator = React.createClass({

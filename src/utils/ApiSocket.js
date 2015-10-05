@@ -92,7 +92,7 @@ export default class ApiSocket {
         resolver:resolver
       };
 
-      console.log('Sending request', path, data, method);
+      console.log('Sending request', path, data ? data : "(no data)", method);
 
     const request = {
       path: path,
@@ -123,7 +123,7 @@ export default class ApiSocket {
       } else {
         // Listener message
         if (ignoredConsoleEvents.indexOf(messageObj.event) == -1) {
-          console.log("Received listener message from websocket: ", messageObj.data);
+          console.log("Received listener message for " + messageObj.event + ": ", messageObj.data);
         }
 
         SocketActions.message(this, messageObj);
