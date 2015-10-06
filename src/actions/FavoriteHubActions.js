@@ -54,11 +54,11 @@ FavoriteHubActions.disconnect.listen(function(hub) {
 });
 
 FavoriteHubActions.create.listen(function(hub) {
-	History.pushOverlay('/favorite-hubs', '/favorite-hubs/new', FAVORITE_MODAL_ID);
+	History.pushModal('/favorite-hubs', '/favorite-hubs/new', FAVORITE_MODAL_ID);
 });
 
 FavoriteHubActions.edit.listen(function(hub, data) {
-  History.pushOverlay('/favorite-hubs', '/favorite-hubs/edit', FAVORITE_MODAL_ID, { hubEntry: hub });
+  History.pushModal('/favorite-hubs', '/favorite-hubs/edit', FAVORITE_MODAL_ID, { hubEntry: hub });
 });
 
 FavoriteHubActions.update.listen(function(hub, data) {

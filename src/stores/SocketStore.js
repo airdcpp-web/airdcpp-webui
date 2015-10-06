@@ -15,7 +15,7 @@ export default Reflux.createStore({
   },
 
   onMessage(socket, event) {
-    this._apiEmitter.emit(event.event, event.data);
+    this._apiEmitter.emit(event.id ? event.event + event.id : event.event, event.data);
   },
 
   onStateConnected(socket) {
@@ -32,25 +32,41 @@ export default Reflux.createStore({
     this._apiEmitter.on(event, callback);
   },
 
-  addSocketListener(apiModuleUrl, event, callback) {
-    var listeners = this._apiSubscriptions[apiModuleUrl];
-    if (listeners == undefined) {
-      this._apiSubscriptions[apiModuleUrl] = 0;
+  addSocketListener(apiModuleUrl, event, callback, entityId) {
+    var subscriptionId = event;
+    var apiModuleUrlFull = apiModuleUrl;
+
+    if (entityId) {
+      apiModuleUrlFull += '/' + entityId;
+      subscriptionId += entityId;
     }
 
-    this._apiSubscriptions[apiModuleUrl]++;
-    this._apiEmitter.on(event, callback);
-    SocketService.post(apiModuleUrl + "/listener/" + event).catch(error => console.error("Failed to add socket listener", apiModuleUrl, event, error.message));
+    var listeners = this._apiSubscriptions[subscriptionId];
+    if (listeners == undefined) {
+      this._apiSubscriptions[subscriptionId] = 0;
+    }
 
-    return () => this.removeSocketListener(apiModuleUrl, event, callback);
+    this._apiSubscriptions[subscriptionId]++;
+    this._apiEmitter.on(subscriptionId, callback);
+    SocketService.post(apiModuleUrlFull + "/listener/" + event).catch(error => console.error("Failed to add socket listener", apiModuleUrlFull, event, error.message));
+
+    return () => this.removeSocketListener(apiModuleUrl, event, callback, entityId);
   },
 
-  removeSocketListener(apiModuleUrl, event, callback) {
-    var listeners = this._apiSubscriptions[apiModuleUrl];
+  removeSocketListener(apiModuleUrl, event, callback, entityId) {
+    var subscriptionId = event;
+    var apiModuleUrlFull = apiModuleUrl;
 
-    this._apiSubscriptions[apiModuleUrl]--;
+    if (entityId) {
+      apiModuleUrlFull += '/' + entityId;
+      subscriptionId += entityId;
+    }
+
+    var listeners = this._apiSubscriptions[subscriptionId];
+
+    this._apiSubscriptions[subscriptionId]--;
     this._apiEmitter.removeListener(event, callback);
-    SocketService.delete(apiModuleUrl + "/listener/" + event);
+    SocketService.delete(apiModuleUrlFull + "/listener/" + event);
   },
 
   get socket() {

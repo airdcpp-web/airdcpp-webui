@@ -18,56 +18,147 @@ const MenuItem = React.createClass({
   onClick: function(evt) {
     evt.preventDefault();
 
-    History.pushSidebar(this.props.location, this.getUrl());
-  },
-
-  getUrl: function() {
-  	return this.props.url + "/" + this.props.idGetter(this.props.item);
+    History.pushSidebar(this.props.location, this.props.url);
   },
 
   render: function() {
     return (
-      <Link to={this.getUrl()} className="item" onClick={this.onClick}>
-        <i className={ this.props.icon + " icon" }></i>
-        {this.props.nameGetter(this.props.item)}
+      <Link to={this.props.url} className="item" onClick={this.onClick}>
+        {this.props.name}
       </Link>
     );
   }
+
+  // <i className={ this.props.icon + " icon" }></i>
 });
 
 const MenuLayout = React.createClass({
   //mixins: [Reflux.connect(PrivateChatSessionStore, "chatSessions")],
   propTypes: {
     /**
-     * Icon to display
+     * Unique ID of the section (used for storing and loading the previously open tab)
      */
-    url: React.PropTypes.string,
+    id: React.PropTypes.any.isRequired,
 
     /**
-     * Close the modal when clicking outside its boundaries
+     * Location object
      */
-    items: React.PropTypes.array,
+    location: React.PropTypes.object.isRequired,
 
     /**
-     * Function to call when the dialog is saved
-     * If no handler is supplied, there will only be a plain close button
+     * Item URL
+     */
+    url: React.PropTypes.string.isRequired,
+
+    /**
+     * Array of items to list
+     */
+    items: React.PropTypes.array.isRequired,
+
+    /**
+     * Function receiving an item object that returns the display name
      */
     nameGetter: React.PropTypes.func.isRequired,
 
     /**
-     * Removes portal from DOM and redirects previous path
-     * Should usually be passed from ChildModalMixin
+     * Function receiving an item object that returns the item ID
      */
     idGetter: React.PropTypes.func.isRequired
   },
   
   displayName: "Sidebar tabmenu",
+  componentDidUpdate() {
+
+  },
+
+  getUrl(cid) {
+  	return this.props.url + "/" + cid;
+  },
+
+  redirectTo(cid) {
+  	History.replaceSidebar(this.props.location, this.getUrl(cid));
+  },
+
+  hasParams() {
+  	return Object.keys(this.props.params).length > 0;
+  },
+
+  getCurrentId() {
+  	return this.props.params[Object.keys(this.props.params)[0]];
+  },
+
+  saveLocation() {
+  	localStorage.setItem(this.props.id + "_last_active", this.getCurrentId());
+  },
+
+  findItem(items, id) {
+  	return items.find(item => this.props.idGetter(item) === id)
+  },
+
+  componentWillReceiveProps(nextProps) {
+  	if (Object.keys(nextProps.params).length === 0) {
+  		return;
+  	}
+
+  	// All items removed?
+  	if (nextProps.items.length === 0) {
+  		History.replaceSidebar(this.props.location, this.props.id);
+  		return;
+  	}
+
+  	const currentId = this.getCurrentId();
+  	if (nextProps.params[Object.keys(nextProps.params)[0]] !== currentId) {
+  		return;
+  	}
+
+  	// Check if the current item still exists
+	const item = this.findItem(nextProps.items, currentId);
+    if (item) {
+  	  return false;
+    }
+
+    // Find the old position
+  	const oldItem = this.findItem(this.props.items, currentId);
+  	const oldPos = this.props.items.indexOf(oldItem);
+
+  	let newItemPos = oldPos;
+  	if (oldPos === this.props.items.length-1) {
+  	  // The last item was removed
+  	  newItemPos = oldPos-1;
+  	}
+
+	this.redirectTo(this.props.idGetter(nextProps.items[newItemPos]));
+  },
+
+  componentDidUpdate() {
+  	if (this.hasParams()) {
+  	  this.saveLocation();
+  	}
+  },
+
+  componentDidMount() {
+  	if (this.hasParams()) {
+  		// Loading an item already
+  		this.saveLocation();
+  		return;
+  	}
+
+  	let lastId = localStorage.getItem(this.props.id + "_last_active");
+  	if (lastId && this.findItem(this.props.items, lastId)) {
+  		this.redirectTo(lastId);
+  	} else if (this.props.items.length > 0) {
+  		this.redirectTo(this.props.items[0].user.cid);
+  	}
+  },
+
   render() {
     const menuItems = this.props.items.map(item => {
+      const id = this.props.idGetter(item);
       return (
-        <MenuItem key={ this.props.idGetter(item) } 
-          item={item}
-          {...this.props}/>
+        <MenuItem key={ id } 
+          url={this.getUrl(id)}
+          name={this.props.nameGetter(item)}
+          location={this.props.location}/>
       );
     }, this);
 
@@ -91,8 +182,8 @@ const MenuLayout = React.createClass({
 const Messages = React.createClass({
   mixins: [Reflux.connect(PrivateChatSessionStore, "chatSessions")],
   displayName: "Messages",
-  _handleSubmit(text) {
-  	console.log(text);
+  _handleSubmit(user) {
+  	PrivateChatActions.createSession(user, this.props.location);
   },
 
   _nameGetter(session) {
@@ -109,7 +200,14 @@ const Messages = React.createClass({
 
   render() {
     return (
-      <MenuLayout location={this.props.location} items={this.state.chatSessions} nameGetter={this._nameGetter} url={'messages/session'} idGetter={ this._idGetter }>
+      <MenuLayout 
+      		params={this.props.params}
+      		id={"messages"}
+	      	location={this.props.location} 
+	      	items={this.state.chatSessions} 
+	      	nameGetter={this._nameGetter} 
+	      	url={'messages/session'} 
+	      	idGetter={ this._idGetter }>
       	{ this.props.children ? 
       	  this.props.children :
 	    (<div>

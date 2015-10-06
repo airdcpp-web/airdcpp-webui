@@ -5,8 +5,8 @@ export default function(store) {
   let socketSubscriptions = [];
   let hasSocket = false;
 
-  const addSocketListener = (apiModuleUrl, event, callback) => {
-    let subscription = SocketStore.addSocketListener(apiModuleUrl, event, callback);
+  const addSocketListener = (apiModuleUrl, event, callback, entityId) => {
+    let subscription = SocketStore.addSocketListener(apiModuleUrl, event, callback, entityId);
     socketSubscriptions.push(subscription);
     return subscription;
   };

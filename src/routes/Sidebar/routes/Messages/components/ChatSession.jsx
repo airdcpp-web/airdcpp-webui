@@ -15,6 +15,67 @@ import {PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE} from 'constants/PrivateC
 //import '../style.css'
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin'
 
+import { ActionMenu } from 'components/Menu'
+import UserActions from 'actions/UserActions'
+
+import '../style.css'
+
+const UserTitleMenu = React.createClass({
+  propTypes: {
+    /**
+     * Hinted user
+     */
+    user: React.PropTypes.shape({
+      cid: React.PropTypes.string,
+      hub_url: React.PropTypes.string
+    }).isRequired,
+
+    /**
+     * Router location
+     */
+    location: React.PropTypes.object.isRequired,
+
+    /**
+     * Action ids to filter from all actions
+     */
+    ids: React.PropTypes.array,
+  },
+
+  getDefaultProps() {
+    return {
+      ids: null
+    }
+  },
+
+  render: function() {
+    const { user, ...other } = this.props;
+    const data = {
+      user: user,
+      directory: '/'
+    }
+
+    return <ActionMenu { ...other } caption={ this.props.user.nicks } actions={ UserActions } itemData={ data }/>;
+  }
+});
+
+const TabHeader = React.createClass({
+  render() {
+    return (
+      <div className="tab-header">
+        <h2 className="ui header">
+          <i className={ this.props.icon + " icon"}></i>
+          <div className="content">
+            { this.props.title }
+          </div>
+        </h2>
+        <div className="ui button" onClick={this.props.closeHandler}>
+          Close
+        </div>
+      </div>
+    );
+  },
+});
+
 const ChatSession = React.createClass({
   displayName: "ChatSession",
   mixins: [SocketSubscriptionMixin],
@@ -33,7 +94,9 @@ const ChatSession = React.createClass({
 
     SocketService.get(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/messages/' + 200)
       .then(data => {
-        this.setState({ messages: data });
+        if (data) {
+          this.setState({ messages: data });
+        }
       })
       .catch(error => 
         console.log("Failed to fetch messages: " + error)
@@ -55,23 +118,47 @@ const ChatSession = React.createClass({
   },
 
   _onMessage(data) {
-    const messages = React.update(this.state.messages, {$push: [data]});
+    const messages = React.addons.update(this.state.messages, {$push: [data]});
     this.setState({ messages: messages });
   },
 
   onSocketConnected() {
-    this.addSocketListener(PRIVATE_CHAT_SESSION_URL + '/' + this.props.params.cid, PRIVATE_CHAT_MESSAGE, this._onMessage);
+    this.addSocketListener(PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE, this._onMessage, this.props.params.cid);
+  },
+
+  handleClose() {
+    this.removeSocketListeners();
+    PrivateChatActions.removeSession(this.state.session.user.cid);
+  },
+
+  handleSend(message) {
+    PrivateChatActions.sendMessage(this.state.session.user.cid, message);
   },
 
   render() {
+    if (!this.state.session) {
+      return <div className="ui text loader">Loading</div>
+    }
+
+    const userMenu = (
+      <UserTitleMenu user={ this.state.session.user } location={this.props.location} ids={["browser"]}/>
+    );
+
     return (
       <div>
-      <MessageView>
+        <TabHeader
+          title={userMenu}
+          closeHandler={this.handleClose}
+          icon="blue user"/>
 
-      </MessageView>
-      <div>
-        SESSION
-      </div>
+        <MessageView
+          messages={this.state.messages}
+          handleSend={this.handleSend}
+        />
+
+        <div>
+          Footer
+        </div>
       </div>
     );
   },

@@ -32,22 +32,23 @@ const ChatSessionStore = Reflux.createStore({
   },
 
   getSession(cid) {
-    return this._chatSessions.find(session => session.cid == cid);
+    return this._chatSessions.find(session => session.user.cid == cid);
   },
 
   _onSessionCreated(data) {
-    this._chatSessions.push(data);
+    this._chatSessions = update(this._chatSessions, {$push: [data]});
     this.trigger(this._chatSessions);
   },
 
   _onSessionUpdated(data) {
-    let session = this.getSession(data.cid);
-    this._chatSessions[this._chatSessions.indexOf(session)] = React.addons.update(session, {$merge: data});
+    const session = this.getSession(data.id);
+    this._chatSessions[this._chatSessions.indexOf(session)] = React.addons.update(session, {$merge: data.properties});
     this.trigger(this._chatSessions);
   },
 
   _onSessionRemoved(data) {
-    array.splice(this.getSession(data.cid), 1);
+    const index = this._chatSessions.indexOf(this.getSession(data.cid));
+    this._chatSessions = React.addons.update(this._chatSessions, {$splice: [[index, 1]]});
     this.trigger(this._chatSessions);
   },
 

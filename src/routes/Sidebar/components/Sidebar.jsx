@@ -16,17 +16,6 @@ const settings = {
 const Sidebar = React.createClass({
   displayName: "Sidebar",
   render() {
-    /*const MenuItem = React.createClass({
-      render: function() {
-        return (
-          <Link to={this.props.page} className="item">
-            <i className={ this.props.icon + " icon" }></i>
-            {this.props.title}
-          </Link>
-        );
-      }
-    });*/
-
     return (
       <div id="sidebar" className="ui right vertical overlay sidebar">
         <div id="sidebar-container">

@@ -25,7 +25,7 @@ DownloadActions.download.listen(function(data) {
 DownloadActions.downloadTo.listen(function(handlerData) {
   const { pathname } = handlerData.location;
   
-  History.pushOverlay(handlerData.location, pathname + '/download', DOWNLOAD_MODAL_ID, {
+  History.pushModal(handlerData.location, pathname + '/download', DOWNLOAD_MODAL_ID, {
     downloadHandler: downloadData => handlerData.handler(handlerData.id, downloadData),
     itemInfo:handlerData.itemInfo
   });

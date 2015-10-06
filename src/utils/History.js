@@ -5,24 +5,39 @@ const History = createBrowserHistory();
 
 // currentLocation can also be a string, but that should be used only when the old location state can be replaced
 // You may also pass additional data to the state
-const pushOverlay = (currentLocation, nextPath, overlayId, data) => {
+const getOverlayState = (currentLocation, overlayId, data) => {
 	if (typeof currentLocation !== "object") {
 		currentLocation = Object.assign({}, { pathname: currentLocation })
 	}
 
-    let state = currentLocation.state || {};
-    if (!state[overlayId]) {
-      state[overlayId] = {
-        returnTo: currentLocation.pathname,
-        data: data
-      };
-    }
+  let state = currentLocation.state || {};
+  if (!state[overlayId]) {
+    state[overlayId] = {
+      returnTo: currentLocation.pathname,
+      data: data
+    };
+  }
 
-	History.pushState(state, nextPath);
+  return state;
+}
+
+const pushModal = (currentLocation, nextPath, overlayId, data) => {
+  const state = getOverlayState(currentLocation, overlayId, data);
+  History.pushState(state, nextPath);
 }
 
 const pushSidebar = (currentLocation, nextPath) => {
-	pushOverlay(currentLocation, "/sidebar/" + nextPath, SIDEBAR_ID);
+	const state = getOverlayState(currentLocation, SIDEBAR_ID);
+  History.pushState(state, "/sidebar/" + nextPath);
 }
 
-export default Object.assign(History, { pushOverlay: pushOverlay }, { pushSidebar: pushSidebar });
+const replaceSidebar = (currentLocation, nextPath) => {
+  const state = getOverlayState(currentLocation, SIDEBAR_ID);
+  History.replaceState(state, "/sidebar/" + nextPath);
+}
+
+export default Object.assign(History, { 
+  pushModal: pushModal, 
+  pushSidebar: pushSidebar,
+  replaceSidebar: replaceSidebar
+});
