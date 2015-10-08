@@ -9,10 +9,26 @@ import History from 'utils/History'
 import NotificationActions from 'actions/NotificationActions'
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 
+//import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
+
 const NotificationStore = Reflux.createStore({
   listenables: NotificationActions,
   init: function() {
+    //this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
+  },
 
+  onPrivateMessage(messages, cid) {
+    if (messages.length == 0) {
+      return;
+    }
+
+    const last = messages[messages.length - 1];
+    if (last.chat_message && !last.chat_message.is_read) {
+      this.trigger("info", last.chat_message.text, last.chat_message.user.cid, {
+        label: "View message",
+        callback: () => { History.pushSidebar(null, 'messages/session/' + last.chat_message.user.cid); }
+      });
+    }
   },
 
   onSuccess(...props) {

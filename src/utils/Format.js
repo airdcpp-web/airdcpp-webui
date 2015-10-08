@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import { Icon, Flag } from 'react-semantify'
 
-module.exports = {
+export default {
   formatSize: function(fileSizeInBytes) {
     if (fileSizeInBytes === undefined) {
       return undefined;

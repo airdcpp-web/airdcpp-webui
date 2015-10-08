@@ -1,0 +1,73 @@
+#sidebar .tab-header h2 {
+	float:left;
+}
+
+#sidebar .tab-header .button {
+	float:right;
+}
+
+#sidebar .tab-header {
+	margin-bottom: 20px;
+}
+
+#sidebar .message-view {
+	clear: both;
+}
+
+#sidebar .message-view {
+	flex: 100 1 0%;
+	display: flex;
+	flex-direction: column;
+}
+
+#sidebar .ui.grid, #sidebar .chat-session, #sidebar .ui.grid .column, #sidebar .ui.grid .column .segment {
+	height: 100%;
+}
+
+#sidebar .chat-session {
+	display: flex;
+	flex-direction: column;
+}
+
+.message-section {
+	flex:1;
+	overflow-y: auto;
+	margin-bottom:10px;
+}
+
+.message-list {
+	margin-right:10px !important;
+}
+
+#sidebar .ui.segment {
+	display: inline-flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.chat-message .message-author-name {
+	float: left;
+}
+
+.message-time {
+	float:right;
+	color: lightgray;
+}
+
+.chat-message .message-text {
+	clear: both;
+	padding-right: 60px;
+}
+
+.status-message .message-text {
+	font-size: small;
+	color: grey;
+}
+
+.status-message .message-text {
+	float: left;
+}
+
+.status-message .message-time {
+	font-size: small;
+}

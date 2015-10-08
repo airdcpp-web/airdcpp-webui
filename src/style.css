@@ -2,6 +2,11 @@ body {
 	background: url("../background.jpg") no-repeat;
 	background-size: cover;
 }
+
+#container-main {
+	min-height: 400px;
+}
+
 .column {
   max-width: 650px;
 }
@@ -99,6 +104,12 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	color: rgba(0,0,0,.87);
 	line-height: 1.33;
 	border-bottom: 1px solid rgba(34,36,38,.1);
+}
+
+.react-autosuggest ul .description {
+	padding-top: 2px;
+	color: rgba(0,0,0,.7);
+    font-size: small;
 }
 
 .react-autosuggest__suggestion--focused, .react-autosuggest li:hover {

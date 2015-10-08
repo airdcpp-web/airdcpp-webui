@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import Reflux from 'reflux';
 
 import { Link } from 'react-router';
 
@@ -8,12 +9,10 @@ import MessageView from 'routes/Sidebar/components/MessageView'
 import SocketService from 'services/SocketService.js'
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
+import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
 
 import {PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE} from 'constants/PrivateChatConstants';
-
-//import '../style.css'
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin'
 
 import { ActionMenu } from 'components/Menu'
 import UserActions from 'actions/UserActions'
@@ -76,9 +75,42 @@ const TabHeader = React.createClass({
   },
 });
 
+const TabFooter = React.createClass({
+  render() {
+    return (
+      <div>
+      <div className="ui grid">
+        <div className="row">
+          <div className="ui list">
+            <div className="item">
+              <i className="ui icon yellow lock"></i>
+              <div className="content">
+                <div className="header">Enryption</div>
+                <div class="description">
+                  Messages are transferred through a direct enrypted channel
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    );
+  },
+});
+
+
 const ChatSession = React.createClass({
   displayName: "ChatSession",
-  mixins: [SocketSubscriptionMixin],
+  mixins: [Reflux.listenTo(PrivateChatMessageStore, "onMessagesChanged")],
+
+  onMessagesChanged(messages, cid) {
+    if (cid !== this.props.params.cid) {
+      return;
+    }
+
+    this.setState({messages: messages});
+  },
 
   getInitialState() {
     return {
@@ -88,26 +120,18 @@ const ChatSession = React.createClass({
   },
 
   updateSession(cid) {
-    this.setState({ session: PrivateChatSessionStore.getSession(cid) });
-
+    PrivateChatActions.sessionChanged(cid);
     PrivateChatActions.setRead(cid);
 
-    SocketService.get(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/messages/' + 200)
-      .then(data => {
-        if (data) {
-          this.setState({ messages: data });
-        }
-      })
-      .catch(error => 
-        console.log("Failed to fetch messages: " + error)
-      );
+    PrivateChatActions.fetchMessages(cid);
+
+    this.setState({ session: PrivateChatSessionStore.getSession(cid) });
   },
 
   componentWillReceiveProps(nextProps) {
     const {cid} = nextProps.params
     if (!this.state.session || this.state.session.user.cid !== cid) {
-      this.removeSocketListeners();
-      this.onSocketConnected();
+      this.setState({ messages: [] });
 
       this.updateSession(cid);
     }
@@ -118,16 +142,11 @@ const ChatSession = React.createClass({
   },
 
   _onMessage(data) {
-    const messages = React.addons.update(this.state.messages, {$push: [data]});
+    const messages = React.addons.update(this.state.messages, {$push: [ { chat_message: data }]});
     this.setState({ messages: messages });
   },
 
-  onSocketConnected() {
-    this.addSocketListener(PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE, this._onMessage, this.props.params.cid);
-  },
-
   handleClose() {
-    this.removeSocketListeners();
     PrivateChatActions.removeSession(this.state.session.user.cid);
   },
 
@@ -145,7 +164,7 @@ const ChatSession = React.createClass({
     );
 
     return (
-      <div>
+      <div className="chat-session">
         <TabHeader
           title={userMenu}
           closeHandler={this.handleClose}
@@ -155,10 +174,6 @@ const ChatSession = React.createClass({
           messages={this.state.messages}
           handleSend={this.handleSend}
         />
-
-        <div>
-          Footer
-        </div>
       </div>
     );
   },

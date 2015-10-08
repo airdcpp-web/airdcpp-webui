@@ -29,31 +29,6 @@ export default React.createClass({
   componentDidMount() {
   },
 
-  /*_onKeyDown: function(event) {
-    if (event.keyCode === 13) {
-      if (!this._isDisabled()) {
-        this._handleSubmit();
-      }
-    }
-  },*/
-
-  /*_handleSubmit() {
-    const { text } = this.state;
-    SocketService.post(HISTORY_ITEM_URL + "/" + this.props.historyId, { item: text })
-      .then(data => {
-      })
-      .catch(error => 
-        console.error("Failed to post history: " + error)
-      );
-    console.log("Searching");
-    this.setState({ 
-      suggestionsActive: false
-    });
-
-    this._loadHistory();
-    this.props.submitHandler(text);
-  },*/
-
   escapeRegexCharacters(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   },
@@ -89,11 +64,11 @@ export default React.createClass({
 
     return (
       <div className="content">
-        <div className="title">
+        <div className="header">
           {beforeMatch}<strong>{match}</strong>{afterMatch}<br />
         </div>
         <div className="description">
-          { "Hub: " + suggestionObj.hub_name }
+          { suggestionObj.hub_name }
         </div>
       </div>
     );

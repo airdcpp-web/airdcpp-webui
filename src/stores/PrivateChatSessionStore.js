@@ -3,7 +3,6 @@ import React from 'react';
 
 import {PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_CREADED, CHAT_SESSION_REMOVED, CHAT_SESSION_UPDATED} from 'constants/PrivateChatConstants';
 
-import SocketStore from './SocketStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
@@ -36,13 +35,13 @@ const ChatSessionStore = Reflux.createStore({
   },
 
   _onSessionCreated(data) {
-    this._chatSessions = update(this._chatSessions, {$push: [data]});
+    this._chatSessions = React.addons.update(this._chatSessions, {$push: [data]});
     this.trigger(this._chatSessions);
   },
 
-  _onSessionUpdated(data) {
-    const session = this.getSession(data.id);
-    this._chatSessions[this._chatSessions.indexOf(session)] = React.addons.update(session, {$merge: data.properties});
+  _onSessionUpdated(data, id) {
+    const session = this.getSession(id);
+    this._chatSessions[this._chatSessions.indexOf(session)] = React.addons.update(session, {$merge: data});
     this.trigger(this._chatSessions);
   },
 

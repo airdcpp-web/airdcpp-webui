@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import Formatter from 'utils/Format';
 
 //import '../style.css'
 
@@ -23,6 +24,7 @@ const MessageComposer = React.createClass({
     return (
       <div className="ui form">
       <textarea
+        rows="2"
         className="message-composer"
         name="message"
         value={this.state.text}
@@ -56,18 +58,30 @@ const MessageListItem = React.createClass({
   },
 
   render: function() {
-    var message = this.props.message.chat_message;
-    return (
-      <li className="message-list-item">
-        <h5 className="message-author-name">{message.from.nick}</h5>
-        <div className="message-time">
-          {message.timestamp}
+    let {message} = this.props;
+    if (message.chat_message) {
+      message = message.chat_message;
+      return (
+        <div className="ui item message-list-item chat-message">
+          <div className="header message-author-name">{message.from.nick}</div>
+          <div className="message-time">
+            {Formatter.formatTimestamp(message.time)}
+          </div>
+          <div className="message-text">{message.text}</div>
         </div>
-        <div className="message-text">{message.text}</div>
-      </li>
-    );
+      );
+    } else {
+      message = message.log_message;
+      return (
+        <div className="ui item message-list-item status-message">
+          <div className="message-time">
+            {Formatter.formatTimestamp(message.time)}
+          </div>
+          <div className="message-text"><i>{message.text}</i></div>
+        </div>
+      );
+    }
   }
-
 });
 
 function getMessageListItem(message) {
@@ -94,11 +108,12 @@ const MessageSection = React.createClass({
 
   render: function() {
     var messageListItems = this.props.messages.map(getMessageListItem);
+    console.log("MessageSection", messageListItems);
     return (
-      <div className="message-section">
-        <ul className="message-list" ref="messageList">
+      <div className="message-section" ref="messageSection">
+        <div className="ui relaxed list message-list">
           {messageListItems}
-        </ul>
+        </div>
       </div>
     );
   },
@@ -108,7 +123,7 @@ const MessageSection = React.createClass({
   },
 
   _scrollToBottom: function() {
-    var ul = this.refs.messageList.getDOMNode();
+    var ul = this.refs.messageSection.getDOMNode();
     ul.scrollTop = ul.scrollHeight;
   },
 });

@@ -15,7 +15,13 @@ export default Reflux.createStore({
   },
 
   onMessage(socket, event) {
-    this._apiEmitter.emit(event.id ? event.event + event.id : event.event, event.data);
+    if (event.id) {
+      // There can be subscribers for a single entity or for all events of this type... emit for both
+      this._apiEmitter.emit(event.event + event.id, event.data, event.id);
+      this._apiEmitter.emit(event.event, event.data, event.id);
+    } else {
+      this._apiEmitter.emit(event.event, event.data);
+    }
   },
 
   onStateConnected(socket) {

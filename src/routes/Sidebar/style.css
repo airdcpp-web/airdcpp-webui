@@ -1,7 +1,9 @@
 #sidebar {
 	background-color: white;
 	z-index: 10;
-	width:800px;
+	width:100%;
+	max-width:1000px;
+	min-width:650px;
 	background-color: #1b1c1d;
 	padding: 10px;
 	padding-right: 100px;
@@ -13,4 +15,12 @@
 	/*border-radius: .28571429rem;*/
 	border-top-left-radius: .28571429rem;
 	border-bottom-left-radius: .28571429rem;
+}
+
+#sidebar .sidebar-new {
+	margin-bottom: 25px;
+}
+
+#sidebar .item.tab-layout .mini.label {
+	margin-right: 5px;
 }

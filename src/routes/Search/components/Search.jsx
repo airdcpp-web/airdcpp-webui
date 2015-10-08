@@ -4,7 +4,7 @@ import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService'
 import SearchActions from 'actions/SearchActions'
 
-import { DupeEnum, DupeName } from 'constants/DupeConstants'
+import DupeEnum from 'constants/DupeConstants'
 import { HistoryEnum } from 'constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
 
@@ -14,6 +14,7 @@ import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 import classNames from 'classnames';
 import { Column } from 'fixed-data-table';
 
+import TypeConvert from 'utils/TypeConvert'
 import Formatter from 'utils/Format';
 import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
 
@@ -89,7 +90,7 @@ const Search = React.createClass({
   },
 
   _rowClassNameGetter(rowData) {
-    return DupeName(rowData.dupe);
+    return TypeConvert.dupeToStringType(rowData.dupe);
   },
 
   render() {
