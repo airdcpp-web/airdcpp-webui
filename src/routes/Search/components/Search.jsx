@@ -4,7 +4,6 @@ import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService'
 import SearchActions from 'actions/SearchActions'
 
-import DupeEnum from 'constants/DupeConstants'
 import { HistoryEnum } from 'constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
 
@@ -61,7 +60,7 @@ const Search = React.createClass({
     }
 
     const formatter = (
-      <Formatter.FileNameFormatter type={ rowData.type.type }>
+      <Formatter.FileNameFormatter item={ rowData.type }>
         { cellData }
       </Formatter.FileNameFormatter>);
 

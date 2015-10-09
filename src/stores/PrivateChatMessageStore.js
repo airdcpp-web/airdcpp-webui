@@ -19,10 +19,6 @@ const PrivateChatMessageStore = Reflux.createStore({
   },
 
   onFetchMessagesCompleted: function(cid, data) {
-    if (!data) {
-      return;
-    }
-
     this._messages[cid] = data;
     this.trigger(this._messages[cid], cid);
   },
@@ -49,7 +45,7 @@ const PrivateChatMessageStore = Reflux.createStore({
   },
 
   _addMessage(cid, message) {
-    this._messages[cid] = React.addons.update(this._messages[cid], {$push: [ data ]});
+    this._messages[cid] = React.addons.update(this._messages[cid], {$push: [ message ]});
     this.trigger(this._messages[cid], cid);
   },
 

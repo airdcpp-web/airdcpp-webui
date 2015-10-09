@@ -17,6 +17,8 @@ import {PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE} from 'constants/PrivateC
 import { ActionMenu } from 'components/Menu'
 import UserActions from 'actions/UserActions'
 
+import Format from 'utils/Format'
+
 import '../style.css'
 
 const UserTitleMenu = React.createClass({
@@ -62,9 +64,10 @@ const TabHeader = React.createClass({
     return (
       <div className="tab-header">
         <h2 className="ui header">
-          <i className={ this.props.icon + " icon"}></i>
+          <Format.UserIconFormatter size="large" flags={this.props.user.flags} />
           <div className="content">
             { this.props.title }
+            <div className="sub header">{ this.props.user.hub_names }</div>
           </div>
         </h2>
         <div className="ui button" onClick={this.props.closeHandler}>
@@ -168,7 +171,7 @@ const ChatSession = React.createClass({
         <TabHeader
           title={userMenu}
           closeHandler={this.handleClose}
-          icon="blue user"/>
+          user={ this.state.session.user }/>
 
         <MessageView
           messages={this.state.messages}

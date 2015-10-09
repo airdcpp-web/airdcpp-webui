@@ -2,6 +2,8 @@ import React from 'react';
 import Moment from 'moment';
 import { Icon, Flag } from 'react-semantify'
 
+import DupeEnum from 'constants/DupeConstants'
+
 export default {
   dupeToStringType: function(dupeEnum) {
     switch(dupeEnum) {

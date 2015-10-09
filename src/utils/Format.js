@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'moment';
 import { Icon, Flag } from 'react-semantify'
+import classNames from 'classnames';
 
 export default {
   formatSize: function(fileSizeInBytes) {
@@ -93,9 +94,8 @@ export default {
   },
 
   FileNameFormatter: React.createClass({
-      typeToIcon: function(name) {
+      fileToIcon: function(name) {
         switch(name) {
-          case "directory": return "file outline yellow folder";
           case "audio": return "file outline audio";
           case "compressed": return "file outline archive";
           case "document": return "edit";
@@ -106,11 +106,22 @@ export default {
         }
       },
 
+      typeToIcon: function(item) {
+        switch(item.id) {
+          case "directory": return "file outline yellow folder";
+          case "file": return this.fileToIcon(item.content_type);
+          case "drive_fixed": return "grey disk outline";
+          case "drive_remote": return "server";
+          case "removable": return "grey external share";
+          default: return "file outline";
+        }
+      },
+
       render: function() {
         return (
           <div>
-          <Icon className={ "large " + this.typeToIcon(this.props.type) }/>
-          { this.props.children }
+          <Icon className={ "large " + this.typeToIcon(this.props.item) }/>
+            { this.props.children }
           </div>
         );
       }
@@ -126,5 +137,68 @@ export default {
           </div>
         );
       }
-    })
+    }),
+
+  UserIconFormatter: React.createClass({
+    propTypes: {
+      /**
+       * Size of the icon
+       */
+      size: React.PropTypes.string,
+
+      /**
+       * Action ids to filter from all actions
+       */
+      flags: React.PropTypes.array.isRequired,
+    },
+
+    getCornerIcon() {
+      const {flags} = this.props;
+      if (flags.indexOf("bot") > -1) {
+        return "setting";
+      }
+
+      if (flags.indexOf("op") > -1) {
+        return "yellow privacy";
+      }
+
+      return null;
+    },
+
+    getDefaultProps() {
+      return {
+        size: ""
+      }
+    },
+
+    render() {
+      const {flags} = this.props;
+
+      let mainIconClass = "";
+      if (flags.indexOf("away") > -1) {
+        mainIconClass = "yellow";
+      } else if (flags.indexOf("offline") > -1) {
+        mainIconClass = "lightgrey";
+      } else {
+        mainIconClass = "green";
+      }
+
+      /*const mainIconClass = classNames(
+        "icon", 
+        { "blue": flags.indexOf("online") > 0 },
+        { "yellow": flags.indexOf("away") > 0 },
+        { "lightgrey": flags.indexOf("offline") > 0 }
+      );*/
+
+
+
+      const cornerIcon = this.getCornerIcon();
+      return (
+        <i className={ this.props.size + " icons" }>
+          <i className={ mainIconClass + " user icon" }></i>
+          { cornerIcon ? <i className={ this.getCornerIcon() + " corner icon" }></i> : null }
+        </i>
+      );
+    },
+  }),
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from './semantic/Modal'
 
-import { DupeEnum, DupeName } from 'constants/DupeConstants'
+import DupeEnum from 'constants/DupeConstants'
 import { PriorityEnum } from 'constants/QueueConstants'
 import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants'
 import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants'
@@ -10,6 +10,8 @@ import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.j
 
 import SocketService from 'services/SocketService'
 import { RouteContext } from 'react-router'
+import FileBrowser from './FileBrowser'
+import TypeConvert from 'utils/TypeConvert'
 
 const MenuItem = React.createClass({
   render: function() {
@@ -139,7 +141,7 @@ export default React.createClass({
     this.fetchPaths(HISTORY_ITEMS_URL + "/" + HistoryEnum.HISTORY_DOWNLOAD_DIR, "history_paths");
 
     const { itemInfo } = this.props;
-    const dupeName = DupeName(itemInfo.dupe);
+    const dupeName = TypeConvert.dupeToStringType(itemInfo.dupe);
     if (dupeName.indexOf("queue") > -1) {
       this.fetchDupePaths(QUEUE_DUPE_PATHS_URL);
     }
@@ -165,6 +167,7 @@ export default React.createClass({
       case 'favorites': return <AccordionTargets groupedPaths={ this.state.favorite_paths } downloadHandler={ this.handleDownload }/>;
       case 'history': return <PathList paths={ this.state.history_paths } downloadHandler={ this.handleDownload }/>;
       case 'dupes': return <PathList paths={ this.state.dupe_paths } downloadHandler={ this.handleDownload }/>;
+      case 'browse': return <FileBrowser initialPath={ "" } itemIcon="green download" itemIconClickHandler={ this.handleDownload }/>;
       default: return <div/>;
     }
   },
@@ -212,7 +215,7 @@ export default React.createClass({
             </div>
           </div>
           <div className="twelve wide stretched column">
-            <div className="ui segment">
+            <div className="ui segment main-content">
               { this.getComponent() }
             </div>
           </div>

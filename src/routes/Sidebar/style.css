@@ -5,8 +5,7 @@
 	max-width:1000px;
 	min-width:650px;
 	background-color: #1b1c1d;
-	padding: 10px;
-	padding-right: 100px;
+	padding: 10px 100px 10px 10px;
 }
 
 #sidebar-container {
@@ -23,4 +22,8 @@
 
 #sidebar .item.tab-layout .mini.label {
 	margin-right: 5px;
+}
+
+#sidebar .ui.grid {
+	margin: 0px !important;
 }

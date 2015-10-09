@@ -35,6 +35,14 @@
 	margin-bottom:10px;
 }
 
+.message-view .ui.form {
+	display: flex;
+}
+
+.message-view .ui.form textarea {
+	resize: none;
+}
+
 .message-list {
 	margin-right:10px !important;
 }
@@ -43,6 +51,15 @@
 	display: inline-flex;
     flex-direction: column;
     margin-right: 20px;
+}
+
+#sidebar .tab-header {
+    display: flex;
+    align-items: flex-start;
+}
+
+#sidebar .tab-header .header {
+    display: flex;
 }
 
 .chat-message .message-author-name {

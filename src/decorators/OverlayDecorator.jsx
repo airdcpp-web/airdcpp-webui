@@ -17,8 +17,7 @@ export default function(Component, semanticModuleName, semanticModuleSettings) {
     routerWillLeave(nextLocation) {
       this.changeHistoryState = false;
 
-      let dom = React.findDOMNode(this);
-      $(dom)[semanticModuleName]('hide');
+      this.hide();
     },
 
     propTypes: {
@@ -45,11 +44,13 @@ export default function(Component, semanticModuleName, semanticModuleSettings) {
       $(dom)[semanticModuleName](settings)[semanticModuleName]('show');
     },
 
+    hide() {
+      let dom = React.findDOMNode(this);
+      $(dom)[semanticModuleName]('hide');
+    },
+
     onHide() {
       this.props.onHide();
-      //if (this.changeHistoryState) {
-      //  this.props.restoreState();
-      //}
     },
 
     onHidden() {

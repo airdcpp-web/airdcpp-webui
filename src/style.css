@@ -31,11 +31,11 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	color:black !important;
 }
 
-.table-dropdown:hover, .public_fixedDataTableCell_main a:hover {
+.table-dropdown:hover, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
 	cursor:pointer;
 }
 
-.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover {
+.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
 	text-decoration:underline;
 }
 
@@ -50,6 +50,16 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 .download-dialog .accordion {
 	max-height: 300px;
 	overflow-y: auto;
+}
+
+.file-browser .table-container {
+	max-height: 300px;
+	overflow-y: auto;
+	margin-top:10px;
+}
+
+.file-browser .table i.download.link {
+	margin-left: 5px;
 }
 
 #side-menu {
@@ -118,4 +128,8 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 
 #side-menu .item>.label {
 	margin-left: 0px !important;
+}
+
+.ui.breadcrumb.segment {
+	display:flex !important;
 }

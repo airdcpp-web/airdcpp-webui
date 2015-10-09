@@ -23,14 +23,18 @@ const MessageComposer = React.createClass({
   render: function() {
     return (
       <div className="ui form">
-      <textarea
-        rows="2"
-        className="message-composer"
-        name="message"
-        value={this.state.text}
-        onChange={this._onChange}
-        onKeyDown={this._onKeyDown}
-      />
+        <textarea
+          resize="none"
+          rows="2"
+          className="message-composer"
+          name="message"
+          value={this.state.text}
+          onChange={this._onChange}
+          onKeyDown={this._onKeyDown}
+        />
+        <div className="blue large ui icon button" onClick={ this._sendText }>
+          <i className="send icon"></i>
+        </div>
       </div>
     );
   },
@@ -42,53 +46,72 @@ const MessageComposer = React.createClass({
   _onKeyDown: function(event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       event.preventDefault();
-      var text = this.state.text.trim();
-      if (text) {
-        this.props.handleSend(text);
-      }
-      this.setState({text: ''});
+      this._sendText();
     }
+  },
+
+  _sendText() {
+    var text = this.state.text.trim();
+    if (text) {
+      this.props.handleSend(text);
+    }
+    this.setState({text: ''});
   }
 });
 
-const MessageListItem = React.createClass({
-  displayName: "MessageListItem",
+const ChatMessage = React.createClass({
+  displayName: "ChatMessage",
   propTypes: {
     message: React.PropTypes.object
   },
 
   render: function() {
     let {message} = this.props;
-    if (message.chat_message) {
-      message = message.chat_message;
-      return (
-        <div className="ui item message-list-item chat-message">
-          <div className="header message-author-name">{message.from.nick}</div>
-          <div className="message-time">
-            {Formatter.formatTimestamp(message.time)}
-          </div>
-          <div className="message-text">{message.text}</div>
+    return (
+      <div className="ui item message-list-item chat-message">
+        <div className="header message-author-name">{message.from.nick}</div>
+        <div className="message-time">
+          {Formatter.formatTimestamp(message.time)}
         </div>
-      );
-    } else {
-      message = message.log_message;
-      return (
-        <div className="ui item message-list-item status-message">
-          <div className="message-time">
-            {Formatter.formatTimestamp(message.time)}
-          </div>
-          <div className="message-text"><i>{message.text}</i></div>
+        <div className="message-text">{message.text}</div>
+      </div>
+    );
+  }
+});
+
+const StatusMessage = React.createClass({
+  displayName: "StatusMessage",
+  propTypes: {
+    message: React.PropTypes.object
+  },
+
+  render: function() {
+    let {message} = this.props;
+    return (
+      <div className="ui item message-list-item status-message">
+        <div className="message-time">
+          {Formatter.formatTimestamp(message.time)}
         </div>
-      );
-    }
+        <div className="message-text"><i>{message.text}</i></div>
+      </div>
+    );
   }
 });
 
 function getMessageListItem(message) {
+  if (message.chat_message) {
+    return (
+      <ChatMessage
+        key={message.chat_message.id}
+        message={message.chat_message}
+      />
+    );
+  }
+
   return (
-    <MessageListItem
-      key={message.id}
-      message={message}
+    <StatusMessage
+      key={message.log_message.id}
+      message={message.log_message}
     />
   );
 }

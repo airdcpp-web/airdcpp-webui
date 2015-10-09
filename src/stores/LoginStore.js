@@ -12,6 +12,7 @@ export default Reflux.createStore({
   init: function() {
     this._token = this.loadProperty("auth_token");
     this._user = this.loadProperty("web_user");
+    this._systemInfo = this.loadProperty("system_info");
 
     this._lastError = null;
     this._socketAuthenticated = false;
@@ -37,11 +38,13 @@ export default Reflux.createStore({
   onLoginCompleted(res) {
     this._token = res.token;
     this._user = res.user;
+    this._systemInfo = res.system;
     this._lastError = null;
     this._socketAuthenticated = true;
 
     this.saveProperty("auth_token", res.token);
     this.saveProperty("web_user", res.user);
+    this.saveProperty("system_info", this._systemInfo);
 
     this.trigger(this.getState());
   },
@@ -117,5 +120,9 @@ export default Reflux.createStore({
 
   get isLoggedIn() {
     return !!this._user;
-  }
+  },
+
+  get systemInfo() {
+    return this._systemInfo;
+  },
 });

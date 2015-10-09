@@ -18,10 +18,6 @@ const ChatSessionStore = Reflux.createStore({
   },
 
   onFetchSessionsCompleted: function(data) {
-    if (!data) {
-      return;
-    }
-
     this._chatSessions = data;
     this.trigger(this._chatSessions);
   },
