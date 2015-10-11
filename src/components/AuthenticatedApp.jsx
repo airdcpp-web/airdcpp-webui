@@ -12,9 +12,7 @@ import SideMenu from './SideMenu'
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 import { SIDEBAR_ID } from 'constants/OverlayConstants'
 
-import { History } from 'react-router';
-import { Dimmer, Loader } from 'react-semantify'
-import { RouteContext } from 'react-router'
+import { History, RouteContext } from 'react-router';
 
 const SocketConnectStatus = React.createClass({
   render() {
@@ -26,7 +24,7 @@ const SocketConnectStatus = React.createClass({
     }
 
     return (
-      <Dimmer className="page visible" active={ this.props.active }>
+      <div className="ui dimmer page visible" active={ this.props.active }>
         <div className="content">
           <div className="center">
             <div className="ui text loader">
@@ -34,7 +32,7 @@ const SocketConnectStatus = React.createClass({
             </div>
           </div>
         </div>
-      </Dimmer>
+      </div>
     );
   }
 });

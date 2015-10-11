@@ -107,8 +107,8 @@ const ChatSession = React.createClass({
   displayName: "ChatSession",
   mixins: [Reflux.listenTo(PrivateChatMessageStore, "onMessagesChanged")],
 
-  onMessagesChanged(messages, cid) {
-    if (cid !== this.props.params.cid) {
+  onMessagesChanged(messages, id) {
+    if (id !== this.props.params.id) {
       return;
     }
 
@@ -122,26 +122,26 @@ const ChatSession = React.createClass({
     }
   },
 
-  updateSession(cid) {
-    PrivateChatActions.sessionChanged(cid);
-    PrivateChatActions.setRead(cid);
+  updateSession(id) {
+    PrivateChatActions.sessionChanged(id);
+    PrivateChatActions.setRead(id);
 
-    PrivateChatActions.fetchMessages(cid);
+    PrivateChatActions.fetchMessages(id);
 
-    this.setState({ session: PrivateChatSessionStore.getSession(cid) });
+    this.setState({ session: PrivateChatSessionStore.getSession(id) });
   },
 
   componentWillReceiveProps(nextProps) {
-    const {cid} = nextProps.params
-    if (!this.state.session || this.state.session.user.cid !== cid) {
+    const {id} = nextProps.params
+    if (!this.state.session || this.state.session.id !== id) {
       this.setState({ messages: [] });
 
-      this.updateSession(cid);
+      this.updateSession(id);
     }
   },
 
   componentWillMount() {
-    this.updateSession(this.props.params.cid);
+    this.updateSession(this.props.params.id);
   },
 
   _onMessage(data) {
@@ -149,12 +149,16 @@ const ChatSession = React.createClass({
     this.setState({ messages: messages });
   },
 
+  componentWillUnmount() {
+    PrivateChatActions.sessionChanged(null);
+  },
+
   handleClose() {
-    PrivateChatActions.removeSession(this.state.session.user.cid);
+    PrivateChatActions.removeSession(this.state.session.id);
   },
 
   handleSend(message) {
-    PrivateChatActions.sendMessage(this.state.session.user.cid, message);
+    PrivateChatActions.sendMessage(this.state.session.id, message);
   },
 
   render() {

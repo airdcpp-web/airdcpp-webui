@@ -7,7 +7,7 @@ import OverlayDecorator from 'decorators/OverlayDecorator'
 
 let settingCallback;
 
-const Modal = {
+const Modal = React.createClass({
   displayName: "Modal",
   propTypes: {
 
@@ -61,9 +61,20 @@ const Modal = {
     if (saveHandler) {
       this.setState({ saving: true });
       let promise = saveHandler();
-      promise.then(this.hide).catch(() => this.setState({ saving: false }));
+      promise.then(this.props.hide).catch(() => this.setState({ saving: false }));
       return false;
     }
+  },
+
+  componentDidMount() {
+    this.props.showOverlay({
+      movePopup:false,
+      onApprove: this.onApprove,
+      onDeny: this.onDeny,
+      closable: this.props.closable,
+      detachable: false,
+      allowMultiple: false
+    })
   },
 
   render: function() {
@@ -96,18 +107,7 @@ const Modal = {
           </div>
         )}
       </div>);
-  },
-
-  getOverlaySettings(props) {
-    return {
-      movePopup:false,
-      onApprove: this.onApprove,
-      onDeny: this.onDeny,
-      closable: props.closable,
-      detachable: false,
-      allowMultiple: false
-    }
   }
-};
+});
 
-export default OverlayDecorator(React.createClass(Modal), "modal", Modal.getOverlaySettings.bind(Modal))
+export default OverlayDecorator(Modal, "modal")

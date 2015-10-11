@@ -7,7 +7,13 @@ import LoginStore from 'stores/LoginStore'
 import SocketService from 'services/SocketService'
 import Formatter from 'utils/Format';
 
+import PathBreadcrumb from 'components/PathBreadcrumb'
+import ErrorMessage from 'components/ErrorMessage'
+import Accordion from 'components/semantic/Accordion'
+import ActionInput from 'components/semantic/ActionInput'
+
 const PathItem = React.createClass({
+  displayName: "PathItem",
   render: function() {
     const { item } = this.props;
     return (
@@ -20,9 +26,9 @@ const PathItem = React.createClass({
             {this.props.itemIcon ? <i className={ this.props.itemIcon + " link icon" } onClick={ () => this.props.iconClickHandler(item.name) }></i> : null}
           </Formatter.FileNameFormatter>
         </td>
-        <td>
+        {/*<td>
           { Formatter.formatSize(item.size) }
-        </td>
+        </td>*/}
       </tr>
     );
   }
@@ -46,6 +52,7 @@ const PathList = React.createClass({
     items: React.PropTypes.array.isRequired,
   },
 
+  displayName: "PathList",
   sort(a, b) {
     if (a.type.id !== b.type.id && (a.type.id === "directory" || b.type.id === "directory")) {
       return a.type.id === "directory" ? -1 : 1;
@@ -61,7 +68,7 @@ const PathList = React.createClass({
           <thead>
             <tr>
               <th>Name</th>
-              <th>Size</th>
+              {/*<th>Size</th>*/}
             </tr>
           </thead>
           <tbody>
@@ -73,67 +80,32 @@ const PathList = React.createClass({
   }
 });
 
-const Breadcrumb = React.createClass({
+const CreateDirectory = React.createClass({
   propTypes: {
     /**
-     * Function handling the path selection. Receives the selected path as argument.
+     * Function to call with the value
      */
-    itemClickHandler: React.PropTypes.func.isRequired,
-
-    /**
-     * Function handling the path selection. Receives the selected path as argument.
-     */
-    rootName: React.PropTypes.string.isRequired,
-
-    /**
-     * Root path that will be appended to the beginning of the returned path
-     */
-    rootPath: React.PropTypes.string.isRequired,
-
-    /**
-     * Root path that will be appended to the beginning of the returned path
-     */
-    separator: React.PropTypes.string.isRequired,
-
-    /**
-     * Array of path objects to list
-     */
-    tokens: React.PropTypes.array.isRequired,
+    handleAction: React.PropTypes.func.isRequired
   },
 
-  onClick(token, index) {
-    let path = this.props.rootPath;
-    for (let i = 0; i <= index; i++) {
-        if (path.length === 0) {
-          // No separator after the drive on Windows
-          path += this.props.tokens[i];
-        } else {
-          path += this.props.tokens[i] + this.props.separator;
-        }
-    }
-
-    this.props.itemClickHandler(path);
-  },
-
+  displayName: "CreateDirectory",
   render: function() {
-    const items = this.props.tokens.map((token, index) => {
-      return (
-        <div>
-          <i className="right chevron icon divider"></i>
-          <a className="section" onClick={() => this.onClick(token, index)}>{token}</a>
-        </div>)
-    });
-
     return (
-      <div className="ui breadcrumb segment">
-        <a className="section" onClick={() => this.props.itemClickHandler(this.props.rootPath)}>{this.props.rootName}</a>
-        {items}
-      </div>
+      <Accordion>
+        <div className="title">
+          <i className="dropdown icon"></i>
+          Create directory
+        </div>
+
+        <div className="content">
+          <ActionInput caption="Create" icon="plus" handleAction={this.props.handleAction} placeholder="Directory name"/>
+        </div>
+      </Accordion>
     );
   }
 });
 
-export default React.createClass({
+const FileBrowser = React.createClass({
   propTypes: {
     /**
      * Initial directory to show
@@ -156,13 +128,16 @@ export default React.createClass({
     onDirectoryChanged: React.PropTypes.func
   },
 
+  displayName: "FileBrowser",
   getInitialState() {
     this._pathSeparator = LoginStore.systemInfo.path_separator;
     this._platform = LoginStore.systemInfo.platform;
 
     return {
       currentDirectory: this.props.initialPath,
-      items: null
+      items: [],
+      loading: true,
+      error: null
     }
   },
 
@@ -173,10 +148,21 @@ export default React.createClass({
   },
 
   fetchItems(path) {
-    this.setState({ items: null, currentDirectory: path });
+    this.setState({ 
+      error: null,
+      loading: true
+    });
+
     SocketService.post(FILESYSTEM_LIST_URL, { path: path, directories_only: true })
-      .then(data => this.setState({ items: data }))
-      .catch(error => console.error("Failed to fetch paths", path, error.message));
+      .then(data => { this.setState({ 
+        currentDirectory: path,
+        items: data,
+        loading: false
+      }) })
+      .catch(error => this.setState({ 
+        error: error.reason,
+        loading: false
+      }));
   },
 
   componentDidMount() {
@@ -226,16 +212,33 @@ export default React.createClass({
     this.props.itemIconClickHandler(nextPath);
   },
 
+  _createDirectory(directoryName) {
+    this.setState({ 
+      error: null
+    });
+
+    const newPath = this.state.currentDirectory + directoryName + this._pathSeparator;
+    SocketService.post(FILESYSTEM_DIRECTORY_URL, { path: newPath })
+      .then(data => this.fetchItems(this.state.currentDirectory))
+      .catch(error => this.setState({ 
+        error: error.reason
+      }));
+  },
+
   render: function() {
-    if (!this.state.items) {
-      return <div className="ui text loader">Loading</div>;
+    if (this.state.loading) {
+      return <div className="ui active text loader">Loading</div>;
     }
 
     const rootName = this._platform == "windows" ? "Computer" : "Root";
     return (
       <div className="file-browser">
-        <Breadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={""} rootName={rootName} itemClickHandler={this.fetchItems}/>
+        { this.state.error ? (<ErrorMessage title="Failed to load content" description={this.state.error}/>) : null }
+        <PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={""} rootName={rootName} itemClickHandler={this.fetchItems}/>
         <PathList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
+        { this.state.currentDirectory ? <CreateDirectory handleAction={this._createDirectory}/> : null }
       </div>
   )}
 });
+
+export default FileBrowser;

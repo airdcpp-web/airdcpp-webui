@@ -1,6 +1,5 @@
 import React from 'react';
 import Moment from 'moment';
-import { Icon, Flag } from 'react-semantify'
 import classNames from 'classnames';
 
 export default {
@@ -111,7 +110,7 @@ export default {
           case "directory": return "file outline yellow folder";
           case "file": return this.fileToIcon(item.content_type);
           case "drive_fixed": return "grey disk outline";
-          case "drive_remote": return "server";
+          case "drive_remote": return "grey server";
           case "removable": return "grey external share";
           default: return "file outline";
         }
@@ -120,7 +119,7 @@ export default {
       render: function() {
         return (
           <div>
-          <Icon className={ "large " + this.typeToIcon(this.props.item) }/>
+          <i className={ "icon large " + this.typeToIcon(this.props.item) }/>
             { this.props.children }
           </div>
         );
@@ -132,7 +131,7 @@ export default {
         const { country_id } = this.props.item;
         return (
           <div>
-          <Flag className={ country_id.length === 0 ? "icon grey " : country_id.toLowerCase() }/>
+          <div className={ "ui flag " + (country_id.length === 0 ? "icon grey " : country_id.toLowerCase()) }/>
           { this.props.item.str }
           </div>
         );

@@ -3,43 +3,12 @@ import Reflux from 'reflux';
 
 import UserSearchInput from 'components/UserSearchInput'
 import TabLayout from 'routes/Sidebar/components/TabLayout'
+import NewLayout from 'routes/Sidebar/components/NewLayout'
 
 import TypeConvert from 'utils/TypeConvert'
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
-import {PRIVATE_CHAT_SESSION_URL} from 'constants/PrivateChatConstants';
-
-
-const NewLayout = React.createClass({
-  propTypes: {
-    /**
-     * Title of the button
-     */
-    title: React.PropTypes.any.isRequired,
-
-    /**
-     * Title of the button
-     */
-    subheader: React.PropTypes.any,
-  },
-
-  displayName: "SidebarNewLayout",
-  render: function() {
-    return (
-      <div>
-      	<h2 className="ui header sidebar-new">
-	      	<i className={ this.props.icon + " icon" }></i>
-	      	<div className="content">
-		        {this.props.title}
-		        { this.props.subheader ? <div className="sub header">{ this.props.subheader }</div> : null }
-	        </div>
-        </h2>
-        {this.props.children}
-      </div>
-    );
-  }
-});
 
 const Messages = React.createClass({
   mixins: [Reflux.connect(PrivateChatSessionStore, "chatSessions")],
@@ -54,10 +23,6 @@ const Messages = React.createClass({
 
   _idGetter(session) {
   	return session.user.cid;
-  },
-
-  handleSelect(session) {
-  	this.props.location.pushState(...this.props.location.state, PRIVATE_CHAT_SESSION_URL + session.user.cid);
   },
 
   _labelGetter(session) {
@@ -78,7 +43,6 @@ const Messages = React.createClass({
 	      	location={this.props.location} 
 	      	items={this.state.chatSessions} 
 	      	nameGetter={this._nameGetter} 
-	      	idGetter={ this._idGetter }
 	      	labelGetter={this._labelGetter}
 	      	statusGetter={this._statusGetter}
 	      	labelColor="red">

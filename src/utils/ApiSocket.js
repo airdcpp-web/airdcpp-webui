@@ -43,7 +43,7 @@ export default class ApiSocket {
 
     self.socket.onerror = function(event){
         console.log("Connecting socket failed");
-        SocketActions.state.disconnected(self, "Connecting failed");
+        SocketActions.state.disconnected(self, "Cannot connect to the server");
 
         if (reconnectOnFailure) {
             self._reconnectTimer = setTimeout(() => {
@@ -51,7 +51,7 @@ export default class ApiSocket {
                 self.connectInternal(reconnectOnFailure, resolve, reject, self);
             }, 3000);
         } else {
-            reject("Connecting failed");
+            reject("Cannot connect to the server");
         }
     }
   }

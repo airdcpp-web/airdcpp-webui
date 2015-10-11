@@ -8,8 +8,14 @@ import LoginActions from 'actions/LoginActions'
 import { Link } from 'react-router';
 import TransferStats from 'components/TransferStats'
 
+import HubSessionStore from 'stores/HubSessionStore'
+import HubActions from 'actions/HubActions'
+
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
+
+import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
+import NotificationActions from 'actions/NotificationActions'
 
 const MenuItem = React.createClass({
   onClick: function(evt) {
@@ -31,31 +37,45 @@ const MenuItem = React.createClass({
   }
 });
 
-export default React.createClass({
-  mixins: [Reflux.connect(PrivateChatSessionStore, "chatSessions")],
+const SideMenu = React.createClass({
+  mixins: [Reflux.ListenerMixin, Reflux.connect(PrivateChatSessionStore, "chatSessions"), Reflux.connect(HubSessionStore, "hubSessions")],
   displayName: "Side menu",
-  getChildContext: function () {
-    return {
-      pathname: this.props.location.pathname
-    };
+
+  componentDidMount() {
+    this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
+  },
+
+  onPrivateMessage(messages) {
+    if (messages.length == 0) {
+      return;
+    }
+
+    const last = messages[messages.length - 1];
+    if (last.chat_message && !last.chat_message.is_read) {
+      const cid = last.chat_message.reply_to.cid;
+      NotificationActions.info({
+        title: last.chat_message.from.nick,
+        message: last.chat_message.text,
+        uid: cid,
+        action: {
+          label: "View message",
+          callback: () => { History.pushSidebar(this.props.location, 'messages/session/' + cid); }
+        }
+      });
+    }
   },
 
   componentWillMount() {
     PrivateChatActions.fetchSessions();
+    HubActions.fetchSessions();
   },
-
-  childContextTypes: {
-    pathname: React.PropTypes.string.isRequired
-  },
-
 
   render() {
-    let tmp = this.props;
     return (
       <div id="side-menu">
         <div className="content">
           <div className="ui labeled icon vertical inverted menu">
-            <MenuItem labelCount={ 0 } labelColor="red" location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
+            <MenuItem labelCount={ HubSessionStore.countUnreadSessions() } labelColor="blue" location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
             <MenuItem labelCount={ PrivateChatSessionStore.countUnreadSessions() } labelColor="red" location={this.props.location} icon="blue comments" title="Messages" page="messages"/>
             <MenuItem labelCount={ 0 } location={this.props.location} icon="blue browser" title="Filelists" page="filelists"/>
           </div>
@@ -68,5 +88,4 @@ export default React.createClass({
   }
 });
 
-
-          //<TransferStats className="ui fixed right fixed vertical inverted menu"/>
+export default SideMenu

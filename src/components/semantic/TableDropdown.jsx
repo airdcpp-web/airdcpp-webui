@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon } from 'react-semantify'
 import Popup from './Popup'
 import classNames from 'classnames';
 

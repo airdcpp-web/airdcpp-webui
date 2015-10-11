@@ -10,24 +10,16 @@ const Notifications = React.createClass({
 
   _notificationSystem: null,
 
-  _addNotification: function(level, message, uid = null, button = null) {
-    this._notificationSystem.addNotification({
-      message: message,
+  _addNotification: function(level, notification) {
+    this._notificationSystem.addNotification(Object.assign(notification, {
       level: level,
       position: 'tl',
-      autoDismiss: 5,
-      action: button,
-      uid: uid
-    });
+      autoDismiss: 5
+    }));
   },
 
   componentDidMount: function() {
     this._notificationSystem = this.refs.notificationSystem;
-
-    /*NotificationActions.success.listen((...props) => this._addNotification("success", ...props));
-    NotificationActions.info.listen((...props) => this._addNotification("info", ...props));
-    NotificationActions.warning.listen((...props) => this._addNotification("warning", ...props));
-    NotificationActions.error.listen((...props) => this._addNotification("error", ...props));*/
   },
 
   render: function() {

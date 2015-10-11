@@ -7,7 +7,7 @@ import History from 'utils/History'
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
 import NotificationActions from 'actions/NotificationActions'
 
-export const PrivateChatActions = Reflux.createActions([
+const PrivateChatActions = Reflux.createActions([
   { "fetchMessages": { asyncResult: true} },
   { "fetchSessions": { asyncResult: true} },
   { "createSession": { asyncResult: true } },
@@ -75,7 +75,10 @@ PrivateChatActions.createSession.completed.listen(function(data, user, location)
 });
 
 PrivateChatActions.createSession.failed.listen(function(error) {
-	NotificationActions.error("Failed to create chat session: " + error.message);
+  NotificationActions.error({ 
+    title: "Failed to create chat session",
+    message: error.message
+  });
 });
 
 PrivateChatActions.removeSession.listen(function(cid) {
@@ -86,7 +89,10 @@ PrivateChatActions.removeSession.listen(function(cid) {
 });
 
 PrivateChatActions.removeSession.failed.listen(function(error) {
-	NotificationActions.error("Failed to remove chat session: " + error.message);
+  NotificationActions.error({ 
+    title: "Failed to remove chat session",
+    message: error.message
+  });
 });
 
 PrivateChatActions.sendMessage.listen(function(cid, message) {
@@ -97,7 +103,10 @@ PrivateChatActions.sendMessage.listen(function(cid, message) {
 });
 
 PrivateChatActions.sendMessage.failed.listen(function(error) {
-	NotificationActions.error("Failed to send message: " + error.message);
+  NotificationActions.error({ 
+    title: "Failed to send message",
+    message: error.message
+  });
 });
 
 export default PrivateChatActions;

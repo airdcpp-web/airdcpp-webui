@@ -8,7 +8,7 @@ import { Lifecycle } from 'react-router'
 
 import '../style.css'
 
-export default function(Component, semanticModuleName, semanticModuleSettings) {
+export default function(Component, semanticModuleName) {
   const OverlayDecorator = React.createClass({
     displayName: "OverlayDecorator",
     mixins: [ Lifecycle ],
@@ -32,13 +32,11 @@ export default function(Component, semanticModuleName, semanticModuleSettings) {
       onHide: React.PropTypes.func.isRequired
     },
 
-    componentDidMount() {
-      const settings = Object.assign({
+    showOverlay(componentSettings = {}) {
+      const settings = Object.assign(componentSettings, {
         onHidden: this.onHidden,
         onHide: this.onHide,
-      }, semanticModuleSettings(this.props));
-
-
+      });
 
       let dom = React.findDOMNode(this);
       $(dom)[semanticModuleName](settings)[semanticModuleName]('show');
@@ -58,7 +56,7 @@ export default function(Component, semanticModuleName, semanticModuleSettings) {
     },
 
     render() {
-      return <Component {...this.props} {...this.state}/>
+      return <Component {...this.props} {...this.state} showOverlay={this.showOverlay} hide={this.hide}/>
     }
   });
 

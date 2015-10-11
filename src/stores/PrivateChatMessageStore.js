@@ -28,13 +28,9 @@ const PrivateChatMessageStore = Reflux.createStore({
   },
 
   _onChatMessage(data, cid) {
-    if (!data.is_read && cid !== this._activeSession) {
-      if (cid !== this._activeSession) {
-
-      } else {
-        PrivateChatActions.setRead(this.state.session.user.cid);
-        data.is_read = true;
-      }
+    if (!data.is_read && cid === this._activeSession) {
+      PrivateChatActions.setRead(cid);
+      data.is_read = true;
     }
 
     this._addMessage(cid, { chat_message: data });
@@ -45,7 +41,8 @@ const PrivateChatMessageStore = Reflux.createStore({
   },
 
   _addMessage(cid, message) {
-    this._messages[cid] = React.addons.update(this._messages[cid], {$push: [ message ]});
+    let userMessages = this._messages[cid] || [];
+    this._messages[cid] = React.addons.update(userMessages, {$push: [ message ]});
     this.trigger(this._messages[cid], cid);
   },
 

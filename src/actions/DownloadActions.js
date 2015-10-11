@@ -19,14 +19,14 @@ export const DownloadActions = Reflux.createActions([
 ]);
 
 DownloadActions.download.listen(function(data) {
-    return data.handler(data.id);
+    return data.handler(data);
 });
 
 DownloadActions.downloadTo.listen(function(handlerData) {
   const { pathname } = handlerData.location;
   
   History.pushModal(handlerData.location, pathname + '/download', DOWNLOAD_MODAL_ID, {
-    downloadHandler: downloadData => handlerData.handler(handlerData.id, downloadData),
+    downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
     itemInfo:handlerData.itemInfo
   });
 });

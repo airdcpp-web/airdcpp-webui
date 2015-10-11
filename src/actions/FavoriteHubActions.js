@@ -87,11 +87,17 @@ FavoriteHubActions.remove.confirmed.listen(function(hub) {
 });
 
 FavoriteHubActions.remove.completed.listen(function(hub) {
-  NotificationActions.success("The hub " + hub.name + " has been removed successfully");
+  NotificationActions.error({ 
+    title: hub.name,
+    message: "The hub has been removed successfully"
+  });
 });
 
 FavoriteHubActions.remove.failed.listen(function(hub, error) {
-  NotificationActions.error("Failed to remove the hub " + hub.name + ": " + error.message);
+  NotificationActions.error({ 
+    title: hub.name,
+    message: "Failed to remove the hub: " + error.reason
+  });
 });
 
 export default FavoriteHubActions;

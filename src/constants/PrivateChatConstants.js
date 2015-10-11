@@ -6,7 +6,7 @@ export default {
   PRIVATE_CHAT_SESSIONS_URL: PRIVATE_CHAT_MODULE_URL + "/sessions",
   PRIVATE_CHAT_SESSION_URL: PRIVATE_CHAT_MODULE_URL + "/session",
 
-  CHAT_SESSION_CREADED: "chat_session_created",
+  CHAT_SESSION_CREATED: "chat_session_created",
   CHAT_SESSION_REMOVED: "chat_session_removed",
   CHAT_SESSION_UPDATED: "chat_session_updated",
 

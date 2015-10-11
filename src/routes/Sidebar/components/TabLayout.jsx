@@ -105,11 +105,6 @@ const TabLayout = React.createClass({
     nameGetter: React.PropTypes.func.isRequired,
 
     /**
-     * Function receiving an item object that returns the item ID
-     */
-    idGetter: React.PropTypes.func.isRequired,
-
-    /**
      * Function receiving label after the name (unread count etc.)
      */
     labelGetter: React.PropTypes.func.isRequired,
@@ -130,12 +125,12 @@ const TabLayout = React.createClass({
 
   },
 
-  getUrl(cid) {
-  	return this.props.itemUrl + "/" + cid;
+  getUrl(id) {
+  	return this.props.itemUrl + "/" + id;
   },
 
-  redirectTo(cid) {
-  	History.replaceSidebar(this.props.location, this.getUrl(cid));
+  redirectTo(id) {
+  	History.replaceSidebar(this.props.location, this.getUrl(id));
   },
 
   hasParams() {
@@ -151,7 +146,7 @@ const TabLayout = React.createClass({
   },
 
   findItem(items, id) {
-  	return items.find(item => this.props.idGetter(item) === id)
+  	return items.find(item => item.id === id)
   },
 
   componentWillReceiveProps(nextProps) {
@@ -186,7 +181,7 @@ const TabLayout = React.createClass({
   	  newItemPos = oldPos-1;
   	}
 
-	this.redirectTo(this.props.idGetter(nextProps.items[newItemPos]));
+	this.redirectTo(nextProps.items[newItemPos].id);
   },
 
   componentDidUpdate() {
@@ -206,7 +201,7 @@ const TabLayout = React.createClass({
   	if (lastId && this.findItem(this.props.items, lastId)) {
   		this.redirectTo(lastId);
   	} else if (this.props.items.length > 0) {
-  		this.redirectTo(this.props.items[0].user.cid);
+  		this.redirectTo(this.props.items[0].id);
   	}
   },
 
@@ -231,7 +226,7 @@ const TabLayout = React.createClass({
 
   render() {
     const menuItems = this.props.items.map(item => {
-      const id = this.props.idGetter(item);
+      const id = item.id;
       return (
         <MenuItem key={ id } 
           url={this.getUrl(id)}

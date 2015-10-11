@@ -9,26 +9,9 @@ import History from 'utils/History'
 import NotificationActions from 'actions/NotificationActions'
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 
-//import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
-
 const NotificationStore = Reflux.createStore({
   listenables: NotificationActions,
   init: function() {
-    //this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
-  },
-
-  onPrivateMessage(messages, cid) {
-    if (messages.length == 0) {
-      return;
-    }
-
-    const last = messages[messages.length - 1];
-    if (last.chat_message && !last.chat_message.is_read) {
-      this.trigger("info", last.chat_message.text, last.chat_message.user.cid, {
-        label: "View message",
-        callback: () => { History.pushSidebar(null, 'messages/session/' + last.chat_message.user.cid); }
-      });
-    }
   },
 
   onSuccess(...props) {
@@ -58,36 +41,41 @@ const NotificationStore = Reflux.createStore({
       case StatusEnum.STATUS_QUEUED: break;
       case StatusEnum.STATUS_FAILED_MISSING:
       case StatusEnum.STATUS_SHARING_FAILED: {
-        text = "Scanning failed for the bundle " + bundle.name + ": " + bundle.status.str;
+        text = "Scanning failed for the bundle: " + bundle.status.str;
         level = "error";
         break;
       };
       case StatusEnum.STATUS_FINISHED: {
-        text = "The bundle " + bundle.name + " has finished downloading";
+        text = "The bundle has finished downloading";
         level = "info";
         break;
       };
       case StatusEnum.STATUS_HASH_FAILED: {
-        text = "Failed to hash the bundle " + bundle.name + ": " + bundle.status.str;
+        text = "Failed to hash the bundle: " + bundle.status.str;
         level = "error";
         break;
       };
       case StatusEnum.STATUS_HASHED: {
-        text = "The bundle " + bundle.name + " has finished hashing";
+        text = "The bundle has finished hashing";
         level = "info";
         break;
       };
       case StatusEnum.STATUS_SHARED: {
-        text = "The bundle " + bundle.name + " has been added in share";
+        text = "The bundle has been added in share";
         level = "info";
         break;
       };
     }
 
     if (level) {
-      this.trigger(level, text, bundle.id, {
-        label: "View queue",
-        callback: () => { History.pushState(null, '/queue'); }
+      this.trigger("info", {
+        title: bundle.name,
+        message: text,
+        uid: bundle.id,
+        action: {
+          label: "View queue",
+          callback: () => { History.pushState(null, '/queue'); }
+        }
       });
     }
   }

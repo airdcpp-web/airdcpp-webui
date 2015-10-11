@@ -47,19 +47,21 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	height: 100%;
 }
 
-.download-dialog .accordion {
-	max-height: 300px;
+.download-dialog .accordion.download-targets {
+	max-height: 400px;
 	overflow-y: auto;
+	min-height: 200px;
 }
 
 .file-browser .table-container {
-	max-height: 300px;
+	max-height: 350px;
 	overflow-y: auto;
 	margin-top:10px;
+	min-height: 200px;
 }
 
 .file-browser .table i.download.link {
-	margin-left: 5px;
+	float:right;
 }
 
 #side-menu {

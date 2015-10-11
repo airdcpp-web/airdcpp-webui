@@ -9,7 +9,6 @@ import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable'
 
 import Formatter from 'utils/Format';
-import { Dropdown, Icon, Item } from 'react-semantify'
 import TableDropdown, { DropdownItem } from 'components/semantic/TableDropdown'
 
 export default React.createClass({

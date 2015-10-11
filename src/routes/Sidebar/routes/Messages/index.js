@@ -4,7 +4,7 @@ module.exports = {
   getChildRoutes (location, cb) {
     require.ensure([], (require) => {
       cb(null, [ {
-        path: 'session/:cid', 
+        path: 'session/:id', 
         component: require('./components/ChatSession'), 
       }])
     }, "messages-children")

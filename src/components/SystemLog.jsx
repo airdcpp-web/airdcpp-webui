@@ -1,7 +1,6 @@
 import React from 'react';
 import Format from 'utils/Format.js'
 import LogActions from 'actions/LogActions'
-import { Icon, Header, Grid, Row, Column } from 'react-semantify'
 
 const LogMessage = React.createClass({
   render: function() {
@@ -13,17 +12,17 @@ const LogMessage = React.createClass({
     }
 
     return (
-      <Row className="message">
-        <Column className="one wide">
+      <div className="ui row message">
+        <div className="ui column one wide">
           <Icon className={ iconClass }/>
-        </Column>
-        <Column className="twelve wide">
+        </div>
+        <div className="ui column twelve wide">
           { this.props.message.text }
-        </Column>
-        <Column className="three wide">
+        </div>
+        <div className="ui column three wide">
           { Format.formatTimestamp(this.props.message.time) }
-        </Column>
-      </Row>
+        </div>
+      </div>
     );
   }
 });
@@ -54,10 +53,10 @@ export default React.createClass({
 
     return (
       <div className="systemlogBox">
-        <Header>System log</Header>
-        <Grid ref="messageList" className="messageList three column divided" style={{maxHeight: 300 + 'px', overflowY: 'auto'}}>
+        <div className="ui header">System log</div>
+        <div ref="messageList" className="ui grid messageList three column divided" style={{maxHeight: 300 + 'px', overflowY: 'auto'}}>
           {messageList}
-        </Grid>
+        </div>
       </div>
     );
   }

@@ -15,6 +15,12 @@ const settings = {
 
 const Sidebar = React.createClass({
   displayName: "Sidebar",
+  componentDidMount() {
+    this.props.showOverlay({
+      context: '#main-layout'
+    });
+  },
+
   render() {
     return (
       <div id="sidebar" className="ui right vertical overlay sidebar">
@@ -24,18 +30,6 @@ const Sidebar = React.createClass({
       </div>
     );
   },
-
-  getOverlaySettings() {
-    return {
-      context: '#main-layout'
-    }
-  }
 });
 
-const getOverlaySettings = () => {
-  return {
-    context: '#main-layout'
-  }
-}
-
-export default OverlayDecorator(Sidebar, "sidebar", getOverlaySettings)
+export default OverlayDecorator(Sidebar, "sidebar")

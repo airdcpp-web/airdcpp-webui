@@ -12,6 +12,7 @@ import SocketService from 'services/SocketService'
 import { RouteContext } from 'react-router'
 import FileBrowser from './FileBrowser'
 import TypeConvert from 'utils/TypeConvert'
+import Accordion from 'components/semantic/Accordion'
 
 const MenuItem = React.createClass({
   render: function() {
@@ -78,11 +79,6 @@ const AccordionTargets = React.createClass({
     groupedPaths: React.PropTypes.array.isRequired,
   },
 
-  componentDidMount() {
-    let dom = React.findDOMNode(this);
-    $(dom).accordion();
-  },
-
   formatParent(parent) {
     return (
       <div key={ parent.name }>
@@ -100,9 +96,9 @@ const AccordionTargets = React.createClass({
 
   render: function() {
     return (
-      <div className="ui styled accordion">
+      <Accordion className="styled download-targets">
         {this.props.groupedPaths.map(this.formatParent) }
-      </div>
+      </Accordion>
     );
   }
 });

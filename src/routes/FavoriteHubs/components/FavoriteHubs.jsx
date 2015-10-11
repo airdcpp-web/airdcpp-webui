@@ -18,8 +18,6 @@ import Checkbox from 'components/semantic/Checkbox'
 
 import '../style.css'
 
-import { Icon, Button } from 'react-semantify'
-
 const ConnectState = React.createClass({
   getTitle() {
     switch(this.props.item.connect_state) {
@@ -56,7 +54,7 @@ const ConnectState = React.createClass({
   render: function() {
     return (
       <div>
-        <Icon className={ "large link " + this.getIcon() } onClick={ this.getClickAction() }/>
+        <i className={ "icon large link " + this.getIcon() } onClick={ this.getClickAction() }/>
         { this.getTitle() }
       </div>
     );
@@ -106,10 +104,10 @@ const FavoriteHubs = React.createClass({
 
   render() {
     const footerData = (
-      <Button className="small" onClick={ this._handleAddHub }>
+      <div className="ui button small" onClick={ this._handleAddHub }>
         <i className="plus icon"></i>
         Add new
-      </Button>);
+      </div>);
 
     return (
       <VirtualTable
