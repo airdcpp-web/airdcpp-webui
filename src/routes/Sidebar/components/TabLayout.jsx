@@ -118,9 +118,20 @@ const TabLayout = React.createClass({
      * Function receiving the circular color label in front of the item
      */
     statusGetter: React.PropTypes.func.isRequired,
+
+    /**
+     * Item ID that is currently active (if any)
+     */
+    activeId: React.PropTypes.any,
   },
   
   displayName: "TabLayout",
+  getInitialState() {
+    return {
+      activeItem: null
+    };
+  },
+
   componentDidUpdate() {
 
   },
@@ -133,16 +144,8 @@ const TabLayout = React.createClass({
   	History.replaceSidebar(this.props.location, this.getUrl(id));
   },
 
-  hasParams() {
-  	return Object.keys(this.props.params).length > 0;
-  },
-
-  getCurrentId() {
-  	return this.props.params[Object.keys(this.props.params)[0]];
-  },
-
   saveLocation() {
-  	localStorage.setItem(this.props.baseUrl + "_last_active", this.getCurrentId());
+  	localStorage.setItem(this.props.baseUrl + "_last_active", this.props.activeId);
   },
 
   findItem(items, id) {
@@ -150,29 +153,38 @@ const TabLayout = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-  	if (Object.keys(nextProps.params).length === 0) {
+  	if (!nextProps.activeId) {
   		return;
   	}
 
   	// All items removed?
   	if (nextProps.items.length === 0) {
   		History.replaceSidebar(this.props.location, this.props.baseUrl);
+      this.setState({ activeItem: null });
   		return;
   	}
 
-  	const currentId = this.getCurrentId();
-  	if (nextProps.params[Object.keys(nextProps.params)[0]] !== currentId) {
-  		return;
-  	}
+    // Update the active item
+    const newActiveItem = this.findItem(nextProps.items, nextProps.activeId);
+    if (newActiveItem) {
+      this.setState({ activeItem: newActiveItem });
+    }
 
-  	// Check if the current item still exists
-	const item = this.findItem(nextProps.items, currentId);
-    if (item) {
-  	  return false;
+    // After this, we only handle cases when the old tab has been closed
+    const oldActiveId = this.props.activeId;
+    if (nextProps.activeId !== oldActiveId) {
+      // We have a new tab already
+      return;
+    }
+
+
+  	// Check if the current item still exists in the list
+    if (this.findItem(nextProps.items, oldActiveId)) {
+  	  return;
     }
 
     // Find the old position
-  	const oldItem = this.findItem(this.props.items, currentId);
+  	const oldItem = this.findItem(this.props.items, oldActiveId);
   	const oldPos = this.props.items.indexOf(oldItem);
 
   	let newItemPos = oldPos;
@@ -181,17 +193,17 @@ const TabLayout = React.createClass({
   	  newItemPos = oldPos-1;
   	}
 
-	this.redirectTo(nextProps.items[newItemPos].id);
+	 this.redirectTo(nextProps.items[newItemPos].id);
   },
 
   componentDidUpdate() {
-  	if (this.hasParams()) {
+  	if (this.props.activeId) {
   	  this.saveLocation();
   	}
   },
 
   componentDidMount() {
-  	if (this.hasParams()) {
+  	if (this.props.activeId) {
   		// Loading an item already
   		this.saveLocation();
   		return;
@@ -235,18 +247,39 @@ const TabLayout = React.createClass({
       );
     }, this);
 
-    menuItems.unshift(<NewButton key="new-button" title="New session" location={this.props.location} baseUrl={this.props.baseUrl}/>);
+    //menuItems.unshift(<NewButton key="new-button" title="New session" location={this.props.location} baseUrl={this.props.baseUrl}/>);
+
+    /*const children = React.Children.map(this.props.children, (child) => {
+      let label = column.props.label + ((this.state.sortProperty === column.props.dataKey) ? sortDirArrow : '');
+      let flexGrow = undefined;
+      let width = undefined;
+      if (this._columnWidths[column.props.dataKey] != undefined) {
+        width = this._columnWidths[column.props.dataKey];
+      } else {
+        flexGrow = column.props.flexGrow;
+        width = column.props.width;
+      }
+
+      return React.cloneElement(column, {
+        headerRenderer: this._renderHeader,
+        label: label,
+        flexGrow: flexGrow,
+        width: width,
+        isResizable: true
+      });
+    }, this);*/
 
     return (
 	    <div className="ui grid">
 	      <div className="four wide column">
 	        <div className="ui vertical fluid tabular menu">
+            <NewButton key="new-button" title="New session" location={this.props.location} baseUrl={this.props.baseUrl}/>
 	          { menuItems }
 	        </div>
 	      </div>
 	      <div className="twelve wide stretched column">
 	        <div className="ui segment">
-	          { this.props.children }
+	          { React.cloneElement(this.props.children, { item: this.state.activeItem }) }
 	        </div>
 	      </div>
 	    </div>

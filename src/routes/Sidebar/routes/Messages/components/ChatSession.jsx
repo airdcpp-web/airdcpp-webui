@@ -1,9 +1,6 @@
 'use strict';
 
 import React from 'react';
-import Reflux from 'reflux';
-
-import { Link } from 'react-router';
 
 import MessageView from 'routes/Sidebar/components/MessageView'
 import SocketService from 'services/SocketService.js'
@@ -12,14 +9,12 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
 
-import {PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE} from 'constants/PrivateChatConstants';
-
 import { ActionMenu } from 'components/Menu'
 import UserActions from 'actions/UserActions'
 
+import TabHeader from 'routes/Sidebar/components/TabHeader'
+import ChatSessionDecorator from 'decorators/ChatSessionDecorator'
 import Format from 'utils/Format'
-
-import '../style.css'
 
 const UserTitleMenu = React.createClass({
   propTypes: {
@@ -59,26 +54,7 @@ const UserTitleMenu = React.createClass({
   }
 });
 
-const TabHeader = React.createClass({
-  render() {
-    return (
-      <div className="tab-header">
-        <h2 className="ui header">
-          <Format.UserIconFormatter size="large" flags={this.props.user.flags} />
-          <div className="content">
-            { this.props.title }
-            <div className="sub header">{ this.props.user.hub_names }</div>
-          </div>
-        </h2>
-        <div className="ui button" onClick={this.props.closeHandler}>
-          Close
-        </div>
-      </div>
-    );
-  },
-});
-
-const TabFooter = React.createClass({
+/*const TabFooter = React.createClass({
   render() {
     return (
       <div>
@@ -100,85 +76,39 @@ const TabFooter = React.createClass({
       </div>
     );
   },
-});
+});*/
 
 
 const ChatSession = React.createClass({
   displayName: "ChatSession",
-  mixins: [Reflux.listenTo(PrivateChatMessageStore, "onMessagesChanged")],
-
-  onMessagesChanged(messages, id) {
-    if (id !== this.props.params.id) {
-      return;
-    }
-
-    this.setState({messages: messages});
-  },
-
-  getInitialState() {
-    return {
-      session: null,
-      messages: []
-    }
-  },
-
-  updateSession(id) {
-    PrivateChatActions.sessionChanged(id);
-    PrivateChatActions.setRead(id);
-
-    PrivateChatActions.fetchMessages(id);
-
-    this.setState({ session: PrivateChatSessionStore.getSession(id) });
-  },
-
-  componentWillReceiveProps(nextProps) {
-    const {id} = nextProps.params
-    if (!this.state.session || this.state.session.id !== id) {
-      this.setState({ messages: [] });
-
-      this.updateSession(id);
-    }
-  },
-
-  componentWillMount() {
-    this.updateSession(this.props.params.id);
-  },
-
-  _onMessage(data) {
-    const messages = React.addons.update(this.state.messages, {$push: [ { chat_message: data }]});
-    this.setState({ messages: messages });
-  },
-
-  componentWillUnmount() {
-    PrivateChatActions.sessionChanged(null);
-  },
-
   handleClose() {
-    PrivateChatActions.removeSession(this.state.session.id);
+    PrivateChatActions.removeSession(this.props.item.id);
   },
 
   handleSend(message) {
-    PrivateChatActions.sendMessage(this.state.session.id, message);
+    PrivateChatActions.sendMessage(this.props.item.id, message);
   },
 
   render() {
-    if (!this.state.session) {
-      return <div className="ui text loader">Loading</div>
-    }
-
+    const { user } = this.props.item;
     const userMenu = (
-      <UserTitleMenu user={ this.state.session.user } location={this.props.location} ids={["browser"]}/>
+      <UserTitleMenu user={ user } location={this.props.location} ids={["browser"]}/>
+    );
+
+    const icon = (
+      <Format.UserIconFormatter size="large" flags={user.flags} />
     );
 
     return (
-      <div className="chat-session">
+      <div className="chat-session session-layout">
         <TabHeader
+          icon={icon}
           title={userMenu}
           closeHandler={this.handleClose}
-          user={ this.state.session.user }/>
+          subHeader={ user.hub_names }/>
 
         <MessageView
-          messages={this.state.messages}
+          messages={this.props.messages}
           handleSend={this.handleSend}
         />
       </div>
@@ -186,4 +116,4 @@ const ChatSession = React.createClass({
   },
 });
 
-export default ChatSession;
+export default ChatSessionDecorator(ChatSession, PrivateChatSessionStore, PrivateChatMessageStore, PrivateChatActions);

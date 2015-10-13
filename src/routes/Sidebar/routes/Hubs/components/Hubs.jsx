@@ -10,6 +10,7 @@ import HubSessionStore from 'stores/HubSessionStore'
 import HubActions from 'actions/HubActions'
 
 import ActionInput from 'components/semantic/ActionInput'
+import HubSearchInput from 'components/autosuggest/HubSearchInput'
 
 const Connect = React.createClass({
   displayName: "Connect",
@@ -19,9 +20,8 @@ const Connect = React.createClass({
 
   render() {
     return (
-      <ActionInput placeholder="Hub address" caption="Connect" icon="green play" handleAction={this._handleSubmit}>
-	  </ActionInput>
-	);
+      <HubSearchInput submitHandler={this._handleSubmit}/>
+	  );
   }
 });
 
@@ -29,7 +29,7 @@ const Hubs = React.createClass({
   mixins: [Reflux.connect(HubSessionStore, "hubSessions")],
   displayName: "Hubs",
   _nameGetter(session) {
-  	return session.name;
+  	return session.identity.name;
   },
 
   _labelGetter(session) {
@@ -37,15 +37,21 @@ const Hubs = React.createClass({
   },
 
   _statusGetter(session) {
-  	return "blue";
-  	//const { flags } = session.user;
-  	//return TypeConvert.userOnlineStatusToColor(flags);
+  	return TypeConvert.hubOnlineStatusToColor(session.connect_state);
+  },
+
+  _getActiveId() {
+    if (!this.props.params) {
+      return null;
+    }
+
+    return parseInt(this.props.params["id"]);
   },
 
   render() {
     return (
       <TabLayout 
-      		params={this.props.params}
+      		activeId={this._getActiveId()}
       		baseUrl="hubs"
       		itemUrl="hubs/session"
 	      	location={this.props.location} 

@@ -98,6 +98,11 @@ const StatusMessage = React.createClass({
   }
 });
 
+function convertMessageText(text) {
+  //let tmp = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+}
+
 function getMessageListItem(message) {
   if (message.chat_message) {
     return (
@@ -131,7 +136,7 @@ const MessageSection = React.createClass({
 
   render: function() {
     var messageListItems = this.props.messages.map(getMessageListItem);
-    console.log("MessageSection", messageListItems);
+    //console.log("MessageSection", messageListItems);
     return (
       <div className="message-section" ref="messageSection">
         <div className="ui relaxed list message-list">

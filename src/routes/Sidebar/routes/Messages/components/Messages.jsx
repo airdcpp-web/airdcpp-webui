@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import UserSearchInput from 'components/UserSearchInput'
+import UserSearchInput from 'components/autosuggest/UserSearchInput'
 import TabLayout from 'routes/Sidebar/components/TabLayout'
 import NewLayout from 'routes/Sidebar/components/NewLayout'
 
@@ -37,7 +37,7 @@ const Messages = React.createClass({
   render() {
     return (
       <TabLayout 
-      		params={this.props.params}
+      		activeId={this.props.params ? this.props.params.id : null}
       		baseUrl="messages"
       		itemUrl="messages/session"
 	      	location={this.props.location} 

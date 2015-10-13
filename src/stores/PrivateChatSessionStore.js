@@ -19,5 +19,4 @@ const ChatSessionStore = Reflux.createStore({
   },
 });
 
-var tmp = PrivateChatActions;
 export default SessionStoreDecorator(SocketSubscriptionDecorator(ChatSessionStore), PrivateChatActions.fetchSessions.completed)

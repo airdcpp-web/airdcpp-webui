@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'moment';
 import classNames from 'classnames';
+import TypeConvert from 'utils/TypeConvert'
 
 export default {
   formatSize: function(fileSizeInBytes) {
@@ -173,28 +174,55 @@ export default {
     render() {
       const {flags} = this.props;
 
-      let mainIconClass = "";
-      if (flags.indexOf("away") > -1) {
-        mainIconClass = "yellow";
-      } else if (flags.indexOf("offline") > -1) {
-        mainIconClass = "lightgrey";
-      } else {
-        mainIconClass = "green";
+      const cornerIcon = this.getCornerIcon();
+      return (
+        <i className={ this.props.size + " icons" }>
+          <i className={ TypeConvert.userOnlineStatusToColor(flags) + " user icon" }></i>
+          { cornerIcon ? <i className={ this.getCornerIcon() + " corner icon" }></i> : null }
+        </i>
+      );
+    },
+  }),
+
+  HubIconFormatter: React.createClass({
+    propTypes: {
+      /**
+       * Size of the icon
+       */
+      size: React.PropTypes.string,
+
+      /**
+       * Action ids to filter from all actions
+       */
+      hub: React.PropTypes.object.isRequired,
+    },
+
+    getCornerIcon() {
+      /*const {identity} = this.props.hub;
+      if (flags.indexOf("bot") > -1) {
+        return "setting";
       }
 
-      /*const mainIconClass = classNames(
-        "icon", 
-        { "blue": flags.indexOf("online") > 0 },
-        { "yellow": flags.indexOf("away") > 0 },
-        { "lightgrey": flags.indexOf("offline") > 0 }
-      );*/
+      if (flags.indexOf("op") > -1) {
+        return "yellow privacy";
+      }*/
 
+      return null;
+    },
 
+    getDefaultProps() {
+      return {
+        size: ""
+      }
+    },
+
+    render() {
+      const {hub} = this.props;
 
       const cornerIcon = this.getCornerIcon();
       return (
         <i className={ this.props.size + " icons" }>
-          <i className={ mainIconClass + " user icon" }></i>
+          <i className={ TypeConvert.hubOnlineStatusToColor(hub.connect_state) + " sitemap icon" }></i>
           { cornerIcon ? <i className={ this.getCornerIcon() + " corner icon" }></i> : null }
         </i>
       );

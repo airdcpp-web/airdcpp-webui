@@ -28,4 +28,16 @@ export default {
 
     return "green";
   },
+
+  hubOnlineStatusToColor: function(connectState) {
+    if (connectState === "connected") {
+      return "green";
+    }
+
+    if (connectState === "connecting") {
+      return "yellow";
+    }
+    
+    return "lightgrey";
+  },  
 };

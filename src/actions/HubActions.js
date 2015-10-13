@@ -13,8 +13,16 @@ const HubActions = Reflux.createActions([
   { "createSession": { asyncResult: true } },
   { "removeSession": { asyncResult: true } },
   { "sendMessage": { asyncResult: true } },
-  	"favorite",
-  	"redirect",
+  { "redirect": { asyncResult: true } },
+  { "password": { asyncResult: true } },
+  { "reconnect": { 
+      asyncResult: true,
+      displayName: "Reconnect", 
+      icon: "green refresh" } },
+  { "favorite": { 
+      asyncResult: true,
+      displayName: "Add to favorites", 
+      icon: "yellow star" } },
   	"setRead",
     "sessionChanged"
 ]);
@@ -33,9 +41,37 @@ HubActions.fetchMessages.listen(function(id) {
       .catch((error) => that.failed(id, error));
 });
 
-HubActions.favorite.listen(function(id) {
+HubActions.password.listen(function(hub, password) {
     let that = this;
-    SocketService.post(HUB_SESSION_URL + "/" + id + "/favorite")
+    SocketService.post(HUB_SESSION_URL + "/" + hub.id + "/password", { password: password })
+      .then(data => that.completed(hub, data))
+      .catch(error => that.failed(hub, error));
+});
+
+HubActions.favorite.listen(function(hub) {
+    let that = this;
+    SocketService.post(HUB_SESSION_URL + "/" + hub.id + "/favorite")
+      .then(data => that.completed(hub, data))
+      .catch(error => that.failed(hub, error));
+});
+
+HubActions.favorite.completed.listen(function(hub) {
+  NotificationActions.success({ 
+    title: hub.identity.name,
+    message: "The hub has been added in favorites"
+  });    
+});
+
+HubActions.favorite.failed.listen(function(hub, error) {
+  NotificationActions.error({ 
+    title: hub.identity.name,
+    message: error.reason
+  });    
+});
+
+HubActions.reconnect.listen(function(hub) {
+    let that = this;
+    SocketService.post(HUB_SESSION_URL + "/" + hub.id + "/reconnect")
       .then(that.completed)
       .catch(this.failed);
 });
@@ -48,11 +84,11 @@ HubActions.setRead.listen(function(id) {
 });
 
 HubActions.createSession.listen(function(hubUrl, location) {
-	let session = HubSessionStore.getSession(hubUrl);
-	if (session) {
-		this.completed(session, location);
-		return;
-	}
+  	let session = HubSessionStore.getSession(hubUrl);
+  	if (session) {
+  		this.completed(session, location);
+  		return;
+  	}
 
     let that = this;
     return SocketService.post(HUB_SESSION_URL, {
@@ -67,10 +103,10 @@ HubActions.createSession.completed.listen(function(data, location) {
 });
 
 HubActions.createSession.failed.listen(function(error) {
-  NotificationActions.error({ 
-    title: "Failed to create hub session",
-    message: error.message
-  });
+    NotificationActions.error({ 
+      title: "Failed to create hub session",
+      message: error.message
+    });
 });
 
 HubActions.removeSession.listen(function(id) {
@@ -81,10 +117,10 @@ HubActions.removeSession.listen(function(id) {
 });
 
 HubActions.removeSession.failed.listen(function(error) {
-	NotificationActions.error({ 
-    title: "Failed to remove hub session",
-    message: error.message
-  });
+  	NotificationActions.error({ 
+      title: "Failed to remove hub session",
+      message: error.message
+    });
 });
 
 HubActions.sendMessage.listen(function(id, message) {
@@ -95,10 +131,10 @@ HubActions.sendMessage.listen(function(id, message) {
 });
 
 HubActions.sendMessage.failed.listen(function(error) {
-  NotificationActions.error({ 
-    title: "Failed to send message",
-    message: error.message
-  });
+    NotificationActions.error({ 
+      title: "Failed to send message",
+      message: error.message
+    });
 });
 
 export default HubActions;

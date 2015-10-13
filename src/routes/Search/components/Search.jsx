@@ -7,7 +7,7 @@ import SearchActions from 'actions/SearchActions'
 import { HistoryEnum } from 'constants/HistoryConstants'
 import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
 
-import HistoryInput from 'components/HistoryInput'
+import HistoryInput from 'components/autosuggest/HistoryInput'
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 
 import classNames from 'classnames';

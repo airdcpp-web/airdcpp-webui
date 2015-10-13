@@ -16,16 +16,20 @@ export default function(store) {
     socketSubscriptions = [];
   };
 
+  const onSocketAuthenticated = () => {
+    if (store.hasSocket) {
+      return;
+    }
+
+    hasSocket = true;
+    if (store.onSocketConnected) {
+      store.onSocketConnected(addSocketListener);
+    }
+  }
+
   const _loginStoreListener = (loginState) => {
   	if (loginState.socketAuthenticated) {
-  		if (store.hasSocket) {
-  			return;
-  		}
-
-  		hasSocket = true;
-  		if (store.onSocketConnected) {
-  			store.onSocketConnected(addSocketListener);
-  		}
+  		onSocketAuthenticated();
   	} else {
   		if (!hasSocket) {
   			return;
@@ -41,6 +45,10 @@ export default function(store) {
   };
 
   store.listenTo(LoginStore, _loginStoreListener);
+  if (LoginStore.socketAuthenticated) {
+    setTimeout(onSocketAuthenticated);
+  }
+
   //return store;
   return Object.assign(store,  {
     addSocketListener: addSocketListener,

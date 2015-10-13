@@ -3,9 +3,9 @@ import SocketService from 'services/SocketService.js'
 import { HUB_SEARCH_NICKS_URL } from 'constants/HubConstants.js'
 import Autosuggest from 'react-autosuggest'
 import classNames from 'classnames';
+import SuggestionRenderer from './SuggestionRenderer'
 
-
-export default React.createClass({
+const UserSearchInput = React.createClass({
   propTypes: {
 
     /**
@@ -26,13 +26,6 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-  },
-
-  escapeRegexCharacters(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  },
-
   _getSuggestionValue(suggestionObj) {
     return suggestionObj.nick;
   },
@@ -48,30 +41,7 @@ export default React.createClass({
   },
 
   _renderSuggestion(suggestionObj, input) {
-    const escapedInput = this.escapeRegexCharacters(input);
-    const nickMatchRegex = new RegExp('\\b' + escapedInput, 'i');
-    const suggestion = suggestionObj.nick;
-
-    const firstMatchIndex = suggestion.search(nickMatchRegex);
-
-    if (firstMatchIndex === -1) {
-      return suggestion;
-    }
-
-    const beforeMatch = suggestion.slice(0, firstMatchIndex);
-    const match = suggestion.slice(firstMatchIndex, firstMatchIndex + input.length);
-    const afterMatch = suggestion.slice(firstMatchIndex + input.length);
-
-    return (
-      <div className="content">
-        <div className="header">
-          {beforeMatch}<strong>{match}</strong>{afterMatch}<br />
-        </div>
-        <div className="description">
-          { suggestionObj.hub_name }
-        </div>
-      </div>
-    );
+    return SuggestionRenderer(input, this._getSuggestionValue(suggestionObj), suggestionObj.hub_name);
   },
 
   _handleChange(value) {
@@ -95,7 +65,6 @@ export default React.createClass({
     return (
       <div className="ui fluid action input" onKeyDown={this._onKeyDown}>
         <Autosuggest 
-          ref='historyInput'
           value={this.state.text}
           suggestions={this._getSuggestions}
           inputAttributes={inputAttributes}
@@ -106,3 +75,5 @@ export default React.createClass({
     );
   }
 });
+
+export default UserSearchInput;
