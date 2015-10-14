@@ -18,6 +18,8 @@ import TabHeader from 'routes/Sidebar/components/TabHeader'
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator'
 import Format from 'utils/Format'
 
+import '../style.css'
+
 const HubActionPrompt = React.createClass({
   propTypes: {
     /**
@@ -34,12 +36,14 @@ const HubActionPrompt = React.createClass({
   displayName: "HubActionPrompt",
   render: function() {
     return (
-      <div className="ui icon message">
-        <i class={ this.props.icon + " icon"}></i>
-        <div className="header">
-          { this.props.title }
-        </div>
-        <p>{this.props.content}</p>
+      <div className="ui icon message hub-action-prompt">
+        <h3 className="ui header">
+          <i className={ this.props.icon + " icon"}></i>
+          <div className="content">
+            { this.props.title }
+          </div>
+        </h3>
+        {this.props.content}
       </div>
     );
   }
@@ -53,7 +57,10 @@ const PasswordPrompt = React.createClass({
 
   render: function() {
     return (
-      <ActionInput placeholder="Password" caption="Enter password" icon="green play" handleAction={this._handleSubmit}/>
+      <div>
+      <ActionInput placeholder="Password" caption="Submit" icon="green play" handleAction={this._handleSubmit}/>
+      <p>This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick.</p>
+      </div>
     );
   }
 });
@@ -66,7 +73,9 @@ const RedirectPrompt = React.createClass({
 
   render: function() {
     return (
-      <div className="ui button" caption="Enter password" icon="green play" onClick={this._handleSubmit}/>
+      <div className="ui button" icon="green play" onClick={this._handleSubmit}>
+        { "Accept redirect to " + this.props.hub.connect_state.hub_url }
+      </div>
     );
   }
 });
@@ -82,7 +91,7 @@ const HubSession = React.createClass({
   },
 
   getMessage() {
-    const connectState = this.props.item.connect_state;
+    const connectState = this.props.item.connect_state.id;
     if (connectState === "password") {
       return (
         <HubActionPrompt 
@@ -124,7 +133,7 @@ const HubSession = React.createClass({
         <TabHeader
           icon={icon}
           title={hubMenu}
-          closeHandler={this.handleClose}
+          buttonClickHandler={this.handleClose}
           subHeader={ identity.description }/>
 
         { this.getMessage() }

@@ -3,12 +3,12 @@ body {
 	background-size: cover;
 }
 
-#container-main {
-	min-height: 400px;
+.login-grid .column {
+  max-width: 650px;
 }
 
-.column {
-  max-width: 650px;
+#container-main {
+	min-height: 400px;
 }
 
 section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {

@@ -1,14 +1,16 @@
 'use strict';
-
 import React from 'react';
-import LoginStore from 'stores/LoginStore'
 import Reflux from 'reflux';
-import Footer from './Footer'
-import NavigationPanel from './Navigation'
-import SocketService from 'services/SocketService'
+
 import LoginActions from 'actions/LoginActions'
+import LoginStore from 'stores/LoginStore'
+import SocketService from 'services/SocketService'
+
 import Notifications from './Notifications'
+
+import NavigationPanel from './Navigation'
 import SideMenu from './SideMenu'
+
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 import { SIDEBAR_ID } from 'constants/OverlayConstants'
 
@@ -24,7 +26,7 @@ const SocketConnectStatus = React.createClass({
     }
 
     return (
-      <div className="ui dimmer page visible" active={ this.props.active }>
+      <div className={ "ui dimmer page visible " + (this.props.active ? "active" : "")}>
         <div className="content">
           <div className="center">
             <div className="ui text loader">

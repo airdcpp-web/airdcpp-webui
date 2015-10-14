@@ -1,3 +1,4 @@
+/* SIDEBAR GENERIC START */
 #sidebar {
 	background-color: white;
 	z-index: 10;
@@ -28,8 +29,10 @@
 	margin: 0px !important;
 }
 
+/* SIDEBAR SESSION END */
 
-/* SESSION START */
+
+/* SIDEBAR SESSION START */
 #sidebar .tab-header h2 {
 	float:left;
 }
@@ -39,7 +42,8 @@
 }
 
 #sidebar .tab-header {
-	margin-bottom: 20px;
+	margin-bottom: 15px;
+	margin-top: 10px;
 }
 
 #sidebar .ui.grid, #sidebar .session-layout, #sidebar .ui.grid .column, #sidebar .ui.grid .column .segment {
@@ -51,7 +55,7 @@
 	flex-direction: column;
 }
 
-/* SESSION END */
+/* SIDEBAR SESSION END */
 
 
 
@@ -64,6 +68,7 @@
 	flex: 100 1 0%;
 	display: flex;
 	flex-direction: column;
+	overflow: auto;
 }
 
 .message-section {
@@ -82,12 +87,6 @@
 
 .message-list {
 	margin-right:10px !important;
-}
-
-#sidebar .ui.segment {
-	display: inline-flex;
-    flex-direction: column;
-    margin-right: 20px;
 }
 
 #sidebar .tab-header {
@@ -117,7 +116,7 @@
 
 .status-message .message-text {
 	font-size: small;
-	color: grey;
+	color: lightgray;
 	white-space: pre;
 }
 

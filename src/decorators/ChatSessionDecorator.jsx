@@ -3,6 +3,13 @@ import Reflux from 'reflux';
 
 export default function(Component, sessionStore, messageStore, actions) {
   const ChatSessionDecorator = React.createClass({
+    propTypes: {
+      /**
+       * Currently active tab (passed by TabLayout)
+       */
+      item: React.PropTypes.any.isRequired
+    },
+
     displayName: "ChatSessionDecorator",
     mixins: [Reflux.listenTo(messageStore, "onMessagesChanged")],
 

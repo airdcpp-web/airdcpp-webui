@@ -222,7 +222,7 @@ export default {
       const cornerIcon = this.getCornerIcon();
       return (
         <i className={ this.props.size + " icons" }>
-          <i className={ TypeConvert.hubOnlineStatusToColor(hub.connect_state) + " sitemap icon" }></i>
+          <i className={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + " sitemap icon" }></i>
           { cornerIcon ? <i className={ this.getCornerIcon() + " corner icon" }></i> : null }
         </i>
       );

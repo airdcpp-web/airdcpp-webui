@@ -10,7 +10,7 @@ const TabHeader = React.createClass({
     /**
      * Subheader
      */
-    subHeader: React.PropTypes.node.isRequired,
+    subHeader: React.PropTypes.node,
 
     /**
      * Icon to display
@@ -20,7 +20,13 @@ const TabHeader = React.createClass({
     /**
      * Icon to display
      */
-    closeHandler: React.PropTypes.func.isRequired,
+    buttonClickHandler: React.PropTypes.func.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      buttonCaption: "Close"
+    }
   },
 
   render() {
@@ -33,8 +39,8 @@ const TabHeader = React.createClass({
             <div className="sub header">{ this.props.subHeader }</div>
           </div>
         </h2>
-        <div className="ui button" onClick={this.props.closeHandler}>
-          Close
+        <div className="ui button" onClick={this.props.buttonClickHandler}>
+          {this.props.buttonCaption}
         </div>
       </div>
     );

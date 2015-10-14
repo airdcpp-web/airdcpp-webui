@@ -17,6 +17,9 @@ import PrivateChatActions from 'actions/PrivateChatActions'
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
 import NotificationActions from 'actions/NotificationActions'
 
+import LogActions from 'actions/LogActions'
+import LogStore from 'stores/LogStore'
+
 const MenuItem = React.createClass({
   onClick: function(evt) {
     evt.preventDefault();
@@ -43,6 +46,13 @@ const SideMenu = React.createClass({
 
   componentDidMount() {
     this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
+    this.listenTo(LogStore, this.updateLogInfo);
+
+    this.updateLogInfo();
+  },
+
+  updateLogInfo() {
+    this.setState({ "logInfo": LogStore.getUnreadInfo() });
   },
 
   onPrivateMessage(messages) {
@@ -65,9 +75,14 @@ const SideMenu = React.createClass({
     }
   },
 
+  getEventButtonCaption() {
+
+  },
+
   componentWillMount() {
     PrivateChatActions.fetchSessions();
     HubActions.fetchSessions();
+    LogActions.fetchMessages();
   },
 
   render() {
@@ -78,6 +93,7 @@ const SideMenu = React.createClass({
             <MenuItem labelCount={ HubSessionStore.countUnreadSessions() } labelColor="blue" location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
             <MenuItem labelCount={ PrivateChatSessionStore.countUnreadSessions() } labelColor="red" location={this.props.location} icon="blue comments" title="Messages" page="messages"/>
             <MenuItem labelCount={ 0 } location={this.props.location} icon="blue browser" title="Filelists" page="filelists"/>
+            <MenuItem labelCount={ this.state.logInfo.count } labelColor={ this.state.logInfo.color + " history" } location={this.props.location} icon="blue history" title="Events" page="events"/>
           </div>
         </div>
         <div>

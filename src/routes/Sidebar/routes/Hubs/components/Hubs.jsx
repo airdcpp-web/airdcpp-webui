@@ -37,7 +37,7 @@ const Hubs = React.createClass({
   },
 
   _statusGetter(session) {
-  	return TypeConvert.hubOnlineStatusToColor(session.connect_state);
+  	return TypeConvert.hubOnlineStatusToColor(session.connect_state.id);
   },
 
   _getActiveId() {

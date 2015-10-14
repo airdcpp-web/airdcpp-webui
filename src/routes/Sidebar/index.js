@@ -10,6 +10,7 @@ module.exports = {
 		    require('./routes/Hubs'),
         require('./routes/Filelists'), 
 		    require('./routes/Messages'), 
+        require('./routes/Events'), 
       ])
     }, "sidebar-children")
   },

@@ -1,0 +1,36 @@
+.system-log .column {
+  max-width: 650px;
+}
+
+#sidebar .simple-layout {
+	height: 100%;
+	padding: 20px;
+
+	max-width: 750px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#sidebar .simple-layout > div {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+#sidebar .simple-layout {
+	height: 100%;
+	padding: 20px;
+}
+
+#sidebar .simple-layout .content {
+	display: flex;
+	overflow-y: auto;
+}
+
+#sidebar .simple-layout .content > div {
+	overflow-y: auto;
+}
+
+/*#sidebar .simple-layout .content .ui.segment {
+	height: 100%;
+}*/

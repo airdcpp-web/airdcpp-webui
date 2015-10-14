@@ -3,7 +3,7 @@
 import React from 'react';
 import Formatter from 'utils/Format';
 
-//import '../style.css'
+import ScrollDecorator from 'decorators/ScrollDecorator'
 
 var ENTER_KEY_CODE = 13;
 
@@ -121,40 +121,20 @@ function getMessageListItem(message) {
   );
 }
 
-const MessageSection = React.createClass({
+const MessageSection = ScrollDecorator(React.createClass({
   displayName: "MessageSection",
-  componentDidMount: function() {
-    this._scrollToBottom();
-    //MessageStore.addChangeListener(this._onChange);
-    //ThreadStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    //MessageStore.removeChangeListener(this._onChange);
-    //ThreadStore.removeChangeListener(this._onChange);
-  },
-
   render: function() {
     var messageListItems = this.props.messages.map(getMessageListItem);
     //console.log("MessageSection", messageListItems);
     return (
-      <div className="message-section" ref="messageSection">
+      <div className="message-section">
         <div className="ui relaxed list message-list">
           {messageListItems}
         </div>
       </div>
     );
   },
-
-  componentDidUpdate: function() {
-    this._scrollToBottom();
-  },
-
-  _scrollToBottom: function() {
-    var ul = this.refs.messageSection.getDOMNode();
-    ul.scrollTop = ul.scrollHeight;
-  },
-});
+}));
 
 const MessageView = React.createClass({
   propTypes: {

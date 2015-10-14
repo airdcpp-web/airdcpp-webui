@@ -48,6 +48,13 @@ HubActions.password.listen(function(hub, password) {
       .catch(error => that.failed(hub, error));
 });
 
+HubActions.redirect.listen(function(hub) {
+    let that = this;
+    SocketService.post(HUB_SESSION_URL + "/" + hub.id + "/redirect")
+      .then(data => that.completed(hub, data))
+      .catch(error => that.failed(hub, error));
+});
+
 HubActions.favorite.listen(function(hub) {
     let that = this;
     SocketService.post(HUB_SESSION_URL + "/" + hub.id + "/favorite")

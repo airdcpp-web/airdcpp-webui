@@ -104,7 +104,7 @@ const ChatSession = React.createClass({
         <TabHeader
           icon={icon}
           title={userMenu}
-          closeHandler={this.handleClose}
+          buttonClickHandler={this.handleClose}
           subHeader={ user.hub_names }/>
 
         <MessageView

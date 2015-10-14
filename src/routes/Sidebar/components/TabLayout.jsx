@@ -149,7 +149,7 @@ const TabLayout = React.createClass({
   },
 
   findItem(items, id) {
-  	return items.find(item => item.id === id)
+  	return items.find(item => item.id == id) // Ignore the type because of local storage
   },
 
   componentWillReceiveProps(nextProps) {
@@ -205,6 +205,11 @@ const TabLayout = React.createClass({
   componentDidMount() {
   	if (this.props.activeId) {
   		// Loading an item already
+      const activeItem = this.findItem(this.props.items, this.props.activeId);
+      if (activeItem) {
+        this.setState({ activeItem: activeItem });
+      }
+
   		this.saveLocation();
   		return;
   	}

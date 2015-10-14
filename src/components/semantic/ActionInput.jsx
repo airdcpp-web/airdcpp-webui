@@ -48,7 +48,7 @@ const ActionInput = React.createClass({
         <div className="ui action input">
           <input type="text" placeholder={this.props.placeholder} onChange={this.handleChange}/>
           <button className={ buttonClass } onClick={ this.handleClick }>
-            <i className={ "plus icon" }></i>
+            <i className={ this.props.icon + " icon" }></i>
             { this.props.caption }
           </button>
         </div>
