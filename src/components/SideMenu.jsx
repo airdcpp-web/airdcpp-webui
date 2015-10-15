@@ -13,12 +13,15 @@ import HubActions from 'actions/HubActions'
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
 import PrivateChatActions from 'actions/PrivateChatActions'
-
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
+
 import NotificationActions from 'actions/NotificationActions'
 
 import LogActions from 'actions/LogActions'
 import LogStore from 'stores/LogStore'
+
+import FilelistSessionStore from 'stores/FilelistSessionStore'
+import FilelistActions from 'actions/FilelistActions'
 
 const MenuItem = React.createClass({
   onClick: function(evt) {
@@ -82,6 +85,8 @@ const SideMenu = React.createClass({
   componentWillMount() {
     PrivateChatActions.fetchSessions();
     HubActions.fetchSessions();
+    FilelistActions.fetchSessions();
+
     LogActions.fetchMessages();
   },
 
