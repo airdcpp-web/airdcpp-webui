@@ -1,8 +1,7 @@
 import React from 'react';
 
 import FavoriteHubActions from 'actions/FavoriteHubActions.js'
-import { StateEnum } from 'constants/FavoriteHubConstants.js'
-import FavoriteHubStore from 'stores/FavoriteHubStore.js';
+import { StateEnum, FAVORITE_HUB_MODULE_URL } from 'constants/FavoriteHubConstants.js'
 
 import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService.js'
@@ -114,7 +113,8 @@ const FavoriteHubs = React.createClass({
         rowClassNameGetter={ this._rowClassNameGetter }
       	defaultSortProperty="name"
         footerData={footerData}
-        store={ FavoriteHubStore }>
+        viewName="favorite_hub_view"
+        viewBaseUrl={FAVORITE_HUB_MODULE_URL}>
         <Column
           label="State"
           width={150}

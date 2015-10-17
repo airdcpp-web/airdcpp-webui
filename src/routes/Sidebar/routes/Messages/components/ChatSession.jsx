@@ -13,46 +13,9 @@ import { ActionMenu } from 'components/Menu'
 import UserActions from 'actions/UserActions'
 
 import TabHeader from 'routes/Sidebar/components/TabHeader'
+
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator'
 import Format from 'utils/Format'
-
-const UserTitleMenu = React.createClass({
-  propTypes: {
-    /**
-     * Hinted user
-     */
-    user: React.PropTypes.shape({
-      cid: React.PropTypes.string,
-      hub_url: React.PropTypes.string
-    }).isRequired,
-
-    /**
-     * Router location
-     */
-    location: React.PropTypes.object.isRequired,
-
-    /**
-     * Action ids to filter from all actions
-     */
-    ids: React.PropTypes.array,
-  },
-
-  getDefaultProps() {
-    return {
-      ids: null
-    }
-  },
-
-  render: function() {
-    const { user, ...other } = this.props;
-    const data = {
-      user: user,
-      directory: '/'
-    }
-
-    return <ActionMenu { ...other } caption={ this.props.user.nicks } actions={ UserActions } itemData={ data }/>;
-  }
-});
 
 /*const TabFooter = React.createClass({
   render() {
@@ -92,7 +55,12 @@ const ChatSession = React.createClass({
   render() {
     const { user } = this.props.item;
     const userMenu = (
-      <UserTitleMenu user={ user } location={this.props.location} ids={["browser"]}/>
+      <ActionMenu 
+        location={this.props.location}
+        caption={ user.nicks } 
+        actions={ UserActions } 
+        itemData={ user } 
+        ids={["browse"]}/>
     );
 
     const icon = (

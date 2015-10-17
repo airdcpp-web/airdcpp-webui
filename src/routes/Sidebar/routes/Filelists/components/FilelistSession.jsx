@@ -2,54 +2,15 @@
 
 import React from 'react';
 
-import SocketService from 'services/SocketService.js'
+import ListBrowser from './ListBrowser'
 
-import FilelistSessionStore from 'stores/FilelistSessionStore'
-import FilelistActions from 'actions/FilelistActions'
-
-import { ActionMenu } from 'components/Menu'
 import UserActions from 'actions/UserActions'
-
-import TabHeader from 'routes/Sidebar/components/TabHeader'
+import FilelistActions from 'actions/FilelistActions'
 import Format from 'utils/Format'
 
-const UserTitleMenu = React.createClass({
-  propTypes: {
-    /**
-     * Hinted user
-     */
-    user: React.PropTypes.shape({
-      cid: React.PropTypes.string,
-      hub_url: React.PropTypes.string
-    }).isRequired,
+import { ActionMenu } from 'components/Menu'
 
-    /**
-     * Router location
-     */
-    location: React.PropTypes.object.isRequired,
-
-    /**
-     * Action ids to filter from all actions
-     */
-    ids: React.PropTypes.array,
-  },
-
-  getDefaultProps() {
-    return {
-      ids: null
-    }
-  },
-
-  render: function() {
-    const { user, ...other } = this.props;
-    const data = {
-      user: user,
-      directory: '/'
-    }
-
-    return <ActionMenu { ...other } caption={ this.props.user.nicks } actions={ UserActions } itemData={ data }/>;
-  }
-});
+import TabHeader from 'routes/Sidebar/components/TabHeader'
 
 const FilelistSession = React.createClass({
   displayName: "FilelistSession",
@@ -57,16 +18,31 @@ const FilelistSession = React.createClass({
     FilelistActions.removeSession(this.props.item.id);
   },
 
+  stateToString(state) {
+    switch(state) {
+      case "download_pending": return "Download pending";
+      case "downloading": return "Downloading";
+      case "loading": return "Loading";
+      default: return "Loaded";
+    }
+  },
+
   render() {
     const { user } = this.props.item;
     const userMenu = (
-      <UserTitleMenu user={ user } location={this.props.location} ids={["browser"]}/>
+      <ActionMenu 
+        location={this.props.location}
+        caption={ user.nicks } 
+        actions={ UserActions } 
+        itemData={ user } 
+        ids={["message"]}/>
     );
 
     const icon = (
       <Format.UserIconFormatter size="large" flags={user.flags} />
     );
 
+    const state = this.props.item.state.id;
     return (
       <div className="filelist-session session-layout">
         <TabHeader
@@ -75,10 +51,13 @@ const FilelistSession = React.createClass({
           buttonClickHandler={this.handleClose}
           subHeader={ user.hub_names }/>
 
-        <MessageView
-          messages={this.props.messages}
-          handleSend={this.handleSend}
-        />
+        { ((state !== "loaded") ? 
+          (<div className="ui active text loader">{ this.stateToString(state) }</div>)
+        : (
+          <ListBrowser
+            location={this.props.location}
+            item={this.props.item}/>
+          ))}
       </div>
     );
   },

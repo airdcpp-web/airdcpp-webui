@@ -1,11 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
+
 import FixedDataTable, { Table, Column } from 'fixed-data-table'
+
 import SetContainerSize from './SetContainerSize'
 import TouchScrollArea  from './TouchScrollArea';
+import DataSource from './DataSource'
 
 import SocketService from 'services/SocketService'
-import SocketStore from 'stores/SocketStore'
 import TableActions from 'actions/TableActions'
 
 import { Input } from 'react-semantify'
@@ -19,10 +21,9 @@ const TABLE_ROW_HEIGHT = 50;
 const {PropTypes} = React;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
-class RowDataLoader {
-  constructor(store, onDataLoad) {
+/*class RowDataLoader {
+  constructor(onDataLoad) {
     this._onDataLoad = onDataLoad;
-    this._store = store;
     this._requestQueue = [];
     this._data = [];
     this._pendingRequest = [];
@@ -48,9 +49,9 @@ class RowDataLoader {
   
   getRowData(rowIndex) {
     if (!this._data[rowIndex]) {
-      if (this._fetchingActive) {
-        this._queueRequestFor(rowIndex);
-      }
+      //if (this._fetchingActive) {
+      //  this._queueRequestFor(rowIndex);
+      //}
       return undefined;
     }
     
@@ -95,7 +96,7 @@ class RowDataLoader {
     sectionsToLoad.forEach(rowBase => {
       this._loadDataRange(
         rowBase,
-        Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._store.rowCount)
+        Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._rowCount)
       );    
     }, this);
     
@@ -105,7 +106,7 @@ class RowDataLoader {
     
   _loadDataRange(rowStart, rowEnd) {
     this._pendingRequest.push(rowStart);
-    SocketService.get(this._store.viewUrl + "/items/" + rowStart + "/" + rowEnd)
+    SocketService.get(this._viewUrl + "/items/" + rowStart + "/" + rowEnd)
       .then(data => {
         this._removeRequest(rowStart);
         for (let i=0; i < data.length; i++) {
@@ -120,7 +121,7 @@ class RowDataLoader {
         }
       );
   }
-}
+}*/
 
 function convertStartToRows(pixels) {
   return Math.max(Math.floor(pixels / TABLE_ROW_HEIGHT), 0);
@@ -163,18 +164,12 @@ const FilterBox = React.createClass({
   }
 });
 
-export default React.createClass({
+const VirtualTable = React.createClass({
   mixins: [SetContainerSize],
 
   propTypes: {
-
     /**
-     * Store implementing ViewStoreMixin that contains the items
-     */
-    store: PropTypes.object.isRequired,
-
-    /**
-     * Store implementing ViewStoreMixin that contains the items
+     * Default property name used for sorting
      */
     defaultSortProperty: PropTypes.string.isRequired,
 
@@ -212,33 +207,28 @@ export default React.createClass({
       setTimeout(this.updateTableSettings, 0);
     }
   },
+
   onItemsUpdated(items) {
     this._dataLoader.items = items;
   },
-  componentDidMount() {
-    this.unsubscribe = this.props.store.listen(this.onItemsUpdated);
-  },
+
   updateTableSettings() {
     const startRows = convertStartToRows(this._scrollPosition);
     const endRows = startRows + convertEndToRows(this.state.height, true);
 
-    console.log("Settings changed, start: " + startRows + ", end: " + endRows, ", height: " + this.state.height, this.props.store.viewName);
-    TableActions.changeSettings(this.props.store.viewUrl, startRows, endRows, this.state.sortProperty, this.state.sortAscending);
+    console.log("Settings changed, start: " + startRows + ", end: " + endRows, ", height: " + this.state.height, this.props.viewName);
+    TableActions.changeSettings(this.props.viewUrl, startRows, endRows, this.state.sortProperty, this.state.sortAscending);
   },
+
   componentWillUnmount() {
-    TableActions.close(this.props.store.viewUrl);
-    this.unsubscribe();
+    TableActions.close(this.props.viewUrl);
   },
 
   componentWillMount() {
     this._columnWidths = { };
     this._isColumnResizing = false;
     this._scrollPosition = 0;
-    this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
-  },
-
-  _rowGetter(rowIndex) {
-    return this._dataLoader.getRowData(rowIndex);
+    //this._dataLoader = new RowDataLoader(() => this.forceUpdate() );
   },
   
   _clearDataForRow(rowIndex) {
@@ -250,19 +240,19 @@ export default React.createClass({
   },
 
   _onScrollStart(horizontal, vertical) {
-    this._dataLoader.fetchingActive = true;
-    //console.log("Scrolling started: " + vertical, this.props.store.viewName);
-    TableActions.pause(this.props.store.viewUrl, true);
+    //this._dataLoader.fetchingActive = true;
+    //console.log("Scrolling started: " + vertical, this.props.viewName);
+    TableActions.pause(this.props.viewUrl, true);
   },
 
   _onScrollEnd(horizontal, vertical) {
     this._scrollPosition = vertical;
-    this._dataLoader.fetchingActive = false;
-    TableActions.pause(this.props.store.viewUrl, false);
+    //this._dataLoader.fetchingActive = false;
+    TableActions.pause(this.props.viewUrl, false);
 
     clearTimeout(this._scrollTimer);
     this._scrollTimer = setTimeout(this.updateTableSettings, 500);
-    //console.log("Scrolling ended: " + vertical, this.props.store.viewName);
+    //console.log("Scrolling ended: " + vertical, this.props.viewName);
   },
 
   _sortRowsBy(cellDataKey) {
@@ -287,11 +277,11 @@ export default React.createClass({
   _onColumnResizeEndCallback(newColumnWidth, dataKey) {
     this._columnWidths[dataKey] = newColumnWidth;
     this._isColumnResizing = false;
-    this.forceUpdate(); // don't do this, use a store and put into this.state!
+    this.forceUpdate();
   },
 
   _setFilter(pattern) {
-    TableActions.filter(this.props.store.viewUrl, pattern);
+    TableActions.filter(this.props.viewUrl, pattern);
   },
 
   _footerDataGetter() {
@@ -321,12 +311,18 @@ export default React.createClass({
     });
   },
 
+  _rowGetter(rowIndex) {
+    return this.props.items[rowIndex];
+    //return this._dataLoader.getRowData(rowIndex);
+  },
+
   rowClassNameGetter(rowIndex) {
     if (!this.props.rowClassNameGetter) {
       return null;
     }
 
-    const rowData = this._dataLoader.getRowData(rowIndex);
+    const rowData = this._rowGetter(rowIndex);
+    //const rowData = this._dataLoader.getRowData(rowIndex);
     if (!rowData) {
       return null;
     }
@@ -377,7 +373,7 @@ export default React.createClass({
           footerDataGetter={this._footerDataGetter}
           rowHeight={50}
           rowGetter={this._rowGetter}
-          rowsCount={this.props.store.rowCount}
+          rowsCount={this.props.rowCount}
           headerHeight={50}
           onScrollStart={this._onScrollStart}
           onScrollEnd={this._onScrollEnd}
@@ -388,9 +384,11 @@ export default React.createClass({
       </TouchScrollArea>
       <div className="table-footer">
         { this.props.footerData }
-        <FilterBox viewUrl={ this.props.store.viewUrl }/>
+        <FilterBox viewUrl={ this.props.viewUrl }/>
       </div>
       </div>
     );
   }
 });
+
+export default DataSource(VirtualTable)

@@ -54,6 +54,12 @@ const SideMenu = React.createClass({
     this.updateLogInfo();
   },
 
+  getInitialState() {
+    return {
+      logInfo: LogStore.getUnreadInfo()
+    }
+  },
+
   updateLogInfo() {
     this.setState({ "logInfo": LogStore.getUnreadInfo() });
   },

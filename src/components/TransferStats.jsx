@@ -2,7 +2,6 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import TransferStatsStore from 'stores/TransferStatsStore'
-import StoreLoaderMixin from 'mixins/StoreLoaderMixin';
 import Format from 'utils/Format.js'
 
 const SpeedDisplay = React.createClass({
@@ -19,7 +18,7 @@ const SpeedDisplay = React.createClass({
 });
 
 const StatisticsBar = React.createClass({
-  mixins: [Reflux.connect(TransferStatsStore), StoreLoaderMixin(TransferStatsStore)],
+  mixins: [Reflux.connect(TransferStatsStore)],
   render: function() {
     return (
       <div className={this.props.className}>

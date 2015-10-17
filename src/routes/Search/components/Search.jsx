@@ -1,11 +1,10 @@
 import React from 'react';
-import SearchStore from 'stores/SearchStore';
 import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService'
 import SearchActions from 'actions/SearchActions'
 
 import { HistoryEnum } from 'constants/HistoryConstants'
-import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
+import { SEARCH_QUERY_URL, SEARCH_MODULE_URL } from 'constants/SearchConstants'
 
 import HistoryInput from 'components/autosuggest/HistoryInput'
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
@@ -103,8 +102,9 @@ const Search = React.createClass({
         <VirtualTable
           rowClassNameGetter={ this._rowClassNameGetter }
         	defaultSortProperty="relevancy"
-          store={ SearchStore }
-          defaultSortAscending={false}>
+          defaultSortAscending={false}
+          viewName="search_view"
+          viewBaseUrl={SEARCH_MODULE_URL}>
           <Column
             label="Name"
             width={270}

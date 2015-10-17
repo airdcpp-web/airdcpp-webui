@@ -1,11 +1,10 @@
-import React from 'react';
-import { Column } from 'fixed-data-table';
-import classNames from 'classnames';
+import React from 'react'
+import { Column } from 'fixed-data-table'
+import classNames from 'classnames'
 
-import { PriorityEnum, StatusEnum } from 'constants/QueueConstants';
+import { PriorityEnum, StatusEnum, QUEUE_MODULE_URL } from 'constants/QueueConstants'
 import { ActionMenu } from 'components/Menu'
-import QueueStore from 'stores/QueueStore';
-import QueueActions from 'actions/QueueActions';
+import QueueActions from 'actions/QueueActions'
 import VirtualTable from 'components/table/VirtualTable'
 
 import Formatter from 'utils/Format';
@@ -148,7 +147,8 @@ export default React.createClass({
     return (
       <VirtualTable
         defaultSortProperty="name"
-        store={ QueueStore }>
+        viewName="bundle_view"
+        viewBaseUrl={QUEUE_MODULE_URL}>
         <Column
           label="Name"
           width={270}

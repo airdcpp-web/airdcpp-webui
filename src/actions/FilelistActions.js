@@ -11,6 +11,7 @@ const FilelistActions = Reflux.createActions([
   { "fetchSessions": { asyncResult: true} },
   { "createSession": { asyncResult: true } },
   { "removeSession": { asyncResult: true } },
+  { "changeDirectory": { asyncResult: true } },
     "sessionChanged"
 ]);
 
@@ -21,6 +22,13 @@ FilelistActions.fetchSessions.listen(function() {
       .catch(that.failed);
 });
 
+FilelistActions.changeDirectory.listen(function(cid, path) {
+  let that = this;
+  SocketService.post(FILELIST_SESSION_URL + "/" + cid + "/directory", { list_path: path })
+    .then(data => that.completed(cid, data))
+    .catch(error => that.failed(cid, error));
+});
+
 FilelistActions.createSession.listen(function(user, location) {
 	let session = FilelistSessionStore.getSession(user.cid);
 	if (session) {
@@ -28,23 +36,26 @@ FilelistActions.createSession.listen(function(user, location) {
 		return;
 	}
 
-    let that = this;
-    return SocketService.post(FILELIST_SESSION_URL, { 
-    	cid: user.cid,
-    	hub_url: user.hub_url
-    })
-      .then((data) => that.completed(data, user, location))
-      .catch(that.failed);
+  let that = this;
+  return SocketService.post(FILELIST_SESSION_URL, {
+    client_view: true,
+    user: {
+      cid: user.cid,
+      hub_url: user.hub_url
+    }
+  })
+    .then((data) => that.completed(data, user, location))
+    .catch(that.failed);
 });
 
 FilelistActions.createSession.completed.listen(function(data, user, location) {
-    History.pushSidebar(location, "messages/session/" + user.cid);
+    History.pushSidebar(location, "filelists/session/" + user.cid);
 });
 
 FilelistActions.createSession.failed.listen(function(error) {
   NotificationActions.error({ 
     title: "Failed to create filelist session",
-    message: error.message
+    message: error.reason
   });
 });
 
@@ -58,7 +69,7 @@ FilelistActions.removeSession.listen(function(cid) {
 FilelistActions.removeSession.failed.listen(function(error) {
   NotificationActions.error({ 
     title: "Failed to remove filelist",
-    message: error.message
+    message: error.reason
   });
 });
 

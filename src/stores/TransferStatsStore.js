@@ -3,10 +3,10 @@ import Reflux from 'reflux';
 import {TRANSFER_MODULE_URL, STATISTICS} from 'constants/TransferConstants';
 
 import SocketStore from './SocketStore'
-import StorageMixin from 'mixins/StorageMixin'
 
-export default Reflux.createStore({
-  mixins: [StorageMixin],
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
+
+const TransferStatsStore = Reflux.createStore({
   init: function() {
     this.getInitialState = this.getState;
     this._statistics = this.loadProperty("statistics", {
@@ -15,14 +15,6 @@ export default Reflux.createStore({
       session_down: 0,
       session_up: 0
     });
-  },
-
-  load: function() {
-    SocketStore.addSocketListener(TRANSFER_MODULE_URL, STATISTICS, this.onStatistics);
-  },
-
-  unload: function() {
-    SocketStore.removeSocketListener(TRANSFER_MODULE_URL, STATISTICS, this.onStatistics);
   },
 
   getState: function() {
@@ -35,5 +27,11 @@ export default Reflux.createStore({
     this._statistics = data;
     this.saveProperty("statistics", this._statistics);
     this.trigger(this.getState());
+  },
+
+  onSocketConnected(addSocketListener) {
+    addSocketListener(TRANSFER_MODULE_URL, STATISTICS, this.onStatistics);
   }
 });
+
+export default SocketSubscriptionDecorator(TransferStatsStore)

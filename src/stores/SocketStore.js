@@ -4,6 +4,18 @@ import SocketActions from 'actions/SocketActions';
 import SocketService from 'services/SocketService';
 import { EventEmitter } from 'events';
 
+const getSubscribtionId = (event, id) => {
+  return id ? (event + id) : event;
+}
+
+const getSubscribtionUrl = (moduleUrl, id, event) => {
+  if (id) {
+    return moduleUrl + '/' + id + '/listener/' + event;
+  }
+
+  return moduleUrl + '/listener/' + event;
+}
+
 export default Reflux.createStore({
   listenables: SocketActions,
   init: function() {
@@ -29,23 +41,25 @@ export default Reflux.createStore({
     this.trigger(this._socket);
   },
 
-  onStateDisconnected(socket, error) {
+  onStateDisconnected(socket, error, id) {
     this._socket = null;
     this.trigger(this._socket, error);
   },
 
-  addMessageListener(event, callback) {
-    this._apiEmitter.on(event, callback);
+  // Listen to a specific event without sending subscription to the server
+  addMessageListener(event, callback, id) {
+    const subscriptionId = getSubscribtionId(event, id);
+    this._apiEmitter.on(subscriptionId, callback);
+    return () => this._removeMessageListener(subscriptionId, callback); 
+  },
+
+  _removeMessageListener(subscriptionId, callback) {
+    this._apiEmitter.removeListener(subscriptionId, callback);
   },
 
   addSocketListener(apiModuleUrl, event, callback, entityId) {
-    var subscriptionId = event;
-    var apiModuleUrlFull = apiModuleUrl;
-
-    if (entityId) {
-      apiModuleUrlFull += '/' + entityId;
-      subscriptionId += entityId;
-    }
+    var subscriptionId = getSubscribtionId(event, entityId);
+    var subscriptionUrl = getSubscribtionUrl(apiModuleUrl, entityId, event);
 
     var listeners = this._apiSubscriptions[subscriptionId];
     if (listeners == undefined) {
@@ -54,25 +68,21 @@ export default Reflux.createStore({
 
     this._apiSubscriptions[subscriptionId]++;
     this._apiEmitter.on(subscriptionId, callback);
-    SocketService.post(apiModuleUrlFull + "/listener/" + event).catch(error => console.error("Failed to add socket listener", apiModuleUrlFull, event, error.message));
+    SocketService.post(subscriptionUrl).catch(error => console.error("Failed to add socket listener", subscriptionUrl, event, entityId, error.reason));
 
-    return () => this.removeSocketListener(apiModuleUrl, event, callback, entityId);
+    return () => this.removeSocketListener(subscriptionUrl, subscriptionId, callback);
   },
 
-  removeSocketListener(apiModuleUrl, event, callback, entityId) {
-    var subscriptionId = event;
-    var apiModuleUrlFull = apiModuleUrl;
-
-    if (entityId) {
-      apiModuleUrlFull += '/' + entityId;
-      subscriptionId += entityId;
-    }
-
+  _removeSocketListener(subscriptionUrl, subscriptionId, callback) {
     var listeners = this._apiSubscriptions[subscriptionId];
 
     this._apiSubscriptions[subscriptionId]--;
-    this._apiEmitter.removeListener(event, callback);
-    SocketService.delete(apiModuleUrlFull + "/listener/" + event);
+    this._apiEmitter.removeListener(subscriptionId, callback);
+
+    if (this._apiSubscriptions[subscriptionId] === 0) {
+      SocketService.delete(subscriptionUrl).catch(error => console.error("Failed to remove socket listener", subscriptionUrl, event, entityId, error.reason));
+      delete this._apiSubscriptions[subscriptionId];
+    }
   },
 
   get socket() {
