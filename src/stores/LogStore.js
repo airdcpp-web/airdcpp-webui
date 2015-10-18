@@ -48,7 +48,7 @@ const LogStore = Reflux.createStore({
     this.trigger(this._logMessages);
   },
 
-  getUnreadInfo() {
+  getUnreadCounts() {
     var counts = {
       [SeverityEnum.INFO]: 0,
       [SeverityEnum.WARNING]: 0,
@@ -61,27 +61,7 @@ const LogStore = Reflux.createStore({
       }
     });
 
-    if (counts[SeverityEnum.ERROR] > 0) {
-      return {
-        count: counts[SeverityEnum.ERROR],
-        color: "red"
-      }
-    } else if (counts[SeverityEnum.WARNING] > 0) {
-      return {
-        count: counts[SeverityEnum.WARNING],
-        color: "yellow"
-      }
-    } else if (counts[SeverityEnum.INFO] > 0) {
-      return {
-        count: counts[SeverityEnum.INFO],
-        color: "gray"
-      }
-    }
-
-    return {
-      count: 0,
-      color: ""
-    }
+    return counts;
   },
 
   get logMessages() {

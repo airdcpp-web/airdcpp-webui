@@ -2,6 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import UserSearchInput from 'components/autosuggest/UserSearchInput'
+
+import CountLabel from 'components/CountLabel'
+import LabelInfo from 'utils/LabelInfo'
+
 import TabLayout from 'routes/Sidebar/components/TabLayout'
 import NewLayout from 'routes/Sidebar/components/NewLayout'
 
@@ -26,7 +30,7 @@ const Messages = React.createClass({
   },
 
   _labelGetter(session) {
-  	return session.unread_count > 0 ? session.unread_count : null;
+    return <CountLabel unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(session.unread_messages)}/>
   },
 
   _statusGetter(session) {
@@ -44,8 +48,7 @@ const Messages = React.createClass({
 	      	items={this.state.chatSessions} 
 	      	nameGetter={this._nameGetter} 
 	      	labelGetter={this._labelGetter}
-	      	statusGetter={this._statusGetter}
-	      	labelColor="red">
+	      	statusGetter={this._statusGetter}>
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Send message" subheader="Start a new private chat session" icon="comments">

@@ -86,7 +86,7 @@ export default function(Component) {
 			let viewItem = this._findItem(rawItem.id) || { id: rawItem.id };
 
 			if (rawItem.properties) {
-				Object.assign(viewItem, rawItem.properties);
+				viewItem = Object.assign({}, viewItem, rawItem.properties);
 			} else if (Object.keys(viewItem).length == 1) {
 				console.error("No properties were sent for a new view item", viewItem.id);
 			}
@@ -126,8 +126,13 @@ export default function(Component) {
 	        return <div className="ui text loader">Loading</div>
 	      }*/
 
-	      const url = this.props.viewUrl;
-	      return <Component {...this.props} {...this.state} viewUrl={this.props.viewBaseUrl + '/' + this.props.viewName } rowCount={rowCount}/>
+	      let viewUrl = this.props.viewBaseUrl + '/';
+	      if (this.props.entityId) {
+	      	viewUrl += this.props.entityId + '/';
+	      }
+	      viewUrl += this.props.viewName;
+
+	      return <Component {...this.props} {...this.state} viewUrl={viewUrl } rowCount={rowCount}/>
 	    },
 	});
 

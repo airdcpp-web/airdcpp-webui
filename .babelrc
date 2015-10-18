@@ -3,7 +3,7 @@
   "env": {
     // only enable it when process.env.NODE_ENV is 'development' or undefined
     "development": {
-      "plugins": ["react-transform"],
+      "plugins": ["react-transform", "object-assign"],
       "extra": {
         // must be defined and be an object
         "react-transform": {

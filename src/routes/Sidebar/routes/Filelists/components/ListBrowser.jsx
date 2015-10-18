@@ -1,6 +1,8 @@
 import React from 'react';
+import { Column } from 'fixed-data-table'
 
 import FilelistActions from 'actions/FilelistActions'
+import { FILELIST_SESSION_URL } from 'constants/FilelistConstants'
 
 import { DownloadMenu } from 'components/Menu'
 
@@ -59,11 +61,13 @@ const ListBrowser = React.createClass({
     return (
       <div className="filelist-browser">
         <PathBreadcrumb tokens={this._tokenizePath()} separator={'/'} rootPath={'/'} rootName={this.props.item.user.nicks} itemClickHandler={this._handleClickDirectory}/>
-        {/*<VirtualTable
+        <VirtualTable
           rowClassNameGetter={ this._rowClassNameGetter }
           defaultSortProperty="name"
-          //store={ SearchStore }
-          defaultSortAscending={false}>
+          viewName="filelist_view"
+          viewBaseUrl={FILELIST_SESSION_URL}
+          entityId={this.props.item.id}
+          defaultSortAscending={true}>
           <Column
             label="Name"
             width={270}
@@ -77,19 +81,19 @@ const ListBrowser = React.createClass({
             dataKey="size"
             cellRenderer={ Formatter.formatSize }
           />
-          <Column
+          {/*<Column
             label="Type"
             width={100}
             dataKey="type"
             cellRenderer={ this._renderStr }
-          />
+          />*/}
           <Column
             label="Date"
             width={150}
             dataKey="time"
             cellRenderer={ Formatter.formatDateTime }
           />
-        </VirtualTable>*/}
+        </VirtualTable>
       </div>
     );
   },

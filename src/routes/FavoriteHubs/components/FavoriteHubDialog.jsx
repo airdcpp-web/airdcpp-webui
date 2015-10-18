@@ -8,7 +8,6 @@ import { RouteContext } from 'react-router'
 import BlueBird from 'bluebird';
 
 import t from 'utils/tcomb-form';
-import _ from 'lodash';
 
 const Form = t.form.Form;
 const Entry = t.struct({

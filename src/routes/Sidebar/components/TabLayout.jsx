@@ -110,11 +110,6 @@ const TabLayout = React.createClass({
     labelGetter: React.PropTypes.func.isRequired,
 
     /**
-     * Color of the label
-     */
-    labelColor: React.PropTypes.string.isRequired,
-
-    /**
      * Function receiving the circular color label in front of the item
      */
     statusGetter: React.PropTypes.func.isRequired,
@@ -222,21 +217,12 @@ const TabLayout = React.createClass({
   	}
   },
 
-  getItemLabel(item) {
-  	const label = this.props.labelGetter(item);
-  	if (!label) {
-  		return null;
-  	}
-
-  	return (<div className={ "ui mini right label " + this.props.labelColor}> { label } </div>)
-  },
-
   getItemContent(item) {
   	return (
   		<div>
   			<div className={ "ui empty circular mini label " + this.props.statusGetter(item) }/>
 	  		{ this.props.nameGetter(item) }
-	  		{ this.getItemLabel(item) }
+	  		{ this.props.labelGetter(item) }
   		</div>
   	);
   },

@@ -356,36 +356,36 @@ const VirtualTable = React.createClass({
 
     const controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
     return (
-      <div>
-      <TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
-        <Table
-          ref="table"
+      <div className="virtual-table">
+        <TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
+          <Table
+            ref="table"
 
-          width={this.state.width}
-          height={this.state.height-45-100} 
-          onContentHeightChange={this._onContentHeightChange}
-          scrollTop={this.state.top}
-          scrollLeft={this.state.left}
-          overflowX={controlledScrolling ? "hidden" : "auto"}
-          overflowY={controlledScrolling ? "hidden" : "auto"}
+            width={this.state.width}
+            height={this.state.height-45-100} 
+            onContentHeightChange={this._onContentHeightChange}
+            scrollTop={this.state.top}
+            scrollLeft={this.state.left}
+            overflowX={controlledScrolling ? "hidden" : "auto"}
+            overflowY={controlledScrolling ? "hidden" : "auto"}
 
-          rowClassNameGetter={this.rowClassNameGetter}
-          footerDataGetter={this._footerDataGetter}
-          rowHeight={50}
-          rowGetter={this._rowGetter}
-          rowsCount={this.props.rowCount}
-          headerHeight={50}
-          onScrollStart={this._onScrollStart}
-          onScrollEnd={this._onScrollEnd}
-          isColumnResizing={this.isColumnResizing}
-          onColumnResizeEndCallback={this._onColumnResizeEndCallback}>
-          {children}
-        </Table>
-      </TouchScrollArea>
-      <div className="table-footer">
-        { this.props.footerData }
-        <FilterBox viewUrl={ this.props.viewUrl }/>
-      </div>
+            rowClassNameGetter={this.rowClassNameGetter}
+            footerDataGetter={this._footerDataGetter}
+            rowHeight={50}
+            rowGetter={this._rowGetter}
+            rowsCount={this.props.rowCount}
+            headerHeight={50}
+            onScrollStart={this._onScrollStart}
+            onScrollEnd={this._onScrollEnd}
+            isColumnResizing={this.isColumnResizing}
+            onColumnResizeEndCallback={this._onColumnResizeEndCallback}>
+            {children}
+          </Table>
+        </TouchScrollArea>
+        <div className="table-footer">
+          { this.props.footerData }
+          <FilterBox viewUrl={ this.props.viewUrl }/>
+        </div>
       </div>
     );
   }

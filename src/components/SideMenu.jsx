@@ -23,6 +23,9 @@ import LogStore from 'stores/LogStore'
 import FilelistSessionStore from 'stores/FilelistSessionStore'
 import FilelistActions from 'actions/FilelistActions'
 
+import CountLabel from 'components/CountLabel'
+import LabelInfo from 'utils/LabelInfo'
+
 const MenuItem = React.createClass({
   onClick: function(evt) {
     evt.preventDefault();
@@ -33,9 +36,7 @@ const MenuItem = React.createClass({
   render: function() {
     return (
       <Link to={this.props.page} className="item" onClick={this.onClick}>
-        { this.props.labelCount > 0 ? (
-          <div className={ "ui mini label " + this.props.labelColor}> { this.props.labelCount } </div>
-          ) : null }
+        <CountLabel className="mini" unreadInfo={this.props.unreadInfo}/>
         <i className={ this.props.icon + " icon" }></i>
         {this.props.title}
       </Link>
@@ -44,26 +45,13 @@ const MenuItem = React.createClass({
 });
 
 const SideMenu = React.createClass({
-  mixins: [Reflux.ListenerMixin, Reflux.connect(PrivateChatSessionStore, "chatSessions"), Reflux.connect(HubSessionStore, "hubSessions")],
+  mixins: [Reflux.connect(PrivateChatSessionStore, "chatSessions"), Reflux.connect(HubSessionStore, "hubSessions"), Reflux.connect(LogStore, "logMessages")],
   displayName: "Side menu",
 
   componentDidMount() {
     this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
-    this.listenTo(LogStore, this.updateLogInfo);
-
-    this.updateLogInfo();
   },
-
-  getInitialState() {
-    return {
-      logInfo: LogStore.getUnreadInfo()
-    }
-  },
-
-  updateLogInfo() {
-    this.setState({ "logInfo": LogStore.getUnreadInfo() });
-  },
-
+  
   onPrivateMessage(messages) {
     if (messages.length == 0) {
       return;
@@ -101,10 +89,10 @@ const SideMenu = React.createClass({
       <div id="side-menu">
         <div className="content">
           <div className="ui labeled icon vertical inverted menu">
-            <MenuItem labelCount={ HubSessionStore.countUnreadSessions() } labelColor="blue" location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
-            <MenuItem labelCount={ PrivateChatSessionStore.countUnreadSessions() } labelColor="red" location={this.props.location} icon="blue comments" title="Messages" page="messages"/>
+            <MenuItem unreadInfo={ LabelInfo.getHubUnreadInfo(HubSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
+            <MenuItem unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(PrivateChatSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue comments" title="Messages" page="messages"/>
             <MenuItem labelCount={ 0 } location={this.props.location} icon="blue browser" title="Filelists" page="filelists"/>
-            <MenuItem labelCount={ this.state.logInfo.count } labelColor={ this.state.logInfo.color + " history" } location={this.props.location} icon="blue history" title="Events" page="events"/>
+            <MenuItem unreadInfo={ LabelInfo.getLogUnreadInfo(LogStore.getUnreadCounts()) } location={this.props.location} icon="blue history" title="Events" page="events"/>
           </div>
         </div>
         <div>

@@ -11,9 +11,17 @@ export default function(store, fetchAction) {
     store.trigger(sessions);
   });
 
-  store.countUnreadSessions = () => {
-    return sessions.reduce((count, session) => session.unread_count > 0 ? count + 1 : count, 0);
+  const countUnread = (type) => {
+    return sessions.reduce((count, session) => session.unread_messages[type] > 0 ? count + 1 : count, 0);
   }
+
+  store.getUnreadCounts = () => {
+    return {
+      user: countUnread("user"),
+      bot: countUnread("bot"),
+      status: countUnread("status"),
+    }
+  },
 
   store.getSession = (id) => {
     return sessions.find(session => session.id == id);

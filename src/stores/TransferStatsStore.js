@@ -9,12 +9,19 @@ import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 const TransferStatsStore = Reflux.createStore({
   init: function() {
     this.getInitialState = this.getState;
-    this._statistics = this.loadProperty("statistics", {
+    this._statistics = {
       speed_down: 0,
       speed_up: 0,
       session_down: 0,
       session_up: 0
-    });
+    };
+
+    /*this._statistics = this.loadProperty("statistics", {
+      speed_down: 0,
+      speed_up: 0,
+      session_down: 0,
+      session_up: 0
+    });*/
   },
 
   getState: function() {
@@ -25,7 +32,7 @@ const TransferStatsStore = Reflux.createStore({
 
   onStatistics: function(data) {
     this._statistics = data;
-    this.saveProperty("statistics", this._statistics);
+    //this.saveProperty("statistics", this._statistics);
     this.trigger(this.getState());
   },
 
