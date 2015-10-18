@@ -118,6 +118,11 @@ const TabLayout = React.createClass({
      * Item ID that is currently active (if any)
      */
     activeId: React.PropTypes.any,
+
+    /**
+     * Label for button that opens a new session
+     */
+    newButtonLabel: React.PropTypes.any.isRequired
   },
   
   displayName: "TabLayout",
@@ -264,7 +269,7 @@ const TabLayout = React.createClass({
 	    <div className="ui grid">
 	      <div className="four wide column">
 	        <div className="ui vertical fluid tabular menu">
-            <NewButton key="new-button" title="New session" location={this.props.location} baseUrl={this.props.baseUrl}/>
+            <NewButton key="new-button" title={this.props.newButtonLabel} location={this.props.location} baseUrl={this.props.baseUrl}/>
 	          { menuItems }
 	        </div>
 	      </div>

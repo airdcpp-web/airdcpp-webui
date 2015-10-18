@@ -109,9 +109,19 @@
 	color: lightgray;
 }
 
+.chat-message {
+	margin-top: 5px;
+}
+
 .chat-message .message-text {
+	padding-top: 5px;
 	clear: both;
 	padding-right: 60px;
+	white-space: pre;
+}
+
+.chat-message img {
+	vertical-align: middle;
 }
 
 .status-message .message-text {
@@ -126,6 +136,14 @@
 
 .status-message .message-time {
 	font-size: small;
+}
+
+.chat-message.me .message-author-name {
+	color: steelblue !important;
+}
+
+.chat-message.bot .message-author-name {
+	color: darkgoldenrod !important;
 }
 
 /* MESSAGE SECTION END */

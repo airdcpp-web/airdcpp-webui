@@ -46,7 +46,7 @@ const Messages = React.createClass({
 	      	nameGetter={this._nameGetter} 
 	      	labelGetter={this._labelGetter}
 	      	statusGetter={this._statusGetter}
-	      	labelColor="blue">
+	      	newButtonLabel="Open new">
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Open list" subheader="Start browsing a new filelist" icon="sitemap">

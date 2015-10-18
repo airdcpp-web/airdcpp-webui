@@ -17,6 +17,7 @@ import Formatter from 'utils/Format';
 import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
 
 import { DownloadMenu, UserMenu } from 'components/Menu'
+import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator'
 
 import '../style.css'
 
@@ -168,4 +169,4 @@ const Search = React.createClass({
   }
 });
 
-export default OverlayParentDecorator(Search, DOWNLOAD_MODAL_ID);
+export default OfflineHubMessageDecorator(OverlayParentDecorator(Search, DOWNLOAD_MODAL_ID), "You need to be connected to at least one hub in order to perform searches");

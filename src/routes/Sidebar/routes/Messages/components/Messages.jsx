@@ -48,7 +48,8 @@ const Messages = React.createClass({
 	      	items={this.state.chatSessions} 
 	      	nameGetter={this._nameGetter} 
 	      	labelGetter={this._labelGetter}
-	      	statusGetter={this._statusGetter}>
+	      	statusGetter={this._statusGetter}
+          newButtonLabel="New session">
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Send message" subheader="Start a new private chat session" icon="comments">

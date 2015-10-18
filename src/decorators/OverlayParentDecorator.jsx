@@ -10,6 +10,7 @@ export default function(Component, overlayId, createPortal = true) {
 
   const replaceState = (props) => {
     const { returnTo } = props.location.state[overlayId];
+    console.assert(returnTo, "Return address missing when closing an overlay");
     delete props.location.state[overlayId];
     History.replaceState(props.location.state, returnTo);
   }

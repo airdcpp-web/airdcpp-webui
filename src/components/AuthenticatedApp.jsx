@@ -68,7 +68,7 @@ let MainLayout = React.createClass({
         <div className="pusher">
           <Notifications/>
           <NavigationPanel/>
-          <div className="ui container main" style={{ height: '100%', paddingTop: '80px'}}>
+          <div className="ui container main">
             {sidebar ?
               this.previousChildren :
               this.props.children

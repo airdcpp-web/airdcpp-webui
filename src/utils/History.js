@@ -6,6 +6,7 @@ const History = createBrowserHistory();
 // currentLocation can also be a string, but that should be used only when the old location state can be replaced
 // You may also pass additional data to the state
 const getOverlayState = (currentLocation, overlayId, data) => {
+  console.assert(currentLocation, "Current location not supplied for overlay creation");
 	if (typeof currentLocation !== "object") {
 		currentLocation = Object.assign({}, { pathname: currentLocation })
 	}

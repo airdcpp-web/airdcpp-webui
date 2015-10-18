@@ -4,6 +4,7 @@ import React from 'react';
 import Formatter from 'utils/Format';
 
 import ScrollDecorator from 'decorators/ScrollDecorator'
+import ReactEmoji from 'react-emoji'
 
 var ENTER_KEY_CODE = 13;
 
@@ -60,20 +61,30 @@ const MessageComposer = React.createClass({
 });
 
 const ChatMessage = React.createClass({
+  mixins: [ ReactEmoji ],
   displayName: "ChatMessage",
   propTypes: {
     message: React.PropTypes.object
   },
 
   render: function() {
-    let {message} = this.props;
+    const {message} = this.props;
+    const { flags } = message.from;
+
+    // No emojis to bot messages as they are likely to contain false matches
     return (
-      <div className="ui item message-list-item chat-message">
-        <div className="header message-author-name">{message.from.nick}</div>
+      <div className={ "ui item message-list-item chat-message " + flags.join(' ')}>
+        <div className="header message-author-name">
+          {message.from.nick}
+        </div>
         <div className="message-time">
           {Formatter.formatTimestamp(message.time)}
         </div>
-        <div className="message-text">{message.text}</div>
+        <div className="message-text">
+          { flags.indexOf("bot") >= 0 ? message.text : this.emojify(message.text, {
+            emojiType: "twemoji"
+          })}
+        </div>
       </div>
     );
   }
@@ -128,7 +139,7 @@ const MessageSection = ScrollDecorator(React.createClass({
     //console.log("MessageSection", messageListItems);
     return (
       <div className="message-section">
-        <div className="ui relaxed list message-list">
+        <div className="ui list message-list">
           {messageListItems}
         </div>
       </div>

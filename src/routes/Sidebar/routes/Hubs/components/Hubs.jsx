@@ -15,19 +15,6 @@ import HubSearchInput from 'components/autosuggest/HubSearchInput'
 import CountLabel from 'components/CountLabel'
 import LabelInfo from 'utils/LabelInfo'
 
-const Connect = React.createClass({
-  displayName: "Connect",
-  _handleSubmit(hubUrl) {
-  	HubActions.createSession(hubUrl, this.props.location);
-  },
-
-  render() {
-    return (
-      <HubSearchInput submitHandler={this._handleSubmit}/>
-	  );
-  }
-});
-
 const Hubs = React.createClass({
   mixins: [Reflux.connect(HubSessionStore, "hubSessions")],
   displayName: "Hubs",
@@ -51,6 +38,10 @@ const Hubs = React.createClass({
     return parseInt(this.props.params["id"]);
   },
 
+  _handleConnect(hubUrl) {
+    HubActions.createSession(hubUrl, this.props.location);
+  },
+
   render() {
     return (
       <TabLayout 
@@ -61,11 +52,12 @@ const Hubs = React.createClass({
       	items={this.state.hubSessions} 
       	nameGetter={this._nameGetter} 
       	labelGetter={this._labelGetter}
-      	statusGetter={this._statusGetter}>
+      	statusGetter={this._statusGetter}
+        newButtonLabel="Connect">
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Connect" subheader="Connect to a new hub" icon="sitemap">
-	      <Connect/>
+	      <HubSearchInput submitHandler={this._handleConnect}/>
 	    </NewLayout>) }
 	  </TabLayout>
 	);
