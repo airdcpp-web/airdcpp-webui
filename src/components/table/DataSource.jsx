@@ -27,6 +27,12 @@ export default function(Component) {
     	entityId: React.PropTypes.any,
 	  },
 
+	  reset() {
+		startPos = 0
+		endPos = 0
+		rowCount = 0
+	  },
+
 		getInitialState() {
 			return {
 				items: [],
@@ -41,11 +47,13 @@ export default function(Component) {
 	      	this.removeListener(this.props.entityId);
 	      	this.addListener(nextProps.entityId);
 
+	      	this.reset();
 	      	this.setState({items : []});
 	      }
 	    },
 
 	    componentWillMount() {
+	    	this.reset();
 	    	this.addListener(this.props.entityId);
 	    },
 

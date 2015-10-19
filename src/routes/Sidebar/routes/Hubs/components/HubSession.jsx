@@ -129,7 +129,7 @@ const HubSession = React.createClass({
     //const subHeader = identity.description;
 
     return (
-      <div className="hub-session session-layout">
+      <div className="hub-session">
         <TabHeader
           icon={icon}
           title={hubMenu}

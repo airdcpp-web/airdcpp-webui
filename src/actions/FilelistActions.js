@@ -29,7 +29,7 @@ FilelistActions.changeDirectory.listen(function(cid, path) {
     .catch(error => that.failed(cid, error));
 });
 
-FilelistActions.createSession.listen(function(user, location) {
+FilelistActions.createSession.listen(function(user, location, directory = '/') {
 	let session = FilelistSessionStore.getSession(user.cid);
 	if (session) {
 		this.completed(session, user, location);
@@ -42,7 +42,8 @@ FilelistActions.createSession.listen(function(user, location) {
     user: {
       cid: user.cid,
       hub_url: user.hub_url
-    }
+    },
+    directory: directory
   })
     .then((data) => that.completed(data, user, location))
     .catch(that.failed);

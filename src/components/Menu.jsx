@@ -1,7 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
+
 import TableDropdown, { DropdownItem } from './semantic/TableDropdown'
 import { Icon, Item } from 'react-semantify'
+import FileUtils from 'utils/FileUtils'
 
 import UserActions from 'actions/UserActions'
 import DownloadActions from 'actions/DownloadActions'
@@ -88,7 +90,7 @@ export const UserMenu = React.createClass({
     const { directory, user } = this.props;
     const data = {
       user: user,
-      directory: directory
+      directory: FileUtils.getFilePath(directory)
     }
 
     const caption = (

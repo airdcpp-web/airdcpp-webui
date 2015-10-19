@@ -6,7 +6,7 @@ import UserSearchInput from 'components/autosuggest/UserSearchInput'
 import CountLabel from 'components/CountLabel'
 import LabelInfo from 'utils/LabelInfo'
 
-import TabLayout from 'routes/Sidebar/components/TabLayout'
+import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout'
 import NewLayout from 'routes/Sidebar/components/NewLayout'
 
 import TypeConvert from 'utils/TypeConvert'
@@ -40,7 +40,7 @@ const Messages = React.createClass({
 
   render() {
     return (
-      <TabLayout 
+      <SideMenuLayout 
       		activeId={this.props.params ? this.props.params.id : null}
       		baseUrl="messages"
       		itemUrl="messages/session"
@@ -53,9 +53,9 @@ const Messages = React.createClass({
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Send message" subheader="Start a new private chat session" icon="comments">
-	      <UserSearchInput submitHandler={this._handleSubmit}/>
+	      <UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You need to be connected to at least one hub in order to send private messages"/>
 	    </NewLayout>) }
-	  </TabLayout>
+	  </SideMenuLayout>
 	);
   }
 });

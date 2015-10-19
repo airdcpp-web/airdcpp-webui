@@ -13,6 +13,7 @@ import { RouteContext } from 'react-router'
 import FileBrowser from './FileBrowser'
 import TypeConvert from 'utils/TypeConvert'
 import Accordion from 'components/semantic/Accordion'
+import FileUtils from 'utils/FileUtils'
 
 const MenuItem = React.createClass({
   render: function() {
@@ -106,6 +107,20 @@ const AccordionTargets = React.createClass({
 
 export default React.createClass({
   mixins: [ RouteContext ],
+  propTypes: {
+    /**
+     * Function handling the path selection. Receives the selected path as argument.
+     */
+    downloadHandler: React.PropTypes.func.isRequired,
+
+    /**
+     * Information about the item to download
+     */
+    itemInfo: React.PropTypes.shape({
+      path: React.PropTypes.string,
+      dupe: React.PropTypes.number
+    }).isRequired,
+  },
 
   getInitialState() {
     return {
@@ -122,12 +137,17 @@ export default React.createClass({
   },
 
   fetchDupePaths(requestPath) {
-    const data = {
-      path: this.props.itemInfo.path
-    };
+    const {itemInfo} = this.props;
+
+    let data = {};
+    if (FileUtils.isDirectory(itemInfo.path)) {
+      data["path"] = itemInfo.path
+    } else {
+      data["tth"] = itemInfo.tth
+    }
 
     SocketService.post(requestPath, data).then(data => this.setState({ 
-      dupe_paths: this.state.dupe_paths.concat(data)
+      dupe_paths: this.state.dupe_paths.concat(data.map(path => FileUtils.getParentPath(path, FileUtils)))
     })).catch(error => console.error("Failed to fetch dupe paths", requestPath, error.message));
   },
 

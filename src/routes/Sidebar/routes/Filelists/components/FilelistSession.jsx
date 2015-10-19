@@ -28,6 +28,10 @@ const FilelistSession = React.createClass({
   },
 
   render() {
+    if (!this.props.item) {
+      return <div className="ui text loader">Loading</div>
+    }
+    
     const { user } = this.props.item;
     const userMenu = (
       <ActionMenu 

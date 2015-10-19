@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import TabLayout from 'routes/Sidebar/components/TabLayout'
+import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout'
 import NewLayout from 'routes/Sidebar/components/NewLayout'
 
 import TypeConvert from 'utils/TypeConvert'
@@ -44,7 +44,7 @@ const Hubs = React.createClass({
 
   render() {
     return (
-      <TabLayout 
+      <SideMenuLayout 
     		activeId={this._getActiveId()}
     		baseUrl="hubs"
     		itemUrl="hubs/session"
@@ -59,7 +59,7 @@ const Hubs = React.createClass({
 	    (<NewLayout title="Connect" subheader="Connect to a new hub" icon="sitemap">
 	      <HubSearchInput submitHandler={this._handleConnect}/>
 	    </NewLayout>) }
-	  </TabLayout>
+	  </SideMenuLayout>
 	);
   }
 });

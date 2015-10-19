@@ -68,7 +68,7 @@ const ChatSession = React.createClass({
     );
 
     return (
-      <div className="chat-session session-layout">
+      <div className="chat-session">
         <TabHeader
           icon={icon}
           title={userMenu}

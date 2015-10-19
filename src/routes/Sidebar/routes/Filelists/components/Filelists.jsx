@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import UserSearchInput from 'components/autosuggest/UserSearchInput'
-import TabLayout from 'routes/Sidebar/components/TabLayout'
+import TopMenuLayout from 'routes/Sidebar/components/TopMenuLayout'
 import NewLayout from 'routes/Sidebar/components/NewLayout'
 
 import TypeConvert from 'utils/TypeConvert'
@@ -37,7 +37,7 @@ const Messages = React.createClass({
 
   render() {
     return (
-      <TabLayout 
+      <TopMenuLayout 
       		activeId={this.props.params ? this.props.params.id : null}
       		baseUrl="filelists"
       		itemUrl="filelists/session"
@@ -50,9 +50,9 @@ const Messages = React.createClass({
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Open list" subheader="Start browsing a new filelist" icon="sitemap">
-	      <UserSearchInput submitHandler={this._handleSubmit}/>
+	      <UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You need to be connected to at least one hub in order to download filelists from other users"/>
 	    </NewLayout>) }
-	  </TabLayout>
+	  </TopMenuLayout>
 	);
   }
 });

@@ -42,17 +42,18 @@
 }
 
 #sidebar .tab-header {
-	margin-bottom: 15px;
 	margin-top: 10px;
+	margin-left: 10px;
 }
 
-#sidebar .ui.grid, #sidebar .session-layout, #sidebar .ui.grid .column, #sidebar .ui.grid .column .segment {
+#sidebar-container > div , #sidebar .session-layout, #sidebar .ui.grid .column, #sidebar .ui.grid .column > div {
 	height: 100%;
 }
 
-#sidebar .session-layout {
+#sidebar .session-layout > div {
 	display: flex;
 	flex-direction: column;
+	height: 100%;
 }
 
 /* SIDEBAR SESSION END */
@@ -69,6 +70,7 @@
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
+	margin-top: 10px;
 }
 
 .message-section {
@@ -134,7 +136,7 @@
 	float: left;
 }
 
-.status-message .message-time {
+.message-list .message-time {
 	font-size: small;
 }
 
@@ -149,11 +151,30 @@
 /* MESSAGE SECTION END */
 
 #sidebar .virtual-table {
-	height: 100%;
 }
 
 .filelist-browser {
 	height: 100%;
 	display:flex;
 	flex-direction: column;
+}
+
+.filelist-browser .ui.segment {
+	margin-bottom: 10px;
+}
+
+.top-menu-layout {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.top-menu-layout .session-layout {
+	/*padding: 0px 10px 10px 10px;*/
+}
+
+.top-menu-layout .menu-bar {
+	border-radius: 0px !important;
+	padding-bottom: 0px;
+	margin-bottom: 20px;
 }

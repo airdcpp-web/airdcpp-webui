@@ -4,43 +4,49 @@ import Reflux from 'reflux';
 import HubSessionStore from 'stores/HubSessionStore'
 
 // Disables the component of there are no online hubs
-export default function(Component, message) {
-  const OfflineHubMessageDecorator = React.createClass({
-    mixins: [Reflux.ListenerMixin],
-    displayName: "OfflineHubMessageDecorator",
-    componentDidMount: function() {
-      this.listenTo(HubSessionStore, this.updateState);
-    },
+const OfflineHubMessageDecorator = React.createClass({
+  mixins: [Reflux.ListenerMixin],
+  displayName: "OfflineHubMessageDecorator",
+  propTypes: {
 
-    getInitialState() {
-      return {
-        hasConnectedHubs: HubSessionStore.hasConnectedHubs()
-      }
-    },
+    /**
+     * Function to call when pressing enter
+     */
+    offlineMessage: React.PropTypes.any.isRequired
+  },
 
-    updateState() {
-      this.setState({ hasConnectedHubs: HubSessionStore.hasConnectedHubs() });
-    },
+  componentDidMount: function() {
+    this.listenTo(HubSessionStore, this.updateState);
+  },
 
-    render() {
-      if (!this.state.hasConnectedHubs) {
-        return (
-          <div>
-          <div className="ui icon message">
-            <i className="plug icon"></i>
-            <div className="content">
-              <div className="header">
-                No online hubs
-              </div>
-              <p>{message}</p>
+  getInitialState() {
+    return {
+      hasConnectedHubs: HubSessionStore.hasConnectedHubs()
+    }
+  },
+
+  updateState() {
+    this.setState({ hasConnectedHubs: HubSessionStore.hasConnectedHubs() });
+  },
+
+  render() {
+    if (!this.state.hasConnectedHubs) {
+      return (
+        <div>
+        <div className="ui icon message">
+          <i className="plug icon"></i>
+          <div className="content">
+            <div className="header">
+              No online hubs
             </div>
+            <p>{this.props.offlineMessage}</p>
           </div>
-          </div>)
-      }
+        </div>
+        </div>)
+    }
 
-      return <Component {...this.props}/>
-    },
-  });
+    return this.props.children
+  },
+});
 
-  return OfflineHubMessageDecorator;
-}
+export default OfflineHubMessageDecorator

@@ -5,6 +5,8 @@ import Autosuggest from 'react-autosuggest'
 import classNames from 'classnames';
 import SuggestionRenderer from './SuggestionRenderer'
 
+import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator'
+
 const UserSearchInput = React.createClass({
   propTypes: {
 
@@ -63,15 +65,17 @@ const UserSearchInput = React.createClass({
     );
 
     return (
-      <div className="ui fluid action input" onKeyDown={this._onKeyDown}>
-        <Autosuggest 
-          value={this.state.text}
-          suggestions={this._getSuggestions}
-          inputAttributes={inputAttributes}
-          onSuggestionSelected={ this.props.submitHandler } 
-          suggestionRenderer={ this._renderSuggestion }
-          suggestionValue={ this._getSuggestionValue }/>
-      </div>
+      <OfflineHubMessageDecorator offlineMessage={this.props.offlineMessage}>
+        <div className="ui fluid action input" onKeyDown={this._onKeyDown}>
+          <Autosuggest 
+            value={this.state.text}
+            suggestions={this._getSuggestions}
+            inputAttributes={inputAttributes}
+            onSuggestionSelected={ this.props.submitHandler } 
+            suggestionRenderer={ this._renderSuggestion }
+            suggestionValue={ this._getSuggestionValue }/>
+        </div>
+      </OfflineHubMessageDecorator>
     );
   }
 });
