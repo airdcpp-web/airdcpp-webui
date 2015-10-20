@@ -10,9 +10,10 @@ const SideMenuLayout = React.createClass({
     location: React.PropTypes.object.isRequired,
   },
 
+  displayName: "SideMenuLayout",
   render() {
     return (
-	    <div className="ui grid">
+	    <div className="ui grid side-menu-layout">
 	      <div className="four wide column">
 	        <div className="ui vertical fluid tabular menu">
             { this.props.newButton }

@@ -48,7 +48,7 @@ const FilelistSession = React.createClass({
 
     const state = this.props.item.state.id;
     return (
-      <div className="filelist-session session-layout">
+      <div className="filelist-session">
         <TabHeader
           icon={icon}
           title={userMenu}

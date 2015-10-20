@@ -17,33 +17,12 @@
 	border-bottom-left-radius: .28571429rem;
 }
 
-#sidebar .sidebar-new {
-	margin-bottom: 25px;
-}
-
 #sidebar .item.tab-layout .mini.label {
 	margin-right: 5px;
 }
 
 #sidebar .ui.grid {
 	margin: 0px !important;
-}
-
-/* SIDEBAR SESSION END */
-
-
-/* SIDEBAR SESSION START */
-#sidebar .tab-header h2 {
-	float:left;
-}
-
-#sidebar .tab-header .button {
-	float:right;
-}
-
-#sidebar .tab-header {
-	margin-top: 10px;
-	margin-left: 10px;
 }
 
 #sidebar-container > div , #sidebar .session-layout, #sidebar .ui.grid .column, #sidebar .ui.grid .column > div {
@@ -56,7 +35,42 @@
 	height: 100%;
 }
 
-/* SIDEBAR SESSION END */
+/* SIDEBAR GENERIC END */
+
+
+/* SIDEBAR HEADER START */
+#sidebar .tab-header h2 {
+	float:left;
+}
+
+#sidebar .tab-header .button {
+	float:right;
+}
+
+#sidebar .tab-header {
+	display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#sidebar .side-menu-layout .tab-header {
+	margin: 10px 10px 10px 10px;
+}
+
+#sidebar .top-menu-layout .tab-header {
+	margin: 10px 20px 20px 20px;
+}
+
+#sidebar .tab-header .header {
+    display: flex;
+    align-items: center;
+}
+
+#sidebar .header.new {
+	margin-bottom: 25px;
+}
+
+/* SIDEBAR HEADER END */
 
 
 
@@ -85,21 +99,15 @@
 
 .message-view .ui.form textarea {
 	resize: none;
+	border-radius: .28571429rem 0 0 .28571429rem;
+}
+
+.message-view .ui.button {
+	border-radius: 0 .28571429rem .28571429rem 0;
 }
 
 .message-list {
 	margin-right:10px !important;
-}
-
-#sidebar .tab-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
-#sidebar .tab-header .header {
-    display: flex;
-    align-items: center;
 }
 
 .chat-message .message-author-name {
@@ -157,6 +165,8 @@
 	height: 100%;
 	display:flex;
 	flex-direction: column;
+	overflow: hidden;
+	margin-bottom: 10px;
 }
 
 .filelist-browser .ui.segment {
@@ -164,13 +174,14 @@
 }
 
 .top-menu-layout {
-	padding: 10px;
+	padding: 20px;
 	display: flex;
 	flex-direction: column;
 }
 
 .top-menu-layout .session-layout {
 	/*padding: 0px 10px 10px 10px;*/
+	overflow: hidden;
 }
 
 .top-menu-layout .menu-bar {

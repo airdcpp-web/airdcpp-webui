@@ -53,6 +53,8 @@ var SetContainerSize = {
 		    height : height
 		  });
 		}
+
+		setTimeout(this._update, 250);
 	},
 };
 

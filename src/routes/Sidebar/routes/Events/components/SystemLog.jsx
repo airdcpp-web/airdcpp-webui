@@ -26,10 +26,10 @@ const LogMessage = React.createClass({
         <div className="ui column one wide">
           <i className={ iconClass + " icon" }></i>
         </div>
-        <div className="ui column twelve wide">
+        <div className="ui column thirteen wide">
           { this.props.message.text }
         </div>
-        <div className="ui column three wide">
+        <div className="ui column two wide">
           { Format.formatTimestamp(this.props.message.time) }
         </div>
       </div>

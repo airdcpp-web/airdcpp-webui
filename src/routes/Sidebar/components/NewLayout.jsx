@@ -16,8 +16,8 @@ const NewLayout = React.createClass({
   displayName: "SidebarNewLayout",
   render: function() {
     return (
-      <div>
-      	<h2 className="ui header sidebar-new">
+      <div className="new-layout">
+      	<h2 className="ui header new">
 	      	<i className={ this.props.icon + " icon" }></i>
 	      	<div className="content">
 		        {this.props.title}

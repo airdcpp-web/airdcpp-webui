@@ -7,9 +7,6 @@ const History = createBrowserHistory();
 // You may also pass additional data to the state
 const getOverlayState = (currentLocation, overlayId, data) => {
   console.assert(currentLocation, "Current location not supplied for overlay creation");
-	if (typeof currentLocation !== "object") {
-		currentLocation = Object.assign({}, { pathname: currentLocation })
-	}
 
   let state = currentLocation.state || {};
   if (!state[overlayId]) {
@@ -23,18 +20,29 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 }
 
 const pushModal = (currentLocation, nextPath, overlayId, data) => {
+  if (typeof currentLocation !== "object") {
+    currentLocation = Object.assign({}, { pathname: currentLocation })
+  }
+
   const state = getOverlayState(currentLocation, overlayId, data);
   History.pushState(state, nextPath);
-}
-
-const pushSidebar = (currentLocation, nextPath) => {
-	const state = getOverlayState(currentLocation, SIDEBAR_ID);
-  History.pushState(state, "/sidebar/" + nextPath);
 }
 
 const replaceSidebar = (currentLocation, nextPath) => {
   const state = getOverlayState(currentLocation, SIDEBAR_ID);
   History.replaceState(state, "/sidebar/" + nextPath);
+}
+
+const pushSidebar = (currentLocation, nextPath) => {
+  const fullNextPath = "/sidebar/" + nextPath;
+  if (fullNextPath === currentLocation.pathname) {
+    // Don't create duplicate history entries
+    replaceSidebar(currentLocation, nextPath);
+    return;
+  }
+
+  const state = getOverlayState(currentLocation, SIDEBAR_ID);
+  History.pushState(state, fullNextPath);
 }
 
 export default Object.assign(History, { 

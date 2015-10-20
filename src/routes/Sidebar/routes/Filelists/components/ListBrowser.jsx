@@ -59,8 +59,13 @@ const ListBrowser = React.createClass({
 
   render() {
     return (
-      <div className="filelist-browser ui segment">
-        <PathBreadcrumb tokens={this._tokenizePath()} separator={'/'} rootPath={'/'} rootName={this.props.item.user.nicks} itemClickHandler={this._handleClickDirectory}/>
+      <div className="filelist-browser">
+        <PathBreadcrumb 
+          tokens={this._tokenizePath()} 
+          separator={'/'} 
+          rootPath={'/'} 
+          rootName={this.props.item.user.nicks} 
+          itemClickHandler={this._handleClickDirectory}/>
         <VirtualTable
           rowClassNameGetter={ this._rowClassNameGetter }
           defaultSortProperty="name"

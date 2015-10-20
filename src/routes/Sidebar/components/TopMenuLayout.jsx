@@ -3,7 +3,7 @@ import React from 'react';
 import SessionManagerDecorator from 'routes/Sidebar/decorators/SessionManagerDecorator'
 import Dropdown from 'components/semantic/Dropdown'
 
-const SideMenuLayout = React.createClass({
+const TopMenuLayout = React.createClass({
   propTypes: {
     /**
      * Location object
@@ -11,7 +11,14 @@ const SideMenuLayout = React.createClass({
     location: React.PropTypes.object.isRequired,
   },
 
+  displayName: "TopMenuLayout",
   render() {
+  	// Don't add nesting for items to preserve Semantic's CSS
+  	let sessionMenuStyle = {};
+  	if (this.props.menuItems.length === 0) {
+  		sessionMenuStyle = { display: "none" }
+  	}
+
     return (
       <div className="top-menu-layout">
       	<div className="ui main menu menu-bar">
@@ -20,14 +27,11 @@ const SideMenuLayout = React.createClass({
 	      	  <div className="menu">
 	      	  	<div className="header">New</div>
 	      	  	{ this.props.newButton }
-	      	  	<div className="ui divider"></div>
-	      	  	<div className="header">Existing</div>
-	      	  	{ this.props.menuItems }
+      	  		<div className="ui divider" style={sessionMenuStyle}></div>
+      	  		<div className="header" style={sessionMenuStyle}>Existing</div>
+      	  		{ this.props.menuItems }
 	      	  </div>
 	      	</Dropdown>
-	      	<div className="item">
-	      		Filelists
-	      	</div>
       	</div>
       	<div className="session-layout">
           { this.props.children }
@@ -37,4 +41,4 @@ const SideMenuLayout = React.createClass({
   }
 });
 
-export default SessionManagerDecorator(SideMenuLayout);
+export default SessionManagerDecorator(TopMenuLayout);

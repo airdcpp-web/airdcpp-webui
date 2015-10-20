@@ -50,7 +50,7 @@ const Messages = React.createClass({
       	{ this.props.children ? 
       	  this.props.children :
 	    (<NewLayout title="Open list" subheader="Start browsing a new filelist" icon="sitemap">
-	      <UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You need to be connected to at least one hub in order to download filelists from other users"/>
+	      <UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"/>
 	    </NewLayout>) }
 	  </TopMenuLayout>
 	);
