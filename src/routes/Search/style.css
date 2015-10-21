@@ -52,3 +52,8 @@
 .search-area button {
 	display: inline-block !important;
 }
+
+.search-layout {
+	display: flex;
+	flex-direction: column;
+}

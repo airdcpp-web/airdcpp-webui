@@ -42,11 +42,11 @@ var SetContainerSize = {
 		if (this.isMounted()) {
 		  var node = this.getDOMNode();
 
-		var borderWidth = node.offsetWidth - node.clientWidth;
-		var borderHeight = node.offsetHeight - node.clientHeight;
+			var borderWidth = node.offsetWidth - node.clientWidth;
+			var borderHeight = node.offsetHeight - node.clientHeight;
 
-		var width = node.parentNode.offsetWidth - borderWidth;
-		var height = node.parentNode.offsetHeight - borderHeight;
+			var width = node.parentNode.offsetWidth - borderWidth;
+			var height = node.parentNode.offsetHeight - borderHeight;
 
 		  this.setState({
 		    width  : width,

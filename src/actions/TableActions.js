@@ -22,11 +22,11 @@ TableActions.close.listen(function(viewUrl) {
     .catch(error => this.failed(viewUrl, error));
 });
 
-TableActions.changeSettings.listen(function(viewUrl, rangeStart, rangeEnd, sortProperty, sortAscending) {
+TableActions.changeSettings.listen(function(viewUrl, rangeStart, maxRows, sortProperty, sortAscending) {
   let that = this;
   return SocketService.post(viewUrl, { 
     range_start: rangeStart, 
-    range_end: rangeEnd,
+    max_count: maxRows,
     sort_property: sortProperty,
     sort_ascending: sortAscending
   }).then(data => that.completed(viewUrl, data))

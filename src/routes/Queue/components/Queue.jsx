@@ -2,13 +2,14 @@ import React from 'react'
 import { Column } from 'fixed-data-table'
 import classNames from 'classnames'
 
-import { PriorityEnum, StatusEnum, QUEUE_MODULE_URL } from 'constants/QueueConstants'
+import { PriorityEnum, StatusEnum } from 'constants/QueueConstants'
 import { ActionMenu } from 'components/Menu'
 import QueueActions from 'actions/QueueActions'
 import VirtualTable from 'components/table/VirtualTable'
 
 import Formatter from 'utils/Format';
 import TableDropdown, { DropdownItem } from 'components/semantic/TableDropdown'
+import QueueStore from 'stores/QueueStore'
 
 export default React.createClass({
   rowGetter(rowIndex) {
@@ -147,8 +148,7 @@ export default React.createClass({
     return (
       <VirtualTable
         defaultSortProperty="name"
-        viewName="bundle_view"
-        viewBaseUrl={QUEUE_MODULE_URL}>
+        store={QueueStore}>
         <Column
           label="Name"
           width={270}

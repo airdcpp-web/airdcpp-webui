@@ -1,13 +1,11 @@
 import React from 'react';
 import Reflux from 'reflux';
-
 import FixedDataTable, { Table, Column } from 'fixed-data-table'
-
 import SetContainerSize from './SetContainerSize'
 import TouchScrollArea  from './TouchScrollArea';
-import DataSource from './DataSource'
 
 import SocketService from 'services/SocketService'
+import SocketStore from 'stores/SocketStore'
 import TableActions from 'actions/TableActions'
 
 import { Input } from 'react-semantify'
@@ -21,9 +19,10 @@ const TABLE_ROW_HEIGHT = 50;
 const {PropTypes} = React;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
-/*class RowDataLoader {
-  constructor(onDataLoad) {
+class RowDataLoader {
+  constructor(store, onDataLoad) {
     this._onDataLoad = onDataLoad;
+    this._store = store;
     this._requestQueue = [];
     this._data = [];
     this._pendingRequest = [];
@@ -49,9 +48,9 @@ const {PropTypes} = React;
   
   getRowData(rowIndex) {
     if (!this._data[rowIndex]) {
-      //if (this._fetchingActive) {
-      //  this._queueRequestFor(rowIndex);
-      //}
+      if (this._fetchingActive) {
+        this._queueRequestFor(rowIndex);
+      }
       return undefined;
     }
     
@@ -96,7 +95,7 @@ const {PropTypes} = React;
     sectionsToLoad.forEach(rowBase => {
       this._loadDataRange(
         rowBase,
-        Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._rowCount)
+        Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._store.rowCount)
       );    
     }, this);
     
@@ -106,7 +105,7 @@ const {PropTypes} = React;
     
   _loadDataRange(rowStart, rowEnd) {
     this._pendingRequest.push(rowStart);
-    SocketService.get(this._viewUrl + "/items/" + rowStart + "/" + rowEnd)
+    SocketService.get(this._store.viewUrl + "/items/" + rowStart + "/" + rowEnd)
       .then(data => {
         this._removeRequest(rowStart);
         for (let i=0; i < data.length; i++) {
@@ -121,7 +120,7 @@ const {PropTypes} = React;
         }
       );
   }
-}*/
+}
 
 function convertStartToRows(pixels) {
   return Math.max(Math.floor(pixels / TABLE_ROW_HEIGHT), 0);
@@ -164,12 +163,18 @@ const FilterBox = React.createClass({
   }
 });
 
-const VirtualTable = React.createClass({
+const TableContainer = React.createClass({
   mixins: [SetContainerSize],
 
   propTypes: {
+
     /**
-     * Default property name used for sorting
+     * Store implementing ViewStoreMixin that contains the items
+     */
+    store: PropTypes.object.isRequired,
+
+    /**
+     * Store implementing ViewStoreMixin that contains the items
      */
     defaultSortProperty: PropTypes.string.isRequired,
 
@@ -186,19 +191,52 @@ const VirtualTable = React.createClass({
     /**
      * Elements to append to the table footer
      */
-    footerData: PropTypes.node
+    footerData: PropTypes.node,
+
+    /**
+     * ID of the current entity for non-singleton sources
+     */
+    entityId: PropTypes.any,    
   },
+
   getInitialProps() {
     return {
-      rowClassNameGetter: null
+      rowClassNameGetter: null,
+      entityId: null
     };
   },
+
   getInitialState() {
     return {
       sortProperty: this.props.defaultSortProperty,
       sortAscending: this.props.defaultSortAscending !== undefined ? this.props.defaultSortAscending : true
     };
   },
+
+  componentWillMount() {
+    this._columnWidths = { };
+    this._isColumnResizing = false;
+    this._scrollPosition = 0;
+    this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
+
+    this.props.store.init(this.props.entityId);
+  },
+
+  componentWillUnmount() {
+    TableActions.close(this.props.store.viewUrl);
+    this.unsubscribe();
+    this.props.store.uninit();
+
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entityId !== this.props.entityId) {
+      TableActions.close(this.props.store.viewUrl);
+      this.props.store.setEntityId(nextProps.entityId);
+      this.updateTableSettings();
+    }
+  },
+
   componentWillUpdate(nextProps, nextState) {
     if (nextState.height != this.state.height || 
       nextState.sortAscending != this.state.sortAscending ||
@@ -212,23 +250,20 @@ const VirtualTable = React.createClass({
     this._dataLoader.items = items;
   },
 
+  componentDidMount() {
+    this.unsubscribe = this.props.store.listen(this.onItemsUpdated);
+  },
+
   updateTableSettings() {
     const startRows = convertStartToRows(this._scrollPosition);
-    const endRows = startRows + convertEndToRows(this.state.height, true);
+    const maxRows = convertEndToRows(this.state.height, true);
 
-    console.log("Settings changed, start: " + startRows + ", end: " + endRows, ", height: " + this.state.height, this.props.viewName);
-    TableActions.changeSettings(this.props.viewUrl, startRows, endRows, this.state.sortProperty, this.state.sortAscending);
+    console.log("Settings changed, start: " + startRows + ", end: " + maxRows, ", height: " + this.state.height, this.props.store.viewName);
+    TableActions.changeSettings(this.props.store.viewUrl, startRows, maxRows, this.state.sortProperty, this.state.sortAscending);
   },
 
-  componentWillUnmount() {
-    TableActions.close(this.props.viewUrl);
-  },
-
-  componentWillMount() {
-    this._columnWidths = { };
-    this._isColumnResizing = false;
-    this._scrollPosition = 0;
-    //this._dataLoader = new RowDataLoader(() => this.forceUpdate() );
+  _rowGetter(rowIndex) {
+    return this._dataLoader.getRowData(rowIndex);
   },
   
   _clearDataForRow(rowIndex) {
@@ -240,19 +275,19 @@ const VirtualTable = React.createClass({
   },
 
   _onScrollStart(horizontal, vertical) {
-    //this._dataLoader.fetchingActive = true;
-    //console.log("Scrolling started: " + vertical, this.props.viewName);
-    TableActions.pause(this.props.viewUrl, true);
+    this._dataLoader.fetchingActive = true;
+    //console.log("Scrolling started: " + vertical, this.props.store.viewName);
+    TableActions.pause(this.props.store.viewUrl, true);
   },
 
   _onScrollEnd(horizontal, vertical) {
     this._scrollPosition = vertical;
-    //this._dataLoader.fetchingActive = false;
-    TableActions.pause(this.props.viewUrl, false);
+    this._dataLoader.fetchingActive = false;
+    TableActions.pause(this.props.store.viewUrl, false);
 
     clearTimeout(this._scrollTimer);
     this._scrollTimer = setTimeout(this.updateTableSettings, 500);
-    //console.log("Scrolling ended: " + vertical, this.props.viewName);
+    //console.log("Scrolling ended: " + vertical, this.props.store.viewName);
   },
 
   _sortRowsBy(cellDataKey) {
@@ -277,11 +312,11 @@ const VirtualTable = React.createClass({
   _onColumnResizeEndCallback(newColumnWidth, dataKey) {
     this._columnWidths[dataKey] = newColumnWidth;
     this._isColumnResizing = false;
-    this.forceUpdate();
+    this.forceUpdate(); // don't do this, use a store and put into this.state!
   },
 
   _setFilter(pattern) {
-    TableActions.filter(this.props.viewUrl, pattern);
+    TableActions.filter(this.props.store.viewUrl, pattern);
   },
 
   _footerDataGetter() {
@@ -311,18 +346,12 @@ const VirtualTable = React.createClass({
     });
   },
 
-  _rowGetter(rowIndex) {
-    return this.props.items[rowIndex];
-    //return this._dataLoader.getRowData(rowIndex);
-  },
-
   rowClassNameGetter(rowIndex) {
     if (!this.props.rowClassNameGetter) {
       return null;
     }
 
-    const rowData = this._rowGetter(rowIndex);
-    //const rowData = this._dataLoader.getRowData(rowIndex);
+    const rowData = this._dataLoader.getRowData(rowIndex);
     if (!rowData) {
       return null;
     }
@@ -356,39 +385,49 @@ const VirtualTable = React.createClass({
 
     const controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
     return (
+      <TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
+        <Table
+          ref="table"
+
+          width={this.state.width}
+          height={this.state.height-50} 
+          onContentHeightChange={this._onContentHeightChange}
+          scrollTop={this.state.top}
+          scrollLeft={this.state.left}
+          overflowX={controlledScrolling ? "hidden" : "auto"}
+          overflowY={controlledScrolling ? "hidden" : "auto"}
+
+          rowClassNameGetter={this.rowClassNameGetter}
+          footerDataGetter={this._footerDataGetter}
+          rowHeight={50}
+          rowGetter={this._rowGetter}
+          rowsCount={this.props.store.rowCount}
+          headerHeight={50}
+          onScrollStart={this._onScrollStart}
+          onScrollEnd={this._onScrollEnd}
+          isColumnResizing={this.isColumnResizing}
+          onColumnResizeEndCallback={this._onColumnResizeEndCallback}>
+          {children}
+        </Table>
+      </TouchScrollArea>
+    );
+  }
+});
+
+const VirtualTable = React.createClass({
+  render: function() {
+    const { footerData, ...other } = this.props;
+
+    return (
       <div className="virtual-table">
-        <TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
-          <Table
-            ref="table"
-
-            width={this.state.width}
-            height={this.state.height-45-100} 
-            onContentHeightChange={this._onContentHeightChange}
-            scrollTop={this.state.top}
-            scrollLeft={this.state.left}
-            overflowX={controlledScrolling ? "hidden" : "auto"}
-            overflowY={controlledScrolling ? "hidden" : "auto"}
-
-            rowClassNameGetter={this.rowClassNameGetter}
-            footerDataGetter={this._footerDataGetter}
-            rowHeight={50}
-            rowGetter={this._rowGetter}
-            rowsCount={this.props.rowCount}
-            headerHeight={50}
-            onScrollStart={this._onScrollStart}
-            onScrollEnd={this._onScrollEnd}
-            isColumnResizing={this.isColumnResizing}
-            onColumnResizeEndCallback={this._onColumnResizeEndCallback}>
-            {children}
-          </Table>
-        </TouchScrollArea>
+        <TableContainer { ...other }/>
         <div className="table-footer">
-          { this.props.footerData }
-          <FilterBox viewUrl={ this.props.viewUrl }/>
+          { footerData }
+          <FilterBox viewUrl={ this.props.store.viewUrl }/>
         </div>
       </div>
     );
   }
 });
 
-export default DataSource(VirtualTable)
+export default VirtualTable

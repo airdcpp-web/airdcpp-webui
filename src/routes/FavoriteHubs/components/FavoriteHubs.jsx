@@ -1,12 +1,13 @@
 import React from 'react';
 
 import FavoriteHubActions from 'actions/FavoriteHubActions.js'
-import { StateEnum, FAVORITE_HUB_MODULE_URL } from 'constants/FavoriteHubConstants.js'
+import { StateEnum } from 'constants/FavoriteHubConstants.js'
 
 import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService.js'
 import { ActionMenu } from 'components/Menu'
 import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
+import FavoriteHubStore from 'stores/FavoriteHubStore'
 
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 
@@ -113,8 +114,7 @@ const FavoriteHubs = React.createClass({
         rowClassNameGetter={ this._rowClassNameGetter }
       	defaultSortProperty="name"
         footerData={footerData}
-        viewName="favorite_hub_view"
-        viewBaseUrl={FAVORITE_HUB_MODULE_URL}>
+        store={FavoriteHubStore}>
         <Column
           label="State"
           width={150}

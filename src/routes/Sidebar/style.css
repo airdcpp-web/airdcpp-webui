@@ -165,7 +165,6 @@
 	height: 100%;
 	display:flex;
 	flex-direction: column;
-	overflow: hidden;
 	margin-bottom: 10px;
 }
 
@@ -181,7 +180,6 @@
 
 .top-menu-layout .session-layout {
 	/*padding: 0px 10px 10px 10px;*/
-	overflow: hidden;
 }
 
 .top-menu-layout .menu-bar {

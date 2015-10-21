@@ -11,6 +11,7 @@ import TypeConvert from 'utils/TypeConvert'
 
 import PathBreadcrumb from 'components/PathBreadcrumb'
 import VirtualTable from 'components/table/VirtualTable'
+import FilelistViewStore from 'stores/FilelistViewStore'
 
 const ListBrowser = React.createClass({
   displayName: "ListBrowser",
@@ -69,8 +70,7 @@ const ListBrowser = React.createClass({
         <VirtualTable
           rowClassNameGetter={ this._rowClassNameGetter }
           defaultSortProperty="name"
-          viewName="filelist_view"
-          viewBaseUrl={FILELIST_SESSION_URL}
+          store={FilelistViewStore}
           entityId={this.props.item.id}
           defaultSortAscending={true}>
           <Column

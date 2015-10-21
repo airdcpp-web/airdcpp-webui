@@ -3,8 +3,9 @@ import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService'
 import SearchActions from 'actions/SearchActions'
 
+import SearchStore from 'stores/SearchStore'
 import { HistoryEnum } from 'constants/HistoryConstants'
-import { SEARCH_QUERY_URL, SEARCH_MODULE_URL } from 'constants/SearchConstants'
+import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
 
 import HistoryInput from 'components/autosuggest/HistoryInput'
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
@@ -94,7 +95,7 @@ const Search = React.createClass({
   render() {
     return (
       <OfflineHubMessageDecorator offlineMessage="You must to be connected to at least one hub in order to perform searches">
-        <div>
+        <div className="search-layout">
           <div className="search-container">
             <div className="search-area">
               <HistoryInput historyId={HistoryEnum.HISTORY_SEARCH} submitHandler={this._handleSearch} running={this.state.running}/>
@@ -104,8 +105,7 @@ const Search = React.createClass({
             rowClassNameGetter={ this._rowClassNameGetter }
           	defaultSortProperty="relevancy"
             defaultSortAscending={false}
-            viewName="search_view"
-            viewBaseUrl={SEARCH_MODULE_URL}>
+            store={ SearchStore }>
             <Column
               label="Name"
               width={270}
