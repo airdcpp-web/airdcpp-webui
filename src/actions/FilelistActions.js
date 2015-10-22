@@ -1,6 +1,8 @@
 'use strict';
 import Reflux from 'reflux';
-import {FILELIST_SESSIONS_URL, FILELIST_SESSION_URL} from 'constants/FilelistConstants';
+import {FILELIST_SESSIONS_URL, FILELIST_SESSION_URL, FILELIST_MODULE_URL} from 'constants/FilelistConstants';
+import {BUNDLE_URL} from 'constants/QueueConstants';
+
 import SocketService from 'services/SocketService'
 
 import History from 'utils/History'
@@ -12,8 +14,35 @@ const FilelistActions = Reflux.createActions([
   { "createSession": { asyncResult: true } },
   { "removeSession": { asyncResult: true } },
   { "changeDirectory": { asyncResult: true } },
+  { "download": { asyncResult: true } },
     "sessionChanged"
 ]);
+
+FilelistActions.download.listen((itemData, downloadData) => {
+  downloadData["user"] = itemData.parentEntity.user;
+  if (itemData.itemInfo.type.id === "file") {
+    downloadData["target"] += itemData.itemInfo.name;
+    downloadData["tth"] = itemData.itemInfo.tth;
+    downloadData["size"] = itemData.itemInfo.size;
+    downloadData["time"] = itemData.itemInfo.time;
+    return SocketService.post(BUNDLE_URL + '/file', downloadData)
+      .then(FilelistActions.download.completed)
+      .catch(error => FilelistActions.download.failed(itemData, error));
+  }
+
+  // Directory
+  downloadData["list_path"] = itemData.itemInfo.path;
+  return SocketService.post(FILELIST_MODULE_URL + '/download_directory', downloadData)
+    .then(FilelistActions.download.completed)
+    .catch(error => FilelistActions.download.failed(itemData, error));
+});
+
+FilelistActions.download.failed.listen((itemData, error) => {
+  NotificationActions.error({
+    title: itemData.itemInfo.name,
+    message: "Failed to queue the item: " + error.reason
+  });
+});
 
 FilelistActions.fetchSessions.listen(function() {
     let that = this;

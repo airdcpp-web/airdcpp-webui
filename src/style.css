@@ -32,22 +32,6 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
   }
 }
 
-.table-dropdown, .public_fixedDataTableCell_main a {
-	color:black !important;
-}
-
-.table-dropdown:hover, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
-	cursor:pointer;
-}
-
-.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
-	text-decoration:underline;
-}
-
-.table-dropdown > div {
-	float: left;
-}
-
 .ui.container.main > div {
 	height: 100%;
 }

@@ -6,6 +6,12 @@ module.exports = {
       cb(null, [ {
         path: 'session/:id', 
         component: require('./components/FilelistSession'), 
+        childRoutes: [
+          {
+            path: 'download', 
+            component: require('components/DownloadDialog'), 
+          }
+        ]
       }])
     }, "filelists-children")
   },

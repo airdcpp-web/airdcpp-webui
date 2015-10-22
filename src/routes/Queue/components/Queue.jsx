@@ -162,12 +162,12 @@ export default React.createClass({
           dataKey="size"
           cellRenderer={ Formatter.formatSize }
         />
-        <Column
+        {/*<Column
           label="Type/content"
           width={100}
           dataKey="type"
           cellRenderer={ this.renderType }
-        />
+        />*/}
         <Column
           label="Sources"
           width={100}

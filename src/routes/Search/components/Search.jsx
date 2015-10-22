@@ -65,8 +65,7 @@ const Search = React.createClass({
       </Formatter.FileNameFormatter>);
 
     return <DownloadMenu 
-      caption={ formatter } 
-      id={ rowData.id } 
+      caption={ formatter }
       itemInfo={ rowData } 
       handler={ SearchActions.download } 
       location={ this.props.location }/>

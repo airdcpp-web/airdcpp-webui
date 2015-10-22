@@ -107,14 +107,19 @@ export const DownloadMenu = React.createClass({
   propTypes: {
 
     /**
-     * Item ID to be passed to the handler
+     * Possible entity to be passed to the handler (when not used for items in a singleton entity)
      */
-    id: React.PropTypes.number,
+    parentEntity: React.PropTypes.any,
 
     /**
      * Function for handling the download
      */
     handler: React.PropTypes.func.isRequired,
+
+    /**
+     * Additional data to be passed to the handler
+     */
+    itemInfo: React.PropTypes.any,
 
     /**
      * Location from component props
@@ -123,9 +128,9 @@ export const DownloadMenu = React.createClass({
   },
 
   render: function() {
-    const { handler, id, itemInfo, location } = this.props;
+    const { handler, parentEntity, itemInfo, location } = this.props;
     const data = {
-      id: id,
+      parentEntity: parentEntity,
       handler: handler,
       itemInfo: itemInfo,
       location: location

@@ -12,13 +12,10 @@ import TypeConvert from 'utils/TypeConvert'
 import PathBreadcrumb from 'components/PathBreadcrumb'
 import VirtualTable from 'components/table/VirtualTable'
 import FilelistViewStore from 'stores/FilelistViewStore'
+import History from 'utils/History'
 
 const ListBrowser = React.createClass({
   displayName: "ListBrowser",
-  handleClose() {
-    //FilelistActions.removeSession(this.props.item.id);
-  },
-
   _renderStr(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
@@ -37,9 +34,18 @@ const ListBrowser = React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
+    let caption = formatter;
+    if (rowData.type.id === "directory") {
+      caption = (
+        <a onClick={() => this._handleClickDirectory(this.props.item.directory + cellData + '/')}>
+          { formatter }
+        </a>
+        )
+    }
+
     return <DownloadMenu 
-      caption={ formatter } 
-      id={ rowData.id } 
+      caption={ caption } 
+      parentEntity={ this.props.item } 
       itemInfo={ rowData } 
       handler={ FilelistActions.download } 
       location={ this.props.location }/>
@@ -55,7 +61,20 @@ const ListBrowser = React.createClass({
   },
 
   _handleClickDirectory(path) {
-    FilelistActions.changeDirectory(this.props.item.user.cid, path);
+    // Handle it through location state data
+    History.pushSidebarData(this.props.location, { directory: path });
+  },
+
+  componentWillMount() {
+    // We need an initial path
+    History.replaceSidebarData(this.props.location, { directory: this.props.item.directory });
+  },
+
+  componentWillReceiveProps(nextProps) {
+    const { directory } = History.getSidebarData(nextProps.location);
+    if (directory && nextProps.item.directory !== directory) {
+      FilelistActions.changeDirectory(this.props.item.user.cid, directory);
+    }
   },
 
   render() {

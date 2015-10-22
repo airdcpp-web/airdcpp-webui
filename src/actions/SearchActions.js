@@ -7,11 +7,7 @@ import NotificationActions from 'actions/NotificationActions'
 
 export const SearchActions = Reflux.createActions([
   { "postSearch": { asyncResult: true} },
-  { "download": { 
-  	asyncResult: true,  
-  	displayName: "Download", 
-  	icon: "green download" } 
-  }
+  { "download": { asyncResult: true } }
 ]);
 
 SearchActions.postSearch.listen(function(pattern) {
@@ -23,15 +19,15 @@ SearchActions.postSearch.listen(function(pattern) {
       .catch(this.failed);
 });
 
-SearchActions.download.listen((searchResult, data) => {
-    return SocketService.post(SEARCH_RESULT_URL + '/' + searchResult.id + '/download', data)
+SearchActions.download.listen((itemData, downloadData) => {
+    return SocketService.post(SEARCH_RESULT_URL + '/' + itemData.itemInfo.id + '/download', downloadData)
       .then(SearchActions.download.completed)
-      .catch(error => SearchActions.download.failed(searchResult, error));
+      .catch(error => SearchActions.download.failed(itemData, error));
 });
 
-SearchActions.download.failed.listen((searchResult, error) => {
+SearchActions.download.failed.listen((itemData, error) => {
   NotificationActions.error({
-    title: searchResult.itemInfo.name,
+    title: itemData.itemInfo.name,
     message: "Failed to queue the item: " + error.reason
   });
 });

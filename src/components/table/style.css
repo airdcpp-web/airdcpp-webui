@@ -25,6 +25,10 @@
 	color: deeppink;
 }
 
+.public_fixedDataTableCell_wrap3 {
+	white-space: nowrap;
+}
+
 .public_fixedDataTable_bodyRow a i:hover {
 	cursor:pointer;
 }
@@ -35,4 +39,20 @@
 
 .virtual-table {
 	height: 100%;
+}
+
+.table-dropdown, .public_fixedDataTableCell_main a {
+	color:black !important;
+}
+
+.table-dropdown:hover, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
+	cursor:pointer;
+}
+
+.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
+	text-decoration:underline;
+}
+
+.table-dropdown i {
+	float: left;
 }

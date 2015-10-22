@@ -9,8 +9,10 @@ import FilelistActions from 'actions/FilelistActions'
 import Format from 'utils/Format'
 
 import { ActionMenu } from 'components/Menu'
-
 import TabHeader from 'routes/Sidebar/components/TabHeader'
+
+import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
+import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
 
 const FilelistSession = React.createClass({
   displayName: "FilelistSession",
@@ -67,4 +69,4 @@ const FilelistSession = React.createClass({
   },
 });
 
-export default FilelistSession;
+export default OverlayParentDecorator(FilelistSession, DOWNLOAD_MODAL_ID);

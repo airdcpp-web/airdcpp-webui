@@ -19,6 +19,11 @@ const getOverlayState = (currentLocation, overlayId, data) => {
   return state;
 }
 
+const mergeOverlayData = (currentLocation, data, overlayId) => {
+  const newData = Object.assign({}, currentLocation.state[overlayId].data, data);
+  currentLocation.state[overlayId].data = newData;
+}
+
 const pushModal = (currentLocation, nextPath, overlayId, data) => {
   if (typeof currentLocation !== "object") {
     currentLocation = Object.assign({}, { pathname: currentLocation })
@@ -45,8 +50,30 @@ const pushSidebar = (currentLocation, nextPath) => {
   History.pushState(state, fullNextPath);
 }
 
+// Append new location data when in sidebar layout and create a new history entry
+const pushSidebarData = (currentLocation, data) => {
+  mergeOverlayData(currentLocation, data, SIDEBAR_ID);
+  History.pushState(currentLocation.state, currentLocation.pathname);
+}
+
+// Append new location data when in sidebar layout without creating a new history entry
+const replaceSidebarData = (currentLocation, data) => {
+  mergeOverlayData(currentLocation, data, SIDEBAR_ID);
+  History.replaceState(currentLocation.state, currentLocation.pathname);
+}
+
+// Shorthand function for receiving the data
+// Data for modals is converted to regular props by the parent decorator but it won't work well with a nested sidebar structure
+const getSidebarData = (currentLocation) => {
+  return currentLocation.state[SIDEBAR_ID].data;
+}
+
+
 export default Object.assign(History, { 
   pushModal: pushModal, 
   pushSidebar: pushSidebar,
-  replaceSidebar: replaceSidebar
+  replaceSidebar: replaceSidebar,
+  pushSidebarData: pushSidebarData,
+  replaceSidebarData: replaceSidebarData,
+  getSidebarData: getSidebarData,
 });

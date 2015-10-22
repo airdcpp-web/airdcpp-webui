@@ -44,8 +44,7 @@ export default React.createClass({
     // Caption
     const trigger = (
       <div className="table-dropdown">
-        {this.props.caption}
-        <i className="dropdown icon"></i>
+        <i className="large angle down icon"></i>
       </div>);
 
     // Settings
@@ -55,12 +54,15 @@ export default React.createClass({
     };
 
     return (
-      <Popup className="basic" trigger={trigger} settings={ settings } ref="dropdownMenu">
-        <div className="ui text menu vertical">
-        <div className="ui dropdown item">
-          { this.props.children.map(this.addCloseHandler) }
-        </div>
-        </div>
-      </Popup>);
+      <div>
+        <Popup className="basic" trigger={trigger} settings={ settings } ref="dropdownMenu">
+          <div className="ui text menu vertical">
+          <div className="ui dropdown item">
+            { this.props.children.map(this.addCloseHandler) }
+          </div>
+          </div>
+        </Popup>
+        {this.props.caption}
+      </div>);
 }
 });

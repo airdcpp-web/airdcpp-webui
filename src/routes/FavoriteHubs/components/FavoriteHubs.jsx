@@ -157,7 +157,7 @@ const FavoriteHubs = React.createClass({
         />
         <Column
           label="Password"
-          width={80}
+          width={100}
           dataKey="has_password"
           cellRenderer={ this._renderPassword }
         />
