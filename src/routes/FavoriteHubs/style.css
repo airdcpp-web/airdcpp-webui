@@ -5,3 +5,7 @@
 .public_fixedDataTable_bodyRow.connecting, .public_fixedDataTable_bodyRow.connecting span {
 	color: orange;
 }
+
+.public_fixedDataTable_bodyRow .password-column {
+	margin-left: 5px;
+}

@@ -145,3 +145,13 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	overflow-y: auto;
   max-height: 65vh;
 }
+
+.password-dialog {
+	display: flex !important;
+  flex-direction: column !important;
+  color: white !important;
+}
+
+.password-dialog input {
+	margin-top: 20px !important;
+}

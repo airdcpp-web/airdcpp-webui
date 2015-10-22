@@ -1,10 +1,11 @@
 import React from 'react';
 
-import FavoriteHubActions from 'actions/FavoriteHubActions.js'
-import { StateEnum } from 'constants/FavoriteHubConstants.js'
+import FavoriteHubActions from 'actions/FavoriteHubActions'
+import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions'
+import { StateEnum } from 'constants/FavoriteHubConstants'
 
 import VirtualTable from 'components/table/VirtualTable'
-import SocketService from 'services/SocketService.js'
+import SocketService from 'services/SocketService'
 import { ActionMenu } from 'components/Menu'
 import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
 import FavoriteHubStore from 'stores/FavoriteHubStore'
@@ -13,7 +14,7 @@ import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
-import Formatter from 'utils/Format.js';
+import Formatter from 'utils/Format';
 import Checkbox from 'components/semantic/Checkbox'
 
 import '../style.css'
@@ -98,6 +99,14 @@ const FavoriteHubs = React.createClass({
     return <Checkbox checked={cellData} onChange={ checked => FavoriteHubActions.update(rowData, { auto_connect: checked }) }/>;
   },
 
+  _renderPassword(cellData, cellDataKey, rowData) {
+     return <ActionMenu 
+      caption={ <div className="password-column"> { cellData ? <strong>Set</strong> : "Not set" } </div> } 
+      actions={ FavoriteHubPasswordActions } 
+      ids={ cellData ? [ "change", "remove" ] : [ "create" ]} 
+      itemData={ rowData }/>;
+  },
+
   _handleAddHub() {
     FavoriteHubActions.create();
   },
@@ -150,7 +159,7 @@ const FavoriteHubs = React.createClass({
           label="Password"
           width={80}
           dataKey="has_password"
-          cellRenderer={ Formatter.formatBool }
+          cellRenderer={ this._renderPassword }
         />
       </VirtualTable>
     );
