@@ -6,6 +6,9 @@ import Formatter from 'utils/Format';
 import ScrollDecorator from 'decorators/ScrollDecorator'
 import ReactEmoji from 'react-emoji'
 
+import { ActionMenu } from 'components/Menu'
+import UserActions from 'actions/UserActions'
+
 var ENTER_KEY_CODE = 13;
 
 const MessageComposer = React.createClass({
@@ -71,11 +74,17 @@ const ChatMessage = React.createClass({
     const {message} = this.props;
     const { flags } = message.from;
 
+
+    let userCaption = message.from.nick;
+    if (flags.indexOf("hidden") < 0) {
+      userCaption = <ActionMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } icon={null} caption={ message.from.nick } actions={ UserActions } itemData={ { user: message.from, directory: '/' } }/>;
+    }
+
     // No emojis to bot messages as they are likely to contain false matches
     return (
       <div className={ "ui item message-list-item chat-message " + flags.join(' ')}>
         <div className="header message-author-name">
-          {message.from.nick}
+          {userCaption}
         </div>
         <div className="message-time">
           {Formatter.formatTimestamp(message.time)}
@@ -114,33 +123,33 @@ function convertMessageText(text) {
 
 }
 
-function getMessageListItem(message) {
-  if (message.chat_message) {
-    return (
-      <ChatMessage
-        key={message.chat_message.id}
-        message={message.chat_message}
-      />
-    );
-  }
-
-  return (
-    <StatusMessage
-      key={message.log_message.id}
-      message={message.log_message}
-    />
-  );
-}
-
 const MessageSection = ScrollDecorator(React.createClass({
   displayName: "MessageSection",
+  getMessageListItem(message) {
+    if (message.chat_message) {
+      return (
+        <ChatMessage
+          key={message.chat_message.id}
+          message={message.chat_message}
+          location={this.props.location}
+          dropdownContextGetter={ () => React.findDOMNode(this) }
+        />
+      );
+    }
+
+    return (
+      <StatusMessage
+        key={message.log_message.id}
+        message={message.log_message}
+      />
+    );
+  },
+
   render: function() {
-    var messageListItems = this.props.messages.map(getMessageListItem);
-    //console.log("MessageSection", messageListItems);
     return (
       <div className="message-section">
         <div className="ui list message-list">
-          {messageListItems}
+          {this.props.messages.map(this.getMessageListItem)}
         </div>
       </div>
     );
@@ -165,7 +174,7 @@ const MessageView = React.createClass({
   render() {
     return (
       <div className="message-view">
-        <MessageSection messages={this.props.messages}/>
+        <MessageSection messages={this.props.messages} location={this.props.location}/>
         <MessageComposer handleSend={this.props.handleSend}/>
       </div>
     );

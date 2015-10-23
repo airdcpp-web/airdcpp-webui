@@ -5,7 +5,7 @@ module.exports = {
     require.ensure([], (require) => {
       cb(null, [ {
         path: 'session/:id', 
-        component: require('./components/ChatSession'), 
+        component: require('./components/PrivateChatSession'), 
       }])
     }, "messages-children")
   },

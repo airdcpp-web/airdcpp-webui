@@ -33,12 +33,12 @@ const pushModal = (currentLocation, nextPath, overlayId, data) => {
   History.pushState(state, nextPath);
 }
 
-const replaceSidebar = (currentLocation, nextPath) => {
-  const state = getOverlayState(currentLocation, SIDEBAR_ID);
+const replaceSidebar = (currentLocation, nextPath, data) => {
+  const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
   History.replaceState(state, "/sidebar/" + nextPath);
 }
 
-const pushSidebar = (currentLocation, nextPath) => {
+const pushSidebar = (currentLocation, nextPath, data) => {
   const fullNextPath = "/sidebar/" + nextPath;
   if (fullNextPath === currentLocation.pathname) {
     // Don't create duplicate history entries
@@ -46,7 +46,7 @@ const pushSidebar = (currentLocation, nextPath) => {
     return;
   }
 
-  const state = getOverlayState(currentLocation, SIDEBAR_ID);
+  const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
   History.pushState(state, fullNextPath);
 }
 

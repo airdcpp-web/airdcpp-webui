@@ -20,8 +20,8 @@ const FilelistActions = Reflux.createActions([
 
 FilelistActions.download.listen((itemData, downloadData) => {
   downloadData["user"] = itemData.parentEntity.user;
+
   if (itemData.itemInfo.type.id === "file") {
-    downloadData["target"] += itemData.itemInfo.name;
     downloadData["tth"] = itemData.itemInfo.tth;
     downloadData["size"] = itemData.itemInfo.size;
     downloadData["time"] = itemData.itemInfo.time;
@@ -61,7 +61,7 @@ FilelistActions.changeDirectory.listen(function(cid, path) {
 FilelistActions.createSession.listen(function(user, location, directory = '/') {
 	let session = FilelistSessionStore.getSession(user.cid);
 	if (session) {
-		this.completed(session, user, location);
+		this.completed(session, user, location, directory);
 		return;
 	}
 
@@ -74,12 +74,12 @@ FilelistActions.createSession.listen(function(user, location, directory = '/') {
     },
     directory: directory
   })
-    .then((data) => that.completed(data, user, location))
+    .then((data) => that.completed(data, user, location, directory))
     .catch(that.failed);
 });
 
-FilelistActions.createSession.completed.listen(function(data, user, location) {
-    History.pushSidebar(location, "filelists/session/" + user.cid);
+FilelistActions.createSession.completed.listen(function(data, user, location, directory) {
+    History.pushSidebar(location, "filelists/session/" + user.cid, { directory: directory });
 });
 
 FilelistActions.createSession.failed.listen(function(error) {

@@ -29,22 +29,23 @@ const ListBrowser = React.createClass({
       return cellData;
     }
 
-    const formatter = (
-      <Formatter.FileNameFormatter item={ rowData.type }>
-        { cellData }
-      </Formatter.FileNameFormatter>);
-
-    let caption = formatter;
+    let captionText = cellData;
     if (rowData.type.id === "directory") {
-      caption = (
+      captionText = (
         <a onClick={() => this._handleClickDirectory(this.props.item.directory + cellData + '/')}>
-          { formatter }
+          { cellData }
         </a>
         )
     }
 
+    const formatter = (
+      <Formatter.FileNameFormatter item={ rowData.type }>
+        { captionText }
+      </Formatter.FileNameFormatter>);
+
     return <DownloadMenu 
-      caption={ caption } 
+      caption={ formatter } 
+      linkCaption={ false }
       parentEntity={ this.props.item } 
       itemInfo={ rowData } 
       handler={ FilelistActions.download } 
@@ -66,15 +67,25 @@ const ListBrowser = React.createClass({
   },
 
   componentWillMount() {
-    // We need an initial path
-    History.replaceSidebarData(this.props.location, { directory: this.props.item.directory });
+    const data = History.getSidebarData(this.props.location);
+    if (!data || !data.directory) {
+      // We need an initial path for our history
+      History.replaceSidebarData(this.props.location, { directory: this.props.item.directory });
+    } else if (this.props.item.directory !== data.directory) {
+      // Opening an existing list from another directory?
+      this.changeDirectory(data.directory);
+    }
   },
 
   componentWillReceiveProps(nextProps) {
     const { directory } = History.getSidebarData(nextProps.location);
     if (directory && nextProps.item.directory !== directory) {
-      FilelistActions.changeDirectory(this.props.item.user.cid, directory);
+      this.changeDirectory(directory);
     }
+  },
+
+  changeDirectory(directory) {
+    FilelistActions.changeDirectory(this.props.item.user.cid, directory);
   },
 
   render() {

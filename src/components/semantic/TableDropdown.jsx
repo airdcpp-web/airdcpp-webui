@@ -6,28 +6,23 @@ import classNames from 'classnames';
 // The normal styled dropdown won't work there because the table cell won't allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
-export var DropdownItem = React.createClass({
-  render() {
-    const className = classNames(
-      "item",
-      this.props.className,
-      { "active": this.props.active  }
-    );
-
-    return (
-      <a className={ className } {...this.props}>
-        {this.props.children}
-      </a>
-    );
-  }
-});
-
 export default React.createClass({
   propTypes: {
     /**
      * Cell content to render
      */
-    caption: React.PropTypes.node.isRequired
+    caption: React.PropTypes.node.isRequired,
+
+    /**
+     * Trigger the dropdown when clicking on the caption
+     */
+    linkCaption: React.PropTypes.bool,
+  },
+
+  getDefaultProps() {
+    return {
+      linkCaption: true
+    }
   },
 
   addCloseHandler(elem) {
@@ -45,6 +40,7 @@ export default React.createClass({
     const trigger = (
       <div className="table-dropdown">
         <i className="large angle down icon"></i>
+        { this.props.linkCaption ? this.props.caption : null }
       </div>);
 
     // Settings
@@ -62,7 +58,7 @@ export default React.createClass({
           </div>
           </div>
         </Popup>
-        {this.props.caption}
+        { this.props.linkCaption ? null : this.props.caption }
       </div>);
-}
+  }
 });

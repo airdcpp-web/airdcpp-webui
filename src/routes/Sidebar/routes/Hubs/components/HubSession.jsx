@@ -140,6 +140,7 @@ const HubSession = React.createClass({
         <MessageView
           messages={this.props.messages}
           handleSend={this.handleSend}
+          location={this.props.location}
         />
       </div>
     );

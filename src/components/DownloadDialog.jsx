@@ -118,7 +118,9 @@ export default React.createClass({
      */
     itemInfo: React.PropTypes.shape({
       path: React.PropTypes.string,
-      dupe: React.PropTypes.number
+      dupe: React.PropTypes.number,
+      name: React.PropTypes.string,
+      type: React.PropTypes.object
     }).isRequired,
   },
 
@@ -168,8 +170,9 @@ export default React.createClass({
   },
 
   handleDownload(path) {
-    this.props.downloadHandler({ 
-      target: path,
+    this.props.downloadHandler({
+      target_name: this.props.itemInfo.name, // possibly allow changing this later...
+      target_path: path,
       target_type: 0,
       priority: PriorityEnum.DEFAULT
     });

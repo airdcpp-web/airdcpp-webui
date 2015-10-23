@@ -22,15 +22,12 @@ const TopMenuLayout = React.createClass({
     return (
       <div className="top-menu-layout">
       	<div className="ui main menu menu-bar">
-	      	<Dropdown className="icon item">
-	      	  <i className="content icon"></i>
-	      	  <div className="menu">
-	      	  	<div className="header">New</div>
-	      	  	{ this.props.newButton }
-      	  		<div className="ui divider" style={sessionMenuStyle}></div>
-      	  		<div className="header" style={sessionMenuStyle}>Existing</div>
-      	  		{ this.props.menuItems }
-	      	  </div>
+	      	<Dropdown icon="content">
+	      	 	<div className="header">New</div>
+	      	 	{ this.props.newButton }
+      	  	<div className="ui divider" style={sessionMenuStyle}></div>
+      	  	<div className="header" style={sessionMenuStyle}>Existing</div>
+      	  	{ this.props.menuItems }
 	      	</Dropdown>
       	</div>
       	<div className="session-layout">

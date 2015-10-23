@@ -6,7 +6,7 @@ import { StateEnum } from 'constants/FavoriteHubConstants'
 
 import VirtualTable from 'components/table/VirtualTable'
 import SocketService from 'services/SocketService'
-import { ActionMenu } from 'components/Menu'
+import { TableActionMenu } from 'components/Menu'
 import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
 import FavoriteHubStore from 'stores/FavoriteHubStore'
 
@@ -69,7 +69,7 @@ const FavoriteHubs = React.createClass({
       return cellData;
     }
 
-    return <ActionMenu caption={ cellData } actions={ FavoriteHubActions } ids={[ "edit", "remove" ]} itemData={ rowData }/>;
+    return <TableActionMenu caption={ cellData } actions={ FavoriteHubActions } ids={[ "edit", "remove" ]} itemData={ rowData }/>;
   },
 
   _renderConnect(cellData, cellDataKey, rowData) {
@@ -100,7 +100,7 @@ const FavoriteHubs = React.createClass({
   },
 
   _renderPassword(cellData, cellDataKey, rowData) {
-     return <ActionMenu 
+     return <TableActionMenu 
       caption={ <div className="password-column"> { cellData ? <strong>Set</strong> : "Not set" } </div> } 
       actions={ FavoriteHubPasswordActions } 
       ids={ cellData ? [ "change", "remove" ] : [ "create" ]} 

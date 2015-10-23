@@ -19,7 +19,7 @@ export const DownloadActions = Reflux.createActions([
 ]);
 
 DownloadActions.download.listen(function(data) {
-    return data.handler(data);
+    return data.handler(data, { target_name: data.itemInfo.name });
 });
 
 DownloadActions.downloadTo.listen(function(handlerData) {

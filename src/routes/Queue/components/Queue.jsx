@@ -3,12 +3,13 @@ import { Column } from 'fixed-data-table'
 import classNames from 'classnames'
 
 import { PriorityEnum, StatusEnum } from 'constants/QueueConstants'
-import { ActionMenu } from 'components/Menu'
+import { TableActionMenu } from 'components/Menu'
 import QueueActions from 'actions/QueueActions'
 import VirtualTable from 'components/table/VirtualTable'
 
 import Formatter from 'utils/Format';
-import TableDropdown, { DropdownItem } from 'components/semantic/TableDropdown'
+import TableDropdown from 'components/semantic/TableDropdown'
+import DropdownItem from 'components/semantic/DropdownItem'
 import QueueStore from 'stores/QueueStore'
 
 export default React.createClass({
@@ -141,7 +142,8 @@ export default React.createClass({
       <Formatter.FileNameFormatter item={ rowData.type }>
         { cellData }
       </Formatter.FileNameFormatter>);
-    return <ActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
+    
+    return <TableActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
   },
 
   render() {
