@@ -15,6 +15,13 @@ module.exports = {
     }, "sidebar-children")
   },
 
+  onEnter(nextProps, replaceState) {
+    // Don't allow sidebar to be accessed with a direct link
+    if (!nextProps.location.state || !nextProps.location.state[SIDEBAR_ID]) {
+      replaceState(null,"/");
+    }
+  },
+
   getComponent (location, cb) {
     require.ensure([], (require) => {
       cb(null, require('./components/Sidebar'))

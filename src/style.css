@@ -139,3 +139,7 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 .password-dialog input {
 	margin-top: 20px !important;
 }
+
+.confirm-dialog .description {
+	width: 100% !important;
+}

@@ -48,7 +48,7 @@ FavoriteHubPasswordActions.create.saved.listen(function(hub, password) {
 });
 
 FavoriteHubPasswordActions.change.listen(function(hub) {
-  const text = "Change password for the hub " + hub.name;
+  const text = "Enter new password for the hub " + hub.name;
   PasswordDialog("Change password", text)
     .then((password) => FavoriteHubPasswordActions.change.saved(hub, password))
     .catch(() => {});

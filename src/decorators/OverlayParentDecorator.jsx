@@ -26,8 +26,10 @@ export default function(Component, overlayId, createPortal = true) {
   };
 
   const getOverlay = (props) => {
-    if (closing)
-      return null;
+    // Causes more bugs when this is enabled, think something better later
+    // It can still mess up the history when quickly going back and forward
+    //if (closing)
+    //  return null;
 
     const { state } = props.location;
     return React.cloneElement(props.children, { 

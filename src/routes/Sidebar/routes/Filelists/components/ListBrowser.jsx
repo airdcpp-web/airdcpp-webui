@@ -4,7 +4,7 @@ import { Column } from 'fixed-data-table'
 import FilelistActions from 'actions/FilelistActions'
 import { FILELIST_SESSION_URL } from 'constants/FilelistConstants'
 
-import { DownloadMenu } from 'components/Menu'
+import { TableDownloadMenu } from 'components/Menu'
 
 import Formatter from 'utils/Format'
 import TypeConvert from 'utils/TypeConvert'
@@ -14,8 +14,15 @@ import VirtualTable from 'components/table/VirtualTable'
 import FilelistViewStore from 'stores/FilelistViewStore'
 import History from 'utils/History'
 
+//import { Lifecycle } from 'react-router'
+
 const ListBrowser = React.createClass({
+  //mixins: [ Lifecycle ],
   displayName: "ListBrowser",
+
+  //hasClickedDirectory: false,
+  //historyLeaveTimeout: null,
+
   _renderStr(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
       return cellData;
@@ -23,6 +30,18 @@ const ListBrowser = React.createClass({
 
     return cellData.str;
   },
+
+  // Disabled, doesn't work (investigate later)
+  /*componentWillUnmount() {
+    clearTimeout(this.historyLeaveTimeout);
+  },
+
+  routerWillLeave(nextLocation) {
+    if (this.hasClickedDirectory && !this.historyLeaveTimeout && nextLocation.pathname !== this.props.location.pathname) {
+      this.historyLeaveTimeout = setTimeout(() => this.historyLeaveTimeout = null, 2000);
+      return false;
+    }
+  },*/
 
   _renderName(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
@@ -43,7 +62,7 @@ const ListBrowser = React.createClass({
         { captionText }
       </Formatter.FileNameFormatter>);
 
-    return <DownloadMenu 
+    return <TableDownloadMenu 
       caption={ formatter } 
       linkCaption={ false }
       parentEntity={ this.props.item } 
@@ -62,6 +81,8 @@ const ListBrowser = React.createClass({
   },
 
   _handleClickDirectory(path) {
+    //this.hasClickedDirectory = true;
+
     // Handle it through location state data
     History.pushSidebarData(this.props.location, { directory: path });
   },
@@ -97,6 +118,7 @@ const ListBrowser = React.createClass({
           rootPath={'/'} 
           rootName={this.props.item.user.nicks} 
           itemClickHandler={this._handleClickDirectory}/>
+
         <VirtualTable
           rowClassNameGetter={ this._rowClassNameGetter }
           defaultSortProperty="name"

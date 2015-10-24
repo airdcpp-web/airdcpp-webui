@@ -17,7 +17,7 @@ import TypeConvert from 'utils/TypeConvert'
 import Formatter from 'utils/Format';
 import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
 
-import { DownloadMenu, TableUserMenu } from 'components/Menu'
+import { TableDownloadMenu, TableUserMenu } from 'components/Menu'
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator'
 
 import '../style.css'
@@ -64,7 +64,7 @@ const Search = React.createClass({
         { cellData }
       </Formatter.FileNameFormatter>);
 
-    return <DownloadMenu 
+    return <TableDownloadMenu 
       caption={ formatter }
       itemInfo={ rowData } 
       handler={ SearchActions.download } 

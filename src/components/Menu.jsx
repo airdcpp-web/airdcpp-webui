@@ -16,9 +16,9 @@ export const TableActionMenu = ActionMenuDecorator(TableDropdown);
 export const ActionMenu = ActionMenuDecorator(Dropdown);
 
 export const UserMenu = UserMenuDecorator(ActionMenu);
-export const TableUserMenu = UserMenuDecorator(TableUserMenu);
+export const TableUserMenu = UserMenuDecorator(TableActionMenu);
 
-export const DownloadMenu = React.createClass({
+export const TableDownloadMenu = React.createClass({
   propTypes: {
 
     /**
@@ -51,6 +51,6 @@ export const DownloadMenu = React.createClass({
       location: location
     }
 
-    return <ActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data } { ...other }/>;
+    return <TableActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data } { ...other }/>;
   }
 })

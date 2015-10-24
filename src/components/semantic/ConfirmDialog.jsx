@@ -22,6 +22,7 @@ const ConfirmDialog = React.createClass({
     icon: React.PropTypes.string
   },
 
+  displayName: "ConfirmDialog",
   componentDidMount() {
     const settings = {
       movePopup:false,
@@ -53,7 +54,7 @@ const ConfirmDialog = React.createClass({
   },
 
   render: function() {
-    return (<div className="ui basic modal">
+    return (<div className="ui basic modal confirm-dialog">
       <div className="header">
         { this.props.title }
       </div>

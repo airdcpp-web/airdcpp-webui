@@ -17,7 +17,8 @@ const Sidebar = React.createClass({
   displayName: "Sidebar",
   componentDidMount() {
     this.props.showOverlay({
-      context: '#main-layout'
+      context: '#main-layout',
+      delaySetup: true
     });
   },
 

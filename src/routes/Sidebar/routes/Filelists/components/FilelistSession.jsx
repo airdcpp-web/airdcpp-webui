@@ -13,8 +13,10 @@ import TabHeader from 'routes/Sidebar/components/TabHeader'
 
 import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
 import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
+import { RouteContext } from 'react-router'
 
 const FilelistSession = React.createClass({
+  mixins: [ RouteContext ],
   displayName: "FilelistSession",
   handleClose() {
     FilelistActions.removeSession(this.props.item.id);
