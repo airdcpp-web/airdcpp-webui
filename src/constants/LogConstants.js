@@ -15,4 +15,4 @@ export default {
 		WARNING: 1,
 		ERROR: 2
 	},
-}
+};

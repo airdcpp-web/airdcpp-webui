@@ -8,17 +8,17 @@ const Accordion = React.createClass({
 
 	getDefaultProps() {
 		return {
-			className: ""
-		}
+			className: '',
+		};
 	},
 
-	render: function() {
+	render: function () {
 		return (
-			<div className={ "ui accordion " + this.props.className }>
+			<div className={ 'ui accordion ' + this.props.className }>
 				{ this.props.children }
 			</div>
 		);
-	}
+	},
 });
 
-export default Accordion
+export default Accordion;

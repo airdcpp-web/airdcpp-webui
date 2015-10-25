@@ -8,3 +8,4 @@ export default {
 
 	HIDDEN_PROFILE_ID: 1
 }
+;

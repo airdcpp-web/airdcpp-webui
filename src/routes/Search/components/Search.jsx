@@ -1,49 +1,48 @@
 import React from 'react';
-import VirtualTable from 'components/table/VirtualTable'
-import SocketService from 'services/SocketService'
-import SearchActions from 'actions/SearchActions'
+import VirtualTable from 'components/table/VirtualTable';
+import SocketService from 'services/SocketService';
+import SearchActions from 'actions/SearchActions';
 
-import SearchStore from 'stores/SearchStore'
-import { HistoryEnum } from 'constants/HistoryConstants'
-import { SEARCH_QUERY_URL } from 'constants/SearchConstants'
+import SearchStore from 'stores/SearchStore';
+import { HistoryEnum } from 'constants/HistoryConstants';
+import { SEARCH_QUERY_URL } from 'constants/SearchConstants';
 
-import HistoryInput from 'components/autosuggest/HistoryInput'
-import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
+import HistoryInput from 'components/autosuggest/HistoryInput';
+import OverlayParentDecorator from 'decorators/OverlayParentDecorator';
 
-import classNames from 'classnames';
 import { Column } from 'fixed-data-table';
 
-import TypeConvert from 'utils/TypeConvert'
+import TypeConvert from 'utils/TypeConvert';
 import Formatter from 'utils/Format';
-import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
+import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
 
-import { TableDownloadMenu, TableUserMenu } from 'components/Menu'
-import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator'
+import { TableDownloadMenu, TableUserMenu } from 'components/Menu';
+import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
-import '../style.css'
+import '../style.css';
 
 const SEARCH_PERIOD = 4000;
 
 const Search = React.createClass({
 	_handleSearch(text) {
-		console.log("Searching");
+		console.log('Searching');
 
 		clearTimeout(this._searchTimeout);
 
 		SocketService.post(SEARCH_QUERY_URL, { pattern: text })
 			.then(data => {
-				this.setState({running:true});
-				this._searchTimeout = setTimeout(() => this.setState({running:false}), data.queue_time + SEARCH_PERIOD);
+				this.setState({ running:true });
+				this._searchTimeout = setTimeout(() => this.setState({ running:false }), data.queue_time + SEARCH_PERIOD);
 			})
 			.catch(error => 
-				console.error("Failed to post search: " + error)
+				console.error('Failed to post search: ' + error)
 			);
 	},
 
 	getInitialState() {
 		return {
 			running: false
-		}
+		};
 	},
 
 	_renderStr(cellData, cellDataKey, rowData) {
@@ -64,11 +63,14 @@ const Search = React.createClass({
 				{ cellData }
 			</Formatter.FileNameFormatter>);
 
-		return <TableDownloadMenu 
-			caption={ formatter }
-			itemInfo={ rowData } 
-			handler={ SearchActions.download } 
-			location={ this.props.location }/>
+		return (
+			<TableDownloadMenu 
+				caption={ formatter }
+				itemInfo={ rowData } 
+				handler={ SearchActions.download } 
+				location={ this.props.location }
+			/>
+		);
 	},
 
 	_renderIp(cellData) {
@@ -76,7 +78,7 @@ const Search = React.createClass({
 			return cellData;
 		}
 
-		return <Formatter.IpFormatter item={ cellData }/>
+		return <Formatter.IpFormatter item={ cellData }/>;
 	},
 
 	_renderUsers(cellData, cellDataKey, rowData) {
@@ -84,7 +86,7 @@ const Search = React.createClass({
 			return cellData;
 		}
 
-		return <TableUserMenu user={ cellData } directory={ rowData.path } location={this.props.location}/>
+		return <TableUserMenu user={ cellData } directory={ rowData.path } location={this.props.location}/>;
 	},
 
 	_rowClassNameGetter(rowData) {
@@ -104,7 +106,8 @@ const Search = React.createClass({
 						rowClassNameGetter={ this._rowClassNameGetter }
 						defaultSortProperty="relevancy"
 						defaultSortAscending={false}
-						store={ SearchStore }>
+						store={ SearchStore }
+					>
 						<Column
 							label="Name"
 							width={270}

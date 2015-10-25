@@ -1,19 +1,19 @@
 module.exports = {
 	path: 'search',
 	
-	getChildRoutes (location, cb) {
+	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'download', 
 				component: require('components/DownloadDialog'), 
-			}])
-		}, "search-children")
+			} ]);
+		}, 'search-children');
 	},
 
-	getComponent (location, cb) {
+	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/Search'))
-		}, "search")
+			cb(null, require('./components/Search'));
+		}, 'search');
 	}
-}
+};
 

@@ -1,19 +1,19 @@
 module.exports = {
 	path: 'hubs',
 	
-	getChildRoutes (location, cb) {
+	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'session/:id', 
 				component: require('./components/HubSession'), 
-			}])
-		}, "hubs-children")
+			} ]);
+		}, 'hubs-children');
 	},
 
-	getComponent (location, cb) {
+	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/Hubs'))
-		}, "hubs")
+			cb(null, require('./components/Hubs'));
+		}, 'hubs');
 	}
-}
+};
 

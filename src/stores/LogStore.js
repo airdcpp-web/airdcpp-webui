@@ -1,32 +1,29 @@
 import Reflux from 'reflux';
 
-import {LOG_MODULE_URL, MAX_LOG_MESSAGES, LOG_MESSAGE, LOG_READ, LOG_CLEARED, SeverityEnum} from 'constants/LogConstants';
+import { LOG_MODULE_URL, MAX_LOG_MESSAGES, LOG_MESSAGE, LOG_READ, LOG_CLEARED, SeverityEnum } from 'constants/LogConstants';
+import { LogActions } from 'actions/LogActions';
 
-import SocketStore from './SocketStore'
-import SocketService from 'services/SocketService'
-import { LogActions } from 'actions/LogActions'
-
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 const LogStore = Reflux.createStore({
 	listenables: LogActions,
-	init: function() {
+	init: function () {
 		this._logMessages = [];
 	},
 
-	getInitialState: function() {
+	getInitialState: function () {
 		return this._logMessages;
 	},
 
-	onFetchMessagesCompleted: function(data) {
+	onFetchMessagesCompleted: function (data) {
 		this._logMessages = data;
 		this.trigger(this._logMessages);
 	},
 
-	onFetchMessagesFailed: function(error) {
+	onFetchMessagesFailed: function (error) {
 	},
 
-	onLogMessage: function(data) {
+	onLogMessage: function (data) {
 		this._logMessages.push(data);
 		if (this._logMessages.length > MAX_LOG_MESSAGES) {
 			this._logMessages.shift();
@@ -35,12 +32,12 @@ const LogStore = Reflux.createStore({
 		this.trigger(this._logMessages);
 	},
 
-	onLogCleared: function(data) {
+	onLogCleared: function (data) {
 		this._logMessages = [];
 		this.trigger(this._logMessages);
 	},
 
-	onLogRead: function(data) {
+	onLogRead: function (data) {
 		this._logMessages = this._logMessages.map(message => 
 			Object.assign({}, message, { is_read: true } )
 		);
@@ -53,7 +50,7 @@ const LogStore = Reflux.createStore({
 			[SeverityEnum.INFO]: 0,
 			[SeverityEnum.WARNING]: 0,
 			[SeverityEnum.ERROR]: 0,
-		}
+		};
 
 		this._logMessages.forEach(message => {
 			if (!message.is_read) {
@@ -75,4 +72,4 @@ const LogStore = Reflux.createStore({
 	}
 });
 
-export default SocketSubscriptionDecorator(LogStore)
+export default SocketSubscriptionDecorator(LogStore);

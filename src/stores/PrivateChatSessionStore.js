@@ -1,14 +1,14 @@
 import Reflux from 'reflux';
 
-import {PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_CREATED, CHAT_SESSION_REMOVED, CHAT_SESSION_UPDATED} from 'constants/PrivateChatConstants';
+import { PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_CREATED, CHAT_SESSION_REMOVED, CHAT_SESSION_UPDATED } from 'constants/PrivateChatConstants';
 
-import PrivateChatActions from 'actions/PrivateChatActions'
+import PrivateChatActions from 'actions/PrivateChatActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
-import SessionStoreDecorator from 'decorators/SessionStoreDecorator'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
 
 const ChatSessionStore = Reflux.createStore({
-	getInitialState: function() {
+	getInitialState: function () {
 		return this.getSessions();
 	},
 
@@ -20,3 +20,4 @@ const ChatSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator(SocketSubscriptionDecorator(ChatSessionStore), PrivateChatActions.fetchSessions.completed)
+;

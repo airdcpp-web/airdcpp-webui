@@ -1,19 +1,19 @@
 import React from 'react';
 
-import History from 'utils/History'
+import History from 'utils/History';
 
 // Pass the wrapped component, an unique ID for it (use OverlayConstants)
 // If no DOM ID is provided, a new one will be created in body
-export default function(Component, overlayId, createPortal = true) {
+export default function (Component, overlayId, createPortal = true) {
 	let node = null;
-	let closing = false;
+	//let closing = false;
 
 	const replaceState = (props) => {
 		const { returnTo } = props.location.state[overlayId];
-		console.assert(returnTo, "Return address missing when closing an overlay");
+		console.assert(returnTo, 'Return address missing when closing an overlay');
 		delete props.location.state[overlayId];
 		History.replaceState(props.location.state, returnTo);
-	}
+	};
 
 	const removeNode = () => {
 		if (node) {
@@ -22,7 +22,7 @@ export default function(Component, overlayId, createPortal = true) {
 			node = null;
 		}
 
-		closing = false;
+		//closing = false;
 	};
 
 	const getOverlay = (props) => {
@@ -33,10 +33,12 @@ export default function(Component, overlayId, createPortal = true) {
 
 		const { state } = props.location;
 		return React.cloneElement(props.children, { 
-			onHide: () => { closing = true },
+			onHide: () => { 
+				closing = true; 
+			},
 			onHidden: () => {
 				replaceState(props);
-				removeNode()
+				removeNode();
 			},
 			...((state && state[overlayId]) ? state[overlayId].data : null)
 		});
@@ -71,7 +73,7 @@ export default function(Component, overlayId, createPortal = true) {
 		},
 
 		render() {
-			return <Component {...this.props} {...this.state} getOverlay={ getOverlay }/>
+			return <Component {...this.props} {...this.state} getOverlay={ getOverlay }/>;
 		}
 	});
 

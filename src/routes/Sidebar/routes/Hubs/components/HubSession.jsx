@@ -2,23 +2,20 @@
 
 import React from 'react';
 
-import MessageView from 'routes/Sidebar/components/MessageView'
-import SocketService from 'services/SocketService.js'
+import MessageView from 'routes/Sidebar/components/MessageView';
 
-import HubSessionStore from 'stores/HubSessionStore'
-import HubMessageStore from 'stores/HubMessageStore'
-import HubActions from 'actions/HubActions'
+import HubSessionStore from 'stores/HubSessionStore';
+import HubMessageStore from 'stores/HubMessageStore';
+import HubActions from 'actions/HubActions';
 
-//import {PRIVATE_CHAT_SESSION_URL, PRIVATE_CHAT_MESSAGE} from 'constants/PrivateChatConstants';
+import { ActionMenu } from 'components/Menu';
+import ActionInput from 'components/semantic/ActionInput';
 
-import { ActionMenu } from 'components/Menu'
-import ActionInput from 'components/semantic/ActionInput'
+import TabHeader from 'routes/Sidebar/components/TabHeader';
+import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
+import Format from 'utils/Format';
 
-import TabHeader from 'routes/Sidebar/components/TabHeader'
-import ChatSessionDecorator from 'decorators/ChatSessionDecorator'
-import Format from 'utils/Format'
-
-import '../style.css'
+import '../style.css';
 
 const HubActionPrompt = React.createClass({
 	propTypes: {
@@ -33,12 +30,12 @@ const HubActionPrompt = React.createClass({
 		content: React.PropTypes.node.isRequired,
 	},
 
-	displayName: "HubActionPrompt",
-	render: function() {
+	displayName: 'HubActionPrompt',
+	render: function () {
 		return (
 			<div className="ui icon message hub-action-prompt">
 				<h3 className="ui header">
-					<i className={ this.props.icon + " icon"}></i>
+					<i className={ this.props.icon + ' icon'}></i>
 					<div className="content">
 						{ this.props.title }
 					</div>
@@ -50,12 +47,12 @@ const HubActionPrompt = React.createClass({
 });
 
 const PasswordPrompt = React.createClass({
-	displayName: "PasswordPrompt",
+	displayName: 'PasswordPrompt',
 	_handleSubmit(text) {
 		HubActions.password(this.props.hub, text);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div>
 			<ActionInput placeholder="Password" caption="Submit" icon="green play" handleAction={this._handleSubmit}/>
@@ -66,22 +63,22 @@ const PasswordPrompt = React.createClass({
 });
 
 const RedirectPrompt = React.createClass({
-	displayName: "RedirectPrompt",
+	displayName: 'RedirectPrompt',
 	_handleSubmit() {
 		HubActions.redirect(this.props.hub);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div className="ui button" icon="green play" onClick={this._handleSubmit}>
-				{ "Accept redirect to " + this.props.hub.connect_state.hub_url }
+				{ 'Accept redirect to ' + this.props.hub.connect_state.hub_url }
 			</div>
 		);
 	}
 });
 
 const HubSession = React.createClass({
-	displayName: "HubSession",
+	displayName: 'HubSession',
 	handleClose() {
 		HubActions.removeSession(this.props.item.id);
 	},
@@ -92,20 +89,22 @@ const HubSession = React.createClass({
 
 	getMessage() {
 		const connectState = this.props.item.connect_state.id;
-		if (connectState === "password") {
+		if (connectState === 'password') {
 			return (
 				<HubActionPrompt 
 					title="Password required"
 					icon="lock"
-					content={ <PasswordPrompt hub={this.props.item}/> }/>
-				);
-		} else if (connectState === "redirect") {
+					content={ <PasswordPrompt hub={this.props.item}/> }
+				/>
+			);
+		} else if (connectState === 'redirect') {
 			return (
 				<HubActionPrompt 
 					title="Redirect requested"
 					icon="forward mail"
-					content={ <RedirectPrompt hub={this.props.item}/> }/>
-				);
+					content={ <RedirectPrompt hub={this.props.item}/> }
+				/>
+			);
 		}
 
 		return null;
@@ -119,7 +118,8 @@ const HubSession = React.createClass({
 				caption={ identity.name } 
 				actions={ HubActions } 
 				itemData={ this.props.item } 
-				ids={ ["reconnect", "favorite"] }/>
+				ids={ [ 'reconnect', 'favorite' ] }
+			/>
 		);
 
 		const icon = (
@@ -134,7 +134,8 @@ const HubSession = React.createClass({
 					icon={icon}
 					title={hubMenu}
 					buttonClickHandler={this.handleClose}
-					subHeader={ identity.description }/>
+					subHeader={ identity.description }
+				/>
 
 				{ this.getMessage() }
 				<MessageView

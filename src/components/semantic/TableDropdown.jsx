@@ -1,9 +1,8 @@
 import React from 'react';
-import Popup from './Popup'
-import classNames from 'classnames';
+import Popup from './Popup';
 
 // A popup-based class for handling dropdowns in Fixed Data Table
-// The normal styled dropdown won't work there because the table cell won't allow overflow
+// The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
 export default React.createClass({
@@ -22,7 +21,7 @@ export default React.createClass({
 	getDefaultProps() {
 		return {
 			linkCaption: true
-		}
+		};
 	},
 
 	addCloseHandler(elem) {
@@ -32,10 +31,10 @@ export default React.createClass({
 				
 				elem.props.onClick();
 			} 
-		})
+		});
 	},
 
-	render: function() {
+	render: function () {
 		// Caption
 		const trigger = (
 			<div className="table-dropdown">

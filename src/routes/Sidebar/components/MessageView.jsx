@@ -3,16 +3,16 @@
 import React from 'react';
 import Formatter from 'utils/Format';
 
-import ScrollDecorator from 'decorators/ScrollDecorator'
-import ReactEmoji from 'react-emoji'
+import ScrollDecorator from 'decorators/ScrollDecorator';
+import ReactEmoji from 'react-emoji';
 
-import { ActionMenu } from 'components/Menu'
-import UserActions from 'actions/UserActions'
+import { ActionMenu } from 'components/Menu';
+import UserActions from 'actions/UserActions';
 
 var ENTER_KEY_CODE = 13;
 
 const MessageComposer = React.createClass({
-	displayName: "MessageComposer",
+	displayName: 'MessageComposer',
 	propTypes: {
 		/**
 		 * Handles sending of the message. Receives the text as param.
@@ -20,11 +20,11 @@ const MessageComposer = React.createClass({
 		handleSend: React.PropTypes.func.isRequired
 	},
 
-	getInitialState: function() {
-		return {text: ''};
+	getInitialState: function () {
+		return { text: '' };
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div className="ui form">
 				<textarea
@@ -43,11 +43,11 @@ const MessageComposer = React.createClass({
 		);
 	},
 
-	_onChange: function(event, value) {
-		this.setState({text: event.target.value});
+	_onChange: function (event, value) {
+		this.setState({ text: event.target.value });
 	},
 
-	_onKeyDown: function(event) {
+	_onKeyDown: function (event) {
 		if (event.keyCode === ENTER_KEY_CODE) {
 			event.preventDefault();
 			this._sendText();
@@ -59,30 +59,30 @@ const MessageComposer = React.createClass({
 		if (text) {
 			this.props.handleSend(text);
 		}
-		this.setState({text: ''});
+		this.setState({ text: '' });
 	}
 });
 
 const ChatMessage = React.createClass({
 	mixins: [ ReactEmoji ],
-	displayName: "ChatMessage",
+	displayName: 'ChatMessage',
 	propTypes: {
 		message: React.PropTypes.object
 	},
 
-	render: function() {
-		const {message} = this.props;
+	render: function () {
+		const { message } = this.props;
 		const { flags } = message.from;
 
 
 		let userCaption = message.from.nick;
-		if (flags.indexOf("hidden") < 0) {
+		if (flags.indexOf('hidden') < 0) {
 			userCaption = <ActionMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } icon={null} caption={ message.from.nick } actions={ UserActions } itemData={ { user: message.from, directory: '/' } }/>;
 		}
 
 		// No emojis to bot messages as they are likely to contain false matches
 		return (
-			<div className={ "ui item message-list-item chat-message " + flags.join(' ')}>
+			<div className={ 'ui item message-list-item chat-message ' + flags.join(' ')}>
 				<div className="header message-author-name">
 					{userCaption}
 				</div>
@@ -90,8 +90,8 @@ const ChatMessage = React.createClass({
 					{Formatter.formatTimestamp(message.time)}
 				</div>
 				<div className="message-text">
-					{ flags.indexOf("bot") >= 0 ? message.text : this.emojify(message.text, {
-						emojiType: "twemoji"
+					{ flags.indexOf('bot') >= 0 ? message.text : this.emojify(message.text, {
+						emojiType: 'twemoji'
 					})}
 				</div>
 			</div>
@@ -100,13 +100,13 @@ const ChatMessage = React.createClass({
 });
 
 const StatusMessage = React.createClass({
-	displayName: "StatusMessage",
+	displayName: 'StatusMessage',
 	propTypes: {
 		message: React.PropTypes.object
 	},
 
-	render: function() {
-		let {message} = this.props;
+	render: function () {
+		let { message } = this.props;
 		return (
 			<div className="ui item message-list-item status-message">
 				<div className="message-time">
@@ -119,7 +119,7 @@ const StatusMessage = React.createClass({
 });
 
 const MessageSection = ScrollDecorator(React.createClass({
-	displayName: "MessageSection",
+	displayName: 'MessageSection',
 	getMessageListItem(message) {
 		if (message.chat_message) {
 			return (
@@ -140,7 +140,7 @@ const MessageSection = ScrollDecorator(React.createClass({
 		);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div className="message-section">
 				<div className="ui list message-list">
@@ -165,7 +165,7 @@ const MessageView = React.createClass({
 		handleSend: React.PropTypes.func.isRequired
 	},
 
-	displayName: "MessageView",
+	displayName: 'MessageView',
 	render() {
 		return (
 			<div className="message-view">
@@ -176,4 +176,4 @@ const MessageView = React.createClass({
 	},
 });
 
-export default MessageView
+export default MessageView;

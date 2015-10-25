@@ -1,5 +1,4 @@
-import Reflux from 'reflux';
-import SocketStore from 'stores/SocketStore'
+import SocketStore from 'stores/SocketStore';
 
 export default {
 	init(entityId) {
@@ -29,7 +28,7 @@ export default {
 	},
 
 	addListener() {
-		this._removeMessageListener = SocketStore.addMessageListener(this._viewName + "_updated", this._handleUpdate, this._entityId);
+		this._removeMessageListener = SocketStore.addMessageListener(this._viewName + '_updated', this._handleUpdate, this._entityId);
 	},
 
 	get items() {
@@ -43,7 +42,7 @@ export default {
 		}
 
 		viewUrl += this._viewName;
-		return viewUrl
+		return viewUrl;
 	},
 
 	get viewName() {
@@ -55,20 +54,19 @@ export default {
 	},
 
 	_addItems(itemsObj) {
-		//let pos = 0;
 		this._items = itemsObj.reduce((newViewItems, rawItem, index) => {
-		// Either a new item, existing one in a different position or we are updating properties
-		let viewItem = this._findItem(rawItem.id) || { id: rawItem.id };
+			// Either a new item, existing one in a different position or we are updating properties
+			let viewItem = this._findItem(rawItem.id) || { id: rawItem.id };
 
-		if (rawItem.properties) {
-			Object.assign(viewItem, rawItem.properties);
-		} else if (Object.keys(viewItem).length == 1) {
-			console.error("No properties were sent for a new view item", viewItem.id);
-		}
+			if (rawItem.properties) {
+				Object.assign(viewItem, rawItem.properties);
+			} else if (Object.keys(viewItem).length == 1) {
+				console.error('No properties were sent for a new view item', viewItem.id);
+			}
 
-		newViewItems[this._startPos + index] = viewItem;
+			newViewItems[this._startPos + index] = viewItem;
 
-		return newViewItems;
+			return newViewItems;
 		}.bind(this), []);
 	},
 
@@ -77,7 +75,7 @@ export default {
 	},
 
 	_handleUpdate(obj) {
-		if(obj.range_start != undefined) {
+		if (obj.range_start != undefined) {
 			this._startPos = obj.range_start;
 		}
 

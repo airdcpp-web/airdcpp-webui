@@ -1,12 +1,8 @@
-import React from 'react';
-import Moment from 'moment';
-import { Icon, Flag } from 'react-semantify'
-
-import DupeEnum from 'constants/DupeConstants'
+import DupeEnum from 'constants/DupeConstants';
 
 export default {
-	dupeToStringType: function(dupeEnum) {
-		switch(dupeEnum) {
+	dupeToStringType: function (dupeEnum) {
+		switch (dupeEnum) {
 			case DupeEnum.SHARE_PARTIAL: return 'dupe share partial';
 			case DupeEnum.SHARE_FULL: return 'dupe share full';
 			case DupeEnum.QUEUE_PARTIAL: return 'dupe queue partial';
@@ -17,27 +13,27 @@ export default {
 		}
 	},
 
-	userOnlineStatusToColor: function(flags) {
-		if (flags.indexOf("offline") != -1) {
-			return "lightgrey";
+	userOnlineStatusToColor: function (flags) {
+		if (flags.indexOf('offline') != -1) {
+			return 'lightgrey';
 		}
 
-		if (flags.indexOf("away") != -1) {
-			return "yellow";
+		if (flags.indexOf('away') != -1) {
+			return 'yellow';
 		}
 
-		return "green";
+		return 'green';
 	},
 
-	hubOnlineStatusToColor: function(connectState) {
-		if (connectState === "connected") {
-			return "green";
+	hubOnlineStatusToColor: function (connectState) {
+		if (connectState === 'connected') {
+			return 'green';
 		}
 
-		if (connectState === "connecting") {
-			return "yellow";
+		if (connectState === 'connecting') {
+			return 'yellow';
 		}
 		
-		return "lightgrey";
+		return 'lightgrey';
 	},	
 };

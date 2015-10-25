@@ -1,14 +1,9 @@
 import React from 'react';
-import { Button, Popup, Icon } from 'react-semantify'
 
-import classNames from 'classnames';
-
-import OverlayDecorator from 'decorators/OverlayDecorator'
-
-let settingCallback;
+import OverlayDecorator from 'decorators/OverlayDecorator';
 
 const Modal = React.createClass({
-	displayName: "Modal",
+	displayName: 'Modal',
 	propTypes: {
 
 		/**
@@ -42,15 +37,15 @@ const Modal = React.createClass({
 	getDefaultProps() {
 		return {
 			closable: true
-		}
+		};
 	},
 
 	getInitialState() {
-		settingCallback = this.getOverlaySettings
+		settingCallback = this.getOverlaySettings;
 
 		return {
 			saving: false
-		}
+		};
 	},
 
 	onDeny: function (el) {
@@ -74,14 +69,14 @@ const Modal = React.createClass({
 			closable: this.props.closable,
 			detachable: false,
 			allowMultiple: false
-		})
+		});
 	},
 
-	render: function() {
+	render: function () {
 		return (
-			<div className={ "ui modal " + this.props.className }>
+			<div className={ 'ui modal ' + this.props.className }>
 				<div className="header">
-					<i className={ this.props.icon + " icon" }></i>
+					<i className={ this.props.icon + ' icon' }></i>
 					{ this.props.title }
 				</div>
 				<div className="content">
@@ -90,7 +85,7 @@ const Modal = React.createClass({
 
 				{this.props.saveHandler ? (
 					<div className="actions">
-						<div className={ "ui ok green basic button " + (this.state.saving ? "loading" : "") }>
+						<div className={ 'ui ok green basic button ' + (this.state.saving ? 'loading' : '') }>
 							<i className="checkmark icon"></i>
 							Save
 						</div>
@@ -110,4 +105,4 @@ const Modal = React.createClass({
 	}
 });
 
-export default OverlayDecorator(Modal, "modal")
+export default OverlayDecorator(Modal, 'modal');

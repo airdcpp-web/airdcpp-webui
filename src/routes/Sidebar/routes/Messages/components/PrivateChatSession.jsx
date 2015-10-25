@@ -2,20 +2,19 @@
 
 import React from 'react';
 
-import MessageView from 'routes/Sidebar/components/MessageView'
-import SocketService from 'services/SocketService.js'
+import MessageView from 'routes/Sidebar/components/MessageView';
 
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
-import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
-import PrivateChatActions from 'actions/PrivateChatActions'
+import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
+import PrivateChatActions from 'actions/PrivateChatActions';
 
-import { ActionMenu } from 'components/Menu'
-import UserActions from 'actions/UserActions'
+import { ActionMenu } from 'components/Menu';
+import UserActions from 'actions/UserActions';
 
-import TabHeader from 'routes/Sidebar/components/TabHeader'
+import TabHeader from 'routes/Sidebar/components/TabHeader';
 
-import ChatSessionDecorator from 'decorators/ChatSessionDecorator'
-import Format from 'utils/Format'
+import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
+import Format from 'utils/Format';
 
 /*const TabFooter = React.createClass({
 	render() {
@@ -43,7 +42,7 @@ import Format from 'utils/Format'
 
 
 const ChatSession = React.createClass({
-	displayName: "ChatSession",
+	displayName: 'ChatSession',
 	handleClose() {
 		PrivateChatActions.removeSession(this.props.item.id);
 	},
@@ -60,7 +59,8 @@ const ChatSession = React.createClass({
 				caption={ user.nicks } 
 				actions={ UserActions } 
 				itemData={ user } 
-				ids={["browse"]}/>
+				ids={[ 'browse' ]}
+			/>
 		);
 
 		const icon = (
@@ -73,7 +73,8 @@ const ChatSession = React.createClass({
 					icon={icon}
 					title={userMenu}
 					buttonClickHandler={this.handleClose}
-					subHeader={ user.hub_names }/>
+					subHeader={ user.hub_names }
+				/>
 
 				<MessageView
 					messages={this.props.messages}

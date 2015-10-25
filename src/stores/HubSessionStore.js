@@ -1,19 +1,19 @@
 import Reflux from 'reflux';
 
-import {HUB_MODULE_URL, HUB_SESSION_CREATED, HUB_SESSION_REMOVED, HUB_SESSION_UPDATED} from 'constants/HubConstants';
+import { HUB_MODULE_URL, HUB_SESSION_CREATED, HUB_SESSION_REMOVED, HUB_SESSION_UPDATED } from 'constants/HubConstants';
 
-import HubActions from 'actions/HubActions'
+import HubActions from 'actions/HubActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
-import SessionStoreDecorator from 'decorators/SessionStoreDecorator'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
 
 const HubSessionStore = Reflux.createStore({
-	getInitialState: function() {
-			return this.getSessions();
+	getInitialState: function () {
+		return this.getSessions();
 	},
 
 	hasConnectedHubs() {
-		return this.getSessions().find(session => session.connect_state.id === "connected");
+		return this.getSessions().find(session => session.connect_state.id === 'connected');
 	},
 
 	onSocketConnected(addSocketListener) {
@@ -25,3 +25,4 @@ const HubSessionStore = Reflux.createStore({
 
 
 export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore), HubActions.fetchSessions.completed)
+;

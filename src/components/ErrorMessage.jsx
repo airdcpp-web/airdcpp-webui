@@ -13,8 +13,8 @@ const ErrorMessage = React.createClass({
 		description: React.PropTypes.node.isRequired,
 	},
 
-	displayName: "ErrorMessage",
-	render: function() {
+	displayName: 'ErrorMessage',
+	render: function () {
 		return (
 			<div className="ui negative message">
 				<div className="header">
@@ -27,3 +27,4 @@ const ErrorMessage = React.createClass({
 });
 
 export default ErrorMessage
+;

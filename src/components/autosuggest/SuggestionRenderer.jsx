@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SuggestionRenderer = function(input, suggestionValue, description = null) {
+const SuggestionRenderer = function (input, suggestionValue, description = null) {
 	const escapeRegexCharacters = (str) => {
 		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	}
+	};
 
 	const escapedInput = escapeRegexCharacters(input);
 	const matchRegex = new RegExp('\\b' + escapedInput, 'i');

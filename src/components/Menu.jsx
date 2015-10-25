@@ -1,15 +1,12 @@
 import React from 'react';
-import Reflux from 'reflux';
 
-import Dropdown from './semantic/Dropdown'
-import TableDropdown from './semantic/TableDropdown'
+import Dropdown from './semantic/Dropdown';
+import TableDropdown from './semantic/TableDropdown';
 
-import UserActions from 'actions/UserActions'
-import DownloadActions from 'actions/DownloadActions'
+import DownloadActions from 'actions/DownloadActions';
 
-import ActionMenuDecorator from 'decorators/ActionMenuDecorator'
-import UserMenuDecorator from 'decorators/UserMenuDecorator'
-
+import ActionMenuDecorator from 'decorators/ActionMenuDecorator';
+import UserMenuDecorator from 'decorators/UserMenuDecorator';
 
 
 export const TableActionMenu = ActionMenuDecorator(TableDropdown);
@@ -42,15 +39,15 @@ export const TableDownloadMenu = React.createClass({
 		location: React.PropTypes.object.isRequired
 	},
 
-	render: function() {
+	render: function () {
 		const { handler, parentEntity, itemInfo, location, ...other } = this.props;
 		const data = {
 			parentEntity: parentEntity,
 			handler: handler,
 			itemInfo: itemInfo,
 			location: location
-		}
+		};
 
-		return <TableActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data } { ...other }/>;
+		return <TableActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ 'download', 'downloadTo' ]} itemData={ data } { ...other }/>;
 	}
-})
+});

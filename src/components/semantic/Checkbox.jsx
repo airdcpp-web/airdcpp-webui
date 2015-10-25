@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox } from 'react-semantify'
+import { Checkbox } from 'react-semantify';
 
 export default React.createClass({
 	propTypes: {
@@ -12,14 +12,14 @@ export default React.createClass({
 		/**
 		 * Handler for state changes (receives bool as argument)
 		 */
-		onChange: React.PropTypes.func.isRequired
+		onChange: React.PropTypes.func.isRequired,
 	},
 
 	componentDidMount() {
 		const settings = {
 			fireOnInit: false,
 			onChecked: () => this.props.onChange(true),
-			onUnchecked: () => this.props.onChange(false)
+			onUnchecked: () => this.props.onChange(false),
 		};
 
 		let dom = React.findDOMNode(this);
@@ -32,15 +32,15 @@ export default React.createClass({
 			if (nextProps.checked) {
 				$(dom).checkbox('set checked');
 			} else {
-				$(dom).checkbox('set unchecked')
+				$(dom).checkbox('set unchecked');
 			}
 		}
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<Checkbox className="toggle">
 				<input type="checkbox" defaultChecked={ this.props.checked }/>
 			</Checkbox>);
-	}
+	},
 });

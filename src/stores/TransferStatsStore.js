@@ -1,13 +1,11 @@
 import Reflux from 'reflux';
 
-import {TRANSFER_MODULE_URL, STATISTICS} from 'constants/TransferConstants';
+import { TRANSFER_MODULE_URL, STATISTICS } from 'constants/TransferConstants';
 
-import SocketStore from './SocketStore'
-
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 const TransferStatsStore = Reflux.createStore({
-	init: function() {
+	init: function () {
 		this.getInitialState = this.getState;
 		this._statistics = {
 			speed_down: 0,
@@ -17,13 +15,13 @@ const TransferStatsStore = Reflux.createStore({
 		};
 	},
 
-	getState: function() {
+	getState: function () {
 		return {
 			statistics: this._statistics
 		};
 	},
 
-	onStatistics: function(data) {
+	onStatistics: function (data) {
 		this._statistics = data;
 		this.trigger(this.getState());
 	},
@@ -34,3 +32,4 @@ const TransferStatsStore = Reflux.createStore({
 });
 
 export default SocketSubscriptionDecorator(TransferStatsStore)
+;

@@ -4,4 +4,4 @@ export default {
 	CONNECT_URL:	'session/v0/socket',
 	LOGIN_USER: 'LOGIN_USER',
 	LOGOUT_USER: 'LOGOUT_USER'
-}
+};

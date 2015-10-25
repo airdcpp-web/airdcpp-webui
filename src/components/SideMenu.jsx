@@ -3,41 +3,40 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import History from 'utils/History'
-import LoginActions from 'actions/LoginActions'
+import History from 'utils/History';
 import { Link } from 'react-router';
-import TransferStats from 'components/TransferStats'
+import TransferStats from 'components/TransferStats';
 
-import HubSessionStore from 'stores/HubSessionStore'
-import HubActions from 'actions/HubActions'
+import HubSessionStore from 'stores/HubSessionStore';
+import HubActions from 'actions/HubActions';
 
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore'
-import PrivateChatActions from 'actions/PrivateChatActions'
-import PrivateChatMessageStore from 'stores/PrivateChatMessageStore'
+import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import PrivateChatActions from 'actions/PrivateChatActions';
+import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
-import NotificationActions from 'actions/NotificationActions'
+import NotificationActions from 'actions/NotificationActions';
 
-import LogActions from 'actions/LogActions'
-import LogStore from 'stores/LogStore'
+import LogActions from 'actions/LogActions';
+import LogStore from 'stores/LogStore';
 
-import FilelistSessionStore from 'stores/FilelistSessionStore'
-import FilelistActions from 'actions/FilelistActions'
+//import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistActions from 'actions/FilelistActions';
 
-import CountLabel from 'components/CountLabel'
-import LabelInfo from 'utils/LabelInfo'
+import CountLabel from 'components/CountLabel';
+import LabelInfo from 'utils/LabelInfo';
 
 const MenuItem = React.createClass({
-	onClick: function(evt) {
+	onClick: function (evt) {
 		evt.preventDefault();
 
 		History.pushSidebar(this.props.location, this.props.page);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<Link to={this.props.page} className="item" onClick={this.onClick}>
 				<CountLabel className="mini" unreadInfo={this.props.unreadInfo}/>
-				<i className={ this.props.icon + " icon" }></i>
+				<i className={ this.props.icon + ' icon' }></i>
 				{this.props.title}
 			</Link>
 		);
@@ -45,8 +44,8 @@ const MenuItem = React.createClass({
 });
 
 const SideMenu = React.createClass({
-	mixins: [Reflux.connect(PrivateChatSessionStore, "chatSessions"), Reflux.connect(HubSessionStore, "hubSessions"), Reflux.connect(LogStore, "logMessages")],
-	displayName: "Side menu",
+	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(LogStore, 'logMessages') ],
+	displayName: 'Side menu',
 
 	componentDidMount() {
 		this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
@@ -65,8 +64,10 @@ const SideMenu = React.createClass({
 				message: last.chat_message.text,
 				uid: cid,
 				action: {
-					label: "View message",
-					callback: () => { History.pushSidebar(this.props.location, 'messages/session/' + cid); }
+					label: 'View message',
+					callback: () => { 
+						History.pushSidebar(this.props.location, 'messages/session/' + cid); 
+					}
 				}
 			});
 		}
@@ -103,4 +104,4 @@ const SideMenu = React.createClass({
 	}
 });
 
-export default SideMenu
+export default SideMenu;

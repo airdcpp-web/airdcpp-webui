@@ -1,11 +1,10 @@
 import React from 'react';
-import SocketService from 'services/SocketService.js'
-import { HUB_SEARCH_NICKS_URL } from 'constants/HubConstants.js'
-import Autosuggest from 'react-autosuggest'
-import classNames from 'classnames';
-import SuggestionRenderer from './SuggestionRenderer'
+import SocketService from 'services/SocketService.js';
+import { HUB_SEARCH_NICKS_URL } from 'constants/HubConstants.js';
+import Autosuggest from 'react-autosuggest';
+import SuggestionRenderer from './SuggestionRenderer';
 
-import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator'
+import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
 const UserSearchInput = React.createClass({
 	propTypes: {
@@ -13,19 +12,19 @@ const UserSearchInput = React.createClass({
 		/**
 		 * Function to call when pressing enter
 		 */
-		submitHandler: React.PropTypes.func.isRequired
+		submitHandler: React.PropTypes.func.isRequired,
 	},
 
 	getInitialState() {
 		return {
-			text:''
-		}
+			text:'',
+		};
 	},
 
 	getDefaultProps() {
 		return {
-			autoFocus: true
-		}
+			autoFocus: true,
+		};
 	},
 
 	_getSuggestionValue(suggestionObj) {
@@ -38,7 +37,7 @@ const UserSearchInput = React.createClass({
 				callback(null, data || []);
 			})
 			.catch(error => 
-				callback(new Error("Failed to fetch nicks: " + error))
+				callback(new Error('Failed to fetch nicks: ' + error))
 			);
 	},
 
@@ -47,22 +46,15 @@ const UserSearchInput = React.createClass({
 	},
 
 	_handleChange(value) {
-		this.setState({ 
-			text: value
-		});
+		this.setState({ text: value });
 	},
 
 	render() {
 		const inputAttributes = {
 			placeholder: 'Enter nick...',
 			onChange: this._handleChange,
-			autoFocus: this.props.autoFocus
+			autoFocus: this.props.autoFocus,
 		};
-
-		const buttonClass = classNames(
-			"ui", 
-			"button",
-		);
 
 		return (
 			<OfflineHubMessageDecorator offlineMessage={this.props.offlineMessage}>
@@ -73,11 +65,12 @@ const UserSearchInput = React.createClass({
 						inputAttributes={inputAttributes}
 						onSuggestionSelected={ this.props.submitHandler } 
 						suggestionRenderer={ this._renderSuggestion }
-						suggestionValue={ this._getSuggestionValue }/>
+						suggestionValue={ this._getSuggestionValue }
+					/>
 				</div>
 			</OfflineHubMessageDecorator>
 		);
-	}
+	},
 });
 
 export default UserSearchInput;

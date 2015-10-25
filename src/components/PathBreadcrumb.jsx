@@ -28,28 +28,28 @@ const PathBreadcrumb = React.createClass({
 		tokens: React.PropTypes.array.isRequired,
 	},
 
-	displayName: "PathBreadcrumb",
+	displayName: 'PathBreadcrumb',
 	onClick(token, index) {
 		let path = this.props.rootPath;
 		for (let i = 0; i <= index; i++) {
-				if (path.length === 0) {
-					// No separator after the drive on Windows
-					path += this.props.tokens[i];
-				} else {
-					path += this.props.tokens[i] + this.props.separator;
-				}
+			if (path.length === 0) {
+				// No separator after the drive on Windows
+				path += this.props.tokens[i];
+			} else {
+				path += this.props.tokens[i] + this.props.separator;
+			}
 		}
 
 		this.props.itemClickHandler(path);
 	},
 
-	render: function() {
+	render: function () {
 		const items = this.props.tokens.map((token, index) => {
 			return (
 				<div>
 					<i className="right chevron icon divider"></i>
 					<a className="section" onClick={() => this.onClick(token, index)}>{token}</a>
-				</div>)
+				</div>);
 		});
 
 		return (
@@ -62,3 +62,4 @@ const PathBreadcrumb = React.createClass({
 });
 
 export default PathBreadcrumb
+;

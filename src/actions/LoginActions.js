@@ -1,16 +1,16 @@
 'use strict';
 import Reflux from 'reflux';
-import SocketService from 'services/SocketService'
-import SocketStore from 'stores/SocketStore'
-import {LOGIN_URL, CONNECT_URL, LOGOUT_URL} from 'constants/LoginConstants';
+import SocketService from 'services/SocketService';
+import SocketStore from 'stores/SocketStore';
+import { LOGIN_URL, CONNECT_URL, LOGOUT_URL } from 'constants/LoginConstants';
 
 export const LoginActions = Reflux.createActions([
-	{ "login": { asyncResult: true} },
-	{ "connect": { asyncResult: true} },
-	{ "logout": { asyncResult: true} }
+	{ 'login': { asyncResult: true } },
+	{ 'connect': { asyncResult: true } },
+	{ 'logout': { asyncResult: true } },
 ]);
 
-LoginActions.login.listen(function(username, password) {
+LoginActions.login.listen(function (username, password) {
 	let that = this;
 
 	SocketService.connect();
@@ -27,7 +27,7 @@ LoginActions.login.listen(function(username, password) {
 	});
 });
 
-LoginActions.connect.listen(function(token) {
+LoginActions.connect.listen(function (token) {
 	let that = this;
 
 	SocketService.reconnect();
@@ -37,19 +37,19 @@ LoginActions.connect.listen(function(token) {
 				.then(that.completed)
 				.catch(that.failed);
 
-				unsubscribe();
+			unsubscribe();
 		}
 	});
 });
 
-LoginActions.logout.listen(function() {
+LoginActions.logout.listen(function () {
 	let that = this;
 	return SocketService.delete(LOGOUT_URL)
 		.then(that.completed)
 		.catch(this.failed);
 });
 
-LoginActions.logout.completed.listen(function() {
+LoginActions.logout.completed.listen(function () {
 	SocketService.disconnect();
 });
 

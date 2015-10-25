@@ -7,3 +7,4 @@ export default {
 	QUEUE_FINISHED: 5,
 	SHARE_QUEUE: 6,
 }
+;

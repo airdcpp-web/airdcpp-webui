@@ -3,10 +3,6 @@ var React = require('react');
 var ZyngaScroller = require('zynga/Scroller.js');
 var TouchableArea = require('./TouchableArea.jsx');
 
-var PropTypes = React.PropTypes;
-
-var cloneWithProps = require('react/lib/cloneWithProps');
-
 function isTouchDevice() {
 	 //return 'ontouchstart' in document.documentElement // works on most browsers
 	 //	 || 'onmsgesturechange' in window; // works on ie10
@@ -15,12 +11,12 @@ function isTouchDevice() {
 
 var ScrollArea = React.createClass({
 
-	componentWillMount : function() {
+	componentWillMount : function () {
 		this.scroller = new ZyngaScroller(isTouchDevice() ? this._handleScroll : this._doNothing);
 		this._scrollTimer = null;
 	},
 
-	render : function() {
+	render : function () {
 		if (!isTouchDevice()) {
 			return this.props.children;
 		}
@@ -32,7 +28,7 @@ var ScrollArea = React.createClass({
 		);
 	},
 
-	_onContentDimensionsChange : function(tableWidth, tableHeight, contentWidth, contentHeight) {
+	_onContentDimensionsChange : function (tableWidth, tableHeight, contentWidth, contentHeight) {
 		this.scroller.setDimensions(
 			tableWidth,
 			tableHeight,
@@ -41,9 +37,9 @@ var ScrollArea = React.createClass({
 		);
 	},
 
-	_handleScroll : function(left, top) {
+	_handleScroll : function (left, top) {
 		if (this.props.onScrollStart && this._scrollTimer === null) {
-			console.log("Touch scroll start, top: " + top);
+			console.log('Touch scroll start, top: ' + top);
 			this.props.onScrollStart(left, top);
 		}
 
@@ -54,7 +50,7 @@ var ScrollArea = React.createClass({
 
 			var self = this;
 			this._scrollTimer = setTimeout(() => {
-				console.log("Touch scroll end, top: " + top);
+				console.log('Touch scroll end, top: ' + top);
 				self.props.onScrollEnd(left, top);
 				this._scrollTimer = null;
 			}, 200);
@@ -63,7 +59,7 @@ var ScrollArea = React.createClass({
 		this.props.handleScroll(left, top);
 	},
 
-	_doNothing : function(left, top) {
+	_doNothing : function (left, top) {
 		
 	}
 });

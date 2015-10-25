@@ -1,9 +1,9 @@
 import React from 'react';
 
-import UserActions from 'actions/UserActions'
-import FileUtils from 'utils/FileUtils'
+import UserActions from 'actions/UserActions';
+import FileUtils from 'utils/FileUtils';
 
-export default function(Component) {
+export default function (Component) {
 	const UserMenu = React.createClass({
 		propTypes: {
 
@@ -29,15 +29,15 @@ export default function(Component) {
 		getDefaultProps() {
 			return {
 				directory: '/'
-			}
+			};
 		},
 
-		render: function() {
+		render: function () {
 			const { directory, user } = this.props;
 			const data = {
 				user: user,
 				directory: FileUtils.getFilePath(directory)
-			}
+			};
 
 			const caption = (
 				<div>

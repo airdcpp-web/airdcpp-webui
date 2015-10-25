@@ -1,19 +1,19 @@
 'use strict';
 
 import React from 'react';
-import LoginActions from 'actions/LoginActions'
+import LoginActions from 'actions/LoginActions';
 import { Link } from 'react-router';
 
 const logo = require('../../images/AirDCPlusPlus.png');
 
 export default class Navigation extends React.Component {
 	constructor() {
-		super()
+		super();
 	}
 	
 	render() {
 		const MenuItem = React.createClass({
-			render: function() {
+			render: function () {
 				return (
 					<Link to={this.props.page} className="item">
 						{this.props.title}

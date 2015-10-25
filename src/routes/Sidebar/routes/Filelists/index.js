@@ -1,7 +1,7 @@
 module.exports = {
 	path: 'filelists',
 	
-	getChildRoutes (location, cb) {
+	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'session/:id', 
@@ -12,14 +12,14 @@ module.exports = {
 						component: require('components/DownloadDialog'), 
 					}
 				]
-			}])
-		}, "filelists-children")
+			} ]);
+		}, 'filelists-children');
 	},
 
-	getComponent (location, cb) {
+	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/Filelists'))
-		}, "filelists")
+			cb(null, require('./components/Filelists'));
+		}, 'filelists');
 	}
-}
+};
 

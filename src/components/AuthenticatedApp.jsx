@@ -2,17 +2,16 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import LoginActions from 'actions/LoginActions'
-import LoginStore from 'stores/LoginStore'
-import SocketService from 'services/SocketService'
+import LoginActions from 'actions/LoginActions';
+import LoginStore from 'stores/LoginStore';
 
-import Notifications from './Notifications'
+import Notifications from './Notifications';
 
-import NavigationPanel from './Navigation'
-import SideMenu from './SideMenu'
+import NavigationPanel from './Navigation';
+import SideMenu from './SideMenu';
 
-import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
-import { SIDEBAR_ID } from 'constants/OverlayConstants'
+import OverlayParentDecorator from 'decorators/OverlayParentDecorator';
+import { SIDEBAR_ID } from 'constants/OverlayConstants';
 
 import { History, RouteContext } from 'react-router';
 
@@ -20,13 +19,13 @@ const SocketConnectStatus = React.createClass({
 	render() {
 		let message;
 		if (this.props.lastError !== null) {
-			message = this.props.lastError + ". Reconnecting...";
+			message = this.props.lastError + '. Reconnecting...';
 		} else {
-			message = "Connecting to the server...";
+			message = 'Connecting to the server...';
 		}
 
 		return (
-			<div className={ "ui dimmer page visible " + (this.props.active ? "active" : "")}>
+			<div className={ 'ui dimmer page visible ' + (this.props.active ? 'active' : '')}>
 				<div className="content">
 					<div className="center">
 						<div className="ui text loader">
@@ -49,7 +48,7 @@ let MainLayout = React.createClass({
 		if (this.showSideBar(nextProps)) {
 			if (!this.previousChildren) {
 				// save the old children (just like animation)
-				this.previousChildren = this.props.children
+				this.previousChildren = this.props.children;
 			}
 		} else {
 			this.previousChildren = null;
@@ -83,12 +82,12 @@ let MainLayout = React.createClass({
 MainLayout = OverlayParentDecorator(MainLayout, SIDEBAR_ID, false);
 
 const AuthenticatedApp = React.createClass({
-	mixins: [Reflux.connect(LoginStore), History, RouteContext],
+	mixins: [ Reflux.connect(LoginStore), History, RouteContext ],
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
 			// Reconnect (but not too fast)
-			console.log("Socket closed, attempting to reconnect in 2 seconds");
+			console.log('Socket closed, attempting to reconnect in 2 seconds');
 			setTimeout(() => LoginActions.connect(this.state.token), 2000);
 		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
 			// Logged out

@@ -10,3 +10,4 @@ export default {
 		HISTORY_DOWNLOAD_DIR: 2
 	},
 }
+;

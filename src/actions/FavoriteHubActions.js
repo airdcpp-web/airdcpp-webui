@@ -1,84 +1,83 @@
 'use strict';
 import Reflux from 'reflux';
-import {FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
-import SocketService from 'services/SocketService'
-import ConfirmDialog from 'components/semantic/ConfirmDialog'
-import NotificationActions from 'actions/NotificationActions'
-import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants'
+import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
+import SocketService from 'services/SocketService';
+import ConfirmDialog from 'components/semantic/ConfirmDialog';
+import NotificationActions from 'actions/NotificationActions';
+import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants';
 
-import History from 'utils/History'
+import History from 'utils/History';
 
 export const FavoriteHubActions = Reflux.createActions([
-	{ "connect": { 
+	{ 'connect': { 
 		asyncResult: true, 
-		displayName: "Connect" } 
+		displayName: 'Connect' },
 	},
-	{ "disconnect": { 
+	{ 'disconnect': { 
 		asyncResult: true, 
-		displayName: "Disconnect" } 
+		displayName: 'Disconnect' },
 	},
-	{ "create": { 
+	{ 'create': { 
 		asyncResult: true, 
-		children: ["saved"], 
-		displayName: "New" } 
+		children: [ 'saved' ], 
+		displayName: 'New' },
 	},
-	{ "edit": { 
+	{ 'edit': { 
 		asyncResult: true, 
-		children: ["saved"], 
-		displayName: "Edit", 
-		icon: "edit" } 
+		children: [ 'saved' ], 
+		displayName: 'Edit', 
+		icon: 'edit' },
 	},
-	{ "update": { 
-		asyncResult: true }
+	{ 'update': { 
+		asyncResult: true },
 	},
-	{ "remove": { 
+	{ 'remove': { 
 		asyncResult: true, 
-		children: ["confirmed"], 
-		displayName: "Remove", 
-		icon: "red remove circle" } 
-	}
+		children: [ 'confirmed' ], 
+		displayName: 'Remove', 
+		icon: 'red remove circle' },
+	},
 ]);
 
-FavoriteHubActions.connect.listen(function(hub) {
+FavoriteHubActions.connect.listen(function (hub) {
 	let that = this;
-	return SocketService.post(FAVORITE_HUB_URL + "/" + hub.id + "/connect")
+	return SocketService.post(FAVORITE_HUB_URL + '/' + hub.id + '/connect')
 		.then(that.completed)
 		.catch(this.failed);
 });
 
-FavoriteHubActions.disconnect.listen(function(hub) {
+FavoriteHubActions.disconnect.listen(function (hub) {
 	let that = this;
-	return SocketService.post(FAVORITE_HUB_URL + "/" + hub.id + "/disconnect")
+	return SocketService.post(FAVORITE_HUB_URL + '/' + hub.id + '/disconnect')
 		.then(that.completed)
 		.catch(this.failed);
 });
 
-FavoriteHubActions.create.listen(function(hub) {
+FavoriteHubActions.create.listen(function (hub) {
 	History.pushModal('/favorite-hubs', '/favorite-hubs/new', FAVORITE_MODAL_ID);
 });
 
-FavoriteHubActions.edit.listen(function(hub, data) {
+FavoriteHubActions.edit.listen(function (hub, data) {
 	History.pushModal('/favorite-hubs', '/favorite-hubs/edit', FAVORITE_MODAL_ID, { hubEntry: hub });
 });
 
-FavoriteHubActions.update.listen(function(hub, data) {
+FavoriteHubActions.update.listen(function (hub, data) {
 	let that = this;
-	return SocketService.patch(FAVORITE_HUB_URL + "/" + hub.id, data)
+	return SocketService.patch(FAVORITE_HUB_URL + '/' + hub.id, data)
 		.then(that.completed)
 		.catch(this.failed);
 });
 
-FavoriteHubActions.remove.shouldEmit = function(hub) {
-	const text = "Are you sure that you want to remove the favorite hub " + hub.name + "?";
-	ConfirmDialog(this.displayName, text, this.icon, "Remove favorite hub", "Don't remove")
+FavoriteHubActions.remove.shouldEmit = function (hub) {
+	const text = 'Are you sure that you want to remove the favorite hub ' + hub.name + '?';
+	ConfirmDialog(this.displayName, text, this.icon, 'Remove favorite hub', "Don't remove")
 		.then(() => FavoriteHubActions.remove.confirmed(hub))
 		.catch(() => {});
 	return false;
 };
 
-FavoriteHubActions.remove.confirmed.listen(function(hub) {
-	let that = this;
-	return SocketService.delete(FAVORITE_HUB_URL + "/" + hub.id)
+FavoriteHubActions.remove.confirmed.listen(function (hub) {
+	return SocketService.delete(FAVORITE_HUB_URL + '/' + hub.id)
 		.then(() => 
 			FavoriteHubActions.remove.completed(hub))
 		.catch((error) => 
@@ -86,17 +85,17 @@ FavoriteHubActions.remove.confirmed.listen(function(hub) {
 		);
 });
 
-FavoriteHubActions.remove.completed.listen(function(hub) {
+FavoriteHubActions.remove.completed.listen(function (hub) {
 	NotificationActions.error({ 
 		title: hub.name,
-		message: "The hub has been removed successfully"
+		message: 'The hub has been removed successfully',
 	});
 });
 
-FavoriteHubActions.remove.failed.listen(function(hub, error) {
+FavoriteHubActions.remove.failed.listen(function (hub, error) {
 	NotificationActions.error({ 
 		title: hub.name,
-		message: "Failed to remove the hub: " + error.reason
+		message: 'Failed to remove the hub: ' + error.reason,
 	});
 });
 

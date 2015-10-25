@@ -3,4 +3,4 @@ export default {
 	SOCKET_CONNECTING: 1,
 	SOCKET_CONNECTED: 2,
 	SOCKET_MESSAGE: 3
-}
+};

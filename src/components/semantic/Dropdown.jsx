@@ -33,7 +33,7 @@ const Dropdown = React.createClass({
 		};
 
 		if (this.props.contextGetter) {
-			settings["context"] = this.props.contextGetter();
+			settings['context'] = this.props.contextGetter();
 		}
 
 		$(dom).dropdown(settings);
@@ -42,25 +42,25 @@ const Dropdown = React.createClass({
 	getDefaultProps() {
 		return {
 			caption: null,
-			className: "",
-			icon: "angle down",
-			direction: "auto"
-		}
+			className: '',
+			icon: 'angle down',
+			direction: 'auto'
+		};
 	},
 
-	render: function() {
+	render: function () {
 		const className = classNames(
-			"ui",
-			"dropdown",
-			"item",
+			'ui',
+			'dropdown',
+			'item',
 			this.props.className,
-			{ "icon": !this.props.caption	},
+			{ 'icon': !this.props.caption	},
 		);
 
 		return (
 			<div className={ className }>
 				{this.props.caption}
-				{this.props.icon ? <i className={ this.props.icon + " icon" }></i> : null }
+				{this.props.icon ? <i className={ this.props.icon + ' icon' }></i> : null }
 				<div className="menu">
 					{ this.props.children }
 				</div>
@@ -69,4 +69,4 @@ const Dropdown = React.createClass({
 	}
 });
 
-export default Dropdown
+export default Dropdown;

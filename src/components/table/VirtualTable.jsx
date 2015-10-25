@@ -1,22 +1,20 @@
 import React from 'react';
-import Reflux from 'reflux';
-import FixedDataTable, { Table, Column } from 'fixed-data-table'
-import SetContainerSize from 'mixins/SetContainerSize'
+import { Table } from 'fixed-data-table';
+import SetContainerSize from 'mixins/SetContainerSize';
 import TouchScrollArea	from './TouchScrollArea';
 
-import SocketService from 'services/SocketService'
-import SocketStore from 'stores/SocketStore'
-import TableActions from 'actions/TableActions'
+import SocketService from 'services/SocketService';
+import TableActions from 'actions/TableActions';
 
-import { Input } from 'react-semantify'
+import { Input } from 'react-semantify';
 
-import './style.css'
-import '../../../node_modules/fixed-data-table/dist/fixed-data-table.css'
+import './style.css';
+import '../../../node_modules/fixed-data-table/dist/fixed-data-table.css';
 
 const NUMBER_OF_ROWS_PER_REQUEST = 10;
 const TABLE_ROW_HEIGHT = 50;
 
-const {PropTypes} = React;
+const { PropTypes } = React;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
@@ -33,9 +31,9 @@ class RowDataLoader {
 		items.forEach((obj, index) => {
 			let old = this._data[index];
 			if (this._data[index]) {
-				this._data[index] = React.addons.update(old, {$merge: obj});
+				this._data[index] = React.addons.update(old, { $merge: obj });
 			} else {
-				this._data[index] = React.addons.update(old, {$set: obj});
+				this._data[index] = React.addons.update(old, { $set: obj });
 			}
 		}, this);
 
@@ -105,7 +103,7 @@ class RowDataLoader {
 		
 	_loadDataRange(rowStart, rowEnd) {
 		this._pendingRequest.push(rowStart);
-		SocketService.get(this._store.viewUrl + "/items/" + rowStart + "/" + rowEnd)
+		SocketService.get(this._store.viewUrl + '/items/' + rowStart + '/' + rowEnd)
 			.then(data => {
 				this._removeRequest(rowStart);
 				for (let i=0; i < data.length; i++) {
@@ -115,9 +113,9 @@ class RowDataLoader {
 				this._onDataLoad();
 			}.bind(this))
 			.catch(error => {
-					this._removeRequest(rowStart);
-					console.log("Failed to load data: " + error, this.props.viewName)
-				}
+				this._removeRequest(rowStart);
+				console.log('Failed to load data: ' + error, this.props.viewName);
+			}
 			);
 	}
 }
@@ -131,11 +129,11 @@ function convertEndToRows(pixels) {
 }
 
 const FilterBox = React.createClass({
-	getInitialState: function() {
-		return {value: ''};
+	getInitialState: function () {
+		return { value: '' };
 	},
 
-	componentWillMount: function() {
+	componentWillMount: function () {
 		this._timer = null;
 	},
 
@@ -143,8 +141,8 @@ const FilterBox = React.createClass({
 		clearTimeout(this._timer);
 	},
 
-	handleChange: function(event) {
-		this.setState({value: event.target.value});
+	handleChange: function (event) {
+		this.setState({ value: event.target.value });
 
 		clearTimeout(this._timer);
 
@@ -154,17 +152,15 @@ const FilterBox = React.createClass({
 		}, 200);
 	},
 
-	render: function() {
+	render: function () {
 		return (
-			<Input className="filter" onChange={this.handleChange} value={this.state.value} placeholder="Filter..." type="text">
-
-			</Input>
+			<Input className="filter" onChange={this.handleChange} value={this.state.value} placeholder="Filter..." type="text"/>
 		);
 	}
 });
 
 const TableContainer = React.createClass({
-	mixins: [SetContainerSize],
+	mixins: [ SetContainerSize ],
 
 	propTypes: {
 
@@ -258,7 +254,7 @@ const TableContainer = React.createClass({
 		const startRows = convertStartToRows(this._scrollPosition);
 		const maxRows = convertEndToRows(this.state.height, true);
 
-		console.log("Settings changed, start: " + startRows + ", end: " + maxRows, ", height: " + this.state.height, this.props.store.viewName);
+		console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
 		TableActions.changeSettings(this.props.store.viewUrl, startRows, maxRows, this.state.sortProperty, this.state.sortAscending);
 	},
 
@@ -271,7 +267,7 @@ const TableContainer = React.createClass({
 	},
 	
 	_renderButton(_1, _2, _3, rowIndex) {
-		return (<button style={{width: '100%'}} onClick={this._clearDataForRow.bind(null, rowIndex)}>clear data</button>);
+		return (<button style={{ width: '100%' }} onClick={this._clearDataForRow.bind(null, rowIndex)}>clear data</button>);
 	},
 
 	_onScrollStart(horizontal, vertical) {
@@ -297,7 +293,7 @@ const TableContainer = React.createClass({
 		};
 
 		if (cellDataKey === this.state.sortProperty) {
-			newState["sortAscending"] = this.state.sortAscending ? false : true;
+			newState['sortAscending'] = this.state.sortAscending ? false : true;
 		}
 
 		this.setState(newState);
@@ -326,11 +322,11 @@ const TableContainer = React.createClass({
 	},
 
 	// Fitted-table
-	_onContentHeightChange : function(contentHeight) {
+	_onContentHeightChange : function (contentHeight) {
 		setTimeout(() => {
 			let width = 0;
-			React.Children.forEach(this.props.children, function(child){
-				if ('width' in child.props){
+			React.Children.forEach(this.props.children, function (child) {
+				if ('width' in child.props) {
 					width = width + child.props.width;
 				}
 			});
@@ -339,7 +335,7 @@ const TableContainer = React.createClass({
 	},
 
 	// Fitted-table
-	handleScroll : function(left, top){
+	handleScroll : function (left, top) {
 		this.setState({
 			top: top,
 			left: left
@@ -359,7 +355,7 @@ const TableContainer = React.createClass({
 		return this.props.rowClassNameGetter(rowData);
 	},
 	
-	render: function() {
+	render: function () {
 		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
 
 		// Update and insert generic columns props
@@ -385,7 +381,7 @@ const TableContainer = React.createClass({
 
 		const controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
 		return (
-			<TouchScrollArea handleScroll={this.handleScroll} ref='touchScrollArea' onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
+			<TouchScrollArea handleScroll={this.handleScroll} ref="touchScrollArea" onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
 				<Table
 					ref="table"
 
@@ -394,8 +390,8 @@ const TableContainer = React.createClass({
 					onContentHeightChange={this._onContentHeightChange}
 					scrollTop={this.state.top}
 					scrollLeft={this.state.left}
-					overflowX={controlledScrolling ? "hidden" : "auto"}
-					overflowY={controlledScrolling ? "hidden" : "auto"}
+					overflowX={controlledScrolling ? 'hidden' : 'auto'}
+					overflowY={controlledScrolling ? 'hidden' : 'auto'}
 
 					rowClassNameGetter={this.rowClassNameGetter}
 					footerDataGetter={this._footerDataGetter}
@@ -406,7 +402,8 @@ const TableContainer = React.createClass({
 					onScrollStart={this._onScrollStart}
 					onScrollEnd={this._onScrollEnd}
 					isColumnResizing={this.isColumnResizing}
-					onColumnResizeEndCallback={this._onColumnResizeEndCallback}>
+					onColumnResizeEndCallback={this._onColumnResizeEndCallback}
+				>
 					{children}
 				</Table>
 			</TouchScrollArea>
@@ -415,7 +412,7 @@ const TableContainer = React.createClass({
 });
 
 const VirtualTable = React.createClass({
-	render: function() {
+	render: function () {
 		const { footerData, ...other } = this.props;
 
 		return (
@@ -430,4 +427,4 @@ const VirtualTable = React.createClass({
 	}
 });
 
-export default VirtualTable
+export default VirtualTable;

@@ -1,16 +1,16 @@
-import React from 'react'
-import { Column } from 'fixed-data-table'
-import classNames from 'classnames'
+import React from 'react';
+import { Column } from 'fixed-data-table';
+import classNames from 'classnames';
 
-import { PriorityEnum, StatusEnum } from 'constants/QueueConstants'
-import { TableActionMenu } from 'components/Menu'
-import QueueActions from 'actions/QueueActions'
-import VirtualTable from 'components/table/VirtualTable'
+import { PriorityEnum, StatusEnum } from 'constants/QueueConstants';
+import { TableActionMenu } from 'components/Menu';
+import QueueActions from 'actions/QueueActions';
+import VirtualTable from 'components/table/VirtualTable';
 
 import Formatter from 'utils/Format';
-import TableDropdown from 'components/semantic/TableDropdown'
-import DropdownItem from 'components/semantic/DropdownItem'
-import QueueStore from 'stores/QueueStore'
+import TableDropdown from 'components/semantic/TableDropdown';
+import DropdownItem from 'components/semantic/DropdownItem';
+import QueueStore from 'stores/QueueStore';
 
 export default React.createClass({
 	rowGetter(rowIndex) {
@@ -23,20 +23,20 @@ export default React.createClass({
 		}
 
 		const Progress = React.createClass({
-			render: function() {
+			render: function () {
 				const cNames = classNames(
-					"ui", 
-					"progress", 
-					{ "grey": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
-					{ "blue": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
-					{ "success": cellData.id >= StatusEnum.STATUS_FINISHED },
-					{ "error": cellData.id == StatusEnum.STATUS_FAILED_MISSING || cellData.id == StatusEnum.STATUS_SHARING_FAILED || cellData.id == StatusEnum.STATUS_HASH_FAILED }
+					'ui', 
+					'progress', 
+					{ 'grey': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
+					{ 'blue': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
+					{ 'success': cellData.id >= StatusEnum.STATUS_FINISHED },
+					{ 'error': cellData.id == StatusEnum.STATUS_FAILED_MISSING || cellData.id == StatusEnum.STATUS_SHARING_FAILED || cellData.id == StatusEnum.STATUS_HASH_FAILED }
 				);
 
 				const percent = (rowData.downloaded_bytes*100) / rowData.size;
 				return (
 					<div className={ cNames } data-percent= { percent }>
-						<div className="bar" style={{transitionDuration: 300 + 'ms'}, { width: percent + '%'}}>
+						<div className="bar" style={{ transitionDuration: 300 + 'ms' }, { width: percent + '%' }}>
 							<div className="progress"></div>
 						</div>
 						<div className="label">{cellData.str}</div>
@@ -50,19 +50,19 @@ export default React.createClass({
 
 	renderPriority(cellData, cellDataKey, rowData) {
 		if (cellData === undefined) {
-			return undefined
+			return undefined;
 		}
 
 		if (rowData.status.id >= StatusEnum.STATUS_FINISHED) {
-			return ''
+			return '';
 		}
 
 		const PriorityListItem = React.createClass({
-			handleClick: function() {
+			handleClick: function () {
 				QueueActions.setBundlePriority(this.props.item.id, this.props.priority.id);
 			},
 
-			render: function() {
+			render: function () {
 				return (
 					<DropdownItem active={this.props.item.priority.id === this.props.priority.id } onClick={ this.handleClick }>{ this.props.priority.str }</DropdownItem>
 				);
@@ -70,13 +70,8 @@ export default React.createClass({
 		});
 
 		const PriorityCell = React.createClass({
-			render: function() {
+			render: function () {
 				let self = this;
-				const trigger = (<div>
-					{ this.props.itemPrio.str }
-					<i className="dropdown icon"></i>
-				</div>);
-
 				return (
 					<TableDropdown caption={ this.props.itemPrio.str }>
 							{Object.keys(PriorityEnum.properties).map((prioKey) => {
@@ -90,16 +85,16 @@ export default React.createClass({
 		return <PriorityCell itemPrio={ cellData } item={ rowData }/>;
 	},
 
-	getInitialState: function() {
+	getInitialState: function () {
 		return { modalIsOpen: false };
 	},
 
-	openModal: function() {
-		this.setState({modalIsOpen: true});
+	openModal: function () {
+		this.setState({ modalIsOpen: true });
 	},
 
-	closeModal: function() {
-		this.setState({modalIsOpen: false});
+	closeModal: function () {
+		this.setState({ modalIsOpen: false });
 	},
 
 	renderType(cellData, cellDataKey, rowData) {
@@ -107,7 +102,7 @@ export default React.createClass({
 			return cellData;
 		}
 
-		if (rowData.type.type !== "directory") {
+		if (rowData.type.type !== 'directory') {
 			return cellData.str;
 		}
 
@@ -143,14 +138,15 @@ export default React.createClass({
 				{ cellData }
 			</Formatter.FileNameFormatter>);
 		
-		return <TableActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
+		return <TableActionMenu caption={ formatter } actions={ QueueActions } ids={[ 'searchBundle', 'removeBundle' ]} itemData={ rowData }/>;
 	},
 
 	render() {
 		return (
 			<VirtualTable
 				defaultSortProperty="name"
-				store={QueueStore}>
+				store={QueueStore}
+			>
 				<Column
 					label="Name"
 					width={270}

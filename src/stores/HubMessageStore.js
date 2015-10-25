@@ -1,13 +1,13 @@
 import Reflux from 'reflux';
 
-import {HUB_MODULE_URL, HUB_CHAT_MESSAGE, HUB_STATUS_MESSAGE} from 'constants/HubConstants';
-import HubActions from 'actions/HubActions'
+import { HUB_MODULE_URL, HUB_CHAT_MESSAGE, HUB_STATUS_MESSAGE } from 'constants/HubConstants';
+import HubActions from 'actions/HubActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
-import MessageStoreDecorator from 'decorators/MessageStoreDecorator'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
 
 const HubMessageStore = Reflux.createStore({
-	getInitialState: function() {
+	getInitialState: function () {
 		return this.getMessages();
 	},
 
@@ -19,3 +19,4 @@ const HubMessageStore = Reflux.createStore({
 
 
 export default MessageStoreDecorator(SocketSubscriptionDecorator(HubMessageStore), HubActions)
+;

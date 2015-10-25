@@ -1,7 +1,7 @@
 module.exports = {
 	path: 'favorite-hubs',
 	
-	getChildRoutes (location, cb) {
+	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'edit', 
@@ -9,14 +9,14 @@ module.exports = {
 			},{
 				path: 'new', 
 				component: require('./components/FavoriteHubDialog'), 
-			} ])
-		}, "favorite-hubs-children")
+			} ]);
+		}, 'favorite-hubs-children');
 	},
 
-	getComponent (location, cb) {
+	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/FavoriteHubs'))
-		}, "favorite-hubs")
+			cb(null, require('./components/FavoriteHubs'));
+		}, 'favorite-hubs');
 	}
-}
+};
 

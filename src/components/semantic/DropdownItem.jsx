@@ -4,9 +4,9 @@ import classNames from 'classnames';
 const DropdownItem = React.createClass({
 	render() {
 		const className = classNames(
-			"item",
+			'item',
 			this.props.className,
-			{ "active": this.props.active	}
+			{ 'active': this.props.active	}
 		);
 
 		return (
@@ -18,3 +18,4 @@ const DropdownItem = React.createClass({
 });
 
 export default DropdownItem
+;

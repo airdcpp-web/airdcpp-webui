@@ -1,29 +1,28 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout'
-import NewLayout from 'routes/Sidebar/components/NewLayout'
+import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout';
+import NewLayout from 'routes/Sidebar/components/NewLayout';
 
-import TypeConvert from 'utils/TypeConvert'
+import TypeConvert from 'utils/TypeConvert';
 
-import HubSessionStore from 'stores/HubSessionStore'
-import HubActions from 'actions/HubActions'
+import HubSessionStore from 'stores/HubSessionStore';
+import HubActions from 'actions/HubActions';
 
-import ActionInput from 'components/semantic/ActionInput'
-import HubSearchInput from 'components/autosuggest/HubSearchInput'
+import HubSearchInput from 'components/autosuggest/HubSearchInput';
 
-import CountLabel from 'components/CountLabel'
-import LabelInfo from 'utils/LabelInfo'
+import CountLabel from 'components/CountLabel';
+import LabelInfo from 'utils/LabelInfo';
 
 const Hubs = React.createClass({
-	mixins: [Reflux.connect(HubSessionStore, "hubSessions")],
-	displayName: "Hubs",
+	mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
+	displayName: 'Hubs',
 	_nameGetter(session) {
 		return session.identity.name;
 	},
 
 	_labelGetter(session) {
-		return <CountLabel unreadInfo={ LabelInfo.getHubUnreadInfo(session.unread_messages)}/>
+		return <CountLabel unreadInfo={ LabelInfo.getHubUnreadInfo(session.unread_messages)}/>;
 	},
 
 	_statusGetter(session) {
@@ -35,7 +34,7 @@ const Hubs = React.createClass({
 			return null;
 		}
 
-		return parseInt(this.props.params["id"]);
+		return parseInt(this.props.params['id']);
 	},
 
 	_handleConnect(hubUrl) {
@@ -53,14 +52,15 @@ const Hubs = React.createClass({
 				nameGetter={this._nameGetter} 
 				labelGetter={this._labelGetter}
 				statusGetter={this._statusGetter}
-				newButtonLabel="Connect">
+				newButtonLabel="Connect"
+			>
 				{ this.props.children ? 
 					this.props.children :
-			(<NewLayout title="Connect" subheader="Connect to a new hub" icon="sitemap">
-				<HubSearchInput submitHandler={this._handleConnect}/>
-			</NewLayout>) }
-		</SideMenuLayout>
-	);
+				(<NewLayout title="Connect" subheader="Connect to a new hub" icon="sitemap">
+					<HubSearchInput submitHandler={this._handleConnect}/>
+				</NewLayout>) }
+			</SideMenuLayout>
+		);
 	}
 });
 

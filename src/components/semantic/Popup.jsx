@@ -15,11 +15,11 @@ export default React.createClass({
 		trigger: React.PropTypes.element.isRequired
 	},
 
-	createPortal: function() {
+	createPortal: function () {
 		// Create portal
 		this.node = document.createElement('div');
 
-		let className = "ui flowing popup ";
+		let className = 'ui flowing popup ';
 		if (this.props.className) {
 			className += this.props.className;
 		}
@@ -32,13 +32,13 @@ export default React.createClass({
 		document.body.appendChild(this.node);
 	},
 
-	getInitialState: function() {
+	getInitialState: function () {
 		return {
 			active: false
 		};
 	},
 
-	componentWillUpdate: function(nextProps, nextState) {
+	componentWillUpdate: function (nextProps, nextState) {
 		if (nextState.active && !this.state.active) {
 			this.show();
 		} else if (!nextState.active && this.state.active) {
@@ -46,14 +46,14 @@ export default React.createClass({
 		}
 	},
 
-	hide: function() {
+	hide: function () {
 		let button = React.findDOMNode(this.refs.overlayTrigger);
 		$(button).popup('destroy');
 
 		React.unmountComponentAtNode(this.node);
 	},
 
-	show: function() {
+	show: function () {
 		this.createPortal();
 
 		React.render(this.props.children, this.node);
@@ -68,7 +68,7 @@ export default React.createClass({
 			on:'click',
 			movePopup:false,
 			popup:this.node,
-			onHidden: () => this.setState({active:false}),
+			onHidden: () => this.setState({ active:false }),
 			offset:parentRect.left
 		};
 
@@ -77,24 +77,24 @@ export default React.createClass({
 			Object.assign(settings, this.props.settings);
 		}
 
-		if (settings["position"].indexOf('bottom') >= 0 && pixelsFromBottom < 350 && pixelsFromBottom < parentRect.top) {
+		if (settings['position'].indexOf('bottom') >= 0 && pixelsFromBottom < 350 && pixelsFromBottom < parentRect.top) {
 			// Random value and hope that there are no popups larger than this
-			// The popup could be rendered before determining but don't go there yet (and hope that the table is being improved before it's needed)
-			settings["position"] = "top left";
+			// The popup could be rendered before determining but don"t go there yet (and hope that the table is being improved before it"s needed)
+			settings['position'] = 'top left';
 		}
 
 		// Relative to the window...
-		if (settings["position"].indexOf('bottom') >= 0) {
-			settings["distanceAway"] = parentRect.top;
-		} else if (settings["position"].indexOf('top') >= 0) {
-			settings["distanceAway"] = pixelsFromBottom;
+		if (settings['position'].indexOf('bottom') >= 0) {
+			settings['distanceAway'] = parentRect.top;
+		} else if (settings['position'].indexOf('top') >= 0) {
+			settings['distanceAway'] = pixelsFromBottom;
 		}
 
 		$(button).popup(settings).popup('show');
 	},
 
 	handleClick: function (el) {
-		this.setState({active: !this.state.active});
+		this.setState({ active: !this.state.active });
 	},
 
 	componentWillUnmount() {
@@ -106,8 +106,8 @@ export default React.createClass({
 		this.node = null;
 	},
 
-	render: function() {
-		this.trigger = React.cloneElement(this.props.trigger, {ref: "overlayTrigger", onClick: this.handleClick })
+	render: function () {
+		this.trigger = React.cloneElement(this.props.trigger, { ref: 'overlayTrigger', onClick: this.handleClick });
 		return (<div>
 			{this.trigger}
 		</div>);

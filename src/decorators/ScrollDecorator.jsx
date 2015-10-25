@@ -1,16 +1,15 @@
 import React from 'react';
-import Reflux from 'reflux';
 
-export default function(Component) {
+export default function (Component) {
 	let shouldScrollBottom = false;
 
 	const ScrollDecorator = React.createClass({
-		displayName: "ScrollDecorator",
-		componentDidMount: function() {
+		displayName: 'ScrollDecorator',
+		componentDidMount: function () {
 			this._scrollToBottom();
 		},
 
-		componentWillUpdate: function() {
+		componentWillUpdate: function () {
 			let node = React.findDOMNode(this.refs.scrollableContainer);
 			if (!node) {
 				shouldScrollBottom = false;
@@ -21,13 +20,13 @@ export default function(Component) {
 			shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
 		},
 		 
-		componentDidUpdate: function() {
+		componentDidUpdate: function () {
 			if (shouldScrollBottom) {
 				this._scrollToBottom();
 			}
 		},
 
-		_scrollToBottom: function() {
+		_scrollToBottom: function () {
 			let node = React.findDOMNode(this.refs.scrollableContainer);
 			if (node) {
 				node.scrollTop = node.scrollHeight;
@@ -37,7 +36,7 @@ export default function(Component) {
 		},
 
 		render() {
-			return <Component ref="scrollableContainer" {...this.props} {...this.state}/>
+			return <Component ref="scrollableContainer" {...this.props} {...this.state}/>;
 		},
 	});
 

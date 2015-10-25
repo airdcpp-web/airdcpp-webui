@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SessionManagerDecorator from 'routes/Sidebar/decorators/SessionManagerDecorator'
+import SessionManagerDecorator from 'routes/Sidebar/decorators/SessionManagerDecorator';
 
 const SideMenuLayout = React.createClass({
 	propTypes: {
@@ -10,7 +10,7 @@ const SideMenuLayout = React.createClass({
 		location: React.PropTypes.object.isRequired,
 	},
 
-	displayName: "SideMenuLayout",
+	displayName: 'SideMenuLayout',
 	render() {
 		return (
 			<div className="ui grid side-menu-layout">
@@ -30,4 +30,4 @@ const SideMenuLayout = React.createClass({
 	}
 });
 
-export default SessionManagerDecorator(SideMenuLayout, "ui fluid button");
+export default SessionManagerDecorator(SideMenuLayout, 'ui fluid button');

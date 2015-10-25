@@ -1,18 +1,18 @@
 
 export default {
-	getFilePath: function(fullPath) {
+	getFilePath: function (fullPath) {
 		return fullPath.replace(/[^\\\/]*$/, '');
 	},
 
-	getFileName: function(fullPath) {
+	getFileName: function (fullPath) {
 		return fullPath.replace(/^.*[\\\/]/, '');
 	},
 
-	isDirectory: function(fullPath) {
+	isDirectory: function (fullPath) {
 		return fullPath.match(/[\\\/]$/);
 	},
 
-	getParentPath: function(fullPath, FileUtils) {
+	getParentPath: function (fullPath, FileUtils) {
 		if (FileUtils.isDirectory(fullPath)) {
 			return fullPath.replace(/[^\\\/]+[\\\/]$/, '');
 		}
@@ -20,3 +20,4 @@ export default {
 		return FileUtils.getFilePath(fullPath);
 	},
 }
+;

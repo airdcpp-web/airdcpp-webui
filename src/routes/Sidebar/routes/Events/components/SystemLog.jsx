@@ -1,21 +1,19 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Format from 'utils/Format.js'
-import LogActions from 'actions/LogActions'
-import LogStore from 'stores/LogStore'
+import Format from 'utils/Format.js';
+import LogActions from 'actions/LogActions';
+import LogStore from 'stores/LogStore';
 
-import NewLayout from 'routes/Sidebar/components/NewLayout'
-import TabHeader from 'routes/Sidebar/components/TabHeader'
+import TabHeader from 'routes/Sidebar/components/TabHeader';
+import ScrollDecorator from 'decorators/ScrollDecorator';
 
-import ScrollDecorator from 'decorators/ScrollDecorator'
-
-import '../style.css'
+import '../style.css';
 
 const LogMessage = React.createClass({
-	render: function() {
+	render: function () {
 		let iconClass;
-		switch(this.props.message.severity) {
+		switch (this.props.message.severity) {
 			case 0: iconClass = 'blue info circle'; break;
 			case 1: iconClass = 'yellow warning sign'; break;
 			case 2: iconClass = 'red warning circle'; break;
@@ -24,7 +22,7 @@ const LogMessage = React.createClass({
 		return (
 			<div className="ui row log-message">
 				<div className="ui column one wide">
-					<i className={ iconClass + " icon" }></i>
+					<i className={ iconClass + ' icon' }></i>
 				</div>
 				<div className="ui column thirteen wide">
 					{ this.props.message.text }
@@ -38,8 +36,8 @@ const LogMessage = React.createClass({
 });
 
 const SystemLog = ScrollDecorator(React.createClass({
-	mixins: [Reflux.ListenerMixin],
-	componentWillMount: function() {
+	mixins: [ Reflux.ListenerMixin ],
+	componentWillMount: function () {
 		LogActions.messagesRead();
 		this.listenTo(LogStore, this._onMessagesUpdated);
 	},
@@ -47,17 +45,17 @@ const SystemLog = ScrollDecorator(React.createClass({
 	getInitialState() {
 		return {
 			messages: LogStore.logMessages
-		}
+		};
 	},
 
 	_onMessagesUpdated(messages) {
 		LogActions.messagesRead();
-		this.setState({messages: messages});
+		this.setState({ messages: messages });
 	},
 
-	render: function() {
+	render: function () {
 		if (this.state.messages.length === 0) {
-			return <div>No messages to show</div>
+			return <div>No messages to show</div>;
 		}
 
 		const messageList = this.state.messages.map(function (message) {
@@ -81,7 +79,7 @@ const SimpleSidebarLayout = React.createClass({
 		LogActions.clear();
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div className="simple-layout">
 				<div className="ui segment">
@@ -89,8 +87,9 @@ const SimpleSidebarLayout = React.createClass({
 						icon={ <i className="blue history icon"></i> }
 						title="Events"
 						buttonClickHandler={this._handleClear}
-						buttonCaption="Clear"/>
-
+						buttonCaption="Clear"
+					/>
+					
 					<div className="content">
 						<SystemLog/>
 					</div>
@@ -100,4 +99,4 @@ const SimpleSidebarLayout = React.createClass({
 	}
 });
 
-export default SimpleSidebarLayout
+export default SimpleSidebarLayout;

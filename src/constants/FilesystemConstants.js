@@ -4,3 +4,4 @@ export default {
 	FILESYSTEM_LIST_URL: FILESYSTEM_MODULE_URL + '/list_items',
 	FILESYSTEM_DIRECTORY_URL: FILESYSTEM_MODULE_URL + '/directory'
 }
+;

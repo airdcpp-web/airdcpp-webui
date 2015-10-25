@@ -1,16 +1,14 @@
 'use strict';
 
 import React from 'react';
-import LoginActions from 'actions/LoginActions'
 
-import { Link } from 'react-router';
-import { Lifecycle } from 'react-router'
+import { Lifecycle } from 'react-router';
 
-import '../style.css'
+import '../style.css';
 
-export default function(Component, semanticModuleName) {
+export default function (Component, semanticModuleName) {
 	const OverlayDecorator = React.createClass({
-		displayName: "OverlayDecorator",
+		displayName: 'OverlayDecorator',
 		mixins: [ Lifecycle ],
 
 		changeHistoryState: true,
@@ -58,7 +56,7 @@ export default function(Component, semanticModuleName) {
 		},
 
 		render() {
-			return <Component {...this.props} {...this.state} showOverlay={this.showOverlay} hide={this.hide}/>
+			return <Component {...this.props} {...this.state} showOverlay={this.showOverlay} hide={this.hide}/>;
 		}
 	});
 

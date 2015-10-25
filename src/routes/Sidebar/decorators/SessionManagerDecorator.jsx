@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router';
 
-import History from 'utils/History'
+import History from 'utils/History';
 
 
 const MenuItem = React.createClass({
@@ -23,17 +23,16 @@ const MenuItem = React.createClass({
 		title: React.PropTypes.any.isRequired,
 	},
 
-	displayName: "MenuItem",
-	onClick: function(evt) {
+	displayName: 'MenuItem',
+	onClick: function (evt) {
 		evt.preventDefault();
 
 		History.pushSidebar(this.props.location, this.props.url);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<Link to={this.props.url} className="item tab-layout" onClick={this.onClick}>
-
 				{this.props.title}
 			</Link>
 		);
@@ -58,14 +57,14 @@ const NewButton = React.createClass({
 		title: React.PropTypes.node.isRequired,
 	},
 
-	displayName: "NewButton",
-	onClick: function(evt) {
+	displayName: 'NewButton',
+	onClick: function (evt) {
 		evt.preventDefault();
 
 		History.pushSidebar(this.props.location, this.props.baseUrl);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<Link to={this.props.baseUrl} className="item button-new" onClick={this.onClick}>
 				<div className={this.props.buttonClass}>
@@ -77,7 +76,7 @@ const NewButton = React.createClass({
 	}
 });
 
-export default function(Component, buttonClass = "") {
+export default function (Component, buttonClass = '') {
 	const SessionManagerDecorator = React.createClass({
 		propTypes: {
 			/**
@@ -126,7 +125,7 @@ export default function(Component, buttonClass = "") {
 			newButtonLabel: React.PropTypes.any.isRequired
 		},
 		
-		displayName: "TabLayout",
+		displayName: 'TabLayout',
 		getInitialState() {
 			return {
 				activeItem: null
@@ -138,7 +137,7 @@ export default function(Component, buttonClass = "") {
 		},
 
 		getUrl(id) {
-			return this.props.itemUrl + "/" + id;
+			return this.props.itemUrl + '/' + id;
 		},
 
 		redirectTo(id) {
@@ -146,11 +145,11 @@ export default function(Component, buttonClass = "") {
 		},
 
 		saveLocation() {
-			localStorage.setItem(this.props.baseUrl + "_last_active", this.props.activeId);
+			localStorage.setItem(this.props.baseUrl + '_last_active', this.props.activeId);
 		},
 
 		findItem(items, id) {
-			return items.find(item => item.id == id) // Ignore the type because of local storage
+			return items.find(item => item.id == id); // Ignore the type because of local storage
 		},
 
 		componentWillReceiveProps(nextProps) {
@@ -193,7 +192,7 @@ export default function(Component, buttonClass = "") {
 				newItemPos = oldPos-1;
 			}
 
-		 this.redirectTo(nextProps.items[newItemPos].id);
+			this.redirectTo(nextProps.items[newItemPos].id);
 		},
 
 		reset() {
@@ -207,7 +206,7 @@ export default function(Component, buttonClass = "") {
 			}
 		},
 
-		componentDidMount() {
+		componentWillMount() {
 			if (this.props.activeId) {
 				// Loading an item already
 				const activeItem = this.findItem(this.props.items, this.props.activeId);
@@ -222,7 +221,7 @@ export default function(Component, buttonClass = "") {
 				return;
 			}
 
-			let lastId = localStorage.getItem(this.props.baseUrl + "_last_active");
+			let lastId = localStorage.getItem(this.props.baseUrl + '_last_active');
 			if (lastId && this.findItem(this.props.items, lastId)) {
 				this.redirectTo(lastId);
 			} else if (this.props.items.length > 0) {
@@ -233,7 +232,7 @@ export default function(Component, buttonClass = "") {
 		getItemContent(item) {
 			return (
 				<div>
-					<div className={ "ui empty circular mini label " + this.props.statusGetter(item) }/>
+					<div className={ 'ui empty circular mini label ' + this.props.statusGetter(item) }/>
 					{ this.props.nameGetter(item) }
 					{ this.props.labelGetter(item) }
 				</div>
@@ -247,7 +246,8 @@ export default function(Component, buttonClass = "") {
 					<MenuItem key={ id } 
 						url={this.getUrl(id)}
 						title={this.getItemContent(item)}
-						location={this.props.location}/>
+						location={this.props.location}
+					/>
 				);
 			}, this);
 
@@ -257,10 +257,10 @@ export default function(Component, buttonClass = "") {
 					newButton={<NewButton key="new-button" title={this.props.newButtonLabel} location={this.props.location} baseUrl={this.props.baseUrl} buttonClass={buttonClass}/>}
 					menuItems={menuItems}
 					location={this.props.location}
-					/>
-			)
+				/>
+			);
 		}
 	});
 
-	return SessionManagerDecorator
+	return SessionManagerDecorator;
 }

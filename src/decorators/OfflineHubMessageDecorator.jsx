@@ -1,12 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import HubSessionStore from 'stores/HubSessionStore'
+import HubSessionStore from 'stores/HubSessionStore';
 
 // Disables the component of there are no online hubs
 const OfflineHubMessageDecorator = React.createClass({
-	mixins: [Reflux.ListenerMixin],
-	displayName: "OfflineHubMessageDecorator",
+	mixins: [ Reflux.ListenerMixin ],
+	displayName: 'OfflineHubMessageDecorator',
 	propTypes: {
 
 		/**
@@ -15,14 +15,14 @@ const OfflineHubMessageDecorator = React.createClass({
 		offlineMessage: React.PropTypes.any.isRequired
 	},
 
-	componentDidMount: function() {
+	componentDidMount: function () {
 		this.listenTo(HubSessionStore, this.updateState);
 	},
 
 	getInitialState() {
 		return {
 			hasConnectedHubs: HubSessionStore.hasConnectedHubs()
-		}
+		};
 	},
 
 	updateState() {
@@ -42,11 +42,12 @@ const OfflineHubMessageDecorator = React.createClass({
   						<p>{this.props.offlineMessage}</p>
   					</div>
   				</div>
-				</div>)
+				</div>);
 		}
 
-		return this.props.children
+		return this.props.children;
 	},
 });
 
 export default OfflineHubMessageDecorator
+;

@@ -1,16 +1,16 @@
 'use strict';
 import Reflux from 'reflux';
-import {SEARCH_QUERY_URL, SEARCH_RESULT_URL} from 'constants/SearchConstants';
-import SocketService from 'services/SocketService'
+import { SEARCH_QUERY_URL, SEARCH_RESULT_URL } from 'constants/SearchConstants';
+import SocketService from 'services/SocketService';
 
-import NotificationActions from 'actions/NotificationActions'
+import NotificationActions from 'actions/NotificationActions';
 
 export const SearchActions = Reflux.createActions([
-	{ "postSearch": { asyncResult: true} },
-	{ "download": { asyncResult: true } }
+	{ 'postSearch': { asyncResult: true } },
+	{ 'download': { asyncResult: true } }
 ]);
 
-SearchActions.postSearch.listen(function(pattern) {
+SearchActions.postSearch.listen(function (pattern) {
 	let that = this;
 	return SocketService.get(SEARCH_QUERY_URL, { 
 		pattern: pattern
@@ -28,7 +28,7 @@ SearchActions.download.listen((itemData, downloadData) => {
 SearchActions.download.failed.listen((itemData, error) => {
 	NotificationActions.error({
 		title: itemData.itemInfo.name,
-		message: "Failed to queue the item: " + error.reason
+		message: 'Failed to queue the item: ' + error.reason
 	});
 });
 

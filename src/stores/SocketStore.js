@@ -1,12 +1,11 @@
 import Reflux from 'reflux';
-import {SOCKET_DISCONNECTED, SOCKET_CONNECTING, SOCKET_CONNECTED, SOCKET_MESSAGE} from 'constants/SocketConstants';
 import SocketActions from 'actions/SocketActions';
 import SocketService from 'services/SocketService';
 import { EventEmitter } from 'events';
 
 const getSubscribtionId = (event, id) => {
 	return id ? (event + id) : event;
-}
+};
 
 const getSubscribtionUrl = (moduleUrl, id, event) => {
 	if (id) {
@@ -14,11 +13,11 @@ const getSubscribtionUrl = (moduleUrl, id, event) => {
 	}
 
 	return moduleUrl + '/listener/' + event;
-}
+};
 
 export default Reflux.createStore({
 	listenables: SocketActions,
-	init: function() {
+	init: function () {
 		this.getInitialState = this.getState;
 
 		this._socket = null;
@@ -68,19 +67,17 @@ export default Reflux.createStore({
 
 		this._apiSubscriptions[subscriptionId]++;
 		this._apiEmitter.on(subscriptionId, callback);
-		SocketService.post(subscriptionUrl).catch(error => console.error("Failed to add socket listener", subscriptionUrl, event, entityId, error.reason));
+		SocketService.post(subscriptionUrl).catch(error => console.error('Failed to add socket listener', subscriptionUrl, event, entityId, error.reason));
 
 		return () => this.removeSocketListener(subscriptionUrl, subscriptionId, callback);
 	},
 
 	_removeSocketListener(subscriptionUrl, subscriptionId, callback) {
-		var listeners = this._apiSubscriptions[subscriptionId];
-
 		this._apiSubscriptions[subscriptionId]--;
 		this._apiEmitter.removeListener(subscriptionId, callback);
 
 		if (this._apiSubscriptions[subscriptionId] === 0) {
-			SocketService.delete(subscriptionUrl).catch(error => console.error("Failed to remove socket listener", subscriptionUrl, event, entityId, error.reason));
+			SocketService.delete(subscriptionUrl).catch(error => console.error('Failed to remove socket listener', subscriptionUrl, event, entityId, error.reason));
 			delete this._apiSubscriptions[subscriptionId];
 		}
 	},

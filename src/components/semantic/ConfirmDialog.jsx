@@ -1,5 +1,4 @@
 import React from 'react';
-import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 
 import BlueBird from 'bluebird';
 
@@ -22,7 +21,7 @@ const ConfirmDialog = React.createClass({
 		icon: React.PropTypes.string
 	},
 
-	displayName: "ConfirmDialog",
+	displayName: 'ConfirmDialog',
 	componentDidMount() {
 		const settings = {
 			movePopup:false,
@@ -53,14 +52,14 @@ const ConfirmDialog = React.createClass({
 		}
 	},
 
-	render: function() {
+	render: function () {
 		return (<div className="ui basic modal confirm-dialog">
 			<div className="header">
 				{ this.props.title }
 			</div>
 			<div className="image content">
 				<div className="image">
-					<i className={ this.props.icon + " icon"}></i>
+					<i className={ this.props.icon + ' icon'}></i>
 				</div>
 				<div className="description">
 					{ this.props.text }
@@ -82,10 +81,10 @@ const ConfirmDialog = React.createClass({
 	}
 });
 
-export default function (title, text, icon, acceptText="Yes", rejectText="No") {
+export default function (title, text, icon, acceptText='Yes', rejectText='No') {
 	let resolver = BlueBird.pending();
 	let node = document.createElement('div');
-	const dialog = <ConfirmDialog node={node} title={title} resolver={ resolver } text={ text } icon={ icon } acceptText={acceptText} rejectText={rejectText}/>
+	const dialog = <ConfirmDialog node={node} title={title} resolver={ resolver } text={ text } icon={ icon } acceptText={acceptText} rejectText={rejectText}/>;
 
 	document.body.appendChild(node);
 

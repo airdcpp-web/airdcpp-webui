@@ -1,20 +1,19 @@
 import React from 'react';
-import Modal from './semantic/Modal'
 
-import { FILESYSTEM_LIST_URL, FILESYSTEM_DIRECTORY_URL } from 'constants/FilesystemConstants'
+import { FILESYSTEM_LIST_URL, FILESYSTEM_DIRECTORY_URL } from 'constants/FilesystemConstants';
 
-import LoginStore from 'stores/LoginStore'
-import SocketService from 'services/SocketService'
+import LoginStore from 'stores/LoginStore';
+import SocketService from 'services/SocketService';
 import Formatter from 'utils/Format';
 
-import PathBreadcrumb from 'components/PathBreadcrumb'
-import ErrorMessage from 'components/ErrorMessage'
-import Accordion from 'components/semantic/Accordion'
-import ActionInput from 'components/semantic/ActionInput'
+import PathBreadcrumb from 'components/PathBreadcrumb';
+import ErrorMessage from 'components/ErrorMessage';
+import Accordion from 'components/semantic/Accordion';
+import ActionInput from 'components/semantic/ActionInput';
 
 const PathItem = React.createClass({
-	displayName: "PathItem",
-	render: function() {
+	displayName: 'PathItem',
+	render: function () {
 		const { item } = this.props;
 		return (
 			<tr>
@@ -23,7 +22,7 @@ const PathItem = React.createClass({
 						<a onClick={evt => this.props.itemClickHandler(item.name)}>
 							{item.name}
 						</a>
-						{this.props.itemIcon ? <i className={ this.props.itemIcon + " link icon" } onClick={ () => this.props.iconClickHandler(item.name) }></i> : null}
+						{this.props.itemIcon ? <i className={ this.props.itemIcon + ' link icon' } onClick={ () => this.props.iconClickHandler(item.name) }></i> : null}
 					</Formatter.FileNameFormatter>
 				</td>
 				{/*<td>
@@ -52,16 +51,16 @@ const PathList = React.createClass({
 		items: React.PropTypes.array.isRequired,
 	},
 
-	displayName: "PathList",
+	displayName: 'PathList',
 	sort(a, b) {
-		if (a.type.id !== b.type.id && (a.type.id === "directory" || b.type.id === "directory")) {
-			return a.type.id === "directory" ? -1 : 1;
+		if (a.type.id !== b.type.id && (a.type.id === 'directory' || b.type.id === 'directory')) {
+			return a.type.id === 'directory' ? -1 : 1;
 		}
 
 		return a.name.localeCompare(b.name);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div className="table-container">
 				<table className="ui striped compact table">
@@ -88,8 +87,8 @@ const CreateDirectory = React.createClass({
 		handleAction: React.PropTypes.func.isRequired
 	},
 
-	displayName: "CreateDirectory",
-	render: function() {
+	displayName: 'CreateDirectory',
+	render: function () {
 		return (
 			<Accordion>
 				<div className="title">
@@ -128,7 +127,7 @@ const FileBrowser = React.createClass({
 		onDirectoryChanged: React.PropTypes.func
 	},
 
-	displayName: "FileBrowser",
+	displayName: 'FileBrowser',
 	getInitialState() {
 		this._pathSeparator = LoginStore.systemInfo.path_separator;
 		this._platform = LoginStore.systemInfo.platform;
@@ -138,13 +137,13 @@ const FileBrowser = React.createClass({
 			items: [],
 			loading: true,
 			error: null
-		}
+		};
 	},
 
 	getDefaultProps() {
 		return {
-			initialPath: ""
-		}
+			initialPath: ''
+		};
 	},
 
 	fetchItems(path) {
@@ -154,11 +153,13 @@ const FileBrowser = React.createClass({
 		});
 
 		SocketService.post(FILESYSTEM_LIST_URL, { path: path, directories_only: true })
-			.then(data => { this.setState({ 
-				currentDirectory: path,
-				items: data,
-				loading: false
-			}) })
+			.then(data => { 
+				this.setState({ 
+					currentDirectory: path,
+					items: data,
+					loading: false
+				}); 
+			})
 			.catch(error => this.setState({ 
 				error: error.reason,
 				loading: false
@@ -176,13 +177,13 @@ const FileBrowser = React.createClass({
 		}
 		
 		let tokens = [];
-		if (this._platform == "windows") {
+		if (this._platform == 'windows') {
 			// Leave the slashes in drive ID intact on Windows
-			tokens = [path.substring(0,3)];
+			tokens = [ path.substring(0,3) ];
 			path = path.substring(3);
 		}
 
-		return [ tokens, ...path.split(this._pathSeparator)].filter(el => el.length != 0);
+		return [ tokens, ...path.split(this._pathSeparator) ].filter(el => el.length != 0);
 	},
 
 	_appendDirectoryName(directoryName) {
@@ -225,12 +226,12 @@ const FileBrowser = React.createClass({
 			}));
 	},
 
-	render: function() {
+	render: function () {
 		if (this.state.loading) {
 			return <div className="ui active text loader">Loading</div>;
 		}
 
-		const rootName = this._platform == "windows" ? "Computer" : "Root";
+		const rootName = this._platform == 'windows' ? 'Computer' : 'Root';
 		return (
 			<div className="file-browser">
 				{ this.state.error ? (<ErrorMessage title="Failed to load content" description={this.state.error}/>) : null }
@@ -238,7 +239,7 @@ const FileBrowser = React.createClass({
 				<PathList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
 				{ this.state.currentDirectory ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
-	)}
+	);}
 });
 
 export default FileBrowser;

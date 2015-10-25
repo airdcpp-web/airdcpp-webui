@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SessionManagerDecorator from 'routes/Sidebar/decorators/SessionManagerDecorator'
-import Dropdown from 'components/semantic/Dropdown'
+import SessionManagerDecorator from 'routes/Sidebar/decorators/SessionManagerDecorator';
+import Dropdown from 'components/semantic/Dropdown';
 
 const TopMenuLayout = React.createClass({
 	propTypes: {
@@ -11,12 +11,12 @@ const TopMenuLayout = React.createClass({
 		location: React.PropTypes.object.isRequired,
 	},
 
-	displayName: "TopMenuLayout",
+	displayName: 'TopMenuLayout',
 	render() {
-		// Don't add nesting for items to preserve Semantic's CSS
+		// Don"t add nesting for items to preserve Semantic"s CSS
 		let sessionMenuStyle = {};
 		if (this.props.menuItems.length === 0) {
-			sessionMenuStyle = { display: "none" }
+			sessionMenuStyle = { display: 'none' };
 		}
 
 		return (

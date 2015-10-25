@@ -1,18 +1,18 @@
 import Reflux from 'reflux';
 
-import StorageMixin from 'mixins/StorageMixin'
+import StorageMixin from 'mixins/StorageMixin';
 
-import LoginActions from 'actions/LoginActions'
-import SocketActions from 'actions/SocketActions'
+import LoginActions from 'actions/LoginActions';
+import SocketActions from 'actions/SocketActions';
 
 
 export default Reflux.createStore({
 	listenables: LoginActions,
-	mixins: [StorageMixin],
-	init: function() {
-		this._token = this.loadProperty("auth_token");
-		this._user = this.loadProperty("web_user");
-		this._systemInfo = this.loadProperty("system_info");
+	mixins: [ StorageMixin ],
+	init: function () {
+		this._token = this.loadProperty('auth_token');
+		this._user = this.loadProperty('web_user');
+		this._systemInfo = this.loadProperty('system_info');
 
 		this._lastError = null;
 		this._socketAuthenticated = false;
@@ -42,9 +42,9 @@ export default Reflux.createStore({
 		this._lastError = null;
 		this._socketAuthenticated = true;
 
-		this.saveProperty("auth_token", res.token);
-		this.saveProperty("web_user", res.user);
-		this.saveProperty("system_info", this._systemInfo);
+		this.saveProperty('auth_token', res.token);
+		this.saveProperty('web_user', res.user);
+		this.saveProperty('system_info', this._systemInfo);
 
 		this.trigger(this.getState());
 	},
@@ -65,7 +65,7 @@ export default Reflux.createStore({
 	onConnectFailed(error) {
 		if (error.code == 400) {
 			this.reset();
-			this._lastError = "Session lost";
+			this._lastError = 'Session lost';
 		} else { 
 			this._lastError = error.reason ? error.reason : error;
 		}
@@ -77,8 +77,8 @@ export default Reflux.createStore({
 	onSocketDisconnected(socket, error) {		
 		this._socketAuthenticated = false;
 		if (this._user) {
-			if (error === "") {
-				this._lastError = "Connection closed";
+			if (error === '') {
+				this._lastError = 'Connection closed';
 			} else {
 				this._lastError = error;
 			}

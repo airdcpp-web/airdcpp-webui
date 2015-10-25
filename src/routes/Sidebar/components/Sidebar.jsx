@@ -1,20 +1,13 @@
 'use strict';
 
 import React from 'react';
-import LoginActions from 'actions/LoginActions'
 
-import { Link } from 'react-router';
+import OverlayDecorator from 'decorators/OverlayDecorator';
 
-import OverlayDecorator from 'decorators/OverlayDecorator'
-
-import '../style.css'
-
-const settings = {
-	context: '#main-layout'
-};
+import '../style.css';
 
 const Sidebar = React.createClass({
-	displayName: "Sidebar",
+	displayName: 'Sidebar',
 	componentDidMount() {
 		this.props.showOverlay({
 			context: '#main-layout',
@@ -33,4 +26,4 @@ const Sidebar = React.createClass({
 	},
 });
 
-export default OverlayDecorator(Sidebar, "sidebar")
+export default OverlayDecorator(Sidebar, 'sidebar');

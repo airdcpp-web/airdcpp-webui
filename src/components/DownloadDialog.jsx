@@ -1,24 +1,23 @@
 import React from 'react';
-import Modal from './semantic/Modal'
+import Modal from './semantic/Modal';
 
-import DupeEnum from 'constants/DupeConstants'
-import { PriorityEnum } from 'constants/QueueConstants'
-import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants'
-import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants'
-import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js'
-import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js'
+import { PriorityEnum } from 'constants/QueueConstants';
+import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants';
+import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
+import { HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js';
+import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js';
 
-import SocketService from 'services/SocketService'
-import { RouteContext } from 'react-router'
-import FileBrowser from './FileBrowser'
-import TypeConvert from 'utils/TypeConvert'
-import Accordion from 'components/semantic/Accordion'
-import FileUtils from 'utils/FileUtils'
+import SocketService from 'services/SocketService';
+import { RouteContext } from 'react-router';
+import FileBrowser from './FileBrowser';
+import TypeConvert from 'utils/TypeConvert';
+import Accordion from 'components/semantic/Accordion';
+import FileUtils from 'utils/FileUtils';
 
 const MenuItem = React.createClass({
-	render: function() {
+	render: function () {
 		return (
-			<a className={ "item " + (this.props.active ? "active" : "")	} onClick={this.props.onClick}>
+			<a className={ 'item ' + (this.props.active ? 'active' : '')	} onClick={this.props.onClick}>
 				{this.props.title}
 
 				{ this.props.list ? (
@@ -30,7 +29,7 @@ const MenuItem = React.createClass({
 });
 
 const PathItem = React.createClass({
-	render: function() {
+	render: function () {
 		const { path } = this.props;
 		return (
 			<div className="item">
@@ -58,7 +57,7 @@ const PathList = React.createClass({
 		paths: React.PropTypes.array.isRequired,
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<div className="ui relaxed list">
 				{ this.props.paths.map(path => <PathItem path={path} downloadHandler={ this.props.downloadHandler }/>) }
@@ -95,7 +94,7 @@ const AccordionTargets = React.createClass({
 			);
 	},
 
-	render: function() {
+	render: function () {
 		return (
 			<Accordion className="styled download-targets">
 				{this.props.groupedPaths.map(this.formatParent) }
@@ -131,40 +130,40 @@ export default React.createClass({
 			dupe_paths: [],
 			favorite_paths: [],
 			history_paths: []
-		}
+		};
 	},
 
 	fetchPaths(requestPath, stateId) {
-		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error("Failed to fetch paths", requestPath, error.message));
+		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error('Failed to fetch paths', requestPath, error.message));
 	},
 
 	fetchDupePaths(requestPath) {
-		const {itemInfo} = this.props;
+		const { itemInfo } = this.props;
 
 		let data = {};
 		if (FileUtils.isDirectory(itemInfo.path)) {
-			data["path"] = itemInfo.path
+			data['path'] = itemInfo.path;
 		} else {
-			data["tth"] = itemInfo.tth
+			data['tth'] = itemInfo.tth;
 		}
 
 		SocketService.post(requestPath, data).then(data => this.setState({ 
 			dupe_paths: this.state.dupe_paths.concat(data.map(path => FileUtils.getParentPath(path, FileUtils)))
-		})).catch(error => console.error("Failed to fetch dupe paths", requestPath, error.message));
+		})).catch(error => console.error('Failed to fetch dupe paths', requestPath, error.message));
 	},
 
 	componentDidMount() {
-		this.fetchPaths(ROOTS_GET_URL, "share_paths");
-		this.fetchPaths(FAVORITE_DIRECTORIES_URL, "favorite_paths");
-		this.fetchPaths(HISTORY_ITEMS_URL + "/" + HistoryEnum.HISTORY_DOWNLOAD_DIR, "history_paths");
+		this.fetchPaths(ROOTS_GET_URL, 'share_paths');
+		this.fetchPaths(FAVORITE_DIRECTORIES_URL, 'favorite_paths');
+		this.fetchPaths(HISTORY_ITEMS_URL + '/' + HistoryEnum.HISTORY_DOWNLOAD_DIR, 'history_paths');
 
 		const { itemInfo } = this.props;
 		const dupeName = TypeConvert.dupeToStringType(itemInfo.dupe);
-		if (dupeName.indexOf("queue") > -1) {
+		if (dupeName.indexOf('queue') > -1) {
 			this.fetchDupePaths(QUEUE_DUPE_PATHS_URL);
 		}
 
-		if (dupeName.indexOf("share") > -1) {
+		if (dupeName.indexOf('share') > -1) {
 			this.fetchDupePaths(SHARE_DUPE_PATHS_URL);
 		}
 	},
@@ -181,7 +180,7 @@ export default React.createClass({
 	},
 
 	getComponent() {
-		switch(this.state.active) {
+		switch (this.state.active) {
 			case 'shared': return <AccordionTargets groupedPaths={ this.state.share_paths } downloadHandler={ this.handleDownload }/>;
 			case 'favorites': return <AccordionTargets groupedPaths={ this.state.favorite_paths } downloadHandler={ this.handleDownload }/>;
 			case 'history': return <PathList paths={ this.state.history_paths } downloadHandler={ this.handleDownload }/>;
@@ -191,7 +190,7 @@ export default React.createClass({
 		}
 	},
 
-	render: function() {
+	render: function () {
 		const names = [
 			{
 				name: 'Previous',
@@ -219,9 +218,10 @@ export default React.createClass({
 			return (
 				<MenuItem key={ item.key } 
 					title={item.name} 
-					onClick={ () => this.setState({active: item.key}) } 
+					onClick={ () => this.setState({ active: item.key }) } 
 					active={ this.state.active === item.key }
-					list={item.list}/>
+					list={item.list}
+				/>
 			);
 		}, this);
 

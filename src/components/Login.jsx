@@ -1,18 +1,18 @@
 import React, { findDOMNode } from 'react';
 import Reflux from 'reflux';
-import LoginActions from 'actions/LoginActions'
-import LoginStore from 'stores/LoginStore'
+import LoginActions from 'actions/LoginActions';
+import LoginStore from 'stores/LoginStore';
 
-import { Icon, Message, Content } from 'react-semantify'
+import { Message, Content } from 'react-semantify';
 import { History } from 'react-router';
 
 const ErrorBox = React.createClass({
-	render: function() {
+	render: function () {
 		if (this.props.lastError === null) {
 			return null;
 		}
 
-		const errorMessage = "Authentication failed: " + this.props.lastError;
+		const errorMessage = 'Authentication failed: ' + this.props.lastError;
 
 		return (
 			<Message className="error">
@@ -27,12 +27,12 @@ const ErrorBox = React.createClass({
 const ENTER_KEY_CODE = 13;
 
 export default React.createClass({
-	mixins: [Reflux.connect(LoginStore), History ],
+	mixins: [ Reflux.connect(LoginStore), History ],
 	getInitialState() {
 		return {
 			username: '',
 			password: ''
-		}
+		};
 	},
 
 	componentWillUpdate(nextProps, nextState) {
@@ -42,7 +42,7 @@ export default React.createClass({
 		}
 	},
 
-	_onKeyDown: function(event) {
+	_onKeyDown: function (event) {
 		if (event.keyCode === ENTER_KEY_CODE) {
 			this.onSubmit(event);
 		}
@@ -53,8 +53,8 @@ export default React.createClass({
 		const password = findDOMNode(this.refs.password).value;
 		evt.preventDefault();
 
-		if (username === "" || password === "") {
-			this.setState({ lastError: "Please enter both username and password" });
+		if (username === '' || password === '') {
+			this.setState({ lastError: 'Please enter both username and password' });
 			return;
 		}
 

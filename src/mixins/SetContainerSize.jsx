@@ -2,23 +2,24 @@
 import _ from 'lodash';
 
 var SetContainerSize = {
-	getInitialState: function(){
+	getInitialState: function () {
 		return {
 			width: 0,
 			height: 0
 		};
 	},
 
-	componentDidMount : function(){
-			var win = window;
-			if (win.addEventListener) {
-				win.addEventListener('resize', _.throttle(this._update, 250), false);
-			} else if (win.attachEvent) {
-				win.attachEvent('onresize', _.throttle(this._update, 250));
-			} else {
-				win.onresize = this._update;
-			}
-			this._update();
+	componentDidMount : function () {
+		var win = window;
+		if (win.addEventListener) {
+			win.addEventListener('resize', _.throttle(this._update, 250), false);
+		} else if (win.attachEvent) {
+			win.attachEvent('onresize', _.throttle(this._update, 250));
+		} else {
+			win.onresize = this._update;
+		}
+		
+		this._update();
 	},
 
 	componentWillReceiveProps(props) {
@@ -27,9 +28,9 @@ var SetContainerSize = {
 
 	componentWillUnmount() {
 		var win = window;
-		if(win.removeEventListener) {
+		if (win.removeEventListener) {
 			win.removeEventListener('resize', _.throttle(this._update, 250), false);
-		} else if(win.removeEvent) {
+		} else if (win.removeEvent) {
 			win.removeEvent('onresize', _.throttle(this._update, 250), false);
 		} else {
 			win.onresize = null;

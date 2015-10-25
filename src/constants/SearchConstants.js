@@ -4,4 +4,4 @@ export default {
 	SEARCH_QUERY_URL: SEARCH_MODULE_URL + '/query',
 
 	SEARCH_RESULT_URL: SEARCH_MODULE_URL + '/result',
-}
+};

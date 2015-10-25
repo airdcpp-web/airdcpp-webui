@@ -1,15 +1,15 @@
 import Reflux from 'reflux';
 
-import {FILELIST_MODULE_URL, FILELIST_SESSION_CREATED, FILELIST_SESSION_REMOVED, FILELIST_SESSION_UPDATED} from 'constants/FilelistConstants';
+import { FILELIST_MODULE_URL, FILELIST_SESSION_CREATED, FILELIST_SESSION_REMOVED, FILELIST_SESSION_UPDATED } from 'constants/FilelistConstants';
 
-import FilelistActions from 'actions/FilelistActions'
+import FilelistActions from 'actions/FilelistActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
-import SessionStoreDecorator from 'decorators/SessionStoreDecorator'
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
 
 const FilelistStore = Reflux.createStore({
-	getInitialState: function() {
-			return this.getSessions();
+	getInitialState: function () {
+		return this.getSessions();
 	},
 
 	onSocketConnected(addSocketListener) {
@@ -20,3 +20,4 @@ const FilelistStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistStore), FilelistActions.fetchSessions.completed)
+;

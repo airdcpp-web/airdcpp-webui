@@ -1,7 +1,7 @@
 import React from 'react';
-import SocketService from 'services/SocketService.js'
-import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from 'constants/HistoryConstants.js'
-import Autosuggest from 'react-autosuggest'
+import SocketService from 'services/SocketService.js';
+import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from 'constants/HistoryConstants.js';
+import Autosuggest from 'react-autosuggest';
 import classNames from 'classnames';
 
 
@@ -16,20 +16,20 @@ export default React.createClass({
 		/**
 		 * ID of the history section
 		 */
-		historyId: React.PropTypes.number.isRequired
+		historyId: React.PropTypes.number.isRequired,
 	},
 
 	getInitialState() {
 		return {
 			history: [],
-			text:''
-		}
+			text:'',
+		};
 	},
 
 	getDefaultProps() {
 		return {
-			autoFocus: true
-		}
+			autoFocus: true,
+		};
 	},
 
 	componentDidMount() {
@@ -37,16 +37,16 @@ export default React.createClass({
 	},
 
 	_loadHistory() {
-		SocketService.get(HISTORY_ITEMS_URL + "/" + this.props.historyId)
+		SocketService.get(HISTORY_ITEMS_URL + '/' + this.props.historyId)
 			.then(data => {
 				this.setState({ history: data });
 			})
 			.catch(error => 
-				console.error("Failed to load history: " + error)
+				console.error('Failed to load history: ' + error)
 			);
 	},
 
-	_onKeyDown: function(event) {
+	_onKeyDown: function (event) {
 		if (event.keyCode === 13) {
 			if (!this._isDisabled()) {
 				this._handleSubmit();
@@ -56,15 +56,15 @@ export default React.createClass({
 
 	_handleSubmit() {
 		const { text } = this.state;
-		SocketService.post(HISTORY_ITEM_URL + "/" + this.props.historyId, { item: text })
+		SocketService.post(HISTORY_ITEM_URL + '/' + this.props.historyId, { item: text })
 			.then(data => {
 			})
 			.catch(error => 
-				console.error("Failed to post history: " + error)
+				console.error('Failed to post history: ' + error)
 			);
-		console.log("Searching");
+		console.log('Searching');
 		this.setState({ 
-			suggestionsActive: false
+			suggestionsActive: false,
 		});
 
 		this._loadHistory();
@@ -81,7 +81,7 @@ export default React.createClass({
 	_handleChange(value) {
 		this.setState({ 
 			text: value,
-			suggestionsActive: true
+			suggestionsActive: true,
 		});
 	},
 
@@ -98,29 +98,30 @@ export default React.createClass({
 		const inputAttributes = {
 			placeholder: 'Enter search string...',
 			onChange: this._handleChange,
-			autoFocus: this.props.autoFocus
+			autoFocus: this.props.autoFocus,
 		};
 
 		const buttonClass = classNames(
-			"ui", 
-			"button", 
-			{ "disabled": this._isDisabled() },
-			{ "loading": this.props.running }
+			'ui', 
+			'button', 
+			{ 'disabled': this._isDisabled() },
+			{ 'loading': this.props.running }
 		);
 
 		return (
 			<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
 				<Autosuggest 
-					ref='historyInput'
+					ref="historyInput"
 					value={this.state.text}
 					showWhen={this._showWhen}
 					suggestions={this._getSuggestions}
-					inputAttributes={inputAttributes} />
+					inputAttributes={inputAttributes} 
+				/>
 				<button onClick={ this._handleSubmit } className={ buttonClass }>
 					<i className="search icon"></i>
 					Search
 				</button>
 			</div>
 		);
-	}
+	},
 });

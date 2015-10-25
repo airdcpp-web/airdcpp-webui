@@ -1,28 +1,27 @@
 'use strict';
 import Reflux from 'reflux';
-//import SocketService from 'services/SocketService'
 
-import History from 'utils/History'
-import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
+import History from 'utils/History';
+import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
 
 export const DownloadActions = Reflux.createActions([
-	{ "download": { 
+	{ 'download': { 
 		asyncResult: true,	
-		displayName: "Download", 
-		icon: "green download" } 
+		displayName: 'Download', 
+		icon: 'green download' } 
 	},
-	{ "downloadTo": { 
+	{ 'downloadTo': { 
 		asyncResult: true,	
-		displayName: "Download to...", 
-		icon: "blue download" } 
+		displayName: 'Download to...', 
+		icon: 'blue download' } 
 	}
 ]);
 
-DownloadActions.download.listen(function(data) {
+DownloadActions.download.listen(function (data) {
 	return data.handler(data, { target_name: data.itemInfo.name });
 });
 
-DownloadActions.downloadTo.listen(function(handlerData) {
+DownloadActions.downloadTo.listen(function (handlerData) {
 	const { pathname } = handlerData.location;
 	
 	History.pushModal(handlerData.location, pathname + '/download', DOWNLOAD_MODAL_ID, {

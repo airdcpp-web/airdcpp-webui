@@ -1,9 +1,8 @@
 import React from 'react';
-import Reflux from 'reflux';
 
-import DropdownItem from 'components/semantic/DropdownItem'
+import DropdownItem from 'components/semantic/DropdownItem';
 
-export default function(Component) {
+export default function (Component) {
 	const ActionMenu = React.createClass({
 		propTypes: {
 
@@ -32,7 +31,7 @@ export default function(Component) {
 			const action = this.props.actions[actionId];
 			return (
 				<DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
-					<i className={ action.icon + " icon" }></i>
+					<i className={ action.icon + ' icon' }></i>
 					{ action.displayName }
 				</DropdownItem>);
 		},
@@ -54,7 +53,7 @@ export default function(Component) {
 				<Component {...other}>
 					{Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}
 				</Component>
-			)
+			);
 		},
 	});
 

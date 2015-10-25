@@ -1,24 +1,23 @@
 import React from 'react';
-import { Column } from 'fixed-data-table'
+import { Column } from 'fixed-data-table';
 
-import FilelistActions from 'actions/FilelistActions'
-import { FILELIST_SESSION_URL } from 'constants/FilelistConstants'
+import FilelistActions from 'actions/FilelistActions';
 
-import { TableDownloadMenu } from 'components/Menu'
+import { TableDownloadMenu } from 'components/Menu';
 
-import Formatter from 'utils/Format'
-import TypeConvert from 'utils/TypeConvert'
+import Formatter from 'utils/Format';
+import TypeConvert from 'utils/TypeConvert';
 
-import PathBreadcrumb from 'components/PathBreadcrumb'
-import VirtualTable from 'components/table/VirtualTable'
-import FilelistViewStore from 'stores/FilelistViewStore'
-import History from 'utils/History'
+import PathBreadcrumb from 'components/PathBreadcrumb';
+import VirtualTable from 'components/table/VirtualTable';
+import FilelistViewStore from 'stores/FilelistViewStore';
+import History from 'utils/History';
 
-import SetContainerSize from 'mixins/SetContainerSize'
+import SetContainerSize from 'mixins/SetContainerSize';
 
 const ListBrowser = React.createClass({
-	mixins: [SetContainerSize], // The table won't handle responsive height quickly enough
-	displayName: "ListBrowser",
+	mixins: [ SetContainerSize ], // The table won't handle responsive height quickly enough
+	displayName: 'ListBrowser',
 
 	_renderStr(cellData, cellDataKey, rowData) {
 		if (cellData === undefined) {
@@ -46,12 +45,12 @@ const ListBrowser = React.createClass({
 		}
 
 		let captionText = cellData;
-		if (rowData.type.id === "directory") {
+		if (rowData.type.id === 'directory') {
 			captionText = (
 				<a onClick={() => this._handleClickDirectory(this.props.item.directory + cellData + '/')}>
 					{ cellData }
 				</a>
-				)
+				);
 		}
 
 		const formatter = (
@@ -59,13 +58,16 @@ const ListBrowser = React.createClass({
 				{ captionText }
 			</Formatter.FileNameFormatter>);
 
-		return <TableDownloadMenu 
-			caption={ formatter } 
-			linkCaption={ false }
-			parentEntity={ this.props.item } 
-			itemInfo={ rowData } 
-			handler={ FilelistActions.download } 
-			location={ this.props.location }/>
+		return (
+			<TableDownloadMenu 
+				caption={ formatter } 
+				linkCaption={ false }
+				parentEntity={ this.props.item } 
+				itemInfo={ rowData } 
+				handler={ FilelistActions.download } 
+				location={ this.props.location }
+			/>
+		);
 	},
 
 	_tokenizePath() {
@@ -118,17 +120,19 @@ const ListBrowser = React.createClass({
 			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 250) }}>
 				<PathBreadcrumb 
 					tokens={this._tokenizePath()} 
-					separator={'/'} 
-					rootPath={'/'} 
+					separator={"/"} 
+					rootPath={"/"} 
 					rootName={this.props.item.user.nicks} 
-					itemClickHandler={this._handleClickDirectory}/>
+					itemClickHandler={this._handleClickDirectory}
+				/>
 
 				<VirtualTable
 					rowClassNameGetter={ this._rowClassNameGetter }
 					defaultSortProperty="name"
 					store={FilelistViewStore}
 					entityId={this.props.item.id}
-					defaultSortAscending={true}>
+					defaultSortAscending={true}
+				>
 					<Column
 						label="Name"
 						width={270}
@@ -160,4 +164,4 @@ const ListBrowser = React.createClass({
 	},
 });
 
-export default ListBrowser
+export default ListBrowser;

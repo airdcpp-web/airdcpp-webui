@@ -10,8 +10,8 @@ const CountLabel = React.createClass({
 	
 	getDefaultProps() {
 		return {
-			className: ""
-		}
+			className: ''
+		};
 	},
 
 	render() {
@@ -20,7 +20,7 @@ const CountLabel = React.createClass({
 			return null;
 		}
 
-		return (<div className={ "ui label " + this.props.className + " " + unreadInfo.color}> { unreadInfo.count } </div>)
+		return (<div className={ 'ui label ' + this.props.className + ' ' + unreadInfo.color}> { unreadInfo.count } </div>);
 	},
 });
 

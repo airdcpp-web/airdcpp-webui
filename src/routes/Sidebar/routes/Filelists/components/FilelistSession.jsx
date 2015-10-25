@@ -2,38 +2,38 @@
 
 import React from 'react';
 
-import ListBrowser from './ListBrowser'
+import ListBrowser from './ListBrowser';
 
-import UserActions from 'actions/UserActions'
-import FilelistActions from 'actions/FilelistActions'
-import Format from 'utils/Format'
+import UserActions from 'actions/UserActions';
+import FilelistActions from 'actions/FilelistActions';
+import Format from 'utils/Format';
 
-import { ActionMenu } from 'components/Menu'
-import TabHeader from 'routes/Sidebar/components/TabHeader'
+import { ActionMenu } from 'components/Menu';
+import TabHeader from 'routes/Sidebar/components/TabHeader';
 
-import OverlayParentDecorator from 'decorators/OverlayParentDecorator'
-import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
-import { RouteContext } from 'react-router'
+import OverlayParentDecorator from 'decorators/OverlayParentDecorator';
+import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
+import { RouteContext } from 'react-router';
 
 const FilelistSession = React.createClass({
 	mixins: [ RouteContext ],
-	displayName: "FilelistSession",
+	displayName: 'FilelistSession',
 	handleClose() {
 		FilelistActions.removeSession(this.props.item.id);
 	},
 
 	stateToString(state) {
-		switch(state) {
-			case "download_pending": return "Download pending";
-			case "downloading": return "Downloading";
-			case "loading": return "Loading";
-			default: return "Loaded";
+		switch (state) {
+			case 'download_pending': return 'Download pending';
+			case 'downloading': return 'Downloading';
+			case 'loading': return 'Loading';
+			default: return 'Loaded';
 		}
 	},
 
 	render() {
 		if (!this.props.item) {
-			return <div className="ui text loader">Loading</div>
+			return <div className="ui text loader">Loading</div>;
 		}
 		
 		const { user } = this.props.item;
@@ -43,7 +43,8 @@ const FilelistSession = React.createClass({
 				caption={ user.nicks } 
 				actions={ UserActions } 
 				itemData={ user } 
-				ids={["message"]}/>
+				ids={[ 'message' ]}
+			/>
 		);
 
 		const icon = (
@@ -57,15 +58,17 @@ const FilelistSession = React.createClass({
 					icon={icon}
 					title={userMenu}
 					buttonClickHandler={this.handleClose}
-					subHeader={ user.hub_names }/>
+					subHeader={ user.hub_names }
+				/>
 
-				{ ((state !== "loaded") ? 
+				{ ((state !== 'loaded') ? 
 					(<div className="ui active text loader">{ this.stateToString(state) }</div>)
 				: (
 					<ListBrowser
 						location={this.props.location}
-						item={this.props.item}/>
-					))}
+						item={this.props.item}
+					/>
+				))}
 			</div>
 		);
 	},

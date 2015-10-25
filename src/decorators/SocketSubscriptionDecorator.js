@@ -1,7 +1,7 @@
-import SocketStore from 'stores/SocketStore'
-import LoginStore from 'stores/LoginStore'
+import SocketStore from 'stores/SocketStore';
+import LoginStore from 'stores/LoginStore';
 
-export default function(store) {
+export default function (store) {
 	let socketSubscriptions = [];
 	let hasSocket = false;
 
@@ -12,7 +12,7 @@ export default function(store) {
 	};
 
 	const removeSocketListeners = () => { 
-		socketSubscriptions.forEach(f => f())
+		socketSubscriptions.forEach(f => f());
 		socketSubscriptions = [];
 	};
 
@@ -25,7 +25,7 @@ export default function(store) {
 		if (store.onSocketConnected) {
 			store.onSocketConnected(addSocketListener);
 		}
-	}
+	};
 
 	const _loginStoreListener = (loginState) => {
 		if (loginState.socketAuthenticated) {

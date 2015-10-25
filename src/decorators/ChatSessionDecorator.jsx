@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-export default function(Component, sessionStore, messageStore, actions) {
+export default function (Component, sessionStore, messageStore, actions) {
 	const ChatSessionDecorator = React.createClass({
 		propTypes: {
 			/**
@@ -10,21 +10,21 @@ export default function(Component, sessionStore, messageStore, actions) {
 			item: React.PropTypes.any.isRequired
 		},
 
-		displayName: "ChatSessionDecorator",
-		mixins: [Reflux.listenTo(messageStore, "onMessagesChanged")],
+		displayName: 'ChatSessionDecorator',
+		mixins: [ Reflux.listenTo(messageStore, 'onMessagesChanged') ],
 
 		onMessagesChanged(messages, id) {
 			if (!this.props.item || id != this.props.item.id) { // NOTE: this should allow type conversion
 				return;
 			}
 
-			this.setState({messages: messages});
+			this.setState({ messages: messages });
 		},
 
 		getInitialState() {
 			return {
 				messages: []
-			}
+			};
 		},
 
 		updateSession(id) {
@@ -53,7 +53,7 @@ export default function(Component, sessionStore, messageStore, actions) {
 		},
 
 		_onMessage(data) {
-			const messages = React.addons.update(this.state.messages, {$push: [ { chat_message: data }]});
+			const messages = React.addons.update(this.state.messages, { $push: [ { chat_message: data } ] });
 			this.setState({ messages: messages });
 		},
 
@@ -71,10 +71,10 @@ export default function(Component, sessionStore, messageStore, actions) {
 
 		render() {
 			if (!this.props.item) {
-				return <div className="ui text loader">Loading</div>
+				return <div className="ui text loader">Loading</div>;
 			}
 
-			return <Component {...this.props} {...this.state}/>
+			return <Component {...this.props} {...this.state}/>;
 		},
 	});
 
