@@ -15,9 +15,11 @@ export default function(Component, semanticModuleName) {
 
     changeHistoryState: true,
     routerWillLeave(nextLocation) {
-      this.changeHistoryState = false;
-
-      this.hide();
+      // Possibly a router bug....
+      if (nextLocation.pathname !== this.props.location.pathname) {
+        this.changeHistoryState = false;
+        this.hide();
+      }
     },
 
     propTypes: {

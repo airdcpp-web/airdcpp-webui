@@ -1,3 +1,5 @@
+import React from 'react';
+
 import createBrowserHistory from 'react-router/node_modules/history/lib/createBrowserHistory'
 import { SIDEBAR_ID } from 'constants/OverlayConstants'
 
@@ -12,16 +14,19 @@ const getOverlayState = (currentLocation, overlayId, data) => {
   if (!state[overlayId]) {
     state[overlayId] = {
       returnTo: currentLocation.pathname,
-      data: data
+      data: data || {}
     };
   }
 
   return state;
 }
 
-const mergeOverlayData = (currentLocation, data, overlayId) => {
-  const newData = Object.assign({}, currentLocation.state[overlayId].data, data);
-  currentLocation.state[overlayId].data = newData;
+const mergeOverlayData = (currentLocation, newData, overlayId) => {
+  return React.addons.update(currentLocation.state, { 
+    [overlayId]: { 
+      data: {$merge: newData} 
+    } 
+  });
 }
 
 const pushModal = (currentLocation, nextPath, overlayId, data) => {
@@ -52,14 +57,14 @@ const pushSidebar = (currentLocation, nextPath, data) => {
 
 // Append new location data when in sidebar layout and create a new history entry
 const pushSidebarData = (currentLocation, data) => {
-  mergeOverlayData(currentLocation, data, SIDEBAR_ID);
-  History.pushState(currentLocation.state, currentLocation.pathname);
+  const newState = mergeOverlayData(currentLocation, data, SIDEBAR_ID);
+  History.pushState(newState, currentLocation.pathname);
 }
 
 // Append new location data when in sidebar layout without creating a new history entry
 const replaceSidebarData = (currentLocation, data) => {
-  mergeOverlayData(currentLocation, data, SIDEBAR_ID);
-  History.replaceState(currentLocation.state, currentLocation.pathname);
+  const newState = mergeOverlayData(currentLocation, data, SIDEBAR_ID);
+  History.replaceState(newState, currentLocation.pathname);
 }
 
 // Shorthand function for receiving the data

@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import FixedDataTable, { Table, Column } from 'fixed-data-table'
-import SetContainerSize from './SetContainerSize'
+import SetContainerSize from 'mixins/SetContainerSize'
 import TouchScrollArea  from './TouchScrollArea';
 
 import SocketService from 'services/SocketService'

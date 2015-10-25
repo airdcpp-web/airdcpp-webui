@@ -10,6 +10,8 @@ import TypeConvert from 'utils/TypeConvert'
 import FilelistSessionStore from 'stores/FilelistSessionStore'
 import FilelistActions from 'actions/FilelistActions'
 
+import '../style.css'
+
 const Messages = React.createClass({
   mixins: [Reflux.connect(FilelistSessionStore, "filelists")],
   displayName: "Filelists",

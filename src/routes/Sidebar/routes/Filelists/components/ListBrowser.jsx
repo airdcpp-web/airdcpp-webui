@@ -14,14 +14,11 @@ import VirtualTable from 'components/table/VirtualTable'
 import FilelistViewStore from 'stores/FilelistViewStore'
 import History from 'utils/History'
 
-//import { Lifecycle } from 'react-router'
+import SetContainerSize from 'mixins/SetContainerSize'
 
 const ListBrowser = React.createClass({
-  //mixins: [ Lifecycle ],
+  mixins: [SetContainerSize], // The table won't handle responsive height quickly enough
   displayName: "ListBrowser",
-
-  //hasClickedDirectory: false,
-  //historyLeaveTimeout: null,
 
   _renderStr(cellData, cellDataKey, rowData) {
     if (cellData === undefined) {
@@ -81,8 +78,6 @@ const ListBrowser = React.createClass({
   },
 
   _handleClickDirectory(path) {
-    //this.hasClickedDirectory = true;
-
     // Handle it through location state data
     History.pushSidebarData(this.props.location, { directory: path });
   },
@@ -94,24 +89,33 @@ const ListBrowser = React.createClass({
       History.replaceSidebarData(this.props.location, { directory: this.props.item.directory });
     } else if (this.props.item.directory !== data.directory) {
       // Opening an existing list from another directory?
-      this.changeDirectory(data.directory);
+      this.sendChangeDirectory(data.directory);
     }
   },
 
   componentWillReceiveProps(nextProps) {
     const { directory } = History.getSidebarData(nextProps.location);
-    if (directory && nextProps.item.directory !== directory) {
-      this.changeDirectory(directory);
+    if (!directory || nextProps.item.directory === directory) {
+      return;
+    }
+
+    const currentData = History.getSidebarData(this.props.location);
+    if (currentData && currentData.directory !== directory) {
+      // It's our change
+      this.sendChangeDirectory(directory);
+    } else {
+      // Change initiated by another session/GUI, update our location
+      History.replaceSidebarData(nextProps.location, { directory: this.props.item.directory });
     }
   },
 
-  changeDirectory(directory) {
+  sendChangeDirectory(directory) {
     FilelistActions.changeDirectory(this.props.item.user.cid, directory);
   },
 
   render() {
     return (
-      <div className="filelist-browser">
+      <div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 250) }}>
         <PathBreadcrumb 
           tokens={this._tokenizePath()} 
           separator={'/'} 

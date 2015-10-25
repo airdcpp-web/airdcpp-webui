@@ -1,6 +1,4 @@
 
-
-//var detectResize   = require('./detect-element-resize.js');
 import _ from 'lodash';
 
 var SetContainerSize = {
@@ -50,11 +48,13 @@ var SetContainerSize = {
 
 		  this.setState({
 		    width  : width,
-		    height : height
+		    height : height,
+		    windowWidth: window.innerWidth,
+		    windowHeight: window.innerHeight
 		  });
 		}
 
-		setTimeout(this._update, 250);
+		//setTimeout(this._update, 250);
 	},
 };
 

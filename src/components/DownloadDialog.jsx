@@ -172,7 +172,7 @@ export default React.createClass({
   handleDownload(path) {
     this.props.downloadHandler({
       target_name: this.props.itemInfo.name, // possibly allow changing this later...
-      target_path: path,
+      target_directory: path,
       target_type: 0,
       priority: PriorityEnum.DEFAULT
     });

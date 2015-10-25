@@ -1,0 +1,23 @@
+#sidebar .virtual-table {
+	flex: 1 100 100%;
+}
+
+.filelist-browser {
+	margin-bottom: 10px;
+}
+
+.filelist-browser .ui.segment {
+	margin-bottom: 10px;
+}
+
+.top-menu-layout {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.top-menu-layout .menu-bar {
+	border-radius: 0px !important;
+	padding-bottom: 0px;
+	margin-bottom: 20px;
+}
