@@ -1,7 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-export default function (Component, sessionStore, messageStore, actions) {
+// Decorator for React components that handle chat sessions
+export default function (Component, messageStore, actions) {
 	const ChatSessionDecorator = React.createClass({
 		propTypes: {
 			/**

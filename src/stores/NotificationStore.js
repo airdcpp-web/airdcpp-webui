@@ -28,6 +28,15 @@ const NotificationStore = Reflux.createStore({
 		this.trigger('error', ...props);
 	},
 
+	onApiError(title, error, uid) {
+		this.trigger('error', { 
+			title: title,
+			message: error.reason + ' (code ' + error.code + ')',
+			uid: uid,
+			dismissible: false, // Won't work well with overlays
+		});
+	},
+
 	onSocketConnected(addSocketListener) {
 		addSocketListener(QUEUE_MODULE_URL, BUNDLE_STATUS, this._onBundleStatus);
 	},

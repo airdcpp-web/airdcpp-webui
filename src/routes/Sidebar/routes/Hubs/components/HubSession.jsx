@@ -4,7 +4,6 @@ import React from 'react';
 
 import MessageView from 'routes/Sidebar/components/MessageView';
 
-import HubSessionStore from 'stores/HubSessionStore';
 import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
 
@@ -148,4 +147,4 @@ const HubSession = React.createClass({
 	},
 });
 
-export default ChatSessionDecorator(HubSession, HubSessionStore, HubMessageStore, HubActions);
+export default ChatSessionDecorator(HubSession, HubMessageStore, HubActions);

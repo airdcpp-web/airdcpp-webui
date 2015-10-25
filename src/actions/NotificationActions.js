@@ -5,7 +5,8 @@ export const NotificationActions = Reflux.createActions([
 	'success',
 	'info',
 	'warning',
-	'error'
+	'error',
+	'apiError',
 ]);
 
 export default NotificationActions;

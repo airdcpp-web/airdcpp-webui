@@ -34,7 +34,7 @@ export default function (Component, overlayId, createPortal = true) {
 		const { state } = props.location;
 		return React.cloneElement(props.children, { 
 			onHide: () => { 
-				closing = true; 
+				//closing = true; 
 			},
 			onHidden: () => {
 				replaceState(props);

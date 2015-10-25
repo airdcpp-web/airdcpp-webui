@@ -1,4 +1,3 @@
-//import Reflux from "reflux";
 import React from 'react';
 
 export default function (store, actions) {

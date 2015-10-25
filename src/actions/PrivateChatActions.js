@@ -6,16 +6,14 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import NotificationActions from 'actions/NotificationActions';
+import ChatActionDecorator from 'decorators/ChatActionDecorator';
 
 const PrivateChatActions = Reflux.createActions([
-	{ 'fetchMessages': { asyncResult: true } },
 	{ 'fetchSessions': { asyncResult: true } },
 	{ 'createSession': { asyncResult: true } },
 	{ 'removeSession': { asyncResult: true } },
-	{ 'sendMessage': { asyncResult: true } },
 	'connectCCPM',
 	'disconnectCCPM',
-	'setRead',
 	'sessionChanged'
 ]);
 
@@ -26,30 +24,16 @@ PrivateChatActions.fetchSessions.listen(function () {
 		.catch(that.failed);
 });
 
-PrivateChatActions.fetchMessages.listen(function (cid) {
-	let that = this;
-	SocketService.get(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/messages/' + MAX_PRIVATE_CHAT_MESSAGES)
-		.then((data) => that.completed(cid, data))
-		.catch((error) => that.failed(cid, error));
-});
-
 PrivateChatActions.connectCCPM.listen(function (cid) {
 	let that = this;
 	SocketService.post(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/ccpm')
 		.then(that.completed)
-		.catch(this.failed);
+		.catch(that.failed);
 });
 
 PrivateChatActions.disconnectCCPM.listen(function (cid) {
 	let that = this;
 	SocketService.delete(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/ccpm')
-		.then(that.completed)
-		.catch(this.failed);
-});
-
-PrivateChatActions.setRead.listen(function (cid) {
-	let that = this;
-	SocketService.post(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/read')
 		.then(that.completed)
 		.catch(that.failed);
 });
@@ -66,47 +50,27 @@ PrivateChatActions.createSession.listen(function (user, location) {
 		cid: user.cid,
 		hub_url: user.hub_url
 	})
-		.then((data) => that.completed(data, user, location))
+		.then(that.completed.bind(that, user, location))
 		.catch(that.failed);
 });
 
-PrivateChatActions.createSession.completed.listen(function (data, user, location) {
+PrivateChatActions.createSession.completed.listen(function (user, location, data) {
 	History.pushSidebar(location, 'messages/session/' + user.cid);
 });
 
 PrivateChatActions.createSession.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to create chat session',
-		message: error.message
-	});
+	NotificationActions.apiError('Failed to create chat session', error);
 });
 
 PrivateChatActions.removeSession.listen(function (cid) {
 	let that = this;
 	SocketService.delete(PRIVATE_CHAT_SESSION_URL + '/' + cid)
 		.then(that.completed)
-		.catch(that.failed);
+		.catch(that.failed.bind(that, cid));
 });
 
-PrivateChatActions.removeSession.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to remove chat session',
-		message: error.message
-	});
+PrivateChatActions.removeSession.failed.listen(function (cid, error) {
+	NotificationActions.apiError('Failed to remove chat session', error, cid);
 });
 
-PrivateChatActions.sendMessage.listen(function (cid, message) {
-	let that = this;
-	SocketService.post(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/message', { message: message })
-		.then(that.completed)
-		.catch(that.failed);
-});
-
-PrivateChatActions.sendMessage.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to send message',
-		message: error.message
-	});
-});
-
-export default PrivateChatActions;
+export default ChatActionDecorator(PrivateChatActions, PRIVATE_CHAT_SESSION_URL, MAX_PRIVATE_CHAT_MESSAGES);

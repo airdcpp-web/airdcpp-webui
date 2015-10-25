@@ -6,13 +6,12 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 import HubSessionStore from 'stores/HubSessionStore';
 import NotificationActions from 'actions/NotificationActions';
+import ChatActionDecorator from 'decorators/ChatActionDecorator';
 
 const HubActions = Reflux.createActions([
-	{ 'fetchMessages': { asyncResult: true } },
 	{ 'fetchSessions': { asyncResult: true } },
 	{ 'createSession': { asyncResult: true } },
 	{ 'removeSession': { asyncResult: true } },
-	{ 'sendMessage': { asyncResult: true } },
 	{ 'redirect': { asyncResult: true } },
 	{ 'password': { asyncResult: true } },
 	{ 'reconnect': { 
@@ -23,7 +22,6 @@ const HubActions = Reflux.createActions([
 		asyncResult: true,
 		displayName: 'Add to favorites', 
 		icon: 'yellow star' } },
-	'setRead',
 	'sessionChanged',
 ]);
 
@@ -34,32 +32,25 @@ HubActions.fetchSessions.listen(function () {
 		.catch(that.failed);
 });
 
-HubActions.fetchMessages.listen(function (id) {
-	let that = this;
-	SocketService.get(HUB_SESSION_URL + '/' + id + '/messages/' + MAX_HUB_CHAT_MESSAGES)
-		.then((data) => that.completed(id, data))
-		.catch((error) => that.failed(id, error));
-});
-
 HubActions.password.listen(function (hub, password) {
 	let that = this;
 	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/password', { password: password })
-		.then(data => that.completed(hub, data))
-		.catch(error => that.failed(hub, error));
+		.then(that.completed.bind(that, hub))
+		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.redirect.listen(function (hub) {
 	let that = this;
 	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/redirect')
-		.then(data => that.completed(hub, data))
-		.catch(error => that.failed(hub, error));
+		.then(that.completed.bind(that, hub))
+		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.favorite.listen(function (hub) {
 	let that = this;
 	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/favorite')
-		.then(data => that.completed(hub, data))
-		.catch(error => that.failed(hub, error));
+		.then(that.completed.bind(that, hub))
+		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.favorite.completed.listen(function (hub) {
@@ -83,13 +74,6 @@ HubActions.reconnect.listen(function (hub) {
 		.catch(this.failed);
 });
 
-HubActions.setRead.listen(function (id) {
-	let that = this;
-	SocketService.post(HUB_SESSION_URL + '/' + id + '/read')
-		.then(that.completed)
-		.catch(that.failed);
-});
-
 HubActions.createSession.listen(function (hubUrl, location) {
 	let session = HubSessionStore.getSession(hubUrl);
 	if (session) {
@@ -101,47 +85,33 @@ HubActions.createSession.listen(function (hubUrl, location) {
 	SocketService.post(HUB_SESSION_URL, {
 		hub_url: hubUrl,
 	})
-		.then((data) => that.completed(data, location))
+		.then(that.completed.bind(that, location))
 		.catch(that.failed);
 });
 
-HubActions.createSession.completed.listen(function (data, location) {
+HubActions.createSession.completed.listen(function (location, data) {
 	History.pushSidebar(location, 'hubs/session/' + data.id);
 });
 
 HubActions.createSession.failed.listen(function (error) {
 	NotificationActions.error({ 
 		title: 'Failed to create hub session',
-		message: error.message,
+		message: error.reason,
 	});
 });
 
 HubActions.removeSession.listen(function (id) {
 	let that = this;
 	SocketService.delete(HUB_SESSION_URL + '/' + id)
-		.then(that.completed)
-		.catch(that.failed);
+		.then(that.completed.bind(that, id))
+		.catch(that.failed.bind(that, id));
 });
 
 HubActions.removeSession.failed.listen(function (error) {
 	NotificationActions.error({ 
 		title: 'Failed to remove hub session',
-		message: error.message,
+		message: error.reason,
 	});
 });
 
-HubActions.sendMessage.listen(function (id, message) {
-	let that = this;
-	SocketService.post(HUB_SESSION_URL + '/' + id + '/message', { message: message })
-		.then(that.completed)
-		.catch(that.failed);
-});
-
-HubActions.sendMessage.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to send message',
-		message: error.message,
-	});
-});
-
-export default HubActions;
+export default ChatActionDecorator(HubActions, HUB_SESSION_URL, MAX_HUB_CHAT_MESSAGES);

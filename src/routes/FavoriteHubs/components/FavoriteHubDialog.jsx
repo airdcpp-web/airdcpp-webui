@@ -128,7 +128,7 @@ export default React.createClass({
 		if (!!error) {
 			options.fields[error.field] = options.fields[error.field] || {};
 			Object.assign(options.fields[error.field], {
-				error: error.message,
+				error: error.reason,
 				hasError: true
 			});
 		}

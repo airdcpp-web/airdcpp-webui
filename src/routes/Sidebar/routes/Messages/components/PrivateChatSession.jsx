@@ -4,7 +4,6 @@ import React from 'react';
 
 import MessageView from 'routes/Sidebar/components/MessageView';
 
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
@@ -86,4 +85,4 @@ const ChatSession = React.createClass({
 	},
 });
 
-export default ChatSessionDecorator(ChatSession, PrivateChatSessionStore, PrivateChatMessageStore, PrivateChatActions);
+export default ChatSessionDecorator(ChatSession, PrivateChatMessageStore, PrivateChatActions);
