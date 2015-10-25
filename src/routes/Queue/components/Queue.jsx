@@ -13,201 +13,201 @@ import DropdownItem from 'components/semantic/DropdownItem'
 import QueueStore from 'stores/QueueStore'
 
 export default React.createClass({
-  rowGetter(rowIndex) {
-    return this.state.bundles[Object.keys(this.state.bundles)[rowIndex]];
-  },
+	rowGetter(rowIndex) {
+		return this.state.bundles[Object.keys(this.state.bundles)[rowIndex]];
+	},
 
-  renderStatus(cellData, cellDataKey, rowData) {
-    if (cellData === undefined) {
-      return cellData;
-    }
+	renderStatus(cellData, cellDataKey, rowData) {
+		if (cellData === undefined) {
+			return cellData;
+		}
 
-    const Progress = React.createClass({
-      render: function() {
-        const cNames = classNames(
-          "ui", 
-          "progress", 
-          { "grey": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
-          { "blue": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
-          { "success": cellData.id >= StatusEnum.STATUS_FINISHED },
-          { "error": cellData.id == StatusEnum.STATUS_FAILED_MISSING || cellData.id == StatusEnum.STATUS_SHARING_FAILED || cellData.id == StatusEnum.STATUS_HASH_FAILED }
-        );
+		const Progress = React.createClass({
+			render: function() {
+				const cNames = classNames(
+					"ui", 
+					"progress", 
+					{ "grey": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
+					{ "blue": cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
+					{ "success": cellData.id >= StatusEnum.STATUS_FINISHED },
+					{ "error": cellData.id == StatusEnum.STATUS_FAILED_MISSING || cellData.id == StatusEnum.STATUS_SHARING_FAILED || cellData.id == StatusEnum.STATUS_HASH_FAILED }
+				);
 
-        const percent = (rowData.downloaded_bytes*100) / rowData.size;
-        return (
-          <div className={ cNames } data-percent= { percent }>
-            <div className="bar" style={{transitionDuration: 300 + 'ms'}, { width: percent + '%'}}>
-              <div className="progress"></div>
-            </div>
-            <div className="label">{cellData.str}</div>
-          </div>
-        );
-      }
-    });
+				const percent = (rowData.downloaded_bytes*100) / rowData.size;
+				return (
+					<div className={ cNames } data-percent= { percent }>
+						<div className="bar" style={{transitionDuration: 300 + 'ms'}, { width: percent + '%'}}>
+							<div className="progress"></div>
+						</div>
+						<div className="label">{cellData.str}</div>
+					</div>
+				);
+			}
+		});
 
-    return <Progress/>; 
-  },
+		return <Progress/>; 
+	},
 
-  renderPriority(cellData, cellDataKey, rowData) {
-    if (cellData === undefined) {
-      return undefined
-    }
+	renderPriority(cellData, cellDataKey, rowData) {
+		if (cellData === undefined) {
+			return undefined
+		}
 
-    if (rowData.status.id >= StatusEnum.STATUS_FINISHED) {
-      return ''
-    }
+		if (rowData.status.id >= StatusEnum.STATUS_FINISHED) {
+			return ''
+		}
 
-    const PriorityListItem = React.createClass({
-      handleClick: function() {
-        QueueActions.setBundlePriority(this.props.item.id, this.props.priority.id);
-      },
+		const PriorityListItem = React.createClass({
+			handleClick: function() {
+				QueueActions.setBundlePriority(this.props.item.id, this.props.priority.id);
+			},
 
-      render: function() {
-        return (
-          <DropdownItem active={this.props.item.priority.id === this.props.priority.id } onClick={ this.handleClick }>{ this.props.priority.str }</DropdownItem>
-        );
-      }
-    });
+			render: function() {
+				return (
+					<DropdownItem active={this.props.item.priority.id === this.props.priority.id } onClick={ this.handleClick }>{ this.props.priority.str }</DropdownItem>
+				);
+			}
+		});
 
-    const PriorityCell = React.createClass({
-      render: function() {
-        let self = this;
-        const trigger = (<div>
-          { this.props.itemPrio.str }
-          <i className="dropdown icon"></i>
-        </div>);
+		const PriorityCell = React.createClass({
+			render: function() {
+				let self = this;
+				const trigger = (<div>
+					{ this.props.itemPrio.str }
+					<i className="dropdown icon"></i>
+				</div>);
 
-        return (
-          <TableDropdown caption={ this.props.itemPrio.str }>
-              {Object.keys(PriorityEnum.properties).map((prioKey) => {
-                return <PriorityListItem key={ prioKey } priority={ PriorityEnum.properties[prioKey] } {...self.props}/>;
-              })}
-          </TableDropdown>
-        );
-      }
-    });
+				return (
+					<TableDropdown caption={ this.props.itemPrio.str }>
+							{Object.keys(PriorityEnum.properties).map((prioKey) => {
+								return <PriorityListItem key={ prioKey } priority={ PriorityEnum.properties[prioKey] } {...self.props}/>;
+							})}
+					</TableDropdown>
+				);
+			}
+		});
 
-    return <PriorityCell itemPrio={ cellData } item={ rowData }/>;
-  },
+		return <PriorityCell itemPrio={ cellData } item={ rowData }/>;
+	},
 
-  getInitialState: function() {
-    return { modalIsOpen: false };
-  },
+	getInitialState: function() {
+		return { modalIsOpen: false };
+	},
 
-  openModal: function() {
-    this.setState({modalIsOpen: true});
-  },
+	openModal: function() {
+		this.setState({modalIsOpen: true});
+	},
 
-  closeModal: function() {
-    this.setState({modalIsOpen: false});
-  },
+	closeModal: function() {
+		this.setState({modalIsOpen: false});
+	},
 
-  renderType(cellData, cellDataKey, rowData) {
-    if (cellData === undefined) {
-      return cellData;
-    }
+	renderType(cellData, cellDataKey, rowData) {
+		if (cellData === undefined) {
+			return cellData;
+		}
 
-    if (rowData.type.type !== "directory") {
-      return cellData.str;
-    }
+		if (rowData.type.type !== "directory") {
+			return cellData.str;
+		}
 
-    return (
-      <div>
-        <a onClick={this.openModal}>
-          { cellData.str }
-        </a>
-    </div>); 
-  },
+		return (
+			<div>
+				<a onClick={this.openModal}>
+					{ cellData.str }
+				</a>
+		</div>); 
+	},
 
-  renderSources(cellData, cellDataKey, rowData) {
-    if (cellData === undefined) {
-      return cellData;
-    }
+	renderSources(cellData, cellDataKey, rowData) {
+		if (cellData === undefined) {
+			return cellData;
+		}
 
-    if (rowData.status.id >= StatusEnum.STATUS_DOWNLOADED) {
-      return '';
-    }
+		if (rowData.status.id >= StatusEnum.STATUS_DOWNLOADED) {
+			return '';
+		}
 
-    return (<a onClick={this.openModal} className="item">
-      { cellData.str }
-    </a>); 
-  },
+		return (<a onClick={this.openModal} className="item">
+			{ cellData.str }
+		</a>); 
+	},
 
-  renderName(cellData, cellDataKey, rowData) {
-    if (cellData === undefined) {
-      return cellData;
-    }
+	renderName(cellData, cellDataKey, rowData) {
+		if (cellData === undefined) {
+			return cellData;
+		}
 
-    const formatter = (
-      <Formatter.FileNameFormatter item={ rowData.type }>
-        { cellData }
-      </Formatter.FileNameFormatter>);
-    
-    return <TableActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
-  },
+		const formatter = (
+			<Formatter.FileNameFormatter item={ rowData.type }>
+				{ cellData }
+			</Formatter.FileNameFormatter>);
+		
+		return <TableActionMenu caption={ formatter } actions={ QueueActions } ids={[ "searchBundle", "removeBundle" ]} itemData={ rowData }/>;
+	},
 
-  render() {
-    return (
-      <VirtualTable
-        defaultSortProperty="name"
-        store={QueueStore}>
-        <Column
-          label="Name"
-          width={270}
-          flexGrow={5}
-          dataKey="name"
-          cellRenderer={ this.renderName }
-        />
-        <Column
-          label="Size"
-          width={100}
-          dataKey="size"
-          cellRenderer={ Formatter.formatSize }
-        />
-        {/*<Column
-          label="Type/content"
-          width={100}
-          dataKey="type"
-          cellRenderer={ this.renderType }
-        />*/}
-        <Column
-          label="Sources"
-          width={100}
-          dataKey="sources"
-          cellRenderer={ this.renderSources }
-        />
-        <Column
-          label="Status"
-          width={300}
-          flexGrow={3}
-          dataKey="status"
-          cellRenderer={ this.renderStatus }
-        />
-        <Column
-          label="Speed"
-          width={100}
-          dataKey="speed"
-          cellRenderer={ Formatter.formatSpeedIfRunning.bind(Formatter) }
-        />
-        <Column
-          label="Priority"
-          width={150}
-          dataKey="priority"
-          cellRenderer={ this.renderPriority }
-        />
-        {/*<Column
-          label="Time added"
-          width={100}
-          dataKey="time_added"
-          cellRenderer={ Formatter.formatDateTime }
-        />
-        <Column
-          label="Time finished"
-          width={100}
-          dataKey="time_finished"
-          cellRenderer={ Formatter.formatDateTime }
-        />*/}
-      </VirtualTable>
-    );
-  }
+	render() {
+		return (
+			<VirtualTable
+				defaultSortProperty="name"
+				store={QueueStore}>
+				<Column
+					label="Name"
+					width={270}
+					flexGrow={5}
+					dataKey="name"
+					cellRenderer={ this.renderName }
+				/>
+				<Column
+					label="Size"
+					width={100}
+					dataKey="size"
+					cellRenderer={ Formatter.formatSize }
+				/>
+				{/*<Column
+					label="Type/content"
+					width={100}
+					dataKey="type"
+					cellRenderer={ this.renderType }
+				/>*/}
+				<Column
+					label="Sources"
+					width={100}
+					dataKey="sources"
+					cellRenderer={ this.renderSources }
+				/>
+				<Column
+					label="Status"
+					width={300}
+					flexGrow={3}
+					dataKey="status"
+					cellRenderer={ this.renderStatus }
+				/>
+				<Column
+					label="Speed"
+					width={100}
+					dataKey="speed"
+					cellRenderer={ Formatter.formatSpeedIfRunning.bind(Formatter) }
+				/>
+				<Column
+					label="Priority"
+					width={150}
+					dataKey="priority"
+					cellRenderer={ this.renderPriority }
+				/>
+				{/*<Column
+					label="Time added"
+					width={100}
+					dataKey="time_added"
+					cellRenderer={ Formatter.formatDateTime }
+				/>
+				<Column
+					label="Time finished"
+					width={100}
+					dataKey="time_finished"
+					cellRenderer={ Formatter.formatDateTime }
+				/>*/}
+			</VirtualTable>
+		);
+	}
 });

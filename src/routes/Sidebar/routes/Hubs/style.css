@@ -1,6 +1,6 @@
 .hub-action-prompt {
-    flex-direction: column;
-    align-items: flex-start !important;
+	flex-direction: column;
+	align-items: flex-start !important;
 }
 
 .hub-action-prompt .header {

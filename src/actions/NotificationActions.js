@@ -2,10 +2,10 @@
 import Reflux from 'reflux';
 
 export const NotificationActions = Reflux.createActions([
-  "success",
-  "info",
-  "warning",
-  "error"
+	"success",
+	"info",
+	"warning",
+	"error"
 ]);
 
 export default NotificationActions;

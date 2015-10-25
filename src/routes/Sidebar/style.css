@@ -49,8 +49,8 @@
 
 #sidebar .tab-header {
 	display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+	align-items: flex-start;
+	justify-content: space-between;
 }
 
 #sidebar .side-menu-layout .tab-header {
@@ -62,8 +62,8 @@
 }
 
 #sidebar .tab-header .header {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 #sidebar .header.new {

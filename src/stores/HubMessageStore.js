@@ -7,14 +7,14 @@ import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 import MessageStoreDecorator from 'decorators/MessageStoreDecorator'
 
 const HubMessageStore = Reflux.createStore({
-  getInitialState: function() {
-    return this.getMessages();
-  },
+	getInitialState: function() {
+		return this.getMessages();
+	},
 
-  onSocketConnected(addSocketListener) {
-    addSocketListener(HUB_MODULE_URL, HUB_CHAT_MESSAGE, this._onChatMessage);
-    addSocketListener(HUB_MODULE_URL, HUB_STATUS_MESSAGE, this._onStatusMessage);
-  },
+	onSocketConnected(addSocketListener) {
+		addSocketListener(HUB_MODULE_URL, HUB_CHAT_MESSAGE, this._onChatMessage);
+		addSocketListener(HUB_MODULE_URL, HUB_STATUS_MESSAGE, this._onStatusMessage);
+	},
 });
 
 

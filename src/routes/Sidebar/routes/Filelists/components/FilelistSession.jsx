@@ -16,59 +16,59 @@ import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants'
 import { RouteContext } from 'react-router'
 
 const FilelistSession = React.createClass({
-  mixins: [ RouteContext ],
-  displayName: "FilelistSession",
-  handleClose() {
-    FilelistActions.removeSession(this.props.item.id);
-  },
+	mixins: [ RouteContext ],
+	displayName: "FilelistSession",
+	handleClose() {
+		FilelistActions.removeSession(this.props.item.id);
+	},
 
-  stateToString(state) {
-    switch(state) {
-      case "download_pending": return "Download pending";
-      case "downloading": return "Downloading";
-      case "loading": return "Loading";
-      default: return "Loaded";
-    }
-  },
+	stateToString(state) {
+		switch(state) {
+			case "download_pending": return "Download pending";
+			case "downloading": return "Downloading";
+			case "loading": return "Loading";
+			default: return "Loaded";
+		}
+	},
 
-  render() {
-    if (!this.props.item) {
-      return <div className="ui text loader">Loading</div>
-    }
-    
-    const { user } = this.props.item;
-    const userMenu = (
-      <ActionMenu 
-        location={this.props.location}
-        caption={ user.nicks } 
-        actions={ UserActions } 
-        itemData={ user } 
-        ids={["message"]}/>
-    );
+	render() {
+		if (!this.props.item) {
+			return <div className="ui text loader">Loading</div>
+		}
+		
+		const { user } = this.props.item;
+		const userMenu = (
+			<ActionMenu 
+				location={this.props.location}
+				caption={ user.nicks } 
+				actions={ UserActions } 
+				itemData={ user } 
+				ids={["message"]}/>
+		);
 
-    const icon = (
-      <Format.UserIconFormatter size="large" flags={user.flags} />
-    );
+		const icon = (
+			<Format.UserIconFormatter size="large" flags={user.flags} />
+		);
 
-    const state = this.props.item.state.id;
-    return (
-      <div className="filelist-session">
-        <TabHeader
-          icon={icon}
-          title={userMenu}
-          buttonClickHandler={this.handleClose}
-          subHeader={ user.hub_names }/>
+		const state = this.props.item.state.id;
+		return (
+			<div className="filelist-session">
+				<TabHeader
+					icon={icon}
+					title={userMenu}
+					buttonClickHandler={this.handleClose}
+					subHeader={ user.hub_names }/>
 
-        { ((state !== "loaded") ? 
-          (<div className="ui active text loader">{ this.stateToString(state) }</div>)
-        : (
-          <ListBrowser
-            location={this.props.location}
-            item={this.props.item}/>
-          ))}
-      </div>
-    );
-  },
+				{ ((state !== "loaded") ? 
+					(<div className="ui active text loader">{ this.stateToString(state) }</div>)
+				: (
+					<ListBrowser
+						location={this.props.location}
+						item={this.props.item}/>
+					))}
+			</div>
+		);
+	},
 });
 
 export default OverlayParentDecorator(FilelistSession, DOWNLOAD_MODAL_ID);

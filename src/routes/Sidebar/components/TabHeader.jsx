@@ -1,51 +1,51 @@
 import React from 'react';
 
 const TabHeader = React.createClass({
-  propTypes: {
-    /**
-     * Header title
-     */
-    title: React.PropTypes.node.isRequired,
+	propTypes: {
+		/**
+		 * Header title
+		 */
+		title: React.PropTypes.node.isRequired,
 
-    /**
-     * Subheader
-     */
-    subHeader: React.PropTypes.node,
+		/**
+		 * Subheader
+		 */
+		subHeader: React.PropTypes.node,
 
-    /**
-     * Icon to display
-     */
-    icon: React.PropTypes.node.isRequired,
+		/**
+		 * Icon to display
+		 */
+		icon: React.PropTypes.node.isRequired,
 
-    /**
-     * Icon to display
-     */
-    buttonClickHandler: React.PropTypes.func.isRequired,
-  },
+		/**
+		 * Icon to display
+		 */
+		buttonClickHandler: React.PropTypes.func.isRequired,
+	},
 
-  displayName: "TabHeader",
-  getDefaultProps() {
-    return {
-      buttonCaption: "Close"
-    }
-  },
+	displayName: "TabHeader",
+	getDefaultProps() {
+		return {
+			buttonCaption: "Close"
+		}
+	},
 
-  render() {
-    return (
-      <div className="tab-header">
-        <h2 className="ui header">
-          { this.props.icon }
-          <div className="content">
-            { this.props.title }
-            <div className="sub header">{ this.props.subHeader }</div>
-          </div>
-        </h2>
-        <div className="ui button" onClick={this.props.buttonClickHandler}>
-          {this.props.buttonCaption}
-        </div>
-      </div>
-    );
-  },
+	render() {
+		return (
+			<div className="tab-header">
+				<h2 className="ui header">
+					{ this.props.icon }
+					<div className="content">
+						{ this.props.title }
+						<div className="sub header">{ this.props.subHeader }</div>
+					</div>
+				</h2>
+				<div className="ui button" onClick={this.props.buttonClickHandler}>
+					{this.props.buttonCaption}
+				</div>
+			</div>
+		);
+	},
 });
 
 export default TabHeader

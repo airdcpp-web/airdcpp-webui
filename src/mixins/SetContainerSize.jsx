@@ -10,15 +10,15 @@ var SetContainerSize = {
 	},
 
 	componentDidMount : function(){
-	    var win = window;
-	    if (win.addEventListener) {
-	      win.addEventListener('resize', _.throttle(this._update, 250), false);
-	    } else if (win.attachEvent) {
-	      win.attachEvent('onresize', _.throttle(this._update, 250));
-	    } else {
-	      win.onresize = this._update;
-	    }
-	    this._update();
+			var win = window;
+			if (win.addEventListener) {
+				win.addEventListener('resize', _.throttle(this._update, 250), false);
+			} else if (win.attachEvent) {
+				win.attachEvent('onresize', _.throttle(this._update, 250));
+			} else {
+				win.onresize = this._update;
+			}
+			this._update();
 	},
 
 	componentWillReceiveProps(props) {
@@ -28,17 +28,17 @@ var SetContainerSize = {
 	componentWillUnmount() {
 		var win = window;
 		if(win.removeEventListener) {
-		  win.removeEventListener('resize', _.throttle(this._update, 250), false);
+			win.removeEventListener('resize', _.throttle(this._update, 250), false);
 		} else if(win.removeEvent) {
-		  win.removeEvent('onresize', _.throttle(this._update, 250), false);
+			win.removeEvent('onresize', _.throttle(this._update, 250), false);
 		} else {
-		  win.onresize = null;
+			win.onresize = null;
 		}
 	},
 
 	_update() {
 		if (this.isMounted()) {
-		  var node = this.getDOMNode();
+			var node = this.getDOMNode();
 
 			var borderWidth = node.offsetWidth - node.clientWidth;
 			var borderHeight = node.offsetHeight - node.clientHeight;
@@ -46,12 +46,12 @@ var SetContainerSize = {
 			var width = node.parentNode.offsetWidth - borderWidth;
 			var height = node.parentNode.offsetHeight - borderHeight;
 
-		  this.setState({
-		    width  : width,
-		    height : height,
-		    windowWidth: window.innerWidth,
-		    windowHeight: window.innerHeight
-		  });
+			this.setState({
+				width	: width,
+				height : height,
+				windowWidth: window.innerWidth,
+				windowHeight: window.innerHeight
+			});
 		}
 
 		//setTimeout(this._update, 250);

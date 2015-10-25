@@ -15,30 +15,30 @@ if (LoginStore.token) {
 
 function requireAuth(nextState, replaceState) {
 	if (!LoginStore.user) {
-	    replaceState({ nextPath: nextState.location.pathname }, '/login', null);
+			replaceState({ nextPath: nextState.location.pathname }, '/login', null);
 	}
 }
 
 var routeConfig = [
-    { 
-    	path: 'login', 
-    	component: require('./components/Login'), 
-    }, 
-    { 
-      component: require('./components/AuthenticatedApp'),
-      path: '/',
-      onEnter: requireAuth,
-      indexRoute: require('./routes/Home'),
-      childRoutes: [
-        require('./routes/FavoriteHubs'),
-        require('./routes/Queue'),
-        require('./routes/Search'),
-        require('./routes/Sidebar'),
-      ]
-    }
+		{ 
+			path: 'login', 
+			component: require('./components/Login'), 
+		}, 
+		{ 
+			component: require('./components/AuthenticatedApp'),
+			path: '/',
+			onEnter: requireAuth,
+			indexRoute: require('./routes/Home'),
+			childRoutes: [
+				require('./routes/FavoriteHubs'),
+				require('./routes/Queue'),
+				require('./routes/Search'),
+				require('./routes/Sidebar'),
+			]
+		}
 ]
 
 React.render(
-  <Router history={ History } routes={routeConfig} />,
-  document.getElementById('container-main')
+	<Router history={ History } routes={routeConfig} />,
+	document.getElementById('container-main')
 );

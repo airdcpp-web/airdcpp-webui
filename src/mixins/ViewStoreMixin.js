@@ -24,8 +24,8 @@ export default {
 
 	setEntityId(entityId) {
 		this._entityId = entityId;
-  	this._removeMessageListener();
-  	this.addListener();
+		this._removeMessageListener();
+		this.addListener();
 	},
 
 	addListener() {
@@ -37,13 +37,13 @@ export default {
 	},
 
 	get viewUrl() {
-    let viewUrl = this._apiUrl + '/';
-    if (this._entityId) {
-    	viewUrl += this._entityId + '/';
-    }
+		let viewUrl = this._apiUrl + '/';
+		if (this._entityId) {
+			viewUrl += this._entityId + '/';
+		}
 
-    viewUrl += this._viewName;
-    return viewUrl
+		viewUrl += this._viewName;
+		return viewUrl
 	},
 
 	get viewName() {
@@ -55,8 +55,8 @@ export default {
 	},
 
 	_addItems(itemsObj) {
-	  //let pos = 0;
-	  this._items = itemsObj.reduce((newViewItems, rawItem, index) => {
+		//let pos = 0;
+		this._items = itemsObj.reduce((newViewItems, rawItem, index) => {
 		// Either a new item, existing one in a different position or we are updating properties
 		let viewItem = this._findItem(rawItem.id) || { id: rawItem.id };
 
@@ -69,7 +69,7 @@ export default {
 		newViewItems[this._startPos + index] = viewItem;
 
 		return newViewItems;
-	  }.bind(this), []);
+		}.bind(this), []);
 	},
 
 	_findItem(id) {
@@ -77,18 +77,18 @@ export default {
 	},
 
 	_handleUpdate(obj) {
-	  if(obj.range_start != undefined) {
-	    this._startPos = obj.range_start;
-	  }
+		if(obj.range_start != undefined) {
+			this._startPos = obj.range_start;
+		}
 
-	  if (obj.total_items != undefined) {
-	    this._rowCount = obj.total_items;
-	  }
+		if (obj.total_items != undefined) {
+			this._rowCount = obj.total_items;
+		}
 
-	  if (obj.items != undefined) {
-	    this._addItems(obj.items);
-	  }
+		if (obj.items != undefined) {
+			this._addItems(obj.items);
+		}
 
-	  this.trigger(this._items);
+		this.trigger(this._items);
 	}
 };

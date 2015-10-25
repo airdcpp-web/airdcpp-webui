@@ -5,52 +5,52 @@ import SocketStore from 'stores/SocketStore'
 import {LOGIN_URL, CONNECT_URL, LOGOUT_URL} from 'constants/LoginConstants';
 
 export const LoginActions = Reflux.createActions([
-  { "login": { asyncResult: true} },
-  { "connect": { asyncResult: true} },
-  { "logout": { asyncResult: true} }
+	{ "login": { asyncResult: true} },
+	{ "connect": { asyncResult: true} },
+	{ "logout": { asyncResult: true} }
 ]);
 
 LoginActions.login.listen(function(username, password) {
-  let that = this;
+	let that = this;
 
-  SocketService.connect();
-  let unsubscribe = SocketStore.listen((socket, error) => {
-    if (socket) {
-      SocketService.post(LOGIN_URL, { username: username, password: password })
-        .then(that.completed)
-        .catch(that.failed);
-    } else {
-      that.failed(error);
-    }
+	SocketService.connect();
+	let unsubscribe = SocketStore.listen((socket, error) => {
+		if (socket) {
+			SocketService.post(LOGIN_URL, { username: username, password: password })
+				.then(that.completed)
+				.catch(that.failed);
+		} else {
+			that.failed(error);
+		}
 
-    unsubscribe();
-  });
+		unsubscribe();
+	});
 });
 
 LoginActions.connect.listen(function(token) {
-  let that = this;
+	let that = this;
 
-  SocketService.reconnect();
-  let unsubscribe = SocketStore.listen((socket, error) => {
-    if (socket) {
-      SocketService.post(CONNECT_URL, { authorization: token })
-        .then(that.completed)
-        .catch(that.failed);
+	SocketService.reconnect();
+	let unsubscribe = SocketStore.listen((socket, error) => {
+		if (socket) {
+			SocketService.post(CONNECT_URL, { authorization: token })
+				.then(that.completed)
+				.catch(that.failed);
 
-        unsubscribe();
-    }
-  });
+				unsubscribe();
+		}
+	});
 });
 
 LoginActions.logout.listen(function() {
-  let that = this;
-  return SocketService.delete(LOGOUT_URL)
-    .then(that.completed)
-    .catch(this.failed);
+	let that = this;
+	return SocketService.delete(LOGOUT_URL)
+		.then(that.completed)
+		.catch(this.failed);
 });
 
 LoginActions.logout.completed.listen(function() {
-  SocketService.disconnect();
+	SocketService.disconnect();
 });
 
 

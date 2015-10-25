@@ -8,76 +8,76 @@ import SuggestionRenderer from './SuggestionRenderer'
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator'
 
 const UserSearchInput = React.createClass({
-  propTypes: {
+	propTypes: {
 
-    /**
-     * Function to call when pressing enter
-     */
-    submitHandler: React.PropTypes.func.isRequired
-  },
+		/**
+		 * Function to call when pressing enter
+		 */
+		submitHandler: React.PropTypes.func.isRequired
+	},
 
-  getInitialState() {
-    return {
-      text:''
-    }
-  },
+	getInitialState() {
+		return {
+			text:''
+		}
+	},
 
-  getDefaultProps() {
-    return {
-      autoFocus: true
-    }
-  },
+	getDefaultProps() {
+		return {
+			autoFocus: true
+		}
+	},
 
-  _getSuggestionValue(suggestionObj) {
-    return suggestionObj.nick;
-  },
+	_getSuggestionValue(suggestionObj) {
+		return suggestionObj.nick;
+	},
 
-  _getSuggestions(input, callback) {
-    SocketService.post(HUB_SEARCH_NICKS_URL, { pattern: this.state.text, max_results: 7 })
-      .then(data => {
-        callback(null, data || []);
-      })
-      .catch(error => 
-        callback(new Error("Failed to fetch nicks: " + error))
-      );
-  },
+	_getSuggestions(input, callback) {
+		SocketService.post(HUB_SEARCH_NICKS_URL, { pattern: this.state.text, max_results: 7 })
+			.then(data => {
+				callback(null, data || []);
+			})
+			.catch(error => 
+				callback(new Error("Failed to fetch nicks: " + error))
+			);
+	},
 
-  _renderSuggestion(suggestionObj, input) {
-    return SuggestionRenderer(input, this._getSuggestionValue(suggestionObj), suggestionObj.hub_name);
-  },
+	_renderSuggestion(suggestionObj, input) {
+		return SuggestionRenderer(input, this._getSuggestionValue(suggestionObj), suggestionObj.hub_name);
+	},
 
-  _handleChange(value) {
-    this.setState({ 
-      text: value
-    });
-  },
+	_handleChange(value) {
+		this.setState({ 
+			text: value
+		});
+	},
 
-  render() {
-    const inputAttributes = {
-      placeholder: 'Enter nick...',
-      onChange: this._handleChange,
-      autoFocus: this.props.autoFocus
-    };
+	render() {
+		const inputAttributes = {
+			placeholder: 'Enter nick...',
+			onChange: this._handleChange,
+			autoFocus: this.props.autoFocus
+		};
 
-    const buttonClass = classNames(
-      "ui", 
-      "button",
-    );
+		const buttonClass = classNames(
+			"ui", 
+			"button",
+		);
 
-    return (
-      <OfflineHubMessageDecorator offlineMessage={this.props.offlineMessage}>
-        <div className="ui fluid action input" onKeyDown={this._onKeyDown}>
-          <Autosuggest 
-            value={this.state.text}
-            suggestions={this._getSuggestions}
-            inputAttributes={inputAttributes}
-            onSuggestionSelected={ this.props.submitHandler } 
-            suggestionRenderer={ this._renderSuggestion }
-            suggestionValue={ this._getSuggestionValue }/>
-        </div>
-      </OfflineHubMessageDecorator>
-    );
-  }
+		return (
+			<OfflineHubMessageDecorator offlineMessage={this.props.offlineMessage}>
+				<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
+					<Autosuggest 
+						value={this.state.text}
+						suggestions={this._getSuggestions}
+						inputAttributes={inputAttributes}
+						onSuggestionSelected={ this.props.submitHandler } 
+						suggestionRenderer={ this._renderSuggestion }
+						suggestionValue={ this._getSuggestionValue }/>
+				</div>
+			</OfflineHubMessageDecorator>
+		);
+	}
 });
 
 export default UserSearchInput;

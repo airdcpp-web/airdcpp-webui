@@ -19,38 +19,38 @@ export const UserMenu = UserMenuDecorator(ActionMenu);
 export const TableUserMenu = UserMenuDecorator(TableActionMenu);
 
 export const TableDownloadMenu = React.createClass({
-  propTypes: {
+	propTypes: {
 
-    /**
-     * Possible entity to be passed to the handler (when not used for items in a singleton entity)
-     */
-    parentEntity: React.PropTypes.any,
+		/**
+		 * Possible entity to be passed to the handler (when not used for items in a singleton entity)
+		 */
+		parentEntity: React.PropTypes.any,
 
-    /**
-     * Function for handling the download
-     */
-    handler: React.PropTypes.func.isRequired,
+		/**
+		 * Function for handling the download
+		 */
+		handler: React.PropTypes.func.isRequired,
 
-    /**
-     * Additional data to be passed to the handler
-     */
-    itemInfo: React.PropTypes.any,
+		/**
+		 * Additional data to be passed to the handler
+		 */
+		itemInfo: React.PropTypes.any,
 
-    /**
-     * Location from component props
-     */
-    location: React.PropTypes.object.isRequired
-  },
+		/**
+		 * Location from component props
+		 */
+		location: React.PropTypes.object.isRequired
+	},
 
-  render: function() {
-    const { handler, parentEntity, itemInfo, location, ...other } = this.props;
-    const data = {
-      parentEntity: parentEntity,
-      handler: handler,
-      itemInfo: itemInfo,
-      location: location
-    }
+	render: function() {
+		const { handler, parentEntity, itemInfo, location, ...other } = this.props;
+		const data = {
+			parentEntity: parentEntity,
+			handler: handler,
+			itemInfo: itemInfo,
+			location: location
+		}
 
-    return <TableActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data } { ...other }/>;
-  }
+		return <TableActionMenu caption={ this.props.caption } actions={ DownloadActions } ids={[ "download", "downloadTo" ]} itemData={ data } { ...other }/>;
+	}
 })

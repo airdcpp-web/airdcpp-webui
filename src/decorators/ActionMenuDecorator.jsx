@@ -4,59 +4,59 @@ import Reflux from 'reflux';
 import DropdownItem from 'components/semantic/DropdownItem'
 
 export default function(Component) {
-  const ActionMenu = React.createClass({
-    propTypes: {
+	const ActionMenu = React.createClass({
+		propTypes: {
 
-      /**
-       * Item to be passed to the actions
-       */
-      itemData: React.PropTypes.any.isRequired,
+			/**
+			 * Item to be passed to the actions
+			 */
+			itemData: React.PropTypes.any.isRequired,
 
-      /**
-       * Menu item actions
-       */
-      actions: React.PropTypes.object.isRequired,
+			/**
+			 * Menu item actions
+			 */
+			actions: React.PropTypes.object.isRequired,
 
-      /**
-       * Action ids to filter from all actions
-       */
-      ids: React.PropTypes.array,
+			/**
+			 * Action ids to filter from all actions
+			 */
+			ids: React.PropTypes.array,
 
-      /**
-       * Router location
-       */
-      location: React.PropTypes.object,
-    },
+			/**
+			 * Router location
+			 */
+			location: React.PropTypes.object,
+		},
 
-    getItem(actionId) {
-      const action = this.props.actions[actionId];
-      return (
-        <DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
-          <i className={ action.icon + " icon" }></i>
-          { action.displayName }
-        </DropdownItem>);
-    },
+		getItem(actionId) {
+			const action = this.props.actions[actionId];
+			return (
+				<DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
+					<i className={ action.icon + " icon" }></i>
+					{ action.displayName }
+				</DropdownItem>);
+		},
 
-    filterItem(actionId) {
-      if (this.props.ids) {
-        return this.props.ids.indexOf(actionId) > -1;
-      }
+		filterItem(actionId) {
+			if (this.props.ids) {
+				return this.props.ids.indexOf(actionId) > -1;
+			}
 
-      return true;
-    },
+			return true;
+		},
 
-    render() {
-      const { ids, actions, itemData, ...other } = this.props;
+		render() {
+			const { ids, actions, itemData, ...other } = this.props;
 
-      //return <Component {...other} items={Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}/>
+			//return <Component {...other} items={Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}/>
 
-      return (
-        <Component {...other}>
-          {Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}
-        </Component>
-      )
-    },
-  });
+			return (
+				<Component {...other}>
+					{Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}
+				</Component>
+			)
+		},
+	});
 
-  return ActionMenu;
+	return ActionMenu;
 }

@@ -6,27 +6,27 @@ import NotificationActions from 'actions/NotificationActions';
 import NotificationStore from 'stores/NotificationStore';
 
 const Notifications = React.createClass({
-  mixins: [Reflux.listenTo(NotificationStore, "_addNotification")],
+	mixins: [Reflux.listenTo(NotificationStore, "_addNotification")],
 
-  _notificationSystem: null,
+	_notificationSystem: null,
 
-  _addNotification: function(level, notification) {
-    this._notificationSystem.addNotification(Object.assign(notification, {
-      level: level,
-      position: 'tl',
-      autoDismiss: 5
-    }));
-  },
+	_addNotification: function(level, notification) {
+		this._notificationSystem.addNotification(Object.assign(notification, {
+			level: level,
+			position: 'tl',
+			autoDismiss: 5
+		}));
+	},
 
-  componentDidMount: function() {
-    this._notificationSystem = this.refs.notificationSystem;
-  },
+	componentDidMount: function() {
+		this._notificationSystem = this.refs.notificationSystem;
+	},
 
-  render: function() {
-    return (
-        <NotificationSystem ref="notificationSystem" />
-      );
-  }
+	render: function() {
+		return (
+			<NotificationSystem ref="notificationSystem" />
+		);
+	}
 });
 
 export default Notifications;
