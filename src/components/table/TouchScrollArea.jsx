@@ -7,7 +7,17 @@ var TouchableArea = require('./TouchableArea.jsx');
 var ScrollArea = React.createClass({
 
 	componentWillMount : function () {
-		this.scroller = new ZyngaScroller(this.props.touchMode ? this._handleScroll : this._doNothing);
+		this.reset(this.props.touchMode);
+	},
+
+	componentWillReceiveProps: function (nextProps) {
+		if (nextProps.touchMode !== this.props.touchMode) {
+			this.reset(nextProps.touchMode);
+		}
+	},
+
+	reset(touchMode) {
+		this.scroller = new ZyngaScroller(touchMode ? this._handleScroll : this._doNothing);
 		this._scrollTimer = null;
 	},
 

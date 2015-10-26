@@ -246,6 +246,7 @@ const TableContainer = React.createClass({
 			nextState.sortAscending != this.state.sortAscending ||
 			nextState.sortProperty != this.state.sortProperty) {
 
+			setTimeout(this._onContentHeightChange, 0);
 			setTimeout(this.updateTableSettings, 0);
 		}
 	},
@@ -338,7 +339,7 @@ const TableContainer = React.createClass({
 					width = width + child.props.width;
 				}
 			});
-			this.refs.touchScrollArea._onContentDimensionsChange(this.state.width, this.state.height, width, contentHeight);
+			this.refs.touchScrollArea._onContentDimensionsChange(this.state.width, this.state.height-50, width, contentHeight);
 		});
 	},
 
