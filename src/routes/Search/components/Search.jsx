@@ -86,7 +86,7 @@ const Search = React.createClass({
 			return cellData;
 		}
 
-		return <TableUserMenu user={ cellData } directory={ rowData.path } location={this.props.location}/>;
+		return <TableUserMenu user={ cellData.user } directory={ rowData.path } location={this.props.location}/>;
 	},
 
 	_rowClassNameGetter(rowData) {

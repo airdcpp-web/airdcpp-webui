@@ -106,6 +106,13 @@
 	border-radius: 0 .28571429rem .28571429rem 0;
 }
 
+.message-view .ui.button i {
+	position: relative;
+	top: 40%;
+	transform: translateY(-50%);
+	vertical-align: -webkit-baseline-middle !important;
+}
+
 .message-list {
 	margin-right:10px !important;
 }
@@ -127,7 +134,7 @@
 	padding-top: 5px;
 	clear: both;
 	padding-right: 60px;
-	white-space: pre;
+	white-space: pre-line;
 }
 
 .chat-message img {
@@ -137,7 +144,7 @@
 .status-message .message-text {
 	font-size: small;
 	color: lightgray;
-	white-space: pre;
+	white-space: pre-line;
 }
 
 .status-message .message-text {

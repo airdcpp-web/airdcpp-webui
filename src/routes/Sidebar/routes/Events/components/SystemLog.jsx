@@ -66,7 +66,7 @@ const SystemLog = ScrollDecorator(React.createClass({
 
 		return (
 			<div className="ui segment system-log">
-				<div ref="messageList" className="ui grid message-list three column divided">
+				<div ref="messageList" className="ui grid message-list three column">
 					{messageList}
 				</div>
 			</div>
