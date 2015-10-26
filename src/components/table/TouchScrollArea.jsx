@@ -3,21 +3,16 @@ var React = require('react');
 var ZyngaScroller = require('zynga/Scroller.js');
 var TouchableArea = require('./TouchableArea.jsx');
 
-function isTouchDevice() {
-	 //return 'ontouchstart' in document.documentElement // works on most browsers
-	 //	 || 'onmsgesturechange' in window; // works on ie10
-	 return false;
-};
 
 var ScrollArea = React.createClass({
 
 	componentWillMount : function () {
-		this.scroller = new ZyngaScroller(isTouchDevice() ? this._handleScroll : this._doNothing);
+		this.scroller = new ZyngaScroller(this.props.touchMode ? this._handleScroll : this._doNothing);
 		this._scrollTimer = null;
 	},
 
 	render : function () {
-		if (!isTouchDevice()) {
+		if (!this.props.touchMode) {
 			return this.props.children;
 		}
 

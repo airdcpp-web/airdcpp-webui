@@ -41,8 +41,6 @@ const Modal = React.createClass({
 	},
 
 	getInitialState() {
-		settingCallback = this.getOverlaySettings;
-
 		return {
 			saving: false
 		};

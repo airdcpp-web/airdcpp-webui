@@ -25,6 +25,9 @@ import FilelistActions from 'actions/FilelistActions';
 import CountLabel from 'components/CountLabel';
 import LabelInfo from 'utils/LabelInfo';
 
+import BrowserUtils from 'utils/BrowserUtils';
+import LocalSettingStore from 'stores/LocalSettingStore';
+
 const MenuItem = React.createClass({
 	onClick: function (evt) {
 		evt.preventDefault();
@@ -40,6 +43,22 @@ const MenuItem = React.createClass({
 				{this.props.title}
 			</Link>
 		);
+	}
+});
+
+const TouchIcon = React.createClass({
+	onClick: function (evt) {
+		LocalSettingStore.toggleTouchMode();
+		this.forceUpdate();
+	},
+
+	render: function () {
+		if (!BrowserUtils.hasTouchSupport()) {
+			return null;
+		}
+
+		const touchIconColor = LocalSettingStore.touchModeEnabled ? 'blue' : 'grey';
+		return <i className={ touchIconColor + ' link large pointing up icon' } onClick={ this.onClick }></i>;
 	}
 });
 
@@ -98,6 +117,9 @@ const SideMenu = React.createClass({
 				</div>
 				<div>
 					<TransferStats className="ui centered inverted mini list"/>
+				</div>
+				<div className="touch-icon">
+					<TouchIcon/>
 				</div>
 			</div>
 		);

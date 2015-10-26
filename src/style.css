@@ -143,3 +143,8 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 .confirm-dialog .description {
 	width: 100% !important;
 }
+
+.touch-icon {
+	text-align: center;
+	margin-top: 10px;
+}

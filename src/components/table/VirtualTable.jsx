@@ -1,4 +1,6 @@
 import React from 'react';
+import Reflux from 'reflux';
+
 import { Table } from 'fixed-data-table';
 import SetContainerSize from 'mixins/SetContainerSize';
 import TouchScrollArea	from './TouchScrollArea';
@@ -7,6 +9,8 @@ import SocketService from 'services/SocketService';
 import TableActions from 'actions/TableActions';
 
 import { Input } from 'react-semantify';
+
+import LocalSettingStore from 'stores/LocalSettingStore'
 
 import './style.css';
 import '../../../node_modules/fixed-data-table/dist/fixed-data-table.css';
@@ -160,7 +164,7 @@ const FilterBox = React.createClass({
 });
 
 const TableContainer = React.createClass({
-	mixins: [ SetContainerSize ],
+	mixins: [ SetContainerSize, Reflux.listenTo(LocalSettingStore, 'onSettingsChanged') ],
 
 	propTypes: {
 
@@ -193,6 +197,10 @@ const TableContainer = React.createClass({
 		 * ID of the current entity for non-singleton sources
 		 */
 		entityId: PropTypes.any,		
+	},
+
+	onSettingsChanged() {
+		this.forceUpdate();
 	},
 
 	getInitialProps() {
@@ -379,9 +387,9 @@ const TableContainer = React.createClass({
 			});
 		}, this);
 
-		const controlledScrolling = this.state.left !== undefined || this.state.top !== undefined;
+		const touchMode = LocalSettingStore.touchModeEnabled;
 		return (
-			<TouchScrollArea handleScroll={this.handleScroll} ref="touchScrollArea" onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd}>
+			<TouchScrollArea handleScroll={this.handleScroll} ref="touchScrollArea" onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd} touchMode={touchMode}>
 				<Table
 					ref="table"
 
@@ -390,8 +398,8 @@ const TableContainer = React.createClass({
 					onContentHeightChange={this._onContentHeightChange}
 					scrollTop={this.state.top}
 					scrollLeft={this.state.left}
-					overflowX={controlledScrolling ? 'hidden' : 'auto'}
-					overflowY={controlledScrolling ? 'hidden' : 'auto'}
+					overflowX={touchMode ? 'hidden' : 'auto'}
+					overflowY={touchMode ? 'hidden' : 'auto'}
 
 					rowClassNameGetter={this.rowClassNameGetter}
 					footerDataGetter={this._footerDataGetter}
