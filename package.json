@@ -1,14 +1,10 @@
 {
   "name": "airdcpp-webui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AirDC++ Web UI",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:airdcpp/airgit.git"
-  },
+  "license": "MIT",
   "authors": [
-    "maksis <maksis@adrenaline-network.com> (http://www.airdcpp.net)"
+    "maksis"
   ],
   "scripts": {
 	"clean": "rimraf dist",
@@ -18,8 +14,8 @@
     "build-webpack": "NODE_ENV=production webpack --progress",
 	"build": "npm run clean && npm run build:webpack"
   },
-  "dependencies": {
-    "bluebird": "^2.10.2",
+  "devDependencies": {
+	"bluebird": "^2.10.2",
     "classnames": "^2.1.5",
 	"fixed-data-table": "^0.4.7",
 	"jquery"  : "^2.1.4",
@@ -30,14 +26,13 @@
 	"react-autosuggest": "^1.18.3",
 	"react-emoji": "^0.3.3",
 	"react-notification-system": "0.1.17",
-    "react-router": "^1.0.0-rc3",
+    "react-router": "1.0.0-rc3",
 	"react-semantify": "^0.3.1",
     "reflux": "^0.3.0",
 	"reflux-promise": "^1.0.2",
     "semantic-ui": "^2.1.4",
-    "tcomb-form": "^0.6.9"
-  },
-  "devDependencies": {
+    "tcomb-form": "^0.6.9",
+	  
 	"autoprefixer": "^6.0.3",
     "babel-core": "^5.8.25",
     "babel-eslint": "^4.1.1",
@@ -58,7 +53,6 @@
 	"redbox-react": "^1.1.1",
 	"rimraf": "^2.4.3",
     "style-loader": "^0.12.3",
-    "uglify-js": "^2.5.0",
 	"url-loader": "^0.5.6",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.2.0",

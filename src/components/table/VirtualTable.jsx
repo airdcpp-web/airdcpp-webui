@@ -230,7 +230,6 @@ const TableContainer = React.createClass({
 		TableActions.close(this.props.store.viewUrl);
 		this.unsubscribe();
 		this.props.store.uninit();
-
 	},
 
 	componentWillReceiveProps(nextProps) {

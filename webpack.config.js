@@ -6,6 +6,10 @@ const release = (process.env.NODE_ENV === 'production');
 
 // PLUGINS
 var plugins = [
+	new webpack.optimize.CommonsChunkPlugin({
+		minChunks: 3,
+		children: true,
+	}),
 	new webpack.ProvidePlugin({
 		$: "jquery",
 		jQuery: "jquery",
@@ -36,9 +40,12 @@ var debugPlugins = [
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-var entries = [ './src/app.jsx' ]; 
+var entries = {
+	app: './src/app.jsx'
+};
+
 if (!release) {
-	entries.push('webpack-hot-middleware/client');
+	entries['webpack-hot-middleware'] = 'webpack-hot-middleware/client';
 }
 
 console.log("[webpack] Release: " + release);
