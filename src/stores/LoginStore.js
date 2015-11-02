@@ -51,7 +51,7 @@ export default Reflux.createStore({
 
 	// Invalid password etc.
 	onLoginFailed(error) {
-		this._lastError = error.reason ? error.reason : error;
+		this._lastError = error.message ? error.message : error;
 		this.trigger(this.getState());
 	},
 
@@ -67,7 +67,7 @@ export default Reflux.createStore({
 			this.reset();
 			this._lastError = 'Session lost';
 		} else { 
-			this._lastError = error.reason ? error.reason : error;
+			this._lastError = error.message ? error.message : error;
 		}
 
 		this.trigger(this.getState());

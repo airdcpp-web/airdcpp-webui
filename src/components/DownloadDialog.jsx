@@ -134,7 +134,7 @@ export default React.createClass({
 	},
 
 	fetchPaths(requestPath, stateId) {
-		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error('Failed to fetch paths', requestPath, error.reason));
+		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error('Failed to fetch paths', requestPath, error.message));
 	},
 
 	fetchDupePaths(requestPath) {
@@ -149,7 +149,7 @@ export default React.createClass({
 
 		SocketService.post(requestPath, data).then(data => this.setState({ 
 			dupe_paths: this.state.dupe_paths.concat(data.map(path => FileUtils.getParentPath(path, FileUtils)))
-		})).catch(error => console.error('Failed to fetch dupe paths', requestPath, error.reason));
+		})).catch(error => console.error('Failed to fetch dupe paths', requestPath, error.message));
 	},
 
 	componentDidMount() {

@@ -95,7 +95,7 @@ FavoriteHubActions.remove.completed.listen(function (hub) {
 FavoriteHubActions.remove.failed.listen(function (hub, error) {
 	NotificationActions.error({ 
 		title: hub.name,
-		message: 'Failed to remove the hub: ' + error.reason,
+		message: 'Failed to remove the hub: ' + error.message,
 	});
 });
 

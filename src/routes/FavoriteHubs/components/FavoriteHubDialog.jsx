@@ -49,20 +49,33 @@ export default React.createClass({
 		return profiles;
 	},
 
+	onProfilesReceived(data) {
+		data.reduce(this.addProfile, this.allProfiles);
+		this._setProfiles();
+		if (this._isNew) {
+			// We don't have anything selected yet
+
+			const value = Object.assign({}, this.state.value, { 
+				'share_profile': this.defaultId
+			});
+
+			this.setState({ value: value });
+		}
+	},
+
 	componentDidMount() {
 		this.allProfiles = [];
 		SocketService.get(PROFILES_GET_URL)
-			.then(data => {
-				data.reduce(this.addProfile, this.allProfiles);
-				this._setProfiles();
-			})
+			.then(this.onProfilesReceived)
 			.catch(error => 
 				console.error('Failed to load profiles: ' + error)
 			);
 	},
 
 	_setProfiles() {
-		this.setState({ profiles: this.allProfiles.filter(p => this.isAdcHub || (p.value === this.defaultId || p.value === HIDDEN_PROFILE_ID), []) });
+		this.setState({ 
+			profiles: this.allProfiles.filter(p => this.isAdcHub || (p.value === this.defaultId || p.value === HIDDEN_PROFILE_ID), []) 
+		});
 	},
 
 	checkAdcHub(hubUrl) {
@@ -80,7 +93,7 @@ export default React.createClass({
 		}
 
 		this.refs.form.getComponent(path).validate();
-		this.setState({ value });
+		this.setState({ value: value });
 	},
 
 	_handleError(error) {
@@ -128,7 +141,7 @@ export default React.createClass({
 		if (!!error) {
 			options.fields[error.field] = options.fields[error.field] || {};
 			Object.assign(options.fields[error.field], {
-				error: error.reason,
+				error: error.message,
 				hasError: true
 			});
 		}

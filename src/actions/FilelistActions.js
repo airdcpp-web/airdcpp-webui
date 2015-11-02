@@ -42,7 +42,7 @@ FilelistActions.download.listen((itemData, downloadData) => {
 FilelistActions.download.failed.listen((itemData, error) => {
 	NotificationActions.error({
 		title: itemData.itemInfo.name,
-		message: 'Failed to queue the item: ' + error.reason,
+		message: 'Failed to queue the item: ' + error.message,
 	});
 });
 
@@ -87,7 +87,7 @@ FilelistActions.createSession.completed.listen(function (data, user, location, d
 FilelistActions.createSession.failed.listen(function (error) {
 	NotificationActions.error({ 
 		title: 'Failed to create filelist session',
-		message: error.reason,
+		message: error.message,
 	});
 });
 
@@ -101,7 +101,7 @@ FilelistActions.removeSession.listen(function (cid) {
 FilelistActions.removeSession.failed.listen(function (error) {
 	NotificationActions.error({ 
 		title: 'Failed to remove filelist',
-		message: error.reason,
+		message: error.message,
 	});
 });
 

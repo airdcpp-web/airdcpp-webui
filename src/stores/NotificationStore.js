@@ -31,7 +31,7 @@ const NotificationStore = Reflux.createStore({
 	onApiError(title, error, uid) {
 		this.trigger('error', { 
 			title: title,
-			message: error.reason + ' (code ' + error.code + ')',
+			message: error.message + ' (code ' + error.code + ')',
 			uid: uid,
 			dismissible: false, // Won't work well with overlays
 		});

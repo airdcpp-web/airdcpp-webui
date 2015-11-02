@@ -67,7 +67,7 @@ export default Reflux.createStore({
 
 		this._apiSubscriptions[subscriptionId]++;
 		this._apiEmitter.on(subscriptionId, callback);
-		SocketService.post(subscriptionUrl).catch(error => console.error('Failed to add socket listener', subscriptionUrl, event, entityId, error.reason));
+		SocketService.post(subscriptionUrl).catch(error => console.error('Failed to add socket listener', subscriptionUrl, event, entityId, error.message));
 
 		return () => this.removeSocketListener(subscriptionUrl, subscriptionId, callback);
 	},
@@ -77,7 +77,7 @@ export default Reflux.createStore({
 		this._apiEmitter.removeListener(subscriptionId, callback);
 
 		if (this._apiSubscriptions[subscriptionId] === 0) {
-			SocketService.delete(subscriptionUrl).catch(error => console.error('Failed to remove socket listener', subscriptionUrl, event, entityId, error.reason));
+			SocketService.delete(subscriptionUrl).catch(error => console.error('Failed to remove socket listener', subscriptionUrl, event, entityId, error.message));
 			delete this._apiSubscriptions[subscriptionId];
 		}
 	},

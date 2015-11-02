@@ -63,7 +63,7 @@ HubActions.favorite.completed.listen(function (hub) {
 HubActions.favorite.failed.listen(function (hub, error) {
 	NotificationActions.error({ 
 		title: hub.identity.name,
-		message: error.reason,
+		message: error.message,
 	});		
 });
 
@@ -96,7 +96,7 @@ HubActions.createSession.completed.listen(function (location, data) {
 HubActions.createSession.failed.listen(function (error) {
 	NotificationActions.error({ 
 		title: 'Failed to create hub session',
-		message: error.reason,
+		message: error.message,
 	});
 });
 
@@ -110,7 +110,7 @@ HubActions.removeSession.listen(function (id) {
 HubActions.removeSession.failed.listen(function (error) {
 	NotificationActions.error({ 
 		title: 'Failed to remove hub session',
-		message: error.reason,
+		message: error.message,
 	});
 });
 

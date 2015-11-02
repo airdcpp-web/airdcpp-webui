@@ -117,7 +117,7 @@ export default class ApiSocket {
 				this.callbacks[messageObj.callback_id].resolver.resolve(messageObj.data);
 			} else {
 				console.log('Websocket request ' + messageObj.callback_id + ' failed with code ' + messageObj.code + ': ' + messageObj.error.message);
-				this.callbacks[messageObj.callback_id].resolver.reject({ reason: messageObj.error.message, code: messageObj.code, json: messageObj.error });
+				this.callbacks[messageObj.callback_id].resolver.reject({ message: messageObj.error.message, code: messageObj.code, json: messageObj.error });
 			}
 
 			delete this.callbacks[messageObj.callback_id];

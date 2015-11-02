@@ -130,10 +130,10 @@ const FileBrowser = React.createClass({
 	displayName: 'FileBrowser',
 	getInitialState() {
 		this._pathSeparator = LoginStore.systemInfo.path_separator;
-		this._platform = LoginStore.systemInfo.platform;
+		this._isWindows = LoginStore.systemInfo.platform == 'windows';
 
 		return {
-			currentDirectory: this.props.initialPath,
+			currentDirectory: this._convertPath(this.props.initialPath),
 			items: [],
 			loading: true,
 			error: null
@@ -161,7 +161,7 @@ const FileBrowser = React.createClass({
 				}); 
 			})
 			.catch(error => this.setState({ 
-				error: error.reason,
+				error: error.message,
 				loading: false
 			}));
 	},
@@ -177,7 +177,7 @@ const FileBrowser = React.createClass({
 		}
 		
 		let tokens = [];
-		if (this._platform == 'windows') {
+		if (this._isWindows) {
 			// Leave the slashes in drive ID intact on Windows
 			tokens = [ path.substring(0,3) ];
 			path = path.substring(3);
@@ -222,8 +222,16 @@ const FileBrowser = React.createClass({
 		SocketService.post(FILESYSTEM_DIRECTORY_URL, { path: newPath })
 			.then(data => this.fetchItems(this.state.currentDirectory))
 			.catch(error => this.setState({ 
-				error: error.reason
+				error: error.message
 			}));
+	},
+
+	_convertPath(path) {
+		if (path == '' && !this._isWindows) {
+			return '/';
+		}
+
+		return path;
 	},
 
 	render: function () {
@@ -231,11 +239,11 @@ const FileBrowser = React.createClass({
 			return <div className="ui active text loader">Loading</div>;
 		}
 
-		const rootName = this._platform == 'windows' ? 'Computer' : 'Root';
+		const rootName = this._isWindows ? 'Computer' : 'Root';
 		return (
 			<div className="file-browser">
 				{ this.state.error ? (<ErrorMessage title="Failed to load content" description={this.state.error}/>) : null }
-				<PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={""} rootName={rootName} itemClickHandler={this.fetchItems}/>
+				<PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
 				<PathList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
 				{ this.state.currentDirectory ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
