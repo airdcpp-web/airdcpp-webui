@@ -231,9 +231,11 @@ export default function (Component, buttonClass = '') {
 
 		getItemContent(item) {
 			return (
-				<div>
-					<div className={ 'ui empty circular mini label ' + this.props.statusGetter(item) }/>
-					{ this.props.nameGetter(item) }
+				<div className="session-item">
+					<span className="left-span">
+						<div className={ 'ui session-status empty circular mini label ' + this.props.statusGetter(item) }/>
+						{ this.props.nameGetter(item) }
+					</span>
 					{ this.props.labelGetter(item) }
 				</div>
 			);

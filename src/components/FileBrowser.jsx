@@ -91,12 +91,12 @@ const CreateDirectory = React.createClass({
 	render: function () {
 		return (
 			<Accordion>
-				<div className="title">
+				<div className="title create-section">
 					<i className="dropdown icon"></i>
 					Create directory
 				</div>
 
-				<div className="content">
+				<div className="content create-section">
 					<ActionInput caption="Create" icon="plus" handleAction={this.props.handleAction} placeholder="Directory name"/>
 				</div>
 			</Accordion>

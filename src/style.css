@@ -38,15 +38,40 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 }
 
 .download-dialog .accordion.download-targets {
-	max-height: 400px;
 	overflow-y: auto;
-	min-height: 200px;
+}
+
+.download-dialog .main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-browser {
+  display: flex;
+  flex-direction: column;
 }
 
 .file-browser .table-container {
-	height: 350px;
 	overflow-y: auto;
 	margin-top:10px;
+	flex: 1;
+}
+
+.download-dialog > .content {
+	height: 65vh;
+}
+
+.download-dialog .ui.grid, .download-dialog .ui.grid .column, 
+.download-dialog .main-content, .file-browser {
+	height: 100%;
+}
+
+.file-browser .create-section .button i {
+	float: left;
+}
+
+.file-browser .create-section .button span {
+	float: left;
 }
 
 .file-browser .table i.download.link {
@@ -125,9 +150,10 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	display:flex !important;
 }
 
-.modal .content {
+.modal > .content {
 	overflow-y: auto;
 	max-height: 65vh;
+	min-height: 350px;
 }
 
 .password-dialog {
