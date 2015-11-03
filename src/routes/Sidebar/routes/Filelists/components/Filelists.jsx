@@ -16,7 +16,7 @@ const Messages = React.createClass({
 	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 	displayName: 'Filelists',
 	_handleSubmit(user) {
-		FilelistActions.createSession(user, this.props.location);
+		FilelistActions.createSession(this.props.location, user);
 	},
 
 	_nameGetter(session) {

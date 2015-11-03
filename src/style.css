@@ -44,10 +44,9 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 }
 
 .file-browser .table-container {
-	max-height: 350px;
+	height: 350px;
 	overflow-y: auto;
 	margin-top:10px;
-	min-height: 200px;
 }
 
 .file-browser .table i.download.link {

@@ -1,11 +1,15 @@
 {
   "name": "airdcpp-webui",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
     "maksis"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maksis/airdcpp-webui.git"
+  },
   "scripts": {
 	"clean": "rimraf dist",
     "lint": "eslint src",
@@ -25,12 +29,13 @@
     "react": "^0.13.3",
 	"react-autosuggest": "^1.18.3",
 	"react-emoji": "^0.3.3",
+	"react-linkify": "^0.0.5",
 	"react-notification-system": "0.1.17",
     "react-router": "1.0.0-rc3",
 	"react-semantify": "^0.3.1",
     "reflux": "^0.3.0",
 	"reflux-promise": "^1.0.2",
-    "semantic-ui": "^2.1.4",
+    "semantic-ui": "^2.1.5",
     "tcomb-form": "^0.6.9",
 	  
 	"autoprefixer": "^6.0.3",

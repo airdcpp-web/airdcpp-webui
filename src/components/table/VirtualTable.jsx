@@ -368,6 +368,10 @@ const TableContainer = React.createClass({
 
 		// Update and insert generic columns props
 		const children = React.Children.map(this.props.children, (column) => {
+			if (column.props.hideWidth > this.state.width) {
+				return null;
+			}
+
 			let label = column.props.label + ((this.state.sortProperty === column.props.dataKey) ? sortDirArrow : '');
 			let flexGrow = undefined;
 			let width = undefined;

@@ -60,7 +60,7 @@ FilelistActions.changeDirectory.listen(function (cid, path) {
 		.catch(error => that.failed(cid, error));
 });
 
-FilelistActions.createSession.listen(function (user, location, directory = '/') {
+FilelistActions.createSession.listen(function (location, user, directory = '/') {
 	let session = FilelistSessionStore.getSession(user.cid);
 	if (session) {
 		this.completed(session, user, location, directory);

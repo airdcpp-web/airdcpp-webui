@@ -18,7 +18,7 @@ const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 	displayName: 'Messages',
 	_handleSubmit(user) {
-		PrivateChatActions.createSession(user, this.props.location);
+		PrivateChatActions.createSession(this.props.location, user);
 	},
 
 	_nameGetter(session) {

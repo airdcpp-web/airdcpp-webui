@@ -86,7 +86,7 @@ const Search = React.createClass({
 			return cellData;
 		}
 
-		return <TableUserMenu user={ cellData.user } directory={ rowData.path } location={this.props.location}/>;
+		return <TableUserMenu user={ cellData } directory={ rowData.path } location={this.props.location}/>;
 	},
 
 	_rowClassNameGetter(rowData) {
@@ -123,7 +123,7 @@ const Search = React.createClass({
 						/>
 						<Column
 							label="Relevancy"
-							width={80}
+							width={85}
 							dataKey="relevancy"
 							cellRenderer={ Formatter.formatDecimal }
 						/>
@@ -138,12 +138,13 @@ const Search = React.createClass({
 							width={100}
 							dataKey="type"
 							cellRenderer={ this._renderStr }
+							flexGrow={1}
 						/>
 						<Column
 							label="Users"
 							width={150}
 							dataKey="users"
-							flexGrow={3}
+							flexGrow={1}
 							cellRenderer={ this._renderUsers }
 						/>
 						<Column
@@ -151,6 +152,7 @@ const Search = React.createClass({
 							width={150}
 							dataKey="time"
 							cellRenderer={ Formatter.formatDateTime }
+							flexGrow={1}
 						/>
 						<Column
 							label="Slots"
@@ -164,6 +166,7 @@ const Search = React.createClass({
 							dataKey="ip"
 							cellRenderer={ this._renderIp }
 							flexGrow={3}
+							hideWidth={1200}
 						/>
 					</VirtualTable>
 				</div>

@@ -38,7 +38,7 @@ PrivateChatActions.disconnectCCPM.listen(function (cid) {
 		.catch(that.failed);
 });
 
-PrivateChatActions.createSession.listen(function (user, location) {
+PrivateChatActions.createSession.listen(function (location, user) {
 	let session = PrivateChatSessionStore.getSession(user.cid);
 	if (session) {
 		this.completed(session, user, location);

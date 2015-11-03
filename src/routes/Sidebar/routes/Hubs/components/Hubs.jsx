@@ -38,7 +38,7 @@ const Hubs = React.createClass({
 	},
 
 	_handleConnect(hubUrl) {
-		HubActions.createSession(hubUrl, this.props.location);
+		HubActions.createSession(this.props.location, hubUrl);
 	},
 
 	render() {

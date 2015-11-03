@@ -74,7 +74,7 @@ HubActions.reconnect.listen(function (hub) {
 		.catch(this.failed);
 });
 
-HubActions.createSession.listen(function (hubUrl, location) {
+HubActions.createSession.listen(function (location, hubUrl) {
 	let session = HubSessionStore.getSession(hubUrl);
 	if (session) {
 		this.completed(session, location);

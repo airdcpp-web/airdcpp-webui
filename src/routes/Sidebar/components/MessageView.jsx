@@ -5,6 +5,7 @@ import Formatter from 'utils/Format';
 
 import ScrollDecorator from 'decorators/ScrollDecorator';
 import ReactEmoji from 'react-emoji';
+import Linkify from 'react-linkify';
 
 import { ActionMenu } from 'components/Menu';
 import UserActions from 'actions/UserActions';
@@ -90,9 +91,11 @@ const ChatMessage = React.createClass({
 					{Formatter.formatTimestamp(message.time)}
 				</div>
 				<div className="message-text">
+					<Linkify properties={{ target: '_blank' }}>
 					{ flags.indexOf('bot') >= 0 ? message.text : this.emojify(message.text, {
 						emojiType: 'twemoji'
 					})}
+					</Linkify>
 				</div>
 			</div>
 		);

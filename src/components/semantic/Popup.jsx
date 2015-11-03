@@ -68,8 +68,7 @@ export default React.createClass({
 			on:'click',
 			movePopup:false,
 			popup:this.node,
-			onHidden: () => this.setState({ active:false }),
-			offset:parentRect.left
+			onHidden: () => this.setState({ active:false })
 		};
 
 		// Component settings
@@ -83,11 +82,8 @@ export default React.createClass({
 			settings['position'] = 'top left';
 		}
 
-		// Relative to the window...
-		if (settings['position'].indexOf('bottom') >= 0) {
-			settings['distanceAway'] = parentRect.top;
-		} else if (settings['position'].indexOf('top') >= 0) {
-			settings['distanceAway'] = pixelsFromBottom;
+		if (settings['position'].indexOf('top') >= 0) {
+			settings['distanceAway'] = parentRect.top + pixelsFromBottom;
 		}
 
 		$(button).popup(settings).popup('show');

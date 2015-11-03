@@ -18,11 +18,11 @@ export const UserActions = Reflux.createActions([
 ]);
 
 UserActions.message.listen(function (userData, location) {
-	PrivateChatActions.createSession(userData, location);
+	PrivateChatActions.createSession(location, userData.user);
 });
 
 UserActions.browse.listen(function (userData, location) {
-	FilelistActions.createSession(userData, location, userData.directory);
+	FilelistActions.createSession(location, userData.user, userData.directory);
 });
 
 export default UserActions;

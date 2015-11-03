@@ -130,25 +130,25 @@
 	margin-top: 5px;
 }
 
+.message-list .message-text {
+	overflow-x: hidden;
+	white-space: pre-line;
+}
+
 .chat-message .message-text {
 	padding-top: 5px;
 	clear: both;
 	padding-right: 60px;
-	white-space: pre-line;
-}
-
-.chat-message img {
-	vertical-align: middle;
 }
 
 .status-message .message-text {
 	font-size: small;
 	color: lightgray;
-	white-space: pre-line;
+	float: left;
 }
 
-.status-message .message-text {
-	float: left;
+.chat-message img {
+	vertical-align: middle;
 }
 
 .message-list .message-time {
