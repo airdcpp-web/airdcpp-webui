@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default function (Component) {
 	let shouldScrollBottom = false;
@@ -10,7 +11,7 @@ export default function (Component) {
 		},
 
 		componentWillUpdate: function () {
-			let node = this.refs.scrollableContainer;
+			let node = ReactDOM.findDOMNode(this.refs.scrollableContainer);
 			if (!node) {
 				shouldScrollBottom = false;
 				return;
@@ -27,7 +28,7 @@ export default function (Component) {
 		},
 
 		_scrollToBottom: function () {
-			let node = this.refs.scrollableContainer;
+			let node = ReactDOM.findDOMNode(this.refs.scrollableContainer);
 			if (node) {
 				node.scrollTop = node.scrollHeight;
 			}

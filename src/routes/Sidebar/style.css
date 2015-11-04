@@ -73,6 +73,7 @@
   width: 85%;
   flex: 1;
   align-items: baseline;
+  overflow: hidden;
 }
 
 #sidebar .menu-column .ui.menu .item>.label {
@@ -188,7 +189,7 @@
 }
 
 .message-list .message-text {
-	overflow-x: hidden;
+	overflow: hidden;
 	white-space: pre-line;
 }
 
