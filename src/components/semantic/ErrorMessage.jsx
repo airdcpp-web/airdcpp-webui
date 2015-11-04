@@ -5,12 +5,12 @@ const ErrorMessage = React.createClass({
 		/**
 		 * Message title
 		 */
-		title: React.PropTypes.node.isRequired,
+		title: React.PropTypes.node,
 
 		/**
 		 * Error details
 		 */
-		description: React.PropTypes.node.isRequired,
+		description: React.PropTypes.node,
 	},
 
 	displayName: 'ErrorMessage',

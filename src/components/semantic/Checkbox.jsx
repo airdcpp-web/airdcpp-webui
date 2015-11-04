@@ -1,5 +1,4 @@
 import React from 'react';
-import { Checkbox } from 'react-semantify';
 
 export default React.createClass({
 	propTypes: {
@@ -39,8 +38,8 @@ export default React.createClass({
 
 	render: function () {
 		return (
-			<Checkbox className="toggle">
+			<div className="ui checkbox toggle">
 				<input type="checkbox" defaultChecked={ this.props.checked }/>
-			</Checkbox>);
+			</div>);
 	},
 });

@@ -7,7 +7,7 @@ import SocketService from 'services/SocketService';
 import Formatter from 'utils/Format';
 
 import PathBreadcrumb from 'components/PathBreadcrumb';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/semantic/ErrorMessage';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 

@@ -8,9 +8,7 @@ import TouchScrollArea	from './TouchScrollArea';
 import SocketService from 'services/SocketService';
 import TableActions from 'actions/TableActions';
 
-import { Input } from 'react-semantify';
-
-import LocalSettingStore from 'stores/LocalSettingStore'
+import LocalSettingStore from 'stores/LocalSettingStore';
 
 import './style.css';
 import '../../../node_modules/fixed-data-table/dist/fixed-data-table.css';
@@ -158,7 +156,9 @@ const FilterBox = React.createClass({
 
 	render: function () {
 		return (
-			<Input className="filter" onChange={this.handleChange} value={this.state.value} placeholder="Filter..." type="text"/>
+			<div className="ui input filter" onChange={this.handleChange} value={this.state.value}>
+				<input placeholder="Filter..." type="text"/>
+			</div>
 		);
 	}
 });
