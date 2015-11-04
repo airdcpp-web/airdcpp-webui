@@ -1,6 +1,6 @@
 import SocketActions from 'actions/SocketActions';
 
-import BlueBird from 'bluebird';
+import Promise from 'utils/Promise';
 
 const ignoredConsoleEvents = [
 	'statistics'
@@ -85,7 +85,7 @@ export default class ApiSocket {
 			return Promise.reject('No socket');
 		}
 
-		let resolver = BlueBird.pending();
+		let resolver = Promise.pending();
 		const callbackId = this.getCallbackId();
 
 		this.callbacks[callbackId] = {

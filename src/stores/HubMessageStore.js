@@ -1,9 +1,8 @@
 import Reflux from 'reflux';
 
-import { HUB_MODULE_URL, HUB_CHAT_MESSAGE, HUB_STATUS_MESSAGE } from 'constants/HubConstants';
+import { HUB_MODULE_URL, HUB_CHAT_MESSAGE, HUB_STATUS_MESSAGE, MAX_HUB_CHAT_MESSAGES } from 'constants/HubConstants';
 import HubActions from 'actions/HubActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
 
 const HubMessageStore = Reflux.createStore({
@@ -15,8 +14,12 @@ const HubMessageStore = Reflux.createStore({
 		addSocketListener(HUB_MODULE_URL, HUB_CHAT_MESSAGE, this._onChatMessage);
 		addSocketListener(HUB_MODULE_URL, HUB_STATUS_MESSAGE, this._onStatusMessage);
 	},
+
+	get maxMessages() {
+		return MAX_HUB_CHAT_MESSAGES;
+	}
 });
 
 
-export default MessageStoreDecorator(SocketSubscriptionDecorator(HubMessageStore), HubActions)
+export default MessageStoreDecorator(HubMessageStore, HubActions)
 ;

@@ -8,7 +8,7 @@ export default function (actions, sessionUrl, maxMessages) {
 	const ChatActions = Reflux.createActions([
 		{ 'fetchMessages': { asyncResult: true } },
 		{ 'sendMessage': { asyncResult: true } },
-		'setRead',
+		{ 'setRead': { asyncResult: true } },
 	]);
 
 	ChatActions.fetchMessages.listen(function (id) {

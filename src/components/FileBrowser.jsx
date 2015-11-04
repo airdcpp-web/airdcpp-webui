@@ -71,7 +71,14 @@ const PathList = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						{ this.props.items.sort(this.sort).map(item => <PathItem item={item} itemIcon={this.props.itemIcon} iconClickHandler={ this.props.iconClickHandler } itemClickHandler={ this.props.itemClickHandler }/>) }
+						{ this.props.items.sort(this.sort).map(item => 
+							<PathItem 
+								key={item.name}
+								item={item}
+								itemIcon={this.props.itemIcon} 
+								iconClickHandler={ this.props.iconClickHandler } 
+								itemClickHandler={ this.props.itemClickHandler }
+							/>) }
 					</tbody>
 				</table>
 			</div>

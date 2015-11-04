@@ -1,4 +1,5 @@
 import update from 'react-addons-update';
+import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 export default function (store, actions) {
 	let messages = {};
@@ -32,9 +33,13 @@ export default function (store, actions) {
 		addMessage(id, { log_message: data });
 	};
 
+	store.onSocketDisconnected = () => {
+		messages = {};
+	};
+
 	store.getMessages = () => messages;
 
 	store.listenTo(actions.fetchMessages.completed, onFetchMessagesCompleted);
 	store.listenTo(actions.sessionChanged, onSessionChanged);
-	return store;
+	return SocketSubscriptionDecorator(store);
 }

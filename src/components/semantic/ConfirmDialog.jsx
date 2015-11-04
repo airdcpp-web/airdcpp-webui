@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import BlueBird from 'bluebird';
+import Promise from 'utils/Promise';
 
 const ConfirmDialog = React.createClass({
 	propTypes: {
@@ -48,7 +48,7 @@ const ConfirmDialog = React.createClass({
 
 	onHidden() {
 		if (this.props.node) {
-			React.unmountComponentAtNode(this.props.node);
+			ReactDOM.unmountComponentAtNode(this.props.node);
 			document.body.removeChild(this.props.node);
 		}
 	},
@@ -83,7 +83,7 @@ const ConfirmDialog = React.createClass({
 });
 
 export default function (title, text, icon, acceptText='Yes', rejectText='No') {
-	let resolver = BlueBird.pending();
+	let resolver = Promise.pending();
 	let node = document.createElement('div');
 	const dialog = <ConfirmDialog node={node} title={title} resolver={ resolver } text={ text } icon={ icon } acceptText={acceptText} rejectText={rejectText}/>;
 

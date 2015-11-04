@@ -52,7 +52,7 @@ export default React.createClass({
 		let button = this.refs.overlayTrigger;
 		$(button).popup('destroy');
 
-		React.unmountComponentAtNode(this.node);
+		ReactDOM.unmountComponentAtNode(this.node);
 	},
 
 	show: function () {
@@ -97,7 +97,7 @@ export default React.createClass({
 
 	componentWillUnmount() {
 		if (this.node) {
-			React.unmountComponentAtNode(this.node);
+			ReactDOM.unmountComponentAtNode(this.node);
 			document.body.removeChild(this.node);
 		}
 

@@ -18,7 +18,7 @@ export default function (Component, overlayId, createPortal = true) {
 
 	const removeNode = () => {
 		if (node) {
-			React.unmountComponentAtNode(node);
+			ReactDOM.unmountComponentAtNode(node);
 			document.body.removeChild(node);
 			node = null;
 		}

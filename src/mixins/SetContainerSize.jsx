@@ -1,11 +1,14 @@
 
 import _ from 'lodash';
+import ReactDOM from 'react-dom';
 
 var SetContainerSize = {
 	getInitialState: function () {
 		return {
 			width: 0,
-			height: 0
+			height: 0,
+			windowWidth: 0,
+			windowHeight: 0
 		};
 	},
 
@@ -39,7 +42,7 @@ var SetContainerSize = {
 
 	_update() {
 		if (this.isMounted()) {
-			var node = this.getDOMNode();
+			var node = ReactDOM.findDOMNode(this);
 
 			var borderWidth = node.offsetWidth - node.clientWidth;
 			var borderHeight = node.offsetHeight - node.clientHeight;

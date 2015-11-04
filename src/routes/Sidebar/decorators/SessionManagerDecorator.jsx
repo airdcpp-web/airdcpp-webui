@@ -132,10 +132,6 @@ export default function (Component, buttonClass = '') {
 			};
 		},
 
-		componentDidUpdate() {
-
-		},
-
 		getUrl(id) {
 			return this.props.itemUrl + '/' + id;
 		},

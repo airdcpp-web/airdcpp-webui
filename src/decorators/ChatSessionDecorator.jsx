@@ -9,7 +9,7 @@ export default function (Component, messageStore, actions) {
 			/**
 			 * Currently active tab (passed by TabLayout)
 			 */
-			item: React.PropTypes.any.isRequired
+			item: React.PropTypes.any
 		},
 
 		displayName: 'ChatSessionDecorator',

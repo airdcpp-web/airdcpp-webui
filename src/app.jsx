@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Router } from 'react-router';
-import LoginStore from './stores/LoginStore';
-import LoginActions from './actions/LoginActions';
-import History from './utils/History';
+import LoginStore from 'stores/LoginStore';
+import LoginActions from 'actions/LoginActions';
+import History from 'utils/History';
+
+import Reflux from 'reflux';
+import RefluxPromise from 'reflux-promise';
+import Promise from 'utils/Promise';
 
 import semantic from './utils/semantic';
 import 'style.css';
+
+Reflux.use(RefluxPromise(Promise));
 
 if (LoginStore.token) {
 	LoginActions.connect(LoginStore.token);
