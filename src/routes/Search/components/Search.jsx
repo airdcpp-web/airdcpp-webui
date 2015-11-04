@@ -8,7 +8,7 @@ import { HistoryEnum } from 'constants/HistoryConstants';
 import { SEARCH_QUERY_URL } from 'constants/SearchConstants';
 
 import HistoryInput from 'components/autosuggest/HistoryInput';
-import OverlayParentDecorator from 'decorators/OverlayParentDecorator';
+import OverlayPortalDecorator from 'decorators/OverlayPortalDecorator';
 
 import { Column } from 'fixed-data-table';
 
@@ -175,4 +175,4 @@ const Search = React.createClass({
 	}
 });
 
-export default OverlayParentDecorator(Search, DOWNLOAD_MODAL_ID);
+export default OverlayPortalDecorator(Search, DOWNLOAD_MODAL_ID);

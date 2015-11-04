@@ -14,13 +14,15 @@ const SideMenuLayout = React.createClass({
 	render() {
 		return (
 			<div className="ui grid side-menu-layout">
-				<div className="four wide column">
-					<div className="ui vertical fluid tabular menu">
-						{ this.props.newButton }
-						{ this.props.menuItems }
-					</div>
+				<div className="four wide column menu-column">
+					{ this.props.newButton }
+					{ (this.props.menuItems.length ? 
+						<div className="ui vertical menu">
+							{ this.props.menuItems }
+						</div> : null)
+					}
 				</div>
-				<div className="twelve wide stretched column">
+				<div className="twelve wide stretched column content-column">
 					<div className="ui segment session-layout">
 						{ this.props.children }
 					</div>

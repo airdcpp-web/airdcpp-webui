@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Lifecycle } from 'react-router';
+import History from 'utils/History';
 
 import '../style.css';
 
@@ -25,13 +26,20 @@ export default function (Component, semanticModuleName) {
 			/**
 			 * Removes portal from DOM
 			 */
-			onHidden: React.PropTypes.func.isRequired,
+			onHidden: React.PropTypes.func,
 
 			/**
 			 * Returns to the location that was active before opening the overlay
 			 */
-			onHide: React.PropTypes.func.isRequired
+			onHide: React.PropTypes.func
 		},
+
+		/*replaceState() {
+			const { returnTo } = props.location.state[overlayId];
+			console.assert(returnTo, 'Return address missing when closing an overlay');
+			delete props.location.state[overlayId];
+			History.replaceState(props.location.state, returnTo);
+		},*/
 
 		showOverlay(componentSettings = {}) {
 			const settings = Object.assign(componentSettings, {
@@ -49,11 +57,23 @@ export default function (Component, semanticModuleName) {
 		},
 
 		onHide() {
-			this.props.onHide();
+			if (this.props.onHide) {
+				this.props.onHide();
+			}
 		},
 
 		onHidden() {
-			this.props.onHidden(this.changeHistoryState);
+			if (this.changeHistoryState) {
+				const { state } = this.props.location;
+				const { returnTo } = state[this.props.overlayId];
+				console.assert(returnTo, 'Return address missing when closing an overlay');
+				delete state[this.props.overlayId];
+				History.replaceState(state, returnTo);
+			}
+
+			if (this.props.onHidden) {
+				this.props.onHidden(this.changeHistoryState);
+			}
 		},
 
 		render() {

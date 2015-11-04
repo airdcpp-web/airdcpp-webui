@@ -17,6 +17,10 @@
 	border-bottom-left-radius: .28571429rem;
 }
 
+/* SIDEBAR GENERIC END */
+
+/* SESSION LAYOUT START */
+
 #sidebar .item.tab-layout .mini.label {
 	margin-right: 5px;
 }
@@ -25,8 +29,12 @@
 	margin: 0px !important;
 }
 
-#sidebar-container > div , #sidebar .session-layout, #sidebar .ui.grid .column, #sidebar .ui.grid .column > div {
+#sidebar-container > div , #sidebar .session-layout, #sidebar .ui.grid .column {
 	height: 100%;
+}
+
+#sidebar .ui.grid .column > div {
+	max-height: 100%;
 }
 
 #sidebar .side-menu-layout .session-layout > div {
@@ -35,26 +43,43 @@
 	height: 100%;
 }
 
-#sidebar .tab-layout.item {
-  padding-left: 0px;
-  padding-right: 0px;
+#sidebar .menu-column .session-item {
+  display: flex;
 }
 
-#sidebar .tab-layout .session-item {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+#sidebar .menu-column .session-status {
   margin-right: 5px;
 }
 
-#sidebar .tab-layout .session-item span, #sidebar .session-layout .content span {
+#sidebar .menu-column {
+	padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar .menu-column .menu {
+	width: 100% !important;
+  overflow-y: auto;
+}
+
+#sidebar .menu-column .session-item span, #sidebar .session-layout .content span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-/* SIDEBAR GENERIC END */
+#sidebar .menu-column .session-item .left-content {
+  display: flex;
+  width: 85%;
+  flex: 1;
+  align-items: baseline;
+}
 
+#sidebar .menu-column .ui.menu .item>.label {
+	margin-left: 0px;
+}
+
+/* SESSION LAYOUT START */
 
 /* SIDEBAR HEADER START */
 #sidebar .tab-header h2 {

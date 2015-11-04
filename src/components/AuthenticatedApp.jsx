@@ -10,7 +10,6 @@ import Notifications from './Notifications';
 import NavigationPanel from './Navigation';
 import SideMenu from './SideMenu';
 
-import OverlayParentDecorator from 'decorators/OverlayParentDecorator';
 import { SIDEBAR_ID } from 'constants/OverlayConstants';
 
 import { History, RouteContext } from 'react-router';
@@ -58,7 +57,7 @@ let MainLayout = React.createClass({
 	render() {
 		let sidebar = null;
 		if (this.showSideBar(this.props)) {
-			sidebar = this.props.getOverlay(this.props);
+			sidebar = React.cloneElement(this.props.children, { overlayId: SIDEBAR_ID });  //this.props.getOverlay(this.props);
 		}
 
 		return (
@@ -77,8 +76,6 @@ let MainLayout = React.createClass({
 		);
 	}
 });
-
-MainLayout = OverlayParentDecorator(MainLayout, SIDEBAR_ID, false);
 
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext ],

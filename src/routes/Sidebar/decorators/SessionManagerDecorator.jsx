@@ -20,7 +20,7 @@ const MenuItem = React.createClass({
 		/**
 		 * Title of the button
 		 */
-		title: React.PropTypes.any.isRequired,
+		//title: React.PropTypes.any.isRequired,
 	},
 
 	displayName: 'MenuItem',
@@ -31,9 +31,14 @@ const MenuItem = React.createClass({
 	},
 
 	render: function () {
+		const { item } = this.props;
 		return (
-			<Link to={this.props.url} className="item tab-layout" onClick={this.onClick}>
-				{this.props.title}
+			<Link to={this.props.url} className="item session-item" onClick={this.onClick}>
+				<div className="left-content">
+					<div className={ 'ui session-status empty circular left mini label ' + this.props.statusGetter(item) }/>
+					{ this.props.nameGetter(item) }
+				</div>
+				{ this.props.labelGetter(item) }
 			</Link>
 		);
 	}
@@ -68,8 +73,8 @@ const NewButton = React.createClass({
 		return (
 			<Link to={this.props.baseUrl} className="item button-new" onClick={this.onClick}>
 				<div className={this.props.buttonClass}>
-				<i className="plus icon"></i>
-				{this.props.title}
+					<i className="plus icon"></i>
+					{this.props.title}
 				</div>
 			</Link>
 		);
@@ -225,26 +230,18 @@ export default function (Component, buttonClass = '') {
 			}
 		},
 
-		getItemContent(item) {
-			return (
-				<div className="session-item">
-					<span className="left-span">
-						<div className={ 'ui session-status empty circular mini label ' + this.props.statusGetter(item) }/>
-						{ this.props.nameGetter(item) }
-					</span>
-					{ this.props.labelGetter(item) }
-				</div>
-			);
-		},
-
 		render() {
 			const menuItems = this.props.items.map(item => {
 				const id = item.id;
 				return (
-					<MenuItem key={ id } 
+					<MenuItem 
+						key={ id } 
 						url={this.getUrl(id)}
-						title={this.getItemContent(item)}
 						location={this.props.location}
+						nameGetter={this.props.nameGetter}
+						labelGetter={this.props.labelGetter}
+						statusGetter={this.props.statusGetter}
+						item={item}
 					/>
 				);
 			}, this);

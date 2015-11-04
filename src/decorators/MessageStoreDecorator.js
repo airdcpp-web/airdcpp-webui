@@ -26,6 +26,10 @@ export default function (store, actions) {
 			data.is_read = true;
 		}
 
+		if (messages.length > store.maxMessages) {
+			messages.shift();
+		}
+
 		addMessage(id, { chat_message: data });
 	};
 

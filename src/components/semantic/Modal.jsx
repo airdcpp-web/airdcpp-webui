@@ -1,8 +1,10 @@
 import React from 'react';
 
 import OverlayDecorator from 'decorators/OverlayDecorator';
+import { History } from 'react-router';
 
 const Modal = React.createClass({
+	mixins: [ History ],
 	displayName: 'Modal',
 	propTypes: {
 

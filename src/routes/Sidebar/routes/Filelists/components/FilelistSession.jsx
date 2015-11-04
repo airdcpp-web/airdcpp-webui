@@ -11,7 +11,7 @@ import Format from 'utils/Format';
 import { ActionMenu } from 'components/Menu';
 import TabHeader from 'routes/Sidebar/components/TabHeader';
 
-import OverlayParentDecorator from 'decorators/OverlayParentDecorator';
+import OverlayPortalDecorator from 'decorators/OverlayPortalDecorator';
 import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
 import { RouteContext } from 'react-router';
 
@@ -74,4 +74,4 @@ const FilelistSession = React.createClass({
 	},
 });
 
-export default OverlayParentDecorator(FilelistSession, DOWNLOAD_MODAL_ID);
+export default OverlayPortalDecorator(FilelistSession, DOWNLOAD_MODAL_ID);

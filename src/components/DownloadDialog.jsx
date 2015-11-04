@@ -8,7 +8,7 @@ import { HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js';
 import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'react-router';
+import { History, RouteContext } from 'react-router';
 import FileBrowser from './FileBrowser';
 import TypeConvert from 'utils/TypeConvert';
 import Accordion from 'components/semantic/Accordion';
