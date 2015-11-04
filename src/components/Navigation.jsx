@@ -2,26 +2,29 @@
 
 import React from 'react';
 import LoginActions from 'actions/LoginActions';
-import { Link } from 'react-router';
+import { IndexLink, Link } from 'react-router';
 
 const logo = require('../../images/AirDCPlusPlus.png');
+
+
+function MenuItem(props) {
+	return (
+		<Link to={props.page} className="item" activeClassName="active">
+			{props.title}
+		</Link>
+	);
+}
 
 export default class Navigation extends React.Component {
 	constructor() {
 		super();
 	}
+
+	static contextTypes = {
+		history: React.PropTypes.object.isRequired
+	}
 	
 	render() {
-		const MenuItem = React.createClass({
-			render: function () {
-				return (
-					<Link to={this.props.page} className="item">
-						{this.props.title}
-					</Link>
-				);
-			}
-		});
-
 		return (
 			<div className="ui fixed inverted menu">
 				<div className="ui container">
@@ -29,7 +32,9 @@ export default class Navigation extends React.Component {
 						<img className="logo" src={ logo }/>
 					</div>
 					<div className="item right">
-						<MenuItem title="Home" page="/"/>
+						<IndexLink className="item" to="/" activeClassName="active">
+							Home
+						</IndexLink>
 						<MenuItem title="Favorites" page="/favorite-hubs"/>
 						<MenuItem title="Queue" page="/queue"/>
 						<MenuItem title="Search" page="/search"/>

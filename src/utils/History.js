@@ -38,21 +38,29 @@ const pushModal = (currentLocation, nextPath, overlayId, data) => {
 	History.pushState(state, nextPath);
 };
 
+// Router links should always use full path for active link detection to work
+const toSidebarPath = (path) => {
+	if (path.indexOf('/sidebar/') == 0) {
+		return path;
+	}
+
+	return '/sidebar/' + path;
+};
+
 const replaceSidebar = (currentLocation, nextPath, data) => {
 	const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
-	History.replaceState(state, '/sidebar/' + nextPath);
+	History.replaceState(state, toSidebarPath(nextPath));
 };
 
 const pushSidebar = (currentLocation, nextPath, data) => {
-	const fullNextPath = '/sidebar/' + nextPath;
-	if (fullNextPath === currentLocation.pathname) {
+	if (toSidebarPath(nextPath) === currentLocation.pathname) {
 		// Don't create duplicate history entries
 		replaceSidebar(currentLocation, nextPath);
 		return;
 	}
 
 	const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
-	History.pushState(state, fullNextPath);
+	History.pushState(state, toSidebarPath(nextPath));
 };
 
 // Append new location data when in sidebar layout and create a new history entry

@@ -23,6 +23,10 @@ const MenuItem = React.createClass({
 		//title: React.PropTypes.any.isRequired,
 	},
 
+	contextTypes: {
+		history: React.PropTypes.object.isRequired
+	},
+
 	displayName: 'MenuItem',
 	onClick: function (evt) {
 		evt.preventDefault();
@@ -33,7 +37,7 @@ const MenuItem = React.createClass({
 	render: function () {
 		const { item } = this.props;
 		return (
-			<Link to={this.props.url} className="item session-item" onClick={this.onClick}>
+			<Link to={'/sidebar/' + this.props.url} className="item session-item" onClick={this.onClick} activeClassName="active">
 				<div className="left-content">
 					<div className={ 'ui session-status empty circular left mini label ' + this.props.statusGetter(item) }/>
 					{ this.props.nameGetter(item) }
@@ -128,6 +132,10 @@ export default function (Component, buttonClass = '') {
 			 * Label for button that opens a new session
 			 */
 			newButtonLabel: React.PropTypes.any.isRequired
+		},
+
+		contextTypes: {
+			history: React.PropTypes.object.isRequired
 		},
 		
 		displayName: 'TabLayout',

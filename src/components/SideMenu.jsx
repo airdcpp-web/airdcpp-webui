@@ -29,6 +29,10 @@ import BrowserUtils from 'utils/BrowserUtils';
 import LocalSettingStore from 'stores/LocalSettingStore';
 
 const MenuItem = React.createClass({
+	contextTypes: {
+		history: React.PropTypes.object.isRequired
+	},
+
 	onClick: function (evt) {
 		evt.preventDefault();
 
@@ -37,7 +41,7 @@ const MenuItem = React.createClass({
 
 	render: function () {
 		return (
-			<Link to={this.props.page} className="item" onClick={this.onClick}>
+			<Link to={this.props.page} className="item" onClick={this.onClick} activeClassName="active">
 				<CountLabel className="mini" unreadInfo={this.props.unreadInfo}/>
 				<i className={ this.props.icon + ' icon' }></i>
 				{this.props.title}
@@ -65,6 +69,9 @@ const TouchIcon = React.createClass({
 const SideMenu = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(LogStore, 'logMessages') ],
 	displayName: 'Side menu',
+	contextTypes: {
+		history: React.PropTypes.object.isRequired
+	},
 
 	componentDidMount() {
 		this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
@@ -109,10 +116,10 @@ const SideMenu = React.createClass({
 			<div id="side-menu">
 				<div className="content">
 					<div className="ui labeled icon vertical inverted menu">
-						<MenuItem unreadInfo={ LabelInfo.getHubUnreadInfo(HubSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue sitemap" title="Hubs" page="hubs"/>
-						<MenuItem unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(PrivateChatSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue comments" title="Messages" page="messages"/>
-						<MenuItem labelCount={ 0 } location={this.props.location} icon="blue browser" title="Filelists" page="filelists"/>
-						<MenuItem unreadInfo={ LabelInfo.getLogUnreadInfo(LogStore.getUnreadCounts()) } location={this.props.location} icon="blue history" title="Events" page="events"/>
+						<MenuItem title="Hubs" page="/sidebar/hubs" unreadInfo={ LabelInfo.getHubUnreadInfo(HubSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue sitemap"/>
+						<MenuItem title="Messages" page="/sidebar/messages" unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(PrivateChatSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue comments"/>
+						<MenuItem title="Filelists" page="/sidebar/filelists" labelCount={ 0 } location={this.props.location} icon="blue browser"/>
+						<MenuItem title="Events" page="/sidebar/events" unreadInfo={ LabelInfo.getLogUnreadInfo(LogStore.getUnreadCounts()) } location={this.props.location} icon="blue history"/>
 					</div>
 				</div>
 				<div>
