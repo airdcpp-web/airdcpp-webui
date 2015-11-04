@@ -168,7 +168,7 @@
 }
 
 .chat-message .message-text {
-	padding-top: 5px;
+	margin-top: 5px;
 	clear: both;
 	padding-right: 60px;
 }

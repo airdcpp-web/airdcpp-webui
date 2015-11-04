@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import update from 'react-addons-update';
 
 // Decorator for React components that handle chat sessions
 export default function (Component, messageStore, actions) {
@@ -54,7 +55,7 @@ export default function (Component, messageStore, actions) {
 		},
 
 		_onMessage(data) {
-			const messages = React.addons.update(this.state.messages, { $push: [ { chat_message: data } ] });
+			const messages = update(this.state.messages, { $push: [ { chat_message: data } ] });
 			this.setState({ messages: messages });
 		},
 

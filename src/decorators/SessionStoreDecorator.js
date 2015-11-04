@@ -1,4 +1,4 @@
-import React from 'react';
+import update from 'react-addons-update';
 
 export default function (store, fetchAction) {
 	let sessions = [];
@@ -29,19 +29,19 @@ export default function (store, fetchAction) {
 	};
 
 	store._onSessionCreated = (data) =>	{
-		sessions = React.addons.update(sessions, { $push: [ data ] });
+		sessions = update(sessions, { $push: [ data ] });
 		store.trigger(sessions);
 	};
 
 	store._onSessionUpdated = (data, id) => {
 		const session = store.getSession(id);
-		sessions[sessions.indexOf(session)] = React.addons.update(session, { $merge: data });
+		sessions[sessions.indexOf(session)] = update(session, { $merge: data });
 		store.trigger(sessions);
 	};
 
 	store._onSessionRemoved = (data) => {
 		const index = sessions.indexOf(store.getSession(data.id));
-		sessions = React.addons.update(sessions, { $splice: [ [ index, 1 ] ] });
+		sessions = update(sessions, { $splice: [ [ index, 1 ] ] });
 		store.trigger(sessions);
 	};
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import BlueBird from 'bluebird';
 
@@ -33,7 +34,7 @@ const ConfirmDialog = React.createClass({
 			allowMultiple: true
 		};
 
-		let dom = React.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		$(dom).modal(settings).modal('show');
 	},
 
@@ -88,6 +89,6 @@ export default function (title, text, icon, acceptText='Yes', rejectText='No') {
 
 	document.body.appendChild(node);
 
-	React.render(dialog, node);
+	ReactDOM.render(dialog, node);
 	return resolver.promise;
 }

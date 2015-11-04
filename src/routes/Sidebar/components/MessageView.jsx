@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Formatter from 'utils/Format';
 
 import ScrollDecorator from 'decorators/ScrollDecorator';
@@ -130,7 +131,7 @@ const MessageSection = ScrollDecorator(React.createClass({
 					key={message.chat_message.id}
 					message={message.chat_message}
 					location={this.props.location}
-					dropdownContextGetter={ () => React.findDOMNode(this) }
+					dropdownContextGetter={ () => ReactDOM.findDOMNode(this) }
 				/>
 			);
 		}

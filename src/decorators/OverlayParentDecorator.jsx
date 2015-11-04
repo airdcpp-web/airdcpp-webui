@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import History from 'utils/History';
 
@@ -58,7 +59,7 @@ export default function (Component, overlayId, createPortal = true) {
 				node = document.createElement('div');
 				document.body.appendChild(node);
 
-				React.render(getOverlay(this.props), node);
+				ReactDOM.render(getOverlay(this.props), node);
 			}
 		},
 

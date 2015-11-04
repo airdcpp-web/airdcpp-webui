@@ -1,8 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Accordion = React.createClass({
 	componentDidMount() {
-		let dom = React.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		$(dom).accordion();
 	},
 

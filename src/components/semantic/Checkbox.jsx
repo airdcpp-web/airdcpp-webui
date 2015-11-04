@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default React.createClass({
 	propTypes: {
@@ -21,7 +22,7 @@ export default React.createClass({
 			onUnchecked: () => this.props.onChange(false),
 		};
 
-		let dom = React.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		$(dom).checkbox(settings);
 	},
 

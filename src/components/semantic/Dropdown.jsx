@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import classNames from 'classnames';
 
 const Dropdown = React.createClass({
@@ -26,7 +28,7 @@ const Dropdown = React.createClass({
 	},
 
 	componentDidMount() {
-		const dom = React.findDOMNode(this);
+		const dom = ReactDOM.findDOMNode(this);
 
 		const settings = {
 			direction: this.props.direction

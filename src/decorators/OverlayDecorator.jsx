@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { Lifecycle } from 'react-router';
 
@@ -38,12 +39,12 @@ export default function (Component, semanticModuleName) {
 				onHide: this.onHide,
 			});
 
-			let dom = React.findDOMNode(this);
+			let dom = ReactDOM.findDOMNode(this);
 			$(dom)[semanticModuleName](settings)[semanticModuleName]('show');
 		},
 
 		hide() {
-			let dom = React.findDOMNode(this);
+			let dom = ReactDOM.findDOMNode(this);
 			$(dom)[semanticModuleName]('hide');
 		},
 

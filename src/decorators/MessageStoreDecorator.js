@@ -1,4 +1,4 @@
-import React from 'react';
+import update from 'react-addons-update';
 
 export default function (store, actions) {
 	let messages = {};
@@ -6,7 +6,7 @@ export default function (store, actions) {
 
 	const addMessage = (id, message) => {
 		let userMessages = messages[id] || [];
-		messages[id] = React.addons.update(userMessages, { $push: [ message ] });
+		messages[id] = update(userMessages, { $push: [ message ] });
 		store.trigger(messages[id], id);
 	};
 

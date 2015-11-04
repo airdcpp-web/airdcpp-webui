@@ -41,8 +41,8 @@ export default React.createClass({
 	},
 
 	onSubmit(evt) {
-		const username = findDOMNode(this.refs.username).value;
-		const password = findDOMNode(this.refs.password).value;
+		const username = this.refs.username.value;
+		const password = this.refs.password.value;
 		evt.preventDefault();
 
 		if (username === '' || password === '') {

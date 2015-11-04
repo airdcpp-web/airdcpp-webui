@@ -11,7 +11,7 @@ module.exports = {
 		})
 	},*/
 
-	getComponent(location, cb) {
+	getIndexRoute(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, require('./components/Queue'));
 		}, 'queue');

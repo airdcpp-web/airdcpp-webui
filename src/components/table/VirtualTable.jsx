@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import update from 'react-addons-update';
 
 import { Table } from 'fixed-data-table';
 import SetContainerSize from 'mixins/SetContainerSize';
@@ -33,9 +34,9 @@ class RowDataLoader {
 		items.forEach((obj, index) => {
 			let old = this._data[index];
 			if (this._data[index]) {
-				this._data[index] = React.addons.update(old, { $merge: obj });
+				this._data[index] = update(old, { $merge: obj });
 			} else {
-				this._data[index] = React.addons.update(old, { $set: obj });
+				this._data[index] = update(old, { $set: obj });
 			}
 		}, this);
 

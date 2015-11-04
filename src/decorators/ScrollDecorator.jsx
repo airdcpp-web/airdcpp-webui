@@ -10,7 +10,7 @@ export default function (Component) {
 		},
 
 		componentWillUpdate: function () {
-			let node = React.findDOMNode(this.refs.scrollableContainer);
+			let node = this.refs.scrollableContainer;
 			if (!node) {
 				shouldScrollBottom = false;
 				return;
@@ -27,7 +27,7 @@ export default function (Component) {
 		},
 
 		_scrollToBottom: function () {
-			let node = React.findDOMNode(this.refs.scrollableContainer);
+			let node = this.refs.scrollableContainer;
 			if (node) {
 				node.scrollTop = node.scrollHeight;
 			}

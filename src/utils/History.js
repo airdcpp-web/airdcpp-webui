@@ -1,6 +1,6 @@
-import React from 'react';
+import update from 'react-addons-update';
 
-import createBrowserHistory from 'react-router/node_modules/history/lib/createBrowserHistory';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { SIDEBAR_ID } from 'constants/OverlayConstants';
 
 const History = createBrowserHistory();
@@ -22,7 +22,7 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 };
 
 const mergeOverlayData = (currentLocation, newData, overlayId) => {
-	return React.addons.update(currentLocation.state, { 
+	return update(currentLocation.state, { 
 		[overlayId]: { 
 			data: { $merge: newData } 
 		} 

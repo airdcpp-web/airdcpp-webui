@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 
 export default React.createClass({
@@ -47,7 +49,7 @@ export default React.createClass({
 	},
 
 	hide: function () {
-		let button = React.findDOMNode(this.refs.overlayTrigger);
+		let button = this.refs.overlayTrigger;
 		$(button).popup('destroy');
 
 		React.unmountComponentAtNode(this.node);
@@ -56,10 +58,10 @@ export default React.createClass({
 	show: function () {
 		this.createPortal();
 
-		React.render(this.props.children, this.node);
+		ReactDOM.render(this.props.children, this.node);
 
 		// Trigger
-		let button = React.findDOMNode(this.refs.overlayTrigger);
+		let button = this.refs.overlayTrigger;
 		const parentRect = button.parentElement.getBoundingClientRect();
 		const pixelsFromBottom = window.innerHeight - parentRect.bottom;
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import { Router } from 'react-router';
 import LoginStore from './stores/LoginStore';
 import LoginActions from './actions/LoginActions';
@@ -6,8 +8,6 @@ import History from './utils/History';
 
 import semantic from './utils/semantic';
 import 'style.css';
-
-React.initializeTouchEvents(true);
 
 if (LoginStore.token) {
 	LoginActions.connect(LoginStore.token);
@@ -38,7 +38,7 @@ var routeConfig = [
 	}
 ];
 
-React.render(
+ReactDOM.render(
 	<Router history={ History } routes={routeConfig} />,
 	document.getElementById('container-main')
 );
