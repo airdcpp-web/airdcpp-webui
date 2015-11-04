@@ -65,7 +65,6 @@ let MainLayout = React.createClass({
 			<div className={this.props.className} id={this.props.id}>
 					{ sidebar }
 				<div className="pusher">
-					<Notifications/>
 					<NavigationPanel/>
 					<div className="ui container main">
 						{sidebar ?
@@ -99,7 +98,7 @@ const AuthenticatedApp = React.createClass({
 		if (this.state.socketAuthenticated) {
 			return (
 				<div id="authenticated-app">
-					
+					<Notifications/>
 					<SideMenu id="side-menu" location={ this.props.location }/>
 					<MainLayout id="main-layout" className="pushable" location={ this.props.location }>
 						{ this.props.children }
