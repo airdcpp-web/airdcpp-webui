@@ -10,7 +10,9 @@ import Reflux from 'reflux';
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
+import find from 'array.prototype.find';
 import semantic from './utils/semantic';
+
 import 'style.css';
 
 Reflux.use(RefluxPromise(Promise));

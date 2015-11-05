@@ -19,6 +19,7 @@
     "build": "npm run clean && npm run build:webpack"
   },
   "devDependencies": {
+	"array.prototype.find": "^1.0.0",
     "bluebird": "^3.0.5",
     "classnames": "^2.2.0",
     "fixed-data-table": "^0.5.0",
