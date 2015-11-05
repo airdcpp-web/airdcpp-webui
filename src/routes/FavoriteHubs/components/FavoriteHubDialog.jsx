@@ -4,6 +4,7 @@ import { PROFILES_GET_URL, HIDDEN_PROFILE_ID } from 'constants/ShareConstants';
 import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
+import HistoryContext from 'mixins/HistoryContext';
 
 import t from 'utils/tcomb-form';
 
@@ -19,7 +20,8 @@ const Entry = t.struct({
 });
 
 export default React.createClass({
-	mixins: [ RouteContext ],
+	mixins: [ RouteContext, HistoryContext ],
+
 	getInitialState() {
 		let value = null;
 		this._isNew = !this.props.hubEntry;

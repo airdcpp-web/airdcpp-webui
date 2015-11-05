@@ -6,6 +6,10 @@
 	color: orange;
 }
 
+.public_fixedDataTable_bodyRow.disconnected, .public_fixedDataTable_bodyRow.disconnected span {
+	color: black;
+}
+
 .public_fixedDataTable_bodyRow .password-column {
 	margin-left: 5px;
 }

@@ -55,11 +55,13 @@
 	padding-top: 30px;
   display: flex;
   flex-direction: column;
+  padding-right: 0px;
 }
 
 #sidebar .menu-column .menu {
-	width: 100% !important;
+	width: initial !important;
   overflow-y: auto;
+  padding-top: 10px;
 }
 
 #sidebar .menu-column .session-item span, #sidebar .session-layout .content span {
@@ -72,7 +74,7 @@
   display: flex;
   width: 85%;
   flex: 1;
-  align-items: baseline;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -98,6 +100,7 @@
 }
 
 #sidebar .tab-header .header {
+	max-width: 85%;
 	display: flex;
 	align-items: center;
 	margin-right: 15px;

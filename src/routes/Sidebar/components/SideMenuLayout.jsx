@@ -17,7 +17,7 @@ const SideMenuLayout = React.createClass({
 				<div className="four wide column menu-column">
 					{ this.props.newButton }
 					{ (this.props.menuItems.length ? 
-						<div className="ui vertical menu">
+						<div className="ui vertical secondary menu">
 							{ this.props.menuItems }
 						</div> : null)
 					}

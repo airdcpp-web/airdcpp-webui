@@ -8,7 +8,9 @@ import { HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js';
 import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js';
 
 import SocketService from 'services/SocketService';
-import { History, RouteContext } from 'react-router';
+import { RouteContext } from 'react-router';
+import HistoryContext from 'mixins/HistoryContext';
+
 import FileBrowser from './FileBrowser';
 import TypeConvert from 'utils/TypeConvert';
 import Accordion from 'components/semantic/Accordion';
@@ -105,7 +107,7 @@ const AccordionTargets = React.createClass({
 
 
 export default React.createClass({
-	mixins: [ RouteContext ],
+	mixins: [ RouteContext, HistoryContext ],
 	propTypes: {
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
