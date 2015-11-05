@@ -34,25 +34,18 @@ export default React.createClass({
 		document.body.appendChild(this.node);
 	},
 
-	getInitialState: function () {
-		return {
-			active: false
-		};
-	},
-
-	componentWillUpdate: function (nextProps, nextState) {
-		if (nextState.active && !this.state.active) {
-			this.show();
-		} else if (!nextState.active && this.state.active) {
-			this.hide();
-		}
-	},
-
 	hide: function () {
+		if (!this.node) {
+			// onHidden called when the popup was removed manually
+			return;
+		}
+
 		let button = this.refs.overlayTrigger;
 		$(button).popup('destroy');
 
 		ReactDOM.unmountComponentAtNode(this.node);
+		document.body.removeChild(this.node);
+		this.node = null;
 	},
 
 	show: function () {
@@ -70,7 +63,7 @@ export default React.createClass({
 			on:'click',
 			movePopup:false,
 			popup:this.node,
-			onHidden: () => this.setState({ active:false })
+			onHidden: () => this.hide()
 		};
 
 		// Component settings
@@ -92,16 +85,7 @@ export default React.createClass({
 	},
 
 	handleClick: function (el) {
-		this.setState({ active: !this.state.active });
-	},
-
-	componentWillUnmount() {
-		if (this.node) {
-			ReactDOM.unmountComponentAtNode(this.node);
-			document.body.removeChild(this.node);
-		}
-
-		this.node = null;
+		this.show();
 	},
 
 	render: function () {

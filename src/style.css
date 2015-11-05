@@ -150,7 +150,7 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	display:flex !important;
 }
 
-.modal > .content {
+.modal.full > .content {
 	overflow-y: auto;
 	max-height: 65vh;
 	min-height: 350px;

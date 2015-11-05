@@ -2,14 +2,13 @@ import React from 'react';
 import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 
-import { PriorityEnum, StatusEnum } from 'constants/QueueConstants';
+import { StatusEnum } from 'constants/QueueConstants';
 import { TableActionMenu } from 'components/Menu';
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable';
 
+import PriorityMenu from './PriorityMenu';
 import Formatter from 'utils/Format';
-import TableDropdown from 'components/semantic/TableDropdown';
-import DropdownItem from 'components/semantic/DropdownItem';
 import QueueStore from 'stores/QueueStore';
 
 export default React.createClass({
@@ -57,32 +56,7 @@ export default React.createClass({
 			return '';
 		}
 
-		const PriorityListItem = React.createClass({
-			handleClick: function () {
-				QueueActions.setBundlePriority(this.props.item.id, this.props.priority.id);
-			},
-
-			render: function () {
-				return (
-					<DropdownItem active={this.props.item.priority.id === this.props.priority.id } onClick={ this.handleClick }>{ this.props.priority.str }</DropdownItem>
-				);
-			}
-		});
-
-		const PriorityCell = React.createClass({
-			render: function () {
-				let self = this;
-				return (
-					<TableDropdown caption={ this.props.itemPrio.str }>
-							{Object.keys(PriorityEnum.properties).map((prioKey) => {
-								return <PriorityListItem key={ prioKey } priority={ PriorityEnum.properties[prioKey] } {...self.props}/>;
-							})}
-					</TableDropdown>
-				);
-			}
-		});
-
-		return <PriorityCell itemPrio={ cellData } item={ rowData }/>;
+		return <PriorityMenu itemPrio={ cellData } item={ rowData }/>;
 	},
 
 	getInitialState: function () {

@@ -40,12 +40,9 @@ var debugPlugins = [
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-var entries = {
-	app: './src/app.jsx'
-};
-
+var entries = [ './src/app.jsx' ]; 
 if (!release) {
-	entries['webpack-hot-middleware'] = 'webpack-hot-middleware/client';
+	entries.push('webpack-hot-middleware/client');
 }
 
 console.log("[webpack] Release: " + release);

@@ -25,6 +25,7 @@ export default React.createClass({
 	},
 
 	addCloseHandler(elem) {
+		console.assert(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
 		return React.cloneElement(elem, {
 			onClick: () => {
 				this.refs.dropdownMenu.hide();

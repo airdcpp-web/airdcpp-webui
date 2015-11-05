@@ -74,7 +74,7 @@ const Modal = React.createClass({
 
 	render: function () {
 		return (
-			<div className={ 'ui modal ' + this.props.className }>
+			<div className={ 'ui modal full ' + this.props.className }>
 				<div className="header">
 					<i className={ this.props.icon + ' icon' }></i>
 					{ this.props.title }

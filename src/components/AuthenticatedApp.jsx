@@ -57,7 +57,7 @@ let MainLayout = React.createClass({
 	render() {
 		let sidebar = null;
 		if (this.showSideBar(this.props)) {
-			sidebar = React.cloneElement(this.props.children, { overlayId: SIDEBAR_ID });  //this.props.getOverlay(this.props);
+			sidebar = React.cloneElement(this.props.children, { overlayId: SIDEBAR_ID });
 		}
 
 		return (
