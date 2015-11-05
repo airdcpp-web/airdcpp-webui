@@ -5,7 +5,7 @@ import Popup from './Popup';
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
-export default React.createClass({
+const TableDropdown = React.createClass({
 	propTypes: {
 		/**
 		 * Cell content to render
@@ -62,3 +62,5 @@ export default React.createClass({
 			</div>);
 	}
 });
+
+export default TableDropdown;

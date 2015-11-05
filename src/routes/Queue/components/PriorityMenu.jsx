@@ -26,6 +26,7 @@ const PriorityMenu = React.createClass({
 	getPriorityListItem: function (priority) {
 		return (
 			<DropdownItem 
+				key={ priority.id }
 				active={ this.props.item.priority.id === priority.id } 
 				onClick={ () => this.setPriority(priority) }
 			>

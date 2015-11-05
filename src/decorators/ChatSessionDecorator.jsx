@@ -12,7 +12,6 @@ export default function (Component, messageStore, actions) {
 			item: React.PropTypes.any
 		},
 
-		displayName: 'ChatSessionDecorator',
 		mixins: [ Reflux.listenTo(messageStore, 'onMessagesChanged') ],
 
 		onMessagesChanged(messages, id) {

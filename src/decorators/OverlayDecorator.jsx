@@ -10,7 +10,6 @@ import '../style.css';
 
 export default function (Component, semanticModuleName) {
 	const OverlayDecorator = React.createClass({
-		displayName: 'OverlayDecorator',
 		mixins: [ Lifecycle ],
 
 		changeHistoryState: true,

@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import ReactDOM from 'react-dom';
 
-var SetContainerSize = {
+const SetContainerSize = {
 	getInitialState: function () {
 		return {
 			width: 0,
@@ -13,7 +13,7 @@ var SetContainerSize = {
 	},
 
 	componentDidMount : function () {
-		var win = window;
+		const win = window;
 		if (win.addEventListener) {
 			win.addEventListener('resize', _.throttle(this._update, 250), false);
 		} else if (win.attachEvent) {
@@ -30,7 +30,7 @@ var SetContainerSize = {
 	},
 
 	componentWillUnmount() {
-		var win = window;
+		const win = window;
 		if (win.removeEventListener) {
 			win.removeEventListener('resize', _.throttle(this._update, 250), false);
 		} else if (win.removeEvent) {
@@ -42,13 +42,13 @@ var SetContainerSize = {
 
 	_update() {
 		if (this.isMounted()) {
-			var node = ReactDOM.findDOMNode(this);
+			const node = ReactDOM.findDOMNode(this);
 
-			var borderWidth = node.offsetWidth - node.clientWidth;
-			var borderHeight = node.offsetHeight - node.clientHeight;
+			const borderWidth = node.offsetWidth - node.clientWidth;
+			const borderHeight = node.offsetHeight - node.clientHeight;
 
-			var width = node.parentNode.offsetWidth - borderWidth;
-			var height = node.parentNode.offsetHeight - borderHeight;
+			const width = node.parentNode.offsetWidth - borderWidth;
+			const height = node.parentNode.offsetHeight - borderHeight;
 
 			this.setState({
 				width	: width,
@@ -62,5 +62,5 @@ var SetContainerSize = {
 	},
 };
 
-module.exports = SetContainerSize;
+export default SetContainerSize;
 

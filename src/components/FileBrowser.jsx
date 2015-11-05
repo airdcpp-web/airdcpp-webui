@@ -12,7 +12,6 @@ import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 
 const PathItem = React.createClass({
-	displayName: 'PathItem',
 	render: function () {
 		const { item } = this.props;
 		return (
@@ -51,7 +50,6 @@ const PathList = React.createClass({
 		items: React.PropTypes.array.isRequired,
 	},
 
-	displayName: 'PathList',
 	sort(a, b) {
 		if (a.type.id !== b.type.id && (a.type.id === 'directory' || b.type.id === 'directory')) {
 			return a.type.id === 'directory' ? -1 : 1;
@@ -94,7 +92,6 @@ const CreateDirectory = React.createClass({
 		handleAction: React.PropTypes.func.isRequired
 	},
 
-	displayName: 'CreateDirectory',
 	render: function () {
 		return (
 			<Accordion>
@@ -134,7 +131,6 @@ const FileBrowser = React.createClass({
 		onDirectoryChanged: React.PropTypes.func
 	},
 
-	displayName: 'FileBrowser',
 	getInitialState() {
 		this._pathSeparator = LoginStore.systemInfo.path_separator;
 		this._isWindows = LoginStore.systemInfo.platform == 'windows';

@@ -17,7 +17,6 @@ import SetContainerSize from 'mixins/SetContainerSize';
 
 const ListBrowser = React.createClass({
 	mixins: [ SetContainerSize ], // The table won't handle responsive height quickly enough
-	displayName: 'ListBrowser',
 
 	_renderStr(cellData, cellDataKey, rowData) {
 		if (cellData === undefined) {

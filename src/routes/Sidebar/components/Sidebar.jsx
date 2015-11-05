@@ -7,7 +7,6 @@ import OverlayDecorator from 'decorators/OverlayDecorator';
 import '../style.css';
 
 const Sidebar = React.createClass({
-	displayName: 'Sidebar',
 	componentDidMount() {
 		this.props.showOverlay({
 			context: '#main-layout',

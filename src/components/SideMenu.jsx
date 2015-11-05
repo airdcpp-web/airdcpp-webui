@@ -68,7 +68,6 @@ const TouchIcon = React.createClass({
 
 const SideMenu = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(LogStore, 'logMessages') ],
-	displayName: 'Side menu',
 	contextTypes: {
 		history: React.PropTypes.object.isRequired
 	},

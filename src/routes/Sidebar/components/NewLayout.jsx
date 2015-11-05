@@ -13,7 +13,6 @@ const NewLayout = React.createClass({
 		subheader: React.PropTypes.any,
 	},
 
-	displayName: 'SidebarNewLayout',
 	render: function () {
 		return (
 			<div className="new-layout">

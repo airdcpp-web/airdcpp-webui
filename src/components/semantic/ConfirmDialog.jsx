@@ -22,7 +22,6 @@ const ConfirmDialog = React.createClass({
 		icon: React.PropTypes.string
 	},
 
-	displayName: 'ConfirmDialog',
 	componentDidMount() {
 		const settings = {
 			movePopup:false,

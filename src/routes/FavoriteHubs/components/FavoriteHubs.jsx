@@ -60,7 +60,6 @@ const ConnectState = React.createClass({
 });
 
 const FavoriteHubs = React.createClass({
-	displayName: 'Favorite hubs',
 	_renderName(cellData, cellDataKey, rowData) {
 		if (cellData === undefined) {
 			return cellData;

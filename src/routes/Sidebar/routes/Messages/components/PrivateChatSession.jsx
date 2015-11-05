@@ -41,7 +41,6 @@ import Format from 'utils/Format';
 
 
 const ChatSession = React.createClass({
-	displayName: 'ChatSession',
 	handleClose() {
 		PrivateChatActions.removeSession(this.props.item.id);
 	},

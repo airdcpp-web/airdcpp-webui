@@ -36,7 +36,6 @@ const ActionInput = React.createClass({
 		this.setState({ value: event.target.value });
 	},
 
-	displayName: 'ActionInput',
 	render: function () {
 		const buttonClass = classNames(
 			'ui', 

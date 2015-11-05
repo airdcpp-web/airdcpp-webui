@@ -11,7 +11,7 @@ import PriorityMenu from './PriorityMenu';
 import Formatter from 'utils/Format';
 import QueueStore from 'stores/QueueStore';
 
-export default React.createClass({
+const Queue = React.createClass({
 	rowGetter(rowIndex) {
 		return this.state.bundles[Object.keys(this.state.bundles)[rowIndex]];
 	},
@@ -181,3 +181,5 @@ export default React.createClass({
 		);
 	}
 });
+
+export default Queue;

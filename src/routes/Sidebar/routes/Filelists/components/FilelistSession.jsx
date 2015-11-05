@@ -17,7 +17,6 @@ import { RouteContext } from 'react-router';
 
 const FilelistSession = React.createClass({
 	mixins: [ RouteContext ],
-	displayName: 'FilelistSession',
 	handleClose() {
 		FilelistActions.removeSession(this.props.item.id);
 	},

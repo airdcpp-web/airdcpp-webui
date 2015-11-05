@@ -62,7 +62,7 @@ const PathList = React.createClass({
 	render: function () {
 		return (
 			<div className="ui relaxed list">
-				{ this.props.paths.map(path => <PathItem path={path} downloadHandler={ this.props.downloadHandler }/>) }
+				{ this.props.paths.map(path => <PathItem key={path} path={path} downloadHandler={ this.props.downloadHandler }/>) }
 			</div>
 		);
 	}
@@ -106,7 +106,7 @@ const AccordionTargets = React.createClass({
 });
 
 
-export default React.createClass({
+const DownloadDialog = React.createClass({
 	mixins: [ RouteContext, HistoryContext ],
 	propTypes: {
 		/**
@@ -244,3 +244,5 @@ export default React.createClass({
 			</Modal>);
 	}
 });
+
+export default DownloadDialog;

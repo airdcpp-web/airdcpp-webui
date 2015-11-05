@@ -5,7 +5,6 @@ export default function (Component) {
 	let shouldScrollBottom = false;
 
 	const ScrollDecorator = React.createClass({
-		displayName: 'ScrollDecorator',
 		componentDidMount: function () {
 			this._scrollToBottom();
 		},

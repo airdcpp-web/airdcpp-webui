@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 
-export default React.createClass({
+const Popup = React.createClass({
 	propTypes: {
 
 		/**
@@ -95,3 +95,5 @@ export default React.createClass({
 		</div>);
 	}
 });
+
+export default Popup;

@@ -23,7 +23,6 @@ const TabHeader = React.createClass({
 		buttonClickHandler: React.PropTypes.func.isRequired,
 	},
 
-	displayName: 'TabHeader',
 	getDefaultProps() {
 		return {
 			buttonCaption: 'Close'

@@ -14,7 +14,6 @@ import UserActions from 'actions/UserActions';
 var ENTER_KEY_CODE = 13;
 
 const MessageComposer = React.createClass({
-	displayName: 'MessageComposer',
 	propTypes: {
 		/**
 		 * Handles sending of the message. Receives the text as param.
@@ -67,7 +66,6 @@ const MessageComposer = React.createClass({
 
 const ChatMessage = React.createClass({
 	mixins: [ ReactEmoji ],
-	displayName: 'ChatMessage',
 	propTypes: {
 		message: React.PropTypes.object
 	},
@@ -104,7 +102,6 @@ const ChatMessage = React.createClass({
 });
 
 const StatusMessage = React.createClass({
-	displayName: 'StatusMessage',
 	propTypes: {
 		message: React.PropTypes.object
 	},
@@ -123,7 +120,6 @@ const StatusMessage = React.createClass({
 });
 
 const MessageSection = ScrollDecorator(React.createClass({
-	displayName: 'MessageSection',
 	getMessageListItem(message) {
 		if (message.chat_message) {
 			return (
@@ -169,7 +165,6 @@ const MessageView = React.createClass({
 		handleSend: React.PropTypes.func.isRequired
 	},
 
-	displayName: 'MessageView',
 	render() {
 		return (
 			<div className="message-view">

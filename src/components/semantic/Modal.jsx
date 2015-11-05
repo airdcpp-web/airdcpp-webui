@@ -5,7 +5,6 @@ import { History } from 'react-router';
 
 const Modal = React.createClass({
 	mixins: [ History ],
-	displayName: 'Modal',
 	propTypes: {
 
 		/**
@@ -28,12 +27,6 @@ const Modal = React.createClass({
 		 * If no handler is supplied, there will only be a plain close button
 		 */
 		saveHandler: React.PropTypes.func,
-
-		/**
-		 * Removes portal from DOM and redirects previous path
-		 * Should usually be passed from ChildModalMixin
-		 */
-		closeHandler: React.PropTypes.func.isRequired
 	},
 
 	getDefaultProps() {

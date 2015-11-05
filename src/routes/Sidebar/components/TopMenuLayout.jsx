@@ -11,7 +11,6 @@ const TopMenuLayout = React.createClass({
 		location: React.PropTypes.object.isRequired,
 	},
 
-	displayName: 'TopMenuLayout',
 	render() {
 		// Don"t add nesting for items to preserve Semantic"s CSS
 		let sessionMenuStyle = {};

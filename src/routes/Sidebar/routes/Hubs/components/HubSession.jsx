@@ -29,7 +29,6 @@ const HubActionPrompt = React.createClass({
 		content: React.PropTypes.node.isRequired,
 	},
 
-	displayName: 'HubActionPrompt',
 	render: function () {
 		return (
 			<div className="ui icon message hub-action-prompt">
@@ -46,7 +45,6 @@ const HubActionPrompt = React.createClass({
 });
 
 const PasswordPrompt = React.createClass({
-	displayName: 'PasswordPrompt',
 	_handleSubmit(text) {
 		HubActions.password(this.props.hub, text);
 	},
@@ -62,7 +60,6 @@ const PasswordPrompt = React.createClass({
 });
 
 const RedirectPrompt = React.createClass({
-	displayName: 'RedirectPrompt',
 	_handleSubmit() {
 		HubActions.redirect(this.props.hub);
 	},
@@ -77,7 +74,6 @@ const RedirectPrompt = React.createClass({
 });
 
 const HubSession = React.createClass({
-	displayName: 'HubSession',
 	handleClose() {
 		HubActions.removeSession(this.props.item.id);
 	},

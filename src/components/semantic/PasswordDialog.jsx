@@ -16,7 +16,6 @@ const PasswordField = React.createClass({
 		onChange: React.PropTypes.func.isRequired,
 	},
 
-	displayName: 'PasswordField',
 	render: function () {
 		return (
 			<div className="ui input password-dialog">

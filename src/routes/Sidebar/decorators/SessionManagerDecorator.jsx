@@ -27,7 +27,6 @@ const MenuItem = React.createClass({
 		history: React.PropTypes.object.isRequired
 	},
 
-	displayName: 'MenuItem',
 	onClick: function (evt) {
 		evt.preventDefault();
 
@@ -66,7 +65,6 @@ const NewButton = React.createClass({
 		title: React.PropTypes.node.isRequired,
 	},
 
-	displayName: 'NewButton',
 	onClick: function (evt) {
 		evt.preventDefault();
 
@@ -138,7 +136,6 @@ export default function (Component, buttonClass = '') {
 			history: React.PropTypes.object.isRequired
 		},
 		
-		displayName: 'TabLayout',
 		getInitialState() {
 			return {
 				activeItem: null

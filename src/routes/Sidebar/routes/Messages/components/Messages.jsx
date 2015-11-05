@@ -16,7 +16,6 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 
 const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
-	displayName: 'Messages',
 	_handleSubmit(user) {
 		PrivateChatActions.createSession(this.props.location, user);
 	},

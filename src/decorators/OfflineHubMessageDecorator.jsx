@@ -6,7 +6,6 @@ import HubSessionStore from 'stores/HubSessionStore';
 // Disables the component of there are no online hubs
 const OfflineHubMessageDecorator = React.createClass({
 	mixins: [ Reflux.ListenerMixin ],
-	displayName: 'OfflineHubMessageDecorator',
 	propTypes: {
 
 		/**

@@ -13,7 +13,6 @@ const ErrorMessage = React.createClass({
 		description: React.PropTypes.node,
 	},
 
-	displayName: 'ErrorMessage',
 	render: function () {
 		return (
 			<div className="ui negative message">

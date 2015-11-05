@@ -10,7 +10,6 @@ const SideMenuLayout = React.createClass({
 		location: React.PropTypes.object.isRequired,
 	},
 
-	displayName: 'SideMenuLayout',
 	render() {
 		return (
 			<div className="ui grid side-menu-layout">

@@ -16,7 +16,6 @@ import LabelInfo from 'utils/LabelInfo';
 
 const Hubs = React.createClass({
 	mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
-	displayName: 'Hubs',
 	_nameGetter(session) {
 		return session.identity.name;
 	},

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default React.createClass({
+const CheckBox = React.createClass({
 	propTypes: {
 
 		/**
@@ -28,7 +28,7 @@ export default React.createClass({
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.checked != this.props.checked) {
-			let dom = React.findDOMNode(this);
+			let dom = ReactDOM.findDOMNode(this);
 			if (nextProps.checked) {
 				$(dom).checkbox('set checked');
 			} else {
@@ -44,3 +44,5 @@ export default React.createClass({
 			</div>);
 	},
 });
+
+export default CheckBox;

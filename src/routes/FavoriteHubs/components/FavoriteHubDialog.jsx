@@ -19,7 +19,7 @@ const Entry = t.struct({
 	user_description: t.maybe(t.Str),
 });
 
-export default React.createClass({
+const FavoriteHubDialog = React.createClass({
 	mixins: [ RouteContext, HistoryContext ],
 
 	getInitialState() {
@@ -161,3 +161,5 @@ export default React.createClass({
 			</Modal>);
 	}
 });
+
+export default FavoriteHubDialog;

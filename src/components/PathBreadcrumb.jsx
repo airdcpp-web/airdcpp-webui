@@ -28,7 +28,6 @@ const PathBreadcrumb = React.createClass({
 		tokens: React.PropTypes.array.isRequired,
 	},
 
-	displayName: 'PathBreadcrumb',
 	onClick(token, index) {
 		let path = this.props.rootPath;
 		for (let i = 0; i <= index; i++) {
@@ -46,7 +45,7 @@ const PathBreadcrumb = React.createClass({
 	render: function () {
 		const items = this.props.tokens.map((token, index) => {
 			return (
-				<div>
+				<div key={token}>
 					<i className="right chevron icon divider"></i>
 					<a className="section" onClick={() => this.onClick(token, index)}>{token}</a>
 				</div>);

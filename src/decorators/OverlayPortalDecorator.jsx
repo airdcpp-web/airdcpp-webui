@@ -22,7 +22,7 @@ export default function (Component, overlayId, createPortal = true) {
 			//	return null;
 
 			const { state } = this.props.location;
-			return React.cloneElement(this.props.children, { 
+			const ret = React.cloneElement(this.props.children, { 
 				onHidden: () => {
 					removeNode();
 				},
@@ -30,6 +30,8 @@ export default function (Component, overlayId, createPortal = true) {
 				overlayId: overlayId,
 				...state[overlayId].data
 			});
+
+			return ret;
 		},
 
 		checkCreateModal() {
