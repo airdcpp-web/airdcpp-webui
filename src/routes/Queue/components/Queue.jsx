@@ -9,42 +9,32 @@ import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
 import Formatter from 'utils/Format';
+import Progress from 'components/semantic/Progress';
 import QueueStore from 'stores/QueueStore';
 
 const Queue = React.createClass({
-	rowGetter(rowIndex) {
-		return this.state.bundles[Object.keys(this.state.bundles)[rowIndex]];
-	},
-
 	renderStatus(cellData, cellDataKey, rowData) {
 		if (cellData === undefined) {
 			return cellData;
 		}
 
-		const Progress = React.createClass({
-			render: function () {
-				const cNames = classNames(
-					'ui', 
-					'progress', 
-					{ 'grey': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
-					{ 'blue': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
-					{ 'success': cellData.id >= StatusEnum.STATUS_FINISHED },
-					{ 'error': cellData.id == StatusEnum.STATUS_FAILED_MISSING || cellData.id == StatusEnum.STATUS_SHARING_FAILED || cellData.id == StatusEnum.STATUS_HASH_FAILED }
-				);
+		const cNames = classNames(
+			{ 'grey': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
+			{ 'blue': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
+			{ 'success': cellData.id >= StatusEnum.STATUS_FINISHED },
+			{ 'error': cellData.id == StatusEnum.STATUS_FAILED_MISSING || 
+								cellData.id == StatusEnum.STATUS_SHARING_FAILED || 
+								cellData.id == StatusEnum.STATUS_HASH_FAILED ||
+								cellData.id == StatusEnum.STATUS_DOWNLOAD_FAILED }
+		);
 
-				const percent = (rowData.downloaded_bytes*100) / rowData.size;
-				return (
-					<div className={ cNames } data-percent= { percent }>
-						<div className="bar" style={{ transitionDuration: 300 + 'ms' }, { width: percent + '%' }}>
-							<div className="progress"></div>
-						</div>
-						<div className="label">{cellData.str}</div>
-					</div>
-				);
-			}
-		});
-
-		return <Progress/>; 
+		return (
+			<Progress 
+				className={cNames}
+				caption={cellData.str}
+				percent={ (rowData.downloaded_bytes*100) / rowData.size }
+			/>
+		);
 	},
 
 	renderPriority(cellData, cellDataKey, rowData) {
@@ -57,18 +47,6 @@ const Queue = React.createClass({
 		}
 
 		return <PriorityMenu itemPrio={ cellData } item={ rowData }/>;
-	},
-
-	getInitialState: function () {
-		return { modalIsOpen: false };
-	},
-
-	openModal: function () {
-		this.setState({ modalIsOpen: true });
-	},
-
-	closeModal: function () {
-		this.setState({ modalIsOpen: false });
 	},
 
 	renderType(cellData, cellDataKey, rowData) {
@@ -134,12 +112,13 @@ const Queue = React.createClass({
 					dataKey="size"
 					cellRenderer={ Formatter.formatSize }
 				/>
-				{/*<Column
+				<Column
 					label="Type/content"
-					width={100}
+					width={150}
 					dataKey="type"
 					cellRenderer={ this.renderType }
-				/>*/}
+					hideWidth={1200}
+				/>
 				<Column
 					label="Sources"
 					width={100}

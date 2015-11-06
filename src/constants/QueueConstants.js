@@ -16,16 +16,17 @@ export default {
 
 	StatusEnum: {
 		STATUS_QUEUED: 1,
-		STATUS_RECHECK: 2,
-		STATUS_DOWNLOADED: 3, // no queued files
-		STATUS_MOVED: 4, // all files moved
-		STATUS_FAILED_MISSING: 5,
-		STATUS_SHARING_FAILED: 6,
-		STATUS_FINISHED: 7, // no missing files, ready for hashing
-		STATUS_HASHING: 8,
-		STATUS_HASH_FAILED: 9,
-		STATUS_HASHED: 10,
-		STATUS_SHARED:11
+		STATUS_DOWNLOAD_FAILED: 2,
+		STATUS_RECHECK: 3,
+		STATUS_DOWNLOADED: 4, // no queued files
+		STATUS_MOVED: 5, // all files moved
+		STATUS_FAILED_MISSING: 6,
+		STATUS_SHARING_FAILED: 7,
+		STATUS_FINISHED: 8, // no missing files, ready for hashing
+		STATUS_HASHING: 9,
+		STATUS_HASH_FAILED: 10,
+		STATUS_HASHED: 11,
+		STATUS_SHARED:12
 	},
 
 	PriorityEnum: {
