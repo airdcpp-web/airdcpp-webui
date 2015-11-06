@@ -77,7 +77,7 @@ HubActions.reconnect.listen(function (hub) {
 HubActions.createSession.listen(function (location, hubUrl) {
 	let session = HubSessionStore.getSession(hubUrl);
 	if (session) {
-		this.completed(session, location);
+		this.completed(location, session);
 		return;
 	}
 
@@ -89,8 +89,8 @@ HubActions.createSession.listen(function (location, hubUrl) {
 		.catch(that.failed);
 });
 
-HubActions.createSession.completed.listen(function (location, data) {
-	History.pushSidebar(location, 'hubs/session/' + data.id);
+HubActions.createSession.completed.listen(function (location, session) {
+	History.pushSidebar(location, 'hubs/session/' + session.id);
 });
 
 HubActions.createSession.failed.listen(function (error) {

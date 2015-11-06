@@ -14,7 +14,7 @@ const Dropdown = React.createClass({
 		 * Dropdown icon to display
 		 * If caption isn't specified, the icon will be used as main trigger
 		 */ 
-		icon: React.PropTypes.string,
+		triggerIcon: React.PropTypes.string,
 
 		/**
 		 * Direction to render
@@ -45,7 +45,7 @@ const Dropdown = React.createClass({
 		return {
 			caption: null,
 			className: '',
-			icon: 'angle down',
+			triggerIcon: 'angle down',
 			direction: 'auto'
 		};
 	},
@@ -62,7 +62,7 @@ const Dropdown = React.createClass({
 		return (
 			<div className={ className }>
 				{this.props.caption}
-				{this.props.icon ? <i className={ this.props.icon + ' icon' }></i> : null }
+				{this.props.triggerIcon ? <i className={ this.props.triggerIcon + ' icon' }></i> : null }
 				<div className="menu">
 					{ this.props.children }
 				</div>

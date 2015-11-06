@@ -7,8 +7,7 @@ import MessageView from 'routes/Sidebar/components/MessageView';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
-import { ActionMenu } from 'components/Menu';
-import UserActions from 'actions/UserActions';
+import { UserMenu } from 'components/Menu';
 
 import TabHeader from 'routes/Sidebar/components/TabHeader';
 
@@ -52,11 +51,9 @@ const ChatSession = React.createClass({
 	render() {
 		const { user } = this.props.item;
 		const userMenu = (
-			<ActionMenu 
+			<UserMenu 
 				location={this.props.location}
-				caption={ user.nicks } 
-				actions={ UserActions } 
-				itemData={ user } 
+				user={ user } 
 				ids={[ 'browse' ]}
 			/>
 		);

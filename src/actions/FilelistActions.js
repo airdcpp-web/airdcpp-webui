@@ -63,7 +63,7 @@ FilelistActions.changeDirectory.listen(function (cid, path) {
 FilelistActions.createSession.listen(function (location, user, directory = '/') {
 	let session = FilelistSessionStore.getSession(user.cid);
 	if (session) {
-		this.completed(session, user, location, directory);
+		this.completed(location, user, directory, session);
 		return;
 	}
 
@@ -76,11 +76,11 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 		},
 		directory: directory,
 	})
-		.then((data) => that.completed(data, user, location, directory))
+		.then((data) => that.completed(location, user, directory, data))
 		.catch(that.failed);
 });
 
-FilelistActions.createSession.completed.listen(function (data, user, location, directory) {
+FilelistActions.createSession.completed.listen(function (location, user, directory, session) {
 	History.pushSidebar(location, 'filelists/session/' + user.cid, { directory: directory });
 });
 

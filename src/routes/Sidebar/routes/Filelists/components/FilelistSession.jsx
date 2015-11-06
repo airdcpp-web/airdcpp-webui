@@ -4,11 +4,10 @@ import React from 'react';
 
 import ListBrowser from './ListBrowser';
 
-import UserActions from 'actions/UserActions';
 import FilelistActions from 'actions/FilelistActions';
 import Format from 'utils/Format';
 
-import { ActionMenu } from 'components/Menu';
+import { UserMenu } from 'components/Menu';
 import TabHeader from 'routes/Sidebar/components/TabHeader';
 
 import OverlayPortalDecorator from 'decorators/OverlayPortalDecorator';
@@ -37,11 +36,9 @@ const FilelistSession = React.createClass({
 		
 		const { user } = this.props.item;
 		const userMenu = (
-			<ActionMenu 
+			<UserMenu 
 				location={this.props.location}
-				caption={ user.nicks } 
-				actions={ UserActions } 
-				itemData={ user } 
+				user={ user } 
 				ids={[ 'message' ]}
 			/>
 		);

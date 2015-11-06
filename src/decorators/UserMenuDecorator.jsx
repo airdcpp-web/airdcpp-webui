@@ -24,6 +24,8 @@ export default function (Component) {
 			 * Router location
 			 */
 			location: React.PropTypes.object.isRequired,
+
+			userIcon: React.PropTypes.bool,
 		},
 
 		getDefaultProps() {
@@ -33,19 +35,21 @@ export default function (Component) {
 		},
 
 		render: function () {
-			const { directory, user } = this.props;
+			const { userIcon, directory, user, ...other } = this.props;
 			const data = {
 				user: user,
 				directory: FileUtils.getFilePath(directory)
 			};
 
-			const caption = (
+			const nicks = user.nicks ? user.nicks : user.nick;
+			const caption = userIcon ? (
 				<div>
 					<i className="blue user"/>
-					{ user.nicks }
-				</div>);
+					{ nicks }
+				</div>
+			) : nicks;
 
-			return <Component location={this.props.location} caption={ caption } actions={ UserActions } itemData={ data }/>;
+			return <Component caption={ caption } actions={ UserActions } itemData={ data } { ...other }/>;
 		}
 	});
 

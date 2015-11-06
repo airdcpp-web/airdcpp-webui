@@ -8,7 +8,7 @@ import ScrollDecorator from 'decorators/ScrollDecorator';
 import ReactEmoji from 'react-emoji';
 import Linkify from 'react-linkify';
 
-import { ActionMenu } from 'components/Menu';
+import { UserMenu } from 'components/Menu';
 import UserActions from 'actions/UserActions';
 
 var ENTER_KEY_CODE = 13;
@@ -77,7 +77,8 @@ const ChatMessage = React.createClass({
 
 		let userCaption = message.from.nick;
 		if (flags.indexOf('hidden') < 0) {
-			userCaption = <ActionMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } icon={null} caption={ message.from.nick } actions={ UserActions } itemData={ { user: message.from, directory: '/' } }/>;
+			//userCaption = <ActionMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } icon={null} caption={ message.from.nick } actions={ UserActions } itemData={ { user: message.from, directory: '/' } }/>;
+			userCaption = <UserMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } triggerIcon={null} noIcon={true} user={ message.from }/>;
 		}
 
 		// No emojis to bot messages as they are likely to contain false matches

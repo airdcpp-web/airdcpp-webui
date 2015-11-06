@@ -32,7 +32,7 @@ const TabHeader = React.createClass({
 	render() {
 		return (
 			<div className="tab-header">
-				<h2 className="ui header">
+				<h2 className="ui header main-header">
 					{ this.props.icon }
 					<div className="content">
 						{ this.props.title }

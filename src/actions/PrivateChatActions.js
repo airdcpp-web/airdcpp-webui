@@ -41,7 +41,7 @@ PrivateChatActions.disconnectCCPM.listen(function (cid) {
 PrivateChatActions.createSession.listen(function (location, user) {
 	let session = PrivateChatSessionStore.getSession(user.cid);
 	if (session) {
-		this.completed(session, user, location);
+		this.completed(location, user, session);
 		return;
 	}
 
@@ -50,11 +50,11 @@ PrivateChatActions.createSession.listen(function (location, user) {
 		cid: user.cid,
 		hub_url: user.hub_url
 	})
-		.then(that.completed.bind(that, user, location))
+		.then(that.completed.bind(that, location, user))
 		.catch(that.failed);
 });
 
-PrivateChatActions.createSession.completed.listen(function (user, location, data) {
+PrivateChatActions.createSession.completed.listen(function (location, user, session) {
 	History.pushSidebar(location, 'messages/session/' + user.cid);
 });
 

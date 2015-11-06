@@ -64,10 +64,16 @@
   padding-top: 10px;
 }
 
-#sidebar .menu-column .session-item span, #sidebar .session-layout .content span {
+#sidebar .menu-column .session-item span, 
+#sidebar .session-layout .content span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+#sidebar .session-layout .sub.header {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #sidebar .menu-column .session-item .left-content {
@@ -99,7 +105,7 @@
 	justify-content: space-between;
 }
 
-#sidebar .tab-header .header {
+#sidebar .tab-header .main-header {
 	max-width: 85%;
 	display: flex;
 	align-items: center;
@@ -107,7 +113,7 @@
 	flex: 1;
 }
 
-#sidebar .tab-header .header .content {
+#sidebar .tab-header .main-header .content {
 	width: 90%;
 }
 
