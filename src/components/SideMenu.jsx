@@ -21,6 +21,7 @@ import FilelistActions from 'actions/FilelistActions';
 
 import CountLabel from 'components/CountLabel';
 import LabelInfo from 'utils/LabelInfo';
+import PerformanceTools from 'components/PerformanceTools';
 
 import BrowserUtils from 'utils/BrowserUtils';
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -97,6 +98,7 @@ const SideMenu = React.createClass({
 				</div>
 				<div className="touch-icon">
 					<TouchIcon/>
+					<PerformanceTools/>
 				</div>
 			</div>
 		);

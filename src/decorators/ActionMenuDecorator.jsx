@@ -27,6 +27,10 @@ export default function (Component) {
 			location: React.PropTypes.object,
 		},
 
+		shouldComponentUpdate: function (nextProps, nextState) {
+			return nextProps.item !== this.props.item;
+		},
+
 		getItem(actionId) {
 			const action = this.props.actions[actionId];
 			return (
@@ -46,8 +50,6 @@ export default function (Component) {
 
 		render() {
 			const { ids, actions, itemData, ...other } = this.props;
-
-			//return <Component {...other} items={Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}/>
 
 			return (
 				<Component {...other}>

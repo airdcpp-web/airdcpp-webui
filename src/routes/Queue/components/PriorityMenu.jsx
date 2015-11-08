@@ -23,6 +23,10 @@ const PriorityMenu = React.createClass({
 		QueueActions.setBundlePriority(this.props.item.id, priority.id);
 	},
 
+	shouldComponentUpdate: function (nextProps, nextState) {
+		return nextProps.item.priority.id !== this.props.item.priority.id;
+	},
+
 	getPriorityListItem: function (priority) {
 		return (
 			<DropdownItem 
