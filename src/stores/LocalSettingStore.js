@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import BrowserUtils from 'utils/BrowserUtils';
 
 const LocalSettingStore = Reflux.createStore({
 	init: function () {
@@ -6,7 +7,12 @@ const LocalSettingStore = Reflux.createStore({
 	},
 
 	get touchModeEnabled() {
-		 return JSON.parse(localStorage.getItem('touch_mode'));
+		const rawValue = localStorage.getItem('touch_mode');
+		if (!rawValue) {
+			return BrowserUtils.preferTouch();
+		}
+
+		return JSON.parse(rawValue);
 	},
 
 	toggleTouchMode() {
