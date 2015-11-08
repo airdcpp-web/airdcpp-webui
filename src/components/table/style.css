@@ -58,6 +58,14 @@
 	text-decoration:underline;
 }
 
+.table-dropdown i.angle.icon {
+    margin: 0px;
+}
+
+.table-dropdown i.user.icon {
+    margin-top: 1.3px;
+}
+
 .table-dropdown i {
 	float: left;
 }

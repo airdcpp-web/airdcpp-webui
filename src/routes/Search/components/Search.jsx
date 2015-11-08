@@ -86,7 +86,12 @@ const Search = React.createClass({
 			return cellData;
 		}
 
-		return <TableUserMenu user={ cellData } directory={ rowData.path } location={this.props.location} userIcon={true}/>;
+		let caption = cellData.user.nicks;
+		if (cellData.count > 1) {
+			caption = cellData.count + ' users (' + caption + ')';
+		}
+
+		return <TableUserMenu text={ caption } user={ cellData.user } directory={ rowData.path } location={this.props.location} userIcon={true}/>;
 	},
 
 	_rowClassNameGetter(rowData) {
@@ -113,7 +118,7 @@ const Search = React.createClass({
 							width={270}
 							dataKey="name"
 							cellRenderer={ this._renderName }
-							flexGrow={5}
+							flexGrow={8}
 						/>
 						<Column
 							label="Size"
@@ -144,7 +149,7 @@ const Search = React.createClass({
 							label="Users"
 							width={150}
 							dataKey="users"
-							flexGrow={1}
+							flexGrow={2}
 							cellRenderer={ this._renderUsers }
 						/>
 						<Column
@@ -159,14 +164,6 @@ const Search = React.createClass({
 							width={70}
 							dataKey="slots"
 							cellRenderer={ this._renderStr }
-						/>
-						<Column
-							label="IP"
-							width={70}
-							dataKey="ip"
-							cellRenderer={ this._renderIp }
-							flexGrow={3}
-							hideWidth={1200}
 						/>
 					</VirtualTable>
 				</div>

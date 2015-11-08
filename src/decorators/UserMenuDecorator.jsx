@@ -26,6 +26,11 @@ export default function (Component) {
 			location: React.PropTypes.object.isRequired,
 
 			userIcon: React.PropTypes.bool,
+
+			/**
+			 * Optional custom caption to use
+			 */
+			text : React.PropTypes.node,
 		},
 
 		getDefaultProps() {
@@ -35,19 +40,22 @@ export default function (Component) {
 		},
 
 		render: function () {
-			const { userIcon, directory, user, ...other } = this.props;
+			const { text, userIcon, directory, user, ...other } = this.props;
 			const data = {
 				user: user,
 				directory: FileUtils.getFilePath(directory)
 			};
 
-			const nicks = user.nicks ? user.nicks : user.nick;
-			const caption = userIcon ? (
+			let nicks = text;
+			if (!nicks) {
+				nicks = user.nicks ? user.nicks : user.nick;
+			}
+			const caption = (userIcon ? 
 				<div>
-					<i className="blue user"/>
+					<i className="blue user icon"/>
 					{ nicks }
 				</div>
-			) : nicks;
+			 : nicks);
 
 			return <Component caption={ caption } actions={ UserActions } itemData={ data } { ...other }/>;
 		}

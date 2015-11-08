@@ -69,7 +69,7 @@ export default Reflux.createStore({
 		this._apiEmitter.on(subscriptionId, callback);
 		SocketService.post(subscriptionUrl).catch(error => console.error('Failed to add socket listener', subscriptionUrl, event, entityId, error.message));
 
-		return () => this.removeSocketListener(subscriptionUrl, subscriptionId, callback);
+		return () => this._removeSocketListener(subscriptionUrl, subscriptionId, callback);
 	},
 
 	_removeSocketListener(subscriptionUrl, subscriptionId, callback) {

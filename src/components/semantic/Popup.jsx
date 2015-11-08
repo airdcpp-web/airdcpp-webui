@@ -49,6 +49,10 @@ const Popup = React.createClass({
 	},
 
 	show: function () {
+		if (this.node) {
+			return;
+		}
+
 		this.createPortal();
 
 		ReactDOM.render(this.props.children, this.node);
