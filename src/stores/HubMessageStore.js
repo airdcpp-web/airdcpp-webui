@@ -4,6 +4,7 @@ import { HUB_MODULE_URL, HUB_CHAT_MESSAGE, HUB_STATUS_MESSAGE, MAX_HUB_CHAT_MESS
 import HubActions from 'actions/HubActions';
 
 import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
+import HubSessionStore from 'stores/HubSessionStore';
 
 const HubMessageStore = Reflux.createStore({
 	getInitialState: function () {
@@ -21,5 +22,5 @@ const HubMessageStore = Reflux.createStore({
 });
 
 
-export default MessageStoreDecorator(HubMessageStore, HubActions)
+export default MessageStoreDecorator(HubMessageStore, HubActions, HubSessionStore)
 ;

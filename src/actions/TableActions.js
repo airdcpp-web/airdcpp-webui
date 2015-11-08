@@ -15,6 +15,10 @@ TableActions.close.listen(function (viewUrl) {
 		.catch(error => this.failed(viewUrl, error));
 });
 
+TableActions.close.failed.listen(function (viewUrl, error) {
+	// Probably a deleted session
+});
+
 TableActions.changeSettings.listen(function (viewUrl, rangeStart, maxRows, sortProperty, sortAscending) {
 	let that = this;
 	return SocketService.post(viewUrl, { 

@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -12,14 +12,15 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "lint": "eslint src",
+    "lint": "eslint src *.js",
+    "lint-fix": "eslint --fix src *.js",
     "start": "node devServer.js",
     "webpack": "webpack --progress",
     "build-webpack": "NODE_ENV=production webpack --progress",
     "build": "npm run clean && npm run build:webpack"
   },
   "devDependencies": {
-	"array.prototype.find": "^1.0.0",
+    "array.prototype.find": "^1.0.0",
     "bluebird": "^3.0.5",
     "classnames": "^2.2.0",
     "fixed-data-table": "^0.5.0",
@@ -28,11 +29,11 @@
     "normalize.css": "3.0.3",
     "moment": "^2.10.6",
     "react": "^0.14.2",
-	"react-dom": "^0.14.2",
-	"react-addons-update": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-addons-update": "^0.14.2",
     "react-autosuggest": "^2.1.1",
     "react-emoji": "^0.4.1",
-	"react-linkify": "^0.0.5",
+    "react-linkify": "^0.0.5",
     "react-notification-system": "0.2.5",
     "react-router": "^1.0.0-rc4",
     "reflux": "^0.3.0",

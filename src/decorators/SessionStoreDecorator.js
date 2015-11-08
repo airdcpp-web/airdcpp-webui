@@ -1,9 +1,14 @@
 import update from 'react-addons-update';
 
-export default function (store, fetchAction) {
+export default function (store, actions) {
 	let sessions = [];
+	let activeSession = null;
 
-	fetchAction.listen(data => {
+	actions.sessionChanged.listen(id => {
+		activeSession = id;
+	});
+
+	actions.fetchSessions.completed.listen(data => {
 		sessions = data;
 		store.trigger(sessions);
 	});
@@ -27,6 +32,8 @@ export default function (store, fetchAction) {
 	store.getSessions = () => {
 		return sessions;
 	};
+
+	store.getActiveSession = () => activeSession;
 
 	store._onSessionCreated = (data) =>	{
 		sessions = update(sessions, { $push: [ data ] });

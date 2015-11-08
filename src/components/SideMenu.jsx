@@ -12,9 +12,6 @@ import HubActions from 'actions/HubActions';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
-import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
-
-import NotificationActions from 'actions/NotificationActions';
 
 import LogActions from 'actions/LogActions';
 import LogStore from 'stores/LogStore';
@@ -70,32 +67,6 @@ const SideMenu = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(LogStore, 'logMessages') ],
 	contextTypes: {
 		history: React.PropTypes.object.isRequired
-	},
-
-	componentDidMount() {
-		this.listenTo(PrivateChatMessageStore, this.onPrivateMessage);
-	},
-	
-	onPrivateMessage(messages) {
-		if (messages.length == 0) {
-			return;
-		}
-
-		const last = messages[messages.length - 1];
-		if (last.chat_message && !last.chat_message.is_read) {
-			const cid = last.chat_message.reply_to.cid;
-			NotificationActions.info({
-				title: last.chat_message.from.nick,
-				message: last.chat_message.text,
-				uid: cid,
-				action: {
-					label: 'View message',
-					callback: () => { 
-						History.pushSidebar(this.props.location, 'messages/session/' + cid); 
-					}
-				}
-			});
-		}
 	},
 
 	getEventButtonCaption() {

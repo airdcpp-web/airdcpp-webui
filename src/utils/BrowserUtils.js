@@ -4,4 +4,4 @@ export default {
 		 	 || 'onmsgesturechange' in window; // works on ie10
 		 //return false;
 	},
-}
+};

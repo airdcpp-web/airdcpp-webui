@@ -32,7 +32,12 @@ export default function (Component, messageStore, actions) {
 			actions.sessionChanged(id);
 			actions.setRead(id);
 
-			actions.fetchMessages(id);
+			const messages = messageStore.getMessages()[id];
+			if (!messages) {
+				actions.fetchMessages(id);
+			} else {
+				this.setState({ messages: messages });
+			}
 		},
 
 		componentWillReceiveProps(nextProps) {

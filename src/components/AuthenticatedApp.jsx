@@ -95,7 +95,7 @@ const AuthenticatedApp = React.createClass({
 		if (this.state.socketAuthenticated) {
 			return (
 				<div id="authenticated-app">
-					<Notifications/>
+					<Notifications location={ this.props.location }/>
 					<SideMenu id="side-menu" location={ this.props.location }/>
 					<MainLayout id="main-layout" className="pushable" location={ this.props.location }>
 						{ this.props.children }

@@ -1,4 +1,4 @@
-import React, { findDOMNode } from 'react';
+import React from 'react';
 import Reflux from 'reflux';
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
@@ -71,7 +71,9 @@ export default React.createClass({
 								<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
 							</div>
 						</div>
-						<div className="ui fluid large submit button" type="submit" onClick={this.onSubmit}>Login</div>
+						<button className="ui fluid large submit button" type="submit" onClick={this.onSubmit}>
+							Login
+						</button>
 					</div>
 				</form>
 

@@ -74,7 +74,7 @@ export default Reflux.createStore({
 	},
 
 
-	onSocketDisconnected(socket, error) {		
+	onSocketDisconnected(socket, error, code) {
 		this._socketAuthenticated = false;
 		if (this._user) {
 			if (error === '') {

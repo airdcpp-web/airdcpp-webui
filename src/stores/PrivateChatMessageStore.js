@@ -4,6 +4,7 @@ import { PRIVATE_CHAT_MODULE_URL, PRIVATE_CHAT_MESSAGE, PRIVATE_CHAT_STATUS, MAX
 import PrivateChatActions from 'actions/PrivateChatActions';
 
 import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
+import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 const PrivateChatMessageStore = Reflux.createStore({
 	getInitialState: function () {
@@ -20,5 +21,5 @@ const PrivateChatMessageStore = Reflux.createStore({
 	}
 });
 
-export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions)
+export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions, PrivateChatSessionStore)
 ;

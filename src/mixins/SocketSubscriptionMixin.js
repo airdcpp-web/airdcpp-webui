@@ -8,7 +8,7 @@ const Mixin = {
 		}
 	},
 
-	listenTo(store, bind) {
+	addStoreListener(store, bind) {
 		this.unsubscribe = store.listen(bind);
 	},
 
@@ -18,4 +18,4 @@ const Mixin = {
 	}
 };
 
-export default SocketSubscriptionDecorator(Mixin);
+export default SocketSubscriptionDecorator(Mixin, 'addStoreListener');

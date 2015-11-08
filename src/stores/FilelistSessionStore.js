@@ -19,5 +19,5 @@ const FilelistStore = Reflux.createStore({
 	},
 });
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistStore), FilelistActions.fetchSessions.completed)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistStore), FilelistActions)
 ;

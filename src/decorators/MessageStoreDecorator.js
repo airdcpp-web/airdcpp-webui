@@ -1,13 +1,11 @@
 import update from 'react-addons-update';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
-export default function (store, actions) {
+export default function (store, actions, sessionStore) {
 	let messages = {};
-	let activeSession = null;
 
 	const addMessage = (id, message) => {
-		let userMessages = messages[id] || [];
-		messages[id] = update(userMessages, { $push: [ message ] });
+		messages[id] = update(messages[id], { $push: [ message ] });
 		store.trigger(messages[id], id);
 	};
 
@@ -16,12 +14,13 @@ export default function (store, actions) {
 		store.trigger(messages[id], id);
 	};
 
-	const onSessionChanged = (id) => {
-		activeSession = id;
-	};
-
 	store._onChatMessage = (data, id) => {
-		if (!data.is_read && id === activeSession) {
+		if (!messages[id]) {
+			// Don't store messages before the initial fetch has completed
+			return;
+		}
+
+		if (!data.is_read && id === sessionStore.getActiveSession()) {
 			actions.setRead(id);
 			data.is_read = true;
 		}
@@ -44,6 +43,5 @@ export default function (store, actions) {
 	store.getMessages = () => messages;
 
 	store.listenTo(actions.fetchMessages.completed, onFetchMessagesCompleted);
-	store.listenTo(actions.sessionChanged, onSessionChanged);
 	return SocketSubscriptionDecorator(store);
 }

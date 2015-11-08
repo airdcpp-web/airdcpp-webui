@@ -24,5 +24,5 @@ const HubSessionStore = Reflux.createStore({
 });
 
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore), HubActions.fetchSessions.completed)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore), HubActions)
 ;

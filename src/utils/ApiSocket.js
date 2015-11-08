@@ -71,7 +71,7 @@ export default class ApiSocket {
 
 		this.socket.onclose = function (event) {
 			console.log('Websocket was closed: ' + event.reason);
-			SocketActions.state.disconnected(self, event.reason);
+			SocketActions.state.disconnected(self, event.reason, event.code);
 		};
 		
 		this.socket.onmessage = function (event) {

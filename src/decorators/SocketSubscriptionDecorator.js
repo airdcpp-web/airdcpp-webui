@@ -1,7 +1,7 @@
 import SocketStore from 'stores/SocketStore';
 import LoginStore from 'stores/LoginStore';
 
-export default function (store) {
+export default function (store, listenToFunction = 'listenTo') {
 	let socketSubscriptions = [];
 	let hasSocket = false;
 
@@ -44,7 +44,7 @@ export default function (store) {
 		}
 	};
 
-	store.listenTo(LoginStore, _loginStoreListener);
+	store[listenToFunction](LoginStore, _loginStoreListener);
 	if (LoginStore.socketAuthenticated) {
 		setTimeout(onSocketAuthenticated);
 	}
