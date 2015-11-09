@@ -2,8 +2,6 @@ import React from 'react';
 
 import Perf from 'react-addons-perf';
 
-const __DEV__ = process.env.NODE_ENV !== 'production';
-
 const PerformanceTools = React.createClass({
 	getInitialState() {
 		return {
@@ -32,4 +30,4 @@ const PerformanceTools = React.createClass({
 	}
 });
 
-export default (__DEV__ ? PerformanceTools : <div/>);
+export default PerformanceTools;

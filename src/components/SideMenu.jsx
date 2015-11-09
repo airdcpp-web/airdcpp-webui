@@ -98,7 +98,7 @@ const SideMenu = React.createClass({
 				</div>
 				<div className="touch-icon">
 					<TouchIcon/>
-					<PerformanceTools/>
+					{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
 				</div>
 			</div>
 		);
