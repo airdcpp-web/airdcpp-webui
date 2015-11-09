@@ -28,7 +28,7 @@ export default function (Component) {
 		},
 
 		shouldComponentUpdate: function (nextProps, nextState) {
-			return nextProps.item !== this.props.item;
+			return nextProps.itemData !== this.props.itemData;
 		},
 
 		getItem(actionId) {

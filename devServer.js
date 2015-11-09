@@ -5,6 +5,7 @@ var config = require('./webpack.config.js');
 var proxyMiddleware = require('http-proxy-middleware');
 
 var proxy = proxyMiddleware('ws://localhost');
+//var proxy = proxyMiddleware('ws://192.168.0.200:5480');
 var app = express();
 var compiler = webpack(config);
 

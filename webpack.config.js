@@ -57,7 +57,8 @@ module.exports = {
 		publicPath: '/build/',
 	},
 
-	devtool: !release && '#cheap-source-map',
+	// cheap-module-source-map doesn't seem to work with Uglify
+	devtool: release ? '#module-source-map' : '#cheap-module-source-map',
 	module: {
 		loaders: [
 			{ 

@@ -31,7 +31,8 @@ const Dropdown = React.createClass({
 		const dom = ReactDOM.findDOMNode(this);
 
 		const settings = {
-			direction: this.props.direction
+			direction: this.props.direction,
+			action: 'hide',
 		};
 
 		if (this.props.contextGetter) {
@@ -46,7 +47,7 @@ const Dropdown = React.createClass({
 			caption: null,
 			className: '',
 			triggerIcon: 'angle down',
-			direction: 'auto'
+			direction: 'auto',
 		};
 	},
 
