@@ -270,14 +270,6 @@ const TableContainer = React.createClass({
 	_rowGetter(rowIndex) {
 		return this._dataLoader.getRowData(rowIndex);
 	},
-	
-	_clearDataForRow(rowIndex) {
-		this._dataLoader.clearRowData(rowIndex);
-	},
-	
-	_renderButton(_1, _2, _3, rowIndex) {
-		return (<button style={{ width: '100%' }} onClick={this._clearDataForRow.bind(null, rowIndex)}>clear data</button>);
-	},
 
 	_onScrollStart(horizontal, vertical) {
 		this._dataLoader.fetchingActive = true;

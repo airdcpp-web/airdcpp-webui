@@ -6,6 +6,7 @@ import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 
+import _ from 'lodash';
 import t from 'utils/tcomb-form';
 
 const Form = t.form.Form;

@@ -41,6 +41,7 @@ var routeConfig = [
 			require('./routes/FavoriteHubs'),
 			require('./routes/Queue'),
 			require('./routes/Search'),
+			require('./routes/Settings'),
 			require('./routes/Sidebar'),
 		]
 	}
