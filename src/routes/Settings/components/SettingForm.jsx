@@ -1,5 +1,5 @@
 import React from 'react';
-import { SETTING_MODULE_URL } from 'constants/SettingConstants';
+import { SETTING_ITEMS_URL } from 'constants/SettingConstants';
 
 import SocketService from 'services/SocketService';
 import SaveSection from './SaveSection';
@@ -31,6 +31,23 @@ const SettingForm = React.createClass({
 		 * Must return promise
 		 */
 		onSave: React.PropTypes.func,
+
+		/**
+		 * Optional callback that is called when a value was changed
+		 * Receives the new value and changed field id as parameter
+		 */
+		onChange: React.PropTypes.func,
+
+		/**
+		 * Optional callback that is called when the setting array is received from the server
+		 * Receives the setting array as parameter
+		 */
+		onCurrentSettings: React.PropTypes.func,
+
+		/**
+		 * Disable fields for auto detected settings
+		 */
+		disableAutoDetected: React.PropTypes.func,
 	},
 
 	getInitialState() {
@@ -54,21 +71,33 @@ const SettingForm = React.createClass({
 	},
 
 	updateOriginalValue(newValue) {
+		if (this.props.onCurrentSettings) {
+			this.props.onCurrentSettings(newValue);
+		}
+
 		this.originalSetting = newValue;
 		this.setState({ value: _.clone(newValue) });
 	},
 
 	componentDidMount() {
+		this.fetchSettings();
+	},
+
+	fetchSettings() {
 		const keys = Object.keys(this.props.formItems);
-		SocketService.get(SETTING_MODULE_URL, keys)
+		SocketService.get(SETTING_ITEMS_URL, keys)
 			.then(this.onSettingsReceived)
 			.catch(error => 
-				console.error('Failed to load settings: ' + error)
+				NotificationActions.apiError('Failed to fetch settings', error)
 			);
 	},
 
 	onChange(value, path) {
 		this.refs.form.getComponent(path).validate();
+		if (this.props.onChange) {
+			this.props.onChange(value, path);
+		}
+
 		this.setState({ value: value });
 	},
 
@@ -76,20 +105,21 @@ const SettingForm = React.createClass({
 		if (error.code === 422) {
 			this.setState({ error: error.json });
 		} else {
-			// ?
+			NotificationActions.apiError('Failed to save settings', error);
 		}
 	},
 
 	onSettingsSaved() {
-		this.updateOriginalValue(this.state.value);
+		this.fetchSettings();
+		//this.updateOriginalValue(this.state.value);
 		NotificationActions.success({ 
 			title: 'Saving completed',
 			message: 'Settings were saved successfully',
-		});		
+		});
 	},
 
 	postSettings(changedSettingArray) {
-		return SocketService.post(SETTING_MODULE_URL, changedSettingArray)
+		return SocketService.post(SETTING_ITEMS_URL, changedSettingArray)
 				.then(this.onSettingsSaved)
 				.catch(this._handleError);
 	},
@@ -120,9 +150,15 @@ const SettingForm = React.createClass({
 	},
 
 	reduceFieldOptions(options, setting) {
+		const autoDetected = this.settingInfo.auto && this.originalSetting[setting.key] === setting.value;
+		const legend = setting.title + (autoDetected ? ' (auto detected)' : '');
 		const fieldOptions = {
-			legend: setting.title,
+			legend: legend,
 		};
+
+		if (autoDetected && this.props.disableAutoDetected) {
+			fieldOptions['disabled'] = true;
+		}
 
 		if (setting.values) {
 			// Enum select field
@@ -130,17 +166,21 @@ const SettingForm = React.createClass({
 				factory: t.form.Select,
 				options: setting.values,
 				nullOption: false,
-				transformer: {
+			});
+
+			if (setting.value && setting.value === parseInt(setting.value, 10)) {
+				// Integer keys won't work, use string conversion
+				fieldOptions['transformer'] = {
 					format: v => String(v),
 					parse: v => parseInt(v, 10)
-				}
-			});
+				};
+			}
 		}
 
 		if (this.props.onFieldSetting) {
 			// string -> int conversion if needed
 			const rawValue = this.state.value[setting.key];
-			this.props.onFieldSetting(setting.key, fieldOptions, fieldOptions.transformer ? fieldOptions.transformer.parse(rawValue) : rawValue);
+			this.props.onFieldSetting(setting.key, fieldOptions, fieldOptions.transformer ? fieldOptions.transformer.parse(rawValue) : rawValue, this.state.value);
 		}
 
 		options[setting.key] = fieldOptions;

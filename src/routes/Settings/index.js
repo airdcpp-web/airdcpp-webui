@@ -5,7 +5,7 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [
 				require('./routes/Personal'),
-				//require('./routes/Connection'),
+				require('./routes/Connectivity'),
 				//require('./routes/Sharing'),
 			]);
 		});
