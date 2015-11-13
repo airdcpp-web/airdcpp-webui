@@ -41,15 +41,13 @@ const GridLayout = React.createClass({
 					</div>
 				</div>
 				<div className="thirteen wide stretched column content-column">
-					<div className="settings-content-column">
-						<SettingPage 
-							sectionId={ currentMenuItem.url } 
-							title={ currentMenuItem.title }
-							icon={ this.props.icon }
-						>
-							{ children }
-						</SettingPage>
-					</div>
+					<SettingPage 
+						sectionId={ currentMenuItem.url } 
+						title={ currentMenuItem.title }
+						icon={ this.props.icon }
+					>
+						{ children }
+					</SettingPage>
 				</div>
 			</div>
 		);

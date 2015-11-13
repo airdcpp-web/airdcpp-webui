@@ -22,7 +22,8 @@ const DetectionPage = React.createClass({
 
 	onCurrentSettings(value) {
 		this.setState({
-			enableDetection: value.connection_auto_v4 || value.connection_auto_v6
+			detectV4: value.connection_auto_v4,
+			detectV6: value.connection_auto_v6
 		});
 	},
 
@@ -34,7 +35,7 @@ const DetectionPage = React.createClass({
 					formItems={Entry}
 					onCurrentSettings={this.onCurrentSettings}
 				/>
-				{ this.state.enableDetection ? <DetectPanel/> : null }
+				<DetectPanel detectV4={this.state.detectV4} detectV6={this.state.detectV6}/>
 			</div>
 		);
 	}

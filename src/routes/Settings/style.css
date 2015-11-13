@@ -3,6 +3,16 @@
   max-width: 1100px;
   margin-left: auto !important;
   margin-right: auto !important;
+
+  max-height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-layout .section-content {
+	overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .settings-page-header {
@@ -13,4 +23,16 @@
 
 .settings-layout .menu-column .menu {
   max-width: 100%;
+}
+
+.settings-layout .settings-page-header {
+	margin-bottom: 20px;
+}
+
+.settings-layout .detect-panel {
+	margin-top: 30px;
+}
+
+.settings-layout .detect-panel .detect-button {
+	margin-top: 20px;
 }

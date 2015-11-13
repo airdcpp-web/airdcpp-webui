@@ -6,7 +6,7 @@ import Button from 'components/semantic/Button';
 
 import { CONNECTIVITY_MODULE_URL, CONNECTIVITY_STATUS_URL, CONNECTIVITY_DETECT_URL, CONNECTIVITY_STARTED, CONNECTIVITY_FINISHED } from 'constants/ConnectivityConstants';
 
-const StatusRow = ({ title, status }) => (
+const StatusRow = ({ title, status, running, detect }) => (
 	<div className="ui row">
 		<div className="four wide column">
 			<div className="ui tiny header">
@@ -14,7 +14,7 @@ const StatusRow = ({ title, status }) => (
 			</div>
 		</div>
 		<div className="twelve wide column">
-			{ status === '' ? 'Auto detection not enabled' : status }
+			{ (!detect ? 'Automatic detection disabled' : (running ? 'Detecting...' : status)) }
 		</div>
 	</div>
 );
@@ -46,6 +46,7 @@ const DetectPanel = React.createClass({
 
 	onDetectFinished(data) {
 		this.setProtocolDetectState(data.v6, false);
+		this.updateStatus();
 	},
 
 	setProtocolDetectState(v6, enabled) {
@@ -71,12 +72,17 @@ const DetectPanel = React.createClass({
 
 	render() {
 		const { status } = this.state;
-		if (!status) {
+		if (!status || (!this.props.detectV4 && !this.props.detectV6)) {
 			return null;
 		}
 
 		return (
 			<div className="ui segment detect-panel">
+				<h3 className="header">Detection status</h3>
+				<div className="ui grid two column detect-grid">
+					<StatusRow title="IPv4 detection status" status={status.status_v4} running={this.state.detectingV4} detect={this.props.detectV4}/>
+					<StatusRow title="IPv6 detection status" status={status.status_v6} running={this.state.detectingV6} detect={this.props.detectV6}/>
+				</div>
 				<Button 
 					className="detect-button"
 					caption="Detect now"
@@ -84,10 +90,6 @@ const DetectPanel = React.createClass({
 					loading={ this.state.detectingV6 || this.state.detectingV4 } 
 					onClick={this.handleDetect}
 				/>
-				<div className="ui grid two column detect-grid">
-					<StatusRow title="IPv4 detection status" status={status.status_v4}/>
-					<StatusRow title="IPv6 detection status" status={status.status_v6}/>
-				</div>
 			</div>
 		);
 	}
