@@ -1,6 +1,16 @@
 .settings-layout {
-    padding-bottom: 30px;
-    width: 1000px;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  padding-bottom: 30px;
+  max-width: 1100px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.settings-page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.settings-layout .menu-column .menu {
+  max-width: 100%;
 }

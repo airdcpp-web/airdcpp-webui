@@ -1,11 +1,11 @@
 import React from 'react';
-//import SocketService from 'services/SocketService';
 import SettingForm from 'routes/Settings/components/SettingForm';
+import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import { ConnectionModeEnum } from 'constants/SettingConstants';
-//import t from 'utils/tcomb-form';
 
 const ProtocolPage = React.createClass({
+	mixins: [ SettingPageMixin('form') ],
 	convertValue(key) {
 		return key + '_' + this.props.protocol;
 	},
@@ -23,6 +23,7 @@ const ProtocolPage = React.createClass({
 		return (
 			<div className="detection-settings">
 				<SettingForm
+					ref="form"
 					formItems={this.props.formItems}
 					onFieldSetting={this.onFieldSetting}
 				/>

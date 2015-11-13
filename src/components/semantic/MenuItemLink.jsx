@@ -19,7 +19,7 @@ const MenuItemLink = React.createClass({
 
 	render: function () {
 		return (
-			<Link to={this.props.url} className={ 'item ' + this.props.className } activeClassName="active">
+			<Link to={this.props.url} className={ 'item ' + (this.props.className ? this.props.className : '') } activeClassName="active">
 				{ this.props.title }
 			</Link>
 		);

@@ -1,5 +1,6 @@
 import React from 'react';
 import ProtocolPage from './ProtocolPage';
+import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
@@ -11,10 +12,12 @@ const Entry = {
 };
 
 const IPv4 = React.createClass({
+	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
 			<div className="v4-settings">
 				<ProtocolPage
+					ref="form"
 					formItems={Entry}
 					protocol="v4"
 				/>

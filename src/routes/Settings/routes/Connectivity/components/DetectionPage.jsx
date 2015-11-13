@@ -3,6 +3,8 @@ import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
 import DetectPanel from './DetectPanel';
 
+import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
+
 import t from 'utils/tcomb-form';
 
 const Entry = {
@@ -10,7 +12,8 @@ const Entry = {
 	connection_auto_v6: t.maybe(t.Boolean),
 };
 
-const Detection = React.createClass({
+const DetectionPage = React.createClass({
+	mixins: [ SettingPageMixin('form') ],
 	getInitialState() {
 		return {
 			enableDetection: false
@@ -26,14 +29,15 @@ const Detection = React.createClass({
 	render() {
 		return (
 			<div className="detection-settings">
-				{ this.state.enableDetection ? <DetectPanel/> : null }
 				<SettingForm
+					ref="form"
 					formItems={Entry}
 					onCurrentSettings={this.onCurrentSettings}
 				/>
+				{ this.state.enableDetection ? <DetectPanel/> : null }
 			</div>
 		);
 	}
 });
 
-export default Detection;
+export default DetectionPage;

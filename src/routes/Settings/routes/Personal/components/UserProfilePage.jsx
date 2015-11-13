@@ -1,7 +1,7 @@
 import React from 'react';
 import { SettingProfileEnum } from 'constants/SettingConstants';
-//import SocketService from 'services/SocketService';
 import SettingForm from 'routes/Settings/components/SettingForm';
+import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
@@ -13,6 +13,7 @@ const Entry = {
 };
 
 const Personal = React.createClass({
+	mixins: [ SettingPageMixin('form') ],
 	onFieldSetting(id, fieldOptions, currentValue) {
 		if (id === 'setting_profile') {
 			switch (currentValue) {
@@ -36,6 +37,7 @@ const Personal = React.createClass({
 		return (
 			<div className="personal-settings">
 				<SettingForm
+					ref="form"
 					formItems={Entry}
 					onFieldSetting={this.onFieldSetting}
 				/>

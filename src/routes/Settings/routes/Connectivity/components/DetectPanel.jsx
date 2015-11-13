@@ -13,7 +13,7 @@ const StatusRow = ({ title, status }) => (
 			{ title }
 			</div>
 		</div>
-		<div className="ten wide column">
+		<div className="twelve wide column">
 			{ status === '' ? 'Auto detection not enabled' : status }
 		</div>
 	</div>
@@ -78,7 +78,8 @@ const DetectPanel = React.createClass({
 		return (
 			<div className="ui segment detect-panel">
 				<Button 
-					caption="Detect"
+					className="detect-button"
+					caption="Detect now"
 					icon={ "gray configure" } 
 					loading={ this.state.detectingV6 || this.state.detectingV4 } 
 					onClick={this.handleDetect}

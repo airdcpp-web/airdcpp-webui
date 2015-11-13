@@ -1,8 +1,8 @@
 import React from 'react';
+import Promise from 'utils/Promise';
 import { SETTING_ITEMS_URL } from 'constants/SettingConstants';
 
 import SocketService from 'services/SocketService';
-import SaveSection from './SaveSection';
 import NotificationActions from 'actions/NotificationActions';
 
 import deepEqual from 'deep-equal';
@@ -13,6 +13,10 @@ import t from 'utils/tcomb-form';
 const Form = t.form.Form;
 
 const SettingForm = React.createClass({
+	contextTypes: {
+		onSettingsChanged: React.PropTypes.func.isRequired
+	},
+
 	propTypes: {
 		/**
 		 * Form items to list
@@ -57,25 +61,29 @@ const SettingForm = React.createClass({
 		};
 	},
 
-	convertRawSetting(settings, rawSetting) {
-		// Convert empty strings for easier comparison as tcomb will use null for returned values
-		settings[rawSetting.key] = rawSetting.value === '' ? null : rawSetting.value;
-		return settings;
-	},
-
 	onSettingsReceived(data) {
-		this.settingInfo = data;
+		// Convert empty strings to nulls (that's what tcomb will use)
+		for (let key in data) {
+			if (data[key].value === '') {
+				data[key].value = null;
+			}
+		}
 
-		const value = data.reduce(this.convertRawSetting, {});
-		this.updateOriginalValue(value);
+		// Get a simple key-value map for the form
+		const value = Object.keys(data).reduce((valueMap, key) => {
+			valueMap[key] = data[key].value;
+			return valueMap;
+		}, {});
+
+		this.updateOriginalValue(value, data);
 	},
 
-	updateOriginalValue(newValue) {
+	updateOriginalValue(newValue, apiSettingInfos) {
 		if (this.props.onCurrentSettings) {
 			this.props.onCurrentSettings(newValue);
 		}
 
-		this.originalSetting = newValue;
+		this.apiSettingInfos = apiSettingInfos;
 		this.setState({ value: _.clone(newValue) });
 	},
 
@@ -92,13 +100,22 @@ const SettingForm = React.createClass({
 			);
 	},
 
-	onChange(value, path) {
-		this.refs.form.getComponent(path).validate();
+	hasChanges(newValue) {
+		return Object.keys(this.state.value).some(key => this.apiSettingInfos[key].value !== newValue[key] );
+	},
+
+	onChange(value, valueKey) {
+		// Make sure that we have a converted value
+		const result = this.refs.form.getComponent(valueKey).validate();
+		value[valueKey] = result.value;
+
 		if (this.props.onChange) {
-			this.props.onChange(value, path);
+			this.props.onChange(value, valueKey);
 		}
 
 		this.setState({ value: value });
+
+		this.context.onSettingsChanged(this.hasChanges(value));
 	},
 
 	_handleError(error) {
@@ -129,7 +146,7 @@ const SettingForm = React.createClass({
 		if (value) {
 			// Filter the changed settings
 			const changedSettingArray = Object.keys(value).reduce((settings, valueKey) => {
-				if (deepEqual(this.originalSetting[valueKey], value[valueKey])) {
+				if (deepEqual(this.apiSettingInfos[valueKey].value, value[valueKey])) {
 					return settings;
 				}
 
@@ -149,9 +166,13 @@ const SettingForm = React.createClass({
 		return Promise.reject();
 	},
 
-	reduceFieldOptions(options, setting) {
-		const autoDetected = this.settingInfo.auto && this.originalSetting[setting.key] === setting.value;
-		const legend = setting.title + (autoDetected ? ' (auto detected)' : '');
+	getFieldOptions(optionsObject, settingKey) {
+		const apiSetting = this.apiSettingInfos[settingKey];
+
+		const currentRawValue = this.state.value[settingKey];
+		const autoDetected = apiSetting.auto && apiSetting.value === currentRawValue;
+		const legend = apiSetting.title + (autoDetected ? ' (auto detected)' : '');
+
 		const fieldOptions = {
 			legend: legend,
 		};
@@ -160,15 +181,15 @@ const SettingForm = React.createClass({
 			fieldOptions['disabled'] = true;
 		}
 
-		if (setting.values) {
+		if (apiSetting.values) {
 			// Enum select field
 			Object.assign(fieldOptions, {
 				factory: t.form.Select,
-				options: setting.values,
+				options: apiSetting.values,
 				nullOption: false,
 			});
 
-			if (setting.value && setting.value === parseInt(setting.value, 10)) {
+			if (apiSetting.value && apiSetting.value === parseInt(apiSetting.value, 10)) {
 				// Integer keys won't work, use string conversion
 				fieldOptions['transformer'] = {
 					format: v => String(v),
@@ -179,21 +200,20 @@ const SettingForm = React.createClass({
 
 		if (this.props.onFieldSetting) {
 			// string -> int conversion if needed
-			const rawValue = this.state.value[setting.key];
-			this.props.onFieldSetting(setting.key, fieldOptions, fieldOptions.transformer ? fieldOptions.transformer.parse(rawValue) : rawValue, this.state.value);
+			this.props.onFieldSetting(settingKey, fieldOptions, fieldOptions.transformer ? fieldOptions.transformer.parse(currentRawValue) : currentRawValue, this.state.value);
 		}
 
-		options[setting.key] = fieldOptions;
-		return options;
+		optionsObject[settingKey] = fieldOptions;
+		return optionsObject;
 	},
 
 	render: function () {
-		if (!this.settingInfo) {
+		if (!this.apiSettingInfos) {
 			return <div className="ui active text loader">Loading</div>;
 		}
 
 		const options = {};
-		options['fields'] = this.settingInfo.reduce(this.reduceFieldOptions, {});
+		options['fields'] = Object.keys(this.apiSettingInfos).reduce(this.getFieldOptions, {});
 
 		const { error } = this.state;
 		if (error) {
@@ -213,7 +233,6 @@ const SettingForm = React.createClass({
 					value={this.state.value}
 					onChange={this.onChange}
 				/>
-				<SaveSection saveHandler={this.save} hasChanges={!deepEqual(this.originalSetting, this.state.value)}/>
 			</div>);
 	}
 });

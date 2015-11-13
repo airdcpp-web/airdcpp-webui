@@ -13,7 +13,8 @@ const General = React.createClass({
 		return (
 			<GridLayout 
 				menuItems={ menuItems } 
-				id="personal" 
+				id="personal"
+				icon="user"
 				{...this.props}
 			/>
 		);

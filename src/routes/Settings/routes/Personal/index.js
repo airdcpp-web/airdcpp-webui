@@ -5,7 +5,7 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'profile', 
-				component: require('./components/UserProfile'), 
+				component: require('./components/UserProfilePage'), 
 			} ]);
 		}, 'setting-personal-children');
 	},
