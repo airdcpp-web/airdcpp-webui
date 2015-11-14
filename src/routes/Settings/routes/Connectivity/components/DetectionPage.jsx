@@ -20,10 +20,10 @@ const DetectionPage = React.createClass({
 		};
 	},
 
-	onCurrentSettings(value) {
+	onSourceDataChanged(sourceData) {
 		this.setState({
-			detectV4: value.connection_auto_v4,
-			detectV6: value.connection_auto_v6
+			detectV4: sourceData.connection_auto_v4.value,
+			detectV6: sourceData.connection_auto_v6.value
 		});
 	},
 
@@ -33,7 +33,7 @@ const DetectionPage = React.createClass({
 				<SettingForm
 					ref="form"
 					formItems={Entry}
-					onCurrentSettings={this.onCurrentSettings}
+					onSourceDataChanged={this.onSourceDataChanged}
 				/>
 				<DetectPanel detectV4={this.state.detectV4} detectV6={this.state.detectV6}/>
 			</div>

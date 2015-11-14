@@ -1,22 +1,20 @@
 import React from 'react';
-import { SettingProfileEnum } from 'constants/SettingConstants';
+
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	nick: t.maybe(t.Str),
-	description: t.maybe(t.Str),
-	email: t.maybe(t.Str),
-	setting_profile: t.Num,
+	download_speed: t.maybe(t.Str),
+	upload_speed: t.maybe(t.Str),
 };
 
 const Personal = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
-	onFieldSetting(id, fieldOptions, formValue) {
+	/*onFieldSetting(id, fieldOptions, currentValue) {
 		if (id === 'setting_profile') {
-			switch (formValue[id]) {
+			switch (currentValue) {
 				case SettingProfileEnum.PROFILE_NORMAL: {
 					fieldOptions['help'] = 'The client is used in normal private/public hubs for transferring files via internet. Use this profile if unsure.';
 					break;
@@ -31,15 +29,15 @@ const Personal = React.createClass({
 				}
 			}
 		}
-	},
+	},*/
 
 	render() {
 		return (
-			<div className="personal-settings">
+			<div className="speed-settings">
 				<SettingForm
 					ref="form"
 					formItems={Entry}
-					onFieldSetting={this.onFieldSetting}
+					//onFieldSetting={this.onFieldSetting}
 				/>
 			</div>
 		);

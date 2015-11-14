@@ -10,11 +10,15 @@ const ProtocolPage = React.createClass({
 		return key + '_' + this.props.protocol;
 	},
 
-	onFieldSetting(id, fieldOptions, fieldValue, formValue) {
+	onFieldSetting(id, fieldOptions, formValue) {
 		const protocolEnabled = formValue[this.convertValue('connection_mode')] !== ConnectionModeEnum.INCOMING_DISABLED;
 		const autoDetect = formValue[this.convertValue('connection_auto')];
 
-		if ((!protocolEnabled || autoDetect) && (id.indexOf('connection_ip') === 0 || id.indexOf('connection_bind') === 0 || id.indexOf('connection_mode') === 0)) {
+		if ((!protocolEnabled || autoDetect) && (id.indexOf('connection_ip') === 0 || id.indexOf('connection_bind') === 0)) {
+			fieldOptions['disabled'] = true;
+		}
+
+		if (autoDetect && id.indexOf('connection_mode') === 0) {
 			fieldOptions['disabled'] = true;
 		}
 	},

@@ -3,22 +3,22 @@
 import React from 'react';
 import GridLayout from 'routes/Settings/components/GridLayout';
 
-const General = React.createClass({
+const SpeedSlots = React.createClass({
 	render() {
 		const menuItems = [
-			{ title: 'User profile', url: 'profile' },
+			{ title: 'Speed', url: 'speed' },
 			//{ title: 'Usage profile', url: 'profile' }
 		];
 
 		return (
 			<GridLayout 
 				menuItems={ menuItems } 
-				id="personal"
-				icon="user"
+				id="speed-slots"
+				icon="dashboard"
 				{...this.props}
 			/>
 		);
 	},
 });
 
-export default General;
+export default SpeedSlots;

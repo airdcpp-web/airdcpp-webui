@@ -8,13 +8,13 @@ import { CONNECTIVITY_MODULE_URL, CONNECTIVITY_STATUS_URL, CONNECTIVITY_DETECT_U
 
 const StatusRow = ({ title, status, running, detect }) => (
 	<div className="ui row">
-		<div className="four wide column">
+		<div className="three wide column">
 			<div className="ui tiny header">
 			{ title }
 			</div>
 		</div>
 		<div className="twelve wide column">
-			{ (!detect ? 'Automatic detection disabled' : (running ? 'Detecting...' : status)) }
+			{ (!detect ? 'Manual configuration' : (running ? 'Detecting...' : status)) }
 		</div>
 	</div>
 );
@@ -78,10 +78,10 @@ const DetectPanel = React.createClass({
 
 		return (
 			<div className="ui segment detect-panel">
-				<h3 className="header">Detection status</h3>
+				<h3 className="header">Current auto detection status</h3>
 				<div className="ui grid two column detect-grid">
-					<StatusRow title="IPv4 detection status" status={status.status_v4} running={this.state.detectingV4} detect={this.props.detectV4}/>
-					<StatusRow title="IPv6 detection status" status={status.status_v6} running={this.state.detectingV6} detect={this.props.detectV6}/>
+					<StatusRow title="IPv4 connectivity" status={status.status_v4} running={this.state.detectingV4} detect={this.props.detectV4}/>
+					<StatusRow title="IPv6 connectivity" status={status.status_v6} running={this.state.detectingV6} detect={this.props.detectV6}/>
 				</div>
 				<Button 
 					className="detect-button"

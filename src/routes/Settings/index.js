@@ -6,6 +6,7 @@ module.exports = {
 			cb(null, [
 				require('./routes/Personal'),
 				require('./routes/Connectivity'),
+				require('./routes/SpeedSlots'),
 				//require('./routes/Sharing'),
 			]);
 		});
