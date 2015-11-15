@@ -26,6 +26,10 @@ const GridLayout = React.createClass({
 	},
 
 	findMenuItem(menuItems) {
+		if (!menuItems) {
+			return null;
+		}
+
 		return menuItems.find(item => this.sectionToUrl(item.url) === this.props.location.pathname);
 	},
 

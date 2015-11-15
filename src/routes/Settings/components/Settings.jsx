@@ -22,6 +22,7 @@ const Settings = React.createClass({
 					<MenuItemLink url="/settings/speed-limits" title="Speed and limits"/>
 					<MenuItemLink url="/settings/downloads" title="Downloads"/>
 					<MenuItemLink url="/settings/sharing" title="Sharing"/>
+					<MenuItemLink url="/settings/about" title="About"/>
 				</div>
 				<div className="section-content">
 					{ this.props.children }

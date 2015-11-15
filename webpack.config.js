@@ -15,13 +15,15 @@ var plugins = [
 		jQuery: 'jquery',
 		'window.jQuery': 'jquery',
 	}),
+	
+	new webpack.DefinePlugin({
+		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+		'UI_VERSION': JSON.stringify(require("./package.json").version),
+		'UI_BUILD_DATE': JSON.stringify((new Date).getTime()),
+	}),
 ];
 
-var releasePlugins = [
-	new webpack.DefinePlugin({
-		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-	}),
-	
+var releasePlugins = [	
 	new webpack.optimize.UglifyJsPlugin({
 		compress: {
 			warnings: false

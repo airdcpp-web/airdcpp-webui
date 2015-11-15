@@ -5,6 +5,18 @@ import SaveButton from './SaveButton';
 import NotificationActions from 'actions/NotificationActions';
 
 const SettingPage = React.createClass({
+	propTypes: {
+		title: React.PropTypes.node.isRequired,
+		icon: React.PropTypes.string.isRequired,
+		saveable: React.PropTypes.bool,
+	},
+
+	getDefaultProps() {
+		return {
+			saveable: true
+		};
+	},
+
 	getInitialState() {
 		return {
 			hasChanges: false
@@ -36,7 +48,7 @@ const SettingPage = React.createClass({
 							{ this.props.title }
 						</div>
 					</h2>
-					<SaveButton saveHandler={this.handleSave} hasChanges={this.state.hasChanges}/>
+					{ (this.props.saveable ? <SaveButton saveHandler={this.handleSave} hasChanges={this.state.hasChanges}/> : null) }
 				</div>
 				<div className="">
 					{ 

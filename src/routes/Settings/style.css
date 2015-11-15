@@ -15,6 +15,10 @@
   flex-direction: column;
 }
 
+.settings-layout .section-content > div {
+	overflow-y: auto;
+}
+
 .settings-page-header {
 	display: flex;
 	justify-content: space-between;

@@ -5,6 +5,7 @@ export default {
 
 	SHARE_DUPE_PATHS_URL: SHARE_MODULE_URL + '/find_dupe_paths',
 	ROOTS_GET_URL: SHARE_MODULE_URL + '/roots',
+	SHARE_STATS_URL: SHARE_MODULE_URL + '/stats',
 
 	HIDDEN_PROFILE_ID: 1
 }
