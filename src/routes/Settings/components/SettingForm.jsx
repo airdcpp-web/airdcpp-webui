@@ -22,6 +22,11 @@ const SettingForm = React.createClass({
 		 * Receives the new value and changed field id as parameter
 		 */
 		onChange: React.PropTypes.func,
+
+		/**
+		 * Possible header for the form
+		 */
+		title: React.PropTypes.node,
 	},
 
 	getInitialState() {
@@ -31,7 +36,7 @@ const SettingForm = React.createClass({
 	},
 
 	onSettingsReceived(data) {
-		this.setState({ sourceData: data });
+		this.setState({ sourceData: Object.assign(this.state.sourceData || {}, data) });
 	},
 
 	componentDidMount() {
@@ -40,30 +45,27 @@ const SettingForm = React.createClass({
 
 	fetchSettings() {
 		const keys = Object.keys(this.props.formItems);
-		SocketService.get(SETTING_ITEMS_URL, keys)
+
+		SocketService.get(SETTING_ITEMS_URL, { 
+			keys: keys
+		})
 			.then(this.onSettingsReceived)
 			.catch(error => 
 				NotificationActions.apiError('Failed to fetch settings', error)
 			);
 	},
 
-	onChange(value, valueKey, hasChanges) {
-		this.context.onSettingsChanged(hasChanges);
+	onFieldChanged(id, value, hasChanges) {
+		this.context.onSettingsChanged(id, value, hasChanges);
 
-		if (this.props.onChange) {
-			this.props.onChange(value, valueKey, hasChanges);
+		if (this.props.onFieldChanged) {
+			return this.props.onFieldChanged(id, value, hasChanges);
 		}
 	},
 
 	onSave(changedSettingArray) {
-		return SocketService.post(SETTING_ITEMS_URL, changedSettingArray).then(this.onSettingsSaved)
-			.then(() => {
-				this.fetchSettings();
-				NotificationActions.success({ 
-					title: 'Saving completed',
-					message: 'Settings were saved successfully',
-				});
-			});
+		return SocketService.post(SETTING_ITEMS_URL, changedSettingArray)
+			.then(this.fetchSettings);
 	},
 
 	save() {
@@ -72,13 +74,14 @@ const SettingForm = React.createClass({
 
 	render: function () {
 		return (
-			<div>
+			<div className="setting-form">
+				{ this.props.title ? <div className="ui header">{ this.props.title } </div> : null }
 				<Form
+					{ ...this.props }
 					ref="form"
-					onChange={this.onChange}
+					onFieldChanged={this.onFieldChanged}
 					sourceData={this.state.sourceData}
 					onSave={this.onSave}
-					{ ...this.props }
 				/>
 			</div>);
 	}

@@ -38,7 +38,7 @@ const ConfirmDialog = React.createClass({
 	},
 
 	onDeny: function (el) {
-		this.props.resolver.reject();
+		this.props.resolver.reject(new Error('Denied'));
 	},
 
 	onApprove: function (el) {

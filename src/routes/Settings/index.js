@@ -6,10 +6,10 @@ module.exports = {
 			cb(null, [
 				require('./routes/Personal'),
 				require('./routes/Connectivity'),
-				require('./routes/SpeedSlots'),
+				require('./routes/SpeedLimits'),
 				//require('./routes/Sharing'),
 			]);
-		});
+		}, 'settings-children');
 	},
 
 	getComponent(location, cb) {

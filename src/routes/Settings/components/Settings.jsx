@@ -19,7 +19,7 @@ const Settings = React.createClass({
 				<div className="ui secondary pointing menu settings top-menu">
 					<MenuItemLink url="/settings/personal" title="Personal"/>
 					<MenuItemLink url="/settings/connectivity" title="Connectivity"/>
-					<MenuItemLink url="/settings/speed-slots" title="Speed"/>
+					<MenuItemLink url="/settings/speed-limits" title="Speed and limits"/>
 					<MenuItemLink url="/settings/downloads" title="Downloads"/>
 					<MenuItemLink url="/settings/sharing" title="Sharing"/>
 				</div>

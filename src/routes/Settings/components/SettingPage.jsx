@@ -2,6 +2,7 @@
 
 import React from 'react';
 import SaveButton from './SaveButton';
+import NotificationActions from 'actions/NotificationActions';
 
 const SettingPage = React.createClass({
 	getInitialState() {
@@ -14,8 +15,15 @@ const SettingPage = React.createClass({
 		this.setState({ hasChanges: hasChanges });
 	},
 
+	onSettingsSaved() {
+		NotificationActions.success({ 
+			title: 'Saving completed',
+			message: 'Settings were saved successfully',
+		});
+	},
+
 	handleSave() {
-		return this.refs.children.save().finally(() => this.setState({ hasChanges: false }));
+		return this.refs.children.save().then(this.onSettingsSaved).finally(() => this.setState({ hasChanges: false }));
 	},
 
 	render() {

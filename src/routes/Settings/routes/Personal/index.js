@@ -7,7 +7,7 @@ module.exports = {
 				path: 'profile', 
 				component: require('./components/UserProfilePage'), 
 			} ]);
-		}, 'setting-personal-children');
+		}, 'settings-personal-children');
 	},
 
 	getComponent(location, cb) {

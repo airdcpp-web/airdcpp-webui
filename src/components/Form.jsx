@@ -33,13 +33,9 @@ const Form = React.createClass({
 		/**
 		 * Optional callback that is called when a value was changed
 		 * Receives the new value and changed field id as parameter
+		 * The function may return a promise containing new setting objects to be set as user selections
 		 */
 		onChange: React.PropTypes.func,
-
-		/**
-		 * Disable fields for auto detected settings
-		 */
-		disableAutoDetected: React.PropTypes.func,
 
 		/**
 		 * Optional callback that is called when the settings are received from the server
@@ -50,7 +46,7 @@ const Form = React.createClass({
 		/**
 		 * Source value to use for initial data
 		 */
-		sourceData: React.PropTypes.object.isRequired,
+		sourceData: React.PropTypes.object,
 	},
 
 	getInitialState() {
@@ -62,11 +58,19 @@ const Form = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.sourceData !== this.props.sourceData) {
-			this.onOriginalValueUpdated(nextProps.sourceData);
+			const formValue = this.getValueMap(nextProps.sourceData);
+
+			if (this.props.onSourceDataChanged) {
+				this.props.onSourceDataChanged(nextProps.sourceData);
+			}
+
+			this.sourceData = nextProps.sourceData;
+			this.setState({ formValue: formValue });
 		}
 	},
 
-	onOriginalValueUpdated(sourceData) {
+	// Convert received settings to key-value map
+	getValueMap(sourceData) {
 		// Convert empty strings to nulls (that's what tcomb will use)
 		for (let key in sourceData) {
 			if (sourceData[key].value === '') {
@@ -75,35 +79,33 @@ const Form = React.createClass({
 		}
 
 		// Get a simple key-value map for the form
-		const formValue = Object.keys(sourceData).reduce((valueMap, key) => {
+		return Object.keys(sourceData).reduce((valueMap, key) => {
 			valueMap[key] = sourceData[key].value;
 			return valueMap;
 		}, {});
-
-		if (this.props.onSourceDataChanged) {
-			this.props.onSourceDataChanged(sourceData);
-		}
-
-		this.sourceData = sourceData;
-		this.setState({ formValue: _.clone(formValue) });
 	},
 
-	updateOriginalValue(newValue, sourceData) {
-		this.sourceData = sourceData;
-		this.setState({ value: _.clone(newValue) });
+	// Merge new settings to current values (don't change source data)
+	onUserSettingsReceived(data) {
+		const newValue = Object.assign({}, this.state.formValue, this.getValueMap(data));
+
+		this.setState({ formValue: newValue });
 	},
 
-	hasChanges(newValue) {
-		return Object.keys(this.state.formValue).some(key => this.sourceData[key].value !== newValue[key] );
-	},
-
-	onChange(value, valueKey) {
+	onFieldChanged(value, valueKey) {
 		// Make sure that we have a converted value
 		const result = this.refs.form.getComponent(valueKey).validate();
 		value[valueKey] = result.value;
 
-		if (this.props.onChange) {
-			this.props.onChange(value, valueKey, this.hasChanges(value));
+		if (this.props.onFieldChanged) {
+			const promise = this.props.onFieldChanged(valueKey, value, !deepEqual(this.sourceData[valueKey].value, value[valueKey]));
+			if (promise) {
+				promise
+					.then(this.onUserSettingsReceived)
+					.catch(error => 
+						NotificationActions.apiError('Failed to update values', error)
+					);
+			}
 		}
 
 		this.setState({ formValue: value });
@@ -130,24 +132,30 @@ const Form = React.createClass({
 				return settings;
 			}.bind(this), {}); 
 
-			this.props.onSave(changedSettingArray).catch(this._handleError);
+			return this.props.onSave(changedSettingArray).catch(this._handleError);
 		}
 
-		return Promise.reject();
+		return Promise.reject(new Error('Validation failed'));
 	},
 
 	getFieldOptions(optionsObject, settingKey) {
 		const sourceItem = this.sourceData[settingKey];
 
 		const autoDetected = sourceItem.auto && sourceItem.value === this.state.formValue[settingKey];
-		const legend = sourceItem.title + (autoDetected ? ' (auto detected)' : '');
 
-		const fieldOptions = {
-			legend: legend,
-		};
+		const fieldOptions = {};
+		if (sourceItem.title) {
+			let legend = sourceItem.title;
 
-		if (autoDetected && this.props.disableAutoDetected) {
-			fieldOptions['disabled'] = true;
+			if (autoDetected) {
+				legend += ' (auto detected)';
+			}
+
+			if (sourceItem.unit) {
+				legend += ' (' + sourceItem.unit + ')';
+			}
+
+			fieldOptions['legend'] = legend;
 		}
 
 		// Enum select field?
@@ -158,7 +166,7 @@ const Form = React.createClass({
 				nullOption: false,
 			});
 
-			// Integer keys won't work, use string conversion
+			// Integer keys won't work, do string conversion
 			if (sourceItem.value === parseInt(sourceItem.value, 10)) {
 				fieldOptions['transformer'] = {
 					format: v => String(v),
@@ -200,7 +208,7 @@ const Form = React.createClass({
 					type={t.struct(this.props.formItems)}
 					options={options}
 					value={this.state.formValue}
-					onChange={this.onChange}
+					onChange={this.onFieldChanged}
 				/>
 			</div>);
 	}
