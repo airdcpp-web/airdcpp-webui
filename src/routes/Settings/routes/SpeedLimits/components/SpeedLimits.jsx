@@ -7,6 +7,9 @@ const SpeedLimits = React.createClass({
 	render() {
 		const menuItems = [
 			{ title: 'Speed', url: 'speed' },
+		];
+
+		const advancedMenuItems = [
 			{ title: 'Download limits', url: 'download-limits' },
 			{ title: 'Upload limits', url: 'upload-limits' },
 			{ title: 'Per-user limits', url: 'user-limits' },
@@ -15,6 +18,7 @@ const SpeedLimits = React.createClass({
 		return (
 			<GridLayout 
 				menuItems={ menuItems } 
+				advancedMenuItems={ advancedMenuItems }
 				id="speed-limits"
 				icon="dashboard"
 				{...this.props}

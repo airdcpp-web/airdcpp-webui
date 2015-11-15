@@ -25,10 +25,14 @@ const GridLayout = React.createClass({
 		}
 	},
 
-	render() {
-		let { children, menuItems } = this.props;
+	findMenuItem(menuItems) {
+		return menuItems.find(item => this.sectionToUrl(item.url) === this.props.location.pathname);
+	},
 
-		const currentMenuItem = this.props.menuItems.find(item => this.sectionToUrl(item.url) === this.props.location.pathname);
+	render() {
+		let { children, menuItems, advancedMenuItems } = this.props;
+
+		const currentMenuItem = this.findMenuItem(this.props.menuItems) || this.findMenuItem(this.props.advancedMenuItems);
 		if (!currentMenuItem) {
 			return null;
 		}
@@ -38,6 +42,16 @@ const GridLayout = React.createClass({
 				<div className="three wide column menu-column">
 					<div className="ui vertical secondary menu">
 						{ menuItems.map(this.getMenuItem) }
+						{ (advancedMenuItems ? 
+							<div>
+								<div className="item header">
+									Advanced
+								</div>
+								<div className="menu">
+									{ advancedMenuItems.map(this.getMenuItem) }
+								</div> 
+							</div>
+						: null) }
 					</div>
 				</div>
 				<div className="thirteen wide stretched column content-column">

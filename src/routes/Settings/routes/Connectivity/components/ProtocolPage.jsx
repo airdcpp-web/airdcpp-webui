@@ -21,6 +21,10 @@ const ProtocolPage = React.createClass({
 		if (autoDetect && id.indexOf('connection_mode') === 0) {
 			fieldOptions['disabled'] = true;
 		}
+
+		if (!protocolEnabled && id.indexOf('connection_auto') === 0) {
+			fieldOptions['disabled'] = true;
+		}
 	},
 
 	render() {
