@@ -1,6 +1,7 @@
 import update from 'react-addons-update';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
+// TODO: remove messages for closed session
 export default function (store, actions, sessionStore) {
 	let messages = {};
 
@@ -14,26 +15,32 @@ export default function (store, actions, sessionStore) {
 		store.trigger(messages[id], id);
 	};
 
-	store._onChatMessage = (data, id) => {
+	const onMessageReceived = (id, message, type) => {
 		if (!messages[id]) {
 			// Don't store messages before the initial fetch has completed
 			return;
 		}
 
-		if (!data.is_read && id === sessionStore.getActiveSession()) {
+		// Active tab?
+		if (!message.is_read && id === sessionStore.getActiveSession()) {
 			actions.setRead(id);
-			data.is_read = true;
+			message.is_read = true;
 		}
 
+		// Message limit exceed?
 		if (messages.length > store.maxMessages) {
 			messages.shift();
 		}
 
-		addMessage(id, { chat_message: data });
+		addMessage(id, { [type]: message });
+	};
+
+	store._onChatMessage = (data, id) => {
+		onMessageReceived(id, data, 'chat_message');
 	};
 
 	store._onStatusMessage = (data, id) => {
-		addMessage(id, { log_message: data });
+		onMessageReceived(id, data, 'log_message');
 	};
 
 	store.onSocketDisconnected = () => {
