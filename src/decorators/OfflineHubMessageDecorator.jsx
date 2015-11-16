@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import HubSessionStore from 'stores/HubSessionStore';
+import Message from 'components/semantic/Message';
 
 // Disables the component of there are no online hubs
 const OfflineHubMessageDecorator = React.createClass({
@@ -31,17 +32,13 @@ const OfflineHubMessageDecorator = React.createClass({
 	render() {
 		if (!this.state.hasConnectedHubs) {
 			return (
-				<div className="offline-message">
-  				<div className="ui icon message">
-  					<i className="plug icon"></i>
-  					<div className="content">
-  						<div className="header">
-  							No online hubs
-  						</div>
-  						<p>{this.props.offlineMessage}</p>
-  					</div>
-  				</div>
-				</div>);
+				<Message 
+					className="offline-message" 
+					icon="plug" 
+					title="No online hubs" 
+					description={this.props.offlineMessage}
+				/>
+			);
 		}
 
 		return this.props.children;

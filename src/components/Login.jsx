@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
-import ErrorMessage from './semantic/ErrorMessage';
+import Message from './semantic/Message';
 import { History } from 'react-router';
 
 const ErrorBox = React.createClass({
@@ -12,7 +12,7 @@ const ErrorBox = React.createClass({
 			return null;
 		}
 
-		return <ErrorMessage description={ 'Authentication failed: ' + this.props.lastError }/>;
+		return <Message isError={true} description={ 'Authentication failed: ' + this.props.lastError }/>;
 	}
 });
 

@@ -190,14 +190,9 @@ const TableContainer = React.createClass({
 		rowClassNameGetter: PropTypes.func,
 
 		/**
-		 * Elements to append to the table footer
-		 */
-		footerData: PropTypes.node,
-
-		/**
 		 * ID of the current entity for non-singleton sources
 		 */
-		entityId: PropTypes.any,		
+		entityId: PropTypes.any,
 	},
 
 	onSettingsChanged() {
@@ -325,6 +320,10 @@ const TableContainer = React.createClass({
 	// Fitted-table
 	_onContentHeightChange : function (contentHeight) {
 		setTimeout(() => {
+			if (!this.refs.touchScrollArea) {
+				return;
+			}
+
 			let width = 0;
 			React.Children.forEach(this.props.children, function (child) {
 				if ('width' in child.props) {
@@ -357,6 +356,10 @@ const TableContainer = React.createClass({
 	},
 	
 	render: function () {
+		if (this.props.emptyRowsNode !== undefined) {
+			return this.props.emptyRowsNode;
+		}
+
 		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
 
 		// Update and insert generic columns props
@@ -417,16 +420,41 @@ const TableContainer = React.createClass({
 });
 
 const VirtualTable = React.createClass({
+	propTypes: {
+		/**
+		 * Elements to append to the table footer
+		 */
+		footerData: PropTypes.node,
+
+		/**
+		 * Returns a node to render if there are no rows to display
+		 */
+		emptyRowsNodeGetter: PropTypes.func,
+	},
+
 	render: function () {
-		const { footerData, ...other } = this.props;
+		const { footerData, emptyRowsNodeGetter, ...other } = this.props;
+
+		// We can't render this here because the table must be kept mounted and receiving updates
+		let emptyRowsNode;
+		if (this.props.emptyRowsNodeGetter && this.props.store.rowCount === 0) {
+			emptyRowsNode = this.props.emptyRowsNodeGetter();
+
+			// null won't work because we must be able to get the dimensions
+			if (emptyRowsNode === null) {
+				emptyRowsNode = (<div></div>);
+			}
+		}
 
 		return (
 			<div className="virtual-table">
-				<TableContainer { ...other }/>
-				<div className="table-footer">
-					{ footerData }
-					<FilterBox viewUrl={ this.props.store.viewUrl }/>
-				</div>
+				<TableContainer { ...other } emptyRowsNode={emptyRowsNode}/>
+				{ emptyRowsNode === undefined ? (
+					<div className="table-footer">
+						{ footerData }
+						<FilterBox viewUrl={ this.props.store.viewUrl }/>
+					</div>
+				) : null }
 			</div>
 		);
 	}

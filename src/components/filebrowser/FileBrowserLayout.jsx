@@ -7,11 +7,11 @@ import SocketService from 'services/SocketService';
 import Formatter from 'utils/Format';
 
 import PathBreadcrumb from 'components/PathBreadcrumb';
-import ErrorMessage from 'components/semantic/ErrorMessage';
+import Message from 'components/semantic/Message';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 
-import './style.css'
+import './style.css';
 
 const PathItem = React.createClass({
 	render: function () {
@@ -251,7 +251,7 @@ const FileBrowser = React.createClass({
 		const rootName = this._isWindows ? 'Computer' : 'Root';
 		return (
 			<div className="file-browser">
-				{ this.state.error ? (<ErrorMessage title="Failed to load content" description={this.state.error}/>) : null }
+				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
 				<PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
 				<PathList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
 				{ this.state.currentDirectory ? <CreateDirectory handleAction={this._createDirectory}/> : null }
