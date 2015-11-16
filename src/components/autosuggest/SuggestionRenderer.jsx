@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './style.css';
+
 const SuggestionRenderer = function (input, suggestionValue, description = null) {
 	const escapeRegexCharacters = (str) => {
 		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

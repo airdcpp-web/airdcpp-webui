@@ -2,6 +2,7 @@ import React from 'react';
 import Promise from 'utils/Promise';
 
 import NotificationActions from 'actions/NotificationActions';
+import BrowseField from 'components/filebrowser/BrowseField';
 
 import deepEqual from 'deep-equal';
 
@@ -155,6 +156,11 @@ const Form = React.createClass({
 			}
 
 			fieldOptions['legend'] = legend;
+		}
+
+		// Path?
+		if (sourceItem.type == 'file_path' || sourceItem.type == 'directory_path') {
+			fieldOptions['factory'] = BrowseField(this.props.location, sourceItem.title);
 		}
 
 		// Enum select field?

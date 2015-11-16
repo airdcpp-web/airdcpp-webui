@@ -6,7 +6,7 @@ import History from 'utils/History';
 
 const t = require('tcomb-form');
 
-const BrowseField = function (location) { 
+const BrowseField = function (location, subHeader) { 
 	class Component extends t.form.Textbox {
 		getTemplate() {
 			return (locals) => {
@@ -16,7 +16,9 @@ const BrowseField = function (location) {
 
 				const showBrowseDialog = () => {
 					History.pushModal(location, location.pathname + '/browse', FILE_BROWSER_MODAL, {
-						onConfirm: onConfirm
+						onConfirm: onConfirm,
+						subHeader: subHeader,
+						initialPath: locals.value,
 					});
 				};
 

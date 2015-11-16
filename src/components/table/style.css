@@ -58,11 +58,11 @@
   padding: 5px;
 }
 
-.table-dropdown:hover, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
+.table-dropdown:hover, .public_fixedDataTableCell_main a:hover {
 	cursor:pointer;
 }
 
-.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover, .file-browser a:hover {
+.table-dropdown:hover span, .public_fixedDataTableCell_main a:hover {
 	text-decoration:underline;
 }
 

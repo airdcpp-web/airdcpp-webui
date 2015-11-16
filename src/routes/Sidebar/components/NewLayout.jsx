@@ -12,7 +12,7 @@ const NewLayout = React.createClass({
 		/**
 		 * Title of the button
 		 */
-		subheader: React.PropTypes.any,
+		subHeader: React.PropTypes.any,
 	},
 
 	render: function () {
@@ -22,7 +22,7 @@ const NewLayout = React.createClass({
 					className="new"
 					title={ this.props.title }
 					icon={ this.props.icon }
-					subheader={ this.props.subheader }
+					subHeader={ this.props.subHeader }
 				/>
 				{this.props.children}
 			</div>

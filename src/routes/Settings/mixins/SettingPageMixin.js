@@ -18,12 +18,14 @@ const SettingPageMixin = function () {
 		},
 
 		childContextTypes: {
-			onSettingsChanged: React.PropTypes.func.isRequired
+			onSettingsChanged: React.PropTypes.func.isRequired,
+			location: React.PropTypes.object.isRequired
 		},
 
 		getChildContext() {
 			return {
-				onSettingsChanged: this.onSettingsChangedInternal
+				onSettingsChanged: this.onSettingsChangedInternal,
+				location: this.props.location,
 			};
 		},
 

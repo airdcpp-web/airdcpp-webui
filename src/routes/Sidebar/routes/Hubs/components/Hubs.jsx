@@ -55,7 +55,7 @@ const Hubs = React.createClass({
 			>
 				{ this.props.children ? 
 					this.props.children :
-				(<NewLayout title="Connect" subheader="Connect to a new hub" icon="sitemap">
+				(<NewLayout title="Connect" subHeader="Connect to a new hub" icon="sitemap">
 					<HubSearchInput submitHandler={this._handleConnect}/>
 				</NewLayout>) }
 			</SideMenuLayout>

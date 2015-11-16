@@ -80,7 +80,7 @@ const Modal = React.createClass({
 				<LayoutHeader
 					title={ this.props.title }
 					icon={ this.props.icon }
-					subheader={ this.props.subheader }
+					subHeader={ this.props.subHeader }
 					size="medium"
 				/>
 				<div className="content">

@@ -11,6 +11,8 @@ import ErrorMessage from 'components/semantic/ErrorMessage';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 
+import './style.css'
+
 const PathItem = React.createClass({
 	render: function () {
 		const { item } = this.props;

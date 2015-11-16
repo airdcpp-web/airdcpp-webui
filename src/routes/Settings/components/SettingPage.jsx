@@ -47,7 +47,7 @@ const SettingPage = React.createClass({
 					className="settings-page-header"
 					title={ this.props.title }
 					icon={ this.props.icon + ' green' }
-					subheader={ this.props.subheader }
+					subHeader={ this.props.subHeader }
 					component={button}
 				/>
 				<div className="">

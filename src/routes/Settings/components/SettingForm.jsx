@@ -8,7 +8,8 @@ import Form from 'components/Form';
 
 const SettingForm = React.createClass({
 	contextTypes: {
-		onSettingsChanged: React.PropTypes.func.isRequired
+		onSettingsChanged: React.PropTypes.func.isRequired,
+		location: React.PropTypes.object.isRequired
 	},
 
 	propTypes: {
@@ -82,6 +83,7 @@ const SettingForm = React.createClass({
 					onFieldChanged={this.onFieldChanged}
 					sourceData={this.state.sourceData}
 					onSave={this.onSave}
+					location={this.context.location}
 				/>
 			</div>);
 	}

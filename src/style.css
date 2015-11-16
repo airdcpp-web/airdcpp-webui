@@ -37,50 +37,7 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	height: 100%;
 }
 
-/* Auto suggest */
-
-.react-autosuggest ul {
-	width:100%;
-	position: absolute;
-	top: 100%;
-	left: 0;
-	-webkit-transform-origin: center top;
-	-ms-transform-origin: center top;
-	transform-origin: center top;
-	background: #fff;
-	border-radius: .28571429rem;
-	box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);
-	border: 1px solid #d4d4d5;
-	z-index: 998;
-	padding:0px;
-	margin:0px;
-}
-
-.react-autosuggest li {
-	cursor: pointer;
-	display: block;
-	overflow: hidden;
-	font-size: 1em;
-	padding: .85714286em 1.14285714em;
-	color: rgba(0,0,0,.87);
-	line-height: 1.33;
-	border-bottom: 1px solid rgba(34,36,38,.1);
-}
-
-.react-autosuggest ul .description {
-	padding-top: 2px;
-	color: rgba(0,0,0,.7);
-	font-size: small;
-}
-
-.react-autosuggest__suggestion--focused, .react-autosuggest li:hover {
-	background: #f9fafb;
-}
-
-/* Auto suggest end */
-
-
-/* Side menu */
+/* Sidemenu start */
 
 #side-menu {
 	position: fixed;
@@ -115,16 +72,10 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	margin-top: 10px;
 }
 
-/* Side end */
+/* Sidemenu end */
+
 
 /* Layout header start */
-/*.layout.header .ui.header {
-	float:left;
-}
-
-.layout.header .button {
-	float:right;
-}*/
 
 .layout.header {
 	display: flex;
@@ -152,21 +103,14 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	display: flex;
 }
 
-/*.side-menu-layout .tab-header {
-	margin: 10px 10px 10px 10px;
-}
-
-.top-menu-layout .tab-header {
-	margin: 10px 20px 20px 20px;
-}*/
-
 .header.new {
 	margin-bottom: 25px;
 }
 
 /* Layout header end */
 
-/* Dialogs */
+
+/* Dialogs start */
 
 .ui.breadcrumb.segment {
 	display:flex !important;
@@ -176,6 +120,7 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	overflow-y: auto;
 	max-height: 65vh;
 	min-height: 350px;
+	height: 65vh;
 }
 
 .password-dialog {
@@ -201,42 +146,12 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
   flex-direction: column;
 }
 
-.file-browser {
-  display: flex;
-  flex-direction: column;
-}
-
-.file-browser .table-container {
-	overflow-y: auto;
-	margin-top:10px;
-	flex: 1;
-}
-
-.download-dialog > .content,
-.file-browser-dialog > .content {
-	height: 65vh;
-}
-
 .download-dialog .ui.grid, .download-dialog .ui.grid .column, 
-.download-dialog .main-content, .file-browser {
+.download-dialog .main-content {
 	height: 100%;
 }
 
-.file-browser .create-section .button i {
-	float: left;
-}
-
-.file-browser .create-section .button span {
-	float: left;
-}
-
-.file-browser .table i.download.link {
-	float:right;
-}
-
-
 /* Dialogs end */
-
 
 .field.browse .field-button {
 	display: flex;
