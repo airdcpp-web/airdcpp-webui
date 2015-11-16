@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
 
 import LoginActions from 'actions/LoginActions';
@@ -77,8 +78,74 @@ let MainLayout = React.createClass({
 	}
 });
 
+let node = null;
+
+const removeNode = () => {
+	if (node) {
+		ReactDOM.unmountComponentAtNode(node);
+		document.body.removeChild(node);
+		node = null;
+	}
+};
+
+const getLastChildren = (currentChild) => {
+	if (currentChild.props.children) {
+		return getLastChildren(currentChild.props.children);
+	}
+
+	return currentChild;
+};
+
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext ],
+
+	getOverlay(props) {
+		// Causes more bugs when this is enabled, think something better later
+		// It can still mess up the history when quickly going back and forward
+		//if (closing)
+		//	return null;
+
+		const { state } = props.location;
+		//const modalComponent = props.routes[props.routes.length-1].component;
+		const modalComponent = getLastChildren(props.children);
+		const ret = React.cloneElement(modalComponent, { 
+			onHidden: () => {
+				removeNode();
+			},
+
+			overlayId: 'modal',
+			...state['modal'].data
+		});
+
+		return ret;
+	},
+
+	checkCreateModal(props) {
+		if ((
+			!node &&
+			props.location.state &&
+			props.location.state['modal']
+		)) {
+			node = document.createElement('div');
+			document.body.appendChild(node);
+
+			ReactDOM.render(this.getOverlay(props), node);
+			return true;
+		}
+
+		return false;
+	},
+
+	componentWillReceiveProps(nextProps) {
+		if (this.checkCreateModal(nextProps)) {
+			if (!this.previousChildren) {
+				// save the old children (just like animation)
+				this.previousChildren = this.props.children;
+			}
+		} else {
+			this.previousChildren = null;
+		}
+	},
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
@@ -98,7 +165,10 @@ const AuthenticatedApp = React.createClass({
 					<Notifications location={ this.props.location }/>
 					<SideMenu id="side-menu" location={ this.props.location }/>
 					<MainLayout id="main-layout" className="pushable" location={ this.props.location }>
-						{ this.props.children }
+						{ this.previousChildren ?
+							this.previousChildren :
+							this.props.children
+						}
 					</MainLayout>
 				</div>
 			);

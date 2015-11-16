@@ -4,7 +4,6 @@ import Promise from 'utils/Promise';
 import NotificationActions from 'actions/NotificationActions';
 
 import deepEqual from 'deep-equal';
-import _ from 'lodash';
 
 import t from 'utils/tcomb-form';
 

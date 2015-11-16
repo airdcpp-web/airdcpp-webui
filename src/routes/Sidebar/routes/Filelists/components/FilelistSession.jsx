@@ -10,8 +10,6 @@ import Format from 'utils/Format';
 import { UserMenu } from 'components/Menu';
 import TabHeader from 'routes/Sidebar/components/TabHeader';
 
-import OverlayPortalDecorator from 'decorators/OverlayPortalDecorator';
-import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
 import { RouteContext } from 'react-router';
 
 const FilelistSession = React.createClass({
@@ -70,4 +68,4 @@ const FilelistSession = React.createClass({
 	},
 });
 
-export default OverlayPortalDecorator(FilelistSession, DOWNLOAD_MODAL_ID);
+export default FilelistSession;

@@ -8,13 +8,11 @@ import { HistoryEnum } from 'constants/HistoryConstants';
 import { SEARCH_QUERY_URL } from 'constants/SearchConstants';
 
 import HistoryInput from 'components/autosuggest/HistoryInput';
-import OverlayPortalDecorator from 'decorators/OverlayPortalDecorator';
 
 import { Column } from 'fixed-data-table';
 
 import TypeConvert from 'utils/TypeConvert';
 import Formatter from 'utils/Format';
-import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
 
 import { TableDownloadMenu, TableUserMenu } from 'components/Menu';
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
@@ -172,4 +170,4 @@ const Search = React.createClass({
 	}
 });
 
-export default OverlayPortalDecorator(Search, DOWNLOAD_MODAL_ID);
+export default Search;

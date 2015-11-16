@@ -9,8 +9,6 @@ import { TableActionMenu } from 'components/Menu';
 import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 
-import OverlayPortalDecorator from 'decorators/OverlayPortalDecorator';
-
 import { Column } from 'fixed-data-table';
 import Checkbox from 'components/semantic/Checkbox';
 
@@ -172,4 +170,4 @@ const FavoriteHubs = React.createClass({
 	}
 });
 
-export default OverlayPortalDecorator(FavoriteHubs, FAVORITE_MODAL_ID);
+export default FavoriteHubs;

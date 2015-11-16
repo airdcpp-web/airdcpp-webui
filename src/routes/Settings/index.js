@@ -10,6 +10,10 @@ module.exports = {
 				require('./routes/Downloads'),
 				//require('./routes/Sharing'),
 				require('./routes/About'),
+				{
+					path: '**/**/browse',
+					component: require('components/filebrowser/FileBrowserDialog'), 
+				}
 			]);
 		}, 'settings-children');
 	},

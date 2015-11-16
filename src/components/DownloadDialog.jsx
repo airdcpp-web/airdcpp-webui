@@ -11,7 +11,7 @@ import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 
-import FileBrowser from './FileBrowser';
+import FileBrowserLayout from './filebrowser/FileBrowserLayout';
 import TypeConvert from 'utils/TypeConvert';
 import Accordion from 'components/semantic/Accordion';
 import FileUtils from 'utils/FileUtils';
@@ -111,18 +111,20 @@ const DownloadDialog = React.createClass({
 	propTypes: {
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
+		 * Required
 		 */
-		downloadHandler: React.PropTypes.func.isRequired,
+		downloadHandler: React.PropTypes.func,
 
 		/**
 		 * Information about the item to download
+		 * Required
 		 */
 		itemInfo: React.PropTypes.shape({
 			path: React.PropTypes.string,
 			dupe: React.PropTypes.number,
 			name: React.PropTypes.string,
 			type: React.PropTypes.object
-		}).isRequired,
+		}),
 	},
 
 	getInitialState() {
@@ -187,7 +189,7 @@ const DownloadDialog = React.createClass({
 			case 'favorites': return <AccordionTargets groupedPaths={ this.state.favorite_paths } downloadHandler={ this.handleDownload }/>;
 			case 'history': return <PathList paths={ this.state.history_paths } downloadHandler={ this.handleDownload }/>;
 			case 'dupes': return <PathList paths={ this.state.dupe_paths } downloadHandler={ this.handleDownload }/>;
-			case 'browse': return <FileBrowser initialPath={ "" } itemIcon="green download" itemIconClickHandler={ this.handleDownload }/>;
+			case 'browse': return <FileBrowserLayout initialPath={ "" } itemIcon="green download" itemIconClickHandler={ this.handleDownload }/>;
 			default: return <div/>;
 		}
 	},

@@ -34,7 +34,7 @@ const pushModal = (currentLocation, nextPath, overlayId, data) => {
 		currentLocation = Object.assign({}, { pathname: currentLocation });
 	}
 
-	const state = getOverlayState(currentLocation, overlayId, data);
+	const state = getOverlayState(currentLocation, 'modal', data);
 	History.pushState(state, nextPath);
 };
 

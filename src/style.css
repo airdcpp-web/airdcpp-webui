@@ -174,3 +174,8 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	text-align: center;
 	margin-top: 10px;
 }
+
+
+.field.browse .field-button {
+	display: flex;
+}

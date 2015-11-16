@@ -30,7 +30,10 @@ export default function (Component, semanticModuleName) {
 			/**
 			 * Returns to the location that was active before opening the overlay
 			 */
-			onHide: React.PropTypes.func
+			onHide: React.PropTypes.func,
+
+			location: React.PropTypes.object.isRequired,
+			overlayId: React.PropTypes.any,
 		},
 
 		/*replaceState() {
@@ -65,7 +68,7 @@ export default function (Component, semanticModuleName) {
 			if (this.changeHistoryState) {
 				const { state } = this.props.location;
 				const { returnTo } = state[this.props.overlayId];
-				console.assert(returnTo, 'Return address missing when closing an overlay');
+				console.assert(returnTo && this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
 				delete state[this.props.overlayId];
 				History.replaceState(state, returnTo);
 			}
