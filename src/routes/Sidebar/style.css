@@ -88,56 +88,6 @@
 
 /* SESSION LAYOUT START */
 
-/* SIDEBAR HEADER START */
-#sidebar .tab-header h2 {
-	float:left;
-}
-
-#sidebar .tab-header .button {
-	float:right;
-}
-
-#sidebar .tab-header {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-}
-
-#sidebar .tab-header .main-header {
-	max-width: 85%;
-	display: flex;
-	align-items: center;
-	margin-right: 15px;
-	flex: 1;
-}
-
-#sidebar .tab-header .main-header .content {
-	width: 90%;
-}
-
-#sidebar .tab-header i.large.icons i {
-	margin-right: 10px;
-}
-
-#sidebar .tab-header .ui.dropdown {
-	display: flex;
-}
-
-#sidebar .side-menu-layout .tab-header {
-	margin: 10px 10px 10px 10px;
-}
-
-#sidebar .top-menu-layout .tab-header {
-	margin: 10px 20px 20px 20px;
-}
-
-#sidebar .header.new {
-	margin-bottom: 25px;
-}
-
-/* SIDEBAR HEADER END */
-
-
 
 /* MESSAGE SECTION START */
 #sidebar .message-view {

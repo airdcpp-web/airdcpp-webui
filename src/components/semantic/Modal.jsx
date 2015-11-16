@@ -2,36 +2,39 @@ import React from 'react';
 
 import OverlayDecorator from 'decorators/OverlayDecorator';
 import { History } from 'react-router';
+import classNames from 'classnames';
+import LayoutHeader from 'components/semantic/LayoutHeader';
 
 const Modal = React.createClass({
 	mixins: [ History ],
 	propTypes: {
-
-		/**
-		 * Title of the modal
-		 */
-		title: React.PropTypes.node.isRequired,
-
-		/**
-		 * Icon to display
-		 */
-		icon: React.PropTypes.string,
-
 		/**
 		 * Close the modal when clicking outside its boundaries
 		 */
 		closable: React.PropTypes.bool,
 
 		/**
-		 * Function to call when the dialog is saved
+		 * Function to call when the dialog is approved
 		 * If no handler is supplied, there will only be a plain close button
 		 */
-		saveHandler: React.PropTypes.func,
+		onApprove: React.PropTypes.func,
+
+		/**
+		 * Caption for the approve button
+		 */
+		approveCaption: React.PropTypes.node,
+
+		/**
+		 * Use disabled style for the approve button
+		 */
+		approveDisabled: React.PropTypes.bool,
 	},
 
 	getDefaultProps() {
 		return {
-			closable: true
+			closable: true,
+			approveCaption: 'Save',
+			approveEnabled: true,
 		};
 	},
 
@@ -45,10 +48,10 @@ const Modal = React.createClass({
 	},
 
 	onApprove: function (el) {
-		let { saveHandler } = this.props;
-		if (saveHandler) {
+		let { onApprove } = this.props;
+		if (onApprove) {
 			this.setState({ saving: true });
-			let promise = saveHandler();
+			let promise = onApprove();
 			promise.then(this.props.hide).catch(() => this.setState({ saving: false }));
 			return false;
 		}
@@ -66,21 +69,29 @@ const Modal = React.createClass({
 	},
 
 	render: function () {
+		const approveStyle = classNames(
+			'ui ok green basic button',
+			{ 'disabled': this.props.approveDisabled },
+			{ 'loading': this.state.saving },
+		);
+
 		return (
 			<div className={ 'ui modal full ' + this.props.className }>
-				<div className="header">
-					<i className={ this.props.icon + ' icon' }></i>
-					{ this.props.title }
-				</div>
+				<LayoutHeader
+					title={ this.props.title }
+					icon={ this.props.icon }
+					subheader={ this.props.subheader }
+					size="medium"
+				/>
 				<div className="content">
 					{ this.props.children }
 				</div>
 
-				{this.props.saveHandler ? (
+				{this.props.onApprove ? (
 					<div className="actions">
-						<div className={ 'ui ok green basic button ' + (this.state.saving ? 'loading' : '') }>
+						<div className={ approveStyle }>
 							<i className="checkmark icon"></i>
-							Save
+							{this.props.approveCaption}
 						</div>
 						<div className="ui cancel red basic button">
 							<i className="remove icon"></i>

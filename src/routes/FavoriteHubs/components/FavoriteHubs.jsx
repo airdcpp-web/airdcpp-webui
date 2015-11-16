@@ -6,11 +6,11 @@ import { StateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { TableActionMenu } from 'components/Menu';
-import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 
 import { Column } from 'fixed-data-table';
 import Checkbox from 'components/semantic/Checkbox';
+import Button from 'components/semantic/Button';
 
 import '../style.css';
 
@@ -116,10 +116,12 @@ const FavoriteHubs = React.createClass({
 
 	render() {
 		const footerData = (
-			<div className="ui button small" onClick={ this._handleAddHub }>
-				<i className="plus icon"></i>
-				Add new
-			</div>);
+			<Button
+				icon="plus icon"
+				onClick={this._handleAddHub}
+				caption="Add new"
+			/>
+		);
 
 		return (
 			<VirtualTable

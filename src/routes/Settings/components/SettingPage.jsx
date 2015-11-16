@@ -3,6 +3,7 @@
 import React from 'react';
 import SaveButton from './SaveButton';
 import NotificationActions from 'actions/NotificationActions';
+import LayoutHeader from 'components/semantic/LayoutHeader';
 
 const SettingPage = React.createClass({
 	propTypes: {
@@ -39,17 +40,16 @@ const SettingPage = React.createClass({
 	},
 
 	render() {
+		const button = (this.props.saveable ? <SaveButton saveHandler={this.handleSave} hasChanges={this.state.hasChanges}/> : null);
 		return (
 			<div className="ui segment">
-				<div className="settings-page-header">
-					<h2 className="ui header main-header">
-						<i className={ this.props.icon + ' green icon' }></i>
-						<div className="content">
-							{ this.props.title }
-						</div>
-					</h2>
-					{ (this.props.saveable ? <SaveButton saveHandler={this.handleSave} hasChanges={this.state.hasChanges}/> : null) }
-				</div>
+				<LayoutHeader
+					className="settings-page-header"
+					title={ this.props.title }
+					icon={ this.props.icon + ' green' }
+					subheader={ this.props.subheader }
+					component={button}
+				/>
 				<div className="">
 					{ 
 						React.cloneElement(this.props.children, {

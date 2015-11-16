@@ -1,5 +1,7 @@
 import React from 'react';
 
+import LayoutHeader from 'components/semantic/LayoutHeader';
+
 const NewLayout = React.createClass({
 	propTypes: {
 		/**
@@ -16,13 +18,12 @@ const NewLayout = React.createClass({
 	render: function () {
 		return (
 			<div className="new-layout">
-				<h2 className="ui header new">
-					<i className={ this.props.icon + ' icon' }></i>
-					<div className="content">
-						{this.props.title}
-						{ this.props.subheader ? <div className="sub header">{ this.props.subheader }</div> : null }
-					</div>
-				</h2>
+				<LayoutHeader
+					className="new"
+					title={ this.props.title }
+					icon={ this.props.icon }
+					subheader={ this.props.subheader }
+				/>
 				{this.props.children}
 			</div>
 		);

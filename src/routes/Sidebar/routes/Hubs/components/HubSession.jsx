@@ -11,6 +11,8 @@ import { ActionMenu } from 'components/Menu';
 import ActionInput from 'components/semantic/ActionInput';
 
 import TabHeader from 'routes/Sidebar/components/TabHeader';
+import Button from 'components/semantic/Button';
+
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
 import Format from 'utils/Format';
 
@@ -66,9 +68,11 @@ const RedirectPrompt = React.createClass({
 
 	render: function () {
 		return (
-			<div className="ui button" icon="green play" onClick={this._handleSubmit}>
-				{ 'Accept redirect to ' + this.props.hub.connect_state.hub_url }
-			</div>
+			<Button
+				icon="green play"
+				onClick={this._handleSubmit}
+				caption={ 'Accept redirect to ' + this.props.hub.connect_state.hub_url }
+			/>
 		);
 	}
 });

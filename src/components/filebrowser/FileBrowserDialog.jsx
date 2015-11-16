@@ -35,7 +35,7 @@ const FileBrowserDialog = React.createClass({
 	},
 
 	onDirectoryChanged(path) {
-		this.path = path;
+		this.setState({ currentPath: path });
 	},
 
 	onConfirm() {
@@ -44,22 +44,23 @@ const FileBrowserDialog = React.createClass({
 	},
 
 	render: function () {
+		const { currentPath } = this.state;
 		return (
 			<Modal
 				{...this.props}
 				ref="modal" 
 				title={this.props.title} 
-				saveHandler={this.onConfirm} 
+				onApprove={this.onConfirm} 
 				className="file-browser-dialog" 
-				closable={true} 
+				closable={true}
+				approveDisabled={ !currentPath || currentPath.length === 0 }
+				approveCaption="Select"
 				icon="orange folder open"
 			>
-				<div className="">
-					<FileBrowserLayout
-						initialPath={ "" }
-						onDirectoryChanged={this.onDirectoryChanged}
-					/>
-				</div>
+				<FileBrowserLayout
+					initialPath={ "" }
+					onDirectoryChanged={this.onDirectoryChanged}
+				/>
 			</Modal>);
 	}
 });

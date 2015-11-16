@@ -1,5 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
+
+import Button from 'components/semantic/Button';
 
 const ActionInput = React.createClass({
 	propTypes: {
@@ -37,19 +38,15 @@ const ActionInput = React.createClass({
 	},
 
 	render: function () {
-		const buttonClass = classNames(
-			'ui', 
-			'button', 
-			{ 'disabled': this.state.value.length === 0 }
-		);
-
 		return (
 			<div className="ui action input">
 				<input type="text" placeholder={this.props.placeholder} onChange={this.handleChange}/>
-				<button className={ buttonClass } onClick={ this.handleClick }>
-					<i className={ this.props.icon + ' icon' }></i>
-					{ this.props.caption }
-				</button>
+				<Button
+					icon={ this.props.icon }
+					onClick={ this.handleClick }
+					caption={ this.props.caption }
+					disabled={this.state.value.length === 0}
+				/>
 			</div>
 		);
 	}

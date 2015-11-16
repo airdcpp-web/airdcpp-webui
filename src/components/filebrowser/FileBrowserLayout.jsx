@@ -149,6 +149,14 @@ const FileBrowser = React.createClass({
 		};
 	},
 
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.currentDirectory !== this.state.currentDirectory) {
+			if (this.props.onDirectoryChanged) {
+				this.props.onDirectoryChanged(this.state.currentDirectory);
+			}
+		}
+	},
+
 	fetchItems(path) {
 		this.setState({ 
 			error: null,
@@ -203,10 +211,6 @@ const FileBrowser = React.createClass({
 
 	_handleSelect(directoryName) {
 		const nextPath = this._appendDirectoryName(directoryName);
-
-		if (this.props.itemClickHandler) {
-			this.props.itemClickHandler(nextPath);
-		}
 
 		this.fetchItems(nextPath);
 	},

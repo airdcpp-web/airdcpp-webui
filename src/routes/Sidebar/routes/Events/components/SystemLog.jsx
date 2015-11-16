@@ -5,7 +5,9 @@ import Format from 'utils/Format.js';
 import LogActions from 'actions/LogActions';
 import LogStore from 'stores/LogStore';
 
-import TabHeader from 'routes/Sidebar/components/TabHeader';
+import LayoutHeader from 'components/semantic/LayoutHeader';
+import Button from 'components/semantic/Button';
+
 import ScrollDecorator from 'decorators/ScrollDecorator';
 
 import '../style.css';
@@ -83,11 +85,15 @@ const SimpleSidebarLayout = React.createClass({
 		return (
 			<div className="simple-layout">
 				<div className="ui segment">
-					<TabHeader
-						icon={ <i className="blue history icon"></i> }
+					<LayoutHeader
+						icon="blue history"
 						title="Events"
-						buttonClickHandler={this._handleClear}
-						buttonCaption="Clear"
+						component={
+							<Button
+								caption="Clear"
+								onClick={this._handleClear}
+							/>
+						}
 					/>
 					
 					<div className="content">

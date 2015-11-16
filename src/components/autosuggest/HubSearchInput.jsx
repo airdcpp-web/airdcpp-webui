@@ -1,9 +1,10 @@
 import React from 'react';
 import SocketService from 'services/SocketService.js';
 import { RECENT_HUB_SEARCH_URL } from 'constants/RecentHubConstants.js';
+
 import Autosuggest from 'react-autosuggest';
-import classNames from 'classnames';
 import SuggestionRenderer from './SuggestionRenderer';
+import Button from 'components/semantic/Button';
 
 const HubSearchInput = React.createClass({
 	propTypes: {
@@ -66,11 +67,6 @@ const HubSearchInput = React.createClass({
 			autoFocus: this.props.autoFocus,
 		};
 
-		const buttonClass = classNames(
-			'ui', 
-			'button',
-		);
-
 		return (
 			<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
 				<Autosuggest 
@@ -82,10 +78,11 @@ const HubSearchInput = React.createClass({
 					suggestionValue={ this._getSuggestionValue }
 				/>
 
-				<button onClick={ this._onClickConnect } className={ buttonClass }>
-					<i className="green play"></i>
-					Connect
-				</button>
+				<Button
+					icon="green play"
+					onClick={this._onClickConnect}
+					caption="Connect"
+				/>
 			</div>
 		);
 	},

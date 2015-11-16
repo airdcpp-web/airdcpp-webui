@@ -1,9 +1,10 @@
 import React from 'react';
 import SocketService from 'services/SocketService.js';
 import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from 'constants/HistoryConstants.js';
+
 import Autosuggest from 'react-autosuggest';
 import classNames from 'classnames';
-
+import Button from 'components/semantic/Button';
 
 export default React.createClass({
 	propTypes: {
@@ -101,13 +102,6 @@ export default React.createClass({
 			autoFocus: this.props.autoFocus,
 		};
 
-		const buttonClass = classNames(
-			'ui', 
-			'button', 
-			{ 'disabled': this._isDisabled() },
-			{ 'loading': this.props.running }
-		);
-
 		return (
 			<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
 				<Autosuggest 
@@ -117,10 +111,14 @@ export default React.createClass({
 					suggestions={this._getSuggestions}
 					inputAttributes={inputAttributes} 
 				/>
-				<button onClick={ this._handleSubmit } className={ buttonClass }>
-					<i className="search icon"></i>
-					Search
-				</button>
+
+				<Button
+					icon="search icon"
+					onClick={this._handleSubmit}
+					caption="Search"
+					disabled={this._isDisabled()}
+					loading={this.props.running}
+				/>
 			</div>
 		);
 	},

@@ -37,71 +37,6 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	height: 100%;
 }
 
-.download-dialog .accordion.download-targets {
-	overflow-y: auto;
-}
-
-.download-dialog .main-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.file-browser {
-  display: flex;
-  flex-direction: column;
-}
-
-.file-browser .table-container {
-	overflow-y: auto;
-	margin-top:10px;
-	flex: 1;
-}
-
-.download-dialog > .content {
-	height: 65vh;
-}
-
-.download-dialog .ui.grid, .download-dialog .ui.grid .column, 
-.download-dialog .main-content, .file-browser {
-	height: 100%;
-}
-
-.file-browser .create-section .button i {
-	float: left;
-}
-
-.file-browser .create-section .button span {
-	float: left;
-}
-
-.file-browser .table i.download.link {
-	float:right;
-}
-
-#side-menu {
-	position: fixed;
-	top: 120px;
-	right: 0px;
-	width: 100px;
-	height: auto;
-	padding-bottom: 10px;
-	border-top-left-radius: .28571429rem;
-	border-bottom-left-radius: .28571429rem;
-	background-color: #1b1c1d;
-	z-index: 1000;
-}
-
-#side-menu .menu {
-	height: auto !important;
-	display: block !important;
-}
-
-#side-menu .mini.list {
-	margin-top: 20px;
-	margin-left: 15px;
-	margin-right: auto;
-}
-
 /* Auto suggest */
 
 .react-autosuggest ul {
@@ -142,9 +77,96 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	background: #f9fafb;
 }
 
+/* Auto suggest end */
+
+
+/* Side menu */
+
+#side-menu {
+	position: fixed;
+	top: 120px;
+	right: 0px;
+	width: 100px;
+	height: auto;
+	padding-bottom: 10px;
+	border-top-left-radius: .28571429rem;
+	border-bottom-left-radius: .28571429rem;
+	background-color: #1b1c1d;
+	z-index: 1000;
+}
+
+#side-menu .menu {
+	height: auto !important;
+	display: block !important;
+}
+
+#side-menu .mini.list {
+	margin-top: 20px;
+	margin-left: 15px;
+	margin-right: auto;
+}
+
 #side-menu .item>.label {
 	margin-left: 0px !important;
 }
+
+.touch-icon {
+	text-align: center;
+	margin-top: 10px;
+}
+
+/* Side end */
+
+/* Layout header start */
+/*.layout.header .ui.header {
+	float:left;
+}
+
+.layout.header .button {
+	float:right;
+}*/
+
+.layout.header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.layout.header .main-header {
+	max-width: 85%;
+	display: flex;
+	align-items: center;
+	margin-right: 15px;
+	flex: 1;
+}
+
+.layout.header .main-header .content {
+	width: 90%;
+}
+
+.layout.header i.large.icons i {
+	margin-right: 10px;
+}
+
+.layout.header .ui.dropdown {
+	display: flex;
+}
+
+/*.side-menu-layout .tab-header {
+	margin: 10px 10px 10px 10px;
+}
+
+.top-menu-layout .tab-header {
+	margin: 10px 20px 20px 20px;
+}*/
+
+.header.new {
+	margin-bottom: 25px;
+}
+
+/* Layout header end */
+
+/* Dialogs */
 
 .ui.breadcrumb.segment {
 	display:flex !important;
@@ -170,10 +192,50 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	width: 100% !important;
 }
 
-.touch-icon {
-	text-align: center;
-	margin-top: 10px;
+.download-dialog .accordion.download-targets {
+	overflow-y: auto;
 }
+
+.download-dialog .main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-browser {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-browser .table-container {
+	overflow-y: auto;
+	margin-top:10px;
+	flex: 1;
+}
+
+.download-dialog > .content,
+.file-browser-dialog > .content {
+	height: 65vh;
+}
+
+.download-dialog .ui.grid, .download-dialog .ui.grid .column, 
+.download-dialog .main-content, .file-browser {
+	height: 100%;
+}
+
+.file-browser .create-section .button i {
+	float: left;
+}
+
+.file-browser .create-section .button span {
+	float: left;
+}
+
+.file-browser .table i.download.link {
+	float:right;
+}
+
+
+/* Dialogs end */
 
 
 .field.browse .field-button {
