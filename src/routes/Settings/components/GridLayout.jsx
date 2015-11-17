@@ -9,6 +9,12 @@ const GridLayout = React.createClass({
 		return '/settings/' + this.props.id + '/' + section;
 	},
 
+	getDefaultProps() {
+		return {
+			saveable: true
+		};
+	},
+
 	getMenuItem(obj) {
 		return (
 			<MenuItemLink 
@@ -60,6 +66,7 @@ const GridLayout = React.createClass({
 				</div>
 				<div className="thirteen wide stretched column content-column">
 					<SettingPage 
+						saveable={ this.props.saveable }
 						sectionId={ currentMenuItem.url } 
 						title={ currentMenuItem.title }
 						icon={ this.props.icon }

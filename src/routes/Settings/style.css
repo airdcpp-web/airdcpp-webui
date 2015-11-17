@@ -19,12 +19,6 @@
 	overflow-y: auto;
 }
 
-.settings-page-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-}
-
 .settings-layout .setting-form {
 	margin-bottom: 20px;
 }

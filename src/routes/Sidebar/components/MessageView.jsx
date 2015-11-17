@@ -9,7 +9,6 @@ import ReactEmoji from 'react-emoji';
 import Linkify from 'react-linkify';
 
 import { UserMenu } from 'components/Menu';
-import UserActions from 'actions/UserActions';
 
 var ENTER_KEY_CODE = 13;
 

@@ -1,20 +1,27 @@
 module.exports = {
 	path: 'about',
 
-	/*getChildRoutes(location, cb) {
+	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, [
-				require('./routes/Hubs'),
-				require('./routes/Filelists'), 
-				require('./routes/Messages'), 
-				require('./routes/Events'), 
-			]);
-		}, 'sidebar-children');
-	},*/
+			cb(null, [ {
+				path: 'application', 
+				component: require('./components/AboutPage'), 
+			}, {
+				path: 'transfers', 
+				component: require('./components/TransferStatisticsPage'), 
+			}, {
+				path: 'share', 
+				component: require('./components/ShareStatisticsPage'), 
+			}, {
+				path: 'hubs', 
+				component: require('./components/HubStatisticsPage'), 
+			} ]);
+		}, 'settings-about-children');
+	},
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/AboutPage'));
+			cb(null, require('./components/About'));
 		}, 'settings-about');
 	}
 };

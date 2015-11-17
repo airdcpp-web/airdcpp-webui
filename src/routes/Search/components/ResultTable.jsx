@@ -79,7 +79,7 @@ const ResultTable = React.createClass({
 					<div className="ui bulleted list">
 						<div className="item">Ensure that you spelled the words correctly</div>
 						<div className="item">Use different keywords</div>
-						<div className="item">You are searching too frequently (hubs use different search intervals)</div>
+						<div className="item">You are searching too frequently (hubs often have a minimum search interval)</div>
 						<div className="item">If you never receive results for common search terms, make sure that your connectivity settings are configured properly</div>
 					</div>
 				) }
