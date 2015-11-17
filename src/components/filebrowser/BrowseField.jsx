@@ -6,49 +6,51 @@ import History from 'utils/History';
 
 const t = require('tcomb-form');
 
-const BrowseField = function (location, subHeader) { 
-	class Component extends t.form.Textbox {
-		getTemplate() {
-			return (locals) => {
-				const onConfirm = (path) => {
-					locals.onChange(path);
-				};
-
-				const showBrowseDialog = () => {
-					History.pushModal(location, location.pathname + '/browse', FILE_BROWSER_MODAL, {
-						onConfirm: onConfirm,
-						subHeader: subHeader,
-						initialPath: locals.value,
-					});
-				};
-
-				// handle error status
-				let className = 'field browse';
-				if (locals.hasError) {
-					className += ' has-error';
-				}
-
-				return (
-					<div className={className}>
-						<label className="label">{locals.label}</label>
-						<div className="ui action input field-button">
-							<input
-								name={locals.attrs.name}
-								value={locals.value}
-								onChange={locals.onChange}
-							/>
-							<Button
-								caption="Browse"
-								onClick={showBrowseDialog}
-							/>
-						</div>
-					</div>
-				);
+class BrowseField extends t.form.Component {
+	getTemplate() {
+		//const tmp = this;
+		return (locals) => {
+			const onConfirm = (path) => {
+				locals.onChange(path);
 			};
-		}
-	}
 
-	return Component;
-};
+			const showBrowseDialog = () => {
+				const { location } = this.props.options;
+				History.pushModal(location, location.pathname + '/browse', FILE_BROWSER_MODAL, {
+					onConfirm: onConfirm,
+					subHeader: locals.label,
+					initialPath: locals.value,
+				});
+			};
+
+			// handle error status
+			let className = 'field browse';
+			if (locals.hasError) {
+				className += ' has-error';
+			}
+
+			return (
+				<div className={className}>
+					<label className="label">{locals.label}</label>
+					<div className="ui action input field-button">
+						<input
+							ref="input"
+							//name={locals.attrs.name}
+							value={locals.value}
+							onChange={(event) => { 
+								locals.onChange(event.target.value);
+								setTimeout(this.refs.input.focus());
+							}}
+						/>
+						<Button
+							caption="Browse"
+							onClick={showBrowseDialog}
+						/>
+					</div>
+				</div>
+			);
+		};
+	}
+}
 
 export default BrowseField;

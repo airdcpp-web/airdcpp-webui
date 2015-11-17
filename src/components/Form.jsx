@@ -160,7 +160,8 @@ const Form = React.createClass({
 
 		// Path?
 		if (sourceItem.type == 'file_path' || sourceItem.type == 'directory_path') {
-			fieldOptions['factory'] = BrowseField(this.props.location, sourceItem.title);
+			fieldOptions['factory'] = BrowseField;
+			fieldOptions['location'] = this.props.location;
 		}
 
 		// Enum select field?

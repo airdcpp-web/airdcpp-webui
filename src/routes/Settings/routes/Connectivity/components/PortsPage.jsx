@@ -8,6 +8,7 @@ const Entry = {
 	tcp_port: t.maybe(t.Num),
 	udp_port: t.maybe(t.Num),
 	tls_port: t.maybe(t.Num),
+	preferred_port_mapper: t.Str,
 };
 
 const PortsPage = React.createClass({
