@@ -7,6 +7,7 @@ import { TableDownloadMenu } from 'components/Menu';
 
 import Formatter from 'utils/Format';
 import TypeConvert from 'utils/TypeConvert';
+import Message from 'components/semantic/Message';
 
 import PathBreadcrumb from 'components/PathBreadcrumb';
 import VirtualTable from 'components/table/VirtualTable';
@@ -114,6 +115,15 @@ const ListBrowser = React.createClass({
 		FilelistActions.changeDirectory(this.props.item.user.cid, directory);
 	},
 
+	emptyRowsNodeGetter() {
+		return (
+			<Message 
+				title={ 'No content to display' }
+				description={ 'The directory is empty' }
+			/>
+		);
+	},
+
 	render() {
 		return (
 			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 250) }}>
@@ -126,6 +136,7 @@ const ListBrowser = React.createClass({
 				/>
 
 				<VirtualTable
+					//emptyRowsNodeGetter={this.emptyRowsNodeGetter}
 					rowClassNameGetter={ this._rowClassNameGetter }
 					defaultSortProperty="name"
 					store={FilelistViewStore}

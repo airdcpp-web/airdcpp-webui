@@ -15,6 +15,9 @@ module.exports = {
 			}, {
 				path: 'user-limits', 
 				component: require('./components/UserLimitPage'), 
+			}, {
+				path: 'limiter', 
+				component: require('./components/LimiterPage'), 
 			} ]);
 		}, 'settings-speed-limits-children');
 	},

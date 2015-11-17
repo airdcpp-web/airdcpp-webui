@@ -6,7 +6,8 @@ import GridLayout from 'routes/Settings/components/GridLayout';
 const SpeedLimits = React.createClass({
 	render() {
 		const menuItems = [
-			{ title: 'Speed', url: 'speed' },
+			{ title: 'Connection speed', url: 'speed' },
+			{ title: 'Bandwidth limiting', url: 'limiter' },
 		];
 
 		const advancedMenuItems = [

@@ -1,19 +1,21 @@
 import React from 'react';
-
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	download_directory: t.Str,
+	auto_add_sources: t.Bool,
+	alt_search_auto: t.Bool,
+	alt_search_max_sources: t.Num,
+	max_sources_match_queue: t.Num,
 };
 
-const LocationsPage = React.createClass({
+const SearchMatchingPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="personal-settings">
+			<div className="search-matching-settings">
 				<SettingForm
 					ref="form"
 					formItems={Entry}
@@ -23,4 +25,4 @@ const LocationsPage = React.createClass({
 	}
 });
 
-export default LocationsPage;
+export default SearchMatchingPage;

@@ -1,19 +1,21 @@
 import React from 'react';
-
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	download_directory: t.Str,
+	refresh_time: t.Num,
+	refresh_time_incoming: t.Num,
+	refresh_startup: t.Bool,
+	refresh_report_scheduled_refreshes: t.Bool,
 };
 
-const LocationsPage = React.createClass({
+const RefreshOptionsPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="personal-settings">
+			<div className="refresh-options-settings">
 				<SettingForm
 					ref="form"
 					formItems={Entry}
@@ -23,4 +25,4 @@ const LocationsPage = React.createClass({
 	}
 });
 
-export default LocationsPage;
+export default RefreshOptionsPage;

@@ -8,7 +8,7 @@ module.exports = {
 				require('./routes/Connectivity'),
 				require('./routes/SpeedLimits'),
 				require('./routes/Downloads'),
-				//require('./routes/Sharing'),
+				require('./routes/Sharing'),
 				require('./routes/About'),
 				{
 					path: '**/**/browse',

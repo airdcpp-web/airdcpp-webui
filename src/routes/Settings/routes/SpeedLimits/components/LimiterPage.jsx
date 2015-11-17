@@ -1,19 +1,20 @@
 import React from 'react';
-
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	download_directory: t.Str,
+	upload_limit_main: t.Num,
+	download_limit_main: t.Num,
+	//limit_use_with_auto_values: t.Bool,
 };
 
-const LocationsPage = React.createClass({
+const LimiterPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="personal-settings">
+			<div className="limiter-settings">
 				<SettingForm
 					ref="form"
 					formItems={Entry}
@@ -23,4 +24,4 @@ const LocationsPage = React.createClass({
 	}
 });
 
-export default LocationsPage;
+export default LimiterPage;

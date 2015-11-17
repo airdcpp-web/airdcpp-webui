@@ -1,19 +1,20 @@
 import React from 'react';
-
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	download_directory: t.Str,
+	max_hash_speed: t.Num,
+	max_total_hashers: t.Num,
+	max_volume_hashers: t.Num,
 };
 
-const LocationsPage = React.createClass({
+const HashingPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="personal-settings">
+			<div className="hashing-settings">
 				<SettingForm
 					ref="form"
 					formItems={Entry}
@@ -23,4 +24,4 @@ const LocationsPage = React.createClass({
 	}
 });
 
-export default LocationsPage;
+export default HashingPage;

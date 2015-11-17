@@ -6,6 +6,15 @@ module.exports = {
 			cb(null, [ {
 				path: 'locations', 
 				component: require('./components/LocationsPage'), 
+			}, {
+				path: 'download-options', 
+				component: require('./components/DownloadOptionsPage'), 
+			}, {
+				path: 'skipping-options', 
+				component: require('./components/SkippingOptionsPage'), 
+			}, {
+				path: 'search-matching', 
+				component: require('./components/SearchMatchingPage'), 
 			} ]);
 		}, 'settings-downloads-children');
 	},
