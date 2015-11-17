@@ -5,9 +5,9 @@ import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	max_hash_speed: t.Num,
-	max_total_hashers: t.Num,
-	max_volume_hashers: t.Num,
+	max_hash_speed: t.Positive,
+	max_total_hashers: t.Positive,
+	max_volume_hashers: t.Positive,
 };
 
 const HashingPage = React.createClass({

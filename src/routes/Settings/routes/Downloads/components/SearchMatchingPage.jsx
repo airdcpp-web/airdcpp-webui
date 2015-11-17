@@ -7,8 +7,8 @@ import t from 'utils/tcomb-form';
 const Entry = {
 	auto_add_sources: t.Bool,
 	alt_search_auto: t.Bool,
-	alt_search_max_sources: t.Num,
-	max_sources_match_queue: t.Num,
+	alt_search_max_sources: t.Positive,
+	max_sources_match_queue: t.Positive,
 };
 
 const SearchMatchingPage = React.createClass({

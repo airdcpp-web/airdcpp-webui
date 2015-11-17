@@ -5,6 +5,13 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import SettingPage from './SettingPage';
 
 const GridLayout = React.createClass({
+	propTypes: {
+		id: React.PropTypes.any.isRequired,
+		menuItems: React.PropTypes.array.isRequired,
+		advancedMenuItems: React.PropTypes.array,
+		saveable: React.PropTypes.bool,
+	},
+
 	sectionToUrl(section) {
 		return '/settings/' + this.props.id + '/' + section;
 	},

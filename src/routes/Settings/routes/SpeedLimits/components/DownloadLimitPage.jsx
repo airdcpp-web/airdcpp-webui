@@ -7,9 +7,9 @@ import t from 'utils/tcomb-form';
 
 const Auto = {
 	download_auto_limits: t.Bool,
-	download_slots: t.maybe(t.Num),
-	download_max_start_speed: t.maybe(t.Num),
-	download_highest_prio_slots: t.maybe(t.Num),
+	download_slots: t.Positive,
+	download_max_start_speed: t.Positive,
+	download_highest_prio_slots: t.Positive,
 };
 
 const DownloadLimitPage = React.createClass({

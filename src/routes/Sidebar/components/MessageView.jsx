@@ -76,7 +76,6 @@ const ChatMessage = React.createClass({
 
 		let userCaption = message.from.nick;
 		if (flags.indexOf('hidden') < 0) {
-			//userCaption = <ActionMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } icon={null} caption={ message.from.nick } actions={ UserActions } itemData={ { user: message.from, directory: '/' } }/>;
 			userCaption = <UserMenu location={this.props.location} contextGetter={ this.props.dropdownContextGetter } triggerIcon={null} noIcon={true} user={ message.from }/>;
 		}
 

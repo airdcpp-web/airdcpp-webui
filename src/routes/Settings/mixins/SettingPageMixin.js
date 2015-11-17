@@ -3,17 +3,17 @@ import React from 'react';
 import Promise from 'utils/Promise';
 
 const SettingPageMixin = function () {
-	//const getChangeHandler = () => this.props.onSettingsChanged || this.context.onSettingsChanged;
 	const refs = Array.prototype.slice.call(arguments);
 
-	//const refs = Array.prototype.slice.call(arguments);
 	const Mixin = {
 		propTypes: {
-			onSettingsChanged: React.PropTypes.func
+			onSettingsChanged: React.PropTypes.func,
+			location: React.PropTypes.object,
 		},
 
 		contextTypes: {
-			onSettingsChanged: React.PropTypes.func
+			onSettingsChanged: React.PropTypes.func,
+			location: React.PropTypes.object,
 		},
 
 		childContextTypes: {
@@ -24,7 +24,7 @@ const SettingPageMixin = function () {
 		getChildContext() {
 			return {
 				onSettingsChanged: this.context.onSettingsChanged || this.props.onSettingsChanged,
-				location: this.props.location,
+				location: this.context.location || this.props.location,
 			};
 		},
 

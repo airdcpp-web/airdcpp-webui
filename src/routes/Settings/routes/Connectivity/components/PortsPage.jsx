@@ -5,9 +5,9 @@ import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	tcp_port: t.maybe(t.Num),
-	udp_port: t.maybe(t.Num),
-	tls_port: t.maybe(t.Num),
+	tcp_port: t.Num,
+	udp_port: t.Num,
+	tls_port: t.Num,
 	preferred_port_mapper: t.Str,
 };
 

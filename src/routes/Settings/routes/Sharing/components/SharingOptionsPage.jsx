@@ -11,7 +11,7 @@ const Entry = {
 	share_follow_symlinks: t.Bool,
 	share_report_duplicates: t.Bool,
 	share_report_skiplist: t.Bool,
-	share_max_size: t.Num,
+	share_max_size: t.Positive,
 
 	share_skiplist: t.maybe(t.Str),
 	share_skiplist_regex: t.Bool,

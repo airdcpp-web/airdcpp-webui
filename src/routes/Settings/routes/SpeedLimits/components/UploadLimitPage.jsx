@@ -8,9 +8,9 @@ import t from 'utils/tcomb-form';
 
 const Auto = {
 	upload_auto_limits: t.Bool,
-	upload_slots: t.maybe(t.Num),
-	upload_auto_grant_speed: t.maybe(t.Num),
-	upload_max_granted: t.maybe(t.Num),
+	upload_slots: t.Positive,
+	upload_auto_grant_speed: t.Positive,
+	upload_max_granted: t.Positive,
 };
 
 const Manual = {

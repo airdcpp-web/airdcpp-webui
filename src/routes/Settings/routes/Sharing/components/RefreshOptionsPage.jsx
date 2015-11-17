@@ -5,8 +5,8 @@ import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	refresh_time: t.Num,
-	refresh_time_incoming: t.Num,
+	refresh_time: t.Positive,
+	refresh_time_incoming: t.Positive,
 	refresh_startup: t.Bool,
 	refresh_report_scheduled_refreshes: t.Bool,
 };
