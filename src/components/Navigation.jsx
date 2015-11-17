@@ -38,7 +38,7 @@ export default class Navigation extends React.Component {
 						<MenuItem title="Favorites" page="/favorite-hubs"/>
 						<MenuItem title="Queue" page="/queue"/>
 						<MenuItem title="Search" page="/search"/>
-						{ process.env.NODE_ENV !== 'production' ? <MenuItem title="Settings" page="/settings"/> : null }
+						<MenuItem title="Settings" page="/settings"/>
 						<a className="item" href="" onClick={this.logout}>
 							Logout
 						</a>

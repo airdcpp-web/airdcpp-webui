@@ -27,6 +27,7 @@ const HubStatisticsPage = React.createClass({
 	formatClient(client) {
 		return (
 			<Row
+				key={client.name}
 				title={client.name}
 				text={client.count + ' (' + client.percentage.toFixed(2) + ' %)' }
 			/>
