@@ -7,6 +7,7 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 const SettingPage = React.createClass({
 	propTypes: {
+		sectionId: React.PropTypes.any.isRequired,
 		title: React.PropTypes.node.isRequired,
 		icon: React.PropTypes.string.isRequired,
 		saveable: React.PropTypes.bool,

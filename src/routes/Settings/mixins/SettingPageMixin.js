@@ -5,7 +5,6 @@ import { Lifecycle } from 'react-router';
 
 const SettingPageMixin = function () {
 	const refs = Array.prototype.slice.call(arguments);
-	const changedProperties = new Set();
 
 	const Mixin = {
 		mixins: [ Lifecycle ],
@@ -24,6 +23,10 @@ const SettingPageMixin = function () {
 			location: React.PropTypes.object.isRequired
 		},
 
+		componentWillMount() {
+			this.changedProperties = new Set();
+		},
+
 		getChildContext() {
 			return {
 				onSettingsChanged: this.onSettingsChangedInternal,
@@ -33,6 +36,7 @@ const SettingPageMixin = function () {
 
 		save() {
 			const promises = refs.map(ref => this.refs[ref].save());
+			this.changedProperties.clear();
 
 			return Promise.all(promises);
 		},
@@ -45,16 +49,16 @@ const SettingPageMixin = function () {
 			}
 
 			if (hasChanges) {
-				changedProperties.add(...id);
+				this.changedProperties.add(...id);
 			} else {
-				changedProperties.delete(...id);
+				this.changedProperties.delete(...id);
 			}
 
-			this.props.onSettingsChanged(changedProperties.size > 0);
+			this.props.onSettingsChanged(this.changedProperties.size > 0);
 		},
 
 		routerWillLeave(nextLocation) {
-			if (changedProperties.size > 0) {
+			if (this.changedProperties.size > 0) {
 				return 'You have unsaved changes. Are you sure you want to leave?';
 			}
 		},
