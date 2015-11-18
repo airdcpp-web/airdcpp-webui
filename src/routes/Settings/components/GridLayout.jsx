@@ -32,10 +32,18 @@ const GridLayout = React.createClass({
 		);
 	},
 
-	componentWillMount() {
-		if (!this.props.children) {
-			this.props.history.replaceState(null, this.sectionToUrl(this.props.menuItems[0].url));
+	checkChildren(props) {
+		if (!props.children) {
+			props.history.replaceState(null, this.sectionToUrl(props.menuItems[0].url));
 		}
+	},
+
+	componentWillMount() {
+		this.checkChildren(this.props);
+	},
+
+	componentWillReceiveProps(nextProps) {
+		this.checkChildren(nextProps);
 	},
 
 	findMenuItem(menuItems) {
