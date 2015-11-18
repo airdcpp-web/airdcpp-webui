@@ -7,10 +7,18 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import '../style.css';
 
 const Settings = React.createClass({
-	componentWillMount() {
-		if (!this.props.children) {
-			this.props.history.replaceState(null, '/settings/personal');
+	checkChildren(props) {
+		if (!props.children) {
+			props.history.replaceState(null, '/settings/personal');
 		}
+	},
+
+	componentWillMount() {
+		this.checkChildren(this.props);
+	},
+
+	componentWillReceiveProps(nextProps) {
+		this.checkChildren(nextProps);
 	},
 
 	render() {
