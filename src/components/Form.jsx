@@ -186,7 +186,7 @@ const Form = React.createClass({
 
 		// Let the parents add their own settings
 		if (this.props.onFieldSetting) {
-			this.props.onFieldSetting(settingKey, fieldOptions, this.state.formValue);
+			this.props.onFieldSetting(settingKey, fieldOptions, this.state.formValue, this.sourceData);
 		}
 
 		optionsObject[settingKey] = fieldOptions;

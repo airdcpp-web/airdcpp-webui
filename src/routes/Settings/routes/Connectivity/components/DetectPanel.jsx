@@ -3,8 +3,20 @@ import SocketService from 'services/SocketService';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import Button from 'components/semantic/Button';
+import Loader from 'components/semantic/Loader';
 
 import { CONNECTIVITY_MODULE_URL, CONNECTIVITY_STATUS_URL, CONNECTIVITY_DETECT_URL, CONNECTIVITY_STARTED, CONNECTIVITY_FINISHED } from 'constants/ConnectivityConstants';
+
+const formatStatus = (status) => {
+	let ret = status.text;
+	if (status.auto_detect) {
+		ret += ' (auto detected)';
+	} else {
+		ret += ' (manual configuration)';
+	}
+
+	return ret;
+};
 
 const StatusRow = ({ title, status, running, detect }) => (
 	<div className="ui row">
@@ -14,7 +26,7 @@ const StatusRow = ({ title, status, running, detect }) => (
 			</div>
 		</div>
 		<div className="twelve wide column">
-			{ (!detect ? 'Manual configuration' : (running ? 'Detecting...' : status)) }
+			{ (running ? 'Detecting...' : formatStatus(status)) }
 		</div>
 	</div>
 );
@@ -72,21 +84,22 @@ const DetectPanel = React.createClass({
 
 	render() {
 		const { status } = this.state;
-		if (!status || (!this.props.detectV4 && !this.props.detectV6)) {
-			return null;
+		if (!status) {
+			return <Loader/>;
 		}
 
 		return (
 			<div className="ui segment detect-panel">
 				<h3 className="header">Current auto detection status</h3>
 				<div className="ui grid two column detect-grid">
-					<StatusRow title="IPv4 connectivity" status={status.status_v4} running={this.state.detectingV4} detect={this.props.detectV4}/>
-					<StatusRow title="IPv6 connectivity" status={status.status_v6} running={this.state.detectingV6} detect={this.props.detectV6}/>
+					<StatusRow title="IPv4 connectivity" status={status.status_v4} running={this.state.detectingV4}/>
+					<StatusRow title="IPv6 connectivity" status={status.status_v6} running={this.state.detectingV6}/>
 				</div>
 				<Button 
 					className="detect-button"
 					caption="Detect now"
 					icon={ "gray configure" } 
+					disabled={ !status.status_v4.auto_detect && !status.status_v6.auto_detect }
 					loading={ this.state.detectingV6 || this.state.detectingV4 } 
 					onClick={this.handleDetect}
 				/>
