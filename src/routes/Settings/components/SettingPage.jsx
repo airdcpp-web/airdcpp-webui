@@ -5,8 +5,6 @@ import SaveButton from './SaveButton';
 import NotificationActions from 'actions/NotificationActions';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
-const changedProperties = new Set();
-
 const SettingPage = React.createClass({
 	propTypes: {
 		title: React.PropTypes.node.isRequired,
@@ -26,14 +24,14 @@ const SettingPage = React.createClass({
 		};
 	},
 
-	onSettingsChanged(id, value, hasChanges) {
-		if (hasChanges) {
-			changedProperties.add(...id);
-		} else {
-			changedProperties.delete(...id);
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.sectionId !== this.props.sectionId) {
+			this.setState({ hasChanges: false });
 		}
+	},
 
-		this.setState({ hasChanges: changedProperties.size > 0 });
+	onSettingsChanged(hasChanges) {
+		this.setState({ hasChanges: hasChanges });
 	},
 
 	onSettingsSaved() {
