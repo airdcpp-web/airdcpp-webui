@@ -42,6 +42,20 @@ export default function (store, actions) {
 
 	store._onSessionUpdated = (data, id) => {
 		const session = store.getSession(id);
+
+		// Active tab?
+		if (data.unread_messages && id === activeSession &&
+			(data.unread_messages.user > 0 || 
+				data.unread_messages.bot > 0 || 
+				data.unread_messages.status > 0)) {
+
+			actions.setRead(id);
+
+			data.unread_messages.user = 0;
+			data.unread_messages.bot = 0;
+			data.unread_messages.status = 0;
+		}
+
 		sessions[sessions.indexOf(session)] = update(session, { $merge: data });
 		store.trigger(sessions);
 	};

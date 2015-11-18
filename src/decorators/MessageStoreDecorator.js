@@ -23,7 +23,6 @@ export default function (store, actions, sessionStore) {
 
 		// Active tab?
 		if (!message.is_read && id === sessionStore.getActiveSession()) {
-			actions.setRead(id);
 			message.is_read = true;
 		}
 

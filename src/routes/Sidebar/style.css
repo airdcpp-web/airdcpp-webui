@@ -45,6 +45,8 @@
 
 #sidebar .menu-column .session-item {
   display: flex;
+  justify-content: space-between;
+  height: 35px;
 }
 
 #sidebar .menu-column .session-status {
