@@ -15,12 +15,8 @@
   flex-direction: column;
 }
 
-.settings-layout .section-content > div {
-	overflow-y: auto;
-}
-
-.settings-layout .setting-form {
-	margin-bottom: 20px;
+.settings-layout .setting-form .header {
+	margin-top: 20px;
 }
 
 .settings-layout .menu-column .menu {
