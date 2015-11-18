@@ -12,12 +12,19 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import History from 'utils/History';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
+const logo = require('../../images/AirDCPlusPlus.png');
+
 const Notifications = React.createClass({
 	mixins: [ SocketSubscriptionMixin, Reflux.listenTo(NotificationStore, '_addNotification') ],
 
 	_notificationSystem: null,
 
 	_addNotification: function (level, notification) {
+		if ('Notification' in window && Notification.permission === 'granted') {
+			this.showNativeNotification(level, notification);
+			return;
+		}
+
 		this._notificationSystem.addNotification(Object.assign(notification, {
 			level: level,
 			position: 'tl',
@@ -25,7 +32,26 @@ const Notifications = React.createClass({
 		}));
 	},
 
+	showNativeNotification(level, notificationInfo) {
+		var options = {
+			body: notificationInfo.message,
+			icon: logo,
+		};
+
+		const n = new Notification(notificationInfo.title, options);
+		n.onclick = () => {
+			window.focus();
+			notificationInfo.action.callback();
+		};
+
+		setTimeout(n.close.bind(n), 5000);
+	},
+
 	componentDidMount: function () {
+		if ('Notification' in window) {
+			Notification.requestPermission();
+		}
+
 		this._notificationSystem = this.refs.notificationSystem;
 	},
 
@@ -42,7 +68,7 @@ const Notifications = React.createClass({
 
 	_onPrivateMessage(message) {
 		const cid = message.reply_to.cid;
-		if (message.is_read || PrivateChatSessionStore.getActiveSession() === cid) {
+		if (message.is_read || (PrivateChatSessionStore.getActiveSession() === cid && document.hasFocus())) {
 			return;
 		}
 
