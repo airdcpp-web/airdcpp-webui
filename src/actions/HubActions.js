@@ -90,7 +90,7 @@ HubActions.createSession.listen(function (location, hubUrl) {
 });
 
 HubActions.createSession.completed.listen(function (location, session) {
-	History.pushSidebar(location, 'hubs/session/' + session.id);
+	History.pushSidebar(location, 'hubs/session/' + session.id, { pending: true });
 });
 
 HubActions.createSession.failed.listen(function (error) {

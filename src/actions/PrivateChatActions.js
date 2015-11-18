@@ -55,7 +55,7 @@ PrivateChatActions.createSession.listen(function (location, user) {
 });
 
 PrivateChatActions.createSession.completed.listen(function (location, user, session) {
-	History.pushSidebar(location, 'messages/session/' + user.cid);
+	History.pushSidebar(location, 'messages/session/' + user.cid, { pending: true });
 });
 
 PrivateChatActions.createSession.failed.listen(function (error) {

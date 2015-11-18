@@ -5,28 +5,30 @@ import { SIDEBAR_ID } from 'constants/OverlayConstants';
 
 const History = createBrowserHistory();
 
-// currentLocation can also be a string, but that should be used only when the old location state can be replaced
-// You may also pass additional data to the state
+const mergeOverlayData = (locationState, overlayId, data) => {
+	return update(locationState, { 
+		[overlayId]: { 
+			data: { $merge: data } 
+		} 
+	});
+};
+
 const getOverlayState = (currentLocation, overlayId, data) => {
 	console.assert(currentLocation, 'Current location not supplied for overlay creation');
 
-	let state = currentLocation.state || {};
+	const state = currentLocation.state || {};
 	if (!state[overlayId]) {
+		// Creating the overlay
 		state[overlayId] = {
 			returnTo: currentLocation.pathname,
 			data: data || {}
 		};
+
+		return state;
 	}
 
-	return state;
-};
-
-const mergeOverlayData = (currentLocation, newData, overlayId) => {
-	return update(currentLocation.state, { 
-		[overlayId]: { 
-			data: { $merge: newData } 
-		} 
-	});
+	// Merge the new data
+	return mergeOverlayData(state, overlayId, data || {});
 };
 
 const pushModal = (currentLocation, nextPath, overlayId, data) => {
@@ -65,13 +67,13 @@ const pushSidebar = (currentLocation, nextPath, data) => {
 
 // Append new location data when in sidebar layout and create a new history entry
 const pushSidebarData = (currentLocation, data) => {
-	const newState = mergeOverlayData(currentLocation, data, SIDEBAR_ID);
+	const newState = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
 	History.pushState(newState, currentLocation.pathname);
 };
 
 // Append new location data when in sidebar layout without creating a new history entry
 const replaceSidebarData = (currentLocation, data) => {
-	const newState = mergeOverlayData(currentLocation, data, SIDEBAR_ID);
+	const newState = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
 	History.replaceState(newState, currentLocation.pathname);
 };
 

@@ -42,6 +42,10 @@ export default function (store, actions) {
 
 	store._onSessionUpdated = (data, id) => {
 		const session = store.getSession(id);
+		if (!session) {
+			console.error('Update received for a non-existing session', id);
+			return;
+		}
 
 		// Active tab?
 		if (data.unread_messages && id === activeSession &&

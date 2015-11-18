@@ -11,6 +11,8 @@ import Message from 'components/semantic/Message';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 
+import Loader from 'components/semantic/Loader';
+
 import './style.css';
 
 const PathItem = React.createClass({
@@ -245,7 +247,7 @@ const FileBrowser = React.createClass({
 
 	render: function () {
 		if (this.state.loading) {
-			return <div className="ui active text loader">Loading</div>;
+			return <Loader/>;
 		}
 
 		const rootName = this._isWindows ? 'Computer' : 'Root';

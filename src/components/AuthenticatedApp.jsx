@@ -7,6 +7,7 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Notifications from './Notifications';
+import Loader from 'components/semantic/Loader';
 
 import NavigationPanel from './Navigation';
 import SideMenu from './SideMenu';
@@ -28,9 +29,7 @@ const SocketConnectStatus = React.createClass({
 			<div className={ 'ui dimmer page visible ' + (this.props.active ? 'active' : '')}>
 				<div className="content">
 					<div className="center">
-						<div className="ui text loader">
-							{message}
-						</div>
+						<Loader text={message}/>
 					</div>
 				</div>
 			</div>

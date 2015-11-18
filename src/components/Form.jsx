@@ -3,6 +3,7 @@ import Promise from 'utils/Promise';
 
 import NotificationActions from 'actions/NotificationActions';
 import BrowseField from 'components/filebrowser/BrowseField';
+import Loader from 'components/semantic/Loader';
 
 import deepEqual from 'deep-equal';
 
@@ -194,7 +195,7 @@ const Form = React.createClass({
 
 	render: function () {
 		if (!this.sourceData) {
-			return <div className="ui active text loader">Loading</div>;
+			return <Loader/>;
 		}
 
 		const options = {};

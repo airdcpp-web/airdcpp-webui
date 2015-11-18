@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import History from 'utils/History';
-
+import Loader from 'components/semantic/Loader';
 
 const MenuItem = React.createClass({
 	propTypes: {
@@ -16,11 +16,6 @@ const MenuItem = React.createClass({
 		 * Item URL
 		 */
 		url: React.PropTypes.string.isRequired,
-
-		/**
-		 * Title of the button
-		 */
-		//title: React.PropTypes.any.isRequired,
 	},
 
 	contextTypes: {
@@ -163,16 +158,31 @@ export default function (Component, buttonClass = '') {
 				return;
 			}
 
-			// All items removed?
-			if (nextProps.items.length === 0) {
-				this.reset();
-				return;
-			}
+			// Did we just create this session?
+			const { pending } = History.getSidebarData(nextProps.location);
 
 			// Update the active item
 			const newActiveItem = this.findItem(nextProps.items, nextProps.activeId);
 			if (newActiveItem) {
+				if (pending) {
+					// Disable pending state
+					History.replaceSidebarData(nextProps.location, {
+						pending: false
+					});
+
+					return;
+				}
+
 				this.setState({ activeItem: newActiveItem });
+			} else if (pending) {
+				// We'll just display a loading indicator
+				return;
+			}
+
+			// All items removed?
+			if (nextProps.items.length === 0) {
+				this.reset();
+				return;
 			}
 
 			// After this, we only handle cases when the old tab has been closed
@@ -251,9 +261,16 @@ export default function (Component, buttonClass = '') {
 				);
 			}, this);
 
+			let children = null;
+			if (History.getSidebarData(this.props.location).pending) {
+				children = <Loader text="Waiting for server response"/>;
+			} else {
+				children = React.cloneElement(this.props.children, { item: this.state.activeItem });
+			}
+
 			return (
 				<Component 
-					children={React.cloneElement(this.props.children, { item: this.state.activeItem })}
+					children={children}
 					newButton={<NewButton key="new-button" title={this.props.newButtonLabel} location={this.props.location} baseUrl={this.props.baseUrl} buttonClass={buttonClass}/>}
 					menuItems={menuItems}
 					location={this.props.location}

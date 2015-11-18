@@ -77,7 +77,7 @@ export default function (Component, messageStore, actions) {
 
 		render() {
 			if (!this.props.item) {
-				return <div className="ui text loader">Loading</div>;
+				return <div>Invalid session</div>;
 			}
 
 			return <Component {...this.props} {...this.state}/>;
