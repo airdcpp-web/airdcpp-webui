@@ -5,25 +5,12 @@ import React from 'react';
 import Format from 'utils/Format';
 
 import { HUB_STATS_URL } from 'constants/HubConstants';
-import SocketService from 'services/SocketService';
+
+import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
 
 import { Row, Header } from './Grid';
 
 const HubStatisticsPage = React.createClass({
-	componentDidMount() {
-		SocketService.get(HUB_STATS_URL).then(this.onStatsReceived).catch(error => console.error('Failed to fetch hub stats', error.message));
-	},
-
-	onStatsReceived(data) {
-		this.setState({ stats: data });
-	},
-
-	getInitialState() {
-		return {
-			stats: null
-		};
-	},
-
 	formatClient(client) {
 		return (
 			<Row
@@ -35,19 +22,7 @@ const HubStatisticsPage = React.createClass({
 	},
 
 	render() {
-		const { stats } = this.state;
-		if (stats === null) {
-			return null;
-		}
-
-		if (stats === undefined) {
-			return (
-				<div>
-					Statistics not available (no hubs online)
-				</div>
-			);
-		}
-
+		const { stats } = this.props;
 		return (
 			<div className="ui grid two column about-grid">
 				<Row title="Total users" text={stats.total_users}/>
@@ -61,4 +36,4 @@ const HubStatisticsPage = React.createClass({
 	},
 });
 
-export default HubStatisticsPage;
+export default StatisticsPageDecorator(HubStatisticsPage, HUB_STATS_URL, 'no hubs online');

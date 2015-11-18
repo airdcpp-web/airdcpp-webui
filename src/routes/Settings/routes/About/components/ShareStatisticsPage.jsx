@@ -6,31 +6,14 @@ import Moment from 'moment';
 import Format from 'utils/Format';
 
 import { SHARE_STATS_URL } from 'constants/ShareConstants';
-import SocketService from 'services/SocketService';
+
+import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
 
 import { Row } from './Grid';
 
 const ShareStatisticsPage = React.createClass({
-	componentDidMount() {
-		SocketService.get(SHARE_STATS_URL).then(this.onStatsReceived).catch(error => console.error('Failed to fetch share stats', error.message));
-	},
-
-	onStatsReceived(data) {
-		this.setState({ stats: data });
-	},
-
-	getInitialState() {
-		return {
-			stats: null
-		};
-	},
-
 	render() {
-		const { stats } = this.state;
-		if (!stats) {
-			return null;
-		}
-
+		const { stats } = this.props;
 		const averageFileAge = Moment.duration(stats.average_file_age*1000).humanize();
 		return (
 			<div className="ui grid two column about-grid">
@@ -44,4 +27,4 @@ const ShareStatisticsPage = React.createClass({
 	},
 });
 
-export default ShareStatisticsPage;
+export default StatisticsPageDecorator(ShareStatisticsPage, SHARE_STATS_URL, 'no files shared');
