@@ -3,10 +3,21 @@ import React from 'react';
 import SocketService from 'services/SocketService';
 
 // Decorator for statistics pages that fetch the content from API
-export default function (Component, fetchUrl, unavailableMessage) {
+export default function (Component, fetchUrl, unavailableMessage, fetchIntervalSeconds = 0) {
 	const StatisticsPageDecorator = React.createClass({
 		componentDidMount() {
+			this.fetchStats();
+		},
+
+		componentWillUnmount() {
+			clearTimeout(this.fetchTimeout);
+		},
+
+		fetchStats() {
 			SocketService.get(fetchUrl).then(this.onStatsReceived).catch(error => console.error('Failed to fetch stats', error.message));
+			if (fetchIntervalSeconds > 0) {
+				this.fetchTimeout = setTimeout(this.fetchStats, fetchIntervalSeconds*1000);
+			}
 		},
 
 		onStatsReceived(data) {

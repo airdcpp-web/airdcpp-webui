@@ -2,19 +2,18 @@
 
 import React from 'react';
 
-import LoginStore from 'stores/LoginStore';
-import TransferStatsStore from 'stores/TransferStatsStore';
-
 import Format from 'utils/Format';
-
 import { Row, Header } from './Grid';
+
+import { TRANSFER_STATS_URL } from 'constants/TransferConstants';
+import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
 
 const TransferStatisticsPage = React.createClass({
 	render() {
-		const transferStats = TransferStatsStore.getState().statistics;
+		const { stats } = this.props;
 
-		const totalUp = transferStats.session_up + LoginStore.systemInfo.start_total_uploaded;
-		const totalDown = transferStats.session_down + LoginStore.systemInfo.start_total_downloaded;
+		const totalUp = stats.session_uploaded + stats.start_total_uploaded;
+		const totalDown = stats.session_downloaded + stats.start_total_downloaded;
 
 		return (
 				<div className="about-page">
@@ -22,12 +21,12 @@ const TransferStatisticsPage = React.createClass({
 						<Row title="Total downloaded" text={Format.formatSize(totalDown)}/>
 						<Row title="Total uploaded" text={Format.formatSize(totalUp)}/>
 						<Header title="Session"/>
-						<Row title="Session downloaded" text={Format.formatSize(transferStats.session_down)}/>
-						<Row title="Session uploaded" text={Format.formatSize(transferStats.session_up)}/>
+						<Row title="Session downloaded" text={Format.formatSize(stats.session_downloaded)}/>
+						<Row title="Session uploaded" text={Format.formatSize(stats.session_uploaded)}/>
 					</div>
 				</div>
 		);
 	},
 });
 
-export default TransferStatisticsPage;
+export default StatisticsPageDecorator(TransferStatisticsPage, TRANSFER_STATS_URL, null, 5);

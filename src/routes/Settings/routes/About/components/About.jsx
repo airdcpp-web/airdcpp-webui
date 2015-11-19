@@ -4,15 +4,6 @@ import React from 'react';
 import GridLayout from 'routes/Settings/components/GridLayout';
 
 const About = React.createClass({
-	componentDidMount() {
-		// Ensure that changing properties get updated
-		this.interval = setInterval(() => this.forceUpdate(), 1000);
-	},
-
-	componentWillUnmount() {
-		clearInterval(this.interval);
-	},
-
 	render() {
 		const menuItems = [
 			{ title: 'Application', url: 'application' },

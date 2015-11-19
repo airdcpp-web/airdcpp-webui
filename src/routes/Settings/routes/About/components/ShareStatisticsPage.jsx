@@ -21,10 +21,10 @@ const ShareStatisticsPage = React.createClass({
 				<Row title="Total files" text={stats.total_file_count + ' (' + stats.unique_file_percentage.toFixed(2) + ' % unique)'}/>
 				<Row title="Total directories" text={stats.total_directory_count}/>
 				<Row title="Average file age" text={averageFileAge}/>
-				<Row title="Average files per directory" text={stats.files_per_directory}/>
+				<Row title="Average files per directory" text={stats.files_per_directory.toFixed(1)}/>
 			</div>
 		);
 	},
 });
 
-export default StatisticsPageDecorator(ShareStatisticsPage, SHARE_STATS_URL, 'no files shared');
+export default StatisticsPageDecorator(ShareStatisticsPage, SHARE_STATS_URL, 'no files shared', 60);

@@ -36,6 +36,7 @@ const Notifications = React.createClass({
 		var options = {
 			body: notificationInfo.message,
 			icon: logo,
+			tag: notificationInfo.uid,
 		};
 
 		const n = new Notification(notificationInfo.title, options);

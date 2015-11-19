@@ -145,10 +145,6 @@ export default function (Component, buttonClass = '') {
 			History.replaceSidebar(this.props.location, this.getUrl(id));
 		},
 
-		saveLocation() {
-			localStorage.setItem(this.props.baseUrl + '_last_active', this.props.activeId);
-		},
-
 		findItem(items, id) {
 			return items.find(item => item.id == id); // Ignore the type because of local storage
 		},
@@ -158,48 +154,16 @@ export default function (Component, buttonClass = '') {
 				return;
 			}
 
-			// Did we just create this session?
-			const { pending } = History.getSidebarData(nextProps.location);
-
-			// Update the active item
-			const newActiveItem = this.findItem(nextProps.items, nextProps.activeId);
-			if (newActiveItem) {
-				if (pending) {
-					// Disable pending state
-					History.replaceSidebarData(nextProps.location, {
-						pending: false
-					});
-
-					return;
-				}
-
-				this.setState({ activeItem: newActiveItem });
-			} else if (pending) {
-				// We'll just display a loading indicator
+			if (this.checkActiveItem(nextProps)) {
+				// We got an item
 				return;
 			}
 
-			// All items removed?
-			if (nextProps.items.length === 0) {
-				this.reset();
-				return;
-			}
-
-			// After this, we only handle cases when the old tab has been closed
-			const oldActiveId = this.props.activeId;
-			if (nextProps.activeId !== oldActiveId) {
-				// We have a new tab already
-				return;
-			}
+			// The old tab was closed
 
 
-			// Check if the current item still exists in the list
-			if (this.findItem(nextProps.items, oldActiveId)) {
-				return;
-			}
-
-			// Find the old position
-			const oldItem = this.findItem(this.props.items, oldActiveId);
+			// Find the old position and use the item in that position (if possible)
+			const oldItem = this.findItem(this.props.items, this.props.activeId);
 			const oldPos = this.props.items.indexOf(oldItem);
 
 			let newItemPos = oldPos;
@@ -211,36 +175,55 @@ export default function (Component, buttonClass = '') {
 			this.redirectTo(nextProps.items[newItemPos].id);
 		},
 
-		reset() {
-			History.replaceSidebar(this.props.location, this.props.baseUrl);
-			this.setState({ activeItem: null });
-		},
+		// Common logic for selecting the item to display (after mounting or session updates)
+		// Returns true active item selection was handled
+		// Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
+		checkActiveItem(props) {
+			// Did we just create this session?
+			const { pending } = History.getSidebarData(props.location);
 
-		componentDidUpdate() {
-			if (this.props.activeId) {
-				this.saveLocation();
+			// Update the active item
+			const activeItem = this.findItem(props.items, props.activeId);
+			if (activeItem) {
+				if (pending) {
+					// Disable pending state
+					History.replaceSidebarData(props.location, {
+						pending: false
+					});
+
+					return true;
+				}
+
+				this.setState({ activeItem: activeItem });
+				localStorage.setItem(this.props.baseUrl + '_last_active', this.props.activeId);
+				return true;
+			} else if (pending) {
+				// We'll just display a loading indicator in 'render', no item needed
+				return true;
+			} else if (props.location.action === 'POP' || props.items.length === 0) {
+				// Browsing from history and item removed (or all items removed)... go to "new session" page
+				History.replaceSidebar(this.props.location, this.props.baseUrl);
+				this.setState({ activeItem: null });
+				return true;
 			}
+
+			return false;
 		},
 
 		componentWillMount() {
+			// Opening an item directly?
 			if (this.props.activeId) {
-				// Loading an item already
-				const activeItem = this.findItem(this.props.items, this.props.activeId);
-				if (activeItem) {
-					this.setState({ activeItem: activeItem });
-				} else if (this.props.location.action === 'POP') {
-					// Browsing from history and item removed... go to "new" page
-					this.reset();
-				}
-
-				this.saveLocation();
+				this.checkActiveItem(this.props);
 				return;
 			}
 
+			// See if we have something stored
 			let lastId = localStorage.getItem(this.props.baseUrl + '_last_active');
 			if (lastId && this.findItem(this.props.items, lastId)) {
+				// Previous session exists
 				this.redirectTo(lastId);
-			} else if (this.props.items.length > 0) {
+			} else {
+				// Load the first session
 				this.redirectTo(this.props.items[0].id);
 			}
 		},
