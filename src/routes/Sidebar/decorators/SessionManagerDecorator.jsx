@@ -195,14 +195,14 @@ export default function (Component, buttonClass = '') {
 				}
 
 				this.setState({ activeItem: activeItem });
-				localStorage.setItem(this.props.baseUrl + '_last_active', this.props.activeId);
+				localStorage.setItem(props.baseUrl + '_last_active', props.activeId);
 				return true;
 			} else if (pending) {
 				// We'll just display a loading indicator in 'render', no item needed
 				return true;
 			} else if (props.location.action === 'POP' || props.items.length === 0) {
 				// Browsing from history and item removed (or all items removed)... go to "new session" page
-				History.replaceSidebar(this.props.location, this.props.baseUrl);
+				History.replaceSidebar(props.location, props.baseUrl);
 				this.setState({ activeItem: null });
 				return true;
 			}

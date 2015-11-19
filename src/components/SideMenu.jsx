@@ -34,6 +34,11 @@ const MenuItem = React.createClass({
 	onClick: function (evt) {
 		evt.preventDefault();
 
+		if (this.context.history.isActive(this.props.page)) {
+			History.removeSidebar(this.props.location);
+			return;
+		}
+
 		History.pushSidebar(this.props.location, this.props.page);
 	},
 

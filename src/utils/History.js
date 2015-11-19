@@ -31,6 +31,14 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 	return mergeOverlayData(state, overlayId, data || {});
 };
 
+const removeOverlayState = (currentLocation, overlayId) => {
+	const { state } = currentLocation;
+	const { returnTo } = state[overlayId];
+	console.assert(returnTo && overlayId, 'Return address or overlay id missing when closing an overlay');
+	delete state[overlayId];
+};
+
+
 const pushModal = (currentLocation, nextPath, overlayId, data) => {
 	if (typeof currentLocation !== 'object') {
 		currentLocation = Object.assign({}, { pathname: currentLocation });
@@ -83,6 +91,10 @@ const getSidebarData = (currentLocation) => {
 	return currentLocation.state[SIDEBAR_ID].data;
 };
 
+const removeSidebar = (currentLocation) => {
+	const returnTo = removeOverlayState(currentLocation, SIDEBAR_ID);
+	History.replaceState(currentLocation.state, returnTo);
+};
 
 export default Object.assign(History, { 
 	pushModal: pushModal, 
@@ -91,4 +103,5 @@ export default Object.assign(History, {
 	pushSidebarData: pushSidebarData,
 	replaceSidebarData: replaceSidebarData,
 	getSidebarData: getSidebarData,
+	removeSidebar: removeSidebar,
 });
