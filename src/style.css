@@ -3,12 +3,14 @@ body {
 	background-size: cover;
 }
 
-.login-grid .column {
-	max-width: 650px;
+html {
+	min-width: 550px;
+	min-height: 400px;
+	overflow: auto;
 }
 
-#container-main {
-	min-height: 400px;
+.login-grid .column {
+	max-width: 650px;
 }
 
 .ui.container.main {
