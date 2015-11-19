@@ -6,8 +6,8 @@ import t from 'utils/tcomb-form';
 
 const Entry = {
 	max_hash_speed: t.Positive,
-	max_total_hashers: t.Positive,
-	max_volume_hashers: t.Positive,
+	max_total_hashers: t.Range(1),
+	max_volume_hashers: t.Range(1),
 };
 
 const HashingPage = React.createClass({

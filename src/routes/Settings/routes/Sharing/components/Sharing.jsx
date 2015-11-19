@@ -7,6 +7,7 @@ const Sharing = React.createClass({
 	render() {
 		const menuItems = [
 			{ title: 'Directories', url: 'directories' },
+			{ title: 'Share profiles', url: 'profiles' },
 			{ title: 'Refresh options', url: 'refresh-options' },
 		];
 

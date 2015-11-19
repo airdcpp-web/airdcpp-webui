@@ -7,6 +7,9 @@ module.exports = {
 				path: 'directories', 
 				component: require('./components/ShareDirectoriesPage'), 
 			}, {
+				path: 'profiles', 
+				component: require('./components/ShareProfilesPage'), 
+			}, {
 				path: 'hashing', 
 				component: require('./components/HashingPage'), 
 			}, {
