@@ -35,7 +35,7 @@ const MenuItem = React.createClass({
 		evt.preventDefault();
 
 		if (this.context.history.isActive(this.props.page)) {
-			History.removeSidebar(this.props.location);
+			History.replaceSidebarData(this.props.location, { close: true });
 			return;
 		}
 

@@ -36,12 +36,11 @@ export default function (Component, semanticModuleName) {
 			overlayId: React.PropTypes.any,
 		},
 
-		/*replaceState() {
-			const { returnTo } = props.location.state[overlayId];
-			console.assert(returnTo, 'Return address missing when closing an overlay');
-			delete props.location.state[overlayId];
-			History.replaceState(props.location.state, returnTo);
-		},*/
+		componentWillReceiveProps(nextProps) {
+			if (History.getSidebarData(nextProps.location).close && !History.getSidebarData(this.props.location).close) {
+				this.hide();
+			}
+		},
 
 		showOverlay(componentSettings = {}) {
 			const settings = Object.assign(componentSettings, {
@@ -66,7 +65,11 @@ export default function (Component, semanticModuleName) {
 
 		onHidden() {
 			if (this.changeHistoryState) {
-				History.removeSidebar(this.props.location);
+				const { state } = this.props.location;
+				const { returnTo } = state[this.props.overlayId];
+				console.assert(returnTo && this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
+				delete state[this.props.overlayId];
+				History.replaceState(state, returnTo);
 			}
 
 			if (this.props.onHidden) {
