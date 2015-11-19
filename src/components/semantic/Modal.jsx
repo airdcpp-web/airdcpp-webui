@@ -28,6 +28,13 @@ const Modal = React.createClass({
 		 * Use disabled style for the approve button
 		 */
 		approveDisabled: React.PropTypes.bool,
+
+		/**
+		 * The modal will always use the maximum allowed width when set,
+		 * instead of adjusting the height dynamically.
+		 * Useful for modals with navigable, varying height content
+		 */
+		fullHeight: React.PropTypes.bool,
 	},
 
 	getDefaultProps() {
@@ -35,6 +42,7 @@ const Modal = React.createClass({
 			closable: true,
 			approveCaption: 'Save',
 			approveEnabled: true,
+			fullHeight: false,
 		};
 	},
 
@@ -75,8 +83,14 @@ const Modal = React.createClass({
 			{ 'loading': this.state.saving },
 		);
 
+		const mainClass = classNames(
+			'ui modal',
+			{ 'full': this.props.fullHeight },
+			this.props.className,
+		);
+
 		return (
-			<div className={ 'ui modal full ' + this.props.className }>
+			<div className={ mainClass }>
 				<LayoutHeader
 					title={ this.props.title }
 					icon={ this.props.icon }

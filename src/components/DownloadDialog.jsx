@@ -230,7 +230,15 @@ const DownloadDialog = React.createClass({
 		}, this);
 
 		return (
-			<Modal ref="modal" className="download-dialog long" title="Download" closable={true} icon="green download" {...this.props}>
+			<Modal 
+				ref="modal" 
+				className="download-dialog" 
+				title="Download" 
+				closable={true} 
+				icon="green download"
+				fullHeight={true}
+				{...this.props}
+			>
 				<div className="ui grid">
 					<div className="four wide column">
 						<div className="ui vertical fluid tabular menu">

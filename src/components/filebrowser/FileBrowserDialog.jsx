@@ -54,6 +54,7 @@ const FileBrowserDialog = React.createClass({
 				onApprove={this.onConfirm} 
 				className="file-browser-dialog" 
 				closable={true}
+				fullHeight={true}
 				approveDisabled={ currentPath.length === 0 }
 				approveCaption="Select"
 				icon="yellow folder open"

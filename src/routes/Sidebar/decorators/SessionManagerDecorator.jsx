@@ -222,7 +222,7 @@ export default function (Component, buttonClass = '') {
 			if (lastId && this.findItem(this.props.items, lastId)) {
 				// Previous session exists
 				this.redirectTo(lastId);
-			} else {
+			} else if (this.props.items.length > 0) {
 				// Load the first session
 				this.redirectTo(this.props.items[0].id);
 			}
