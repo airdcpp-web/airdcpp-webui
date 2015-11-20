@@ -37,7 +37,7 @@ export default function (Component, semanticModuleName) {
 		},
 
 		componentWillReceiveProps(nextProps) {
-			if (History.getSidebarData(nextProps.location).close && !History.getSidebarData(this.props.location).close) {
+			if (nextProps.location.state[this.props.overlayId].data.close) {
 				this.hide();
 			}
 		},
