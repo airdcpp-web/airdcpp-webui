@@ -2,7 +2,6 @@ import React from 'react';
 import Promise from 'utils/Promise';
 
 import NotificationActions from 'actions/NotificationActions';
-import BrowseField from 'components/filebrowser/BrowseField';
 import Loader from 'components/semantic/Loader';
 
 import deepEqual from 'deep-equal';
@@ -48,6 +47,11 @@ const Form = React.createClass({
 		 * Source value to use for initial data
 		 */
 		sourceData: React.PropTypes.object,
+
+		/**
+		 * Header for the form
+		 */
+		title: React.PropTypes.node,
 	},
 
 	getInitialState() {
@@ -87,14 +91,14 @@ const Form = React.createClass({
 	},
 
 	// Merge new settings to current values (don't change source data)
-	onUserSettingsReceived(data) {
-		const newValue = Object.assign({}, this.state.formValue, this.getValueMap(data));
+	onUserSettingsReceived(formValue, data) {
+		const newValue = Object.assign({}, formValue, this.getValueMap(data));
 
 		this.setState({ formValue: newValue });
 	},
 
 	onFieldChanged(value, valueKey) {
-		// Make sure that we have a converted value
+		// Make sure that we have the converted value
 		const result = this.refs.form.getComponent(valueKey).validate();
 		value[valueKey] = result.value;
 
@@ -102,7 +106,7 @@ const Form = React.createClass({
 			const promise = this.props.onFieldChanged(valueKey, value, !deepEqual(this.sourceData[valueKey].value, value[valueKey]));
 			if (promise) {
 				promise
-					.then(this.onUserSettingsReceived)
+					.then(this.onUserSettingsReceived.bind(this, value))
 					.catch(error => 
 						NotificationActions.apiError('Failed to update values', error)
 					);
@@ -140,56 +144,11 @@ const Form = React.createClass({
 	},
 
 	getFieldOptions(optionsObject, settingKey) {
-		const sourceItem = this.sourceData[settingKey];
-
-		const autoDetected = sourceItem.auto && sourceItem.value === this.state.formValue[settingKey];
-
-		const fieldOptions = {};
-		if (sourceItem.title) {
-			let legend = sourceItem.title;
-
-			if (autoDetected) {
-				legend += ' (auto detected)';
-			}
-
-			if (sourceItem.unit) {
-				legend += ' (' + sourceItem.unit + ')';
-			}
-
-			fieldOptions['legend'] = legend;
-		}
-
-		// Path?
-		if (sourceItem.type == 'file_path' || sourceItem.type == 'directory_path') {
-			fieldOptions['factory'] = BrowseField;
-			fieldOptions['location'] = this.props.location;
-		} else if (sourceItem.type === 'long_text') {
-			fieldOptions['type'] = 'textfield';
-		}
-
-		// Enum select field?
-		if (sourceItem.values) {
-			Object.assign(fieldOptions, {
-				factory: t.form.Select,
-				options: sourceItem.values,
-				nullOption: false,
-			});
-
-			// Integer keys won't work, do string conversion
-			if (sourceItem.value === parseInt(sourceItem.value, 10)) {
-				fieldOptions['transformer'] = {
-					format: v => String(v),
-					parse: v => parseInt(v, 10)
-				};
-			}
-		}
-
-		// Let the parents add their own settings
 		if (this.props.onFieldSetting) {
-			this.props.onFieldSetting(settingKey, fieldOptions, this.state.formValue, this.sourceData);
+			optionsObject[settingKey] = {};
+			this.props.onFieldSetting(settingKey, optionsObject[settingKey], this.state.formValue, this.sourceData);
 		}
 
-		optionsObject[settingKey] = fieldOptions;
 		return optionsObject;
 	},
 
@@ -211,7 +170,8 @@ const Form = React.createClass({
 		}
 
 		return (
-			<div>
+			<div className="form">
+				{ this.props.title ? <div className="ui header">{ this.props.title } </div> : null }
 				<TcombForm
 					ref="form"
 					type={t.struct(this.props.formItems)}

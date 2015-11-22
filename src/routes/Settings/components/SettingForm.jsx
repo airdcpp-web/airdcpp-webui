@@ -4,7 +4,11 @@ import { SETTING_ITEMS_URL } from 'constants/SettingConstants';
 import SocketService from 'services/SocketService';
 import NotificationActions from 'actions/NotificationActions';
 
+import BrowseField from 'components/filebrowser/BrowseField';
+import FormUtils from 'utils/FormUtils';
 import Form from 'components/Form';
+
+import t from 'utils/tcomb-form';
 
 const SettingForm = React.createClass({
 	contextTypes: {
@@ -17,17 +21,6 @@ const SettingForm = React.createClass({
 		 * Form items to list
 		 */
 		formItems: React.PropTypes.object.isRequired,
-
-		/**
-		 * Optional callback that is called when a value was changed
-		 * Receives the new value and changed field id as parameter
-		 */
-		onChange: React.PropTypes.func,
-
-		/**
-		 * Possible header for the form
-		 */
-		title: React.PropTypes.node,
 	},
 
 	getInitialState() {
@@ -56,6 +49,53 @@ const SettingForm = React.createClass({
 			);
 	},
 
+	onFieldSetting(settingKey, fieldOptions, formValue, sourceData) {
+		const sourceItem = sourceData[settingKey];
+
+		const autoDetected = sourceItem.auto && sourceItem.value === formValue[settingKey];
+
+		if (sourceItem.title) {
+			let legend = sourceItem.title;
+
+			if (autoDetected) {
+				legend += ' (auto detected)';
+			}
+
+			if (sourceItem.unit) {
+				legend += ' (' + sourceItem.unit + ')';
+			}
+
+			fieldOptions['legend'] = legend;
+		}
+
+		// Path?
+		if (sourceItem.type == 'file_path' || sourceItem.type == 'directory_path') {
+			fieldOptions['factory'] = BrowseField;
+			fieldOptions['location'] = this.context.location;
+		} else if (sourceItem.type === 'long_text') {
+			fieldOptions['type'] = 'textfield';
+		}
+
+		// Enum select field?
+		if (sourceItem.values) {
+			Object.assign(fieldOptions, {
+				factory: t.form.Select,
+				options: sourceItem.values,
+				nullOption: false,
+			});
+
+			// Integer keys won't work, do string conversion
+			if (sourceItem.value === parseInt(sourceItem.value, 10)) {
+				fieldOptions['transformer'] = FormUtils.intTransformer;
+			}
+		}
+
+		// Let the parents add their own settings
+		if (this.props.onFieldSetting) {
+			this.props.onFieldSetting(settingKey, fieldOptions, formValue, sourceData);
+		}
+	},
+
 	onFieldChanged(id, value, hasChanges) {
 		this.context.onSettingsChanged(id, value, hasChanges);
 
@@ -76,14 +116,13 @@ const SettingForm = React.createClass({
 	render: function () {
 		return (
 			<div className="setting-form">
-				{ this.props.title ? <div className="ui header">{ this.props.title } </div> : null }
 				<Form
 					{ ...this.props }
 					ref="form"
 					onFieldChanged={this.onFieldChanged}
+					onFieldSetting={this.onFieldSetting}
 					sourceData={this.state.sourceData}
 					onSave={this.onSave}
-					location={this.context.location}
 				/>
 			</div>);
 	}

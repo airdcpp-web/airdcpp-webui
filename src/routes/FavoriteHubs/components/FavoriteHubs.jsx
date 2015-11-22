@@ -2,6 +2,8 @@ import React from 'react';
 
 import FavoriteHubActions from 'actions/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
+import HubActions from 'actions/HubActions';
+
 import { StateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
@@ -15,19 +17,8 @@ import Button from 'components/semantic/Button';
 import '../style.css';
 
 const ConnectState = React.createClass({
-	getTitle() {
-		switch (this.props.item.connect_state) {
-			case StateEnum.STATE_CONNECTING:
-				return 'Connecting';
-			case StateEnum.STATE_CONNECTED:
-				return 'Connected';
-			case StateEnum.STATE_DISCONNECTED:
-				return 'Disconnected';
-		}
-	},
-
 	getIcon() {
-		switch (this.props.item.connect_state) {
+		switch (this.props.item.connect_state.id) {
 			case StateEnum.STATE_CONNECTING:
 				return 'yellow remove';
 			case StateEnum.STATE_CONNECTED:
@@ -38,12 +29,13 @@ const ConnectState = React.createClass({
 	},
 
 	getClickAction() {
-		switch (this.props.item.connect_state) {
+		const { item } = this.props;
+		switch (item.connect_state.id) {
 			case StateEnum.STATE_CONNECTING:
 			case StateEnum.STATE_CONNECTED:
-				return () => FavoriteHubActions.disconnect(this.props.item);
+				return () => HubActions.removeSession(item.connected_hub_id);
 			case StateEnum.STATE_DISCONNECTED:
-				return () => FavoriteHubActions.connect(this.props.item);
+				return () => HubActions.createSession(this.props.location, item.hub_url);
 		}
 	},
 
@@ -51,7 +43,7 @@ const ConnectState = React.createClass({
 		return (
 			<div>
 				<i className={ 'icon large link ' + this.getIcon() } onClick={ this.getClickAction() }/>
-				{ this.getTitle() }
+				{ this.props.item.connect_state.str }
 			</div>
 		);
 	}
@@ -71,7 +63,7 @@ const FavoriteHubs = React.createClass({
 			return cellData;
 		}
 
-		return <ConnectState item={ rowData }/>;
+		return <ConnectState item={ rowData } location={ this.props.location }/>;
 	},
 
 	_rowClassNameGetter(rowData) {

@@ -1,73 +1,52 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
+
 import { PROFILES_GET_URL, HIDDEN_PROFILE_ID } from 'constants/ShareConstants';
 import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
+
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 
-import _ from 'lodash';
 import t from 'utils/tcomb-form';
 
-const Form = t.form.Form;
-const Entry = t.struct({
+import Form from 'components/Form';
+import FormUtils from 'utils/FormUtils';
+
+const Entry = {
 	name: t.Str,
 	hub_url: t.Str,
 	hub_description: t.maybe(t.Str),
-	share_profile: t.Num,
+	share_profile: t.maybe(t.Number),
+	//share_profile: t.Any,
 	auto_connect: t.Bool,
 	nick: t.maybe(t.Str),
 	user_description: t.maybe(t.Str),
-});
+};
 
 const FavoriteHubDialog = React.createClass({
 	mixins: [ RouteContext, HistoryContext ],
 
 	getInitialState() {
-		let value = null;
 		this._isNew = !this.props.hubEntry;
 		if (!this._isNew) {
-			value = _.clone(this.props.hubEntry, true);
-			value['share_profile'] = value.share_profile.id;
-
-			this.checkAdcHub(value.hub_url);
+			this.checkAdcHub(this.props.hubEntry.hub_url);
 		}
 
 		return {
-			error: null,
-			value: value,
-			profiles: []
+			sourceData: null,
 		};
 	},
 
-	addProfile(profiles, rawItem) {
-		if (rawItem.default) {
-			this.defaultId = rawItem.id;
-		}
-
-		profiles.push({
-			value: rawItem.id,
-			text: rawItem.str
-		});
-		return profiles;
-	},
-
 	onProfilesReceived(data) {
-		data.reduce(this.addProfile, this.allProfiles);
-		this._setProfiles();
-		if (this._isNew) {
-			// We don't have anything selected yet
+		this.profiles = data;
 
-			const value = Object.assign({}, this.state.value, { 
-				'share_profile': this.defaultId
-			});
-
-			this.setState({ value: value });
-		}
+		// Set source data so that the form will render
+		const sourceData = FormUtils.valueMapToInfo(this.props.hubEntry, Object.keys(Entry));
+		this.setState({ sourceData: sourceData });
 	},
 
 	componentDidMount() {
-		this.allProfiles = [];
 		SocketService.get(PROFILES_GET_URL)
 			.then(this.onProfilesReceived)
 			.catch(error => 
@@ -75,91 +54,77 @@ const FavoriteHubDialog = React.createClass({
 			);
 	},
 
-	_setProfiles() {
-		this.setState({ 
-			profiles: this.allProfiles.filter(p => this.isAdcHub || (p.value === this.defaultId || p.value === HIDDEN_PROFILE_ID), []) 
-		});
-	},
-
 	checkAdcHub(hubUrl) {
-		this.isAdcHub = hubUrl.indexOf('adc://') == 0 || hubUrl.indexOf('adcs://') == 0;
+		this.isAdcHub = hubUrl.indexOf('adc://') === 0 || hubUrl.indexOf('adcs://') === 0;
 	},
 
-	onChange(value, path) {
-		if (path.indexOf('hub_url') > -1) {
+	onFieldChanged(id, value, hasChanges) {
+		if (id.indexOf('hub_url') != -1) {
 			this.checkAdcHub(value.hub_url);
-			if (!this.isAdcHub) {
-				value.share_profile = this.defaultId;
+
+			if (!this.isAdcHub && value.share_profile !== HIDDEN_PROFILE_ID) {
+				// Reset share profile
+				const sourceData = FormUtils.valueMapToInfo({ share_profile: null });
+				return Promise.resolve(sourceData);
 			}
-
-			this._setProfiles();
-		}
-
-		this.refs.form.getComponent(path).validate();
-		this.setState({ value: value });
-	},
-
-	_handleError(error) {
-		if (error.code === 422) {
-			this.setState({ error: error.json });
-		} else {
-			// ?
 		}
 	},
 
 	save() {
-		let value = this.refs.form.getValue();
-		if (value) {
-			let promise;
-			if (this._isNew) {
-				promise = SocketService.post(FAVORITE_HUB_URL, value);
-			} else {
-				promise = SocketService.patch(FAVORITE_HUB_URL + '/' + this.props.hubEntry.id, value);
-			}
+		return this.refs.form.save();
+	},
 
-			promise.catch(this._handleError);
-			return promise;
+	onSave(changedFields) {
+		if (this._isNew) {
+			return SocketService.post(FAVORITE_HUB_URL, changedFields);
 		}
 
-		return Promise.reject();
+		return SocketService.patch(FAVORITE_HUB_URL + '/' + this.props.hubEntry.id, changedFields);
+	},
+
+	convertProfile(profiles, rawItem) {
+		profiles.push({
+			value: rawItem.id,
+			text: rawItem.str
+		});
+
+		return profiles;
+	},
+
+	getFieldProfiles() {
+		return this.profiles
+			.filter(p => this.isAdcHub || p.id === HIDDEN_PROFILE_ID)
+			.reduce(this.convertProfile, []);
+	},
+
+	onFieldSetting(id, fieldOptions, formValue) {
+		if (id === 'share_profile') {
+			Object.assign(fieldOptions, {
+				help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
+				nullOption: { value: 'null', text: 'Global default' },
+				factory: t.form.Select,
+				options: this.getFieldProfiles(),
+				transformer: FormUtils.intTransformer,
+			});
+		}
 	},
 
 	render: function () {
-		let options = {
-			fields: {
-				share_profile: {
-					factory: t.form.Select,
-					options: this.state.profiles,
-					nullOption: false,
-					help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
-					transformer: {
-						format: v => String(v),
-						parse: v => parseInt(v, 10)
-					}
-				}
-			}
-		};
-
-		const { error } = this.state;
-		if (!!error) {
-			options.fields[error.field] = options.fields[error.field] || {};
-			Object.assign(options.fields[error.field], {
-				error: error.message,
-				hasError: true
-			});
-		}
-
 		const title = this._isNew ? 'Add favorite hub' : 'Edit favorite hub';
 		return (
 			<Modal className="fav-hub" title={title} onApprove={this.save} closable={false} icon="yellow star" {...this.props}>
 				<Form
 					ref="form"
-					type={Entry}
-					options={options}
-					value={this.state.value}
-					onChange={this.onChange}
+					title="User information"
+					formItems={Entry}
+					onFieldChanged={this.onFieldChanged}
+					onFieldSetting={this.onFieldSetting}
+					onSave={this.onSave}
+					sourceData={this.state.sourceData}
+					location={this.props.location}
 				/>
-			</Modal>);
+			</Modal>
+		);
 	}
 });
 

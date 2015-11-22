@@ -15,10 +15,6 @@
   flex-direction: column;
 }
 
-.settings-layout .setting-form .header {
-	margin-top: 20px;
-}
-
 .settings-layout .menu-column .menu {
   max-width: 100%;
 }
