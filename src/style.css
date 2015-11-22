@@ -125,13 +125,13 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	height: 65vh;
 }
 
-.password-dialog {
+.input.dialog {
 	display: flex !important;
 	flex-direction: column !important;
 	color: white !important;
 }
 
-.password-dialog input {
+.input.dialog input {
 	margin-top: 20px !important;
 }
 

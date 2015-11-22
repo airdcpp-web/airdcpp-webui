@@ -28,7 +28,7 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 		this.confirmed(bundle);
 	} else {
 		const text = 'Are you sure that you want to remove the bundle ' + bundle.name + '?';
-		ConfirmDialog(this.displayName, text, this.icon, 'Remove bundle', "Don't remove").then(() => this.confirmed(bundle)).catch(() => 'fasfasf');
+		ConfirmDialog(this.displayName, text, this.icon, 'Remove bundle', "Don't remove").then(() => this.confirmed(bundle));
 	}
 	return false;
 };

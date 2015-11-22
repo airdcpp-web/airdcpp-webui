@@ -3,8 +3,9 @@ import Reflux from 'reflux';
 
 import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService';
-import PasswordDialog from 'components/semantic/PasswordDialog';
-//import NotificationActions from 'actions/NotificationActions';
+
+import ConfirmDialog from 'components/semantic/ConfirmDialog';
+import { PasswordDialog } from 'components/semantic/InputDialog';
 
 const sendPassword = (hub, password, action) => {
 	return SocketService.patch(FAVORITE_HUB_URL + '/' + hub.id, { password: password })
@@ -30,7 +31,7 @@ const FavoriteHubPasswordActions = Reflux.createActions([
 	},
 	{ 'remove': { 
 		asyncResult: true, 
-		//children: ["confirmed"], 
+		children: [ 'confirmed' ], 
 		displayName: 'Remove password', 
 		icon: 'red remove circle' },
 	},
@@ -59,6 +60,11 @@ FavoriteHubPasswordActions.change.saved.listen(function (hub, password) {
 });
 
 FavoriteHubPasswordActions.remove.listen(function (hub) {
+	const text = 'Are you sure that you want to reset the password of the hub ' + hub.name + '?';
+	ConfirmDialog('Remove password', text, this.icon, 'Remove password', "Don't remove").then(() => this.confirmed(hub));
+});
+
+FavoriteHubPasswordActions.remove.confirmed.listen(function (hub) {
 	sendPassword(hub, null, FavoriteHubPasswordActions.remove);
 });
 

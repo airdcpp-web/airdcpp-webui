@@ -107,7 +107,7 @@ HubActions.removeSession.listen(function (id) {
 		.catch(that.failed.bind(that, id));
 });
 
-HubActions.removeSession.failed.listen(function (error) {
+HubActions.removeSession.failed.listen(function (id, error) {
 	NotificationActions.error({ 
 		title: 'Failed to remove hub session',
 		message: error.message,

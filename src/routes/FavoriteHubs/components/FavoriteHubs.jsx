@@ -33,7 +33,7 @@ const ConnectState = React.createClass({
 		switch (item.connect_state.id) {
 			case StateEnum.STATE_CONNECTING:
 			case StateEnum.STATE_CONNECTED:
-				return () => HubActions.removeSession(item.connected_hub_id);
+				return () => HubActions.removeSession(item.connect_state.current_hub_id);
 			case StateEnum.STATE_DISCONNECTED:
 				return () => HubActions.createSession(this.props.location, item.hub_url);
 		}

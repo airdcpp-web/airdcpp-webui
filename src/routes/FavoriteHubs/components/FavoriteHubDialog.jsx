@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { PROFILES_GET_URL, HIDDEN_PROFILE_ID } from 'constants/ShareConstants';
+import { SHARE_PROFILES_URL, HIDDEN_PROFILE_ID } from 'constants/ShareConstants';
 import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
 
 import SocketService from 'services/SocketService';
@@ -47,7 +47,7 @@ const FavoriteHubDialog = React.createClass({
 	},
 
 	componentDidMount() {
-		SocketService.get(PROFILES_GET_URL)
+		SocketService.get(SHARE_PROFILES_URL)
 			.then(this.onProfilesReceived)
 			.catch(error => 
 				console.error('Failed to load profiles: ' + error)

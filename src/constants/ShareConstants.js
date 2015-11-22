@@ -1,12 +1,17 @@
 const SHARE_MODULE_URL = 'share/v0';
 export default {
 	SHARE_MODULE_URL: SHARE_MODULE_URL,
-	PROFILES_GET_URL: SHARE_MODULE_URL + '/profiles',
+	SHARE_PROFILES_URL: SHARE_MODULE_URL + '/profiles',
+	SHARE_PROFILE_URL: SHARE_MODULE_URL + '/profile',
 
 	SHARE_DUPE_PATHS_URL: SHARE_MODULE_URL + '/find_dupe_paths',
-	ROOTS_GET_URL: SHARE_MODULE_URL + '/roots',
+	GROUPED_ROOTS_GET_URL: SHARE_MODULE_URL + '/grouped_root_paths',
 	SHARE_STATS_URL: SHARE_MODULE_URL + '/stats',
 
+	SHARE_PROFILE_ADDED: 'share_profile_added',
+	SHARE_PROFILE_UPDATED: 'share_profile_updated',
+	SHARE_PROFILE_REMOVED: 'share_profile_removed',
+	
 	HIDDEN_PROFILE_ID: 1
 }
 ;

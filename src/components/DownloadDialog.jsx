@@ -3,7 +3,7 @@ import Modal from './semantic/Modal';
 
 import { PriorityEnum } from 'constants/QueueConstants';
 import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants';
-import { ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
+import { GROUPED_ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
 import { HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js';
 import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js';
 
@@ -157,7 +157,7 @@ const DownloadDialog = React.createClass({
 	},
 
 	componentDidMount() {
-		this.fetchPaths(ROOTS_GET_URL, 'share_paths');
+		this.fetchPaths(GROUPED_ROOTS_GET_URL, 'share_paths');
 		this.fetchPaths(FAVORITE_DIRECTORIES_URL, 'favorite_paths');
 		this.fetchPaths(HISTORY_ITEMS_URL + '/' + HistoryEnum.HISTORY_DOWNLOAD_DIR, 'history_paths');
 
