@@ -81,7 +81,7 @@ const GridLayout = React.createClass({
 				</div>
 				<div className="thirteen wide stretched column content-column">
 					<SettingPage 
-						saveable={ this.props.saveable }
+						saveable={ this.props.saveable && !currentMenuItem.noSave }
 						sectionId={ currentMenuItem.url } 
 						title={ currentMenuItem.title }
 						icon={ this.props.icon }

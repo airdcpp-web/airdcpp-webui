@@ -1,26 +1,34 @@
 import React from 'react';
-//import SettingForm from 'routes/Settings/components/SettingForm';
-//import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
+import ReactDOM from 'react-dom';
 
 import ShareProfileActions from 'actions/ShareProfileActions';
 import { SHARE_PROFILE_ADDED, SHARE_PROFILE_UPDATED, SHARE_PROFILE_REMOVED, SHARE_PROFILES_URL, HIDDEN_PROFILE_ID, SHARE_MODULE_URL } from 'constants/ShareConstants';
 
 import Button from 'components/semantic/Button';
 import SocketService from 'services/SocketService';
-import { TableActionMenu } from 'components/Menu';
+import Formatter from 'utils/Format';
+
+import { ActionMenu } from 'components/Menu';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
-const Row = ({ profile }) => (
-	<div className="ui row">
-		<div className="ten wide column">
-			<div className="ui tiny header">
-				<TableActionMenu caption={ profile.name } actions={ ShareProfileActions } ids={[ 'edit', 'remove' ]} itemData={ profile }/>
-			</div>
-		</div>
-		<div className="six wide column">
-			{ profile.size }
-		</div>
-	</div>
+const Row = ({ profile, contextGetter }) => (
+	<tr>
+		<td>
+			<ActionMenu 
+				caption={ <strong>{profile.name}</strong> } 
+				actions={ ShareProfileActions } 
+				ids={ profile.default ? [ 'edit', 'remove' ] : [ 'edit', 'default', 'remove' ]} 
+				itemData={ profile }
+				contextGetter={ contextGetter }
+			/>
+		</td>
+		<td>
+			{ Formatter.formatSize(profile.size) }
+		</td>
+		<td>
+			{ profile.files }
+		</td>
+	</tr>
 );
 
 const ShareProfilesPage = React.createClass({
@@ -70,11 +78,21 @@ const ShareProfilesPage = React.createClass({
 					caption="Add profile"
 				/>
 
-				<div className="ui vertically divided grid two column">
+				<table className="ui striped table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Total size</th>
+							<th>Total files</th>
+						</tr>
+					</thead>
+					<tbody>
 					{ this.state.profiles
 						.filter(p => p.id !== HIDDEN_PROFILE_ID)
-						.map(p => <Row key={p.id} profile={p}/>) }
-				</div>
+						.map(p => <Row key={p.id} profile={p} contextGetter={ () => ReactDOM.findDOMNode(this) }/>) 
+					}
+					</tbody>
+				</table>
 			</div>
 		);
 	}

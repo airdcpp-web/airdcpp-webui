@@ -5,6 +5,7 @@ import SocketService from 'services/SocketService';
 
 import InputDialog from 'components/semantic/InputDialog';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
+import NotificationActions from 'actions/NotificationActions';
 
 import { SHARE_PROFILE_URL } from 'constants/ShareConstants';
 
@@ -20,6 +21,11 @@ const ShareProfileActions = Reflux.createActions([
 		children: [ 'saved' ], 
 		displayName: 'Rename profile', 
 		icon: 'edit' },
+	},
+	{ 'default': { 
+		asyncResult: true, 
+		displayName: 'Set as default', 
+		icon: 'blue pin' },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
@@ -46,8 +52,8 @@ ShareProfileActions.create.listen(function () {
 ShareProfileActions.create.saved.listen(function (name) {
 	const that = this;
 	return SocketService.post(SHARE_PROFILE_URL, { name: name })
-		.then(that.completed.bind(profile))
-		.catch(that.failed.bind(profile));
+		.then(ShareProfileActions.create.completed.bind(that, profile))
+		.catch(ShareProfileActions.create.failed.bind(that, profile));
 });
 
 ShareProfileActions.edit.listen(function (profile) {
@@ -57,6 +63,7 @@ ShareProfileActions.edit.listen(function (profile) {
 		title: 'Rename profile',
 		text: 'Enter new name for the profile ' + profile.name,
 		placeholder: 'Enter name',
+		defaultValue: profile.plain_name,
 	};
 
 	InputDialog(options)
@@ -64,11 +71,32 @@ ShareProfileActions.edit.listen(function (profile) {
 		.catch(() => {});
 });
 
+ShareProfileActions.default.listen(function (profile) {
+	const that = this;
+	return SocketService.post(SHARE_PROFILE_URL + '/' + profile.id + '/default')
+		.then(ShareProfileActions.default.completed.bind(that, profile))
+		.catch(ShareProfileActions.default.failed.bind(that, profile));
+});
+
 ShareProfileActions.edit.saved.listen(function (profile, name) {
 	const that = this;
 	return SocketService.patch(SHARE_PROFILE_URL + '/' + profile.id, { name: name })
-		.then(that.completed.bind(profile))
-		.catch(that.failed.bind(profile));
+		.then(ShareProfileActions.edit.completed.bind(that, profile))
+		.catch(ShareProfileActions.edit.failed.bind(that, profile));
+});
+
+ShareProfileActions.edit.failed.listen(function (profile, error) {
+	NotificationActions.error({ 
+		title: 'Failed to rename profile' ,
+		message: error.message,
+	});
+});
+
+ShareProfileActions.create.failed.listen(function (profile, error) {
+	NotificationActions.error({ 
+		title: 'Failed to create profile',
+		message: error.message,
+	});
 });
 
 ShareProfileActions.remove.listen(function (profile) {
@@ -79,8 +107,8 @@ ShareProfileActions.remove.listen(function (profile) {
 ShareProfileActions.remove.confirmed.listen(function (profile) {
 	const that = this;
 	return SocketService.delete(SHARE_PROFILE_URL + '/' + profile.id)
-		.then(that.completed.bind(profile))
-		.catch(that.failed.bind(profile));
+		.then(ShareProfileActions.remove.completed.bind(that, profile))
+		.catch(ShareProfileActions.remove.failed.bind(that, profile));
 });
 
 export default ShareProfileActions;

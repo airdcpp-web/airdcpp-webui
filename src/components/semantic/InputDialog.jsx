@@ -31,7 +31,7 @@ const InputField = React.createClass({
 });
 
 const InputDialog = function (options) {
-	let inputText = '';
+	let inputText = options.defaultValue ? options.defaultValue : '';
 	let resolver = BlueBird.pending();
 
 	const { title, icon, approveCaption, ...other } = options;

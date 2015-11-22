@@ -6,7 +6,7 @@ import GridLayout from 'routes/Settings/components/GridLayout';
 const Connectivity = React.createClass({
 	render() {
 		const menuItems = [
-			{ title: 'Auto detection', url: 'detection' },
+			{ title: 'Auto detection', url: 'detection', noSave: true },
 		];
 
 		const advancedMenuItems = [
