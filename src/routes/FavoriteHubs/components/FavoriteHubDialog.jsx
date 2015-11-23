@@ -85,7 +85,7 @@ const FavoriteHubDialog = React.createClass({
 	convertProfile(profiles, rawItem) {
 		profiles.push({
 			value: rawItem.id,
-			text: rawItem.str
+			text: rawItem.name
 		});
 
 		return profiles;

@@ -50,10 +50,9 @@ ShareProfileActions.create.listen(function () {
 });
 
 ShareProfileActions.create.saved.listen(function (name) {
-	const that = this;
 	return SocketService.post(SHARE_PROFILE_URL, { name: name })
-		.then(ShareProfileActions.create.completed.bind(that, profile))
-		.catch(ShareProfileActions.create.failed.bind(that, profile));
+		.then(ShareProfileActions.create.completed)
+		.catch(ShareProfileActions.create.failed);
 });
 
 ShareProfileActions.edit.listen(function (profile) {
@@ -86,17 +85,11 @@ ShareProfileActions.edit.saved.listen(function (profile, name) {
 });
 
 ShareProfileActions.edit.failed.listen(function (profile, error) {
-	NotificationActions.error({ 
-		title: 'Failed to rename profile' ,
-		message: error.message,
-	});
+	NotificationActions.apiError('Failed to rename profile', error, profile.id);
 });
 
-ShareProfileActions.create.failed.listen(function (profile, error) {
-	NotificationActions.error({ 
-		title: 'Failed to create profile',
-		message: error.message,
-	});
+ShareProfileActions.create.failed.listen(function (error) {
+	NotificationActions.apiError('Failed to create profile', error);
 });
 
 ShareProfileActions.remove.listen(function (profile) {

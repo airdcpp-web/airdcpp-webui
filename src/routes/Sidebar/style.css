@@ -146,6 +146,11 @@
 	margin-top: 5px;
 }
 
+.status-message {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .message-list .message-text {
 	overflow: hidden;
 	white-space: pre-line;

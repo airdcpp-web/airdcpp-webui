@@ -126,7 +126,7 @@ const ListBrowser = React.createClass({
 
 	render() {
 		return (
-			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 250) }}>
+			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 210) }}>
 				<PathBreadcrumb 
 					tokens={this._tokenizePath()} 
 					separator={"/"} 
@@ -136,7 +136,7 @@ const ListBrowser = React.createClass({
 				/>
 
 				<VirtualTable
-					//emptyRowsNodeGetter={this.emptyRowsNodeGetter}
+					emptyRowsNodeGetter={this.emptyRowsNodeGetter}
 					rowClassNameGetter={ this._rowClassNameGetter }
 					defaultSortProperty="name"
 					store={FilelistViewStore}
