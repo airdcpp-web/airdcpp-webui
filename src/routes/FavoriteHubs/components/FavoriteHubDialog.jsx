@@ -1,12 +1,13 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { SHARE_PROFILES_URL, HIDDEN_PROFILE_ID } from 'constants/ShareConstants';
+import { HIDDEN_PROFILE_ID } from 'constants/ShareConstants';
 import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
+import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
 import t from 'utils/tcomb-form';
 
@@ -18,7 +19,6 @@ const Entry = {
 	hub_url: t.Str,
 	hub_description: t.maybe(t.Str),
 	share_profile: t.maybe(t.Number),
-	//share_profile: t.Any,
 	auto_connect: t.Bool,
 	nick: t.maybe(t.Str),
 	user_description: t.maybe(t.Str),
@@ -34,24 +34,8 @@ const FavoriteHubDialog = React.createClass({
 		}
 
 		return {
-			sourceData: null,
+			sourceData: FormUtils.valueMapToInfo(this.props.hubEntry, Object.keys(Entry)),
 		};
-	},
-
-	onProfilesReceived(data) {
-		this.profiles = data;
-
-		// Set source data so that the form will render
-		const sourceData = FormUtils.valueMapToInfo(this.props.hubEntry, Object.keys(Entry));
-		this.setState({ sourceData: sourceData });
-	},
-
-	componentDidMount() {
-		SocketService.get(SHARE_PROFILES_URL)
-			.then(this.onProfilesReceived)
-			.catch(error => 
-				console.error('Failed to load profiles: ' + error)
-			);
 	},
 
 	checkAdcHub(hubUrl) {
@@ -92,7 +76,7 @@ const FavoriteHubDialog = React.createClass({
 	},
 
 	getFieldProfiles() {
-		return this.profiles
+		return this.props.profiles
 			.filter(p => this.isAdcHub || p.id === HIDDEN_PROFILE_ID)
 			.reduce(this.convertProfile, []);
 	},
@@ -128,4 +112,4 @@ const FavoriteHubDialog = React.createClass({
 	}
 });
 
-export default FavoriteHubDialog;
+export default ShareProfileDecorator(FavoriteHubDialog, true);

@@ -61,16 +61,26 @@ const Form = React.createClass({
 		};
 	},
 
+	setSourceData(sourceData) {
+		const formValue = this.getValueMap(sourceData);
+
+		if (this.props.onSourceDataChanged) {
+			this.props.onSourceDataChanged(sourceData);
+		}
+
+		this.sourceData = sourceData;
+		this.setState({ formValue: formValue });
+	},
+
+	componentWillMount() {
+		if (this.props.sourceData) {
+			this.setSourceData(this.props.sourceData);
+		}
+	},
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.sourceData !== this.props.sourceData) {
-			const formValue = this.getValueMap(nextProps.sourceData);
-
-			if (this.props.onSourceDataChanged) {
-				this.props.onSourceDataChanged(nextProps.sourceData);
-			}
-
-			this.sourceData = nextProps.sourceData;
-			this.setState({ formValue: formValue });
+			this.setSourceData(nextProps.sourceData);
 		}
 	},
 
@@ -154,7 +164,7 @@ const Form = React.createClass({
 
 	render: function () {
 		if (!this.sourceData) {
-			return <Loader/>;
+			return <Loader text="Loading form data"/>;
 		}
 
 		const options = {};

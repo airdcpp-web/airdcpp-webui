@@ -18,7 +18,7 @@ const Sidebar = React.createClass({
 		return (
 			<div id="sidebar" className="ui right vertical overlay sidebar">
 				<div id="sidebar-container">
-						{ this.props.children }
+					{ this.props.children }
 				</div>
 			</div>
 		);
