@@ -1,20 +1,47 @@
 import React from 'react';
-//import SettingForm from 'routes/Settings/components/SettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
-//import t from 'utils/tcomb-form';
+import ShareRootActions from 'actions/ShareRootActions';
 
+import Button from 'components/semantic/Button';
+import ShareDirectoryLayout from './ShareDirectoryLayout';
+import ProfileDropdown from './ProfileDropdown';
 
-const ShareDirectories = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
+import '../style.css';
+
+const ShareDirectoriesPage = React.createClass({
+	getInitialState() {
+		return {
+			selectedProfileId: null,
+		};
+	},
+
+	_handleAddDirectory() {
+		ShareRootActions.create();
+	},
+
+	onClickProfile(profile) {
+		this.setState({ selectedProfileId: profile.id });
+	},
+
+	onProfilesReceived(profiles) {
+
+	},
 
 	render() {
 		return (
 			<div className="share-directories-settings">
-
+				<div className="actions">
+					<Button
+						icon="plus icon"
+						onClick={this._handleAddDirectory}
+						caption="Add directory"
+					/>
+					<ProfileDropdown onClickProfile={ this.onClickProfile } onProfilesReceived={ this.onProfilesReceived }/>
+				</div>
+				<ShareDirectoryLayout className="directory-layout" selectedProfileId={ this.state.selectedProfileId }/>
 			</div>
 		);
 	}
 });
 
-export default ShareDirectories;
+export default ShareDirectoriesPage;
