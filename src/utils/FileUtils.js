@@ -1,29 +1,41 @@
 
-export default {
+const FileUtils = {
 	getFilePath: function (fullPath) {
-		return fullPath.replace(/[^\\\/]*$/, '');
+		return fullPath ? fullPath.replace(/[^\\\/]*$/, '') : undefined;
 	},
 
 	getFileName: function (fullPath) {
-		return fullPath.replace(/^.*[\\\/]/, '');
+		return fullPath ? fullPath.replace(/^.*[\\\/]/, '') : undefined;
 	},
 
 	isDirectory: function (fullPath) {
-		return fullPath.match(/[\\\/]$/);
+		return fullPath ? fullPath.match(/[\\\/]$/) : false;
 	},
+};
 
-	getParentPath: function (fullPath, FileUtils) {
-		if (FileUtils.isDirectory(fullPath)) {
-			return fullPath.replace(/[^\\\/]+[\\\/]$/, '');
-		}
-			
-		return FileUtils.getFilePath(fullPath);
-	},
+const getParentPath = (fullPath) => {
+	if (!fullPath) {
+		return undefined;
+	}
 
+	if (FileUtils.isDirectory(fullPath)) {
+		return fullPath.replace(/[^\\\/]+[\\\/]$/, '');
+	}
+		
+	return FileUtils.getFilePath(fullPath);
+};
 
-	getLastDirectory: function (fullPath, FileUtils) {
-		const path = FileUtils.isDirectory(fullPath) ? fullPath : FileUtils.getParentPath(fullPath);
-		return path.match(/([^\\\/]+)[\\\/]$/)[1];
-	},
-}
-;
+const getLastDirectory = (fullPath) => {
+	if (!fullPath) {
+		return undefined;
+	}
+
+	const path = FileUtils.isDirectory(fullPath) ? fullPath : FileUtils.getParentPath(fullPath);
+	const result = path.match(/([^\\\/]+)[\\\/]$/);
+	return result ? result[1] : fullPath;
+};
+
+export default Object.assign(FileUtils, {
+	getLastDirectory: getLastDirectory,
+	getParentPath: getParentPath,
+});

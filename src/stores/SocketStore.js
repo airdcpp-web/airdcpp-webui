@@ -77,7 +77,7 @@ export default Reflux.createStore({
 		this._apiEmitter.removeListener(subscriptionId, callback);
 
 		if (this._apiSubscriptions[subscriptionId] === 0) {
-			SocketService.delete(subscriptionUrl).catch(error => console.error('Failed to remove socket listener', subscriptionUrl, event, entityId, error.message));
+			SocketService.delete(subscriptionUrl).catch(error => console.error('Failed to remove socket listener', subscriptionUrl, event, subscriptionId, error.message));
 			delete this._apiSubscriptions[subscriptionId];
 		}
 	},

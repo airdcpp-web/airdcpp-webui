@@ -5,12 +5,10 @@ import Autosuggest from 'react-autosuggest';
 import t from 'utils/tcomb-form';
 
 const AutoSuggestField = t.form.Form.templates.textbox.clone({
-	// override default implementation
-	renderInput: (locals) => {
-		const settings = locals.context[locals.path[0]];
+	renderInput(locals) {
 		let getSuggestions = (input, callback) => {
 			const regex = new RegExp('^' + input, 'i');
-			const suggestions = settings.suggestions ? settings.suggestions.filter(str => regex.test(str)) : null;
+			const suggestions = locals.attrs.suggestionGetter().filter(str => regex.test(str));
 
 			callback(null, suggestions);
 		};
@@ -25,7 +23,7 @@ const AutoSuggestField = t.form.Form.templates.textbox.clone({
 		};
 
 		const inputAttributes = {
-			//placeholder: 'Enter search string...',
+			placeholder: locals.attrs.placeholder,
 			onChange: handleChange,
 		};
 

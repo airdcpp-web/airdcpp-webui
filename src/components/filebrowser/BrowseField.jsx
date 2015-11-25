@@ -9,6 +9,7 @@ import t from 'utils/tcomb-form';
 const BrowseField = t.form.Form.templates.textbox.clone({
 	// override default implementation
 	renderInput: (locals) => {
+		let _input;
 		const onConfirm = (path) => {
 			locals.onChange(path);
 		};
@@ -22,16 +23,18 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 			});
 		};
 
+		const onChange = (event) => {
+			locals.onChange(event.target.value);
+			setTimeout(_input.focus());
+		};
+
 		return (
 			<div className="ui action fluid input field">
 				<input
-					ref="input"
+					ref={ input => { _input = input } }
 					//name={locals.attrs.name}
 					value={locals.value}
-					onChange={(event) => { 
-						locals.onChange(event.target.value);
-						setTimeout(this.refs.input.focus());
-					}}
+					onChange={onChange}
 				/>
 				<Button
 					caption="Browse"

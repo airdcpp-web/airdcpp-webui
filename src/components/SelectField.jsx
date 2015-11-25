@@ -31,7 +31,7 @@ const TagValue = React.createClass({
 const ReactSelect = t.form.Form.templates.select.clone({
 	renderSelect: (locals) => { // <- locals contains the "recipe" to build the UI
 		const onChange = (values) => {
-			locals.onChange(values ? values.map(value => value.value, []) : null);
+			locals.onChange(values.map(value => value.value, []));
 		};
 
 		// translate the option model from tcomb to react-select

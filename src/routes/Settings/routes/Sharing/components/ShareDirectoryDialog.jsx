@@ -3,8 +3,6 @@ import Modal from 'components/semantic/Modal';
 
 import { SHARE_ROOT_URL, GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
 
-//import { GROUPED_ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
-
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
@@ -19,10 +17,15 @@ import FileUtils from 'utils/FileUtils';
 import SelectField from 'components/SelectField';
 import AutoSuggestField from 'components/autosuggest/AutoSuggestField';
 
+const ProfileList = t.refinement(t.list(t.Num), (n) => {
+	return n.length > 0;
+});
+
+
 const Entry = {
 	path: t.Str,
 	virtual_name: t.Str,
-	profiles: t.list(t.Num),
+	profiles: ProfileList,
 	incoming: t.Bool,
 };
 
@@ -34,7 +37,7 @@ const ShareDirectoryDialog = React.createClass({
 
 		return {
 			sourceData: FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry)),
-			virtualNames: null,
+			virtualNames: [],
 		};
 	},
 
@@ -59,10 +62,10 @@ const ShareDirectoryDialog = React.createClass({
 
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
-			if (!value.virtual_name) {
+			//if (!value.virtual_name) {
 				const sourceData = FormUtils.valueMapToInfo({ virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) });
 				return Promise.resolve(sourceData);
-			}
+			//}
 		}
 	},
 
@@ -101,6 +104,9 @@ const ShareDirectoryDialog = React.createClass({
 		} else if (id === 'virtual_name') {
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;
+			fieldOptions['attrs'] = {
+				suggestionGetter: () => this.state.virtualNames,
+			};
 		}
 	},
 
@@ -113,9 +119,6 @@ const ShareDirectoryDialog = React.createClass({
 
 		const context = {
 			location: this.props.location,
-			virtual_name: {
-				suggestions: this.state.virtualNames,
-			}
 		};
 
 		return (
