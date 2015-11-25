@@ -72,6 +72,7 @@ module.exports = {
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'node_modules/semantic-ui/dist'),
+					path.resolve(__dirname, 'node_modules/react-select/dist'),
 					path.resolve(__dirname, 'node_modules/fixed-data-table/dist') 
 				], 
 				loader: 'style-loader!css-loader' 

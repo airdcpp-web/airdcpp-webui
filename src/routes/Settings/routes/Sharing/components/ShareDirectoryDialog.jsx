@@ -13,10 +13,12 @@ import t from 'utils/tcomb-form';
 
 import Form from 'components/Form';
 import FormUtils from 'utils/FormUtils';
+import FileUtils from 'utils/FileUtils';
+import SelectField from 'components/SelectField';
 
 const Entry = {
-	virtual_name: t.Str,
 	path: t.Str,
+	virtual_name: t.Str,
 	profiles: t.list(t.Num),
 	incoming: t.Bool,
 };
@@ -26,9 +28,6 @@ const ShareDirectoryDialog = React.createClass({
 
 	getInitialState() {
 		this._isNew = !this.props.rootEntry;
-		/*if (!this._isNew) {
-			this.checkAdcHub(this.props.hubEntry.hub_url);
-		}*/
 
 		return {
 			sourceData: FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry)),
@@ -36,15 +35,12 @@ const ShareDirectoryDialog = React.createClass({
 	},
 
 	onFieldChanged(id, value, hasChanges) {
-		/*if (id.indexOf('hub_url') != -1) {
-			this.checkAdcHub(value.hub_url);
-
-			if (!this.isAdcHub && value.share_profile !== HIDDEN_PROFILE_ID) {
-				// Reset share profile
-				const sourceData = FormUtils.valueMapToInfo({ share_profile: null });
+		if (id.indexOf('path') != -1) {
+			if (!value.virtual_name) {
+				const sourceData = FormUtils.valueMapToInfo({ virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) });
 				return Promise.resolve(sourceData);
 			}
-		}*/
+		}
 	},
 
 	save() {
@@ -67,16 +63,15 @@ const ShareDirectoryDialog = React.createClass({
 	onFieldSetting(id, fieldOptions, formValue) {
 		if (id === 'profiles') {
 			Object.assign(fieldOptions, {
-				//help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
-				//nullOption: { value: 'null', text: 'Global default' },
 				factory: t.form.Select,
+				template: SelectField,
 				options: this.getFieldProfiles(),
-				transformer: FormUtils.intTransformer,
+				//transformer: FormUtils.intTransformer,
 			});
 		} else if (id === 'path') {
 			if (this._isNew) {
-				fieldOptions['factory'] = BrowseField;
-				fieldOptions['location'] = this.props.location;
+				fieldOptions['factory'] = t.form.Textbox;
+				fieldOptions['template'] = BrowseField;
 			} else {
 				fieldOptions['disabled'] = true;
 			}
@@ -89,13 +84,12 @@ const ShareDirectoryDialog = React.createClass({
 			<Modal className="share-directory" title={title} onApprove={this.save} closable={false} icon="yellow folder" {...this.props}>
 				<Form
 					ref="form"
-					//title="User information"
 					formItems={Entry}
 					onFieldChanged={this.onFieldChanged}
 					onFieldSetting={this.onFieldSetting}
 					onSave={this.onSave}
 					sourceData={this.state.sourceData}
-					location={this.props.location}
+					context={{ location: this.props.location }}
 				/>
 			</Modal>
 		);

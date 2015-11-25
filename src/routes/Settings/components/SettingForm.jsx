@@ -70,8 +70,8 @@ const SettingForm = React.createClass({
 
 		// Path?
 		if (sourceItem.type == 'file_path' || sourceItem.type == 'directory_path') {
-			fieldOptions['factory'] = BrowseField;
-			fieldOptions['location'] = this.context.location;
+			fieldOptions['factory'] = t.form.Textbox;
+			fieldOptions['template'] = BrowseField;
 		} else if (sourceItem.type === 'long_text') {
 			fieldOptions['type'] = 'textfield';
 		}
@@ -123,6 +123,7 @@ const SettingForm = React.createClass({
 					onFieldSetting={this.onFieldSetting}
 					sourceData={this.state.sourceData}
 					onSave={this.onSave}
+					context={{ location: this.context.location }}
 				/>
 			</div>);
 	}

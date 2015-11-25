@@ -188,6 +188,7 @@ const Form = React.createClass({
 					options={options}
 					value={this.state.formValue}
 					onChange={this.onFieldChanged}
+					context={this.props.context}
 				/>
 			</div>);
 	}

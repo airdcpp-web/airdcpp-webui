@@ -105,7 +105,6 @@ const FavoriteHubDialog = React.createClass({
 					onFieldSetting={this.onFieldSetting}
 					onSave={this.onSave}
 					sourceData={this.state.sourceData}
-					location={this.props.location}
 				/>
 			</Modal>
 		);
