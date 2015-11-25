@@ -1,7 +1,9 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { SHARE_ROOT_URL } from 'constants/ShareConstants';
+import { SHARE_ROOT_URL, GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
+
+//import { GROUPED_ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
@@ -15,6 +17,7 @@ import Form from 'components/Form';
 import FormUtils from 'utils/FormUtils';
 import FileUtils from 'utils/FileUtils';
 import SelectField from 'components/SelectField';
+import AutoSuggestField from 'components/autosuggest/AutoSuggestField';
 
 const Entry = {
 	path: t.Str,
@@ -31,8 +34,28 @@ const ShareDirectoryDialog = React.createClass({
 
 		return {
 			sourceData: FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry)),
+			virtualNames: null,
 		};
 	},
+
+	componentDidMount() {
+		this.fetchRoots();
+	},
+
+	onRootsReceived(data) {
+		this.setState({
+			virtualNames: data.map(item => item.name, []),
+		});
+	},
+
+	fetchRoots() {
+		SocketService.get(GROUPED_ROOTS_GET_URL)
+			.then(this.onRootsReceived)
+			.catch(error => 
+				console.error('Failed to load roots: ' + error)
+			);
+	},
+
 
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
@@ -75,11 +98,26 @@ const ShareDirectoryDialog = React.createClass({
 			} else {
 				fieldOptions['disabled'] = true;
 			}
+		} else if (id === 'virtual_name') {
+			fieldOptions['factory'] = t.form.Textbox;
+			fieldOptions['template'] = AutoSuggestField;
 		}
 	},
 
 	render: function () {
+		if (!this.state.virtualNames) {
+			return null;
+		}
+
 		const title = this._isNew ? 'Add share directory' : 'Edit share directory';
+
+		const context = {
+			location: this.props.location,
+			virtual_name: {
+				suggestions: this.state.virtualNames,
+			}
+		};
+
 		return (
 			<Modal className="share-directory" title={title} onApprove={this.save} closable={false} icon="yellow folder" {...this.props}>
 				<Form
@@ -89,7 +127,7 @@ const ShareDirectoryDialog = React.createClass({
 					onFieldSetting={this.onFieldSetting}
 					onSave={this.onSave}
 					sourceData={this.state.sourceData}
-					context={{ location: this.props.location }}
+					context={ context }
 				/>
 			</Modal>
 		);

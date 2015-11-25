@@ -4,7 +4,7 @@ import Button from 'components/semantic/Button';
 import { FILE_BROWSER_MODAL } from 'constants/OverlayConstants';
 import History from 'utils/History';
 
-const t = require('tcomb-form');
+import t from 'utils/tcomb-form';
 
 const BrowseField = t.form.Form.templates.textbox.clone({
 	// override default implementation

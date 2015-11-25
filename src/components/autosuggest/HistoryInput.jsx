@@ -3,7 +3,6 @@ import SocketService from 'services/SocketService.js';
 import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from 'constants/HistoryConstants.js';
 
 import Autosuggest from 'react-autosuggest';
-import classNames from 'classnames';
 import Button from 'components/semantic/Button';
 
 export default React.createClass({
@@ -105,7 +104,6 @@ export default React.createClass({
 		return (
 			<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
 				<Autosuggest 
-					ref="historyInput"
 					value={this.state.text}
 					showWhen={this._showWhen}
 					suggestions={this._getSuggestions}

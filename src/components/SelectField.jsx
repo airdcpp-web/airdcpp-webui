@@ -45,6 +45,7 @@ const ReactSelect = t.form.Form.templates.select.clone({
 				onChange={onChange}
 				multi={true}
 				valueComponent={TagValue}
+				noResultsText={null}
 			/>
 		);
 	}
