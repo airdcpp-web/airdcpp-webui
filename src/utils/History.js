@@ -16,7 +16,7 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 const getOverlayState = (currentLocation, overlayId, data) => {
 	console.assert(currentLocation, 'Current location not supplied for overlay creation');
 
-	const state = currentLocation.state || {};
+	const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
 	if (!state[overlayId]) {
 		// Creating the overlay
 		state[overlayId] = {
@@ -36,7 +36,7 @@ const pushModal = (currentLocation, nextPath, overlayId, data) => {
 		currentLocation = Object.assign({}, { pathname: currentLocation });
 	}
 
-	const state = getOverlayState(currentLocation, 'modal', data);
+	const state = getOverlayState(currentLocation, 'modal_' + overlayId, data);
 	History.pushState(state, nextPath);
 };
 

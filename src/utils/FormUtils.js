@@ -41,5 +41,14 @@ export default {
 		format: format,
 		parse: parse
 	},
+
+	convertRawProfile(profiles, rawItem) {
+		profiles.push({
+			value: rawItem.id,
+			text: rawItem.name
+		});
+
+		return profiles;
+	},
 }
 ;

@@ -247,7 +247,7 @@ const FileBrowser = React.createClass({
 
 	render: function () {
 		if (this.state.loading) {
-			return <Loader/>;
+			return <Loader text="Loading items"/>;
 		}
 
 		const rootName = this._isWindows ? 'Computer' : 'Root';

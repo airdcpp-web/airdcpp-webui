@@ -11,7 +11,7 @@ module.exports = {
 				require('./routes/Sharing'),
 				require('./routes/About'),
 				{
-					path: '**/**/browse',
+					path: '**/**(/**)/browse',
 					component: require('components/filebrowser/FileBrowserDialog'), 
 				}
 			]);

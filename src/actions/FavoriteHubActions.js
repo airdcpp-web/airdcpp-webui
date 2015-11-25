@@ -9,14 +9,6 @@ import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants';
 import History from 'utils/History';
 
 export const FavoriteHubActions = Reflux.createActions([
-	{ 'connect': { 
-		asyncResult: true, 
-		displayName: 'Connect' },
-	},
-	{ 'disconnect': { 
-		asyncResult: true, 
-		displayName: 'Disconnect' },
-	},
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
@@ -38,20 +30,6 @@ export const FavoriteHubActions = Reflux.createActions([
 		icon: 'red remove circle' },
 	},
 ]);
-
-FavoriteHubActions.connect.listen(function (hub) {
-	let that = this;
-	return SocketService.post(FAVORITE_HUB_URL + '/' + hub.id + '/connect')
-		.then(that.completed)
-		.catch(this.failed);
-});
-
-FavoriteHubActions.disconnect.listen(function (hub) {
-	let that = this;
-	return SocketService.post(FAVORITE_HUB_URL + '/' + hub.id + '/disconnect')
-		.then(that.completed)
-		.catch(this.failed);
-});
 
 FavoriteHubActions.create.listen(function (hub) {
 	History.pushModal('/favorite-hubs', '/favorite-hubs/new', FAVORITE_MODAL_ID);

@@ -77,13 +77,14 @@ let MainLayout = React.createClass({
 	}
 });
 
-let node = null;
+let nodes = {};
 
-const removeNode = () => {
+const removeNode = (key) => {
+	let node = nodes[key];
 	if (node) {
 		ReactDOM.unmountComponentAtNode(node);
 		document.body.removeChild(node);
-		node = null;
+		delete nodes[key];
 	}
 };
 
@@ -98,45 +99,60 @@ const getLastChildren = (currentChild) => {
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext ],
 
-	getOverlay(props) {
+	getOverlay(key, props) {
 		// Causes more bugs when this is enabled, think something better later
 		// It can still mess up the history when quickly going back and forward
 		//if (closing)
 		//	return null;
 
 		const { state } = props.location;
-		//const modalComponent = props.routes[props.routes.length-1].component;
 		const modalComponent = getLastChildren(props.children);
 		const ret = React.cloneElement(modalComponent, { 
 			onHidden: () => {
-				removeNode();
+				removeNode(key);
 			},
 
-			overlayId: 'modal',
-			...state['modal'].data
+			overlayId: key,
+
+			// Pass the location data as props
+			// Note: isRequired can't be used in proptypes because of cloneElement
+			...state[key].data
 		});
 
 		return ret;
 	},
 
-	checkCreateModal(props) {
-		if ((
-			!node &&
-			props.location.state &&
-			props.location.state['modal']
-		)) {
-			node = document.createElement('div');
-			document.body.appendChild(node);
+	createModal(key, props) {
+		let node = document.createElement('div');
+		nodes[key] = node;
 
-			ReactDOM.render(this.getOverlay(props), node);
-			return true;
+		document.body.appendChild(node);
+		ReactDOM.render(this.getOverlay(key, props), node);
+	},
+
+	checkModals(props) {
+		if (!props.location.state) {
+			return false;
 		}
 
-		return false;
+		let hasModals = false;
+
+		// Check all modal entries that don't exist in current props
+		Object.keys(props.location.state).forEach(key => {
+			if (key.indexOf('modal_') === 0) {
+				if (!this.props.location.state || !this.props.location.state[key]) {
+					this.createModal(key, props);
+				}
+
+				hasModals = true;
+			}
+		});
+
+		return hasModals;
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (this.checkCreateModal(nextProps)) {
+		if (this.checkModals(nextProps)) {
 			if (!this.previousChildren) {
 				// save the old children (just like animation)
 				this.previousChildren = this.props.children;

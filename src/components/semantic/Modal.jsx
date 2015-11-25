@@ -72,7 +72,7 @@ const Modal = React.createClass({
 			onDeny: this.onDeny,
 			closable: this.props.closable,
 			detachable: false,
-			allowMultiple: false
+			allowMultiple: true
 		});
 	},
 

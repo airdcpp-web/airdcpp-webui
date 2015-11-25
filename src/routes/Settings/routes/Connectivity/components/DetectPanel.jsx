@@ -85,7 +85,7 @@ const DetectPanel = React.createClass({
 	render() {
 		const { status } = this.state;
 		if (!status) {
-			return <Loader/>;
+			return <Loader text="Loading detection status"/>;
 		}
 
 		return (

@@ -14,7 +14,7 @@ import Accordion from 'components/semantic/Accordion';
 
 import '../style.css';
 
-const Row = ({ root, contextGetter }) => (
+const Row = ({ root, contextGetter, location }) => (
 	<tr>
 		<td>
 			<ActionMenu 
@@ -23,6 +23,7 @@ const Row = ({ root, contextGetter }) => (
 				ids={ [ 'edit', 'remove' ] } 
 				itemData={ root }
 				contextGetter={ contextGetter }
+				location={ location }
 			/>
 		</td>
 		<td>
@@ -51,7 +52,7 @@ const Row = ({ root, contextGetter }) => (
 	</div>
 );*/
 
-const AccordionTargets = React.createClass({
+const GroupedSection = React.createClass({
 	formatTitle() {
 		const size = this.props.roots.reduce((sum, root) => sum + root.size, 0);
 
@@ -82,7 +83,7 @@ const AccordionTargets = React.createClass({
 					</thead>
 					<tbody>
 					{ this.props.roots
-						.map(root => <Row key={root.path} root={root} contextGetter={ this.props.contextGetter }/>) 
+						.map(root => <Row key={root.path} root={root} contextGetter={ this.props.contextGetter } location={ this.props.location }/>) 
 					}
 					</tbody>
 				</table>
@@ -144,11 +145,12 @@ const ShareDirectoryLayout = React.createClass({
 		}
 
 		tables.push(
-			<AccordionTargets 
+			<GroupedSection 
 				key={name} 
 				name={name} 
 				roots={roots} 
 				contextGetter={ () => ReactDOM.findDOMNode(this) }
+				location={ this.props.location }
 			/>
 		);
 

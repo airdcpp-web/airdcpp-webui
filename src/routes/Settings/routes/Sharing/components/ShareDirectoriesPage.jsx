@@ -16,7 +16,7 @@ const ShareDirectoriesPage = React.createClass({
 	},
 
 	_handleAddDirectory() {
-		ShareRootActions.create();
+		ShareRootActions.create(this.props.location);
 	},
 
 	onClickProfile(profile) {
@@ -38,7 +38,7 @@ const ShareDirectoriesPage = React.createClass({
 					/>
 					<ProfileDropdown onClickProfile={ this.onClickProfile } onProfilesReceived={ this.onProfilesReceived }/>
 				</div>
-				<ShareDirectoryLayout className="directory-layout" selectedProfileId={ this.state.selectedProfileId }/>
+				<ShareDirectoryLayout className="directory-layout" selectedProfileId={ this.state.selectedProfileId } location={ this.props.location }/>
 			</div>
 		);
 	}

@@ -19,7 +19,7 @@ class BrowseField extends t.form.Component {
 				History.pushModal(location, location.pathname + '/browse', FILE_BROWSER_MODAL, {
 					onConfirm: onConfirm,
 					subHeader: locals.label,
-					initialPath: locals.value,
+					initialPath: locals.value ? locals.value : '',
 				});
 			};
 

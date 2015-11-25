@@ -27,9 +27,6 @@ export default function (Component, listHidden) {
 		},
 
 		onProfilesReceived(data) {
-			//const defaultItem = { name: 'All profiles', id: null };
-			//const profiles = [ { name: 'All profiles', id: null } ];
-			//const profiles = [ defaultItem ];
 			const profiles = [];
 			profiles.push(...data.filter(p => listHidden || p.id !== HIDDEN_PROFILE_ID));
 

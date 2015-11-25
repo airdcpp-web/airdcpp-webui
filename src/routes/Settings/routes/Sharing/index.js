@@ -5,10 +5,16 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'directories', 
-				component: require('./components/ShareDirectoriesPage'), 
+				component: require('./components/ShareDirectoriesPage'),
+				childRoutes: [
+					{
+						path: 'root', 
+						component: require('./components/ShareDirectoryDialog'), 
+					}
+				]
 			}, {
 				path: 'profiles', 
-				component: require('./components/ShareProfilesPage'), 
+				component: require('./components/ShareProfilesPage'),
 			}, {
 				path: 'hashing', 
 				component: require('./components/HashingPage'), 
