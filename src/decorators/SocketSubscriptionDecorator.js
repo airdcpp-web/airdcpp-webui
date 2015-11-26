@@ -1,7 +1,7 @@
 import SocketStore from 'stores/SocketStore';
 import LoginStore from 'stores/LoginStore';
 
-export default function (store, listenToFunction = 'listenTo') {
+const SocketSubscriptionDecorator = (store, listenToFunction = 'listenTo') => {
 	let socketSubscriptions = [];
 	let hasSocket = false;
 
@@ -55,3 +55,5 @@ export default function (store, listenToFunction = 'listenTo') {
 		removeSocketListeners: removeSocketListeners
 	});
 };
+
+export default SocketSubscriptionDecorator;

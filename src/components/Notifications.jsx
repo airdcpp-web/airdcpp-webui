@@ -15,7 +15,7 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 const logo = require('../../images/AirDCPlusPlus.png');
 
 const Notifications = React.createClass({
-	mixins: [ SocketSubscriptionMixin, Reflux.listenTo(NotificationStore, '_addNotification') ],
+	mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, '_addNotification') ],
 
 	_notificationSystem: null,
 

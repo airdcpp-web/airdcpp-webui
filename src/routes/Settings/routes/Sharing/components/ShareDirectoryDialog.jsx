@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { SHARE_ROOT_URL, GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
+import { SHARE_ROOT_POST_URL, SHARE_ROOT_UPDATE_URL, GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
@@ -62,10 +62,8 @@ const ShareDirectoryDialog = React.createClass({
 
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
-			//if (!value.virtual_name) {
-				const sourceData = FormUtils.valueMapToInfo({ virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) });
-				return Promise.resolve(sourceData);
-			//}
+			const sourceData = FormUtils.valueMapToInfo({ virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) });
+			return Promise.resolve(sourceData);
 		}
 	},
 
@@ -75,10 +73,10 @@ const ShareDirectoryDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(SHARE_ROOT_URL, changedFields);
+			return SocketService.post(SHARE_ROOT_POST_URL, changedFields);
 		}
 
-		return SocketService.patch(SHARE_ROOT_URL, Object.assign(changedFields, { path: this.props.rootEntry.path }));
+		return SocketService.post(SHARE_ROOT_UPDATE_URL, Object.assign(changedFields, { path: this.props.rootEntry.path }));
 	},
 
 	getFieldProfiles() {

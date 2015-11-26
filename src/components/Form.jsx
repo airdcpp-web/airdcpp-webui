@@ -132,6 +132,8 @@ const Form = React.createClass({
 		} else {
 			NotificationActions.apiError('Failed to save the form', error);
 		}
+
+		throw error;
 	},
 
 	save() {

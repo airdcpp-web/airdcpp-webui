@@ -60,14 +60,15 @@ export default Reflux.createStore({
 		var subscriptionId = getSubscribtionId(event, entityId);
 		var subscriptionUrl = getSubscribtionUrl(apiModuleUrl, entityId, event);
 
+		this._apiEmitter.on(subscriptionId, callback);
+
 		var listeners = this._apiSubscriptions[subscriptionId];
-		if (listeners == undefined) {
+		if (!listeners) {
 			this._apiSubscriptions[subscriptionId] = 0;
+			SocketService.post(subscriptionUrl).catch(error => console.error('Failed to add socket listener', subscriptionUrl, event, entityId, error.message));
 		}
 
 		this._apiSubscriptions[subscriptionId]++;
-		this._apiEmitter.on(subscriptionId, callback);
-		SocketService.post(subscriptionUrl).catch(error => console.error('Failed to add socket listener', subscriptionUrl, event, entityId, error.message));
 
 		return () => this._removeSocketListener(subscriptionUrl, subscriptionId, callback);
 	},

@@ -32,7 +32,7 @@ const StatusRow = ({ title, status, running, detect }) => (
 );
 
 const DetectPanel = React.createClass({
-	mixins: [ SocketSubscriptionMixin ],
+	mixins: [ SocketSubscriptionMixin() ],
 	onSocketConnected(addSocketListener) {
 		addSocketListener(CONNECTIVITY_MODULE_URL, CONNECTIVITY_STARTED, this.onDetectStarted);
 		addSocketListener(CONNECTIVITY_MODULE_URL, CONNECTIVITY_FINISHED, this.onDetectFinished);

@@ -5,7 +5,9 @@ export default {
 	SHARE_PROFILE_URL: SHARE_MODULE_URL + '/profile',
 
 	SHARE_ROOTS_URL: SHARE_MODULE_URL + '/roots',
-	SHARE_ROOT_URL: SHARE_MODULE_URL + '/root',
+	SHARE_ROOT_POST_URL: SHARE_MODULE_URL + '/root/add',
+	SHARE_ROOT_UPDATE_URL: SHARE_MODULE_URL + '/root/update',
+	SHARE_ROOT_DELETE_URL: SHARE_MODULE_URL + '/root/remove',
 
 	SHARE_DUPE_PATHS_URL: SHARE_MODULE_URL + '/find_dupe_paths',
 	GROUPED_ROOTS_GET_URL: SHARE_MODULE_URL + '/grouped_root_paths',

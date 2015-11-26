@@ -8,7 +8,7 @@ import Loader from 'components/semantic/Loader';
 
 export default function (Component, listHidden) {
 	const ShareProfileDecorator = React.createClass({
-		mixins: [ SocketSubscriptionMixin ],
+		mixins: [ SocketSubscriptionMixin() ],
 		//propTypes: {
 			/**
 			 * Callback after the profiles have been received

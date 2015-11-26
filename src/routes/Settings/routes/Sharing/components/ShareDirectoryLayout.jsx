@@ -94,7 +94,7 @@ const GroupedSection = React.createClass({
 });
 
 const ShareDirectoryLayout = React.createClass({
-	mixins: [ SocketSubscriptionMixin ],
+	mixins: [ SocketSubscriptionMixin() ],
 	componentDidMount() {
 		this.fetchRoots();
 	},

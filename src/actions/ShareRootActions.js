@@ -6,7 +6,7 @@ import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
 import { SHARE_ROOT_MODAL_ID } from 'constants/OverlayConstants';
-import { SHARE_ROOT_URL } from 'constants/ShareConstants';
+import { SHARE_ROOT_DELETE_URL } from 'constants/ShareConstants';
 
 import History from 'utils/History';
 
@@ -37,13 +37,13 @@ ShareRootActions.edit.listen(function (root, location) {
 });
 
 ShareRootActions.remove.listen(function (root) {
-	const text = 'Are you sure that you want to remove the directory ' + root.virtual_name + '?';
+	const text = 'Are you sure that you want to remove the directory ' + root.virtual_name + ' from share? It will be removed from all share profiles.';
 	ConfirmDialog('Remove directory', text, this.icon, 'Remove directory', "Don't remove").then(() => this.confirmed(root));
 });
 
 ShareRootActions.remove.confirmed.listen(function (root) {
 	const that = this;
-	return SocketService.delete(SHARE_ROOT_URL, { path: root.path })
+	return SocketService.post(SHARE_ROOT_DELETE_URL, { path: root.path })
 		.then(ShareRootActions.remove.completed.bind(that, root))
 		.catch(ShareRootActions.remove.failed.bind(that, root));
 });
