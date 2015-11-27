@@ -10,7 +10,7 @@ import PriorityMenu from './PriorityMenu';
 import Progress from 'components/semantic/Progress';
 import QueueStore from 'stores/QueueStore';
 
-import { FileActionCell, SizeCell, SpeedCell } from 'components/Cell';
+import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/Cell';
 
 import '../style.css';
 
@@ -82,9 +82,16 @@ const Queue = React.createClass({
 				<Column
 					name="Status"
 					width={300}
-					flexGrow={3}
+					flexGrow={1}
 					columnKey="status"
 					cell={ <StatusCell/> }
+				/>
+				<Column
+					name="Time left"
+					width={50}
+					columnKey="seconds_left"
+					renderCondition={ this.isRunning }
+					cell={ <AbbreviatedDurationCell/> }
 				/>
 				<Column
 					name="Speed"

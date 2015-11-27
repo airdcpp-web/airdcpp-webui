@@ -48,6 +48,12 @@ export const DateCell = ({ cellData, ...props }) => (
 	</span>
 );
 
+export const AbbreviatedDurationCell = ({ cellData, ...props }) => (
+	<span className="plain abbr-duration cell">
+		{ ValueFormat.formatAbbreviatedDuration(cellData) }
+	</span>
+);
+
 export const ConnectionCell = ({ cellData, ...props }) => (
 	<span className="plain connection cell">
 		{ ValueFormat.formatConnection(cellData) }

@@ -27,7 +27,7 @@ const Row = ({ root, contextGetter, location }) => (
 			/>
 		</td>
 		<td>
-			{ Formatter.formatSize(root.size) }
+			{ ValueFormat.formatSize(root.size) }
 		</td>
 		<td>
 			{ root.profiles.length }

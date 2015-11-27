@@ -1,5 +1,27 @@
 import Moment from 'moment';
 
+const abbreviatedRelativeUnits = {
+	relativeTime: {
+		future: '%s',
+		past:   '%s',
+		s:  '%d s',
+		m:  '%d m',
+		mm: '%d m',
+		h:  '%d h',
+		hh: '%d h',
+		d:  '%d d',
+		dd: '%d d',
+		M:  '%d M',
+		MM: '%d M',
+		y:  '%d y',
+		yy: '%d y',
+	}
+};
+
+const normalRelativeUnits = {
+	relativeTime:	Moment.localeData('en')._relativeTime
+};
+
 const Format = {
 	formatSize: function (fileSizeInBytes) {
 		let i = 0;
@@ -31,6 +53,18 @@ const Format = {
 		}
 
 		return Moment.unix(time).format('LLL');
+	},
+
+	formatAbbreviatedDuration: function (time) {
+		const now = Moment();
+		const finish = Moment().add(time, 'seconds');
+
+		// Change the relative units temporarily
+		Moment.locale('en', abbreviatedRelativeUnits);
+		const ret = now.to(finish);
+		Moment.locale('en', normalRelativeUnits);
+
+		return ret;
 	},
 
 	formatTimestamp: function (time) {
