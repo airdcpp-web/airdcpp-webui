@@ -12,7 +12,7 @@ import { UserMenu } from 'components/Menu';
 import TabHeader from 'routes/Sidebar/components/TabHeader';
 
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
-import Format from 'utils/Format';
+import { UserIconFormatter } from 'utils/IconFormat';
 
 /*const TabFooter = React.createClass({
 	render() {
@@ -59,7 +59,7 @@ const ChatSession = React.createClass({
 		);
 
 		const icon = (
-			<Format.UserIconFormatter size="large" flags={user.flags} />
+			<UserIconFormatter size="large" flags={user.flags} />
 		);
 
 		return (

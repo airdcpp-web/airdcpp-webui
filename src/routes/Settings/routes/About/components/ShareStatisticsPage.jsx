@@ -3,7 +3,7 @@
 import React from 'react';
 
 import Moment from 'moment';
-import Format from 'utils/Format';
+import ValueFormat from 'utils/ValueFormat';
 
 import { SHARE_STATS_URL } from 'constants/ShareConstants';
 
@@ -17,7 +17,7 @@ const ShareStatisticsPage = React.createClass({
 		const averageFileAge = Moment.duration(stats.average_file_age*1000).humanize();
 		return (
 			<div className="ui grid two column about-grid">
-				<Row title="Total share size" text={Format.formatSize(stats.total_size)}/>
+				<Row title="Total share size" text={ValueFormat.formatSize(stats.total_size)}/>
 				<Row title="Total files" text={stats.total_file_count + ' (' + stats.unique_file_percentage.toFixed(2) + ' % unique)'}/>
 				<Row title="Total directories" text={stats.total_directory_count}/>
 				<Row title="Average file age" text={averageFileAge}/>

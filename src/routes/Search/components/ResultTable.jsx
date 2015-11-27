@@ -5,64 +5,33 @@ import SearchStore from 'stores/SearchStore';
 
 import { Column } from 'fixed-data-table';
 import VirtualTable from 'components/table/VirtualTable';
+import { SizeCell, DateCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/Cell';
 
 import TypeConvert from 'utils/TypeConvert';
-import Formatter from 'utils/Format';
-
-import { TableDownloadMenu, TableUserMenu } from 'components/Menu';
-
+import { TableUserMenu } from 'components/Menu';
 import Message from 'components/semantic/Message';
 
+
+const getUserCaption = (cellData) => {
+	let caption = cellData.user.nicks;
+	if (cellData.count > 1) {
+		caption = cellData.count + ' users (' + caption + ')';
+	}
+
+	return caption;
+};
+
+const UserCell = ({ location, cellData, rowData, ...props }) => (
+	<TableUserMenu 
+		text={ getUserCaption(cellData) } 
+		user={ cellData.user }
+		directory={ rowData.path }
+		location={ location }
+		userIcon={true}
+	/>
+);
+
 const ResultTable = React.createClass({
-	_renderStr(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		return cellData.str;
-	},
-
-	_renderName(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		const formatter = (
-			<Formatter.FileNameFormatter item={ rowData.type }>
-				{ cellData }
-			</Formatter.FileNameFormatter>);
-
-		return (
-			<TableDownloadMenu 
-				caption={ formatter }
-				itemInfo={ rowData } 
-				handler={ SearchActions.download } 
-				location={ this.props.location }
-			/>
-		);
-	},
-
-	_renderIp(cellData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		return <Formatter.IpFormatter item={ cellData }/>;
-	},
-
-	_renderUsers(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		let caption = cellData.user.nicks;
-		if (cellData.count > 1) {
-			caption = cellData.count + ' users (' + caption + ')';
-		}
-
-		return <TableUserMenu text={ caption } user={ cellData.user } directory={ rowData.path } location={this.props.location} userIcon={true}/>;
-	},
-
 	_rowClassNameGetter(rowData) {
 		return TypeConvert.dupeToStringType(rowData.dupe);
 	},
@@ -97,56 +66,59 @@ const ResultTable = React.createClass({
 				store={ SearchStore }
 			>
 				<Column
-					label="Name"
+					name="Name"
 					width={270}
-					dataKey="name"
-					cellRenderer={ this._renderName }
+					columnKey="name"
 					flexGrow={8}
+					cell={ 
+						<FileDownloadCell 
+							location={ this.props.location }
+							handler={ SearchActions.download } 
+						/>  
+					}
 				/>
 				<Column
-					label="Size"
+					name="Size"
 					width={100}
-					dataKey="size"
-					cellRenderer={ Formatter.formatSize }
+					columnKey="size"
+					cell={ <SizeCell/> }
 				/>
 				<Column
-					label="Relevancy"
+					name="Relevancy"
 					width={85}
-					dataKey="relevancy"
-					cellRenderer={ Formatter.formatDecimal }
+					columnKey="relevancy"
+					cell={ <DecimalCell/> }
 				/>
 				<Column
-					label="Connection"
+					name="Connection"
 					width={100}
-					dataKey="connection"
-					cellRenderer={ Formatter.formatConnection }
+					columnKey="connection"
+					cell={ <ConnectionCell/> }
 				/>
 				<Column
-					label="Type"
+					name="Type"
 					width={100}
-					dataKey="type"
+					columnKey="type"
 					flexGrow={1}
-					cellRenderer={ this._renderStr }
 				/>
 				<Column
-					label="Users"
+					name="Users"
 					width={150}
-					dataKey="users"
+					columnKey="users"
 					flexGrow={2}
-					cellRenderer={ this._renderUsers }
+					cell={ <UserCell location={this.props.location}/> }
 				/>
 				<Column
-					label="Date"
+					name="Date"
 					width={150}
-					dataKey="time"
-					cellRenderer={ Formatter.formatDateTime }
+					columnKey="time"
 					flexGrow={1}
+					cell={ <DateCell/> }
 				/>
 				<Column
-					label="Slots"
+					name="Slots"
 					width={70}
-					dataKey="slots"
-					cellRenderer={ this._renderStr }
+					columnKey="slots"
 				/>
 			</VirtualTable>
 		);

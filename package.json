@@ -23,7 +23,7 @@
     "array.prototype.find": "^1.0.0",
     "bluebird": "^3.0.5",
     "classnames": "^2.2.0",
-    "fixed-data-table": "^0.5.0",
+    "fixed-data-table": "^0.6.0",
     "history": "^1.13.0",
     "jquery"  : "^2.1.4",
     "lodash": "^3.10.0",

@@ -4,7 +4,9 @@ import { FILESYSTEM_LIST_URL, FILESYSTEM_DIRECTORY_URL } from 'constants/Filesys
 
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
-import Formatter from 'utils/Format';
+
+import { FileNameFormatter } from 'utils/IconFormat';
+//import ValueFormat from 'utils/ValueFormat';
 
 import PathBreadcrumb from 'components/PathBreadcrumb';
 import Message from 'components/semantic/Message';
@@ -21,12 +23,12 @@ const PathItem = React.createClass({
 		return (
 			<tr>
 				<td>
-					<Formatter.FileNameFormatter item={ item.type }>
+					<FileNameFormatter item={ item.type }>
 						<a onClick={evt => this.props.itemClickHandler(item.name)}>
 							{item.name}
 						</a>
 						{this.props.itemIcon ? <i className={ this.props.itemIcon + ' link icon' } onClick={ () => this.props.iconClickHandler(item.name) }></i> : null}
-					</Formatter.FileNameFormatter>
+					</FileNameFormatter>
 				</td>
 				{/*<td>
 					{ Formatter.formatSize(item.size) }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Format from 'utils/Format.js';
+import ValueFormat from 'utils/ValueFormat.js';
 import LogActions from 'actions/LogActions';
 import LogStore from 'stores/LogStore';
 
@@ -30,7 +30,7 @@ const LogMessage = React.createClass({
 					{ this.props.message.text }
 				</div>
 				<div className="ui column two wide">
-					{ Format.formatTimestamp(this.props.message.time) }
+					{ ValueFormat.formatTimestamp(this.props.message.time) }
 				</div>
 			</div>
 		);

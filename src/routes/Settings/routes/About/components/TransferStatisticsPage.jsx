@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import Format from 'utils/Format';
+import ValueFormat from 'utils/ValueFormat';
 import { Row, Header } from './Grid';
 
 import { TRANSFER_STATS_URL } from 'constants/TransferConstants';
@@ -18,11 +18,11 @@ const TransferStatisticsPage = React.createClass({
 		return (
 				<div className="about-page">
 					<div className="ui grid two column about-grid">
-						<Row title="Total downloaded" text={Format.formatSize(totalDown)}/>
-						<Row title="Total uploaded" text={Format.formatSize(totalUp)}/>
+						<Row title="Total downloaded" text={ValueFormat.formatSize(totalDown)}/>
+						<Row title="Total uploaded" text={ValueFormat.formatSize(totalUp)}/>
 						<Header title="Session"/>
-						<Row title="Session downloaded" text={Format.formatSize(stats.session_downloaded)}/>
-						<Row title="Session uploaded" text={Format.formatSize(stats.session_uploaded)}/>
+						<Row title="Session downloaded" text={ValueFormat.formatSize(stats.session_downloaded)}/>
+						<Row title="Session uploaded" text={ValueFormat.formatSize(stats.session_uploaded)}/>
 					</div>
 				</div>
 		);

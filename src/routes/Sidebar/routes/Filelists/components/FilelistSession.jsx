@@ -5,7 +5,7 @@ import React from 'react';
 import ListBrowser from './ListBrowser';
 
 import FilelistActions from 'actions/FilelistActions';
-import Format from 'utils/Format';
+import { UserIconFormatter } from 'utils/IconFormat';
 
 import { UserMenu } from 'components/Menu';
 import TabHeader from 'routes/Sidebar/components/TabHeader';
@@ -42,7 +42,7 @@ const FilelistSession = React.createClass({
 		);
 
 		const icon = (
-			<Format.UserIconFormatter size="large" flags={user.flags} />
+			<UserIconFormatter size="large" flags={user.flags} />
 		);
 
 		const state = this.props.item.state.id;

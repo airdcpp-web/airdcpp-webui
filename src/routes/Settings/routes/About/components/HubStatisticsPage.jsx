@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import Format from 'utils/Format';
+import ValueFormat from 'utils/ValueFormat';
 
 import { HUB_STATS_URL } from 'constants/HubConstants';
 
@@ -27,8 +27,8 @@ const HubStatisticsPage = React.createClass({
 			<div className="ui grid two column about-grid">
 				<Row title="Total users" text={stats.total_users}/>
 				<Row title="Unique users" text={stats.unique_users + ' (' + stats.unique_user_percentage.toFixed(2) + ' %)'}/>
-				<Row title="Total share" text={Format.formatSize(stats.total_share)}/>
-				<Row title="Average share per user" text={Format.formatSize(stats.share_per_user)}/>
+				<Row title="Total share" text={ValueFormat.formatSize(stats.total_share)}/>
+				<Row title="Average share per user" text={ValueFormat.formatSize(stats.share_per_user)}/>
 				<Header title="Clients"/>
 				{stats.clients.map(this.formatClient)}
 			</div>

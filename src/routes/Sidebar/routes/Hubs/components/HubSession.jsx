@@ -14,7 +14,7 @@ import TabHeader from 'routes/Sidebar/components/TabHeader';
 import Button from 'components/semantic/Button';
 
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
-import Format from 'utils/Format';
+import { HubIconFormatter } from 'utils/IconFormat';
 
 import '../style.css';
 
@@ -122,7 +122,7 @@ const HubSession = React.createClass({
 		);
 
 		const icon = (
-			<Format.HubIconFormatter size="large" hub={this.props.item} />
+			<HubIconFormatter size="large" hub={this.props.item} />
 		);
 
 		//const subHeader = identity.description;

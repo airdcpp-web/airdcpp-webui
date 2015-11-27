@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Formatter from 'utils/Format';
+import ValueFormat from 'utils/ValueFormat';
 
 import ScrollDecorator from 'decorators/ScrollDecorator';
 import ReactEmoji from 'react-emoji';
@@ -86,7 +86,7 @@ const ChatMessage = React.createClass({
 					{userCaption}
 				</div>
 				<div className="message-time">
-					{Formatter.formatTimestamp(message.time)}
+					{ValueFormat.formatTimestamp(message.time)}
 				</div>
 				<div className="message-text">
 					<Linkify properties={{ target: '_blank' }}>
@@ -110,7 +110,7 @@ const StatusMessage = React.createClass({
 		return (
 			<div className="ui item message-list-item status-message">
 				<div className="message-time">
-					{Formatter.formatTimestamp(message.time)}
+					{ValueFormat.formatTimestamp(message.time)}
 				</div>
 				<div className="message-text"><i>{message.text}</i></div>
 			</div>

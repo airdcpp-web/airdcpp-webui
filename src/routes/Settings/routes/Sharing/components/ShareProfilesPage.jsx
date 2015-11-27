@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import ShareProfileActions from 'actions/ShareProfileActions';
 
 import Button from 'components/semantic/Button';
-import Formatter from 'utils/Format';
+import ValueFormat from 'utils/ValueFormat';
 
 import { ActionMenu } from 'components/Menu';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
@@ -21,7 +21,7 @@ const Row = ({ profile, contextGetter }) => (
 			/>
 		</td>
 		<td>
-			{ Formatter.formatSize(profile.size) }
+			{ ValueFormat.formatSize(profile.size) }
 		</td>
 		<td>
 			{ profile.files }

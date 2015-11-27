@@ -3,9 +3,6 @@ import { Column } from 'fixed-data-table';
 
 import FilelistActions from 'actions/FilelistActions';
 
-import { TableDownloadMenu } from 'components/Menu';
-
-import Formatter from 'utils/Format';
 import TypeConvert from 'utils/TypeConvert';
 import Message from 'components/semantic/Message';
 
@@ -16,16 +13,10 @@ import History from 'utils/History';
 
 import SetContainerSize from 'mixins/SetContainerSize';
 
+import { SizeCell, DateCell, FileDownloadCell } from 'components/Cell';
+
 const ListBrowser = React.createClass({
 	mixins: [ SetContainerSize ], // The table won't handle responsive height quickly enough
-
-	_renderStr(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		return cellData.str;
-	},
 
 	// Disabled, doesn't work (investigate later)
 	/*componentWillUnmount() {
@@ -38,37 +29,6 @@ const ListBrowser = React.createClass({
 			return false;
 		}
 	},*/
-
-	_renderName(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		let captionText = cellData;
-		if (rowData.type.id === 'directory') {
-			captionText = (
-				<a onClick={() => this._handleClickDirectory(this.props.item.directory + cellData + '/')}>
-					{ cellData }
-				</a>
-				);
-		}
-
-		const formatter = (
-			<Formatter.FileNameFormatter item={ rowData.type }>
-				{ captionText }
-			</Formatter.FileNameFormatter>);
-
-		return (
-			<TableDownloadMenu 
-				caption={ formatter } 
-				linkCaption={ false }
-				parentEntity={ this.props.item } 
-				itemInfo={ rowData } 
-				handler={ FilelistActions.download } 
-				location={ this.props.location }
-			/>
-		);
-	},
 
 	_tokenizePath() {
 		let path = this.props.item.directory;
@@ -124,6 +84,19 @@ const ListBrowser = React.createClass({
 		);
 	},
 
+	nameCaptionGetter(cellData, rowData) {
+		let captionText = cellData;
+		if (rowData.type.id === 'directory') {
+			captionText = (
+				<a onClick={ () => this._handleClickDirectory(this.props.item.directory + cellData + '/') }>
+					{ cellData }
+				</a>
+				);
+		}
+
+		return captionText;
+	},
+
 	render() {
 		return (
 			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 210) }}>
@@ -144,17 +117,24 @@ const ListBrowser = React.createClass({
 					defaultSortAscending={true}
 				>
 					<Column
-						label="Name"
+						name="Name"
 						width={270}
-						dataKey="name"
-						cellRenderer={ this._renderName }
+						columnKey="name"
+						cell={
+							<FileDownloadCell 
+								captionGetter={ this.nameCaptionGetter }
+								parentEntity={ this.props.item }
+								location={ this.props.location }
+								handler={ FilelistActions.download } 
+							/> 
+						}
 						flexGrow={5}
 					/>
 					<Column
-						label="Size"
+						name="Size"
 						width={100}
-						dataKey="size"
-						cellRenderer={ Formatter.formatSize }
+						columnKey="size"
+						cell={ <SizeCell/> }
 					/>
 					{/*<Column
 						label="Type"
@@ -163,10 +143,10 @@ const ListBrowser = React.createClass({
 						cellRenderer={ this._renderStr }
 					/>*/}
 					<Column
-						label="Date"
+						name="Date"
 						width={150}
-						dataKey="time"
-						cellRenderer={ Formatter.formatDateTime }
+						columnKey="time"
+						cell={ <DateCell/> }
 					/>
 				</VirtualTable>
 			</div>

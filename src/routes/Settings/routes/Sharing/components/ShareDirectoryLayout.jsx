@@ -6,7 +6,7 @@ import { SHARE_ROOT_CREATED, SHARE_ROOT_UPDATED, SHARE_ROOT_REMOVED, SHARE_ROOTS
 
 import Message from 'components/semantic/Message';
 import SocketService from 'services/SocketService';
-import Formatter from 'utils/Format';
+import ValueFormat from 'utils/ValueFormat';
 
 import { ActionMenu } from 'components/Menu';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
@@ -56,7 +56,7 @@ const GroupedSection = React.createClass({
 	formatTitle() {
 		const size = this.props.roots.reduce((sum, root) => sum + root.size, 0);
 
-		const name = this.props.name + ' (' + Formatter.formatSize(size) + ')';
+		const name = this.props.name + ' (' + ValueFormat.formatSize(size) + ')';
 		if (this.props.roots.length === 1) {
 			return name;
 		}

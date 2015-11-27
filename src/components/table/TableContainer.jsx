@@ -8,6 +8,7 @@ import TouchScrollArea	from './TouchScrollArea';
 import TableActions from 'actions/TableActions';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
+import { TextCell, RowWrapperCell, HeaderCell } from './BaseCell';
 
 const TABLE_ROW_HEIGHT = 50;
 const { PropTypes } = React;
@@ -132,12 +133,6 @@ const TableContainer = React.createClass({
 		this.setState(newState);
 	},
 
-	_renderHeader(label, cellDataKey) {
-		return (
-			<a onClick={this._sortRowsBy.bind(null, cellDataKey)}>{label}</a>
-		);
-	},
-
 	_onColumnResizeEndCallback(newColumnWidth, dataKey) {
 		this._columnWidths[dataKey] = newColumnWidth;
 		this._isColumnResizing = false;
@@ -195,7 +190,7 @@ const TableContainer = React.createClass({
 				return null;
 			}
 
-			let label = column.props.label + ((this.state.sortProperty === column.props.dataKey) ? sortDirArrow : '');
+			let label = column.props.name + ((this.state.sortProperty === column.props.dataKey) ? sortDirArrow : '');
 			let flexGrow = undefined;
 			let width = undefined;
 			if (this._columnWidths[column.props.dataKey] != undefined) {
@@ -205,12 +200,23 @@ const TableContainer = React.createClass({
 				width = column.props.width;
 			}
 
+			let { cell } = column.props;
+			if (!cell) {
+				cell = <TextCell/>;
+			}
+
+			cell = (
+				<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={column.props.renderCondition}>
+					{ cell }
+				</RowWrapperCell>
+			);
+
 			return React.cloneElement(column, {
-				headerRenderer: this._renderHeader,
-				label: label,
+				header: (<HeaderCell onClick={this._sortRowsBy.bind(null, column.props.dataKey)} label={label}/>),
 				flexGrow: flexGrow,
 				width: width,
-				isResizable: true
+				isResizable: true,
+				cell: cell,
 			});
 		}, this);
 
@@ -229,9 +235,8 @@ const TableContainer = React.createClass({
 					overflowY={touchMode ? 'hidden' : 'auto'}
 
 					rowClassNameGetter={this.rowClassNameGetter}
-					footerDataGetter={this._footerDataGetter}
 					rowHeight={50}
-					rowGetter={this._rowGetter}
+					//rowGetter={this._rowGetter}
 					rowsCount={this.props.store.rowCount}
 					headerHeight={50}
 					onScrollStart={this._onScrollStart}

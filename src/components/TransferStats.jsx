@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import TransferStatsStore from 'stores/TransferStatsStore';
-import Format from 'utils/Format.js';
+import ValueFormat from 'utils/ValueFormat';
 
 const SpeedDisplay = React.createClass({
 	render: function () {
@@ -10,7 +10,7 @@ const SpeedDisplay = React.createClass({
 			<div className="item">
 				<i className={this.props.type + ' icon'}></i>
 				<div className="content">
-					<div className="header">{ Format.formatSpeed(this.props.speed, Format) }</div>
+					<div className="header">{ ValueFormat.formatSpeed(this.props.speed) }</div>
 				</div>
 			</div>
 		);

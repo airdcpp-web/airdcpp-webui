@@ -11,14 +11,15 @@ import { TableActionMenu } from 'components/Menu';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 
 import { Column } from 'fixed-data-table';
-import Checkbox from 'components/semantic/Checkbox';
 import Button from 'components/semantic/Button';
+
+import { CheckboxCell, ActionCell } from 'components/Cell';
 
 import '../style.css';
 
-const ConnectState = React.createClass({
+const ConnectStateCell = React.createClass({
 	getIcon() {
-		switch (this.props.item.connect_state.id) {
+		switch (this.props.cellData.id) {
 			case StateEnum.STATE_CONNECTING:
 				return 'yellow remove';
 			case StateEnum.STATE_CONNECTED:
@@ -29,13 +30,12 @@ const ConnectState = React.createClass({
 	},
 
 	getClickAction() {
-		const { item } = this.props;
-		switch (item.connect_state.id) {
+		switch (this.props.cellData.id) {
 			case StateEnum.STATE_CONNECTING:
 			case StateEnum.STATE_CONNECTED:
-				return () => HubActions.removeSession(item.connect_state.current_hub_id);
+				return () => HubActions.removeSession(this.props.cellData.current_hub_id);
 			case StateEnum.STATE_DISCONNECTED:
-				return () => HubActions.createSession(this.props.location, item.hub_url);
+				return () => HubActions.createSession(this.props.location, this.props.rowData.hub_url);
 		}
 	},
 
@@ -43,29 +43,22 @@ const ConnectState = React.createClass({
 		return (
 			<div>
 				<i className={ 'icon large link ' + this.getIcon() } onClick={ this.getClickAction() }/>
-				{ this.props.item.connect_state.str }
+				{ this.props.cellData.str }
 			</div>
 		);
 	}
 });
 
+const PasswordCell = ({ cellData, rowData, actions, ids, ...props }) => (
+	<TableActionMenu 
+		caption={ cellData ? <strong>Set</strong> : 'Not set' } 
+		actions={ FavoriteHubPasswordActions } 
+		ids={ cellData ? [ 'change', 'remove' ] : [ 'create' ] } 
+		itemData={ rowData }
+	/>
+);
+
 const FavoriteHubs = React.createClass({
-	_renderName(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		return <TableActionMenu caption={ cellData } actions={ FavoriteHubActions } ids={[ 'edit', 'remove' ]} itemData={ rowData }/>;
-	},
-
-	_renderConnect(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		return <ConnectState item={ rowData } location={ this.props.location }/>;
-	},
-
 	_rowClassNameGetter(rowData) {
 		switch (rowData.connect_state) {
 			case StateEnum.STATE_CONNECTING:
@@ -75,31 +68,6 @@ const FavoriteHubs = React.createClass({
 			case StateEnum.STATE_DISCONNECTED:
 				return 'disconnected'; 
 		}
-	},
-
-	_renderAutoConnect(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		return <Checkbox checked={cellData} onChange={ checked => FavoriteHubActions.update(rowData, { auto_connect: checked }) }/>;
-	},
-
-	_renderPassword(cellData, cellDataKey, rowData) {
-		const caption = (
-			<div className="password-column"> 
-				{ cellData ? <strong>Set</strong> : 'Not set' } 
-			</div>
-		);
-
-		return (
-			<TableActionMenu
-				caption={ caption } 
-				actions={ FavoriteHubPasswordActions } 
-				ids={ cellData ? [ 'change', 'remove' ] : [ 'create' ] } 
-				itemData={ rowData }
-			/>
-		);
 	},
 
 	_handleAddHub() {
@@ -123,41 +91,50 @@ const FavoriteHubs = React.createClass({
 				store={FavoriteHubStore}
 			>
 				<Column
-					label="State"
+					name="State"
 					width={150}
-					dataKey="connect_state"
-					cellRenderer={ this._renderConnect }
+					columnKey="connect_state"
+					cell={ 
+						<ConnectStateCell
+							location={ this.props.location }
+						/> 
+					}
 				/>
 				<Column
-					label="Name"
+					name="Name"
 					width={270}
-					dataKey="name"
+					columnKey="name"
 					flexGrow={3}
-					cellRenderer={ this._renderName }
+					cell={ <ActionCell actions={ FavoriteHubActions } ids={[ 'edit', 'remove' ]}/> }
 				/>
 				<Column
-					label="Address"
+					name="Address"
 					width={270}
-					dataKey="hub_url"
+					columnKey="hub_url"
 					flexGrow={2}
 				/>
 				<Column
-					label="Auto connect"
+					name="Auto connect"
 					width={70}
-					dataKey="auto_connect"
-					cellRenderer={ this._renderAutoConnect }
+					columnKey="auto_connect"
+					cell={
+						<CheckboxCell
+							onChange={ (checked, rowData) => FavoriteHubActions.update(rowData, { auto_connect: checked }) }
+						/>
+					}
 				/>
 				<Column
-					label="Nick"
+					name="Nick"
 					width={100}
-					dataKey="nick"
+					columnKey="nick"
 					flexGrow={1}
 				/>
 				<Column
-					label="Password"
+					name="Password"
 					width={100}
-					dataKey="has_password"
-					cellRenderer={ this._renderPassword }
+					columnKey="has_password"
+					cell={ <PasswordCell/> }
+					//cellRenderer={ this._renderPassword }
 				/>
 			</VirtualTable>
 		);

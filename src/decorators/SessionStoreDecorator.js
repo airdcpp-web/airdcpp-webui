@@ -1,6 +1,6 @@
 import update from 'react-addons-update';
 
-export default function (store, actions) {
+const SessionStoreDecorator = function (store, actions) {
 	let sessions = [];
 	let activeSession = null;
 
@@ -72,3 +72,5 @@ export default function (store, actions) {
 
 	return store;
 };
+
+export default SessionStoreDecorator;

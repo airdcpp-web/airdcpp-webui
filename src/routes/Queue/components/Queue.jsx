@@ -3,94 +3,43 @@ import { Column } from 'fixed-data-table';
 import classNames from 'classnames';
 
 import { StatusEnum } from 'constants/QueueConstants';
-import { TableActionMenu } from 'components/Menu';
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
-import Formatter from 'utils/Format';
 import Progress from 'components/semantic/Progress';
 import QueueStore from 'stores/QueueStore';
 
+import { FileActionCell, SizeCell, SpeedCell } from 'components/Cell';
+
+const getStatusClass = (cellData, rowData) => {
+	const statusId = cellData.id;
+	return classNames(
+			{ 'grey': statusId == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
+			{ 'blue': statusId == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
+			{ 'success': statusId >= StatusEnum.STATUS_FINISHED },
+			{ 'error': statusId == StatusEnum.STATUS_FAILED_MISSING || 
+								statusId == StatusEnum.STATUS_SHARING_FAILED || 
+								statusId == StatusEnum.STATUS_HASH_FAILED ||
+								statusId == StatusEnum.STATUS_DOWNLOAD_FAILED }
+		);
+};
+
+const StatusCell = ({ cellData, rowData, ...props }) => (
+	<Progress 
+		className={getStatusClass(cellData, rowData)}
+		caption={cellData.str}
+		percent={ (rowData.downloaded_bytes*100) / rowData.size }
+	/>
+);
+
+const PriorityCell = ({ cellData, rowData, ...props }) => (
+	<PriorityMenu itemPrio={ cellData } item={ rowData }/>
+);
+
 const Queue = React.createClass({
-	renderStatus(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		const cNames = classNames(
-			{ 'grey': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
-			{ 'blue': cellData.id == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
-			{ 'success': cellData.id >= StatusEnum.STATUS_FINISHED },
-			{ 'error': cellData.id == StatusEnum.STATUS_FAILED_MISSING || 
-								cellData.id == StatusEnum.STATUS_SHARING_FAILED || 
-								cellData.id == StatusEnum.STATUS_HASH_FAILED ||
-								cellData.id == StatusEnum.STATUS_DOWNLOAD_FAILED }
-		);
-
-		return (
-			<Progress 
-				className={cNames}
-				caption={cellData.str}
-				percent={ (rowData.downloaded_bytes*100) / rowData.size }
-			/>
-		);
-	},
-
-	renderPriority(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return undefined;
-		}
-
-		if (rowData.status.id >= StatusEnum.STATUS_FINISHED) {
-			return '';
-		}
-
-		return <PriorityMenu itemPrio={ cellData } item={ rowData }/>;
-	},
-
-	renderType(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		if (rowData.type.type !== 'directory') {
-			return cellData.str;
-		}
-
-		return (
-			<div>
-				<a onClick={this.openModal}>
-					{ cellData.str }
-				</a>
-		</div>); 
-	},
-
-	renderSources(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		if (rowData.status.id >= StatusEnum.STATUS_DOWNLOADED) {
-			return '';
-		}
-
-		return (<a onClick={this.openModal} className="item">
-			{ cellData.str }
-		</a>); 
-	},
-
-	renderName(cellData, cellDataKey, rowData) {
-		if (cellData === undefined) {
-			return cellData;
-		}
-
-		const formatter = (
-			<Formatter.FileNameFormatter item={ rowData.type }>
-				{ cellData }
-			</Formatter.FileNameFormatter>);
-		
-		return <TableActionMenu caption={ formatter } actions={ QueueActions } ids={[ 'searchBundle', 'removeBundle' ]} itemData={ rowData }/>;
+	isActive(cellData, rowData) {
+		return rowData.status.id < StatusEnum.STATUS_DOWNLOADED;
 	},
 
 	render() {
@@ -100,49 +49,49 @@ const Queue = React.createClass({
 				store={QueueStore}
 			>
 				<Column
-					label="Name"
+					name="Name"
 					width={270}
 					flexGrow={5}
-					dataKey="name"
-					cellRenderer={ this.renderName }
+					columnKey="name"
+					cell={ <FileActionCell actions={ QueueActions } ids={[ 'searchBundle', 'removeBundle' ]}/> }
 				/>
 				<Column
-					label="Size"
+					name="Size"
 					width={100}
-					dataKey="size"
-					cellRenderer={ Formatter.formatSize }
+					columnKey="size"
+					cell={ <SizeCell/> }
 				/>
 				<Column
-					label="Type/content"
+					name="Type/content"
 					width={150}
-					dataKey="type"
-					cellRenderer={ this.renderType }
+					columnKey="type"
 					hideWidth={1200}
 				/>
 				<Column
-					label="Sources"
+					name="Sources"
 					width={100}
-					dataKey="sources"
-					cellRenderer={ this.renderSources }
+					columnKey="sources"
+					renderCondition={ this.isActive }
 				/>
 				<Column
-					label="Status"
+					name="Status"
 					width={300}
 					flexGrow={3}
-					dataKey="status"
-					cellRenderer={ this.renderStatus }
+					columnKey="status"
+					cell={ <StatusCell/> }
 				/>
 				<Column
-					label="Speed"
+					name="Speed"
 					width={100}
-					dataKey="speed"
-					cellRenderer={ Formatter.formatSpeedIfRunning.bind(Formatter) }
+					columnKey="speed"
+					cell={ <SpeedCell/> }
 				/>
 				<Column
-					label="Priority"
+					name="Priority"
 					width={150}
-					dataKey="priority"
-					cellRenderer={ this.renderPriority }
+					columnKey="priority"
+					renderCondition={ this.isActive }
+					cell={ <PriorityCell/> }
 				/>
 				{/*<Column
 					label="Time added"
