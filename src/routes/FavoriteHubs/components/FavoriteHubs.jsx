@@ -27,7 +27,7 @@ const PasswordCell = ({ cellData, rowData, actions, ids, ...props }) => (
 
 const FavoriteHubs = React.createClass({
 	_rowClassNameGetter(rowData) {
-		switch (rowData.connect_state) {
+		switch (rowData.connect_state.id) {
 			case StateEnum.STATE_CONNECTING:
 				return 'connecting';
 			case StateEnum.STATE_CONNECTED:

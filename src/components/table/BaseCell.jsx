@@ -22,9 +22,9 @@ const parseWrapperData = ({ columnKey, dataLoader, rowIndex, children, renderCon
 
 // Generic wrapper for all cells
 export const RowWrapperCell = (props) => (
-	<Cell {...props}>
+	<div className="row-wrapper" {...props}>
 		{ parseWrapperData(props) }
-	</Cell>
+	</div>
 );
 
 // Column header
@@ -38,7 +38,7 @@ export const HeaderCell = ({ onClick, label, ...props }) => (
 
 // Default cell
 export const TextCell = ({ cellData, ...props }) => (
-	<span>
+	<span className="plain text cell">
 		{ (typeof cellData === 'object') ? cellData.str : cellData }
 	</span>
 );

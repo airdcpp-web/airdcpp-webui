@@ -12,6 +12,8 @@ import QueueStore from 'stores/QueueStore';
 
 import { FileActionCell, SizeCell, SpeedCell } from 'components/Cell';
 
+import '../style.css';
+
 const getStatusClass = (cellData, rowData) => {
 	const statusId = cellData.id;
 	return classNames(

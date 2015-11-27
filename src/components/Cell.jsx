@@ -31,31 +31,31 @@ export const ActionCell = ({ cellData, rowData, actions, ids, ...props }) => (
 );
 
 export const SizeCell = ({ cellData, ...props }) => (
-	<span>
+	<span className="plain size cell">
 		{ ValueFormat.formatSize(cellData) }
 	</span>
 );
 
 export const SpeedCell = ({ cellData, ...props }) => (
-	<span>
+	<span className="plain speed cell">
 		{ ValueFormat.formatSpeed(cellData) }
 	</span>
 );
 
 export const DateCell = ({ cellData, ...props }) => (
-	<span>
+	<span className="plain date cell">
 		{ ValueFormat.formatDateTime(cellData) }
 	</span>
 );
 
 export const ConnectionCell = ({ cellData, ...props }) => (
-	<span>
+	<span className="plain connection cell">
 		{ ValueFormat.formatConnection(cellData) }
 	</span>
 );
 
 export const DecimalCell = ({ cellData, ...props }) => (
-	<span>
+	<span className="plain decimal cell">
 		{ ValueFormat.formatDecimal(cellData) }
 	</span>
 );

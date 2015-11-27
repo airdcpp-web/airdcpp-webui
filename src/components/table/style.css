@@ -83,3 +83,13 @@
   text-overflow: ellipsis;
   flex: 1;
 }
+
+.fixedDataTableCellLayout_main .row-wrapper {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.fixedDataTableCellLayout_main .plain.cell {
+  margin: 0px 5px;
+}

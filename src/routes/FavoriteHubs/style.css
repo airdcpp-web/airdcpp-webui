@@ -1,15 +1,17 @@
-.public_fixedDataTable_bodyRow.connected, .public_fixedDataTable_bodyRow.connected span {
+.public_fixedDataTable_bodyRow.connected, 
+.public_fixedDataTable_bodyRow.connected span,
+.public_fixedDataTable_bodyRow.connected strong {
 	color: green;
 }
 
-.public_fixedDataTable_bodyRow.connecting, .public_fixedDataTable_bodyRow.connecting span {
+.public_fixedDataTable_bodyRow.connecting, 
+.public_fixedDataTable_bodyRow.connecting span,
+.public_fixedDataTable_bodyRow.connecting strong {
 	color: orange;
 }
 
-.public_fixedDataTable_bodyRow.disconnected, .public_fixedDataTable_bodyRow.disconnected span {
+.public_fixedDataTable_bodyRow.disconnected, 
+.public_fixedDataTable_bodyRow.disconnected span,
+.public_fixedDataTable_bodyRow.disconnected strong {
 	color: black;
-}
-
-.public_fixedDataTable_bodyRow .password-column {
-	margin-left: 5px;
 }
