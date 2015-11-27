@@ -100,10 +100,6 @@ const TableContainer = React.createClass({
 		TableActions.changeSettings(this.props.store.viewUrl, startRows, maxRows, this.state.sortProperty, this.state.sortAscending);
 	},
 
-	_rowGetter(rowIndex) {
-		return this.props.dataLoader.getRowData(rowIndex);
-	},
-
 	_onScrollStart(horizontal, vertical) {
 		this.props.dataLoader.fetchingActive = true;
 		//console.log("Scrolling started: " + vertical, this.props.store.viewName);
@@ -176,49 +172,50 @@ const TableContainer = React.createClass({
 
 		return this.props.rowClassNameGetter(rowData);
 	},
+
+	convertCell(rawCell, columnProps) {
+		const cell = rawCell ? rawCell : <TextCell/>; 
+
+		return (
+			<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={columnProps.renderCondition}>
+				{ cell }
+			</RowWrapperCell>
+		);
+	},
+
+	convertColumn(column) {
+		if (column.props.hideWidth > this.state.width) {
+			return null;
+		}
+
+		let { name, flexGrow, width, cell, columnKey } = column.props;
+
+		// Convert name
+		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
+		name += ((this.state.sortProperty === columnKey) ? sortDirArrow : '');
+
+		// Get column width
+		if (this._columnWidths[columnKey] != undefined) {
+			width = this._columnWidths[columnKey];
+			flexGrow = null;
+		}
+
+		return React.cloneElement(column, {
+			header: (<HeaderCell onClick={this._sortRowsBy.bind(null, columnKey)} label={name}/>),
+			flexGrow: flexGrow,
+			width: width,
+			isResizable: true,
+			cell: this.convertCell(cell, column.props),
+		});
+	},
 	
 	render: function () {
 		if (this.props.emptyRowsNode !== undefined) {
 			return this.props.emptyRowsNode;
 		}
 
-		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
-
 		// Update and insert generic columns props
-		const children = React.Children.map(this.props.children, (column) => {
-			if (column.props.hideWidth > this.state.width) {
-				return null;
-			}
-
-			let label = column.props.name + ((this.state.sortProperty === column.props.dataKey) ? sortDirArrow : '');
-			let flexGrow = undefined;
-			let width = undefined;
-			if (this._columnWidths[column.props.dataKey] != undefined) {
-				width = this._columnWidths[column.props.dataKey];
-			} else {
-				flexGrow = column.props.flexGrow;
-				width = column.props.width;
-			}
-
-			let { cell } = column.props;
-			if (!cell) {
-				cell = <TextCell/>;
-			}
-
-			cell = (
-				<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={column.props.renderCondition}>
-					{ cell }
-				</RowWrapperCell>
-			);
-
-			return React.cloneElement(column, {
-				header: (<HeaderCell onClick={this._sortRowsBy.bind(null, column.props.dataKey)} label={label}/>),
-				flexGrow: flexGrow,
-				width: width,
-				isResizable: true,
-				cell: cell,
-			});
-		}, this);
+		const children = React.Children.map(this.props.children, this.convertColumn);
 
 		const touchMode = LocalSettingStore.touchModeEnabled;
 		return (
@@ -236,7 +233,6 @@ const TableContainer = React.createClass({
 
 					rowClassNameGetter={this.rowClassNameGetter}
 					rowHeight={50}
-					//rowGetter={this._rowGetter}
 					rowsCount={this.props.store.rowCount}
 					headerHeight={50}
 					onScrollStart={this._onScrollStart}

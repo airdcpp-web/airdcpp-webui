@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Cell } from 'fixed-data-table';
 
+// Cell components that are used internally by the table
+
 const parseWrapperData = ({ columnKey, dataLoader, rowIndex, children, renderCondition, ...props }) => {
 	const rowData = dataLoader.getRowData(rowIndex);
 	if (!rowData) {
@@ -18,12 +20,14 @@ const parseWrapperData = ({ columnKey, dataLoader, rowIndex, children, renderCon
 	});
 };
 
+// Generic wrapper for all cells
 export const RowWrapperCell = (props) => (
 	<Cell {...props}>
 		{ parseWrapperData(props) }
 	</Cell>
 );
 
+// Column header
 export const HeaderCell = ({ onClick, label, ...props }) => (
 	<Cell {...props}>
 		<a onClick={onClick}>
@@ -32,8 +36,9 @@ export const HeaderCell = ({ onClick, label, ...props }) => (
 	</Cell>
 );
 
+// Default cell
 export const TextCell = ({ cellData, ...props }) => (
-	<div>
-	{ (typeof cellData === 'object') ? (cellData.str ? cellData.str : 'MOI') : cellData }
-	</div>
+	<span>
+		{ (typeof cellData === 'object') ? cellData.str : cellData }
+	</span>
 );

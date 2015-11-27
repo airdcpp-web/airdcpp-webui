@@ -42,6 +42,10 @@ const Queue = React.createClass({
 		return rowData.status.id < StatusEnum.STATUS_DOWNLOADED;
 	},
 
+	isRunning(cellData, rowData) {
+		return rowData.speed > 0;
+	},
+
 	render() {
 		return (
 			<VirtualTable
@@ -85,6 +89,7 @@ const Queue = React.createClass({
 					width={100}
 					columnKey="speed"
 					cell={ <SpeedCell/> }
+					renderCondition={ this.isRunning }
 				/>
 				<Column
 					name="Priority"

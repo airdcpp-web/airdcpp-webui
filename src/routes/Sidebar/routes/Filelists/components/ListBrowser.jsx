@@ -84,7 +84,7 @@ const ListBrowser = React.createClass({
 		);
 	},
 
-	nameCaptionGetter(cellData, rowData) {
+	nameCellCaptionGetter(cellData, rowData) {
 		let captionText = cellData;
 		if (rowData.type.id === 'directory') {
 			captionText = (
@@ -122,7 +122,7 @@ const ListBrowser = React.createClass({
 						columnKey="name"
 						cell={
 							<FileDownloadCell 
-								captionGetter={ this.nameCaptionGetter }
+								captionGetter={ this.nameCellCaptionGetter }
 								parentEntity={ this.props.item }
 								location={ this.props.location }
 								handler={ FilelistActions.download } 

@@ -136,5 +136,3 @@ export const HubIconFormatter = React.createClass({
 		);
 	},
 });
-
-//export default IconFormat;

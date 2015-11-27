@@ -2,52 +2,19 @@ import React from 'react';
 
 import FavoriteHubActions from 'actions/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
-import HubActions from 'actions/HubActions';
-
+import FavoriteHubStore from 'stores/FavoriteHubStore';
 import { StateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { TableActionMenu } from 'components/Menu';
-import FavoriteHubStore from 'stores/FavoriteHubStore';
-
 import { Column } from 'fixed-data-table';
+import { CheckboxCell, ActionCell } from 'components/Cell';
+import ConnectStateCell from './ConnectStateCell';
+
+import { TableActionMenu } from 'components/Menu';
+
 import Button from 'components/semantic/Button';
 
-import { CheckboxCell, ActionCell } from 'components/Cell';
-
 import '../style.css';
-
-const ConnectStateCell = React.createClass({
-	getIcon() {
-		switch (this.props.cellData.id) {
-			case StateEnum.STATE_CONNECTING:
-				return 'yellow remove';
-			case StateEnum.STATE_CONNECTED:
-				return 'grey remove';
-			case StateEnum.STATE_DISCONNECTED:
-				return 'green video play';
-		}
-	},
-
-	getClickAction() {
-		switch (this.props.cellData.id) {
-			case StateEnum.STATE_CONNECTING:
-			case StateEnum.STATE_CONNECTED:
-				return () => HubActions.removeSession(this.props.cellData.current_hub_id);
-			case StateEnum.STATE_DISCONNECTED:
-				return () => HubActions.createSession(this.props.location, this.props.rowData.hub_url);
-		}
-	},
-
-	render: function () {
-		return (
-			<div>
-				<i className={ 'icon large link ' + this.getIcon() } onClick={ this.getClickAction() }/>
-				{ this.props.cellData.str }
-			</div>
-		);
-	}
-});
 
 const PasswordCell = ({ cellData, rowData, actions, ids, ...props }) => (
 	<TableActionMenu 
@@ -72,6 +39,10 @@ const FavoriteHubs = React.createClass({
 
 	_handleAddHub() {
 		FavoriteHubActions.create();
+	},
+
+	onChangeAutoConnect(checked, rowData) {
+		FavoriteHubActions.update(rowData, { auto_connect: checked });
 	},
 
 	render() {
@@ -118,9 +89,7 @@ const FavoriteHubs = React.createClass({
 					width={70}
 					columnKey="auto_connect"
 					cell={
-						<CheckboxCell
-							onChange={ (checked, rowData) => FavoriteHubActions.update(rowData, { auto_connect: checked }) }
-						/>
+						<CheckboxCell onChange={ this.onChangeAutoConnect }/>
 					}
 				/>
 				<Column
@@ -134,7 +103,6 @@ const FavoriteHubs = React.createClass({
 					width={100}
 					columnKey="has_password"
 					cell={ <PasswordCell/> }
-					//cellRenderer={ this._renderPassword }
 				/>
 			</VirtualTable>
 		);

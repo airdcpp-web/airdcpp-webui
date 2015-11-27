@@ -38,7 +38,7 @@ export const SizeCell = ({ cellData, ...props }) => (
 
 export const SpeedCell = ({ cellData, ...props }) => (
 	<span>
-		{ ValueFormat.formatSpeedIfRunning(cellData) }
+		{ ValueFormat.formatSpeed(cellData) }
 	</span>
 );
 

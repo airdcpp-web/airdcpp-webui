@@ -55,15 +55,6 @@ const formatSpeed = (bytesPerSecond) => {
 	return Format.formatSize(bytesPerSecond) + '/s';
 };
 
-const formatSpeedIfRunning = (bytesPerSecond) => {
-	if (bytesPerSecond == 0) {
-		return '';
-	}
-
-	return Format.formatSize(bytesPerSecond) + '/s';
-};
-
 export default Object.assign(Format, {
 	formatSpeed: formatSpeed,
-	formatSpeedIfRunning: formatSpeedIfRunning,
 });
