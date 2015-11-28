@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TableActions from 'actions/TableActions';
+import TableFilterDecorator from 'decorators/TableFilterDecorator';
 
 const FilterBox = React.createClass({
 	propTypes: {
@@ -26,17 +26,18 @@ const FilterBox = React.createClass({
 
 		this._timer = setTimeout(() => {
 			this._timer = null;
-			TableActions.filter(this.props.viewUrl, this.state.value);
+			this.props.onFilterUpdated(this.state.value);
+			//TableActions.filter(this.props.viewUrl, this.state.value);
 		}, 200);
 	},
 
 	render: function () {
 		return (
-			<div className="ui input filter" onChange={this.handleChange} value={this.state.value}>
+			<div className="ui input" onChange={this.handleChange} value={this.state.value}>
 				<input placeholder="Filter..." type="text"/>
 			</div>
 		);
 	}
 });
 
-export default FilterBox;
+export default TableFilterDecorator(FilterBox);

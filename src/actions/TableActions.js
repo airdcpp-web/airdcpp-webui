@@ -5,7 +5,6 @@ const TableActions = Reflux.createActions([
 	{ 'changeSettings': { asyncResult: true } },
 	{ 'close': { asyncResult: true } },
 	{ 'pause': { asyncResult: true } },
-	{ 'filter': { asyncResult: true } },
 ]);
 
 TableActions.close.listen(function (viewUrl) {
@@ -34,16 +33,6 @@ TableActions.pause.listen(function (viewUrl, pause) {
 	let that = this;
 	return SocketService.post(viewUrl, { 
 		paused: pause,
-	}).then(data => that.completed(viewUrl, data))
-		.catch(error => this.failed(viewUrl, error));
-});
-
-TableActions.filter.listen(function (viewUrl, pattern, method = 0, property = 'any') {
-	let that = this;
-	return SocketService.post(viewUrl + '/filter', { 
-		pattern: pattern,
-		method: method,
-		property: property,
 	}).then(data => that.completed(viewUrl, data))
 		.catch(error => this.failed(viewUrl, error));
 });

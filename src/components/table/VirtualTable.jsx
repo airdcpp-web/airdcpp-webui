@@ -70,7 +70,10 @@ const VirtualTable = React.createClass({
 				{ emptyRowsNode === undefined ? (
 					<div className="table-footer">
 						{ footerData }
-						<FilterBox viewUrl={ this.props.store.viewUrl }/>
+						<div className="filter">
+							<FilterBox viewUrl={ this.props.store.viewUrl }/>
+							{ this.props.filter ? React.cloneElement(this.props.filter, { viewUrl: this.props.store.viewUrl }) : null }
+						</div>
 					</div>
 				) : null }
 			</div>

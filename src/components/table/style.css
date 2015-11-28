@@ -12,6 +12,10 @@
 	margin-left: auto;
 }
 
+.table-footer .filter > div:last-child {
+	margin-left: 10px;
+}
+
 .fixedDataTableCellLayout_main .ui.checkbox {
 	display: flex;
 	justify-content: center;
