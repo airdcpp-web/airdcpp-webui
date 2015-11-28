@@ -1,9 +1,8 @@
 /* Add a few semantic styles manually because of different layout */
 
-.react-autosuggest ul {
+.react-autosuggest ul, .Select-menu {
 	width:100%;
 	position: absolute;
-	top: 100%;
 	left: 0;
 	-webkit-transform-origin: center top;
 	-ms-transform-origin: center top;
@@ -17,7 +16,7 @@
 	margin:0px;
 }
 
-.react-autosuggest li {
+.react-autosuggest li, .Select-menu .Select-option {
 	cursor: pointer;
 	display: block;
 	overflow: hidden;
@@ -26,6 +25,17 @@
 	color: rgba(0,0,0,.87);
 	line-height: 1.33;
 	border-bottom: 1px solid rgba(34,36,38,.1);
+}
+
+.Select-menu .Select-option:hover, 
+.Select-menu .Select-option.is-focused,
+.react-autosuggest li:hover {
+	background: #f9fafb;
+}
+
+.field.error .Select-control {
+	background: #FFF6F6;
+	border-color: #E0B4B4;
 }
 
 .react-autosuggest ul .description {
