@@ -39,6 +39,6 @@ export const HeaderCell = ({ onClick, label, ...props }) => (
 // Default cell
 export const TextCell = ({ cellData, ...props }) => (
 	<span className="plain text cell">
-		{ (typeof cellData === 'object') ? cellData.str : cellData }
+		{ (typeof cellData === 'object') ? (Array.isArray(cellData) ? cellData.length : cellData.str) : cellData }
 	</span>
 );

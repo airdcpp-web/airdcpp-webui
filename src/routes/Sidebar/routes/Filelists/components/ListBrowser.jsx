@@ -1,5 +1,4 @@
 import React from 'react';
-import { Column } from 'fixed-data-table';
 
 import FilelistActions from 'actions/FilelistActions';
 
@@ -7,13 +6,14 @@ import TypeConvert from 'utils/TypeConvert';
 import Message from 'components/semantic/Message';
 
 import PathBreadcrumb from 'components/PathBreadcrumb';
-import VirtualTable from 'components/table/VirtualTable';
 import FilelistViewStore from 'stores/FilelistViewStore';
 import History from 'utils/History';
 
-import SetContainerSize from 'mixins/SetContainerSize';
-
+import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DateCell, FileDownloadCell } from 'components/Cell';
+import { Column } from 'fixed-data-table';
+
+import SetContainerSize from 'mixins/SetContainerSize';
 
 const ListBrowser = React.createClass({
 	mixins: [ SetContainerSize ], // The table won't handle responsive height quickly enough

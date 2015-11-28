@@ -16,7 +16,7 @@ import Button from 'components/semantic/Button';
 
 import '../style.css';
 
-const PasswordCell = ({ cellData, rowData, actions, ids, ...props }) => (
+const PasswordCell = ({ cellData, rowData }) => (
 	<TableActionMenu 
 		caption={ cellData ? <strong>Set</strong> : 'Not set' } 
 		actions={ FavoriteHubPasswordActions } 

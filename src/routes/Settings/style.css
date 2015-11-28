@@ -1,12 +1,13 @@
 .settings-layout {
   padding-bottom: 30px;
-  max-width: 1100px;
-  margin-left: auto !important;
-  margin-right: auto !important;
 
   max-height: 100% !important;
   display: flex;
   flex-direction: column;
+}
+
+.content-column:not(.directories) {
+  max-width: 900px;
 }
 
 .settings-layout .section-content {

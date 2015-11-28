@@ -8,59 +8,57 @@ import Checkbox from 'components/semantic/Checkbox';
 
 //import { Cell } from 'fixed-data-table';
 
-export const FileActionCell = ({ cellData, rowData, actions, ids, ...props }) => (
+export const FileActionCell = ({ cellData, rowData, ...props }) => (
 	<TableActionMenu 
 		caption={ 
 			<FileNameFormatter item={ rowData.type }>
 				{ cellData }
 			</FileNameFormatter> 
-		} 
-		actions={ actions } 
-		ids={ ids } 
+		}
 		itemData={ rowData }
+		{ ...props }
 	/>
 );
 
-export const ActionCell = ({ cellData, rowData, actions, ids, ...props }) => (
+export const ActionCell = ({ cellData, rowData, ...props }) => (
 	<TableActionMenu 
 		caption={ cellData }
-		actions={ actions } 
-		ids={ ids } 
 		itemData={ rowData }
+		{ ...props }
 	/>
 );
 
-export const SizeCell = ({ cellData, ...props }) => (
+export const SizeCell = ({ cellData }) => (
 	<span className="plain size cell">
 		{ ValueFormat.formatSize(cellData) }
 	</span>
 );
 
-export const SpeedCell = ({ cellData, ...props }) => (
+export const SpeedCell = ({ cellData }) => (
 	<span className="plain speed cell">
 		{ ValueFormat.formatSpeed(cellData) }
 	</span>
 );
 
-export const DateCell = ({ cellData, ...props }) => (
+export const DateCell = ({ cellData }) => (
 	<span className="plain date cell">
 		{ ValueFormat.formatDateTime(cellData) }
 	</span>
 );
 
-export const AbbreviatedDurationCell = ({ cellData, ...props }) => (
+export const AbbreviatedDurationCell = ({ cellData }) => (
 	<span className="plain abbr-duration cell">
 		{ ValueFormat.formatAbbreviatedDuration(cellData) }
 	</span>
 );
 
-export const ConnectionCell = ({ cellData, ...props }) => (
+export const ConnectionCell = ({ cellData }) => (
 	<span className="plain connection cell">
 		{ ValueFormat.formatConnection(cellData) }
 	</span>
 );
 
-export const DecimalCell = ({ cellData, ...props }) => (
+export const DecimalCell = ({ cellData }) => (
 	<span className="plain decimal cell">
 		{ ValueFormat.formatDecimal(cellData) }
 	</span>
@@ -79,7 +77,7 @@ export const FileDownloadCell = ({ cellData, rowData, captionGetter, ...props })
 	/>
 );
 
-export const CheckboxCell = ({ cellData, rowData, onChange, ...props }) => (
+export const CheckboxCell = ({ cellData, rowData, onChange }) => (
 	<Checkbox 
 		checked={cellData} 
 		onChange={ (checked) => onChange(checked, rowData) }

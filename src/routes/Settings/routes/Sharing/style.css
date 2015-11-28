@@ -11,3 +11,7 @@
 .share-directories-settings .accordion {
 	width: inherit !important;
 }
+
+.virtual-table {
+	min-height: calc(100vh - 400px);
+}
