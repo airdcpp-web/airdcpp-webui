@@ -62,4 +62,4 @@ const ShareProfilesPage = React.createClass({
 	}
 });
 
-export default ShareProfileDecorator(ShareProfilesPage, false);
+export default ShareProfileDecorator(ShareProfilesPage, false, false);

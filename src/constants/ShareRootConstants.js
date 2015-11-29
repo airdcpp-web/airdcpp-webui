@@ -1,4 +1,4 @@
-const SHARE_ROOT_MODULE_URL = 'share/v0';
+const SHARE_ROOT_MODULE_URL = 'share_roots/v0';
 export default {
 	SHARE_ROOT_MODULE_URL: SHARE_ROOT_MODULE_URL,
 	SHARE_ROOTS_URL: SHARE_ROOT_MODULE_URL + '/roots',

@@ -19,7 +19,7 @@ export default {
 
 		return keys.reduce((convertedData, key) => {
 			let value = null;
-			if (valueMap && valueMap.hasOwnProperty(key)) {
+			if (valueMap && valueMap.hasOwnProperty(key) && valueMap[key] !== null) {
 				if (typeof valueMap[key] === 'object' && !Array.isArray(valueMap[key])) {
 					console.assert(valueMap[key].hasOwnProperty('id'), 'Invalid object supplied for valueMapToInfo (id property is required)');
 					value = valueMap[key].id;

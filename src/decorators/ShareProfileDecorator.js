@@ -5,8 +5,9 @@ import SocketService from 'services/SocketService';
 
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import Loader from 'components/semantic/Loader';
+import ValueFormat from 'utils/ValueFormat';
 
-export default function (Component, listHidden) {
+export default function (Component, listHidden, addSize = true) {
 	const ShareProfileDecorator = React.createClass({
 		mixins: [ SocketSubscriptionMixin() ],
 		//propTypes: {
@@ -26,9 +27,24 @@ export default function (Component, listHidden) {
 			this.fetchProfiles();
 		},
 
+		convertProfile(profile) {
+			let name = profile.name;
+			if (addSize && profile.id !== HIDDEN_PROFILE_ID) {
+				name += ' (' + ValueFormat.formatSize(profile.size) + ')';
+			}
+
+			return Object.assign({},
+				profile,
+				{ name: name }
+ 			);
+		},
+
 		onProfilesReceived(data) {
 			const profiles = [];
-			profiles.push(...data.filter(p => listHidden || p.id !== HIDDEN_PROFILE_ID));
+			profiles.push(...data
+				.filter(p => listHidden || p.id !== HIDDEN_PROFILE_ID)
+				.map(this.convertProfile)
+			);
 
 			this.setState({
 				profiles: profiles,
