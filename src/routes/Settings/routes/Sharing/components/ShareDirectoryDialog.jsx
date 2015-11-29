@@ -1,7 +1,8 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { SHARE_ROOT_POST_URL, SHARE_ROOT_UPDATE_URL, GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
+import { SHARE_ROOT_POST_URL, SHARE_ROOT_UPDATE_URL } from 'constants/ShareRootConstants';
+import { GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';

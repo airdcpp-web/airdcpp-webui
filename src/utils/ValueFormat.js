@@ -47,8 +47,16 @@ const Format = {
 		return Math.max(bits, 0.0).toFixed(2) + bitUnits[i] + '/s';
 	},
 
+	formatRelativeTime: function (time) {
+		if (time === 0) {
+			return 'Unknown';
+		}
+
+		return Moment.unix(time).from(Moment());
+	},
+
 	formatDateTime: function (time) {
-		if (time == 0) {
+		if (time === 0) {
 			return '';
 		}
 

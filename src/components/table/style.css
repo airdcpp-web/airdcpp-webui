@@ -97,3 +97,7 @@
 .fixedDataTableCellLayout_main .plain.cell {
   margin: 0px 5px;
 }
+
+.fixedDataTableCellLayout_main .inline.loader {
+	margin: 0px 5px;
+}

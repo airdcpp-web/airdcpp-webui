@@ -1,0 +1,13 @@
+const SHARE_PROFILE_MODULE_URL = 'share/v0';
+export default {
+	SHARE_PROFILE_MODULE_URL: SHARE_PROFILE_MODULE_URL,
+	SHARE_PROFILES_URL: SHARE_PROFILE_MODULE_URL + '/profiles',
+	SHARE_PROFILE_URL: SHARE_PROFILE_MODULE_URL + '/profile',
+
+	SHARE_PROFILE_ADDED: 'share_profile_added',
+	SHARE_PROFILE_UPDATED: 'share_profile_updated',
+	SHARE_PROFILE_REMOVED: 'share_profile_removed',
+
+	HIDDEN_PROFILE_ID: 1
+}
+;

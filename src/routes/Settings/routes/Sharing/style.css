@@ -13,5 +13,6 @@
 }
 
 .virtual-table {
-	min-height: calc(100vh - 400px);
+	height: calc(100vh - 400px);
+	min-height: 300px;
 }

@@ -6,7 +6,7 @@ import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
 import { SHARE_ROOT_MODAL_ID } from 'constants/OverlayConstants';
-import { SHARE_ROOT_DELETE_URL } from 'constants/ShareConstants';
+import { SHARE_ROOT_DELETE_URL } from 'constants/ShareRootConstants';
 
 import History from 'utils/History';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SHARE_MODULE_URL, SHARE_PROFILES_URL, HIDDEN_PROFILE_ID, SHARE_PROFILE_ADDED, SHARE_PROFILE_UPDATED, SHARE_PROFILE_REMOVED } from 'constants/ShareConstants';
+import { SHARE_PROFILE_MODULE_URL, SHARE_PROFILES_URL, HIDDEN_PROFILE_ID, SHARE_PROFILE_ADDED, SHARE_PROFILE_UPDATED, SHARE_PROFILE_REMOVED } from 'constants/ShareProfileConstants';
 import SocketService from 'services/SocketService';
 
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
@@ -17,9 +17,9 @@ export default function (Component, listHidden) {
 		//},
 
 		onSocketConnected(addSocketListener) {
-			addSocketListener(SHARE_MODULE_URL, SHARE_PROFILE_ADDED, this.fetchProfiles);
-			addSocketListener(SHARE_MODULE_URL, SHARE_PROFILE_UPDATED, this.fetchProfiles);
-			addSocketListener(SHARE_MODULE_URL, SHARE_PROFILE_REMOVED, this.fetchProfiles);
+			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_ADDED, this.fetchProfiles);
+			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_UPDATED, this.fetchProfiles);
+			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_REMOVED, this.fetchProfiles);
 		},
 
 		componentDidMount() {

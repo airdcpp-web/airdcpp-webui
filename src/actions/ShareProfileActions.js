@@ -7,7 +7,7 @@ import InputDialog from 'components/semantic/InputDialog';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
-import { SHARE_PROFILE_URL } from 'constants/ShareConstants';
+import { SHARE_PROFILE_URL } from 'constants/ShareProfileConstants';
 
 const ShareProfileActions = Reflux.createActions([
 	{ 'create': { 

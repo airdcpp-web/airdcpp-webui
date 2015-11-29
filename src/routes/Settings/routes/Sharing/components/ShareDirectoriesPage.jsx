@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ShareRootActions from 'actions/ShareRootActions';
+import ShareActions from 'actions/ShareActions';
 
 import Button from 'components/semantic/Button';
 import ShareDirectoryLayout from './ShareDirectoryLayout';
@@ -8,8 +9,12 @@ import ShareDirectoryLayout from './ShareDirectoryLayout';
 import '../style.css';
 
 const ShareDirectoriesPage = React.createClass({
-	_handleAddDirectory() {
+	handleAddDirectory() {
 		ShareRootActions.create(this.props.location);
+	},
+
+	handleRefresh() {
+		ShareActions.refresh();
 	},
 
 	render() {
@@ -18,8 +23,13 @@ const ShareDirectoriesPage = React.createClass({
 				<div className="actions">
 					<Button
 						icon="plus icon"
-						onClick={this._handleAddDirectory}
+						onClick={this.handleAddDirectory}
 						caption="Add directory"
+					/>
+					<Button
+						icon="green refresh icon"
+						onClick={this.handleRefresh}
+						caption="Refresh all"
 					/>
 				</div>
 				<ShareDirectoryLayout className="directory-layout" location={ this.props.location }/>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import ShareRootActions from 'actions/ShareRootActions';
-//import { SHARE_ROOT_CREATED, SHARE_ROOT_UPDATED, SHARE_ROOT_REMOVED, SHARE_ROOTS_URL, SHARE_MODULE_URL } from 'constants/ShareConstants';
 import ShareRootStore from 'stores/ShareRootStore';
 
 //import Message from 'components/semantic/Message';
@@ -11,6 +10,7 @@ import { SizeCell, ActionCell } from 'components/Cell';
 import { Column } from 'fixed-data-table';
 
 import ProfileDropdown from './ProfileDropdown';
+import RefreshCell from './RefreshCell';
 
 import '../style.css';
 
@@ -66,6 +66,12 @@ const ShareDirectoryLayout = React.createClass({
 					name="Profiles"
 					width={80}
 					columnKey="profiles"
+				/>
+				<Column
+					name="Last refreshed"
+					width={150}
+					columnKey="last_refresh_time"
+					cell={ <RefreshCell/> }
 				/>
 				{/*<Column
 					name="Date"
