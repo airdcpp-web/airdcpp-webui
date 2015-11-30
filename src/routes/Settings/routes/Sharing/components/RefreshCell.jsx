@@ -5,6 +5,22 @@ import { RefreshStateEnum } from 'constants/ShareRootConstants';
 import ValueFormat from 'utils/ValueFormat';
 
 const RefreshCell = React.createClass({
+	componentDidMount() {
+		this.scheduleComponentRefresh();
+	},
+
+	componentWillUnmount() {
+		clearTimeout(this.fetchTimeout);
+	},
+
+	scheduleComponentRefresh() {
+		// Update once per minute to show the correct time since last refresh
+		this.fetchTimeout = setTimeout(() => { 
+			this.forceUpdate();
+			this.scheduleComponentRefresh();
+		}, 60*1000);
+	},
+
 	onClickRefresh() {
 		ShareActions.refreshPaths([ this.props.rowData.path ]);
 	},

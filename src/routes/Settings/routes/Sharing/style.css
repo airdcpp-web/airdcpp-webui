@@ -1,18 +1,5 @@
-/*.root-table {
-	margin-bottom: 20px;
-}*/
-
 .share-directories-settings .actions {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 20px;
-}
-
-.share-directories-settings .accordion {
-	width: inherit !important;
-}
-
-.virtual-table {
-	height: calc(100vh - 400px);
-	min-height: 300px;
 }

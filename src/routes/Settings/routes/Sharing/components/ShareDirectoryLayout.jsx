@@ -3,8 +3,6 @@ import React from 'react';
 import ShareRootActions from 'actions/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
-//import Message from 'components/semantic/Message';
-
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, ActionCell } from 'components/Cell';
 import { Column } from 'fixed-data-table';
@@ -20,18 +18,8 @@ const ShareDirectoryLayout = React.createClass({
 	},
 
 	render() {
-		/*if (sections.length === 0) {
-			return (
-				<Message 
-					title={ 'No directories to display' }
-					description={ Object.keys(this.state.groupedRoots).length === 0 ? 'No shared directories' : 'The selected profile is empty' }
-				/>
-			);
-		}*/
-
 		return (
 			<VirtualTable
-				//emptyRowsNodeGetter={this.emptyRowsNodeGetter}
 				defaultSortProperty="path"
 				store={ShareRootStore}
 				defaultSortAscending={true}
@@ -73,12 +61,6 @@ const ShareDirectoryLayout = React.createClass({
 					columnKey="last_refresh_time"
 					cell={ <RefreshCell/> }
 				/>
-				{/*<Column
-					name="Date"
-					width={150}
-					columnKey="time"
-					cell={ <DateCell/> }
-				/>*/}
 			</VirtualTable>
 		);
 	}

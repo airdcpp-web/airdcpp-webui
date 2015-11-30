@@ -31,3 +31,9 @@
 .settings-layout .detect-panel .detect-button {
 	margin-top: 20px;
 }
+
+
+.settings-layout .virtual-table {
+  height: calc(100vh - 400px);
+  min-height: 300px;
+}

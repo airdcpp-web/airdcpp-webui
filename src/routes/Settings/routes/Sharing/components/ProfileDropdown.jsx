@@ -23,7 +23,6 @@ const ProfileDropdown = React.createClass({
 	},
 
 	onClick: function (profile) {
-		//this.props.onClickProfile(profile);
 		this.props.onFilterUpdated(profile.id);
 		this.setState({ selectedProfile: profile });
 	},

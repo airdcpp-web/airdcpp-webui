@@ -27,7 +27,6 @@ const FilterBox = React.createClass({
 		this._timer = setTimeout(() => {
 			this._timer = null;
 			this.props.onFilterUpdated(this.state.value);
-			//TableActions.filter(this.props.viewUrl, this.state.value);
 		}, 200);
 	},
 

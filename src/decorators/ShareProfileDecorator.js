@@ -10,12 +10,6 @@ import ValueFormat from 'utils/ValueFormat';
 export default function (Component, listHidden, addSize = true) {
 	const ShareProfileDecorator = React.createClass({
 		mixins: [ SocketSubscriptionMixin() ],
-		//propTypes: {
-			/**
-			 * Callback after the profiles have been received
-			 */
-		//	onProfilesReceived: React.PropTypes.func,
-		//},
 
 		onSocketConnected(addSocketListener) {
 			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_ADDED, this.fetchProfiles);

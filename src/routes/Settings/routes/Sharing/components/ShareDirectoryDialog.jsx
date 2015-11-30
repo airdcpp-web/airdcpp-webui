@@ -91,7 +91,6 @@ const ShareDirectoryDialog = React.createClass({
 				factory: t.form.Select,
 				template: SelectField,
 				options: this.getFieldProfiles(),
-				//transformer: FormUtils.intTransformer,
 			});
 		} else if (id === 'path') {
 			if (this._isNew) {
@@ -136,4 +135,4 @@ const ShareDirectoryDialog = React.createClass({
 	}
 });
 
-export default ShareProfileDecorator(ShareDirectoryDialog, true);
+export default ShareProfileDecorator(ShareDirectoryDialog, false);

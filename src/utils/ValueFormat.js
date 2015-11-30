@@ -80,7 +80,6 @@ const Format = {
 			return '';
 		}
 
-		//return Moment.unix(time).format("LTS");
 		return Moment.unix(time).format('HH:mm:ss');
 	},
 
