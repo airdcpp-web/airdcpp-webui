@@ -48,7 +48,7 @@ const ListBrowser = React.createClass({
 		const data = History.getSidebarData(this.props.location);
 		if (!data || !data.directory) {
 			// We need an initial path for our history
-			History.replaceSidebarData(this.props.location, { directory: this.props.item.directory });
+			History.replaceSidebarData(this.props.location, { directory: this.props.item.directory }, true);
 		} else if (this.props.item.directory !== data.directory) {
 			// Opening an existing list from another directory?
 			this.sendChangeDirectory(data.directory);

@@ -6,9 +6,12 @@ export default {
 	ICON_LOCK: 'lock',
 	ICON_REFRESH: 'green refresh',
 	ICON_MESSAGE: 'mail outline',
+
 	ICON_FILELIST: 'browser',
 	ICON_SEARCH: 'search',
 	ICON_FAVORITE: 'yellow star',
+	ICON_HUB: 'sitemap',
+
 	ICON_DOWNLOAD: 'green download',
 	ICON_DOWNLOAD_TO: 'blue download',
 	ICON_FOLDER: 'yellow folder',

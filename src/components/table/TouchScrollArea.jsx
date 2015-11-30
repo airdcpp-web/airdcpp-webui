@@ -16,6 +16,10 @@ var ScrollArea = React.createClass({
 		}
 	},
 
+	componentWillUnmount() {
+		clearTimeout(this._scrollTimer);
+	},
+
 	reset(touchMode) {
 		this.scroller = new ZyngaScroller(touchMode ? this._handleScroll : this._doNothing);
 		this._scrollTimer = null;

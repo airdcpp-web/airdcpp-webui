@@ -1,9 +1,31 @@
 import update from 'react-addons-update';
 
 import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { useQueries } from 'history';
 import { SIDEBAR_ID } from 'constants/OverlayConstants';
 
-const History = createBrowserHistory();
+import qs from 'qs';
+
+const History = useQueries(createBrowserHistory)();
+
+/*const filterFunc = (prefix, value) => {
+	//return value.split('/');
+	Object.keys(value).map((key, index) => {
+		value[key] = value[key].split('/');
+	});
+
+	return value;
+};
+
+const History = useQueries(createBrowserHistory)({
+	parseQueryString: function (queryString) {
+		return qs.parse(queryString);
+	},
+	stringifyQuery: function (query) {
+		return qs.stringify(query, { arrayFormat: 'brackets', filter: filterFunc });
+	}
+});*/
+
 
 const mergeOverlayData = (locationState, overlayId, data) => {
 	return update(locationState, { 
@@ -66,15 +88,16 @@ const pushSidebar = (currentLocation, nextPath, data) => {
 };
 
 // Append new location data when in sidebar layout and create a new history entry
+// Query will always be appended due to history lib: https://github.com/rackt/history/pull/43
 const pushSidebarData = (currentLocation, data) => {
 	const newState = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
-	History.pushState(newState, currentLocation.pathname);
+	History.pushState(newState, currentLocation.pathname, data);
 };
 
 // Append new location data when in sidebar layout without creating a new history entry
-const replaceSidebarData = (currentLocation, data) => {
+const replaceSidebarData = (currentLocation, data, addQuery = false) => {
 	const newState = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
-	History.replaceState(newState, currentLocation.pathname);
+	History.replaceState(newState, currentLocation.pathname, addQuery ? data : null);
 };
 
 // Shorthand function for receiving the data

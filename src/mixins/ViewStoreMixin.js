@@ -8,10 +8,12 @@ export default {
 		this._entityId = entityId;
 
 		this.addListener();
+		this._active = true;
 	},
 
 	uninit() {
 		this._removeMessageListener();
+		this._active = false;
 	},
 
 	clear() {
@@ -51,6 +53,10 @@ export default {
 
 	get rowCount() {
 		return this._rowCount;
+	},
+
+	get active() {
+		return this._active;
 	},
 
 	_addItems(itemsObj) {

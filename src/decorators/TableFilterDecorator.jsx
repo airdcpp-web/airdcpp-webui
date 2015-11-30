@@ -1,7 +1,6 @@
 import React from 'react';
 
 import SocketService from 'services/SocketService';
-import Loader from 'components/semantic/Loader';
 
 export default function (Component, propertyName = 'any') {
 	const TableFilterDecorator = React.createClass({
@@ -19,11 +18,14 @@ export default function (Component, propertyName = 'any') {
 		},
 
 		componentDidMount() {
-			//this.fetchProfiles();
 			SocketService.post(this.props.viewUrl + '/filter').then(this.onFilterAdded);
 		},
 
 		onFilterAdded(data) {
+			if (!this.isMounted()) {
+				return;
+			}
+
 			this.setState({ filterId: data.id });
 		},
 
@@ -34,14 +36,12 @@ export default function (Component, propertyName = 'any') {
 				property: propertyName,
 			};
 
-			SocketService.put(this.props.viewUrl + '/filter/' + this.state.filterId, data);
-
-			//promise.catch(error => this.failed(viewUrl, error);
+			SocketService.put(this.props.viewUrl + '/filter/' + this.state.filterId, data)
+				.catch(error => console.error('Failed to add table filter'));
 		},
 
 		render() {
 			if (!this.state.filterId) {
-				//return <span>Loading</span>;
 				return null;
 			}
 

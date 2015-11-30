@@ -42,7 +42,8 @@ const VirtualTable = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.entityId !== this.props.entityId) {
-			this.updateTableSettings();
+			TableActions.close(this.props.store.viewUrl);
+			this.props.store.setEntityId(nextProps.entityId);
 		}
 	},
 

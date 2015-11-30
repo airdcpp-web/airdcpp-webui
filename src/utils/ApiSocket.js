@@ -93,7 +93,7 @@ export default class ApiSocket {
 			resolver:resolver
 		};
 
-		console.log('Sending request', callbackId, path, data ? data : '(no data)', method);
+		console.log(callbackId, method, path, data ? data : '(no data)');
 
 		const request = {
 			path: path,
@@ -113,10 +113,10 @@ export default class ApiSocket {
 			// Callback
 
 			if (messageObj.code >= 200 && messageObj.code <= 204) {
-				console.log('Websocket request ' + messageObj.callback_id + ' succeed: ' + event.data);
+				console.info(messageObj.callback_id, 'SUCCEED', messageObj.data ? messageObj.data : '(no data)');
 				this.callbacks[messageObj.callback_id].resolver.resolve(messageObj.data);
 			} else {
-				console.log('Websocket request ' + messageObj.callback_id + ' failed with code ' + messageObj.code + ': ' + messageObj.error.message);
+				console.warn(messageObj.callback_id, messageObj.code, messageObj.error.message);
 				this.callbacks[messageObj.callback_id].resolver.reject({ message: messageObj.error.message, code: messageObj.code, json: messageObj.error });
 			}
 
@@ -124,7 +124,7 @@ export default class ApiSocket {
 		} else {
 			// Listener message
 			if (ignoredConsoleEvents.indexOf(messageObj.event) == -1) {
-				console.log('Received listener message for ' + messageObj.event + ' (ID ' + messageObj.id + '): ', messageObj.data);
+				console.log(messageObj.event, messageObj.id ? messageObj.id : '-', messageObj.data);
 			}
 
 			SocketActions.message(this, messageObj);

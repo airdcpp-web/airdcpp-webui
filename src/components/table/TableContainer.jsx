@@ -82,33 +82,41 @@ const TableContainer = React.createClass({
 		}
 	},
 
-	componentWillUpdate(nextProps, nextState) {
-		if (nextState.height != this.state.height || 
-			nextState.sortAscending != this.state.sortAscending ||
-			nextState.sortProperty != this.state.sortProperty) {
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.height != this.state.height || 
+			prevState.sortAscending != this.state.sortAscending ||
+			prevState.sortProperty != this.state.sortProperty) {
 
-			setTimeout(this._onContentHeightChange, 0);
-			setTimeout(this.updateTableSettings, 0);
+			this._onContentHeightChange();
+			this.updateTableSettings();
 		}
+	},
+
+	componentWillUnmount() {
+		clearTimeout(this._scrollTimer);
 	},
 
 	updateTableSettings() {
 		const startRows = convertStartToRows(this._scrollPosition);
 		const maxRows = convertEndToRows(this.state.height, true);
 
-		console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
+		//console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
+
+		console.assert(this.props.store.active, 'Posting data for an inactive view');
 		TableActions.changeSettings(this.props.store.viewUrl, startRows, maxRows, this.state.sortProperty, this.state.sortAscending);
 	},
 
 	_onScrollStart(horizontal, vertical) {
 		this.props.dataLoader.fetchingActive = true;
 		//console.log("Scrolling started: " + vertical, this.props.store.viewName);
+		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, true);
 	},
 
 	_onScrollEnd(horizontal, vertical) {
 		this._scrollPosition = vertical;
 		this.props.dataLoader.fetchingActive = false;
+		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, false);
 
 		clearTimeout(this._scrollTimer);

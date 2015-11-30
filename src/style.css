@@ -118,6 +118,10 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	display:flex !important;
 }
 
+.ui.breadcrumb.segment > div {
+	display:flex;
+}
+
 .modal.full > .content {
 	overflow-y: auto;
 	max-height: 65vh;
