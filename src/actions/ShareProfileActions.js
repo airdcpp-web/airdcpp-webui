@@ -8,30 +8,31 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
 import { SHARE_PROFILE_URL } from 'constants/ShareProfileConstants';
+import { ICON_CREATE, ICON_EDIT, ICON_REMOVE, ICON_DEFAULT } from 'constants/IconConstants';
 
 const ShareProfileActions = Reflux.createActions([
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Add profile',
-		icon: 'green tasks' },
+		icon: ICON_CREATE },
 	},
 	{ 'edit': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Rename profile', 
-		icon: 'edit' },
+		icon: ICON_EDIT },
 	},
 	{ 'default': { 
 		asyncResult: true, 
 		displayName: 'Set as default', 
-		icon: 'blue pin' },
+		icon: ICON_DEFAULT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove profile', 
-		icon: 'red remove circle' },
+		icon: ICON_REMOVE },
 	},
 ]);
 

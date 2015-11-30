@@ -4,14 +4,18 @@ import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
 
 import { SHARE_REFRESH_URL, SHARE_REFRESH_PATHS_URL } from 'constants/ShareConstants';
-
+import { ICON_REFRESH } from 'constants/IconConstants';
 
 const ShareActions = Reflux.createActions([
 	{ 'refresh': { 
-		asyncResult: true, }
+		asyncResult: true,
+		displayName: 'Refresh all',
+		icon: ICON_REFRESH }
 	},
 	{ 'refreshPaths': { 
-		asyncResult: true, }
+		asyncResult: true,
+		displayName: 'Refresh directory',
+		icon: ICON_REFRESH }
 	},
 ]);
 

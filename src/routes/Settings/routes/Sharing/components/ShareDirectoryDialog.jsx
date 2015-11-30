@@ -3,6 +3,7 @@ import Modal from 'components/semantic/Modal';
 
 import { SHARE_ROOT_POST_URL, SHARE_ROOT_UPDATE_URL } from 'constants/ShareRootConstants';
 import { GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
+import { ICON_FOLDER } from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
@@ -120,7 +121,7 @@ const ShareDirectoryDialog = React.createClass({
 		};
 
 		return (
-			<Modal className="share-directory" title={title} onApprove={this.save} closable={false} icon="yellow folder" {...this.props}>
+			<Modal className="share-directory" title={title} onApprove={this.save} closable={false} icon={ ICON_FOLDER } {...this.props}>
 				<Form
 					ref="form"
 					formItems={Entry}

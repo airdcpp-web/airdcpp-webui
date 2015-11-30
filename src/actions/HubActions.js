@@ -8,6 +8,8 @@ import HubSessionStore from 'stores/HubSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 import ChatActionDecorator from 'decorators/ChatActionDecorator';
 
+import { ICON_FAVORITE, ICON_REFRESH } from 'constants/IconConstants';
+
 const HubActions = Reflux.createActions([
 	{ 'fetchSessions': { asyncResult: true } },
 	{ 'createSession': { asyncResult: true } },
@@ -17,11 +19,13 @@ const HubActions = Reflux.createActions([
 	{ 'reconnect': { 
 		asyncResult: true,
 		displayName: 'Reconnect', 
-		icon: 'green refresh' } },
+		icon: ICON_REFRESH } 
+	},
 	{ 'favorite': { 
 		asyncResult: true,
 		displayName: 'Add to favorites', 
-		icon: 'yellow star' } },
+		icon: ICON_FAVORITE } 
+	},
 	'sessionChanged',
 ]);
 

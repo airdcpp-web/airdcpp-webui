@@ -4,13 +4,24 @@ import { BUNDLE_URL, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
+import { ICON_REMOVE, ICON_SEARCH } from 'constants/IconConstants';
 
 export const QueueActions = Reflux.createActions([
-	{ 'searchBundle': { asyncResult: true, displayName: 'Search for alternates', icon: 'search' } },
-	{ 'setBundlePriority': { asyncResult: true, displayName: 'Set priority' } },
-	{ 'setFilePriority': { asyncResult: true, displayName: 'Set priority' } },
-	{ 'removeBundle': { asyncResult: true, children: [ 'confirmed' ], displayName: 'Remove', icon: 'red remove circle' } },
-	{ 'removeFile': { asyncResult: true, displayName: 'Remove', icon: 'red remove' } }
+	{ 'searchBundle': { 
+		asyncResult: true, 
+		displayName: 'Search for alternates', 
+		icon: ICON_SEARCH } 
+	},
+	{ 'setBundlePriority': { 
+		asyncResult: true, 
+		displayName: 'Set priority' } 
+	},
+	{ 'removeBundle': { 
+		asyncResult: true, 
+		children: [ 'confirmed' ], 
+		displayName: 'Remove', 
+		icon: ICON_REMOVE } 
+	},
 ]);
 
 QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {

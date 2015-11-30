@@ -9,22 +9,22 @@ import { SHARE_ROOT_MODAL_ID } from 'constants/OverlayConstants';
 import { SHARE_ROOT_DELETE_URL } from 'constants/ShareRootConstants';
 
 import History from 'utils/History';
-
+import { ICON_CREATE, ICON_EDIT, ICON_REMOVE } from 'constants/IconConstants';
 
 const ShareRootActions = Reflux.createActions([
 	{ 'create': { 
 		displayName: 'Add directory',
-		icon: 'green folder' },
+		icon: ICON_CREATE },
 	},
 	{ 'edit': { 
 		displayName: 'Edit directory', 
-		icon: 'edit' },
+		icon: ICON_EDIT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove directory', 
-		icon: 'red remove circle' },
+		icon: ICON_REMOVE },
 	},
 ]);
 

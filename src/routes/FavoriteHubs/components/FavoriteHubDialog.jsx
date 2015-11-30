@@ -8,6 +8,7 @@ import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
+import { ICON_FAVORITE } from 'constants/IconConstants';
 
 import t from 'utils/tcomb-form';
 
@@ -96,7 +97,7 @@ const FavoriteHubDialog = React.createClass({
 	render: function () {
 		const title = this._isNew ? 'Add favorite hub' : 'Edit favorite hub';
 		return (
-			<Modal className="fav-hub" title={title} onApprove={this.save} closable={false} icon="yellow star" {...this.props}>
+			<Modal className="fav-hub" title={title} onApprove={this.save} closable={false} icon={ ICON_FAVORITE } {...this.props}>
 				<Form
 					ref="form"
 					title="User information"

@@ -6,28 +6,31 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants';
 
+import { ICON_CREATE, ICON_EDIT, ICON_REMOVE } from 'constants/IconConstants';
+
 import History from 'utils/History';
 
 export const FavoriteHubActions = Reflux.createActions([
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
-		displayName: 'New' },
+		displayName: 'Add new',
+		icon: ICON_CREATE },
 	},
 	{ 'edit': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Edit', 
-		icon: 'edit' },
-	},
-	{ 'update': { 
-		asyncResult: true },
+		icon: ICON_EDIT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove', 
-		icon: 'red remove circle' },
+		icon: ICON_REMOVE },
+	},
+	{ 'update': { 
+		asyncResult: true },
 	},
 ]);
 

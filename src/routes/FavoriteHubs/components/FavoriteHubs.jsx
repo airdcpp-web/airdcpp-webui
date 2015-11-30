@@ -12,7 +12,8 @@ import ConnectStateCell from './ConnectStateCell';
 
 import { TableActionMenu } from 'components/Menu';
 
-import Button from 'components/semantic/Button';
+//import Button from 'components/semantic/Button';
+import ActionButton from 'components/ActionButton';
 
 import '../style.css';
 
@@ -47,11 +48,7 @@ const FavoriteHubs = React.createClass({
 
 	render() {
 		const footerData = (
-			<Button
-				icon="plus icon"
-				onClick={this._handleAddHub}
-				caption="Add new"
-			/>
+			<ActionButton action={ FavoriteHubActions.create }/>
 		);
 
 		return (

@@ -16,7 +16,7 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import LogActions from 'actions/LogActions';
 import LogStore from 'stores/LogStore';
 
-import FilelistSessionStore from 'stores/FilelistSessionStore'; // must be required here for now
+import 'stores/FilelistSessionStore'; // must be required here for now
 import FilelistActions from 'actions/FilelistActions';
 
 import CountLabel from 'components/CountLabel';

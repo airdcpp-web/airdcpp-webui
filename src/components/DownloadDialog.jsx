@@ -6,6 +6,7 @@ import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants';
 import { GROUPED_ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
 import { HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js';
 import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js';
+import { ICON_DOWNLOAD } from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
@@ -235,7 +236,7 @@ const DownloadDialog = React.createClass({
 				className="download-dialog" 
 				title="Download" 
 				closable={true} 
-				icon="green download"
+				icon={ ICON_DOWNLOAD }
 				fullHeight={true}
 				{...this.props}
 			>

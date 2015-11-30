@@ -6,6 +6,7 @@ import SocketService from 'services/SocketService';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import { PasswordDialog } from 'components/semantic/InputDialog';
+import { ICON_LOCK, ICON_EDIT, ICON_REMOVE } from 'constants/IconConstants';
 
 const sendPassword = (hub, password, action) => {
 	return SocketService.patch(FAVORITE_HUB_URL + '/' + hub.id, { password: password })
@@ -21,19 +22,19 @@ const FavoriteHubPasswordActions = Reflux.createActions([
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Set password',
-		icon: 'lock' },
+		icon: ICON_LOCK },
 	},
 	{ 'change': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Change password', 
-		icon: 'edit' },
+		icon: ICON_EDIT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove password', 
-		icon: 'red remove circle' },
+		icon: ICON_REMOVE },
 	},
 ]);
 

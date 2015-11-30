@@ -4,16 +4,18 @@ import Reflux from 'reflux';
 import History from 'utils/History';
 import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
 
+import { ICON_DOWNLOAD, ICON_DOWNLOAD_TO } from 'constants/IconConstants';
+
 export const DownloadActions = Reflux.createActions([
 	{ 'download': { 
 		asyncResult: true,	
 		displayName: 'Download', 
-		icon: 'green download' } 
+		icon: ICON_DOWNLOAD } 
 	},
 	{ 'downloadTo': { 
 		asyncResult: true,	
 		displayName: 'Download to...', 
-		icon: 'blue download' } 
+		icon: ICON_DOWNLOAD_TO } 
 	}
 ]);
 

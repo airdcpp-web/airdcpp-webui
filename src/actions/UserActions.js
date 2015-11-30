@@ -4,16 +4,18 @@ import Reflux from 'reflux';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 
+import { ICON_FILELIST, ICON_MESSAGE } from 'constants/IconConstants';
+
 export const UserActions = Reflux.createActions([
 	 { 'message': { 
 		asyncResult: true, 
 		displayName: 'Send message', 
-		icon: 'mail outline' },
+		icon: ICON_MESSAGE },
 	},
 	{ 'browse': { 
 		asyncResult: true,	
 		displayName: 'Browse share', 
-		icon: 'browser' },
+		icon: ICON_FILELIST },
 	},
 ]);
 

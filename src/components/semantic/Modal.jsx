@@ -5,6 +5,8 @@ import { History } from 'react-router';
 import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
+import { ICON_SAVE } from 'constants/IconConstants';
+
 const Modal = React.createClass({
 	mixins: [ History ],
 	propTypes: {
@@ -104,7 +106,7 @@ const Modal = React.createClass({
 				{this.props.onApprove ? (
 					<div className="actions">
 						<div className={ approveStyle }>
-							<i className="checkmark icon"></i>
+							<i className={ ICON_SAVE + ' icon' }></i>
 							{this.props.approveCaption}
 						</div>
 						<div className="ui cancel red basic button">
