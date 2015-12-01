@@ -122,6 +122,13 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	display:flex;
 }
 
+.ui.breadcrumb.segment .section {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 150px;
+	white-space: nowrap;
+}
+
 .modal.full > .content {
 	overflow-y: auto;
 	max-height: 65vh;

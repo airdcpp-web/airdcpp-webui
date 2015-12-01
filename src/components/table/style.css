@@ -59,7 +59,7 @@
 
 .table-dropdown {
 	line-height: 21px;
-  padding: 5px;
+  padding: 0 0 0 2px;
 }
 
 .table-dropdown:hover, .public_fixedDataTableCell_main a:hover {
