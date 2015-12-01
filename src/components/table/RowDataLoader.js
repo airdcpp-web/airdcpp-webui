@@ -39,6 +39,11 @@ class RowDataLoader {
 	}
 
 	_queueRequestFor(rowIndex, onDataLoaded) {
+		// Can be called without queueing as well (rowClassNameGetter etc.)
+		if (!onDataLoaded) {
+			return;
+		}
+
 		const request = this._pendingRequest[rowIndex];
 		if (request) {
 			request.push(onDataLoaded);
@@ -53,7 +58,7 @@ class RowDataLoader {
 				delete this._pendingRequest[rowIndex];
 			}.bind(this))
 			.catch(error => {
-				console.log('Failed to load data: ' + error, this.props.viewName);
+				console.log('Failed to load data', error);
 				delete this._pendingRequest[rowIndex];
 			}
 		);
