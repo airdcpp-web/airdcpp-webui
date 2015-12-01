@@ -120,6 +120,7 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 
 .ui.breadcrumb.segment > div {
 	display:flex;
+	align-items: baseline;
 }
 
 .ui.breadcrumb.segment .section {

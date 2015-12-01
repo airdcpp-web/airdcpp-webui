@@ -59,7 +59,6 @@
 
 .table-dropdown {
 	line-height: 21px;
-  padding: 0 0 0 2px;
 }
 
 .table-dropdown:hover, .public_fixedDataTableCell_main a:hover {
@@ -92,6 +91,8 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  max-height: 50px;
+  padding: 5px;
 }
 
 .fixedDataTableCellLayout_main .plain.cell {

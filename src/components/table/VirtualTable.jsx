@@ -47,8 +47,10 @@ const VirtualTable = React.createClass({
 		}
 	},
 
-	onItemsUpdated(items) {
+	onItemsUpdated(items, rangeOffset) {
+		this._dataLoader.onItemsUpdated(items, rangeOffset);
 		this._dataLoader.items = items;
+		//this.rangeOffset = rangeOffset;
 	},
 
 	render: function () {
@@ -65,6 +67,7 @@ const VirtualTable = React.createClass({
 			}
 		}
 
+		//console.log('Render virtual table');
 		return (
 			<div className="virtual-table">
 				<TableContainer { ...other } emptyRowsNode={emptyRowsNode} dataLoader={this._dataLoader}/>

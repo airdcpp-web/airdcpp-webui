@@ -93,6 +93,6 @@ export default {
 			this._addItems(obj.items);
 		}
 
-		this.trigger(this._items);
+		this.trigger(this._items, obj.range_offset);
 	}
 };

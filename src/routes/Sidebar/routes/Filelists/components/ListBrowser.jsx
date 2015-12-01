@@ -78,9 +78,15 @@ const ListBrowser = React.createClass({
 
 	emptyRowsNodeGetter() {
 		const { location } = this.props.item;
+
+		// The list finished downloading but the view hasn't updated yet
 		if (location.files !== 0 || location.directories !== 0) {
-			const text = location.complete ? 'Updating view' : 'Loading';
-			return <Loader text={ text }/>;
+			return <Loader text="Updating view"/>;
+		}
+
+		// The directory was changed but the download state hasn't changed yet
+		if (!location.complete) {
+			return <Loader text="Preparing download"/>;
 		}
 
 		return (

@@ -57,12 +57,7 @@ const OverlayHelpers = {
 	},
 
 	pushSidebar: function (currentLocation, nextPath, data) {
-		if (toSidebarPath(nextPath) === currentLocation.pathname) {
-			// Don't create duplicate history entries
-			replaceSidebar(currentLocation, nextPath);
-			return;
-		}
-
+		// replaceState is invoked automatically if the path hasn't changed
 		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
 		History.pushState(state, toSidebarPath(nextPath));
 	},

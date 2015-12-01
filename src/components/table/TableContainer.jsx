@@ -50,6 +50,9 @@ const TableContainer = React.createClass({
 		 * ID of the current entity for non-singleton sources
 		 */
 		entityId: PropTypes.any,
+
+		
+		dataLoader: PropTypes.any,
 	},
 
 	onLocalSettingsChanged() {
@@ -66,7 +69,9 @@ const TableContainer = React.createClass({
 	getInitialState() {
 		return {
 			sortProperty: this.props.defaultSortProperty,
-			sortAscending: this.props.defaultSortAscending !== undefined ? this.props.defaultSortAscending : true
+			sortAscending: this.props.defaultSortAscending !== undefined ? this.props.defaultSortAscending : true,
+			top: 0,
+			left: 0,
 		};
 	},
 
@@ -107,7 +112,7 @@ const TableContainer = React.createClass({
 	},
 
 	_onScrollStart(horizontal, vertical) {
-		this.props.dataLoader.fetchingActive = true;
+		//this.props.dataLoader.fetchingActive = true;
 		//console.log("Scrolling started: " + vertical, this.props.store.viewName);
 		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, true);
@@ -115,7 +120,7 @@ const TableContainer = React.createClass({
 
 	_onScrollEnd(horizontal, vertical) {
 		this._scrollPosition = vertical;
-		this.props.dataLoader.fetchingActive = false;
+		//this.props.dataLoader.fetchingActive = false;
 		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, false);
 
@@ -222,6 +227,7 @@ const TableContainer = React.createClass({
 			return this.props.emptyRowsNode;
 		}
 
+		//console.log('Render table container, scroll top: ' + this.state.top);
 		// Update and insert generic columns props
 		const children = React.Children.map(this.props.children, this.convertColumn);
 
