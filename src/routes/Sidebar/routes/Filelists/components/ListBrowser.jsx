@@ -14,6 +14,7 @@ import { SizeCell, DateCell, FileDownloadCell } from 'components/Cell';
 import { Column } from 'fixed-data-table';
 
 import SetContainerSize from 'mixins/SetContainerSize';
+import Loader from 'components/semantic/Loader';
 
 const ListBrowser = React.createClass({
 	mixins: [ SetContainerSize ], // The table won't handle responsive height quickly enough
@@ -31,7 +32,7 @@ const ListBrowser = React.createClass({
 	},*/
 
 	_tokenizePath() {
-		let path = this.props.item.directory;
+		let path = this.props.item.location.path;
 		return path.split('/').filter(el => el.length != 0);
 	},
 
@@ -49,7 +50,7 @@ const ListBrowser = React.createClass({
 		if (!data || !data.directory) {
 			// We need an initial path for our history
 			History.replaceSidebarData(this.props.location, { directory: this.props.item.directory }, true);
-		} else if (this.props.item.directory !== data.directory) {
+		} else if (this.props.item.location.path !== data.directory) {
 			// Opening an existing list from another directory?
 			this.sendChangeDirectory(data.directory);
 		}
@@ -57,7 +58,7 @@ const ListBrowser = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		const { directory } = History.getSidebarData(nextProps.location);
-		if (!directory || nextProps.item.directory === directory) {
+		if (!directory || nextProps.item.location.path === directory) {
 			return;
 		}
 
@@ -67,7 +68,7 @@ const ListBrowser = React.createClass({
 			this.sendChangeDirectory(directory);
 		} else {
 			// Change initiated by another session/GUI, update our location
-			History.replaceSidebarData(nextProps.location, { directory: this.props.item.directory });
+			History.replaceSidebarData(nextProps.location, { directory: this.props.item.location.path });
 		}
 	},
 
@@ -76,6 +77,12 @@ const ListBrowser = React.createClass({
 	},
 
 	emptyRowsNodeGetter() {
+		const { location } = this.props.item;
+		if (location.files !== 0 || location.directories !== 0) {
+			const text = location.complete ? 'Updating view' : 'Loading';
+			return <Loader text={ text }/>;
+		}
+
 		return (
 			<Message 
 				title={ 'No content to display' }
@@ -88,7 +95,7 @@ const ListBrowser = React.createClass({
 		let captionText = cellData;
 		if (rowData.type.id === 'directory') {
 			captionText = (
-				<a onClick={ () => this._handleClickDirectory(this.props.item.directory + cellData + '/') }>
+				<a onClick={ () => this._handleClickDirectory(this.props.item.location.path + cellData + '/') }>
 					{ cellData }
 				</a>
 				);
