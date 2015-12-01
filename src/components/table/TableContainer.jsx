@@ -112,7 +112,6 @@ const TableContainer = React.createClass({
 	},
 
 	_onScrollStart(horizontal, vertical) {
-		//this.props.dataLoader.fetchingActive = true;
 		//console.log("Scrolling started: " + vertical, this.props.store.viewName);
 		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, true);
@@ -120,7 +119,6 @@ const TableContainer = React.createClass({
 
 	_onScrollEnd(horizontal, vertical) {
 		this._scrollPosition = vertical;
-		//this.props.dataLoader.fetchingActive = false;
 		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, false);
 
