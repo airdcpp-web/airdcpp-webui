@@ -2,6 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Promise from 'utils/Promise';
+import Checkbox from 'components/semantic/Checkbox';
+
+const CheckboxCell = ({ cellData, rowData, onChange }) => (
+	<Checkbox 
+		checked={cellData} 
+		onChange={ (checked) => onChange(checked, rowData) }
+	/>
+);
 
 const ConfirmDialog = React.createClass({
 	propTypes: {
@@ -23,12 +31,24 @@ const ConfirmDialog = React.createClass({
 
 		approveCaption: React.PropTypes.string,
 		rejectCaption: React.PropTypes.string,
+
+		/**
+		 * Display a textbox if the caption is supplied
+		 * The checkbox value will be provided as an argument when the promise is resolved
+		 */
+		checkboxCaption: React.PropTypes.node,
 	},
 
 	getDefaultProps() {
 		return {
 			approveCaption: 'Yes',
 			rejectCaption: 'No',
+		};
+	},
+
+	getInitialState() {
+		return {
+			checked: false,
 		};
 	},
 
@@ -52,7 +72,7 @@ const ConfirmDialog = React.createClass({
 	},
 
 	onApprove: function (el) {
-		this.props.resolver.resolve();
+		this.props.resolver.resolve(this.state.checked);
 	},
 
 	onHidden() {
@@ -60,6 +80,10 @@ const ConfirmDialog = React.createClass({
 			ReactDOM.unmountComponentAtNode(this.props.node);
 			document.body.removeChild(this.props.node);
 		}
+	},
+
+	onCheckboxValueChanged(value) {
+		this.setState({ checked: value });
 	},
 
 	render: function () {
@@ -73,6 +97,13 @@ const ConfirmDialog = React.createClass({
 				</div>
 				<div className="description">
 					{ this.props.content }
+					{ this.props.checkboxCaption ? (	
+						<Checkbox 
+							checked={false} 
+							onChange={ this.onCheckboxValueChanged }
+							caption={ this.props.checkboxCaption }
+						/>
+					) : null }
 				</div>
 			</div>
 			<div className="actions">

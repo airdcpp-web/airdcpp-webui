@@ -77,9 +77,10 @@ export const FileDownloadCell = ({ cellData, rowData, captionGetter, ...props })
 	/>
 );
 
-export const CheckboxCell = ({ cellData, rowData, onChange }) => (
+export const CheckboxCell = ({ cellData, rowData, onChange, ...props }) => (
 	<Checkbox 
 		checked={cellData} 
 		onChange={ (checked) => onChange(checked, rowData) }
+		{ ...props }
 	/>
 );

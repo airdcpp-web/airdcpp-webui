@@ -137,13 +137,19 @@ section#container-main, .login-grid, #main-layout, #authenticated-app, .pusher {
 	height: 65vh;
 }
 
+.confirm-dialog .description, 
 .input.dialog {
 	display: flex !important;
 	flex-direction: column !important;
+}
+
+.input.dialog,
+.confirm-dialog label {
 	color: white !important;
 }
 
-.input.dialog input {
+.input.dialog input,
+.confirm-dialog label {
 	margin-top: 20px !important;
 }
 

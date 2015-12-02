@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import classNames from 'classnames';
+
 const CheckBox = React.createClass({
 	propTypes: {
 
@@ -13,6 +15,18 @@ const CheckBox = React.createClass({
 		 * Handler for state changes (receives bool as argument)
 		 */
 		onChange: React.PropTypes.func.isRequired,
+
+		/**
+		 * Checkbox caption
+		 */
+		caption: React.PropTypes.node,
+
+		/**
+		 * Display type (slider or toggle), leave undefined for default
+		 */
+		type: React.PropTypes.string,
+
+		disabled: React.PropTypes.bool,
 	},
 
 	componentDidMount() {
@@ -38,9 +52,23 @@ const CheckBox = React.createClass({
 	},
 
 	render: function () {
+		const { className, checked, caption, type, disabled } = this.props;
+
+		const checkboxStyle = classNames(
+			'ui checkbox',
+			{ 'disabled': disabled },
+			className,
+			type,
+		);
+
 		return (
-			<div className="ui checkbox toggle">
-				<input type="checkbox" defaultChecked={ this.props.checked }/>
+			<div className={ checkboxStyle }>
+				<input type="checkbox" defaultChecked={ checked }/>
+				{ caption ? (
+					<label>
+						{ caption }
+					</label>
+					) : null }
 			</div>);
 	},
 });

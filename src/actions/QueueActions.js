@@ -85,7 +85,7 @@ QueueActions.removeFinished.completed.listen(function (data) {
 QueueActions.removeBundle.shouldEmit = function (bundle) {
 	if (bundle.status.id >= StatusEnum.STATUS_FINISHED) {
 		// No need to confirm finished bundles
-		this.confirmed(bundle);
+		this.confirmed(bundle, false);
 	} else {
 		const options = {
 			title: this.displayName,
@@ -93,17 +93,18 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 			icon: this.icon,
 			approveCaption: 'Remove bundle',
 			rejectCaption: "Don't remove",
+			checkboxCaption: 'Remove finished files',
 		};
 
-		ConfirmDialog(options).then(() => this.confirmed(bundle));
+		ConfirmDialog(options).then((removeFinished) => this.confirmed(bundle, removeFinished));
 	}
 	return false;
 };
 
-QueueActions.removeBundle.confirmed.listen(function (bundle) {
+QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	let that = this;
 	console.log('Remove succeed');
-	return SocketService.delete(BUNDLE_URL + '/' + bundle.id)
+	return SocketService.delete(BUNDLE_URL + '/' + bundle.id, { remove_finished: removeFinished })
 		.then(that.completed)
 		.catch(this.failed);
 });
