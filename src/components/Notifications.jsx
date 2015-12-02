@@ -42,7 +42,9 @@ const Notifications = React.createClass({
 		const n = new Notification(notificationInfo.title, options);
 		n.onclick = () => {
 			window.focus();
-			notificationInfo.action.callback();
+			if (notificationInfo.action) {
+				notificationInfo.action.callback();
+			}
 		};
 
 		setTimeout(n.close.bind(n), 5000);

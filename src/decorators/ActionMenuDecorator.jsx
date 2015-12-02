@@ -49,11 +49,14 @@ export default function (Component) {
 		},
 
 		render() {
-			const { ids, actions, itemData, ...other } = this.props;
+			let { ids, actions, ...other } = this.props;
+			if (!ids) {
+				ids = Object.keys(actions);
+			}
 
 			return (
 				<Component {...other}>
-					{ this.props.ids.map(this.getItem) }
+					{ ids.map(this.getItem) }
 				</Component>
 			);
 		},
