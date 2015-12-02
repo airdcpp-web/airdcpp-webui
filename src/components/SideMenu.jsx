@@ -92,10 +92,10 @@ const SideMenu = React.createClass({
 			<div id="side-menu">
 				<div className="content">
 					<div className="ui labeled icon vertical inverted menu">
-						<MenuItem title="Hubs" page="/sidebar/hubs" unreadInfo={ LabelInfo.getHubUnreadInfo(HubSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue sitemap"/>
-						<MenuItem title="Messages" page="/sidebar/messages" unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(PrivateChatSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue comments"/>
-						<MenuItem title="Filelists" page="/sidebar/filelists" labelCount={ 0 } location={this.props.location} icon="blue browser"/>
-						<MenuItem title="Events" page="/sidebar/events" unreadInfo={ LabelInfo.getLogUnreadInfo(LogStore.getUnreadCounts()) } location={this.props.location} icon="blue history"/>
+						<MenuItem title="Hubs" page="/hubs" unreadInfo={ LabelInfo.getHubUnreadInfo(HubSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue sitemap"/>
+						<MenuItem title="Messages" page="/messages" unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(PrivateChatSessionStore.getUnreadCounts()) } location={this.props.location} icon="blue comments"/>
+						<MenuItem title="Filelists" page="/filelists" labelCount={ 0 } location={this.props.location} icon="blue browser"/>
+						<MenuItem title="Events" page="/events" unreadInfo={ LabelInfo.getLogUnreadInfo(LogStore.getUnreadCounts()) } location={this.props.location} icon="blue history"/>
 					</div>
 				</div>
 				<div>

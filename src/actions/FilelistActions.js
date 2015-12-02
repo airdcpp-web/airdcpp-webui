@@ -81,7 +81,7 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 });
 
 FilelistActions.createSession.completed.listen(function (location, user, directory, session) {
-	History.pushSidebar(location, 'filelists/session/' + user.cid, { 
+	History.pushSidebar(location, '/filelists/session/' + user.cid, { 
 		directory: directory,
 		pending: true
 	});

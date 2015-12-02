@@ -10,6 +10,8 @@ import Reflux from 'reflux';
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
+import { SIDEBAR_ID } from 'constants/OverlayConstants';
+
 import 'array.prototype.find';
 import './utils/semantic';
 
@@ -21,13 +23,20 @@ if (LoginStore.token) {
 	LoginActions.connect(LoginStore.token);
 }
 
-function requireAuth(nextState, replaceState) {
+const requireAuth = (nextState, replaceState) => {
 	if (!LoginStore.user) {
 		replaceState({ nextPath: nextState.location.pathname }, '/login', null);
 	}
-}
+};
 
-var routeConfig = [
+const onEnterSidebar = (nextProps, replaceState) => {
+	// Don't allow sidebar to be accessed with a direct link
+	if (!nextProps.location.state || !nextProps.location.state[SIDEBAR_ID]) {
+		replaceState(null, '/');
+	}
+};
+
+const routeConfig = [
 	{ 
 		path: 'login', 
 		component: require('./components/Login'), 
@@ -42,7 +51,17 @@ var routeConfig = [
 			require('./routes/Queue'),
 			require('./routes/Search'),
 			require('./routes/Settings'),
-			require('./routes/Sidebar'),
+			{ 
+				component: require('./routes/sidebar/components/Sidebar'),
+				path: 'sidebar',
+				onEnter: onEnterSidebar,
+				childRoutes: [
+					require('./routes/sidebar/routes/Hubs'),
+					require('./routes/sidebar/routes/Filelists'), 
+					require('./routes/sidebar/routes/Messages'), 
+					require('./routes/sidebar/routes/Events'), 
+				]
+			}
 		]
 	}
 ];

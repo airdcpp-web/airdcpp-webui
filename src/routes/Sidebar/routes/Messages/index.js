@@ -1,5 +1,5 @@
 module.exports = {
-	path: 'messages',
+	path: '/messages',
 	
 	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {

@@ -31,7 +31,7 @@ const MenuItem = React.createClass({
 	render: function () {
 		const { item } = this.props;
 		return (
-			<Link to={'/sidebar/' + this.props.url} className="item session-item" onClick={this.onClick} activeClassName="active">
+			<Link to={this.props.url} className="item session-item" onClick={this.onClick} activeClassName="active">
 				<div className="left-content">
 					<div className={ 'ui session-status empty circular left mini label ' + this.props.statusGetter(item) }/>
 					{ this.props.nameGetter(item) }
@@ -138,7 +138,7 @@ export default function (Component, buttonClass = '') {
 		},
 
 		getUrl(id) {
-			return this.props.itemUrl + '/' + id;
+			return '/' + this.props.itemUrl + '/' + id;
 		},
 
 		redirectTo(id) {
@@ -211,7 +211,7 @@ export default function (Component, buttonClass = '') {
 		},
 
 		getNewUrl() {
-			return this.props.baseUrl + '/new';
+			return '/' + this.props.baseUrl + '/new';
 		},
 
 		componentWillMount() {

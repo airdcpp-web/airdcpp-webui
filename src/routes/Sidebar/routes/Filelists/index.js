@@ -1,5 +1,5 @@
 module.exports = {
-	path: 'filelists',
+	path: '/filelists',
 	
 	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {

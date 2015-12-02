@@ -32,15 +32,6 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 	return mergeOverlayData(state, overlayId, data || {});
 };
 
-// Router links should always use full path for active link detection to work
-const toSidebarPath = (path) => {
-	if (path.indexOf('/sidebar/') == 0) {
-		return path;
-	}
-
-	return '/sidebar/' + path;
-};
-
 const OverlayHelpers = {
 	pushModal: function (currentLocation, nextPath, overlayId, data) {
 		if (typeof currentLocation !== 'object') {
@@ -53,13 +44,13 @@ const OverlayHelpers = {
 
 	replaceSidebar: function (currentLocation, nextPath, data) {
 		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
-		History.replaceState(state, toSidebarPath(nextPath));
+		History.replaceState(state, nextPath);
 	},
 
 	pushSidebar: function (currentLocation, nextPath, data) {
 		// replaceState is invoked automatically if the path hasn't changed
 		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
-		History.pushState(state, toSidebarPath(nextPath));
+		History.pushState(state, nextPath);
 	},
 
 	// Append new location data when in sidebar layout and create a new history entry
