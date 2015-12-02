@@ -11,18 +11,24 @@ const Sidebar = React.createClass({
 	componentDidMount() {
 		this.props.showOverlay({
 			context: '#main-layout',
-			onShow: this.onShow,
+
+			// Using onShow callback would cause a significant delay, do this via timeout instead
+			onVisible: () => setTimeout(this.onVisible, 300),
 		});
 	},
 
 	getInitialState() {
+		// Don't render the content while sidebar is animating
+		// Avoids issues if there are router transitions while the sidebar is animating (such as placing the content in the middle of the window)
 		return {
 			visible: false,
 		};
 	},
 
-	onShow() {
-		this.setState({ visible: true });
+	onVisible() {
+		if (this.isMounted()) {
+			this.setState({ visible: true });
+		}
 	},
 
 	render() {
