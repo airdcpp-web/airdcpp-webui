@@ -1,10 +1,13 @@
 'use strict';
 import Reflux from 'reflux';
-import { BUNDLE_URL, StatusEnum } from 'constants/QueueConstants';
+import { BUNDLES_URL, BUNDLE_URL, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
+import { ICON_REMOVE, ICON_SEARCH, ICON_PAUSE, ICON_PLAY } from 'constants/IconConstants';
+import { PriorityEnum } from 'constants/QueueConstants';
+
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
-import { ICON_REMOVE, ICON_SEARCH } from 'constants/IconConstants';
+import NotificationActions from 'actions/NotificationActions';
 
 export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
@@ -22,7 +25,31 @@ export const QueueActions = Reflux.createActions([
 		displayName: 'Remove', 
 		icon: ICON_REMOVE } 
 	},
+	{ 'removeFinished': { 
+		asyncResult: true, 
+		displayName: 'Remove finished bundles', 
+		icon: ICON_REMOVE } 
+	},
+	{ 'pause': { 
+		asyncResult: true, 
+		displayName: 'Pause all', 
+		icon: ICON_PAUSE } 
+	},
+	{ 'resume': { 
+		asyncResult: true, 
+		displayName: 'Resume all', 
+		icon: ICON_PLAY } 
+	},
 ]);
+
+const setBundlePriorities = (prio, action) => {
+	return SocketService.post(BUNDLES_URL + '/priority', { priority: prio })
+		.then(() => 
+			action.completed())
+		.catch((error) => 
+			action.failed(error)
+		);
+};
 
 QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
 	let that = this;
@@ -31,6 +58,28 @@ QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
 	})
 		.then(that.completed)
 		.catch(this.failed);
+});
+
+QueueActions.pause.listen(function () {
+	setBundlePriorities(PriorityEnum.PAUSED_FORCED, QueueActions.pause);
+});
+
+QueueActions.resume.listen(function () {
+	setBundlePriorities(PriorityEnum.DEFAULT, QueueActions.pause);
+});
+
+QueueActions.removeFinished.listen(function () {
+	let that = this;
+	return SocketService.post(BUNDLES_URL + '/remove_finished')
+		.then(that.completed)
+		.catch(this.failed);
+});
+
+QueueActions.removeFinished.completed.listen(function (data) {
+	NotificationActions.error({ 
+		title: 'Action completed',
+		message: data.count > 0 ? data.count + ' bundles were removed' : 'No bundles were removed',
+	});
 });
 
 QueueActions.removeBundle.shouldEmit = function (bundle) {

@@ -10,6 +10,8 @@ import PriorityMenu from './PriorityMenu';
 import Progress from 'components/semantic/Progress';
 import QueueStore from 'stores/QueueStore';
 
+import { ActionMenu } from 'components/Menu';
+
 import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/Cell';
 
 import '../style.css';
@@ -53,6 +55,17 @@ const Queue = React.createClass({
 			<VirtualTable
 				defaultSortProperty="name"
 				store={QueueStore}
+				footerData={ 
+					<ActionMenu 
+						className="top left pointing"
+						caption="Actions..." 
+						actions={ QueueActions }
+						header="Queue actions"
+						triggerIcon="chevron up"
+						ids={ [ 'removeFinished', 'divider', 'resume', 'pause' ]}
+						button={true}
+					/>
+				}
 			>
 				<Column
 					name="Name"

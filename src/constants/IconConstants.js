@@ -16,4 +16,7 @@ export default {
 	ICON_DOWNLOAD_TO: 'blue download',
 	ICON_FOLDER: 'yellow folder',
 	ICON_SAVE: 'green checkmark',
+
+	ICON_PAUSE: 'blue pause',
+	ICON_PLAY: 'green play',
 };

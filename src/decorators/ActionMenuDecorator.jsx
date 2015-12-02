@@ -32,6 +32,14 @@ export default function (Component) {
 		},
 
 		getItem(actionId) {
+			if (actionId === 'divider') {
+				return <div className="divider"></div>;
+			}
+
+			if (typeof actionId !== 'string') {
+				return actionId;
+			}
+
 			const action = this.props.actions[actionId];
 			return (
 				<DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
@@ -40,20 +48,12 @@ export default function (Component) {
 				</DropdownItem>);
 		},
 
-		filterItem(actionId) {
-			if (this.props.ids) {
-				return this.props.ids.indexOf(actionId) > -1;
-			}
-
-			return true;
-		},
-
 		render() {
 			const { ids, actions, itemData, ...other } = this.props;
 
 			return (
 				<Component {...other}>
-					{Object.keys(this.props.actions).filter(this.filterItem).map(this.getItem)}
+					{ this.props.ids.map(this.getItem) }
 				</Component>
 			);
 		},

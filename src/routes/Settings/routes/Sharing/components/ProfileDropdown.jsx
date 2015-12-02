@@ -45,7 +45,7 @@ const ProfileDropdown = React.createClass({
 
 	render: function () {
 		return (
-			<Dropdown className="labeled icon top right pointing button" caption={this.getCaption()} triggerIcon="filter">
+			<Dropdown className="top right pointing" caption={this.getCaption()} triggerIcon="filter" button={true}>
 				<div className="header">
 					<i className="filter icon"></i>
 					Filter by profile

@@ -25,6 +25,11 @@ const Dropdown = React.createClass({
 		 * Returns DOM node used for checking whether the dropdown can fit on screen
 		 */
 		contextGetter: React.PropTypes.func,
+
+		/**
+		 * Render as button
+		 */
+		button: React.PropTypes.bool,
 	},
 
 	componentDidMount() {
@@ -57,7 +62,8 @@ const Dropdown = React.createClass({
 			'dropdown',
 			'item',
 			this.props.className,
-			{ 'icon': !this.props.caption	},
+			{ 'labeled button': this.props.button },
+			'icon',
 		);
 
 		return (
@@ -65,6 +71,11 @@ const Dropdown = React.createClass({
 				{this.props.caption}
 				{this.props.triggerIcon ? <i className={ this.props.triggerIcon + ' icon' }></i> : null }
 				<div className="menu">
+					{ this.props.header ? (
+						<div className="header">
+							{ this.props.header }
+						</div>
+					) : null }
 					{ this.props.children }
 				</div>
 			</div>
