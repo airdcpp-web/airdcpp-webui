@@ -4,41 +4,42 @@ import { Cell } from 'fixed-data-table';
 
 // Cell components that are used internally by the table
 
-/*const parseWrapperData = ({ columnKey, dataLoader, rowIndex, children, renderCondition, ...props }, onDataLoaded) => {
-	const rowData = dataLoader.getRowData(rowIndex, onDataLoaded);
-	if (!rowData) {
-		//console.log('SKIP RENDER', rowIndex);
-		return null;
-	}
-
-	if (renderCondition && !renderCondition(rowData[columnKey], rowData)) {
-		return null;
-	}
-
-	return React.cloneElement(children, {
-		cellData: rowData[columnKey],
-		rowData: rowData,
-		rowIndex: rowIndex,
-	});
-};
-
-// Generic wrapper for all cells
-export const RowWrapperCell = (props) => (
-	<div className="row-wrapper" {...props}>
-		{ parseWrapperData(props, _ => this.forceUpdate()) }
-	</div>
-);*/
 
 // Generic wrapper for all cells that will handle data loading
 export const RowWrapperCell = React.createClass({
-	onDataLoaded() {
-		this.forceUpdate();
+	getInitialState() {
+		return {
+			rowData: null,
+		};
+	},
+
+	componentDidMount() {
+		this.loadData(this.props.rowIndex);
+	},
+
+	componentWillReceiveProps(nextProps) {
+		// Check if there is new data available (rowIndex may have changed as well)
+		this.loadData(nextProps.rowIndex);
+	},
+
+	loadData(rowIndex) {
+		this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
+	},
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextState.rowData !== this.state.rowData;
+	},
+
+	onDataLoaded(data) {
+		if (this.isMounted()) {
+			this.setState({ rowData: data });
+		}
 	},
 
 	render() {
-		const { columnKey, dataLoader, rowIndex, children, renderCondition } = this.props;
+		const { columnKey, children, renderCondition } = this.props;
+		const { rowData } = this.state;
 
-		const rowData = dataLoader.getRowData(rowIndex, this.onDataLoaded);
 		if (!rowData) {
 			return null;
 		}

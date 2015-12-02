@@ -184,22 +184,12 @@ const TableContainer = React.createClass({
 		return this.props.rowClassNameGetter(rowData);
 	},
 
-	convertCell(rawCell, columnProps) {
-		const cell = rawCell ? rawCell : <TextCell/>; 
-
-		return (
-			<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={columnProps.renderCondition}>
-				{ cell }
-			</RowWrapperCell>
-		);
-	},
-
 	convertColumn(column) {
 		if (column.props.hideWidth > this.state.width) {
 			return null;
 		}
 
-		let { name, flexGrow, width, cell, columnKey } = column.props;
+		let { name, flexGrow, width, cell, columnKey, renderCondition } = column.props;
 
 		// Convert name
 		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
@@ -216,7 +206,11 @@ const TableContainer = React.createClass({
 			flexGrow: flexGrow,
 			width: width,
 			isResizable: true,
-			cell: this.convertCell(cell, column.props),
+			cell: (			
+				<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={renderCondition}>
+					{ cell ? cell : <TextCell/> }
+				</RowWrapperCell>
+			),
 		});
 	},
 	
@@ -225,7 +219,7 @@ const TableContainer = React.createClass({
 			return this.props.emptyRowsNode;
 		}
 
-		//console.log('Render table container, scroll top: ' + this.state.top);
+		console.log('Render table container, scroll top: ' + this.state.top);
 		// Update and insert generic columns props
 		const children = React.Children.map(this.props.children, this.convertColumn);
 

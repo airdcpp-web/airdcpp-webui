@@ -1,6 +1,8 @@
 import SocketService from 'services/SocketService';
 import update from 'react-addons-update';
 
+//import deepEqual from 'deep-equal';
+
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
 	constructor(store, onDataLoad) {
@@ -8,19 +10,34 @@ class RowDataLoader {
 		this._store = store;
 		this._data = [];
 		this._pendingRequest = {};
+		this._initialDataReceived = false;
 	}
 
 	onItemsUpdated(items, rangeOffset) {
+		this._initialDataReceived = true;
+
+		let hasChanges = false;
 		items.forEach((obj, index) => {
 			let old = this._data[index];
-			if (this._data[index]) {
+
+			// Objects equal most of the time
+			// TODO: causes delay during initial loading
+			//if (old === obj || deepEqual(this._data[index], obj)) {
+			//	return;
+			//}
+
+			if (old) {
 				this._data[index] = update(old, { $merge: obj });
 			} else {
 				this._data[index] = update(old, { $set: obj });
 			}
+
+			hasChanges = true;
 		}, this);
 
-		this._onDataLoad();
+		if (hasChanges) {
+			this._onDataLoad();
+		}
 	}
 
 	get rangeOffset() {
@@ -29,21 +46,25 @@ class RowDataLoader {
 		return ret;
 	}
 	
-	getRowData(rowIndex, onDataLoaded) {
-		if (!this._data[rowIndex]) {
-			this._queueRequestFor(rowIndex, onDataLoaded);
-			return undefined;
-		}
-		
+	getRowData(rowIndex) {
 		return this._data[rowIndex];
 	}
 
-	_queueRequestFor(rowIndex, onDataLoaded) {
-		// Can be called without queueing as well (rowClassNameGetter etc.)
-		if (!onDataLoaded) {
+	// onDataLoaded is called when the data is ready
+	updateRowData(rowIndex, onDataLoaded) {
+		const rowData = this._data[rowIndex];
+		if (!rowData) {
+			if (this._initialDataReceived) {
+				this._queueRequestFor(rowIndex, onDataLoaded);
+			}
+			
 			return;
 		}
+		
+		onDataLoaded(rowData);
+	}
 
+	_queueRequestFor(rowIndex, onDataLoaded) {
 		const request = this._pendingRequest[rowIndex];
 		if (request) {
 			request.push(onDataLoaded);
@@ -52,9 +73,9 @@ class RowDataLoader {
 
 		this._pendingRequest[rowIndex] = [ onDataLoaded ];
 		SocketService.get(this._store.viewUrl + '/items/' + rowIndex + '/' + (rowIndex+1))
-			.then(row => {
-				this._data[rowIndex] = row[0];
-				this._pendingRequest[rowIndex].forEach(f => f());
+			.then(rows => {
+				this._data[rowIndex] = rows[0];
+				this._pendingRequest[rowIndex].forEach(f => f(rows[0]));
 				delete this._pendingRequest[rowIndex];
 			}.bind(this))
 			.catch(error => {
