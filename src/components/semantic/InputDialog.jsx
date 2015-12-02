@@ -8,37 +8,30 @@ const InputField = React.createClass({
 		/**
 		 * Action description
 		 */
-		text: React.PropTypes.node.isRequired,
-
-		/**
-		 * Handler for input changes
-		 */
-		//onChange: React.PropTypes.func.isRequired,
-
-		//inputPrompt: React.PropTypes.string,
-		//type: React.PropTypes.string,
+		content: React.PropTypes.node.isRequired,
 	},
 
 	render: function () {
-		const { text, ...other } = this.props;
+		const { content, ...other } = this.props;
 		return (
 			<div className="ui input dialog">
-				{text}
+				{content}
 				<input { ...other}/>
 			</div>
 		);
 	}
 });
 
-const InputDialog = function (options) {
-	let inputText = options.defaultValue ? options.defaultValue : '';
+const InputDialog = function (dialogOptions, inputOptions) {
+	let inputText = inputOptions.defaultValue ? inputOptions.defaultValue : '';
 	let resolver = BlueBird.pending();
 
-	const { title, icon, approveCaption, ...other } = options;
+	const input = <InputField { ...inputOptions } content={ dialogOptions.content } onChange={(event) => inputText = event.target.value }/>;
 
-	const input = <InputField { ...other } onChange={(event) => inputText = event.target.value }/>;
-
-	ConfirmDialog(title, input, icon, approveCaption, 'Cancel')
+	ConfirmDialog(Object.assign(dialogOptions, {
+		rejectCaption: 'Cancel',
+		content: input,
+	}))
 		.then(() => resolver.resolve(inputText))
 		.catch(() => {});
 
@@ -46,16 +39,19 @@ const InputDialog = function (options) {
 };
 
 export const PasswordDialog = function (title, text) {
-	const options = {
+	const dialogOptions = {
 		icon: 'yellow lock',
 		approveCaption: 'Set password',
-		text: text,
+		content: text,
 		title: title,
+	};
+
+	const inputOptions = {
 		placeholder: 'Enter password',
 		type: 'password',
 	};
 
-	return InputDialog(options);
+	return InputDialog(dialogOptions, inputOptions);
 };
 
 export default InputDialog;

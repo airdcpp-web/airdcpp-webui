@@ -37,8 +37,15 @@ ShareRootActions.edit.listen(function (root, location) {
 });
 
 ShareRootActions.remove.listen(function (root) {
-	const text = 'Are you sure that you want to remove the directory ' + root.virtual_name + ' from share? It will be removed from all share profiles.';
-	ConfirmDialog('Remove directory', text, this.icon, 'Remove directory', "Don't remove").then(() => this.confirmed(root));
+	const options = {
+		title: this.displayName,
+		content: 'Are you sure that you want to remove the directory ' + root.virtual_name + ' from share? It will be removed from all share profiles.',
+		icon: this.icon,
+		approveCaption: 'Remove directory',
+		rejectCaption: "Don't remove",
+	};
+
+	ConfirmDialog(options).then(() => this.confirmed(root));
 });
 
 ShareRootActions.remove.confirmed.listen(function (root) {

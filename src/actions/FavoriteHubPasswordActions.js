@@ -61,8 +61,15 @@ FavoriteHubPasswordActions.change.saved.listen(function (hub, password) {
 });
 
 FavoriteHubPasswordActions.remove.listen(function (hub) {
-	const text = 'Are you sure that you want to reset the password of the hub ' + hub.name + '?';
-	ConfirmDialog('Remove password', text, this.icon, 'Remove password', "Don't remove").then(() => this.confirmed(hub));
+	const options = {
+		title: this.displayName,
+		content: 'Are you sure that you want to reset the password of the hub ' + hub.name + '?',
+		icon: this.icon,
+		approveCaption: 'Remove password',
+		rejectCaption: "Don't remove",
+	};
+
+	ConfirmDialog(options).then(() => this.confirmed(hub));
 });
 
 FavoriteHubPasswordActions.remove.confirmed.listen(function (hub) {

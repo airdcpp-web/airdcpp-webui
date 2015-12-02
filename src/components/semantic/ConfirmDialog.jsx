@@ -14,12 +14,22 @@ const ConfirmDialog = React.createClass({
 		/**
 		 * Content of the modal
 		 */
-		text: React.PropTypes.node.isRequired,
+		content: React.PropTypes.node.isRequired,
 
 		/**
 		 * Icon to display
 		 */
-		icon: React.PropTypes.string
+		icon: React.PropTypes.string,
+
+		approveCaption: React.PropTypes.string,
+		rejectCaption: React.PropTypes.string,
+	},
+
+	getDefaultProps() {
+		return {
+			approveCaption: 'Yes',
+			rejectCaption: 'No',
+		};
 	},
 
 	componentDidMount() {
@@ -62,18 +72,18 @@ const ConfirmDialog = React.createClass({
 					<i className={ this.props.icon + ' icon'}></i>
 				</div>
 				<div className="description">
-					{ this.props.text }
+					{ this.props.content }
 				</div>
 			</div>
 			<div className="actions">
 				<div className="two fluid ui inverted buttons">
 					<div className="ui cancel red basic inverted button">
 						<i className="remove icon"></i>
-						{ this.props.rejectText }
+						{ this.props.rejectCaption }
 					</div>
 					<div className="ui ok green basic inverted button">
 						<i className="checkmark icon"></i>
-						{ this.props.acceptText }
+						{ this.props.approveCaption }
 					</div>
 				</div>
 			</div>
@@ -81,10 +91,10 @@ const ConfirmDialog = React.createClass({
 	}
 });
 
-export default function (title, text, icon, acceptText='Yes', rejectText='No') {
+export default function (options) {
 	let resolver = Promise.pending();
 	let node = document.createElement('div');
-	const dialog = <ConfirmDialog node={node} title={title} resolver={ resolver } text={ text } icon={ icon } acceptText={acceptText} rejectText={rejectText}/>;
+	const dialog = <ConfirmDialog node={node} resolver={ resolver } { ...options }/>;
 
 	document.body.appendChild(node);
 

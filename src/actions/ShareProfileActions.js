@@ -57,16 +57,19 @@ ShareProfileActions.create.saved.listen(function (name) {
 });
 
 ShareProfileActions.edit.listen(function (profile) {
-	const options = {
+	const dialogOptions = {
 		icon: this.icon,
 		approveCaption: 'Rename',
 		title: 'Rename profile',
-		text: 'Enter new name for the profile ' + profile.name,
+		content: 'Enter new name for the profile ' + profile.name,
+	};
+
+	const inputOptions = {
 		placeholder: 'Enter name',
 		defaultValue: profile.plain_name,
 	};
 
-	InputDialog(options)
+	InputDialog(dialogOptions, inputOptions)
 		.then((name) => ShareProfileActions.edit.saved(profile, name))
 		.catch(() => {});
 });
@@ -94,8 +97,15 @@ ShareProfileActions.create.failed.listen(function (error) {
 });
 
 ShareProfileActions.remove.listen(function (profile) {
-	const text = 'Are you sure that you want to remove the profile ' + profile.name + '?';
-	ConfirmDialog('Remove profile', text, this.icon, 'Remove profile', "Don't remove").then(() => this.confirmed(profile));
+	const options = {
+		title: this.displayName,
+		content: 'Are you sure that you want to remove the profile ' + profile.name + '?',
+		icon: this.icon,
+		approveCaption: 'Remove profile',
+		rejectCaption: "Don't remove",
+	};
+
+	ConfirmDialog(options).then(() => this.confirmed(profile));
 });
 
 ShareProfileActions.remove.confirmed.listen(function (profile) {

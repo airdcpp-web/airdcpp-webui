@@ -87,8 +87,15 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 		// No need to confirm finished bundles
 		this.confirmed(bundle);
 	} else {
-		const text = 'Are you sure that you want to remove the bundle ' + bundle.name + '?';
-		ConfirmDialog(this.displayName, text, this.icon, 'Remove bundle', "Don't remove").then(() => this.confirmed(bundle));
+		const options = {
+			title: this.displayName,
+			content: 'Are you sure that you want to remove the bundle ' + bundle.name + '?',
+			icon: this.icon,
+			approveCaption: 'Remove bundle',
+			rejectCaption: "Don't remove",
+		};
+
+		ConfirmDialog(options).then(() => this.confirmed(bundle));
 	}
 	return false;
 };

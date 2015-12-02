@@ -50,8 +50,15 @@ FavoriteHubActions.update.listen(function (hub, data) {
 });
 
 FavoriteHubActions.remove.shouldEmit = function (hub) {
-	const text = 'Are you sure that you want to remove the favorite hub ' + hub.name + '?';
-	ConfirmDialog(this.displayName, text, this.icon, 'Remove favorite hub', "Don't remove")
+	const options = {
+		title: this.displayName,
+		content: 'Are you sure that you want to remove the favorite hub ' + hub.name + '?',
+		icon: this.icon,
+		approveCaption: 'Remove favorite hub',
+		rejectCaption: "Don't remove",
+	};
+
+	ConfirmDialog(options)
 		.then(() => FavoriteHubActions.remove.confirmed(hub))
 		.catch(() => {});
 	return false;
