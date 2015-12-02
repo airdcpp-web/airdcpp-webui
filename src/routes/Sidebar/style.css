@@ -16,6 +16,12 @@
 	border-bottom-left-radius: .28571429rem;
 }
 
+.animating.ui.overlay.sidebar,
+.ui.visible.overlay.sidebar {
+  transition: transform 250ms !important;
+}
+
+
 /* SIDEBAR GENERIC END */
 
 /* SESSION LAYOUT START */
