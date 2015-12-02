@@ -6,6 +6,9 @@ module.exports = {
 			cb(null, [ {
 				path: 'session/:id', 
 				component: require('./components/PrivateChatSession'), 
+			}, {
+				path: 'new', 
+				component: require('./components/MessageNew'),
 			} ]);
 		}, 'messages-children');
 	},

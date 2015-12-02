@@ -12,6 +12,9 @@ module.exports = {
 						component: require('components/DownloadDialog'), 
 					}
 				]
+			}, {
+				path: 'new', 
+				component: require('./components/FilelistNew'),
 			} ]);
 		}, 'filelists-children');
 	},

@@ -2,14 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout';
-import NewLayout from 'routes/Sidebar/components/NewLayout';
 
 import TypeConvert from 'utils/TypeConvert';
 
 import HubSessionStore from 'stores/HubSessionStore';
-import HubActions from 'actions/HubActions';
-
-import HubSearchInput from 'components/autosuggest/HubSearchInput';
 
 import CountLabel from 'components/CountLabel';
 import LabelInfo from 'utils/LabelInfo';
@@ -36,10 +32,6 @@ const Hubs = React.createClass({
 		return parseInt(this.props.params['id']);
 	},
 
-	_handleConnect(hubUrl) {
-		HubActions.createSession(this.props.location, hubUrl);
-	},
-
 	render() {
 		return (
 			<SideMenuLayout 
@@ -53,11 +45,7 @@ const Hubs = React.createClass({
 				statusGetter={this._statusGetter}
 				newButtonLabel="Connect"
 			>
-				{ this.props.children ? 
-					this.props.children :
-				(<NewLayout title="Connect" subHeader="Connect to a new hub" icon="sitemap">
-					<HubSearchInput submitHandler={this._handleConnect}/>
-				</NewLayout>) }
+				{ this.props.children }
 			</SideMenuLayout>
 		);
 	}

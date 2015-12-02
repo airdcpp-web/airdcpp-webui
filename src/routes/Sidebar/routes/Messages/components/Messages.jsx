@@ -1,25 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import UserSearchInput from 'components/autosuggest/UserSearchInput';
-
 import CountLabel from 'components/CountLabel';
 import LabelInfo from 'utils/LabelInfo';
 
 import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout';
-import NewLayout from 'routes/Sidebar/components/NewLayout';
 
 import TypeConvert from 'utils/TypeConvert';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-import PrivateChatActions from 'actions/PrivateChatActions';
 
 const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
-	_handleSubmit(user) {
-		PrivateChatActions.createSession(this.props.location, user);
-	},
-
 	_nameGetter(session) {
 		return session.user.nicks;
 	},
@@ -50,11 +42,7 @@ const Messages = React.createClass({
 				statusGetter={this._statusGetter}
 				newButtonLabel="New session"
 			>
-				{ this.props.children ? 
-					this.props.children :
-				(<NewLayout title="Send message" subHeader="Start a new private chat session" icon="comments">
-					<UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You must to be connected to at least one hub in order to send private messages"/>
-				</NewLayout>) }
+				{ this.props.children }
 			</SideMenuLayout>
 	);
 	}

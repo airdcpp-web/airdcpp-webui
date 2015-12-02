@@ -52,7 +52,7 @@ const NewButton = React.createClass({
 		/**
 		 * Base URL of the section
 		 */
-		baseUrl: React.PropTypes.string.isRequired,
+		url: React.PropTypes.string.isRequired,
 
 		/**
 		 * Title of the button
@@ -63,12 +63,12 @@ const NewButton = React.createClass({
 	onClick: function (evt) {
 		evt.preventDefault();
 
-		History.pushSidebar(this.props.location, this.props.baseUrl);
+		History.pushSidebar(this.props.location, this.props.url);
 	},
 
 	render: function () {
 		return (
-			<Link to={this.props.baseUrl} className="item button-new" onClick={this.onClick}>
+			<Link to={this.props.url} className="item button-new" onClick={this.onClick}>
 				<div className={this.props.buttonClass}>
 					<i className="plus icon"></i>
 					{this.props.title}
@@ -202,7 +202,7 @@ export default function (Component, buttonClass = '') {
 				return true;
 			} else if (props.location.action === 'POP' || props.items.length === 0) {
 				// Browsing from history and item removed (or all items removed)... go to "new session" page
-				History.replaceSidebar(props.location, props.baseUrl);
+				History.replaceSidebar(props.location, this.getNewUrl());
 				this.setState({ activeItem: null });
 				return true;
 			}
@@ -210,10 +210,13 @@ export default function (Component, buttonClass = '') {
 			return false;
 		},
 
+		getNewUrl() {
+			return this.props.baseUrl + '/new';
+		},
+
 		componentWillMount() {
-			// Opening an item directly?
-			if (this.props.activeId) {
-				this.checkActiveItem(this.props);
+			// Opening an item directly? Or no items?
+			if (this.checkActiveItem(this.props)) {
 				return;
 			}
 
@@ -244,17 +247,25 @@ export default function (Component, buttonClass = '') {
 				);
 			}, this);
 
-			let children = null;
+			let children = this.props.children;
 			if (History.getSidebarData(this.props.location).pending) {
 				children = <Loader text="Waiting for server response"/>;
-			} else {
-				children = React.cloneElement(this.props.children, { item: this.state.activeItem });
+			} else if (this.state.activeItem) {
+				children = React.cloneElement(children, { item: this.state.activeItem });
 			}
 
 			return (
 				<Component 
 					children={children}
-					newButton={<NewButton key="new-button" title={this.props.newButtonLabel} location={this.props.location} baseUrl={this.props.baseUrl} buttonClass={buttonClass}/>}
+					newButton={
+						<NewButton 
+							key="new-button" 
+							title={this.props.newButtonLabel} 
+							location={this.props.location} 
+							url={this.getNewUrl()} 
+							buttonClass={buttonClass}
+						/>
+					}
 					menuItems={menuItems}
 					location={this.props.location}
 				/>

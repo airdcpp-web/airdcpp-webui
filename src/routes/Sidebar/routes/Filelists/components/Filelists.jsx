@@ -1,23 +1,16 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import TopMenuLayout from 'routes/Sidebar/components/TopMenuLayout';
-import NewLayout from 'routes/Sidebar/components/NewLayout';
 
 import TypeConvert from 'utils/TypeConvert';
 
 import FilelistSessionStore from 'stores/FilelistSessionStore';
-import FilelistActions from 'actions/FilelistActions';
 
 import '../style.css';
 
 const Messages = React.createClass({
 	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
-	_handleSubmit(user) {
-		FilelistActions.createSession(this.props.location, user);
-	},
-
 	_nameGetter(session) {
 		return session.user.nicks;
 	},
@@ -49,11 +42,7 @@ const Messages = React.createClass({
 				statusGetter={this._statusGetter}
 				newButtonLabel="Open new"
 			>
-				{ this.props.children ? 
-					this.props.children :
-				(<NewLayout title="Open list" subHeader="Start browsing a new filelist" icon="sitemap">
-					<UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"/>
-				</NewLayout>) }
+				{ this.props.children }
 			</TopMenuLayout>
 		);
 	}
