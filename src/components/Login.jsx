@@ -4,6 +4,8 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Message from './semantic/Message';
+import Button from './semantic/Button';
+
 import { History } from 'react-router';
 
 const ErrorBox = React.createClass({
@@ -18,12 +20,13 @@ const ErrorBox = React.createClass({
 
 const ENTER_KEY_CODE = 13;
 
-export default React.createClass({
+const Login = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History ],
 	getInitialState() {
 		return {
 			username: '',
-			password: ''
+			password: '',
+			loading: false,
 		};
 	},
 
@@ -31,6 +34,8 @@ export default React.createClass({
 		if (nextState.socketAuthenticated) {
 			const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
 			this.history.replaceState(null, nextPath);
+		} else if (this.state.loading && nextState.lastError !== null) {
+			this.setState({ loading: false });
 		}
 	},
 
@@ -51,6 +56,7 @@ export default React.createClass({
 		}
 
 		LoginActions.login(username, password);
+		this.setState({ loading: true });
 	},
 
 	render() {
@@ -71,9 +77,14 @@ export default React.createClass({
 								<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
 							</div>
 						</div>
-						<button className="ui fluid large submit button" type="submit" onClick={this.onSubmit}>
-							Login
-						</button>
+						<Button
+							className="fluid large submit"
+							caption="Login"
+							type="submit"
+							icon={ this.props.icon }
+							onClick={ this.onSubmit }
+							loading={ this.state.loading }
+						/>
 					</div>
 				</form>
 
@@ -82,3 +93,5 @@ export default React.createClass({
 		</div>);
 	}
 });
+
+export default Login;
