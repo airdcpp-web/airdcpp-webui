@@ -36,7 +36,7 @@ const ShareDirectoryLayout = React.createClass({
 							ids={[ 'edit', 'remove' ]}
 						/> 
 					}
-					flexGrow={5}
+					flexGrow={10}
 				/>
 				<Column
 					name="Size"
@@ -48,7 +48,7 @@ const ShareDirectoryLayout = React.createClass({
 					name="Virtual name"
 					width={150}
 					columnKey="virtual_name"
-					flexGrow={2}
+					flexGrow={3}
 				/>
 				<Column
 					name="Profiles"
@@ -58,6 +58,7 @@ const ShareDirectoryLayout = React.createClass({
 				<Column
 					name="Last refreshed"
 					width={150}
+					flexGrow={1}
 					columnKey="last_refresh_time"
 					cell={ <RefreshCell/> }
 				/>

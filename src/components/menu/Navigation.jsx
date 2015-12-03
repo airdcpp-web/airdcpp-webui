@@ -9,7 +9,7 @@ import Logo from '../../../images/AirDCPlusPlus.png';
 
 function MenuItem(props) {
 	return (
-		<Link to={props.page} className="item" activeClassName="active">
+		<Link to={props.url} className="item" activeClassName="active">
 			{props.title}
 		</Link>
 	);
@@ -36,10 +36,10 @@ export default class Navigation extends React.Component {
 							<IndexLink className="item" to="/" activeClassName="active">
 								Home
 							</IndexLink>
-							<MenuItem title="Favorites" page="/favorite-hubs"/>
-							<MenuItem title="Queue" page="/queue"/>
-							<MenuItem title="Search" page="/search"/>
-							<MenuItem title="Settings" page="/settings"/>
+							<MenuItem title="Favorites" url="/favorite-hubs"/>
+							<MenuItem title="Queue" url="/queue"/>
+							<MenuItem title="Search" url="/search"/>
+							<MenuItem title="Settings" url="/settings"/>
 							<a className="item" href="" onClick={this.logout}>
 								Logout
 							</a>

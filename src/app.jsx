@@ -52,14 +52,14 @@ const routeConfig = [
 			require('./routes/Search'),
 			require('./routes/Settings'),
 			{ 
-				component: require('./routes/sidebar/components/Sidebar'),
-				path: 'sidebar',
+				component: require('./routes/Sidebar/components/Sidebar'),
+				path: 'Sidebar',
 				onEnter: onEnterSidebar,
 				childRoutes: [
-					require('./routes/sidebar/routes/Hubs'),
-					require('./routes/sidebar/routes/Filelists'), 
-					require('./routes/sidebar/routes/Messages'), 
-					require('./routes/sidebar/routes/Events'), 
+					require('./routes/Sidebar/routes/Hubs'),
+					require('./routes/Sidebar/routes/Filelists'), 
+					require('./routes/Sidebar/routes/Messages'), 
+					require('./routes/Sidebar/routes/Events'), 
 				]
 			}
 		]
