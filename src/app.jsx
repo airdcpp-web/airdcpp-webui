@@ -53,7 +53,7 @@ const routeConfig = [
 			require('./routes/Settings'),
 			{ 
 				component: require('./routes/Sidebar/components/Sidebar'),
-				path: 'Sidebar',
+				path: 'sidebar',
 				onEnter: onEnterSidebar,
 				childRoutes: [
 					require('./routes/Sidebar/routes/Hubs'),

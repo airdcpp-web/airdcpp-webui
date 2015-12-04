@@ -2,67 +2,37 @@ import React from 'react';
 
 import NavigationPanel from './menu/Navigation';
 import SideMenu from './menu/SideMenu';
+import SiteHeader from './SiteHeader';
 
-import { SIDEBAR_ID } from 'constants/OverlayConstants';
+import MainLayoutDecorator from 'decorators/MainLayoutDecorator';
 
-import HubActions from 'actions/HubActions';
-import PrivateChatActions from 'actions/PrivateChatActions';
-import FilelistActions from 'actions/FilelistActions';
-import LogActions from 'actions/LogActions';
+import '../normal.css';
 
-
-const showSideBar = (props) => {
-	return props.location.state &&
-		props.location.state[SIDEBAR_ID];
-};
 
 const MainLayout = React.createClass({
-	showSideBar(props) {
-		return props.location.state &&
-			props.location.state[SIDEBAR_ID];
-	},
-
-	componentWillMount() {
-		PrivateChatActions.fetchSessions();
-		HubActions.fetchSessions();
-		FilelistActions.fetchSessions();
-
-		LogActions.fetchMessages();
-	},
-
-	componentWillReceiveProps(nextProps) {
-		if (showSideBar(nextProps)) {
-			if (!this.previousChildren) {
-				// save the old children (just like animation)
-				this.previousChildren = this.props.children;
-			}
-		} else {
-			this.previousChildren = null;
-		}
-	},
-
 	render() {
-		let sidebar = null;
-		if (showSideBar(this.props)) {
-			sidebar = React.cloneElement(this.props.children, { overlayId: SIDEBAR_ID });
-		}
+		const { mainContent, sidebar, mainMenuItems, secondaryMenuItems } = this.props;
 
 		return (
-			<div className={this.props.className} id={this.props.id}>
+			<div className={this.props.className} id="normal-layout">
 				{ sidebar }
 				<div className="pusher">
-					<NavigationPanel location={this.props.location}/>
-					<div className="ui container main">
-						{sidebar ?
-							this.previousChildren :
-							this.props.children
+					<SiteHeader 
+						content={ 
+							<NavigationPanel
+								secondaryMenuItems={ secondaryMenuItems } 
+								mainMenuItems={ mainMenuItems }
+							/>
 						}
+					/>
+					<div className="ui container site-content">
+						{ mainContent }
 					</div>
 				</div>
-				<SideMenu id="side-menu" location={ this.props.location }/>
+				<SideMenu location={ this.props.location } sidebarItems={this.props.secondaryMenuItems}/>
 			</div>
 		);
 	}
 });
 
-export default MainLayout;
+export default MainLayoutDecorator(MainLayout, '#normal-layout');

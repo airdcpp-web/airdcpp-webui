@@ -10,8 +10,8 @@ import '../style.css';
 const Sidebar = React.createClass({
 	componentDidMount() {
 		this.props.showOverlay({
-			context: '#main-layout',
-
+			context: this.props.overlayContext,
+			transition: 'overlay',
 			// Using onShow callback would cause a significant delay, do this via timeout instead
 			onVisible: () => setTimeout(this.onVisible, 300),
 		});
@@ -33,7 +33,7 @@ const Sidebar = React.createClass({
 
 	render() {
 		return (
-			<div id="sidebar" className="ui right vertical overlay sidebar">
+			<div id="sidebar" className="ui right vertical sidebar">
 				<div id="sidebar-container">
 					{ this.state.visible ? this.props.children : <Loader text=""/> }
 				</div>

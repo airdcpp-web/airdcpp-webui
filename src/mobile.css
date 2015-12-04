@@ -1,0 +1,27 @@
+#mobile-menu {
+	z-index: 100 !important;
+	max-width: 200px;
+}
+
+#mobile-layout .site-header .container {
+	width: 100%;
+}
+
+#mobile-menu i.icon {
+	float: none !important;
+	margin: 0 .5em 0 0 !important;
+}
+
+#mobile-menu a.logout {
+	margin: 15px auto;
+}
+
+#mobile-menu a.logout:before {
+	width: 0px;
+}
+
+#mobile-menu .actions {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+}

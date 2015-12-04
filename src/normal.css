@@ -1,0 +1,54 @@
+/*html {
+	min-width: 550px;
+	min-height: 400px;
+	overflow: auto;
+}*/
+
+@media only screen and (min-width: 1600px) {
+	.ui.container {
+		width: 1527px;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
+	.ui.grid.container {
+		width: calc( 1527px	+	2em ) !important;
+	}
+}
+
+/* Sidemenu start */
+
+#side-menu {
+	position: fixed;
+	top: 120px;
+	right: 0px;
+	width: 100px;
+	height: auto;
+	padding-bottom: 10px;
+	border-top-left-radius: .28571429rem;
+	border-bottom-left-radius: .28571429rem;
+	background-color: #1b1c1d;
+	z-index: 1000;
+}
+
+#side-menu .menu {
+	height: auto !important;
+	display: block !important;
+}
+
+#side-menu .mini.list {
+	margin-top: 20px;
+	margin-left: 15px;
+	margin-right: auto;
+}
+
+#side-menu .item>.label {
+	margin-left: 0px !important;
+}
+
+.touch-icon {
+	text-align: center;
+	margin-top: 10px;
+}
+
+/* Sidemenu end */

@@ -9,7 +9,7 @@ export default function (Component) {
 			/**
 			 * Item to be passed to the actions
 			 */
-			itemData: React.PropTypes.any.isRequired,
+			itemData: React.PropTypes.any,
 
 			/**
 			 * Menu item actions
@@ -33,7 +33,8 @@ export default function (Component) {
 
 		getItem(actionId) {
 			if (actionId === 'divider') {
-				return <div className="divider"></div>;
+				// TODO: support multiple dividers
+				return <div key="divider" className="divider"></div>;
 			}
 
 			if (typeof actionId !== 'string') {

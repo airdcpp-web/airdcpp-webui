@@ -6,12 +6,20 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Notifications from './Notifications';
+
+import MobileLayout from './MobileLayout';
 import MainLayout from './MainLayout';
 
 import { History, RouteContext } from 'react-router';
 import SocketConnectStatus from './SocketConnectStatus';
 
 import ModalHandlerDecorator from 'decorators/ModalHandlerDecorator';
+
+
+import HubActions from 'actions/HubActions';
+import PrivateChatActions from 'actions/PrivateChatActions';
+import FilelistActions from 'actions/FilelistActions';
+import LogActions from 'actions/LogActions';
 
 
 const AuthenticatedApp = React.createClass({
@@ -26,17 +34,26 @@ const AuthenticatedApp = React.createClass({
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
 			this.history.replaceState(LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, '/login');
+		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
+			PrivateChatActions.fetchSessions();
+			HubActions.fetchSessions();
+			FilelistActions.fetchSessions();
+
+			LogActions.fetchMessages();
 		}
 	},
 
 	render() {
+		const mobileView = window.innerWidth < 500;
+		//const mobileView = true;
+		const LayoutElement = mobileView ? MobileLayout : MainLayout;
 		if (this.state.socketAuthenticated) {
 			return (
 				<div id="authenticated-app">
 					<Notifications location={ this.props.location }/>
-					<MainLayout id="main-layout" className="pushable" location={ this.props.location }>
+					<LayoutElement className="pushable main-layout" location={ this.props.location }>
 						{ this.props.children }
-					</MainLayout>
+					</LayoutElement>
 				</div>
 			);
 		} else {

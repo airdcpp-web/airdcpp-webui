@@ -12,7 +12,7 @@ const SideMenuLayout = React.createClass({
 
 	render() {
 		return (
-			<div className="ui grid side-menu-layout">
+			<div className="ui grid session horizontal">
 				<div className="four wide column menu-column">
 					{ this.props.newButton }
 					{ (this.props.menuItems.length ? 
@@ -21,7 +21,7 @@ const SideMenuLayout = React.createClass({
 						</div> : null)
 					}
 				</div>
-				<div className="twelve wide stretched column content-column">
+				<div className="twelve wide stretched column content-column session">
 					<div className="ui segment session-layout">
 						{ this.props.children }
 					</div>

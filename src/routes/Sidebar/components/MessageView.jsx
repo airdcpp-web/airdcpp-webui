@@ -10,6 +10,8 @@ import Linkify from 'react-linkify';
 
 import { UserMenu } from 'components/Menu';
 
+import '../messages.css';
+
 var ENTER_KEY_CODE = 13;
 
 const MessageComposer = React.createClass({

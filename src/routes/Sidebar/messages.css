@@ -1,0 +1,92 @@
+.message-view {
+	clear: both;
+}
+
+.message-view {
+	flex: 100 1 0%;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	margin-top: 10px;
+}
+
+.message-section {
+	flex:1;
+	overflow-y: auto;
+	margin-bottom:10px;
+}
+
+.message-view .ui.form {
+	display: flex;
+}
+
+.message-view .ui.form textarea {
+	resize: none;
+	border-radius: .28571429rem 0 0 .28571429rem;
+}
+
+.message-view .ui.button {
+	border-radius: 0 .28571429rem .28571429rem 0;
+}
+
+.message-view .ui.button i {
+	position: relative;
+	top: 40%;
+	transform: translateY(-50%);
+	vertical-align: -webkit-baseline-middle !important;
+}
+
+.message-list {
+	margin-right:10px !important;
+}
+
+.chat-message .message-author-name {
+	float: left;
+}
+
+.message-time {
+	float:right;
+	color: lightgray;
+}
+
+.chat-message {
+	margin-top: 5px;
+}
+
+.status-message {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.message-list .message-text {
+	overflow: hidden;
+	white-space: pre-line;
+}
+
+.chat-message .message-text {
+	margin-top: 5px;
+	clear: both;
+	padding-right: 60px;
+}
+
+.status-message .message-text {
+	font-size: small;
+	color: lightgray;
+	float: left;
+}
+
+.chat-message img {
+	vertical-align: middle;
+}
+
+.message-list .message-time {
+	font-size: small;
+}
+
+.chat-message.me .message-author-name {
+	color: steelblue !important;
+}
+
+.chat-message.bot .message-author-name {
+	color: darkgoldenrod !important;
+}

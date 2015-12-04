@@ -1,11 +1,19 @@
-/* SIDEBAR GENERIC START */
 #sidebar {
 	background-color: white;
 	z-index: 10;
 	width:100%;
-	max-width:1000px;
 	background-color: #1b1c1d;
 	padding: 10px 100px 10px 10px;
+}
+
+#normal-layout #sidebar {
+	padding: 10px 100px 10px 10px;
+	max-width:1000px;
+}
+
+#mobile-layout #sidebar {
+	padding: 50px 10px 10px 10px;
+	max-width:95%;
 }
 
 #sidebar-container {
@@ -20,174 +28,3 @@
 .ui.visible.overlay.sidebar {
   transition: transform 250ms !important;
 }
-
-
-/* SIDEBAR GENERIC END */
-
-/* SESSION LAYOUT START */
-
-#sidebar .item.tab-layout .mini.label {
-	margin-right: 5px;
-}
-
-#sidebar .ui.grid {
-	margin: 0px !important;
-}
-
-#sidebar-container > div , #sidebar .session-layout, #sidebar .ui.grid .column {
-	height: 100%;
-}
-
-#sidebar .ui.grid .column > div {
-	max-height: 100%;
-}
-
-#sidebar .side-menu-layout .session-layout > div {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
-
-#sidebar .menu-column .session-item {
-  display: flex;
-  justify-content: space-between;
-  height: 35px;
-}
-
-#sidebar .menu-column .session-status {
-  margin-right: 5px;
-  margin-top: 3px;
-}
-
-#sidebar .menu-column {
-	padding-top: 30px;
-  display: flex;
-  flex-direction: column;
-  padding-right: 0px;
-}
-
-#sidebar .menu-column .menu {
-	width: initial !important;
-  overflow-y: auto;
-  padding-top: 10px;
-}
-
-#sidebar .menu-column .session-item span, 
-#sidebar .session-layout .content span {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-#sidebar .session-layout .sub.header {
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-#sidebar .menu-column .session-item .left-content {
-  display: flex;
-  overflow: hidden;
-}
-
-#sidebar .menu-column .ui.menu .item>.label {
-	margin-left: 0px;
-}
-
-/* SESSION LAYOUT START */
-
-
-/* MESSAGE SECTION START */
-#sidebar .message-view {
-	clear: both;
-}
-
-#sidebar .message-view {
-	flex: 100 1 0%;
-	display: flex;
-	flex-direction: column;
-	overflow: auto;
-	margin-top: 10px;
-}
-
-.message-section {
-	flex:1;
-	overflow-y: auto;
-	margin-bottom:10px;
-}
-
-.message-view .ui.form {
-	display: flex;
-}
-
-.message-view .ui.form textarea {
-	resize: none;
-	border-radius: .28571429rem 0 0 .28571429rem;
-}
-
-.message-view .ui.button {
-	border-radius: 0 .28571429rem .28571429rem 0;
-}
-
-.message-view .ui.button i {
-	position: relative;
-	top: 40%;
-	transform: translateY(-50%);
-	vertical-align: -webkit-baseline-middle !important;
-}
-
-.message-list {
-	margin-right:10px !important;
-}
-
-.chat-message .message-author-name {
-	float: left;
-}
-
-.message-time {
-	float:right;
-	color: lightgray;
-}
-
-.chat-message {
-	margin-top: 5px;
-}
-
-.status-message {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-.message-list .message-text {
-	overflow: hidden;
-	white-space: pre-line;
-}
-
-.chat-message .message-text {
-	margin-top: 5px;
-	clear: both;
-	padding-right: 60px;
-}
-
-.status-message .message-text {
-	font-size: small;
-	color: lightgray;
-	float: left;
-}
-
-.chat-message img {
-	vertical-align: middle;
-}
-
-.message-list .message-time {
-	font-size: small;
-}
-
-.chat-message.me .message-author-name {
-	color: steelblue !important;
-}
-
-.chat-message.bot .message-author-name {
-	color: darkgoldenrod !important;
-}
-
-/* MESSAGE SECTION END */

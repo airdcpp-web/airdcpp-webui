@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
 
+import '../sessions.css';
+
 const MenuItem = React.createClass({
 	propTypes: {
 		/**
