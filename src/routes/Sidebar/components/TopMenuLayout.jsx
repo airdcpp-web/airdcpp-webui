@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
-//import Loader from 'components/semantic/Loader';
 
 
 const SessionDropdown = ({ menuItems, newButton, sessionMenuStyle }) => (
@@ -14,6 +13,20 @@ const SessionDropdown = ({ menuItems, newButton, sessionMenuStyle }) => (
 	</Dropdown>
 );
 
+const ItemHeader = ({ itemIconGetter, itemHeaderGetter, location, activeItem }) => (
+	<div className="session-header">
+		{ itemIconGetter(activeItem) }
+		{ itemHeaderGetter(activeItem, location) }
+	</div>
+);
+
+const CloseButton = ({ itemCloseHandler }) => (
+	<a onClick={ itemCloseHandler } className="item">
+		<i className="grey remove icon"/>
+		Close
+	</a>
+);
+
 const TopMenuLayout = React.createClass({
 	propTypes: {
 		/**
@@ -23,7 +36,7 @@ const TopMenuLayout = React.createClass({
 	},
 
 	render() {
-		const { activeItem, menuItems, itemIconGetter, itemHeaderGetter, itemCloseHandler, location } = this.props;
+		const { menuItems, activeItem } = this.props;
 
 		// Don't add nesting for items to preserve Semantic"s CSS
 		let sessionMenuStyle = {};
@@ -36,11 +49,11 @@ const TopMenuLayout = React.createClass({
 		return (
 			<div className="session-container vertical">
 				<div className="ui main menu menu-bar">
-					<SessionDropdown sessionMenuStyle={ sessionMenuStyle } { ...this.props }/>
-					<div className="session-header">
-						{ itemIconGetter(activeItem) }
-						{ itemHeaderGetter(activeItem, location) }
+					<div className="content-left">
+						<SessionDropdown sessionMenuStyle={ sessionMenuStyle } { ...this.props }/>
+						{ activeItem ? <ItemHeader { ...this.props }/> : null }
 					</div>
+					{ activeItem ? <CloseButton { ...this.props }/> : null }
 				</div>
 				<div className="session-layout">
 					{ content }

@@ -16,26 +16,14 @@ export default (ItemHandler, itemMenuIds) => {
 		},
 
 		itemDescriptionGetter(session) {
-			if (!session) {
-				return 'New';
-			}
-
 			return session.user.hub_names;
 		},
 
 		itemIconGetter(session) {
-			if (!session) {
-				return null;
-			}
-
 			return <UserIconFormatter size="large" flags={session.user.flags} />;
 		},
 
 		itemHeaderGetter(session, location) {
-			if (!session) {
-				return 'New';
-			}
-
 			const { user } = session;
 			return (
 				<UserMenu 

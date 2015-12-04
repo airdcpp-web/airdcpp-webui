@@ -1,4 +1,5 @@
-.chat.session {
+.ui.segment.session-layout {
+	flex: 1;
 	display: flex;
 	flex-direction: column;
 }
@@ -7,12 +8,12 @@
 	clear: both;
 }
 
-.message-view {
+.message-view,
+.chat.session {
 	flex: 100 1 0%;
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
-	margin-top: 10px;
 }
 
 .message-section {

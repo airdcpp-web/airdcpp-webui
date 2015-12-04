@@ -75,7 +75,8 @@ export const UserIconFormatter = React.createClass({
 
 	getDefaultProps() {
 		return {
-			size: ''
+			size: '',
+			className: '',
 		};
 	},
 
@@ -84,7 +85,7 @@ export const UserIconFormatter = React.createClass({
 
 		const cornerIcon = this.getCornerIcon();
 		return (
-			<i className={ this.props.size + ' icons' }>
+			<i className={ this.props.size + ' icons ' + this.props.className }>
 				<i className={ TypeConvert.userOnlineStatusToColor(flags) + ' user icon' }></i>
 				{ cornerIcon ? <i className={ this.getCornerIcon() + ' corner icon' }></i> : null }
 			</i>

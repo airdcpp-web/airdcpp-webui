@@ -2,6 +2,7 @@ import React from 'react';
 
 import TabHeader from 'routes/Sidebar/components/TabHeader';
 
+
 const SideMenuLayout = React.createClass({
 	propTypes: {
 		/**
@@ -19,7 +20,7 @@ const SideMenuLayout = React.createClass({
 		const newButton = React.cloneElement(this.props.newButton, { 
 			className: this.props.newButton.props.className + 'ui fluid button' 
 		});
-		
+
 		return (
 			<div className="ui grid session-container horizontal">
 				<div className="four wide column menu-column">
@@ -32,12 +33,13 @@ const SideMenuLayout = React.createClass({
 				</div>
 				<div className="twelve wide stretched column content-column session">
 					<div className="ui segment session-layout">
+						{ activeItem ? (
 						<TabHeader
 							icon={ itemIconGetter(activeItem) }
 							title={ itemHeaderGetter(activeItem, location) }
-							buttonClickHandler={ _ => itemCloseHandler(activeItem) }
+							buttonClickHandler={ itemCloseHandler }
 							subHeader={ itemDescriptionGetter(activeItem) }
-						/>
+						/>) : null }
 						{ this.props.children }
 					</div>
 				</div>

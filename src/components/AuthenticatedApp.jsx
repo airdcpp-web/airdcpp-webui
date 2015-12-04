@@ -25,6 +25,20 @@ import LogActions from 'actions/LogActions';
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext ],
 
+	initContent() {
+		PrivateChatActions.fetchSessions();
+		HubActions.fetchSessions();
+		FilelistActions.fetchSessions();
+
+		LogActions.fetchMessages();
+	},
+
+	componentWillMount() {
+		if (this.state.socketAuthenticated) {
+			this.initContent();
+		}
+	},
+
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
 			// Reconnect (but not too fast)
@@ -35,11 +49,7 @@ const AuthenticatedApp = React.createClass({
 			// Return to this page if the session was lost (instead of having logged out) 
 			this.history.replaceState(LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, '/login');
 		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
-			PrivateChatActions.fetchSessions();
-			HubActions.fetchSessions();
-			FilelistActions.fetchSessions();
-
-			LogActions.fetchMessages();
+			this.initContent();
 		}
 	},
 

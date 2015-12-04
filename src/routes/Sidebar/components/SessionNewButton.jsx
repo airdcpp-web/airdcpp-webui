@@ -22,6 +22,12 @@ const SessionNewButton = React.createClass({
 		title: React.PropTypes.node.isRequired,
 	},
 
+	getDefaultProps() {
+		return {
+			className: '',
+		};
+	},
+
 	onClick: function (evt) {
 		evt.preventDefault();
 
@@ -30,7 +36,7 @@ const SessionNewButton = React.createClass({
 
 	render: function () {
 		return (
-			<Link to={this.props.url} className="item button-new" onClick={this.onClick}>
+			<Link to={this.props.url} className={ 'item button-new ' + this.props.className } onClick={this.onClick}>
 				<div>
 					<i className="plus icon"></i>
 					{this.props.title}

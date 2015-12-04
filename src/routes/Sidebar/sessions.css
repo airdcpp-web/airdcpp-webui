@@ -12,6 +12,36 @@
   flex-direction: column;
 }
 
+.session-layout {
+  flex: 100 1 0%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.session-container.vertical .menu-bar {
+  justify-content: space-between;
+}
+
+.session-container.vertical .menu-bar .content-left {
+  flex: 1;
+  display: flex;
+}
+
+.session-container.vertical .session-header {
+  display: flex;
+  align-items: center;
+}
+
+.session-container.vertical .session-header > div {
+  padding-left: 5px;
+  width: 100%;
+}
+
+.session-container.vertical .session-header > i {
+  padding-left: 10px;
+}
+
 .session-container.vertical .menu-bar {
   border-radius: 0px !important;
   padding-bottom: 0px;
@@ -26,10 +56,6 @@
 
 .session-container.horizontal .column > div {
 	max-height: 100%;
-}
-
-.session-layout > div {
-	height: calc(100% - 50px);
 }
 
 .session-container.horizontal .menu-column .session-item {
@@ -63,7 +89,8 @@
   text-overflow: ellipsis;
 }
 
-.session-layout .sub.header {
+.session-layout .sub.header,
+.session-container .session-header > div span {
   text-overflow: ellipsis;
   overflow: hidden;
 }

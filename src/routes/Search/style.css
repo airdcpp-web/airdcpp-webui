@@ -5,7 +5,8 @@
 }
 
 .search-container .search-area {
-	width:50%;
+	width:90%;
+	max-width: 600px;
 	margin-left: auto;
 	margin-right: auto;
 }

@@ -221,6 +221,8 @@ const SessionLayout = React.createClass({
 			children = React.cloneElement(children, { 
 				item: this.state.activeItem 
 			});
+		} else if (this.props.activeId) {
+			children = <Loader/>;
 		}
 
 		/*const newItemProps = {
@@ -242,14 +244,13 @@ const SessionLayout = React.createClass({
 			/>
 		);
 
-		//const Component = TopMenuLayout;
-		const Component = SideMenuLayout;
+		const Component = this.props.disableSideMenu || window.innerWidth < 500 ? TopMenuLayout : SideMenuLayout;
 		return (
 			<Component 
 				itemIconGetter={ this.props.itemIconGetter }
 				itemHeaderGetter={ this.props.itemHeaderGetter }
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
-				itemCloseHandler={ this.props.itemCloseHandler }
+				itemCloseHandler={ () => this.props.itemCloseHandler(this.state.activeItem) }
 				activeItem={ this.state.activeItem }
 
 				newButton={ newButton }

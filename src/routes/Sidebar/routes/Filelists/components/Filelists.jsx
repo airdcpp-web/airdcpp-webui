@@ -14,8 +14,8 @@ const ItemHandler = {
 		return null;
 	},
 
-	itemCloseHandler() {
-		FilelistActions.removeSession(this.props.item.id);
+	itemCloseHandler(session) {
+		FilelistActions.removeSession(session.id);
 	},
 };
 
@@ -31,7 +31,7 @@ const Filelists = React.createClass({
 				location={this.props.location} 
 				items={this.state.filelists}
 				newButtonCaption="Open new"
-				disableSideMenu={false}
+				disableSideMenu={true}
 				{ ...UserItemHandlerDecorator(ItemHandler, [ 'message' ]) }
 			>
 				{ this.props.children }

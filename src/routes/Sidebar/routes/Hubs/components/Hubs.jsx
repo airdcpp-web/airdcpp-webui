@@ -28,26 +28,14 @@ const ItemHandler = {
 	},
 
 	itemDescriptionGetter(session) {
-		if (!session) {
-			return 'Connect';
-		}
-
 		return session.identity.description;
 	},
 
 	itemIconGetter(session) {
-		if (!session) {
-			return null;
-		}
-
 		return <HubIconFormatter size="large" hub={session} />;
 	},
 
 	itemHeaderGetter(session, location) {
-		if (!session) {
-			return 'Connect';
-		}
-
 		return (
 			<ActionMenu 
 				location={location} 
@@ -84,7 +72,7 @@ const Hubs = React.createClass({
 				itemUrl="hubs/session"
 				location={this.props.location} 
 				items={this.state.hubSessions} 
-				newButtonLabel="Connect"
+				newButtonCaption="Connect"
 				{ ...ItemHandler }
 			>
 				{ this.props.children }
