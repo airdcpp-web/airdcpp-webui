@@ -4,6 +4,12 @@ import React from 'react';
 import LoginActions from 'actions/LoginActions';
 import { getTextMenuItem } from './MenuItem';
 
+const LogoutItem = { 
+	url: 'logout', 
+	title: 'Logout',
+	className: 'logout', 
+};
+
 export default class Navigation extends React.Component {
 	constructor() {
 		super();
@@ -17,14 +23,12 @@ export default class Navigation extends React.Component {
 		return (
 			<div className="item right">
 				{ this.props.mainMenuItems.map(item => getTextMenuItem(null, item)) }
-				<a className="item" href="" onClick={this.logout}>
-					Logout
-				</a>
+				{ getTextMenuItem(this.onClickLogout, LogoutItem) }
 			</div>
 		);
 	}
 
-	logout(e) {
+	onClickLogout(item, e) {
 		e.preventDefault();
 		LoginActions.logout();
 	}

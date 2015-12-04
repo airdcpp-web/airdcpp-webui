@@ -1,51 +1,43 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import TopMenuLayout from 'routes/Sidebar/components/TopMenuLayout';
-
-import TypeConvert from 'utils/TypeConvert';
+import SessionLayout from 'routes/Sidebar/components/SessionLayout';
+import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistActions from 'actions/FilelistActions';
 
 import '../style.css';
 
-const Messages = React.createClass({
-	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
-	_nameGetter(session) {
-		return session.user.nicks;
-	},
-
-	_idGetter(session) {
-		return session.user.cid;
-	},
-
-	_labelGetter(session) {
-		//return session.unread_count > 0 ? session.unread_count : null;
+const ItemHandler = {
+	itemLabelGetter(session) {
 		return null;
 	},
 
-	_statusGetter(session) {
-		const { flags } = session.user;
-		return TypeConvert.userOnlineStatusToColor(flags);
+	itemCloseHandler() {
+		FilelistActions.removeSession(this.props.item.id);
 	},
+};
 
+
+const Filelists = React.createClass({
+	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 	render() {
 		return (
-			<TopMenuLayout 
+			<SessionLayout 
 				activeId={this.props.params ? this.props.params.id : null}
 				baseUrl="filelists"
 				itemUrl="filelists/session"
 				location={this.props.location} 
-				items={this.state.filelists} 
-				nameGetter={this._nameGetter} 
-				labelGetter={this._labelGetter}
-				statusGetter={this._statusGetter}
-				newButtonLabel="Open new"
+				items={this.state.filelists}
+				newButtonCaption="Open new"
+				disableSideMenu={false}
+				{ ...UserItemHandlerDecorator(ItemHandler, [ 'message' ]) }
 			>
 				{ this.props.children }
-			</TopMenuLayout>
+			</SessionLayout>
 		);
 	}
 });
 
-export default Messages;
+export default Filelists;

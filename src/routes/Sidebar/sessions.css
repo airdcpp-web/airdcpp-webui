@@ -2,49 +2,61 @@
 	margin-right: 5px;
 }
 
-.session.horizontal.ui.grid {
+.session-container.horizontal.ui.grid {
 	margin: 0px !important;
 }
 
-#sidebar-container > div , .session-layout, .session.horizontal.ui.grid .column {
+.session-container.vertical {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-container.vertical .menu-bar {
+  border-radius: 0px !important;
+  padding-bottom: 0px;
+  margin-bottom: 20px;
+}
+
+#sidebar-container > div, 
+.session-layout, 
+.session-container.horizontal .column {
 	height: 100%;
 }
 
-.session.horizontal.grid .column > div {
+.session-container.horizontal .column > div {
 	max-height: 100%;
 }
 
-.session.horizontal .session-layout > div {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+.session-layout > div {
+	height: calc(100% - 50px);
 }
 
-.session.horizontal .menu-column .session-item {
+.session-container.horizontal .menu-column .session-item {
   display: flex;
   justify-content: space-between;
   height: 35px;
 }
 
-.session.horizontal .menu-column .session-status {
+.session-container.horizontal .menu-column .session-status {
   margin-right: 5px;
   margin-top: 3px;
 }
 
-.session.horizontal .menu-column {
+.session-container.horizontal .menu-column {
 	padding-top: 30px;
   display: flex;
   flex-direction: column;
   padding-right: 0px;
 }
 
-.session.horizontal .menu-column .menu {
+.session-container.horizontal .menu-column .menu {
 	width: initial !important;
   overflow-y: auto;
   padding-top: 10px;
 }
 
-.session.horizontal .menu-column .session-item span, 
+.session-container.horizontal .menu-column .session-item span, 
 .session-layout .content span {
   overflow: hidden;
   white-space: nowrap;
@@ -56,11 +68,11 @@
   overflow: hidden;
 }
 
-.session.horizontal .menu-column .session-item .left-content {
+.session-container.horizontal .menu-column .session-item .left-content {
   display: flex;
   overflow: hidden;
 }
 
-.session.horizontal .menu-column .ui.menu .item>.label {
+.session-container.horizontal .menu-column .ui.menu .item>.label {
 	margin-left: 0px;
 }

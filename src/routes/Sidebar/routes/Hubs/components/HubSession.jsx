@@ -7,14 +7,10 @@ import MessageView from 'routes/Sidebar/components/MessageView';
 import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
 
-import { ActionMenu } from 'components/Menu';
 import ActionInput from 'components/semantic/ActionInput';
-
-import TabHeader from 'routes/Sidebar/components/TabHeader';
 import Button from 'components/semantic/Button';
 
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
-import { HubIconFormatter } from 'utils/IconFormat';
 
 import '../style.css';
 
@@ -78,10 +74,6 @@ const RedirectPrompt = React.createClass({
 });
 
 const HubSession = React.createClass({
-	handleClose() {
-		HubActions.removeSession(this.props.item.id);
-	},
-
 	handleSend(message) {
 		HubActions.sendMessage(this.props.item.id, message);
 	},
@@ -110,32 +102,8 @@ const HubSession = React.createClass({
 	},
 
 	render() {
-		const { identity } = this.props.item;
-		const hubMenu = (
-			<ActionMenu 
-				location={this.props.location} 
-				caption={ identity.name } 
-				actions={ HubActions } 
-				itemData={ this.props.item } 
-				ids={ [ 'reconnect', 'favorite' ] }
-			/>
-		);
-
-		const icon = (
-			<HubIconFormatter size="large" hub={this.props.item} />
-		);
-
-		//const subHeader = identity.description;
-
 		return (
-			<div className="hub-session">
-				<TabHeader
-					icon={icon}
-					title={hubMenu}
-					buttonClickHandler={this.handleClose}
-					subHeader={ identity.description }
-				/>
-
+			<div className="hub chat session">
 				{ this.getMessage() }
 				<MessageView
 					messages={this.props.messages}

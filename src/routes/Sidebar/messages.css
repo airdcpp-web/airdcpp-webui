@@ -1,3 +1,8 @@
+.chat.session {
+	display: flex;
+	flex-direction: column;
+}
+
 .message-view {
 	clear: both;
 }

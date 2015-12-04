@@ -4,46 +4,39 @@ import Reflux from 'reflux';
 import CountLabel from 'components/CountLabel';
 import LabelInfo from 'utils/LabelInfo';
 
-import SideMenuLayout from 'routes/Sidebar/components/SideMenuLayout';
-
-import TypeConvert from 'utils/TypeConvert';
+import SessionLayout from 'routes/Sidebar/components/SessionLayout';
+import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import PrivateChatActions from 'actions/PrivateChatActions';
 
-const Messages = React.createClass({
-	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
-	_nameGetter(session) {
-		return session.user.nicks;
-	},
-
-	_idGetter(session) {
-		return session.user.cid;
-	},
-
-	_labelGetter(session) {
+const ItemHandler = {
+	itemLabelGetter(session) {
 		return <CountLabel unreadInfo={ LabelInfo.getPrivateChatUnreadInfo(session.unread_messages)}/>;
 	},
 
-	_statusGetter(session) {
-		const { flags } = session.user;
-		return TypeConvert.userOnlineStatusToColor(flags);
+	itemCloseHandler(session) {
+		PrivateChatActions.removeSession(session.id);
 	},
+};
+
+const Messages = React.createClass({
+	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
 	render() {
 		return (
-			<SideMenuLayout 
+			<SessionLayout 
 				activeId={this.props.params ? this.props.params.id : null}
 				baseUrl="messages"
 				itemUrl="messages/session"
-				location={this.props.location} 
-				items={this.state.chatSessions} 
-				nameGetter={this._nameGetter} 
-				labelGetter={this._labelGetter}
-				statusGetter={this._statusGetter}
-				newButtonLabel="New session"
+				location={this.props.location}
+				items={this.state.chatSessions}
+				newButtonCaption="New session"
+
+				{ ...UserItemHandlerDecorator(ItemHandler, [ 'browse' ]) }
 			>
 				{ this.props.children }
-			</SideMenuLayout>
+			</SessionLayout>
 	);
 	}
 });

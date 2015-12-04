@@ -1,7 +1,18 @@
 import React from 'react';
 
-import SessionManagerDecorator from 'routes/Sidebar/decorators/SessionManagerDecorator';
 import Dropdown from 'components/semantic/Dropdown';
+//import Loader from 'components/semantic/Loader';
+
+
+const SessionDropdown = ({ menuItems, newButton, sessionMenuStyle }) => (
+	<Dropdown triggerIcon="content">
+	 	<div className="header">New</div>
+	 	{ newButton }
+		<div className="ui divider" style={sessionMenuStyle}></div>
+		<div className="header" style={sessionMenuStyle}>Existing</div>
+		{ menuItems }
+	</Dropdown>
+);
 
 const TopMenuLayout = React.createClass({
 	propTypes: {
@@ -12,29 +23,31 @@ const TopMenuLayout = React.createClass({
 	},
 
 	render() {
-		// Don"t add nesting for items to preserve Semantic"s CSS
+		const { activeItem, menuItems, itemIconGetter, itemHeaderGetter, itemCloseHandler, location } = this.props;
+
+		// Don't add nesting for items to preserve Semantic"s CSS
 		let sessionMenuStyle = {};
-		if (this.props.menuItems.length === 0) {
+		if (menuItems.length === 0) {
 			sessionMenuStyle = { display: 'none' };
 		}
 
+		//const content = activeItem ? this.props.children : <Loader/>;
+		const content = this.props.children;
 		return (
-			<div className="top-menu-layout">
+			<div className="session-container vertical">
 				<div className="ui main menu menu-bar">
-					<Dropdown icon="content">
-					 	<div className="header">New</div>
-					 	{ this.props.newButton }
-						<div className="ui divider" style={sessionMenuStyle}></div>
-						<div className="header" style={sessionMenuStyle}>Existing</div>
-						{ this.props.menuItems }
-					</Dropdown>
+					<SessionDropdown sessionMenuStyle={ sessionMenuStyle } { ...this.props }/>
+					<div className="session-header">
+						{ itemIconGetter(activeItem) }
+						{ itemHeaderGetter(activeItem, location) }
+					</div>
 				</div>
 				<div className="session-layout">
-					{ this.props.children }
+					{ content }
 				</div>
 			</div>
 		);
 	}
 });
 
-export default SessionManagerDecorator(TopMenuLayout);
+export default TopMenuLayout;
