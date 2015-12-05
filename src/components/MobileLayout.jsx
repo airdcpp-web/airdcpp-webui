@@ -2,11 +2,34 @@ import React from 'react';
 
 import SiteHeader from './SiteHeader';
 import MobileMenu from './menu/MobileMenu';
+import MenuIcon from './menu/MenuIcon';
 
 import MainLayoutDecorator from 'decorators/MainLayoutDecorator';
+import UrgencyUtils from 'utils/UrgencyUtils';
 
 import '../mobile.css';
 
+
+const reduceItemUrgency = (map, menuItem) => {
+	if (menuItem.unreadInfoStore) {
+		const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
+		const max = UrgencyUtils.maxUrgency(urgencies);
+		if (max) {
+			UrgencyUtils.appendToMap(map, max);
+		}
+	}
+
+	return map;
+};
+
+const Menu = ({ secondaryMenuItems, onClick }) => (
+	<div className="item right">
+		<MenuIcon 
+			urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
+			onClick={ onClick }
+		/>
+	</div>
+);
 
 const MobileLayout = React.createClass({
 	getInitialState() {
@@ -35,9 +58,10 @@ const MobileLayout = React.createClass({
 				<div className="pusher" id="mobile-layout-inner">
 					<SiteHeader 
 						content={
-							<div className="item right">
-								<i className="content link icon" onClick={this.onClickMenu}></i>
-							</div>
+							<Menu
+								onClick={this.onClickMenu}
+								secondaryMenuItems={ secondaryMenuItems } 
+							/>
 						}
 					/>
 					{ sidebar }

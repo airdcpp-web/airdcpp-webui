@@ -1,4 +1,5 @@
 import DupeEnum from 'constants/DupeConstants';
+import { UrgencyEnum } from 'constants/UrgencyConstants';
 
 export default {
 	dupeToStringType: function (dupeEnum) {
@@ -35,5 +36,15 @@ export default {
 		}
 		
 		return 'lightgrey';
-	},	
+	},
+
+	urgencyToColor: function (urgencyMap) {
+		switch (urgencyMap) {
+			case UrgencyEnum.URGENCY_HIGH: return 'red';
+			case UrgencyEnum.URGENCY_MEDIUM: return 'yellow';
+			case UrgencyEnum.URGENCY_LOW: return 'blue';
+			case UrgencyEnum.URGENCY_INFO: return 'grey';
+			default: return '';
+		}
+	},
 };

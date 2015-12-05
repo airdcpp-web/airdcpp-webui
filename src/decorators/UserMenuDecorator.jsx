@@ -41,21 +41,28 @@ export default function (Component) {
 
 		render: function () {
 			const { text, userIcon, directory, user, ...other } = this.props;
-			const data = {
-				user: user,
-				directory: FileUtils.getFilePath(directory)
-			};
 
 			let nicks = text;
 			if (!nicks) {
 				nicks = user.nicks ? user.nicks : user.nick;
 			}
+
 			const caption = (userIcon ? 
 				<div>
 					<i className="blue user icon"/>
 					{ nicks }
 				</div>
 			 : nicks);
+
+			// There are no items at the moment that work with our own user
+			if (user.flags.indexOf('me') !== -1) {
+				return <span>{ caption }</span>;
+			}
+
+			const data = {
+				user: user,
+				directory: FileUtils.getFilePath(directory)
+			};
 
 			return <Component caption={ caption } actions={ UserActions } itemData={ data } { ...other }/>;
 		}

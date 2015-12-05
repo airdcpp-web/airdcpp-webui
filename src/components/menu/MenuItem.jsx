@@ -8,7 +8,7 @@ import CountLabel from 'components/CountLabel';
 
 const IconMenuItem = React.createClass({
 	propTypes: {
-		unreadInfo: React.PropTypes.object,
+		urgencies: React.PropTypes.object,
 		icon: React.PropTypes.string.isRequired,
 		title: React.PropTypes.node.isRequired,
 	},
@@ -18,12 +18,12 @@ const IconMenuItem = React.createClass({
 	},
 
 	render() {
-		const { unreadInfo, icon, title, indexLink, ...props } = this.props;
+		const { urgencies, icon, title, indexLink, ...props } = this.props;
 		const LinkElement = indexLink ? IndexLink : Link;
 
 		return (
 			<LinkElement { ...props }>
-				<CountLabel className="mini" unreadInfo={unreadInfo}/>
+				<CountLabel className="mini" urgencies={urgencies}/>
 				<i className={ icon + ' icon' }></i>
 				{ title }
 			</LinkElement>
@@ -50,7 +50,7 @@ TextMenuItem.contextTypes = {
 
 
 const getMenuItem = (onClick, item, ContentElement) => {
-	const { url, className, ...other } = item;
+	const { url, className, unreadInfoStore, ...other } = item;
 	return (
 		<ContentElement 
 			key={ url }
@@ -59,6 +59,7 @@ const getMenuItem = (onClick, item, ContentElement) => {
 			onClick={ onClick ? (evt) => onClick(url, evt) : undefined }
 			className={ 'item ' + (className ? className : '') }
 			indexLink={ url === '/' }
+			urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null }
 			{ ...other }
 		/>
 	);

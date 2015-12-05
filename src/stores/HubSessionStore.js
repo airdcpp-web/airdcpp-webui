@@ -2,6 +2,8 @@ import Reflux from 'reflux';
 
 import { HUB_MODULE_URL, HUB_SESSION_CREATED, HUB_SESSION_REMOVED, HUB_SESSION_UPDATED } from 'constants/HubConstants';
 
+import { HubMessageUrgencies } from 'constants/UrgencyConstants';
+
 import HubActions from 'actions/HubActions';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
@@ -24,5 +26,5 @@ const HubSessionStore = Reflux.createStore({
 });
 
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore), HubActions)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore), HubActions, HubMessageUrgencies)
 ;

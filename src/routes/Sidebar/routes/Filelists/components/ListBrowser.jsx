@@ -112,7 +112,7 @@ const ListBrowser = React.createClass({
 
 	render() {
 		return (
-			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 150) }}>
+			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 170) }}>
 				<PathBreadcrumb 
 					tokens={this._tokenizePath()} 
 					separator={"/"} 

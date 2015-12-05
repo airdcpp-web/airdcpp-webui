@@ -17,6 +17,10 @@ section#container-main, .login-grid, .main-layout, #authenticated-app, .pusher {
 	height: 100%;
 }
 
+.full-height {
+	height: 100%;
+}
+
 
 /* Layout header start */
 

@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import History from 'utils/History';
 
+import CountLabel from 'components/CountLabel';
+
 const SessionMenuItem = React.createClass({
 	propTypes: {
 		/**
@@ -34,7 +36,8 @@ const SessionMenuItem = React.createClass({
 					<div className={ 'ui session-status empty circular left mini label ' + this.props.statusGetter(item) }/>
 					{ this.props.nameGetter(item) }
 				</div>
-				{ this.props.labelGetter(item) }
+
+				{ this.props.unreadInfoStore ? <CountLabel urgencies={ this.props.unreadInfoStore.getItemUrgencies(item) }/> : null }
 			</Link>
 		);
 	}

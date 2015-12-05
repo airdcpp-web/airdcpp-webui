@@ -6,8 +6,8 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import HubSessionStore from 'stores/HubSessionStore';
 import HubActions from 'actions/HubActions';
 
-import CountLabel from 'components/CountLabel';
-import LabelInfo from 'utils/LabelInfo';
+//import CountLabel from 'components/CountLabel';
+//import LabelInfo from 'utils/LabelInfo';
 import TypeConvert from 'utils/TypeConvert';
 
 import { ActionMenu } from 'components/Menu';
@@ -17,10 +17,6 @@ import { HubIconFormatter } from 'utils/IconFormat';
 const ItemHandler = {
 	itemNameGetter(session) {
 		return session.identity.name;
-	},
-
-	itemLabelGetter(session) {
-		return <CountLabel unreadInfo={ LabelInfo.getHubUnreadInfo(session.unread_messages)}/>;
 	},
 
 	itemStatusGetter(session) {
@@ -52,7 +48,6 @@ const ItemHandler = {
 	},
 };
 
-
 const Hubs = React.createClass({
 	mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
 
@@ -73,6 +68,8 @@ const Hubs = React.createClass({
 				location={this.props.location} 
 				items={this.state.hubSessions} 
 				newButtonCaption="Connect"
+
+				unreadInfoStore={ HubSessionStore }
 				{ ...ItemHandler }
 			>
 				{ this.props.children }

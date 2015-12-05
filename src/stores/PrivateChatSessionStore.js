@@ -7,6 +7,8 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
 
+import { PrivateMessageUrgencies } from 'constants/UrgencyConstants';
+
 const PrivateChatSessionStore = Reflux.createStore({
 	getInitialState: function () {
 		return this.getSessions();
@@ -19,5 +21,5 @@ const PrivateChatSessionStore = Reflux.createStore({
 	},
 });
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(PrivateChatSessionStore), PrivateChatActions)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(PrivateChatSessionStore), PrivateChatActions, PrivateMessageUrgencies)
 ;

@@ -3,6 +3,9 @@ import Reflux from 'reflux';
 import { LOG_MODULE_URL, MAX_LOG_MESSAGES, LOG_MESSAGE, LOG_READ, LOG_CLEARED, SeverityEnum } from 'constants/LogConstants';
 import { LogActions } from 'actions/LogActions';
 
+import { LogMessageUrgencies } from 'constants/UrgencyConstants';
+import UrgencyUtils from 'utils/UrgencyUtils';
+
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 const LogStore = Reflux.createStore({
@@ -45,20 +48,8 @@ const LogStore = Reflux.createStore({
 		this.trigger(this._logMessages);
 	},
 
-	getUnreadCounts() {
-		var counts = {
-			[SeverityEnum.INFO]: 0,
-			[SeverityEnum.WARNING]: 0,
-			[SeverityEnum.ERROR]: 0,
-		};
-
-		this._logMessages.forEach(message => {
-			if (!message.is_read) {
-				counts[message.severity] += 1;
-			}
-		});
-
-		return counts;
+	getTotalUrgencies() {
+		return UrgencyUtils.getMessageUrgencies(this._logMessages, LogMessageUrgencies, 'severity');
 	},
 
 	get logMessages() {

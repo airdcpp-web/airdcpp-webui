@@ -6,7 +6,8 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import 'stores/FilelistSessionStore'; // must be required here for now
 import LogStore from 'stores/LogStore';
 
-import LabelInfo from 'utils/LabelInfo';
+import UrgencyUtils from 'utils/UrgencyUtils';
+import { HubMessageUrgencies, PrivateMessageUrgencies, LogMessageUrgencies } from 'constants/UrgencyConstants';
 import { SIDEBAR_ID } from 'constants/OverlayConstants';
 
 const MainNavigationItems = [
@@ -53,32 +54,31 @@ export default function (Component, sidebarContext) {
 			}
 		},
 
+		onClickSidebar() {
+
+		},
+
 		getSidebarItems() {
 			return [
 				{
 					title: 'Hubs',
 					url: '/hubs',
-					unreadInfo: LabelInfo.getHubUnreadInfo(HubSessionStore.getUnreadCounts()),
-					location: this.props.location,
 					icon: 'blue sitemap',
+					unreadInfoStore: HubSessionStore,
 				}, {
 					title: 'Messages',
 					url: '/messages',
-					unreadInfo: LabelInfo.getPrivateChatUnreadInfo(PrivateChatSessionStore.getUnreadCounts()),
-					location: this.props.location,
 					icon: 'blue comments',
+					unreadInfoStore: PrivateChatSessionStore,
 				}, {
 					title: 'Filelists',
 					url: '/filelists',
-					labelCount: 0,
-					location: this.props.location,
 					icon: 'blue browser',
 				}, {
 					title: 'Events',
 					url: '/events',
-					unreadInfo: LabelInfo.getLogUnreadInfo(LogStore.getUnreadCounts()),
-					location: this.props.location,
 					icon: 'blue history',
+					unreadInfoStore: LogStore,
 				}
 			];
 		},

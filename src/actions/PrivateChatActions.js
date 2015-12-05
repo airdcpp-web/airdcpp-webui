@@ -46,9 +46,11 @@ PrivateChatActions.createSession.listen(function (location, user) {
 	}
 
 	let that = this;
-	SocketService.post(PRIVATE_CHAT_SESSION_URL, { 
-		cid: user.cid,
-		hub_url: user.hub_url
+	SocketService.post(PRIVATE_CHAT_SESSION_URL, {
+		user: {
+			cid: user.cid,
+			hub_url: user.hub_url,
+		}
 	})
 		.then(that.completed.bind(that, location, user))
 		.catch(that.failed);

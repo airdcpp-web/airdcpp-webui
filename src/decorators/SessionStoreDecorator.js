@@ -1,6 +1,8 @@
 import update from 'react-addons-update';
 
-const SessionStoreDecorator = function (store, actions) {
+import UrgencyUtils from 'utils/UrgencyUtils';
+
+const SessionStoreDecorator = function (store, actions, urgencyMappings) {
 	let sessions = [];
 	let activeSession = null;
 
@@ -13,16 +15,12 @@ const SessionStoreDecorator = function (store, actions) {
 		store.trigger(sessions);
 	});
 
-	const countUnread = (type) => {
-		return sessions.reduce((count, session) => session.unread_messages[type] > 0 ? count + 1 : count, 0);
+	store.getTotalUrgencies = () => {
+		return UrgencyUtils.getSessionUrgencies(sessions, urgencyMappings, 'unread_messages');
 	};
 
-	store.getUnreadCounts = () => {
-		return {
-			user: countUnread('user'),
-			bot: countUnread('bot'),
-			status: countUnread('status'),
-		};
+	store.getItemUrgencies = (item) => {
+		return UrgencyUtils.toUrgencyMap(item.unread_messages, urgencyMappings);
 	};
 
 	store.getSession = (id) => {

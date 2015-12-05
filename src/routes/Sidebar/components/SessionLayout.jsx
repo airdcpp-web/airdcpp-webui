@@ -55,9 +55,9 @@ const SessionLayout = React.createClass({
 		itemIconGetter: React.PropTypes.func.isRequired,
 
 		/**
-		 * Function receiving label after the name (unread count etc.)
+		 * Store containing information about unread items
 		 */
-		itemLabelGetter: React.PropTypes.func.isRequired,
+		unreadInfoStore: React.PropTypes.object,
 
 		/**
 		 * Function receiving the circular color label in front of the item
@@ -115,6 +115,9 @@ const SessionLayout = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.activeId) {
+			if (this.state.activeItem) {
+				this.setState({ activeItem: null });
+			}
 			return;
 		}
 
@@ -202,7 +205,7 @@ const SessionLayout = React.createClass({
 				url={this.getUrl(item.id)}
 				location={this.props.location}
 				nameGetter={this.props.itemNameGetter}
-				labelGetter={this.props.itemLabelGetter}
+				unreadInfoStore={ this.props.unreadInfoStore }
 				statusGetter={this.props.itemStatusGetter}
 				item={item}
 			/>
@@ -225,15 +228,6 @@ const SessionLayout = React.createClass({
 			children = <Loader/>;
 		}
 
-		/*const newItemProps = {
-			key: 'new',
-			title: this.props.newButtonLabel,
-			//location: this.props.location,
-			url: this.getNewUrl(),
-			onClick: this.props.onClose,
-			//buttonClass: buttonClass,
-		};*/
-
 		// New session button
 		const newButton = (
 			<SessionNewButton 
@@ -244,7 +238,8 @@ const SessionLayout = React.createClass({
 			/>
 		);
 
-		const Component = this.props.disableSideMenu || window.innerWidth < 500 ? TopMenuLayout : SideMenuLayout;
+		//const Component = TopMenuLayout;
+		const Component = this.props.disableSideMenu || window.innerWidth < 700 ? TopMenuLayout : SideMenuLayout;
 		return (
 			<Component 
 				itemIconGetter={ this.props.itemIconGetter }
@@ -252,6 +247,7 @@ const SessionLayout = React.createClass({
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
 				itemCloseHandler={ () => this.props.itemCloseHandler(this.state.activeItem) }
 				activeItem={ this.state.activeItem }
+				unreadInfoStore={ this.props.unreadInfoStore }
 
 				newButton={ newButton }
 				menuItems={ menuItems }

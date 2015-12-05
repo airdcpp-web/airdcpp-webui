@@ -12,6 +12,7 @@ import MainLayout from './MainLayout';
 
 import { History, RouteContext } from 'react-router';
 import SocketConnectStatus from './SocketConnectStatus';
+import SetContainerSize from 'mixins/SetContainerSize';
 
 import ModalHandlerDecorator from 'decorators/ModalHandlerDecorator';
 
@@ -23,7 +24,7 @@ import LogActions from 'actions/LogActions';
 
 
 const AuthenticatedApp = React.createClass({
-	mixins: [ Reflux.connect(LoginStore), History, RouteContext ],
+	mixins: [ Reflux.connect(LoginStore), History, RouteContext, SetContainerSize ],
 
 	initContent() {
 		PrivateChatActions.fetchSessions();
@@ -54,14 +55,14 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	render() {
-		const mobileView = window.innerWidth < 500;
+		const mobileView = window.innerWidth < 700;
 		//const mobileView = true;
 		const LayoutElement = mobileView ? MobileLayout : MainLayout;
 		if (this.state.socketAuthenticated) {
 			return (
 				<div id="authenticated-app">
 					<Notifications location={ this.props.location }/>
-					<LayoutElement className="pushable main-layout" location={ this.props.location }>
+					<LayoutElement className="pushable main-layout" { ...this.props }>
 						{ this.props.children }
 					</LayoutElement>
 				</div>

@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
+import MenuIcon from 'components/menu/MenuIcon';
 
 
-const SessionDropdown = ({ menuItems, newButton, sessionMenuStyle }) => (
-	<Dropdown triggerIcon="content">
+const SessionDropdown = ({ menuItems, newButton, sessionMenuStyle, unreadInfoStore }) => (
+	<Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
 	 	<div className="header">New</div>
 	 	{ newButton }
 		<div className="ui divider" style={sessionMenuStyle}></div>
