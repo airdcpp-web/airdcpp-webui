@@ -1,16 +1,17 @@
 import React from 'react';
 
-const Progress = React.createClass({
-	render: function () {
-		return (
-			<div className={ 'ui progress ' + this.props.className } data-percent= { this.props.percent }>
-				<div className="bar" style={{ transitionDuration: 300 + 'ms' }, { width: this.props.percent + '%' }}>
-					<div className="progress"></div>
-				</div>
-				<div className="label">{ this.props.caption }</div>
-			</div>
-		);
-	}
-});
+const Progress = ({ className, percent, caption }) => (
+	<div className={ 'ui progress ' + className } data-percent= { percent }>
+		<div className="bar" style={{ transitionDuration: 300 + 'ms' }, { width: percent + '%' }}>
+			<div className="progress"></div>
+		</div>
+		<div className="label">{ caption }</div>
+	</div>
+);
+
+Progress.propTypes = {
+	percent: React.PropTypes.number.isRequired,
+	caption: React.PropTypes.node.isRequired,
+};
 
 export default Progress;

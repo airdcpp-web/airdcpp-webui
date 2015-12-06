@@ -34,7 +34,7 @@ export default function (Component) {
 		getItem(actionId) {
 			if (actionId === 'divider') {
 				// TODO: support multiple dividers
-				return <div key="divider" className="divider"></div>;
+				return <div key="divider" className="ui divider"></div>;
 			}
 
 			if (typeof actionId !== 'string') {

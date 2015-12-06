@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const Popup = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 
 		/**

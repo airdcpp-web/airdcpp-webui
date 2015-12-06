@@ -12,28 +12,26 @@ import ScrollDecorator from 'decorators/ScrollDecorator';
 
 import '../style.css';
 
-const LogMessage = React.createClass({
-	render: function () {
-		let iconClass;
-		switch (this.props.message.severity) {
-			case 0: iconClass = 'blue info circle'; break;
-			case 1: iconClass = 'yellow warning sign'; break;
-			case 2: iconClass = 'red warning circle'; break;
-		}
-
-		return (
-			<div className="log-message">
-				<div className="ui message-info">
-					<i className={ iconClass + ' icon' }></i>
-					<div className="timestamp">{ ValueFormat.formatTimestamp(this.props.message.time) }</div>
-				</div>
-				<div className="message-text">
-					{ this.props.message.text }
-				</div>
-			</div>
-		);
+const LogMessage = ({ message }) => {
+	let iconClass;
+	switch (message.severity) {
+		case 0: iconClass = 'blue info circle'; break;
+		case 1: iconClass = 'yellow warning sign'; break;
+		case 2: iconClass = 'red warning circle'; break;
 	}
-});
+
+	return (
+		<div className="log-message">
+			<div className="ui message-info">
+				<i className={ iconClass + ' icon' }></i>
+				<div className="timestamp">{ ValueFormat.formatTimestamp(message.time) }</div>
+			</div>
+			<div className="message-text">
+				{ message.text }
+			</div>
+		</div>
+	);
+};
 
 const SystemLog = ScrollDecorator(React.createClass({
 	mixins: [ Reflux.ListenerMixin ],

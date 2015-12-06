@@ -6,43 +6,41 @@ import { Link, IndexLink } from 'react-router';
 import CountLabel from 'components/CountLabel';
 
 
-const IconMenuItem = React.createClass({
-	propTypes: {
-		urgencies: React.PropTypes.object,
-		icon: React.PropTypes.string.isRequired,
-		title: React.PropTypes.node.isRequired,
-	},
+const IconMenuItem = ({ urgencies, icon, title, indexLink, ...props }) => {
+	const LinkElement = indexLink ? IndexLink : Link;
 
-	contextTypes: {
-		history: React.PropTypes.object.isRequired
-	},
+	return (
+		<LinkElement { ...props }>
+			<CountLabel className="mini" urgencies={urgencies}/>
+			<i className={ icon + ' icon' }></i>
+			{ title }
+		</LinkElement>
+	);
+};
 
-	render() {
-		const { urgencies, icon, title, indexLink, ...props } = this.props;
-		const LinkElement = indexLink ? IndexLink : Link;
+IconMenuItem.propTypes = {
+	urgencies: React.PropTypes.object,
+	icon: React.PropTypes.string.isRequired,
+	title: React.PropTypes.node.isRequired,
+};
 
-		return (
-			<LinkElement { ...props }>
-				<CountLabel className="mini" urgencies={urgencies}/>
-				<i className={ icon + ' icon' }></i>
-				{ title }
-			</LinkElement>
-		);
-	},
-});
+IconMenuItem.contextTypes = {
+	history: React.PropTypes.object.isRequired
+};
 
 
-const TextMenuItem = ({ title, indexLink, ...props }) => (
-	indexLink ? (
-			<IndexLink { ...props }>
-				{title}
-			</IndexLink>
-		) : (
-			<Link { ...props }>
-				{title}
-			</Link>
-		)
-);
+const TextMenuItem = ({ title, indexLink, ...props }) => {
+	const LinkElement = indexLink ? IndexLink : Link;
+	return (
+		<LinkElement { ...props }>
+			{title}
+		</LinkElement>
+	);
+};
+
+TextMenuItem.propTypes = {
+	title: React.PropTypes.node.isRequired,
+};
 
 TextMenuItem.contextTypes = {
 	history: React.PropTypes.object.isRequired

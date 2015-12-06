@@ -2,51 +2,42 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-const Button = React.createClass({
-	propTypes: {
+const Button = ({ className, loading, icon, caption, loadingCaption, disabled, ...other }) => {
+	const buttonStyle = classNames(
+		'ui button',
+		{ 'disabled': disabled || loading },
+		{ 'loading': loading },
+		className,
+	);
 
-		/**
-		 * Icon class
-		 */
-		icon: React.PropTypes.string,
+	return (
+		<div className={ buttonStyle } { ...other }>
+			{ icon ? <i className={ icon + ' icon' }></i> : null }
+			{ caption }
+		</div>
+	);
+};
 
-		/**
-		 * Button caption
-		 */
-		caption: React.PropTypes.node.isRequired,
+Button.propTypes = {
+	/**
+	 * Icon class
+	 */
+	icon: React.PropTypes.string,
 
-		/**
-		 * Caption to show when 'loading' is true
-		 */
-		//loadingCaption: React.PropTypes.node,
+	/**
+	 * Button caption
+	 */
+	caption: React.PropTypes.node.isRequired,
 
-		/**
-		 * Disable button (the button will be disabled automatically when 'loading' is true)
-		 */
-		disabled: React.PropTypes.bool,
+	/**
+	 * Disable button (the button will be disabled automatically when 'loading' is true)
+	 */
+	disabled: React.PropTypes.bool,
 
-		/**
-		 * Show spinner
-		 */
-		loading: React.PropTypes.bool,
-	},
-
-	render: function () {
-		const { className, loading, icon, caption, loadingCaption, disabled, ...other } = this.props;
-		const buttonStyle = classNames(
-			'ui button',
-			{ 'disabled': disabled || loading },
-			{ 'loading': loading },
-			className
-		);
-
-		return (
-			<div className={ buttonStyle } { ...other }>
-				{ icon ? <i className={ icon + ' icon' }></i> : null }
-				{ caption }
-			</div>
-		);
-	},
-});
+	/**
+	 * Show spinner
+	 */
+	loading: React.PropTypes.bool,
+};
 
 export default Button;

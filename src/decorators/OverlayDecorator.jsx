@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import invariant from 'invariant';
 
 import { Lifecycle } from 'react-router';
 import History from 'utils/History';
@@ -66,7 +67,7 @@ export default function (Component, semanticModuleName) {
 			if (this.changeHistoryState) {
 				const { state } = this.props.location;
 				const { returnTo } = state[this.props.overlayId];
-				console.assert(returnTo && this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
+				invariant(returnTo && this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
 				delete state[this.props.overlayId];
 				History.replaceState(state, returnTo);
 			}

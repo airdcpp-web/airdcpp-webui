@@ -1,8 +1,10 @@
 import React from 'react';
 
 import Button from 'components/semantic/Button';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const ActionInput = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Button caption

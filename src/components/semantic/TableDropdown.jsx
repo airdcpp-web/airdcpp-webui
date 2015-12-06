@@ -1,11 +1,15 @@
 import React from 'react';
 import Popup from './Popup';
 
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import invariant from 'invariant';
+
 // A popup-based class for handling dropdowns in Fixed Data Table
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
 const TableDropdown = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Cell content to render
@@ -25,7 +29,7 @@ const TableDropdown = React.createClass({
 	},
 
 	addCloseHandler(elem) {
-		console.assert(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
+		invariant(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
 		return React.cloneElement(elem, {
 			onClick: () => {
 				this.refs.dropdownMenu.hide();

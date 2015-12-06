@@ -59,6 +59,10 @@ var ScrollArea = React.createClass({
 
 			var self = this;
 			this._scrollTimer = setTimeout(() => {
+				if (!this.isMounted()) {
+					return;
+				}
+
 				console.log('Touch scroll end, top: ' + top);
 				self.props.onScrollEnd(left, top);
 				this._scrollTimer = null;

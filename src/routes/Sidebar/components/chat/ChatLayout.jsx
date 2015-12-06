@@ -31,6 +31,10 @@ const MessageSection = ScrollDecorator(React.createClass({
 		);
 	},
 
+	shouldComponentUpdate: function (nextProps, nextState) {
+		return nextProps.messages !== this.props.messages;
+	},
+
 	render: function () {
 		return (
 			<div className="message-section">

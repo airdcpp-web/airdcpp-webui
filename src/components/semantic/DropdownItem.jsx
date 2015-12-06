@@ -1,21 +1,24 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const DropdownItem = React.createClass({
-	render() {
-		const className = classNames(
-			'item',
-			this.props.className,
-			{ 'active': this.props.active	}
-		);
+const DropdownItem = ({ className, active, children, ...other }) => {
+	const itemClass = classNames(
+		'item',
+		className,
+		{ 'active': active	}
+	);
 
-		return (
-			<a className={ className } {...this.props}>
-				{this.props.children}
-			</a>
-		);
-	}
-});
+	return (
+		<a className={ itemClass } {...other}>
+			{ children }
+		</a>
+	);
+};
+
+DropdownItem.propTypes = {
+	className: React.PropTypes.string,
+	active: React.PropTypes.bool,
+};
 
 export default DropdownItem
 ;

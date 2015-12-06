@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const CheckBox = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 
 		/**

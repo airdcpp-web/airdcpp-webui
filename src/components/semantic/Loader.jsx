@@ -1,25 +1,18 @@
 import React from 'react';
 
-// Disables the component of there are no online hubs
-const Loader = React.createClass({
-	propTypes: {
-		text: React.PropTypes.node,
-	},
+const Loader = ({ text }) => (
+	<div className="ui active text loader">
+		{ text }
+	</div>
+);
 
-	getDefaultProps() {
-		return {
-			text: 'Loading'
-		};
-	},
+Loader.propTypes = {
+	text: React.PropTypes.node,
+};
 
-	render() {
-		return (
-			<div className="ui active text loader">
-				{ this.props.text }
-			</div>
-		);
-	},
-});
+Loader.defaultProps = {
+	text: 'Loading'
+};
 
 export default Loader
 ;

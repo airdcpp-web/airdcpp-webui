@@ -27,10 +27,3 @@ const ChatSession = React.createClass({
 });
 
 export default ChatSessionDecorator(ChatSession, PrivateChatMessageStore, PrivateChatActions);
-
-		/*		<TabHeader
-					icon={icon}
-					title={userMenu}
-					buttonClickHandler={this.handleClose}
-					subHeader={ user.hub_names }
-				/>*/

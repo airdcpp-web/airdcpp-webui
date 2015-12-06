@@ -2,44 +2,42 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-const Message = React.createClass({
-	propTypes: {
-		/**
-		 * Message title
-		 */
-		title: React.PropTypes.node,
+const Message = ({ className, title, description, icon, isError }) => {
+	const style = classNames(
+		'ui message',
+		{ 'negative': isError },
+		{ 'icon': icon },
+		className,
+	);
 
-		/**
-		 * Error details
-		 */
-		description: React.PropTypes.node,
-
-		isError: React.PropTypes.bool,
-
-		icon: React.PropTypes.string,
-	},
-
-	render: function () {
-		const style = classNames(
-			'ui message',
-			{ 'negative': this.props.isError },
-			{ 'icon': this.props.icon },
-			this.props.className,
-		);
-
-		return (
-			<div className={style}>
-				{ (this.props.icon ? <i className={ this.props.icon + ' icon' }></i> : null) }
-				<div className="content">
-					<div className="header">
-						{ this.props.title }
-					</div>
-					{this.props.description}
+	return (
+		<div className={ style }>
+			{ (icon ? <i className={ icon + ' icon' }></i> : null) }
+			<div className="content">
+				<div className="header">
+					{ title }
 				</div>
+				{ description }
 			</div>
-		);
-	}
-});
+		</div>
+	);
+};
+
+Message.propTypes = {
+	/**
+	 * Message title
+	 */
+	title: React.PropTypes.node,
+
+	/**
+	 * Message content
+	 */
+	description: React.PropTypes.node,
+
+	isError: React.PropTypes.bool,
+
+	icon: React.PropTypes.string,
+};
 
 export default Message
 ;
