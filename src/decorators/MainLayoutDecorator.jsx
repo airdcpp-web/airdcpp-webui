@@ -34,7 +34,7 @@ const MainNavigationItems = [
 	}
 ];
 
-export default function (Component, sidebarContext) {
+export default function (Component) {
 	const showSideBar = (props) => {
 		return props.location.state &&
 			props.location.state[SIDEBAR_ID];
@@ -88,7 +88,7 @@ export default function (Component, sidebarContext) {
 			if (showSideBar(this.props)) {
 				sidebar = React.cloneElement(this.props.children, { 
 					overlayId: SIDEBAR_ID,
-					overlayContext: sidebarContext,
+					overlayContext: '.sidebar-context',
 				});
 			}
 

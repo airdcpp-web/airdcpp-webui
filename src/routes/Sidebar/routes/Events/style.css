@@ -16,12 +16,6 @@
 	padding: 20px;
 }
 
-#sidebar .simple-layout .content {
-	display: flex;
-	overflow-y: auto;
-	margin-top: 10px;
-}
-
 #sidebar .simple-layout .content > div {
 	overflow-y: auto;
 }

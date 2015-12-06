@@ -9,7 +9,7 @@ const SessionDropdown = ({ menuItems, newButton, sessionMenuStyle, unreadInfoSto
 	 	<div className="header">New</div>
 	 	{ newButton }
 		<div className="ui divider" style={sessionMenuStyle}></div>
-		<div className="header" style={sessionMenuStyle}>Existing</div>
+		<div className="header" style={sessionMenuStyle}>Current sessions</div>
 		{ menuItems }
 	</Dropdown>
 );
@@ -22,7 +22,7 @@ const ItemHeader = ({ itemIconGetter, itemHeaderGetter, location, activeItem }) 
 );
 
 const CloseButton = ({ itemCloseHandler }) => (
-	<a onClick={ itemCloseHandler } className="item">
+	<a onClick={ itemCloseHandler } className="item close-button">
 		<i className="grey remove icon"/>
 		Close
 	</a>

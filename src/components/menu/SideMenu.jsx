@@ -35,10 +35,11 @@ const SideMenu = React.createClass({
 		return (
 			<div id="side-menu">
 				<div className="content">
-					<div className="ui labeled icon vertical inverted menu">
+					<div className="ui labeled icon vertical small inverted menu">
 						{ this.props.sidebarItems.map(getIconMenuItem.bind(this, this.onClick)) }
 					</div>
 				</div>
+				<div className="ui divider"/>
 				<div>
 					<TransferStats className="ui centered inverted mini list"/>
 				</div>

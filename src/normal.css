@@ -1,19 +1,14 @@
-/*html {
-	min-width: 550px;
-	min-height: 400px;
-	overflow: auto;
-}*/
+#normal-layout .site-content,
+#normal-layout .header-content {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1600px;
+	width: calc(100% - 180px);
+}
 
-@media only screen and (min-width: 1600px) {
-	.ui.container {
-		width: 1527px;
-		margin-left: auto !important;
-		margin-right: auto !important;
-	}
-
-	.ui.grid.container {
-		width: calc( 1527px	+	2em ) !important;
-	}
+.header-content {
+	display: flex;
+	width: 100%;
 }
 
 /* Sidemenu start */
@@ -22,7 +17,7 @@
 	position: fixed;
 	top: 120px;
 	right: 0px;
-	width: 100px;
+	width: 80px !important;
 	height: auto;
 	padding-bottom: 10px;
 	border-top-left-radius: .28571429rem;
@@ -34,21 +29,36 @@
 #side-menu .menu {
 	height: auto !important;
 	display: block !important;
+	width: inherit;
+}
+
+#side-menu a.item {
+	padding: 10px 8px;
 }
 
 #side-menu .mini.list {
-	margin-top: 20px;
-	margin-left: 15px;
+	margin-left: 10px;
 	margin-right: auto;
+	font-size: 9.5px !important;
 }
 
 #side-menu .item>.label {
-	margin-left: 0px !important;
+	position: absolute;
+	top: 7px;
+	right: 7px;
+}
+
+#side-menu .ui.divider {
+	margin-top: 0px;
 }
 
 .touch-icon {
 	text-align: center;
 	margin-top: 10px;
+}
+
+.touch-icon > i {
+	margin: 0px !important;
 }
 
 /* Sidemenu end */

@@ -32,8 +32,15 @@
 }
 
 .session-container.vertical .menu-bar .content-left {
-  flex: 1;
-  display: flex;
+  max-width: calc(100% - 90px);
+}
+
+.session-container.vertical .menu-bar .close-button {
+  margin-right: -3px;
+}
+
+.session-container.vertical .menu-bar .content-left > .ui.dropdown {
+  float: left;
 }
 
 .session-container.vertical .session-header {
@@ -43,7 +50,7 @@
 
 .session-container.vertical .session-header > div {
   padding-left: 5px;
-  width: 100%;
+  width: 90%;
 }
 
 .session-container.vertical .session-header > i {

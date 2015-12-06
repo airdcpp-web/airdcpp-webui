@@ -4,7 +4,6 @@ import SiteHeader from './SiteHeader';
 import MobileMenu from './menu/MobileMenu';
 import MenuIcon from './menu/MenuIcon';
 
-import MainLayoutDecorator from 'decorators/MainLayoutDecorator';
 import UrgencyUtils from 'utils/UrgencyUtils';
 
 import '../mobile.css';
@@ -55,7 +54,7 @@ const MobileLayout = React.createClass({
 						onClose={ this.onClickMenu }
 					/>
 				) : null }
-				<div className="pusher" id="mobile-layout-inner">
+				<div className="pusher sidebar-context" id="mobile-layout-inner">
 					<SiteHeader 
 						content={
 							<Menu
@@ -74,4 +73,4 @@ const MobileLayout = React.createClass({
 	}
 });
 
-export default MainLayoutDecorator(MobileLayout, '#mobile-layout-inner');
+export default MobileLayout;

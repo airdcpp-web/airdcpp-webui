@@ -6,7 +6,7 @@ const SiteHeader = React.createClass({
 	render() {
 		return (
 			<div className="ui fixed inverted menu site-header">
-				<div className="ui container">
+				<div className="ui header-content">
 					<div href="#" className="header item">
 						<img className="logo" src={ Logo }/>
 					</div>

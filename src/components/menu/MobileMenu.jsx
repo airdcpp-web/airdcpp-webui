@@ -20,6 +20,10 @@ const LogoutItem = {
 };
 
 const MobileMenu = React.createClass({
+	contextTypes: {
+		history: React.PropTypes.object.isRequired
+	},
+	
 	componentDidMount() {
 		const settings = {
 			context: '#mobile-layout',
@@ -35,7 +39,10 @@ const MobileMenu = React.createClass({
 	onClickSecondary(url, evt) {
 		evt.preventDefault();
 
-		History.pushSidebar(this.props.location, url);
+		if (!this.context.history.isActive(url)) {
+			History.pushSidebar(this.props.location, url);
+		}
+
 		this.onClick(url, evt);
 	},
 

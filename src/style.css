@@ -34,8 +34,7 @@ section#container-main, .login-grid, .main-layout, #authenticated-app, .pusher {
 	max-width: 85%;
 	display: flex;
 	align-items: center;
-	margin-right: 15px;
-	flex: 1;
+	padding: 5px 5px;
 }
 
 .layout.header .main-header .content {

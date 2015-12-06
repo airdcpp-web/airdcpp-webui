@@ -4,8 +4,6 @@ import NavigationPanel from './menu/Navigation';
 import SideMenu from './menu/SideMenu';
 import SiteHeader from './SiteHeader';
 
-import MainLayoutDecorator from 'decorators/MainLayoutDecorator';
-
 import '../normal.css';
 
 
@@ -14,7 +12,7 @@ const MainLayout = React.createClass({
 		const { mainContent, sidebar, mainMenuItems, secondaryMenuItems } = this.props;
 
 		return (
-			<div className={this.props.className} id="normal-layout">
+			<div className={ this.props.className + ' sidebar-context' } id="normal-layout">
 				{ sidebar }
 				<div className="pusher">
 					<SiteHeader 
@@ -25,7 +23,7 @@ const MainLayout = React.createClass({
 							/>
 						}
 					/>
-					<div className="ui container site-content">
+					<div className="ui site-content">
 						{ mainContent }
 					</div>
 				</div>
@@ -35,4 +33,4 @@ const MainLayout = React.createClass({
 	}
 });
 
-export default MainLayoutDecorator(MainLayout, '#normal-layout');
+export default MainLayout;

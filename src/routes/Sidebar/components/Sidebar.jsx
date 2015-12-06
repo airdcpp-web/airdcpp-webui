@@ -10,8 +10,9 @@ import '../style.css';
 const Sidebar = React.createClass({
 	componentDidMount() {
 		this.props.showOverlay({
-			context: this.props.overlayContext,
+			context: $(this.props.overlayContext),
 			transition: 'overlay',
+			mobileTransition: 'overlay',
 			// Using onShow callback would cause a significant delay, do this via timeout instead
 			onVisible: () => setTimeout(this.onVisible, 300),
 		});

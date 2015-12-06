@@ -15,7 +15,7 @@ import SocketConnectStatus from './SocketConnectStatus';
 import SetContainerSize from 'mixins/SetContainerSize';
 
 import ModalHandlerDecorator from 'decorators/ModalHandlerDecorator';
-
+import MainLayoutDecorator from 'decorators/MainLayoutDecorator';
 
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
@@ -74,4 +74,4 @@ const AuthenticatedApp = React.createClass({
 	}
 });
 
-export default ModalHandlerDecorator(AuthenticatedApp);
+export default MainLayoutDecorator(ModalHandlerDecorator(AuthenticatedApp));
