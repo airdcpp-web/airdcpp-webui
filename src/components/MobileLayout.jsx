@@ -5,6 +5,8 @@ import MobileMenu from './menu/MobileMenu';
 import MenuIcon from './menu/MenuIcon';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
+import History from 'utils/History';
+import Button from 'components/semantic/Button';
 
 import '../mobile.css';
 
@@ -21,11 +23,19 @@ const reduceItemUrgency = (map, menuItem) => {
 	return map;
 };
 
-const Menu = ({ secondaryMenuItems, onClick }) => (
-	<div className="item right">
+const HeaderContent = ({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }) => (
+	<div className="right">
+		{ sidebar ? 
+			<Button 
+				className="item" 
+				caption="Back" 
+				icon="blue angle left"
+				onClick={ onClickBack }
+			/> : null }
 		<MenuIcon 
 			urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
-			onClick={ onClick }
+			onClick={ onClickMenu }
+			className="item"
 		/>
 	</div>
 );
@@ -39,6 +49,10 @@ const MobileLayout = React.createClass({
 
 	onClickMenu() {
 		this.setState({ menuVisible: !this.state.menuVisible });
+	},
+
+	onClickBack() {
+		History.replaceSidebarData(this.props.location, { close: true });
 	},
 
 	render() {
@@ -57,9 +71,11 @@ const MobileLayout = React.createClass({
 				<div className="pusher sidebar-context" id="mobile-layout-inner">
 					<SiteHeader 
 						content={
-							<Menu
-								onClick={this.onClickMenu}
-								secondaryMenuItems={ secondaryMenuItems } 
+							<HeaderContent
+								onClickMenu={ this.onClickMenu }
+								onClickBack={ this.onClickBack }
+								secondaryMenuItems={ secondaryMenuItems }
+								sidebar={ sidebar }
 							/>
 						}
 					/>

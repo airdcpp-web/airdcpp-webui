@@ -6,6 +6,7 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Notifications from './Notifications';
+import BrowserUtils from 'utils/BrowserUtils';
 
 import MobileLayout from './MobileLayout';
 import MainLayout from './MainLayout';
@@ -55,9 +56,7 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	render() {
-		const mobileView = window.innerWidth < 700;
-		//const mobileView = true;
-		const LayoutElement = mobileView ? MobileLayout : MainLayout;
+		const LayoutElement = BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout;
 		if (this.state.socketAuthenticated) {
 			return (
 				<div id="authenticated-app">

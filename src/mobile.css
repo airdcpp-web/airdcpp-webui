@@ -7,9 +7,18 @@
 	width: 100%;
 }
 
+#mobile-layout .site-header .right {
+	display: flex;
+	margin-left: auto!important;
+}
+
 #mobile-menu i.icon {
 	float: none !important;
 	margin: 0 .5em 0 0 !important;
+}
+
+#mobile-menu .separator {
+	height: 20px;
 }
 
 #mobile-menu a.logout {

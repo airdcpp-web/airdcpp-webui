@@ -16,6 +16,27 @@
 	padding: 20px;
 }
 
+#sidebar .simple-layout .content {
+	display: flex;
+	overflow-y: auto;
+	margin-top: 10px;
+}
+
 #sidebar .simple-layout .content > div {
 	overflow-y: auto;
+	width: 100%;
+}
+
+#sidebar .simple-layout .message-list {
+	width: 100%;
+}
+
+#sidebar .simple-layout .message-info {
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+#sidebar .simple-layout .timestamp {
+	color: gray;
 }

@@ -13,12 +13,9 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DateCell, FileDownloadCell } from 'components/Cell';
 import { Column } from 'fixed-data-table';
 
-import SetContainerSize from 'mixins/SetContainerSize';
 import Loader from 'components/semantic/Loader';
 
 const ListBrowser = React.createClass({
-	mixins: [ SetContainerSize ], // The table won't handle responsive height quickly enough
-
 	// Disabled, doesn't work (investigate later)
 	/*componentWillUnmount() {
 		clearTimeout(this.historyLeaveTimeout);
@@ -112,7 +109,7 @@ const ListBrowser = React.createClass({
 
 	render() {
 		return (
-			<div className="filelist-browser" style={{ height: Math.max(150, this.state.windowHeight - 170) }}>
+			<div className="filelist-browser">
 				<PathBreadcrumb 
 					tokens={this._tokenizePath()} 
 					separator={"/"} 

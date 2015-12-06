@@ -10,6 +10,7 @@ import '../sessions.css';
 
 import SessionNewButton from './SessionNewButton';
 import SessionMenuItem from './SessionMenuItem';
+import BrowserUtils from 'utils/BrowserUtils';
 
 
 const SessionLayout = React.createClass({
@@ -239,7 +240,7 @@ const SessionLayout = React.createClass({
 		);
 
 		//const Component = TopMenuLayout;
-		const Component = this.props.disableSideMenu || window.innerWidth < 700 ? TopMenuLayout : SideMenuLayout;
+		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
 		return (
 			<Component 
 				itemIconGetter={ this.props.itemIconGetter }

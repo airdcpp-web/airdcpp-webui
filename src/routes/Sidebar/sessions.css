@@ -33,6 +33,7 @@
 
 .session-container.vertical .menu-bar .content-left {
   max-width: calc(100% - 90px);
+  width: 100%;
 }
 
 .session-container.vertical .menu-bar .close-button {
@@ -53,8 +54,17 @@
   width: 90%;
 }
 
+.session-container.vertical .session-header > div:before {
+  background: none !important;
+}
+
 .session-container.vertical .session-header > i {
   padding-left: 10px;
+}
+
+.session-container.vertical .session-header .ui.dropdown > i {
+  /*margin: 0px 5px;*/
+  display: none;
 }
 
 .session-container.vertical .menu-bar {
@@ -98,14 +108,14 @@
 }
 
 .session-container.horizontal .menu-column .session-item span, 
-.session-layout .content span {
+.session-layout .content span,
+.session-container .session-header > div span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.session-layout .sub.header,
-.session-container .session-header > div span {
+.session-layout .sub.header {
   text-overflow: ellipsis;
   overflow: hidden;
 }

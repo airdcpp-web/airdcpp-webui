@@ -9,6 +9,10 @@ export default {
 		 //return false;
 	},
 
+	useMobileLayout() {
+		return window.innerWidth < 700;
+	},
+
 	preferTouch() {
 		return md.mobile();
 	},

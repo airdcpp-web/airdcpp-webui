@@ -22,15 +22,13 @@ const LogMessage = React.createClass({
 		}
 
 		return (
-			<div className="ui row log-message">
-				<div className="ui column one wide">
+			<div className="log-message">
+				<div className="ui message-info">
 					<i className={ iconClass + ' icon' }></i>
+					<div className="timestamp">{ ValueFormat.formatTimestamp(this.props.message.time) }</div>
 				</div>
-				<div className="ui column thirteen wide">
+				<div className="message-text">
 					{ this.props.message.text }
-				</div>
-				<div className="ui column two wide">
-					{ ValueFormat.formatTimestamp(this.props.message.time) }
 				</div>
 			</div>
 		);
@@ -68,7 +66,7 @@ const SystemLog = ScrollDecorator(React.createClass({
 
 		return (
 			<div className="ui segment system-log">
-				<div ref="messageList" className="ui grid message-list three column">
+				<div ref="messageList" className="ui message-list">
 					{messageList}
 				</div>
 			</div>

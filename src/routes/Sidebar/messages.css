@@ -60,11 +60,13 @@
 }
 
 .status-message {
-  display: flex;
+	width: 100%;
+  display: flex !important;
   flex-direction: row-reverse;
 }
 
 .message-list .message-text {
+	flex: 1;
 	overflow: hidden;
 	white-space: pre-line;
 }

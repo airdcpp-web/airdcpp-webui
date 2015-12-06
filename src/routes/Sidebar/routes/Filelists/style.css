@@ -4,8 +4,17 @@
 
 .filelist-browser {
 	margin-bottom: 10px;
+	height: calc(100% - 90px);
+}
+
+.filelist-browser .virtual-table {
+	height: calc(100% - 20px) !important;
 }
 
 .filelist-browser .ui.segment {
 	margin-bottom: 10px;
+}
+
+.filelist-session {
+	height: 100%;
 }

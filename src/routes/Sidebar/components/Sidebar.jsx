@@ -4,6 +4,7 @@ import React from 'react';
 
 import OverlayDecorator from 'decorators/OverlayDecorator';
 import Loader from 'components/semantic/Loader';
+import BrowserUtils from 'utils/BrowserUtils';
 
 import '../style.css';
 
@@ -13,6 +14,7 @@ const Sidebar = React.createClass({
 			context: $(this.props.overlayContext),
 			transition: 'overlay',
 			mobileTransition: 'overlay',
+			closable: !BrowserUtils.useMobileLayout(),
 			// Using onShow callback would cause a significant delay, do this via timeout instead
 			onVisible: () => setTimeout(this.onVisible, 300),
 		});

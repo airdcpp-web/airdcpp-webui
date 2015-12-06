@@ -23,7 +23,7 @@ const MobileMenu = React.createClass({
 	contextTypes: {
 		history: React.PropTypes.object.isRequired
 	},
-	
+
 	componentDidMount() {
 		const settings = {
 			context: '#mobile-layout',
@@ -60,7 +60,7 @@ const MobileMenu = React.createClass({
 		return (
 			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
 				{ mainMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
-				<div className="divider"></div>
+				<div className="separator"></div>
 				{ secondaryMenuItems.map(getIconMenuItem.bind(this, this.onClickSecondary)) }
 				{ getIconMenuItem(this.logout, LogoutItem) }
 				<div className="actions">
