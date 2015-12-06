@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-import MessageView from 'routes/Sidebar/components/MessageView';
+import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
@@ -16,7 +16,7 @@ const ChatSession = React.createClass({
 	render() {
 		return (
 			<div className="private chat session">
-				<MessageView
+				<ChatLayout
 					messages={this.props.messages}
 					handleSend={this.handleSend}
 					location={this.props.location}

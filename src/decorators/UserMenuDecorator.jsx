@@ -55,7 +55,7 @@ export default function (Component) {
 			 : nicks);
 
 			// There are no items at the moment that work with our own user
-			if (user.flags.indexOf('me') !== -1) {
+			if (user.flags.indexOf('me') !== -1 || user.flags.indexOf('hidden') !== -1) {
 				return <span>{ caption }</span>;
 			}
 

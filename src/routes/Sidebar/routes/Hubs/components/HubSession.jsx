@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import MessageView from 'routes/Sidebar/components/MessageView';
+import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 
 import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
@@ -105,7 +105,7 @@ const HubSession = React.createClass({
 		return (
 			<div className="hub chat session">
 				{ this.getMessage() }
-				<MessageView
+				<ChatLayout
 					messages={this.props.messages}
 					handleSend={this.handleSend}
 					location={this.props.location}
