@@ -73,4 +73,4 @@ const AuthenticatedApp = React.createClass({
 	}
 });
 
-export default MainLayoutDecorator(ModalHandlerDecorator(AuthenticatedApp));
+export default ModalHandlerDecorator(MainLayoutDecorator(AuthenticatedApp));

@@ -70,11 +70,18 @@ export default function (Component) {
 		},
 
 		componentWillReceiveProps(nextProps) {
-			this.checkModals(nextProps);
+			if (this.checkModals(nextProps)) {
+				if (!this.previousChildren) {
+					// save the old children (just like animation)
+					this.previousChildren = this.props.children;
+				}
+			} else {
+				this.previousChildren = null;
+			}
 		},
 
 		render() {
-			return <Component {...this.props}/>;
+			return <Component {...this.props} children={ this.previousChildren ? this.previousChildren : this.props.children }/>;
 		},
 	});
 

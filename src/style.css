@@ -5,6 +5,7 @@ body {
 
 .login-grid .column {
 	max-width: 650px;
+	width: 95% !important;
 }
 
 .ui.site-content {

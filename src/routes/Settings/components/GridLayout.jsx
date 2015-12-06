@@ -47,11 +47,7 @@ const GridLayout = React.createClass({
 	},
 
 	isItemActive(item) {
-		// Keep the link active even when modals are open
-		// Location prop needs to be used instead when sidebar is open
-		const url = this.sectionToUrl(item.url);
-		return url === this.props.location.pathname ||
-			this.props.history.isActive(url);
+		return this.props.location.pathname === this.sectionToUrl(item.url);
 	},
 
 	findMenuItem(menuItems) {
