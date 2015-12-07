@@ -34,7 +34,7 @@ const GridLayout = React.createClass({
 
 	checkChildren(props) {
 		if (!props.children) {
-			props.history.replaceState(null, this.sectionToUrl(props.menuItems[0].url));
+			props.history.replace(this.sectionToUrl(props.menuItems[0].url));
 		}
 	},
 

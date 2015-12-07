@@ -96,6 +96,7 @@ const formatSpeed = (bytesPerSecond) => {
 	return Format.formatSize(bytesPerSecond) + '/s';
 };
 
-export default Object.assign(Format, {
-	formatSpeed: formatSpeed,
-});
+export default {
+	...Format,
+	formatSpeed,
+};

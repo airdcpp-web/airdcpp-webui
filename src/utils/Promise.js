@@ -8,12 +8,12 @@ function pending() {
 	});
 
 	return {
-		resolve: resolve,
-		reject: reject,
-		promise: promise
+		resolve,
+		reject,
+		promise
 	};
 }
 
 export default Object.assign(Promise, {
-	pending: pending
+	pending
 });

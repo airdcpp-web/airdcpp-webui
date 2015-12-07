@@ -33,37 +33,54 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 };
 
 const OverlayHelpers = {
-	pushModal: function (currentLocation, nextPath, overlayId, data) {
+	pushModal: function (currentLocation, pathname, overlayId, data) {
 		if (typeof currentLocation !== 'object') {
-			currentLocation = Object.assign({}, { pathname: currentLocation });
+			currentLocation = { pathname: currentLocation };
 		}
 
 		const state = getOverlayState(currentLocation, 'modal_' + overlayId, data);
-		History.pushState(state, nextPath);
+		History.push({ 
+			state, 
+			pathname
+		});
 	},
 
-	replaceSidebar: function (currentLocation, nextPath, data) {
+	replaceSidebar: function (currentLocation, pathname, data) {
 		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
-		History.replaceState(state, nextPath);
+		History.replace({
+			state, 
+			pathname,
+		});
 	},
 
-	pushSidebar: function (currentLocation, nextPath, data) {
+	pushSidebar: function (currentLocation, pathname, data) {
 		// replaceState is invoked automatically if the path hasn't changed
 		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
-		History.pushState(state, nextPath);
+		History.push({
+			state, 
+			pathname,
+		});
 	},
 
 	// Append new location data when in sidebar layout and create a new history entry
 	// Query will always be appended due to history lib: https://github.com/rackt/history/pull/43
 	pushSidebarData: function (currentLocation, data) {
-		const newState = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
-		History.pushState(newState, currentLocation.pathname, data);
+		const state = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
+		History.push({
+			state, 
+			pathname: currentLocation.pathname, 
+			query: data,
+		});
 	},
 
 	// Append new location data when in sidebar layout without creating a new history entry
 	replaceSidebarData: function (currentLocation, data, addQuery = false) {
-		const newState = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
-		History.replaceState(newState, currentLocation.pathname, addQuery ? data : null);
+		const state = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
+		History.replace({ 
+			state, 
+			pathname: currentLocation.pathname, 
+			query: addQuery ? data : null,
+		});
 	},
 
 	// Shorthand function for receiving the data

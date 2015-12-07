@@ -19,35 +19,33 @@ export default class ApiSocket {
 	}
 
 	connect(reconnectOnFailure) {
-		SocketActions.state.connecting(self);
+		SocketActions.state.connecting(this);
 
-		let self = this;
-
-		return new Promise(function (resolve, reject) {
+		return new Promise((resolve, reject) => {
 			console.log('Starting socket connect');
-			self.connectInternal(reconnectOnFailure, resolve, reject, self);
+			this.connectInternal(reconnectOnFailure, resolve, reject);
 		});
 	}
 
-	connectInternal(reconnectOnFailure, resolve, reject, self) {
-		self.socket = new WebSocket((window.location.protocol == 'https:' ? 'wss://' : 'ws://') + window.location.host + '/');
+	connectInternal(reconnectOnFailure, resolve, reject) {
+		this.socket = new WebSocket((window.location.protocol == 'https:' ? 'wss://' : 'ws://') + window.location.host + '/');
 
-		self.socket.onopen = function () {
-			self._reconnectTimer = null;
+		this.socket.onopen = () => {
+			this._reconnectTimer = null;
 
-			self.setHandlers(self.socket);
-			SocketActions.state.connected(self);
-			resolve(self);
+			this.setSocketHandlers();
+			SocketActions.state.connected(this);
+			resolve(this);
 		};
 
-		self.socket.onerror = function (event) {
+		this.socket.onerror = (event) => {
 			console.log('Connecting socket failed');
-			SocketActions.state.disconnected(self, 'Cannot connect to the server');
+			SocketActions.state.disconnected(this, 'Cannot connect to the server');
 
 			if (reconnectOnFailure) {
-				self._reconnectTimer = setTimeout(() => {
+				this._reconnectTimer = setTimeout(() => {
 					console.log('Socket reconnecting');
-					self.connectInternal(reconnectOnFailure, resolve, reject, self);
+					this.connectInternal(reconnectOnFailure, resolve, reject);
 				}, 3000);
 			} else {
 				reject('Cannot connect to the server');
@@ -56,26 +54,25 @@ export default class ApiSocket {
 	}
 
 	disconnect() {
-		if (self._reconnectTimer != null) {
-			clearTimeout(self._reconnectTimer);
+		if (this._reconnectTimer != null) {
+			clearTimeout(this._reconnectTimer);
 		}
 
 		this.socket.close();
 	}
 
-	setHandlers(socket) {
-		let self = this;
-		this.socket.onerror = function (event) {
+	setSocketHandlers() {
+		this.socket.onerror = (event) => {
 			console.log('Websocket error: ' + event.reason);
 		};
 
-		this.socket.onclose = function (event) {
+		this.socket.onclose = (event) => {
 			console.log('Websocket was closed: ' + event.reason);
-			SocketActions.state.disconnected(self, event.reason, event.code);
+			SocketActions.state.disconnected(this, event.reason, event.code);
 		};
 		
-		this.socket.onmessage = function (event) {
-			self.listener(event);
+		this.socket.onmessage = (event) => {
+			this.listener(event);
 		};
 	}
 
@@ -96,10 +93,10 @@ export default class ApiSocket {
 		console.log(callbackId, method, path, data ? data : '(no data)');
 
 		const request = {
-			path: path,
-			method: method,
-			data: data,
-			callback_id: callbackId
+			path,
+			method,
+			data,
+			callback_id: callbackId,
 		};
 
 		this.socket.send(JSON.stringify(request));
