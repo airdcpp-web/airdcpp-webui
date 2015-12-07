@@ -46,6 +46,12 @@ export const DateCell = ({ cellData, width }) => (
 	</span>
 );
 
+export const DurationCell = ({ cellData }) => (
+	<span className="plain duration cell">
+		{ ValueFormat.formatRelativeTime(cellData) }
+	</span>
+);
+
 export const AbbreviatedDurationCell = ({ cellData }) => (
 	<span className="plain abbr-duration cell">
 		{ ValueFormat.formatAbbreviatedDuration(cellData) }

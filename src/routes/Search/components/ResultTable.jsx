@@ -5,7 +5,7 @@ import SearchStore from 'stores/SearchStore';
 
 import { Column } from 'fixed-data-table';
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DateCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/Cell';
+import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/Cell';
 
 import TypeConvert from 'utils/TypeConvert';
 import { TableUserMenu } from 'components/Menu';
@@ -85,6 +85,13 @@ const ResultTable = React.createClass({
 					flexGrow={1}
 				/>
 				<Column
+					name="Type"
+					width={60}
+					columnKey="type"
+					flexGrow={1}
+					hideWidth={1000}
+				/>
+				<Column
 					name="Relevancy"
 					width={60}
 					columnKey="relevancy"
@@ -99,12 +106,6 @@ const ResultTable = React.createClass({
 					flexGrow={2}
 				/>
 				<Column
-					name="Type"
-					width={40}
-					columnKey="type"
-					flexGrow={1}
-				/>
-				<Column
 					name="Users"
 					width={120}
 					columnKey="users"
@@ -112,10 +113,11 @@ const ResultTable = React.createClass({
 					cell={ <UserCell location={this.props.location}/> }
 				/>
 				<Column
-					name="Date"
-					width={100}
+					name="Last modified"
+					width={80}
 					columnKey="time"
-					cell={ <DateCell/> }
+					cell={ <DurationCell/> }
+					flexGrow={1}
 				/>
 				<Column
 					name="Slots"

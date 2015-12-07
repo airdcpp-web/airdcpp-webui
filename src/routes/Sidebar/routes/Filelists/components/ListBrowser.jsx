@@ -10,7 +10,7 @@ import FilelistViewStore from 'stores/FilelistViewStore';
 import History from 'utils/History';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DateCell, FileDownloadCell } from 'components/Cell';
+import { SizeCell, DurationCell, FileDownloadCell } from 'components/Cell';
 import { Column } from 'fixed-data-table';
 
 import Loader from 'components/semantic/Loader';
@@ -148,17 +148,18 @@ const ListBrowser = React.createClass({
 						flexGrow={1}
 					/>
 					{/*<Column
-						label="Type"
-						width={100}
-						dataKey="type"
-						cellRenderer={ this._renderStr }
+						name="Type"
+						width={70}
+						columnKey="type"
+						flexGrow={1}
+						hideWidth={ 500 }
 					/>*/}
 					<Column
-						name="Date"
-						width={90}
+						name="Last modified"
+						width={80}
 						columnKey="time"
-						cell={ <DateCell/> }
-						flexGrow={2}
+						cell={ <DurationCell/> }
+						flexGrow={1}
 					/>
 				</VirtualTable>
 			</div>

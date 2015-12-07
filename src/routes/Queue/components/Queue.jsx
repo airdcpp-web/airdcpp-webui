@@ -12,7 +12,7 @@ import QueueStore from 'stores/QueueStore';
 
 import { ActionMenu } from 'components/Menu';
 
-import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DateCell } from 'components/Cell';
+import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/Cell';
 
 import '../style.css';
 
@@ -44,6 +44,10 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 const Queue = React.createClass({
 	isActive(cellData, rowData) {
 		return rowData.status.id < StatusEnum.STATUS_DOWNLOADED;
+	},
+
+	isFinished(cellData, rowData) {
+		return !this.isActive(cellData, rowData);
 	},
 
 	isRunning(cellData, rowData) {
@@ -125,17 +129,18 @@ const Queue = React.createClass({
 					flexGrow={1}
 				/>
 				<Column
-					name="Time added"
+					name="Added"
 					width={100}
 					columnKey="time_added"
-					cell={ <DateCell/> }
+					cell={ <DurationCell/> }
 					hideWidth={1400}
 				/>
 				<Column
-					name="Time finished"
+					name="Finished"
 					width={100}
 					columnKey="time_finished"
-					cell={ <DateCell/> }
+					cell={ <DurationCell/> }
+					renderCondition={ this.isFinished }
 					hideWidth={1200}
 				/>
 			</VirtualTable>

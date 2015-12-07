@@ -49,7 +49,7 @@ const Format = {
 
 	formatRelativeTime: function (time) {
 		if (time === 0) {
-			return 'Unknown';
+			return '';
 		}
 
 		return Moment.unix(time).from(Moment());
