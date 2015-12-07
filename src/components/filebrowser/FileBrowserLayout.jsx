@@ -5,114 +5,37 @@ import { FILESYSTEM_LIST_URL, FILESYSTEM_DIRECTORY_URL } from 'constants/Filesys
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 
-import { FileNameFormatter } from 'utils/IconFormat';
-//import ValueFormat from 'utils/ValueFormat';
-
 import PathBreadcrumb from 'components/PathBreadcrumb';
 import Message from 'components/semantic/Message';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 
 import Loader from 'components/semantic/Loader';
+import PathList from './PathList';
 
 import './style.css';
 
-const PathItem = React.createClass({
-	render: function () {
-		const { item } = this.props;
-		return (
-			<tr>
-				<td>
-					<FileNameFormatter item={ item.type }>
-						<a onClick={evt => this.props.itemClickHandler(item.name)}>
-							{item.name}
-						</a>
-						{this.props.itemIcon ? <i className={ this.props.itemIcon + ' link icon' } onClick={ () => this.props.iconClickHandler(item.name) }></i> : null}
-					</FileNameFormatter>
-				</td>
-				{/*<td>
-					{ Formatter.formatSize(item.size) }
-				</td>*/}
-			</tr>
-		);
-	}
-});
 
-const PathList = React.createClass({
-	propTypes: {
-		/**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
-		itemClickHandler: React.PropTypes.func.isRequired,
+const CreateDirectory = ({ handleAction }) => (
+	<Accordion>
+		<div className="title create-section">
+			<i className="dropdown icon"></i>
+			Create directory
+		</div>
 
-		/**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
-		iconClickHandler: React.PropTypes.func,
+		<div className="content create-section">
+			<ActionInput caption="Create" icon="plus" handleAction={ handleAction } placeholder="Directory name"/>
+		</div>
+	</Accordion>
+);
 
-		/**
-		 * Array of path objects to list
-		 */
-		items: React.PropTypes.array.isRequired,
-	},
+CreateDirectory.propTypes = {
+	/**
+	 * Function to call with the value
+	 */
+	handleAction: React.PropTypes.func.isRequired
+};
 
-	sort(a, b) {
-		if (a.type.id !== b.type.id && (a.type.id === 'directory' || b.type.id === 'directory')) {
-			return a.type.id === 'directory' ? -1 : 1;
-		}
-
-		return a.name.localeCompare(b.name);
-	},
-
-	render: function () {
-		return (
-			<div className="table-container">
-				<table className="ui striped compact table">
-					<thead>
-						<tr>
-							<th>Name</th>
-							{/*<th>Size</th>*/}
-						</tr>
-					</thead>
-					<tbody>
-						{ this.props.items.sort(this.sort).map(item => 
-							<PathItem 
-								key={item.name}
-								item={item}
-								itemIcon={this.props.itemIcon} 
-								iconClickHandler={ this.props.iconClickHandler } 
-								itemClickHandler={ this.props.itemClickHandler }
-							/>) }
-					</tbody>
-				</table>
-			</div>
-		);
-	}
-});
-
-const CreateDirectory = React.createClass({
-	propTypes: {
-		/**
-		 * Function to call with the value
-		 */
-		handleAction: React.PropTypes.func.isRequired
-	},
-
-	render: function () {
-		return (
-			<Accordion>
-				<div className="title create-section">
-					<i className="dropdown icon"></i>
-					Create directory
-				</div>
-
-				<div className="content create-section">
-					<ActionInput caption="Create" icon="plus" handleAction={this.props.handleAction} placeholder="Directory name"/>
-				</div>
-			</Accordion>
-		);
-	}
-});
 
 const FileBrowser = React.createClass({
 	propTypes: {

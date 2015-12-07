@@ -7,6 +7,7 @@ import t from 'utils/tcomb-form';
 
 import 'react-select/dist/react-select.css';
 
+
 const TagValue = React.createClass({
 	propTypes: {
 		value: React.PropTypes.object,
@@ -25,8 +26,6 @@ const TagValue = React.createClass({
 		);
 	}
 });
-
-//class ReactSelect extends t.form.Select {
 
 const ReactSelect = t.form.Form.templates.select.clone({
 	renderSelect: (locals) => { // <- locals contains the "recipe" to build the UI

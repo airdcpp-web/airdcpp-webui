@@ -12,7 +12,8 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import History from 'utils/History';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
-const logo = require('../../images/AirDCPlusPlus.png');
+import Logo from '../../images/AirDCPlusPlus.png';
+
 
 const Notifications = React.createClass({
 	mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, '_addNotification') ],
@@ -32,10 +33,14 @@ const Notifications = React.createClass({
 		}));
 	},
 
+	shouldComponentUpdate(nextProps, nextState) {
+		return false;
+	},
+
 	showNativeNotification(level, notificationInfo) {
 		var options = {
 			body: notificationInfo.message,
-			icon: logo,
+			icon: Logo,
 			tag: notificationInfo.uid,
 		};
 

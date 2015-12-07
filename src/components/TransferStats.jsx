@@ -4,18 +4,14 @@ import Reflux from 'reflux';
 import TransferStatsStore from 'stores/TransferStatsStore';
 import ValueFormat from 'utils/ValueFormat';
 
-const SpeedDisplay = React.createClass({
-	render: function () {
-		return (
-			<div className="item">
-				<i className={this.props.type + ' icon'}></i>
-				<div className="content">
-					<div className="header">{ ValueFormat.formatSpeed(this.props.speed) }</div>
-				</div>
-			</div>
-		);
-	}
-});
+const SpeedDisplay = ({ type, speed }) => (
+	<div className="item">
+		<i className={ type + ' icon'}></i>
+		<div className="content">
+			<div className="header">{ ValueFormat.formatSpeed(speed) }</div>
+		</div>
+	</div>
+);
 
 const StatisticsBar = React.createClass({
 	mixins: [ Reflux.connect(TransferStatsStore) ],

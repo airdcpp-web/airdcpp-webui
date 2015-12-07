@@ -17,57 +17,45 @@ import TypeConvert from 'utils/TypeConvert';
 import Accordion from 'components/semantic/Accordion';
 import FileUtils from 'utils/FileUtils';
 
-const MenuItem = React.createClass({
-	render: function () {
-		return (
-			<a className={ 'item ' + (this.props.active ? 'active' : '')	} onClick={this.props.onClick}>
-				{this.props.title}
+const MenuItem = ({ active, list, title, onClick }) => (
+	<a className={ 'item ' + (active ? 'active' : '')	} onClick={ onClick }>
+		{ title }
 
-				{ this.props.list ? (
-					<div className="ui label"> { this.props.list.length } </div>
-					) : null }
+		{ list ? (
+			<div className="ui label"> { list.length } </div>
+			) : null }
+	</a>
+);
+
+const PathItem = ({ path, downloadHandler }) => (
+	<div className="item">
+		<i className="yellow folder icon"></i>
+		<div className="content">
+			<a onClick={ evt => downloadHandler(path) }>
+				{ path }
 			</a>
-		);
-	}
-});
+		</div>
+	</div>
+);
 
-const PathItem = React.createClass({
-	render: function () {
-		const { path } = this.props;
-		return (
-			<div className="item">
-				<i className="yellow folder icon"></i>
-				<div className="content">
-					<a onClick={evt => this.props.downloadHandler(path)}>
-						{path}
-					</a>
-				</div>
-			</div>
-		);
-	}
-});
+const PathList = ({ downloadHandler, paths }) => (
+	<div className="ui relaxed list">
+		{ paths.map(path => <PathItem key={path} path={path} downloadHandler={ downloadHandler }/>) }
+	</div>
+);
 
-const PathList = React.createClass({
-	propTypes: {
-		/**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
-		downloadHandler: React.PropTypes.func.isRequired,
+PathList.propTypes = {
+	/**
+	 * Function handling the path selection. Receives the selected path as argument.
+	 */
+	downloadHandler: React.PropTypes.func.isRequired,
 
-		/**
-		 * Array of paths to list
-		 */
-		paths: React.PropTypes.array.isRequired,
-	},
+	/**
+	 * Array of paths to list
+	 */
+	paths: React.PropTypes.array.isRequired,
+};
 
-	render: function () {
-		return (
-			<div className="ui relaxed list">
-				{ this.props.paths.map(path => <PathItem key={path} path={path} downloadHandler={ this.props.downloadHandler }/>) }
-			</div>
-		);
-	}
-});
 
 const AccordionTargets = React.createClass({
 	propTypes: {
