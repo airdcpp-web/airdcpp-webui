@@ -60,34 +60,42 @@ const FavoriteHubs = React.createClass({
 			>
 				<Column
 					name="State"
-					width={150}
+					width={45}
 					columnKey="connect_state"
 					cell={ 
 						<ConnectStateCell
 							location={ this.props.location }
 						/> 
 					}
+					flexGrow={3}
 				/>
 				<Column
 					name="Name"
-					width={270}
+					width={150}
 					columnKey="name"
-					flexGrow={3}
+					flexGrow={6}
 					cell={ <ActionCell actions={ FavoriteHubActions } ids={[ 'edit', 'remove' ]}/> }
 				/>
 				<Column
 					name="Address"
 					width={270}
 					columnKey="hub_url"
-					flexGrow={2}
+					flexGrow={3}
+					hideWidth={ 700 }
 				/>
 				<Column
 					name="Auto connect"
-					width={70}
+					width={65}
 					columnKey="auto_connect"
 					cell={
 						<CheckboxCell onChange={ this.onChangeAutoConnect } type="toggle"/>
 					}
+				/>
+				<Column
+					name="Share profile"
+					width={100}
+					columnKey="share_profile"
+					flexGrow={1}
 				/>
 				<Column
 					name="Nick"

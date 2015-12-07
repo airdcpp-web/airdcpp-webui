@@ -128,7 +128,7 @@ const ListBrowser = React.createClass({
 				>
 					<Column
 						name="Name"
-						width={270}
+						width={200}
 						columnKey="name"
 						cell={
 							<FileDownloadCell 
@@ -138,13 +138,14 @@ const ListBrowser = React.createClass({
 								handler={ FilelistActions.download } 
 							/> 
 						}
-						flexGrow={5}
+						flexGrow={8}
 					/>
 					<Column
 						name="Size"
-						width={100}
+						width={60}
 						columnKey="size"
 						cell={ <SizeCell/> }
+						flexGrow={1}
 					/>
 					{/*<Column
 						label="Type"
@@ -154,9 +155,10 @@ const ListBrowser = React.createClass({
 					/>*/}
 					<Column
 						name="Date"
-						width={150}
+						width={90}
 						columnKey="time"
 						cell={ <DateCell/> }
+						flexGrow={2}
 					/>
 				</VirtualTable>
 			</div>

@@ -40,9 +40,9 @@ export const SpeedCell = ({ cellData }) => (
 	</span>
 );
 
-export const DateCell = ({ cellData }) => (
+export const DateCell = ({ cellData, width }) => (
 	<span className="plain date cell">
-		{ ValueFormat.formatDateTime(cellData) }
+		{ width > 150 ? ValueFormat.formatDateTime(cellData) : ValueFormat.formatShortDate(cellData) }
 	</span>
 );
 

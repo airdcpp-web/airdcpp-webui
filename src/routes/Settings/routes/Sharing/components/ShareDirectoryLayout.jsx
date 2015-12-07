@@ -27,7 +27,7 @@ const ShareDirectoryLayout = React.createClass({
 			>
 				<Column
 					name="Path"
-					width={270}
+					width={200}
 					columnKey="path"
 					cell={
 						<ActionCell 
@@ -40,25 +40,27 @@ const ShareDirectoryLayout = React.createClass({
 				/>
 				<Column
 					name="Size"
-					width={100}
+					width={60}
 					columnKey="size"
 					cell={ <SizeCell/> }
+					flexGrow={2}
 				/>
 				<Column
 					name="Virtual name"
-					width={150}
+					width={100}
 					columnKey="virtual_name"
-					flexGrow={3}
+					flexGrow={4}
 				/>
 				<Column
 					name="Profiles"
-					width={80}
+					width={60}
 					columnKey="profiles"
+					flexGrow={1}
 				/>
 				<Column
 					name="Last refreshed"
-					width={150}
-					flexGrow={1}
+					width={80}
+					flexGrow={3}
 					columnKey="last_refresh_time"
 					cell={ <RefreshCell/> }
 				/>

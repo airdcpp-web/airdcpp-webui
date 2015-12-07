@@ -16,11 +16,6 @@
 	margin-left: 10px;
 }
 
-.fixedDataTableCellLayout_main .ui.checkbox {
-	display: flex;
-	justify-content: center;
-}
-
 .public_fixedDataTable_bodyRow.dupe.queue, 
 .public_fixedDataTable_bodyRow.dupe.queue span,
 .public_fixedDataTable_bodyRow.dupe.queue a {

@@ -206,6 +206,7 @@ const TableContainer = React.createClass({
 			flexGrow: flexGrow,
 			width: width,
 			isResizable: true,
+			allowCellsRecycling: true,
 			cell: (			
 				<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={renderCondition}>
 					{ cell ? cell : <TextCell/> }

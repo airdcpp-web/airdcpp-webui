@@ -29,7 +29,7 @@ const ConnectStateCell = React.createClass({
 		return (
 			<div>
 				<i className={ 'icon large link ' + this.getIcon() } onClick={ this.getClickAction() }/>
-				{ this.props.cellData.str }
+				{ this.props.width > 100 ? this.props.cellData.str : null }
 			</div>
 		);
 	}

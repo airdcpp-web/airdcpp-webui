@@ -67,7 +67,7 @@ const ResultTable = React.createClass({
 			>
 				<Column
 					name="Name"
-					width={270}
+					width={200}
 					columnKey="name"
 					flexGrow={8}
 					cell={ 
@@ -79,46 +79,49 @@ const ResultTable = React.createClass({
 				/>
 				<Column
 					name="Size"
-					width={100}
+					width={60}
 					columnKey="size"
 					cell={ <SizeCell/> }
+					flexGrow={1}
 				/>
 				<Column
 					name="Relevancy"
-					width={85}
+					width={60}
 					columnKey="relevancy"
 					cell={ <DecimalCell/> }
+					flexGrow={1}
 				/>
 				<Column
 					name="Connection"
-					width={100}
+					width={60}
 					columnKey="connection"
 					cell={ <ConnectionCell/> }
+					flexGrow={2}
 				/>
 				<Column
 					name="Type"
-					width={100}
+					width={40}
 					columnKey="type"
 					flexGrow={1}
 				/>
 				<Column
 					name="Users"
-					width={150}
+					width={120}
 					columnKey="users"
-					flexGrow={2}
+					flexGrow={3}
 					cell={ <UserCell location={this.props.location}/> }
 				/>
 				<Column
 					name="Date"
-					width={150}
+					width={100}
 					columnKey="time"
-					flexGrow={1}
 					cell={ <DateCell/> }
 				/>
 				<Column
 					name="Slots"
-					width={70}
+					width={60}
 					columnKey="slots"
+					flexGrow={1}
 				/>
 			</VirtualTable>
 		);

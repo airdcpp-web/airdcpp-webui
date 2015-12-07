@@ -63,6 +63,14 @@ const Format = {
 		return Moment.unix(time).format('LLL');
 	},
 
+	formatShortDate: function (time) {
+		if (time === 0) {
+			return '';
+		}
+
+		return Moment.unix(time).format('YYYY-MM-DD');
+	},
+
 	formatAbbreviatedDuration: function (time) {
 		const now = Moment();
 		const finish = Moment().add(time, 'seconds');

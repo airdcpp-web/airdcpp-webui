@@ -12,7 +12,7 @@ import QueueStore from 'stores/QueueStore';
 
 import { ActionMenu } from 'components/Menu';
 
-import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/Cell';
+import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DateCell } from 'components/Cell';
 
 import '../style.css';
 
@@ -69,69 +69,75 @@ const Queue = React.createClass({
 			>
 				<Column
 					name="Name"
-					width={270}
-					flexGrow={5}
+					width={200}
+					flexGrow={4}
 					columnKey="name"
 					cell={ <FileActionCell actions={ QueueActions } ids={[ 'searchBundle', 'removeBundle' ]}/> }
 				/>
 				<Column
 					name="Size"
-					width={100}
+					width={60}
 					columnKey="size"
 					cell={ <SizeCell/> }
+					flexGrow={1}
 				/>
 				<Column
 					name="Type/content"
 					width={150}
 					columnKey="type"
-					hideWidth={1200}
-				/>
-				<Column
-					name="Sources"
-					width={100}
-					columnKey="sources"
-					renderCondition={ this.isActive }
+					hideWidth={1000}
 				/>
 				<Column
 					name="Status"
-					width={300}
-					flexGrow={1}
+					width={120}
+					flexGrow={3}
 					columnKey="status"
 					cell={ <StatusCell/> }
 				/>
 				<Column
+					name="Sources"
+					width={60}
+					columnKey="sources"
+					renderCondition={ this.isActive }
+					flexGrow={1}
+				/>
+				<Column
 					name="Time left"
-					width={50}
+					width={45}
 					columnKey="seconds_left"
 					renderCondition={ this.isRunning }
 					cell={ <AbbreviatedDurationCell/> }
 				/>
 				<Column
 					name="Speed"
-					width={100}
+					width={50}
 					columnKey="speed"
 					cell={ <SpeedCell/> }
 					renderCondition={ this.isRunning }
+					flexGrow={1}
 				/>
 				<Column
 					name="Priority"
-					width={150}
+					width={70}
 					columnKey="priority"
 					renderCondition={ this.isActive }
 					cell={ <PriorityCell/> }
-				/>
-				{/*<Column
-					label="Time added"
-					width={100}
-					dataKey="time_added"
-					cellRenderer={ Formatter.formatDateTime }
+					flexGrow={1}
 				/>
 				<Column
-					label="Time finished"
+					name="Time added"
 					width={100}
-					dataKey="time_finished"
-					cellRenderer={ Formatter.formatDateTime }
-				/>*/}
+					columnKey="time_added"
+					cell={ <DateCell/> }
+					hideWidth={1400}
+				/>
+				<Column
+					name="Time finished"
+					width={100}
+					columnKey="time_finished"
+					cell={ <DateCell/> }
+					hideWidth={1200}
+				/>
 			</VirtualTable>
 		);
 	}
