@@ -6,6 +6,7 @@ import SetContainerSize from 'mixins/SetContainerSize';
 import TouchScrollArea	from './TouchScrollArea';
 
 import TableActions from 'actions/TableActions';
+import BrowserUtils from 'utils/BrowserUtils';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
 import { TextCell, RowWrapperCell, HeaderCell } from './BaseCell';
@@ -195,17 +196,20 @@ const TableContainer = React.createClass({
 		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
 		name += ((this.state.sortProperty === columnKey) ? sortDirArrow : '');
 
-		// Get column width
-		if (this._columnWidths[columnKey] != undefined) {
-			width = this._columnWidths[columnKey];
-			flexGrow = null;
+		const mobileView = BrowserUtils.useMobileLayout();
+		if (!mobileView) {
+			// Get column width
+			if (this._columnWidths[columnKey] != undefined) {
+				width = this._columnWidths[columnKey];
+				flexGrow = null;
+			}
 		}
 
 		return React.cloneElement(column, {
 			header: (<HeaderCell onClick={this._sortRowsBy.bind(null, columnKey)} label={name}/>),
 			flexGrow: flexGrow,
 			width: width,
-			isResizable: true,
+			isResizable: !mobileView,
 			allowCellsRecycling: true,
 			cell: (			
 				<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={renderCondition}>
