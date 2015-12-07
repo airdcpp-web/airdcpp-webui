@@ -16,13 +16,19 @@ import SocketConnectStatus from './SocketConnectStatus';
 import SetContainerSize from 'mixins/SetContainerSize';
 
 import ModalHandlerDecorator from 'decorators/ModalHandlerDecorator';
-import MainLayoutDecorator from 'decorators/MainLayoutDecorator';
 
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 import LogActions from 'actions/LogActions';
 
+import { SIDEBAR_ID } from 'constants/OverlayConstants';
+
+
+const showSideBar = (props) => {
+	return props.location.state &&
+		props.location.state[SIDEBAR_ID];
+};
 
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext, SetContainerSize ],
@@ -41,6 +47,17 @@ const AuthenticatedApp = React.createClass({
 		}
 	},
 
+	componentWillReceiveProps(nextProps) {
+		if (showSideBar(nextProps)) {
+			if (!this.previousChildren) {
+				// save the old children (just like animation)
+				this.previousChildren = this.props.children;
+			}
+		} else {
+			this.previousChildren = null;
+		}
+	},
+
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
 			// Reconnect (but not too fast)
@@ -56,21 +73,30 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	render() {
-		const LayoutElement = BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout;
-		if (this.state.socketAuthenticated) {
-			return (
-				<div id="authenticated-app">
-					<Notifications location={ this.props.location }/>
-					<LayoutElement className="pushable main-layout" { ...this.props }>
-						{ this.props.children }
-					</LayoutElement>
-				</div>
-			);
-		} else {
+		if (!this.state.socketAuthenticated) {
 			// Dim the screen until the server can be reached (we can't do anything without the socket)
 			return <SocketConnectStatus active={true} lastError={this.state.lastError}/>;
 		}
+
+
+		let sidebar = null;
+		if (showSideBar(this.props)) {
+			sidebar = React.cloneElement(this.props.children, { 
+				overlayId: SIDEBAR_ID,
+				overlayContext: '.sidebar-context',
+			});
+		}
+
+		const LayoutElement = BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout;
+		return (
+			<div id="authenticated-app">
+				<Notifications location={ this.props.location }/>
+				<LayoutElement className="pushable main-layout" sidebar={ sidebar } { ...this.props }>
+					{ this.previousChildren ? this.previousChildren : this.props.children }
+				</LayoutElement>
+			</div>
+		);
 	}
 });
 
-export default ModalHandlerDecorator(MainLayoutDecorator(AuthenticatedApp));
+export default ModalHandlerDecorator(AuthenticatedApp);

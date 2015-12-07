@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Loader = ({ text }) => (
-	<div className="ui active text loader">
+const Loader = ({ text, className }) => (
+	<div className={ 'ui active text loader ' + className }>
 		{ text }
 	</div>
 );
@@ -11,7 +11,8 @@ Loader.propTypes = {
 };
 
 Loader.defaultProps = {
-	text: 'Loading'
+	text: 'Loading',
+	className: '',
 };
 
 export default Loader

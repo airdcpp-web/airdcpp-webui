@@ -7,6 +7,7 @@ import MenuIcon from './menu/MenuIcon';
 import UrgencyUtils from 'utils/UrgencyUtils';
 import History from 'utils/History';
 import Button from 'components/semantic/Button';
+import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
 
 import '../mobile.css';
 
@@ -23,7 +24,7 @@ const reduceItemUrgency = (map, menuItem) => {
 	return map;
 };
 
-const HeaderContent = ({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }) => (
+const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }) => (
 	<div className="right">
 		{ sidebar ? 
 			<Button 
@@ -38,7 +39,7 @@ const HeaderContent = ({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }
 			className="item"
 		/>
 	</div>
-);
+));
 
 const MobileLayout = React.createClass({
 	getInitialState() {
@@ -56,7 +57,7 @@ const MobileLayout = React.createClass({
 	},
 
 	render() {
-		const { mainContent, sidebar, secondaryMenuItems, mainMenuItems } = this.props;
+		const { children, sidebar, secondaryMenuItems, mainMenuItems } = this.props;
 		
 		return (
 			<div className={this.props.className} id="mobile-layout">
@@ -81,7 +82,7 @@ const MobileLayout = React.createClass({
 					/>
 					{ sidebar }
 					<div className="ui site-content pusher">
-						{ mainContent }
+						{ children }
 					</div>
 				</div>
 			</div>

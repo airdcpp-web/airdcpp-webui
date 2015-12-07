@@ -4,7 +4,7 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Message from './semantic/Message';
-import Button from './semantic/Button';
+import Loader from './semantic/Loader';
 
 import { History } from 'react-router';
 
@@ -60,37 +60,39 @@ const Login = React.createClass({
 	},
 
 	render() {
+		// Don't change the submit button type so that browser prompt to save the password
 		return (
-		<div className="ui middle aligned center aligned grid login-grid">
-			<div className="column">
-				<form className="ui large form" onKeyDown={this._onKeyDown}>
-					<div className="ui stacked segment">
-						<div className="field">
-							<div className="ui left icon input">
-								<i className="user icon"></i>
-								<input type="text" name="username" placeholder="Username" ref="username"/>
+			<div className="ui middle aligned center aligned grid login-grid">
+				<div className="column">
+					<form className="ui large form" onKeyDown={this._onKeyDown} autoComplete="on">
+						<div className="ui stacked segment">
+							<div className="field">
+								<div className="ui left icon input">
+									<i className="user icon"></i>
+									<input type="text" name="username" placeholder="Username" ref="username"/>
+								</div>
 							</div>
-						</div>
-						<div className="field">
-							<div className="ui left icon input">
-								<i className="lock icon"></i>
-								<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
+							<div className="field">
+								<div className="ui left icon input">
+									<i className="lock icon"></i>
+									<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
+								</div>
 							</div>
+							{ !this.state.loading ? (
+								<input
+									className="ui button fluid large submit"
+									value="Login"
+									type="submit"
+									onClick={ this.onSubmit }
+								/>
+							) : <Loader className="inline small" text=""/> }
 						</div>
-						<Button
-							className="fluid large submit"
-							caption="Login"
-							type="submit"
-							icon={ this.props.icon }
-							onClick={ this.onSubmit }
-							loading={ this.state.loading }
-						/>
-					</div>
-				</form>
+					</form>
 
-				<ErrorBox userLoggedIn={this.state.userLoggedIn} lastError={this.state.lastError}/>
+					<ErrorBox userLoggedIn={this.state.userLoggedIn} lastError={this.state.lastError}/>
+				</div>
 			</div>
-		</div>);
+		);
 	}
 });
 

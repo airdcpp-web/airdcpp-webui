@@ -9,7 +9,7 @@ import '../normal.css';
 
 const MainLayout = React.createClass({
 	render() {
-		const { mainContent, sidebar, mainMenuItems, secondaryMenuItems } = this.props;
+		const { children, sidebar, mainMenuItems, secondaryMenuItems } = this.props;
 
 		return (
 			<div className={ this.props.className + ' sidebar-context' } id="normal-layout">
@@ -24,7 +24,7 @@ const MainLayout = React.createClass({
 						}
 					/>
 					<div className="ui site-content">
-						{ mainContent }
+						{ children }
 					</div>
 				</div>
 				<SideMenu location={ this.props.location } sidebarItems={this.props.secondaryMenuItems}/>

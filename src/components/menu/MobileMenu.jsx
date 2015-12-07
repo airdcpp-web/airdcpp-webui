@@ -3,7 +3,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
 import { getIconMenuItem } from './MenuItem';
+
 import History from 'utils/History';
 import LoginActions from 'actions/LoginActions';
 
@@ -73,4 +75,4 @@ const MobileMenu = React.createClass({
 	},
 });
 
-export default MobileMenu;
+export default MainNavigationDecorator(MobileMenu);
