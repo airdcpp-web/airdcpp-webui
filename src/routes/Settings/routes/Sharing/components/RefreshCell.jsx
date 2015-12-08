@@ -31,7 +31,7 @@ const RefreshCell = React.createClass({
 			return (
 				<div>
 					<i className={ 'icon large link green refresh' } onClick={ this.onClickRefresh }/>
-					{ ValueFormat.formatRelativeTime(this.props.cellData) }
+					{ this.props.cellData === 0 ? 'Unknown' : ValueFormat.formatRelativeTime(this.props.cellData) }
 				</div>
 			);
 		}

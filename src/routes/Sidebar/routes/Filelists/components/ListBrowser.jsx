@@ -124,6 +124,7 @@ const ListBrowser = React.createClass({
 					defaultSortProperty="name"
 					store={FilelistViewStore}
 					entityId={this.props.item.id}
+					viewId={ this.props.item.location.path }
 					defaultSortAscending={true}
 				>
 					<Column

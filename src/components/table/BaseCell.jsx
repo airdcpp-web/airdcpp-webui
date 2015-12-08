@@ -19,11 +19,13 @@ export const RowWrapperCell = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		// Check if there is new data available (rowIndex may have changed as well)
-		this.loadData(nextProps.rowIndex);
+		if (!this.loadData(nextProps.rowIndex)) {
+			this.setState({ rowData: null });
+		}
 	},
 
 	loadData(rowIndex) {
-		this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
+		return this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
 	},
 
 	shouldComponentUpdate(nextProps, nextState) {

@@ -21,6 +21,7 @@ export default {
 		this._startPos = 0;
 		this._rowCount = 0;
 		this._items = [];
+		this.trigger();
 	},
 
 	setEntityId(entityId) {

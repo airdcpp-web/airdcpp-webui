@@ -13,7 +13,17 @@ class RowDataLoader {
 		this._initialDataReceived = false;
 	}
 
+	clear() {
+		this._pendingRequest = {};
+		this._data = [];
+	}
+
 	onItemsUpdated(items, rangeOffset) {
+		if (!items) {
+			this.clear();
+			return;
+		}
+
 		this._initialDataReceived = true;
 
 		let hasChanges = false;
@@ -58,10 +68,11 @@ class RowDataLoader {
 				this._queueRequestFor(rowIndex, onDataLoaded);
 			}
 			
-			return;
+			return false;
 		}
-		
+
 		onDataLoaded(rowData);
+		return true;
 	}
 
 	_queueRequestFor(rowIndex, onDataLoaded) {
@@ -74,6 +85,11 @@ class RowDataLoader {
 		this._pendingRequest[rowIndex] = [ onDataLoaded ];
 		SocketService.get(this._store.viewUrl + '/items/' + rowIndex + '/' + (rowIndex+1))
 			.then(rows => {
+				if (!this._pendingRequest[rowIndex]) {
+					// View changed
+					return;
+				}
+
 				this._data[rowIndex] = rows[0];
 				this._pendingRequest[rowIndex].forEach(f => f(rows[0]));
 				delete this._pendingRequest[rowIndex];

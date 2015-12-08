@@ -224,7 +224,8 @@ const TableContainer = React.createClass({
 			return this.props.emptyRowsNode;
 		}
 
-		console.log('Render table container, scroll top: ' + this.state.top);
+		//console.log('Render table container, scroll top: ' + this.state.top);
+
 		// Update and insert generic columns props
 		const children = React.Children.map(this.props.children, this.convertColumn);
 

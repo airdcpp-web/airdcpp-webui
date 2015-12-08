@@ -21,6 +21,11 @@ const VirtualTable = React.createClass({
 		 * Returns a node to render if there are no rows to display
 		 */
 		emptyRowsNodeGetter: React.PropTypes.func,
+
+		/**
+		 * Possible ID of the current view (items will be cleared when the ID changes)
+		 */
+		viewId: React.PropTypes.any,
 	},
 
 	componentWillMount() {
@@ -44,6 +49,10 @@ const VirtualTable = React.createClass({
 		if (nextProps.entityId !== this.props.entityId) {
 			TableActions.close(this.props.store.viewUrl);
 			this.props.store.setEntityId(nextProps.entityId);
+		}
+
+		if (nextProps.viewId != this.props.viewId) {
+			this.props.store.clear();
 		}
 	},
 

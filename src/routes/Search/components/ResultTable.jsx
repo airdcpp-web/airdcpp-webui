@@ -86,10 +86,9 @@ const ResultTable = React.createClass({
 				/>
 				<Column
 					name="Type"
-					width={60}
+					width={80}
 					columnKey="type"
 					flexGrow={1}
-					hideWidth={1000}
 				/>
 				<Column
 					name="Relevancy"

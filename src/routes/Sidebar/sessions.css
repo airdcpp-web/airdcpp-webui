@@ -51,7 +51,7 @@
 
 .session-container.vertical .session-header > div {
   padding-left: 5px;
-  width: 90%;
+  max-width: 90%;
 }
 
 .session-container.vertical .session-header > div:before {
