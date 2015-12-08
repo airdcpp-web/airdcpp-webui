@@ -1,7 +1,10 @@
 import SocketService from 'services/SocketService';
 import update from 'react-addons-update';
 
-//import deepEqual from 'deep-equal';
+import deepEqual from 'deep-equal';
+
+const NUMBER_OF_ROWS_PER_REQUEST = 10;
+
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
@@ -31,10 +34,9 @@ class RowDataLoader {
 			let old = this._data[index];
 
 			// Objects equal most of the time
-			// TODO: causes delay during initial loading
-			//if (old === obj || deepEqual(this._data[index], obj)) {
-			//	return;
-			//}
+			if (old === obj || deepEqual(this._data[index], obj)) {
+				return;
+			}
 
 			if (old) {
 				this._data[index] = update(old, { $merge: obj });
@@ -76,6 +78,8 @@ class RowDataLoader {
 	}
 
 	_queueRequestFor(rowIndex, onDataLoaded) {
+		const rowBase = rowIndex - (rowIndex % NUMBER_OF_ROWS_PER_REQUEST);
+
 		const request = this._pendingRequest[rowIndex];
 		if (request) {
 			request.push(onDataLoaded);
@@ -83,22 +87,45 @@ class RowDataLoader {
 		}
 
 		this._pendingRequest[rowIndex] = [ onDataLoaded ];
-		SocketService.get(this._store.viewUrl + '/items/' + rowIndex + '/' + (rowIndex+1))
-			.then(rows => {
-				if (!this._pendingRequest[rowIndex]) {
-					// View changed
-					return;
-				}
+		if (rowIndex !== rowBase) {
+			if (this._pendingRequest[rowBase]) {
+				return;
+			}
 
-				this._data[rowIndex] = rows[0];
-				this._pendingRequest[rowIndex].forEach(f => f(rows[0]));
-				delete this._pendingRequest[rowIndex];
-			}.bind(this))
+			this._pendingRequest[rowBase] = [ ];
+		}
+
+		const endRow = Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._store.rowCount);
+		SocketService.get(this._store.viewUrl + '/items/' + rowBase + '/' + endRow)
+			.then(this.onRowsReceived.bind(this, rowBase))
 			.catch(error => {
-				console.log('Failed to load data', error);
-				delete this._pendingRequest[rowIndex];
+				console.error('Failed to load data', error);
+				for (let i=rowBase; i < endRow; i++) {
+					if (this._pendingRequest[i]) {
+						delete this._pendingRequest[i];
+					}
+				}
 			}
 		);
+	}
+
+	onRowsReceived(start, rows) {
+		if (!this._pendingRequest[start]) {
+			// View changed
+			return;
+		}
+
+		for (let i=0; i < rows.length; i++) {
+			//console.log('Loading', rowIndex);
+
+			const rowIndex = start+i;
+			this._data[rowIndex] = rows[i];
+
+			if (this._pendingRequest[rowIndex]) {
+				this._pendingRequest[rowIndex].forEach(f => f(rows[i]));
+				delete this._pendingRequest[rowIndex];
+			}
+		}
 	}
 }
 
