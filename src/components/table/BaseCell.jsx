@@ -20,6 +20,7 @@ export const RowWrapperCell = React.createClass({
 	componentWillReceiveProps(nextProps) {
 		// Check if there is new data available (rowIndex may have changed as well)
 		if (!this.loadData(nextProps.rowIndex)) {
+			// Avoid displaying old data
 			this.setState({ rowData: null });
 		}
 	},

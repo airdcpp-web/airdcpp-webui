@@ -66,7 +66,7 @@ export default {
 			let viewItem = this._findItem(rawItem.id) || { id: rawItem.id };
 
 			if (rawItem.properties) {
-				Object.assign(viewItem, rawItem.properties);
+				viewItem = Object.assign({}, viewItem, rawItem.properties);
 			} else if (Object.keys(viewItem).length == 1) {
 				console.error('No properties were sent for a new view item', viewItem.id);
 			}
