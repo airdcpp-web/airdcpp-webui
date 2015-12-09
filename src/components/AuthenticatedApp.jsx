@@ -66,10 +66,15 @@ const AuthenticatedApp = React.createClass({
 		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
-			this.history.replace({
-				state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
-				pathname: '/login',
-			});
+			//this.history.replace({
+			//	state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
+			//	pathname: '/login',
+			//});
+
+			this.history.replaceState(
+				LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
+				'/login'
+			);
 		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
 			this.initContent();
 		}

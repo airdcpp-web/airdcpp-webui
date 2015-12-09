@@ -33,7 +33,7 @@ const Login = React.createClass({
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.socketAuthenticated) {
 			const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
-			this.history.replace(nextPath);
+			this.history.replaceState(null, nextPath);
 		} else if (this.state.loading && nextState.lastError !== null) {
 			this.setState({ loading: false });
 		}

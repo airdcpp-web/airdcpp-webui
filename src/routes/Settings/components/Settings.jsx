@@ -9,7 +9,7 @@ import '../style.css';
 const Settings = React.createClass({
 	checkChildren(props) {
 		if (!props.children) {
-			props.history.replace('/settings/personal');
+			props.history.replaceState(null, '/settings/personal');
 		}
 	},
 

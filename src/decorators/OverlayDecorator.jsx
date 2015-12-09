@@ -70,9 +70,14 @@ export default function (Component, semanticModuleName) {
 				invariant(returnTo && this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
 				delete state[this.props.overlayId];
 				
-				History.replace({
+				//History.replace({
+				//	state, 
+				//	pathname: returnTo,
+				//});
+
+				History.replaceState({
 					state, 
-					pathname: returnTo,
+					returnTo,
 				});
 			}
 
