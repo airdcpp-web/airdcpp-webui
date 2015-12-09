@@ -1,19 +1,51 @@
 import SocketStore from 'stores/SocketStore';
+import TableActions from 'actions/TableActions';
+
+import invariant from 'invariant';
+
 
 export default {
-	init(entityId) {
+	listenables: TableActions,
+	init() {
 		this._items = [];
 		this._startPos = 0;
 		this._rowCount = 0;
-		this._entityId = entityId;
+		this._active = false;
+	},
 
-		this.addListener();
+	onClose(viewUrl) {
+		if (viewUrl !== this.viewUrl) {
+			return;
+		}
+
+		this._removeMessageListener();
+		this.clear();
+
+		this._active = false;
+	},
+
+	onClear(viewUrl) {
+		if (viewUrl !== this.viewUrl) {
+			return;
+		}
+
+		this.clear();
+	},
+
+	onStart(viewUrl, entityId) {
+		if (viewUrl !== this.viewUrl) {
+			return;
+		}
+
+		invariant(!this._active, 'Trying start an active table view');
+
+		this._entityId = entityId;
+		this.addMessageListener();
 		this._active = true;
 	},
 
-	uninit() {
-		this._removeMessageListener();
-		this._active = false;
+	addMessageListener() {
+		this._removeMessageListener = SocketStore.addMessageListener(this._viewName + '_updated', this._handleUpdate, this._entityId);
 	},
 
 	clear() {
@@ -22,16 +54,6 @@ export default {
 		this._rowCount = 0;
 		this._items = [];
 		this.trigger();
-	},
-
-	setEntityId(entityId) {
-		this._entityId = entityId;
-		this._removeMessageListener();
-		this.addListener();
-	},
-
-	addListener() {
-		this._removeMessageListener = SocketStore.addMessageListener(this._viewName + '_updated', this._handleUpdate, this._entityId);
 	},
 
 	get items() {

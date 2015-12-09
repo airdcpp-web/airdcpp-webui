@@ -5,6 +5,8 @@ const TableActions = Reflux.createActions([
 	{ 'changeSettings': { asyncResult: true } },
 	{ 'close': { asyncResult: true } },
 	{ 'pause': { asyncResult: true } },
+	'start',
+	'clear',
 ]);
 
 TableActions.close.listen(function (viewUrl) {

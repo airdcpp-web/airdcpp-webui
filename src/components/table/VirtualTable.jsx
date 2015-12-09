@@ -30,8 +30,7 @@ const VirtualTable = React.createClass({
 
 	componentWillMount() {
 		this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
-
-		this.props.store.init(this.props.entityId);
+		TableActions.start(this.props.store.viewUrl, this.props.entityId);
 	},
 
 	componentDidMount() {
@@ -42,17 +41,17 @@ const VirtualTable = React.createClass({
 		TableActions.close(this.props.store.viewUrl);
 
 		this.unsubscribe();
-		this.props.store.uninit();
 	},
 
 	componentWillReceiveProps(nextProps) {
+		const { viewUrl } = this.props.store;
 		if (nextProps.entityId !== this.props.entityId) {
-			TableActions.close(this.props.store.viewUrl);
-			this.props.store.setEntityId(nextProps.entityId);
+			TableActions.close(viewUrl);
+			TableActions.start(viewUrl, nextProps.entityId);
 		}
 
 		if (nextProps.viewId != this.props.viewId) {
-			this.props.store.clear();
+			TableActions.clear(viewUrl);
 		}
 	},
 
