@@ -72,12 +72,13 @@ const VirtualTable = React.createClass({
 	},
 
 	start(entityId) {
+		TableActions.init(this.props.store.viewUrl, entityId);
 		TableActions.start(this.props.store.viewUrl, entityId);
 	},
 
 	close() {
 		// Don't send the close command if the session was removed
-		TableActions.close(this.props.store.viewUrl, this.props.entityId, !this.moduleExists());
+		TableActions.close(this.props.store.viewUrl, this.moduleExists());
 	},
 
 	onItemsUpdated(items, rangeOffset) {
@@ -89,15 +90,8 @@ const VirtualTable = React.createClass({
 	render: function () {
 		const { footerData, emptyRowsNodeGetter, ...other } = this.props;
 
-		// We can't render this here because the table must be kept mounted and receiving updates
-		let emptyRowsNode;
 		if (this.props.emptyRowsNodeGetter && this.props.store.rowCount === 0) {
-			emptyRowsNode = this.props.emptyRowsNodeGetter();
-
-			// null won't work because we must be able to get the dimensions
-			if (emptyRowsNode === null) {
-				emptyRowsNode = (<div></div>);
-			}
+			return this.props.emptyRowsNodeGetter();
 		}
 
 		//console.log('Render virtual table');
@@ -106,18 +100,15 @@ const VirtualTable = React.createClass({
 				<TableContainer 
 					{ ...other }
 					dataLoader={this._dataLoader}
-					emptyRowsNode={this.emptyRowsNode}
 				/>
 
-				{ emptyRowsNode ? null : (
-					<div className="table-footer">
-						{ footerData }
-						<FilterBox 
-							viewUrl={ this.props.store.viewUrl }
-							customFilter={ this.props.customFilter }
-						/>
-					</div> 
-				)}
+				<div className="table-footer">
+					{ footerData }
+					<FilterBox 
+						viewUrl={ this.props.store.viewUrl }
+						customFilter={ this.props.customFilter }
+					/>
+				</div> 
 			</div>
 		);
 	}

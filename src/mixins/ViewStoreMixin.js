@@ -13,6 +13,11 @@ export default {
 		this._active = false;
 	},
 
+	onStartCompleted(viewUrl, data) {
+		// Parse the total item count
+		this._handleUpdate(data);
+	},
+
 	onClose(viewUrl) {
 		if (viewUrl !== this.viewUrl) {
 			return;
@@ -33,7 +38,7 @@ export default {
 		this.clear();
 	},
 
-	onStart(viewUrl, entityId) {
+	onInit(viewUrl, entityId) {
 		if (viewUrl !== this.viewUrl) {
 			return;
 		}

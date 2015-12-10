@@ -21,31 +21,34 @@ class RowDataLoader {
 		this._data = [];
 	}
 
-	onItemsUpdated(items, rangeOffset) {
-		if (!items) {
-			this.clear();
-			return;
+	// Returns true if the item was updated
+	updateItem(updated, item, index) {
+		let old = this._data[index];
+
+		// Objects equal most of the time
+		if (old === item || deepEqual(this._data[index], item)) {
+			return updated;
 		}
 
-		this._initialDataReceived = true;
+		if (old) {
+			this._data[index] = update(old, { $merge: item });
+		} else {
+			this._data[index] = update(old, { $set: item });
+		}
 
+		return updated + 1;
+	}
+
+	onItemsUpdated(items, rangeOffset) {
 		let hasChanges = false;
-		items.forEach((obj, index) => {
-			let old = this._data[index];
-
-			// Objects equal most of the time
-			if (old === obj || deepEqual(this._data[index], obj)) {
-				return;
-			}
-
-			if (old) {
-				this._data[index] = update(old, { $merge: obj });
-			} else {
-				this._data[index] = update(old, { $set: obj });
-			}
-
+		if (!items) {
+			this.clear();
 			hasChanges = true;
-		}, this);
+		} else {
+			this._initialDataReceived = true;
+
+			hasChanges = items.reduce(this.updateItem.bind(this), 0) > 0 || items.length === 0;
+		}
 
 		if (hasChanges) {
 			this._onDataLoad();

@@ -5,24 +5,30 @@ const TableActions = Reflux.createActions([
 	{ 'changeSettings': { asyncResult: true } },
 	{ 'close': { asyncResult: true } },
 	{ 'pause': { asyncResult: true } },
-	'start',
+	{ 'start': { asyncResult: true } },
+	'init',
 	'clear',
 ]);
 
-TableActions.close.listen(function (viewUrl) {
+TableActions.start.listen(function (viewUrl) {
 	let that = this;
-	return SocketService.delete(viewUrl)
-		.then(data => that.completed(viewUrl))
+	return SocketService.post(viewUrl)
+		.then(data => that.completed(viewUrl, data))
 		.catch(error => this.failed(viewUrl, error));
 });
 
-TableActions.close.failed.listen(function (viewUrl, error) {
-	// Probably a deleted session
+TableActions.close.listen(function (viewUrl, sessionExists) {
+	if (sessionExists) {
+		let that = this;
+		return SocketService.delete(viewUrl)
+			.then(data => that.completed(viewUrl, data))
+			.catch(error => this.failed(viewUrl, error));
+	}
 });
 
 TableActions.changeSettings.listen(function (viewUrl, rangeStart, maxRows, sortProperty, sortAscending) {
 	let that = this;
-	return SocketService.post(viewUrl, { 
+	return SocketService.post(viewUrl + '/settings', { 
 		range_start: rangeStart, 
 		max_count: maxRows,
 		sort_property: sortProperty,
@@ -33,7 +39,7 @@ TableActions.changeSettings.listen(function (viewUrl, rangeStart, maxRows, sortP
 
 TableActions.pause.listen(function (viewUrl, pause) {
 	let that = this;
-	return SocketService.post(viewUrl, { 
+	return SocketService.post(viewUrl + '/settings', { 
 		paused: pause,
 	}).then(data => that.completed(viewUrl, data))
 		.catch(error => this.failed(viewUrl, error));

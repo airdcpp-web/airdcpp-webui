@@ -82,6 +82,10 @@ const TableContainer = React.createClass({
 		this._scrollPosition = 0;
 	},
 
+	componentDidMount() {
+		this.updateTableSettings();
+	},
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.entityId !== this.props.entityId) {
 			this.updateTableSettings();
