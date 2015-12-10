@@ -14,6 +14,10 @@ export default {
 	},
 
 	onStartCompleted(viewUrl, data) {
+		if (viewUrl !== this.viewUrl) {
+			return;
+		}
+		
 		// Parse the total item count
 		this._parseDataProperties(data);
 		this.trigger(null);
@@ -85,6 +89,10 @@ export default {
 		return this._rowCount;
 	},
 
+	get totalCount() {
+		return this._totalCount;
+	},
+
 	get active() {
 		return this._active;
 	},
@@ -116,7 +124,11 @@ export default {
 		}
 
 		if (data.total_items != undefined) {
-			this._rowCount = data.total_items;
+			this._totalCount = data.total_items;
+		}
+
+		if (data.matching_items != undefined) {
+			this._rowCount = data.matching_items;
 		}
 
 		if (data.items != undefined) {

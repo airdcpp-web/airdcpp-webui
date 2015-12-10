@@ -90,7 +90,7 @@ const VirtualTable = React.createClass({
 	render: function () {
 		const { footerData, emptyRowsNodeGetter, ...other } = this.props;
 
-		if (this.props.emptyRowsNodeGetter && this.props.store.rowCount === 0) {
+		if (this.props.emptyRowsNodeGetter && this.props.store.totalCount === 0) {
 			return this.props.emptyRowsNodeGetter();
 		}
 
