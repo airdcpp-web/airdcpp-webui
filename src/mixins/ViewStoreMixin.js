@@ -7,10 +7,8 @@ import invariant from 'invariant';
 export default {
 	listenables: TableActions,
 	init() {
-		this._items = [];
-		this._startPos = 0;
-		this._rowCount = 0;
 		this._active = false;
+		this.clear();
 	},
 
 	onStartCompleted(viewUrl, data) {
@@ -33,6 +31,7 @@ export default {
 
 		//this._entityId = null;
 		this._active = false;
+		this.trigger();
 	},
 
 	onClear(viewUrl) {
@@ -41,6 +40,7 @@ export default {
 		}
 
 		this.clear();
+		this.trigger();
 	},
 
 	onInit(viewUrl, entityId) {
@@ -63,8 +63,7 @@ export default {
 		this._items = [];
 		this._startPos = 0;
 		this._rowCount = 0;
-		this._items = [];
-		this.trigger();
+		this._totalCount = 0;
 	},
 
 	get items() {

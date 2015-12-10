@@ -10,6 +10,12 @@
 
 .table-footer .filter {
 	margin-left: auto;
+	display: flex;
+}
+
+.table-footer .count-info {
+	margin-right: 0px;
+	color: grey;
 }
 
 .table-footer .filter > div:last-child {

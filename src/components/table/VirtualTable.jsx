@@ -2,7 +2,7 @@ import React from 'react';
 
 import TableActions from 'actions/TableActions';
 
-import FilterBox from './FilterBox';
+import TableFooter from './TableFooter';
 import TableContainer from './TableContainer';
 import RowDataLoader from './RowDataLoader';
 
@@ -102,13 +102,11 @@ const VirtualTable = React.createClass({
 					dataLoader={this._dataLoader}
 				/>
 
-				<div className="table-footer">
-					{ footerData }
-					<FilterBox 
-						viewUrl={ this.props.store.viewUrl }
-						customFilter={ this.props.customFilter }
-					/>
-				</div> 
+				<TableFooter
+					store={ this.props.store }
+					customFilter={ this.props.customFilter }
+					footerData={ footerData }
+				/>
 			</div>
 		);
 	}

@@ -5,7 +5,6 @@ import TableFilterDecorator from 'decorators/TableFilterDecorator';
 const FilterBox = React.createClass({
 	propTypes: {
 		viewUrl: React.PropTypes.string.isRequired,
-		customFilter: React.PropTypes.node,
 	},
 
 	getInitialState: function () {
@@ -32,16 +31,8 @@ const FilterBox = React.createClass({
 	},
 
 	render: function () {
-		let customFilter = null;
-		if (this.props.customFilter) {
-			customFilter = React.cloneElement(this.props.customFilter, { 
-				viewUrl: this.props.viewUrl, 
-			});
-		}
-
 		return (
-			<div className="filter">
-				{ customFilter }
+			<div className="text-filter">
 				<div className="ui input" onChange={this.handleChange} value={this.state.value}>
 					<input placeholder="Filter..." type="text"/>
 				</div>
