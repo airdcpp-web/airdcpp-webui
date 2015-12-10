@@ -15,7 +15,8 @@ export default {
 
 	onStartCompleted(viewUrl, data) {
 		// Parse the total item count
-		this._handleUpdate(data);
+		this._parseDataProperties(data);
+		this.trigger(null);
 	},
 
 	onClose(viewUrl) {
@@ -109,19 +110,22 @@ export default {
 		return this._items.find(item => !item ? false : item.id === id );
 	},
 
-	_handleUpdate(obj) {
-		if (obj.range_start != undefined) {
-			this._startPos = obj.range_start;
+	_parseDataProperties(data) {
+		if (data.range_start != undefined) {
+			this._startPos = data.range_start;
 		}
 
-		if (obj.total_items != undefined) {
-			this._rowCount = obj.total_items;
+		if (data.total_items != undefined) {
+			this._rowCount = data.total_items;
 		}
 
-		if (obj.items != undefined) {
-			this._addItems(obj.items);
+		if (data.items != undefined) {
+			this._addItems(data.items);
 		}
+	},
 
-		this.trigger(this._items, obj.range_offset);
+	_handleUpdate(data) {
+		this._parseDataProperties(data);
+		this.trigger(this._items, data.range_offset);
 	}
 };

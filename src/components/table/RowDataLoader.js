@@ -41,13 +41,15 @@ class RowDataLoader {
 
 	onItemsUpdated(items, rangeOffset) {
 		let hasChanges = false;
-		if (!items) {
+		if (!items || items.length === 0) {
 			this.clear();
 			hasChanges = true;
+
+			this._initialDataReceived = false;
 		} else {
 			this._initialDataReceived = true;
 
-			hasChanges = items.reduce(this.updateItem.bind(this), 0) > 0 || items.length === 0;
+			hasChanges = items.reduce(this.updateItem.bind(this), 0) > 0;
 		}
 
 		if (hasChanges) {
