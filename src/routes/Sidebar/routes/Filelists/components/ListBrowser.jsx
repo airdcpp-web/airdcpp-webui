@@ -4,9 +4,12 @@ import FilelistActions from 'actions/FilelistActions';
 
 import TypeConvert from 'utils/TypeConvert';
 import Message from 'components/semantic/Message';
-
 import PathBreadcrumb from 'components/PathBreadcrumb';
+
+
 import FilelistViewStore from 'stores/FilelistViewStore';
+import FilelistSessionStore from 'stores/FilelistSessionStore';
+
 import History from 'utils/History';
 
 import VirtualTable from 'components/table/VirtualTable';
@@ -43,11 +46,13 @@ const ListBrowser = React.createClass({
 	},
 
 	componentWillMount() {
-		const data = History.getSidebarData(this.props.location);
+		const { item, location } = this.props;
+
+		const data = History.getSidebarData(location);
 		if (!data || !data.directory) {
 			// We need an initial path for our history
-			History.replaceSidebarData(this.props.location, { directory: this.props.item.directory }, true);
-		} else if (this.props.item.location.path !== data.directory) {
+			History.replaceSidebarData(location, { directory: item.directory }, true);
+		} else if (item.location.path !== data.directory) {
 			// Opening an existing list from another directory?
 			this.sendChangeDirectory(data.directory);
 		}
@@ -108,13 +113,14 @@ const ListBrowser = React.createClass({
 	},
 
 	render() {
+		const { item, location } = this.props;
 		return (
 			<div className="filelist-browser">
 				<PathBreadcrumb 
 					tokens={this._tokenizePath()} 
 					separator={"/"} 
 					rootPath={"/"} 
-					rootName={this.props.item.user.nicks} 
+					rootName={ item.user.nicks } 
 					itemClickHandler={this._handleClickDirectory}
 				/>
 
@@ -123,9 +129,10 @@ const ListBrowser = React.createClass({
 					rowClassNameGetter={ this._rowClassNameGetter }
 					defaultSortProperty="name"
 					store={FilelistViewStore}
-					entityId={this.props.item.id}
-					viewId={ this.props.item.location.path }
+					entityId={item.id}
+					viewId={ item.location.path }
 					defaultSortAscending={true}
+					sessionStore={ FilelistSessionStore }
 				>
 					<Column
 						name="Name"
@@ -134,8 +141,8 @@ const ListBrowser = React.createClass({
 						cell={
 							<FileDownloadCell 
 								captionGetter={ this.nameCellCaptionGetter }
-								parentEntity={ this.props.item }
-								location={ this.props.location }
+								parentEntity={ item }
+								location={ location }
 								handler={ FilelistActions.download } 
 							/> 
 						}

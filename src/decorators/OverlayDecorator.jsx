@@ -75,10 +75,7 @@ export default function (Component, semanticModuleName) {
 				//	pathname: returnTo,
 				//});
 
-				History.replaceState({
-					state, 
-					returnTo,
-				});
+				History.replaceState(state, returnTo);
 			}
 
 			if (this.props.onHidden) {

@@ -21,6 +21,7 @@ export default {
 		this._removeMessageListener();
 		this.clear();
 
+		//this._entityId = null;
 		this._active = false;
 	},
 

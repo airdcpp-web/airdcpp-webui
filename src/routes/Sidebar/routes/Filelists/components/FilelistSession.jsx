@@ -26,8 +26,7 @@ const FilelistSession = React.createClass({
 					(<div className="ui active text loader">{ this.stateToString(state) }</div>)
 				: (
 					<ListBrowser
-						location={this.props.location}
-						item={this.props.item}
+						{ ...this.props }
 					/>
 				))}
 			</div>

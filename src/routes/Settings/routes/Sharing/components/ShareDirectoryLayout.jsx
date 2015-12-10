@@ -23,7 +23,7 @@ const ShareDirectoryLayout = React.createClass({
 				defaultSortProperty="path"
 				store={ShareRootStore}
 				defaultSortAscending={true}
-				filter={ <ProfileDropdown/> }
+				customFilter={ <ProfileDropdown/> }
 			>
 				<Column
 					name="Path"
