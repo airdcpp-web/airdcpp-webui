@@ -11,7 +11,7 @@ export default {
 		this.clear();
 	},
 
-	onStartCompleted(viewUrl, data) {
+	/*onStartCompleted(viewUrl, data) {
 		if (viewUrl !== this.viewUrl) {
 			return;
 		}
@@ -19,7 +19,7 @@ export default {
 		// Parse the total item count
 		this._parseDataProperties(data);
 		this.trigger(null);
-	},
+	},*/
 
 	onClose(viewUrl) {
 		if (viewUrl !== this.viewUrl) {

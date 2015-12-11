@@ -2,20 +2,19 @@ import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
 
 const TableActions = Reflux.createActions([
-	{ 'changeSettings': { asyncResult: true } },
+	{ 'setRange': { asyncResult: true } },
+	{ 'setSort': { asyncResult: true } },
 	{ 'close': { asyncResult: true } },
 	{ 'pause': { asyncResult: true } },
-	{ 'start': { asyncResult: true } },
 	'init',
 	'clear',
 ]);
 
-TableActions.start.listen(function (viewUrl) {
-	let that = this;
-	return SocketService.post(viewUrl)
-		.then(data => that.completed(viewUrl, data))
-		.catch(error => this.failed(viewUrl, error));
-});
+const postSettings = (settings, viewUrl, action) => {
+	return SocketService.post(viewUrl + '/settings', settings)
+		.then(data => action.completed(viewUrl, data))
+		.catch(error => action.failed(viewUrl, error));
+};
 
 TableActions.close.listen(function (viewUrl, sessionExists) {
 	if (sessionExists) {
@@ -26,23 +25,24 @@ TableActions.close.listen(function (viewUrl, sessionExists) {
 	}
 });
 
-TableActions.changeSettings.listen(function (viewUrl, rangeStart, maxRows, sortProperty, sortAscending) {
-	let that = this;
-	return SocketService.post(viewUrl + '/settings', { 
-		range_start: rangeStart, 
-		max_count: maxRows,
+TableActions.setSort.listen(function (viewUrl, sortProperty, sortAscending) {
+	postSettings({ 
 		sort_property: sortProperty,
 		sort_ascending: sortAscending,
-	}).then(data => that.completed(viewUrl, data))
-		.catch(error => this.failed(viewUrl, error));
+	}, viewUrl, this);
+});
+
+TableActions.setRange.listen(function (viewUrl, rangeStart, maxRows) {
+	postSettings({ 
+		range_start: rangeStart, 
+		max_count: maxRows,
+	}, viewUrl, this);
 });
 
 TableActions.pause.listen(function (viewUrl, pause) {
-	let that = this;
-	return SocketService.post(viewUrl + '/settings', { 
+	postSettings({ 
 		paused: pause,
-	}).then(data => that.completed(viewUrl, data))
-		.catch(error => this.failed(viewUrl, error));
+	}, viewUrl, this);
 });
 
 export default TableActions;

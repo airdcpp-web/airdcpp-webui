@@ -36,10 +36,21 @@ const VirtualTable = React.createClass({
 		 * Custom filter that will be displayed in addition to regular text filter
 		 */
 		customFilter: React.PropTypes.node,
+
+		/**
+		 * Store implementing ViewStoreMixin that contains the items
+		 */
+		defaultSortProperty: React.PropTypes.string.isRequired,
+
+		/**
+		 * Sort ascening by default
+		 */
+		defaultSortAscending: React.PropTypes.bool,
 	},
 
 	componentWillMount() {
 		this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
+
 		this.start(this.props.entityId);
 	},
 
@@ -55,6 +66,7 @@ const VirtualTable = React.createClass({
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.entityId !== this.props.entityId) {
 			this.close();
+
 			this.start(nextProps.entityId);
 		}
 
@@ -72,8 +84,10 @@ const VirtualTable = React.createClass({
 	},
 
 	start(entityId) {
-		TableActions.init(this.props.store.viewUrl, entityId);
-		TableActions.start(this.props.store.viewUrl, entityId);
+		const { store, defaultSortProperty, defaultSortAscending } = this.props;
+
+		TableActions.init(store.viewUrl, entityId);
+		TableActions.setSort(store.viewUrl, defaultSortProperty, defaultSortAscending);
 	},
 
 	close() {

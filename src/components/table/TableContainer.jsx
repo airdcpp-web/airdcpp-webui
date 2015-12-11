@@ -53,7 +53,7 @@ const TableContainer = React.createClass({
 		entityId: PropTypes.any,
 
 		
-		dataLoader: PropTypes.any,
+		dataLoader: PropTypes.any.isRequired,
 	},
 
 	onLocalSettingsChanged() {
@@ -83,22 +83,19 @@ const TableContainer = React.createClass({
 	},
 
 	componentDidMount() {
-		this.updateTableSettings();
+		this.updateRowRange();
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.entityId !== this.props.entityId) {
-			this.updateTableSettings();
-		}
+		//if (nextProps.entityId !== this.props.entityId) {
+		//	this.updateTableSettings();
+		//}
 	},
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevState.height != this.state.height || 
-			prevState.sortAscending != this.state.sortAscending ||
-			prevState.sortProperty != this.state.sortProperty) {
-
+		if (prevState.height != this.state.height) {
 			this._onContentHeightChange();
-			this.updateTableSettings();
+			this.updateRowRange();
 		}
 	},
 
@@ -106,14 +103,14 @@ const TableContainer = React.createClass({
 		clearTimeout(this._scrollTimer);
 	},
 
-	updateTableSettings() {
+	updateRowRange() {
 		const startRows = convertStartToRows(this._scrollPosition);
 		const maxRows = convertEndToRows(this.state.height, true);
 
 		//console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
 
 		console.assert(this.props.store.active, 'Posting data for an inactive view');
-		TableActions.changeSettings(this.props.store.viewUrl, startRows, maxRows, this.state.sortProperty, this.state.sortAscending);
+		TableActions.setRange(this.props.store.viewUrl, startRows, maxRows);
 	},
 
 	_onScrollStart(horizontal, vertical) {
@@ -128,21 +125,22 @@ const TableContainer = React.createClass({
 		TableActions.pause(this.props.store.viewUrl, false);
 
 		clearTimeout(this._scrollTimer);
-		this._scrollTimer = setTimeout(this.updateTableSettings, 500);
+		this._scrollTimer = setTimeout(this.updateRowRange, 500);
 		//console.log("Scrolling ended: " + vertical, this.props.store.viewName);
 	},
 
-	_sortRowsBy(cellDataKey) {
-		var newState = {
-			sortProperty: cellDataKey,
-			sortAscending: true
-		};
-
-		if (cellDataKey === this.state.sortProperty) {
-			newState['sortAscending'] = this.state.sortAscending ? false : true;
+	_sortRowsBy(sortProperty) {
+		let sortAscending = true;
+		if (sortProperty === this.state.sortProperty && this.state.sortAscending) {
+			sortAscending = false;
 		}
 
-		this.setState(newState);
+		this.setState({
+			sortProperty,
+			sortAscending,
+		});
+
+		TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
 	},
 
 	_onColumnResizeEndCallback(newColumnWidth, dataKey) {
