@@ -127,11 +127,9 @@ const ListBrowser = React.createClass({
 				<VirtualTable
 					emptyRowsNodeGetter={this.emptyRowsNodeGetter}
 					rowClassNameGetter={ this._rowClassNameGetter }
-					defaultSortProperty="name"
 					store={FilelistViewStore}
 					entityId={item.id}
 					viewId={ item.location.path }
-					defaultSortAscending={true}
 					sessionStore={ FilelistSessionStore }
 				>
 					<Column

@@ -33,16 +33,6 @@ const TableContainer = React.createClass({
 		store: PropTypes.object.isRequired,
 
 		/**
-		 * Store implementing ViewStoreMixin that contains the items
-		 */
-		defaultSortProperty: PropTypes.string.isRequired,
-
-		/**
-		 * Sort ascening by default
-		 */
-		defaultSortAscending: PropTypes.bool,
-
-		/**
 		 * Append class names to row (takes row data as param)
 		 */
 		rowClassNameGetter: PropTypes.func,
@@ -69,8 +59,6 @@ const TableContainer = React.createClass({
 
 	getInitialState() {
 		return {
-			sortProperty: this.props.defaultSortProperty,
-			sortAscending: this.props.defaultSortAscending !== undefined ? this.props.defaultSortAscending : true,
 			top: 0,
 			left: 0,
 		};
@@ -130,15 +118,12 @@ const TableContainer = React.createClass({
 	},
 
 	_sortRowsBy(sortProperty) {
+		const { store } = this.props;
+
 		let sortAscending = true;
-		if (sortProperty === this.state.sortProperty && this.state.sortAscending) {
+		if (sortProperty === store.sortProperty && store.sortAscending) {
 			sortAscending = false;
 		}
-
-		this.setState({
-			sortProperty,
-			sortAscending,
-		});
 
 		TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
 	},
@@ -193,10 +178,11 @@ const TableContainer = React.createClass({
 		}
 
 		let { name, flexGrow, width, cell, columnKey, renderCondition } = column.props;
+		const { store } = this.props;
 
 		// Convert name
-		const sortDirArrow = this.state.sortAscending ? ' ↑' : ' ↓';
-		name += ((this.state.sortProperty === columnKey) ? sortDirArrow : '');
+		const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';
+		name += ((store.sortProperty === columnKey) ? sortDirArrow : '');
 
 		const mobileView = BrowserUtils.useMobileLayout();
 		if (!mobileView) {

@@ -29,10 +29,10 @@ const TableFooter = ({ store, customFilter, footerData }) => {
 		<div className="table-footer">
 			{ footerData }
 			<div className="filter item">
+				{ clonedFilter }
 				<TextFilter 
 					viewUrl={ store.viewUrl }
 				/>
-				{ clonedFilter }
 				<CountInfo store={ store }/>
 			</div>
 		</div>

@@ -54,7 +54,6 @@ const FavoriteHubs = React.createClass({
 		return (
 			<VirtualTable
 				rowClassNameGetter={ this._rowClassNameGetter }
-				defaultSortProperty="name"
 				footerData={footerData}
 				store={FavoriteHubStore}
 			>

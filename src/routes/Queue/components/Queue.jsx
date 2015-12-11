@@ -57,7 +57,6 @@ const Queue = React.createClass({
 	render() {
 		return (
 			<VirtualTable
-				defaultSortProperty="name"
 				store={QueueStore}
 				footerData={ 
 					<ActionMenu 

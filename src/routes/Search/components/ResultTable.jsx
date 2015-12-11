@@ -61,8 +61,6 @@ const ResultTable = React.createClass({
 			<VirtualTable
 				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 				rowClassNameGetter={ this._rowClassNameGetter }
-				defaultSortProperty="relevancy"
-				defaultSortAscending={false}
 				store={ SearchStore }
 			>
 				<Column

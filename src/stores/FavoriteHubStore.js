@@ -5,7 +5,7 @@ import Reflux from 'reflux';
 export default Reflux.createStore({
 	_viewName: 'favorite_hub_view',
 	_apiUrl: FAVORITE_HUB_MODULE_URL,
-	mixins: [ ViewStoreMixin ],
+	mixins: [ ViewStoreMixin('name') ],
 	init: function () {
 		
 	},

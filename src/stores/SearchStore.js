@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 export default Reflux.createStore({
 	_viewName: 'search_view',
 	_apiUrl: 'search/v0',
-	mixins: [ ViewStoreMixin ],
+	mixins: [ ViewStoreMixin('relevancy', false) ],
 	init: function () {
 		
 	},
