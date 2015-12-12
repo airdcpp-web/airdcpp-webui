@@ -10,7 +10,7 @@ import Reflux from 'reflux';
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
-import { SIDEBAR_ID } from 'constants/OverlayConstants';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import 'array.prototype.find';
 import './utils/semantic';
@@ -31,7 +31,7 @@ const requireAuth = (nextState, replaceState) => {
 
 const onEnterSidebar = (nextProps, replaceState) => {
 	// Don't allow sidebar to be accessed with a direct link
-	if (!nextProps.location.state || !nextProps.location.state[SIDEBAR_ID]) {
+	if (!nextProps.location.state || !nextProps.location.state[OverlayConstants.SIDEBAR_ID]) {
 		replaceState(null, '/');
 	}
 };
@@ -39,10 +39,10 @@ const onEnterSidebar = (nextProps, replaceState) => {
 const routeConfig = [
 	{ 
 		path: 'login', 
-		component: require('./components/Login'), 
+		component: require('./components/Login').default, 
 	}, 
 	{ 
-		component: require('./components/AuthenticatedApp'),
+		component: require('./components/AuthenticatedApp').default,
 		path: '/',
 		onEnter: requireAuth,
 		indexRoute: require('./routes/Home'),
@@ -52,7 +52,7 @@ const routeConfig = [
 			require('./routes/Search'),
 			require('./routes/Settings'),
 			{ 
-				component: require('./routes/Sidebar/components/Sidebar'),
+				component: require('./routes/Sidebar/components/Sidebar').default,
 				path: 'sidebar',
 				onEnter: onEnterSidebar,
 				childRoutes: [

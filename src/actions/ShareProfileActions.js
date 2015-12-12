@@ -7,32 +7,32 @@ import InputDialog from 'components/semantic/InputDialog';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
-import { SHARE_PROFILE_URL } from 'constants/ShareProfileConstants';
-import { ICON_CREATE, ICON_EDIT, ICON_REMOVE, ICON_DEFAULT } from 'constants/IconConstants';
+import ShareProfileConstants from 'constants/ShareProfileConstants';
+import IconConstants from 'constants/IconConstants';
 
 const ShareProfileActions = Reflux.createActions([
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Add profile',
-		icon: ICON_CREATE },
+		icon: IconConstants.CREATE },
 	},
 	{ 'edit': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Rename profile', 
-		icon: ICON_EDIT },
+		icon: IconConstants.EDIT },
 	},
 	{ 'default': { 
 		asyncResult: true, 
 		displayName: 'Set as default', 
-		icon: ICON_DEFAULT },
+		icon: IconConstants.DEFAULT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove profile', 
-		icon: ICON_REMOVE },
+		icon: IconConstants.REMOVE },
 	},
 ]);
 
@@ -51,7 +51,7 @@ ShareProfileActions.create.listen(function () {
 });
 
 ShareProfileActions.create.saved.listen(function (name) {
-	return SocketService.post(SHARE_PROFILE_URL, { name: name })
+	return SocketService.post(ShareProfileConstants.PROFILE_URL, { name: name })
 		.then(ShareProfileActions.create.completed)
 		.catch(ShareProfileActions.create.failed);
 });
@@ -76,14 +76,14 @@ ShareProfileActions.edit.listen(function (profile) {
 
 ShareProfileActions.default.listen(function (profile) {
 	const that = this;
-	return SocketService.post(SHARE_PROFILE_URL + '/' + profile.id + '/default')
+	return SocketService.post(ShareProfileConstants.PROFILE_URL + '/' + profile.id + '/default')
 		.then(ShareProfileActions.default.completed.bind(that, profile))
 		.catch(ShareProfileActions.default.failed.bind(that, profile));
 });
 
 ShareProfileActions.edit.saved.listen(function (profile, name) {
 	const that = this;
-	return SocketService.patch(SHARE_PROFILE_URL + '/' + profile.id, { name: name })
+	return SocketService.patch(ShareProfileConstants.PROFILE_URL + '/' + profile.id, { name: name })
 		.then(ShareProfileActions.edit.completed.bind(that, profile))
 		.catch(ShareProfileActions.edit.failed.bind(that, profile));
 });
@@ -110,7 +110,7 @@ ShareProfileActions.remove.listen(function (profile) {
 
 ShareProfileActions.remove.confirmed.listen(function (profile) {
 	const that = this;
-	return SocketService.delete(SHARE_PROFILE_URL + '/' + profile.id)
+	return SocketService.delete(ShareProfileConstants.PROFILE_URL + '/' + profile.id)
 		.then(ShareProfileActions.remove.completed.bind(that, profile))
 		.catch(ShareProfileActions.remove.failed.bind(that, profile));
 });

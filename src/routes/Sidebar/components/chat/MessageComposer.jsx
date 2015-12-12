@@ -1,9 +1,8 @@
 'use strict';
-
 import React from 'react';
 
 
-var ENTER_KEY_CODE = 13;
+const ENTER_KEY_CODE = 13;
 
 const MessageComposer = React.createClass({
 	propTypes: {

@@ -10,9 +10,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-var React = require('react');
+import React from 'react';
 
-var TouchableArea = React.createClass({
+const TouchableArea = React.createClass({
 	getDefaultProps : function () {
 		return {
 			touchable: true
@@ -55,4 +55,4 @@ var TouchableArea = React.createClass({
 	}
 });
 
-module.exports = TouchableArea;
+export default TouchableArea;

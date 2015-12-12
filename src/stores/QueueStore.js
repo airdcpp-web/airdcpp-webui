@@ -1,16 +1,11 @@
-import { QUEUE_MODULE_URL } from 'constants/QueueConstants';
-import ViewStoreMixin from 'mixins/ViewStoreMixin';
 import Reflux from 'reflux';
+
+import QueueConstants from 'constants/QueueConstants';
+import ViewStoreMixin from 'mixins/ViewStoreMixin';
+
 
 export default Reflux.createStore({
 	_viewName: 'bundle_view',
-	_apiUrl: QUEUE_MODULE_URL,
+	_apiUrl: QueueConstants.QUEUE_MODULE_URL,
 	mixins: [ ViewStoreMixin('name') ],
-	init: function () {
-		
-	},
-
-	storeMethod: function () {
-			
-	}
 });

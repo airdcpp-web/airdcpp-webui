@@ -1,5 +1,5 @@
 import React from 'react';
-import { SETTING_ITEMS_URL } from 'constants/SettingConstants';
+import SettingConstants from 'constants/SettingConstants';
 
 import SocketService from 'services/SocketService';
 import NotificationActions from 'actions/NotificationActions';
@@ -40,7 +40,7 @@ const SettingForm = React.createClass({
 	fetchSettings() {
 		const keys = Object.keys(this.props.formItems);
 
-		SocketService.get(SETTING_ITEMS_URL, { 
+		SocketService.post(SettingConstants.ITEMS_INFO_URL, { 
 			keys: keys
 		})
 			.then(this.onSettingsReceived)
@@ -105,7 +105,7 @@ const SettingForm = React.createClass({
 	},
 
 	onSave(changedSettingArray) {
-		return SocketService.post(SETTING_ITEMS_URL, changedSettingArray)
+		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedSettingArray)
 			.then(this.fetchSettings);
 	},
 

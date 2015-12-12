@@ -1,11 +1,10 @@
-var React = require('react');
+import React from 'react';
 
-var ZyngaScroller = require('zynga/Scroller.js');
-var TouchableArea = require('./TouchableArea.jsx');
+import ZyngaScroller from 'zynga/Scroller';
+import TouchableArea from './TouchableArea';
 
 
-var ScrollArea = React.createClass({
-
+const ScrollArea = React.createClass({
 	componentWillMount : function () {
 		this.reset(this.props.touchMode);
 	},
@@ -77,4 +76,4 @@ var ScrollArea = React.createClass({
 	}
 });
 
-module.exports = ScrollArea;
+export default ScrollArea;

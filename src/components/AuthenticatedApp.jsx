@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import Reflux from 'reflux';
+import invariant from 'invariant';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
@@ -22,12 +23,12 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 import LogActions from 'actions/LogActions';
 
-import { SIDEBAR_ID } from 'constants/OverlayConstants';
+import OverlayConstants from 'constants/OverlayConstants';
 
 
 const showSideBar = (props) => {
 	return props.location.state &&
-		props.location.state[SIDEBAR_ID];
+		props.location.state[OverlayConstants.SIDEBAR_ID];
 };
 
 const AuthenticatedApp = React.createClass({
@@ -50,7 +51,6 @@ const AuthenticatedApp = React.createClass({
 	componentWillReceiveProps(nextProps) {
 		if (showSideBar(nextProps)) {
 			if (!this.previousChildren) {
-				// save the old children (just like animation)
 				this.previousChildren = this.props.children;
 			}
 		} else {
@@ -81,6 +81,7 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	render() {
+		invariant(this.props.children, 'AuthenticatedApp should always have children');
 		if (!this.state.socketAuthenticated) {
 			// Dim the screen until the server can be reached (we can't do anything without the socket)
 			return <SocketConnectStatus active={true} lastError={this.state.lastError}/>;
@@ -90,7 +91,7 @@ const AuthenticatedApp = React.createClass({
 		let sidebar = null;
 		if (showSideBar(this.props)) {
 			sidebar = React.cloneElement(this.props.children, { 
-				overlayId: SIDEBAR_ID,
+				overlayId: OverlayConstants.SIDEBAR_ID,
 				overlayContext: '.sidebar-context',
 			});
 		}

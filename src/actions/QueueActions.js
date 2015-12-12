@@ -1,9 +1,9 @@
 'use strict';
 import Reflux from 'reflux';
-import { BUNDLES_URL, BUNDLE_URL, StatusEnum } from 'constants/QueueConstants';
+import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
-import { ICON_REMOVE, ICON_SEARCH, ICON_PAUSE, ICON_PLAY } from 'constants/IconConstants';
+import IconConstants from 'constants/IconConstants';
 import { PriorityEnum } from 'constants/QueueConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
@@ -13,7 +13,7 @@ export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
 		asyncResult: true, 
 		displayName: 'Search for alternates', 
-		icon: ICON_SEARCH } 
+		icon: IconConstants.SEARCH } 
 	},
 	{ 'setBundlePriority': { 
 		asyncResult: true, 
@@ -23,27 +23,27 @@ export const QueueActions = Reflux.createActions([
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove', 
-		icon: ICON_REMOVE } 
+		icon: IconConstants.REMOVE } 
 	},
 	{ 'removeFinished': { 
 		asyncResult: true, 
 		displayName: 'Remove finished bundles', 
-		icon: ICON_REMOVE } 
+		icon: IconConstants.REMOVE } 
 	},
 	{ 'pause': { 
 		asyncResult: true, 
 		displayName: 'Pause all', 
-		icon: ICON_PAUSE } 
+		icon: IconConstants.PAUSE } 
 	},
 	{ 'resume': { 
 		asyncResult: true, 
 		displayName: 'Resume all', 
-		icon: ICON_PLAY } 
+		icon: IconConstants.PLAY } 
 	},
 ]);
 
 const setBundlePriorities = (prio, action) => {
-	return SocketService.post(BUNDLES_URL + '/priority', { priority: prio })
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/priority', { priority: prio })
 		.then(() => 
 			action.completed())
 		.catch((error) => 
@@ -53,7 +53,7 @@ const setBundlePriorities = (prio, action) => {
 
 QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
 	let that = this;
-	return SocketService.patch(BUNDLE_URL + '/' + bundleId, {
+	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundleId, {
 		priority: newPrio
 	})
 		.then(that.completed)
@@ -70,7 +70,7 @@ QueueActions.resume.listen(function () {
 
 QueueActions.removeFinished.listen(function () {
 	let that = this;
-	return SocketService.post(BUNDLES_URL + '/remove_finished')
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_finished')
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -104,14 +104,14 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	let that = this;
 	console.log('Remove succeed');
-	return SocketService.delete(BUNDLE_URL + '/' + bundle.id, { remove_finished: removeFinished })
+	return SocketService.delete(QueueConstants.BUNDLE_URL + '/' + bundle.id, { remove_finished: removeFinished })
 		.then(that.completed)
 		.catch(this.failed);
 });
 
 QueueActions.searchBundle.listen(function (bundle) {
 	let that = this;
-	return SocketService.post(BUNDLE_URL + '/' + bundle.id + '/search')
+	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/search')
 		.then(that.completed)
 		.catch(this.failed);
 });

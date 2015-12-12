@@ -1,6 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
-import { HUB_SESSIONS_URL, HUB_SESSION_URL, MAX_HUB_CHAT_MESSAGES } from 'constants/HubConstants';
+import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
@@ -8,7 +8,7 @@ import HubSessionStore from 'stores/HubSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 import ChatActionDecorator from 'decorators/ChatActionDecorator';
 
-import { ICON_FAVORITE, ICON_REFRESH } from 'constants/IconConstants';
+import IconConstants from 'constants/IconConstants';
 
 const HubActions = Reflux.createActions([
 	{ 'fetchSessions': { asyncResult: true } },
@@ -19,40 +19,40 @@ const HubActions = Reflux.createActions([
 	{ 'reconnect': { 
 		asyncResult: true,
 		displayName: 'Reconnect', 
-		icon: ICON_REFRESH } 
+		icon: IconConstants.REFRESH } 
 	},
 	{ 'favorite': { 
 		asyncResult: true,
 		displayName: 'Add to favorites', 
-		icon: ICON_FAVORITE } 
+		icon: IconConstants.FAVORITE } 
 	},
 	'sessionChanged',
 ]);
 
 HubActions.fetchSessions.listen(function () {
 	let that = this;
-	SocketService.get(HUB_SESSIONS_URL)
+	SocketService.get(HubConstants.HUB_SESSIONS_URL)
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 HubActions.password.listen(function (hub, password) {
 	let that = this;
-	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/password', { password: password })
+	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/password', { password: password })
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.redirect.listen(function (hub) {
 	let that = this;
-	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/redirect')
+	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/redirect')
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.favorite.listen(function (hub) {
 	let that = this;
-	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/favorite')
+	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/favorite')
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
@@ -73,7 +73,7 @@ HubActions.favorite.failed.listen(function (hub, error) {
 
 HubActions.reconnect.listen(function (hub) {
 	let that = this;
-	SocketService.post(HUB_SESSION_URL + '/' + hub.id + '/reconnect')
+	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/reconnect')
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -86,7 +86,7 @@ HubActions.createSession.listen(function (location, hubUrl) {
 	}
 
 	let that = this;
-	SocketService.post(HUB_SESSION_URL, {
+	SocketService.post(HubConstants.HUB_SESSION_URL, {
 		hub_url: hubUrl,
 	})
 		.then(that.completed.bind(that, location))
@@ -106,7 +106,7 @@ HubActions.createSession.failed.listen(function (error) {
 
 HubActions.removeSession.listen(function (id) {
 	let that = this;
-	SocketService.delete(HUB_SESSION_URL + '/' + id)
+	SocketService.delete(HubConstants.HUB_SESSION_URL + '/' + id)
 		.then(that.completed.bind(that, id))
 		.catch(that.failed.bind(that, id));
 });
@@ -118,4 +118,4 @@ HubActions.removeSession.failed.listen(function (id, error) {
 	});
 });
 
-export default ChatActionDecorator(HubActions, HUB_SESSION_URL, MAX_HUB_CHAT_MESSAGES);
+export default ChatActionDecorator(HubActions, HubConstants.HUB_SESSION_URL, HubConstants.MAX_HUB_MESSAGES);

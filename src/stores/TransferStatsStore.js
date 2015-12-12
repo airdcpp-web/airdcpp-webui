@@ -1,8 +1,9 @@
 import Reflux from 'reflux';
 
-import { TRANSFER_MODULE_URL, STATISTICS } from 'constants/TransferConstants';
+import TransferConstants from 'constants/TransferConstants';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+
 
 const TransferStatsStore = Reflux.createStore({
 	init: function () {
@@ -27,7 +28,7 @@ const TransferStatsStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(TRANSFER_MODULE_URL, STATISTICS, this.onStatistics);
+		addSocketListener(TransferConstants.TRANSFER_MODULE_URL, TransferConstants.STATISTICS, this.onStatistics);
 	}
 });
 

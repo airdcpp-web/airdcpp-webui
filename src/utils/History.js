@@ -2,7 +2,7 @@ import update from 'react-addons-update';
 
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 //import { useQueries } from 'history';
-import { SIDEBAR_ID } from 'constants/OverlayConstants';
+import OverlayConstants from 'constants/OverlayConstants';
 
 //const History = useQueries(createBrowserHistory)();
 const History = createBrowserHistory();
@@ -49,7 +49,7 @@ const OverlayHelpers = {
 	},
 
 	replaceSidebar: function (currentLocation, pathname, data) {
-		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
+		const state = getOverlayState(currentLocation, OverlayConstants.SIDEBAR_ID, data);
 		//History.replace({
 		//	state, 
 		//	pathname,
@@ -60,7 +60,7 @@ const OverlayHelpers = {
 
 	pushSidebar: function (currentLocation, pathname, data) {
 		// replaceState is invoked automatically if the path hasn't changed
-		const state = getOverlayState(currentLocation, SIDEBAR_ID, data);
+		const state = getOverlayState(currentLocation, OverlayConstants.SIDEBAR_ID, data);
 		//History.push({
 		//	state, 
 		//	pathname,
@@ -73,7 +73,7 @@ const OverlayHelpers = {
 	// Query will always be appended due to history lib: https://github.com/rackt/history/pull/43
 	// (UPDATE: doesn't apply for now since the history has been fixed to use an older version)
 	pushSidebarData: function (currentLocation, data) {
-		const state = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
+		const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
 		//History.push({
 		//	state, 
 		//	pathname: currentLocation.pathname, 
@@ -85,7 +85,7 @@ const OverlayHelpers = {
 
 	// Append new location data when in sidebar layout without creating a new history entry
 	replaceSidebarData: function (currentLocation, data, addQuery = false) {
-		const state = mergeOverlayData(currentLocation.state, SIDEBAR_ID, data);
+		const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
 		//History.replace({ 
 		//	state, 
 		//	pathname: currentLocation.pathname, 
@@ -98,7 +98,7 @@ const OverlayHelpers = {
 	// Shorthand function for receiving the data
 	// Data for modals is converted to regular props by the parent decorator but it won't work well with a nested sidebar structure
 	getSidebarData: function (currentLocation) {
-		return currentLocation.state[SIDEBAR_ID].data;
+		return currentLocation.state[OverlayConstants.SIDEBAR_ID].data;
 	},
 };
 

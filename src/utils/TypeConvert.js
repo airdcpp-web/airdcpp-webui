@@ -1,4 +1,4 @@
-import DupeEnum from 'constants/DupeConstants';
+import { DupeEnum } from 'constants/DupeConstants';
 import { UrgencyEnum } from 'constants/UrgencyConstants';
 
 export default {

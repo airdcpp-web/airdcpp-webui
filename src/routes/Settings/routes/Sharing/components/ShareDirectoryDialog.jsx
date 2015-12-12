@@ -1,9 +1,9 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { SHARE_ROOT_POST_URL, SHARE_ROOT_UPDATE_URL } from 'constants/ShareRootConstants';
-import { GROUPED_ROOTS_GET_URL } from 'constants/ShareConstants';
-import { ICON_FOLDER } from 'constants/IconConstants';
+import ShareConstants from 'constants/ShareConstants';
+import ShareRootConstants from 'constants/ShareRootConstants';
+import IconConstants from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
@@ -54,7 +54,7 @@ const ShareDirectoryDialog = React.createClass({
 	},
 
 	fetchRoots() {
-		SocketService.get(GROUPED_ROOTS_GET_URL)
+		SocketService.get(ShareConstants.GROUPED_ROOTS_GET_URL)
 			.then(this.onRootsReceived)
 			.catch(error => 
 				console.error('Failed to load roots: ' + error)
@@ -75,10 +75,10 @@ const ShareDirectoryDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(SHARE_ROOT_POST_URL, changedFields);
+			return SocketService.post(ShareRootConstants.ROOT_POST_URL, changedFields);
 		}
 
-		return SocketService.post(SHARE_ROOT_UPDATE_URL, Object.assign(changedFields, { path: this.props.rootEntry.path }));
+		return SocketService.post(ShareRootConstants.ROOT_UPDATE_URL, Object.assign(changedFields, { path: this.props.rootEntry.path }));
 	},
 
 	getFieldProfiles() {
@@ -121,7 +121,14 @@ const ShareDirectoryDialog = React.createClass({
 		};
 
 		return (
-			<Modal className="share-directory" title={title} onApprove={this.save} closable={false} icon={ ICON_FOLDER } {...this.props}>
+			<Modal 
+				className="share-directory" 
+				title={title} 
+				onApprove={this.save} 
+				closable={false} 
+				icon={ IconConstants.FOLDER } 
+				{...this.props}
+			>
 				<Form
 					ref="form"
 					formItems={Entry}

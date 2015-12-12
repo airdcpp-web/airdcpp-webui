@@ -1,7 +1,7 @@
 'use strict';
 import Reflux from 'reflux';
-import { FILELIST_SESSIONS_URL, FILELIST_SESSION_URL, FILELIST_MODULE_URL } from 'constants/FilelistConstants';
-import { BUNDLE_URL } from 'constants/QueueConstants';
+import FilelistConstants from 'constants/FilelistConstants';
+import QueueConstants from 'constants/QueueConstants';
 
 import SocketService from 'services/SocketService';
 
@@ -22,10 +22,14 @@ FilelistActions.download.listen((itemData, downloadData) => {
 	downloadData['user'] = itemData.parentEntity.user;
 
 	if (itemData.itemInfo.type.id === 'file') {
-		downloadData['tth'] = itemData.itemInfo.tth;
-		downloadData['size'] = itemData.itemInfo.size;
-		downloadData['time'] = itemData.itemInfo.time;
-		SocketService.post(BUNDLE_URL + '/file', downloadData)
+		const { tth, size, time } = itemData.itemInfo;
+		Object.assign(downloadData, {
+			tth,
+			size,
+			time,
+		});
+
+		SocketService.post(QueueConstants.BUNDLE_URL + '/file', downloadData)
 			.then(FilelistActions.download.completed)
 			.catch(error => FilelistActions.download.failed(itemData, error));
 
@@ -34,7 +38,7 @@ FilelistActions.download.listen((itemData, downloadData) => {
 
 	// Directory
 	downloadData['list_path'] = itemData.itemInfo.path;
-	SocketService.post(FILELIST_MODULE_URL + '/download_directory', downloadData)
+	SocketService.post(FilelistConstants.MODULE_URL + '/download_directory', downloadData)
 		.then(FilelistActions.download.completed)
 		.catch(error => FilelistActions.download.failed(itemData, error));
 });
@@ -48,14 +52,14 @@ FilelistActions.download.failed.listen((itemData, error) => {
 
 FilelistActions.fetchSessions.listen(function () {
 	let that = this;
-	SocketService.get(FILELIST_SESSIONS_URL)
+	SocketService.get(FilelistConstants.SESSIONS_URL)
 			.then(that.completed)
 			.catch(that.failed);
 });
 
 FilelistActions.changeDirectory.listen(function (cid, path) {
 	let that = this;
-	SocketService.post(FILELIST_SESSION_URL + '/' + cid + '/directory', { list_path: path })
+	SocketService.post(FilelistConstants.SESSION_URL + '/' + cid + '/directory', { list_path: path })
 		.then(data => that.completed(cid, data))
 		.catch(error => that.failed(cid, error));
 });
@@ -68,7 +72,7 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 	}
 
 	let that = this;
-	SocketService.post(FILELIST_SESSION_URL, {
+	SocketService.post(FilelistConstants.SESSION_URL, {
 		client_view: true,
 		user: {
 			cid: user.cid,
@@ -96,7 +100,7 @@ FilelistActions.createSession.failed.listen(function (error) {
 
 FilelistActions.removeSession.listen(function (cid) {
 	let that = this;
-	SocketService.delete(FILELIST_SESSION_URL + '/' + cid)
+	SocketService.delete(FilelistConstants.SESSION_URL + '/' + cid)
 		.then(that.completed)
 		.catch(that.failed);
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import SocketService from 'services/SocketService';
 import { HistoryEnum } from 'constants/HistoryConstants';
-import { SEARCH_QUERY_URL } from 'constants/SearchConstants';
+import SearchConstants from 'constants/SearchConstants';
 
 import HistoryInput from 'components/autosuggest/HistoryInput';
 
@@ -20,7 +20,7 @@ const Search = React.createClass({
 
 		clearTimeout(this._searchTimeout);
 
-		SocketService.post(SEARCH_QUERY_URL, { pattern: text })
+		SocketService.post(SearchConstants.SEARCH_QUERY_URL, { pattern: text })
 			.then(this.onSearchPosted)
 			.catch(error => 
 				console.error('Failed to post search: ' + error)

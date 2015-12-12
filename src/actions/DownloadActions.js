@@ -2,20 +2,20 @@
 import Reflux from 'reflux';
 
 import History from 'utils/History';
-import { DOWNLOAD_MODAL_ID } from 'constants/OverlayConstants';
+import OverlayConstants from 'constants/OverlayConstants';
 
-import { ICON_DOWNLOAD, ICON_DOWNLOAD_TO } from 'constants/IconConstants';
+import IconConstants from 'constants/IconConstants';
 
 export const DownloadActions = Reflux.createActions([
 	{ 'download': { 
 		asyncResult: true,	
 		displayName: 'Download', 
-		icon: ICON_DOWNLOAD } 
+		icon: IconConstants.DOWNLOAD } 
 	},
 	{ 'downloadTo': { 
 		asyncResult: true,	
 		displayName: 'Download to...', 
-		icon: ICON_DOWNLOAD_TO } 
+		icon: IconConstants.DOWNLOAD_TO } 
 	}
 ]);
 
@@ -26,7 +26,7 @@ DownloadActions.download.listen(function (data) {
 DownloadActions.downloadTo.listen(function (handlerData) {
 	const { pathname } = handlerData.location;
 	
-	History.pushModal(handlerData.location, pathname + '/download', DOWNLOAD_MODAL_ID, {
+	History.pushModal(handlerData.location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
 		downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
 		itemInfo:handlerData.itemInfo
 	});

@@ -1,7 +1,6 @@
 import Reflux from 'reflux';
 
-import { PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_CREATED, CHAT_SESSION_REMOVED, CHAT_SESSION_UPDATED } from 'constants/PrivateChatConstants';
-
+import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
@@ -15,9 +14,10 @@ const PrivateChatSessionStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_CREATED, this._onSessionCreated);
-		addSocketListener(PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_REMOVED, this._onSessionRemoved);
-		addSocketListener(PRIVATE_CHAT_MODULE_URL, CHAT_SESSION_UPDATED, this._onSessionUpdated);
+		const url = PrivateChatConstants.MODULE_URL;
+		addSocketListener(url, PrivateChatConstants.SESSION_CREATED, this._onSessionCreated);
+		addSocketListener(url, PrivateChatConstants.SESSION_REMOVED, this._onSessionRemoved);
+		addSocketListener(url, PrivateChatConstants.SESSION_UPDATED, this._onSessionUpdated);
 	},
 });
 

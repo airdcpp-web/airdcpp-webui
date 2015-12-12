@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import { LOG_MODULE_URL, MAX_LOG_MESSAGES, LOG_MESSAGE, LOG_READ, LOG_CLEARED, SeverityEnum } from 'constants/LogConstants';
+import { default as LogConstants } from 'constants/LogConstants';
 import { LogActions } from 'actions/LogActions';
 
 import { LogMessageUrgencies } from 'constants/UrgencyConstants';
@@ -28,7 +28,7 @@ const LogStore = Reflux.createStore({
 
 	onLogMessage: function (data) {
 		this._logMessages.push(data);
-		if (this._logMessages.length > MAX_LOG_MESSAGES) {
+		if (this._logMessages.length > LogConstants.MAX_LOG_MESSAGES) {
 			this._logMessages.shift();
 		}
 
@@ -57,9 +57,10 @@ const LogStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(LOG_MODULE_URL, LOG_MESSAGE, this.onLogMessage);
-		addSocketListener(LOG_MODULE_URL, LOG_READ, this.onLogRead);
-		addSocketListener(LOG_MODULE_URL, LOG_CLEARED, this.onLogCleared);
+		const url = LogConstants.LOG_MODULE_URL;
+		addSocketListener(url, LogConstants.LOG_MESSAGE, this.onLogMessage);
+		addSocketListener(url, LogConstants.LOG_READ, this.onLogRead);
+		addSocketListener(url, LogConstants.LOG_CLEARED, this.onLogCleared);
 	}
 });
 

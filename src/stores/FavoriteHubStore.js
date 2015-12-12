@@ -1,16 +1,11 @@
-import { FAVORITE_HUB_MODULE_URL } from 'constants/FavoriteHubConstants';
-import ViewStoreMixin from 'mixins/ViewStoreMixin';
 import Reflux from 'reflux';
+
+import FavoriteHubConstants from 'constants/FavoriteHubConstants';
+import ViewStoreMixin from 'mixins/ViewStoreMixin';
+
 
 export default Reflux.createStore({
 	_viewName: 'favorite_hub_view',
-	_apiUrl: FAVORITE_HUB_MODULE_URL,
+	_apiUrl: FavoriteHubConstants.FAVORITE_HUB_MODULE_URL,
 	mixins: [ ViewStoreMixin('name') ],
-	init: function () {
-		
-	},
-
-	storeMethod: function () {
-			
-	}
 });

@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import invariant from 'invariant';
 
 import OverlayDecorator from 'decorators/OverlayDecorator';
 import Loader from 'components/semantic/Loader';
@@ -9,9 +10,16 @@ import BrowserUtils from 'utils/BrowserUtils';
 import '../style.css';
 
 const Sidebar = React.createClass({
+	propTypes: {
+		context: React.PropTypes.string,
+	},
+
 	componentDidMount() {
+		const context = $(this.props.overlayContext);
+		invariant(context.length !== 0, 'Invalid sidebar context');
+
 		this.props.showOverlay({
-			context: $(this.props.overlayContext),
+			context: context,
 			transition: 'overlay',
 			mobileTransition: 'overlay',
 			closable: !BrowserUtils.useMobileLayout(),

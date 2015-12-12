@@ -2,7 +2,7 @@
 import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
 import SocketStore from 'stores/SocketStore';
-import { LOGIN_URL, CONNECT_URL, LOGOUT_URL } from 'constants/LoginConstants';
+import LoginConstants from 'constants/LoginConstants';
 
 export const LoginActions = Reflux.createActions([
 	{ 'login': { asyncResult: true } },
@@ -16,7 +16,7 @@ LoginActions.login.listen(function (username, password) {
 	SocketService.connect();
 	let unsubscribe = SocketStore.listen((socket, error) => {
 		if (socket) {
-			SocketService.post(LOGIN_URL, { username: username, password: password })
+			SocketService.post(LoginConstants.LOGIN_URL, { username: username, password: password })
 				.then(that.completed)
 				.catch(that.failed);
 		} else {
@@ -33,7 +33,7 @@ LoginActions.connect.listen(function (token) {
 	SocketService.reconnect();
 	let unsubscribe = SocketStore.listen((socket, error) => {
 		if (socket) {
-			SocketService.post(CONNECT_URL, { authorization: token })
+			SocketService.post(LoginConstants.CONNECT_URL, { authorization: token })
 				.then(that.completed)
 				.catch(that.failed);
 
@@ -44,7 +44,7 @@ LoginActions.connect.listen(function (token) {
 
 LoginActions.logout.listen(function () {
 	let that = this;
-	return SocketService.delete(LOGOUT_URL)
+	return SocketService.delete(LoginConstants.LOGOUT_URL)
 		.then(that.completed)
 		.catch(this.failed);
 });

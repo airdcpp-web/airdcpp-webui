@@ -5,26 +5,26 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'speed', 
-				component: require('./components/SpeedPage'), 
+				component: require('./components/SpeedPage').default, 
 			}, {
 				path: 'download-limits', 
-				component: require('./components/DownloadLimitPage'), 
+				component: require('./components/DownloadLimitPage').default, 
 			}, {
 				path: 'upload-limits', 
-				component: require('./components/UploadLimitPage'), 
+				component: require('./components/UploadLimitPage').default, 
 			}, {
 				path: 'user-limits', 
-				component: require('./components/UserLimitPage'), 
+				component: require('./components/UserLimitPage').default, 
 			}, {
 				path: 'limiter', 
-				component: require('./components/LimiterPage'), 
+				component: require('./components/LimiterPage').default, 
 			} ]);
 		}, 'settings-speed-limits-children');
 	},
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/SpeedLimits'));
+			cb(null, require('./components/SpeedLimits').default);
 		}, 'settings-speed-limits');
 	}
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import SocketService from 'services/SocketService.js';
-import { RECENT_HUB_SEARCH_URL } from 'constants/RecentHubConstants.js';
+import SocketService from 'services/SocketService';
+import RecentHubConstants from 'constants/RecentHubConstants';
 
 import Autosuggest from 'react-autosuggest';
 import SuggestionRenderer from './SuggestionRenderer';
@@ -32,7 +32,7 @@ const HubSearchInput = React.createClass({
 	},
 
 	_getSuggestions(input, callback) {
-		SocketService.post(RECENT_HUB_SEARCH_URL, { pattern: this.state.text, max_results: 7 })
+		SocketService.post(RecentHubConstants.RECENT_HUB_SEARCH_URL, { pattern: this.state.text, max_results: 7 })
 			.then(data => {
 				callback(null, data || []);
 			})

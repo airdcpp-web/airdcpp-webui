@@ -1,14 +1,15 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { HIDDEN_PROFILE_ID } from 'constants/ShareProfileConstants';
-import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
+import ShareProfileConstants from 'constants/ShareProfileConstants';
+import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
+
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
-import { ICON_FAVORITE } from 'constants/IconConstants';
+import IconConstants from 'constants/IconConstants';
 
 import t from 'utils/tcomb-form';
 
@@ -47,7 +48,7 @@ const FavoriteHubDialog = React.createClass({
 		if (id.indexOf('hub_url') != -1) {
 			this.checkAdcHub(value.hub_url);
 
-			if (!this.isAdcHub && value.share_profile !== HIDDEN_PROFILE_ID) {
+			if (!this.isAdcHub && value.share_profile !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
 				// Reset share profile
 				const sourceData = FormUtils.valueMapToInfo({ share_profile: null });
 				return Promise.resolve(sourceData);
@@ -61,10 +62,10 @@ const FavoriteHubDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(FAVORITE_HUB_URL, changedFields);
+			return SocketService.post(FavoriteHubConstants.FAVORITE_HUB_URL, changedFields);
 		}
 
-		return SocketService.patch(FAVORITE_HUB_URL + '/' + this.props.hubEntry.id, changedFields);
+		return SocketService.patch(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + this.props.hubEntry.id, changedFields);
 	},
 
 	convertProfile(profiles, rawItem) {
@@ -78,7 +79,7 @@ const FavoriteHubDialog = React.createClass({
 
 	getFieldProfiles() {
 		return this.props.profiles
-			.filter(p => this.isAdcHub || p.id === HIDDEN_PROFILE_ID)
+			.filter(p => this.isAdcHub || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
 			.reduce(this.convertProfile, []);
 	},
 
@@ -97,7 +98,7 @@ const FavoriteHubDialog = React.createClass({
 	render: function () {
 		const title = this._isNew ? 'Add favorite hub' : 'Edit favorite hub';
 		return (
-			<Modal className="fav-hub" title={title} onApprove={this.save} closable={false} icon={ ICON_FAVORITE } {...this.props}>
+			<Modal className="fav-hub" title={title} onApprove={this.save} closable={false} icon={ IconConstants.FAVORITE } {...this.props}>
 				<Form
 					ref="form"
 					title="User information"

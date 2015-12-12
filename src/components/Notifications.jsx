@@ -1,8 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import { PRIVATE_CHAT_MODULE_URL, PRIVATE_CHAT_MESSAGE } from 'constants/PrivateChatConstants';
-import { QUEUE_MODULE_URL, BUNDLE_STATUS, StatusEnum } from 'constants/QueueConstants';
+import PrivateChatConstants from 'constants/PrivateChatConstants';
+import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 
 import NotificationSystem from 'react-notification-system';
 import NotificationStore from 'stores/NotificationStore';
@@ -70,8 +70,8 @@ const Notifications = React.createClass({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(PRIVATE_CHAT_MODULE_URL, PRIVATE_CHAT_MESSAGE, this._onPrivateMessage);
-		addSocketListener(QUEUE_MODULE_URL, BUNDLE_STATUS, this._onBundleStatus);
+		addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this._onPrivateMessage);
+		addSocketListener(QueueConstants.QUEUE_MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
 	},
 
 	_onPrivateMessage(message) {

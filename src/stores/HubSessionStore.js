@@ -1,10 +1,9 @@
 import Reflux from 'reflux';
 
-import { HUB_MODULE_URL, HUB_SESSION_CREATED, HUB_SESSION_REMOVED, HUB_SESSION_UPDATED } from 'constants/HubConstants';
+import HubActions from 'actions/HubActions';
+import HubConstants from 'constants/HubConstants';
 
 import { HubMessageUrgencies } from 'constants/UrgencyConstants';
-
-import HubActions from 'actions/HubActions';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
@@ -19,9 +18,9 @@ const HubSessionStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(HUB_MODULE_URL, HUB_SESSION_CREATED, this._onSessionCreated);
-		addSocketListener(HUB_MODULE_URL, HUB_SESSION_REMOVED, this._onSessionRemoved);
-		addSocketListener(HUB_MODULE_URL, HUB_SESSION_UPDATED, this._onSessionUpdated);
+		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.HUB_SESSION_CREATED, this._onSessionCreated);
+		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.HUB_SESSION_REMOVED, this._onSessionRemoved);
+		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.HUB_SESSION_UPDATED, this._onSessionUpdated);
 	},
 });
 

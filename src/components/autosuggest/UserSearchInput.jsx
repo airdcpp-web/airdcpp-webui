@@ -1,10 +1,12 @@
 import React from 'react';
-import SocketService from 'services/SocketService.js';
-import { HUB_SEARCH_NICKS_URL } from 'constants/HubConstants.js';
+
+import SocketService from 'services/SocketService';
+import HubConstants from 'constants/HubConstants';
+
 import Autosuggest from 'react-autosuggest';
 import SuggestionRenderer from './SuggestionRenderer';
-
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
+
 
 const UserSearchInput = React.createClass({
 	propTypes: {
@@ -32,7 +34,7 @@ const UserSearchInput = React.createClass({
 	},
 
 	_getSuggestions(input, callback) {
-		SocketService.post(HUB_SEARCH_NICKS_URL, { pattern: this.state.text, max_results: 7 })
+		SocketService.post(HubConstants.HUB_SEARCH_NICKS_URL, { pattern: this.state.text, max_results: 7 })
 			.then(data => {
 				callback(null, data || []);
 			})

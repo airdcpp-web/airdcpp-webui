@@ -1,6 +1,6 @@
 import React from 'react';
-import SocketService from 'services/SocketService.js';
-import { HISTORY_ITEM_URL, HISTORY_ITEMS_URL } from 'constants/HistoryConstants.js';
+import SocketService from 'services/SocketService';
+import HistoryConstants from 'constants/HistoryConstants';
 
 import Autosuggest from 'react-autosuggest';
 import Button from 'components/semantic/Button';
@@ -37,7 +37,7 @@ export default React.createClass({
 	},
 
 	_loadHistory() {
-		SocketService.get(HISTORY_ITEMS_URL + '/' + this.props.historyId)
+		SocketService.get(HistoryConstants.HISTORY_ITEMS_URL + '/' + this.props.historyId)
 			.then(data => {
 				this.setState({ history: data });
 			})
@@ -56,7 +56,7 @@ export default React.createClass({
 
 	_handleSubmit() {
 		const { text } = this.state;
-		SocketService.post(HISTORY_ITEM_URL + '/' + this.props.historyId, { item: text })
+		SocketService.post(HistoryConstants.HISTORY_ITEM_URL + '/' + this.props.historyId, { item: text })
 			.then(data => {
 			})
 			.catch(error => 

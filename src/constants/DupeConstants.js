@@ -1,4 +1,4 @@
-export default {
+export const DupeEnum = {
 	NONE: 0,
 	SHARE_PARTIAL: 1,
 	SHARE_FULL: 2,

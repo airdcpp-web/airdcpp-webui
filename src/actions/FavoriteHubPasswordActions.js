@@ -1,15 +1,15 @@
 'use strict';
 import Reflux from 'reflux';
 
-import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
+import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import { PasswordDialog } from 'components/semantic/InputDialog';
-import { ICON_LOCK, ICON_EDIT, ICON_REMOVE } from 'constants/IconConstants';
+import IconConstants from 'constants/IconConstants';
 
 const sendPassword = (hub, password, action) => {
-	return SocketService.patch(FAVORITE_HUB_URL + '/' + hub.id, { password: password })
+	return SocketService.patch(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + hub.id, { password: password })
 		.then(() => 
 			action.completed(hub))
 		.catch((error) => 
@@ -22,19 +22,19 @@ const FavoriteHubPasswordActions = Reflux.createActions([
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Set password',
-		icon: ICON_LOCK },
+		icon: IconConstants.LOCK },
 	},
 	{ 'change': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Change password', 
-		icon: ICON_EDIT },
+		icon: IconConstants.EDIT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove password', 
-		icon: ICON_REMOVE },
+		icon: IconConstants.REMOVE },
 	},
 ]);
 

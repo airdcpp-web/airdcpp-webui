@@ -53,8 +53,8 @@ const UrgencyUtils = {
 	},
 };
 
-export default Object.assign(UrgencyUtils, 
-	{ maxUrgency: maxUrgency },
-	{ toUrgencyMap: toUrgencyMap },
-	{ appendToMap: appendToMap },
-);
+export default Object.assign(UrgencyUtils, {
+	maxUrgency,
+	toUrgencyMap,
+	appendToMap,
+});

@@ -12,7 +12,7 @@ module.exports = {
 				require('./routes/About'),
 				{
 					path: '**/**(/**)/browse',
-					component: require('components/filebrowser/FileBrowserDialog'), 
+					component: require('components/filebrowser/FileBrowserDialog').default,
 				}
 			]);
 		}, 'settings-children');
@@ -20,7 +20,7 @@ module.exports = {
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/Settings'));
+			cb(null, require('./components/Settings').default);
 		}, 'settings');
 	}
 };

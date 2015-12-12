@@ -1,12 +1,13 @@
 'use strict';
 import Reflux from 'reflux';
-import { FAVORITE_HUB_URL } from 'constants/FavoriteHubConstants';
+
+import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
-import { FAVORITE_MODAL_ID } from 'constants/OverlayConstants';
 
-import { ICON_CREATE, ICON_EDIT, ICON_REMOVE } from 'constants/IconConstants';
+import OverlayConstants from 'constants/OverlayConstants';
+import IconConstants from 'constants/IconConstants';
 
 import History from 'utils/History';
 
@@ -15,19 +16,19 @@ export const FavoriteHubActions = Reflux.createActions([
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Add new',
-		icon: ICON_CREATE },
+		icon: IconConstants.CREATE },
 	},
 	{ 'edit': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Edit', 
-		icon: ICON_EDIT },
+		icon: IconConstants.EDIT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove', 
-		icon: ICON_REMOVE },
+		icon: IconConstants.REMOVE },
 	},
 	{ 'update': { 
 		asyncResult: true },
@@ -35,16 +36,16 @@ export const FavoriteHubActions = Reflux.createActions([
 ]);
 
 FavoriteHubActions.create.listen(function (hub) {
-	History.pushModal('/favorite-hubs', '/favorite-hubs/new', FAVORITE_MODAL_ID);
+	History.pushModal('/favorite-hubs', '/favorite-hubs/new', OverlayConstants.FAVORITE_MODAL_ID);
 });
 
 FavoriteHubActions.edit.listen(function (hub, data) {
-	History.pushModal('/favorite-hubs', '/favorite-hubs/edit', FAVORITE_MODAL_ID, { hubEntry: hub });
+	History.pushModal('/favorite-hubs', '/favorite-hubs/edit', OverlayConstants.FAVORITE_MODAL_ID, { hubEntry: hub });
 });
 
 FavoriteHubActions.update.listen(function (hub, data) {
 	let that = this;
-	return SocketService.patch(FAVORITE_HUB_URL + '/' + hub.id, data)
+	return SocketService.patch(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + hub.id, data)
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -65,7 +66,7 @@ FavoriteHubActions.remove.shouldEmit = function (hub) {
 };
 
 FavoriteHubActions.remove.confirmed.listen(function (hub) {
-	return SocketService.delete(FAVORITE_HUB_URL + '/' + hub.id)
+	return SocketService.delete(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + hub.id)
 		.then(() => 
 			FavoriteHubActions.remove.completed(hub))
 		.catch((error) => 

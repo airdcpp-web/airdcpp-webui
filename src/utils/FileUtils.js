@@ -35,8 +35,7 @@ const getLastDirectory = (fullPath) => {
 	return result ? result[1] : fullPath;
 };
 
-export default {
-	...FileUtils,
+export default Object.assign(FileUtils, {
 	getLastDirectory,
 	getParentPath,
-};
+});

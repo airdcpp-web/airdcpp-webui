@@ -16,7 +16,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 
 		const showBrowseDialog = () => {
 			const { location } = locals.context;
-			History.pushModal(location, location.pathname + '/browse', FILE_BROWSER_MODAL, {
+			History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL, {
 				onConfirm: onConfirm,
 				subHeader: locals.label,
 				initialPath: locals.value ? locals.value : '',
@@ -31,7 +31,9 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 		return (
 			<div className="ui action fluid input field">
 				<input
-					ref={ input => { _input = input } }
+					ref={ input => { 
+						_input = input;
+					} }
 					//name={locals.attrs.name}
 					value={locals.value}
 					onChange={onChange}

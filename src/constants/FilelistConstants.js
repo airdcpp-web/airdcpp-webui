@@ -1,10 +1,10 @@
-const FILELIST_MODULE_URL = 'filelists/v0';
+const MODULE_URL = 'filelists/v0';
 export default {
-	FILELIST_MODULE_URL: FILELIST_MODULE_URL,
-	FILELIST_SESSIONS_URL: FILELIST_MODULE_URL + '/sessions',
-	FILELIST_SESSION_URL: FILELIST_MODULE_URL + '/session',
+	MODULE_URL: MODULE_URL,
+	SESSIONS_URL: MODULE_URL + '/sessions',
+	SESSION_URL: MODULE_URL + '/session',
 
-	FILELIST_SESSION_CREATED: 'filelist_created',
-	FILELIST_SESSION_REMOVED: 'filelist_removed',
-	FILELIST_SESSION_UPDATED: 'filelist_updated',
+	SESSION_CREATED: 'filelist_created',
+	SESSION_REMOVED: 'filelist_removed',
+	SESSION_UPDATED: 'filelist_updated',
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SHARE_PROFILE_MODULE_URL, SHARE_PROFILES_URL, HIDDEN_PROFILE_ID, SHARE_PROFILE_ADDED, SHARE_PROFILE_UPDATED, SHARE_PROFILE_REMOVED } from 'constants/ShareProfileConstants';
+import ShareProfileConstants from 'constants/ShareProfileConstants';
 import SocketService from 'services/SocketService';
 
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
@@ -12,9 +12,10 @@ export default function (Component, listHidden, addSize = true) {
 		mixins: [ SocketSubscriptionMixin() ],
 
 		onSocketConnected(addSocketListener) {
-			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_ADDED, this.fetchProfiles);
-			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_UPDATED, this.fetchProfiles);
-			addSocketListener(SHARE_PROFILE_MODULE_URL, SHARE_PROFILE_REMOVED, this.fetchProfiles);
+			const url = ShareProfileConstants.PROFILE_MODULE_URL;
+			addSocketListener(url, ShareProfileConstants.PROFILE_ADDED, this.fetchProfiles);
+			addSocketListener(url, ShareProfileConstants.PROFILE_UPDATED, this.fetchProfiles);
+			addSocketListener(url, ShareProfileConstants.PROFILE_REMOVED, this.fetchProfiles);
 		},
 
 		componentDidMount() {
@@ -23,7 +24,7 @@ export default function (Component, listHidden, addSize = true) {
 
 		convertProfile(profile) {
 			let name = profile.name;
-			if (addSize && profile.id !== HIDDEN_PROFILE_ID) {
+			if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
 				name += ' (' + ValueFormat.formatSize(profile.size) + ')';
 			}
 
@@ -36,7 +37,7 @@ export default function (Component, listHidden, addSize = true) {
 		onProfilesReceived(data) {
 			const profiles = [];
 			profiles.push(...data
-				.filter(p => listHidden || p.id !== HIDDEN_PROFILE_ID)
+				.filter(p => listHidden || p.id !== ShareProfileConstants.HIDDEN_PROFILE_ID)
 				.map(this.convertProfile)
 			);
 
@@ -46,7 +47,7 @@ export default function (Component, listHidden, addSize = true) {
 		},
 
 		fetchProfiles() {
-			SocketService.get(SHARE_PROFILES_URL)
+			SocketService.get(ShareProfileConstants.PROFILES_URL)
 				.then(this.onProfilesReceived)
 				.catch(error => 
 					console.error('Failed to load profiles: ' + error)

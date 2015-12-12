@@ -5,7 +5,7 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import Button from 'components/semantic/Button';
 import Loader from 'components/semantic/Loader';
 
-import { CONNECTIVITY_MODULE_URL, CONNECTIVITY_STATUS_URL, CONNECTIVITY_DETECT_URL, CONNECTIVITY_STARTED, CONNECTIVITY_FINISHED } from 'constants/ConnectivityConstants';
+import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 const formatStatus = (status) => {
 	let ret = status.text;
@@ -34,8 +34,9 @@ const StatusRow = ({ title, status, running, detect }) => (
 const DetectPanel = React.createClass({
 	mixins: [ SocketSubscriptionMixin() ],
 	onSocketConnected(addSocketListener) {
-		addSocketListener(CONNECTIVITY_MODULE_URL, CONNECTIVITY_STARTED, this.onDetectStarted);
-		addSocketListener(CONNECTIVITY_MODULE_URL, CONNECTIVITY_FINISHED, this.onDetectFinished);
+		const url = ConnectivityConstants.CONNECTIVITY_MODULE_URL;
+		addSocketListener(url, ConnectivityConstants.CONNECTIVITY_STARTED, this.onDetectStarted);
+		addSocketListener(url, ConnectivityConstants.CONNECTIVITY_FINISHED, this.onDetectFinished);
 	},
 
 	getInitialState() {
@@ -67,7 +68,7 @@ const DetectPanel = React.createClass({
 	},
 
 	updateStatus() {
-		SocketService.get(CONNECTIVITY_STATUS_URL)
+		SocketService.get(ConnectivityConstants.CONNECTIVITY_STATUS_URL)
 			.then(this.onStatusReceived)
 			.catch(error => 
 				console.error('Failed to get status: ' + error)
@@ -75,7 +76,7 @@ const DetectPanel = React.createClass({
 	},
 
 	handleDetect() {
-		SocketService.post(CONNECTIVITY_DETECT_URL)
+		SocketService.post(ConnectivityConstants.CONNECTIVITY_DETECT_URL)
 			.then(this.onSettingsReceived)
 			.catch(error => 
 				console.error('Failed to start detection: ' + error)

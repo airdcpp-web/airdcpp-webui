@@ -2,11 +2,11 @@ import React from 'react';
 import Modal from './semantic/Modal';
 
 import { PriorityEnum } from 'constants/QueueConstants';
-import { QUEUE_DUPE_PATHS_URL } from 'constants/QueueConstants';
-import { GROUPED_ROOTS_GET_URL, SHARE_DUPE_PATHS_URL } from 'constants/ShareConstants';
-import { HISTORY_ITEMS_URL, HistoryEnum } from 'constants/HistoryConstants.js';
-import { FAVORITE_DIRECTORIES_URL } from 'constants/FavoriteDirectoryConstants.js';
-import { ICON_DOWNLOAD } from 'constants/IconConstants';
+import QueueConstants from 'constants/QueueConstants';
+import ShareConstants from 'constants/ShareConstants';
+import { default as HistoryConstants, HistoryEnum } from 'constants/HistoryConstants';
+import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
+import IconConstants from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
@@ -146,18 +146,18 @@ const DownloadDialog = React.createClass({
 	},
 
 	componentDidMount() {
-		this.fetchPaths(GROUPED_ROOTS_GET_URL, 'share_paths');
-		this.fetchPaths(FAVORITE_DIRECTORIES_URL, 'favorite_paths');
-		this.fetchPaths(HISTORY_ITEMS_URL + '/' + HistoryEnum.HISTORY_DOWNLOAD_DIR, 'history_paths');
+		this.fetchPaths(ShareConstants.GROUPED_ROOTS_GET_URL, 'share_paths');
+		this.fetchPaths(FavoriteDirectoryConstants.FAVORITE_DIRECTORIES_URL, 'favorite_paths');
+		this.fetchPaths(HistoryConstants.HISTORY_ITEMS_URL + '/' + HistoryEnum.HISTORY_DOWNLOAD_DIR, 'history_paths');
 
 		const { itemInfo } = this.props;
 		const dupeName = TypeConvert.dupeToStringType(itemInfo.dupe);
 		if (dupeName.indexOf('queue') > -1) {
-			this.fetchDupePaths(QUEUE_DUPE_PATHS_URL);
+			this.fetchDupePaths(QueueConstants.QUEUE_DUPE_PATHS_URL);
 		}
 
 		if (dupeName.indexOf('share') > -1) {
-			this.fetchDupePaths(SHARE_DUPE_PATHS_URL);
+			this.fetchDupePaths(ShareConstants.SHARE_DUPE_PATHS_URL);
 		}
 	},
 
@@ -224,7 +224,7 @@ const DownloadDialog = React.createClass({
 				className="download-dialog" 
 				title="Download" 
 				closable={true} 
-				icon={ ICON_DOWNLOAD }
+				icon={ IconConstants.DOWNLOAD }
 				fullHeight={true}
 				{...this.props}
 			>

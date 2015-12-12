@@ -5,14 +5,14 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'download', 
-				component: require('components/DownloadDialog'), 
+				component: require('components/DownloadDialog').default, 
 			} ]);
 		}, 'search-children');
 	},
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/Search'));
+			cb(null, require('./components/Search').default);
 		}, 'search');
 	}
 };

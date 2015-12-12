@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FILESYSTEM_LIST_URL, FILESYSTEM_DIRECTORY_URL } from 'constants/FilesystemConstants';
+import FilesystemConstants from 'constants/FilesystemConstants';
 
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
@@ -92,7 +92,7 @@ const FileBrowser = React.createClass({
 			loading: true
 		});
 
-		SocketService.post(FILESYSTEM_LIST_URL, { path: path, directories_only: true })
+		SocketService.post(FilesystemConstants.FILESYSTEM_LIST_URL, { path: path, directories_only: true })
 			.then(data => { 
 				this.setState({ 
 					currentDirectory: path,
@@ -155,7 +155,7 @@ const FileBrowser = React.createClass({
 		});
 
 		const newPath = this.state.currentDirectory + directoryName + this._pathSeparator;
-		SocketService.post(FILESYSTEM_DIRECTORY_URL, { path: newPath })
+		SocketService.post(FilesystemConstants.FILESYSTEM_DIRECTORY_URL, { path: newPath })
 			.then(data => this.fetchItems(this.state.currentDirectory))
 			.catch(error => this.setState({ 
 				error: error.message

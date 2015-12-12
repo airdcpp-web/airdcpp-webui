@@ -4,7 +4,7 @@ import React from 'react';
 
 import ValueFormat from 'utils/ValueFormat';
 
-import { HUB_STATS_URL } from 'constants/HubConstants';
+import HubConstants from 'constants/HubConstants';
 
 import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
 
@@ -36,4 +36,4 @@ const HubStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(HubStatisticsPage, HUB_STATS_URL, 'no hubs online', 10);
+export default StatisticsPageDecorator(HubStatisticsPage, HubConstants.HUB_STATS_URL, 'no hubs online', 10);

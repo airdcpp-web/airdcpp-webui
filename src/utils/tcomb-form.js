@@ -1,4 +1,5 @@
-const t = require('tcomb-form');
+import t from 'tcomb-form';
+
 t.form.Form.templates = require('tcomb-form/lib/templates/semantic');
 
 t.Positive = t.refinement(t.Number, function (n) {

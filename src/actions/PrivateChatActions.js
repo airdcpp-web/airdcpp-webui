@@ -1,6 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
-import { PRIVATE_CHAT_SESSIONS_URL, PRIVATE_CHAT_SESSION_URL, MAX_PRIVATE_CHAT_MESSAGES } from 'constants/PrivateChatConstants';
+import PrivateChatConstants from 'constants/PrivateChatConstants';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
@@ -19,21 +19,21 @@ const PrivateChatActions = Reflux.createActions([
 
 PrivateChatActions.fetchSessions.listen(function () {
 	let that = this;
-	SocketService.get(PRIVATE_CHAT_SESSIONS_URL)
+	SocketService.get(PrivateChatConstants.SESSIONS_URL)
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 PrivateChatActions.connectCCPM.listen(function (cid) {
 	let that = this;
-	SocketService.post(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/ccpm')
+	SocketService.post(PrivateChatConstants.SESSION_URL + '/' + cid + '/ccpm')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 PrivateChatActions.disconnectCCPM.listen(function (cid) {
 	let that = this;
-	SocketService.delete(PRIVATE_CHAT_SESSION_URL + '/' + cid + '/ccpm')
+	SocketService.delete(PrivateChatConstants.SESSION_URL + '/' + cid + '/ccpm')
 		.then(that.completed)
 		.catch(that.failed);
 });
@@ -46,7 +46,7 @@ PrivateChatActions.createSession.listen(function (location, user) {
 	}
 
 	let that = this;
-	SocketService.post(PRIVATE_CHAT_SESSION_URL, {
+	SocketService.post(PrivateChatConstants.SESSION_URL, {
 		user: {
 			cid: user.cid,
 			hub_url: user.hub_url,
@@ -66,7 +66,7 @@ PrivateChatActions.createSession.failed.listen(function (error) {
 
 PrivateChatActions.removeSession.listen(function (cid) {
 	let that = this;
-	SocketService.delete(PRIVATE_CHAT_SESSION_URL + '/' + cid)
+	SocketService.delete(PrivateChatConstants.SESSION_URL + '/' + cid)
 		.then(that.completed)
 		.catch(that.failed.bind(that, cid));
 });
@@ -75,4 +75,4 @@ PrivateChatActions.removeSession.failed.listen(function (cid, error) {
 	NotificationActions.apiError('Failed to remove chat session', error, cid);
 });
 
-export default ChatActionDecorator(PrivateChatActions, PRIVATE_CHAT_SESSION_URL, MAX_PRIVATE_CHAT_MESSAGES);
+export default ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL, PrivateChatConstants.MAX_MESSAGES);

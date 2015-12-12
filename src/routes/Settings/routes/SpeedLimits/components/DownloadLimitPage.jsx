@@ -1,5 +1,4 @@
 import React from 'react';
-//import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 import AutoValuePanel from './AutoValuePanel';
 

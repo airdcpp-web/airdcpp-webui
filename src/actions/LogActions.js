@@ -1,6 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
-import { LOG_GET_URL, LOG_CLEAR_URL, LOG_READ_URL, MAX_LOG_MESSAGES } from 'constants/LogConstants';
+import LogConstants from 'constants/LogConstants';
 import SocketService from 'services/SocketService';
 
 export const LogActions = Reflux.createActions([
@@ -12,21 +12,21 @@ export const LogActions = Reflux.createActions([
 
 LogActions.fetchMessages.listen(function () {
 	let that = this;
-	return SocketService.get(LOG_GET_URL + '/' + MAX_LOG_MESSAGES)
+	return SocketService.get(LogConstants.LOG_GET_URL + '/' + LogConstants.MAX_LOG_MESSAGES)
 		.then(that.completed)
 		.catch(this.failed);
 });
 
 LogActions.clear.listen(function () {
 	//let that = this;
-	return SocketService.post(LOG_CLEAR_URL);
+	return SocketService.post(LogConstants.LOG_CLEAR_URL);
 	//	.then(that.completed)
 	//	.catch(this.failed);
 });
 
 LogActions.messagesRead.listen(function () {
 	//let that = this;
-	return SocketService.post(LOG_READ_URL);
+	return SocketService.post(LogConstants.LOG_READ_URL);
 	//	.then(that.completed)
 	//	.catch(this.failed);
 });

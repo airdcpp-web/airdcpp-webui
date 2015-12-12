@@ -1,4 +1,11 @@
 const LOG_MODULE_URL = 'log/v0';
+
+export const SeverityEnum = {
+	INFO: 0,
+	WARNING: 1,
+	ERROR: 2,
+};
+
 export default {
 	LOG_MODULE_URL: LOG_MODULE_URL,
 	LOG_GET_URL: LOG_MODULE_URL + '/messages',
@@ -9,10 +16,4 @@ export default {
 	LOG_READ: 'log_read',
 	LOG_CLEARED: 'log_cleared',
 	MAX_LOG_MESSAGES: 50,
-
-	SeverityEnum: {
-		INFO: 0,
-		WARNING: 1,
-		ERROR: 2
-	},
 };

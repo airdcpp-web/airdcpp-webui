@@ -1,13 +1,11 @@
-import ViewStoreMixin from 'mixins/ViewStoreMixin';
 import Reflux from 'reflux';
 
-import { SHARE_ROOT_MODULE_URL } from 'constants/ShareRootConstants';
+import ViewStoreMixin from 'mixins/ViewStoreMixin';
+import ShareRootConstants from 'constants/ShareRootConstants';
+
 
 export default Reflux.createStore({
 	_viewName: 'share_root_view',
-	_apiUrl: SHARE_ROOT_MODULE_URL,
+	_apiUrl: ShareRootConstants.MODULE_URL,
 	mixins: [ ViewStoreMixin('path') ],
-	init: function () {
-		
-	},
 });

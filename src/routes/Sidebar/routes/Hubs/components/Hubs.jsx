@@ -6,8 +6,6 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import HubSessionStore from 'stores/HubSessionStore';
 import HubActions from 'actions/HubActions';
 
-//import CountLabel from 'components/CountLabel';
-//import LabelInfo from 'utils/LabelInfo';
 import TypeConvert from 'utils/TypeConvert';
 
 import { ActionMenu } from 'components/Menu';

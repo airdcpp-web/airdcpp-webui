@@ -147,7 +147,7 @@ const Form = React.createClass({
 
 				settings[valueKey] = value[valueKey];
 				return settings;
-			}.bind(this), {}); 
+			}, {}); 
 
 			return this.props.onSave(changedSettingArray).catch(this._handleError);
 		}

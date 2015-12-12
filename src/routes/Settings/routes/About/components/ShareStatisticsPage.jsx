@@ -5,7 +5,7 @@ import React from 'react';
 import Moment from 'moment';
 import ValueFormat from 'utils/ValueFormat';
 
-import { SHARE_STATS_URL } from 'constants/ShareConstants';
+import ShareConstants from 'constants/ShareConstants';
 
 import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
 
@@ -27,4 +27,4 @@ const ShareStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(ShareStatisticsPage, SHARE_STATS_URL, 'no files shared', 60);
+export default StatisticsPageDecorator(ShareStatisticsPage, ShareConstants.SHARE_STATS_URL, 'no files shared', 60);

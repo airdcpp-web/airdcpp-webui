@@ -11,11 +11,10 @@ import { CheckboxCell, ActionCell } from 'components/Cell';
 import ConnectStateCell from './ConnectStateCell';
 
 import { TableActionMenu } from 'components/Menu';
-
-//import Button from 'components/semantic/Button';
 import ActionButton from 'components/ActionButton';
 
 import '../style.css';
+
 
 const PasswordCell = ({ cellData, rowData }) => (
 	<TableActionMenu 

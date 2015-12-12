@@ -3,7 +3,7 @@ import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import SocketService from 'services/SocketService';
-import { SETTING_ITEMS_URL } from 'constants/SettingConstants';
+import SettingConstants from 'constants/SettingConstants';
 
 
 const AutoValuePanel = React.createClass({
@@ -16,7 +16,7 @@ const AutoValuePanel = React.createClass({
 			return null;
 		}
 
-		return SocketService.get(SETTING_ITEMS_URL, { 
+		return SocketService.post(SettingConstants.ITEMS_INFO_URL, { 
 			keys: Object.keys(this.props.formItems).slice(1), 
 			force_auto_values: true 
 		});
