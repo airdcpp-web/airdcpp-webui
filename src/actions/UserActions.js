@@ -5,16 +5,20 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
+
 
 export const UserActions = Reflux.createActions([
 	 { 'message': { 
 		asyncResult: true, 
 		displayName: 'Send message', 
+		access: AccessConstants.PRIVATE_CHAT_EDIT, 
 		icon: IconConstants.MESSAGE },
 	},
 	{ 'browse': { 
 		asyncResult: true,	
 		displayName: 'Browse share', 
+		access: AccessConstants.FILELISTS_EDIT, 
 		icon: IconConstants.FILELIST },
 	},
 ]);

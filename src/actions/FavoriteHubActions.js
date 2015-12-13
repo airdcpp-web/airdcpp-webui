@@ -1,33 +1,38 @@
 'use strict';
 import Reflux from 'reflux';
 
-import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
+import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import OverlayConstants from 'constants/OverlayConstants';
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
 
 import History from 'utils/History';
 
+
 export const FavoriteHubActions = Reflux.createActions([
-	{ 'create': { 
-		asyncResult: true, 
-		children: [ 'saved' ], 
+	{ 'create': {
+		asyncResult: true,
+		children: [ 'saved' ],
 		displayName: 'Add new',
+		access: AccessConstants.FAVORITE_HUBS_EDIT,
 		icon: IconConstants.CREATE },
 	},
 	{ 'edit': { 
-		asyncResult: true, 
-		children: [ 'saved' ], 
-		displayName: 'Edit', 
+		asyncResult: true,
+		children: [ 'saved' ],
+		displayName: 'Edit',
+		access: AccessConstants.FAVORITE_HUBS_EDIT,
 		icon: IconConstants.EDIT },
 	},
-	{ 'remove': { 
-		asyncResult: true, 
-		children: [ 'confirmed' ], 
-		displayName: 'Remove', 
+	{ 'remove': {
+		asyncResult: true,
+		children: [ 'confirmed' ],
+		displayName: 'Remove',
+		access: AccessConstants.FAVORITE_HUBS_EDIT,
 		icon: IconConstants.REMOVE },
 	},
 	{ 'update': { 

@@ -5,16 +5,20 @@ import History from 'utils/History';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
+
 
 export const DownloadActions = Reflux.createActions([
 	{ 'download': { 
 		asyncResult: true,	
 		displayName: 'Download', 
+		access: AccessConstants.DOWNLOAD, 
 		icon: IconConstants.DOWNLOAD } 
 	},
 	{ 'downloadTo': { 
 		asyncResult: true,	
-		displayName: 'Download to...', 
+		displayName: 'Download to...',
+		access: AccessConstants.DOWNLOAD, 
 		icon: IconConstants.DOWNLOAD_TO } 
 	}
 ]);

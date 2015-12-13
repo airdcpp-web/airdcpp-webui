@@ -9,29 +9,35 @@ import NotificationActions from 'actions/NotificationActions';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
+
 
 const ShareProfileActions = Reflux.createActions([
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Add profile',
+		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.CREATE },
 	},
 	{ 'edit': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
-		displayName: 'Rename profile', 
+		displayName: 'Rename profile',
+		access: AccessConstants.SETTINGS_EDIT,  
 		icon: IconConstants.EDIT },
 	},
 	{ 'default': { 
 		asyncResult: true, 
 		displayName: 'Set as default', 
+		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.DEFAULT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove profile', 
+		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.REMOVE },
 	},
 ]);

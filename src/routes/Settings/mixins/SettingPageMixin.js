@@ -3,6 +3,10 @@ import React from 'react';
 import Promise from 'utils/Promise';
 import { Lifecycle } from 'react-router';
 
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
+
 const SettingPageMixin = function () {
 	const refs = Array.prototype.slice.call(arguments);
 
@@ -58,7 +62,7 @@ const SettingPageMixin = function () {
 		},
 
 		routerWillLeave(nextLocation) {
-			if (this.changedProperties.size > 0) {
+			if (this.changedProperties.size > 0 && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT)) {
 				return 'You have unsaved changes. Are you sure you want to leave?';
 			}
 		},

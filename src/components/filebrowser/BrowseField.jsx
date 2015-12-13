@@ -1,10 +1,14 @@
 import React from 'react';
 import Button from 'components/semantic/Button';
 
-import { FILE_BROWSER_MODAL } from 'constants/OverlayConstants';
+import OverlayConstants from 'constants/OverlayConstants';
 import History from 'utils/History';
 
 import t from 'utils/tcomb-form';
+
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
 
 const BrowseField = t.form.Form.templates.textbox.clone({
 	// override default implementation
@@ -38,10 +42,12 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 					value={locals.value}
 					onChange={onChange}
 				/>
-				<Button
-					caption="Browse"
-					onClick={showBrowseDialog}
-				/>
+				{ LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW) ? (
+					<Button
+						caption="Browse"
+						onClick={showBrowseDialog}
+					/>
+				) : null }
 			</div>
 		);
 	}

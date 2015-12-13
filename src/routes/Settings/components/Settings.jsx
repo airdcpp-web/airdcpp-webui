@@ -3,8 +3,11 @@
 import React from 'react';
 
 import MenuItemLink from 'components/semantic/MenuItemLink';
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
 
 import '../style.css';
+
 
 const Settings = React.createClass({
 	checkChildren(props) {
@@ -30,7 +33,7 @@ const Settings = React.createClass({
 					<MenuItemLink url="/settings/speed-limits" title="Speed and limits"/>
 					<MenuItemLink url="/settings/downloads" title="Downloads"/>
 					<MenuItemLink url="/settings/sharing" title="Sharing"/>
-					<MenuItemLink url="/settings/system" title="System"/>
+					{ LoginStore.hasAccess(AccessConstants.ADMIN) ? <MenuItemLink url="/settings/system" title="System"/> : null }
 					<MenuItemLink url="/settings/about" title="About"/>
 				</div>
 				<div className="section-content">

@@ -6,6 +6,10 @@ import QueueActions from 'actions/QueueActions';
 import TableDropdown from 'components/semantic/TableDropdown';
 import DropdownItem from 'components/semantic/DropdownItem';
 
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
+
 const PriorityMenu = React.createClass({
 	propTypes: {
 		/**
@@ -40,8 +44,13 @@ const PriorityMenu = React.createClass({
 	},
 
 	render: function () {
+		const caption = this.props.itemPrio.str;
+		if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
+			return <span>{ caption }</span>;
+		}
+
 		return (
-			<TableDropdown caption={ this.props.itemPrio.str }>
+			<TableDropdown caption={ caption }>
 				{ Object.keys(PriorityEnum.properties).map((prioKey) => this.getPriorityListItem(PriorityEnum.properties[prioKey])) }
 			</TableDropdown>
 		);

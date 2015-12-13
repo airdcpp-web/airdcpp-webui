@@ -5,11 +5,14 @@ import StorageMixin from 'mixins/StorageMixin';
 import LoginActions from 'actions/LoginActions';
 import SocketActions from 'actions/SocketActions';
 
+import AccessConstants from 'constants/AccessConstants';
+
 
 export default Reflux.createStore({
 	listenables: LoginActions,
 	mixins: [ StorageMixin ],
 	init: function () {
+		this._permissions = this.loadProperty('permissions');
 		this._token = this.loadProperty('auth_token');
 		this._user = this.loadProperty('web_user');
 		this._systemInfo = this.loadProperty('system_info');
@@ -36,12 +39,14 @@ export default Reflux.createStore({
 	},
 
 	onLoginCompleted(res) {
+		this._permissions = res.permissions;
 		this._token = res.token;
 		this._user = res.user;
 		this._systemInfo = res.system;
 		this._lastError = null;
 		this._socketAuthenticated = true;
 
+		this.saveProperty('permissions', res.permissions);
 		this.saveProperty('auth_token', res.token);
 		this.saveProperty('web_user', res.user);
 		this.saveProperty('system_info', this._systemInfo);
@@ -73,6 +78,9 @@ export default Reflux.createStore({
 		this.trigger(this.getState());
 	},
 
+	hasAccess(access) {
+		return this._permissions.indexOf(access) !== -1 || this._permissions.indexOf(AccessConstants.ADMIN) !== -1;
+	},
 
 	onSocketDisconnected(socket, error, code) {
 		this._socketAuthenticated = false;

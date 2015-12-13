@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LoginStore from 'stores/LoginStore';
 import DropdownItem from 'components/semantic/DropdownItem';
 
 export default function (Component) {
@@ -33,8 +34,16 @@ export default function (Component) {
 
 		filterItem(actionId) {
 			const action = this.props.actions[actionId];
-			if (action.filter) {
-				return action.filter(this.props.itemData);
+			if (!action) {
+				return true;
+			}
+
+			if (action.filter && !action.filter(this.props.itemData)) {
+				return false;
+			}
+
+			if (action.access && !LoginStore.hasAccess(action.access)) {
+				return false;
 			}
 
 			return true;
@@ -64,10 +73,22 @@ export default function (Component) {
 				ids = Object.keys(actions);
 			}
 
+			ids = ids.filter(this.filterItem);
+			if (ids.length === 0 || ids.every(id => id === 'divider')) {
+				if (this.props.button) {
+					return null;
+				}
+
+				return (
+					<span>
+						{ this.props.caption }
+					</span>
+				);
+			}
+
 			return (
 				<Component {...other}>
 					{ ids
-						.filter(this.filterItem)
 						.map(this.getItem) }
 				</Component>
 			);

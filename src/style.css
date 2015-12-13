@@ -46,7 +46,8 @@ section#container-main, .login-grid, .main-layout, #authenticated-app, .pusher {
 	margin-right: 10px;
 }
 
-.layout.header .ui.dropdown {
+.layout.header .content > div,
+.layout.header .content > span {
 	display: flex;
 }
 

@@ -5,16 +5,20 @@ import SocketService from 'services/SocketService';
 
 import ShareConstants from 'constants/ShareConstants';
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
+
 
 const ShareActions = Reflux.createActions([
 	{ 'refresh': { 
 		asyncResult: true,
 		displayName: 'Refresh all',
+		access: AccessConstants.SETTINGS_EDIT,
 		icon: IconConstants.REFRESH }
 	},
 	{ 'refreshPaths': { 
 		asyncResult: true,
 		displayName: 'Refresh directory',
+		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.REFRESH }
 	},
 ]);

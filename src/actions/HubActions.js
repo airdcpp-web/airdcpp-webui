@@ -9,6 +9,8 @@ import NotificationActions from 'actions/NotificationActions';
 import ChatActionDecorator from 'decorators/ChatActionDecorator';
 
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
+
 
 const HubActions = Reflux.createActions([
 	{ 'fetchSessions': { asyncResult: true } },
@@ -18,11 +20,13 @@ const HubActions = Reflux.createActions([
 	{ 'password': { asyncResult: true } },
 	{ 'reconnect': { 
 		asyncResult: true,
-		displayName: 'Reconnect', 
+		displayName: 'Reconnect',
+		access: AccessConstants.HUBS_EDIT, 
 		icon: IconConstants.REFRESH } 
 	},
 	{ 'favorite': { 
 		asyncResult: true,
+		access: AccessConstants.HUBS_EDIT, 
 		displayName: 'Add to favorites', 
 		icon: IconConstants.FAVORITE } 
 	},

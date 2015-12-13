@@ -5,39 +5,45 @@ import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 import { PriorityEnum } from 'constants/QueueConstants';
+import AccessConstants from 'constants/AccessConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
 export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
-		asyncResult: true, 
+		asyncResult: true,
+		access: AccessConstants.QUEUE_EDIT, 
 		displayName: 'Search for alternates', 
-		icon: IconConstants.SEARCH } 
+		icon: IconConstants.SEARCH }
 	},
 	{ 'setBundlePriority': { 
-		asyncResult: true, 
+		asyncResult: true,
 		displayName: 'Set priority' } 
 	},
 	{ 'removeBundle': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
-		displayName: 'Remove', 
+		displayName: 'Remove',
+		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.REMOVE } 
 	},
 	{ 'removeFinished': { 
-		asyncResult: true, 
+		asyncResult: true,
+		access: AccessConstants.QUEUE_EDIT, 
 		displayName: 'Remove finished bundles', 
 		icon: IconConstants.REMOVE } 
 	},
 	{ 'pause': { 
 		asyncResult: true, 
-		displayName: 'Pause all', 
+		displayName: 'Pause all',
+		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.PAUSE } 
 	},
 	{ 'resume': { 
 		asyncResult: true, 
-		displayName: 'Resume all', 
+		displayName: 'Resume all',
+		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.PLAY } 
 	},
 ]);

@@ -49,9 +49,12 @@
   align-items: center;
 }
 
-.session-container.vertical .session-header > div {
+.session-container.vertical .session-header > div,
+.session-container.vertical .session-header > span {
   padding-left: 5px;
   max-width: 90%;
+  padding: .92857143em 1.14285714em;
+  line-height: 1;
 }
 
 .session-container.vertical .session-header > div:before {

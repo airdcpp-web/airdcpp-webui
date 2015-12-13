@@ -18,17 +18,11 @@ LogActions.fetchMessages.listen(function () {
 });
 
 LogActions.clear.listen(function () {
-	//let that = this;
 	return SocketService.post(LogConstants.LOG_CLEAR_URL);
-	//	.then(that.completed)
-	//	.catch(this.failed);
 });
 
 LogActions.messagesRead.listen(function () {
-	//let that = this;
 	return SocketService.post(LogConstants.LOG_READ_URL);
-	//	.then(that.completed)
-	//	.catch(this.failed);
 });
 
 export default LogActions;

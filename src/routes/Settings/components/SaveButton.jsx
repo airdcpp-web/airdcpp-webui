@@ -1,6 +1,10 @@
 import React from 'react';
 import Button from 'components/semantic/Button';
 
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
+
 const SaveButton = React.createClass({
 	propTypes: {
 		/**
@@ -26,13 +30,20 @@ const SaveButton = React.createClass({
 	},
 
 	render: function () {
-		const title = this.props.hasChanges ? 'Save changes' : 'No unsaved changes';
+		let title;
+		let hasAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+		if (!hasAccess) {
+			title = 'No save permission';
+		} else {
+			title = this.props.hasChanges ? 'Save changes' : 'No unsaved changes';
+		}
+
 		return (
 			<Button 
 				caption={ title }
-				icon={ (this.props.hasChanges ? 'green checkmark' : null) } 
+				icon={ (hasAccess && this.props.hasChanges ? 'green checkmark' : null) } 
 				loading={ this.state.saving } 
-				disabled={ !this.props.hasChanges }
+				disabled={ !this.props.hasChanges || !hasAccess }
 				onClick={ this.onClick }
 			/>
 		);
