@@ -107,13 +107,15 @@ const Form = React.createClass({
 		this.setState({ formValue: newValue });
 	},
 
-	onFieldChanged(value, valueKey) {
+	onFieldChanged(value, valueKey, kind) {
 		// Make sure that we have the converted value
 		const result = this.refs.form.getComponent(valueKey).validate();
-		value[valueKey] = result.value;
+
+		const key = valueKey[0];
+		value[key] = result.value;
 
 		if (this.props.onFieldChanged) {
-			const promise = this.props.onFieldChanged(valueKey, value, !deepEqual(this.sourceData[valueKey].value, value[valueKey]));
+			const promise = this.props.onFieldChanged(key, value, !deepEqual(this.sourceData[key].value, value[key]));
 			if (promise) {
 				promise
 					.then(this.onUserSettingsReceived.bind(this, value))

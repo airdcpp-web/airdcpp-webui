@@ -31,6 +31,15 @@ export default function (Component) {
 			return nextProps.itemData !== this.props.itemData;
 		},
 
+		filterItem(actionId) {
+			const action = this.props.actions[actionId];
+			if (action.filter) {
+				return action.filter(this.props.itemData);
+			}
+
+			return true;
+		},
+
 		getItem(actionId) {
 			if (actionId === 'divider') {
 				// TODO: support multiple dividers
@@ -57,7 +66,9 @@ export default function (Component) {
 
 			return (
 				<Component {...other}>
-					{ ids.map(this.getItem) }
+					{ ids
+						.filter(this.filterItem)
+						.map(this.getItem) }
 				</Component>
 			);
 		},

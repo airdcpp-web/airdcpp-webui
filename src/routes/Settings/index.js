@@ -10,6 +10,7 @@ module.exports = {
 				require('./routes/Downloads'),
 				require('./routes/Sharing'),
 				require('./routes/About'),
+				require('./routes/System'),
 				{
 					path: '**/**(/**)/browse',
 					component: require('components/filebrowser/FileBrowserDialog').default,

@@ -16,7 +16,6 @@ export const ConnectionModeEnum = {
 
 export default {
 	SETTING_MODULE_URL: SETTING_MODULE_URL,
-	SETTING_ITEMS_URL: SETTING_MODULE_URL + '/items/get',
 
 	ITEMS_GET_URL: SETTING_MODULE_URL + '/items/get',
 	ITEMS_SET_URL: SETTING_MODULE_URL + '/items/set',

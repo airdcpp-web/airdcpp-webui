@@ -13,16 +13,10 @@ import RefreshCell from './RefreshCell';
 import '../style.css';
 
 const ShareDirectoryLayout = React.createClass({
-	_handleAddDirectory() {
-		ShareRootActions.create();
-	},
-
 	render() {
 		return (
 			<VirtualTable
-				defaultSortProperty="path"
-				store={ShareRootStore}
-				defaultSortAscending={true}
+				store={ ShareRootStore }
 				customFilter={ <ProfileDropdown/> }
 			>
 				<Column
