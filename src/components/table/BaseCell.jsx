@@ -73,9 +73,21 @@ export const HeaderCell = ({ onClick, label, ...props }) => (
 	</Cell>
 );
 
+const getCellContent = (cellData) => {
+	if (typeof cellData === 'object') {
+		return Array.isArray(cellData) ? cellData.length : cellData.str;
+	}
+
+	if (typeof cellData === 'boolean') {
+		return cellData ? 'Yes' : 'No';
+	}
+
+	return cellData;
+};
+
 // Default cell
 export const TextCell = ({ cellData, ...props }) => (
 	<span className="plain text cell">
-		{ (typeof cellData === 'object') ? (Array.isArray(cellData) ? cellData.length : cellData.str) : cellData }
+		{ getCellContent(cellData) }
 	</span>
 );

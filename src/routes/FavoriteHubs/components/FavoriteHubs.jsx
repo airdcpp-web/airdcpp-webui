@@ -13,6 +13,9 @@ import ConnectStateCell from './ConnectStateCell';
 import { TableActionMenu } from 'components/Menu';
 import ActionButton from 'components/ActionButton';
 
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
 import '../style.css';
 
 
@@ -50,6 +53,7 @@ const FavoriteHubs = React.createClass({
 			<ActionButton action={ FavoriteHubActions.create }/>
 		);
 
+		const editAccess = LoginStore.hasAccess(AccessConstants.ACCESS_HUBS_EDIT);
 		return (
 			<VirtualTable
 				rowClassNameGetter={ this._rowClassNameGetter }
@@ -60,11 +64,11 @@ const FavoriteHubs = React.createClass({
 					name="State"
 					width={45}
 					columnKey="connect_state"
-					cell={ 
+					cell={ editAccess ? (
 						<ConnectStateCell
 							location={ this.props.location }
 						/> 
-					}
+					) : null }
 					flexGrow={3}
 				/>
 				<Column
@@ -85,9 +89,12 @@ const FavoriteHubs = React.createClass({
 					name="Auto connect"
 					width={65}
 					columnKey="auto_connect"
-					cell={
-						<CheckboxCell onChange={ this.onChangeAutoConnect } type="toggle"/>
-					}
+					cell={ editAccess ? (
+							<CheckboxCell 
+								onChange={ this.onChangeAutoConnect } 
+								type="toggle"
+							/>
+					) : null }
 				/>
 				<Column
 					name="Share profile"

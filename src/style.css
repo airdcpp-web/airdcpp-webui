@@ -46,9 +46,12 @@ section#container-main, .login-grid, .main-layout, #authenticated-app, .pusher {
 	margin-right: 10px;
 }
 
-.layout.header .content > div,
-.layout.header .content > span {
+.layout.header .content > div {
 	display: flex;
+}
+
+.layout.header .content > span {
+	display: block;
 }
 
 .header.new {

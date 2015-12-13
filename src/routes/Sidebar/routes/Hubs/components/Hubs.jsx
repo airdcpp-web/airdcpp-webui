@@ -7,6 +7,7 @@ import HubSessionStore from 'stores/HubSessionStore';
 import HubActions from 'actions/HubActions';
 
 import TypeConvert from 'utils/TypeConvert';
+import AccessConstants from 'constants/AccessConstants';
 
 import { ActionMenu } from 'components/Menu';
 import { HubIconFormatter } from 'utils/IconFormat';
@@ -66,6 +67,7 @@ const Hubs = React.createClass({
 				location={this.props.location} 
 				items={this.state.hubSessions} 
 				newButtonCaption="Connect"
+				editAccess={ AccessConstants.HUBS_EDIT }
 
 				unreadInfoStore={ HubSessionStore }
 				{ ...ItemHandler }

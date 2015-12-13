@@ -2,6 +2,7 @@ import React from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
 
+import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 
@@ -175,13 +176,14 @@ const FileBrowser = React.createClass({
 			return <Loader text="Loading items"/>;
 		}
 
+		const hasEditAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT);
 		const rootName = this._isWindows ? 'Computer' : 'Root';
 		return (
 			<div className="file-browser">
 				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
 				<PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
 				<PathList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
-				{ this.state.currentDirectory ? <CreateDirectory handleAction={this._createDirectory}/> : null }
+				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
 	);}
 });

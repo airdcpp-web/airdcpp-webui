@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import Button from 'components/semantic/Button';
 
 import OverlayConstants from 'constants/OverlayConstants';
@@ -32,8 +34,14 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 			setTimeout(_input.focus());
 		};
 
+		const hasAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW);
+		const fieldStyle = classNames(
+			'ui fluid input field',
+			{ 'action': hasAccess },
+		);
+
 		return (
-			<div className="ui action fluid input field">
+			<div className={ fieldStyle }>
 				<input
 					ref={ input => { 
 						_input = input;
@@ -42,7 +50,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 					value={locals.value}
 					onChange={onChange}
 				/>
-				{ LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW) ? (
+				{ hasAccess ? (
 					<Button
 						caption="Browse"
 						onClick={showBrowseDialog}

@@ -10,6 +10,9 @@ import '../sessions.css';
 
 import SessionNewButton from './SessionNewButton';
 import SessionMenuItem from './SessionMenuItem';
+import Message from 'components/semantic/Message';
+
+import LoginStore from 'stores/LoginStore';
 import BrowserUtils from 'utils/BrowserUtils';
 
 
@@ -84,6 +87,11 @@ const SessionLayout = React.createClass({
 		 * Set to false if the side menu should never be shown (the session will use all width that is available)  
 		 */
 		disableSideMenu: React.PropTypes.bool,
+
+		/**
+		 * AccessConstant defining whether the user has edit permission 
+		 */
+		editAccess: React.PropTypes.string.isRequired,
 	},
 
 	contextTypes: {
@@ -214,6 +222,8 @@ const SessionLayout = React.createClass({
 	},
 
 	render() {
+		const hasEditAccess = LoginStore.hasAccess(this.props.editAccess);
+
 		// Menu items
 		const menuItems = this.props.items.map(this.getMenuItem);
 
@@ -227,17 +237,19 @@ const SessionLayout = React.createClass({
 			});
 		} else if (this.props.activeId) {
 			children = <Loader/>;
+		} else if (!hasEditAccess) {
+			return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
 		}
 
 		// New session button
-		const newButton = (
+		const newButton = hasEditAccess ? (
 			<SessionNewButton 
 				key="new-button" 
 				title={this.props.newButtonCaption} 
 				location={this.props.location} 
 				url={this.getNewUrl()} 
 			/>
-		);
+		) : null;
 
 		//const Component = TopMenuLayout;
 		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
@@ -246,7 +258,7 @@ const SessionLayout = React.createClass({
 				itemIconGetter={ this.props.itemIconGetter }
 				itemHeaderGetter={ this.props.itemHeaderGetter }
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
-				itemCloseHandler={ () => this.props.itemCloseHandler(this.state.activeItem) }
+				itemCloseHandler={ hasEditAccess ? () => this.props.itemCloseHandler(this.state.activeItem) : null }
 				activeItem={ this.state.activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
 

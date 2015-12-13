@@ -9,6 +9,7 @@ import { Column } from 'fixed-data-table';
 
 import AccessConstants from 'constants/AccessConstants';
 
+
 export const PermissionsCell = ({ cellData }) => (
 	<span className="plain permissions cell">
 		{ cellData.indexOf(AccessConstants.ADMIN) !== -1 ? 'Administrator' : cellData.length }

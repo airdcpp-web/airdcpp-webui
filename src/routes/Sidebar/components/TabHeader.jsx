@@ -20,11 +20,12 @@ const TabHeader = React.createClass({
 			<LayoutHeader
 				{ ...other }
 				className="tab-header"
-				component={
-					<Button
-						caption="Close"
-						onClick={this.props.buttonClickHandler}
-					/>
+				component={ buttonClickHandler ? (
+						<Button
+							caption="Close"
+							onClick={this.props.buttonClickHandler}
+						/>
+					) : null
 				}
 			/>
 		);

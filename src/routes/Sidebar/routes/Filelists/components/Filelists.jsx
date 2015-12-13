@@ -7,7 +7,10 @@ import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerD
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import FilelistActions from 'actions/FilelistActions';
 
+import AccessConstants from 'constants/AccessConstants';
+
 import '../style.css';
+
 
 const ItemHandler = {
 	itemLabelGetter(session) {
@@ -32,6 +35,8 @@ const Filelists = React.createClass({
 				items={this.state.filelists}
 				newButtonCaption="Open new"
 				disableSideMenu={true}
+				editAccess={ AccessConstants.FILELISTS_EDIT }
+
 				{ ...UserItemHandlerDecorator(ItemHandler, [ 'message' ]) }
 			>
 				{ this.props.children }

@@ -17,6 +17,10 @@ import TypeConvert from 'utils/TypeConvert';
 import Accordion from 'components/semantic/Accordion';
 import FileUtils from 'utils/FileUtils';
 
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
+
 const MenuItem = ({ active, list, title, onClick }) => (
 	<a className={ 'item ' + (active ? 'active' : '')	} onClick={ onClick }>
 		{ title }
@@ -184,7 +188,7 @@ const DownloadDialog = React.createClass({
 	},
 
 	render: function () {
-		const names = [
+		const sections = [
 			{
 				name: 'Previous',
 				key: 'history',
@@ -201,13 +205,17 @@ const DownloadDialog = React.createClass({
 				name: 'Dupes',
 				key: 'dupes',
 				list: this.state.dupe_paths
-			}, {
-				name: 'Browse',
-				key: 'browse',
 			}
 		];
 
-		const menuItems = names.map(item => {
+		if (LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW)) {
+			sections.push({
+				name: 'Browse',
+				key: 'browse',
+			});
+		}
+
+		const menuItems = sections.map(item => {
 			return (
 				<MenuItem key={ item.key } 
 					title={item.name} 

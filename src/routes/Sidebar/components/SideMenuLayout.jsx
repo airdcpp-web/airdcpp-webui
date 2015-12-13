@@ -17,9 +17,9 @@ const SideMenuLayout = React.createClass({
 			itemCloseHandler, location 
 		} = this.props;
 
-		const newButton = React.cloneElement(this.props.newButton, { 
+		const newButton = this.props.newButton ? React.cloneElement(this.props.newButton, { 
 			className: this.props.newButton.props.className + 'ui fluid button' 
-		});
+		}) : null;
 
 		return (
 			<div className="ui grid session-container horizontal">

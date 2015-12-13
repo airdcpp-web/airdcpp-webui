@@ -2,28 +2,30 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
+import History from 'utils/History';
 
 import OverlayConstants from 'constants/OverlayConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
-
-import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
+import AccessConstants from 'constants/AccessConstants';
 
 const ShareRootActions = Reflux.createActions([
 	{ 'create': { 
 		displayName: 'Add directory',
+		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.CREATE },
 	},
 	{ 'edit': { 
-		displayName: 'Edit directory', 
+		displayName: 'Edit directory',
+		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.EDIT },
 	},
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
-		displayName: 'Remove directory', 
+		displayName: 'Remove directory',
+		access: AccessConstants.SETTINGS_EDIT,
 		icon: IconConstants.REMOVE },
 	},
 ]);

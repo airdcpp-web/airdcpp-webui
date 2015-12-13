@@ -7,6 +7,8 @@ import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerD
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
+import AccessConstants from 'constants/AccessConstants';
+
 
 const ItemHandler = {
 	itemCloseHandler(session) {
@@ -27,6 +29,8 @@ const Messages = React.createClass({
 				items={this.state.chatSessions}
 				newButtonCaption="New session"
 				unreadInfoStore={ PrivateChatSessionStore }
+				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
+
 				{ ...UserItemHandlerDecorator(ItemHandler, [ 'browse' ]) }
 			>
 				{ this.props.children }
