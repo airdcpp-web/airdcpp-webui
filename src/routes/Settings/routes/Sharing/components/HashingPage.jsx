@@ -2,6 +2,8 @@ import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
+import HashDatabaseLayout from './HashDatabaseLayout';
+
 import t from 'utils/tcomb-form';
 
 const Entry = {
@@ -19,6 +21,8 @@ const HashingPage = React.createClass({
 					ref="form"
 					formItems={Entry}
 				/>
+
+				<HashDatabaseLayout/>
 			</div>
 		);
 	}

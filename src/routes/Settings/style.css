@@ -40,6 +40,15 @@
   margin-top: 0px;
 }
 
+.settings-layout h3,
+.form .header {
+  /*color: #2185D0!important;*/
+  margin-bottom: 20px;
+}
+
+.settings-layout h4 {
+  margin-top: 15px;
+}
 
 .settings-layout .virtual-table {
   height: calc(100vh - 400px);

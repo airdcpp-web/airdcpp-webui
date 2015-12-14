@@ -29,6 +29,7 @@ const CheckBox = React.createClass({
 		type: React.PropTypes.string,
 
 		disabled: React.PropTypes.bool,
+		floating: React.PropTypes.bool,
 	},
 
 	componentDidMount() {
@@ -54,11 +55,12 @@ const CheckBox = React.createClass({
 	},
 
 	render: function () {
-		const { className, checked, caption, type, disabled } = this.props;
+		const { className, checked, caption, type, disabled, floating } = this.props;
 
 		const checkboxStyle = classNames(
 			'ui checkbox',
 			{ 'disabled': disabled },
+			{ 'floating': floating },
 			className,
 			type,
 		);

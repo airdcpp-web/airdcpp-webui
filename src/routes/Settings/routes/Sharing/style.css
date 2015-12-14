@@ -3,3 +3,11 @@
 	justify-content: space-between;
 	margin-bottom: 20px;
 }
+
+.hashing-settings .grid {
+	padding: 10px 0px 15px 0px;
+}
+
+.hashing-settings .grid .row {
+	padding: 5px 0px;
+}
