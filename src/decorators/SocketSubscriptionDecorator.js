@@ -13,7 +13,7 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 	};
 
 	const removeSocketListeners = () => { 
-		socketSubscriptions.forEach(f => f());
+		socketSubscriptions.forEach(f => f(LoginStore.socketAuthenticated));
 		socketSubscriptions = [];
 	};
 

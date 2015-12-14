@@ -70,15 +70,15 @@ export default Reflux.createStore({
 
 		this._apiSubscriptions[subscriptionId]++;
 
-		return () => this._removeSocketListener(subscriptionUrl, subscriptionId, callback);
+		return (socketAuthenticated) => this._removeSocketListener(subscriptionUrl, subscriptionId, callback, socketAuthenticated);
 	},
 
-	_removeSocketListener(subscriptionUrl, subscriptionId, callback) {
+	_removeSocketListener(subscriptionUrl, subscriptionId, callback, socketAuthenticated) {
 		this._apiSubscriptions[subscriptionId]--;
 		this._apiEmitter.removeListener(subscriptionId, callback);
 
 		if (this._apiSubscriptions[subscriptionId] === 0) {
-			if (this._socket) {
+			if (this._socket && socketAuthenticated) {
 				SocketService.delete(subscriptionUrl)
 					.catch(error => console.error('Failed to remove socket listener', subscriptionUrl, subscriptionId, error));
 			}
