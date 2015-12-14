@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import classNames from 'classnames';
 
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import SettingPage from './SettingPage';
@@ -66,6 +67,12 @@ const GridLayout = React.createClass({
 			return null;
 		}
 
+		const contentClassname = classNames(
+			'thirteen wide stretched column content-column',
+			{ 'full-width': currentMenuItem.fullWidth },
+			this.props.id + ' ' + currentMenuItem.url,
+		);
+
 		return (
 			<div className={ 'ui segment grid settings-grid-layout ' + this.props.id }>
 				<div className="three wide column menu-column">
@@ -83,7 +90,7 @@ const GridLayout = React.createClass({
 						: null) }
 					</div>
 				</div>
-				<div className={ 'thirteen wide stretched column content-column ' + this.props.id + ' ' + currentMenuItem.url }>
+				<div className={ contentClassname }>
 					<SettingPage 
 						saveable={ this.props.saveable && !currentMenuItem.noSave }
 						sectionId={ currentMenuItem.url } 

@@ -6,7 +6,7 @@ import GridLayout from 'routes/Settings/components/GridLayout';
 const Sharing = React.createClass({
 	render() {
 		const menuItems = [
-			{ title: 'Directories', url: 'directories', noSave: true },
+			{ title: 'Directories', url: 'directories', noSave: true, fullWidth: true },
 			{ title: 'Share profiles', url: 'profiles', noSave: true },
 			{ title: 'Refresh options', url: 'refresh-options' },
 		];

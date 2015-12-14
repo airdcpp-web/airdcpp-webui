@@ -11,7 +11,7 @@ const WebUsersPage = React.createClass({
 	render() {
 		return (
 			<div className="web-users-settings">
-				<div className="actions">
+				<div className="table-actions">
 					<ActionButton action={ WebUserActions.create } args={ [ this.props.location ] }/>
 				</div>
 				<WebUserLayout className="user-layout" location={ this.props.location }/>

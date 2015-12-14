@@ -6,7 +6,7 @@ import GridLayout from 'routes/Settings/components/GridLayout';
 const System = React.createClass({
 	render() {
 		const menuItems = [
-			{ title: 'Users', url: 'users', noSave: true },
+			{ title: 'Users', url: 'users', noSave: true, fullWidth: true },
 		];
 
 		/*const advancedMenuItems = [

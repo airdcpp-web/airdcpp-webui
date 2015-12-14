@@ -1,9 +1,3 @@
-.share-directories-settings .actions {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
-}
-
 .hashing-settings .grid {
 	padding: 10px 0px 15px 0px;
 }

@@ -12,19 +12,26 @@ const Entry = {
 	share_report_duplicates: t.Bool,
 	share_report_skiplist: t.Bool,
 	share_max_size: t.Positive,
+};
 
+const Skiplist = {
 	share_skiplist: t.maybe(t.Str),
 	share_skiplist_regex: t.Bool,
 };
 
 const SharingOptionsPage = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
+	mixins: [ SettingPageMixin('form', 'skiplist') ],
 	render() {
 		return (
 			<div className="sharing-options-settings">
 				<SettingForm
 					ref="form"
 					formItems={Entry}
+				/>
+				<SettingForm
+					title="Skiplist"
+					ref="skiplist"
+					formItems={Skiplist}
 				/>
 			</div>
 		);

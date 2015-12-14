@@ -12,7 +12,7 @@ const ShareDirectoriesPage = React.createClass({
 	render() {
 		return (
 			<div className="share-directories-settings">
-				<div className="actions">
+				<div className="table-actions">
 					<ActionButton action={ ShareRootActions.create } args={ [ this.props.location ] }/>
 					<ActionButton action={ ShareActions.refresh }/>
 				</div>
