@@ -1,6 +1,8 @@
 import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
 
+import LoginStore from 'stores/LoginStore';
+
 const TableActions = Reflux.createActions([
 	{ 'setRange': { asyncResult: true } },
 	{ 'setSort': { asyncResult: true } },
@@ -17,7 +19,7 @@ const postSettings = (settings, viewUrl, action) => {
 };
 
 TableActions.close.listen(function (viewUrl, sessionExists) {
-	if (sessionExists) {
+	if (sessionExists && LoginStore.socketAuthenticated) {
 		let that = this;
 		return SocketService.delete(viewUrl)
 			.then(data => that.completed(viewUrl, data))

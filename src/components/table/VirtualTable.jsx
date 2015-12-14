@@ -6,8 +6,6 @@ import TableFooter from './TableFooter';
 import TableContainer from './TableContainer';
 import RowDataLoader from './RowDataLoader';
 
-import LoginStore from 'stores/LoginStore';
-
 import './style.css';
 import 'fixed-data-table/dist/fixed-data-table.css';
 
@@ -83,10 +81,8 @@ const VirtualTable = React.createClass({
 	},
 
 	close() {
-		if (LoginStore.socketAuthenticated) {
-			// Don't send the close command if the session was removed
-			TableActions.close(this.props.store.viewUrl, this.moduleExists());
-		}
+		// Don't send the close command if the session was removed
+		TableActions.close(this.props.store.viewUrl, this.moduleExists());
 	},
 
 	onItemsUpdated(items, rangeOffset) {

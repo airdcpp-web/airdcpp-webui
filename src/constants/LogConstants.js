@@ -15,5 +15,4 @@ export default {
 	LOG_MESSAGE: 'log_message',
 	LOG_READ: 'log_read',
 	LOG_CLEARED: 'log_cleared',
-	MAX_LOG_MESSAGES: 50,
 };

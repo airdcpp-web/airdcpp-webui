@@ -1,7 +1,5 @@
 const MODULE_URL = 'private_chat/v0';
 export default {
-	MAX_MESSAGES: 100,
-
 	MODULE_URL: MODULE_URL,
 	SESSIONS_URL: MODULE_URL + '/sessions',
 	SESSION_URL: MODULE_URL + '/session',

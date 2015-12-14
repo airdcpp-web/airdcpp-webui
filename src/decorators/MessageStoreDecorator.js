@@ -2,7 +2,7 @@ import update from 'react-addons-update';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 // TODO: remove messages for closed session
-export default function (store, actions, sessionStore) {
+export default function (store, actions, sessionStore, access) {
 	let messages = {};
 
 	const addMessage = (id, message) => {
@@ -27,7 +27,7 @@ export default function (store, actions, sessionStore) {
 		}
 
 		// Message limit exceed?
-		if (messages.length > store.maxMessages) {
+		if (messages.length > 100) {
 			messages.shift();
 		}
 
@@ -49,5 +49,5 @@ export default function (store, actions, sessionStore) {
 	store.getMessages = () => messages;
 
 	store.listenTo(actions.fetchMessages.completed, onFetchMessagesCompleted);
-	return SocketSubscriptionDecorator(store);
+	return SocketSubscriptionDecorator(store, access);
 }

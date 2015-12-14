@@ -6,8 +6,11 @@ import FilelistActions from 'actions/FilelistActions';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
 
-const FilelistStore = Reflux.createStore({
-	getInitialState: function () {
+import AccessConstants from 'constants/AccessConstants';
+
+
+const FilelistSessionStore = Reflux.createStore({
+	getInitialState() {
 		return this.getSessions();
 	},
 
@@ -19,5 +22,5 @@ const FilelistStore = Reflux.createStore({
 	},
 });
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistStore), FilelistActions)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW), FilelistActions)
 ;

@@ -10,6 +10,7 @@ const SocketSubscriptionMixin = () => {
 			}
 		},
 
+		// Emulates the listenTo property that stores have
 		addStoreListener(store, bind) {
 			this.unsubscribe = store.listen(bind);
 		},
@@ -18,7 +19,7 @@ const SocketSubscriptionMixin = () => {
 			this.removeSocketListeners();
 			this.unsubscribe();
 		}
-	}, 'addStoreListener');
+	}, null, 'addStoreListener');
 };
 
 export default SocketSubscriptionMixin;

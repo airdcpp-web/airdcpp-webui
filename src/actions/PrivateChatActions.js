@@ -75,4 +75,4 @@ PrivateChatActions.removeSession.failed.listen(function (cid, error) {
 	NotificationActions.apiError('Failed to remove chat session', error, cid);
 });
 
-export default ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL, PrivateChatConstants.MAX_MESSAGES);
+export default ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL);

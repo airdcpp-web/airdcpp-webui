@@ -7,6 +7,8 @@ import { LogMessageUrgencies } from 'constants/UrgencyConstants';
 import UrgencyUtils from 'utils/UrgencyUtils';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import AccessConstants from 'constants/AccessConstants';
+
 
 const LogStore = Reflux.createStore({
 	listenables: LogActions,
@@ -64,4 +66,4 @@ const LogStore = Reflux.createStore({
 	}
 });
 
-export default SocketSubscriptionDecorator(LogStore);
+export default SocketSubscriptionDecorator(LogStore, AccessConstants.EVENTS);

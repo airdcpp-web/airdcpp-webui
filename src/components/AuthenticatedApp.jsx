@@ -5,6 +5,7 @@ import invariant from 'invariant';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
+import AccessConstants from 'constants/AccessConstants';
 
 import Notifications from './Notifications';
 import BrowserUtils from 'utils/BrowserUtils';
@@ -35,11 +36,21 @@ const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext, SetContainerSize ],
 
 	initContent() {
-		PrivateChatActions.fetchSessions();
-		HubActions.fetchSessions();
-		FilelistActions.fetchSessions();
+		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
+			PrivateChatActions.fetchSessions();
+		}
 
-		LogActions.fetchMessages();
+		if (LoginStore.hasAccess(AccessConstants.HUBS_VIEW)) {
+			HubActions.fetchSessions();
+		}
+
+		if (LoginStore.hasAccess(AccessConstants.FILELISTS_VIEW)) {
+			FilelistActions.fetchSessions();
+		}
+
+		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
+			LogActions.fetchMessages();
+		}
 	},
 
 	componentWillMount() {

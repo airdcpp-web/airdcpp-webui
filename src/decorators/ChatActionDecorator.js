@@ -4,7 +4,7 @@ import SocketService from 'services/SocketService';
 
 import NotificationActions from 'actions/NotificationActions';
 
-export default function (actions, sessionUrl, maxMessages) {
+export default function (actions, sessionUrl) {
 	const ChatActions = Reflux.createActions([
 		{ 'fetchMessages': { asyncResult: true } },
 		{ 'sendMessage': { asyncResult: true } },
@@ -13,7 +13,7 @@ export default function (actions, sessionUrl, maxMessages) {
 
 	ChatActions.fetchMessages.listen(function (id) {
 		let that = this;
-		SocketService.get(sessionUrl + '/' + id + '/messages/' + maxMessages)
+		SocketService.get(sessionUrl + '/' + id + '/messages/0')
 			.then(that.completed.bind(that, id))
 			.catch(that.failed.bind(that, id));
 	});

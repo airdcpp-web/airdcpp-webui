@@ -7,6 +7,8 @@ import ScrollDecorator from 'decorators/ScrollDecorator';
 import { ChatMessage, StatusMessage } from './Message';
 import MessageComposer from './MessageComposer';
 
+import LoginStore from 'stores/LoginStore';
+
 import './messages.css';
 
 
@@ -57,14 +59,20 @@ const MessageView = React.createClass({
 		/**
 		 * Handles sending of the message. Receives the text as param.
 		 */
-		handleSend: React.PropTypes.func.isRequired
+		handleSend: React.PropTypes.func.isRequired,
+
+		/**
+		 * Access required for sending messages
+		 */
+		chatAccess: React.PropTypes.string.isRequired,
 	},
 
 	render() {
+		const { chatAccess, messages, location, handleSend } = this.props;
 		return (
 			<div className="message-view">
-				<MessageSection messages={this.props.messages} location={this.props.location}/>
-				<MessageComposer handleSend={this.props.handleSend}/>
+				<MessageSection messages={messages} location={location}/>
+				{ LoginStore.hasAccess(chatAccess) ? <MessageComposer handleSend={handleSend}/> : null }
 			</div>
 		);
 	},

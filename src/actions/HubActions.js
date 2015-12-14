@@ -122,4 +122,4 @@ HubActions.removeSession.failed.listen(function (id, error) {
 	});
 });
 
-export default ChatActionDecorator(HubActions, HubConstants.HUB_SESSION_URL, HubConstants.MAX_HUB_MESSAGES);
+export default ChatActionDecorator(HubActions, HubConstants.HUB_SESSION_URL);

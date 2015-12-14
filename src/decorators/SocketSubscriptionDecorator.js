@@ -1,7 +1,8 @@
 import SocketStore from 'stores/SocketStore';
 import LoginStore from 'stores/LoginStore';
 
-const SocketSubscriptionDecorator = (store, listenToFunction = 'listenTo') => {
+
+const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo') => {
 	let socketSubscriptions = [];
 	let hasSocket = false;
 
@@ -16,44 +17,54 @@ const SocketSubscriptionDecorator = (store, listenToFunction = 'listenTo') => {
 		socketSubscriptions = [];
 	};
 
-	const onSocketAuthenticated = () => {
-		if (store.hasSocket) {
+	const _onSocketConnected = () => {
+		if (access && !LoginStore.hasAccess(access)) {
 			return;
 		}
 
 		hasSocket = true;
+
 		if (store.onSocketConnected) {
 			store.onSocketConnected(addSocketListener);
 		}
 	};
 
+	const _onSocketDisconnected = () => {
+		removeSocketListeners();
+		hasSocket = false;
+
+		if (store.onSocketDisconnected) {
+			store.onSocketDisconnected();
+		}
+	};
+
 	const _loginStoreListener = (loginState) => {
 		if (loginState.socketAuthenticated) {
-			onSocketAuthenticated();
+			if (hasSocket) {
+				return;
+			}
+
+			_onSocketConnected();
 		} else {
 			if (!hasSocket) {
 				return;
 			}
 
-
-			removeSocketListeners();
-			hasSocket = false;
-
-			if (store.onSocketDisconnected) {
-				store.onSocketDisconnected();
-			}
+			_onSocketDisconnected();
 		}
 	};
 
+	// Listen to authentication status changes
 	store[listenToFunction](LoginStore, _loginStoreListener);
+
+	// We have a socket already (happens when used together with the socket subscription mixin)
 	if (LoginStore.socketAuthenticated) {
-		setTimeout(onSocketAuthenticated);
+		setTimeout(_onSocketConnected);
 	}
 
-	//return store;
 	return Object.assign(store,	{
-		addSocketListener: addSocketListener,
-		removeSocketListeners: removeSocketListeners
+		addSocketListener,
+		removeSocketListeners,
 	});
 };
 

@@ -32,6 +32,14 @@
 	margin-top: 20px;
 }
 
+.settings-layout .setting-form {
+  margin-top: 30px;
+}
+
+.settings-layout .setting-form:first-child {
+  margin-top: 0px;
+}
+
 
 .settings-layout .virtual-table {
   height: calc(100vh - 400px);

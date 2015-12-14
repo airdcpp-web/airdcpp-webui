@@ -10,6 +10,7 @@ import HubActions from 'actions/HubActions';
 import ActionInput from 'components/semantic/ActionInput';
 import Button from 'components/semantic/Button';
 
+import AccessConstants from 'constants/AccessConstants';
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
 
 import '../style.css';
@@ -109,6 +110,7 @@ const HubSession = React.createClass({
 					messages={this.props.messages}
 					handleSend={this.handleSend}
 					location={this.props.location}
+					chatAccess={ AccessConstants.HUBS_SEND }
 				/>
 			</div>
 		);

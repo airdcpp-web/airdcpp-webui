@@ -6,6 +6,9 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
+import AccessConstants from 'constants/AccessConstants';
+
+
 const PrivateChatMessageStore = Reflux.createStore({
 	getInitialState: function () {
 		return this.getMessages();
@@ -16,11 +19,7 @@ const PrivateChatMessageStore = Reflux.createStore({
 		addSocketListener(url, PrivateChatConstants.MESSAGE, this._onChatMessage);
 		addSocketListener(url, PrivateChatConstants.STATUS, this._onStatusMessage);
 	},
-
-	get maxMessages() {
-		return PrivateChatConstants.MAX_MESSAGES;
-	}
 });
 
-export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions, PrivateChatSessionStore)
+export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions, PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW)
 ;

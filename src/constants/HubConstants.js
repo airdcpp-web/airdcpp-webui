@@ -4,8 +4,6 @@ export default {
 	HUB_SEARCH_NICKS_URL: HUB_MODULE_URL + '/search_nicks',
 	HUB_STATS_URL: HUB_MODULE_URL + '/stats',
 
-	MAX_HUB_MESSAGES: 100,
-
 	HUB_SESSIONS_URL: HUB_MODULE_URL + '/sessions',
 	HUB_SESSION_URL: HUB_MODULE_URL + '/session',
 

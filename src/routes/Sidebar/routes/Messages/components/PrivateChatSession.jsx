@@ -7,6 +7,8 @@ import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
+import AccessConstants from 'constants/AccessConstants';
+
 
 const ChatSession = React.createClass({
 	handleSend(message) {
@@ -20,6 +22,7 @@ const ChatSession = React.createClass({
 					messages={this.props.messages}
 					handleSend={this.handleSend}
 					location={this.props.location}
+					chatAccess={ AccessConstants.PRIVATE_CHAT_SEND }
 				/>
 			</div>
 		);

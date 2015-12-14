@@ -8,6 +8,9 @@ import { HubMessageUrgencies } from 'constants/UrgencyConstants';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
 
+import AccessConstants from 'constants/AccessConstants';
+
+
 const HubSessionStore = Reflux.createStore({
 	getInitialState: function () {
 		return this.getSessions();
@@ -25,5 +28,5 @@ const HubSessionStore = Reflux.createStore({
 });
 
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore), HubActions, HubMessageUrgencies)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(HubSessionStore, AccessConstants.HUBS_VIEW), HubActions, HubMessageUrgencies)
 ;

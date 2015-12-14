@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
+import { default as LogConstants, SeverityEnum } from 'constants/LogConstants';
 
 import NotificationSystem from 'react-notification-system';
 import NotificationStore from 'stores/NotificationStore';
@@ -13,6 +14,9 @@ import History from 'utils/History';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import Logo from '../../images/AirDCPlusPlus.png';
+
+import LoginStore from 'stores/LoginStore';
+import AccessConstants from 'constants/AccessConstants';
 
 
 const Notifications = React.createClass({
@@ -70,8 +74,42 @@ const Notifications = React.createClass({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this._onPrivateMessage);
-		addSocketListener(QueueConstants.QUEUE_MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
+		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
+			addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this._onPrivateMessage);
+		}
+
+		if (LoginStore.hasAccess(AccessConstants.QUEUE_VIEW)) {
+			addSocketListener(QueueConstants.QUEUE_MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
+		}
+
+		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
+			addSocketListener(LogConstants.LOG_MODULE_URL, LogConstants.LOG_MESSAGE, this._onLogMessage);
+		}
+	},
+
+	_onLogMessage(message) {
+		const { text, id, severity } = message;
+		if (severity !== SeverityEnum.WARNING && severity !== SeverityEnum.ERROR) {
+			return;
+		}
+
+		const notification = {
+			title: severity === SeverityEnum.WARNING ? 'WARNING' : 'ERROR',
+			message: text,
+			uid: id,
+			action: {
+				label: 'View events',
+				callback: () => { 
+					History.pushSidebar(this.props.location, 'events'); 
+				}
+			}
+		};
+
+		if (severity === SeverityEnum.WARNING) {
+			NotificationActions.warning(notification);
+		} else {
+			NotificationActions.error(notification);
+		}
 	},
 
 	_onPrivateMessage(message) {

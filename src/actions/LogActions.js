@@ -12,7 +12,7 @@ export const LogActions = Reflux.createActions([
 
 LogActions.fetchMessages.listen(function () {
 	let that = this;
-	return SocketService.get(LogConstants.LOG_GET_URL + '/' + LogConstants.MAX_LOG_MESSAGES)
+	return SocketService.get(LogConstants.LOG_GET_URL + '/0')
 		.then(that.completed)
 		.catch(this.failed);
 });

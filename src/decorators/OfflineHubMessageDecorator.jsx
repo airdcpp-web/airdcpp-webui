@@ -4,6 +4,10 @@ import Reflux from 'reflux';
 import HubSessionStore from 'stores/HubSessionStore';
 import Message from 'components/semantic/Message';
 
+import LoginStore from 'stores/LoginStore';
+import AccessConstants from 'constants/AccessConstants';
+
+
 // Disables the component of there are no online hubs
 const OfflineHubMessageDecorator = React.createClass({
 	mixins: [ Reflux.ListenerMixin ],
@@ -30,7 +34,7 @@ const OfflineHubMessageDecorator = React.createClass({
 	},
 
 	render() {
-		if (!this.state.hasConnectedHubs) {
+		if (!this.state.hasConnectedHubs && LoginStore.hasAccess(AccessConstants.HUBS_VIEW)) {
 			return (
 				<Message 
 					className="offline-message" 
