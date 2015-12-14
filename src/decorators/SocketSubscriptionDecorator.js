@@ -35,7 +35,8 @@ const SocketSubscriptionDecorator = (store, listenToFunction = 'listenTo') => {
 				return;
 			}
 
-			socketSubscriptions = [];
+
+			removeSocketListeners();
 			hasSocket = false;
 
 			if (store.onSocketDisconnected) {

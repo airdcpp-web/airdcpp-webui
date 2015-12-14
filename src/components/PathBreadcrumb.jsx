@@ -10,7 +10,7 @@ const PathBreadcrumb = React.createClass({
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		rootName: React.PropTypes.string.isRequired,
+		rootName: React.PropTypes.string,
 
 		/**
 		 * Root path that will be appended to the beginning of the returned path
@@ -26,6 +26,12 @@ const PathBreadcrumb = React.createClass({
 		 * Array of path objects to list
 		 */
 		tokens: React.PropTypes.array.isRequired,
+	},
+
+	getDefaultProps() {
+		return {
+			rootName: 'Root',
+		};
 	},
 
 	onClick(token, index) {

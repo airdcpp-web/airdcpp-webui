@@ -117,10 +117,9 @@ const ListBrowser = React.createClass({
 		return (
 			<div className="filelist-browser">
 				<PathBreadcrumb 
-					tokens={this._tokenizePath()} 
-					separator={"/"} 
-					rootPath={"/"} 
-					rootName={ item.user.nicks } 
+					tokens={this._tokenizePath()}
+					separator={"/"}
+					rootPath={"/"}
 					itemClickHandler={this._handleClickDirectory}
 				/>
 

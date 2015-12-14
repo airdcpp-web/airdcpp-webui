@@ -1,6 +1,7 @@
 import SocketStore from 'stores/SocketStore';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
+// For React components
 const SocketSubscriptionMixin = () => {
 	return SocketSubscriptionDecorator({
 		componentWillMount() {

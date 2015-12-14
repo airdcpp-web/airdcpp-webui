@@ -48,7 +48,7 @@ export default class ApiSocket {
 					this.connectInternal(reconnectOnFailure, resolve, reject);
 				}, 3000);
 			} else {
-				reject('Cannot connect to the server');
+				reject('Connection');
 			}
 		};
 	}

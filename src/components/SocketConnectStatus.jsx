@@ -4,7 +4,7 @@ import Loader from 'components/semantic/Loader';
 
 const getMessage = (lastError) => {
 	if (lastError !== null) {
-		return lastError + '. Reconnecting...';
+		return lastError + '. Attempting to re-establish connection...';
 	}
 		
 	return 'Connecting to the server...';
