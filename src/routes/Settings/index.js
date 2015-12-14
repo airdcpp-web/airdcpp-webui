@@ -9,8 +9,9 @@ module.exports = {
 				require('./routes/SpeedLimits'),
 				require('./routes/Downloads'),
 				require('./routes/Sharing'),
-				require('./routes/About'),
+				require('./routes/View'),
 				require('./routes/System'),
+				require('./routes/About'),
 				{
 					path: '**/**(/**)/browse',
 					component: require('components/filebrowser/FileBrowserDialog').default,
