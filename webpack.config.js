@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CompressionPlugin = require("compression-webpack-plugin");
 
 const release = (process.env.NODE_ENV === 'production');
 
@@ -32,6 +33,14 @@ var releasePlugins = [
 	
 	new webpack.optimize.OccurenceOrderPlugin(),
 	new webpack.optimize.DedupePlugin(),
+	
+	new CompressionPlugin({
+		asset: "{file}.gz",
+		algorithm: "gzip",
+		regExp: /\.js$/,
+		threshold: 0,
+		minRatio: 0
+	}),
 ];
 
 var debugPlugins = [

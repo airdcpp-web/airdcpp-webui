@@ -47,5 +47,5 @@ app.listen(port, '0.0.0.0', function (err) {
 	}
 
 	
-	console.log('Listening connections');
+	console.log('Listening for connections');
 });
