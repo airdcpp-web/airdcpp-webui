@@ -5,10 +5,19 @@ import SocketService from 'services/SocketService';
 
 export const LogActions = Reflux.createActions([
 	{ 'fetchMessages': { asyncResult: true } },
+	{ 'fetchInfo': { asyncResult: true } },
 	'clear',
-	'messagesRead',
+	'setRead',
+	'setActive',
 	'resetLogCounters'
 ]);
+
+LogActions.fetchInfo.listen(function () {
+	let that = this;
+	return SocketService.get(LogConstants.LOG_INFO_URL)
+		.then(that.completed)
+		.catch(this.failed);
+});
 
 LogActions.fetchMessages.listen(function () {
 	let that = this;
@@ -21,7 +30,7 @@ LogActions.clear.listen(function () {
 	return SocketService.post(LogConstants.LOG_CLEAR_URL);
 });
 
-LogActions.messagesRead.listen(function () {
+LogActions.setRead.listen(function () {
 	return SocketService.post(LogConstants.LOG_READ_URL);
 });
 

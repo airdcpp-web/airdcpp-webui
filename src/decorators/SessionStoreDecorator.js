@@ -1,5 +1,6 @@
 import update from 'react-addons-update';
 
+import MessageUtils from 'utils/MessageUtils';
 import UrgencyUtils from 'utils/UrgencyUtils';
 
 const SessionStoreDecorator = function (store, actions, urgencyMappings) {
@@ -46,16 +47,8 @@ const SessionStoreDecorator = function (store, actions, urgencyMappings) {
 		}
 
 		// Active tab?
-		if (data.unread_messages && id === activeSession &&
-			(data.unread_messages.user > 0 || 
-				data.unread_messages.bot > 0 || 
-				data.unread_messages.status > 0)) {
-
-			actions.setRead(id);
-
-			data.unread_messages.user = 0;
-			data.unread_messages.bot = 0;
-			data.unread_messages.status = 0;
+		if (data.unread_messages && id === activeSession) {
+			data = MessageUtils.checkUnread(data, actions, id);
 		}
 
 		sessions[sessions.indexOf(session)] = update(session, { $merge: data });

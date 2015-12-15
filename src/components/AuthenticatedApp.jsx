@@ -49,7 +49,7 @@ const AuthenticatedApp = React.createClass({
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
-			LogActions.fetchMessages();
+			LogActions.fetchInfo();
 		}
 	},
 

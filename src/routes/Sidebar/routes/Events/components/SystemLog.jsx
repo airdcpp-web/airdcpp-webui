@@ -4,9 +4,11 @@ import Reflux from 'reflux';
 import ValueFormat from 'utils/ValueFormat.js';
 import LogActions from 'actions/LogActions';
 import LogStore from 'stores/LogStore';
+import { SeverityEnum } from 'constants/LogConstants';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import Button from 'components/semantic/Button';
+import Loader from 'components/semantic/Loader';
 
 import ScrollDecorator from 'decorators/ScrollDecorator';
 
@@ -15,9 +17,9 @@ import '../style.css';
 const LogMessage = ({ message }) => {
 	let iconClass;
 	switch (message.severity) {
-		case 0: iconClass = 'blue info circle'; break;
-		case 1: iconClass = 'yellow warning sign'; break;
-		case 2: iconClass = 'red warning circle'; break;
+		case SeverityEnum.INFO: iconClass = 'blue info circle'; break;
+		case SeverityEnum.WARNING: iconClass = 'yellow warning sign'; break;
+		case SeverityEnum.ERROR: iconClass = 'red warning circle'; break;
 	}
 
 	return (
@@ -34,24 +36,25 @@ const LogMessage = ({ message }) => {
 };
 
 const SystemLog = ScrollDecorator(React.createClass({
-	mixins: [ Reflux.ListenerMixin ],
+	mixins: [ Reflux.connect(LogStore, 'messages'), ],
 	componentWillMount: function () {
-		LogActions.messagesRead();
-		this.listenTo(LogStore, this._onMessagesUpdated);
+		LogActions.setActive(true);
+		LogActions.setRead();
+
+		if (!this.state.messages) {
+			LogActions.fetchMessages();
+		}
 	},
 
-	getInitialState() {
-		return {
-			messages: LogStore.logMessages
-		};
-	},
-
-	_onMessagesUpdated(messages) {
-		LogActions.messagesRead();
-		this.setState({ messages: messages });
+	componentWillUnmount() {
+		LogActions.setActive(false);
 	},
 
 	render: function () {
+		if (!this.state.messages) {
+			return <Loader text="Loading messages"/>;
+		}
+
 		if (this.state.messages.length === 0) {
 			return <div>No messages to show</div>;
 		}

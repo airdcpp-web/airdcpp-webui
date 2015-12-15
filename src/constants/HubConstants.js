@@ -11,6 +11,6 @@ export default {
 	HUB_SESSION_REMOVED: 'hub_removed',
 	HUB_SESSION_UPDATED: 'hub_updated',
 
-	HUB_MESSAGE: 'hub_chat_message',
-	HUB_STATUS_MESSAGE: 'hub_status_message',
+	HUB_MESSAGE: 'hub_message',
+	HUB_STATUS_MESSAGE: 'hub_status',
 };

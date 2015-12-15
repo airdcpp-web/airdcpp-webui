@@ -4,9 +4,9 @@ export default {
 	SESSIONS_URL: MODULE_URL + '/sessions',
 	SESSION_URL: MODULE_URL + '/session',
 
-	SESSION_CREATED: 'chat_session_created',
-	SESSION_REMOVED: 'chat_session_removed',
-	SESSION_UPDATED: 'chat_session_updated',
+	SESSION_CREATED: 'private_chat_created',
+	SESSION_REMOVED: 'private_chat_removed',
+	SESSION_UPDATED: 'private_chat_updated',
 
 	MESSAGE: 'private_chat_message',
 	STATUS: 'private_chat_status',

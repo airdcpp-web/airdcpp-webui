@@ -27,7 +27,7 @@ export default function (store, actions, sessionStore, access) {
 		}
 
 		// Message limit exceed?
-		if (messages.length > 100) {
+		if (messages.length > sessionStore.getSession(id).total_messages) {
 			messages.shift();
 		}
 
