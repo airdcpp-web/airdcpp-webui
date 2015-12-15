@@ -24,19 +24,6 @@ const toUrgencyMap = (source, urgencies) => {
 };
 
 const UrgencyUtils = {
-	// Get urgencyMap [urgency: numberOfMessages] for a list of messages
-	getMessageUrgencies(messages, urgencies, infoProperty) {
-		const counts = {};
-
-		messages.forEach(message => {
-			if (!message.is_read) {
-				appendToMap(counts, urgencies[message[infoProperty]]);
-			}
-		});
-
-		return counts;
-	},
-
 	// Get urgencyMap [urgency: numberOfSessions] for a list of sessions
 	getSessionUrgencies(sessions, urgencies, infoProperty) {
 		const counts = {};

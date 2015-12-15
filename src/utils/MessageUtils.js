@@ -1,4 +1,3 @@
-//import invariant from 'invariant';
 import update from 'react-addons-update';
 
 const checkSplice = (messages, cacheMessageCount) => {

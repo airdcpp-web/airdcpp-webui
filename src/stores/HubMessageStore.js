@@ -20,6 +20,5 @@ const HubMessageStore = Reflux.createStore({
 	},
 });
 
-
 export default MessageStoreDecorator(HubMessageStore, HubActions, HubSessionStore, AccessConstants.HUBS_VIEW)
 ;

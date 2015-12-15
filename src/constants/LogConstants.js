@@ -15,7 +15,4 @@ export default {
 
 	LOG_MESSAGE: 'log_message',
 	LOG_INFO: 'log_info',
-
-	//LOG_READ: 'log_read',
-	//LOG_CLEARED: 'log_cleared',
 };

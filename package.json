@@ -14,7 +14,7 @@
     "clean": "rimraf dist",
     "lint": "eslint src *.js",
     "lint-fix": "eslint --fix src *.js",
-    "start": "node devServer.js",
+    "start": "node server.js",
     "webpack": "webpack --progress",
     "build-webpack": "NODE_ENV=production webpack --progress",
     "build": "npm run clean && npm run build:webpack"
@@ -55,6 +55,7 @@
     "babel-plugin-react-transform": "^2.0.0-beta1",
     "babel-plugin-transform-object-assign": "^6.1.12",
     "babel-plugin-transform-react-display-name": "^6.3.13",
+		"compression": "^1.6.0",
     "css-loader": "^0.23.0",
     "eslint": "^1.10.3",
     "eslint-plugin-babel": "^3.0.0",
