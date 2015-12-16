@@ -49,7 +49,11 @@ const Search = React.createClass({
 				<div className="search-layout full-height">
 					<div className="search-container">
 						<div className="search-area">
-							<HistoryInput historyId={HistoryEnum.HISTORY_SEARCH} submitHandler={this._handleSearch} running={this.state.running}/>
+							<HistoryInput 
+								historyId={HistoryEnum.HISTORY_SEARCH} 
+								submitHandler={this._handleSearch} 
+								running={this.state.running}
+							/>
 						</div>
 					</div>
 					<ResultTable 

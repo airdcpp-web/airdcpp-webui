@@ -5,7 +5,7 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'download', 
-				component: require('components/DownloadDialog').default, 
+				component: require('components/download/DownloadDialog').default, 
 			} ]);
 		}, 'search-children');
 	},

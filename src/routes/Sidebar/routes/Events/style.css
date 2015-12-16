@@ -16,13 +16,13 @@
 	padding: 20px;
 }
 
-#sidebar .simple-layout .content {
+#sidebar .simple-layout .main-content {
 	display: flex;
 	overflow-y: auto;
 	margin-top: 10px;
 }
 
-#sidebar .simple-layout .content > div {
+#sidebar .simple-layout .main-content > div {
 	overflow-y: auto;
 	width: 100%;
 }

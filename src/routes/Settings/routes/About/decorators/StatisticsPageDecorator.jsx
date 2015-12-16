@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SocketService from 'services/SocketService';
+import Message from 'components/semantic/Message';
 
 // Decorator for statistics pages that fetch the content from API
 export default function (Component, fetchUrl, unavailableMessage, fetchIntervalSeconds = 0) {
@@ -38,9 +39,10 @@ export default function (Component, fetchUrl, unavailableMessage, fetchIntervalS
 
 			if (stats === undefined) {
 				return (
-					<div>
-						{ 'Statistics not available (' + unavailableMessage + ')' }
-					</div>
+					<Message
+						title="Statistics not available"
+						description={ unavailableMessage }
+					/>
 				);
 			}
 

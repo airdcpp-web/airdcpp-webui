@@ -9,7 +9,7 @@ module.exports = {
 				childRoutes: [
 					{
 						path: 'download', 
-						component: require('components/DownloadDialog').default, 
+						component: require('components/download/DownloadDialog').default, 
 					}
 				]
 			}, {

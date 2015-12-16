@@ -9,6 +9,7 @@ import { SeverityEnum } from 'constants/LogConstants';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import Button from 'components/semantic/Button';
 import Loader from 'components/semantic/Loader';
+import Message from 'components/semantic/Message';
 
 import ScrollDecorator from 'decorators/ScrollDecorator';
 
@@ -56,7 +57,11 @@ const SystemLog = ScrollDecorator(React.createClass({
 		}
 
 		if (this.state.messages.length === 0) {
-			return <div>No messages to show</div>;
+			return (
+				<Message 
+					description="No messages to show"
+				/>
+			);
 		}
 
 		const messageList = this.state.messages.map(function (message) {
@@ -66,7 +71,7 @@ const SystemLog = ScrollDecorator(React.createClass({
 		});
 
 		return (
-			<div className="ui segment system-log">
+			<div className="ui segment system-log layout-content">
 				<div ref="messageList" className="ui message-list">
 					{messageList}
 				</div>
@@ -95,7 +100,7 @@ const SimpleSidebarLayout = React.createClass({
 						}
 					/>
 					
-					<div className="content">
+					<div className="layout-content">
 						<SystemLog/>
 					</div>
 				</div>

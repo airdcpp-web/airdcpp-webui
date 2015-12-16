@@ -36,4 +36,4 @@ const HubStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(HubStatisticsPage, HubConstants.HUB_STATS_URL, 'no hubs online', 10);
+export default StatisticsPageDecorator(HubStatisticsPage, HubConstants.HUB_STATS_URL, 'No hubs online', 10);

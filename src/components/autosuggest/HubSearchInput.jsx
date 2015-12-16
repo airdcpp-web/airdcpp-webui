@@ -56,8 +56,7 @@ const HubSearchInput = React.createClass({
 	},
 
 	_onClickConnect() {
-		const { text } = this.state;
-		this.props.submitHandler(text);
+		this.props.submitHandler(this.state.text);
 	},
 
 	render() {
@@ -67,12 +66,13 @@ const HubSearchInput = React.createClass({
 			autoFocus: this.props.autoFocus,
 		};
 
+		const { text } = this.state;
 		return (
-			<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
+			<div className="ui fluid action input" onKeyDown={ this._onKeyDown }>
 				<Autosuggest 
-					value={this.state.text}
-					suggestions={this._getSuggestions}
-					inputAttributes={inputAttributes}
+					value={ text }
+					suggestions={ this._getSuggestions }
+					inputAttributes={ inputAttributes }
 					onSuggestionSelected={ this._onSuggestionSelected } 
 					suggestionRenderer={ this._renderSuggestion }
 					suggestionValue={ this._getSuggestionValue }
@@ -80,8 +80,9 @@ const HubSearchInput = React.createClass({
 
 				<Button
 					icon="green play"
-					onClick={this._onClickConnect}
+					onClick={ this._onClickConnect }
 					caption="Connect"
+					disabled={ text.length === 0 }
 				/>
 			</div>
 		);
