@@ -4,9 +4,10 @@ import ShareRootActions from 'actions/ShareRootActions';
 import ShareActions from 'actions/ShareActions';
 
 import ActionButton from 'components/ActionButton';
-import ShareDirectoryLayout from './ShareDirectoryLayout';
+import ShareDirectoryLayout from './directories/ShareDirectoryLayout';
 
 import '../style.css';
+
 
 const ShareDirectoriesPage = React.createClass({
 	render() {

@@ -9,7 +9,7 @@ module.exports = {
 				childRoutes: [
 					{
 						path: 'root', 
-						component: require('./components/ShareDirectoryDialog').default, 
+						component: require('./components/directories/ShareDirectoryDialog').default, 
 					}
 				]
 			}, {

@@ -13,7 +13,6 @@ import RefreshCell from './RefreshCell';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
-import '../style.css';
 
 const ShareDirectoryLayout = React.createClass({
 	render() {
