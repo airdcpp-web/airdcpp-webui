@@ -1,10 +1,10 @@
 import React from 'react';
 
-import NavigationPanel from './menu/Navigation';
-import SideMenu from './menu/SideMenu';
+import NavigationPanel from 'components/menu/Navigation';
+import SideMenu from 'components/menu/SideMenu';
 import SiteHeader from './SiteHeader';
 
-import '../normal.css';
+import 'normal.css';
 
 
 const MainLayout = React.createClass({

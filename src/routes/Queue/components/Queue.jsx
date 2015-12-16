@@ -10,9 +10,9 @@ import PriorityMenu from './PriorityMenu';
 import Progress from 'components/semantic/Progress';
 import QueueStore from 'stores/QueueStore';
 
-import { ActionMenu } from 'components/Menu';
+import { ActionMenu } from 'components/menu/DropdownMenu';
 
-import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/Cell';
+import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
 
 import '../style.css';
 

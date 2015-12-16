@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TypeConvert from 'utils/TypeConvert';
-import { UserMenu } from 'components/Menu';
+import { UserMenu } from 'components/menu/DropdownMenu';
 import { UserIconFormatter } from 'utils/IconFormat';
 
 export default (ItemHandler, itemMenuIds) => {

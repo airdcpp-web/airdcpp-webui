@@ -13,7 +13,7 @@ import FilelistSessionStore from 'stores/FilelistSessionStore';
 import History from 'utils/History';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DurationCell, FileDownloadCell } from 'components/Cell';
+import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
 import Loader from 'components/semantic/Loader';

@@ -4,9 +4,10 @@ import SettingConstants from 'constants/SettingConstants';
 import SocketService from 'services/SocketService';
 import NotificationActions from 'actions/NotificationActions';
 
-import BrowseField from 'components/filebrowser/BrowseField';
 import FormUtils from 'utils/FormUtils';
-import Form from 'components/Form';
+
+import BrowseField from 'components/form/BrowseField';
+import Form from 'components/form/Form';
 
 import t from 'utils/tcomb-form';
 

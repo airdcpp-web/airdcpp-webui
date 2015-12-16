@@ -5,10 +5,10 @@ import SearchStore from 'stores/SearchStore';
 
 import { Column } from 'fixed-data-table';
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/Cell';
+import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/table/Cell';
 
 import TypeConvert from 'utils/TypeConvert';
-import { TableUserMenu } from 'components/Menu';
+import { TableUserMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
 

@@ -3,8 +3,8 @@ import Reflux from 'reflux';
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
-import Message from './semantic/Message';
-import Loader from './semantic/Loader';
+import Message from 'components/semantic/Message';
+import Loader from 'components/semantic/Loader';
 
 import { History } from 'react-router';
 

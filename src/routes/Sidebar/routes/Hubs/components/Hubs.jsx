@@ -9,7 +9,7 @@ import HubActions from 'actions/HubActions';
 import TypeConvert from 'utils/TypeConvert';
 import AccessConstants from 'constants/AccessConstants';
 
-import { ActionMenu } from 'components/Menu';
+import { ActionMenu } from 'components/menu/DropdownMenu';
 import { HubIconFormatter } from 'utils/IconFormat';
 
 

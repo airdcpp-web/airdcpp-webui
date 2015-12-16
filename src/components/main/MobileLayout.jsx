@@ -1,15 +1,15 @@
 import React from 'react';
 
 import SiteHeader from './SiteHeader';
-import MobileMenu from './menu/MobileMenu';
-import MenuIcon from './menu/MenuIcon';
+import MobileMenu from 'components/menu/MobileMenu';
+import MenuIcon from 'components/menu/MenuIcon';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
 import History from 'utils/History';
 import Button from 'components/semantic/Button';
 import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
 
-import '../mobile.css';
+import 'mobile.css';
 
 
 const reduceItemUrgency = (map, menuItem) => {

@@ -6,7 +6,7 @@ import ValueFormat from 'utils/ValueFormat';
 import ReactEmoji from 'react-emoji';
 import Linkify from 'react-linkify';
 
-import { UserMenu } from 'components/Menu';
+import { UserMenu } from 'components/menu/DropdownMenu';
 
 
 const Author = ({ message, dropdownContextGetter, location }) => (

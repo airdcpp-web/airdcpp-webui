@@ -11,8 +11,9 @@ import HistoryContext from 'mixins/HistoryContext';
 
 import t from 'utils/tcomb-form';
 
-import Form from 'components/Form';
+import Form from 'components/form/Form';
 import FormUtils from 'utils/FormUtils';
+
 import LoginStore from 'stores/LoginStore';
 
 import '../style.css';

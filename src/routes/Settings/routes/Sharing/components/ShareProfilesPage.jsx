@@ -6,7 +6,7 @@ import ShareProfileActions from 'actions/ShareProfileActions';
 import Button from 'components/semantic/Button';
 import ValueFormat from 'utils/ValueFormat';
 
-import { ActionMenu } from 'components/Menu';
+import { ActionMenu } from 'components/menu/DropdownMenu';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
 const Row = ({ profile, contextGetter }) => (

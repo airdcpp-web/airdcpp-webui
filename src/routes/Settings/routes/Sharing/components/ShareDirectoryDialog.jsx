@@ -9,15 +9,16 @@ import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
-import BrowseField from 'components/filebrowser/BrowseField';
 
 import t from 'utils/tcomb-form';
 
-import Form from 'components/Form';
 import FormUtils from 'utils/FormUtils';
 import FileUtils from 'utils/FileUtils';
-import SelectField from 'components/SelectField';
-import AutoSuggestField from 'components/autosuggest/AutoSuggestField';
+
+import Form from 'components/form/Form';
+import BrowseField from 'components/form/BrowseField';
+import SelectField from 'components/form/SelectField';
+import AutoSuggestField from 'components/form/AutoSuggestField';
 
 const ProfileList = t.refinement(t.list(t.Num), (n) => {
 	return n.length > 0;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TableActionMenu } from 'components/Menu';
+import { TableActionMenu } from 'components/menu/DropdownMenu';
 import ValueFormat from 'utils/ValueFormat';
 import { FileNameFormatter } from 'utils/IconFormat';
-import { TableDownloadMenu } from 'components/Menu';
+import { TableDownloadMenu } from 'components/menu/DropdownMenu';
 import Checkbox from 'components/semantic/Checkbox';
 
 //import { Cell } from 'fixed-data-table';

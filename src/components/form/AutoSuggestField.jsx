@@ -4,7 +4,8 @@ import Autosuggest from 'react-autosuggest';
 
 import t from 'utils/tcomb-form';
 
-import './style.css';
+import 'components/autosuggest/style.css';
+
 
 const AutoSuggestField = t.form.Form.templates.textbox.clone({
 	renderInput(locals) {

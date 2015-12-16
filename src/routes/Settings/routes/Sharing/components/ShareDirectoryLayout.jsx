@@ -4,7 +4,7 @@ import ShareRootActions from 'actions/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, ActionCell, DurationCell } from 'components/Cell';
+import { SizeCell, ActionCell, DurationCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
 import ProfileDropdown from './ProfileDropdown';

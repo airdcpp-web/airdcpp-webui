@@ -7,10 +7,10 @@ import { StateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { Column } from 'fixed-data-table';
-import { CheckboxCell, ActionCell } from 'components/Cell';
+import { CheckboxCell, ActionCell } from 'components/table/Cell';
 import ConnectStateCell from './ConnectStateCell';
 
-import { TableActionMenu } from 'components/Menu';
+import { TableActionMenu } from 'components/menu/DropdownMenu';
 import ActionButton from 'components/ActionButton';
 
 import AccessConstants from 'constants/AccessConstants';

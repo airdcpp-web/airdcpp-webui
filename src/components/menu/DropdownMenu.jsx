@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Dropdown from './semantic/Dropdown';
-import TableDropdown from './semantic/TableDropdown';
+import Dropdown from 'components/semantic/Dropdown';
+import TableDropdown from 'components/semantic/TableDropdown';
 
 import DownloadActions from 'actions/DownloadActions';
 

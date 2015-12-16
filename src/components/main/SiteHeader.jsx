@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import Logo from '../../images/AirDCPlusPlus.png';
+import Logo from '../../../images/AirDCPlusPlus.png';
 
 const SiteHeader = ({ content }) => (
 	<div className="ui fixed inverted menu site-header">
