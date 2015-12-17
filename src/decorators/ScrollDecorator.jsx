@@ -35,8 +35,12 @@ export default function (Component) {
 			shouldScrollBottom = false;
 		},
 
+		dropdownContextGetter() {
+			return ReactDOM.findDOMNode(this.refs.scrollableContainer);
+		},
+
 		render() {
-			return <Component ref="scrollableContainer" {...this.props} {...this.state}/>;
+			return <Component ref="scrollableContainer" {...this.props} dropdownContextGetter={ this.dropdownContextGetter }/>;
 		},
 	});
 

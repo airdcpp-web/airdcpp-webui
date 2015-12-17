@@ -42,7 +42,8 @@ const SessionStoreDecorator = function (store, actions, urgencyMappings) {
 	store._onSessionUpdated = (data, id) => {
 		const session = store.getSession(id);
 		if (!session) {
-			console.error('Update received for a non-existing session', id);
+			// May happen before the sessions have been fetched
+			console.log('Update received for a non-existing session', id);
 			return;
 		}
 

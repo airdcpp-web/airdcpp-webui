@@ -36,7 +36,32 @@ const LogMessage = ({ message }) => {
 	);
 };
 
-const SystemLog = ScrollDecorator(React.createClass({
+const MessageView = ScrollDecorator(React.createClass({
+	render: function () {
+		const { messages } = this.props;
+		if (messages.length === 0) {
+			return (
+				<Message 
+					description="No messages to show"
+				/>
+			);
+		}
+
+		const messageList = messages.map(function (message) {
+			return (
+				<LogMessage key={ message.id } message={message}/>
+			);
+		});
+
+		return (
+			<div ref="messageList" className="message-list ui segment">
+				{messageList}
+			</div>
+		);
+	}
+}));
+
+const SystemLog = React.createClass({
 	mixins: [ Reflux.connect(LogStore, 'messages'), ],
 	componentWillMount: function () {
 		LogActions.setActive(true);
@@ -51,41 +76,15 @@ const SystemLog = ScrollDecorator(React.createClass({
 		LogActions.setActive(false);
 	},
 
-	render: function () {
-		if (!this.state.messages) {
-			return <Loader text="Loading messages"/>;
-		}
-
-		if (this.state.messages.length === 0) {
-			return (
-				<Message 
-					description="No messages to show"
-				/>
-			);
-		}
-
-		const messageList = this.state.messages.map(function (message) {
-			return (
-				<LogMessage key={ message.id } message={message}/>
-			);
-		});
-
-		return (
-			<div className="ui segment system-log layout-content">
-				<div ref="messageList" className="ui message-list">
-					{messageList}
-				</div>
-			</div>
-		);
-	}
-}));
-
-const SimpleSidebarLayout = React.createClass({
 	_handleClear() {
 		LogActions.clear();
 	},
 
 	render: function () {
+		if (!this.state.messages) {
+			return <Loader text="Loading messages"/>;
+		}
+
 		return (
 			<div className="simple-layout">
 				<div className="ui segment">
@@ -100,8 +99,8 @@ const SimpleSidebarLayout = React.createClass({
 						}
 					/>
 					
-					<div className="layout-content">
-						<SystemLog/>
+					<div className="layout-content system-log">
+						<MessageView messages={ this.state.messages }/>
 					</div>
 				</div>
 			</div>
@@ -109,4 +108,4 @@ const SimpleSidebarLayout = React.createClass({
 	}
 });
 
-export default SimpleSidebarLayout;
+export default SystemLog;

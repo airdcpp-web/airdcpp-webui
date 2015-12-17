@@ -45,7 +45,7 @@ const VirtualTable = React.createClass({
 	},
 
 	componentDidMount() {
-		this.unsubscribe = this.props.store.listen(this.onItemsUpdated);
+		this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
 	},
 
 	componentWillUnmount() {
@@ -87,7 +87,7 @@ const VirtualTable = React.createClass({
 
 	onItemsUpdated(items, rangeOffset) {
 		this._dataLoader.onItemsUpdated(items, rangeOffset);
-		this._dataLoader.items = items;
+		//this._dataLoader.items = items;
 		//this.rangeOffset = rangeOffset;
 	},
 

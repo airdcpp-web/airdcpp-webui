@@ -41,7 +41,9 @@ class RowDataLoader {
 
 	onItemsUpdated(items, rangeOffset) {
 		let hasChanges = false;
+		//const oldData = this._data;
 		if (!items || items.length === 0) {
+			// The view was cleared
 			this.clear();
 			hasChanges = true;
 
@@ -49,7 +51,17 @@ class RowDataLoader {
 		} else {
 			this._initialDataReceived = true;
 
-			hasChanges = items.reduce(this.updateItem.bind(this), 0) > 0;
+			// Remove rows outside the range
+			// Leave the current range in case all old items can be reused 
+			// (avoids flickering because there is no need to re-render)
+			for (let i = 0; i < this._data.length; i++) {
+				if (!items[i]) {
+					delete this._data[i];
+				}
+			}
+
+			// Update rows
+			hasChanges = items.reduce(this.updateItem.bind(this), 0) > 0 || rangeOffset !== 0;
 		}
 
 		if (hasChanges) {

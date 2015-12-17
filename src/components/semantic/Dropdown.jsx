@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import invariant from 'invariant';
 
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -38,6 +39,11 @@ const Dropdown = React.createClass({
 	},
 
 	componentDidMount() {
+		// Use timeout to allow all parents finish mounting (otherwise we get no context)
+		setTimeout(this.init);
+	},
+
+	init() {
 		const dom = ReactDOM.findDOMNode(this);
 
 		const settings = {
@@ -47,6 +53,7 @@ const Dropdown = React.createClass({
 
 		if (this.props.contextGetter) {
 			settings['context'] = this.props.contextGetter();
+			invariant(settings['context'], 'Context missing from dropdown');
 		}
 
 		$(dom).dropdown(settings);
