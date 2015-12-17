@@ -9,6 +9,7 @@ const Entry = {
 	connection_bind_v4: t.Str,
 	connection_mode_v4: t.Num,
 	connection_ip_v4: t.maybe(t.Str),
+	connection_update_ip_v4: t.Boolean,
 };
 
 const IPv4 = React.createClass({
