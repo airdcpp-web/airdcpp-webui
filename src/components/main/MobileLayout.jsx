@@ -13,12 +13,18 @@ import 'mobile.css';
 
 
 const reduceItemUrgency = (map, menuItem) => {
-	if (menuItem.unreadInfoStore) {
-		const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
-		const max = UrgencyUtils.maxUrgency(urgencies);
-		if (max) {
-			UrgencyUtils.appendToMap(map, max);
-		}
+	if (!menuItem.unreadInfoStore) {
+		return map;
+	}
+
+	const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
+	if (!urgencies) {
+		return map;
+	}
+
+	const max = UrgencyUtils.maxUrgency(urgencies);
+	if (max) {
+		UrgencyUtils.appendToMap(map, max);
 	}
 
 	return map;
