@@ -48,10 +48,13 @@ ShareProfileActions.create.listen(function () {
 		approveCaption: 'Create',
 		title: 'Create profile',
 		text: 'Enter name for the profile',
+	};
+
+	const inputOptions = {
 		placeholder: 'Enter name',
 	};
 
-	InputDialog(options)
+	InputDialog(options, inputOptions)
 		.then(ShareProfileActions.create.saved)
 		.catch(() => {});
 });
