@@ -35,6 +35,7 @@ TableActions.setSort.listen(function (viewUrl, sortProperty, sortAscending) {
 });
 
 TableActions.setRange.listen(function (viewUrl, rangeStart, maxRows) {
+	console.assert(maxRows > 0, 'Invalid max rows');
 	postSettings({ 
 		range_start: rangeStart, 
 		max_count: maxRows,

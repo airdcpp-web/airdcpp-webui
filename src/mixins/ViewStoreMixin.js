@@ -11,6 +11,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 	let startPos = 0;
 	let items = [];
 	let entityId = null;
+	let paused = false;
 
 	let sortProperty = defaultSortProperty;
 	let sortAscending = defaultSortAscending;
@@ -85,6 +86,14 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 			this.trigger();
 		},
 
+		onPause(viewUrl, enabled) {
+			if (viewUrl !== this.viewUrl) {
+				return;
+			}
+
+			paused = enabled;
+		},
+
 		onInit(viewUrl, entity) {
 			if (viewUrl !== this.viewUrl) {
 				return;
@@ -148,6 +157,10 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 
 		get sortAscending() {
 			return sortAscending;
+		},
+
+		get paused() {
+			return paused;
 		},
 
 		_handleUpdate(data) {

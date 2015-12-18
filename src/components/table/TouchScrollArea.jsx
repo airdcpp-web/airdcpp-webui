@@ -46,6 +46,10 @@ const ScrollArea = React.createClass({
 	},
 
 	_handleScroll : function (left, top) {
+		if (!this.isMounted()) {
+			return;
+		}
+		
 		if (this.props.onScrollStart && this._scrollTimer === null) {
 			console.log('Touch scroll start, top: ' + top);
 			this.props.onScrollStart(left, top);

@@ -61,6 +61,11 @@ const VirtualTable = React.createClass({
 		}
 
 		if (nextProps.viewId != this.props.viewId) {
+			if (this.props.store.paused) {
+				// We need to receive the new items
+				TableActions.pause(this.props.store.viewUrl, false);
+			}
+
 			TableActions.clear(this.props.store.viewUrl);
 		}
 	},

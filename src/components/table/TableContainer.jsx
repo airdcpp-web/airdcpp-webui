@@ -70,16 +70,7 @@ const TableContainer = React.createClass({
 		this._scrollPosition = 0;
 	},
 
-	componentDidMount() {
-		this.updateRowRange();
-	},
-
-	componentWillReceiveProps(nextProps) {
-		//if (nextProps.entityId !== this.props.entityId) {
-		//	this.updateTableSettings();
-		//}
-	},
-
+	// This will also be used for setting the initial rows
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.height != this.state.height) {
 			this._onContentHeightChange();
