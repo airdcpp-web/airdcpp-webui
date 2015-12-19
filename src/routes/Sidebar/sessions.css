@@ -98,8 +98,7 @@
 }
 
 .session-container.horizontal .menu-column {
-	padding-top: 30px;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   padding-right: 0px;
 }
@@ -108,6 +107,7 @@
 	width: initial !important;
   overflow-y: auto;
   padding-top: 10px;
+  flex: 1;
 }
 
 .session-container.horizontal .menu-column .session-item span, 
