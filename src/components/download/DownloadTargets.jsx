@@ -39,7 +39,7 @@ const PathList = ({ downloadHandler, paths }) => {
 	);
 };
 
-PathList.propTypes = {
+PathList.PropTypes = {
 	/**
 	 * Function handling the path selection. Receives the selected path as argument.
 	 */
@@ -94,4 +94,4 @@ const AccordionTargets = React.createClass({
 	}
 });
 
-export default { PathList, AccordionTargets };
+export { PathList, AccordionTargets };

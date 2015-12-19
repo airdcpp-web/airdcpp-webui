@@ -12,7 +12,7 @@ import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
 
 import Loader from 'components/semantic/Loader';
-import PathList from './PathList';
+import FileItemList from './FileItemList';
 
 import './style.css';
 
@@ -93,7 +93,7 @@ const FileBrowser = React.createClass({
 			loading: true
 		});
 
-		SocketService.post(FilesystemConstants.FILESYSTEM_LIST_URL, { path: path, directories_only: true })
+		SocketService.post(FilesystemConstants.FILESYSTEM_LIST_URL, { path: path, directories_only: false })
 			.then(data => { 
 				this.setState({ 
 					currentDirectory: path,
@@ -182,7 +182,7 @@ const FileBrowser = React.createClass({
 			<div className="file-browser">
 				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
 				<PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
-				<PathList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
+				<FileItemList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
 				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
 	);}

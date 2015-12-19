@@ -1,25 +1,35 @@
 import React from 'react';
 
 import { FileNameFormatter } from 'utils/IconFormat';
+import ValueFormat from 'utils/ValueFormat';
 
 
-const PathItem = ({ item, itemClickHandler, itemIcon, iconClickHandler }) => (
-	<tr>
-		<td>
-			<FileNameFormatter item={ item.type }>
-				<a onClick={evt => itemClickHandler(item.name)}>
-					{ item.name }
-				</a>
-				{ itemIcon ? <i className={ itemIcon + ' link icon' } onClick={ () => iconClickHandler(item.name) }></i> : null }
-			</FileNameFormatter>
-		</td>
-		{/*<td>
-			{ Formatter.formatSize(item.size) }
-		</td>*/}
-	</tr>
+const DirectoryCaption = ({ item, itemClickHandler, itemIcon, iconClickHandler }) => (
+	<span>
+		<a onClick={evt => itemClickHandler(item.name)}>
+			{ item.name }
+		</a>
+		{ itemIcon ? <i className={ itemIcon + ' link icon' } onClick={ () => iconClickHandler(item.name) }></i> : null }
+	</span>
 );
 
-const PathList = React.createClass({
+const FileItem = ({ item, ...other }) => {
+	const isFile = item.type.id === 'file';
+	return (
+		<tr>
+			<td>
+				<FileNameFormatter item={ item.type }>
+					{ !isFile ? <DirectoryCaption item={ item } { ...other }/> : <span>{ item.name }</span> }
+				</FileNameFormatter>
+			</td>
+			<td>
+				{ isFile ? ValueFormat.formatSize(item.size) : null }
+			</td>
+		</tr>
+	);
+};
+
+const FileItemList = React.createClass({
 	propTypes: {
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -52,12 +62,12 @@ const PathList = React.createClass({
 					<thead>
 						<tr>
 							<th>Name</th>
-							{/*<th>Size</th>*/}
+							<th>Size</th>
 						</tr>
 					</thead>
 					<tbody>
 						{ this.props.items.sort(this.sort).map(item => 
-							<PathItem 
+							<FileItem 
 								key={item.name}
 								item={item}
 								itemIcon={this.props.itemIcon} 
@@ -71,4 +81,4 @@ const PathList = React.createClass({
 	}
 });
 
-export default PathList;
+export default FileItemList;
