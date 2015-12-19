@@ -57,6 +57,10 @@ const AuthenticatedApp = React.createClass({
 		if (this.state.socketAuthenticated) {
 			this.initContent();
 		}
+
+		if (showSideBar(this.props)) {
+			this.previousChildren = <div/>;
+		}
 	},
 
 	componentWillReceiveProps(nextProps) {

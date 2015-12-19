@@ -9,11 +9,39 @@ const MessageComposer = React.createClass({
 		/**
 		 * Handles sending of the message. Receives the text as param.
 		 */
-		handleSend: React.PropTypes.func.isRequired
+		handleSend: React.PropTypes.func.isRequired,
+		location: React.PropTypes.object.isRequired,
+	},
+
+	getStorageKey(props) {
+		return 'last_message_' + props.location.pathname;
+	},
+
+	saveText() {
+		const { text } = this.state;
+		sessionStorage.setItem(this.getStorageKey(this.props), text);
+	},
+
+	loadState(props) {
+		const lastText = sessionStorage.getItem(this.getStorageKey(props));
+		return {
+			text: lastText ? lastText : '',
+		};
 	},
 
 	getInitialState: function () {
-		return { text: '' };
+		return this.loadState(this.props);
+	},
+
+	componentWillUnmount() {
+		this.saveText();
+	},
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.location.pathname !== this.props.location.pathname) {
+			this.saveText();
+			this.setState(this.loadState(nextProps));
+		}
 	},
 
 	render: function () {

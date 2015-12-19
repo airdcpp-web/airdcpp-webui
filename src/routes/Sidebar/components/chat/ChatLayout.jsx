@@ -70,8 +70,16 @@ const MessageView = React.createClass({
 		const { chatAccess, messages, location, handleSend } = this.props;
 		return (
 			<div className="message-view">
-				<MessageSection messages={messages} location={location}/>
-				{ LoginStore.hasAccess(chatAccess) ? <MessageComposer handleSend={handleSend}/> : null }
+				<MessageSection 
+					messages={messages} 
+					location={location}
+				/>
+				{ LoginStore.hasAccess(chatAccess) ? (
+					<MessageComposer 
+						handleSend={handleSend}
+						location={location}
+					/>
+				) : null }
 			</div>
 		);
 	},
