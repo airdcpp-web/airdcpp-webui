@@ -62,10 +62,10 @@ module.exports = {
 	entry: entries,
 
 	output: {
-		path: path.resolve(__dirname, 'build'),
-		filename: '[name].entry.js',
-		chunkFilename: '[name].chunk.js',
-		publicPath: '/build/',
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'js/[name].entry.js',
+		chunkFilename: 'js/[name].chunk.js',
+		publicPath: '/',
 	},
 
 	// cheap-module-source-map doesn't seem to work with Uglify
@@ -87,14 +87,14 @@ module.exports = {
 				loader: 'style-loader!css-loader' 
 			}, { 
 				test: /\.(jpg|png)$/, 
-				loader: 'file-loader' 
+				loader: 'file-loader?name=images/[name].[ext]' 
 			}, { 
 				test: /\.(woff|woff2|eot|ttf|svg)$/, 
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'node_modules/semantic-ui/dist') 
 				], 
-				loader: 'url-loader?limit=100000' 
+				loader: 'url-loader?limit=100000&name=assets/[hash].[ext]' // No name for URLs
 			},
 		]
 	},

@@ -27,6 +27,11 @@ LoginActions.login.listen(function (username, password) {
 	});
 });
 
+LoginActions.login.failed.listen(function (error) {
+	console.log('Logging in failed', error);
+});
+
+
 LoginActions.connect.listen(function (token) {
 	let that = this;
 
