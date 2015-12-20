@@ -1,6 +1,14 @@
-body {
-	background: url("../background.jpg") no-repeat;
-	background-size: cover;
+@media (max-width: 700px) {
+	body {
+		background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
+	}
+}
+
+@media (min-width: 700px) {
+	body {
+		background: url("../images/background.jpg") no-repeat;
+		background-size: cover;
+	}
 }
 
 .login-grid .column {
@@ -10,8 +18,6 @@ body {
 
 .ui.site-content {
 	height: 100%;
-	padding-top: 80px;
-	padding-bottom: 10px;
 }
 
 section#container-main, .login-grid, .main-layout, #authenticated-app, .pusher {
