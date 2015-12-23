@@ -18,7 +18,7 @@ module.exports = {
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/System').default);
+			cb(null, require('../../components/SettingSection').default);
 		}, 'settings-system');
 	}
 };

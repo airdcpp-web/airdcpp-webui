@@ -22,12 +22,12 @@ const formatStatus = (status) => {
 
 const StatusRow = ({ title, status, running, detect }) => (
 	<div className="ui row">
-		<div className="three wide column">
+		<div className="five wide column header">
 			<div className="ui tiny header">
 			{ title }
 			</div>
 		</div>
-		<div className="twelve wide column">
+		<div className="eleven wide column">
 			{ (running ? 'Detecting...' : formatStatus(status)) }
 		</div>
 	</div>

@@ -10,12 +10,6 @@
   max-width: 900px;
 }
 
-.settings-layout .section-content {
-	overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .settings-layout .menu-column .menu {
   max-width: 100%;
 }
@@ -26,6 +20,16 @@
 
 .settings-layout .detect-panel {
 	margin-top: 30px;
+}
+
+.settings-layout .detect-panel .header.column > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: inherit !important;
+}
+
+.settings-layout .detect-panel .header.column {
+  max-width: 200px;
 }
 
 .settings-layout .detect-panel .detect-button {
@@ -59,4 +63,38 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.settings-layout > div,
+.settings-layout .mobile .section-content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.settings-grid-layout {
+  overflow-y: auto;
+}
+
+.settings-grid-layout .content-column {
+  height: 100%;
+}
+
+.settings-layout .mobile .main-header {
+  display: none;
+}
+
+.settings-layout .top-menu {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.settings-layout .top-menu > .dropdown,
+.settings-layout .top-menu > .dropdown > .caption {
+  display: flex;
+}
+
+.settings-layout .top-menu > i {
+  margin: 0px 5px;
 }

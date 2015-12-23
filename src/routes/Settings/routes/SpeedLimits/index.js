@@ -24,7 +24,7 @@ module.exports = {
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/SpeedLimits').default);
+			cb(null, require('../../components/SettingSection').default);
 		}, 'settings-speed-limits');
 	}
 };

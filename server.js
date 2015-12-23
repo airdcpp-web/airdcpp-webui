@@ -1,6 +1,6 @@
 var path = require('path');
 var express = require('express');
-var proxyMiddleware = require('http-proxy-middleware');
+var httpProxy = require('http-proxy');
 var compression = require('compression');
 
 var apiHost = process.argv[2] || 'localhost';
@@ -11,20 +11,18 @@ var app = express();
 
 
 // Set proxy
-var proxyOptions = {
-	onError: function (err, req, res) {
-		try {
-			res.end(err);
-		} catch(e) { }
-	},
-	
-	//onProxyReq: function (proxyReq, req, res) {
-	//	console.log(proxyReq);
-	//}
-};
+var proxy = new httpProxy.createProxyServer({
+  target: {
+    host: apiHost,
+    port: 80
+  }
+});
 
-var proxy = proxyMiddleware('ws://' + apiHost, proxyOptions);
-app.use(proxy);
+proxy.on('error', function (err, req, res) {
+	try {
+		res.end(err);
+	} catch(e) { }
+});
 
 
 // Env-specific configuration
@@ -52,7 +50,7 @@ app.get('*', function (req, res) {
 
 
 // Listen
-app.listen(port, '0.0.0.0', function (err) {
+var server = app.listen(port, '0.0.0.0', function (err) {
 	console.log('API host: ' + apiHost);
 	console.log('Server port: ' + port);
 	if (err) {
@@ -62,4 +60,9 @@ app.listen(port, '0.0.0.0', function (err) {
 
 	
 	console.log('Listening for connections');
+});
+
+server.on('upgrade', function (req, socket, head) {
+  console.log("Upgrade to websocket", req.url);
+  proxy.ws(req, socket, head);
 });

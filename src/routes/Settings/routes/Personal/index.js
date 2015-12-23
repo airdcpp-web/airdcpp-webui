@@ -12,8 +12,8 @@ module.exports = {
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
-			cb(null, require('./components/Personal').default);
+			cb(null, require('../../components/SettingSection').default);
 		}, 'settings-personal');
-	}
+	},
 };
 

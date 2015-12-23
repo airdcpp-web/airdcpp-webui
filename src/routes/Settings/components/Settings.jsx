@@ -2,45 +2,193 @@
 
 import React from 'react';
 
-import MenuItemLink from 'components/semantic/MenuItemLink';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
+import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
+
+
 import '../style.css';
+
+const menu = [
+	{
+		url: 'personal',
+		title: 'Personal',
+		icon: 'user',
+		menuItems: [
+			{ 
+				title: 'User profile', 
+				url: 'profile' 
+			},
+		]
+	}, {
+		url: 'connectivity',
+		title: 'Connectivity',
+		icon: 'signal',
+		menuItems: [
+			{ 
+				title: 'Auto detection', 
+				url: 'detection', 
+				noSave: true 
+			},
+		],
+		advancedMenuItems: [
+			{ 
+				title: 'IPv4 connectivity (manual)', 
+				url: 
+				'v4' 
+			}, {
+				title: 'IPv6 connectivity (manual)', 
+				url: 'v6' 
+			}, { 
+				title: 'Ports (manual)', 
+				url: 'ports' 
+			},
+		],
+	}, {
+		url: 'speed-limits',
+		title: 'Speed and limits',
+		icon: 'dashboard',
+		menuItems: [
+			{ 
+				title: 'Connection speed', 
+				url: 'speed' 
+			}, { 
+				title: 'Bandwidth limiting', 
+				url: 'limiter',
+			},
+		],
+		advancedMenuItems: [
+			{ 
+				title: 'Download limits', 
+				url: 'download-limits' 
+			}, { 
+				title: 'Upload limits', 
+				url: 'upload-limits' 
+			}, { 
+				title: 'Per-user limits', 
+				url: 'user-limits' 
+			},
+		],
+	}, {
+		url: 'downloads',
+		title: 'Downloads',
+		icon: 'download',
+		menuItems: [
+			{ 
+				title: 'Locations', 
+				url: 'locations' 
+			},
+		],
+		advancedMenuItems: [
+			{ 
+				title: 'Skipping options', 
+				url: 'skipping-options' 
+			}, { 
+				title: 'Search matching', 
+				url: 'search-matching' 
+			}, { 
+				title: 'Download options', 
+				url: 'download-options' 
+			}
+		],
+	}, {
+		url: 'sharing',
+		title: 'Sharing',
+		icon: 'tasks',
+		menuItems: [
+			{ 
+				title: 'Directories', 
+				url: 'directories', 
+				noSave: true, 
+				fullWidth: true 
+			}, { 
+				title: 'Share profiles', 
+				url: 'profiles', 
+				noSave: true 
+			}, { 
+				title: 'Refresh options', 
+				url: 'refresh-options' 
+			},
+		],
+		advancedMenuItems: [
+			{ 
+				title: 'Sharing options', 
+				url: 'sharing-options' 
+			}, { 
+				title: 'Hashing', 
+				url: 'hashing' 
+			},
+		],
+	}, {
+		url: 'view',
+		title: 'View',
+		icon: 'server',
+		menuItems: [
+			{ 
+				title: 'Histories', 
+				url: 'histories' 
+			},
+		],
+	}, {
+		url: 'about',
+		title: 'About',
+		icon: 'info',
+		menuItems: [
+			{ 
+				title: 'Application', 
+				url: 'application' 
+			}, { 
+				title: 'Transfer statistics', 
+				url: 'transfers' 
+			}, { 
+				title: 'Share statistics', 
+				url: 'share' 
+			}, { 
+				title: 'Hub statistics', 
+				url: 'hubs' 
+			},
+		],
+	},
+];
+
+const MainLayout = SettingsMenuDecorator(({ menuItems, children, currentMenuItem }) => {
+	const child = React.cloneElement(children, {
+		menuItems: currentMenuItem.menuItems,
+		advancedMenuItems: currentMenuItem.advancedMenuItems,
+		parent: currentMenuItem,
+		parentMenuItems: menuItems,
+	});
+
+	return (
+		<div className="ui segment settings-layout">
+			{ child }
+		</div>
+	);
+});
 
 
 const Settings = React.createClass({
-	checkChildren(props) {
-		if (!props.children) {
-			props.history.replaceState(null, '/settings/personal');
-		}
-	},
-
-	componentWillMount() {
-		this.checkChildren(this.props);
-	},
-
-	componentWillReceiveProps(nextProps) {
-		this.checkChildren(nextProps);
-	},
-
 	render() {
+		let menuItems = menu;
+		if (LoginStore.hasAccess(AccessConstants.ADMIN)) {
+			menuItems = [ ...menu, {
+				url: 'system',
+				title: 'System',
+				icon: 'server',
+				menuItems: [
+					{ 
+						title: 'Users', 
+						url: 'users', 
+						noSave: true, 
+						fullWidth: true 
+					},
+				],
+			} ];
+		}
+
 		return (
-			<div className="ui segment settings-layout">
-				<div className="ui secondary pointing menu settings top-menu">
-					<MenuItemLink url="/settings/personal" title="Personal"/>
-					<MenuItemLink url="/settings/connectivity" title="Connectivity"/>
-					<MenuItemLink url="/settings/speed-limits" title="Speed and limits"/>
-					<MenuItemLink url="/settings/downloads" title="Downloads"/>
-					<MenuItemLink url="/settings/sharing" title="Sharing"/>
-					<MenuItemLink url="/settings/view" title="View"/>
-					{ LoginStore.hasAccess(AccessConstants.ADMIN) ? <MenuItemLink url="/settings/system" title="System"/> : null }
-					<MenuItemLink url="/settings/about" title="About"/>
-				</div>
-				<div className="section-content">
-					{ this.props.children }
-				</div>
-			</div>
+			<MainLayout { ...this.props } menuItems={ menuItems }/>
 		);
 	},
 });

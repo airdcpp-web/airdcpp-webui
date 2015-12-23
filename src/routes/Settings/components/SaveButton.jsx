@@ -40,6 +40,7 @@ const SaveButton = React.createClass({
 
 		return (
 			<Button 
+				className={ this.props.className }
 				caption={ title }
 				icon={ (hasAccess && this.props.hasChanges ? 'green checkmark' : null) } 
 				loading={ this.state.saving } 

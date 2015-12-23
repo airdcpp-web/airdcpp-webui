@@ -13,7 +13,7 @@ export const LoginActions = Reflux.createActions([
 LoginActions.login.listen(function (username, password) {
 	let that = this;
 
-	SocketService.connect();
+	SocketService.connect().catch(that.failed);
 	let unsubscribe = SocketStore.listen((socket, error) => {
 		if (socket) {
 			SocketService.post(LoginConstants.LOGIN_URL, { username: username, password: password })
