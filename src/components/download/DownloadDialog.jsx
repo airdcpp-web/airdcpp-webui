@@ -17,19 +17,47 @@ import { PathList, AccordionTargets } from './DownloadTargets';
 
 import TypeConvert from 'utils/TypeConvert';
 import FileUtils from 'utils/FileUtils';
+import BrowserUtils from 'utils/BrowserUtils';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+
+import Dropdown from 'components/semantic/Dropdown';
 
 
 const MenuItem = ({ active, list, title, onClick }) => (
 	<a className={ 'item ' + (active ? 'active' : '')	} onClick={ onClick }>
 		{ title }
-
 		{ list ? (
-			<div className="ui label"> { list.length } </div>
-			) : null }
+			<div className="ui small right label"> { list.length } </div>
+		) : null }
 	</a>
+);
+
+const NormalLayout = ({ menuItems, section }) => (
+	<div className="ui grid">
+		<div className="four wide column">
+			<div className="ui vertical fluid tabular menu">
+				{ menuItems }
+			</div>
+		</div>
+		<div className="twelve wide stretched column">
+			<div className="ui segment main-content">
+				{ section.component }
+			</div>
+		</div>
+	</div>
+);
+
+const MobileLayout = ({ menuItems, section }) => (
+	<div className="">
+		<Dropdown className="selection fluid" caption={ section.name }>
+			{ menuItems }
+		</Dropdown>
+		<div className="ui segment main-content">
+			{ section.component }
+		</div>
+	</div>
 );
 
 const DownloadDialog = React.createClass({
@@ -109,15 +137,15 @@ const DownloadDialog = React.createClass({
 		this.refs.modal.hide();
 	},
 
-	getComponent() {
-		switch (this.state.active) {
-			case 'shared': return <AccordionTargets groupedPaths={ this.state.share_paths } downloadHandler={ this.handleDownload }/>;
-			case 'favorites': return <AccordionTargets groupedPaths={ this.state.favorite_paths } downloadHandler={ this.handleDownload }/>;
-			case 'history': return <PathList paths={ this.state.history_paths } downloadHandler={ this.handleDownload }/>;
-			case 'dupes': return <PathList paths={ this.state.dupe_paths } downloadHandler={ this.handleDownload }/>;
-			case 'browse': return <FileBrowserLayout initialPath={ "" } itemIcon="green download" itemIconClickHandler={ this.handleDownload }/>;
-			default: return <div/>;
-		}
+	getMenuItem(section) {
+		return (
+			<MenuItem key={ section.key } 
+				title={section.name} 
+				onClick={ () => this.setState({ active: section.key }) } 
+				active={ this.state.active === section.key }
+				list={section.list}
+			/>
+		);
 	},
 
 	render: function () {
@@ -125,19 +153,23 @@ const DownloadDialog = React.createClass({
 			{
 				name: 'Previous',
 				key: 'history',
-				list: this.state.history_paths
+				list: this.state.history_paths,
+				component: <PathList paths={ this.state.history_paths } downloadHandler={ this.handleDownload }/>
 			}, {
 				name: 'Shared',
 				key: 'shared',
-				list: this.state.share_paths
+				list: this.state.share_paths,
+				component: <AccordionTargets groupedPaths={ this.state.share_paths } downloadHandler={ this.handleDownload }/>
 			}, {
 				name: 'Favorites',
 				key: 'favorites',
-				list: this.state.favorite_paths
+				list: this.state.favorite_paths,
+				component: <AccordionTargets groupedPaths={ this.state.favorite_paths } downloadHandler={ this.handleDownload }/>
 			}, {
 				name: 'Dupes',
 				key: 'dupes',
-				list: this.state.dupe_paths
+				list: this.state.dupe_paths,
+				component: <PathList paths={ this.state.dupe_paths } downloadHandler={ this.handleDownload }/>
 			}
 		];
 
@@ -145,20 +177,14 @@ const DownloadDialog = React.createClass({
 			sections.push({
 				name: 'Browse',
 				key: 'browse',
+				component: <FileBrowserLayout initialPath={ "" } itemIcon="green download" itemIconClickHandler={ this.handleDownload }/>
 			});
 		}
 
-		const menuItems = sections.map(item => {
-			return (
-				<MenuItem key={ item.key } 
-					title={item.name} 
-					onClick={ () => this.setState({ active: item.key }) } 
-					active={ this.state.active === item.key }
-					list={item.list}
-				/>
-			);
-		}, this);
+		const section = sections.find(section => section.key === this.state.active);
+		const menuItems = sections.map(this.getMenuItem);
 
+		const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
 		return (
 			<Modal 
 				ref="modal" 
@@ -169,18 +195,10 @@ const DownloadDialog = React.createClass({
 				fullHeight={true}
 				{...this.props}
 			>
-				<div className="ui grid">
-					<div className="four wide column">
-						<div className="ui vertical fluid tabular menu">
-							{ menuItems }
-						</div>
-					</div>
-					<div className="twelve wide stretched column">
-						<div className="ui segment main-content">
-							{ this.getComponent() }
-						</div>
-					</div>
-				</div>
+				<Component
+					menuItems={ menuItems }
+					section={ section }
+				/>
 			</Modal>);
 	}
 });

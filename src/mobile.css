@@ -39,3 +39,9 @@
 	justify-content: space-around;
 	margin-top: 20px;
 }
+
+.download-dialog .dropdown a.item {
+	display: flex !important;
+	justify-content: space-between;
+	align-items: center;
+}
