@@ -18,6 +18,7 @@ const getMenuItem = (obj, parent) => {
 			key={ obj.url } 
 			url={ sectionToUrl(obj.url, parent) } 
 			title={ obj.title }
+			icon={ obj.icon }
 		/>
 	);
 };

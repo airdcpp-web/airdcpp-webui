@@ -24,9 +24,15 @@ const SaveButton = React.createClass({
 		};
 	},
 
+	toggleSaveState() {
+		this.setState({ saving: !this.state.saving });
+	},
+
 	onClick() {
-		this.setState({ saving: true });
-		this.props.saveHandler().finally(() => this.setState({ saving: false }));
+		this.toggleSaveState();
+		this.props.saveHandler()
+			.then(this.toggleSaveState)
+			.catch(this.toggleSaveState);
 	},
 
 	render: function () {
@@ -40,7 +46,7 @@ const SaveButton = React.createClass({
 
 		return (
 			<Button 
-				className={ this.props.className }
+				className={ 'save ' + this.props.className }
 				caption={ title }
 				icon={ (hasAccess && this.props.hasChanges ? 'green checkmark' : null) } 
 				loading={ this.state.saving } 

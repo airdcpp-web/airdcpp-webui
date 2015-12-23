@@ -167,7 +167,7 @@ const MainLayout = SettingsMenuDecorator(({ menuItems, children, currentMenuItem
 	);
 });
 
-
+// Only to pass menu items to the decorated component
 const Settings = React.createClass({
 	render() {
 		let menuItems = menu;

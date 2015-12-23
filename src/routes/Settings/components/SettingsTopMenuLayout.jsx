@@ -2,13 +2,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import SettingPage from './SettingPage';
-
 import Dropdown from 'components/semantic/Dropdown';
+import SaveDecorator from '../decorators/SaveDecorator';
 
 
-const SelectionMenu = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => {
-	// Don't add nesting for items to preserve Semantic"s CSS
+const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => {
+	// Don't add nesting for items to preserve Semantic's CSS
 	const hideStyle = { display: 'none' };
 	const advancedMenuStyle = !advancedMenuItems ? hideStyle : null;
 
@@ -38,31 +37,16 @@ const SelectionMenu = ({ menuItems, advancedMenuItems, currentMenuItem, parentMe
 };
 
 
-const GridLayout = React.createClass({
-	render() {
-		const { currentMenuItem, parent, children } = this.props;
-
-		const contentClassname = classNames(
-			parent.url + ' ' + currentMenuItem.url,
-			'section-content',
-		);
-
-		return (
-			<div className="mobile">
-				<SelectionMenu { ...this.props }/>
-				<div className={ contentClassname }>
-					<SettingPage 
-						saveable={ !currentMenuItem.noSave }
-						sectionId={ currentMenuItem.url } 
-						title={ currentMenuItem.title }
-						icon={ parent.icon }
-					>
-						{ children }
-					</SettingPage>
-				</div>
+const TopMenuLayout = (props) => {
+	return (
+		<div className="mobile">
+			<MenuSection { ...props }/>
+			<div className={ props.contentClassname }>
+				{ props.saveButton }
+				{ props.children }
 			</div>
-		);
-	},
-});
+		</div>
+	);
+};
 
-export default GridLayout;
+export default SaveDecorator(TopMenuLayout, 'fluid');

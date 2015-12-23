@@ -70,14 +70,20 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  margin-bottom: 5px;
 }
 
 .settings-grid-layout {
   overflow-y: auto;
 }
 
-.settings-grid-layout .content-column {
+.settings-layout .mobile .section-content {
+  padding-bottom: 5px;
+}
+
+.settings-grid-layout .section-content {
   height: 100%;
+  margin-bottom: inherit !important;
 }
 
 .settings-layout .mobile .main-header {
@@ -97,4 +103,13 @@
 
 .settings-layout .top-menu > i {
   margin: 0px 5px;
+}
+
+.settings-layout .mobile .save.button {
+  margin-bottom: 5px;
+  flex-shrink: 0;
+}
+
+.settings-layout .section-content.about .grid {
+  margin: 0px;
 }
