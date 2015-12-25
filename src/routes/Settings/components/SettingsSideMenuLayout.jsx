@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import classNames from 'classnames';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import SaveDecorator from '../decorators/SaveDecorator';

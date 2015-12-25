@@ -2,7 +2,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-
 import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
 import BrowserUtils from 'utils/BrowserUtils';
 

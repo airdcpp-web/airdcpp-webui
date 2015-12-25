@@ -111,7 +111,7 @@
 }
 
 .session-container.horizontal .menu-column .session-item span, 
-.session-layout .content span,
+.session-layout .header .content span,
 .session-container .session-header > div span {
   overflow: hidden;
   white-space: nowrap;
