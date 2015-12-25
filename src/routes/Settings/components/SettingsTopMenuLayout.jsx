@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import classNames from 'classnames';
 
 import Dropdown from 'components/semantic/Dropdown';
 import SaveDecorator from '../decorators/SaveDecorator';

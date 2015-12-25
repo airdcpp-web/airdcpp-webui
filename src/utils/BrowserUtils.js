@@ -10,10 +10,14 @@ export default {
 	},
 
 	useMobileLayout() {
-		return window.innerWidth < 700;
+		return window.innerWidth < 700 || md.phone();
 	},
 
 	preferTouch() {
 		return md.mobile();
+	},
+
+	get mobileDetect() {
+		return md;
 	},
 };

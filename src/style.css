@@ -11,27 +11,38 @@ html.ios, html.ios body {
 }
 
 @media (min-width: 700px) {
-	body {
-		background: url("../images/background.jpg") no-repeat;
+	#app {
+		background: url("../images/background_1500px.jpg") no-repeat;
 		background-size: cover;
 	}
 }
+
+@media (min-width: 1440px) {
+	#app {
+		background: url("../images/background_3460px.jpg") no-repeat;
+		background-size: cover;
+	}
+}
+
 
 .login-grid .column {
 	max-width: 650px;
 	width: 95% !important;
 }
 
-.ui.site-content {
-	height: 100%;
-}
-
-section#container-main, .login-grid, .main-layout, #authenticated-app, .pusher {
-	height: 100%;
-}
-
+section#container-main, 
+#app, 
+.login-grid, 
+.main-layout, 
+#authenticated-app, 
+.pusher,
+.ui.site-content,
 .full-height {
 	height: 100%;
+}
+
+.login-grid {
+	margin: 0px !important;
 }
 
 .ui.checkbox.floating {
