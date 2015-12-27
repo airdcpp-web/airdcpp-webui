@@ -22,24 +22,28 @@
 	margin-left: 10px;
 }
 
-.public_fixedDataTable_bodyRow.dupe.queue, 
-.public_fixedDataTable_bodyRow.dupe.queue span,
-.public_fixedDataTable_bodyRow.dupe.queue a {
+.public_fixedDataTable_bodyRow.dupe.queue.full, 
+.public_fixedDataTable_bodyRow.dupe.queue.full span,
+.public_fixedDataTable_bodyRow.dupe.queue.full a {
 	color: orange !important;
 }
 
-.public_fixedDataTable_bodyRow.dupe.share, 
-.public_fixedDataTable_bodyRow.dupe.share span,
-.public_fixedDataTable_bodyRow.dupe.share a,
- {
-	color: deeppink !important;
+.public_fixedDataTable_bodyRow.dupe.queue.partial, 
+.public_fixedDataTable_bodyRow.dupe.queue.partial span,
+.public_fixedDataTable_bodyRow.dupe.queue.partial a {
+	color: #C1933E !important;
 }
 
-.public_fixedDataTable_bodyRow.dupe.share, 
-.public_fixedDataTable_bodyRow.dupe.share span,
-.public_fixedDataTable_bodyRow.dupe.share a,
- {
-	color: deeppink !important;
+.public_fixedDataTable_bodyRow.dupe.share.full, 
+.public_fixedDataTable_bodyRow.dupe.share.full span,
+.public_fixedDataTable_bodyRow.dupe.share.full a {
+	color: fuchsia !important;
+}
+
+.public_fixedDataTable_bodyRow.dupe.share.partial, 
+.public_fixedDataTable_bodyRow.dupe.share.partial span,
+.public_fixedDataTable_bodyRow.dupe.share.partial a {
+	color: #FFA2FF !important;
 }
 
 .public_fixedDataTable_bodyRow a i:hover {
