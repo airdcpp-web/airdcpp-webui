@@ -41,7 +41,7 @@ export const RowWrapperCell = React.createClass({
 	},
 
 	render() {
-		const { columnKey, children, renderCondition, ...other } = this.props;
+		const { columnKey, children, renderCondition, rowClassNameGetter, ...other } = this.props;
 		const { rowData } = this.state;
 
 		if (!rowData) {
@@ -52,8 +52,13 @@ export const RowWrapperCell = React.createClass({
 			return null;
 		}
 
+		let className = '';
+		if (rowClassNameGetter) {
+			className = rowClassNameGetter(rowData);
+		}
+
 		return (
-			<div className="row-wrapper" {...this.props}>
+			<div className={ 'cell-wrapper ' + className } {...this.props}>
 				{ React.cloneElement(children, {
 					cellData: rowData[columnKey],
 					rowData: rowData,

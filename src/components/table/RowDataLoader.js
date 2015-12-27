@@ -4,7 +4,7 @@ import update from 'react-addons-update';
 import deepEqual from 'deep-equal';
 
 const NUMBER_OF_ROWS_PER_REQUEST = 10;
-
+const DEBUG = false;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
@@ -39,7 +39,7 @@ class RowDataLoader {
 		return updated + 1;
 	}
 
-	onItemsUpdated(items, rangeOffset) {
+	onItemsUpdated(items, rangeOffset = 0) {
 		let hasChanges = false;
 		//const oldData = this._data;
 		if (!items || items.length === 0) {
@@ -48,6 +48,10 @@ class RowDataLoader {
 			hasChanges = true;
 
 			this._initialDataReceived = false;
+
+			if (DEBUG) {
+				console.log('onItemsUpdated, cleared');
+			}
 		} else {
 			this._initialDataReceived = true;
 
@@ -61,7 +65,14 @@ class RowDataLoader {
 			}
 
 			// Update rows
-			hasChanges = items.reduce(this.updateItem.bind(this), 0) > 0 || rangeOffset !== 0;
+			const updatedCount = items.reduce(this.updateItem.bind(this), 0);
+			if (updatedCount > 0 || rangeOffset !== 0) {
+				if (DEBUG) {
+					console.log('onItemsUpdated, changed (updatedCount, rangeOffset)', updatedCount, rangeOffset);
+				}
+
+				hasChanges = true;
+			}
 		}
 
 		if (hasChanges) {
@@ -133,15 +144,18 @@ class RowDataLoader {
 		}
 
 		for (let i=0; i < rows.length; i++) {
-			//console.log('Loading', rowIndex);
-
 			const rowIndex = start+i;
-			this._data[rowIndex] = rows[i];
+			if (!deepEqual(this._data[rowIndex], rows[i])) {
+				this._data[rowIndex] = rows[i];
 
-			if (this._pendingRequest[rowIndex]) {
-				this._pendingRequest[rowIndex].forEach(f => f(rows[i]));
-				delete this._pendingRequest[rowIndex];
+				if (this._pendingRequest[rowIndex]) {
+					this._pendingRequest[rowIndex].forEach(f => f(rows[i]));
+				}
+			} else if (DEBUG) {
+				console.log('onRowsReceived, row data equals', rowIndex);
 			}
+
+			delete this._pendingRequest[rowIndex];
 		}
 	}
 }

@@ -150,26 +150,13 @@ const TableContainer = React.createClass({
 		});
 	},
 
-	rowClassNameGetter(rowIndex) {
-		if (!this.props.rowClassNameGetter) {
-			return null;
-		}
-
-		const rowData = this.props.dataLoader.getRowData(rowIndex);
-		if (!rowData) {
-			return null;
-		}
-
-		return this.props.rowClassNameGetter(rowData);
-	},
-
 	convertColumn(column) {
 		if (column.props.hideWidth > this.state.width) {
 			return null;
 		}
 
 		let { name, flexGrow, width, cell, columnKey, renderCondition } = column.props;
-		const { store } = this.props;
+		const { store, rowClassNameGetter } = this.props;
 
 		// Convert name
 		const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';
@@ -191,7 +178,11 @@ const TableContainer = React.createClass({
 			isResizable: !mobileView,
 			allowCellsRecycling: true,
 			cell: (			
-				<RowWrapperCell dataLoader={this.props.dataLoader} renderCondition={renderCondition}>
+				<RowWrapperCell 
+					dataLoader={this.props.dataLoader} 
+					renderCondition={renderCondition} 
+					rowClassNameGetter={rowClassNameGetter}
+				>
 					{ cell ? cell : <TextCell/> }
 				</RowWrapperCell>
 			),
@@ -222,7 +213,6 @@ const TableContainer = React.createClass({
 					overflowX={touchMode ? 'hidden' : 'auto'}
 					overflowY={touchMode ? 'hidden' : 'auto'}
 
-					rowClassNameGetter={this.rowClassNameGetter}
 					rowHeight={50}
 					rowsCount={this.props.store.rowCount}
 					headerHeight={50}

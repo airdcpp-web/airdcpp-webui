@@ -22,27 +22,27 @@
 	margin-left: 10px;
 }
 
-.public_fixedDataTable_bodyRow.dupe.queue.full, 
-.public_fixedDataTable_bodyRow.dupe.queue.full span,
-.public_fixedDataTable_bodyRow.dupe.queue.full a {
+.virtual-table .cell-wrapper.dupe.queue.full, 
+.virtual-table .cell-wrapper.dupe.queue.full span,
+.virtual-table .cell-wrapper.dupe.queue.full a {
 	color: orange !important;
 }
 
-.public_fixedDataTable_bodyRow.dupe.queue.partial, 
-.public_fixedDataTable_bodyRow.dupe.queue.partial span,
-.public_fixedDataTable_bodyRow.dupe.queue.partial a {
+.virtual-table .cell-wrapper.dupe.queue.partial, 
+.virtual-table .cell-wrapper.dupe.queue.partial span,
+.virtual-table .cell-wrapper.dupe.queue.partial a {
 	color: #C1933E !important;
 }
 
-.public_fixedDataTable_bodyRow.dupe.share.full, 
-.public_fixedDataTable_bodyRow.dupe.share.full span,
-.public_fixedDataTable_bodyRow.dupe.share.full a {
+.virtual-table .cell-wrapper.dupe.share.full, 
+.virtual-table .cell-wrapper.dupe.share.full span,
+.virtual-table .cell-wrapper.dupe.share.full a {
 	color: fuchsia !important;
 }
 
-.public_fixedDataTable_bodyRow.dupe.share.partial, 
-.public_fixedDataTable_bodyRow.dupe.share.partial span,
-.public_fixedDataTable_bodyRow.dupe.share.partial a {
+.virtual-table .cell-wrapper.dupe.share.partial, 
+.virtual-table .cell-wrapper.dupe.share.partial span,
+.virtual-table .cell-wrapper.dupe.share.partial a {
 	color: #FFA2FF !important;
 }
 
@@ -92,7 +92,7 @@
   flex: 1;
 }
 
-.fixedDataTableCellLayout_main .row-wrapper {
+.virtual-table .cell-wrapper {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -100,10 +100,10 @@
   padding: 5px;
 }
 
-.fixedDataTableCellLayout_main .plain.cell {
+.virtual-table .plain.cell {
   margin: 0px 5px;
 }
 
-.fixedDataTableCellLayout_main .inline.loader {
+.virtual-table .inline.loader {
 	margin: 0px 5px;
 }
