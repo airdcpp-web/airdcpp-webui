@@ -90,22 +90,6 @@ section#container-main,
 
 /* Dialogs start */
 
-.ui.breadcrumb.segment {
-	display:flex !important;
-}
-
-.ui.breadcrumb.segment > div {
-	display:flex;
-	align-items: baseline;
-}
-
-.ui.breadcrumb.segment .section {
-	text-overflow: ellipsis;
-	overflow: hidden;
-	max-width: 150px;
-	white-space: nowrap;
-}
-
 .modal.full > .content {
 	overflow-y: auto;
 	max-height: 65vh;

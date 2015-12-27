@@ -19,17 +19,20 @@ const FilelistActions = Reflux.createActions([
 ]);
 
 FilelistActions.download.listen((itemData, downloadData) => {
-	downloadData['user'] = itemData.parentEntity.user;
+	const data = {
+		user: itemData.parentEntity.user,
+		...downloadData,
+	};
 
 	if (itemData.itemInfo.type.id === 'file') {
 		const { tth, size, time } = itemData.itemInfo;
-		Object.assign(downloadData, {
+		Object.assign(data, {
 			tth,
 			size,
 			time,
 		});
 
-		SocketService.post(QueueConstants.BUNDLE_URL + '/file', downloadData)
+		SocketService.post(QueueConstants.BUNDLE_URL + '/file', data)
 			.then(FilelistActions.download.completed)
 			.catch(error => FilelistActions.download.failed(itemData, error));
 
@@ -37,8 +40,8 @@ FilelistActions.download.listen((itemData, downloadData) => {
 	}
 
 	// Directory
-	downloadData['list_path'] = itemData.itemInfo.path;
-	SocketService.post(FilelistConstants.MODULE_URL + '/download_directory', downloadData)
+	data['list_path'] = itemData.itemInfo.path;
+	SocketService.post(FilelistConstants.MODULE_URL + '/download_directory', data)
 		.then(FilelistActions.download.completed)
 		.catch(error => FilelistActions.download.failed(itemData, error));
 });

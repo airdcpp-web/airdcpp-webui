@@ -4,8 +4,8 @@ import FilelistActions from 'actions/FilelistActions';
 
 import TypeConvert from 'utils/TypeConvert';
 import Message from 'components/semantic/Message';
-import PathBreadcrumb from 'components/PathBreadcrumb';
-
+import BrowserBar from 'components/browserbar/BrowserBar';
+import { DownloadMenu } from 'components/menu/DropdownMenu';
 
 import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
@@ -112,15 +112,28 @@ const ListBrowser = React.createClass({
 		return captionText;
 	},
 
+	selectedNameFormatter(name) {
+		return (
+			<DownloadMenu 
+				caption={ name }
+				parentEntity={ this.props.item }
+				itemInfo={ this.props.item.location }
+				location={ this.props.location }
+				handler={ FilelistActions.download } 
+			/>
+		);
+	},
+
 	render() {
 		const { item, location } = this.props;
 		return (
 			<div className="filelist-browser">
-				<PathBreadcrumb 
+				<BrowserBar 
 					tokens={this._tokenizePath()}
 					separator={"/"}
 					rootPath={"/"}
 					itemClickHandler={this._handleClickDirectory}
+					selectedNameFormatter={ this.selectedNameFormatter }
 				/>
 
 				<VirtualTable

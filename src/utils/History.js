@@ -17,6 +17,7 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 
 const getOverlayState = (currentLocation, overlayId, data) => {
 	console.assert(currentLocation, 'Current location not supplied for overlay creation');
+	console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
 
 	const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
 	if (!state[overlayId]) {

@@ -1,0 +1,46 @@
+.ui.breadcrumb {
+	display:flex !important;
+}
+
+.path-navigation {
+	display: flex;
+	overflow: hidden;
+}
+
+.browserbar {
+	display: flex;
+	padding: 5px 10px !important;
+}
+
+.browserbar.overflow .path-navigation {
+	justify-content: flex-end;
+}
+
+.browserbar .path-token a {
+	margin: 3px 0px !important;
+}
+
+.browserbar .path-token.current {
+	padding: 3px 5px !important;
+	font-weight: 900;
+	font-size: 14px;
+	color: black !important;
+}
+
+.browserbar.overflow .ui.dropdown .menu {
+	left: auto !important;
+	right: 0 !important;
+}
+
+.browserbar .ui.dropdown {
+	margin-right: 0px !important;
+}
+
+.ui.breadcrumb > div {
+	display:flex;
+	align-items: baseline;
+}
+
+.browserbar .section {
+	white-space: nowrap;
+}

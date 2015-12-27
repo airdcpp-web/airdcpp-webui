@@ -6,7 +6,7 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 
-import PathBreadcrumb from 'components/PathBreadcrumb';
+import BrowserBar from 'components/browserbar/BrowserBar';
 import Message from 'components/semantic/Message';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput from 'components/semantic/ActionInput';
@@ -181,7 +181,7 @@ const FileBrowser = React.createClass({
 		return (
 			<div className="file-browser">
 				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
-				<PathBreadcrumb tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
+				<BrowserBar tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
 				<FileItemList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
 				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
