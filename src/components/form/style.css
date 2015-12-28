@@ -1,0 +1,30 @@
+.form .header {
+	margin-top: 20px;
+}
+
+.Select {
+	margin-bottom: 10px;
+}
+
+.Select-input > input {
+	padding: inherit !important;
+	border: inherit !important;
+}
+
+.Select-control {
+	padding: 2px 2px 2px 2px;
+}
+
+.Select-control > a:first-child {
+	margin-left: 5px !important;
+}
+
+.Select-placeholder {
+	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  line-height: 35px;
+  padding-top: 2px;
+}
+
+.Select--multi .Select-input {
+	margin-left: 7px !important;
+}

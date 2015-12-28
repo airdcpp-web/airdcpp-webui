@@ -16,14 +16,14 @@ LogActions.fetchInfo.listen(function () {
 	let that = this;
 	return SocketService.get(LogConstants.LOG_INFO_URL)
 		.then(that.completed)
-		.catch(this.failed);
+		.catch(that.failed);
 });
 
 LogActions.fetchMessages.listen(function () {
 	let that = this;
 	return SocketService.get(LogConstants.LOG_GET_URL + '/0')
 		.then(that.completed)
-		.catch(this.failed);
+		.catch(that.failed);
 });
 
 LogActions.clear.listen(function () {

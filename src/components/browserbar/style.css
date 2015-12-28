@@ -16,7 +16,7 @@
 	justify-content: flex-end;
 }
 
-.browserbar .path-token a {
+.browserbar .path-navigation .path-token a {
 	margin: 3px 0px !important;
 }
 
@@ -49,13 +49,19 @@
 
 @media (max-width: 700px) {
 	.browserbar .section-caption {
-		overflow: hidden;
-		text-overflow: ellipsis;
 		max-width: 150px;
-		white-space: nowrap;
+	}
+}
+
+@media (max-width: 1000) {
+	.browserbar .section-caption {
+		max-width: 200px;
 	}
 }
 
 .browserbar .section-caption {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	width: 100%;
 }

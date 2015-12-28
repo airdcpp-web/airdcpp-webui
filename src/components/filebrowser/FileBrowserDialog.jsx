@@ -61,7 +61,7 @@ const FileBrowserDialog = React.createClass({
 			>
 				<FileBrowserLayout
 					initialPath={ this.props.initialPath }
-					onDirectoryChanged={this.onDirectoryChanged}
+					onDirectoryChanged={ this.onDirectoryChanged }
 				/>
 			</Modal>);
 	}

@@ -2,6 +2,8 @@ import React from 'react';
 import SocketService from 'services/SocketService';
 import HistoryConstants from 'constants/HistoryConstants';
 
+import HistoryActions from 'actions/HistoryActions';
+
 import Autosuggest from 'react-autosuggest';
 import Button from 'components/semantic/Button';
 
@@ -56,13 +58,9 @@ export default React.createClass({
 
 	_handleSubmit() {
 		const { text } = this.state;
-		SocketService.post(HistoryConstants.HISTORY_ITEM_URL + '/' + this.props.historyId, { item: text })
-			.then(data => {
-			})
-			.catch(error => 
-				console.error('Failed to post history: ' + error)
-			);
-		console.log('Searching');
+
+		HistoryActions.add(this.props.historyId, text);
+		
 		this.setState({ 
 			suggestionsActive: false,
 		});

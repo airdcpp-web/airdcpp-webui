@@ -8,11 +8,13 @@ import { default as HistoryConstants, HistoryEnum } from 'constants/HistoryConst
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
+import HistoryActions from 'actions/HistoryActions';
+
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 
-import FileBrowserLayout from 'components/filebrowser/FileBrowserLayout';
+import DownloadFileBrowser from './DownloadFileBrowser';
 import { PathList, AccordionTargets } from './DownloadTargets';
 
 import TypeConvert from 'utils/TypeConvert';
@@ -23,6 +25,8 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import Dropdown from 'components/semantic/Dropdown';
+
+import './style.css';
 
 
 const MenuItem = ({ active, list, title, onClick }) => (
@@ -35,7 +39,7 @@ const MenuItem = ({ active, list, title, onClick }) => (
 );
 
 const NormalLayout = ({ menuItems, section }) => (
-	<div className="ui grid">
+	<div className="ui grid normal layout">
 		<div className="four wide column">
 			<div className="ui vertical fluid tabular menu">
 				{ menuItems }
@@ -50,7 +54,7 @@ const NormalLayout = ({ menuItems, section }) => (
 );
 
 const MobileLayout = ({ menuItems, section }) => (
-	<div className="">
+	<div className="mobile layout">
 		<Dropdown className="selection fluid" caption={ section.name }>
 			{ menuItems }
 		</Dropdown>
@@ -105,9 +109,11 @@ const DownloadDialog = React.createClass({
 			data['tth'] = itemInfo.tth;
 		}
 
-		SocketService.post(requestPath, data).then(data => this.setState({ 
-			dupe_paths: this.state.dupe_paths.concat(data.map(path => FileUtils.getParentPath(path, FileUtils)))
-		})).catch(error => console.error('Failed to fetch dupe paths', requestPath, error.message));
+		SocketService.post(requestPath, data)
+			.then(data => this.setState({ 
+				dupe_paths: this.state.dupe_paths.concat(data.map(path => FileUtils.getParentPath(path, FileUtils)))
+			}))
+			.catch(error => console.error('Failed to fetch dupe paths', requestPath, error.message));
 	},
 
 	componentDidMount() {
@@ -134,6 +140,7 @@ const DownloadDialog = React.createClass({
 			priority: PriorityEnum.DEFAULT
 		});
 
+		HistoryActions.add(HistoryEnum.HISTORY_DOWNLOAD_DIR, path);
 		this.refs.modal.hide();
 	},
 
@@ -177,7 +184,7 @@ const DownloadDialog = React.createClass({
 			sections.push({
 				name: 'Browse',
 				key: 'browse',
-				component: <FileBrowserLayout initialPath={ "" } itemIcon="green download" itemIconClickHandler={ this.handleDownload }/>
+				component: <DownloadFileBrowser history={ this.state.history_paths } downloadHandler={ this.handleDownload }/>
 			});
 		}
 

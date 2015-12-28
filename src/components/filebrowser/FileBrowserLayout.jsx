@@ -46,16 +46,6 @@ const FileBrowser = React.createClass({
 		initialPath: React.PropTypes.string,
 
 		/**
-		 * Possible additional icon to append after the items
-		 */
-		itemIcon: React.PropTypes.string,
-
-		/**
-		 * Function to call after clicking the selection icon. Receives the path as param.
-		 */
-		itemIconClickHandler: React.PropTypes.func,
-
-		/**
 		 * Function to call when changing the directory. Receives the path as param.
 		 */
 		onDirectoryChanged: React.PropTypes.func
@@ -88,6 +78,29 @@ const FileBrowser = React.createClass({
 		}
 	},
 
+	onFetchFailed(error) {
+		if (!this.initialFetchCompleted) {
+			// The path doesn't exists, go to root
+			this.fetchItems(this.getRootPath());
+			return;
+		}
+
+		this.setState({ 
+			error: error.message,
+			loading: false
+		});
+	},
+
+	onFetchSucceed(path, data) {
+		this.setState({ 
+			currentDirectory: path,
+			items: data,
+			loading: false
+		});
+
+		this.initialFetchCompleted = true;
+	},
+
 	fetchItems(path) {
 		this.setState({ 
 			error: null,
@@ -95,17 +108,8 @@ const FileBrowser = React.createClass({
 		});
 
 		SocketService.post(FilesystemConstants.FILESYSTEM_LIST_URL, { path: path, directories_only: false })
-			.then(data => { 
-				this.setState({ 
-					currentDirectory: path,
-					items: data,
-					loading: false
-				}); 
-			})
-			.catch(error => this.setState({ 
-				error: error.message,
-				loading: false
-			}));
+			.then(this.onFetchSucceed.bind(this, path))
+			.catch(this.onFetchFailed);
 	},
 
 	componentDidMount() {
@@ -114,16 +118,6 @@ const FileBrowser = React.createClass({
 
 	_appendDirectoryName(directoryName) {
 		return this.state.currentDirectory + directoryName + this._pathSeparator;
-
-		/*let nextPath = this.state.currentDirectory;
-		if (nextPath.length === 0) {
-			// No separator after the drive on Windows
-			nextPath += directoryName;
-		} else {
-			nextPath += directoryName + this._pathSeparator;
-		}
-
-		return nextPath;*/
 	},
 
 	_handleSelect(directoryName) {
@@ -165,7 +159,6 @@ const FileBrowser = React.createClass({
 			<div className="file-browser">
 				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
 				<BrowserBar 
-					//tokens={this._tokenizePath()} 
 					path={ this.state.currentDirectory }
 					separator={ this._pathSeparator } 
 					rootPath={ this.getRootPath() } 
@@ -175,9 +168,7 @@ const FileBrowser = React.createClass({
 				/>
 				<FileItemList 
 					items={ this.state.items } 
-					iconClickHandler={ this._onIconClick } 
 					itemClickHandler={ this._handleSelect } 
-					itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}
 				/>
 				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>

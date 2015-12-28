@@ -1,23 +1,25 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import './style.css';
 
-const Section = ({ name, onClick }) => (
+const Section = ({ caption, onClick }) => (
 	<div className="path-token">
 		<a className="section" onClick={ onClick }>
-			{ name }
+			{ caption }
 		</a>
 		<i className="right chevron icon divider"></i>
 	</div>
 );
 
-const SelectedSection = ({ selectedNameFormatter, name }) => (
+const SelectedSection = ({ selectedNameFormatter, caption, token }) => (
 	<div className="ui label current path-token section">
-		{ selectedNameFormatter(name) }
+		{ selectedNameFormatter(caption, token) }
 	</div>
 );
 
 const BrowserBar = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -43,6 +45,12 @@ const BrowserBar = React.createClass({
 		 * Current path to display
 		 */
 		path: React.PropTypes.string.isRequired,
+
+		/**
+		 * Function returning the formated element for the current directory name
+		 * Receives the caption element and path token as parameters
+		 */
+		selectedNameFormatter: React.PropTypes.func.isRequired,
 	},
 
 	getDefaultProps() {
@@ -55,10 +63,6 @@ const BrowserBar = React.createClass({
 		return {
 			overflow: false,
 		};
-	},
-
-	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.path !== this.props.path;
 	},
 
 	componentDidMount() {
@@ -101,7 +105,7 @@ const BrowserBar = React.createClass({
 			<Section 
 				key={ token + index } 
 				onClick={ () => this.onClick(token, index) }
-				name={ this.formatName(token) }
+				caption={ this.formatName(token) }
 			/>
 		);
 	},
@@ -135,7 +139,8 @@ const BrowserBar = React.createClass({
 				<SelectedSection
 					key={ current }
 					selectedNameFormatter={ this.props.selectedNameFormatter }
-					name={ this.formatName(current) }
+					caption={ this.formatName(current) }
+					token={ current }
 				/>
 			</div>
 		);

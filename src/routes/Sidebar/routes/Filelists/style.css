@@ -17,4 +17,5 @@
 
 .filelist-session {
 	height: 100%;
+	overflow: hidden;
 }

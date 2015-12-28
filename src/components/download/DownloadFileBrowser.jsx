@@ -1,0 +1,66 @@
+import React from 'react';
+
+import FileBrowserLayout from 'components/filebrowser/FileBrowserLayout';
+//import Dropdown from 'components/semantic/Dropdown';
+//import DropdownItem from 'components/semantic/DropdownItem';
+
+
+const DownloadFileBrowser = React.createClass({
+	handleDownload(path) {
+		this.refs.modal.hide();
+	},
+
+	onDirectoryChanged(path) {
+		this.setState({ currentPath: path });
+	},
+
+	getInitialState() {
+		return {
+			currentPath: this.getInitialPath,
+		};
+	},
+
+	selectedNameFormatter(caption, token) {
+		if (token.length === 0) {
+			// Drive listing on Windows isn't a good target
+			return caption;
+		}
+
+		const formatedCaption = (
+			<div className="download-handler" onClick={ () => this.props.downloadHandler(this.state.currentPath) }>
+				<i className="green download link icon"></i>
+				<a>{ caption }</a>
+			</div>
+		);
+
+		return formatedCaption;
+		/*return (
+			<Dropdown 
+				caption={ formatedCaption }
+			>
+				<DropdownItem 
+					onClick={ () => this.props.downloadHandler(this.state.currentPath) }
+				>
+					{ 'Download here' }
+				</DropdownItem>
+			</Dropdown>
+		);*/
+	},
+
+	getInitialPath() {
+		const { history } = this.props;
+		return history.length > 0 ? history[history.length-1] : '';
+	},
+
+	render: function () {
+		return (
+			<FileBrowserLayout 
+				initialPath={ this.getInitialPath() } 
+				selectedNameFormatter={ this.selectedNameFormatter }
+				onDirectoryChanged={ this.onDirectoryChanged }
+			/>
+		);
+	}
+});
+
+export default DownloadFileBrowser;

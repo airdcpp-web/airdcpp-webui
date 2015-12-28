@@ -1,0 +1,18 @@
+.download-dialog .accordion.download-targets {
+	overflow-y: auto;
+}
+
+.download-dialog .main-content,
+.download-dialog .mobile.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.download-dialog .content > div, .download-dialog .ui.grid .column, 
+.download-dialog .main-content {
+	height: 100%;
+}
+
+.download-dialog .download-handler {
+	display: flex;
+}

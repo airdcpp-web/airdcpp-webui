@@ -7,6 +7,7 @@ import Loader from 'components/semantic/Loader';
 import deepEqual from 'deep-equal';
 
 import t from 'utils/tcomb-form';
+import './style.css';
 
 const TcombForm = t.form.Form;
 

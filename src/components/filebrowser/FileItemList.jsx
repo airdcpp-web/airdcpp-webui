@@ -4,10 +4,9 @@ import { FileNameFormatter } from 'utils/IconFormat';
 import ValueFormat from 'utils/ValueFormat';
 
 
-const DirectoryCaption = ({ item, itemClickHandler, itemIcon, iconClickHandler }) => (
+const DirectoryCaption = ({ item, itemClickHandler }) => (
 	<FileNameFormatter item={ item.type } onClick={evt => itemClickHandler(item.name)}>
 		{ item.name }
-		{ itemIcon ? <i className={ itemIcon + ' link icon' } onClick={ () => iconClickHandler(item.name) }></i> : null }
 	</FileNameFormatter>
 );
 
@@ -40,11 +39,6 @@ const FileItemList = React.createClass({
 		itemClickHandler: React.PropTypes.func.isRequired,
 
 		/**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
-		iconClickHandler: React.PropTypes.func,
-
-		/**
 		 * Array of path objects to list
 		 */
 		items: React.PropTypes.array.isRequired,
@@ -73,8 +67,6 @@ const FileItemList = React.createClass({
 							<FileItem 
 								key={item.name}
 								item={item}
-								itemIcon={this.props.itemIcon} 
-								iconClickHandler={ this.props.iconClickHandler } 
 								itemClickHandler={ this.props.itemClickHandler }
 							/>) }
 					</tbody>
