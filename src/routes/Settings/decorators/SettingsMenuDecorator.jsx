@@ -12,18 +12,6 @@ const sectionToUrl = (section, parent) => {
 	return '/settings/' + section;
 };
 
-const getMenuItem = (obj, parent) => {
-	return (
-		<MenuItemLink 
-			key={ obj.url } 
-			url={ sectionToUrl(obj.url, parent) } 
-			title={ obj.title }
-			icon={ obj.icon }
-		/>
-	);
-};
-
-
 export default (Component) => {
 	const MenuDecorator = React.createClass({
 		propTypes: {
@@ -59,6 +47,25 @@ export default (Component) => {
 			return menuItems.find(this.isItemActive);
 		},
 
+		getMenuItem(obj, parent) {
+			let url = sectionToUrl(obj.url, parent);
+
+			// Browsing is smoother when the child page is loaded directly
+			// Don't use the child URL for currently active parent so that the route is detected as active correctly
+			if (obj.menuItems && this.props.location.pathname.indexOf(url) !== 0) {
+				url = sectionToUrl(obj.menuItems[0].url, obj);
+			}
+
+			return (
+				<MenuItemLink 
+					key={ url } 
+					url={ url } 
+					title={ obj.title }
+					icon={ obj.icon }
+				/>
+			);
+		},
+
 		render() {
 			const currentMenuItem = this.findMenuItem(this.props.menuItems) || this.findMenuItem(this.props.advancedMenuItems);
 			if (!currentMenuItem) {
@@ -69,7 +76,7 @@ export default (Component) => {
 				<Component 
 					{ ...this.props } 
 					currentMenuItem={ currentMenuItem } 
-					menuItemToLink={ getMenuItem }
+					menuItemToLink={ this.getMenuItem }
 				/>
 			);
 		},
