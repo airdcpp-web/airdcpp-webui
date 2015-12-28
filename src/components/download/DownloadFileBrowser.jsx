@@ -1,8 +1,6 @@
 import React from 'react';
 
 import FileBrowserLayout from 'components/filebrowser/FileBrowserLayout';
-//import Dropdown from 'components/semantic/Dropdown';
-//import DropdownItem from 'components/semantic/DropdownItem';
 
 
 const DownloadFileBrowser = React.createClass({
@@ -16,7 +14,7 @@ const DownloadFileBrowser = React.createClass({
 
 	getInitialState() {
 		return {
-			currentPath: this.getInitialPath,
+			currentPath: this.getInitialPath(),
 		};
 	},
 
@@ -34,17 +32,6 @@ const DownloadFileBrowser = React.createClass({
 		);
 
 		return formatedCaption;
-		/*return (
-			<Dropdown 
-				caption={ formatedCaption }
-			>
-				<DropdownItem 
-					onClick={ () => this.props.downloadHandler(this.state.currentPath) }
-				>
-					{ 'Download here' }
-				</DropdownItem>
-			</Dropdown>
-		);*/
 	},
 
 	getInitialPath() {
