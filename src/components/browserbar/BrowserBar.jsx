@@ -40,9 +40,9 @@ const BrowserBar = React.createClass({
 		separator: React.PropTypes.string.isRequired,
 
 		/**
-		 * Array of path objects to list
+		 * Current path to display
 		 */
-		tokens: React.PropTypes.array.isRequired,
+		path: React.PropTypes.string.isRequired,
 	},
 
 	getDefaultProps() {
@@ -55,6 +55,10 @@ const BrowserBar = React.createClass({
 		return {
 			overflow: false,
 		};
+	},
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.path !== this.props.path;
 	},
 
 	componentDidMount() {
@@ -74,56 +78,64 @@ const BrowserBar = React.createClass({
 	},
 
 	onClick(token, index) {
+		const tokens = this.tokenizePath();
 		let path = this.props.rootPath;
-		for (let i = 0; i <= index; i++) {
-			if (path.length === 0) {
-				// No separator after the drive on Windows
-				path += this.props.tokens[i];
-			} else {
-				path += this.props.tokens[i] + this.props.separator;
-			}
+
+		for (let i = 1; i <= index; i++) {
+			path += tokens[i] + this.props.separator;
 		}
 
 		this.props.itemClickHandler(path);
 	},
 
-	formatToken(token, index) {
-		if (index === this.props.tokens.length-1) {
-			return null;
-		}
+	formatName(token) {
+		return (
+			<div className="section-caption">
+				{ this.props.rootPath === token ? this.props.rootName : token }
+			</div>
+		);
+	},
 
+	formatSection(token, index) {
 		return (
 			<Section 
 				key={ token + index } 
 				onClick={ () => this.onClick(token, index) }
-				name={ token }
+				name={ this.formatName(token) }
 			/>
 		);
 	},
 
-	render: function () {
-		const { tokens } = this.props;
+	tokenizePath() {
+		const { path, separator, rootPath } = this.props;
 
-		const items = this.props.tokens.map(this.formatToken);
+		return [ rootPath, ...path.split(separator).filter(t => t.length != 0) ];
+	},
+
+	parsePath() {
+		const tokens = this.tokenizePath();
+		return {
+			current: tokens[tokens.length-1],
+			tokens: tokens.slice(0, tokens.length-1),
+		};
+	},
+
+	render: function () {
+		const { current, tokens } = this.parsePath();
 
 		const className = this.state.overflow ? 'overflow' : '';
-		const selectedToken = tokens[tokens.length-1];
 		return (
 			<div className={ 'ui segment browserbar ' + className }>
 				<div className="path-navigation" ref="wrapper">
 					<div className="ui breadcrumb" ref="breadcrumb">
-						<Section 
-							key={ this.props.rootPath } 
-							onClick={ () => this.props.itemClickHandler(this.props.rootPath) }
-							name={ this.props.rootName }
-						/>
-						{items}
+						{ tokens.map(this.formatSection) }
 					</div>
 				</div>
+				
 				<SelectedSection
-					key={ selectedToken }
+					key={ current }
 					selectedNameFormatter={ this.props.selectedNameFormatter }
-					name={ selectedToken }
+					name={ this.formatName(current) }
 				/>
 			</div>
 		);

@@ -5,22 +5,25 @@ import ValueFormat from 'utils/ValueFormat';
 
 
 const DirectoryCaption = ({ item, itemClickHandler, itemIcon, iconClickHandler }) => (
-	<span>
-		<a onClick={evt => itemClickHandler(item.name)}>
-			{ item.name }
-		</a>
+	<FileNameFormatter item={ item.type } onClick={evt => itemClickHandler(item.name)}>
+		{ item.name }
 		{ itemIcon ? <i className={ itemIcon + ' link icon' } onClick={ () => iconClickHandler(item.name) }></i> : null }
-	</span>
+	</FileNameFormatter>
+);
+
+const FileCaption = ({ item }) => (
+	<FileNameFormatter item={ item.type }>
+		{ item.name }
+	</FileNameFormatter>
 );
 
 const FileItem = ({ item, ...other }) => {
 	const isFile = item.type.id === 'file';
+	const Component = isFile ? FileCaption : DirectoryCaption;
 	return (
 		<tr>
 			<td>
-				<FileNameFormatter item={ item.type }>
-					{ !isFile ? <DirectoryCaption item={ item } { ...other }/> : <span>{ item.name }</span> }
-				</FileNameFormatter>
+				<Component item={ item } { ...other }/>
 			</td>
 			<td>
 				{ isFile ? ValueFormat.formatSize(item.size) : null }

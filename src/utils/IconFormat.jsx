@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import TypeConvert from 'utils/TypeConvert';
 
 export const FileNameFormatter = React.createClass({
@@ -26,10 +28,21 @@ export const FileNameFormatter = React.createClass({
 	},
 
 	render: function () {
+		const { onClick } = this.props;
+		const iconClass = classNames(
+			'icon large',
+			{ 'link': onClick },
+			this.typeToIcon(this.props.item),
+		);
+
 		return (
-			<div>
-			<i className={ 'icon large ' + this.typeToIcon(this.props.item) }/>
-				{ this.props.children }
+			<div onClick={ onClick }>
+				<i className={ iconClass }/>
+				{ onClick ? (
+					<a>
+						{ this.props.children }
+					</a>
+				) : this.props.children }
 			</div>
 		);
 	}

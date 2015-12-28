@@ -66,7 +66,7 @@ const FileBrowser = React.createClass({
 		this._isWindows = LoginStore.systemInfo.platform == 'windows';
 
 		return {
-			currentDirectory: this._convertPath(this.props.initialPath),
+			currentDirectory: this.props.initialPath.length === 0 ? this.getRootPath() : this.props.initialPath,
 			items: [],
 			loading: true,
 			error: null
@@ -75,7 +75,8 @@ const FileBrowser = React.createClass({
 
 	getDefaultProps() {
 		return {
-			initialPath: ''
+			initialPath: '',
+			selectedNameFormatter: (element) => element,
 		};
 	},
 
@@ -111,24 +112,10 @@ const FileBrowser = React.createClass({
 		this.fetchItems(this.state.currentDirectory);
 	},
 
-	_tokenizePath() {
-		let path = this.state.currentDirectory;
-		if (path.length === 0) {
-			return [];
-		}
-		
-		let tokens = [];
-		if (this._isWindows) {
-			// Leave the slashes in drive ID intact on Windows
-			tokens = [ path.substring(0,3) ];
-			path = path.substring(3);
-		}
-
-		return [ tokens, ...path.split(this._pathSeparator) ].filter(el => el.length != 0);
-	},
-
 	_appendDirectoryName(directoryName) {
-		let nextPath = this.state.currentDirectory;
+		return this.state.currentDirectory + directoryName + this._pathSeparator;
+
+		/*let nextPath = this.state.currentDirectory;
 		if (nextPath.length === 0) {
 			// No separator after the drive on Windows
 			nextPath += directoryName;
@@ -136,7 +123,7 @@ const FileBrowser = React.createClass({
 			nextPath += directoryName + this._pathSeparator;
 		}
 
-		return nextPath;
+		return nextPath;*/
 	},
 
 	_handleSelect(directoryName) {
@@ -163,12 +150,8 @@ const FileBrowser = React.createClass({
 			}));
 	},
 
-	_convertPath(path) {
-		if (path == '' && !this._isWindows) {
-			return '/';
-		}
-
-		return path;
+	getRootPath() {
+		return this._isWindows ? '' : '/';
 	},
 
 	render: function () {
@@ -181,8 +164,21 @@ const FileBrowser = React.createClass({
 		return (
 			<div className="file-browser">
 				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
-				<BrowserBar tokens={this._tokenizePath()} separator={this._pathSeparator} rootPath={this._convertPath('')} rootName={rootName} itemClickHandler={this.fetchItems}/>
-				<FileItemList items={ this.state.items } iconClickHandler={ this._onIconClick } itemClickHandler={ this._handleSelect } itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}/>
+				<BrowserBar 
+					//tokens={this._tokenizePath()} 
+					path={ this.state.currentDirectory }
+					separator={ this._pathSeparator } 
+					rootPath={ this.getRootPath() } 
+					rootName={ rootName } 
+					itemClickHandler={ this.fetchItems }
+					selectedNameFormatter={ this.props.selectedNameFormatter }
+				/>
+				<FileItemList 
+					items={ this.state.items } 
+					iconClickHandler={ this._onIconClick } 
+					itemClickHandler={ this._handleSelect } 
+					itemIcon={ this.state.currentDirectory.length === 0 ? null : this.props.itemIcon}
+				/>
 				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
 	);}

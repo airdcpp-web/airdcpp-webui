@@ -1,4 +1,4 @@
-.ui.breadcrumb {
+.path-navigation .breadcrumb {
 	display:flex !important;
 }
 
@@ -25,6 +25,7 @@
 	font-weight: 900;
 	font-size: 14px;
 	color: black !important;
+	margin: 0px !important;
 }
 
 .browserbar.overflow .ui.dropdown .menu {
@@ -34,13 +35,27 @@
 
 .browserbar .ui.dropdown {
 	margin-right: 0px !important;
+	display: flex;
 }
 
-.ui.breadcrumb > div {
+.browserbar .path-token {
 	display:flex;
 	align-items: baseline;
 }
 
-.browserbar .section {
-	white-space: nowrap;
+.browserbar .section > div {
+	width: 100% !important;
+}
+
+@media (max-width: 700px) {
+	.browserbar .section-caption {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 150px;
+		white-space: nowrap;
+	}
+}
+
+.browserbar .section-caption {
+	width: 100%;
 }

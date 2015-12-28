@@ -44,6 +44,10 @@ const Dropdown = React.createClass({
 	},
 
 	init() {
+		if (!this.isMounted()) {
+			return;
+		}
+
 		const dom = ReactDOM.findDOMNode(this);
 
 		const settings = {

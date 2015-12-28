@@ -31,11 +31,6 @@ const ListBrowser = React.createClass({
 		}
 	},*/
 
-	_tokenizePath() {
-		let path = this.props.item.location.path;
-		return path.split('/').filter(el => el.length != 0);
-	},
-
 	_rowClassNameGetter(rowData) {
 		return TypeConvert.dupeToStringType(rowData.dupe);
 	},
@@ -112,10 +107,10 @@ const ListBrowser = React.createClass({
 		return captionText;
 	},
 
-	selectedNameFormatter(name) {
+	selectedNameFormatter(caption) {
 		return (
 			<DownloadMenu 
-				caption={ name }
+				caption={ caption }
 				parentEntity={ this.props.item }
 				itemInfo={ this.props.item.location }
 				location={ this.props.location }
@@ -129,18 +124,18 @@ const ListBrowser = React.createClass({
 		return (
 			<div className="filelist-browser">
 				<BrowserBar 
-					tokens={this._tokenizePath()}
-					separator={"/"}
-					rootPath={"/"}
-					itemClickHandler={this._handleClickDirectory}
+					path={ item.location.path }
+					separator="/"
+					rootPath="/"
+					itemClickHandler={ this._handleClickDirectory }
 					selectedNameFormatter={ this.selectedNameFormatter }
 				/>
 
 				<VirtualTable
-					emptyRowsNodeGetter={this.emptyRowsNodeGetter}
+					emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 					rowClassNameGetter={ this._rowClassNameGetter }
-					store={FilelistViewStore}
-					entityId={item.id}
+					store={ FilelistViewStore }
+					entityId={ item.id }
 					viewId={ item.location.path }
 					sessionStore={ FilelistSessionStore }
 				>
