@@ -6,6 +6,10 @@ module.exports = {
 			cb(null, [ {
 				path: 'session/:id', 
 				component: require('./components/HubSession').default, 
+				childRoutes: [ {
+					path: 'users', 
+					component: require('./components/HubUserTable').default, 
+				} ]
 			}, {
 				path: 'new', 
 				component: require('./components/HubNew').default,

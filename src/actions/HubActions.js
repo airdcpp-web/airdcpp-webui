@@ -42,21 +42,21 @@ HubActions.fetchSessions.listen(function () {
 
 HubActions.password.listen(function (hub, password) {
 	let that = this;
-	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/password', { password: password })
+	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/password', { password: password })
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.redirect.listen(function (hub) {
 	let that = this;
-	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/redirect')
+	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/redirect')
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.favorite.listen(function (hub) {
 	let that = this;
-	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/favorite')
+	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/favorite')
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
@@ -77,7 +77,7 @@ HubActions.favorite.failed.listen(function (hub, error) {
 
 HubActions.reconnect.listen(function (hub) {
 	let that = this;
-	SocketService.post(HubConstants.HUB_SESSION_URL + '/' + hub.id + '/reconnect')
+	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/reconnect')
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -90,7 +90,7 @@ HubActions.createSession.listen(function (location, hubUrl) {
 	}
 
 	let that = this;
-	SocketService.post(HubConstants.HUB_SESSION_URL, {
+	SocketService.post(HubConstants.SESSION_URL, {
 		hub_url: hubUrl,
 	})
 		.then(that.completed.bind(that, location))
@@ -110,7 +110,7 @@ HubActions.createSession.failed.listen(function (error) {
 
 HubActions.removeSession.listen(function (id) {
 	let that = this;
-	SocketService.delete(HubConstants.HUB_SESSION_URL + '/' + id)
+	SocketService.delete(HubConstants.SESSION_URL + '/' + id)
 		.then(that.completed.bind(that, id))
 		.catch(that.failed.bind(that, id));
 });
@@ -122,4 +122,4 @@ HubActions.removeSession.failed.listen(function (id, error) {
 	});
 });
 
-export default ChatActionDecorator(HubActions, HubConstants.HUB_SESSION_URL);
+export default ChatActionDecorator(HubActions, HubConstants.SESSION_URL);

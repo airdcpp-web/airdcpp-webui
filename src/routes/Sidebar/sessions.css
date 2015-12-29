@@ -131,3 +131,45 @@
 .session-container.horizontal .menu-column .ui.menu .item>.label {
 	margin-left: 0px;
 }
+
+.session-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /*padding: 5px 5px 1px 5px;*/
+  padding: 8px !important;
+  flex: 0 0 100%;
+  margin-top: 7px !important;
+}
+
+.session-footer > div {
+  /*flex: 1;*/
+}
+
+.session-footer .info-grid {
+  font-size: small;
+  color: grey;
+  display: flex;
+  /*width: 100%;*/
+  flex: 1;
+}
+
+.session-footer .info-grid > div {
+  flex: 1;
+}
+
+.session-footer .info-grid > div > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.session-footer .ui.checkbox {
+  min-height: inherit !important;
+}
+
+.footer.divider {
+  display: none;
+  margin-top: 8px;
+  margin-bottom: 0px;
+}

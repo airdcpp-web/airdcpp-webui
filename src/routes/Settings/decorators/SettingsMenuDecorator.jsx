@@ -16,7 +16,7 @@ export default (Component) => {
 	const MenuDecorator = React.createClass({
 		propTypes: {
 			parent: React.PropTypes.object,
-			menuItems: React.PropTypes.array.isRequired,
+			menuItems: React.PropTypes.array, // required
 			advancedMenuItems: React.PropTypes.array,
 		},
 

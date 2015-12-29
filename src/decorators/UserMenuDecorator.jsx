@@ -2,6 +2,7 @@ import React from 'react';
 
 import UserActions from 'actions/UserActions';
 import FileUtils from 'utils/FileUtils';
+import { UserIconFormatter } from 'utils/IconFormat';
 
 export default function (Component) {
 	const UserMenu = ({ text, userIcon, directory, user, ...other }) => {
@@ -10,12 +11,24 @@ export default function (Component) {
 			nicks = user.nicks ? user.nicks : user.nick;
 		}
 
-		const caption = (userIcon ? 
+		/*const caption = (userIcon ? 
 			<div>
 				<i className="blue user icon"/>
 				{ nicks }
 			</div>
-		 : nicks);
+		 : nicks);*/
+
+		let caption = nicks;
+		if (userIcon) {
+			caption = (
+				<div className="user-caption">
+					<UserIconFormatter size="large" flags={ user.flags }/>
+					{ nicks }
+				</div>
+			);
+
+			//caption = <UserIconFormatter flags={ user.flags }/>;
+		}
 
 		// There are no items at the moment that work with our own user
 		if (user.flags.indexOf('me') !== -1 || user.flags.indexOf('hidden') !== -1) {
@@ -27,7 +40,15 @@ export default function (Component) {
 			directory: FileUtils.getFilePath(directory)
 		};
 
-		return <Component caption={ caption } actions={ UserActions } itemData={ data } { ...other }/>;
+		return (
+			<Component 
+				{ ...other }
+				className="user-menu"
+				caption={ caption } 
+				actions={ UserActions } 
+				itemData={ data }
+			/>
+		);
 	};
 
 	UserMenu.defaultProps = {

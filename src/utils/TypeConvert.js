@@ -15,6 +15,10 @@ export default {
 	},
 
 	userOnlineStatusToColor: function (flags) {
+		if (flags.indexOf('bot') != -1) {
+			return 'blue';
+		}
+
 		if (flags.indexOf('offline') != -1) {
 			return 'lightgrey';
 		}

@@ -35,6 +35,10 @@ const Format = {
 	},
 
 	formatConnection: function (bytes) {
+		if (bytes === 0) {
+			return null;
+		}
+
 		let bits = bytes*8;
 		let i = 0;
 

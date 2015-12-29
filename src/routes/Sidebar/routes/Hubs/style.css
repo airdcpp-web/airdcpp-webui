@@ -6,3 +6,25 @@
 .hub-action-prompt .header {
 	margin: 0 0 1rem !important;
 }
+
+.hub.session .virtual-table {
+	flex: 1;
+}
+
+.hub.session .cell-wrapper.tag,
+.hub.session .cell-wrapper.nick,
+.hub.session .cell-wrapper.description,
+.hub.session .cell-wrapper.share_size {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hub.session .cell-wrapper.nick.op {
+	color: orange;
+}
+
+.hub.session .cell-wrapper.nick.me {
+	color: green;
+  margin-left: 25px;
+}

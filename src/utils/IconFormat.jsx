@@ -3,62 +3,54 @@ import classNames from 'classnames';
 
 import TypeConvert from 'utils/TypeConvert';
 
-export const FileNameFormatter = React.createClass({
-	fileToIcon: function (name) {
-		switch (name) {
-			case 'audio': return 'file outline audio';
-			case 'compressed': return 'file outline archive';
-			case 'document': return 'edit';
-			case 'executable': return 'browser';
-			case 'picture': return 'file outline image';
-			case 'video': return 'file outline video';
-			default: return 'file outline';
-		}
-	},
-
-	typeToIcon: function (item) {
-		switch (item.id) {
-			case 'directory': return 'file outline yellow folder';
-			case 'file': return this.fileToIcon(item.content_type);
-			case 'drive_fixed': return 'grey disk outline';
-			case 'drive_remote': return 'grey server';
-			case 'removable': return 'grey external share';
-			default: return 'file outline';
-		}
-	},
-
-	render: function () {
-		const { onClick } = this.props;
-		const iconClass = classNames(
-			'icon large',
-			{ 'link': onClick },
-			this.typeToIcon(this.props.item),
-		);
-
-		return (
-			<div onClick={ onClick }>
-				<i className={ iconClass }/>
-				{ onClick ? (
-					<a>
-						{ this.props.children }
-					</a>
-				) : this.props.children }
-			</div>
-		);
+const fileToIcon = (name) => {
+	switch (name) {
+		case 'audio': return 'file outline audio';
+		case 'compressed': return 'file outline archive';
+		case 'document': return 'edit';
+		case 'executable': return 'browser';
+		case 'picture': return 'file outline image';
+		case 'video': return 'file outline video';
+		default: return 'file outline';
 	}
-});
+};
 
-export const IpFormatter = React.createClass({
-	render: function () {
-		const { country_id } = this.props.item;
-		return (
-			<div>
-			<div className={ 'ui flag ' + (country_id.length === 0 ? 'icon grey ' : country_id.toLowerCase()) }/>
-			{ this.props.item.str }
-			</div>
-		);
+const fileItemTypeToIcon = (item) => {
+	switch (item.id) {
+		case 'directory': return 'file outline yellow folder';
+		case 'file': return fileToIcon(item.content_type);
+		case 'drive_fixed': return 'grey disk outline';
+		case 'drive_remote': return 'grey server';
+		case 'removable': return 'grey external share';
+		default: return 'file outline';
 	}
-});
+};
+
+export const FileNameFormatter = ({ onClick, item, children }) => {
+	const iconClass = classNames(
+		'icon large',
+		{ 'link': onClick },
+		fileItemTypeToIcon(item),
+	);
+
+	return (
+		<div onClick={ onClick }>
+			<i className={ iconClass }/>
+			{ onClick ? (
+				<a>
+					{ children }
+				</a>
+			) : children }
+		</div>
+	);
+};
+
+export const IpFormatter = ({ item }) => (
+	<div className="ip flag">
+		<i className={ 'ui flag ' + item.country_id.toLowerCase() }/>
+		{ item.str }
+	</div>
+);
 
 export const UserIconFormatter = React.createClass({
 	propTypes: {
@@ -81,6 +73,10 @@ export const UserIconFormatter = React.createClass({
 
 		if (flags.indexOf('op') > -1) {
 			return 'yellow privacy';
+		}
+
+		if (flags.indexOf('me') > -1) {
+			return 'blue star';
 		}
 
 		return null;

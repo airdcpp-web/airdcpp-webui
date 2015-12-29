@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TableActionMenu } from 'components/menu/DropdownMenu';
 import ValueFormat from 'utils/ValueFormat';
-import { FileNameFormatter } from 'utils/IconFormat';
+import { FileNameFormatter, IpFormatter } from 'utils/IconFormat';
 import { TableDownloadMenu } from 'components/menu/DropdownMenu';
 import Checkbox from 'components/semantic/Checkbox';
 
@@ -56,6 +56,10 @@ export const AbbreviatedDurationCell = ({ cellData }) => (
 	<span className="plain abbr-duration cell">
 		{ ValueFormat.formatAbbreviatedDuration(cellData) }
 	</span>
+);
+
+export const IpCell = ({ cellData }) => (
+	<IpFormatter item={ cellData }/>
 );
 
 export const ConnectionCell = ({ cellData }) => (

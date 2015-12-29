@@ -52,9 +52,9 @@ export const RowWrapperCell = React.createClass({
 			return null;
 		}
 
-		let className = '';
+		let className = columnKey;
 		if (rowClassNameGetter) {
-			className = rowClassNameGetter(rowData);
+			className += ' ' + rowClassNameGetter(rowData);
 		}
 
 		return (

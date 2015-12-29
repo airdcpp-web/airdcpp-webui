@@ -64,6 +64,8 @@
 
 .table-dropdown {
 	line-height: 21px;
+	display: flex;
+	align-items: center;
 }
 
 .table-dropdown:hover, .public_fixedDataTableCell_main a:hover {
@@ -78,12 +80,16 @@
     margin: 0px;
 }
 
-.table-dropdown i {
+/*.table-dropdown i {
 	float: left;
 }
 
 .table-dropdown > div {
 	display: flex;
+}*/
+
+.table-dropdown > div {
+	flex: 1;
 }
 
 .table-dropdown span {

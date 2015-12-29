@@ -95,6 +95,10 @@
 	color: steelblue !important;
 }
 
+.chat-message.op .message-author-name {
+	color: orange !important;
+}
+
 .chat-message.me .message-author-name {
 	color: black !important;
 }
