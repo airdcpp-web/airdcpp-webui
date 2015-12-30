@@ -104,7 +104,7 @@ export default function (Component) {
 				});*/
 			}
 
-			if (!items) {
+			if (items.length === 0) {
 				if (this.props.button) {
 					return null;
 				}

@@ -19,6 +19,9 @@ const menu = [
 			{ 
 				title: 'User profile', 
 				url: 'profile' 
+			}, { 
+				title: 'Away mode', 
+				url: 'away' 
 			},
 		]
 	}, {

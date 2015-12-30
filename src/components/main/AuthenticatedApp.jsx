@@ -34,8 +34,23 @@ const showSideBar = (props) => {
 
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext, SetContainerSize ],
+	changeAwayState(away) {
+		this.away = away;
+		LoginActions.setAway(away);
+	},
 
-	initContent() {
+	resetActivityTimer() {
+		if (this.away) {
+			this.changeAwayState(false);
+		}
+
+		clearTimeout(this.activityTimeout);
+		this.activityTimeout = setTimeout(() => this.changeAwayState(true), this.state.awayIdleTime*60*1000);
+	},
+
+	onSocketAuthenticated() {
+		this.addActivityHandlers();
+
 		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
 			PrivateChatActions.fetchSessions();
 		}
@@ -55,7 +70,7 @@ const AuthenticatedApp = React.createClass({
 
 	componentWillMount() {
 		if (this.state.socketAuthenticated) {
-			this.initContent();
+			this.onSocketAuthenticated();
 		}
 
 		if (showSideBar(this.props)) {
@@ -73,11 +88,27 @@ const AuthenticatedApp = React.createClass({
 		}
 	},
 
+	removeActivityHandlers() {
+		document.onmousemove = null;
+		document.onkeypress = null;
+
+		clearTimeout(this.activityTimeout);
+	},
+
+	addActivityHandlers() {
+		document.onmousemove = this.resetActivityTimer;
+		document.onkeypress = this.resetActivityTimer;
+
+		this.resetActivityTimer();
+	},
+
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
 			// Reconnect (but not too fast)
 			console.log('Socket closed, attempting to reconnect in 2 seconds');
 			setTimeout(() => LoginActions.connect(this.state.token), 2000);
+
+			this.removeActivityHandlers();
 		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
@@ -90,8 +121,12 @@ const AuthenticatedApp = React.createClass({
 				LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
 				'/login'
 			);
+
+			this.away = false;
+
+			this.removeActivityHandlers();
 		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
-			this.initContent();
+			this.onSocketAuthenticated();
 		}
 	},
 

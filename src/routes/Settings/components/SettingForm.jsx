@@ -74,7 +74,7 @@ const SettingForm = React.createClass({
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = BrowseField;
 		} else if (sourceItem.type === 'long_text') {
-			fieldOptions['type'] = 'textfield';
+			fieldOptions['type'] = 'textarea';
 		}
 
 		// Enum select field?

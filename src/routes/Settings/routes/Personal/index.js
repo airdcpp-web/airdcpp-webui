@@ -6,6 +6,9 @@ module.exports = {
 			cb(null, [ {
 				path: 'profile', 
 				component: require('./components/UserProfilePage').default, 
+			}, {
+				path: 'away', 
+				component: require('./components/AwayPage').default, 
 			} ]);
 		}, 'settings-personal-children');
 	},

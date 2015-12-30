@@ -34,7 +34,8 @@ export default Reflux.createStore({
 			token: this._token,
 			user: this._user,
 			socketAuthenticated: this._socketAuthenticated,
-			userLoggedIn: this._user !== null
+			userLoggedIn: this._user !== null,
+			awayIdleTime: this._awayIdleTime,
 		};
 	},
 
@@ -43,6 +44,8 @@ export default Reflux.createStore({
 		this._token = res.token;
 		this._user = res.user;
 		this._systemInfo = res.system;
+		this._awayIdleTime = res.away_idle_time;
+
 		this._lastError = null;
 		this._socketAuthenticated = true;
 
@@ -50,6 +53,7 @@ export default Reflux.createStore({
 		this.saveProperty('auth_token', res.token);
 		this.saveProperty('web_user', res.user);
 		this.saveProperty('system_info', this._systemInfo);
+		this.saveProperty('away_idle_time', this._awayIdleTime);
 
 		this.trigger(this.getState());
 	},

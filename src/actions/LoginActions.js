@@ -8,7 +8,16 @@ export const LoginActions = Reflux.createActions([
 	{ 'login': { asyncResult: true } },
 	{ 'connect': { asyncResult: true } },
 	{ 'logout': { asyncResult: true } },
+	{ 'setAway': { asyncResult: true } },
 ]);
+
+
+LoginActions.setAway.listen(function (away) {
+	let that = this;
+	return SocketService.post(LoginConstants.AWAY_URL, { away })
+		.then(that.completed)
+		.catch(this.failed);
+});
 
 LoginActions.login.listen(function (username, password) {
 	let that = this;
@@ -16,7 +25,11 @@ LoginActions.login.listen(function (username, password) {
 	SocketService.connect().catch(that.failed);
 	let unsubscribe = SocketStore.listen((socket, error) => {
 		if (socket) {
-			SocketService.post(LoginConstants.LOGIN_URL, { username: username, password: password })
+			SocketService.post(LoginConstants.LOGIN_URL, { 
+				username, 
+				password,
+				user_session: true,
+			})
 				.then(that.completed)
 				.catch(that.failed);
 		} else {

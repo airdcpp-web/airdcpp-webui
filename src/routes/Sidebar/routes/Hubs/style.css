@@ -25,10 +25,10 @@
 	color: steelblue;
 }
 
-.hub.session .cell-wrapper.nick.me {
-	/*color: green;*/
+/*.hub.session .cell-wrapper.nick.me {
+	color: green;
   margin-left: 25px;
-}
+}*/
 
 .hub.session .session-footer .userlist-button > a,
 .hub.session .session-footer .userlist-button > div {
