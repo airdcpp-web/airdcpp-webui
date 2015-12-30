@@ -50,7 +50,7 @@ const PriorityMenu = React.createClass({
 		}
 
 		return (
-			<TableDropdown caption={ caption }>
+			<TableDropdown caption={ caption } className="priority-menu">
 				{ Object.keys(PriorityEnum.properties).map((prioKey) => this.getPriorityListItem(PriorityEnum.properties[prioKey])) }
 			</TableDropdown>
 		);

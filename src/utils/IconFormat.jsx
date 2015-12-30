@@ -34,7 +34,7 @@ export const FileNameFormatter = ({ onClick, item, children }) => {
 	);
 
 	return (
-		<div onClick={ onClick }>
+		<div className="file-name" onClick={ onClick }>
 			<i className={ iconClass }/>
 			{ onClick ? (
 				<a>

@@ -43,7 +43,7 @@ const TableDropdown = React.createClass({
 	render: function () {
 		// Caption
 		const trigger = (
-			<div className="table-dropdown">
+			<div className="trigger">
 				<i className="large angle down icon"></i>
 				{ this.props.linkCaption ? this.props.caption : null }
 			</div>);
@@ -55,12 +55,12 @@ const TableDropdown = React.createClass({
 		};
 
 		return (
-			<div>
+			<div className="table-dropdown">
 				<Popup className={ 'basic ' + this.props.className } trigger={trigger} settings={ settings } ref="dropdownMenu">
 					<div className="ui text menu vertical">
-					<div className="ui dropdown item">
-						{ this.props.children.map(this.addCloseHandler) }
-					</div>
+						<div className="ui dropdown item">
+							{ this.props.children.map(this.addCloseHandler) }
+						</div>
 					</div>
 				</Popup>
 				{ this.props.linkCaption ? null : this.props.caption }
