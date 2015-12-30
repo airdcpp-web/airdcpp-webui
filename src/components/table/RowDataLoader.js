@@ -105,6 +105,10 @@ class RowDataLoader {
 		return true;
 	}
 
+	removePendingRequests(rowIndex, onDataLoaded) {
+		delete this._pendingRequest[rowIndex];
+	}
+
 	_queueRequestFor(rowIndex, onDataLoaded) {
 		const rowBase = rowIndex - (rowIndex % NUMBER_OF_ROWS_PER_REQUEST);
 

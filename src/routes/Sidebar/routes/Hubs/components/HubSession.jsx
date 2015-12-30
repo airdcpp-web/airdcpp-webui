@@ -45,7 +45,29 @@ const GridItem = ({ label, text }) => (
 	</div>
 );
 
+const getStorageKey = (props) => {
+	return 'view_userlist_' + props.item.id;
+};
+
+const checkList = (props) => {
+	const showList = sessionStorage.getItem(getStorageKey(props));
+	if (showList) {
+		History.pushSidebar(props.location, '/hubs/session/' + props.item.id + '/users');
+	}
+};
+
 const HubSession = React.createClass({
+	componentWillMount() {
+		checkList(this.props);
+	},
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.item.id !== this.props.item.id) {
+			checkList(nextProps);
+		}
+	},
+
+
 	handleSend(message) {
 		HubActions.sendMessage(this.props.item.id, message);
 	},
@@ -83,6 +105,7 @@ const HubSession = React.createClass({
 			newUrl += '/users';
 		}
 
+		sessionStorage.setItem(getStorageKey(this.props), !this.props.children);
 		History.pushSidebar(this.props.location, newUrl);
 	},
 
@@ -90,11 +113,6 @@ const HubSession = React.createClass({
 		const { item } = this.props;
 		const users = item.identity.user_count;
 		const shared = item.identity.share_size;
-
-		let shareCaption = ValueFormat.formatSize(shared);
-		if (window.innerWidth > 900) {
-			shareCaption += ' (' + ValueFormat.formatSize(shared / users) + '/user)';
-		}
 
 		return (
 			<div className="hub chat session">
@@ -111,7 +129,7 @@ const HubSession = React.createClass({
 				<div className="session-footer">
 					<div className="info-grid ui">
 						<GridItem text={ users + ' users'}/>
-						<GridItem text={ shareCaption }/>
+						{ window.innerWidth > 700 ? <GridItem text={ ValueFormat.formatSize(shared) + ' (' + ValueFormat.formatSize(shared / users) + '/user)' }/> : null }
 						<div className="userlist-button">
 							<Checkbox
 								className=""
