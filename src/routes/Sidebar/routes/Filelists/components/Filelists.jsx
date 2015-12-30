@@ -36,6 +36,7 @@ const Filelists = React.createClass({
 				newButtonCaption="Open new"
 				disableSideMenu={true}
 				editAccess={ AccessConstants.FILELISTS_EDIT }
+				actions={ FilelistActions }
 
 				{ ...UserItemHandlerDecorator(ItemHandler, [ 'message' ]) }
 			>

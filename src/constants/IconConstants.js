@@ -19,4 +19,6 @@ export default {
 
 	PAUSE: 'blue pause',
 	PLAY: 'green play',
+
+	CLEAR: 'blue erase',
 };

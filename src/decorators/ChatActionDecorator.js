@@ -3,12 +3,19 @@ import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
 
 import NotificationActions from 'actions/NotificationActions';
+import IconConstants from 'constants/IconConstants';
 
-export default function (actions, sessionUrl) {
+export default function (actions, sessionUrl, editAccess) {
 	const ChatActions = Reflux.createActions([
 		{ 'fetchMessages': { asyncResult: true } },
 		{ 'sendMessage': { asyncResult: true } },
 		{ 'setRead': { asyncResult: true } },
+		{ 'clear': { 
+			asyncResult: true ,
+			displayName: 'Clear chat',
+			access: editAccess,
+			icon: IconConstants.CLEAR },
+		},
 	]);
 
 	ChatActions.fetchMessages.listen(function (id) {
@@ -38,6 +45,13 @@ export default function (actions, sessionUrl) {
 
 	ChatActions.sendMessage.failed.listen(function (id, error) {
 		NotificationActions.apiError('Failed to send chat message', error, id);
+	});
+
+	ChatActions.clear.listen(function (session) {
+		let that = this;
+		SocketService.post(sessionUrl + '/' + session.id + '/clear')
+			.then(that.completed.bind(that, session))
+			.catch(that.failed.bind(that, session));
 	});
 
 	return Object.assign(actions, ChatActions);

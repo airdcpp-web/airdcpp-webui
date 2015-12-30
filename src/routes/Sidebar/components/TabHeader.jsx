@@ -5,7 +5,7 @@ import Button from 'components/semantic/Button';
 
 const TabHeader = React.createClass({
 	propTypes: {
-		buttonClickHandler: React.PropTypes.func.isRequired,
+		buttonClickHandler: React.PropTypes.func,
 	},
 
 	getDefaultProps() {
@@ -22,8 +22,8 @@ const TabHeader = React.createClass({
 				className="tab-header"
 				component={ buttonClickHandler ? (
 						<Button
-							caption="Close"
-							onClick={this.props.buttonClickHandler}
+							caption={ this.props.buttonCaption }
+							onClick={ this.props.buttonClickHandler }
 						/>
 					) : null
 				}

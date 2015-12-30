@@ -32,15 +32,17 @@ const TopMenu = ({ parentMenuItems }) => (
 );
 
 const Content = ({ contentClassname, currentMenuItem, parent, saveButton, children }) => (
-	<div className={ 'ui segment thirteen wide stretched column ' + contentClassname }>
-		<LayoutHeader
-			className="settings-page-header"
-			title={ currentMenuItem.title }
-			icon={ parent.icon + ' green' }
-			component={ saveButton }
-		/>
-		<div className="">
-			{ children }
+	<div className={ 'thirteen wide stretched column ' + contentClassname }>
+		<div className="ui segment">
+			<LayoutHeader
+				className="settings-page-header"
+				title={ currentMenuItem.title }
+				icon={ parent.icon + ' green' }
+				component={ saveButton }
+			/>
+			<div className="">
+				{ children }
+			</div>
 		</div>
 	</div>
 );

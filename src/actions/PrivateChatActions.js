@@ -5,24 +5,19 @@ import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+
 import NotificationActions from 'actions/NotificationActions';
+import AccessConstants from 'constants/AccessConstants';
+
 import ChatActionDecorator from 'decorators/ChatActionDecorator';
+import SessionActionDecorator from 'decorators/SessionActionDecorator';
+
 
 const PrivateChatActions = Reflux.createActions([
-	{ 'fetchSessions': { asyncResult: true } },
 	{ 'createSession': { asyncResult: true } },
-	{ 'removeSession': { asyncResult: true } },
 	'connectCCPM',
 	'disconnectCCPM',
-	'sessionChanged'
 ]);
-
-PrivateChatActions.fetchSessions.listen(function () {
-	let that = this;
-	SocketService.get(PrivateChatConstants.SESSIONS_URL)
-		.then(that.completed)
-		.catch(that.failed);
-});
 
 PrivateChatActions.connectCCPM.listen(function (cid) {
 	let that = this;
@@ -64,15 +59,6 @@ PrivateChatActions.createSession.failed.listen(function (error) {
 	NotificationActions.apiError('Failed to create chat session', error);
 });
 
-PrivateChatActions.removeSession.listen(function (cid) {
-	let that = this;
-	SocketService.delete(PrivateChatConstants.SESSION_URL + '/' + cid)
-		.then(that.completed)
-		.catch(that.failed.bind(that, cid));
-});
-
-PrivateChatActions.removeSession.failed.listen(function (cid, error) {
-	NotificationActions.apiError('Failed to remove chat session', error, cid);
-});
-
-export default ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL);
+export default SessionActionDecorator(
+	ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL), PrivateChatConstants.MODULE_URL, AccessConstants.PRIVATE_CHAT_EDIT
+);

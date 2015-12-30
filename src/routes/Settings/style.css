@@ -83,7 +83,7 @@
 
 .settings-grid-layout .section-content {
   height: 100%;
-  margin-bottom: inherit !important;
+  padding-bottom: 2px;
 }
 
 .settings-layout .mobile .main-header {

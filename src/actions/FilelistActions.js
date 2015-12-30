@@ -9,13 +9,14 @@ import History from 'utils/History';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
+import SessionActionDecorator from 'decorators/SessionActionDecorator';
+import AccessConstants from 'constants/AccessConstants';
+
+
 const FilelistActions = Reflux.createActions([
-	{ 'fetchSessions': { asyncResult: true } },
 	{ 'createSession': { asyncResult: true } },
-	{ 'removeSession': { asyncResult: true } },
 	{ 'changeDirectory': { asyncResult: true } },
 	{ 'download': { asyncResult: true } },
-	'sessionChanged',
 ]);
 
 FilelistActions.download.listen((itemData, downloadData) => {
@@ -51,13 +52,6 @@ FilelistActions.download.failed.listen((itemData, error) => {
 		title: itemData.itemInfo.name,
 		message: 'Failed to queue the item: ' + error.message,
 	});
-});
-
-FilelistActions.fetchSessions.listen(function () {
-	let that = this;
-	SocketService.get(FilelistConstants.SESSIONS_URL)
-			.then(that.completed)
-			.catch(that.failed);
 });
 
 FilelistActions.changeDirectory.listen(function (cid, path) {
@@ -101,18 +95,4 @@ FilelistActions.createSession.failed.listen(function (error) {
 	});
 });
 
-FilelistActions.removeSession.listen(function (cid) {
-	let that = this;
-	SocketService.delete(FilelistConstants.SESSION_URL + '/' + cid)
-		.then(that.completed)
-		.catch(that.failed);
-});
-
-FilelistActions.removeSession.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to remove filelist',
-		message: error.message,
-	});
-});
-
-export default FilelistActions;
+export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELIST_EDIT);

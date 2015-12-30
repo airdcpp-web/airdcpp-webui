@@ -23,14 +23,16 @@ export default (ItemHandler, itemMenuIds) => {
 			return <UserIconFormatter size="large" flags={session.user.flags} />;
 		},
 
-		itemHeaderGetter(session, location) {
+		itemHeaderGetter(session, location, actionMenu) {
 			const { user } = session;
 			return (
 				<UserMenu 
 					location={ location }
 					user={ user } 
 					ids={ itemMenuIds }
-				/>
+				>
+					{ actionMenu }
+				</UserMenu>
 			);
 		},
 	};

@@ -6,16 +6,16 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 import HubSessionStore from 'stores/HubSessionStore';
 import NotificationActions from 'actions/NotificationActions';
+
 import ChatActionDecorator from 'decorators/ChatActionDecorator';
+import SessionActionDecorator from 'decorators/SessionActionDecorator';
 
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
 
 const HubActions = Reflux.createActions([
-	{ 'fetchSessions': { asyncResult: true } },
 	{ 'createSession': { asyncResult: true } },
-	{ 'removeSession': { asyncResult: true } },
 	{ 'redirect': { asyncResult: true } },
 	{ 'password': { asyncResult: true } },
 	{ 'reconnect': { 
@@ -30,15 +30,7 @@ const HubActions = Reflux.createActions([
 		displayName: 'Add to favorites', 
 		icon: IconConstants.FAVORITE } 
 	},
-	'sessionChanged',
 ]);
-
-HubActions.fetchSessions.listen(function () {
-	let that = this;
-	SocketService.get(HubConstants.HUB_SESSIONS_URL)
-		.then(that.completed)
-		.catch(that.failed);
-});
 
 HubActions.password.listen(function (hub, password) {
 	let that = this;
@@ -108,18 +100,6 @@ HubActions.createSession.failed.listen(function (error) {
 	});
 });
 
-HubActions.removeSession.listen(function (id) {
-	let that = this;
-	SocketService.delete(HubConstants.SESSION_URL + '/' + id)
-		.then(that.completed.bind(that, id))
-		.catch(that.failed.bind(that, id));
-});
-
-HubActions.removeSession.failed.listen(function (id, error) {
-	NotificationActions.error({ 
-		title: 'Failed to remove hub session',
-		message: error.message,
-	});
-});
-
-export default ChatActionDecorator(HubActions, HubConstants.SESSION_URL);
+export default SessionActionDecorator(
+	ChatActionDecorator(HubActions, HubConstants.SESSION_URL, AccessConstants.HUBS_EDIT), HubConstants.HUB_MODULE_URL, AccessConstants.HUBS_EDIT
+);

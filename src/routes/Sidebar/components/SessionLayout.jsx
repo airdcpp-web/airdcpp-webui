@@ -8,6 +8,7 @@ import SideMenuLayout from './SideMenuLayout';
 
 import '../sessions.css';
 
+import { ActionMenu } from 'components/menu/DropdownMenu';
 import SessionNewButton from './SessionNewButton';
 import SessionMenuItem from './SessionMenuItem';
 import Message from 'components/semantic/Message';
@@ -69,9 +70,9 @@ const SessionLayout = React.createClass({
 		itemStatusGetter: React.PropTypes.func.isRequired,
 
 		/**
-		 * Function receiving an item object that is called when the close button is pressed
+		 * Session actions (should contain 'removeSession')
 		 */
-		itemCloseHandler: React.PropTypes.func.isRequired,
+		actions: React.PropTypes.object.isRequired,
 
 		/**
 		 * Item ID that is currently active (if any)
@@ -227,13 +228,15 @@ const SessionLayout = React.createClass({
 		// Menu items
 		const menuItems = this.props.items.map(this.getMenuItem);
 
+		const { activeItem } = this.state;
+
 		// Children
 		let children = this.props.children;
 		if (History.getSidebarData(this.props.location).pending) {
 			children = <Loader text="Waiting for server response"/>;
-		} else if (this.state.activeItem) {
+		} else if (activeItem) {
 			children = React.cloneElement(children, { 
-				item: this.state.activeItem 
+				item: activeItem 
 			});
 		} else if (this.props.activeId) {
 			children = <Loader/>;
@@ -251,6 +254,15 @@ const SessionLayout = React.createClass({
 			/>
 		) : null;
 
+		const actionMenu = (
+			<ActionMenu 
+				location={ location }
+				actions={ this.props.actions }
+				itemData={ activeItem }
+				ids={ [ 'removeSession' ] }
+			/>
+		);
+
 		//const Component = TopMenuLayout;
 		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
 		return (
@@ -258,8 +270,8 @@ const SessionLayout = React.createClass({
 				itemIconGetter={ this.props.itemIconGetter }
 				itemHeaderGetter={ this.props.itemHeaderGetter }
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
-				itemCloseHandler={ hasEditAccess ? () => this.props.itemCloseHandler(this.state.activeItem) : null }
-				activeItem={ this.state.activeItem }
+				actionMenu={ actionMenu }
+				activeItem={ activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
 
 				newButton={ newButton }

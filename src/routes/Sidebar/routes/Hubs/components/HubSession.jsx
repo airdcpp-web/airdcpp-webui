@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-//import Button from 'components/semantic/Button';
+import Button from 'components/semantic/Button';
 import Checkbox from 'components/semantic/Checkbox';
 import History from 'utils/History';
 import ValueFormat from 'utils/ValueFormat';
@@ -39,8 +39,8 @@ import '../style.css';
 
 const GridItem = ({ label, text }) => (
 	<div className="grid-item">
-		<div className="ui">
-			{ label + ': ' + text }
+		<div className="item-inner">
+			{ text }
 		</div>
 	</div>
 );
@@ -90,6 +90,12 @@ const HubSession = React.createClass({
 		const { item } = this.props;
 		const users = item.identity.user_count;
 		const shared = item.identity.share_size;
+
+		let shareCaption = ValueFormat.formatSize(shared);
+		if (window.innerWidth > 900) {
+			shareCaption += ' (' + ValueFormat.formatSize(shared / users) + '/user)';
+		}
+
 		return (
 			<div className="hub chat session">
 				{ this.getMessage() }
@@ -102,18 +108,20 @@ const HubSession = React.createClass({
 					/>
 				) }
 				<div className="ui footer divider"/>
-				<div className="ui segment session-footer">
+				<div className="session-footer">
 					<div className="info-grid ui">
-						<GridItem label="Users" text={ users }/>
-						<GridItem label="Share" text={ ValueFormat.formatSize(shared) + ' (' + ValueFormat.formatSize(shared / users) + '/user)' }/>
+						<GridItem text={ users + ' users'}/>
+						<GridItem text={ shareCaption }/>
+						<div className="userlist-button">
+							<Checkbox
+								className=""
+								type="toggle"
+								caption="User list"
+								onChange={ this.onClickUsers }
+								checked={ this.props.children ? true : false }
+							/>
+						</div>
 					</div>
-					<Checkbox
-						className=""
-						type="slider"
-						caption="User list"
-						onChange={ this.onClickUsers }
-						checked={ this.props.children ? true : false }
-					/>
 				</div>
 			</div>
 		);

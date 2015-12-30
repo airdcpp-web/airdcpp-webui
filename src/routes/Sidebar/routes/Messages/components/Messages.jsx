@@ -30,6 +30,7 @@ const Messages = React.createClass({
 				newButtonCaption="New session"
 				unreadInfoStore={ PrivateChatSessionStore }
 				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
+				actions={ PrivateChatActions }
 
 				{ ...UserItemHandlerDecorator(ItemHandler, [ 'browse' ]) }
 			>

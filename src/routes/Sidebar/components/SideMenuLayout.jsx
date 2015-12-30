@@ -14,7 +14,7 @@ const SideMenuLayout = React.createClass({
 	render() {
 		const { activeItem, menuItems, 
 			itemIconGetter, itemHeaderGetter, itemDescriptionGetter, 
-			itemCloseHandler, location 
+			actionMenu, location 
 		} = this.props;
 
 		const newButton = this.props.newButton ? React.cloneElement(this.props.newButton, { 
@@ -36,10 +36,12 @@ const SideMenuLayout = React.createClass({
 						{ activeItem ? (
 						<TabHeader
 							icon={ itemIconGetter(activeItem) }
-							title={ itemHeaderGetter(activeItem, location) }
-							buttonClickHandler={ itemCloseHandler }
+							title={ itemHeaderGetter(activeItem, location, actionMenu) }
+							//buttonClickHandler={ () => this.props.newButton }
+							//buttonCaption="User list"
 							subHeader={ itemDescriptionGetter(activeItem) }
 						/>) : null }
+						<div className="ui divider"/>
 						{ this.props.children }
 					</div>
 				</div>

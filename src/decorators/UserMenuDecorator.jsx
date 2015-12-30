@@ -11,13 +11,6 @@ export default function (Component) {
 			nicks = user.nicks ? user.nicks : user.nick;
 		}
 
-		/*const caption = (userIcon ? 
-			<div>
-				<i className="blue user icon"/>
-				{ nicks }
-			</div>
-		 : nicks);*/
-
 		let caption = nicks;
 		if (userIcon) {
 			caption = (
@@ -26,8 +19,6 @@ export default function (Component) {
 					{ nicks }
 				</div>
 			);
-
-			//caption = <UserIconFormatter flags={ user.flags }/>;
 		}
 
 		// There are no items at the moment that work with our own user

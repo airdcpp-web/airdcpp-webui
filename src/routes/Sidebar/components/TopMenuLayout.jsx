@@ -21,18 +21,11 @@ const SessionDropdown = ({ menuItems, newButton, unreadInfoStore }) => {
 	);
 };
 
-const ItemHeader = ({ itemIconGetter, itemHeaderGetter, location, activeItem }) => (
+const ItemHeader = ({ itemIconGetter, itemHeaderGetter, location, activeItem, actionMenu }) => (
 	<div className="session-header">
 		{ itemIconGetter(activeItem) }
-		{ itemHeaderGetter(activeItem, location) }
+		{ itemHeaderGetter(activeItem, location, actionMenu) }
 	</div>
-);
-
-const CloseButton = ({ itemCloseHandler }) => (
-	<a onClick={ itemCloseHandler } className="item close-button">
-		<i className="grey remove icon"/>
-		Close
-	</a>
 );
 
 const TopMenuLayout = React.createClass({
@@ -44,17 +37,14 @@ const TopMenuLayout = React.createClass({
 	},
 
 	render() {
-		const { activeItem, itemCloseHandler } = this.props;
-
 		const content = this.props.children;
 		return (
 			<div className="session-container vertical">
 				<div className="ui main menu menu-bar">
 					<div className="content-left">
 						<SessionDropdown { ...this.props }/>
-						{ activeItem ? <ItemHeader { ...this.props }/> : null }
+						{ this.props.activeItem ? <ItemHeader { ...this.props }/> : null }
 					</div>
-					{ activeItem && itemCloseHandler ? <CloseButton { ...this.props }/> : null }
 				</div>
 				<div className="session-layout">
 					{ content }
