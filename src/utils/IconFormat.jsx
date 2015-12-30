@@ -116,13 +116,9 @@ export const HubIconFormatter = React.createClass({
 	},
 
 	getCornerIcon() {
-		/*const {identity} = this.props.hub;
-		if (flags.indexOf("bot") > -1) {
-			return "setting";
-		}
-
-		if (flags.indexOf("op") > -1) {
-			return "yellow privacy";
+		/*const { hub } = this.props;
+		if (hub.hub_url.indexOf('adcs') === 0 || hub.hub_url.indexOf('dchubs') === 0) {
+			return 'yellow lock';
 		}*/
 
 		return null;

@@ -1,6 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import Linkify from 'react-linkify';
+
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
 import HubSessionStore from 'stores/HubSessionStore';
@@ -23,7 +25,11 @@ const ItemHandler = {
 	},
 
 	itemDescriptionGetter(session) {
-		return session.identity.description;
+		return (
+			<Linkify properties={{ target: '_blank' }}>
+				{ session.identity.description }
+			</Linkify>
+		);
 	},
 
 	itemIconGetter(session) {

@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 
-import Button from 'components/semantic/Button';
 import Checkbox from 'components/semantic/Checkbox';
 import History from 'utils/History';
 import ValueFormat from 'utils/ValueFormat';
@@ -16,25 +15,6 @@ import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
 
 import '../style.css';
-
-/*export const FileNameFormatter = ({ onClick, item, children }) => {
-	const iconClass = classNames(
-		'icon large',
-		{ 'link': onClick },
-		fileItemTypeToIcon(item),
-	);
-
-	return (
-		<div onClick={ onClick }>
-			<i className={ iconClass }/>
-			{ onClick ? (
-				<a>
-					{ children }
-				</a>
-			) : children }
-		</div>
-	);
-};*/
 
 
 const GridItem = ({ label, text }) => (

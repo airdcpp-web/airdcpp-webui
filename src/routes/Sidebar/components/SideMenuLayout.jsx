@@ -37,8 +37,6 @@ const SideMenuLayout = React.createClass({
 						<TabHeader
 							icon={ itemIconGetter(activeItem) }
 							title={ itemHeaderGetter(activeItem, location, actionMenu) }
-							//buttonClickHandler={ () => this.props.newButton }
-							//buttonCaption="User list"
 							subHeader={ itemDescriptionGetter(activeItem) }
 						/>) : null }
 						<div className="ui divider"/>
