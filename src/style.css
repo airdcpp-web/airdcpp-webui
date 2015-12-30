@@ -49,7 +49,9 @@ section#container-main,
 	margin: 10px 0px;
 }
 
-
+.user-menu .icon-caption {
+	display: flex;
+}
 
 
 /* Layout header start */

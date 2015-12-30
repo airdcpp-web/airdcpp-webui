@@ -14,8 +14,8 @@ export default function (Component) {
 		let caption = nicks;
 		if (userIcon) {
 			caption = (
-				<div className="user-caption">
-					<UserIconFormatter size="large" flags={ user.flags }/>
+				<div className="icon-caption">
+					{ userIcon === 'simple' ? <i className="blue user icon"/> : <UserIconFormatter size="large" flags={ user.flags }/> }
 					{ nicks }
 				</div>
 			);
@@ -65,6 +65,10 @@ export default function (Component) {
 		 */
 		location: React.PropTypes.object.isRequired,
 
+		/**
+		 * No icon is added by default
+		 * Set the 'simple' to use a single color icon for all users
+		 */
 		userIcon: React.PropTypes.bool,
 
 		/**

@@ -55,8 +55,13 @@ const TableDropdown = React.createClass({
 		};
 
 		return (
-			<div className="table-dropdown">
-				<Popup className={ 'basic ' + this.props.className } trigger={trigger} settings={ settings } ref="dropdownMenu">
+			<div className={ 'table-dropdown ' + this.props.className }>
+				<Popup 
+					className="basic" 
+					trigger={ trigger } 
+					settings={ settings } 
+					ref="dropdownMenu"
+				>
 					<div className="ui text menu vertical">
 						<div className="ui dropdown item">
 							{ this.props.children.map(this.addCloseHandler) }
