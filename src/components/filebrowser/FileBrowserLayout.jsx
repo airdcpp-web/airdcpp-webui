@@ -107,7 +107,7 @@ const FileBrowser = React.createClass({
 			loading: true
 		});
 
-		SocketService.post(FilesystemConstants.FILESYSTEM_LIST_URL, { path: path, directories_only: false })
+		SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
 			.then(this.onFetchSucceed.bind(this, path))
 			.catch(this.onFetchFailed);
 	},
@@ -137,7 +137,7 @@ const FileBrowser = React.createClass({
 		});
 
 		const newPath = this.state.currentDirectory + directoryName + this._pathSeparator;
-		SocketService.post(FilesystemConstants.FILESYSTEM_DIRECTORY_URL, { path: newPath })
+		SocketService.post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
 			.then(data => this.fetchItems(this.state.currentDirectory))
 			.catch(error => this.setState({ 
 				error: error.message

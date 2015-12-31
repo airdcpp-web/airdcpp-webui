@@ -1,7 +1,7 @@
-const FILESYSTEM_MODULE_URL = 'filesystem/v0';
+const MODULE_URL = 'filesystem/v0';
 export default {
-	FILESYSTEM_MODULE_URL: FILESYSTEM_MODULE_URL,
-	FILESYSTEM_LIST_URL: FILESYSTEM_MODULE_URL + '/list_items',
-	FILESYSTEM_DIRECTORY_URL: FILESYSTEM_MODULE_URL + '/directory'
+	MODULE_URL: MODULE_URL,
+	LIST_URL: MODULE_URL + '/list_items',
+	DIRECTORY_URL: MODULE_URL + '/directory'
 }
 ;

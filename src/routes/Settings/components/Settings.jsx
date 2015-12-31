@@ -126,7 +126,7 @@ const menu = [
 	}, {
 		url: 'view',
 		title: 'View',
-		icon: 'server',
+		icon: 'browser',
 		menuItems: [
 			{ 
 				title: 'Histories', 
@@ -178,7 +178,7 @@ const Settings = React.createClass({
 			menuItems = [ ...menu, {
 				url: 'system',
 				title: 'System',
-				icon: 'server',
+				icon: 'settings',
 				menuItems: [
 					{ 
 						title: 'Users', 

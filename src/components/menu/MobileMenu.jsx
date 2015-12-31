@@ -12,6 +12,7 @@ import LoginActions from 'actions/LoginActions';
 import TransferStats from 'components/TransferStats';
 import PerformanceTools from './PerformanceTools';
 import TouchIcon from './TouchIcon';
+import AwayIcon from './AwayIcon';
 
 
 const LogoutItem = { 
@@ -67,6 +68,7 @@ const MobileMenu = React.createClass({
 				{ getIconMenuItem(this.logout, LogoutItem) }
 				<div className="actions">
 					<TransferStats className="ui centered inverted mini list"/>
+					<AwayIcon/>
 					<TouchIcon/>
 					{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
 				</div>

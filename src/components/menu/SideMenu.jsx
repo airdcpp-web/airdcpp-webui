@@ -7,6 +7,7 @@ import History from 'utils/History';
 import TransferStats from 'components/TransferStats';
 import PerformanceTools from './PerformanceTools';
 import TouchIcon from './TouchIcon';
+import AwayIcon from './AwayIcon';
 
 import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
 import { getIconMenuItem } from './MenuItem';
@@ -44,6 +45,7 @@ const SideMenu = React.createClass({
 					<TransferStats className="ui centered inverted mini list"/>
 				</div>
 				<div className="touch-icon">
+					<AwayIcon/>
 					<TouchIcon/>
 					{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
 				</div>

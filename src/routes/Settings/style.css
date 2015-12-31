@@ -105,6 +105,10 @@
   margin: 0px 5px;
 }
 
+.settings-layout .grid-layout .top-menu i {
+  display: none;
+}
+
 .settings-layout .mobile .save.button {
   margin-bottom: 5px;
   flex-shrink: 0;

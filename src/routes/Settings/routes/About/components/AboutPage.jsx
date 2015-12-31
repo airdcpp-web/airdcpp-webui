@@ -31,4 +31,4 @@ const AboutPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(AboutPage, SystemConstants.SYSTEM_STATS_URL, null, 5);
+export default StatisticsPageDecorator(AboutPage, SystemConstants.STATS_URL, null, 5);

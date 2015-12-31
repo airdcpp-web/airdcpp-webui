@@ -47,7 +47,7 @@ export default (Component) => {
 			return menuItems.find(this.isItemActive);
 		},
 
-		getMenuItem(obj, parent) {
+		getMenuItem(obj, parent, showIcon) {
 			let url = sectionToUrl(obj.url, parent);
 
 			// Browsing is smoother when the child page is loaded directly
@@ -61,7 +61,7 @@ export default (Component) => {
 					key={ url } 
 					url={ url } 
 					title={ obj.title }
-					icon={ obj.icon }
+					icon={ 'green ' + obj.icon }
 				/>
 			);
 		},

@@ -16,6 +16,7 @@ export default Reflux.createStore({
 		this._token = this.loadProperty('auth_token');
 		this._user = this.loadProperty('web_user');
 		this._systemInfo = this.loadProperty('system_info');
+		this._awayIdleTime = this.loadProperty('away_idle_time');
 
 		this._lastError = null;
 		this._socketAuthenticated = false;

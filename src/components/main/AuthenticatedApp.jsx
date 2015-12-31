@@ -40,12 +40,18 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	resetActivityTimer() {
+		invariant(this.state.awayIdleTime, 'Away idle period not set');
+		if (!this.state.awayIdleTime || this.state.awayIdleTime === 0) {
+			return;
+		}
+
 		if (this.away) {
 			this.changeAwayState(false);
 		}
 
 		clearTimeout(this.activityTimeout);
 		this.activityTimeout = setTimeout(() => this.changeAwayState(true), this.state.awayIdleTime*60*1000);
+		//this.activityTimeout = setTimeout(() => this.changeAwayState(true), 3000);
 	},
 
 	onSocketAuthenticated() {

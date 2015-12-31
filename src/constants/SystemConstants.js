@@ -1,5 +1,14 @@
-const SYSTEM_MODULE_URL = 'system/v0';
+const MODULE_URL = 'system/v0';
+
+export const AwayEnum = {
+	AWAY_OFF: 'off',
+	AWAY_IDLE: 'idle',
+	AWAY_MANUAL: 'manual',
+};
+
 export default {
-	SYSTEM_MODULE_URL: SYSTEM_MODULE_URL,
-	SYSTEM_STATS_URL: SYSTEM_MODULE_URL + '/stats',
+	MODULE_URL: MODULE_URL,
+	STATS_URL: MODULE_URL + '/stats',
+
+	AWAY_STATE: 'away_state',
 };
