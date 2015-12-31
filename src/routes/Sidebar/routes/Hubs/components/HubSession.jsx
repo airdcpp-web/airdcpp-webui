@@ -6,6 +6,7 @@ import History from 'utils/History';
 import ValueFormat from 'utils/ValueFormat';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
+import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 
 import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
@@ -16,14 +17,6 @@ import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
 
 import '../style.css';
 
-
-const GridItem = ({ label, text }) => (
-	<div className="grid-item">
-		<div className="item-inner">
-			{ text }
-		</div>
-	</div>
-);
 
 const getStorageKey = (props) => {
 	return 'view_userlist_' + props.item.id;
@@ -105,22 +98,18 @@ const HubSession = React.createClass({
 						chatAccess={ AccessConstants.HUBS_SEND }
 					/>
 				) }
-				<div className="ui footer divider"/>
-				<div className="session-footer">
-					<div className="info-grid ui">
-						<GridItem text={ users + ' users'}/>
-						{ window.innerWidth > 700 ? <GridItem text={ ValueFormat.formatSize(shared) + ' (' + ValueFormat.formatSize(shared / users) + '/user)' }/> : null }
-						<div className="userlist-button">
-							<Checkbox
-								className=""
-								type="toggle"
-								caption="User list"
-								onChange={ this.onClickUsers }
-								checked={ this.props.children ? true : false }
-							/>
-						</div>
+				<SessionFooter>
+					<FooterItem text={ users + ' users'}/>
+					{ window.innerWidth > 700 ? <FooterItem text={ ValueFormat.formatSize(shared) + ' (' + ValueFormat.formatSize(shared / users) + '/user)' }/> : null }
+					<div className="userlist-button">
+						<Checkbox
+							type="toggle"
+							caption="User list"
+							onChange={ this.onClickUsers }
+							checked={ this.props.children ? true : false }
+						/>
 					</div>
-				</div>
+				</SessionFooter>
 			</div>
 		);
 	},

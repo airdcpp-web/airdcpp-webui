@@ -53,6 +53,10 @@ section#container-main,
 	display: flex;
 }
 
+.inline-loader > .loader {
+	margin-right: 5px !important;
+}
+
 
 /* Layout header start */
 

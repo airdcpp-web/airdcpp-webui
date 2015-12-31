@@ -3,6 +3,7 @@ import React from 'react';
 import ShareActions from 'actions/ShareActions';
 import { RefreshStateEnum } from 'constants/ShareRootConstants';
 import ValueFormat from 'utils/ValueFormat';
+import Loader from 'components/semantic/Loader';
 
 const RefreshCell = React.createClass({
 	componentDidMount() {
@@ -37,10 +38,7 @@ const RefreshCell = React.createClass({
 		}
 
 		return (
-			<div>
-				<div className="ui active inline small loader"></div>
-				{ state.str }
-			</div>
+			<Loader size="small" inline={ true } text={ state.str }/>
 		);
 	}
 });

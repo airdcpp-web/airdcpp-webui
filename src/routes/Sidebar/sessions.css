@@ -128,16 +128,8 @@
 	margin-left: 0px;
 }
 
-.session-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1px 5px 1px 5px;
-  flex: 0 0 100%;
-  margin-top: 7px !important;
-}
-
 .session-footer .info-grid {
+  margin-top: 7px !important;
   font-size: small;
   color: grey;
   display: flex;
@@ -152,7 +144,7 @@
   min-height: inherit !important;
 }
 
-.footer.divider {
+.session-footer .divider {
   margin-top: 8px;
   margin-bottom: 0px;
 }

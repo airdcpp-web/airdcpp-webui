@@ -1,4 +1,11 @@
 const MODULE_URL = 'private_chat/v0';
+
+export const CCPMEnum = {
+	DISCONNECTED: 'disconnected',
+	CONNECTING: 'connecting',
+	CONNECTED: 'connected',
+};
+
 export default {
 	MODULE_URL: MODULE_URL,
 	SESSIONS_URL: MODULE_URL + '/sessions',
