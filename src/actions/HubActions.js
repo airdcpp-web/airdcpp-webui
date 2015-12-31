@@ -101,5 +101,5 @@ HubActions.createSession.failed.listen(function (error) {
 });
 
 export default SessionActionDecorator(
-	ChatActionDecorator(HubActions, HubConstants.SESSION_URL, AccessConstants.HUBS_EDIT), HubConstants.HUB_MODULE_URL, AccessConstants.HUBS_EDIT
+	ChatActionDecorator(HubActions, HubConstants.SESSION_URL, AccessConstants.HUBS_EDIT), HubConstants.MODULE_URL, AccessConstants.HUBS_EDIT
 );

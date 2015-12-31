@@ -7,7 +7,7 @@ const Loader = ({ text, className, inline, size }) => {
 	const style = classNames(
 		'ui active  loader',
 		{ 'inline': inline },
-		{ 'text': !inline && text.length > 0 },
+		{ 'text': !inline }, // Should be used even if there is no text because of styling
 		className,
 		size,
 	);

@@ -21,9 +21,9 @@ const HubSessionStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.SESSION_CREATED, this._onSessionCreated);
-		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.SESSION_REMOVED, this._onSessionRemoved);
-		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.SESSION_UPDATED, this._onSessionUpdated);
+		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_CREATED, this._onSessionCreated);
+		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_REMOVED, this._onSessionRemoved);
+		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_UPDATED, this._onSessionUpdated);
 	},
 });
 

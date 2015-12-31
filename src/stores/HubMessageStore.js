@@ -15,8 +15,8 @@ const HubMessageStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.HUB_MESSAGE, this._onChatMessage);
-		addSocketListener(HubConstants.HUB_MODULE_URL, HubConstants.HUB_STATUS_MESSAGE, this._onStatusMessage);
+		addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_MESSAGE, this._onChatMessage);
+		addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_STATUS_MESSAGE, this._onStatusMessage);
 	},
 });
 

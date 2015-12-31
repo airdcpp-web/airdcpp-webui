@@ -86,7 +86,7 @@ const Login = React.createClass({
 									type="submit"
 									onClick={ this.onSubmit }
 								/>
-							) : <Loader className="inline small" text=""/> }
+							) : <Loader size="small" inline={ true } text=""/> }
 						</div>
 					</form>
 

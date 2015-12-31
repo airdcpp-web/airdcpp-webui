@@ -3,16 +3,16 @@ import React from 'react';
 
 import Checkbox from 'components/semantic/Checkbox';
 import History from 'utils/History';
-import ValueFormat from 'utils/ValueFormat';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
-import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 
 import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
 
 import AccessConstants from 'constants/AccessConstants';
 import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
+
+import HubFooter from './HubFooter';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
 
 import '../style.css';
@@ -83,14 +83,21 @@ const HubSession = React.createClass({
 	},
 
 	render() {
-		const { item } = this.props;
-		const users = item.identity.user_count;
-		const shared = item.identity.share_size;
+		const { item, children } = this.props;
+
+		const checkbox = (
+			<Checkbox
+				type="toggle"
+				caption="User list"
+				onChange={ this.onClickUsers }
+				checked={ children ? true : false }
+			/>
+		);
 
 		return (
 			<div className="hub chat session">
 				{ this.getMessage() }
-				{ this.props.children ? React.cloneElement(this.props.children, { item }) : (
+				{ this.props.children ? React.cloneElement(children, { item }) : (
 					<ChatLayout
 						messages={this.props.messages}
 						handleSend={this.handleSend}
@@ -98,18 +105,10 @@ const HubSession = React.createClass({
 						chatAccess={ AccessConstants.HUBS_SEND }
 					/>
 				) }
-				<SessionFooter>
-					<FooterItem text={ users + ' users'}/>
-					{ window.innerWidth > 700 ? <FooterItem text={ ValueFormat.formatSize(shared) + ' (' + ValueFormat.formatSize(shared / users) + '/user)' }/> : null }
-					<div className="userlist-button">
-						<Checkbox
-							type="toggle"
-							caption="User list"
-							onChange={ this.onClickUsers }
-							checked={ this.props.children ? true : false }
-						/>
-					</div>
-				</SessionFooter>
+				<HubFooter
+					userlistToggle={ checkbox }
+					item={ item }
+				/>
 			</div>
 		);
 	},

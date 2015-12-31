@@ -9,7 +9,6 @@ const CountLabel = ({ urgencies, empty, size, className, circular }) => {
 		return <span/>;
 	}
 
-	const tmp = UrgencyUtils;
 	const max = UrgencyUtils.maxUrgency(urgencies);
 	if (!max) {
 		return <span/>;
