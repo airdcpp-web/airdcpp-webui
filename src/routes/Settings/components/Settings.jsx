@@ -46,6 +46,9 @@ const menu = [
 			}, { 
 				title: 'Ports (manual)', 
 				url: 'ports' 
+			}, { 
+				title: 'Encryption', 
+				url: 'encryption' 
 			},
 		],
 	}, {

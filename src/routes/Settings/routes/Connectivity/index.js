@@ -15,6 +15,9 @@ module.exports = {
 			}, {
 				path: 'ports', 
 				component: require('./components/PortsPage').default, 
+			}, {
+				path: 'encryption', 
+				component: require('./components/EncryptionPage').default, 
 			} ]);
 		}, 'settings-connectivity-children');
 	},
