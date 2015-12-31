@@ -6,7 +6,7 @@ import HubConstants from 'constants/HubConstants';
 import { HubMessageUrgencies } from 'constants/UrgencyConstants';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
-import SessionStoreDecorator from 'decorators/SessionStoreDecorator';
+import SessionStoreDecorator from 'decorators/store/SessionStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
 

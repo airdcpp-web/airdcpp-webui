@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
-import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
+import MessageStoreDecorator from 'decorators/store/MessageStoreDecorator';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import AccessConstants from 'constants/AccessConstants';

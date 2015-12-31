@@ -7,8 +7,8 @@ import History from 'utils/History';
 import HubSessionStore from 'stores/HubSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
-import ChatActionDecorator from 'decorators/ChatActionDecorator';
-import SessionActionDecorator from 'decorators/SessionActionDecorator';
+import ChatActionDecorator from 'decorators/action/ChatActionDecorator';
+import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
 
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';

@@ -42,8 +42,8 @@ const AwayIcon = React.createClass({
 
 	render: function () {
 		//const touchIconColor = LocalSettingStore.touchModeEnabled ? 'blue' : 'grey';
-		const iconColor = this.isAway() ? 'yellow' : 'green';
-		return <i className={ iconColor + ' link large user icon' } onClick={ this.onClick }></i>;
+		const iconColor = this.isAway() ? 'grey' : 'green';
+		return <i className={ iconColor + ' away-state link large user icon' } onClick={ this.onClick }></i>;
 	}
 });
 

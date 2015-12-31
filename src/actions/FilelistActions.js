@@ -9,7 +9,7 @@ import History from 'utils/History';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
-import SessionActionDecorator from 'decorators/SessionActionDecorator';
+import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
 import AccessConstants from 'constants/AccessConstants';
 
 

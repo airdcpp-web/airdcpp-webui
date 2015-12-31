@@ -1,9 +1,9 @@
 import Dropdown from 'components/semantic/Dropdown';
 import TableDropdown from 'components/semantic/TableDropdown';
 
-import ActionMenuDecorator from 'decorators/ActionMenuDecorator';
-import DownloadMenuDecorator from 'decorators/DownloadMenuDecorator';
-import UserMenuDecorator from 'decorators/UserMenuDecorator';
+import ActionMenuDecorator from 'decorators/menu/ActionMenuDecorator';
+import DownloadMenuDecorator from 'decorators/menu/DownloadMenuDecorator';
+import UserMenuDecorator from 'decorators/menu/UserMenuDecorator';
 
 
 export const TableActionMenu = ActionMenuDecorator(TableDropdown);

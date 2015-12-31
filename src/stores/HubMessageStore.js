@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import HubConstants from 'constants/HubConstants';
 import HubActions from 'actions/HubActions';
 
-import MessageStoreDecorator from 'decorators/MessageStoreDecorator';
+import MessageStoreDecorator from 'decorators/store/MessageStoreDecorator';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import AccessConstants from 'constants/AccessConstants';
