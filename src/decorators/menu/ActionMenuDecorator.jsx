@@ -46,12 +46,12 @@ const parseMenu = (props, subMenu) => {
 	// Note the filtering order (no-access will be preferred over filtered)
 	ids = filterItems(props, filterAccess, ids);
 	if (!ids) {
-		return [ 'no-access' ];
+		return 'no-access';
 	}
 
 	ids = filterItems(props, filterAction, ids);
 	if (!ids) {
-		return [ 'filtered' ];
+		return 'filtered';
 	}
 
 	// Show a divider before submenus
@@ -59,17 +59,21 @@ const parseMenu = (props, subMenu) => {
 		ids = [ 'divider', ...ids ];
 	}
 
-	return ids;
+	return {
+		actionIds: ids,
+		itemData: props.itemData,
+		actions: props.actions,
+	};
 };
 
-const notError = (id) => id !== 'filtered' && id !== 'no-access';
+const notError = (id) => typeof id !== 'string';
 
 
-const EmptyMenu = ({ combinedIds, caption }) => {
+const EmptyMenu = ({ menus, caption }) => {
 	const className = classNames(
 		'empty-dropdown',
-		{ 'no-access': combinedIds.indexOf('no-access') !== -1 },
-		{ 'filtered': combinedIds.indexOf('filtered') !== -1 },
+		{ 'no-access': menus.indexOf('no-access') !== -1 },
+		{ 'filtered': menus.indexOf('filtered') !== -1 },
 	);
 
 	return (
@@ -114,7 +118,7 @@ export default function (Component) {
 		},
 
 		// Convert ID to DropdownItem
-		getItem(actions, actionId, index) {
+		getItem(menu, actionId, index) {
 			if (actionId === 'divider') {
 				return <div key={ 'divider' + index } className="ui divider"></div>;
 			}
@@ -124,40 +128,43 @@ export default function (Component) {
 				return actionId;
 			}
 
-			const action = actions[actionId];
+			const action = menu.actions[actionId];
 			return (
-				<DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
+				<DropdownItem key={ actionId } onClick={ () => action(menu.itemData, this.props.location) }>
 					<i className={ action.icon + ' icon' }/>
 					{ action.displayName }
 				</DropdownItem>);
 		},
 
+		// Reduce menus to an array of DropdownItems
+		reduceMenus(items, menu) {
+			items.push(...menu.actionIds.map(this.getItem.bind(this, menu)));
+			return items;
+		},
+
 		render() {
 			let { ids, actions, children, ...other } = this.props;
 
-			const combinedIds = parseMenu(this.props);
-			const combinedActions = Object.assign({}, actions);
-
+			const menus = [ parseMenu(this.props) ];
 			if (children) {
-				combinedIds.push(...parseMenu(children.props, true));
-				Object.assign(combinedActions, children.props.actions);
+				menus.push(parseMenu(children.props, true));
 			}
 
 			// Are there any items to show?
-			if (!combinedIds.some(notError)) {
+			if (!menus.some(notError)) {
 				return (
 					<EmptyMenu
 						caption={ this.props.caption }
-						combinedIds={ combinedIds }
+						menus={ menus }
 					/>
 				);
 			}
 
 			return (
 				<Component {...other}>
-					{ combinedIds
+					{ menus
 						.filter(notError)
-						.map(this.getItem.bind(this, combinedActions)) 
+						.reduce(this.reduceMenus, []) 
 					}
 				</Component>
 			);
