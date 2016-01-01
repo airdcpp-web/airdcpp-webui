@@ -69,7 +69,7 @@
 .session-container.vertical .menu-bar {
   border-radius: 0px !important;
   padding-bottom: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 #sidebar-container > div, 
@@ -138,6 +138,14 @@
 
 .session-footer .info-grid > div {
   flex: 1;
+}
+
+.session-footer .info-grid > div:last-child > div {
+  float: right;
+}
+
+.session-footer .info-grid > div:only-child > div {
+  float: inherit;
 }
 
 .session-footer .ui.checkbox {

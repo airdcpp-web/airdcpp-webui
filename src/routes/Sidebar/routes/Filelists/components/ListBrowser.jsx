@@ -77,7 +77,7 @@ const ListBrowser = React.createClass({
 		const { location } = this.props.item;
 
 		// The list finished downloading but the view hasn't updated yet
-		if (location.files !== 0 || location.directories !== 0) {
+		if (location.type.files !== 0 || location.type.directories !== 0) {
 			return <Loader text="Updating view"/>;
 		}
 

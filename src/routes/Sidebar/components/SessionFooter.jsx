@@ -5,7 +5,7 @@ import React from 'react';
 export const FooterItem = ({ label, text }) => (
 	<div className="grid-item">
 		<div className="item-inner">
-			{ text }
+			{ label && text.length > 0 ? (label + ': ' + text) : text }
 		</div>
 	</div>
 );

@@ -3,12 +3,15 @@
 }
 
 .filelist-browser {
-	margin-bottom: 10px;
-	height: calc(100% - 80px);
+	height: calc(100% - 95px);
+}
+
+#mobile-layout .filelist-browser {
+	height: calc(100% - 60px);
 }
 
 .filelist-browser .virtual-table {
-	height: calc(100% - 20px) !important;
+	height: calc(100% - 35px) !important;
 }
 
 .filelist-browser .ui.segment {
