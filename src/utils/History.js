@@ -36,10 +36,6 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 
 const OverlayHelpers = {
 	pushModal: function (currentLocation, pathname, overlayId, data) {
-		if (typeof currentLocation !== 'object') {
-			currentLocation = { pathname: currentLocation };
-		}
-
 		const state = getOverlayState(currentLocation, 'modal_' + overlayId, data);
 		//History.push({ 
 		//	state, 

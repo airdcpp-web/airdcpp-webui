@@ -124,7 +124,7 @@
   overflow: hidden;
 }
 
-.session-container.horizontal .menu-column .ui.menu .item>.label {
+.session-container.horizontal .menu-column .ui.menu .item > .label {
 	margin-left: 0px;
 }
 
@@ -150,6 +150,6 @@
 }
 
 .session-layout > .divider {
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: 5px;
 }

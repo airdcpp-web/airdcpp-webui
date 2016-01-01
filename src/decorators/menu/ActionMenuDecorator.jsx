@@ -1,60 +1,82 @@
 import React from 'react';
+import invariant from 'invariant';
+import classNames from 'classnames';
 
 import LoginStore from 'stores/LoginStore';
 import DropdownItem from 'components/semantic/DropdownItem';
 
 
-const filterItem = (props, actionId) => {
+const filterAction = ({ itemData }, action) => {
+	return !action.filter || action.filter(itemData);
+};
+
+const filterAccess = ({ itemData }, action) => {
+	return !action.access || LoginStore.hasAccess(action.access);
+};
+
+// Returns true if the provided ID matches the specified filter
+const filterItem = (props, filter, actionId) => {
 	const action = props.actions[actionId];
 	if (!action) {
+		invariant(actionId === 'divider', 'No action for action ID');
 		return true;
 	}
 
-	if (action.filter && !action.filter(props.itemData)) {
-		return false;
-	}
-
-	if (action.access && !LoginStore.hasAccess(action.access)) {
-		return false;
-	}
-
-	return true;
+	return filter(props, action);
 };
 
-const getItem = (props, subMenu, actionId, index) => {
-	if (actionId === 'divider') {
-		// TODO: support multiple dividers
-		return <div key={ 'divider' + subMenu + index } className="ui divider"></div>;
+// Get IDs matching the provided filter
+const filterItems = (props, filter, actionIds) => {
+	let ids = actionIds.filter(filterItem.bind(this, props, filter));
+	if (ids.length === 0 || ids.every(id => id === 'divider')) {
+		return null;
 	}
 
-	if (typeof actionId !== 'string') {
-		return actionId;
-	}
-
-	const action = props.actions[actionId];
-	return (
-		<DropdownItem key={ actionId } onClick={ () => action(props.itemData, props.location) }>
-			<i className={ action.icon + ' icon' }></i>
-			{ action.displayName }
-		</DropdownItem>);
+	return ids;
 };
 
+// Get IDs to display from the specified menu
 const parseMenu = (props, subMenu) => {
 	let { ids } = props;
 	if (!ids) {
 		ids = Object.keys(props.actions);
 	}
 
-	let actionIds = ids.filter(filterItem.bind(this, props));
-	if (actionIds.length === 0 || actionIds.every(id => id === 'divider')) {
-		return [];
+	// Only return a single error for each menu
+	// Note the filtering order (no-access will be preferred over filtered)
+	ids = filterItems(props, filterAccess, ids);
+	if (!ids) {
+		return [ 'no-access' ];
 	}
 
+	ids = filterItems(props, filterAction, ids);
+	if (!ids) {
+		return [ 'filtered' ];
+	}
+
+	// Show a divider before submenus
 	if (subMenu) {
-		actionIds = [ 'divider', ...actionIds ];
+		ids = [ 'divider', ...ids ];
 	}
 
-	return actionIds.map(getItem.bind(this, props, subMenu));
+	return ids;
+};
+
+const notError = (id) => id !== 'filtered' && id !== 'no-access';
+
+
+const EmptyMenu = ({ combinedIds, caption }) => {
+	const className = classNames(
+		'empty-dropdown',
+		{ 'no-access': combinedIds.indexOf('no-access') !== -1 },
+		{ 'filtered': combinedIds.indexOf('filtered') !== -1 },
+	);
+
+	return (
+		<span className={ className }>
+			{ caption }
+		</span>
+	);
 };
 
 export default function (Component) {
@@ -91,34 +113,52 @@ export default function (Component) {
 			return nextProps.itemData !== this.props.itemData;
 		},
 
+		// Convert ID to DropdownItem
+		getItem(actions, actionId, index) {
+			if (actionId === 'divider') {
+				return <div key={ 'divider' + index } className="ui divider"></div>;
+			}
+
+			// A custom element
+			if (typeof actionId !== 'string') {
+				return actionId;
+			}
+
+			const action = actions[actionId];
+			return (
+				<DropdownItem key={ actionId } onClick={ () => action(this.props.itemData, this.props.location) }>
+					<i className={ action.icon + ' icon' }/>
+					{ action.displayName }
+				</DropdownItem>);
+		},
+
 		render() {
 			let { ids, actions, children, ...other } = this.props;
 
-			const items = parseMenu(this.props);
-			if (children) {
-				items.push(...parseMenu(children.props, true));
+			const combinedIds = parseMenu(this.props);
+			const combinedActions = Object.assign({}, actions);
 
-				/*children.forEach(child => {
-					//const subItems = parseMenu(child.props);
-					items.push(...parseMenu(child.props, true));
-				});*/
+			if (children) {
+				combinedIds.push(...parseMenu(children.props, true));
+				Object.assign(combinedActions, children.props.actions);
 			}
 
-			if (items.length === 0) {
-				if (this.props.button) {
-					return null;
-				}
-
+			// Are there any items to show?
+			if (!combinedIds.some(notError)) {
 				return (
-					<span>
-						{ this.props.caption }
-					</span>
+					<EmptyMenu
+						caption={ this.props.caption }
+						combinedIds={ combinedIds }
+					/>
 				);
 			}
 
 			return (
 				<Component {...other}>
-					{ items }
+					{ combinedIds
+						.filter(notError)
+						.map(this.getItem.bind(this, combinedActions)) 
+					}
 				</Component>
 			);
 		},

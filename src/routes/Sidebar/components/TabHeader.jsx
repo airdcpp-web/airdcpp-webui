@@ -19,7 +19,7 @@ const TabHeader = React.createClass({
 		return (
 			<LayoutHeader
 				{ ...other }
-				className="tab-header"
+				className="session-header"
 				component={ buttonClickHandler ? (
 						<Button
 							caption={ this.props.buttonCaption }

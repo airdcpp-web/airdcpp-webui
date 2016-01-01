@@ -30,10 +30,20 @@ const HubFooter = React.createClass({
 		});
 	},
 
-	componentDidMount() {
-		SocketService.get(HubConstants.SESSION_URL + '/' + this.props.item.id + '/counts')
+	fetchCounts(item) {
+		SocketService.get(HubConstants.SESSION_URL + '/' + item.id + '/counts')
 			.then(this.onCountsReceived)
 			.catch(error => console.error('Failed to fetch hub counts', error.message));
+	},
+
+	componentDidMount() {
+		this.fetchCounts(this.props.item);
+	},
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.item !== this.props.item) {
+			this.fetchCounts(nextProps.item);
+		}
 	},
 
 	render: function () {

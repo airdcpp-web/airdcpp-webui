@@ -4,7 +4,7 @@
 
 .filelist-browser {
 	margin-bottom: 10px;
-	height: calc(100% - 90px);
+	height: calc(100% - 80px);
 }
 
 .filelist-browser .virtual-table {

@@ -84,13 +84,9 @@
     margin: 0px;
 }
 
-/*.table-dropdown i {
-	float: left;
+.virtual-table span.empty-dropdown.filtered:not(.no-access) > div {
+	padding-left: 25px;
 }
-
-.table-dropdown > div {
-	display: flex;
-}*/
 
 .table-dropdown .trigger > div {
 	flex: 1;

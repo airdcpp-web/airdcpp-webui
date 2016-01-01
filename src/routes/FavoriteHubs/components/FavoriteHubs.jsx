@@ -40,17 +40,16 @@ const FavoriteHubs = React.createClass({
 		}
 	},
 
-	_handleAddHub() {
-		FavoriteHubActions.create();
-	},
-
 	onChangeAutoConnect(checked, rowData) {
 		FavoriteHubActions.update(rowData, { auto_connect: checked });
 	},
 
 	render() {
 		const footerData = (
-			<ActionButton action={ FavoriteHubActions.create }/>
+			<ActionButton 
+				action={ FavoriteHubActions.create }
+				args={ [ this.props.location ] }
+			/>
 		);
 
 		const editAccess = LoginStore.hasAccess(AccessConstants.ACCESS_HUBS_EDIT);
@@ -76,7 +75,12 @@ const FavoriteHubs = React.createClass({
 					width={150}
 					columnKey="name"
 					flexGrow={6}
-					cell={ <ActionCell actions={ FavoriteHubActions } ids={[ 'edit', 'remove' ]}/> }
+					cell={ 
+						<ActionCell 
+							actions={ FavoriteHubActions } 
+							ids={[ 'edit', 'remove' ]}
+							location={ this.props.location }
+						/> }
 				/>
 				<Column
 					name="Address"

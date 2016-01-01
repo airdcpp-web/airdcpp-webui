@@ -39,7 +39,7 @@ const SideMenuLayout = React.createClass({
 							title={ itemHeaderGetter(activeItem, location, actionMenu) }
 							subHeader={ itemDescriptionGetter(activeItem) }
 						/>) : null }
-						<div className="ui divider"/>
+						{ activeItem ? <div className="ui divider"/> : null }
 						{ this.props.children }
 					</div>
 				</div>

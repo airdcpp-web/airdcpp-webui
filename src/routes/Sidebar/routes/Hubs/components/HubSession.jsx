@@ -23,7 +23,7 @@ const getStorageKey = (props) => {
 };
 
 const checkList = (props) => {
-	const showList = sessionStorage.getItem(getStorageKey(props));
+	const showList = JSON.parse(sessionStorage.getItem(getStorageKey(props)));
 	if (showList) {
 		History.pushSidebar(props.location, '/hubs/session/' + props.item.id + '/users');
 	}
@@ -78,7 +78,7 @@ const HubSession = React.createClass({
 			newUrl += '/users';
 		}
 
-		sessionStorage.setItem(getStorageKey(this.props), !this.props.children);
+		sessionStorage.setItem(getStorageKey(this.props), JSON.stringify(!this.props.children));
 		History.pushSidebar(this.props.location, newUrl);
 	},
 
