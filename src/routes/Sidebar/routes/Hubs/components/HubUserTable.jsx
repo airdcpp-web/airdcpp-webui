@@ -35,21 +35,21 @@ const HubUserTable = React.createClass({
 			>
 				<Column
 					name="Nick"
-					width={150}
+					width={170}
 					columnKey="nick"
 					flexGrow={8}
 					cell={ <NickCell location={ this.props.location }/> }
 				/>
 				<Column
 					name="Share size"
-					width={80}
+					width={85}
 					columnKey="share_size"
 					cell={ <SizeCell/> }
 					flexGrow={1}
 				/>
 				<Column
 					name="Description"
-					width={90}
+					width={100}
 					columnKey="description"
 					flexGrow={1}
 				/>
@@ -60,16 +60,16 @@ const HubUserTable = React.createClass({
 					flexGrow={2}
 				/>
 				<Column
-					name="Download speed"
+					name="Upload speed"
 					width={80}
-					columnKey="download_speed"
+					columnKey="upload_speed"
 					cell={ <ConnectionCell/> }
 					flexGrow={2}
 				/>
 				<Column
-					name="Upload speed"
+					name="Download speed"
 					width={80}
-					columnKey="upload_speed"
+					columnKey="download_speed"
 					cell={ <ConnectionCell/> }
 					flexGrow={2}
 				/>

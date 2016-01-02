@@ -106,7 +106,7 @@ const Queue = React.createClass({
 				/>
 				<Column
 					name="Time left"
-					width={45}
+					width={50}
 					columnKey="seconds_left"
 					renderCondition={ this.isRunning }
 					cell={ <AbbreviatedDurationCell/> }

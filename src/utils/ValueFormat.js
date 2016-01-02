@@ -22,16 +22,23 @@ const normalRelativeUnits = {
 	relativeTime:	Moment.localeData('en')._relativeTime
 };
 
+const byteUnits = [ 'kB','MB','GB','TB','PB','EB','ZB','YB' ];
+const bitUnits = [ ' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit' ];
+
 const Format = {
 	formatSize: function (fileSizeInBytes) {
-		let i = 0;
-		const byteUnits = [ ' b', ' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB' ];
-		do {
-			fileSizeInBytes = fileSizeInBytes / 1024;
-			i++;
-		} while (fileSizeInBytes > 1024);
+		const thresh = 1024;
+		if (Math.abs(fileSizeInBytes) < thresh) {
+			return fileSizeInBytes + ' B';
+		}
 
-		return Math.max(fileSizeInBytes, 0.0).toFixed(2) + byteUnits[i];
+		let u = -1;
+		do {
+			fileSizeInBytes /= thresh;
+			++u;
+		} while (Math.abs(fileSizeInBytes) >= thresh && u < byteUnits.length - 1);
+
+		return fileSizeInBytes.toFixed(2) + ' ' + byteUnits[u];
 	},
 
 	formatConnection: function (bytes) {
@@ -42,7 +49,6 @@ const Format = {
 		let bits = bytes*8;
 		let i = 0;
 
-		const bitUnits = [ ' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit' ];
 		do {
 			bits = bits / 1000;
 			i++;
