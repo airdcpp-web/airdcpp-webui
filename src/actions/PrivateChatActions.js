@@ -20,14 +20,14 @@ const PrivateChatActions = Reflux.createActions([
 		asyncResult: true,
 		displayName: 'Connect',
 		access: AccessConstants.PRIVATE_CHAT_EDIT, 
-		icon: IconConstants.PLAY } 
-	},
+		icon: IconConstants.PLAY,
+	} },
 	{ 'disconnectCCPM': { 
 		asyncResult: true,
 		access: AccessConstants.PRIVATE_CHAT_EDIT, 
 		displayName: 'Disconnect', 
-		icon: IconConstants.REMOVE } 
-	},
+		icon: IconConstants.REMOVE,
+	} },
 ]);
 
 PrivateChatActions.connectCCPM.listen(function (session) {

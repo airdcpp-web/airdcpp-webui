@@ -5,7 +5,7 @@ import FilelistActions from 'actions/FilelistActions';
 import TypeConvert from 'utils/TypeConvert';
 import Message from 'components/semantic/Message';
 import BrowserBar from 'components/browserbar/BrowserBar';
-import { DownloadMenu } from 'components/menu/DropdownMenu';
+import { ActionMenu, DownloadMenu } from 'components/menu/DropdownMenu';
 
 import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
@@ -17,6 +17,7 @@ import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell'
 import { Column } from 'fixed-data-table';
 
 import Loader from 'components/semantic/Loader';
+
 
 const ListBrowser = React.createClass({
 	// Disabled, doesn't work (investigate later)
@@ -115,7 +116,17 @@ const ListBrowser = React.createClass({
 				itemInfo={ this.props.item.location }
 				location={ this.props.location }
 				handler={ FilelistActions.download } 
-			/>
+			>
+				<ActionMenu
+					itemData={ {
+						directory: this.props.item.location,
+						session: this.props.item,
+					} }
+					location={ this.props.location }
+					actions={ FilelistActions }
+					ids={ [ 'reloadDirectory' ] } 
+				/>
+			</DownloadMenu>
 		);
 	},
 

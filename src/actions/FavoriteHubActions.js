@@ -19,22 +19,22 @@ export const FavoriteHubActions = Reflux.createActions([
 		children: [ 'saved' ],
 		displayName: 'Add new',
 		access: AccessConstants.FAVORITE_HUBS_EDIT,
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE 
+	} },
 	{ 'edit': { 
 		asyncResult: true,
 		children: [ 'saved' ],
 		displayName: 'Edit',
 		access: AccessConstants.FAVORITE_HUBS_EDIT,
-		icon: IconConstants.EDIT },
-	},
+		icon: IconConstants.EDIT,
+	} },
 	{ 'remove': {
 		asyncResult: true,
 		children: [ 'confirmed' ],
 		displayName: 'Remove',
 		access: AccessConstants.FAVORITE_HUBS_EDIT,
-		icon: IconConstants.REMOVE },
-	},
+		icon: IconConstants.REMOVE,
+	} },
 	{ 'update': { 
 		asyncResult: true },
 	},

@@ -11,11 +11,18 @@ import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
 import AccessConstants from 'constants/AccessConstants';
+import IconConstants from 'constants/IconConstants';
 
 
 const FilelistActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
 	{ 'changeDirectory': { asyncResult: true } },
+	{ 'reloadDirectory': { 
+		asyncResult: true,
+		displayName: 'Reload',
+		access: AccessConstants.FILELIST_VIEW,
+		icon: IconConstants.REFRESH,
+	} },
 	{ 'download': { asyncResult: true } },
 ]);
 
@@ -59,6 +66,16 @@ FilelistActions.changeDirectory.listen(function (cid, path) {
 	SocketService.post(FilelistConstants.SESSION_URL + '/' + cid + '/directory', { list_path: path })
 		.then(data => that.completed(cid, data))
 		.catch(error => that.failed(cid, error));
+});
+
+FilelistActions.reloadDirectory.listen(function ({ directory, session }) {
+	let that = this;
+	SocketService.post(FilelistConstants.SESSION_URL + '/' + session.id + '/directory', { 
+		list_path: directory.path,
+		reload: true,
+	})
+		.then(data => that.completed(session, data))
+		.catch(error => that.failed(session, error));
 });
 
 FilelistActions.createSession.listen(function (location, user, directory = '/') {
