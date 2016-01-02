@@ -36,7 +36,7 @@ const StatusRow = ({ title, status, running, detect }) => (
 const DetectPanel = React.createClass({
 	mixins: [ SocketSubscriptionMixin() ],
 	onSocketConnected(addSocketListener) {
-		const url = ConnectivityConstants.CONNECTIVITY_MODULE_URL;
+		const url = ConnectivityConstants.MODULE_URL;
 		addSocketListener(url, ConnectivityConstants.CONNECTIVITY_STARTED, this.onDetectStarted);
 		addSocketListener(url, ConnectivityConstants.CONNECTIVITY_FINISHED, this.onDetectFinished);
 	},
@@ -70,7 +70,7 @@ const DetectPanel = React.createClass({
 	},
 
 	updateStatus() {
-		SocketService.get(ConnectivityConstants.CONNECTIVITY_STATUS_URL)
+		SocketService.get(ConnectivityConstants.STATUS_URL)
 			.then(this.onStatusReceived)
 			.catch(error => 
 				console.error('Failed to get status: ' + error)
@@ -78,7 +78,7 @@ const DetectPanel = React.createClass({
 	},
 
 	handleDetect() {
-		SocketService.post(ConnectivityConstants.CONNECTIVITY_DETECT_URL)
+		SocketService.post(ConnectivityConstants.DETECT_URL)
 			.then(this.onSettingsReceived)
 			.catch(error => 
 				console.error('Failed to start detection: ' + error)

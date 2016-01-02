@@ -28,7 +28,7 @@ const RefreshCell = React.createClass({
 
 	render: function () {
 		const state = this.props.rowData.refresh_state;
-		if (state.id === RefreshStateEnum.STATE_NORMAL) {
+		if (state.id === RefreshStateEnum.NORMAL) {
 			return (
 				<div>
 					<i className={ 'icon large link green refresh' } onClick={ this.onClickRefresh }/>

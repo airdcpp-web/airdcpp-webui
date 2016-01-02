@@ -6,6 +6,6 @@ import ViewStoreMixin from 'mixins/ViewStoreMixin';
 
 export default Reflux.createStore({
 	_viewName: 'bundle_view',
-	_apiUrl: QueueConstants.QUEUE_MODULE_URL,
+	_apiUrl: QueueConstants.MODULE_URL,
 	mixins: [ ViewStoreMixin('name') ],
 });

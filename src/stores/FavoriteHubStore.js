@@ -6,6 +6,6 @@ import ViewStoreMixin from 'mixins/ViewStoreMixin';
 
 export default Reflux.createStore({
 	_viewName: 'favorite_hub_view',
-	_apiUrl: FavoriteHubConstants.FAVORITE_MODULE_URL,
+	_apiUrl: FavoriteHubConstants.MODULE_URL,
 	mixins: [ ViewStoreMixin('name') ],
 });

@@ -19,13 +19,13 @@ import '../style.css';
 const getStatusClass = (cellData, rowData) => {
 	const statusId = cellData.id;
 	return classNames(
-			{ 'grey': statusId == StatusEnum.STATUS_QUEUED && rowData.speed == 0 },
-			{ 'blue': statusId == StatusEnum.STATUS_QUEUED && rowData.speed > 0 },
-			{ 'success': statusId >= StatusEnum.STATUS_FINISHED },
-			{ 'error': statusId == StatusEnum.STATUS_FAILED_MISSING || 
-								statusId == StatusEnum.STATUS_SHARING_FAILED || 
-								statusId == StatusEnum.STATUS_HASH_FAILED ||
-								statusId == StatusEnum.STATUS_DOWNLOAD_FAILED }
+			{ 'grey': statusId == StatusEnum.QUEUED && rowData.speed == 0 },
+			{ 'blue': statusId == StatusEnum.QUEUED && rowData.speed > 0 },
+			{ 'success': statusId >= StatusEnum.FINISHED },
+			{ 'error': statusId == StatusEnum.FAILED_MISSING || 
+								statusId == StatusEnum.SHARING_FAILED || 
+								statusId == StatusEnum.HASH_FAILED ||
+								statusId == StatusEnum.DOWNLOAD_FAILED }
 		);
 };
 
@@ -43,7 +43,7 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 
 const Queue = React.createClass({
 	isActive(cellData, rowData) {
-		return rowData.status.id < StatusEnum.STATUS_DOWNLOADED;
+		return rowData.status.id < StatusEnum.DOWNLOADED;
 	},
 
 	isFinished(cellData, rowData) {

@@ -62,10 +62,10 @@ const FavoriteHubDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(FavoriteHubConstants.FAVORITE_HUB_URL, changedFields);
+			return SocketService.post(FavoriteHubConstants.HUB_URL, changedFields);
 		}
 
-		return SocketService.patch(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + this.props.hubEntry.id, changedFields);
+		return SocketService.patch(FavoriteHubConstants.HUB_URL + '/' + this.props.hubEntry.id, changedFields);
 	},
 
 	convertProfile(profiles, rawItem) {

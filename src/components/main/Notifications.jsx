@@ -79,11 +79,11 @@ const Notifications = React.createClass({
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.QUEUE_VIEW)) {
-			addSocketListener(QueueConstants.QUEUE_MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
+			addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
-			addSocketListener(LogConstants.LOG_MODULE_URL, LogConstants.LOG_MESSAGE, this._onLogMessage);
+			addSocketListener(LogConstants.MODULE_URL, LogConstants.LOG_MESSAGE, this._onLogMessage);
 		}
 	},
 
@@ -135,33 +135,33 @@ const Notifications = React.createClass({
 		let text;
 		let level;
 		switch (bundle.status.id) {
-			case StatusEnum.STATUS_QUEUED: {
+			case StatusEnum.QUEUED: {
 				text = 'The bundle has been added in queue';
 				level = 'info';
 				break;
 			}
-			case StatusEnum.STATUS_FAILED_MISSING:
-			case StatusEnum.STATUS_SHARING_FAILED: {
+			case StatusEnum.FAILED_MISSING:
+			case StatusEnum.SHARING_FAILED: {
 				text = 'Scanning failed for the bundle: ' + bundle.status.str;
 				level = 'error';
 				break;
 			};
-			case StatusEnum.STATUS_FINISHED: {
+			case StatusEnum.FINISHED: {
 				text = 'The bundle has finished downloading';
 				level = 'info';
 				break;
 			};
-			case StatusEnum.STATUS_HASH_FAILED: {
+			case StatusEnum.HASH_FAILED: {
 				text = 'Failed to hash the bundle: ' + bundle.status.str;
 				level = 'error';
 				break;
 			};
-			case StatusEnum.STATUS_HASHED: {
+			case StatusEnum.HASHED: {
 				text = 'The bundle has finished hashing';
 				level = 'info';
 				break;
 			};
-			case StatusEnum.STATUS_SHARED: {
+			case StatusEnum.SHARED: {
 				text = 'The bundle has been added in share';
 				level = 'info';
 				break;

@@ -1,7 +1,7 @@
-const SEARCH_MODULE_URL = 'search/v0';
+const MODULE_URL = 'search/v0';
 export default {
-	SEARCH_MODULE_URL: SEARCH_MODULE_URL,
-	SEARCH_QUERY_URL: SEARCH_MODULE_URL + '/query',
+	MODULE_URL: MODULE_URL,
+	QUERY_URL: MODULE_URL + '/query',
 
-	SEARCH_RESULT_URL: SEARCH_MODULE_URL + '/result',
+	RESULT_URL: MODULE_URL + '/result',
 };

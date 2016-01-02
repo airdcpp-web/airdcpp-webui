@@ -12,7 +12,7 @@ export const SearchActions = Reflux.createActions([
 
 /*SearchActions.postSearch.listen(function (pattern) {
 	let that = this;
-	return SocketService.get(SEARCH_QUERY_URL, { 
+	return SocketService.get(QUERY_URL, { 
 		pattern: pattern
 	})
 		.then(that.completed)
@@ -20,7 +20,7 @@ export const SearchActions = Reflux.createActions([
 });*/
 
 SearchActions.download.listen((itemData, downloadData) => {
-	return SocketService.post(SearchConstants.SEARCH_RESULT_URL + '/' + itemData.itemInfo.id + '/download', downloadData)
+	return SocketService.post(SearchConstants.RESULT_URL + '/' + itemData.itemInfo.id + '/download', downloadData)
 		.then(SearchActions.download.completed)
 		.catch(error => SearchActions.download.failed(itemData, error));
 });

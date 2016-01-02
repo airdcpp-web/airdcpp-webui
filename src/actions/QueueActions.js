@@ -89,7 +89,7 @@ QueueActions.removeFinished.completed.listen(function (data) {
 });
 
 QueueActions.removeBundle.shouldEmit = function (bundle) {
-	if (bundle.status.id >= StatusEnum.STATUS_FINISHED) {
+	if (bundle.status.id >= StatusEnum.FINISHED) {
 		// No need to confirm finished bundles
 		this.confirmed(bundle, false);
 	} else {

@@ -28,7 +28,7 @@ const TransferStatsStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(TransferConstants.TRANSFER_MODULE_URL, TransferConstants.STATISTICS, this.onStatistics);
+		addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatistics);
 	}
 });
 

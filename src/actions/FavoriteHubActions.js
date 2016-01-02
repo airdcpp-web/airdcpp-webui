@@ -50,7 +50,7 @@ FavoriteHubActions.edit.listen(function (hub, location) {
 
 FavoriteHubActions.update.listen(function (hub, data) {
 	let that = this;
-	return SocketService.patch(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + hub.id, data)
+	return SocketService.patch(FavoriteHubConstants.HUB_URL + '/' + hub.id, data)
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -71,7 +71,7 @@ FavoriteHubActions.remove.shouldEmit = function (hub) {
 };
 
 FavoriteHubActions.remove.confirmed.listen(function (hub) {
-	return SocketService.delete(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + hub.id)
+	return SocketService.delete(FavoriteHubConstants.HUB_URL + '/' + hub.id)
 		.then(() => 
 			FavoriteHubActions.remove.completed(hub))
 		.catch((error) => 

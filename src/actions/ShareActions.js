@@ -25,14 +25,14 @@ const ShareActions = Reflux.createActions([
 
 ShareActions.refresh.listen(function (incoming) {
 	const that = this;
-	return SocketService.post(ShareConstants.SHARE_REFRESH_URL)
+	return SocketService.post(ShareConstants.REFRESH_URL)
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 ShareActions.refreshPaths.listen(function (paths) {
 	const that = this;
-	return SocketService.post(ShareConstants.SHARE_REFRESH_PATHS_URL, { paths: paths })
+	return SocketService.post(ShareConstants.REFRESH_PATHS_URL, { paths: paths })
 		.then(that.completed)
 		.catch(that.failed);
 });

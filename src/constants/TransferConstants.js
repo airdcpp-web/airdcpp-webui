@@ -1,7 +1,7 @@
-const TRANSFER_MODULE_URL = 'transfers/v0';
+const MODULE_URL = 'transfers/v0';
 export default {
-	TRANSFER_MODULE_URL: TRANSFER_MODULE_URL,
-	TRANSFER_STATS_URL: TRANSFER_MODULE_URL + '/stats',
+	MODULE_URL: MODULE_URL,
+	STATS_URL: MODULE_URL + '/stats',
 
 	STATISTICS: 'statistics'
 };

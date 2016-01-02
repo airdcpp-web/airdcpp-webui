@@ -27,4 +27,4 @@ const ShareStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(ShareStatisticsPage, ShareConstants.SHARE_STATS_URL, 'No files shared', 60);
+export default StatisticsPageDecorator(ShareStatisticsPage, ShareConstants.STATS_URL, 'No files shared', 60);

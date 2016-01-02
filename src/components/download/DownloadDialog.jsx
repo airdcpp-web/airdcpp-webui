@@ -118,17 +118,17 @@ const DownloadDialog = React.createClass({
 
 	componentDidMount() {
 		this.fetchPaths(ShareConstants.GROUPED_ROOTS_GET_URL, 'share_paths');
-		this.fetchPaths(FavoriteDirectoryConstants.FAVORITE_DIRECTORIES_URL, 'favorite_paths');
-		this.fetchPaths(HistoryConstants.HISTORY_ITEMS_URL + '/' + HistoryEnum.HISTORY_DOWNLOAD_DIR, 'history_paths');
+		this.fetchPaths(FavoriteDirectoryConstants.DIRECTORIES_URL, 'favorite_paths');
+		this.fetchPaths(HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR, 'history_paths');
 
 		const { itemInfo } = this.props;
 		const dupeName = TypeConvert.dupeToStringType(itemInfo.dupe);
 		if (dupeName.indexOf('queue') > -1) {
-			this.fetchDupePaths(QueueConstants.QUEUE_DUPE_PATHS_URL);
+			this.fetchDupePaths(QueueConstants.DUPE_PATHS_URL);
 		}
 
 		if (dupeName.indexOf('share') > -1) {
-			this.fetchDupePaths(ShareConstants.SHARE_DUPE_PATHS_URL);
+			this.fetchDupePaths(ShareConstants.DUPE_PATHS_URL);
 		}
 	},
 
@@ -140,7 +140,7 @@ const DownloadDialog = React.createClass({
 			priority: PriorityEnum.DEFAULT
 		});
 
-		HistoryActions.add(HistoryEnum.HISTORY_DOWNLOAD_DIR, path);
+		HistoryActions.add(HistoryEnum.DOWNLOAD_DIR, path);
 		this.refs.modal.hide();
 	},
 

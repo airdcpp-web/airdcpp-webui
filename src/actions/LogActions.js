@@ -14,24 +14,24 @@ export const LogActions = Reflux.createActions([
 
 LogActions.fetchInfo.listen(function () {
 	let that = this;
-	return SocketService.get(LogConstants.LOG_INFO_URL)
+	return SocketService.get(LogConstants.INFO_URL)
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 LogActions.fetchMessages.listen(function () {
 	let that = this;
-	return SocketService.get(LogConstants.LOG_GET_URL + '/0')
+	return SocketService.get(LogConstants.GET_URL + '/0')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 LogActions.clear.listen(function () {
-	return SocketService.post(LogConstants.LOG_CLEAR_URL);
+	return SocketService.post(LogConstants.CLEAR_URL);
 });
 
 LogActions.setRead.listen(function () {
-	return SocketService.post(LogConstants.LOG_READ_URL);
+	return SocketService.post(LogConstants.READ_URL);
 });
 
 export default LogActions;

@@ -1,13 +1,13 @@
-const HISTORY_MODULE_URL = 'histories/v0';
+const MODULE_URL = 'histories/v0';
 
 export const HistoryEnum = {
-	HISTORY_SEARCH: 0,
-	HISTORY_EXCLUDE: 1,
-	HISTORY_DOWNLOAD_DIR: 2
+	SEARCH: 0,
+	EXCLUDE: 1,
+	DOWNLOAD_DIR: 2
 };
 
 export default {
-	HISTORY_MODULE_URL: HISTORY_MODULE_URL,
-	HISTORY_ITEMS_URL: HISTORY_MODULE_URL + '/items',
-	HISTORY_ITEM_URL: HISTORY_MODULE_URL + '/item',
+	MODULE_URL: MODULE_URL,
+	ITEMS_URL: MODULE_URL + '/items',
+	ITEM_URL: MODULE_URL + '/item',
 };

@@ -44,10 +44,10 @@ export default {
 
 	urgencyToColor: function (urgencyMap) {
 		switch (urgencyMap) {
-			case UrgencyEnum.URGENCY_HIGH: return 'red';
-			case UrgencyEnum.URGENCY_MEDIUM: return 'yellow';
-			case UrgencyEnum.URGENCY_LOW: return 'blue';
-			case UrgencyEnum.URGENCY_INFO: return 'grey';
+			case UrgencyEnum.HIGH: return 'red';
+			case UrgencyEnum.MEDIUM: return 'yellow';
+			case UrgencyEnum.LOW: return 'blue';
+			case UrgencyEnum.INFO: return 'grey';
 			default: return '';
 		}
 	},

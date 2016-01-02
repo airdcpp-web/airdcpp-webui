@@ -32,7 +32,7 @@ const HubSearchInput = React.createClass({
 	},
 
 	_getSuggestions(input, callback) {
-		SocketService.post(RecentHubConstants.RECENT_HUB_SEARCH_URL, { pattern: this.state.text, max_results: 7 })
+		SocketService.post(RecentHubConstants.SEARCH_URL, { pattern: this.state.text, max_results: 7 })
 			.then(data => {
 				callback(null, data || []);
 			})

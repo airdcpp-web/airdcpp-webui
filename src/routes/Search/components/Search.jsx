@@ -20,7 +20,7 @@ const Search = React.createClass({
 
 		clearTimeout(this._searchTimeout);
 
-		SocketService.post(SearchConstants.SEARCH_QUERY_URL, { pattern: text })
+		SocketService.post(SearchConstants.QUERY_URL, { pattern: text })
 			.then(this.onSearchPosted)
 			.catch(error => 
 				console.error('Failed to post search: ' + error)
@@ -50,7 +50,7 @@ const Search = React.createClass({
 					<div className="search-container">
 						<div className="search-area">
 							<HistoryInput 
-								historyId={HistoryEnum.HISTORY_SEARCH} 
+								historyId={HistoryEnum.SEARCH} 
 								submitHandler={this._handleSearch} 
 								running={this.state.running}
 							/>

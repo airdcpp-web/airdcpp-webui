@@ -1,9 +1,9 @@
 const MODULE_URL = 'share_roots/v0';
 
 export const RefreshStateEnum = {
-	STATE_NORMAL: 0,
-	STATE_PENDING: 1,
-	STATE_RUNNING: 2
+	NORMAL: 0,
+	PENDING: 1,
+	RUNNING: 2
 };
 
 export default {

@@ -3,7 +3,7 @@ import React from 'react';
 import FavoriteHubActions from 'actions/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
-import { StateEnum } from 'constants/FavoriteHubConstants';
+import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { Column } from 'fixed-data-table';
@@ -31,11 +31,11 @@ const PasswordCell = ({ cellData, rowData }) => (
 const FavoriteHubs = React.createClass({
 	_rowClassNameGetter(rowData) {
 		switch (rowData.connect_state.id) {
-			case StateEnum.STATE_CONNECTING:
+			case ConnectStateEnum.CONNECTING:
 				return 'connecting';
-			case StateEnum.STATE_CONNECTED:
+			case ConnectStateEnum.CONNECTED:
 				return 'connected';
-			case StateEnum.STATE_DISCONNECTED:
+			case ConnectStateEnum.DISCONNECTED:
 				return 'disconnected'; 
 		}
 	},

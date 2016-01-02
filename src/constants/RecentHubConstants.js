@@ -1,5 +1,5 @@
-const RECENT_MODULE_URL = 'recent_hubs/v0';
+const MODULE_URL = 'recent_hubs/v0';
 export default {
-	RECENT_MODULE_URL: RECENT_MODULE_URL,
-	RECENT_HUB_SEARCH_URL: RECENT_MODULE_URL + '/search',
+	MODULE_URL: MODULE_URL,
+	SEARCH_URL: MODULE_URL + '/search',
 };

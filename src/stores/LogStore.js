@@ -73,7 +73,7 @@ const LogStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		const url = LogConstants.LOG_MODULE_URL;
+		const url = LogConstants.MODULE_URL;
 		addSocketListener(url, LogConstants.LOG_MESSAGE, this.onLogMessage);
 		addSocketListener(url, LogConstants.LOG_INFO, this.onLogInfo);
 	}

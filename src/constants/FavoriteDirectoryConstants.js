@@ -1,6 +1,6 @@
-const FAVORITE_DIRECTORY_MODULE_URL = 'favorite_directories/v0';
+const MODULE_URL = 'favorite_directories/v0';
 export default {
-	FAVORITE_DIRECTORY_MODULE_URL: FAVORITE_DIRECTORY_MODULE_URL,
-	FAVORITE_DIRECTORIES_URL: FAVORITE_DIRECTORY_MODULE_URL + '/directories'
+	MODULE_URL: MODULE_URL,
+	DIRECTORIES_URL: MODULE_URL + '/directories'
 }
 ;

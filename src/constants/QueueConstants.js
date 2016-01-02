@@ -1,18 +1,18 @@
-const QUEUE_MODULE_URL = 'queue/v0';
+const MODULE_URL = 'queue/v0';
 
 export const StatusEnum = {
-	STATUS_QUEUED: 1,
-	STATUS_DOWNLOAD_FAILED: 2,
-	STATUS_RECHECK: 3,
-	STATUS_DOWNLOADED: 4, // no queued files
-	STATUS_MOVED: 5, // all files moved
-	STATUS_FAILED_MISSING: 6,
-	STATUS_SHARING_FAILED: 7,
-	STATUS_FINISHED: 8, // no missing files, ready for hashing
-	STATUS_HASHING: 9,
-	STATUS_HASH_FAILED: 10,
-	STATUS_HASHED: 11,
-	STATUS_SHARED:12
+	QUEUED: 1,
+	DOWNLOAD_FAILED: 2,
+	RECHECK: 3,
+	DOWNLOADED: 4, // no queued files
+	MOVED: 5, // all files moved
+	FAILED_MISSING: 6,
+	SHARING_FAILED: 7,
+	FINISHED: 8, // no missing files, ready for hashing
+	HASHING: 9,
+	HASH_FAILED: 10,
+	HASHED: 11,
+	SHARED:12
 };
 
 export const PriorityEnum = {
@@ -36,17 +36,15 @@ export const PriorityEnum = {
 };
 
 export default {
-	QUEUE_MODULE_URL: QUEUE_MODULE_URL,
+	MODULE_URL: MODULE_URL,
 
-	QUEUE_DUPE_PATHS_URL: QUEUE_MODULE_URL + '/find_dupe_paths',
+	DUPE_PATHS_URL: MODULE_URL + '/find_dupe_paths',
 
-	BUNDLES_URL: QUEUE_MODULE_URL + '/bundles',
-	BUNDLE_URL: QUEUE_MODULE_URL + '/bundle',
+	BUNDLES_URL: MODULE_URL + '/bundles',
+	BUNDLE_URL: MODULE_URL + '/bundle',
 
 	BUNDLE_ADDED: 'bundle_added',
 	BUNDLE_REMOVED: 'bundle_removed',
 	BUNDLE_UPDATED: 'bundle_updated',
 	BUNDLE_STATUS: 'bundle_status',
-
-	URL: QUEUE_MODULE_URL + '/filelist',
 };

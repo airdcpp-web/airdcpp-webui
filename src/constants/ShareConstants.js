@@ -1,12 +1,12 @@
-const SHARE_MODULE_URL = 'share/v0';
+const MODULE_URL = 'share/v0';
 export default {
-	SHARE_MODULE_URL: SHARE_MODULE_URL,
+	MODULE_URL: MODULE_URL,
 
-	SHARE_DUPE_PATHS_URL: SHARE_MODULE_URL + '/find_dupe_paths',
-	GROUPED_ROOTS_GET_URL: SHARE_MODULE_URL + '/grouped_root_paths',
-	SHARE_STATS_URL: SHARE_MODULE_URL + '/stats',
+	DUPE_PATHS_URL: MODULE_URL + '/find_dupe_paths',
+	GROUPED_ROOTS_GET_URL: MODULE_URL + '/grouped_root_paths',
+	STATS_URL: MODULE_URL + '/stats',
 
-	SHARE_REFRESH_URL: SHARE_MODULE_URL + '/refresh',
-	SHARE_REFRESH_PATHS_URL: SHARE_MODULE_URL + '/refresh/paths',
+	REFRESH_URL: MODULE_URL + '/refresh',
+	REFRESH_PATHS_URL: MODULE_URL + '/refresh/paths',
 }
 ;

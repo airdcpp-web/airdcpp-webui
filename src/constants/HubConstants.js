@@ -1,8 +1,8 @@
 const MODULE_URL = 'hubs/v0';
 export default {
 	MODULE_URL: MODULE_URL,
-	HUB_SEARCH_NICKS_URL: MODULE_URL + '/search_nicks',
-	HUB_STATS_URL: MODULE_URL + '/stats',
+	SEARCH_NICKS_URL: MODULE_URL + '/search_nicks',
+	STATS_URL: MODULE_URL + '/stats',
 
 	//HUB_SESSIONS_URL: MODULE_URL + '/sessions',
 	SESSION_URL: MODULE_URL + '/session',

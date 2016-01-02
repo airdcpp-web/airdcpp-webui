@@ -34,7 +34,7 @@ const UserSearchInput = React.createClass({
 	},
 
 	_getSuggestions(input, callback) {
-		SocketService.post(HubConstants.HUB_SEARCH_NICKS_URL, { pattern: this.state.text, max_results: 7 })
+		SocketService.post(HubConstants.SEARCH_NICKS_URL, { pattern: this.state.text, max_results: 7 })
 			.then(data => {
 				callback(null, data || []);
 			})

@@ -12,7 +12,7 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 const sendPassword = (hub, password, action) => {
-	return SocketService.patch(FavoriteHubConstants.FAVORITE_HUB_URL + '/' + hub.id, { password: password })
+	return SocketService.patch(FavoriteHubConstants.HUB_URL + '/' + hub.id, { password: password })
 		.then(() => 
 			action.completed(hub))
 		.catch((error) => 

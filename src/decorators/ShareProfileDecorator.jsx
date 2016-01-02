@@ -12,7 +12,7 @@ export default function (Component, listHidden, addSize = true) {
 		mixins: [ SocketSubscriptionMixin() ],
 
 		onSocketConnected(addSocketListener) {
-			const url = ShareProfileConstants.PROFILE_MODULE_URL;
+			const url = ShareProfileConstants.MODULE_URL;
 			addSocketListener(url, ShareProfileConstants.PROFILE_ADDED, this.fetchProfiles);
 			addSocketListener(url, ShareProfileConstants.PROFILE_UPDATED, this.fetchProfiles);
 			addSocketListener(url, ShareProfileConstants.PROFILE_REMOVED, this.fetchProfiles);
