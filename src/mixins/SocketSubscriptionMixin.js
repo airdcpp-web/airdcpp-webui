@@ -2,7 +2,9 @@ import SocketStore from 'stores/SocketStore';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 // For React components
-const SocketSubscriptionMixin = () => {
+const SocketSubscriptionMixin = (updateCondition) => {
+	let unsubscribe;
+
 	return SocketSubscriptionDecorator({
 		componentWillMount() {
 			if (SocketStore.socket) {
@@ -10,14 +12,21 @@ const SocketSubscriptionMixin = () => {
 			}
 		},
 
+		componentDidUpdate(prevProps) {
+			if (updateCondition && updateCondition.bind(this, prevProps)) {
+				this.removeSocketListeners();
+				this.onSocketConnected(this.addSocketListener);
+			}
+		},
+
 		// Emulates the listenTo property that stores have
 		addStoreListener(store, bind) {
-			this.unsubscribe = store.listen(bind);
+			unsubscribe = store.listen(bind);
 		},
 
 		componentWillUnmount() {
 			this.removeSocketListeners();
-			this.unsubscribe();
+			unsubscribe();
 		}
 	}, null, 'addStoreListener');
 };

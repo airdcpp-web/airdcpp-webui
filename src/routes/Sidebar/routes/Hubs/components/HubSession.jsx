@@ -8,9 +8,7 @@ import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 
 import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
-
 import AccessConstants from 'constants/AccessConstants';
-import ChatSessionDecorator from 'decorators/ChatSessionDecorator';
 
 import HubFooter from './HubFooter';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
@@ -27,22 +25,19 @@ const checkList = (props) => {
 	if (showList) {
 		History.pushSidebar(props.location, '/hubs/session/' + props.item.id + '/users');
 	}
+
+	return showList;
 };
 
 const HubSession = React.createClass({
 	componentWillMount() {
-		checkList(this.props);
+		this.showList = checkList(this.props);
 	},
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.item.id !== this.props.item.id) {
-			checkList(nextProps);
+			this.showList = checkList(nextProps);
 		}
-	},
-
-
-	handleSend(message) {
-		HubActions.sendMessage(this.props.item.id, message);
 	},
 
 	getMessage() {
@@ -73,12 +68,14 @@ const HubSession = React.createClass({
 	},
 
 	onClickUsers() {
+		this.showList = !this.showList;
+
 		let newUrl = '/hubs/session/' + this.props.item.id;
-		if (!this.props.children) {
+		if (this.showList) {
 			newUrl += '/users';
 		}
 
-		sessionStorage.setItem(getStorageKey(this.props), JSON.stringify(!this.props.children));
+		sessionStorage.setItem(getStorageKey(this.props), JSON.stringify(this.showList));
 		History.pushSidebar(this.props.location, newUrl);
 	},
 
@@ -90,19 +87,25 @@ const HubSession = React.createClass({
 				type="toggle"
 				caption="User list"
 				onChange={ this.onClickUsers }
-				checked={ children ? true : false }
+				checked={ this.showList }
 			/>
 		);
+
+		if (this.showList && !children) {
+			// Redirecting, don't mount anything
+			return null;
+		}
 
 		return (
 			<div className="hub chat session">
 				{ this.getMessage() }
-				{ this.props.children ? React.cloneElement(children, { item }) : (
+				{ this.showList ? React.cloneElement(children, { item }) : (
 					<ChatLayout
-						messages={this.props.messages}
-						handleSend={this.handleSend}
-						location={this.props.location}
+						messageStore={ HubMessageStore }
+						chatActions={ HubActions }
+						location={ this.props.location }
 						chatAccess={ AccessConstants.HUBS_SEND }
+						session={ this.props.item }
 					/>
 				) }
 				<HubFooter
@@ -114,4 +117,4 @@ const HubSession = React.createClass({
 	},
 });
 
-export default ChatSessionDecorator(HubSession, HubMessageStore, HubActions);
+export default HubSession;

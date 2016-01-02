@@ -9,7 +9,15 @@ import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFoot
 
 
 const HubFooter = React.createClass({
-	mixins: [ SocketSubscriptionMixin() ],
+	mixins: [ SocketSubscriptionMixin(props => props.item !== this.props.item) ],
+	propTypes: {
+		/**
+		 * Currently active session (required)
+		 */
+		item: React.PropTypes.any,
+
+		userlistToggle: React.PropTypes.node.isRequired,
+	},
 
 	onSocketConnected(addSocketListener) {
 		const url = HubConstants.SESSION_URL;
