@@ -1,17 +1,14 @@
 'use strict';
-
 import React from 'react';
 
 import ListBrowser from './ListBrowser';
+import FilelistFooter from './FilelistFooter';
 
 import { RouteContext } from 'react-router';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
-import ValueFormat from 'utils/ValueFormat';
-import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import BrowserUtils from 'utils/BrowserUtils';
 
 const FilelistSession = React.createClass({
 	mixins: [ RouteContext ],
@@ -20,19 +17,18 @@ const FilelistSession = React.createClass({
 		switch (state) {
 			case 'download_pending': return 'Download pending';
 			case 'downloading': return 'Downloading';
-			case 'loading': return 'Loading';
-			default: return 'Loaded';
+			case 'loading':
+			default: return 'Loading';
 		}
 	},
 
 	render() {
-		const state = this.props.item.state.id;
+		const { user, location, state } = this.props.item;
 
-		if (state !== 'loaded') {
-			return <Loader text={ this.stateToString(state) }/>;
+		if (state.id !== 'loaded' || !location) {
+			return <Loader text={ this.stateToString(state.id) }/>;
 		}
 
-		const { user, location } = this.props.item;
 		if (user.flags.indexOf('offline') !== -1) {
 			return (
 				<Message 
@@ -42,22 +38,15 @@ const FilelistSession = React.createClass({
 			);
 		}
 
-		let locationText = location.type.str;
-		if (locationText.length > 0) {
-			locationText = ValueFormat.formatSize(this.props.item.location.size) + ' (' + locationText + ')';
-		}
-
 		return (
 			<div className="filelist-session">
 				<ListBrowser
 					{ ...this.props }
 				/>
-				{ !BrowserUtils.useMobileLayout() ? (
-					<SessionFooter>
-						<FooterItem label="Directory size" text={ locationText }/>
-						<FooterItem label="Total list size" text={ ValueFormat.formatSize(this.props.item.total_size) }/>
-					</SessionFooter>
-				) : null }
+
+				<FilelistFooter
+					item={ this.props.item }
+				/>
 			</div>
 		);
 	},

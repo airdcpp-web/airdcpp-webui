@@ -3,8 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
-import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import CCPMState from './CCPMState';
+import MessageFooter from './MessageFooter';
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
@@ -24,15 +23,11 @@ const ChatSession = React.createClass({
 					chatActions={ PrivateChatActions }
 					session={ item }
 				/>
-				{ item.ccpm_state.supported ? ( 
-					<SessionFooter>
-						<CCPMState 
-							state={ item.ccpm_state.id } 
-							item={ item }
-							contextGetter={ () => ReactDOM.findDOMNode(this) }
-						/>
-					</SessionFooter>
-				) : null }
+
+				<MessageFooter
+					item={ item }
+					contextGetter={ () => ReactDOM.findDOMNode(this) }
+				/>
 			</div>
 		);
 	},
