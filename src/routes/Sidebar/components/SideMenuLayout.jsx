@@ -13,8 +13,7 @@ const SideMenuLayout = React.createClass({
 
 	render() {
 		const { activeItem, menuItems, 
-			itemIconGetter, itemHeaderGetter, itemDescriptionGetter, 
-			actionMenu, location 
+			itemIcon, itemHeader, itemDescriptionGetter
 		} = this.props;
 
 		const newButton = this.props.newButton ? React.cloneElement(this.props.newButton, { 
@@ -35,8 +34,8 @@ const SideMenuLayout = React.createClass({
 					<div className="ui segment session-layout">
 						{ activeItem ? (
 						<TabHeader
-							icon={ itemIconGetter(activeItem) }
-							title={ itemHeaderGetter(activeItem, location, actionMenu) }
+							icon={ itemIcon }
+							title={ itemHeader }
 							subHeader={ itemDescriptionGetter(activeItem) }
 						/>) : null }
 						{ activeItem ? <div className="ui divider"/> : null }

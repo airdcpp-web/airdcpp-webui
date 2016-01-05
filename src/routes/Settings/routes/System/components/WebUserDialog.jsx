@@ -47,6 +47,9 @@ const AccessCaptions = {
 
 	FILELISTS_VIEW: 'Filelists: View',
 	FILELISTS_EDIT: 'Filelists: Modify',
+
+	VIEW_FILE_VIEW: 'Viewed files: View',
+	VIEW_FILE_EDIT: 'Viewed files: Modify',
 };
 
 

@@ -13,7 +13,7 @@ const FileFooter = ({ item }) => {
 
 	return (
 		<SessionFooter>
-			<FooterItem label="Downloaded on" text={ ValueFormat.formatRelativeTime(item.time_finished) }/>
+			<FooterItem label="Downloaded" text={ ValueFormat.formatRelativeTime(item.time_finished) }/>
 		</SessionFooter>
 	);
 };

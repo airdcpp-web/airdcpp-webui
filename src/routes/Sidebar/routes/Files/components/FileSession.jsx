@@ -18,7 +18,7 @@ const FileSession = React.createClass({
 			<div className={ 'file-session ' + item.type.str + ' ' + item.type.content_type }>
 				<div className="file-content">
 					{ item.text ? (
-						<TextFile text={ this.state.text }/>
+						<TextFile item={ item }/>
 					) : (
 						<ImageFile item={ item }/>
 					) }

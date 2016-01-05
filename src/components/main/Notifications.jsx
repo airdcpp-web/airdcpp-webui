@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
+import ViewFileConstants from 'constants/ViewFileConstants';
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import { default as LogConstants, SeverityEnum } from 'constants/LogConstants';
 
@@ -11,6 +12,7 @@ import NotificationActions from 'actions/NotificationActions';
 
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import History from 'utils/History';
+
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import Logo from '../../../images/AirDCPlusPlus.png';
@@ -85,6 +87,10 @@ const Notifications = React.createClass({
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
 			addSocketListener(LogConstants.MODULE_URL, LogConstants.LOG_MESSAGE, this._onLogMessage);
 		}
+
+		if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {
+			addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this._onViewFileDownloaded);
+		}
 	},
 
 	_onLogMessage(message) {
@@ -110,6 +116,20 @@ const Notifications = React.createClass({
 		} else {
 			NotificationActions.error(notification);
 		}
+	},
+
+	_onViewFileDownloaded(file) {
+		NotificationActions.info({
+			title: file.name,
+			message: 'File has finished downloading',
+			uid: file.id,
+			action: {
+				label: 'View file',
+				callback: () => { 
+					History.pushSidebar(this.props.location, 'files/session/' + file.id); 
+				}
+			}
+		});
 	},
 
 	_onPrivateMessage(message) {

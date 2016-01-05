@@ -21,10 +21,10 @@ const SessionDropdown = ({ menuItems, newButton, unreadInfoStore }) => {
 	);
 };
 
-const ItemHeader = ({ itemIconGetter, itemHeaderGetter, location, activeItem, actionMenu }) => (
+const ItemHeader = ({ itemIcon, itemHeader, location, activeItem, actionMenu }) => (
 	<div className="session-header">
-		{ itemIconGetter(activeItem) }
-		{ itemHeaderGetter(activeItem, location, actionMenu) }
+		{ itemIcon }
+		{ itemHeader }
 	</div>
 );
 

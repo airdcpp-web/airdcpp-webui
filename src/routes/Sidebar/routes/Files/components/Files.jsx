@@ -30,29 +30,6 @@ const ItemHandler = {
 		return <FileIcon file={ session }/>;
 	},
 
-	itemHeaderGetter(session, location, actionMenu) {
-		return actionMenu;
-
-		/*return (
-			<div>
-				{ actionMenu }
-				{ session.name }
-			</div>
-		);*/
-
-		/*return (
-			<ActionMenu 
-				location={ location } 
-				caption={ session.identity.name } 
-				actions={ HubActions } 
-				itemData={ session } 
-				ids={ [ 'reconnect', 'favorite' ] }
-			>
-				{ actionMenu }
-			</ActionMenu>
-		);*/
-	},
-
 	itemLabelGetter(session) {
 		return null;
 	},

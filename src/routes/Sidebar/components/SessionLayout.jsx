@@ -46,8 +46,9 @@ const SessionLayout = React.createClass({
 
 		/**
 		 * Function receiving an item object that returns header for the currently active item
+		 * If no function is supplied, the item name will be used
 		 */
-		itemHeaderGetter: React.PropTypes.func.isRequired,
+		itemHeaderGetter: React.PropTypes.func,
 
 		/**
 		 * Function receiving an item object that returns the description (subheader) of the item
@@ -226,6 +227,49 @@ const SessionLayout = React.createClass({
 		);
 	},
 
+	getItemHeader() {
+		const { activeItem } = this.state;
+		if (!activeItem) {
+			return null;
+		}
+
+		const actionMenu = (
+			<ActionMenu 
+				caption={ this.props.itemNameGetter(activeItem) }
+				location={ location }
+				actions={ this.props.actions }
+				itemData={ activeItem }
+				ids={ [ 'removeSession' ] }
+			/>
+		);
+
+		return this.props.itemHeaderGetter ? this.props.itemHeaderGetter(activeItem, location, actionMenu) : actionMenu;
+	},
+
+	getItemIcon() {
+		const { activeItem } = this.state;
+		if (!activeItem) {
+			return null;
+		}
+
+		return this.props.itemIconGetter(activeItem);
+	},
+
+	getNewButton(hasEditAccess) {
+		if (!hasEditAccess || !this.props.newButtonCaption) {
+			return null;
+		}
+
+		return (
+			<SessionNewButton 
+				key="new-button" 
+				title={this.props.newButtonCaption} 
+				location={this.props.location} 
+				url={this.getNewUrl()} 
+			/>
+		);
+	},
+
 	render() {
 		const hasEditAccess = LoginStore.hasAccess(this.props.editAccess);
 
@@ -248,38 +292,16 @@ const SessionLayout = React.createClass({
 			return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
 		}
 
-		// New session button
-		const newButton = hasEditAccess && this.props.newButtonCaption ? (
-			<SessionNewButton 
-				key="new-button" 
-				title={this.props.newButtonCaption} 
-				location={this.props.location} 
-				url={this.getNewUrl()} 
-			/>
-		) : null;
-
-		const actionMenu = activeItem ? (
-			<ActionMenu 
-				caption={ this.props.itemNameGetter(activeItem) }
-				location={ location }
-				actions={ this.props.actions }
-				itemData={ activeItem }
-				ids={ [ 'removeSession' ] }
-			/>
-		) : null;
-
-		//const Component = TopMenuLayout;
 		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
 		return (
 			<Component 
-				itemIconGetter={ this.props.itemIconGetter }
-				itemHeaderGetter={ this.props.itemHeaderGetter }
+				itemIcon={ this.getItemIcon() }
+				itemHeader={ this.getItemHeader() }
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
-				actionMenu={ actionMenu }
 				activeItem={ activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
 
-				newButton={ newButton }
+				newButton={ this.getNewButton(hasEditAccess) }
 				menuItems={ menuItems }
 				location={ this.props.location }
 			>
