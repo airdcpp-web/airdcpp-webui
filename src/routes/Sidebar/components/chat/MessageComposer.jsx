@@ -1,8 +1,10 @@
 'use strict';
 import React from 'react';
 
+import BrowserUtils from 'utils/BrowserUtils';
 
 const ENTER_KEY_CODE = 13;
+
 
 const MessageComposer = React.createClass({
 	propTypes: {
@@ -49,7 +51,7 @@ const MessageComposer = React.createClass({
 			<div className="ui form">
 				<textarea
 					resize="none"
-					rows="2"
+					rows={ BrowserUtils.useMobileLayout() ? 1 : 2 }
 					className="message-composer"
 					name="message"
 					value={this.state.text}
