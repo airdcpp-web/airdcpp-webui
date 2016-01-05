@@ -74,13 +74,14 @@ export const DecimalCell = ({ cellData }) => (
 	</span>
 );
 
-export const FileDownloadCell = ({ cellData, rowData, captionGetter, ...props }) => (
+export const FileDownloadCell = ({ cellData, rowData, captionGetter, userGetter, ...props }) => (
 	<TableDownloadMenu 
 		caption={ 
 			<FileNameFormatter item={ rowData.type }>
 				{ captionGetter ? captionGetter(cellData, rowData) : cellData }
 			</FileNameFormatter> 
 		} 
+		user={ userGetter(rowData) }
 		linkCaption={ captionGetter ? false : true }
 		itemInfo={ rowData }
 		{ ...props }

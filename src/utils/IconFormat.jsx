@@ -7,7 +7,7 @@ const fileToIcon = (name) => {
 	switch (name) {
 		case 'audio': return 'file outline audio';
 		case 'compressed': return 'file outline archive';
-		case 'document': return 'edit';
+		case 'document': return 'file text outline';
 		case 'executable': return 'browser';
 		case 'picture': return 'file outline image';
 		case 'video': return 'file outline video';
@@ -26,24 +26,28 @@ const fileItemTypeToIcon = (item) => {
 	}
 };
 
-export const FileNameFormatter = ({ onClick, item, children }) => {
+export const FileIcon = ({ file, onClick }) => {
 	const iconClass = classNames(
 		'icon large',
 		{ 'link': onClick },
-		fileItemTypeToIcon(item),
+		fileItemTypeToIcon(file),
 	);
 
 	return (
-		<div className="file-name" onClick={ onClick }>
-			<i className={ iconClass }/>
-			{ onClick ? (
-				<a>
-					{ children }
-				</a>
-			) : children }
-		</div>
+		<i className={ iconClass }/>
 	);
 };
+
+export const FileNameFormatter = ({ onClick, item, children }) => (
+	<div className="file-name" onClick={ onClick }>
+		<FileIcon file={ item }/>
+		{ onClick ? (
+			<a>
+				{ children }
+			</a>
+		) : children }
+	</div>
+);
 
 export const IpFormatter = ({ item }) => (
 	<div className="ip flag">

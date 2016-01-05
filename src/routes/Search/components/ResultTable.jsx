@@ -68,10 +68,11 @@ const ResultTable = React.createClass({
 					width={200}
 					columnKey="name"
 					flexGrow={8}
-					cell={ 
+					cell={
 						<FileDownloadCell 
 							location={ this.props.location }
 							handler={ SearchActions.download } 
+							userGetter={ (rowData) => rowData.users.user }
 						/>  
 					}
 				/>

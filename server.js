@@ -24,6 +24,7 @@ proxy.on('error', function (err, req, res) {
 	} catch(e) { }
 });
 
+//app.use('/view', proxy);
 
 // Env-specific configuration
 if (process.env.NODE_ENV !== 'production') {
@@ -42,6 +43,9 @@ if (process.env.NODE_ENV !== 'production') {
 	app.use(compression());
 }
 
+app.get("/view/*", function(req, res){ 
+  proxy.web(req, res);
+});
 
 // Setup static file handling
 app.get('*', function (req, res) {

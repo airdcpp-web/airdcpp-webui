@@ -27,6 +27,9 @@ const AccessConstants = {
 
 	FILELISTS_VIEW: 'filelists_view',
 	FILELISTS_EDIT: 'filelists_edit',
+
+	VIEW_FILE_VIEW: 'view_file_view',
+	VIEW_FILE_EDIT: 'view_file_edit',
 };
 
 export default AccessConstants;

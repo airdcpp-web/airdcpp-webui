@@ -64,7 +64,10 @@ export default function (Component) {
 		 * No icon is added by default
 		 * Set the 'simple' to use a single color icon for all users
 		 */
-		userIcon: React.PropTypes.bool,
+		userIcon: React.PropTypes.oneOfType([
+			React.PropTypes.bool,
+			React.PropTypes.string,
+		]),
 
 		/**
 		 * Optional custom caption to use

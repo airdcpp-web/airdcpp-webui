@@ -56,6 +56,7 @@ const routeConfig = [
 					require('./routes/Sidebar/routes/Hubs'),
 					require('./routes/Sidebar/routes/Filelists'), 
 					require('./routes/Sidebar/routes/Messages'), 
+					require('./routes/Sidebar/routes/Files'), 
 					require('./routes/Sidebar/routes/Events'), 
 				]
 			}

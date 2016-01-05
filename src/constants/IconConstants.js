@@ -21,4 +21,6 @@ export default {
 	PLAY: 'green play',
 
 	CLEAR: 'blue erase',
+	OPEN: 'external',
+	FIND: 'find',
 };

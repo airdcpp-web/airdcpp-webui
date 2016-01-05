@@ -82,7 +82,7 @@ const SessionLayout = React.createClass({
 		/**
 		 * Label for button that opens a new session
 		 */
-		newButtonCaption: React.PropTypes.any.isRequired,
+		newButtonCaption: React.PropTypes.any,
 
 		/**
 		 * Set to false if the side menu should never be shown (the session will use all width that is available)  
@@ -188,6 +188,10 @@ const SessionLayout = React.createClass({
 	},
 
 	getNewUrl() {
+		if (!this.props.newButtonCaption) {
+			return '/' + this.props.baseUrl;
+		}
+
 		return '/' + this.props.baseUrl + '/new';
 	},
 
@@ -245,7 +249,7 @@ const SessionLayout = React.createClass({
 		}
 
 		// New session button
-		const newButton = hasEditAccess ? (
+		const newButton = hasEditAccess && this.props.newButtonCaption ? (
 			<SessionNewButton 
 				key="new-button" 
 				title={this.props.newButtonCaption} 
@@ -254,14 +258,15 @@ const SessionLayout = React.createClass({
 			/>
 		) : null;
 
-		const actionMenu = (
+		const actionMenu = activeItem ? (
 			<ActionMenu 
+				caption={ this.props.itemNameGetter(activeItem) }
 				location={ location }
 				actions={ this.props.actions }
 				itemData={ activeItem }
 				ids={ [ 'removeSession' ] }
 			/>
-		);
+		) : null;
 
 		//const Component = TopMenuLayout;
 		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;

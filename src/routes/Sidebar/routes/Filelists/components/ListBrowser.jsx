@@ -112,7 +112,7 @@ const ListBrowser = React.createClass({
 		return (
 			<DownloadMenu 
 				caption={ caption }
-				parentEntity={ this.props.item }
+				user={ this.props.item.user }
 				itemInfo={ this.props.item.location }
 				location={ this.props.location }
 				handler={ FilelistActions.download } 
@@ -157,7 +157,7 @@ const ListBrowser = React.createClass({
 						cell={
 							<FileDownloadCell 
 								captionGetter={ this.nameCellCaptionGetter }
-								parentEntity={ item }
+								userGetter={ _ => item.user }
 								location={ location }
 								handler={ FilelistActions.download } 
 							/> 

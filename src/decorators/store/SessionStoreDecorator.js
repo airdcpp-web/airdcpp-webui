@@ -40,10 +40,15 @@ const SessionStoreDecorator = function (store, actions, urgencyMappings) {
 	};
 
 	store._onSessionUpdated = (data, id) => {
+		if (!id) {
+			// It's not a submodule
+			id = data.id;
+		}
+
 		const session = store.getSession(id);
 		if (!session) {
 			// May happen before the sessions have been fetched
-			console.log('Update received for a non-existing session', id);
+			console.log('Update received for a non-existing session', data);
 			return;
 		}
 

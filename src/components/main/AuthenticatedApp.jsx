@@ -22,6 +22,7 @@ import ModalHandlerDecorator from 'decorators/ModalHandlerDecorator';
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
+import ViewFileActions from 'actions/ViewFileActions';
 import LogActions from 'actions/LogActions';
 
 import OverlayConstants from 'constants/OverlayConstants';
@@ -67,6 +68,10 @@ const AuthenticatedApp = React.createClass({
 
 		if (LoginStore.hasAccess(AccessConstants.FILELISTS_VIEW)) {
 			FilelistActions.fetchSessions();
+		}
+
+		if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {
+			ViewFileActions.fetchSessions();
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {

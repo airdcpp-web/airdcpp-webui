@@ -24,11 +24,12 @@ const FilelistActions = Reflux.createActions([
 		icon: IconConstants.REFRESH,
 	} },
 	{ 'download': { asyncResult: true } },
+	{ 'findNfo': { asyncResult: true } },
 ]);
 
 FilelistActions.download.listen((itemData, downloadData) => {
 	const data = {
-		user: itemData.parentEntity.user,
+		user: itemData.user,
 		...downloadData,
 	};
 
@@ -95,6 +96,21 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 		directory: directory,
 	})
 		.then((data) => that.completed(location, user, directory, data))
+		.catch(that.failed);
+});
+
+FilelistActions.findNfo.listen(function ({ user, itemInfo }) {
+	let that = this;
+	SocketService.post(FilelistConstants.SESSION_URL, {
+		client_view: false,
+		user: {
+			cid: user.cid,
+			hub_url: user.hub_url,
+		},
+		directory: itemInfo.path,
+		find_nfo: true,
+	})
+		.then((data) => that.completed(user, itemInfo, data))
 		.catch(that.failed);
 });
 

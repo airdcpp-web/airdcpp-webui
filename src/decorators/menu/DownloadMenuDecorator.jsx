@@ -4,19 +4,32 @@ import DownloadActions from 'actions/DownloadActions';
 
 
 export default function (Component) {
-	const DownloadMenu = ({ handler, parentEntity, itemInfo, location, caption, ...other }) => {
+	const DownloadMenu = ({ handler, user, itemInfo, location, caption, ...other }) => {
 		const data = {
-			parentEntity: parentEntity,
-			handler: handler,
-			itemInfo: itemInfo,
-			location: location
+			user,
+			handler,
+			itemInfo,
+			location
 		};
+
+		const isDirectory = itemInfo.type.id === 'directory';
+		const ids = [ 'download', 'downloadTo' ];
+
+		if (itemInfo.type.content_type === 'picture') {
+			ids.push('viewImage');
+		} else if (!isDirectory && itemInfo.size < 256*1024) {
+			ids.push('viewText');
+		}
+
+		if (isDirectory) {
+			ids.push('findNfo');
+		}
 
 		return (
 			<Component 
 				caption={ caption } 
 				actions={ DownloadActions } 
-				ids={[ 'download', 'downloadTo' ]} 
+				ids={ ids } 
 				itemData={ data } 
 				{ ...other }
 			/>
@@ -26,9 +39,9 @@ export default function (Component) {
 	DownloadMenu.propTypes = {
 
 		/**
-		 * Possible entity to be passed to the handler (when not used for items in a singleton entity)
+		 * Possible user to be passed to the handler (when not used for items in a singleton entity)
 		 */
-		parentEntity: React.PropTypes.any,
+		user: React.PropTypes.object.isRequired,
 
 		/**
 		 * Function for handling the download

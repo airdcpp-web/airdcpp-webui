@@ -12,21 +12,11 @@ import Message from 'components/semantic/Message';
 
 const FilelistSession = React.createClass({
 	mixins: [ RouteContext ],
-
-	stateToString(state) {
-		switch (state) {
-			case 'download_pending': return 'Download pending';
-			case 'downloading': return 'Downloading';
-			case 'loading':
-			default: return 'Loading';
-		}
-	},
-
 	render() {
 		const { user, location, state } = this.props.item;
 
 		if (state.id !== 'loaded' || !location) {
-			return <Loader text={ this.stateToString(state.id) }/>;
+			return <Loader text={ state.str }/>;
 		}
 
 		if (user.flags.indexOf('offline') !== -1) {

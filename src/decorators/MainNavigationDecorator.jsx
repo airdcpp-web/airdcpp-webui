@@ -4,6 +4,7 @@ import Reflux from 'reflux';
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import 'stores/FilelistSessionStore'; // must be required here for now
+import 'stores/ViewFileStore'; // must be required here for now
 import LogStore from 'stores/LogStore';
 
 import LoginStore from 'stores/LoginStore';
@@ -56,6 +57,11 @@ const SecondaryMenuItems = [
 		url: '/filelists',
 		icon: 'blue browser',
 		access: AccessConstants.FILELISTS_VIEW,
+	}, {
+		title: 'Files',
+		url: '/files',
+		icon: 'blue file',
+		access: AccessConstants.VIEW_FILE_VIEW,
 	}, {
 		title: 'Events',
 		url: '/events',
