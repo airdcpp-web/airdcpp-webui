@@ -5,7 +5,7 @@ import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import 'stores/FilelistSessionStore'; // must be required here for now
 import 'stores/ViewFileStore'; // must be required here for now
-import LogStore from 'stores/LogStore';
+import EventStore from 'stores/EventStore';
 
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
@@ -66,7 +66,7 @@ const SecondaryMenuItems = [
 		title: 'Events',
 		url: '/events',
 		icon: 'blue history',
-		unreadInfoStore: LogStore,
+		unreadInfoStore: EventStore,
 		access: AccessConstants.EVENTS,
 	}
 ];
@@ -75,7 +75,7 @@ const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
 	const MainNavigationDecorator = React.createClass({
-		mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(LogStore, 'logMessages') ],
+		mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(EventStore, 'logMessages') ],
 		render() {
 			return (
 				<Component 

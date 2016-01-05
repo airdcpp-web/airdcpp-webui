@@ -1,4 +1,4 @@
-//import { SeverityEnum } from 'constants/LogConstants';
+//import { SeverityEnum } from 'constants/EventConstants';
 
 // Returns the maximum urgency from the map of urgencies (or undefined if all counts are 0)
 const maxUrgency = (urgencyMap) => {

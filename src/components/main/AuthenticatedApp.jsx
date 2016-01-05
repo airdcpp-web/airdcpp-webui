@@ -23,7 +23,7 @@ import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 import ViewFileActions from 'actions/ViewFileActions';
-import LogActions from 'actions/LogActions';
+import EventActions from 'actions/EventActions';
 
 import OverlayConstants from 'constants/OverlayConstants';
 
@@ -75,7 +75,7 @@ const AuthenticatedApp = React.createClass({
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
-			LogActions.fetchInfo();
+			EventActions.fetchInfo();
 		}
 	},
 

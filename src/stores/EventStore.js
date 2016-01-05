@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
-import { default as LogConstants } from 'constants/LogConstants';
-import { LogActions } from 'actions/LogActions';
+import { default as EventConstants } from 'constants/EventConstants';
+import { EventActions } from 'actions/EventActions';
 
 import { LogMessageUrgencies } from 'constants/UrgencyConstants';
 import UrgencyUtils from 'utils/UrgencyUtils';
@@ -11,8 +11,8 @@ import AccessConstants from 'constants/AccessConstants';
 import MessageUtils from 'utils/MessageUtils';
 
 
-const LogStore = Reflux.createStore({
-	listenables: LogActions,
+const EventStore = Reflux.createStore({
+	listenables: EventActions,
 	init: function () {
 		this._logMessages = null;
 		this._info = null;
@@ -50,7 +50,7 @@ const LogStore = Reflux.createStore({
 
 	onLogInfo: function (newInfo) {
 		if (this._active) {
-			newInfo = MessageUtils.checkUnread(newInfo, LogActions);
+			newInfo = MessageUtils.checkUnread(newInfo, EventActions);
 		}
 
 		// In case the log was cleared
@@ -73,10 +73,10 @@ const LogStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
-		const url = LogConstants.MODULE_URL;
-		addSocketListener(url, LogConstants.LOG_MESSAGE, this.onLogMessage);
-		addSocketListener(url, LogConstants.LOG_INFO, this.onLogInfo);
+		const url = EventConstants.MODULE_URL;
+		addSocketListener(url, EventConstants.LOG_MESSAGE, this.onLogMessage);
+		addSocketListener(url, EventConstants.LOG_INFO, this.onLogInfo);
 	}
 });
 
-export default SocketSubscriptionDecorator(LogStore, AccessConstants.EVENTS);
+export default SocketSubscriptionDecorator(EventStore, AccessConstants.EVENTS);

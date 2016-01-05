@@ -2,9 +2,9 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import ValueFormat from 'utils/ValueFormat.js';
-import LogActions from 'actions/LogActions';
-import LogStore from 'stores/LogStore';
-import { SeverityEnum } from 'constants/LogConstants';
+import EventActions from 'actions/EventActions';
+import EventStore from 'stores/EventStore';
+import { SeverityEnum } from 'constants/EventConstants';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import Button from 'components/semantic/Button';
@@ -62,22 +62,22 @@ const MessageView = ScrollDecorator(React.createClass({
 }));
 
 const SystemLog = React.createClass({
-	mixins: [ Reflux.connect(LogStore, 'messages'), ],
+	mixins: [ Reflux.connect(EventStore, 'messages'), ],
 	componentWillMount: function () {
-		LogActions.setActive(true);
-		LogActions.setRead();
+		EventActions.setActive(true);
+		EventActions.setRead();
 
 		if (!this.state.messages) {
-			LogActions.fetchMessages();
+			EventActions.fetchMessages();
 		}
 	},
 
 	componentWillUnmount() {
-		LogActions.setActive(false);
+		EventActions.setActive(false);
 	},
 
 	_handleClear() {
-		LogActions.clear();
+		EventActions.clear();
 	},
 
 	render: function () {

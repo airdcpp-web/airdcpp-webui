@@ -1,4 +1,4 @@
-import { SeverityEnum } from 'constants/LogConstants';
+import { SeverityEnum } from 'constants/EventConstants';
 
 export const UrgencyEnum = {
 	HIGH: 5,

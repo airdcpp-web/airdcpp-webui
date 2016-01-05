@@ -1,6 +1,7 @@
 const MODULE_URL = 'log/v0';
 
 export const SeverityEnum = {
+	NOTIFY: 'notify',
 	INFO: 'info',
 	WARNING: 'warning',
 	ERROR: 'error',

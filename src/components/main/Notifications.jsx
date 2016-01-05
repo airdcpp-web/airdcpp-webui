@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
-import { default as LogConstants, SeverityEnum } from 'constants/LogConstants';
+import { default as EventConstants, SeverityEnum } from 'constants/EventConstants';
 
 import NotificationSystem from 'react-notification-system';
 import NotificationStore from 'stores/NotificationStore';
@@ -85,7 +85,7 @@ const Notifications = React.createClass({
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
-			addSocketListener(LogConstants.MODULE_URL, LogConstants.LOG_MESSAGE, this._onLogMessage);
+			addSocketListener(EventConstants.MODULE_URL, EventConstants.LOG_MESSAGE, this._onLogMessage);
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {
@@ -93,14 +93,23 @@ const Notifications = React.createClass({
 		}
 	},
 
+	getSeverityStr(severity) {
+		switch (severity) {
+			case SeverityEnum.NOTIFY: return 'Information';
+			case SeverityEnum.ERROR: return 'ERROR';
+			case SeverityEnum.WARNING: return 'WARNING';
+			default: return null;
+		}
+	},
+
 	_onLogMessage(message) {
 		const { text, id, severity } = message;
-		if (severity !== SeverityEnum.WARNING && severity !== SeverityEnum.ERROR) {
+		if (severity === SeverityEnum.INFO) {
 			return;
 		}
 
 		const notification = {
-			title: severity === SeverityEnum.WARNING ? 'WARNING' : 'ERROR',
+			title: this.getSeverityStr(severity),
 			message: text,
 			uid: id,
 			action: {
