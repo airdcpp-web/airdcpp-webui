@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 
+import RedrawDecorator from 'decorators/RedrawDecorator';
 import ValueFormat from 'utils/ValueFormat';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import BrowserUtils from 'utils/BrowserUtils';
@@ -18,4 +19,4 @@ const FileFooter = ({ item }) => {
 	);
 };
 
-export default FileFooter;
+export default RedrawDecorator(FileFooter);

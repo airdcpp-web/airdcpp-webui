@@ -4,12 +4,12 @@
 	flex-direction: column;
 }
 
-.file-session .file-content pre {
+.file-session .file-content {
 	flex: 1;
 	overflow-x: auto;
 }
 
-.file-session.nfo .file-content {
+.file-session.nfo .file-content pre {
 	font-family: "Courier New", "DejaVu Sans Mono", monospace;
 	font-size: 11px;
 	line-height: 12px;
