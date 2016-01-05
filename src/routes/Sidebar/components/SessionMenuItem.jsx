@@ -30,10 +30,11 @@ const SessionMenuItem = React.createClass({
 
 	render: function () {
 		const { item } = this.props;
+		const status = this.props.statusGetter(item);
 		return (
 			<Link to={this.props.url} className="item session-item" onClick={this.onClick} activeClassName="active">
 				<div className="left-content">
-					<div className={ 'ui session-status empty circular left mini label ' + this.props.statusGetter(item) }/>
+					{ status ? <div className={ 'ui session-status empty circular left mini label ' + status }/> : null }
 					{ this.props.nameGetter(item) }
 				</div>
 

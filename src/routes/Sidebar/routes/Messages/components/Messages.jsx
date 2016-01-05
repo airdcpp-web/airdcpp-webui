@@ -10,12 +10,6 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import AccessConstants from 'constants/AccessConstants';
 
 
-const ItemHandler = {
-	itemCloseHandler(session) {
-		PrivateChatActions.removeSession(session.id);
-	},
-};
-
 const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
@@ -32,7 +26,7 @@ const Messages = React.createClass({
 				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
 				actions={ PrivateChatActions }
 
-				{ ...UserItemHandlerDecorator(ItemHandler, [ 'browse' ]) }
+				{ ...UserItemHandlerDecorator({ }, [ 'browse' ]) }
 			>
 				{ this.props.children }
 			</SessionLayout>

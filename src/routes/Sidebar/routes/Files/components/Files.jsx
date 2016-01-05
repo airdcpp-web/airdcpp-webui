@@ -33,10 +33,6 @@ const ItemHandler = {
 	itemLabelGetter(session) {
 		return null;
 	},
-
-	itemCloseHandler(session) {
-		ViewFileActions.removeSession(session.id);
-	},
 };
 
 
@@ -47,7 +43,7 @@ const Files = React.createClass({
 			return (
 				<Message
 					title="No files to view"
-					description="You can open specific files to be viewed here from search or filelists"
+					description="You may open text or image files to be viewed here (from search or filelists)"
 				/>
 			);
 		}
@@ -59,7 +55,6 @@ const Files = React.createClass({
 				itemUrl="files/session"
 				location={this.props.location} 
 				items={ this.state.files }
-				//newButtonCaption="Open new"
 				disableSideMenu={true}
 				editAccess={ AccessConstants.VIEW_FILE_EDIT }
 				actions={ ViewFileActions }

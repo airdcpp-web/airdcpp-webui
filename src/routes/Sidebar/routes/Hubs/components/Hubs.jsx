@@ -49,10 +49,6 @@ const ItemHandler = {
 			</ActionMenu>
 		);
 	},
-
-	itemCloseHandler(session) {
-		HubActions.removeSession(session.id);
-	},
 };
 
 const Hubs = React.createClass({

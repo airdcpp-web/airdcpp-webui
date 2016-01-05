@@ -16,10 +16,6 @@ const ItemHandler = {
 	itemLabelGetter(session) {
 		return null;
 	},
-
-	itemCloseHandler(session) {
-		FilelistActions.removeSession(session.id);
-	},
 };
 
 
