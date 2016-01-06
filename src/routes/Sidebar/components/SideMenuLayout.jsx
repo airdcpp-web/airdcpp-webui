@@ -1,6 +1,7 @@
 import React from 'react';
 
-import TabHeader from 'routes/Sidebar/components/TabHeader';
+import LayoutHeader from 'components/semantic/LayoutHeader';
+import ActionButton from 'components/ActionButton';
 
 
 const SideMenuLayout = React.createClass({
@@ -33,10 +34,18 @@ const SideMenuLayout = React.createClass({
 				<div className="twelve wide stretched column content-column session">
 					<div className="ui segment session-layout">
 						{ activeItem ? (
-						<TabHeader
+						<LayoutHeader
+							className="session-header"
 							icon={ itemIcon }
-							title={ itemHeader }
+							title={ <div className="title">{ itemHeader }</div> }
 							subHeader={ itemDescriptionGetter(activeItem) }
+							/*component={ 
+								<ActionButton 
+									action={ this.props.closeAction } 
+									args={ [ activeItem ] }
+									icon={ false }
+								/>
+							}*/
 						/>) : null }
 						{ activeItem ? <div className="ui divider"/> : null }
 						{ this.props.children }

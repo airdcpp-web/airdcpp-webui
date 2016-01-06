@@ -53,8 +53,8 @@
 .session-container.vertical .session-header > span {
   padding-left: 5px;
   max-width: 90%;
-  padding: .92857143em 1.14285714em;
-  line-height: 1;
+  padding: .82857143em 1.14285714em;
+  line-height: 1.2;
 }
 
 .session-container.vertical .session-header > div:before {
@@ -115,11 +115,17 @@
 }
 
 .session-container.horizontal .menu-column .session-item span, 
-.session-layout .header .content span,
-.session-container .session-header > div span {
+/*.session-layout .header .content span,*/
+.session-container.horizontal .session-header .title span,
+.session-container.vertical .session-header span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.session-container .session-header .title > div {
+  display: flex !important;
+  width: 100%;
 }
 
 .session-layout .sub.header {

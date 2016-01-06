@@ -12,7 +12,7 @@ const LayoutHeader = ({ className, icon, component, size, title, subHeader }) =>
 	);
 
 	const headerClassName = classNames(
-		'ui header main-header',
+		'ui header left',
 		size,
 	);
 

@@ -66,14 +66,14 @@ section#container-main,
 	justify-content: space-between;
 }
 
-.layout.header .main-header {
+.layout.header .left {
 	max-width: 85%;
 	display: flex;
 	align-items: center;
 	padding: 5px 5px;
 }
 
-.layout.header .main-header .content {
+.layout.header .left .content {
 	width: 90%;
 }
 
@@ -87,6 +87,10 @@ section#container-main,
 
 .layout.header .content > span {
 	display: block;
+}
+
+.layout.header > div {
+	margin-bottom: 0px;
 }
 
 .header.new {

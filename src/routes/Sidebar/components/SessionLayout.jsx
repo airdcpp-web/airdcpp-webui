@@ -300,7 +300,7 @@ const SessionLayout = React.createClass({
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
 				activeItem={ activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
-
+				closeAction={ this.props.actions.removeSession }
 				newButton={ this.getNewButton(hasEditAccess) }
 				menuItems={ menuItems }
 				location={ this.props.location }

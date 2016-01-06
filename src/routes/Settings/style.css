@@ -86,7 +86,7 @@
   padding-bottom: 2px;
 }
 
-.settings-layout .mobile .main-header {
+.settings-layout .mobile .layout.header .left {
   display: none;
 }
 
