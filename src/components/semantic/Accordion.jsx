@@ -1,10 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import classNames from 'classnames';
+
+
 const Accordion = React.createClass({
+	propTypes: {
+		controlled: React.PropTypes.bool,
+		//activeIndexes: React.PropTypes.bool,
+	},
+
+	/*componentWillReceiveProps(nextProps) {
+		if (!this.props.controlled || nextProps.activeIndexes === this.props.activeIndexes) {
+			return;
+		}
+
+		let dom = ReactDOM.findDOMNode(this);
+		nextProps.activeIndexes.forEach(id => {
+			if (nextProps.active) {
+				$(dom).accordion('open', id);
+			} else {
+				$(dom).accordion('close', id);
+			}
+		});
+	},*/
+
 	componentDidMount() {
 		let dom = ReactDOM.findDOMNode(this);
-		$(dom).accordion();
+
+		let settings = {};
+		if (this.props.controlled) {
+			settings = {
+				on: 'disabled',
+			};
+		}
+
+		$(dom).accordion(settings);
+
+		/*if (this.props.active) {
+			$(dom).accordion('open', 0);
+		}*/
 	},
 
 	getDefaultProps() {
@@ -14,9 +49,15 @@ const Accordion = React.createClass({
 	},
 
 	render: function () {
+		const accordionStyle = classNames(
+			'ui accordion',
+			this.props.className,
+		);
+
+		let { children } = this.props;
 		return (
-			<div className={ 'ui accordion ' + this.props.className }>
-				{ this.props.children }
+			<div className={ accordionStyle }>
+				{ children }
 			</div>
 		);
 	},

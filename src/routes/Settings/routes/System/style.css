@@ -7,3 +7,11 @@
 	margin-bottom: 10px;
 	font-weight: bold;
 }
+
+.logging-settings .log-section.active {
+	background-color: whitesmoke;
+}
+
+.logging-settings .field-log_directory {
+	margin-bottom: 25px !important;
+}

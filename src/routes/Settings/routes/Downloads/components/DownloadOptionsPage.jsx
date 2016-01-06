@@ -10,6 +10,8 @@ const Entry = {
 	new_segment_min_speed: t.Positive,
 	allow_slow_overlap: t.Bool,
 	share_finished_bundles: t.Bool,
+	finished_no_hash: t.Bool,
+	finished_remove_exit: t.Bool,
 };
 
 const DownloadOptionsPage = React.createClass({

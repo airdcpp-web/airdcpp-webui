@@ -16,7 +16,8 @@ import FormUtils from 'utils/FormUtils';
 
 import LoginStore from 'stores/LoginStore';
 
-import '../style.css';
+import '../../style.css';
+
 
 const AccessCaptions = {
 	ADMIN: 'Administrator',

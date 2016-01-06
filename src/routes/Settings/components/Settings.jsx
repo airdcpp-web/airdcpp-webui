@@ -188,6 +188,9 @@ const Settings = React.createClass({
 						url: 'users', 
 						noSave: true, 
 						fullWidth: true 
+					}, { 
+						title: 'Logging', 
+						url: 'logging',
 					},
 				],
 			} ];

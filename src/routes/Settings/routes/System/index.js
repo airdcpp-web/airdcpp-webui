@@ -9,9 +9,12 @@ module.exports = {
 				childRoutes: [
 					{
 						path: 'user', 
-						component: require('./components/WebUserDialog').default, 
+						component: require('./components/users/WebUserDialog').default, 
 					}
 				]
+			}, {
+				path: 'logging', 
+				component: require('./components/LoggingPage').default,
 			} ]);
 		}, 'settings-system-children');
 	},

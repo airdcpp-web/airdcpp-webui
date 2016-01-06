@@ -3,9 +3,8 @@ import React from 'react';
 import WebUserActions from 'actions/WebUserActions';
 
 import ActionButton from 'components/ActionButton';
-import WebUserLayout from './WebUserLayout';
+import WebUserLayout from './users/WebUserLayout';
 
-//import '../style.css';
 
 const WebUsersPage = React.createClass({
 	render() {
