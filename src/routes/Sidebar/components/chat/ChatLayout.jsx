@@ -5,7 +5,6 @@ import MessageComposer from './MessageComposer';
 import MessageView from './MessageView';
 
 import LoginStore from 'stores/LoginStore';
-//import Loader from 'components/semantic/Loader';
 
 import './messages.css';
 
@@ -79,16 +78,11 @@ const ChatLayout = React.createClass({
 	},
 
 	render() {
-		const { messages } = this.state;
-		if (!messages) {
-			return null;
-		}
-
 		const { chatAccess, location } = this.props;
 		return (
 			<div className="message-view">
 				<MessageView 
-					messages={ messages }
+					messages={ this.state.messages }
 					location={ location }
 				/>
 				{ LoginStore.hasAccess(chatAccess) ? (

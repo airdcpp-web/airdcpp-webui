@@ -1,13 +1,14 @@
 'use strict';
 import React from 'react';
 
+import Loader from 'components/semantic/Loader';
 import ScrollDecorator from 'decorators/ScrollDecorator';
 import { ChatMessage, StatusMessage } from './Message';
 
 
 const MessageView = React.createClass({
 	propTypes: {
-		messages: React.PropTypes.array.isRequired,
+		messages: React.PropTypes.array,
 	},
 
 	getMessageListItem(message) {
@@ -35,10 +36,15 @@ const MessageView = React.createClass({
 	},
 
 	render: function () {
+		const { messages } = this.props;
+		if (!messages) {
+			return <Loader text="Loading messages"/>;
+		}
+
 		return (
 			<div className="message-section">
 				<div className="ui list message-list">
-					{ this.props.messages.map(this.getMessageListItem) }
+					{ messages.map(this.getMessageListItem) }
 				</div>
 			</div>
 		);
