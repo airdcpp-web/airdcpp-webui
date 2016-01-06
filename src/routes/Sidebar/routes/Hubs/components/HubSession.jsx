@@ -24,9 +24,10 @@ const checkList = (props) => {
 	const showList = JSON.parse(sessionStorage.getItem(getStorageKey(props)));
 	if (showList) {
 		History.pushSidebar(props.location, '/hubs/session/' + props.item.id + '/users');
+		return true;
 	}
 
-	return showList;
+	return false;
 };
 
 const HubSession = React.createClass({

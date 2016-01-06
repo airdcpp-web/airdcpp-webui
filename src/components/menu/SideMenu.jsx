@@ -4,7 +4,7 @@ import React from 'react';
 
 import History from 'utils/History';
 
-import TransferStats from 'components/TransferStats';
+import StatisticsIcons from './StatisticsIcons';
 import PerformanceTools from './PerformanceTools';
 import TouchIcon from './TouchIcon';
 import AwayIcon from './AwayIcon';
@@ -42,7 +42,7 @@ const SideMenu = React.createClass({
 				) : null }
 				<div className="ui divider"/>
 				<div>
-					<TransferStats className="ui centered inverted mini list"/>
+					<StatisticsIcons className="ui centered inverted mini list"/>
 				</div>
 				<div className="touch-icon">
 					<AwayIcon/>

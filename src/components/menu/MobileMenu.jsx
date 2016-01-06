@@ -9,7 +9,7 @@ import { getIconMenuItem } from './MenuItem';
 import History from 'utils/History';
 import LoginActions from 'actions/LoginActions';
 
-import TransferStats from 'components/TransferStats';
+import StatisticsIcons from './StatisticsIcons';
 import PerformanceTools from './PerformanceTools';
 import TouchIcon from './TouchIcon';
 import AwayIcon from './AwayIcon';
@@ -67,7 +67,7 @@ const MobileMenu = React.createClass({
 				{ secondaryMenuItems.map(getIconMenuItem.bind(this, this.onClickSecondary)) }
 				{ getIconMenuItem(this.logout, LogoutItem) }
 				<div className="actions">
-					<TransferStats className="ui centered inverted mini list"/>
+					<StatisticsIcons className="ui centered inverted mini list"/>
 					<AwayIcon/>
 					<TouchIcon/>
 					{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }

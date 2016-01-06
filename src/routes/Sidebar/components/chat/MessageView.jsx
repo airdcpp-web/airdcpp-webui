@@ -7,7 +7,7 @@ import { ChatMessage, StatusMessage } from './Message';
 
 const MessageView = React.createClass({
 	propTypes: {
-		messages: React.PropTypes.object.isRequired,
+		messages: React.PropTypes.array.isRequired,
 	},
 
 	getMessageListItem(message) {

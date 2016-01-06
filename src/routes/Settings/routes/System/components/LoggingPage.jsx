@@ -35,7 +35,7 @@ const LoggingPage = React.createClass({
 					<div className="ui header">Sections</div>
 					<Message
 						icon="blue info"
-						description={ <a href="http://dcplusplus.sourceforge.net/webhelp/settings_logs.html" target="_blank">Variable information for File and Format fields</a> }
+						description={ <a href="http://dcplusplus.sourceforge.net/webhelp/settings_logs.html" target="_blank">Variable information for Filename and Format fields</a> }
 					/>
 					<Accordion className="styled" controlled={ true }>
 						{ sections.map(section => <LogSection ref={ section } section={ section }/>) }

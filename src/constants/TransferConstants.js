@@ -3,5 +3,5 @@ export default {
 	MODULE_URL: MODULE_URL,
 	STATS_URL: MODULE_URL + '/stats',
 
-	STATISTICS: 'statistics'
+	STATISTICS: 'transfer_statistics'
 };
