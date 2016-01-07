@@ -37,15 +37,15 @@ const MessageView = React.createClass({
 
 	render: function () {
 		const { messages } = this.props;
-		if (!messages) {
-			return <Loader text="Loading messages"/>;
-		}
-
 		return (
 			<div className="message-section">
-				<div className="ui list message-list">
-					{ messages.map(this.getMessageListItem) }
-				</div>
+				{ messages ? (
+					<div className="ui list message-list">
+						{ messages.map(this.getMessageListItem) }
+					</div>
+				) : (
+					<Loader text="Loading messages"/>
+				) }
 			</div>
 		);
 	},

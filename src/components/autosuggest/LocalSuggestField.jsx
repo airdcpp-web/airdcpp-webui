@@ -76,6 +76,9 @@ export default React.createClass({
 
 	onKeyDown: function (event) {
 		if (event.keyCode === 13 && this.state.text.length !== 0) {
+			// Hide the suggestion menu
+			this.setState({ suggestions: [] });
+			
 			this.handleSubmit();
 		}
 	},
