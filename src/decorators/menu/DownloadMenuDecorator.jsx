@@ -11,25 +11,11 @@ export default function (Component) {
 			itemInfo,
 			location
 		};
-
-		const isDirectory = itemInfo.type.id === 'directory';
-		const ids = [ 'download', 'downloadTo' ];
-
-		if (itemInfo.type.content_type === 'picture') {
-			ids.push('viewImage');
-		} else if (!isDirectory && itemInfo.size < 256*1024) {
-			ids.push('viewText');
-		}
-
-		if (isDirectory) {
-			ids.push('findNfo');
-		}
-
+		
 		return (
 			<Component 
 				caption={ caption } 
-				actions={ DownloadActions } 
-				ids={ ids } 
+				actions={ DownloadActions }
 				itemData={ data } 
 				{ ...other }
 			/>

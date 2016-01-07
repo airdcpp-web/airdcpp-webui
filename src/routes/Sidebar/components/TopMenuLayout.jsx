@@ -14,7 +14,7 @@ const SessionDropdown = ({ menuItems, newButton, unreadInfoStore }) => {
 		<Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
 		 	<div className="header" style={ newButton ? null : hideStyle }>New</div>
 		 	{ newButton }
-			<div className="ui divider" style={sessionMenuStyle}></div>
+			<div className="ui divider" style={ newButton ? sessionMenuStyle : hideStyle }/>
 			<div className="header" style={sessionMenuStyle}>Current sessions</div>
 			{ menuItems }
 		</Dropdown>

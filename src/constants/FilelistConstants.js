@@ -7,4 +7,7 @@ export default {
 	SESSION_CREATED: 'filelist_created',
 	SESSION_REMOVED: 'filelist_removed',
 	SESSION_UPDATED: 'filelist_updated',
+
+	FIND_NFO_URL: MODULE_URL + '/find_nfo',
+	MATCH_QUEUE_URL: MODULE_URL + '/match_queue',
 };

@@ -10,6 +10,10 @@ import ViewFileActions from 'actions/ViewFileActions';
 import FilelistActions from 'actions/FilelistActions';
 
 
+const showImage = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
+const viewText = ({ itemInfo }) => itemInfo.type.id !== 'directory' && itemInfo.size < 256*1024;
+const findNfo = ({ itemInfo }) => itemInfo.type.id === 'directory';
+
 export const DownloadActions = Reflux.createActions([
 	{ 'download': { 
 		asyncResult: true,	
@@ -28,18 +32,21 @@ export const DownloadActions = Reflux.createActions([
 		displayName: 'View as text',
 		access: AccessConstants.VIEW_FILE_EDIT, 
 		icon: IconConstants.OPEN, 
+		filter: viewText,
 	} },
 	{ 'viewImage': {
 		asyncResult: true,	
 		displayName: 'View image',
 		access: AccessConstants.VIEW_FILE_EDIT, 
 		icon: IconConstants.OPEN, 
+		filter: showImage,
 	} },
 	{ 'findNfo': {
 		asyncResult: true,	
 		displayName: 'Find NFO',
 		access: AccessConstants.VIEW_FILE_EDIT, // TODO: FIX
-		icon: IconConstants.FIND, 
+		icon: IconConstants.FIND,
+		filter: findNfo,
 	} }
 ]);
 

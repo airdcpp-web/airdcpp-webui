@@ -36,7 +36,7 @@ const filterItems = (props, filter, actionIds) => {
 };
 
 // Get IDs to display from the specified menu
-const parseMenu = (props, subMenu) => {
+const parseMenu = (props, subMenu, hasPreviousItems) => {
 	let { ids } = props;
 	if (!ids) {
 		ids = Object.keys(props.actions);
@@ -55,7 +55,7 @@ const parseMenu = (props, subMenu) => {
 	}
 
 	// Show a divider before submenus
-	if (subMenu) {
+	if (subMenu && hasPreviousItems) {
 		ids = [ 'divider', ...ids ];
 	}
 
@@ -147,7 +147,9 @@ export default function (Component) {
 
 			const menus = [ parseMenu(this.props) ];
 			if (children) {
-				menus.push(parseMenu(children.props, true));
+				React.Children.map(children, child => {
+					menus.push(parseMenu(child.props, true, notError(menus[0])));
+				});
 			}
 
 			// Are there any items to show?

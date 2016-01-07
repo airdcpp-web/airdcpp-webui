@@ -88,7 +88,6 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 
 	let that = this;
 	SocketService.post(FilelistConstants.SESSION_URL, {
-		client_view: true,
 		user: {
 			cid: user.cid,
 			hub_url: user.hub_url,
@@ -101,14 +100,12 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 
 FilelistActions.findNfo.listen(function ({ user, itemInfo }) {
 	let that = this;
-	SocketService.post(FilelistConstants.SESSION_URL, {
-		client_view: false,
+	SocketService.post(FilelistConstants.FIND_NFO_URL, {
 		user: {
 			cid: user.cid,
 			hub_url: user.hub_url,
 		},
 		directory: itemInfo.path,
-		find_nfo: true,
 	})
 		.then((data) => that.completed(user, itemInfo, data))
 		.catch(that.failed);
