@@ -1,6 +1,6 @@
 /* Add a few semantic styles manually because of different layout */
 
-.react-autosuggest ul, .Select-menu {
+.react-autosuggest__container ul, .Select-menu {
 	width:100%;
 	position: absolute;
 	left: 0;
@@ -16,7 +16,18 @@
 	margin:0px;
 }
 
-.react-autosuggest li, .Select-menu .Select-option {
+.ui.action.input .react-autosuggest__container input {
+	border-top-right-radius: 0!important;
+	border-bottom-right-radius: 0!important;
+	border-right-color: transparent!important;
+}
+
+.ui.input.fluid .react-autosuggest__container,
+.ui.input.fluid .react-autosuggest__container input {
+	width: 100% !important;
+}
+
+.react-autosuggest__container li, .Select-menu .Select-option {
 	cursor: pointer;
 	display: block;
 	overflow: hidden;
@@ -29,7 +40,7 @@
 
 .Select-menu .Select-option:hover, 
 .Select-menu .Select-option.is-focused,
-.react-autosuggest li:hover {
+.react-autosuggest__container li:hover {
 	background: #f9fafb;
 }
 
@@ -38,12 +49,12 @@
 	border-color: #E0B4B4;
 }
 
-.react-autosuggest ul .description {
+.react-autosuggest__container ul .description {
 	padding-top: 2px;
 	color: rgba(0,0,0,.7);
 	font-size: small;
 }
 
-.react-autosuggest__suggestion--focused, .react-autosuggest li:hover {
+.react-autosuggest__suggestion--focused, .react-autosuggest__container li:hover {
 	background: #f9fafb;
 }

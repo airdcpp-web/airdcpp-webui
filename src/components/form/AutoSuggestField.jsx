@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Autosuggest from 'react-autosuggest';
+import LocalSuggestField from 'components/autosuggest/LocalSuggestField';
 
 import t from 'utils/tcomb-form';
 
@@ -9,34 +9,15 @@ import 'components/autosuggest/style.css';
 
 const AutoSuggestField = t.form.Form.templates.textbox.clone({
 	renderInput(locals) {
-		let getSuggestions = (input, callback) => {
-			const regex = new RegExp('^' + input, 'i');
-			const suggestions = locals.attrs.suggestionGetter().filter(str => regex.test(str));
-
-			callback(null, suggestions);
-		};
-
-		const handleChange = (value) => {
-			locals.onChange(value);
-		};
-
-		// Hide suggestions after submitting input
-		const showWhen = (input) => {
-			return true;
-		};
-
-		const inputAttributes = {
-			placeholder: locals.attrs.placeholder,
-			onChange: handleChange,
-		};
-
 		return (
-			<Autosuggest 
-				value={locals.value ? locals.value : '' }
-				showWhen={showWhen}
-				suggestions={getSuggestions}
-				inputAttributes={inputAttributes} 
-			/>
+			<div className="ui fluid input">
+				<LocalSuggestField 
+					placeholder={ locals.attrs.placeholder }
+					data={ locals.attrs.suggestionGetter() }
+					onChange={ value => locals.onChange(value) }
+					value={ locals.value }
+				/>
+			</div>
 		);
 	}
 });

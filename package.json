@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -35,7 +35,7 @@
     "react-addons-perf": "^0.14.2",
     "react-addons-pure-render-mixin": "^0.14.2",
     "react-addons-update": "^0.14.2",
-    "react-autosuggest": "^2.2.5",
+    "react-autosuggest": "^3.0.0",
     "react-emoji": "^0.4.1",
     "react-linkify": "^0.1.1",
     "react-notification-system": "^0.2.5",

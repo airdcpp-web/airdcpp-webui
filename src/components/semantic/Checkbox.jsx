@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-const CheckBox = React.createClass({
+const Checkbox = React.createClass({
 	mixins: [ PureRenderMixin ],
 	propTypes: {
 
@@ -77,4 +77,4 @@ const CheckBox = React.createClass({
 	},
 });
 
-export default CheckBox;
+export default Checkbox;

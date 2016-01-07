@@ -4,8 +4,9 @@ import HistoryConstants from 'constants/HistoryConstants';
 
 import HistoryActions from 'actions/HistoryActions';
 
-import Autosuggest from 'react-autosuggest';
+import LocalSuggestField from './LocalSuggestField';
 import Button from 'components/semantic/Button';
+
 
 export default React.createClass({
 	propTypes: {
@@ -28,17 +29,11 @@ export default React.createClass({
 		};
 	},
 
-	getDefaultProps() {
-		return {
-			autoFocus: true,
-		};
-	},
-
 	componentDidMount() {
-		this._loadHistory();
+		this.loadHistory();
 	},
 
-	_loadHistory() {
+	loadHistory() {
 		SocketService.get(HistoryConstants.ITEMS_URL + '/' + this.props.historyId)
 			.then(data => {
 				this.setState({ history: data });
@@ -48,72 +43,31 @@ export default React.createClass({
 			);
 	},
 
-	_onKeyDown: function (event) {
-		if (event.keyCode === 13) {
-			if (!this._isDisabled()) {
-				this._handleSubmit();
-			}
-		}
-	},
-
-	_handleSubmit() {
+	handleSubmit() {
 		const { text } = this.state;
 
 		HistoryActions.add(this.props.historyId, text);
-		
-		this.setState({ 
-			suggestionsActive: false,
-		});
 
-		this._loadHistory();
+		this.loadHistory();
 		this.props.submitHandler(text);
 	},
 
-	_getSuggestions(input, callback) {
-		const regex = new RegExp('^' + input, 'i');
-		const suggestions = this.state.history.filter(str => regex.test(str));
-
-		callback(null, suggestions);
-	},
-
-	_handleChange(value) {
-		this.setState({ 
-			text: value,
-			suggestionsActive: true,
-		});
-	},
-
-	// Hide suggestions after submitting input
-	_showWhen(input) {
-		return input.trim().length > 0 && this.state.suggestionsActive;
-	},
-
-	_isDisabled() {
-		return this.state.text.length === 0;
-	},
-
 	render() {
-		const inputAttributes = {
-			placeholder: 'Enter search string...',
-			onChange: this._handleChange,
-			autoFocus: this.props.autoFocus,
-		};
-
 		return (
-			<div className="ui fluid action input" onKeyDown={this._onKeyDown}>
-				<Autosuggest 
-					value={this.state.text}
-					showWhen={this._showWhen}
-					suggestions={this._getSuggestions}
-					inputAttributes={inputAttributes} 
+			<div className="ui fluid action input">
+				<LocalSuggestField 
+					data={ this.state.history }
+					placeholder="Enter search string..."
+					submitHandler={ this.handleSubmit }
+					onChange={ value => this.setState({ text: value }) }
 				/>
 
 				<Button
 					icon="search icon"
-					onClick={this._handleSubmit}
+					onClick={ this.handleSubmit }
 					caption="Search"
-					disabled={this._isDisabled()}
-					loading={this.props.running}
+					disabled={ this.state.text.length === 0 }
+					loading={ this.props.running }
 				/>
 			</div>
 		);

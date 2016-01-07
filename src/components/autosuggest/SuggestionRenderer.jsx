@@ -2,32 +2,45 @@ import React from 'react';
 
 import './style.css';
 
-const SuggestionRenderer = function (input, suggestionValue, description = null) {
-	const escapeRegexCharacters = (str) => {
-		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	};
 
-	const escapedInput = escapeRegexCharacters(input);
+const escapeRegexCharacters = (str) => {
+	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+const SuggestionRenderer = function (searchText, suggestionText, description = null) {
+	const escapedInput = escapeRegexCharacters(searchText);
 	const matchRegex = new RegExp('\\b' + escapedInput, 'i');
 
-	const firstMatchIndex = suggestionValue.search(matchRegex);
+	const firstMatchIndex = suggestionText.search(matchRegex);
 
-	if (firstMatchIndex === -1) {
-		return suggestionValue;
+	let title = suggestionText;
+	if (firstMatchIndex !== -1) {
+		const beforeMatch = suggestionText.slice(0, firstMatchIndex);
+		const match = suggestionText.slice(firstMatchIndex, firstMatchIndex + searchText.length);
+		const afterMatch = suggestionText.slice(firstMatchIndex + searchText.length);
+
+		title = (
+			<span>
+				{beforeMatch}
+				<strong>
+					{match}
+				</strong>
+				{afterMatch}
+				<br />
+			</span>
+		);
 	}
-
-	const beforeMatch = suggestionValue.slice(0, firstMatchIndex);
-	const match = suggestionValue.slice(firstMatchIndex, firstMatchIndex + input.length);
-	const afterMatch = suggestionValue.slice(firstMatchIndex + input.length);
 
 	return (
 		<div className="content">
 			<div className="header">
-				{beforeMatch}<strong>{match}</strong>{afterMatch}<br />
+				{ title }
 			</div>
-			{ description ? (<div className="description">
-				{ description }
-			</div>) : null }
+			{ description ? (
+				<div className="description">
+					{ description }
+				</div>
+			) : null }
 		</div>
 	);
 };

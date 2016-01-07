@@ -186,7 +186,7 @@ const Form = React.createClass({
 
 		return (
 			<div className="form">
-				{ this.props.title ? <div className="ui header">{ this.props.title } </div> : null }
+				{ this.props.title ? <div className="ui form header">{ this.props.title } </div> : null }
 				<TcombForm
 					ref="form"
 					type={t.struct(this.props.formItems)}
