@@ -3,7 +3,9 @@ import SocketActions from 'actions/SocketActions';
 import Promise from 'utils/Promise';
 
 const ignoredConsoleEvents = [
-	'statistics'
+	'transfer_statistics',
+	'hash_statistics',
+	'hub_counts_updated',
 ];
 
 export default class ApiSocket {

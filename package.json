@@ -43,7 +43,8 @@
     "reflux": "^0.3.0",
     "reflux-promise": "^1.0.2",
     "semantic-ui": "^2.1.5",
-    "tcomb-form": "^0.7.10",
+    "tcomb-form": "^0.8.0",
+		"tcomb-form-templates-semantic": "^0.1.0",
       
     "autoprefixer": "^6.0.3",
     "babel-core": "^6.3.15",
