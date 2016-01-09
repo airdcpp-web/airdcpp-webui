@@ -3,6 +3,8 @@ var webpack = require('webpack');
 var CompressionPlugin = require("compression-webpack-plugin");
 
 const release = (process.env.NODE_ENV === 'production');
+const demo = (process.env.DEMO_MODE === '1');
+const chalk = require('chalk');
 
 
 // PLUGINS
@@ -19,6 +21,7 @@ var plugins = [
 	
 	new webpack.DefinePlugin({
 		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+		'process.env.DEMO_MODE': JSON.stringify(process.env.DEMO_MODE),
 		'UI_VERSION': JSON.stringify(require("./package.json").version),
 		'UI_BUILD_DATE': JSON.stringify((new Date).getTime()),
 	}),
@@ -56,7 +59,8 @@ if (!release) {
 	entries.push('webpack-hot-middleware/client');
 }
 
-console.log('[webpack] Release: ' + release);
+console.log(chalk.bold('[webpack] Release: ' + release));
+console.log(chalk.bold('[webpack] Demo mode: ' + demo));
 
 module.exports = {
 	entry: entries,

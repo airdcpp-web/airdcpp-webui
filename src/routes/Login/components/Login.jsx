@@ -9,15 +9,54 @@ import Loader from 'components/semantic/Loader';
 
 import { History } from 'react-router';
 
-const ErrorBox = React.createClass({
-	render: function () {
-		if (this.props.lastError === null) {
-			return null;
-		}
-
-		return <Message isError={true} description={ 'Authentication failed: ' + this.props.lastError }/>;
+const ErrorBox = ({ lastError }) => {
+	if (lastError === null) {
+		return <span/>;
 	}
-});
+
+	return (
+		<Message 
+			isError={true} 
+			description={ 'Authentication failed: ' + lastError }
+		/>
+	);
+};
+
+const SubmitButton = ({ onSubmit, loading }) => {
+	if (loading) {
+		return <Loader size="small" inline={ true } text=""/>;
+	}
+
+	// Don't change the submit button type so that browser prompt to save the password
+	return (
+		<input
+			className="ui button fluid large submit"
+			value="Login"
+			type="submit"
+			onClick={ onSubmit }
+		/>
+	);
+};
+
+const BottomMessage = () => {
+	if (process.env.DEMO_MODE !== '1') {
+		return <span/>;
+	}
+
+	return (
+		<div className="ui stacked segment">
+			<Message 
+				description={ (
+					<div>
+						Username: <strong>demo</strong>
+						<br/>
+						Password: <strong>demo</strong>
+					</div> 
+				)}
+			/>
+		</div>
+	);
+};
 
 const ENTER_KEY_CODE = 13;
 
@@ -25,8 +64,6 @@ const Login = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History ],
 	getInitialState() {
 		return {
-			username: '',
-			password: '',
 			loading: false,
 		};
 	},
@@ -61,7 +98,6 @@ const Login = React.createClass({
 	},
 
 	render() {
-		// Don't change the submit button type so that browser prompt to save the password
 		return (
 			<div className="ui middle aligned center aligned grid login-grid">
 				<div className="column">
@@ -79,15 +115,14 @@ const Login = React.createClass({
 									<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
 								</div>
 							</div>
-							{ !this.state.loading ? (
-								<input
-									className="ui button fluid large submit"
-									value="Login"
-									type="submit"
-									onClick={ this.onSubmit }
-								/>
-							) : <Loader size="small" inline={ true } text=""/> }
+
+							<SubmitButton
+								onSubmit={ this.onSubmit }
+								loading={ this.state.loading }
+							/>
 						</div>
+
+						<BottomMessage/>
 					</form>
 
 					<ErrorBox userLoggedIn={this.state.userLoggedIn} lastError={this.state.lastError}/>

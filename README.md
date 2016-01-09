@@ -18,6 +18,6 @@ Start the server:
 
     $ npm start
 
-The development server connects to AirDC++ Web API through port 80 by default. You may edit devServer.js to use a different port.
+The development server connects to AirDC++ Web API through the default port 5600.
 
 When the server is running, open your browser and navigate to http://localhost:3000
