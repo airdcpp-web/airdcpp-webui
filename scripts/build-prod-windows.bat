@@ -1,3 +1,4 @@
+cd ..
 rmdir /S /Q dist
 
 mkdir dist
