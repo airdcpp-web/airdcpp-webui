@@ -115,6 +115,7 @@ export default class ApiSocket {
 				console.info(messageObj.callback_id, 'SUCCEED', messageObj.data ? messageObj.data : '(no data)');
 				this.callbacks[messageObj.callback_id].resolver.resolve(messageObj.data);
 			} else {
+				console.assert(messageObj.error, 'Invalid error response received from the API');
 				console.warn(messageObj.callback_id, messageObj.code, messageObj.error.message);
 				this.callbacks[messageObj.callback_id].resolver.reject({ message: messageObj.error.message, code: messageObj.code, json: messageObj.error });
 			}

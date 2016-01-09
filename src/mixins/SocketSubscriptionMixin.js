@@ -2,8 +2,17 @@ import SocketStore from 'stores/SocketStore';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 // For React components
-const SocketSubscriptionMixin = (updateCondition) => {
+const SocketSubscriptionMixin = (sessionStore) => {
 	let unsubscribe;
+
+	const removeSocketSubscriptions = (props, removeSocketListeners) => {
+		let entityExists = true;
+		if (sessionStore) {
+			entityExists = sessionStore.getSession(props.item.id) ? true : false;
+		}
+
+		removeSocketListeners(entityExists);
+	};
 
 	return SocketSubscriptionDecorator({
 		componentWillMount() {
@@ -13,8 +22,12 @@ const SocketSubscriptionMixin = (updateCondition) => {
 		},
 
 		componentDidUpdate(prevProps) {
-			if (updateCondition && updateCondition.bind(this, prevProps)) {
-				this.removeSocketListeners();
+			if (!sessionStore) {
+				return;
+			}
+
+			if (this.props.item.id !== prevProps.item.id) {
+				removeSocketSubscriptions(prevProps, this.removeSocketListeners);
 				this.onSocketConnected(this.addSocketListener);
 			}
 		},
@@ -25,7 +38,7 @@ const SocketSubscriptionMixin = (updateCondition) => {
 		},
 
 		componentWillUnmount() {
-			this.removeSocketListeners();
+			removeSocketSubscriptions(this.props, this.removeSocketListeners);
 			unsubscribe();
 		}
 	}, null, 'addStoreListener');

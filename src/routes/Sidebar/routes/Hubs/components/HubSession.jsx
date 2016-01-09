@@ -45,7 +45,7 @@ const HubSession = React.createClass({
 		const { item } = this.props;
 		const connectState = item.connect_state.id;
 
-		if (connectState === 'password') {
+		if (connectState === 'password' && !item.connect_state.has_password) {
 			return (
 				<HubActionPrompt 
 					title="Password required"

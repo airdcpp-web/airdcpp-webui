@@ -12,8 +12,8 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 		return subscription;
 	};
 
-	const removeSocketListeners = () => { 
-		socketSubscriptions.forEach(f => f(LoginStore.socketAuthenticated));
+	const removeSocketListeners = (entityExists = true) => { 
+		socketSubscriptions.forEach(f => f(LoginStore.socketAuthenticated && entityExists));
 		socketSubscriptions = [];
 	};
 

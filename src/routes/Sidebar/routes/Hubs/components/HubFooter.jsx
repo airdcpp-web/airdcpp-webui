@@ -3,13 +3,14 @@ import React from 'react';
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
+import HubSessionStore from 'stores/HubSessionStore';
 
 import ValueFormat from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 
 
 const HubFooter = React.createClass({
-	mixins: [ SocketSubscriptionMixin(props => props.item !== this.props.item) ],
+	mixins: [ SocketSubscriptionMixin(HubSessionStore) ],
 	propTypes: {
 		/**
 		 * Currently active session (required)
@@ -38,19 +39,19 @@ const HubFooter = React.createClass({
 		});
 	},
 
-	fetchCounts(item) {
-		SocketService.get(HubConstants.SESSION_URL + '/' + item.id + '/counts')
+	fetchCounts() {
+		SocketService.get(HubConstants.SESSION_URL + '/' + this.props.item.id + '/counts')
 			.then(this.onCountsReceived)
 			.catch(error => console.error('Failed to fetch hub counts', error.message));
 	},
 
 	componentDidMount() {
-		this.fetchCounts(this.props.item);
+		this.fetchCounts();
 	},
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.item !== this.props.item) {
-			this.fetchCounts(nextProps.item);
+	componentDidUpdate(prevProps) {
+		if (prevProps.item.id !== this.props.item.id) {
+			this.fetchCounts();
 		}
 	},
 
