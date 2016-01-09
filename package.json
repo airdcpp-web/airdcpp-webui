@@ -17,7 +17,7 @@
     "start": "node server.js",
     "webpack": "webpack --progress",
     "build-webpack": "NODE_ENV=production webpack --progress",
-    "build": "npm run clean && npm run build:webpack"
+    "build": "npm run clean && npm run build-webpack"
   },
   "devDependencies": {
     "array.prototype.find": "^1.0.0",
