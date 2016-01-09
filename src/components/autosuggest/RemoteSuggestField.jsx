@@ -2,39 +2,22 @@ import React from 'react';
 
 import SocketService from 'services/SocketService';
 
-import Autosuggest from 'react-autosuggest';
+import SuggestField from './SuggestField';
 import SuggestionRenderer from './SuggestionRenderer';
 
 
 const RemoteSuggestField = React.createClass({
 	propTypes: {
-
-		/**
-		 * Function to call when pressing enter
-		 */
-		submitHandler: React.PropTypes.func.isRequired,
-
-		onChange: React.PropTypes.func,
-
 		valueField: React.PropTypes.string.isRequired,
 
 		descriptionField: React.PropTypes.string.isRequired,
 
 		url: React.PropTypes.string.isRequired,
-
-		placeholder: React.PropTypes.string.isRequired,
 	},
 
 	getInitialState() {
 		return {
-			text:'',
 			suggestions: [],
-		};
-	},
-
-	getDefaultProps() {
-		return {
-			autoFocus: true,
 		};
 	},
 
@@ -42,7 +25,11 @@ const RemoteSuggestField = React.createClass({
 		return suggestionObj[this.props.valueField];
 	},
 
-	updateSuggestions(pattern) {
+	onTextChanged(pattern) {
+		if (!pattern) {
+			return;
+		}
+
 		SocketService.post(this.props.url, { 
 			pattern, 
 			max_results: 7 
@@ -61,36 +48,14 @@ const RemoteSuggestField = React.createClass({
 		return SuggestionRenderer(value, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
 	},
 
-	onTextChange(evt, { newValue, method }) {
-		this.setState({ text: newValue });
-		if (this.props.onChange) {
-			this.props.onChange(newValue);
-		}
-
-		if (method === 'type') {
-			this.updateSuggestions(newValue);
-		}
-	},
-
-	onSuggestionSelected(evt, { suggestion, suggestionValue, method }) {
-		this.props.submitHandler(suggestion, suggestionValue);
-	},
-
 	render() {
-		const inputAttributes = {
-			placeholder: this.props.placeholder,
-			onChange: this.onTextChange,
-			autoFocus: this.props.autoFocus,
-			value: this.state.text,
-		};
-
 		return (
-			<Autosuggest 
+			<SuggestField 
+				{ ...this.props }
 				suggestions={ this.state.suggestions }
-				inputProps={ inputAttributes }
-				onSuggestionSelected={ this.onSuggestionSelected } 
 				renderSuggestion={ this.renderSuggestion }
 				getSuggestionValue={ this.getSuggestionValue }
+				onChange={ this.onTextChanged }
 			/>
 		);
 	},

@@ -12,11 +12,6 @@ export default React.createClass({
 	propTypes: {
 
 		/**
-		 * Function to call when pressing enter
-		 */
-		submitHandler: React.PropTypes.func.isRequired,
-
-		/**
 		 * ID of the history section
 		 */
 		historyId: React.PropTypes.number.isRequired,
@@ -25,7 +20,6 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			history: [],
-			text:'',
 		};
 	},
 
@@ -43,9 +37,7 @@ export default React.createClass({
 			);
 	},
 
-	handleSubmit() {
-		const { text } = this.state;
-
+	handleSubmit(text) {
 		HistoryActions.add(this.props.historyId, text);
 
 		this.loadHistory();
@@ -54,22 +46,18 @@ export default React.createClass({
 
 	render() {
 		return (
-			<div className="ui fluid action input">
-				<LocalSuggestField 
-					data={ this.state.history }
-					placeholder="Enter search string..."
-					submitHandler={ this.handleSubmit }
-					onChange={ value => this.setState({ text: value }) }
-				/>
-
-				<Button
-					icon="search icon"
-					onClick={ this.handleSubmit }
-					caption="Search"
-					disabled={ this.state.text.length === 0 }
-					loading={ this.props.running }
-				/>
-			</div>
+			<LocalSuggestField 
+				data={ this.state.history }
+				placeholder="Enter search string..."
+				submitHandler={ this.handleSubmit }
+				button={ 
+					<Button
+						icon="search icon"
+						caption="Search"
+						loading={ this.props.running }
+					/>
+				}
+			/>
 		);
 	},
 });

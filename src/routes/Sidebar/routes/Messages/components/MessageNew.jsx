@@ -7,7 +7,7 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 
 
 const MessageNew = React.createClass({
-	_handleSubmit(user) {
+	_handleSubmit(nick, user) {
 		PrivateChatActions.createSession(this.props.location, user);
 	},
 

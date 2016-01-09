@@ -7,7 +7,7 @@ import FilelistActions from 'actions/FilelistActions';
 
 
 const Messages = React.createClass({
-	_handleSubmit(user) {
+	_handleSubmit(nick, user) {
 		FilelistActions.createSession(this.props.location, user);
 	},
 
