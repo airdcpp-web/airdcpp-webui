@@ -27,7 +27,7 @@ const ItemHandler = {
 	},
 
 	itemIconGetter(session) {
-		return <FileIcon file={ session }/>;
+		return <FileIcon typeInfo={ session.type }/>;
 	},
 
 	itemLabelGetter(session) {

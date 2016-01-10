@@ -7,7 +7,9 @@
 	margin: 0 0 1rem !important;
 }
 
-.hub.session .virtual-table {
+.hub.session .virtual-table,
+.hub.session .offline-message,
+.hub.session .connecting-loader {
 	flex: 1;
 	margin-top: 5px;
 }

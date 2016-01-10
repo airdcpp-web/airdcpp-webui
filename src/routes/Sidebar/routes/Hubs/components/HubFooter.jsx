@@ -58,11 +58,13 @@ const HubFooter = React.createClass({
 	render: function () {
 		const { userlistToggle } = this.props;
 		const { shared, users } = this.state;
+
+		const averageShare = ValueFormat.formatSize(users > 0 ? (shared / users) : 0);
 		return (
 			<SessionFooter>
 				<FooterItem text={ users + ' users'}/>
 				{ window.innerWidth > 700 ? (
-					<FooterItem text={ ValueFormat.formatSize(shared) + ' (' + ValueFormat.formatSize(shared / users) + '/user)' }/> 
+					<FooterItem text={ ValueFormat.formatSize(shared) + ' (' + averageShare + '/user)' }/> 
 				): null }
 				<div className="userlist-button">
 					{ userlistToggle }

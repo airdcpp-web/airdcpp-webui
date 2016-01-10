@@ -8,6 +8,10 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, ConnectionCell, IpCell } from 'components/table/Cell';
 
 import { TableUserMenu } from 'components/menu/DropdownMenu';
+import { ConnectStateEnum } from 'constants/HubConstants';
+
+import Message from 'components/semantic/Message';
+import Loader from 'components/semantic/Loader';
 
 
 const NickCell = ({ location, cellData, rowData, ...props }) => (
@@ -24,6 +28,30 @@ const HubUserTable = React.createClass({
 		return user.flags.join(' ');
 	},
 
+	emptyRowsNodeGetter() {
+		const connectState = this.props.item.connect_state.id;
+
+		if (connectState === ConnectStateEnum.DISCONNECTED) {
+			return (
+				<div className="offline-message">
+					<Message 
+						className="offline"
+						title="Not connected to the hub"
+						icon="plug"
+					/>
+				</div>
+			);
+		} else if (connectState !== ConnectStateEnum.CONNECTED) {
+			return (
+				<div className="connecting-loader">
+					<Loader text="Connecting"/>
+				</div>
+			);
+		}
+
+		return null;
+	},
+
 	render() {
 		const { item } = this.props;
 		return (
@@ -32,6 +60,7 @@ const HubUserTable = React.createClass({
 				entityId={ item.id }
 				sessionStore={ HubSessionStore }
 				rowClassNameGetter={ this.rowClassNameGetter }
+				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 			>
 				<Column
 					name="Nick"

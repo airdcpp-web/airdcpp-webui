@@ -1,4 +1,13 @@
 const MODULE_URL = 'hubs/v0';
+
+export const ConnectStateEnum = {
+	REDIRECT: 'redirect',
+	CONNECTING: 'connecting',
+	PASSWORD: 'password',
+	CONNECTED: 'connected',
+	DISCONNECTED: 'disconnected',
+};
+
 export default {
 	MODULE_URL: MODULE_URL,
 	SEARCH_NICKS_URL: MODULE_URL + '/search_nicks',

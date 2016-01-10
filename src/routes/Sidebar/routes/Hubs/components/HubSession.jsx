@@ -2,12 +2,14 @@
 import React from 'react';
 
 import Checkbox from 'components/semantic/Checkbox';
-import History from 'utils/History';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
+import HubUserTable from './HubUserTable';
 
 import HubMessageStore from 'stores/HubMessageStore';
+
 import HubActions from 'actions/HubActions';
+import { ConnectStateEnum } from 'constants/HubConstants';
 import AccessConstants from 'constants/AccessConstants';
 
 import HubFooter from './HubFooter';
@@ -22,12 +24,7 @@ const getStorageKey = (props) => {
 
 const checkList = (props) => {
 	const showList = JSON.parse(sessionStorage.getItem(getStorageKey(props)));
-	if (showList) {
-		History.pushSidebar(props.location, '/hubs/session/' + props.item.id + '/users');
-		return true;
-	}
-
-	return false;
+	return showList ? true : false;
 };
 
 const HubSession = React.createClass({
@@ -35,17 +32,27 @@ const HubSession = React.createClass({
 		this.showList = checkList(this.props);
 	},
 
+	getInitialState() {
+		return {
+			showList: checkList(this.props),
+		};
+	},
+
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.item.id !== this.props.item.id) {
-			this.showList = checkList(nextProps);
+		if (nextProps.item.id !== this.props.item.id && this.state.showList !== checkList(nextProps)) {
+			this.toggleListState();
 		}
+	},
+
+	toggleListState() {
+		this.setState({ showList: !this.state.showList });
 	},
 
 	getMessage() {
 		const { item } = this.props;
 		const connectState = item.connect_state.id;
 
-		if (connectState === 'password' && !item.connect_state.has_password) {
+		if (connectState === ConnectStateEnum.PASSWORD && !item.connect_state.has_password) {
 			return (
 				<HubActionPrompt 
 					title="Password required"
@@ -55,7 +62,7 @@ const HubSession = React.createClass({
 			);
 		}
 
-		if (connectState === 'redirect') {
+		if (connectState === ConnectStateEnum.REDIRECT) {
 			return (
 				<HubActionPrompt 
 					title="Redirect requested"
@@ -69,19 +76,13 @@ const HubSession = React.createClass({
 	},
 
 	onClickUsers() {
-		this.showList = !this.showList;
+		this.toggleListState();
 
-		let newUrl = '/hubs/session/' + this.props.item.id;
-		if (this.showList) {
-			newUrl += '/users';
-		}
-
-		sessionStorage.setItem(getStorageKey(this.props), JSON.stringify(this.showList));
-		History.pushSidebar(this.props.location, newUrl);
+		sessionStorage.setItem(getStorageKey(this.props), JSON.stringify(this.state.showList));
 	},
 
 	render() {
-		const { item, children } = this.props;
+		const { item } = this.props;
 
 		const checkbox = (
 			<Checkbox
@@ -92,22 +93,21 @@ const HubSession = React.createClass({
 			/>
 		);
 
-		if (this.showList && !children) {
-			// Redirecting, don't mount anything
-			return null;
-		}
-
 		return (
 			<div className="hub chat session">
 				{ this.getMessage() }
-				{ this.showList ? React.cloneElement(children, { item }) : (
-					<ChatLayout
-						messageStore={ HubMessageStore }
-						chatActions={ HubActions }
-						location={ this.props.location }
-						chatAccess={ AccessConstants.HUBS_SEND }
-						session={ this.props.item }
-					/>
+				{ this.state.showList ? (
+						<HubUserTable
+							item={ item }
+						/>
+					) : (
+						<ChatLayout
+							messageStore={ HubMessageStore }
+							chatActions={ HubActions }
+							location={ this.props.location }
+							chatAccess={ AccessConstants.HUBS_SEND }
+							session={ this.props.item }
+						/>
 				) }
 				<HubFooter
 					userlistToggle={ checkbox }

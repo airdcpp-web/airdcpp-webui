@@ -135,7 +135,7 @@ const Notifications = React.createClass({
 			action: {
 				label: 'View file',
 				callback: () => { 
-					History.pushSidebar(this.props.location, 'files/session/' + file.id); 
+					History.pushSidebar(this.props.location, '/files/session/' + file.id); 
 				}
 			}
 		});
@@ -154,7 +154,7 @@ const Notifications = React.createClass({
 			action: {
 				label: 'View message',
 				callback: () => { 
-					History.pushSidebar(this.props.location, 'messages/session/' + cid); 
+					History.pushSidebar(this.props.location, '/messages/session/' + cid); 
 				}
 			}
 		});

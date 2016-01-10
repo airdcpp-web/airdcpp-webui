@@ -5,11 +5,7 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'session/:id', 
-				component: require('./components/HubSession').default, 
-				childRoutes: [ {
-					path: 'users', 
-					component: require('./components/HubUserTable').default, 
-				} ]
+				component: require('./components/HubSession').default,
 			}, {
 				path: 'new', 
 				component: require('./components/HubNew').default,
