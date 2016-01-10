@@ -10,42 +10,59 @@ import AccessConstants from 'constants/AccessConstants';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
+
+const bundleFailed = bundle => bundle.status.failed;
+
 export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
 		asyncResult: true,
 		access: AccessConstants.QUEUE_EDIT, 
 		displayName: 'Search for alternates', 
-		icon: IconConstants.SEARCH }
-	},
+		icon: IconConstants.SEARCH,
+	} },
 	{ 'setBundlePriority': { 
 		asyncResult: true,
-		displayName: 'Set priority' } 
-	},
+		displayName: 'Set priority' 
+	} },
 	{ 'removeBundle': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove',
 		access: AccessConstants.QUEUE_EDIT,
-		icon: IconConstants.REMOVE } 
-	},
+		icon: IconConstants.REMOVE,
+	} },
 	{ 'removeFinished': { 
 		asyncResult: true,
 		access: AccessConstants.QUEUE_EDIT, 
 		displayName: 'Remove finished bundles', 
-		icon: IconConstants.REMOVE } 
-	},
+		icon: IconConstants.REMOVE,
+	} },
 	{ 'pause': { 
 		asyncResult: true, 
 		displayName: 'Pause all',
 		access: AccessConstants.QUEUE_EDIT,
-		icon: IconConstants.PAUSE } 
-	},
+		icon: IconConstants.PAUSE,
+	} },
 	{ 'resume': { 
 		asyncResult: true, 
 		displayName: 'Resume all',
 		access: AccessConstants.QUEUE_EDIT,
-		icon: IconConstants.PLAY } 
-	},
+		icon: IconConstants.PLAY,
+	} },
+	{ 'rescan': { 
+		asyncResult: true, 
+		displayName: 'Rescan for errors',
+		access: AccessConstants.QUEUE_EDIT,
+		icon: IconConstants.REFRESH,
+		filter: bundleFailed,
+	} },
+	{ 'forceShare': { 
+		asyncResult: true, 
+		displayName: 'Force in share',
+		access: AccessConstants.QUEUE_EDIT,
+		icon: IconConstants.ERROR,
+		filter: bundleFailed,
+	} },
 ]);
 
 const setBundlePriorities = (prio, action) => {
@@ -56,6 +73,18 @@ const setBundlePriorities = (prio, action) => {
 			action.failed(error)
 		);
 };
+
+const shareBundle = (bundle, skipScan, action) => {
+	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/share', { 
+		skip_scan: skipScan, 
+	})
+		.then(() => 
+			action.completed(bundle))
+		.catch((error) => 
+			action.failed(error, bundle)
+		);
+};
+
 
 QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
 	let that = this;
@@ -72,6 +101,14 @@ QueueActions.pause.listen(function () {
 
 QueueActions.resume.listen(function () {
 	setBundlePriorities(PriorityEnum.DEFAULT, QueueActions.pause);
+});
+
+QueueActions.rescan.listen(function (bundle) {
+	shareBundle(bundle, false, QueueActions.rescan);
+});
+
+QueueActions.forceShare.listen(function (bundle) {
+	shareBundle(bundle, true, QueueActions.forceShare);
 });
 
 QueueActions.removeFinished.listen(function () {
@@ -109,8 +146,7 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 
 QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	let that = this;
-	console.log('Remove succeed');
-	return SocketService.delete(QueueConstants.BUNDLE_URL + '/' + bundle.id, { remove_finished: removeFinished })
+	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/remove', { remove_finished: removeFinished })
 		.then(that.completed)
 		.catch(this.failed);
 });

@@ -46,13 +46,15 @@ const SocketService = {
 		return sendCommand(data, path, 'POST');
 	},
 
-	delete(path) {
+	delete(path, data) {
+		invariant(!data, 'No data is allowed for delete command');
 		return sendCommand(null, path, 'DELETE');
 	},
 
-	get(path) {
+	get(path, data) {
+		invariant(!data, 'No data is allowed for delete command');
 		return sendCommand(null, path, 'GET');
 	},
-}
+};
 
 export default SocketService;

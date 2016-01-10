@@ -22,17 +22,14 @@ const getStatusClass = (cellData, rowData) => {
 			{ 'grey': statusId == StatusEnum.QUEUED && rowData.speed == 0 },
 			{ 'blue': statusId == StatusEnum.QUEUED && rowData.speed > 0 },
 			{ 'success': statusId >= StatusEnum.FINISHED },
-			{ 'error': statusId == StatusEnum.FAILED_MISSING || 
-								statusId == StatusEnum.SHARING_FAILED || 
-								statusId == StatusEnum.HASH_FAILED ||
-								statusId == StatusEnum.DOWNLOAD_FAILED }
+			{ 'error': cellData.failed }
 		);
 };
 
 const StatusCell = ({ cellData, rowData, ...props }) => (
 	<Progress 
-		className={getStatusClass(cellData, rowData)}
-		caption={cellData.str}
+		className={ getStatusClass(cellData, rowData) }
+		caption={ cellData.str }
 		percent={ (rowData.downloaded_bytes*100) / rowData.size }
 	/>
 );
@@ -75,7 +72,12 @@ const Queue = React.createClass({
 					width={200}
 					flexGrow={4}
 					columnKey="name"
-					cell={ <FileActionCell actions={ QueueActions } ids={[ 'searchBundle', 'removeBundle' ]}/> }
+					cell={ 
+						<FileActionCell 
+							actions={ QueueActions } 
+							ids={[ 'searchBundle', 'removeBundle', 'rescan', 'forceShare' ]}
+						/> 
+					}
 				/>
 				<Column
 					name="Size"

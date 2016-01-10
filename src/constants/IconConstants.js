@@ -23,4 +23,6 @@ export default {
 	CLEAR: 'blue erase',
 	OPEN: 'external',
 	FIND: 'find',
+
+	ERROR: 'red warning circle',
 };
