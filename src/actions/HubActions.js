@@ -14,6 +14,8 @@ import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
 
+const showFav = hub => !hub.favorite_hub;
+
 const HubActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
 	{ 'redirect': { asyncResult: true } },
@@ -22,14 +24,15 @@ const HubActions = Reflux.createActions([
 		asyncResult: true,
 		displayName: 'Reconnect',
 		access: AccessConstants.HUBS_EDIT, 
-		icon: IconConstants.REFRESH } 
-	},
+		icon: IconConstants.REFRESH,
+	} },
 	{ 'favorite': { 
 		asyncResult: true,
 		access: AccessConstants.HUBS_EDIT, 
 		displayName: 'Add to favorites', 
-		icon: IconConstants.FAVORITE } 
-	},
+		icon: IconConstants.FAVORITE,
+		filter: showFav,
+	} },
 ]);
 
 HubActions.password.listen(function (hub, password) {

@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import TypeConvert from 'utils/TypeConvert';
 
+
 const fileToIcon = (name) => {
 	switch (name) {
 		case 'audio': return 'file outline audio';
@@ -15,10 +16,10 @@ const fileToIcon = (name) => {
 	}
 };
 
-const fileItemTypeToIcon = (item) => {
-	switch (item.id) {
+const fileItemTypeToIcon = (typeInfo) => {
+	switch (typeInfo.id) {
 		case 'directory': return 'file outline yellow folder';
-		case 'file': return fileToIcon(item.content_type);
+		case 'file': return fileToIcon(typeInfo.content_type);
 		case 'drive_fixed': return 'grey disk outline';
 		case 'drive_remote': return 'grey server';
 		case 'removable': return 'grey external share';
@@ -26,11 +27,11 @@ const fileItemTypeToIcon = (item) => {
 	}
 };
 
-export const FileIcon = ({ file, onClick }) => {
+export const FileIcon = ({ typeInfo, onClick }) => {
 	const iconClass = classNames(
 		'icon large',
 		{ 'link': onClick },
-		fileItemTypeToIcon(file),
+		fileItemTypeToIcon(typeInfo),
 	);
 
 	return (
@@ -38,16 +39,35 @@ export const FileIcon = ({ file, onClick }) => {
 	);
 };
 
-export const FileNameFormatter = ({ onClick, item, children }) => (
-	<div className="file-name" onClick={ onClick }>
-		<FileIcon file={ item }/>
-		{ onClick ? (
-			<a>
-				{ children }
+export const FileNameFormatter = ({ onClick, typeInfo, caption }) => {
+	//let className = 'file-name';
+	//if (caption.indexOf(' ') === -1 /*&& caption.indexOf('-') === -1*/) {
+	//	className += ' long';
+	//}
+
+	if (onClick) {
+		caption = (
+			<a onClick={ onClick }>
+				{ caption }
 			</a>
-		) : children }
-	</div>
-);
+		);
+	}
+
+	return (
+		<div className="file-name">
+			<FileIcon typeInfo={ typeInfo }/>
+			{ caption }
+		</div>
+	);
+};
+
+FileNameFormatter.propTypes = {
+	onClick: React.PropTypes.func,
+
+	typeInfo: React.PropTypes.object.isRequired,
+
+	caption: React.PropTypes.string.isRequired,
+};
 
 export const IpFormatter = ({ item }) => (
 	<div className="ip flag">

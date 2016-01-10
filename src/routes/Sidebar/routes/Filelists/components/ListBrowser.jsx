@@ -47,7 +47,7 @@ const ListBrowser = React.createClass({
 		const data = History.getSidebarData(location);
 		if (!data || !data.directory) {
 			// We need an initial path for our history
-			History.replaceSidebarData(location, { directory: item.directory }, true);
+			History.replaceSidebarData(location, { directory: item.location.path }, true);
 		} else if (item.location.path !== data.directory) {
 			// Opening an existing list from another directory?
 			this.sendChangeDirectory(data.directory);
@@ -95,17 +95,12 @@ const ListBrowser = React.createClass({
 		);
 	},
 
-	nameCellCaptionGetter(cellData, rowData) {
-		let captionText = cellData;
+	onClickDirectory(cellData, rowData) {
 		if (rowData.type.id === 'directory') {
-			captionText = (
-				<a onClick={ () => this._handleClickDirectory(this.props.item.location.path + cellData + '/') }>
-					{ cellData }
-				</a>
-				);
+			return () => this._handleClickDirectory(this.props.item.location.path + cellData + '/');
 		}
 
-		return captionText;
+		return undefined;
 	},
 
 	selectedNameFormatter(caption) {
@@ -156,7 +151,7 @@ const ListBrowser = React.createClass({
 						columnKey="name"
 						cell={
 							<FileDownloadCell 
-								captionGetter={ this.nameCellCaptionGetter }
+								clickHandlerGetter={ this.onClickDirectory }
 								userGetter={ _ => item.user }
 								location={ location }
 								handler={ FilelistActions.download } 

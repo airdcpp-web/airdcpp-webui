@@ -11,9 +11,10 @@ import Checkbox from 'components/semantic/Checkbox';
 export const FileActionCell = ({ cellData, rowData, ...props }) => (
 	<TableActionMenu 
 		caption={ 
-			<FileNameFormatter item={ rowData.type }>
-				{ cellData }
-			</FileNameFormatter> 
+			<FileNameFormatter 
+				typeInfo={ rowData.type }
+				caption={ cellData }
+			/>
 		}
 		itemData={ rowData }
 		{ ...props }
@@ -74,15 +75,17 @@ export const DecimalCell = ({ cellData }) => (
 	</span>
 );
 
-export const FileDownloadCell = ({ cellData, rowData, captionGetter, userGetter, ...props }) => (
+export const FileDownloadCell = ({ cellData, rowData, clickHandlerGetter, userGetter, ...props }) => (
 	<TableDownloadMenu 
 		caption={ 
-			<FileNameFormatter item={ rowData.type }>
-				{ captionGetter ? captionGetter(cellData, rowData) : cellData }
-			</FileNameFormatter> 
+			<FileNameFormatter 
+				typeInfo={ rowData.type }
+				onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowData) : null }
+				caption={ cellData }
+			/>
 		} 
 		user={ userGetter(rowData) }
-		linkCaption={ captionGetter ? false : true }
+		linkCaption={ clickHandlerGetter ? false : true }
 		itemInfo={ rowData }
 		{ ...props }
 	/>

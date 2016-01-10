@@ -4,25 +4,16 @@ import { FileNameFormatter } from 'utils/IconFormat';
 import ValueFormat from 'utils/ValueFormat';
 
 
-const DirectoryCaption = ({ item, itemClickHandler }) => (
-	<FileNameFormatter item={ item.type } onClick={evt => itemClickHandler(item.name)}>
-		{ item.name }
-	</FileNameFormatter>
-);
-
-const FileCaption = ({ item }) => (
-	<FileNameFormatter item={ item.type }>
-		{ item.name }
-	</FileNameFormatter>
-);
-
-const FileItem = ({ item, ...other }) => {
+const FileItem = ({ item, itemClickHandler }) => {
 	const isFile = item.type.id === 'file';
-	const Component = isFile ? FileCaption : DirectoryCaption;
 	return (
 		<tr>
 			<td>
-				<Component item={ item } { ...other }/>
+				<FileNameFormatter 
+					typeInfo={ item.type } 
+					onClick={ isFile ? null : evt => itemClickHandler(item.name) }
+					caption={ item.name }
+				/>
 			</td>
 			<td>
 				{ isFile ? ValueFormat.formatSize(item.size) : null }

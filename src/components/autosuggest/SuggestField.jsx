@@ -117,7 +117,7 @@ const SuggestField = React.createClass({
 				<div className={ fieldStyle }>
 					{ suggestField }
 					{ React.cloneElement(button, {
-						onClick: this.handleSubmit,
+						onClick: evt => this.handleSubmit(evt),
 						disabled: this.isSubmitDisabled(),
 					}) }
 				</div>
