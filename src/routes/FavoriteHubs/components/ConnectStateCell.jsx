@@ -19,7 +19,7 @@ const ConnectStateCell = React.createClass({
 		switch (this.props.cellData.id) {
 			case ConnectStateEnum.CONNECTING:
 			case ConnectStateEnum.CONNECTED:
-				return () => HubActions.removeSession(this.props.cellData.current_hub_id);
+				return () => HubActions.removeSession({ id: this.props.cellData.current_hub_id });
 			case ConnectStateEnum.DISCONNECTED:
 				return () => HubActions.createSession(this.props.location, this.props.rowData.hub_url);
 		}
