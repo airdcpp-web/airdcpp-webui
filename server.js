@@ -75,8 +75,8 @@ function listen(bindAddress, protocol) {
 	return ret;
 }
 
-var server4 = listen('0.0.0.0', 'v4');
-var server6 = listen('[::]', 'v6');
+listen('0.0.0.0', 'v4');
+//listen('[::]', 'v6');
 
 console.log('API address: ' + apiHost + ':' + apiPort);
 console.log('');

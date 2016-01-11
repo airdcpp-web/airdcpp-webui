@@ -46,6 +46,12 @@
 	color: #FFA2FF !important;
 }
 
+.virtual-table .cell-wrapper.dupe.queue.finished, 
+.virtual-table .cell-wrapper.dupe.queue.finished span,
+.virtual-table .cell-wrapper.dupe.queue.finished a {
+	color: green;
+}
+
 .public_fixedDataTable_bodyRow a i:hover {
 	cursor:pointer;
 }

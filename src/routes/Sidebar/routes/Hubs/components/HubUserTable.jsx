@@ -41,15 +41,14 @@ const HubUserTable = React.createClass({
 					/>
 				</div>
 			);
-		} else if (connectState !== ConnectStateEnum.CONNECTED) {
-			return (
-				<div className="connecting-loader">
-					<Loader text="Connecting"/>
-				</div>
-			);
-		}
+		} 
 
-		return null;
+		const text = connectState !== ConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist';
+		return (
+			<div className="loader-wrapper">
+				<Loader text={ text }/>
+			</div>
+		);
 	},
 
 	render() {

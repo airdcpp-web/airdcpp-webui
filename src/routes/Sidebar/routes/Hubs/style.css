@@ -9,7 +9,7 @@
 
 .hub.session .virtual-table,
 .hub.session .offline-message,
-.hub.session .connecting-loader {
+.hub.session .loader-wrapper {
 	flex: 1;
 	margin-top: 5px;
 }
