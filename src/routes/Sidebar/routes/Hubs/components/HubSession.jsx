@@ -82,7 +82,7 @@ const HubSession = React.createClass({
 	},
 
 	render() {
-		const { item } = this.props;
+		const { item, location } = this.props;
 
 		const checkbox = (
 			<Checkbox
@@ -99,12 +99,13 @@ const HubSession = React.createClass({
 				{ this.state.showList ? (
 						<HubUserTable
 							item={ item }
+							location={ location }
 						/>
 					) : (
 						<ChatLayout
 							messageStore={ HubMessageStore }
 							chatActions={ HubActions }
-							location={ this.props.location }
+							location={ location }
 							chatAccess={ AccessConstants.HUBS_SEND }
 							session={ this.props.item }
 						/>

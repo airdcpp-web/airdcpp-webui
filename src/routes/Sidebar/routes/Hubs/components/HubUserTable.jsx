@@ -24,6 +24,12 @@ const NickCell = ({ location, cellData, rowData, ...props }) => (
 );
 
 const HubUserTable = React.createClass({
+	propTypes: {
+		item: React.PropTypes.object, // required
+
+		location: React.PropTypes.node, // required
+	},
+
 	rowClassNameGetter(user) {
 		return user.flags.join(' ');
 	},
@@ -66,7 +72,11 @@ const HubUserTable = React.createClass({
 					width={170}
 					columnKey="nick"
 					flexGrow={8}
-					cell={ <NickCell location={ this.props.location }/> }
+					cell={ 
+						<NickCell 
+							location={ this.props.location }
+						/> 
+					}
 				/>
 				<Column
 					name="Share size"
