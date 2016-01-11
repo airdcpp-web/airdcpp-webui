@@ -83,20 +83,21 @@ const HubSession = React.createClass({
 
 	render() {
 		const { item, location } = this.props;
+		const { showList } = this.state;
 
 		const checkbox = (
 			<Checkbox
 				type="toggle"
 				caption="User list"
 				onChange={ this.onClickUsers }
-				checked={ this.showList }
+				checked={ showList }
 			/>
 		);
 
 		return (
 			<div className="hub chat session">
 				{ this.getMessage() }
-				{ this.state.showList ? (
+				{ showList ? (
 						<HubUserTable
 							item={ item }
 							location={ location }
