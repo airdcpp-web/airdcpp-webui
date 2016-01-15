@@ -10,6 +10,12 @@ const Message = ({ className, title, description, icon, isError }) => {
 		className,
 	);
 
+	if (typeof description !== 'string') {
+		description = React.cloneElement(description, {
+			className: description.props.className + ' description'
+		});
+	}
+
 	return (
 		<div className={ style }>
 			{ (icon ? <i className={ icon + ' icon' }></i> : null) }
@@ -17,7 +23,7 @@ const Message = ({ className, title, description, icon, isError }) => {
 				<div className="header">
 					{ title }
 				</div>
-				{ description }
+				{ description } 
 			</div>
 		</div>
 	);

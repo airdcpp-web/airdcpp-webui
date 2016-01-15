@@ -6,17 +6,14 @@ import LoginActions from 'actions/LoginActions';
 import SocketActions from 'actions/SocketActions';
 
 import AccessConstants from 'constants/AccessConstants';
+import LoginConstants from 'constants/LoginConstants';
 
 
-export default Reflux.createStore({
+const LoginStore = Reflux.createStore({
 	listenables: LoginActions,
 	mixins: [ StorageMixin ],
 	init: function () {
-		this._permissions = this.loadProperty('permissions');
-		this._token = this.loadProperty('auth_token');
-		this._user = this.loadProperty('web_user');
-		this._systemInfo = this.loadProperty('system_info');
-		this._awayIdleTime = this.loadProperty('away_idle_time');
+		this.loginProperties = this.loadProperty('login_properties', {});
 
 		this._lastError = null;
 		this._socketAuthenticated = false;
@@ -32,36 +29,38 @@ export default Reflux.createStore({
 	getState() {
 		return {
 			lastError: this._lastError,
-			token: this._token,
-			user: this._user,
 			socketAuthenticated: this._socketAuthenticated,
-			userLoggedIn: this._user !== null,
-			awayIdleTime: this._awayIdleTime,
+
+			token: this.token,
+			user: this.user,
+			userLoggedIn: this.isLoggedIn,
+			awayIdleTime: this.awayIdleTime,
 		};
 	},
 
 	onLoginCompleted(res) {
-		this._permissions = res.permissions;
-		this._token = res.token;
-		this._user = res.user;
-		this._systemInfo = res.system;
-		this._awayIdleTime = res.away_idle_time;
-
 		this._lastError = null;
 		this._socketAuthenticated = true;
 
-		this.saveProperty('permissions', res.permissions);
-		this.saveProperty('auth_token', res.token);
-		this.saveProperty('web_user', res.user);
-		this.saveProperty('system_info', this._systemInfo);
-		this.saveProperty('away_idle_time', this._awayIdleTime);
-
+		this.setLoginProperties(res);
 		this.trigger(this.getState());
+	},
+
+	setLoginProperties(props) {
+		this.loginProperties = props;
+		this.saveProperty('login_properties', props);
 	},
 
 	// Invalid password etc.
 	onLoginFailed(error) {
 		this._lastError = error.message ? error.message : error;
+		this.trigger(this.getState());
+	},
+
+	onNewUserIntroSeen() {
+		const newProps = Object.assign({}, this.loginProperties, { [LoginConstants.RUN_WIZARD]: false });
+		this.setLoginProperties(newProps);
+
 		this.trigger(this.getState());
 	},
 
@@ -84,12 +83,13 @@ export default Reflux.createStore({
 	},
 
 	hasAccess(access) {
-		return this._permissions.indexOf(access) !== -1 || this._permissions.indexOf(AccessConstants.ADMIN) !== -1;
+		const { permissions } = this.loginProperties;
+		return permissions.indexOf(access) !== -1 || permissions.indexOf(AccessConstants.ADMIN) !== -1;
 	},
 
 	onSocketDisconnected(socket, error, code) {
 		this._socketAuthenticated = false;
-		if (this._user) {
+		if (this.user) {
 			if (error === '') {
 				this._lastError = 'Connection closed';
 			} else {
@@ -107,20 +107,9 @@ export default Reflux.createStore({
 
 	reset() {
 		this._lastError = null;
-		this._token = null;
-		this._user = null;
 		this._socketAuthenticated = false;
 
-		sessionStorage.removeItem('auth_token');
-		sessionStorage.removeItem('web_user');
-	},
-
-	get user() {
-		return this._user;
-	},
-
-	get token() {
-		return this._token;
+		this.setLoginProperties({});
 	},
 
 	get lastError() {
@@ -131,11 +120,29 @@ export default Reflux.createStore({
 		return this._socketAuthenticated;
 	},
 
+	get user() {
+		return this.loginProperties.user;
+	},
+
+	get token() {
+		return this.loginProperties.token;
+	},
+
 	get isLoggedIn() {
-		return !!this._user;
+		return !!this.loginProperties.user;
 	},
 
 	get systemInfo() {
-		return this._systemInfo;
+		return this.loginProperties.system_info;
+	},
+
+	get awayIdleTime() {
+		return this.loginProperties.away_idle_time;
+	},
+
+	get showNewUserIntro() {
+		return this.loginProperties[LoginConstants.RUN_WIZARD];
 	},
 });
+
+export default LoginStore;

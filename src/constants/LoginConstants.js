@@ -3,4 +3,6 @@ export default {
 	LOGOUT_URL: 'session/v0/auth',
 	CONNECT_URL:	'session/v0/socket',
 	AWAY_URL:	'session/v0/away',
+
+	RUN_WIZARD: 'run_wizard',
 };

@@ -9,6 +9,7 @@ const Entry = {
 	refresh_time_incoming: t.Positive,
 	refresh_startup: t.Bool,
 	refresh_report_scheduled_refreshes: t.Bool,
+	refresh_threading: t.Num,
 };
 
 const RefreshOptionsPage = React.createClass({
