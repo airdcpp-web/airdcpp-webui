@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router';
+import LinkConstants from 'constants/LinkConstants';
 
 import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
@@ -19,11 +21,11 @@ const NewUserIntro = () => {
 				<div className="new-user-message">
 					<ul>
 					<li>
-						You might want to go through at least each main page of <a href="/settings">the client settings</a> before you start.
+						You might want to go through at least each main page of <Link to="/settings">the client settings</Link> before you start.
 					</li>
 					<li>
 						<strong>
-							It's important that you <a href="/settings/speed-limits/speed">configure your connection speed</a> correctly 
+							It's important that you <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
 							because the client won't be able to utilize your bandwidth efficiently otherwise.
 						</strong>
 					</li>
@@ -32,7 +34,7 @@ const NewUserIntro = () => {
 					</li>
 					</ul>
 					<p>
-						Visit the <a href="https://github.com/maksis/airdcpp-webclient" target="_blank">home page</a> for more information about the client and its features.
+						Visit the <a href={ LinkConstants.HOME_PAGE_URL } target="_blank">home page</a> for more information about the client and its features.
 					</p>
 					<ActionButton 
 						action={ LoginActions.newUserIntroSeen }

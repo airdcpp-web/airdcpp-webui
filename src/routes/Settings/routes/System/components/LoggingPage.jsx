@@ -2,9 +2,11 @@ import React from 'react';
 
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
+
+import Accordion from 'components/semantic/Accordion';
+import LinkConstants from 'constants/LinkConstants';
 import LogSection from './LogSection';
 import Message from 'components/semantic/Message';
-import Accordion from 'components/semantic/Accordion';
 
 import t from 'utils/tcomb-form';
 
@@ -34,7 +36,7 @@ const LoggingPage = React.createClass({
 					<div className="ui header">Sections</div>
 					<Message
 						icon="blue info"
-						description={ <a href="http://dcplusplus.sourceforge.net/webhelp/settings_logs.html" target="_blank">Variable information for Filename and Format fields</a> }
+						description={ <a href={ LinkConstants.LOG_HELP_URL } target="_blank">Variable information for Filename and Format fields</a> }
 					/>
 					<Accordion className="styled" controlled={ true }>
 						{ sections.map(section => <LogSection ref={ section } section={ section }/>) }
