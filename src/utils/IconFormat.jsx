@@ -106,6 +106,15 @@ export const UserIconFormatter = React.createClass({
 		return null;
 	},
 
+	getUserIcon() {
+		const { flags } = this.props;
+		if (flags.indexOf('ignored') > -1) {
+			return 'red ban icon';
+		}
+
+		return TypeConvert.userOnlineStatusToColor(flags) + ' user icon';
+	},
+
 	getDefaultProps() {
 		return {
 			size: '',
@@ -114,12 +123,10 @@ export const UserIconFormatter = React.createClass({
 	},
 
 	render() {
-		const { flags } = this.props;
-
 		const cornerIcon = this.getCornerIcon();
 		return (
 			<i className={ this.props.size + ' icons ' + this.props.className }>
-				<i className={ TypeConvert.userOnlineStatusToColor(flags) + ' user icon' }></i>
+				<i className={ this.getUserIcon() }></i>
 				{ cornerIcon ? <i className={ this.getCornerIcon() + ' corner icon' }></i> : null }
 			</i>
 		);

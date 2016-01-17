@@ -92,7 +92,7 @@ QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
 		priority: newPrio
 	})
 		.then(that.completed)
-		.catch(this.failed);
+		.catch(that.failed);
 });
 
 QueueActions.pause.listen(function () {
@@ -115,7 +115,7 @@ QueueActions.removeFinished.listen(function () {
 	let that = this;
 	return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_finished')
 		.then(that.completed)
-		.catch(this.failed);
+		.catch(that.failed);
 });
 
 QueueActions.removeFinished.completed.listen(function (data) {
