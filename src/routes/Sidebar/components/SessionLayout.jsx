@@ -288,7 +288,7 @@ const SessionLayout = React.createClass({
 			});
 		} else if (this.props.activeId) {
 			children = <Loader/>;
-		} else if (!hasEditAccess) {
+		} else if (!hasEditAccess && menuItems.length === 0) {
 			return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
 		}
 

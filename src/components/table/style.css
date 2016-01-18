@@ -90,7 +90,7 @@
     margin: 0px;
 }
 
-.virtual-table span.empty-dropdown.filtered:not(.no-access) > div {
+.virtual-table .empty.dropdown.filtered:not(.no-access) > div {
 	padding-left: 25px;
 }
 
@@ -113,6 +113,6 @@
 }
 
 .virtual-table .plain.cell,
-.virtual-table .empty-dropdown {
+.virtual-table .empty.dropdown {
   margin: 0px 3px;
 }

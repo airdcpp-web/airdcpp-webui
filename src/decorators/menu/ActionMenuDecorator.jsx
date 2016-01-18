@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import LoginStore from 'stores/LoginStore';
 import DropdownItem from 'components/semantic/DropdownItem';
+import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
 
 const filterAction = ({ itemData }, action) => {
@@ -11,6 +12,7 @@ const filterAction = ({ itemData }, action) => {
 };
 
 const filterAccess = ({ itemData }, action) => {
+	invariant(!action.hasOwnProperty('access') || action.access, 'Invalid access supplied for an action ' + action.displayName);
 	return !action.access || LoginStore.hasAccess(action.access);
 };
 
@@ -68,20 +70,6 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 
 const notError = (id) => typeof id !== 'string';
 
-
-const EmptyMenu = ({ menus, caption }) => {
-	const className = classNames(
-		'empty-dropdown',
-		{ 'no-access': menus.indexOf('no-access') !== -1 },
-		{ 'filtered': menus.indexOf('filtered') !== -1 },
-	);
-
-	return (
-		<div className={ className }>
-			{ caption }
-		</div>
-	);
-};
 
 export default function (Component) {
 	const ActionMenu = React.createClass({
@@ -154,10 +142,16 @@ export default function (Component) {
 
 			// Are there any items to show?
 			if (!menus.some(notError)) {
+				const dropdownClassName = classNames(
+					{ 'no-access': menus.indexOf('no-access') !== -1 },
+					{ 'filtered': menus.indexOf('filtered') !== -1 },
+					this.props.className,
+				);
+
 				return (
-					<EmptyMenu
+					<EmptyDropdown
 						caption={ this.props.caption }
-						menus={ menus }
+						className={ dropdownClassName }
 					/>
 				);
 			}

@@ -27,7 +27,7 @@ const HubUserTable = React.createClass({
 	propTypes: {
 		item: React.PropTypes.object, // required
 
-		location: React.PropTypes.node, // required
+		location: React.PropTypes.object, // required
 	},
 
 	rowClassNameGetter(user) {

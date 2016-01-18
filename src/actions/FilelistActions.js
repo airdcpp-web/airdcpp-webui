@@ -20,7 +20,7 @@ const FilelistActions = Reflux.createActions([
 	{ 'reloadDirectory': { 
 		asyncResult: true,
 		displayName: 'Reload',
-		access: AccessConstants.FILELIST_VIEW,
+		access: AccessConstants.FILELISTS_VIEW,
 		icon: IconConstants.REFRESH,
 	} },
 	{ 'download': { asyncResult: true } },
@@ -125,4 +125,4 @@ FilelistActions.createSession.failed.listen(function (error) {
 	});
 });
 
-export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELIST_EDIT);
+export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELISTS_EDIT);

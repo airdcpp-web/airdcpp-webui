@@ -4,6 +4,8 @@ import invariant from 'invariant';
 
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import DropdownCaption from './DropdownCaption';
+
 
 const Dropdown = React.createClass({
 	mixins: [ PureRenderMixin ],
@@ -89,7 +91,9 @@ const Dropdown = React.createClass({
 
 		return (
 			<div className={ className }>
-				{ this.props.caption }
+				<DropdownCaption>
+					{ this.props.caption }
+				</DropdownCaption>
 				{ icon }
 				<div className="menu">
 					{ this.props.header ? (

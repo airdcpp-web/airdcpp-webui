@@ -39,6 +39,10 @@ const LogMessage = ({ message }) => {
 const MessageView = ScrollDecorator(React.createClass({
 	render: function () {
 		const { messages } = this.props;
+		if (!messages) {
+			return <Loader text="Loading messages"/>;
+		}
+
 		if (messages.length === 0) {
 			return (
 				<Message 
@@ -81,10 +85,6 @@ const SystemLog = React.createClass({
 	},
 
 	render: function () {
-		if (!this.state.messages) {
-			return <Loader text="Loading messages"/>;
-		}
-
 		return (
 			<div className="simple-layout">
 				<div className="ui segment">

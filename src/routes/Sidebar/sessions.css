@@ -110,16 +110,14 @@
   flex: 1;
 }
 
-.session-container.horizontal .menu-column .session-item span, 
-/*.session-layout .header .content span,*/
-.session-container.horizontal .session-header .title span,
-.session-container.vertical .session-header span {
+.session-container.horizontal .menu-column .session-item span,
+.session-container .session-header .dropdown .caption {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.session-container .session-header .title > div {
+.session-container .session-header .title .dropdown {
   display: flex !important;
   width: 100%;
 }

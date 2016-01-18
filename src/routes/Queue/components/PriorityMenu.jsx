@@ -5,6 +5,7 @@ import QueueActions from 'actions/QueueActions';
 
 import TableDropdown from 'components/semantic/TableDropdown';
 import DropdownItem from 'components/semantic/DropdownItem';
+import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -46,7 +47,11 @@ const PriorityMenu = React.createClass({
 	render: function () {
 		const caption = this.props.itemPrio.str;
 		if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
-			return <div className="empty-dropdown">{ caption }</div>;
+			return (
+				<EmptyDropdown
+					caption={ caption }
+				/>
+			);
 		}
 
 		return (

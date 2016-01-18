@@ -61,7 +61,7 @@ export default (Component) => {
 					key={ url } 
 					url={ url } 
 					title={ obj.title }
-					icon={ 'green ' + obj.icon }
+					icon={ obj.icon ? ('green ' + obj.icon) : null }
 				/>
 			);
 		},

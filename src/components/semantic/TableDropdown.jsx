@@ -3,6 +3,8 @@ import Popup from './Popup';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import invariant from 'invariant';
+import DropdownCaption from './DropdownCaption';
+
 
 // A popup-based class for handling dropdowns in Fixed Data Table
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
@@ -41,11 +43,17 @@ const TableDropdown = React.createClass({
 	},
 
 	render: function () {
+		let caption = (
+			<DropdownCaption>
+				{ this.props.caption }
+			</DropdownCaption>
+		);
+
 		// Caption
 		const trigger = (
 			<div className="trigger">
 				<i className="large angle down icon"></i>
-				{ this.props.linkCaption ? this.props.caption : null }
+				{ this.props.linkCaption ? caption : null }
 			</div>);
 
 		// Settings
@@ -68,7 +76,7 @@ const TableDropdown = React.createClass({
 						</div>
 					</div>
 				</Popup>
-				{ this.props.linkCaption ? null : this.props.caption }
+				{ this.props.linkCaption ? null : caption }
 			</div>);
 	}
 });
