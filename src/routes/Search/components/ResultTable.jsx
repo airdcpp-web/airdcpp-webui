@@ -28,6 +28,7 @@ const UserCell = ({ location, cellData, rowData, ...props }) => (
 		directory={ rowData.path }
 		location={ location }
 		userIcon={ 'simple' }
+		ids={ [ 'browse', 'message' ] }
 	/>
 );
 

@@ -12,10 +12,6 @@
   flex-direction: column;
 }
 
-#mobile-layout .session-container.vertical {
-  padding: 10px;
-}
-
 .session-container.vertical .session-item {
   min-width: 150px;
 }

@@ -10,7 +10,7 @@ const Message = ({ className, title, description, icon, isError }) => {
 		className,
 	);
 
-	if (typeof description !== 'string') {
+	if (description && typeof description !== 'string') {
 		description = React.cloneElement(description, {
 			className: description.props.className + ' description'
 		});

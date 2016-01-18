@@ -25,6 +25,7 @@ const AboutPage = React.createClass({
 						<Row title="Web UI build date" text={buildDate}/>
 						<Row title="Started" text={ValueFormat.formatRelativeTime(stats.client_started)}/>
 						<Row title="Active sessions" text={stats.active_sessions}/>
+						<Row title="Server threads" text={stats.server_threads}/>
 					</div>
 				</div>
 		);
