@@ -133,7 +133,7 @@ const LoginStore = Reflux.createStore({
 	},
 
 	get systemInfo() {
-		return this.loginProperties.system_info;
+		return this.loginProperties.system;
 	},
 
 	get awayIdleTime() {
