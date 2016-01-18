@@ -112,13 +112,18 @@ const Notifications = React.createClass({
 			title: this.getSeverityStr(severity),
 			message: text,
 			uid: id,
-			action: {
-				label: 'View events',
-				callback: () => { 
-					History.pushSidebar(this.props.location, 'events'); 
-				}
-			}
 		};
+
+		if (severity !== SeverityEnum.NOTIFY) {
+			Object.assign(notification, {
+				action: {
+					label: 'View events',
+					callback: severity === SeverityEnum.NOTIFY ? null : () => { 
+						History.pushSidebar(this.props.location, 'events'); 
+					}
+				}
+			});
+		}
 
 		if (severity === SeverityEnum.WARNING) {
 			NotificationActions.warning(notification);
