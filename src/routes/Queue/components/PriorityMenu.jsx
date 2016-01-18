@@ -46,7 +46,7 @@ const PriorityMenu = React.createClass({
 	render: function () {
 		const caption = this.props.itemPrio.str;
 		if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
-			return <span>{ caption }</span>;
+			return <div className="empty-dropdown">{ caption }</div>;
 		}
 
 		return (

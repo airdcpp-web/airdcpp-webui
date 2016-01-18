@@ -77,9 +77,9 @@ const EmptyMenu = ({ menus, caption }) => {
 	);
 
 	return (
-		<span className={ className }>
+		<div className={ className }>
 			{ caption }
-		</span>
+		</div>
 	);
 };
 

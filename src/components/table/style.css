@@ -112,6 +112,7 @@
   padding: 5px;
 }
 
-.virtual-table .plain.cell {
-  margin: 0px 5px;
+.virtual-table .plain.cell,
+.virtual-table .empty-dropdown {
+  margin: 0px 3px;
 }
