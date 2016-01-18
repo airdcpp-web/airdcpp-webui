@@ -39,9 +39,10 @@ class RowDataLoader {
 		return updated + 1;
 	}
 
-	onItemsUpdated(items, rangeOffset = 0) {
-		let hasChanges = false;
-		//const oldData = this._data;
+	onItemsUpdated(items, rangeOffset = 0, rowCount) {
+		// Rows removed?
+		let hasChanges = rowCount < this._data.length;
+
 		if (!items || items.length === 0) {
 			// The view was cleared
 			this.clear();

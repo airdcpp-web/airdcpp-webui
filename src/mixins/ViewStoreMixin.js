@@ -7,7 +7,7 @@ import invariant from 'invariant';
 export default (defaultSortProperty, defaultSortAscending = true) => {
 	let active = false;
 	let totalCount = 0;
-	let rowCount = 0;
+	let matchingCount = 0;
 	let startPos = 0;
 	let items = [];
 	let entityId = null;
@@ -23,7 +23,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 	const clear = () => {
 		items = [];
 		startPos = 0;
-		rowCount = 0;
+		matchingCount = 0;
 		totalCount = 0;
 	};
 
@@ -54,7 +54,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 		}
 
 		if (data.matching_items != undefined) {
-			rowCount = data.matching_items;
+			matchingCount = data.matching_items;
 		}
 
 		if (data.items != undefined) {
@@ -140,7 +140,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 		},
 
 		get rowCount() {
-			return rowCount;
+			return matchingCount;
 		},
 
 		get totalCount() {
@@ -165,7 +165,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 
 		_handleUpdate(data) {
 			parseDataProperties(data);
-			this.trigger(items, data.range_offset);
+			this.trigger(items, data.range_offset, matchingCount);
 		}
 	};
 
