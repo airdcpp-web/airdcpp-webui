@@ -38,7 +38,11 @@ const ResultTable = React.createClass({
 	},
 
 	emptyRowsNodeGetter() {
-		if (!this.props.searchString || this.props.running) {
+		if (this.props.running) {
+			return null;
+		}
+
+		if (!this.props.searchString) {
 			return process.env.DEMO_MODE === '1' ? (
 				<Message 
 					title="Demo content available"
