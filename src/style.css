@@ -57,7 +57,7 @@ section#container-main,
 	margin-right: 5px !important;
 }
 
-.dropdown:not(.table-items) {
+div.dropdown:not(.table-items) {
   display: flex !important;
 }
 
