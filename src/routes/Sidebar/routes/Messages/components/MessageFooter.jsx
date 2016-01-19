@@ -9,28 +9,36 @@ import Loader from 'components/semantic/Loader';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
 
+const getCaption = (state) => {
+	switch (state) {
+		case CCPMEnum.CONNECTED: return 'Messages are sent through direct encrypted channel';
+		case CCPMEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
+		case CCPMEnum.DISCONNECTED: return 'Direct encrypted channel available';
+	}
+};
+
+const getIcon = (state) => {
+	switch (state) {
+		case CCPMEnum.CONNECTED: return 'yellow lock icon';
+		case CCPMEnum.CONNECTING: return null;
+		case CCPMEnum.DISCONNECTED: return 'lock icon';
+	}
+};
+
 const CCPMState = ({ contextGetter, item }) => {
 	if (!item.ccpm_state.supported) {
 		return <span/>;
 	}
 	
 	const state = item.ccpm_state.id;
-
-	if (state === CCPMEnum.CONNECTING) {
-		return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
-	}
-
-	const connected = state === CCPMEnum.CONNECTED;
-	const iconClass = (connected ? 'yellow' : '') + ' lock icon';
-	const caption = connected ? 'Messages are sent through direct encrypted channel' : 'Direct encryption channel available';
-	const ids = [ connected ? 'disconnectCCPM' : 'connectCCPM' ];
+	const ids = [ state === CCPMEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
 
 	return (
 		<SessionFooter>
 			<div className="ccpm-state">
-				<i className={ iconClass }/>
+				<i className={ getIcon(state) }/>
 				<ActionMenu
-					caption={ caption }
+					caption={ getCaption(state) }
 					actions={ PrivateChatActions }
 					ids={ ids }
 					contextGetter={ contextGetter }

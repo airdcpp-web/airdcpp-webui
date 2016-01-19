@@ -6,7 +6,7 @@ import invariant from 'invariant';
 
 export default (defaultSortProperty, defaultSortAscending = true) => {
 	let active = false;
-	let totalCount = 0;
+	let totalCount = -1; // Not zero to avoid using emptyRowsNodeGetter when it's not wanted
 	let matchingCount = 0;
 	let startPos = 0;
 	let items = [];
@@ -24,7 +24,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 		items = [];
 		startPos = 0;
 		matchingCount = 0;
-		totalCount = 0;
+		totalCount = -1;
 	};
 
 	const addItems = (itemsObj) => {

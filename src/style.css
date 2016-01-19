@@ -57,6 +57,9 @@ section#container-main,
 	margin-right: 5px !important;
 }
 
+.dropdown:not(.table-items) {
+  display: flex !important;
+}
 
 /* Layout header start */
 

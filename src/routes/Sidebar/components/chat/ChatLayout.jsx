@@ -83,7 +83,7 @@ const ChatLayout = React.createClass({
 		const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
 		return (
 			<div className="message-view">
-				{ hasChatAccess ? null : <Message description="You aren't allowed to post new messages" idcon="blue info"/> }
+				{ hasChatAccess ? null : <Message description="You aren't allowed to send new messages" idcon="blue info"/> }
 				<MessageView 
 					messages={ this.state.messages }
 					location={ location }

@@ -9,6 +9,8 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
+import '../style.css';
+
 
 const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],

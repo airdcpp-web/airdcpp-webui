@@ -118,7 +118,6 @@
 }
 
 .session-container .session-header .title .dropdown {
-  display: flex !important;
   width: 100%;
 }
 
