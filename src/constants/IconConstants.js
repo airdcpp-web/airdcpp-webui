@@ -24,5 +24,7 @@ export default {
 	OPEN: 'external',
 	FIND: 'find',
 
+	INFO: 'blue info',
+	WARNING: 'yellow warning sign',
 	ERROR: 'red warning circle',
 };

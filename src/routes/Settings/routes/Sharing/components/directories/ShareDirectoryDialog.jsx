@@ -10,6 +10,8 @@ import { RouteContext } from 'react-router';
 import HistoryContext from 'mixins/HistoryContext';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
+import Message from 'components/semantic/Message';
+
 import t from 'utils/tcomb-form';
 
 import FormUtils from 'utils/FormUtils';
@@ -19,6 +21,7 @@ import Form from 'components/form/Form';
 import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
 import AutoSuggestField from 'components/form/AutoSuggestField';
+
 
 const ProfileList = t.refinement(t.list(t.Num), (n) => {
 	return n.length > 0;
@@ -130,6 +133,17 @@ const ShareDirectoryDialog = React.createClass({
 				icon={ IconConstants.FOLDER } 
 				{...this.props}
 			>
+				<Message 
+					title="Hashing information"
+					icon={ IconConstants.INFO }
+					description={ 
+						<span>
+							<p>
+								New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.
+							</p>
+						</span>
+					}
+				/>
 				<Form
 					ref="form"
 					formItems={Entry}

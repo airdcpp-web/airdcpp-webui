@@ -1,40 +1,19 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import ValueFormat from 'utils/ValueFormat.js';
 import EventActions from 'actions/EventActions';
 import EventStore from 'stores/EventStore';
-import { SeverityEnum } from 'constants/EventConstants';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import Button from 'components/semantic/Button';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
+import LogMessage from './LogMessage';
 import ScrollDecorator from 'decorators/ScrollDecorator';
 
 import '../style.css';
 
-const LogMessage = ({ message }) => {
-	let iconClass;
-	switch (message.severity) {
-		case SeverityEnum.INFO: iconClass = 'blue info circle'; break;
-		case SeverityEnum.WARNING: iconClass = 'yellow warning sign'; break;
-		case SeverityEnum.ERROR: iconClass = 'red warning circle'; break;
-	}
-
-	return (
-		<div className="log-message">
-			<div className="ui message-info">
-				<i className={ iconClass + ' icon' }></i>
-				<div className="timestamp">{ ValueFormat.formatTimestamp(message.time) }</div>
-			</div>
-			<div className="message-text">
-				{ message.text }
-			</div>
-		</div>
-	);
-};
 
 const MessageView = ScrollDecorator(React.createClass({
 	render: function () {

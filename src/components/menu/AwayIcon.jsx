@@ -4,6 +4,8 @@ import { default as SystemConstants, AwayEnum } from 'constants/SystemConstants'
 import SocketService from 'services/SocketService';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
+import NotificationActions from 'actions/NotificationActions';
+
 
 const AwayIcon = React.createClass({
 	mixins: [ SocketSubscriptionMixin() ],
@@ -29,14 +31,23 @@ const AwayIcon = React.createClass({
 			.catch(error => console.error('Failed to fetch away state', error.message));
 	},
 
+	onAwaySet(away) {
+		NotificationActions.info({ 
+			title: away ? 'Away mode was enabled' : 'Away mode was disabled',
+			uid: 'away',
+		});
+	},
+
 	isAway() {
 		return this.state.away !== AwayEnum.AWAY_OFF;
 	},
 
 	onClick: function (evt) {
+		const newAway = !this.isAway();
 		SocketService.post(SystemConstants.MODULE_URL + '/away', { 
-			away: !this.isAway(),
+			away: newAway,
 		})
+			.then(_ => this.onAwaySet(newAway))
 			.catch(error => console.error('Failed to set away state', error.message));
 	},
 

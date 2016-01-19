@@ -11,6 +11,7 @@ import Progress from 'components/semantic/Progress';
 import QueueStore from 'stores/QueueStore';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
+import Message from 'components/semantic/Message';
 
 import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
 
@@ -51,9 +52,20 @@ const Queue = React.createClass({
 		return rowData.speed > 0;
 	},
 
+	emptyRowsNodeGetter() {
+		return (
+			<Message 
+				title="The queue is empty"
+				icon="file outline"
+				description="New items can be queued from search or filelists"
+			/>
+		);
+	},
+
 	render() {
 		return (
 			<VirtualTable
+				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 				store={QueueStore}
 				footerData={ 
 					<ActionMenu 
