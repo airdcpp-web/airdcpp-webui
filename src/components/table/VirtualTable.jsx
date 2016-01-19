@@ -90,12 +90,6 @@ const VirtualTable = React.createClass({
 		TableActions.close(this.props.store.viewUrl, this.moduleExists());
 	},
 
-	onItemsUpdated(items, rangeOffset) {
-		this._dataLoader.onItemsUpdated(items, rangeOffset);
-		//this._dataLoader.items = items;
-		//this.rangeOffset = rangeOffset;
-	},
-
 	render: function () {
 		const { footerData, emptyRowsNodeGetter, ...other } = this.props;
 

@@ -142,6 +142,10 @@ export default function (Component) {
 
 			// Are there any items to show?
 			if (!menus.some(notError)) {
+				if (this.props.button) {
+					return null;
+				}
+
 				const dropdownClassName = classNames(
 					{ 'no-access': menus.indexOf('no-access') !== -1 },
 					{ 'filtered': menus.indexOf('filtered') !== -1 },
