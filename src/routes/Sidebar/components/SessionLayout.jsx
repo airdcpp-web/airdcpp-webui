@@ -153,6 +153,10 @@ const SessionLayout = React.createClass({
 		this.redirectTo(nextProps.items[newItemPos].id);
 	},
 
+	getStorageKey(props) {
+		return props.baseUrl + '_last_active';
+	},
+
 	// Common logic for selecting the item to display (after mounting or session updates)
 	// Returns true active item selection was handled
 	// Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
@@ -173,7 +177,7 @@ const SessionLayout = React.createClass({
 			}
 
 			this.setState({ activeItem: activeItem });
-			localStorage.setItem(props.baseUrl + '_last_active', props.activeId);
+			BrowserUtils.saveLocalProperty(this.getStorageKey(props), props.activeId);
 			return true;
 		} else if (pending) {
 			// We'll just display a loading indicator in 'render', no item needed
@@ -203,7 +207,7 @@ const SessionLayout = React.createClass({
 		}
 
 		// See if we have something stored
-		let lastId = localStorage.getItem(this.props.baseUrl + '_last_active');
+		let lastId = BrowserUtils.loadLocalProperty(this.getStorageKey(this.props));
 		if (lastId && this.findItem(this.props.items, lastId)) {
 			// Previous session exists
 			this.redirectTo(lastId);

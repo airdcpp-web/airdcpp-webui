@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 
+import BrowserUtils from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
@@ -23,8 +24,7 @@ const getStorageKey = (props) => {
 };
 
 const checkList = (props) => {
-	const showList = JSON.parse(sessionStorage.getItem(getStorageKey(props)));
-	return showList ? true : false;
+	return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
 };
 
 const HubSession = React.createClass({
@@ -78,7 +78,7 @@ const HubSession = React.createClass({
 	onClickUsers() {
 		this.toggleListState();
 
-		sessionStorage.setItem(getStorageKey(this.props), JSON.stringify(this.state.showList));
+		BrowserUtils.saveSessionProperty(getStorageKey(this.props), this.state.showList);
 	},
 
 	render() {

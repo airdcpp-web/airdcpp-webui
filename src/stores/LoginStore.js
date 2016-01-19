@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import StorageMixin from 'mixins/StorageMixin';
+import BrowserUtils from 'utils/BrowserUtils';
 
 import LoginActions from 'actions/LoginActions';
 import SocketActions from 'actions/SocketActions';
@@ -11,9 +11,8 @@ import LoginConstants from 'constants/LoginConstants';
 
 const LoginStore = Reflux.createStore({
 	listenables: LoginActions,
-	mixins: [ StorageMixin ],
 	init: function () {
-		this.loginProperties = this.loadProperty('login_properties', {});
+		this.loginProperties = BrowserUtils.loadSessionProperty('login_properties', {});
 
 		this._lastError = null;
 		this._socketAuthenticated = false;
@@ -48,7 +47,7 @@ const LoginStore = Reflux.createStore({
 
 	setLoginProperties(props) {
 		this.loginProperties = props;
-		this.saveProperty('login_properties', props);
+		BrowserUtils.saveSessionProperty('login_properties', props);
 	},
 
 	// Invalid password etc.

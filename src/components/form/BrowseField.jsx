@@ -26,6 +26,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 				onConfirm: onConfirm,
 				subHeader: locals.label,
 				initialPath: locals.value ? locals.value : '',
+				historyId: locals.attrs && !locals.value ? locals.attrs.historyId : undefined,
 			});
 		};
 
@@ -46,7 +47,6 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 					ref={ input => { 
 						_input = input;
 					} }
-					//name={locals.attrs.name}
 					value={locals.value}
 					onChange={onChange}
 				/>

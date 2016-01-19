@@ -5,6 +5,7 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
+import BrowserUtils from 'utils/BrowserUtils';
 
 import BrowserBar from 'components/browserbar/BrowserBar';
 import Message from 'components/semantic/Message';
@@ -41,6 +42,12 @@ CreateDirectory.propTypes = {
 const FileBrowser = React.createClass({
 	propTypes: {
 		/**
+		 * Local storage ID used for saving/loading the last path
+		 * This will have priority over initialPath
+		 */
+		historyId: React.PropTypes.string,
+
+		/**
 		 * Initial directory to show
 		 */
 		initialPath: React.PropTypes.string,
@@ -48,19 +55,32 @@ const FileBrowser = React.createClass({
 		/**
 		 * Function to call when changing the directory. Receives the path as param.
 		 */
-		onDirectoryChanged: React.PropTypes.func
+		onDirectoryChanged: React.PropTypes.func,
 	},
 
 	getInitialState() {
 		this._pathSeparator = LoginStore.systemInfo.path_separator;
 		this._isWindows = LoginStore.systemInfo.platform == 'windows';
 
+		let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
+		if (!currentDirectory) {
+			currentDirectory = this.props.initialPath.length === 0 ? this.getRootPath() : this.props.initialPath;
+		}
+
 		return {
-			currentDirectory: this.props.initialPath.length === 0 ? this.getRootPath() : this.props.initialPath,
+			currentDirectory,
 			items: [],
 			loading: true,
 			error: null
 		};
+	},
+
+	getStorageKey() {
+		if (!this.props.historyId) {
+			return undefined;
+		}
+
+		return 'browse_' + this.props.historyId;
 	},
 
 	getDefaultProps() {
@@ -72,9 +92,17 @@ const FileBrowser = React.createClass({
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.currentDirectory !== this.state.currentDirectory) {
-			if (this.props.onDirectoryChanged) {
-				this.props.onDirectoryChanged(this.state.currentDirectory);
-			}
+			this.onDirectoryChanged();
+		}
+	},
+
+	onDirectoryChanged() {
+		// Save the location
+		BrowserUtils.saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
+
+		// Props
+		if (this.props.onDirectoryChanged) {
+			this.props.onDirectoryChanged(this.state.currentDirectory);
 		}
 	},
 
@@ -124,11 +152,6 @@ const FileBrowser = React.createClass({
 		const nextPath = this._appendDirectoryName(directoryName);
 
 		this.fetchItems(nextPath);
-	},
-
-	_onIconClick(directoryName) {
-		const nextPath = this._appendDirectoryName(directoryName);
-		this.props.itemIconClickHandler(nextPath);
 	},
 
 	_createDirectory(directoryName) {

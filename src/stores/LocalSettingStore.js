@@ -7,16 +7,11 @@ const LocalSettingStore = Reflux.createStore({
 	},
 
 	get touchModeEnabled() {
-		const rawValue = localStorage.getItem('touch_mode');
-		if (!rawValue) {
-			return BrowserUtils.preferTouch();
-		}
-
-		return JSON.parse(rawValue);
+		return BrowserUtils.loadLocalProperty('touch_mode', BrowserUtils.preferTouch());
 	},
 
 	toggleTouchMode() {
-		localStorage.setItem('touch_mode', JSON.stringify(!this.touchModeEnabled));
+		BrowserUtils.saveLocalProperty('touch_mode', !this.touchModeEnabled);
 		this.trigger();
 	},
 });

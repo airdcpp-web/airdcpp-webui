@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FileBrowserLayout from 'components/filebrowser/FileBrowserLayout';
+import FilesystemConstants from 'constants/FilesystemConstants';
 
 
 const DownloadFileBrowser = React.createClass({
@@ -45,6 +46,7 @@ const DownloadFileBrowser = React.createClass({
 				initialPath={ this.getInitialPath() } 
 				selectedNameFormatter={ this.selectedNameFormatter }
 				onDirectoryChanged={ this.onDirectoryChanged }
+				historyId={ FilesystemConstants.LOCATION_DOWNLOAD }
 			/>
 		);
 	}

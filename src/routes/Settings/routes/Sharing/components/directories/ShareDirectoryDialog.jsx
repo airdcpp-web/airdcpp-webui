@@ -19,6 +19,7 @@ import FileUtils from 'utils/FileUtils';
 
 import Form from 'components/form/Form';
 import BrowseField from 'components/form/BrowseField';
+import FilesystemConstants from 'constants/FilesystemConstants';
 import SelectField from 'components/form/SelectField';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
@@ -104,6 +105,10 @@ const ShareDirectoryDialog = React.createClass({
 			} else {
 				fieldOptions['disabled'] = true;
 			}
+			
+			fieldOptions['attrs'] = {
+				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
+			};
 		} else if (id === 'virtual_name') {
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;

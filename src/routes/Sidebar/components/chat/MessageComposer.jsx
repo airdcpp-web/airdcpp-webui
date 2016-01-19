@@ -21,13 +21,12 @@ const MessageComposer = React.createClass({
 
 	saveText() {
 		const { text } = this.state;
-		sessionStorage.setItem(this.getStorageKey(this.props), text);
+		BrowserUtils.saveSessionProperty(this.getStorageKey(this.props), text);
 	},
 
 	loadState(props) {
-		const lastText = sessionStorage.getItem(this.getStorageKey(props));
 		return {
-			text: lastText ? lastText : '',
+			text: BrowserUtils.loadSessionProperty(this.getStorageKey(props), ''),
 		};
 	},
 
