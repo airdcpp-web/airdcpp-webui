@@ -1,6 +1,6 @@
-
 import _ from 'lodash';
 import ReactDOM from 'react-dom';
+
 
 const SetContainerSize = {
 	getInitialState: function () {
@@ -57,8 +57,6 @@ const SetContainerSize = {
 				windowHeight: window.innerHeight
 			});
 		}
-
-		//setTimeout(this._update, 250);
 	},
 };
 

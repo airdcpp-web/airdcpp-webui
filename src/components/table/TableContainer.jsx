@@ -190,10 +190,6 @@ const TableContainer = React.createClass({
 	},
 	
 	render: function () {
-		if (this.props.emptyRowsNode !== undefined) {
-			return this.props.emptyRowsNode;
-		}
-
 		//console.log('Render table container, scroll top: ' + this.state.top);
 
 		// Update and insert generic columns props
@@ -201,7 +197,13 @@ const TableContainer = React.createClass({
 
 		const touchMode = LocalSettingStore.touchModeEnabled;
 		return (
-			<TouchScrollArea handleScroll={this.handleScroll} ref="touchScrollArea" onScrollStart={this._onScrollStart} onScrollEnd={this._onScrollEnd} touchMode={touchMode}>
+			<TouchScrollArea 
+				ref="touchScrollArea"
+				handleScroll={this.handleScroll} 
+				onScrollStart={this._onScrollStart} 
+				onScrollEnd={this._onScrollEnd} 
+				touchMode={touchMode}
+			>
 				<Table
 					ref="table"
 
@@ -216,8 +218,6 @@ const TableContainer = React.createClass({
 					rowHeight={50}
 					rowsCount={this.props.store.rowCount}
 					headerHeight={50}
-					onScrollStart={this._onScrollStart}
-					onScrollEnd={this._onScrollEnd}
 					isColumnResizing={this.isColumnResizing}
 					onColumnResizeEndCallback={this._onColumnResizeEndCallback}
 				>
