@@ -11,7 +11,7 @@
     "url": "https://github.com/airdcpp-web/airdcpp-webui.git"
   },
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist/*",
     "lint": "eslint src *.js",
     "lint-fix": "eslint --fix src *.js",
     "start": "node server.js",
