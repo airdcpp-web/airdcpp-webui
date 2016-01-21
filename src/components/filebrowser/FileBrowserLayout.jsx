@@ -96,6 +96,13 @@ const FileBrowser = React.createClass({
 		}
 	},
 
+	componentDidMount() {
+		// Fire a change event in case something was loaded from localStorage
+		this.onDirectoryChanged();
+		
+		this.fetchItems(this.state.currentDirectory);
+	},
+
 	onDirectoryChanged() {
 		// Save the location
 		BrowserUtils.saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
@@ -104,6 +111,17 @@ const FileBrowser = React.createClass({
 		if (this.props.onDirectoryChanged) {
 			this.props.onDirectoryChanged(this.state.currentDirectory);
 		}
+	},
+
+	fetchItems(path) {
+		this.setState({ 
+			error: null,
+			loading: true
+		});
+
+		SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
+			.then(this.onFetchSucceed.bind(this, path))
+			.catch(this.onFetchFailed);
 	},
 
 	onFetchFailed(error) {
@@ -127,21 +145,6 @@ const FileBrowser = React.createClass({
 		});
 
 		this.initialFetchCompleted = true;
-	},
-
-	fetchItems(path) {
-		this.setState({ 
-			error: null,
-			loading: true
-		});
-
-		SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
-			.then(this.onFetchSucceed.bind(this, path))
-			.catch(this.onFetchFailed);
-	},
-
-	componentDidMount() {
-		this.fetchItems(this.state.currentDirectory);
 	},
 
 	_appendDirectoryName(directoryName) {
