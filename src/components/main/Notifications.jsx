@@ -174,6 +174,11 @@ const Notifications = React.createClass({
 				level = 'info';
 				break;
 			}
+			case StatusEnum.DOWNLOAD_FAILED: {
+				text = 'Download failed: ' + bundle.status.str;
+				level = 'error';
+				break;
+			};
 			case StatusEnum.FAILED_MISSING:
 			case StatusEnum.SHARING_FAILED: {
 				text = 'Scanning failed for the bundle: ' + bundle.status.str;

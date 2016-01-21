@@ -11,7 +11,7 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
 
-const bundleFailed = bundle => bundle.status.failed;
+const finishedFailed = bundle => bundle.status.failed && bundle.status.id >= StatusEnum.DOWNLOADED;
 
 export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
@@ -54,14 +54,14 @@ export const QueueActions = Reflux.createActions([
 		displayName: 'Rescan for errors',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.REFRESH,
-		filter: bundleFailed,
+		filter: finishedFailed,
 	} },
 	{ 'forceShare': { 
 		asyncResult: true, 
 		displayName: 'Force in share',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.ERROR,
-		filter: bundleFailed,
+		filter: finishedFailed,
 	} },
 ]);
 

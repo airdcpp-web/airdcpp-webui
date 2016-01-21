@@ -32,6 +32,11 @@ const TableDropdown = React.createClass({
 	},
 
 	addCloseHandler(elem) {
+		if (elem.type === 'div') {
+			// Divider
+			return elem;
+		}
+
 		invariant(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
 		return React.cloneElement(elem, {
 			onClick: () => {
