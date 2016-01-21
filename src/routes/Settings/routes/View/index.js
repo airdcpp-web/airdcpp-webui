@@ -5,7 +5,10 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [ {
 				path: 'histories', 
-				component: require('./components/Histories').default, 
+				component: require('./components/HistoryPage').default, 
+			}, {
+				path: 'events', 
+				component: require('./components/EventPage').default, 
 			} ]);
 		}, 'settings-view-children');
 	},

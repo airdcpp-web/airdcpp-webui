@@ -134,6 +134,9 @@ const menu = [
 			{ 
 				title: 'Histories', 
 				url: 'histories' 
+			}, { 
+				title: 'Events', 
+				url: 'events' 
 			},
 		],
 	}, {

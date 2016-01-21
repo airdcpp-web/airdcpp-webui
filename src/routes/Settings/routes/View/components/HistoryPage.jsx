@@ -16,7 +16,7 @@ const MessageEntry = {
 	history_log_messages: t.Positive,
 };
 
-const Histories = React.createClass({
+const HistoryPage = React.createClass({
 	mixins: [ SettingPageMixin('messages', 'histories') ],
 	render() {
 		return (
@@ -37,4 +37,4 @@ const Histories = React.createClass({
 	}
 });
 
-export default Histories;
+export default HistoryPage;

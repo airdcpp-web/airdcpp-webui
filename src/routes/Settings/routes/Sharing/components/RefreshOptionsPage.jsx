@@ -8,7 +8,6 @@ const Entry = {
 	refresh_time: t.Positive,
 	refresh_time_incoming: t.Positive,
 	refresh_startup: t.Bool,
-	refresh_report_scheduled_refreshes: t.Bool,
 	refresh_threading: t.Num,
 };
 

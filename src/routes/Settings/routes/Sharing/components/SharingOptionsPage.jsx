@@ -9,8 +9,6 @@ const Entry = {
 	share_no_empty_dirs: t.Bool,
 	share_no_zero_byte: t.Bool,
 	share_follow_symlinks: t.Bool,
-	share_report_duplicates: t.Bool,
-	share_report_skiplist: t.Bool,
 	share_max_size: t.Positive,
 };
 
