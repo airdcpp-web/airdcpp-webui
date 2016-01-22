@@ -33,6 +33,9 @@ const EventStore = Reflux.createStore({
 	},
 
 	onFetchInfoCompleted: function (data) {
+		// If the socket was disconnected
+		this._logMessages = null;
+		
 		this.onLogInfo(data);
 	},
 

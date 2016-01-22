@@ -59,6 +59,7 @@ LoginActions.login.listen(function (username, password) {
 });
 
 LoginActions.login.failed.listen(function (error) {
+	SocketService.disconnect();
 	console.log('Logging in failed', error);
 });
 
@@ -76,6 +77,10 @@ LoginActions.connect.listen(function (token) {
 			unsubscribe();
 		}
 	});
+});
+
+LoginActions.connect.failed.listen(function (token) {
+	SocketService.disconnect();
 });
 
 LoginActions.logout.listen(function () {

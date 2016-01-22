@@ -41,22 +41,24 @@ const SetContainerSize = {
 	},
 
 	_update() {
-		if (this.isMounted()) {
-			const node = ReactDOM.findDOMNode(this);
-
-			const borderWidth = node.offsetWidth - node.clientWidth;
-			const borderHeight = node.offsetHeight - node.clientHeight;
-
-			const width = node.parentNode.offsetWidth - borderWidth;
-			const height = node.parentNode.offsetHeight - borderHeight;
-
-			this.setState({
-				width	: width,
-				height : height,
-				windowWidth: window.innerWidth,
-				windowHeight: window.innerHeight
-			});
+		if (!this.isMounted()) {
+			return;
 		}
+		
+		const node = ReactDOM.findDOMNode(this);
+
+		const borderWidth = node.offsetWidth - node.clientWidth;
+		const borderHeight = node.offsetHeight - node.clientHeight;
+
+		const width = node.parentNode.offsetWidth - borderWidth;
+		const height = node.parentNode.offsetHeight - borderHeight;
+
+		this.setState({
+			width	: width,
+			height : height,
+			windowWidth: window.innerWidth,
+			windowHeight: window.innerHeight
+		});
 	},
 };
 

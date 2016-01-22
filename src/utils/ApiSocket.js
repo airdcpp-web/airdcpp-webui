@@ -33,6 +33,7 @@ export default class ApiSocket {
 		this.socket = new WebSocket((window.location.protocol == 'https:' ? 'wss://' : 'ws://') + window.location.host + '/');
 
 		this.socket.onopen = () => {
+			console.log('Socket connected');
 			this._reconnectTimer = null;
 
 			this.setSocketHandlers();
@@ -56,6 +57,7 @@ export default class ApiSocket {
 	}
 
 	disconnect() {
+		console.log('Disconnecting socket');
 		if (this._reconnectTimer != null) {
 			clearTimeout(this._reconnectTimer);
 		}
