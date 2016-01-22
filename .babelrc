@@ -1,12 +1,14 @@
 {
   "presets": ["react", "es2015", "stage-1"],
+  "plugins": [
+    "transform-es2015-function-name",
+    "transform-object-assign",
+    "transform-react-display-name",
+  ],
   "env": {
     // only enable it when process.env.NODE_ENV is 'development' or undefined
     "development": {
       "plugins": [
-        "transform-react-display-name",
-        "transform-object-assign",
-				"transform-es2015-function-name",
         [ "react-transform", {
           "transforms": [{
             "transform": "react-transform-hmr",
