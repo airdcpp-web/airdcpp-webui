@@ -26,6 +26,7 @@ import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 
 import OverlayConstants from 'constants/OverlayConstants';
+import SocketService from 'services/SocketService';
 
 
 const showSideBar = (props) => {
@@ -104,6 +105,24 @@ const AuthenticatedApp = React.createClass({
 		document.onkeypress = null;
 
 		clearTimeout(this.activityTimeout);
+		clearInterval(this.aliveInterval);
+	},
+
+	setAliveCheck() {
+		// Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
+
+		this.lastAlive = (new Date()).getTime();
+		this.aliveInterval = setInterval(() => {
+			const currentTime = (new Date()).getTime();
+			if (currentTime > (this.lastAlive + 30000)) { // 30 seconds
+				console.log('Wake up detected');
+
+				// Woke up, disconnect the socket (it will be reconnected automatically)
+				SocketService.disconnect();
+			}
+
+			this.lastAlive = currentTime;
+		}, 2000);
 	},
 
 	addActivityHandlers() {
@@ -111,6 +130,7 @@ const AuthenticatedApp = React.createClass({
 		document.onkeypress = this.resetActivityTimer;
 
 		this.resetActivityTimer();
+		this.setAliveCheck();
 	},
 
 	componentWillUpdate(nextProps, nextState) {

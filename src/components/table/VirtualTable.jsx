@@ -93,10 +93,10 @@ const VirtualTable = React.createClass({
 	render: function () {
 		const { footerData, emptyRowsNodeGetter, ...other } = this.props;
 
-		//if (this.props.emptyRowsNodeGetter && this.props.store.totalCount === -1) {
+		if (this.props.emptyRowsNodeGetter && this.props.store.totalCount === -1) {
 			// Row count is unknown, don't flash the table
-			//return <div className="virtual-table"/>;
-		//}
+			return <div className="virtual-table"/>;
+		}
 
 		if (this.props.emptyRowsNodeGetter && this.props.store.totalCount === 0) {
 			return this.props.emptyRowsNodeGetter();

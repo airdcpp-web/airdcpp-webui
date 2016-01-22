@@ -16,11 +16,18 @@ const sendCommand = (data, path, method) => {
 
 const SocketService = {
 	connect() {
+		invariant(!SocketStore.socket, 'Attempting socket connect while a socket exists');
+
 		let socket = new ApiSocket();
 		return socket.connect(false);
 	},
 
 	reconnect() {
+		if (SocketStore.socket) {
+			console.log('Reconnect, disconnecting an existing socket');
+			SocketStore.socket.disconnect();
+		}
+
 		let socket = new ApiSocket();
 		return socket.connect(true);
 	},
