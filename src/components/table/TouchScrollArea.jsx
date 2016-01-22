@@ -4,7 +4,7 @@ import ZyngaScroller from 'zynga/Scroller';
 import TouchableArea from './TouchableArea';
 
 
-const ScrollArea = React.createClass({
+const TouchScrollArea = React.createClass({
 	propTypes: {
 		/**
 		 * Function to call when the scroll position changes
@@ -115,4 +115,4 @@ const ScrollArea = React.createClass({
 	}
 });
 
-export default ScrollArea;
+export default TouchScrollArea;

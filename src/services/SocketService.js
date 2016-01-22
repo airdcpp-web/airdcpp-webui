@@ -34,8 +34,8 @@ const SocketService = {
 
 	disconnect() {
 		if (!SocketStore.socket) {
-			console.log('Disconnect for a closed socket: ' + path);
-			return Promise.reject('No socket');
+			console.log('Disconnect for a closed socket');
+			return;
 		}
 
 		SocketStore.socket.disconnect();
@@ -59,7 +59,7 @@ const SocketService = {
 	},
 
 	get(path, data) {
-		invariant(!data, 'No data is allowed for delete command');
+		invariant(!data, 'No data is allowed for get command');
 		return sendCommand(null, path, 'GET');
 	},
 };

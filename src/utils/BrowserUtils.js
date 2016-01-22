@@ -9,7 +9,7 @@ const loadProperty = (storage, storageKey, defaultData) => {
 		if (savedItem !== undefined && savedItem !== null) { // 'false' should be loaded
 			try {
 				return JSON.parse(savedItem);
-			} catch(e) {
+			} catch (e) {
 				// Possibly a legacy storage item that wasn't saved as JSON
 				console.warn('Failed to load storage property', e.message);
 			}
@@ -55,7 +55,7 @@ export default {
 	},
 
 	preferTouch() {
-		return md.mobile();
+		return md.mobile() ? true : false;
 	},
 
 	get mobileDetect() {

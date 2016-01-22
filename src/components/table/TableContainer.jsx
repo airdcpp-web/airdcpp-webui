@@ -72,8 +72,10 @@ const TableContainer = React.createClass({
 
 	// This will also be used for setting the initial rows
 	componentDidUpdate(prevProps, prevState) {
-		if (prevState.height != this.state.height) {
+		if (prevState.height !== this.state.height) {
 			this._onContentHeightChange();
+			this.updateRowRange();
+		} else if (prevProps.entityId !== this.props.entityId) {
 			this.updateRowRange();
 		}
 	},
