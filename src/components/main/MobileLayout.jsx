@@ -7,7 +7,7 @@ import MenuIcon from 'components/menu/MenuIcon';
 import UrgencyUtils from 'utils/UrgencyUtils';
 import History from 'utils/History';
 import Button from 'components/semantic/Button';
-import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
+import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 import 'mobile.css';
 

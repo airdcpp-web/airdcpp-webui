@@ -4,7 +4,7 @@ import React from 'react';
 import LoginActions from 'actions/LoginActions';
 import { getTextMenuItem } from './MenuItem';
 
-import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
+import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 const LogoutItem = { 
 	url: 'logout', 

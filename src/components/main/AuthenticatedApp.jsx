@@ -7,6 +7,7 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 
+import ActivityTracker from './ActivityTracker';
 import Notifications from './Notifications';
 import BrowserUtils from 'utils/BrowserUtils';
 
@@ -17,7 +18,7 @@ import { History, RouteContext } from 'react-router';
 import SocketConnectStatus from './SocketConnectStatus';
 import SetContainerSize from 'mixins/SetContainerSize';
 
-import ModalHandlerDecorator from 'decorators/ModalHandlerDecorator';
+import ModalHandlerDecorator from 'decorators/main/ModalHandlerDecorator';
 
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
@@ -27,7 +28,6 @@ import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 
 import OverlayConstants from 'constants/OverlayConstants';
-import ActivityTrackerDecorator from 'decorators/ActivityTrackerDecorator';
 
 
 const showSideBar = (props) => {
@@ -119,9 +119,10 @@ const AuthenticatedApp = React.createClass({
 			});
 		}
 
-		const LayoutElement = ActivityTrackerDecorator(BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout);
+		const LayoutElement = BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout;
 		return (
 			<div id="authenticated-app">
+				<ActivityTracker/>
 				<Notifications location={ this.props.location }/>
 				<LayoutElement className="pushable main-layout" sidebar={ sidebar } { ...this.props }>
 					{ this.previousChildren ? this.previousChildren : this.props.children }

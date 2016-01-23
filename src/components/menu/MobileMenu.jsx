@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
+import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import { getIconMenuItem } from './MenuItem';
 
 import History from 'utils/History';

@@ -9,7 +9,7 @@ import PerformanceTools from './PerformanceTools';
 import TouchIcon from './TouchIcon';
 import AwayIcon from './AwayIcon';
 
-import MainNavigationDecorator from 'decorators/MainNavigationDecorator';
+import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import { getIconMenuItem } from './MenuItem';
 
 
