@@ -8,9 +8,11 @@ import HubSessionStore from 'stores/HubSessionStore';
 import ValueFormat from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 
 const HubFooter = React.createClass({
-	mixins: [ SocketSubscriptionMixin(HubSessionStore) ],
+	mixins: [ SocketSubscriptionMixin(HubSessionStore), PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Currently active session (required)

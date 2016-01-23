@@ -38,7 +38,7 @@ const MessageView = ScrollDecorator(React.createClass({
 
 		return (
 			<div ref="messageList" className="message-list ui segment">
-				{messageList}
+				{ messageList }
 			</div>
 		);
 	}
@@ -57,6 +57,10 @@ const SystemLog = React.createClass({
 
 	componentWillUnmount() {
 		EventActions.setActive(false);
+	},
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextState.messages !== this.state.messages;
 	},
 
 	_handleClear() {

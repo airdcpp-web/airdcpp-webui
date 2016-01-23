@@ -16,13 +16,15 @@ const ActivityTracker = React.createClass({
 		document.onmousemove = this.onUserActivity;
 		document.onkeypress = this.onUserActivity;
 
-		// Notify the API once per minute if the user is active due to idle away tracking
+		// Notify the API regurarly if the user is active due to idle away tracking
 		this.activityInteval = setInterval(this.checkActivity, 60*1000);
 
 		// Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
 		this.aliveInterval = setInterval(this.checkAlive, 2000);
-
 		this.lastAlive = (new Date()).getTime();
+
+		// Avoid long breaks if the page is refreshed often
+		this.checkActivity();
 	},
 
 	componentWillUnmount() {

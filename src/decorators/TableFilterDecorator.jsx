@@ -1,9 +1,11 @@
 import React from 'react';
 
 import SocketService from 'services/SocketService';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default function (Component, propertyName = 'any') {
 	const TableFilterDecorator = React.createClass({
+		mixins: [ PureRenderMixin ],
 		propTypes: {
 			/**
 			 * Callback after the profiles have been received

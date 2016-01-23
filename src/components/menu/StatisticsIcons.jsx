@@ -2,6 +2,7 @@ import React from 'react';
 
 import ValueFormat from 'utils/ValueFormat';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import HashConstants from 'constants/HashConstants';
 import TransferConstants from 'constants/TransferConstants';
@@ -23,7 +24,7 @@ const SpeedDisplay = ({ type, speed }) => {
 };
 
 const StatisticsBar = React.createClass({
-	mixins: [ SocketSubscriptionMixin() ],
+	mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
 
 	onSocketConnected(addSocketListener) {
 		addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
