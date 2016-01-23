@@ -24,9 +24,10 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
+import SystemActions from 'actions/SystemActions';
 
 import OverlayConstants from 'constants/OverlayConstants';
-import SocketService from 'services/SocketService';
+import ActivityTrackerDecorator from 'decorators/ActivityTrackerDecorator';
 
 
 const showSideBar = (props) => {
@@ -36,29 +37,7 @@ const showSideBar = (props) => {
 
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore), History, RouteContext, SetContainerSize ],
-	changeAwayState(away) {
-		this.away = away;
-		LoginActions.setAway(away);
-	},
-
-	resetActivityTimer() {
-		invariant(this.state.awayIdleTime, 'Away idle period not set');
-		if (!this.state.awayIdleTime || this.state.awayIdleTime === 0) {
-			return;
-		}
-
-		if (this.away) {
-			this.changeAwayState(false);
-		}
-
-		clearTimeout(this.activityTimeout);
-		this.activityTimeout = setTimeout(() => this.changeAwayState(true), this.state.awayIdleTime*60*1000);
-		//this.activityTimeout = setTimeout(() => this.changeAwayState(true), 3000);
-	},
-
 	onSocketAuthenticated() {
-		this.addActivityHandlers();
-
 		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
 			PrivateChatActions.fetchSessions();
 		}
@@ -78,6 +57,8 @@ const AuthenticatedApp = React.createClass({
 		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
 			EventActions.fetchInfo();
 		}
+
+		SystemActions.fetchAway();
 	},
 
 	componentWillMount() {
@@ -100,46 +81,11 @@ const AuthenticatedApp = React.createClass({
 		}
 	},
 
-	removeActivityHandlers() {
-		document.onmousemove = null;
-		document.onkeypress = null;
-
-		clearTimeout(this.activityTimeout);
-		clearInterval(this.aliveInterval);
-	},
-
-	setAliveCheck() {
-		// Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
-
-		this.lastAlive = (new Date()).getTime();
-		this.aliveInterval = setInterval(() => {
-			const currentTime = (new Date()).getTime();
-			if (currentTime > (this.lastAlive + 30000)) { // 30 seconds
-				console.log('Wake up detected');
-
-				// Woke up, disconnect the socket (it will be reconnected automatically)
-				SocketService.disconnect();
-			}
-
-			this.lastAlive = currentTime;
-		}, 2000);
-	},
-
-	addActivityHandlers() {
-		document.onmousemove = this.resetActivityTimer;
-		document.onkeypress = this.resetActivityTimer;
-
-		this.resetActivityTimer();
-		this.setAliveCheck();
-	},
-
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
 			// Reconnect (but not too fast)
 			console.log('Socket closed, attempting to reconnect in 2 seconds');
 			setTimeout(() => LoginActions.connect(this.state.token), 2000);
-
-			this.removeActivityHandlers();
 		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
@@ -152,10 +98,6 @@ const AuthenticatedApp = React.createClass({
 				LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
 				'/login'
 			);
-
-			this.away = false;
-
-			this.removeActivityHandlers();
 		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
 			this.onSocketAuthenticated();
 		}
@@ -177,7 +119,7 @@ const AuthenticatedApp = React.createClass({
 			});
 		}
 
-		const LayoutElement = BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout;
+		const LayoutElement = ActivityTrackerDecorator(BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout);
 		return (
 			<div id="authenticated-app">
 				<Notifications location={ this.props.location }/>

@@ -33,7 +33,6 @@ const LoginStore = Reflux.createStore({
 			token: this.token,
 			user: this.user,
 			userLoggedIn: this.isLoggedIn,
-			awayIdleTime: this.awayIdleTime,
 		};
 	},
 
@@ -133,10 +132,6 @@ const LoginStore = Reflux.createStore({
 
 	get systemInfo() {
 		return this.loginProperties.system;
-	},
-
-	get awayIdleTime() {
-		return this.loginProperties.away_idle_time;
 	},
 
 	get showNewUserIntro() {

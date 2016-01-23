@@ -13,7 +13,7 @@ export const LoginActions = Reflux.createActions([
 	{ 'login': { asyncResult: true } },
 	{ 'connect': { asyncResult: true } },
 	{ 'logout': { asyncResult: true } },
-	{ 'setAway': { asyncResult: true } },
+	{ 'activity': { asyncResult: true } },
 	{ 'newUserIntroSeen': {
 		asyncResult: true,
 		displayName: "Close and don't show again",
@@ -23,9 +23,9 @@ export const LoginActions = Reflux.createActions([
 ]);
 
 
-LoginActions.setAway.listen(function (away) {
+LoginActions.activity.listen(function (away) {
 	let that = this;
-	return SocketService.post(LoginConstants.AWAY_URL, { away })
+	return SocketService.post(LoginConstants.ACTIVITY_URL)
 		.then(that.completed)
 		.catch(that.failed);
 });

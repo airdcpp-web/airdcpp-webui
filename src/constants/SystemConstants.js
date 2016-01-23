@@ -1,9 +1,9 @@
 const MODULE_URL = 'system/v0';
 
 export const AwayEnum = {
-	AWAY_OFF: 'off',
-	AWAY_IDLE: 'idle',
-	AWAY_MANUAL: 'manual',
+	OFF: 'off',
+	IDLE: 'idle',
+	MANUAL: 'manual',
 };
 
 export default {
