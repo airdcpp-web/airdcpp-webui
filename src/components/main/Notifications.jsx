@@ -133,6 +133,10 @@ const Notifications = React.createClass({
 	},
 
 	_onViewFileDownloaded(file) {
+		if (!file.downloaded) {
+			return;
+		}
+
 		NotificationActions.info({
 			title: file.name,
 			message: 'File has finished downloading',

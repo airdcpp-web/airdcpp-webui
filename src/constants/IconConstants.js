@@ -4,6 +4,8 @@ export default {
 	REMOVE: 'red remove circle',
 	DEFAULT: 'blue pin',
 	LOCK: 'lock',
+
+	RELOAD: 'blue refresh',
 	REFRESH: 'green refresh',
 	MESSAGE: 'mail outline',
 

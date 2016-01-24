@@ -10,22 +10,27 @@ import ViewFileActions from 'actions/ViewFileActions';
 import FilelistActions from 'actions/FilelistActions';
 
 
+const notMe = ({ user }) => user.flags.indexOf('me') === -1;
+const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
+
 const showImage = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
 const viewText = ({ itemInfo }) => itemInfo.type.id !== 'directory' && itemInfo.size < 256*1024;
-const findNfo = ({ itemInfo }) => itemInfo.type.id === 'directory';
+const findNfo = data => isDirectory(data) && notMe(data);
 
 export const DownloadActions = Reflux.createActions([
 	{ 'download': { 
 		asyncResult: true,	
 		displayName: 'Download', 
 		access: AccessConstants.DOWNLOAD, 
-		icon: IconConstants.DOWNLOAD 
+		icon: IconConstants.DOWNLOAD,
+		filter: notMe,
 	} },
 	{ 'downloadTo': { 
 		asyncResult: true,	
 		displayName: 'Download to...',
 		access: AccessConstants.DOWNLOAD, 
-		icon: IconConstants.DOWNLOAD_TO, 
+		icon: IconConstants.DOWNLOAD_TO,
+		filter: notMe,
 	} }, 
 	{ 'viewText': {
 		asyncResult: true,	
@@ -44,7 +49,7 @@ export const DownloadActions = Reflux.createActions([
 	{ 'findNfo': {
 		asyncResult: true,	
 		displayName: 'Find NFO',
-		access: AccessConstants.VIEW_FILE_EDIT, // TODO: FIX
+		access: AccessConstants.VIEW_FILE_EDIT,
 		icon: IconConstants.FIND,
 		filter: findNfo,
 	} }

@@ -119,7 +119,7 @@ const ListBrowser = React.createClass({
 					} }
 					location={ this.props.location }
 					actions={ FilelistActions }
-					ids={ [ 'reloadDirectory' ] } 
+					ids={ [ 'reloadDirectory', 'refreshShare' ] } 
 				/>
 			</DownloadMenu>
 		);

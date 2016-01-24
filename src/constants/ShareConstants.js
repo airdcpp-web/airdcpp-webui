@@ -8,5 +8,6 @@ export default {
 
 	REFRESH_URL: MODULE_URL + '/refresh',
 	REFRESH_PATHS_URL: MODULE_URL + '/refresh/paths',
+	REFRESH_VIRTUAL_URL: MODULE_URL + '/refresh/virtual',
 }
 ;

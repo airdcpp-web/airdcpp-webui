@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import FilelistConstants from 'constants/FilelistConstants';
 import QueueConstants from 'constants/QueueConstants';
 
+import ShareActions from 'actions/ShareActions';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
@@ -14,6 +15,8 @@ import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 
+const isMe = ({ session }) => session.user.flags.indexOf('me') !== -1;
+
 const FilelistActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
 	{ 'changeDirectory': { asyncResult: true } },
@@ -21,7 +24,14 @@ const FilelistActions = Reflux.createActions([
 		asyncResult: true,
 		displayName: 'Reload',
 		access: AccessConstants.FILELISTS_VIEW,
+		icon: IconConstants.RELOAD,
+	} },
+	{ 'refreshShare': { 
+		asyncResult: true,
+		displayName: 'Refresh in share',
+		access: AccessConstants.SETTINGS_EDIT,
 		icon: IconConstants.REFRESH,
+		filter: isMe,
 	} },
 	{ 'download': { asyncResult: true } },
 	{ 'findNfo': { asyncResult: true } },
@@ -123,6 +133,10 @@ FilelistActions.createSession.failed.listen(function (error) {
 		title: 'Failed to create filelist session',
 		message: error.message,
 	});
+});
+
+FilelistActions.refreshShare.listen(function ({ session, directory }) {
+	ShareActions.refreshVirtual(directory.path, session.profile);
 });
 
 export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELISTS_EDIT);

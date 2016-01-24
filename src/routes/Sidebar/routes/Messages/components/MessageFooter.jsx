@@ -11,7 +11,7 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 
 const getCaption = (state) => {
 	switch (state) {
-		case CCPMEnum.CONNECTED: return 'Messages are sent through direct encrypted channel';
+		case CCPMEnum.CONNECTED: return 'Direct encrypted channel established';
 		case CCPMEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
 		case CCPMEnum.DISCONNECTED: return 'Direct encrypted channel available';
 	}
