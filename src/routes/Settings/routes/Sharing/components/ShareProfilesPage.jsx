@@ -6,10 +6,13 @@ import ShareProfileActions from 'actions/ShareProfileActions';
 import Button from 'components/semantic/Button';
 import ValueFormat from 'utils/ValueFormat';
 
+import FilelistActions from 'actions/FilelistActions';
+import ActionButton from 'components/ActionButton';
+
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
-const Row = ({ profile, contextGetter }) => (
+const Row = ({ profile, contextGetter, location }) => (
 	<tr>
 		<td>
 			<ActionMenu 
@@ -18,6 +21,11 @@ const Row = ({ profile, contextGetter }) => (
 				ids={ profile.default ? [ 'edit', 'remove' ] : [ 'edit', 'default', 'remove' ]} 
 				itemData={ profile }
 				contextGetter={ contextGetter }
+			/>
+			<ActionButton 
+				action={ FilelistActions.ownList }
+				args={ [ location, profile.id ] }
+				className="basic browse"
 			/>
 		</td>
 		<td>
@@ -32,6 +40,17 @@ const Row = ({ profile, contextGetter }) => (
 const ShareProfilesPage = React.createClass({
 	_handleAddProfile() {
 		ShareProfileActions.create();
+	},
+
+	getRow(profile) {
+		return (
+			<Row 
+				key={ profile.id } 
+				profile={ profile } 
+				contextGetter={ () => ReactDOM.findDOMNode(this) }
+				location={ this.props.location }
+			/>
+		);
 	},
 
 	render() {
@@ -52,9 +71,7 @@ const ShareProfilesPage = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-					{ this.props.profiles
-						.map(p => <Row key={p.id} profile={p} contextGetter={ () => ReactDOM.findDOMNode(this) }/>) 
-					}
+					{ this.props.profiles.map(this.getRow) }
 					</tbody>
 				</table>
 			</div>

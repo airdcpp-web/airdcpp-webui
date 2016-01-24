@@ -126,6 +126,10 @@ const LoginStore = Reflux.createStore({
 		return this.loginProperties.token;
 	},
 
+	get cid() {
+		return this.loginProperties.cid;
+	},
+
 	get isLoggedIn() {
 		return !!this.loginProperties.user;
 	},

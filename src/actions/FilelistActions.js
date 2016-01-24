@@ -1,8 +1,8 @@
 'use strict';
 import Reflux from 'reflux';
 import FilelistConstants from 'constants/FilelistConstants';
-import QueueConstants from 'constants/QueueConstants';
 
+import LoginStore from 'stores/LoginStore';
 import ShareActions from 'actions/ShareActions';
 import SocketService from 'services/SocketService';
 
@@ -32,6 +32,12 @@ const FilelistActions = Reflux.createActions([
 		access: AccessConstants.SETTINGS_EDIT,
 		icon: IconConstants.REFRESH,
 		filter: isMe,
+	} },
+	{ 'ownList': { 
+		asyncResult: true,
+		displayName: 'Browse files',
+		access: AccessConstants.FILELISTS_VIEW,
+		icon: IconConstants.OPEN,
 	} },
 	{ 'download': { asyncResult: true } },
 	{ 'findNfo': { asyncResult: true } },
@@ -108,6 +114,21 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 		.catch(that.failed);
 });
 
+FilelistActions.ownList.listen(function (location, profile) {
+	let session = FilelistSessionStore.getSession(LoginStore.cid);
+	if (session && session.profile === profile) {
+		this.completed(location, profile, session);
+		return;
+	}
+
+	let that = this;
+	SocketService.post(FilelistConstants.SESSION_URL + '/me', {
+		profile,
+	})
+		.then((data) => that.completed(location, profile, data))
+		.catch(that.failed);
+});
+
 FilelistActions.findNfo.listen(function ({ user, itemInfo }) {
 	let that = this;
 	SocketService.post(FilelistConstants.FIND_NFO_URL, {
@@ -121,11 +142,19 @@ FilelistActions.findNfo.listen(function ({ user, itemInfo }) {
 		.catch(that.failed);
 });
 
-FilelistActions.createSession.completed.listen(function (location, user, directory, session) {
-	History.pushSidebar(location, '/filelists/session/' + user.cid, { 
-		directory: directory,
+const openSession = (location, cid, directory) => {
+	History.pushSidebar(location, '/filelists/session/' + cid, { 
+		directory,
 		pending: true
 	});
+};
+
+FilelistActions.ownList.completed.listen(function (location, profile, session) {
+	openSession(location, LoginStore.cid, '/');
+});
+
+FilelistActions.createSession.completed.listen(function (location, user, directory, session) {
+	openSession(location, user.cid, directory);
 });
 
 FilelistActions.createSession.failed.listen(function (error) {
