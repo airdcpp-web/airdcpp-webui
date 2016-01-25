@@ -123,7 +123,7 @@ FilelistActions.ownList.listen(function (location, profile) {
 
 	let that = this;
 	SocketService.post(FilelistConstants.SESSION_URL + '/me', {
-		profile,
+		share_profile: profile,
 	})
 		.then((data) => that.completed(location, profile, data))
 		.catch(that.failed);

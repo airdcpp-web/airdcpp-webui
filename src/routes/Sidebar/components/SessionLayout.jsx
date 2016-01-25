@@ -247,7 +247,15 @@ const SessionLayout = React.createClass({
 			/>
 		);
 
-		return this.props.itemHeaderGetter ? this.props.itemHeaderGetter(activeItem, location, actionMenu) : actionMenu;
+		// Use the header getter only if there is a getter that returns a valid value
+		if (this.props.itemHeaderGetter) {
+			const header = this.props.itemHeaderGetter(activeItem, location, actionMenu);
+			if (header) {
+				return header;
+			}
+		}
+
+		return actionMenu;
 	},
 
 	getItemIcon() {

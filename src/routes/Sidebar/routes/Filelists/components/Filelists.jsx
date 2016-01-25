@@ -12,15 +12,36 @@ import AccessConstants from 'constants/AccessConstants';
 import '../style.css';
 
 
+const userItems = UserItemHandlerDecorator({}, [ 'message' ]);
 const ItemHandler = {
 	itemLabelGetter(session) {
 		return null;
 	},
-};
 
+	itemNameGetter(session) {
+		return session.share_profile ? session.share_profile.str : userItems.itemNameGetter(session);
+	},
+
+	itemIconGetter(session) {
+		return session.share_profile ? <i className="green server icon"/> : userItems.itemIconGetter(session);
+	},
+
+	itemStatusGetter(session) {
+		return session.share_profile ? 'blue' : userItems.itemStatusGetter(session);
+	},
+
+	itemHeaderGetter(session, location, actionMenu) {
+		if (session.share_profile) {
+			return actionMenu;
+		}
+
+		return userItems.itemHeaderGetter(session, location, actionMenu);
+	},
+}
 
 const Filelists = React.createClass({
 	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
+
 	render() {
 		return (
 			<SessionLayout 
@@ -34,7 +55,7 @@ const Filelists = React.createClass({
 				editAccess={ AccessConstants.FILELISTS_EDIT }
 				actions={ FilelistActions }
 
-				{ ...UserItemHandlerDecorator(ItemHandler, [ 'message' ]) }
+				{ ...ItemHandler }
 			>
 				{ this.props.children }
 			</SessionLayout>

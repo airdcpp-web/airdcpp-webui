@@ -12,9 +12,9 @@ import FilelistActions from 'actions/FilelistActions';
 
 const notMe = ({ user }) => user.flags.indexOf('me') === -1;
 const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
+const isPicture = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
 
-const showImage = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
-const viewText = ({ itemInfo }) => itemInfo.type.id !== 'directory' && itemInfo.size < 256*1024;
+const viewText = data => !isDirectory(data) && !isPicture(data) && data.itemInfo.size < 256*1024;
 const findNfo = data => isDirectory(data) && notMe(data);
 
 export const DownloadActions = Reflux.createActions([
@@ -44,7 +44,7 @@ export const DownloadActions = Reflux.createActions([
 		displayName: 'View image',
 		access: AccessConstants.VIEW_FILE_EDIT, 
 		icon: IconConstants.OPEN, 
-		filter: showImage,
+		filter: isPicture,
 	} },
 	{ 'findNfo': {
 		asyncResult: true,	
