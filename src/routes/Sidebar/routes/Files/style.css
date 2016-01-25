@@ -29,6 +29,6 @@
 	margin: 0px;
 }
 
-.file-session img {
+.file-session img, .file-session video {
 	max-width: 100%;
 }

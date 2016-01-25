@@ -1,16 +1,10 @@
 'use strict';
 import React from 'react';
 
-import LoginStore from 'stores/LoginStore';
 
-
-const getUri = (tth) => {
-	return '/view/' + tth + '?auth=' + LoginStore.token; 
-};
-
-const ImageFile = ({ item }) => {
+const ImageFile = ({ item, url }) => {
 	return (
-		<img src={ getUri(item.tth) }/>
+		<img src={ url }/>
 	);
 };
 
