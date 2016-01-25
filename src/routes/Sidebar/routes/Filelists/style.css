@@ -2,16 +2,23 @@
 	flex: 1 100 100%;
 }
 
-.filelist-browser {
-	height: calc(100% - 95px);
+.filelist-browser, .filelist-browser .virtual-table {
+	height: calc(100% - 35px);
 }
 
 #mobile-layout .filelist-browser {
-	height: calc(100% - 60px);
+	height: 100%;
 }
 
-.filelist-browser .virtual-table {
-	height: calc(100% - 35px) !important;
+@supports (-webkit-appearance:none) and (not (-ms-accelerator:true)) {
+	/* webkit specific CSS */
+	.filelist-browser {
+		height: calc(100% - 95px);
+	}
+
+	#mobile-layout .filelist-browser {
+		height: calc(100% - 60px);
+	}
 }
 
 .filelist-browser .ui.segment {

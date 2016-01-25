@@ -47,9 +47,8 @@
 
 .session-container.vertical .session-header > div,
 .session-container.vertical .session-header > span {
-  padding-left: 5px;
   max-width: 90%;
-  padding: .82857143em 1.14285714em;
+  padding: .82857143em 0.4285714em;
   line-height: 1.2;
 }
 
@@ -58,7 +57,7 @@
 }
 
 .session-container.vertical .session-header > i {
-  padding-left: 10px;
+  margin-left: 10px;
 }
 
 .session-container.vertical .session-header .ui.dropdown > i {

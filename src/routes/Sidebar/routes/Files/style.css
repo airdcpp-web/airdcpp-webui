@@ -5,9 +5,20 @@
 	max-height: 100%;
 }
 
+@supports (-webkit-appearance:none) and (not (-ms-accelerator:true)) {
+	/* webkit specific CSS */
+	.file-session {
+		max-height: 94%;
+	}
+}
+
 .file-session .file-content {
 	flex: 1;
 	overflow-x: auto;
+}
+
+.file-session .file-content pre {
+	overflow: initial;
 }
 
 .file-session.nfo .file-content pre {

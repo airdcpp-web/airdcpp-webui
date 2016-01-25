@@ -23,7 +23,7 @@ const ItemHandler = {
 	},
 
 	itemIconGetter(session) {
-		return session.share_profile ? <i className="green server icon"/> : userItems.itemIconGetter(session);
+		return session.share_profile ? <i className="large green server icon"/> : userItems.itemIconGetter(session);
 	},
 
 	itemStatusGetter(session) {
@@ -37,7 +37,7 @@ const ItemHandler = {
 
 		return userItems.itemHeaderGetter(session, location, actionMenu);
 	},
-}
+};
 
 const Filelists = React.createClass({
 	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
