@@ -15,9 +15,15 @@ const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
 const isPicture = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
 const isVideo = ({ itemInfo }) => itemInfo.type.content_type === 'video';
 const isAudio = ({ itemInfo }) => itemInfo.type.content_type === 'audio';
+const sizeValid = ({ itemInfo }) => itemInfo.size < 200*1024*1024; // 200 MB
 
 const viewText = data => !isDirectory(data) && !isPicture(data) && !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256*1024;
 const findNfo = data => isDirectory(data) && notMe(data);
+
+const viewVideo = data => isVideo(data) && sizeValid(data);
+const viewAudio = data => isAudio(data) && sizeValid(data);
+const viewImage = data => isPicture(data) && sizeValid(data);
+
 
 export const DownloadActions = Reflux.createActions([
 	{ 'download': { 
@@ -46,7 +52,7 @@ export const DownloadActions = Reflux.createActions([
 		displayName: 'View image',
 		access: AccessConstants.VIEW_FILE_EDIT, 
 		icon: IconConstants.OPEN, 
-		filter: isPicture,
+		filter: viewImage,
 	} },
 	{ 'findNfo': {
 		asyncResult: true,	
@@ -60,14 +66,14 @@ export const DownloadActions = Reflux.createActions([
 		displayName: 'Play video',
 		access: AccessConstants.VIEW_FILE_EDIT,
 		icon: IconConstants.OPEN,
-		filter: isVideo,
+		filter: viewVideo,
 	} },
 	{ 'viewAudio': {
 		asyncResult: true,	
 		displayName: 'Play audio',
 		access: AccessConstants.VIEW_FILE_EDIT,
 		icon: IconConstants.OPEN,
-		filter: isAudio,
+		filter: viewAudio,
 	} }
 ]);
 
