@@ -32,7 +32,7 @@ const StatisticsBar = React.createClass({
 	},
 
 	onStatsReceived(data) {
-		const newState = Object.assign(this.state, data);
+		const newState = Object.assign({}, this.state, data);
 		this.setState(newState);
 	},
 
