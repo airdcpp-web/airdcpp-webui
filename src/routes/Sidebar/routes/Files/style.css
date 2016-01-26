@@ -31,4 +31,10 @@
 
 .file-session img, .file-session video {
 	max-width: 100%;
+	max-height: 99%;
+}
+
+/* The fullscreen mode conflicts with sidebar styles in Webkit-based browsers */
+.file-session video::-webkit-media-controls-fullscreen-button {
+    display: none;
 }
