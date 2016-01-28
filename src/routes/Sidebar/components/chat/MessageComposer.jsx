@@ -47,11 +47,10 @@ const MessageComposer = React.createClass({
 
 	render: function () {
 		return (
-			<div className="ui form">
+			<div className="ui form composer">
 				<textarea
 					resize="none"
 					rows={ BrowserUtils.useMobileLayout() ? 1 : 2 }
-					className="message-composer"
 					name="message"
 					value={this.state.text}
 					onChange={this._onChange}

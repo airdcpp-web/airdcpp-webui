@@ -22,11 +22,11 @@
 	margin-bottom:10px;
 }
 
-.message-view .ui.form {
+.message-view .composer {
 	display: flex;
 }
 
-.message-view .ui.form textarea {
+.message-view .composer textarea, .message-view .composer textarea:focus {
 	resize: none;
 	border-radius: .28571429rem 0 0 .28571429rem;
 }
@@ -105,4 +105,17 @@
 
 .chat-message.bot .message-author-name {
 	color: darkgoldenrod !important;
+}
+
+@supports (-webkit-appearance:none) and (not (-ms-accelerator:true)) {
+	/* Workaround for flexbox issues in Chrome 48.0.2564.97 
+		 https://code.google.com/p/chromium/issues/detail?id=580196
+	 */
+	#normal-layout .composer {
+		min-height: 60px;
+	}
+
+	#mobile-layout .composer {
+		min-height: 45px;
+	}
 }
