@@ -1,6 +1,8 @@
 'use strict';
 import Reflux from 'reflux';
+
 import FilelistConstants from 'constants/FilelistConstants';
+import QueueConstants from 'constants/QueueConstants';
 
 import LoginStore from 'stores/LoginStore';
 import ShareActions from 'actions/ShareActions';
