@@ -2,7 +2,7 @@ import React from 'react';
 
 import TransferStore from 'stores/TransferStore';
 
-//import Message from 'components/semantic/Message';
+import Message from 'components/semantic/Message';
 
 import StatusCell from './StatusCell';
 import UserCell from './UserCell';
@@ -14,6 +14,12 @@ import { SizeCell, SpeedCell, AbbreviatedDurationCell, IpCell } from 'components
 import '../style.css';
 
 
+const FlagsCell = ({ cellData, rowData, location, ...props }) => (
+	<span className="plain flags cell">
+		{ cellData.join('') }
+	</span>
+);
+
 const Transfers = React.createClass({
 	isPositive(cellData, rowData) {
 		return cellData > 0;
@@ -23,20 +29,19 @@ const Transfers = React.createClass({
 		return rowData.speed > 0;
 	},
 
-	/*emptyRowsNodeGetter() {
+	emptyRowsNodeGetter() {
 		return (
 			<Message 
-				title="No transfers"
-				icon="file outline"
-				description="New items can be queued from search or filelists"
+				title="No active transfers"
+				icon="exchange"
 			/>
 		);
-	},*/
+	},
 
 	render() {
 		return (
 			<VirtualTable
-				//emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
+				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 				store={ TransferStore }
 			>
 				<Column
@@ -49,7 +54,7 @@ const Transfers = React.createClass({
 				<Column
 					name="Name"
 					width={120}
-					flexGrow={2}
+					flexGrow={3}
 					columnKey="name"
 				/>
 				<Column
@@ -63,7 +68,7 @@ const Transfers = React.createClass({
 				<Column
 					name="Status"
 					width={120}
-					flexGrow={3}
+					flexGrow={4}
 					columnKey="status"
 					cell={ <StatusCell/> }
 				/>
@@ -83,6 +88,14 @@ const Transfers = React.createClass({
 					flexGrow={1}
 				/>
 				<Column
+					name="Flags"
+					width={50}
+					columnKey="flags"
+					cell={ <FlagsCell/> }
+					renderCondition={ this.isRunning }
+					flexGrow={1}
+				/>
+				<Column
 					name="IP"
 					width={120}
 					columnKey="ip"
@@ -93,7 +106,7 @@ const Transfers = React.createClass({
 					name="Target"
 					width={120}
 					columnKey="target"
-					flexGrow={5}
+					flexGrow={7}
 				/>
 			</VirtualTable>
 		);

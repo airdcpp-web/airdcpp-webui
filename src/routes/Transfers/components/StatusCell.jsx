@@ -28,10 +28,20 @@ const StatusCell = ({ cellData, rowData, ...props }) => {
 		return <span className="error">{ cellData.str }</span>;
 	}
 
+	let caption = cellData.str;
+	if (rowData.flags.indexOf('S') !== 1 || rowData.flags.indexOf('U') !== -1) {
+		caption = (
+			<span>
+				<i className="yellow lock icon"/>
+				{ caption }
+			</span>
+		);
+	}
+
 	return (
 		<Progress 
 			className={ getStatusClass(cellData, rowData) }
-			caption={ cellData.str }
+			caption={ caption }
 			percent={ (rowData.bytes_transferred * 100) / rowData.size }
 		/>
 	);

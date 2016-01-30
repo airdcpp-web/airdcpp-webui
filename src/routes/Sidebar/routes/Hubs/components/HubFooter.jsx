@@ -58,13 +58,25 @@ const HubFooter = React.createClass({
 	},
 
 	render: function () {
-		const { userlistToggle } = this.props;
+		const { userlistToggle, item } = this.props;
 		const { shared, users } = this.state;
 
 		const averageShare = ValueFormat.formatSize(users > 0 ? (shared / users) : 0);
+
+		let userCaption = users + ' users';
+		if (item.connect_state.encryption && item.connect_state.encryption.length > 0) {
+			userCaption = (
+				<span>
+					<i className="yellow lock icon"/>
+					{ userCaption }
+				</span>
+			);
+		}
+
+
 		return (
 			<SessionFooter>
-				<FooterItem text={ users + ' users'}/>
+				<FooterItem text={ userCaption }/>
 				{ window.innerWidth > 700 ? (
 					<FooterItem text={ ValueFormat.formatSize(shared) + ' (' + averageShare + '/user)' }/> 
 				): null }
