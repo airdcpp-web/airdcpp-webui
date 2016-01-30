@@ -103,6 +103,14 @@ export const UserIconFormatter = React.createClass({
 			return 'blue star';
 		}
 
+		if (flags.indexOf('noconnect') > -1) {
+			return 'red plug';
+		}
+
+		if (flags.indexOf('passive') > -1) {
+			return 'orange protect';
+		}
+
 		return null;
 	},
 

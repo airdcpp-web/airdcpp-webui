@@ -87,7 +87,7 @@
 }
 
 .virtual-table .empty.dropdown.filtered:not(.no-access) > div {
-	padding-left: 25px;
+	padding-left: 22px;
 }
 
 .table.dropdown .trigger > div {
