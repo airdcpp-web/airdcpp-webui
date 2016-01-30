@@ -14,8 +14,25 @@ const LoginStore = Reflux.createStore({
 	init: function () {
 		this.loginProperties = BrowserUtils.loadSessionProperty('login_properties', {});
 
+		this._allowLogin = true;
 		this._lastError = null;
 		this._socketAuthenticated = false;
+
+
+		// The login would silently fail if data storage isn't available
+		try {
+			sessionStorage.setItem('storage_test', 'test');
+			sessionStorage.removeItem('storage_test');
+		} catch (e) {
+			if (e.code === DOMException.QUOTA_EXCEEDED_ERR && sessionStorage.length === 0) {
+				// Safari and private mode
+				this._lastError = "This site can't be used with your browser if private browsing mode is enabled";
+				this._allowLogin = false;
+			} else {
+				this._lastError = "This site can't be used with your browser because it doesn't have support data storage";
+				this._allowLogin = false;
+			}
+		}
 
 		this.listenTo(SocketActions.state.disconnected, this.onSocketDisconnected);
 		this.getInitialState = this.getState;
@@ -27,6 +44,7 @@ const LoginStore = Reflux.createStore({
 
 	getState() {
 		return {
+			allowLogin: this._allowLogin,
 			lastError: this._lastError,
 			socketAuthenticated: this._socketAuthenticated,
 

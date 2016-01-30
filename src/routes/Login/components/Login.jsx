@@ -22,7 +22,11 @@ const ErrorBox = ({ lastError }) => {
 	);
 };
 
-const SubmitButton = ({ onSubmit, loading }) => {
+const SubmitButton = ({ onSubmit, loading, allowLogin }) => {
+	if (!allowLogin) {
+		return <span/>;
+	}
+
 	if (loading) {
 		return <Loader size="small" inline={ true } text=""/>;
 	}
@@ -119,13 +123,17 @@ const Login = React.createClass({
 							<SubmitButton
 								onSubmit={ this.onSubmit }
 								loading={ this.state.loading }
+								allowLogin={ this.state.allowLogin }
 							/>
 						</div>
 
 						<BottomMessage/>
 					</form>
 
-					<ErrorBox userLoggedIn={this.state.userLoggedIn} lastError={this.state.lastError}/>
+					<ErrorBox 
+						userLoggedIn={this.state.userLoggedIn} 
+						lastError={this.state.lastError}
+					/>
 				</div>
 			</div>
 		);
