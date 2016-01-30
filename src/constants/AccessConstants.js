@@ -4,6 +4,7 @@ const AccessConstants = {
 	SEARCH: 'search',
 	DOWNLOAD: 'download',
 	EVENTS: 'events',
+	TRANSFERS: 'transfers',
 
 	QUEUE_VIEW: 'queue_view',
 	QUEUE_EDIT: 'queue_edit',

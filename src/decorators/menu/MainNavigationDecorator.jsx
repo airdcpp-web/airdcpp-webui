@@ -7,6 +7,7 @@ import 'stores/FilelistSessionStore'; // must be required here for now
 import 'stores/ViewFileStore'; // must be required here for now
 import EventStore from 'stores/EventStore';
 
+import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 
@@ -34,8 +35,8 @@ const MainNavigationItems = [
 	}, {
 		title: 'Transfers',
 		url: '/transfers',
-		icon: 'signal',
-		access: AccessConstants.SEARCH,
+		icon: 'exchange',
+		access: AccessConstants.TRANSFERS,
 	}, {
 		title: 'Settings',
 		url: '/settings',
@@ -76,6 +77,19 @@ const SecondaryMenuItems = [
 	}
 ];
 
+const onClickLogout = (item, e) => {
+	e.preventDefault();
+	LoginActions.logout();
+};
+
+const LogoutItem = { 
+	icon: 'sign out', 
+	url: 'logout', 
+	title: 'Logout',
+	className: 'logout', 
+	onClick: onClickLogout,
+};
+
 const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
@@ -87,6 +101,7 @@ export default function (Component) {
 					{...this.props} 
 					secondaryMenuItems={ SecondaryMenuItems.filter(filterItem) } 
 					mainMenuItems={ MainNavigationItems.filter(filterItem) }
+					logoutItem={ LogoutItem }
 				/>
 			);
 		}

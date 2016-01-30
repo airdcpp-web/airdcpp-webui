@@ -2,7 +2,7 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-import NotificationActions from 'actions/NotificationActions';
+//import NotificationActions from 'actions/NotificationActions';
 
 import TransferConstants from 'constants/TransferConstants';
 import IconConstants from 'constants/IconConstants';
@@ -15,14 +15,14 @@ const TransferActions = Reflux.createActions([
 	{ 'force': { 
 		asyncResult: true,
 		displayName: 'Force connect',
-		access: AccessConstants.SETTINGS_EDIT,
+		access: AccessConstants.TRANSFERS,
 		icon: IconConstants.REFRESH,
 		filter: isDownload,
 	} },
 	{ 'disconnect': { 
 		asyncResult: true,
 		displayName: 'Disconnect',
-		access: AccessConstants.SETTINGS_EDIT, 
+		access: AccessConstants.TRANSFERS, 
 		icon: IconConstants.REMOVE,
 	} },
 ]);

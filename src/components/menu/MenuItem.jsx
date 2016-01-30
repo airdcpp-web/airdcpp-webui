@@ -52,13 +52,13 @@ const getMenuItem = (onClick, item, ContentElement) => {
 	return (
 		<ContentElement 
 			key={ url }
+			{ ...other }
 			to={ url } 
 			activeClassName="active" 
 			onClick={ onClick ? (evt) => onClick(url, evt) : undefined }
 			className={ 'item ' + (className ? className : '') }
 			indexLink={ url === '/' }
 			urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null }
-			{ ...other }
 		/>
 	);
 };

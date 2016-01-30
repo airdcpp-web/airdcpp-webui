@@ -7,20 +7,12 @@ import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import { getIconMenuItem } from './MenuItem';
 
 import History from 'utils/History';
-import LoginActions from 'actions/LoginActions';
 
 import StatisticsIcons from './StatisticsIcons';
 import PerformanceTools from './PerformanceTools';
 import TouchIcon from './TouchIcon';
 import AwayIcon from './AwayIcon';
 
-
-const LogoutItem = { 
-	icon: 'sign out', 
-	url: 'logout', 
-	title: 'Logout',
-	className: 'logout', 
-};
 
 const MobileMenu = React.createClass({
 	contextTypes: {
@@ -54,18 +46,14 @@ const MobileMenu = React.createClass({
 		$(dom).sidebar('hide');
 	},
 
-	logout(e) {
-		LoginActions.logout();
-	},
-
 	render() {
-		const { secondaryMenuItems, mainMenuItems } = this.props;
+		const { secondaryMenuItems, mainMenuItems, logoutItem } = this.props;
 		return (
 			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
 				{ mainMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
 				<div className="separator"></div>
 				{ secondaryMenuItems.map(getIconMenuItem.bind(this, this.onClickSecondary)) }
-				{ getIconMenuItem(this.logout, LogoutItem) }
+				{ getIconMenuItem(logoutItem.onClick, logoutItem) }
 				<div className="actions">
 					<StatisticsIcons className="ui centered inverted mini list"/>
 					<AwayIcon/>

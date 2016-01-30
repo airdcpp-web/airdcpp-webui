@@ -2,7 +2,7 @@ import React from 'react';
 
 import TransferStore from 'stores/TransferStore';
 
-import Message from 'components/semantic/Message';
+//import Message from 'components/semantic/Message';
 
 import StatusCell from './StatusCell';
 import UserCell from './UserCell';
@@ -15,14 +15,6 @@ import '../style.css';
 
 
 const Transfers = React.createClass({
-	/*isActive(cellData, rowData) {
-		return rowData.status.id < StatusEnum.DOWNLOADED;
-	},
-
-	isFinished(cellData, rowData) {
-		return !this.isActive(cellData, rowData);
-	},*/
-
 	isPositive(cellData, rowData) {
 		return cellData > 0;
 	},
@@ -61,7 +53,7 @@ const Transfers = React.createClass({
 					columnKey="name"
 				/>
 				<Column
-					name="Size"
+					name="Segment"
 					width={60}
 					columnKey="size"
 					cell={ <SizeCell/> }

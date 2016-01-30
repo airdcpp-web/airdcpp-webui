@@ -1,6 +1,7 @@
 #mobile-menu {
 	z-index: 100 !important;
 	max-width: 200px;
+	padding-bottom: 10px;
 }
 
 #mobile-layout .ui.site-content {
