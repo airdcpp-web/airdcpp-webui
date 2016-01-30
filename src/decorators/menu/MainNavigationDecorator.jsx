@@ -32,6 +32,11 @@ const MainNavigationItems = [
 		icon: 'search',
 		access: AccessConstants.SEARCH,
 	}, {
+		title: 'Transfers',
+		url: '/transfers',
+		icon: 'signal',
+		access: AccessConstants.SEARCH,
+	}, {
 		title: 'Settings',
 		url: '/settings',
 		icon: 'configure',

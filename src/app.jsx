@@ -48,6 +48,7 @@ const routeConfig = [
 			require('./routes/Queue'),
 			require('./routes/Search'),
 			require('./routes/Settings'),
+			require('./routes/Transfers'),
 			{ 
 				component: require('./routes/Sidebar/components/Sidebar').default,
 				path: 'sidebar',

@@ -15,10 +15,6 @@ const FilelistSession = React.createClass({
 	render() {
 		const { user, location, state } = this.props.item;
 
-		if (state.id !== 'loaded' || !location) {
-			return <Loader text={ state.str }/>;
-		}
-
 		if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('me') === -1) {
 			return (
 				<Message 
@@ -26,6 +22,10 @@ const FilelistSession = React.createClass({
 					description="You will be able to continue browsing when the user comes back online"
 				/>
 			);
+		}
+
+		if (state.id !== 'loaded' || !location) {
+			return <Loader text={ state.str }/>;
 		}
 
 		return (

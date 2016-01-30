@@ -14,6 +14,7 @@ export default {
 	FAVORITE: 'yellow star',
 	HUB: 'sitemap',
 
+	UPLOAD: 'red upload',
 	DOWNLOAD: 'green download',
 	DOWNLOAD_TO: 'blue download',
 	FOLDER: 'yellow folder',

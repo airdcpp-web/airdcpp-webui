@@ -19,7 +19,7 @@ const NickCell = ({ location, cellData, rowData, ...props }) => (
 		text={ cellData } 
 		user={ rowData }
 		location={ location }
-		userIcon={true}
+		userIcon={ true }
 	/>
 );
 

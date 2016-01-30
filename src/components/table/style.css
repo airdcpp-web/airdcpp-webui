@@ -112,3 +112,7 @@
 .virtual-table .empty.dropdown {
   margin: 0px 3px;
 }
+
+.virtual-table .ui.progress .bar {
+	height: 5px;
+}
