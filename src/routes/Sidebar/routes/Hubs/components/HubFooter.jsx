@@ -7,6 +7,7 @@ import HubSessionStore from 'stores/HubSessionStore';
 
 import ValueFormat from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
+import EncryptionState from 'components/EncryptionState';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -64,10 +65,10 @@ const HubFooter = React.createClass({
 		const averageShare = ValueFormat.formatSize(users > 0 ? (shared / users) : 0);
 
 		let userCaption = users + ' users';
-		if (item.connect_state.encryption && item.connect_state.encryption.length > 0) {
+		if (item.connect_state.encryption) {
 			userCaption = (
 				<span>
-					<i className="yellow lock icon"/>
+					<EncryptionState encryption={ item.connect_state.encryption }/>
 					{ userCaption }
 				</span>
 			);

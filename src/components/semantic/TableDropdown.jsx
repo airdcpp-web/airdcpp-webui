@@ -63,7 +63,6 @@ const TableDropdown = React.createClass({
 
 		// Settings
 		const settings = {
-			position:'bottom left',
 			lastResort:true
 		};
 
@@ -74,6 +73,7 @@ const TableDropdown = React.createClass({
 					trigger={ trigger } 
 					settings={ settings } 
 					ref="dropdownMenu"
+					position="bottom left"
 				>
 					<div className="ui text menu vertical">
 						<div className="ui dropdown item table-items">

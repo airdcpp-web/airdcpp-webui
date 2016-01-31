@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Progress from 'components/semantic/Progress';
 import { StatusEnum } from 'constants/TransferConstants';
 
+import EncryptionState from 'components/EncryptionState';
 import Loader from 'components/semantic/Loader';
 
 
@@ -29,10 +30,10 @@ const StatusCell = ({ cellData, rowData, ...props }) => {
 	}
 
 	let caption = cellData.str;
-	if (rowData.flags.indexOf('S') !== 1 || rowData.flags.indexOf('U') !== -1) {
+	if (rowData.encryption) {
 		caption = (
 			<span>
-				<i className="yellow lock icon"/>
+				<EncryptionState encryption={ rowData.encryption }/>
 				{ caption }
 			</span>
 		);

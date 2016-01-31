@@ -7,6 +7,7 @@ import { CCPMEnum } from 'constants/PrivateChatConstants';
 import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import Loader from 'components/semantic/Loader';
 import { ActionMenu } from 'components/menu/DropdownMenu';
+import EncryptionState from 'components/EncryptionState';
 
 
 const getCaption = (state) => {
@@ -14,14 +15,6 @@ const getCaption = (state) => {
 		case CCPMEnum.CONNECTED: return 'Direct encrypted channel established';
 		case CCPMEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
 		case CCPMEnum.DISCONNECTED: return 'Direct encrypted channel available';
-	}
-};
-
-const getIcon = (state) => {
-	switch (state) {
-		case CCPMEnum.CONNECTED: return 'yellow lock icon';
-		case CCPMEnum.CONNECTING: return null;
-		case CCPMEnum.DISCONNECTED: return 'lock icon';
 	}
 };
 
@@ -36,7 +29,7 @@ const CCPMState = ({ contextGetter, item }) => {
 	return (
 		<SessionFooter>
 			<div className="ccpm-state">
-				<i className={ getIcon(state) }/>
+				<EncryptionState encryption={ item.ccpm_state.encryption } alwaysVisible={ true }/>
 				<ActionMenu
 					caption={ getCaption(state) }
 					actions={ PrivateChatActions }
