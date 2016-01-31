@@ -135,7 +135,7 @@ const Queue = React.createClass({
 				/>
 				<Column
 					name="Priority"
-					width={70}
+					width={80}
 					columnKey="priority"
 					renderCondition={ this.isActive }
 					cell={ <PriorityCell/> }

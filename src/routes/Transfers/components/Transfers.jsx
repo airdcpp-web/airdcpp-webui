@@ -59,7 +59,7 @@ const Transfers = React.createClass({
 				/>
 				<Column
 					name="Segment"
-					width={60}
+					width={65}
 					columnKey="size"
 					cell={ <SizeCell/> }
 					renderCondition={ this.isPositive }
@@ -67,7 +67,7 @@ const Transfers = React.createClass({
 				/>
 				<Column
 					name="Status"
-					width={120}
+					width={130}
 					flexGrow={4}
 					columnKey="status"
 					cell={ <StatusCell/> }
@@ -94,6 +94,7 @@ const Transfers = React.createClass({
 					cell={ <FlagsCell/> }
 					renderCondition={ this.isRunning }
 					flexGrow={1}
+					hideWidth={800}
 				/>
 				<Column
 					name="IP"
@@ -101,12 +102,14 @@ const Transfers = React.createClass({
 					columnKey="ip"
 					flexGrow={1}
 					cell={ <IpCell/> }
+					hideWidth={1000}
 				/>
 				<Column
 					name="Target"
 					width={120}
 					columnKey="target"
 					flexGrow={7}
+					hideWidth={1000}
 				/>
 			</VirtualTable>
 		);
