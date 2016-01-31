@@ -125,7 +125,8 @@ const SessionLayout = React.createClass({
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (!nextProps.activeId) {
+		if (!nextProps.activeId && (nextProps.items.length === 0 || nextProps.children)) {
+			// Don't redirect to it if the "new session" layout is open
 			if (this.state.activeItem) {
 				this.setState({ activeItem: null });
 			}
@@ -137,17 +138,18 @@ const SessionLayout = React.createClass({
 			return;
 		}
 
-		// The old tab was closed
+		// The old tab was closed or we didn't have any session before
 
 
-		// Find the old position and use the item in that position (if possible)
+		let newItemPos = 0;
 		const oldItem = this.findItem(this.props.items, this.props.activeId);
-		const oldPos = this.props.items.indexOf(oldItem);
-
-		let newItemPos = oldPos;
-		if (oldPos === this.props.items.length-1) {
-			// The last item was removed
-			newItemPos = oldPos-1;
+		if (oldItem) {
+			// Find the old position and use the item in that position (if possible)
+			newItemPos = this.props.items.indexOf(oldItem);
+			if (newItemPos === this.props.items.length-1) {
+				// The last item was removed
+				newItemPos = newItemPos - 1;
+			}
 		}
 
 		this.redirectTo(nextProps.items[newItemPos].id);
@@ -193,7 +195,7 @@ const SessionLayout = React.createClass({
 	},
 
 	getNewUrl() {
-		if (!this.props.newButtonCaption) {
+		if (!this.props.newButtonCaption || !this.hasEditAccess()) {
 			return '/' + this.props.baseUrl;
 		}
 
@@ -237,19 +239,20 @@ const SessionLayout = React.createClass({
 			return null;
 		}
 
+		const { location, actions, itemNameGetter, itemHeaderGetter } = this.props;
 		const actionMenu = (
 			<ActionMenu 
-				caption={ this.props.itemNameGetter(activeItem) }
+				caption={ itemNameGetter(activeItem) }
 				location={ location }
-				actions={ this.props.actions }
+				actions={ actions }
 				itemData={ activeItem }
 				ids={ [ 'removeSession' ] }
 			/>
 		);
 
 		// Use the header getter only if there is a getter that returns a valid value
-		if (this.props.itemHeaderGetter) {
-			const header = this.props.itemHeaderGetter(activeItem, location, actionMenu);
+		if (itemHeaderGetter) {
+			const header = itemHeaderGetter(activeItem, location, actionMenu);
 			if (header) {
 				return header;
 			}
@@ -267,8 +270,8 @@ const SessionLayout = React.createClass({
 		return this.props.itemIconGetter(activeItem);
 	},
 
-	getNewButton(hasEditAccess) {
-		if (!hasEditAccess || !this.props.newButtonCaption) {
+	getNewButton() {
+		if (!this.hasEditAccess() || !this.props.newButtonCaption) {
 			return null;
 		}
 
@@ -282,27 +285,39 @@ const SessionLayout = React.createClass({
 		);
 	},
 
-	render() {
-		const hasEditAccess = LoginStore.hasAccess(this.props.editAccess);
+	getChildren() {
+		const { activeItem } = this.state;
+		const { children, items } = this.props;
+		if (History.getSidebarData(this.props.location).pending) {
+			// The session was just created
+			return <Loader text="Waiting for server response"/>;
+		} else if (activeItem) {
+			// We have a session
+			return React.cloneElement(this.props.children, { 
+				item: activeItem 
+			});
+		} else if (this.props.activeId || (!children && items.length !== 0)) {
+			// Redirecting to a new page
+			return <Loader text="Loading session"/>;
+		} else if (!this.hasEditAccess() && items.length === 0) {
+			// Nothing to show
+			return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
+		}
 
+		// New layout
+		return children;
+	},
+
+	hasEditAccess() {
+		return LoginStore.hasAccess(this.props.editAccess);
+	},
+
+	render() {
 		// Menu items
 		const menuItems = this.props.items.map(this.getMenuItem);
 
-		const { activeItem } = this.state;
-
 		// Children
-		let children = this.props.children;
-		if (History.getSidebarData(this.props.location).pending) {
-			children = <Loader text="Waiting for server response"/>;
-		} else if (activeItem) {
-			children = React.cloneElement(children, { 
-				item: activeItem 
-			});
-		} else if (this.props.activeId) {
-			children = <Loader/>;
-		} else if (!hasEditAccess && menuItems.length === 0) {
-			return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
-		}
+		const children = this.getChildren();
 
 		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
 		return (
@@ -310,10 +325,10 @@ const SessionLayout = React.createClass({
 				itemIcon={ this.getItemIcon() }
 				itemHeader={ this.getItemHeader() }
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
-				activeItem={ activeItem }
+				activeItem={ this.state.activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
 				closeAction={ this.props.actions.removeSession }
-				newButton={ this.getNewButton(hasEditAccess) }
+				newButton={ this.getNewButton() }
 				menuItems={ menuItems }
 				location={ this.props.location }
 			>
