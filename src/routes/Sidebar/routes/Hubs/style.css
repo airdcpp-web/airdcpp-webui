@@ -7,6 +7,10 @@
 	margin: 0 0 1rem !important;
 }
 
+.hub-action-prompt .help {
+  margin-top: 10px;
+}
+
 .hub.session .virtual-table,
 .hub.session .offline-message,
 .hub.session .loader-wrapper {
@@ -26,7 +30,6 @@
 .hub.session .cell-wrapper.nick.op {
 	color: steelblue;
 }
-
 .hub.session .session-footer .userlist-button > a,
 .hub.session .session-footer .userlist-button > div {
   /* Don't cut the shadow */

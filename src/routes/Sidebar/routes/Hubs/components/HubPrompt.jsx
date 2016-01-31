@@ -38,7 +38,11 @@ const PasswordPrompt = ({ hub }) => (
 			icon="green play" 
 			handleAction={ text => HubActions.password(hub, text) }
 		/>
-		<p>This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick.</p>
+		<div className="help">
+			This usually means that there's a registered account associated with your nick. 
+			If you don't remember having a registered account in this hub, 
+			there may be someone else using the same nick.
+		</div>
 	</div>
 );
 

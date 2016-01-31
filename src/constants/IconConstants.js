@@ -8,11 +8,15 @@ export default {
 	RELOAD: 'blue refresh',
 	REFRESH: 'green refresh',
 	MESSAGE: 'mail outline',
+	HASH: 'blue database',
 
 	FILELIST: 'browser',
 	SEARCH: 'search',
 	FAVORITE: 'yellow star',
 	HUB: 'sitemap',
+	QUEUE: 'wait',
+	TRANSFERS: 'exchange',
+	SETTINGS: 'configure',
 
 	UPLOAD: 'red upload',
 	DOWNLOAD: 'green download',

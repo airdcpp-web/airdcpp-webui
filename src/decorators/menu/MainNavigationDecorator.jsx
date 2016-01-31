@@ -10,6 +10,7 @@ import EventStore from 'stores/EventStore';
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
+import IconConstants from 'constants/IconConstants';
 
 
 const MainNavigationItems = [
@@ -20,27 +21,27 @@ const MainNavigationItems = [
 	}, {
 		title: 'Favorites',
 		url: '/favorite-hubs',
-		icon: 'yellow star',
+		icon: IconConstants.FAVORITE,
 		access: AccessConstants.FAVORITE_HUBS_VIEW,
 	}, {
 		title: 'Queue',
 		url: '/queue',
-		icon: 'green download',
+		icon: IconConstants.QUEUE,
 		access: AccessConstants.QUEUE_VIEW,
 	}, {
 		title: 'Search',
 		url: '/search',
-		icon: 'search',
+		icon: IconConstants.SEARCH,
 		access: AccessConstants.SEARCH,
 	}, {
 		title: 'Transfers',
 		url: '/transfers',
-		icon: 'exchange',
+		icon: IconConstants.TRANSFERS,
 		access: AccessConstants.TRANSFERS,
 	}, {
 		title: 'Settings',
 		url: '/settings',
-		icon: 'configure',
+		icon: IconConstants.SETTINGS,
 		access: AccessConstants.SETTINGS_VIEW,
 	}
 ];
