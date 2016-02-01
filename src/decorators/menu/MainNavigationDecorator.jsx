@@ -19,11 +19,6 @@ const MainNavigationItems = [
 		url: '/',
 		icon: 'home',
 	}, {
-		title: 'Favorites',
-		url: '/favorite-hubs',
-		icon: IconConstants.FAVORITE,
-		access: AccessConstants.FAVORITE_HUBS_VIEW,
-	}, {
 		title: 'Queue',
 		url: '/queue',
 		icon: IconConstants.QUEUE,
@@ -38,6 +33,11 @@ const MainNavigationItems = [
 		url: '/transfers',
 		icon: IconConstants.TRANSFERS,
 		access: AccessConstants.TRANSFERS,
+	}, {
+		title: 'Favorites',
+		url: '/favorite-hubs',
+		icon: IconConstants.FAVORITE,
+		access: AccessConstants.FAVORITE_HUBS_VIEW,
 	}, {
 		title: 'Settings',
 		url: '/settings',

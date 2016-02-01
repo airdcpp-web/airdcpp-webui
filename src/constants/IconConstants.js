@@ -14,7 +14,7 @@ export default {
 	SEARCH: 'search',
 	FAVORITE: 'yellow star',
 	HUB: 'sitemap',
-	QUEUE: 'wait',
+	QUEUE: 'orange arrow circle up',
 	TRANSFERS: 'exchange',
 	SETTINGS: 'configure',
 

@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { getTextMenuItem } from './MenuItem';
+import { getTextMenuItem, getIconMenuItem } from './MenuItem';
 import Dropdown from 'components/semantic/Dropdown';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
@@ -17,21 +17,21 @@ const Navigation = React.createClass({
 		history: React.PropTypes.object.isRequired
 	},
 
-	getItems(filter) {
+	getItems(filter, formatter) {
 		return this.props.mainMenuItems
 					.filter(filter)
-					.map(item => getTextMenuItem(null, item));
+					.map(item => formatter(null, item));
 	},
 	
 	render() {
 		const { logoutItem } = this.props;
 		return (
 			<div className="item right">
-				{ this.getItems(noDropdown) }
+				{ this.getItems(noDropdown, getTextMenuItem) }
 
-				<Dropdown className="top right" caption={ '' }>
-					{ this.getItems(isDropdown) }
-					{ getTextMenuItem(logoutItem.onClick, logoutItem) }
+				<Dropdown className="top right">
+					{ this.getItems(isDropdown, getIconMenuItem) }
+					{ getIconMenuItem(logoutItem.onClick, logoutItem) }
 				</Dropdown>
 			</div>
 		);

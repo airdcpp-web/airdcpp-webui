@@ -29,4 +29,4 @@ const TransferStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(TransferStatisticsPage, TransferConstants.STATS_URL, null, 5);
+export default StatisticsPageDecorator(TransferStatisticsPage, TransferConstants.TRANSFERRED_BYTES_URL, null, 5);

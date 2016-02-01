@@ -53,8 +53,8 @@ const Transfers = React.createClass({
 				/>
 				<Column
 					name="Name"
-					width={120}
-					flexGrow={3}
+					width={150}
+					flexGrow={4}
 					columnKey="name"
 				/>
 				<Column
@@ -102,13 +102,6 @@ const Transfers = React.createClass({
 					columnKey="ip"
 					flexGrow={1}
 					cell={ <IpCell/> }
-					hideWidth={1000}
-				/>
-				<Column
-					name="Target"
-					width={120}
-					columnKey="target"
-					flexGrow={7}
 					hideWidth={1000}
 				/>
 			</VirtualTable>
