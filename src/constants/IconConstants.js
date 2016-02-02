@@ -10,12 +10,13 @@ export default {
 	MESSAGE: 'mail outline',
 	HASH: 'blue database',
 
+	HOME: 'home',
 	FILELIST: 'browser',
 	SEARCH: 'search',
 	FAVORITE: 'yellow star',
 	HUB: 'sitemap',
-	QUEUE: 'orange arrow circle up',
-	TRANSFERS: 'exchange',
+	QUEUE: 'olive arrow circle down',
+	TRANSFERS: 'teal exchange',
 	SETTINGS: 'configure',
 
 	UPLOAD: 'red upload',

@@ -4,6 +4,7 @@ import TransferStore from 'stores/TransferStore';
 
 import Message from 'components/semantic/Message';
 
+import NameCell from './NameCell';
 import StatusCell from './StatusCell';
 import UserCell from './UserCell';
 
@@ -56,6 +57,7 @@ const Transfers = React.createClass({
 					width={150}
 					flexGrow={4}
 					columnKey="name"
+					cell={ <NameCell/> }
 				/>
 				<Column
 					name="Segment"

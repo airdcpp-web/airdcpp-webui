@@ -61,6 +61,10 @@ div.dropdown:not(.table-items) {
   display: flex !important;
 }
 
+.popup.trigger:hover {
+	cursor:pointer;
+}
+
 /* Layout header start */
 
 .layout.header {

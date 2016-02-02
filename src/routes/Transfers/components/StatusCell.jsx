@@ -32,7 +32,7 @@ const StatusCell = ({ cellData, rowData, ...props }) => {
 	let caption = cellData.str;
 	if (rowData.encryption) {
 		caption = (
-			<span>
+			<span className="transfer status encryption">
 				<EncryptionState encryption={ rowData.encryption }/>
 				{ caption }
 			</span>

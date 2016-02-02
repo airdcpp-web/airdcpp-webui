@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import IconConstants from 'constants/IconConstants';
 import TypeConvert from 'utils/TypeConvert';
 
 
@@ -12,6 +13,7 @@ const fileToIcon = (name) => {
 		case 'executable': return 'browser';
 		case 'picture': return 'file outline image';
 		case 'video': return 'file outline video';
+		case 'filelist': return IconConstants.FILELIST;
 		default: return 'file outline';
 	}
 };
@@ -66,7 +68,7 @@ FileNameFormatter.propTypes = {
 
 	typeInfo: React.PropTypes.object.isRequired,
 
-	caption: React.PropTypes.string.isRequired,
+	caption: React.PropTypes.node.isRequired,
 };
 
 export const IpFormatter = ({ item }) => (

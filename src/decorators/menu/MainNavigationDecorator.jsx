@@ -17,7 +17,7 @@ const MainNavigationItems = [
 	{
 		title: 'Home',
 		url: '/',
-		icon: 'home',
+		icon: IconConstants.HOME,
 	}, {
 		title: 'Queue',
 		url: '/queue',

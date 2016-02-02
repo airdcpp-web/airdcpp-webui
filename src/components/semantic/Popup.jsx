@@ -16,7 +16,7 @@ const Popup = React.createClass({
 		/**
 		 * Element that will trigger the popup when clicking on it
 		 */
-		trigger: React.PropTypes.element.isRequired,
+		trigger: React.PropTypes.node.isRequired,
 
 		/**
 		 * Show the popup on hover instead of when clicking the element

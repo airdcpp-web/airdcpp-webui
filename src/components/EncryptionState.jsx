@@ -8,7 +8,7 @@ const encryptionToInfo = (encryption) => {
 		return {
 			iconColor: 'red',
 			messageColor: 'red',
-			message: 'Outdated cryptographic protocol with serious vulnerabilities',
+			message: 'Outdated cryptographic protocol with known security vulnerabilities',
 			icon: 'orange warning',
 		};
 	}

@@ -24,7 +24,7 @@ const Sidebar = React.createClass({
 			mobileTransition: 'overlay',
 			closable: !BrowserUtils.useMobileLayout(),
 			// Using onShow callback would cause a significant delay, do this via timeout instead
-			onVisible: () => setTimeout(this.onVisible, 300),
+			onVisible: () => setTimeout(this.onVisible, 350),
 		});
 	},
 
