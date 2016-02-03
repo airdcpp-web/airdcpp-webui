@@ -6,7 +6,7 @@ import Popup from 'components/semantic/Popup';
 const encryptionToInfo = (encryption) => {
 	if (encryption.str.indexOf('TLSv1.2') === -1 && encryption.str.indexOf('TLSv1.1') === -1) {
 		return {
-			iconColor: 'red',
+			iconColor: 'orange',
 			messageColor: 'red',
 			message: 'Outdated cryptographic protocol with known security vulnerabilities',
 			icon: 'orange warning',

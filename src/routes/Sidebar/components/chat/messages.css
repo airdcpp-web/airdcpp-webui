@@ -83,6 +83,14 @@
 	float: left;
 }
 
+.status-message.warning .message-text {
+	color: orange;
+}
+
+.status-message.error .message-text {
+	color: red;
+}
+
 .chat-message img {
 	vertical-align: middle;
 }

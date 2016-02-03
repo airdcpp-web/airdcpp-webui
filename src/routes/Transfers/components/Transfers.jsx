@@ -47,7 +47,7 @@ const Transfers = React.createClass({
 			>
 				<Column
 					name="User"
-					width={200}
+					width={150}
 					flexGrow={4}
 					columnKey="user"
 					cell={ <UserCell location={ this.props.location }/> }
