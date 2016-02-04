@@ -18,6 +18,7 @@ const PrivateChatMessageStore = Reflux.createStore({
 		const url = PrivateChatConstants.MODULE_URL;
 		addSocketListener(url, PrivateChatConstants.MESSAGE, this._onChatMessage);
 		addSocketListener(url, PrivateChatConstants.STATUS, this._onStatusMessage);
+		addSocketListener(url, PrivateChatConstants.SESSION_REMOVED, this._onSessionRemoved);
 	},
 });
 

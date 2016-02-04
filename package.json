@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -20,7 +20,7 @@
     "build": "npm run clean && npm run build-webpack"
   },
   "devDependencies": {
-    "array.prototype.find": "^1.0.0",
+    "array.prototype.find": "^2.0.0",
     "bluebird": "^3.0.5",
     "classnames": "^2.2.0",
     "fixed-data-table": "^0.6.0",

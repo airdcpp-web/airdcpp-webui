@@ -2,7 +2,7 @@ import update from 'react-addons-update';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
-// TODO: remove messages for closed session
+
 export default function (store, actions, sessionStore, access) {
 	let messages = {};
 
@@ -50,6 +50,10 @@ export default function (store, actions, sessionStore, access) {
 
 	store._onStatusMessage = (data, sessionId) => {
 		onMessageReceived(sessionId, data, 'log_message');
+	};
+
+	store._onSessionRemoved = (data) => {
+		delete messages[data.id];
 	};
 
 	store.onSocketDisconnected = () => {
