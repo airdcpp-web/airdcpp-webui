@@ -111,7 +111,7 @@ const SettingForm = React.createClass({
 	},
 
 	save() {
-		this.refs.form.save();
+		return this.refs.form.save();
 	},
 
 	render: function () {

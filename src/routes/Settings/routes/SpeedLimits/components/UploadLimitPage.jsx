@@ -15,7 +15,7 @@ const Auto = {
 
 const Manual = {
 	upload_minislot_size: t.maybe(t.Num),
-	upload_minislot_ext: t.maybe(t.Num),
+	upload_minislot_ext: t.maybe(t.Str),
 };
 
 const UploadLimitPage = React.createClass({
