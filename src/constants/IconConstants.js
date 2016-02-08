@@ -2,6 +2,7 @@ export default {
 	CREATE: 'plus icon',
 	EDIT: 'edit',
 	REMOVE: 'red remove circle',
+	DISCONNECT: 'remove circle',
 	DEFAULT: 'blue pin',
 	LOCK: 'lock',
 

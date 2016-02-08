@@ -24,7 +24,7 @@ const UserCell = ({ cellData, rowData, location, ...props }) => (
 		<TableActionMenu 
 			itemData={ rowData }
 			actions={ TransferActions } 
-			//ids={ [ 'force', 'disconnect' ] }
+			ids={ [ 'force', 'disconnect' ] }
 		/>
 	</TableUserMenu>
 );

@@ -63,6 +63,12 @@ export const QueueActions = Reflux.createActions([
 		icon: IconConstants.ERROR,
 		filter: finishedFailed,
 	} },
+	{ 'removeFile': { 
+		asyncResult: true,
+	} },
+	{ 'removeSource': { 
+		asyncResult: true,
+	} },
 ]);
 
 const setBundlePriorities = (prio, action) => {
@@ -156,6 +162,47 @@ QueueActions.searchBundle.listen(function (bundle) {
 	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/search')
 		.then(that.completed)
 		.catch(this.failed);
+});
+
+QueueActions.removeFile.listen(function (item) {
+	const that = this;
+	const { target } = item;
+	return SocketService.post(QueueConstants.REMOVE_FILE_URL, {
+		target
+	})
+		.then(that.completed.bind(that, target))
+		.catch(that.failed);
+});
+
+QueueActions.removeFile.completed.listen(function (target, data) {
+	NotificationActions.error({ 
+		title: 'Queued file removed',
+		message: 'The file ' + target + ' was removed from queue',
+	});
+});
+
+QueueActions.removeFile.failed.listen(function (target, error) {
+	NotificationActions.error({ 
+		title: 'Failed to remove ' + target,
+		message: error.message,
+	});
+});
+
+QueueActions.removeSource.listen(function (item) {
+	let that = this;
+	const { user } = item;
+	return SocketService.post(QueueConstants.REMOVE_SOURCE_URL, {
+		user,
+	})
+		.then(that.completed.bind(that, user))
+		.catch(this.failed);
+});
+
+QueueActions.removeSource.completed.listen(function (user, data) {
+	NotificationActions.error({ 
+		title: 'Source removed',
+		message: 'The user ' + user.nicks + ' was removed from ' + data.count + ' files',
+	});
 });
 
 export default QueueActions;
