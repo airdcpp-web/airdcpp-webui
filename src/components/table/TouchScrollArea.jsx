@@ -52,12 +52,16 @@ const TouchScrollArea = React.createClass({
 
 	render : function () {
 		if (!this.props.touchMode) {
-			return this.props.children;
+			const { onScrollStart, onScrollEnd } = this.props;
+			return React.cloneElement(this.props.children, {
+				onScrollStart,
+				onScrollEnd,
+			});
 		}
 
 		return (
 			<TouchableArea scroller={this.scroller}>
-				{this.props.children}
+				{ this.props.children }
 			</TouchableArea>
 		);
 	},
