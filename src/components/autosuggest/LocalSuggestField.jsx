@@ -22,9 +22,13 @@ export default React.createClass({
 		return this.props.data.filter(str => regex.test(str));
 	},
 
-	onTextChange(newValue) {
+	onTextChange(newValue, typed) {
 		if (this.props.onChange) {
 			this.props.onChange(newValue);
+		}
+
+		if (!typed) {
+			return;
 		}
 
 		this.setState({ 

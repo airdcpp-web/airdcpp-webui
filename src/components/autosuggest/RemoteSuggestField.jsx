@@ -25,8 +25,8 @@ const RemoteSuggestField = React.createClass({
 		return suggestionObj[this.props.valueField];
 	},
 
-	onTextChanged(pattern) {
-		if (!pattern) {
+	onTextChanged(pattern, typed) {
+		if (!pattern || !typed) {
 			return;
 		}
 

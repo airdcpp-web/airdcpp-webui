@@ -51,11 +51,8 @@ const SuggestField = React.createClass({
 
 	onTextChange(evt, { newValue, method }) {
 		this.setState({ text: newValue });
-		if (method !== 'type') {
-			return;
-		}
 
-		this.props.onChange(newValue);
+		this.props.onChange(newValue, method === 'type');
 	},
 
 	isSubmitDisabled() {
