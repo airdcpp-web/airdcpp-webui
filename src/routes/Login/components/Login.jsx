@@ -7,7 +7,6 @@ import LoginStore from 'stores/LoginStore';
 import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
 
-import { History } from 'react-router';
 
 const ErrorBox = ({ lastError }) => {
 	if (lastError === null) {
@@ -65,7 +64,11 @@ const BottomMessage = () => {
 const ENTER_KEY_CODE = 13;
 
 const Login = React.createClass({
-	mixins: [ Reflux.connect(LoginStore), History ],
+	mixins: [ Reflux.connect(LoginStore) ],
+	contextTypes: {
+		router: React.PropTypes.object
+	},
+
 	getInitialState() {
 		return {
 			loading: false,
@@ -75,7 +78,9 @@ const Login = React.createClass({
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.socketAuthenticated) {
 			const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
-			this.history.replaceState(null, nextPath);
+			this.context.router.replace({
+				pathname: nextPath,
+			});
 		} else if (this.state.loading && nextState.lastError !== null) {
 			this.setState({ loading: false });
 		}

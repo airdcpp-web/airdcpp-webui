@@ -14,7 +14,6 @@ import BrowserUtils from 'utils/BrowserUtils';
 import MobileLayout from './MobileLayout';
 import MainLayout from './MainLayout';
 
-import { History, RouteContext } from 'react-router';
 import SocketConnectStatus from './SocketConnectStatus';
 import SetContainerSize from 'mixins/SetContainerSize';
 
@@ -36,7 +35,11 @@ const showSideBar = (props) => {
 };
 
 const AuthenticatedApp = React.createClass({
-	mixins: [ Reflux.connect(LoginStore), History, RouteContext, SetContainerSize ],
+	mixins: [ Reflux.connect(LoginStore), SetContainerSize ],
+	contextTypes: {
+		router: React.PropTypes.object
+	},
+
 	onSocketAuthenticated() {
 		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
 			PrivateChatActions.fetchSessions();
@@ -89,15 +92,10 @@ const AuthenticatedApp = React.createClass({
 		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
-			//this.history.replace({
-			//	state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
-			//	pathname: '/login',
-			//});
-
-			this.history.replaceState(
-				LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
-				'/login'
-			);
+			this.context.router.replace({
+				state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
+				pathname: '/login',
+			});
 		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
 			this.onSocketAuthenticated();
 		}

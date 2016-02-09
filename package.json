@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -24,7 +24,7 @@
     "bluebird": "^3.0.5",
     "classnames": "^2.2.0",
     "fixed-data-table": "^0.6.0",
-    "history": "1.13.0",
+    "history": "^2.0.0",
     "jquery"  : "^2.1.4",
     "lodash": "^3.10.0",
     "normalize.css": "^3.0.3",
@@ -39,7 +39,7 @@
     "react-emoji": "^0.4.1",
     "react-linkify": "^0.1.1",
     "react-notification-system": "^0.2.5",
-    "react-router": "1.0.2",
+    "react-router": "^2.0.0-rc6",
     "reflux": "^0.3.0",
     "reflux-promise": "^1.0.2",
     "semantic-ui": "^2.1.5",

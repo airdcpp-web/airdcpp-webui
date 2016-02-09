@@ -23,16 +23,23 @@ if (LoginStore.token) {
 	LoginActions.connect(LoginStore.token);
 }
 
-const requireAuth = (nextState, replaceState) => {
+const requireAuth = (nextState, replace) => {
 	if (!LoginStore.user) {
-		replaceState({ nextPath: nextState.location.pathname }, '/login', null);
+		replace({ 
+			state: {
+				nextPath: nextState.location.pathname,
+			},
+			pathname: '/login',
+		});
 	}
 };
 
-const onEnterSidebar = (nextProps, replaceState) => {
+const onEnterSidebar = (nextProps, replace) => {
 	// Don't allow sidebar to be accessed with a direct link
 	if (!nextProps.location.state || !nextProps.location.state[OverlayConstants.SIDEBAR_ID]) {
-		replaceState(null, '/');
+		replace({
+			pathname: '/',
+		});
 	}
 };
 

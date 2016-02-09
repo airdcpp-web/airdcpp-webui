@@ -22,7 +22,9 @@ export default (Component) => {
 
 		checkChildren(props) {
 			if (!props.children) {
-				props.history.replaceState(null, sectionToUrl(props.menuItems[0].url, props.parent));
+				props.history.replace({
+					pathname: sectionToUrl(props.menuItems[0].url, props.parent)
+				});
 			}
 		},
 

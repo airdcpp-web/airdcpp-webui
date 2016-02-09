@@ -1,14 +1,14 @@
 import React from 'react';
 
 import OverlayDecorator from 'decorators/OverlayDecorator';
-import { History } from 'react-router';
+//import { History } from 'react-router';
 import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
 import IconConstants from 'constants/IconConstants';
 
 const Modal = React.createClass({
-	mixins: [ History ],
+	//mixins: [ History ],
 	propTypes: {
 		/**
 		 * Close the modal when clicking outside its boundaries
