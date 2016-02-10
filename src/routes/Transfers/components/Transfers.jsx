@@ -15,7 +15,7 @@ import { SizeCell, SpeedCell, AbbreviatedDurationCell, IpCell } from 'components
 import '../style.css';
 
 
-const FlagsCell = ({ cellData, rowData, location, ...props }) => (
+const FlagsCell = ({ cellData }) => (
 	<span className="plain flags cell">
 		{ cellData.join('') }
 	</span>

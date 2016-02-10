@@ -116,3 +116,11 @@
 .virtual-table .ui.progress .bar {
 	height: 5px;
 }
+
+.popup.dropdown-content {
+	padding: 0px 5px;
+}
+
+.popup.dropdown-content .ui.dropdown.item {
+	margin: 0px 0px;
+}

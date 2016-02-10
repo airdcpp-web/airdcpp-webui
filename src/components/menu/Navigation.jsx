@@ -31,6 +31,7 @@ const Navigation = React.createClass({
 
 				<Dropdown className="top right">
 					{ this.getItems(isDropdown, getIconMenuItem) }
+					<div className="divider"></div>
 					{ getIconMenuItem(logoutItem.onClick, logoutItem) }
 				</Dropdown>
 			</div>

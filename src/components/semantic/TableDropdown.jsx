@@ -69,7 +69,7 @@ const TableDropdown = React.createClass({
 		return (
 			<div className={ 'table dropdown ' + this.props.className }>
 				<Popup 
-					className="basic" 
+					className="basic dropdown-content" 
 					trigger={ trigger } 
 					settings={ settings } 
 					ref="dropdownMenu"

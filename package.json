@@ -39,7 +39,7 @@
     "react-emoji": "^0.4.1",
     "react-linkify": "^0.1.1",
     "react-notification-system": "^0.2.5",
-    "react-router": "^2.0.0-rc6",
+    "react-router": "^2.0.0",
     "reflux": "^0.3.0",
     "reflux-promise": "^1.0.2",
     "semantic-ui": "^2.1.5",
