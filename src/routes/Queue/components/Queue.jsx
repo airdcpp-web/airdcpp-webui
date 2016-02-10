@@ -1,13 +1,12 @@
 import React from 'react';
 import { Column } from 'fixed-data-table';
-import classNames from 'classnames';
 
 import { StatusEnum } from 'constants/QueueConstants';
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
-import Progress from 'components/semantic/Progress';
+import StatusCell from './StatusCell';
 import QueueStore from 'stores/QueueStore';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
@@ -17,23 +16,6 @@ import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationC
 
 import '../style.css';
 
-const getStatusClass = (cellData, rowData) => {
-	const statusId = cellData.id;
-	return classNames(
-			{ 'grey': statusId == StatusEnum.QUEUED && rowData.speed == 0 },
-			{ 'blue': statusId == StatusEnum.QUEUED && rowData.speed > 0 },
-			{ 'success': statusId >= StatusEnum.FINISHED },
-			{ 'error': cellData.failed }
-		);
-};
-
-const StatusCell = ({ cellData, rowData, ...props }) => (
-	<Progress 
-		className={ getStatusClass(cellData, rowData) }
-		caption={ cellData.str }
-		percent={ (rowData.downloaded_bytes*100) / rowData.size }
-	/>
-);
 
 const PriorityCell = ({ cellData, rowData, ...props }) => (
 	<PriorityMenu itemPrio={ cellData } item={ rowData }/>
