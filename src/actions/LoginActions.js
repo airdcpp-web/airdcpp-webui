@@ -40,26 +40,12 @@ LoginActions.newUserIntroSeen.listen(function (away) {
 LoginActions.login.listen(function (username, password) {
 	let that = this;
 
-	SocketService.connect().catch(that.failed);
-	let unsubscribe = SocketStore.listen((socket, error) => {
-		if (socket) {
-			SocketService.post(LoginConstants.LOGIN_URL, { 
-				username, 
-				password,
-				user_session: true,
-			})
-				.then(that.completed)
-				.catch(that.failed);
-		} else {
-			that.failed(error);
-		}
-
-		unsubscribe();
-	});
+	SocketService.connect(username, password)
+		.then(that.completed)
+		.catch(that.failed);
 });
 
 LoginActions.login.failed.listen(function (error) {
-	SocketService.disconnect();
 	console.log('Logging in failed', error);
 });
 
@@ -67,20 +53,13 @@ LoginActions.login.failed.listen(function (error) {
 LoginActions.connect.listen(function (token) {
 	let that = this;
 
-	SocketService.reconnect();
-	let unsubscribe = SocketStore.listen((socket, error) => {
-		if (socket) {
-			SocketService.post(LoginConstants.CONNECT_URL, { authorization: token })
-				.then(that.completed)
-				.catch(that.failed);
-
-			unsubscribe();
-		}
-	});
+	SocketService.reconnect(token)
+		.then(that.completed)
+		.catch(that.failed);
 });
 
 LoginActions.connect.failed.listen(function (token) {
-	SocketService.disconnect();
+
 });
 
 LoginActions.logout.listen(function () {

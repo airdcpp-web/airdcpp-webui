@@ -1,5 +1,7 @@
+import LoginConstants from 'constants/LoginConstants';
 import SocketActions from 'actions/SocketActions';
 
+import invariant from 'invariant';
 import Promise from 'utils/Promise';
 
 const ignoredConsoleEvents = [
@@ -8,8 +10,23 @@ const ignoredConsoleEvents = [
 	'hub_counts_updated',
 ];
 
+const handleLogin = (username, password, userSession, socket) => {
+	return socket.sendRequest(LoginConstants.LOGIN_URL, { 
+		username, 
+		password,
+		user_session: userSession,
+	}, 'POST');
+};
+
+const handleAuthorize = (authorization, socket) => {
+	return socket.sendRequest(LoginConstants.CONNECT_URL, { authorization }, 'POST');
+};
+
 export default class ApiSocket {
-	constructor() {
+	constructor(apiUrl) {
+		invariant(apiUrl, 'API URL must be supplied for the socket constructor');
+
+		this.apiUrl = apiUrl;
 		this.socket = null;
 		this.init = false;
 		this.currentCallbackId = 0;
@@ -20,25 +37,57 @@ export default class ApiSocket {
 		this.callbacks = {};
 	}
 
-	connect(reconnectOnFailure) {
+	connect(username, password, userSession) {
+		return this.startConnect(false, handleLogin.bind(this, username, password, userSession));
+	}
+
+	reconnect(token) {
+		return this.startConnect(true, handleAuthorize.bind(this, token));
+	}
+
+	startConnect(reconnectOnFailure, authenticationHandler) {
 		SocketActions.state.connecting(this);
 
 		return new Promise((resolve, reject) => {
 			console.log('Starting socket connect');
-			this.connectInternal(reconnectOnFailure, resolve, reject);
+			this.connectInternal(reconnectOnFailure, resolve, reject, authenticationHandler);
 		});
 	}
 
-	connectInternal(reconnectOnFailure, resolve, reject) {
-		this.socket = new WebSocket((window.location.protocol == 'https:' ? 'wss://' : 'ws://') + window.location.host + '/');
+	connectInternal(reconnectOnFailure, resolve, reject, authenticationHandler) {
+		this.socket = new WebSocket(this.apiUrl);
+
+		const scheduleReconnect = () => {
+			this._reconnectTimer = setTimeout(() => {
+				console.log('Socket reconnecting');
+				this.connectInternal(reconnectOnFailure, resolve, reject, authenticationHandler);
+			}, 3000);
+		};
 
 		this.socket.onopen = () => {
 			console.log('Socket connected');
 			this._reconnectTimer = null;
 
 			this.setSocketHandlers();
-			SocketActions.state.connected(this);
-			resolve(this);
+
+			authenticationHandler(this)
+				.then((data) => {
+					// Authentication succeed
+					SocketActions.state.connected(this);
+					resolve(data);
+				})
+				.catch((error) => {
+					if (this.socket) {
+						// Authentication was rejected
+						this.disconnect();
+					} else if (reconnectOnFailure) {
+						// Socket was disconnected during the authentication
+						scheduleReconnect();
+						return;
+					} 
+
+					reject(error);
+				});
 		};
 
 		this.socket.onerror = (event) => {
@@ -46,10 +95,7 @@ export default class ApiSocket {
 			SocketActions.state.disconnected(this, 'Cannot connect to the server');
 
 			if (reconnectOnFailure) {
-				this._reconnectTimer = setTimeout(() => {
-					console.log('Socket reconnecting');
-					this.connectInternal(reconnectOnFailure, resolve, reject);
-				}, 3000);
+				scheduleReconnect();
 			} else {
 				reject('Cannot connect to the server');
 			}
@@ -72,6 +118,12 @@ export default class ApiSocket {
 
 		this.socket.onclose = (event) => {
 			console.log('Websocket was closed: ' + event.reason);
+
+			// Clear callbacks
+			Object.keys(this.callbacks).forEach(id => this.callbacks[id].resolver.reject({ message: 'Socket disconnected' }));
+			this.callbacks = {};
+			
+			this.socket = null;
 			SocketActions.state.disconnected(this, event.reason, event.code);
 		};
 		
@@ -80,7 +132,7 @@ export default class ApiSocket {
 		};
 	}
 
-	sendRequest(data, path, method) {
+	sendRequest(path, data, method) {
 		if (this.socket.readyState == this.socket.CLOSED || this.socket.readyState == this.socket.CLOSING) {
 			console.log('Attempting to send request on a closed socket: ' + path);
 			return Promise.reject('No socket');
