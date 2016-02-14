@@ -1,4 +1,4 @@
-import SocketStore from 'stores/SocketStore';
+import SocketService from 'services/SocketService';
 import LoginStore from 'stores/LoginStore';
 
 
@@ -7,13 +7,13 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 	let hasSocket = false;
 
 	const addSocketListener = (apiModuleUrl, event, callback, entityId) => {
-		let subscription = SocketStore.addSocketListener(apiModuleUrl, event, callback, entityId);
+		let subscription = SocketService.addSocketListener(apiModuleUrl, event, callback, entityId);
 		socketSubscriptions.push(subscription);
 		return subscription;
 	};
 
-	const removeSocketListeners = (entityExists = true) => { 
-		socketSubscriptions.forEach(f => f(LoginStore.socketAuthenticated && entityExists));
+	const removeSocketListeners = (entityExists) => { 
+		socketSubscriptions.forEach(f => f(entityExists));
 		socketSubscriptions = [];
 	};
 

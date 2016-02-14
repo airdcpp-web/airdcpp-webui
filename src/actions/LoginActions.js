@@ -1,7 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
-import SocketStore from 'stores/SocketStore';
 
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
@@ -40,7 +39,7 @@ LoginActions.newUserIntroSeen.listen(function (away) {
 LoginActions.login.listen(function (username, password) {
 	let that = this;
 
-	SocketService.connect(username, password)
+	SocketService.connect(username, password, false)
 		.then(that.completed)
 		.catch(that.failed);
 });
@@ -64,13 +63,9 @@ LoginActions.connect.failed.listen(function (token) {
 
 LoginActions.logout.listen(function () {
 	let that = this;
-	return SocketService.delete(LoginConstants.LOGOUT_URL)
+	return SocketService.destroy()
 		.then(that.completed)
 		.catch(this.failed);
-});
-
-LoginActions.logout.completed.listen(function () {
-	SocketService.disconnect();
 });
 
 

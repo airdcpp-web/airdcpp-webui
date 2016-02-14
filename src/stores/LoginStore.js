@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import BrowserUtils from 'utils/BrowserUtils';
 
 import LoginActions from 'actions/LoginActions';
-import SocketActions from 'actions/SocketActions';
+import SocketService from 'services/SocketService';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginConstants from 'constants/LoginConstants';
@@ -17,7 +17,6 @@ const LoginStore = Reflux.createStore({
 		this._allowLogin = true;
 		this._lastError = null;
 		this._socketAuthenticated = false;
-
 
 		// The login would silently fail if data storage isn't available
 		try {
@@ -34,7 +33,9 @@ const LoginStore = Reflux.createStore({
 			}
 		}
 
-		this.listenTo(SocketActions.state.disconnected, this.onSocketDisconnected);
+		// We must handle disconnect sockets
+		SocketService.onDisconnected = this.onSocketDisconnected;
+
 		this.getInitialState = this.getState;
 	},
 

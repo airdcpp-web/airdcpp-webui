@@ -1,4 +1,4 @@
-import SocketStore from 'stores/SocketStore';
+import SocketService from 'services/SocketService';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 // For React components
@@ -16,7 +16,7 @@ const SocketSubscriptionMixin = (sessionStore) => {
 
 	return SocketSubscriptionDecorator({
 		componentWillMount() {
-			if (SocketStore.socket) {
+			if (SocketService.isReady()) {
 				this.onSocketConnected(this.addSocketListener);
 			}
 		},
