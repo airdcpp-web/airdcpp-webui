@@ -69,7 +69,6 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'js/[name].entry.js',
 		chunkFilename: 'js/[name].chunk.js',
-		publicPath: '/',
 	},
 
 	// cheap-module-source-map doesn't seem to work with Uglify

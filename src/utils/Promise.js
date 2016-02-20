@@ -1,9 +1,9 @@
-// Use native promises when available (bluebird causes delays with table scrolling)
+// Use native promises when available
 let AppPromise;
 if (window.Promise /*&& process.env.NODE_ENV !== 'production'*/) {
 	AppPromise = window.Promise;
 } else {
-	AppPromise = require('bluebird');
+	AppPromise = require('promise');
 }
 
 function pending() {
