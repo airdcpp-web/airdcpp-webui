@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
+import Promise from 'utils/Promise';
 
 import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
@@ -66,12 +67,13 @@ const ShareDirectoryDialog = React.createClass({
 			);
 	},
 
-
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
 			const sourceData = FormUtils.valueMapToInfo({ virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) });
 			return Promise.resolve(sourceData);
 		}
+
+		return null;
 	},
 
 	save() {

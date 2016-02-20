@@ -1,4 +1,6 @@
 import Reflux from 'reflux';
+import Promise from 'utils/Promise';
+
 import SocketService from 'services/SocketService';
 
 import LoginStore from 'stores/LoginStore';
@@ -25,6 +27,8 @@ TableActions.close.listen(function (viewUrl, sessionExists) {
 			.then(data => that.completed(viewUrl, data))
 			.catch(error => this.failed(viewUrl, error));
 	}
+
+	return Promise.resolve();
 });
 
 TableActions.setSort.listen(function (viewUrl, sortProperty, sortAscending) {

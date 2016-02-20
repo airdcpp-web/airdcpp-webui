@@ -193,7 +193,7 @@ const ApiSocket = (options, WebSocketImpl = WebSocket) => {
 
 		disconnect() {
 			if (!ws) {
-				return Promise.reject('Attempting to disconnect a closed socket');
+				return;
 			}
 
 			logger.info('Disconnecting socket');

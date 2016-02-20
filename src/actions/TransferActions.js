@@ -2,7 +2,7 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-import NotificationActions from 'actions/NotificationActions';
+//import NotificationActions from 'actions/NotificationActions';
 import QueueActions from 'actions/QueueActions';
 
 import { default as TransferConstants, StatusEnum } from 'constants/TransferConstants';

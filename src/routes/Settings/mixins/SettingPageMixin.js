@@ -65,6 +65,8 @@ const SettingPageMixin = function () {
 			if (this.changedProperties.size > 0 && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT)) {
 				return 'You have unsaved changes. Are you sure you want to leave?';
 			}
+
+			return null;
 		},
 	};
 

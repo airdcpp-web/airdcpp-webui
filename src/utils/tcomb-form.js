@@ -28,6 +28,8 @@ t.Range = function (min, max) {
 		if (max && value > max) {
 			return 'Maximum allowed value is ' + max;
 		}
+
+		return null;
 	};
 
 	return Range;
