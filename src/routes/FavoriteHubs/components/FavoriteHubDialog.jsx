@@ -55,6 +55,8 @@ const FavoriteHubDialog = React.createClass({
 				return Promise.resolve(sourceData);
 			}
 		}
+
+		return null;
 	},
 
 	save() {

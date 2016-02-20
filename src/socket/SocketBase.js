@@ -28,6 +28,8 @@ const ApiSocket = (options, WebSocketImpl = WebSocket) => {
 		logger.info(event.reason ? 'Websocket was closed: ' + event.reason : 'Websocket was closed');
 
 		requests.onSocketDisconnected();
+		subscriptions.onSocketDisconnected();
+		
 		if (disconnectedHandler) {
 			disconnectedHandler(event.reason, event.code);
 		}

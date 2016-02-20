@@ -104,7 +104,7 @@ const LoginStore = Reflux.createStore({
 		return permissions.indexOf(access) !== -1 || permissions.indexOf(AccessConstants.ADMIN) !== -1;
 	},
 
-	onSocketDisconnected(socket, error, code) {
+	onSocketDisconnected(error, code) {
 		this._socketAuthenticated = false;
 		if (this.user) {
 			if (error === '') {

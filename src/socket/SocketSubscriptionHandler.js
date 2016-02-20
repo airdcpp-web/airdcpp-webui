@@ -1,4 +1,4 @@
-//import SocketService from 'services/SocketService';
+import invariant from 'invariant';
 import { EventEmitter } from 'events';
 
 
@@ -16,10 +16,15 @@ const SocketSubscriptionHandler = (socket, logger, { ignoredListenerEvents = [] 
 		return moduleUrl + '/listener/' + event;
 	};
 
-	const subscriptions = {};
+	let subscriptions = {};
 	const emitter = new EventEmitter();
 
 	const removeSocketListener = (subscriptionUrl, subscriptionId, callback, sendApi) => {
+		if (!socket.isReady()) {
+			invariant(Object.keys(subscriptions).length === 0, 'Subscriptions not empty for a disconnected socket');
+			return;
+		}
+
 		subscriptions[subscriptionId]--;
 		emitter.removeListener(subscriptionId, callback);
 
@@ -48,6 +53,10 @@ const SocketSubscriptionHandler = (socket, logger, { ignoredListenerEvents = [] 
 
 	// Listen to a specific event and manage the API subscription automatically
 	socket.addSocketListener = (apiModuleUrl, event, callback, entityId) => {
+		if (!socket.isReady()) {
+			throw 'Listeners can be only for a connected socket';
+		}
+
 		var subscriptionId = getSubscribtionId(event, entityId);
 		var subscriptionUrl = getSubscribtionUrl(apiModuleUrl, entityId, event);
 
@@ -68,6 +77,11 @@ const SocketSubscriptionHandler = (socket, logger, { ignoredListenerEvents = [] 
 
 	// For the socket
 	const Handler = {
+		onSocketDisconnected() {
+			emitter.removeAllListeners();
+			subscriptions = {};
+		},
+
 		handleMessage(message) {
 			if (!ignoredListenerEvents || ignoredListenerEvents.indexOf(message.event) == -1) {
 				logger.verbose(message.event, message.id ? message.id : '-', message.data);
