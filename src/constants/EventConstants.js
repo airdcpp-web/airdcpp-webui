@@ -1,4 +1,4 @@
-const MODULE_URL = 'log/v0';
+const MODULE_URL = 'events/v0';
 
 export const SeverityEnum = {
 	NOTIFY: 'notify',
@@ -12,8 +12,8 @@ export default {
 	GET_URL: MODULE_URL + '/messages',
 	CLEAR_URL: MODULE_URL + '/clear',
 	READ_URL: MODULE_URL + '/read',
-	INFO_URL: MODULE_URL + '/info',
+	INFO_URL: MODULE_URL + '/counts',
 
-	LOG_MESSAGE: 'log_message',
-	LOG_INFO: 'log_info',
+	MESSAGE: 'event_message',
+	COUNTS: 'event_counts',
 };

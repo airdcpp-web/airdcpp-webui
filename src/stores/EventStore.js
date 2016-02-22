@@ -77,8 +77,8 @@ const EventStore = Reflux.createStore({
 
 	onSocketConnected(addSocketListener) {
 		const url = EventConstants.MODULE_URL;
-		addSocketListener(url, EventConstants.LOG_MESSAGE, this.onLogMessage);
-		addSocketListener(url, EventConstants.LOG_INFO, this.onLogInfo);
+		addSocketListener(url, EventConstants.MESSAGE, this.onLogMessage);
+		addSocketListener(url, EventConstants.COUNTS, this.onLogInfo);
 	}
 });
 

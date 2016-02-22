@@ -85,7 +85,7 @@ const Notifications = React.createClass({
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.EVENTS_VIEW)) {
-			addSocketListener(EventConstants.MODULE_URL, EventConstants.LOG_MESSAGE, this._onLogMessage);
+			addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this._onLogMessage);
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {

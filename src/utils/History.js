@@ -3,19 +3,12 @@ import update from 'react-addons-update';
 import { createHistory, useBasename } from 'history';
 import { useRouterHistory } from 'react-router';
 
+import BrowserUtils from 'utils/BrowserUtils';
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-let basename;
-const pathTokens = window.location.pathname.split('/');
-
-// All basenames must used a fixed prefix
-if (pathTokens.length > 1 && pathTokens[1].indexOf('airdcpp-') === 0) {
-	basename = '/' + pathTokens[1];
-}
-
 const History = useRouterHistory(useBasename(createHistory))({
-	basename,
+	basepath: BrowserUtils.getBasePath(),
 });
 
 

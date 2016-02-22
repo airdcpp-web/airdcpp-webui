@@ -58,6 +58,17 @@ export default {
 		return md.mobile() ? true : false;
 	},
 
+	getBasePath() {
+		const pathTokens = window.location.pathname.split('/');
+
+		// All basenames must used a fixed prefix
+		if (pathTokens.length > 1 && pathTokens[1].indexOf('airdcpp-') === 0) {
+			return '/' + pathTokens[1] + '/';
+		}
+
+		return '/';
+	},
+
 	get mobileDetect() {
 		return md;
 	},

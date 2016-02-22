@@ -1,8 +1,8 @@
 import ApiSocket from 'socket/SocketBase';
-
+import BrowserUtils from 'utils/BrowserUtils';
 
 const options = {
-	url: window.location.host,
+	url: window.location.host + BrowserUtils.getBasePath(),
 	secure: window.location.protocol === 'https:',
 	autoReconnect: false,
 	userSession: true,
