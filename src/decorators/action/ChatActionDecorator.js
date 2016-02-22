@@ -37,9 +37,11 @@ export default function (actions, sessionUrl, editAccess) {
 			.catch(that.failed);
 	});
 
-	ChatActions.sendMessage.listen(function (id, message) {
+	ChatActions.sendMessage.listen(function (id, text) {
 		let that = this;
-		SocketService.post(sessionUrl + '/' + id + '/message', { message: message })
+		SocketService.post(sessionUrl + '/' + id + '/message', { 
+			text 
+		})
 			.then(that.completed)
 			.catch(that.failed.bind(that, id));
 	});

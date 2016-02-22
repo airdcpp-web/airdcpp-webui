@@ -20,7 +20,11 @@ const Search = React.createClass({
 
 		clearTimeout(this._searchTimeout);
 
-		SocketService.post(SearchConstants.QUERY_URL, { pattern: text })
+		SocketService.post(SearchConstants.QUERY_URL, {
+			query: {
+				pattern: text,
+			}
+		})
 			.then(this.onSearchPosted)
 			.catch(error => 
 				console.error('Failed to post search: ' + error)

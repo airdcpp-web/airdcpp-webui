@@ -31,7 +31,6 @@ const SuggestField = React.createClass({
 
 	getInitialState() {
 		return {
-			suggestions: [],
 			text: this.props.initialValue ? this.props.initialValue : '',
 		};
 	},
@@ -71,7 +70,7 @@ const SuggestField = React.createClass({
 
 		if (event.keyCode === 13 && !event.isDefaultPrevented()) {
 			// Hide the suggestion menu
-			this.props.onChange(null);
+			this.props.onChange(null, true);
 
 			this.handleSubmit(event);
 		}
