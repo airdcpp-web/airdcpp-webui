@@ -84,7 +84,7 @@ const Notifications = React.createClass({
 			addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
 		}
 
-		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
+		if (LoginStore.hasAccess(AccessConstants.EVENTS_VIEW)) {
 			addSocketListener(EventConstants.MODULE_URL, EventConstants.LOG_MESSAGE, this._onLogMessage);
 		}
 

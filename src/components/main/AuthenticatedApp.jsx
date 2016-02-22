@@ -57,7 +57,7 @@ const AuthenticatedApp = React.createClass({
 			ViewFileActions.fetchSessions();
 		}
 
-		if (LoginStore.hasAccess(AccessConstants.EVENTS)) {
+		if (LoginStore.hasAccess(AccessConstants.EVENTS_VIEW)) {
 			EventActions.fetchInfo();
 		}
 

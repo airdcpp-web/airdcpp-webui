@@ -2,11 +2,17 @@
 import Reflux from 'reflux';
 import EventConstants from 'constants/EventConstants';
 import SocketService from 'services/SocketService';
+import AccessConstants from 'constants/AccessConstants';
 
 export const EventActions = Reflux.createActions([
 	{ 'fetchMessages': { asyncResult: true } },
 	{ 'fetchInfo': { asyncResult: true } },
-	'clear',
+	{ 'clear': {
+		asyncResult: true,
+		displayName: 'Clear',
+		access: AccessConstants.EVENTS_EDIT,
+		//icon: IconConstants.CREATE 
+	} },
 	'setRead',
 	'setActive',
 	'resetLogCounters'

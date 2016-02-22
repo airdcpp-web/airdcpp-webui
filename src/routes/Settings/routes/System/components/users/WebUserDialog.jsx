@@ -24,8 +24,10 @@ const AccessCaptions = {
 
 	SEARCH: 'Search',
 	DOWNLOAD: 'Download',
-	EVENTS: 'Events',
 	TRANSFERS: 'Transfers',
+
+	EVENTS_VIEW: 'Events: View',
+	EVENTS_EDIT: 'Events: Edit',
 
 	QUEUE_VIEW: 'Queue: View',
 	QUEUE_EDIT: 'Queue: Modify',

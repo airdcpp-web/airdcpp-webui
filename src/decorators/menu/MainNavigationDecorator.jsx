@@ -74,7 +74,7 @@ const SecondaryMenuItems = [
 		url: '/events',
 		icon: 'blue history',
 		unreadInfoStore: EventStore,
-		access: AccessConstants.EVENTS,
+		access: AccessConstants.EVENTS_VIEW,
 	}
 ];
 

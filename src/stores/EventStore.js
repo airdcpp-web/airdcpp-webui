@@ -82,4 +82,4 @@ const EventStore = Reflux.createStore({
 	}
 });
 
-export default SocketSubscriptionDecorator(EventStore, AccessConstants.EVENTS);
+export default SocketSubscriptionDecorator(EventStore, AccessConstants.EVENTS_VIEW);

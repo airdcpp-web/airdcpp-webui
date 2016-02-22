@@ -3,8 +3,10 @@ const AccessConstants = {
 
 	SEARCH: 'search',
 	DOWNLOAD: 'download',
-	EVENTS: 'events',
 	TRANSFERS: 'transfers',
+
+	EVENTS_VIEW: 'events_view',
+	EVENTS_EDIT: 'events_edit',
 
 	QUEUE_VIEW: 'queue_view',
 	QUEUE_EDIT: 'queue_edit',
