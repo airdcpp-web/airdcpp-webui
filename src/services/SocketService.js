@@ -1,4 +1,4 @@
-import ApiSocket from 'socket/SocketBase';
+import ApiSocket from 'airdcpp-apisocket/dist/SocketBase';
 import BrowserUtils from 'utils/BrowserUtils';
 
 const options = {
@@ -14,6 +14,6 @@ const options = {
 	],
 };
 
-let Socket = ApiSocket(options);
+let Socket = ApiSocket(options, WebSocket);
 
 export default Socket;

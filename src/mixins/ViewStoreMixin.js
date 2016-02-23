@@ -1,4 +1,4 @@
-import SocketStore from 'stores/SocketStore';
+import SocketService from 'services/SocketService';
 import TableActions from 'actions/TableActions';
 
 import invariant from 'invariant';
@@ -118,7 +118,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 		},
 
 		addMessageListener() {
-			this._removeMessageListener = SocketStore.addMessageListener(this._viewName + '_updated', this._handleUpdate, entityId);
+			this._removeMessageListener = SocketService.addLocalListener(this._viewName + '_updated', this._handleUpdate, entityId);
 		},
 
 		get items() {
