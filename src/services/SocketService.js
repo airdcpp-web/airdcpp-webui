@@ -1,8 +1,8 @@
 import ApiSocket from 'airdcpp-apisocket/dist/SocketBase';
-import BrowserUtils from 'utils/BrowserUtils';
+
 
 const options = {
-	url: window.location.host + BrowserUtils.getBasePath(),
+	url: window.location.host,
 	secure: window.location.protocol === 'https:',
 	autoReconnect: false,
 	userSession: true,

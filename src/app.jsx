@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import BrowserUtils from 'utils/BrowserUtils';
 import { Router } from 'react-router';
 import LoginStore from 'stores/LoginStore';
 import LoginActions from 'actions/LoginActions';
@@ -18,7 +17,7 @@ import './utils/semantic';
 
 import 'style.css';
 
-__webpack_public_path__ = BrowserUtils.getBasePath();
+
 Reflux.use(RefluxPromise(Promise));
 
 if (LoginStore.token) {

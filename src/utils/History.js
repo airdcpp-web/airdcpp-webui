@@ -1,15 +1,12 @@
 import update from 'react-addons-update';
 
-import { createHistory, useBasename } from 'history';
+import { createHistory } from 'history';
 import { useRouterHistory } from 'react-router';
 
-import BrowserUtils from 'utils/BrowserUtils';
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-const History = useRouterHistory(useBasename(createHistory))({
-	basepath: BrowserUtils.getBasePath(),
-});
+const History = (useRouterHistory(createHistory))();
 
 
 const mergeOverlayData = (locationState, overlayId, data) => {
