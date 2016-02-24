@@ -1,5 +1,4 @@
 import React from 'react';
-import BlueBird from 'bluebird';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
@@ -22,23 +21,25 @@ const InputField = React.createClass({
 	}
 });
 
-const InputDialog = function (dialogOptions, inputOptions) {
+const InputDialog = function (dialogOptions, inputOptions, onApproved) {
 	let inputText = inputOptions.defaultValue ? inputOptions.defaultValue : '';
-	let resolver = BlueBird.pending();
 
-	const input = <InputField { ...inputOptions } content={ dialogOptions.content } onChange={(event) => inputText = event.target.value }/>;
+	const input = (
+		<InputField 
+			{ ...inputOptions } 
+			content={ dialogOptions.content } 
+			onChange={(event) => inputText = event.target.value }
+		/>
+	);
 
-	ConfirmDialog(Object.assign(dialogOptions, {
+	ConfirmDialog({
+		...dialogOptions,
 		rejectCaption: 'Cancel',
 		content: input,
-	}))
-		.then(() => resolver.resolve(inputText))
-		.catch(() => {});
-
-	return resolver.promise;
+	}, () => onApproved(inputText));
 };
 
-export const PasswordDialog = function (title, text) {
+export const PasswordDialog = function (title, text, onApproved) {
 	const dialogOptions = {
 		icon: 'yellow lock',
 		approveCaption: 'Set password',
@@ -51,7 +52,7 @@ export const PasswordDialog = function (title, text) {
 		type: 'password',
 	};
 
-	return InputDialog(dialogOptions, inputOptions);
+	InputDialog(dialogOptions, inputOptions, onApproved);
 };
 
 export default InputDialog;

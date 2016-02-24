@@ -1,6 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
-import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
+import { default as QueueConstants } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
@@ -11,7 +11,7 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
 
-const finishedFailed = bundle => bundle.status.failed && bundle.status.id >= StatusEnum.DOWNLOADED;
+const finishedFailed = bundle => bundle.status.failed && bundle.status.finished;
 
 export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
@@ -132,7 +132,7 @@ QueueActions.removeFinished.completed.listen(function (data) {
 });
 
 QueueActions.removeBundle.shouldEmit = function (bundle) {
-	if (bundle.status.id >= StatusEnum.FINISHED) {
+	if (bundle.status.finished) {
 		// No need to confirm finished bundles
 		this.confirmed(bundle, false);
 	} else {
@@ -145,7 +145,7 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 			checkboxCaption: 'Remove finished files',
 		};
 
-		ConfirmDialog(options).then((removeFinished) => this.confirmed(bundle, removeFinished));
+		ConfirmDialog(options, this.confirmed.bind(this, bundle));
 	}
 	return false;
 };

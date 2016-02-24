@@ -46,9 +46,7 @@ const FavoriteHubPasswordActions = Reflux.createActions([
 
 FavoriteHubPasswordActions.create.listen(function (hub) {
 	const text = 'Set password for the hub ' + hub.name;
-	PasswordDialog('Set password', text)
-		.then((password) => FavoriteHubPasswordActions.create.saved(hub, password))
-		.catch(() => {});
+	PasswordDialog('Set password', text, this.saved.bind(this, hub));
 });
 
 FavoriteHubPasswordActions.create.saved.listen(function (hub, password) {
@@ -57,9 +55,7 @@ FavoriteHubPasswordActions.create.saved.listen(function (hub, password) {
 
 FavoriteHubPasswordActions.change.listen(function (hub) {
 	const text = 'Enter new password for the hub ' + hub.name;
-	PasswordDialog('Change password', text)
-		.then((password) => FavoriteHubPasswordActions.change.saved(hub, password))
-		.catch(() => {});
+	PasswordDialog('Change password', text, this.saved.bind(this, hub));
 });
 
 FavoriteHubPasswordActions.change.saved.listen(function (hub, password) {
@@ -75,7 +71,7 @@ FavoriteHubPasswordActions.remove.listen(function (hub) {
 		rejectCaption: "Don't remove",
 	};
 
-	ConfirmDialog(options).then(() => this.confirmed(hub));
+	ConfirmDialog(options, this.confirmed.bind(this, hub));
 });
 
 FavoriteHubPasswordActions.remove.confirmed.listen(function (hub) {

@@ -47,7 +47,7 @@ ShareRootActions.remove.listen(function (root) {
 		rejectCaption: "Don't remove",
 	};
 
-	ConfirmDialog(options).then(() => this.confirmed(root));
+	ConfirmDialog(options, this.confirmed.bind(this, root));
 });
 
 ShareRootActions.remove.confirmed.listen(function (root) {

@@ -64,9 +64,7 @@ FavoriteHubActions.remove.shouldEmit = function (hub) {
 		rejectCaption: "Don't remove",
 	};
 
-	ConfirmDialog(options)
-		.then(() => FavoriteHubActions.remove.confirmed(hub))
-		.catch(() => {});
+	ConfirmDialog(options, this.confirmed.bind(this, hub));
 	return false;
 };
 

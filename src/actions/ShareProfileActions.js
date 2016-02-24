@@ -54,9 +54,7 @@ ShareProfileActions.create.listen(function () {
 		placeholder: 'Enter name',
 	};
 
-	InputDialog(options, inputOptions)
-		.then(ShareProfileActions.create.saved)
-		.catch(() => {});
+	InputDialog(options, inputOptions, this.saved.bind(this));
 });
 
 ShareProfileActions.create.saved.listen(function (name) {
@@ -78,9 +76,7 @@ ShareProfileActions.edit.listen(function (profile) {
 		defaultValue: profile.plain_name,
 	};
 
-	InputDialog(dialogOptions, inputOptions)
-		.then((name) => ShareProfileActions.edit.saved(profile, name))
-		.catch(() => {});
+	InputDialog(dialogOptions, inputOptions, this.saved.bind(this, profile));
 });
 
 ShareProfileActions.default.listen(function (profile) {
@@ -114,7 +110,7 @@ ShareProfileActions.remove.listen(function (profile) {
 		rejectCaption: "Don't remove",
 	};
 
-	ConfirmDialog(options).then(() => this.confirmed(profile));
+	ConfirmDialog(options, this.confirmed.bind(this, profile));
 });
 
 ShareProfileActions.remove.confirmed.listen(function (profile) {

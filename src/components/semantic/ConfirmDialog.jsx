@@ -1,15 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Promise from 'utils/Promise';
 import Checkbox from 'components/semantic/Checkbox';
 
-const CheckboxCell = ({ cellData, rowData, onChange }) => (
-	<Checkbox 
-		checked={cellData} 
-		onChange={ (checked) => onChange(checked, rowData) }
-	/>
-);
 
 const ConfirmDialog = React.createClass({
 	propTypes: {
@@ -31,6 +24,9 @@ const ConfirmDialog = React.createClass({
 
 		approveCaption: React.PropTypes.string,
 		rejectCaption: React.PropTypes.string,
+
+		onApproved: React.PropTypes.func.isRequired,
+		onRejected: React.PropTypes.func,
 
 		/**
 		 * Display a textbox if the caption is supplied
@@ -68,11 +64,13 @@ const ConfirmDialog = React.createClass({
 	},
 
 	onDeny: function (el) {
-		this.props.resolver.reject(new Error('Denied'));
+		if (this.props.onRejected) {
+			this.props.onRejected(new Error('Denied'));
+		}
 	},
 
 	onApprove: function (el) {
-		this.props.resolver.resolve(this.state.checked);
+		this.props.onApproved(this.state.checked);
 	},
 
 	onHidden() {
@@ -122,13 +120,18 @@ const ConfirmDialog = React.createClass({
 	}
 });
 
-export default function (options) {
-	let resolver = Promise.pending();
-	let node = document.createElement('div');
-	const dialog = <ConfirmDialog node={node} resolver={ resolver } { ...options }/>;
+export default function (options, onApproved, onRejected) {
+	const node = document.createElement('div');
+	const dialog = (
+		<ConfirmDialog 
+			node={ node } 
+			onApproved={ onApproved }
+			onRejected={ onRejected }
+			{ ...options }
+		/>
+	);
 
 	document.body.appendChild(node);
 
 	ReactDOM.render(dialog, node);
-	return resolver.promise;
 }
