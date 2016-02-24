@@ -10,7 +10,7 @@ const getStatusClass = (cellData, rowData) => {
 	return classNames(
 			{ 'grey': statusId === StatusEnum.QUEUED && rowData.speed === 0 },
 			{ 'blue': statusId === StatusEnum.QUEUED && rowData.speed > 0 },
-			{ 'success': statusId >= StatusEnum.FINISHED }
+			{ 'success': cellData.finished }
 		);
 };
 

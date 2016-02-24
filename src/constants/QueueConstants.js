@@ -1,18 +1,18 @@
 const MODULE_URL = 'queue/v0';
 
 export const StatusEnum = {
-	QUEUED: 1,
-	DOWNLOAD_FAILED: 2,
-	RECHECK: 3,
-	DOWNLOADED: 4, // no queued files
-	MOVED: 5, // all files moved
-	FAILED_MISSING: 6,
-	SHARING_FAILED: 7,
-	FINISHED: 8, // no missing files, ready for hashing
-	HASHING: 9,
-	HASH_FAILED: 10,
-	HASHED: 11,
-	SHARED:12
+	QUEUED: 'queue',
+	DOWNLOAD_FAILED: 'download_failed',
+	RECHECK: 'recheck',
+	DOWNLOADED: 'downloaded', // no queued files
+	MOVED: 'moved', // all files moved
+	FAILED_MISSING: 'scan_failed_files_missing',
+	SHARING_FAILED: 'scan_failed',
+	FINISHED: 'finished', // no missing files, ready for hashing
+	HASHING: 'hashing',
+	HASH_FAILED: 'hash_failed',
+	HASHED: 'hashed',
+	SHARED: 'shared'
 };
 
 export const PriorityEnum = {

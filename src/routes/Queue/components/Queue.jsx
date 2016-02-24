@@ -1,7 +1,6 @@
 import React from 'react';
 import { Column } from 'fixed-data-table';
 
-import { StatusEnum } from 'constants/QueueConstants';
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable';
 
@@ -13,6 +12,7 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
 import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
+//import { LocationContext } from 'mixins/RouterMixin';
 
 import '../style.css';
 
@@ -22,12 +22,13 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 );
 
 const Queue = React.createClass({
+	//mixins: [ LocationContext ],
 	isActive(cellData, rowData) {
-		return rowData.status.id < StatusEnum.DOWNLOADED;
+		return !rowData.status.finished;
 	},
 
 	isFinished(cellData, rowData) {
-		return !this.isActive(cellData, rowData);
+		return rowData.status.finished;
 	},
 
 	isRunning(cellData, rowData) {
