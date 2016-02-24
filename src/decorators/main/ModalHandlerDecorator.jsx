@@ -45,7 +45,9 @@ export default function (Component) {
 			nodes[key] = node;
 
 			document.body.appendChild(node);
-			ReactDOM.render(this.getOverlay(key, props), node);
+
+			// Don't use regular render as we want to pass (router) context as well
+			ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getOverlay(key, props), node);
 		},
 
 		checkModals(props) {

@@ -30,7 +30,6 @@ const WebUserLayout = React.createClass({
 					columnKey="username"
 					cell={
 						<ActionCell 
-							//location={ this.props.location }
 							actions={ WebUserActions }
 							ids={[ 'edit', 'remove' ]}
 						/> 

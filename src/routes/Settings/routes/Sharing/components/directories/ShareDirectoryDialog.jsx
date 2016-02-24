@@ -7,8 +7,7 @@ import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'react-router';
-import HistoryContext from 'mixins/HistoryContext';
+import { RouteContext } from 'mixins/RouterMixin';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
 import Message from 'components/semantic/Message';
@@ -38,7 +37,7 @@ const Entry = {
 };
 
 const ShareDirectoryDialog = React.createClass({
-	mixins: [ RouteContext, HistoryContext ],
+	mixins: [ RouteContext ],
 
 	getInitialState() {
 		this._isNew = !this.props.rootEntry;

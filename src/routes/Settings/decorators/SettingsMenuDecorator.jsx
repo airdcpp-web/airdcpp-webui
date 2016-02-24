@@ -14,6 +14,10 @@ const sectionToUrl = (section, parent) => {
 
 export default (Component) => {
 	const MenuDecorator = React.createClass({
+		contextTypes: {
+			router: React.PropTypes.object.isRequired
+		},
+
 		propTypes: {
 			parent: React.PropTypes.object,
 			menuItems: React.PropTypes.array, // required
@@ -22,7 +26,7 @@ export default (Component) => {
 
 		checkChildren(props) {
 			if (!props.children) {
-				props.history.replace({
+				this.context.router.replace({
 					pathname: sectionToUrl(props.menuItems[0].url, props.parent)
 				});
 			}

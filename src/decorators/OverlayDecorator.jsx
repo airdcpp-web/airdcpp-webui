@@ -3,8 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import invariant from 'invariant';
+import { Lifecycle } from 'mixins/RouterMixin';
 
-import { Lifecycle } from 'react-router';
 import History from 'utils/History';
 
 import '../style.css';
@@ -12,7 +12,6 @@ import '../style.css';
 export default function (Component, semanticModuleName) {
 	const OverlayDecorator = React.createClass({
 		mixins: [ Lifecycle ],
-
 		changeHistoryState: true,
 		routerWillLeave(nextLocation) {
 			if (nextLocation.pathname.indexOf(this.props.location.pathname) !== 0) {

@@ -1,14 +1,13 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { RouteContext } from 'react-router';
-import HistoryContext from 'mixins/HistoryContext';
+import { RouteContext } from 'mixins/RouterMixin';
 
 import FileBrowserLayout from './FileBrowserLayout';
 
 
 const FileBrowserDialog = React.createClass({
-	mixins: [ RouteContext, HistoryContext ],
+	mixins: [ RouteContext ],
 	propTypes: {
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.

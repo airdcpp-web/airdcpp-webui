@@ -1,4 +1,6 @@
 import React from 'react';
+import invariant from 'invariant';
+
 
 export const LocationContext = {
 	propTypes: {
@@ -16,36 +18,39 @@ export const LocationContext = {
 	},
 };
 
-export const RouterContext = {
-	contextTypes: {
-		router: React.PropTypes.object.isRequired
-	},
-
+export const RouteContext = {
 	propTypes: {
 		route: React.PropTypes.object.isRequired,
 	},
 
 	childContextTypes: {
 		route: React.PropTypes.object.isRequired,
-		router: React.PropTypes.object.isRequired,
 	},
 
 	getChildContext() {
 		return {
 			route: this.props.route,
-			router: this.context.router,
 		};
 	},
 };
 
 export const Lifecycle = {
 	contextTypes: {
-		route: React.PropTypes.object.isRequired,
+		route: React.PropTypes.object,
 		router: React.PropTypes.object.isRequired,
 	},
 
+	propTypes: {
+		route: React.PropTypes.object,
+	},
+
 	componentDidMount() {
-		const { route, router } = this.context;
+		const { router } = this.context;
+		const route = this.props.route || this.context.route;
+		
+		invariant(route, 'Route not provided for Lifecycle mixin');
+		invariant(this.routerWillLeave, 'routerWillLeave must exist with Lifecycle mixin');
+
 		router.setRouteLeaveHook(route, this.routerWillLeave);
 	},
 };

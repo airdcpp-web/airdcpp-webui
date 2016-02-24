@@ -6,8 +6,7 @@ import AccessConstants from 'constants/AccessConstants';
 import PermissionSelector from './PermissionSelector';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'react-router';
-import HistoryContext from 'mixins/HistoryContext';
+import { RouteContext } from 'mixins/RouterMixin';
 
 import t from 'utils/tcomb-form';
 
@@ -74,7 +73,7 @@ const Entry = {
 };
 
 const WebUserDialog = React.createClass({
-	mixins: [ RouteContext, HistoryContext ],
+	mixins: [ RouteContext ],
 
 	getInitialState() {
 		this._isNew = !this.props.user;

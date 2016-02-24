@@ -11,8 +11,7 @@ import IconConstants from 'constants/IconConstants';
 import HistoryActions from 'actions/HistoryActions';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'react-router';
-import HistoryContext from 'mixins/HistoryContext';
+import { RouteContext } from 'mixins/RouterMixin';
 
 import DownloadFileBrowser from './DownloadFileBrowser';
 import { PathList, AccordionTargets } from './DownloadTargets';
@@ -65,7 +64,7 @@ const MobileLayout = ({ menuItems, section }) => (
 );
 
 const DownloadDialog = React.createClass({
-	mixins: [ RouteContext, HistoryContext ],
+	mixins: [ RouteContext ],
 	propTypes: {
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.

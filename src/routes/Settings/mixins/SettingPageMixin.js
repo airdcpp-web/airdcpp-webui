@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Promise from 'utils/Promise';
-import { Lifecycle } from 'react-router';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -11,13 +10,13 @@ const SettingPageMixin = function () {
 	const refs = Array.prototype.slice.call(arguments);
 
 	const Mixin = {
-		mixins: [ Lifecycle ],
 		propTypes: {
 			onSettingsChanged: React.PropTypes.func,
 			location: React.PropTypes.object,
 		},
 
 		contextTypes: {
+			router: React.PropTypes.object.isRequired,
 			onSettingsChanged: React.PropTypes.func,
 			routerLocation: React.PropTypes.object,
 		},
@@ -27,8 +26,14 @@ const SettingPageMixin = function () {
 			routerLocation: React.PropTypes.object.isRequired
 		},
 
-		componentWillMount() {
+		componentDidMount() {
 			this.changedProperties = new Set();
+
+			const { route } = this.props;
+			if (route) {
+				const { router } = this.context;
+				router.setRouteLeaveHook(route, this.routerWillLeave);
+			}
 		},
 
 		getChildContext() {

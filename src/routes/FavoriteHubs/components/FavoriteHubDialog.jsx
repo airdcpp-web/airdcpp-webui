@@ -6,8 +6,7 @@ import ShareProfileConstants from 'constants/ShareProfileConstants';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'react-router';
-import HistoryContext from 'mixins/HistoryContext';
+import { RouteContext } from 'mixins/RouterMixin';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import IconConstants from 'constants/IconConstants';
@@ -28,7 +27,7 @@ const Entry = {
 };
 
 const FavoriteHubDialog = React.createClass({
-	mixins: [ RouteContext, HistoryContext ],
+	mixins: [ RouteContext ],
 
 	getInitialState() {
 		this._isNew = !this.props.hubEntry;
