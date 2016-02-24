@@ -5,7 +5,7 @@ import EventActions from 'actions/EventActions';
 import EventStore from 'stores/EventStore';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
-import Button from 'components/semantic/Button';
+import ActionButton from 'components/ActionButton';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
@@ -75,9 +75,8 @@ const SystemLog = React.createClass({
 						icon="blue history"
 						title="Events"
 						component={
-							<Button
-								caption="Clear"
-								onClick={this._handleClear}
+							<ActionButton 
+								action={ EventActions.clear }
 							/>
 						}
 					/>

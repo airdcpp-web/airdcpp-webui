@@ -15,9 +15,11 @@ import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
 import BrowserUtils from 'utils/BrowserUtils';
+import { LocationContext } from 'mixins/RouterMixin';
 
 
 const SessionLayout = React.createClass({
+	mixins: [ LocationContext ],
 	propTypes: {
 		/**
 		 * Unique ID of the section (used for storing and loading the previously open tab)
@@ -95,10 +97,6 @@ const SessionLayout = React.createClass({
 		 */
 		editAccess: React.PropTypes.string.isRequired,
 	},
-
-	contextTypes: {
-		history: React.PropTypes.object.isRequired
-	},
 	
 	getInitialProps() {
 		return {
@@ -164,14 +162,15 @@ const SessionLayout = React.createClass({
 	// Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
 	checkActiveItem(props) {
 		// Did we just create this session?
-		const { pending } = History.getSidebarData(props.location);
+		const routerLocation = props.location;
+		const { pending } = History.getSidebarData(routerLocation);
 
 		// Update the active item
 		const activeItem = this.findItem(props.items, props.activeId);
 		if (activeItem) {
 			if (pending) {
 				// Disable pending state
-				History.replaceSidebarData(props.location, {
+				History.replaceSidebarData(routerLocation, {
 					pending: false
 				});
 
@@ -184,9 +183,9 @@ const SessionLayout = React.createClass({
 		} else if (pending) {
 			// We'll just display a loading indicator in 'render', no item needed
 			return true;
-		} else if (props.location.action === 'POP' || props.items.length === 0) {
+		} else if (routerLocation.action === 'POP' || props.items.length === 0) {
 			// Browsing from history and item removed (or all items removed)... go to "new session" page
-			History.replaceSidebar(props.location, this.getNewUrl());
+			History.replaceSidebar(routerLocation, this.getNewUrl());
 			this.setState({ activeItem: null });
 			return true;
 		}
@@ -224,7 +223,6 @@ const SessionLayout = React.createClass({
 			<SessionMenuItem 
 				key={ item.id } 
 				url={this.getUrl(item.id)}
-				location={this.props.location}
 				nameGetter={this.props.itemNameGetter}
 				unreadInfoStore={ this.props.unreadInfoStore }
 				statusGetter={this.props.itemStatusGetter}
@@ -239,11 +237,10 @@ const SessionLayout = React.createClass({
 			return null;
 		}
 
-		const { location, actions, itemNameGetter, itemHeaderGetter } = this.props;
+		const { actions, itemNameGetter, itemHeaderGetter } = this.props;
 		const actionMenu = (
 			<ActionMenu 
 				caption={ itemNameGetter(activeItem) }
-				location={ location }
 				actions={ actions }
 				itemData={ activeItem }
 				ids={ [ 'removeSession' ] }
@@ -252,7 +249,7 @@ const SessionLayout = React.createClass({
 
 		// Use the header getter only if there is a getter that returns a valid value
 		if (itemHeaderGetter) {
-			const header = itemHeaderGetter(activeItem, location, actionMenu);
+			const header = itemHeaderGetter(activeItem, this.props.location, actionMenu);
 			if (header) {
 				return header;
 			}
@@ -279,7 +276,6 @@ const SessionLayout = React.createClass({
 			<SessionNewButton 
 				key="new-button" 
 				title={this.props.newButtonCaption} 
-				location={this.props.location} 
 				url={this.getNewUrl()} 
 			/>
 		);
@@ -330,7 +326,6 @@ const SessionLayout = React.createClass({
 				closeAction={ this.props.actions.removeSession }
 				newButton={ this.getNewButton() }
 				menuItems={ menuItems }
-				location={ this.props.location }
 			>
 				{ children }
 			</Component>

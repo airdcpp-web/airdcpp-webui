@@ -4,6 +4,10 @@ import HubActions from 'actions/HubActions';
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 const ConnectStateCell = React.createClass({
+	contextTypes: {
+		routerLocation: React.PropTypes.object.isRequired,
+	},
+
 	getIcon() {
 		switch (this.props.cellData.id) {
 			case ConnectStateEnum.CONNECTING:
@@ -21,7 +25,7 @@ const ConnectStateCell = React.createClass({
 			case ConnectStateEnum.CONNECTED:
 				return () => HubActions.removeSession({ id: this.props.cellData.current_hub_id });
 			case ConnectStateEnum.DISCONNECTED:
-				return () => HubActions.createSession(this.props.location, this.props.rowData.hub_url);
+				return () => HubActions.createSession(this.context.routerLocation, this.props.rowData.hub_url);
 		}
 	},
 

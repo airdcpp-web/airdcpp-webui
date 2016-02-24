@@ -12,6 +12,7 @@ import HubMessageStore from 'stores/HubMessageStore';
 import HubActions from 'actions/HubActions';
 import { ConnectStateEnum } from 'constants/HubConstants';
 import AccessConstants from 'constants/AccessConstants';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import HubFooter from './HubFooter';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
@@ -28,6 +29,7 @@ const checkList = (props) => {
 };
 
 const HubSession = React.createClass({
+	mixins: [ LocationContext ],
 	componentWillMount() {
 		this.showList = checkList(this.props);
 	},
@@ -82,7 +84,7 @@ const HubSession = React.createClass({
 	},
 
 	render() {
-		const { item, location } = this.props;
+		const { item } = this.props;
 		const { showList } = this.state;
 
 		const checkbox = (
@@ -100,13 +102,11 @@ const HubSession = React.createClass({
 				{ showList ? (
 						<HubUserTable
 							item={ item }
-							location={ location }
 						/>
 					) : (
 						<ChatLayout
 							messageStore={ HubMessageStore }
 							chatActions={ HubActions }
-							location={ location }
 							chatAccess={ AccessConstants.HUBS_SEND }
 							session={ this.props.item }
 						/>

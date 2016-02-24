@@ -9,10 +9,9 @@ import Linkify from 'react-linkify';
 import { UserMenu } from 'components/menu/DropdownMenu';
 
 
-const Author = ({ message, dropdownContextGetter, location }) => (
+const Author = ({ message, dropdownContextGetter }) => (
 	<div className="header message-author-name">
 		<UserMenu 
-			location={location} 
 			contextGetter={ dropdownContextGetter } 
 			triggerIcon={null} 
 			noIcon={true} 
@@ -23,7 +22,6 @@ const Author = ({ message, dropdownContextGetter, location }) => (
 
 Author.propTypes = {
 	message: React.PropTypes.object.isRequired,
-	location: React.PropTypes.object.isRequired,
 	dropdownContextGetter: React.PropTypes.func.isRequired,
 };
 

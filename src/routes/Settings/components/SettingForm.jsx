@@ -14,7 +14,7 @@ import t from 'utils/tcomb-form';
 const SettingForm = React.createClass({
 	contextTypes: {
 		onSettingsChanged: React.PropTypes.func.isRequired,
-		location: React.PropTypes.object.isRequired
+		routerLocation: React.PropTypes.object.isRequired
 	},
 
 	propTypes: {
@@ -103,6 +103,8 @@ const SettingForm = React.createClass({
 		if (this.props.onFieldChanged) {
 			return this.props.onFieldChanged(id, value, hasChanges);
 		}
+
+		return null;
 	},
 
 	onSave(changedSettingArray) {
@@ -124,7 +126,7 @@ const SettingForm = React.createClass({
 					onFieldSetting={this.onFieldSetting}
 					sourceData={this.state.sourceData}
 					onSave={this.onSave}
-					context={{ location: this.context.location }}
+					context={{ location: this.context.routerLocation }}
 				/>
 			</div>);
 	}

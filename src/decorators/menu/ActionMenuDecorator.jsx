@@ -91,14 +91,13 @@ export default function (Component) {
 			ids: React.PropTypes.array,
 
 			/**
-			 * Router location
-			 */
-			location: React.PropTypes.object,
-
-			/**
 			 * Use button style for the trigger
 			 */
 			button: React.PropTypes.bool,
+		},
+
+		contextTypes: {
+			routerLocation: React.PropTypes.object,
 		},
 
 		shouldComponentUpdate: function (nextProps, nextState) {
@@ -118,7 +117,7 @@ export default function (Component) {
 
 			const action = menu.actions[actionId];
 			return (
-				<DropdownItem key={ actionId } onClick={ () => action(menu.itemData, this.props.location) }>
+				<DropdownItem key={ actionId } onClick={ () => action(menu.itemData, this.context.routerLocation) }>
 					<i className={ action.icon + ' icon' }/>
 					{ action.displayName }
 				</DropdownItem>);

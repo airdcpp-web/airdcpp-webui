@@ -9,9 +9,11 @@ import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
 import AccessConstants from 'constants/AccessConstants';
+import { LocationContext } from 'mixins/RouterMixin';
 
 
 const ChatSession = React.createClass({
+	mixins: [ LocationContext ],
 	render() {
 		const { item, location } = this.props;
 		return (

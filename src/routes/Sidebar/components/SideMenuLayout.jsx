@@ -1,16 +1,12 @@
 import React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
-import ActionButton from 'components/ActionButton';
 
 
 const SideMenuLayout = React.createClass({
-	propTypes: {
-		/**
-		 * Location object
-		 */
-		location: React.PropTypes.object.isRequired,
-	},
+	//contextTypes: {
+	//	routerLocation: React.PropTypes.object.isRequired,
+	//},
 
 	render() {
 		const { activeItem, menuItems, 
@@ -52,7 +48,7 @@ const SideMenuLayout = React.createClass({
 					</div>
 				</div>
 			</div>
-	);
+		);
 	}
 });
 

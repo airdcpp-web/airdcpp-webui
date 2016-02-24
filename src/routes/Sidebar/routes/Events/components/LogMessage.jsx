@@ -10,6 +10,7 @@ const getIcon = (severity) => {
 		case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
 		case SeverityEnum.WARNING: return IconConstants.WARNING;
 		case SeverityEnum.ERROR: return IconConstants.ERROR;
+		default: return '';
 	}
 };
 

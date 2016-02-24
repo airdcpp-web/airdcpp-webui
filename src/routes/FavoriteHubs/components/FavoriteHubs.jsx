@@ -15,6 +15,7 @@ import ActionButton from 'components/ActionButton';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import '../style.css';
 
@@ -29,6 +30,7 @@ const PasswordCell = ({ cellData, rowData }) => (
 );
 
 const FavoriteHubs = React.createClass({
+	mixins: [ LocationContext ],
 	_rowClassNameGetter(rowData) {
 		switch (rowData.connect_state.id) {
 			case ConnectStateEnum.CONNECTING:
@@ -56,18 +58,14 @@ const FavoriteHubs = React.createClass({
 		return (
 			<VirtualTable
 				rowClassNameGetter={ this._rowClassNameGetter }
-				footerData={footerData}
-				store={FavoriteHubStore}
+				footerData={ footerData }
+				store={ FavoriteHubStore }
 			>
 				<Column
 					name="State"
 					width={45}
 					columnKey="connect_state"
-					cell={ editAccess ? (
-						<ConnectStateCell
-							location={ this.props.location }
-						/> 
-					) : null }
+					cell={ editAccess ? <ConnectStateCell/> : null }
 					flexGrow={3}
 				/>
 				<Column
@@ -79,8 +77,8 @@ const FavoriteHubs = React.createClass({
 						<ActionCell 
 							actions={ FavoriteHubActions } 
 							ids={[ 'edit', 'remove' ]}
-							location={ this.props.location }
-						/> }
+						/> 
+					}
 				/>
 				<Column
 					name="Address"

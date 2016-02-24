@@ -4,12 +4,12 @@ import DownloadActions from 'actions/DownloadActions';
 
 
 export default function (Component) {
-	const DownloadMenu = ({ handler, user, itemInfo, location, caption, ...other }) => {
+	const DownloadMenu = ({ handler, user, itemInfo, caption, ...other }, { routerLocation }) => {
 		const data = {
 			user,
 			handler,
 			itemInfo,
-			location
+			location: routerLocation
 		};
 		
 		return (
@@ -20,6 +20,10 @@ export default function (Component) {
 				{ ...other }
 			/>
 		);
+	};
+
+	DownloadMenu.contextTypes = {
+		routerLocation: React.PropTypes.object.isRequired,
 	};
 
 	DownloadMenu.propTypes = {
@@ -38,11 +42,6 @@ export default function (Component) {
 		 * Additional data to be passed to the handler
 		 */
 		itemInfo: React.PropTypes.any,
-
-		/**
-		 * Location from component props
-		 */
-		location: React.PropTypes.object.isRequired
 	};
 
 

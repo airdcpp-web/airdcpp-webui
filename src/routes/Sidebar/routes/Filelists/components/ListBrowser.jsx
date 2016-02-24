@@ -11,6 +11,7 @@ import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import History from 'utils/History';
+//import { Lifecycle } from 'mixins/RouterMixin';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
@@ -20,8 +21,10 @@ import Loader from 'components/semantic/Loader';
 
 
 const ListBrowser = React.createClass({
+	/*mixins: [ Lifecycle ],
+
 	// Disabled, doesn't work (investigate later)
-	/*componentWillUnmount() {
+	componentWillUnmount() {
 		clearTimeout(this.historyLeaveTimeout);
 	},
 
@@ -30,6 +33,11 @@ const ListBrowser = React.createClass({
 			this.historyLeaveTimeout = setTimeout(() => this.historyLeaveTimeout = null, 2000);
 			return false;
 		}
+	},
+
+	contextTypes: {
+		route: React.PropTypes.object.isRequired,
+		router: React.PropTypes.object.isRequired,
 	},*/
 
 	_rowClassNameGetter(rowData) {
@@ -37,11 +45,17 @@ const ListBrowser = React.createClass({
 	},
 
 	_handleClickDirectory(path) {
+		this.hasClickedDirectory = true;
+
 		// Handle it through location state data
 		History.pushSidebarData(this.props.location, { directory: path });
 	},
 
 	componentWillMount() {
+		//const { route, router } = this.context;
+		//router.setRouteLeaveHook(route, this.routerWillLeave);
+
+
 		const { item, location } = this.props;
 
 		const data = History.getSidebarData(location);
@@ -109,7 +123,6 @@ const ListBrowser = React.createClass({
 				caption={ caption }
 				user={ this.props.item.user }
 				itemInfo={ this.props.item.location }
-				location={ this.props.location }
 				handler={ FilelistActions.download } 
 			>
 				<ActionMenu
@@ -117,7 +130,6 @@ const ListBrowser = React.createClass({
 						directory: this.props.item.location,
 						session: this.props.item,
 					} }
-					location={ this.props.location }
 					actions={ FilelistActions }
 					ids={ [ 'reloadDirectory', 'refreshShare' ] } 
 				/>
@@ -126,7 +138,7 @@ const ListBrowser = React.createClass({
 	},
 
 	render() {
-		const { item, location } = this.props;
+		const { item } = this.props;
 		return (
 			<div className="filelist-browser">
 				<BrowserBar 
@@ -153,7 +165,6 @@ const ListBrowser = React.createClass({
 							<FileDownloadCell 
 								clickHandlerGetter={ this.onClickDirectory }
 								userGetter={ _ => item.user }
-								location={ location }
 								handler={ FilelistActions.download } 
 							/> 
 						}

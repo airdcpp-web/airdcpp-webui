@@ -14,11 +14,10 @@ import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
 
 
-const NickCell = ({ location, cellData, rowData, ...props }) => (
+const NickCell = ({ cellData, rowData, ...props }) => (
 	<TableUserMenu 
 		text={ cellData } 
 		user={ rowData }
-		location={ location }
 		userIcon={ true }
 	/>
 );
@@ -27,8 +26,12 @@ const HubUserTable = React.createClass({
 	propTypes: {
 		item: React.PropTypes.object, // required
 
-		location: React.PropTypes.object, // required
+		//location: React.PropTypes.object, // required
 	},
+
+	//contextTypes: {
+	//	routerLocation: React.PropTypes.object.isRequired,
+	//},
 
 	rowClassNameGetter(user) {
 		return user.flags.join(' ');
@@ -73,9 +76,7 @@ const HubUserTable = React.createClass({
 					columnKey="nick"
 					flexGrow={8}
 					cell={ 
-						<NickCell 
-							location={ this.props.location }
-						/> 
+						<NickCell/> 
 					}
 				/>
 				<Column

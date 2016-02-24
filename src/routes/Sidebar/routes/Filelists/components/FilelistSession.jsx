@@ -4,14 +4,14 @@ import React from 'react';
 import ListBrowser from './ListBrowser';
 import FilelistFooter from './FilelistFooter';
 
-import { RouteContext } from 'react-router';
+import { RouterContext, LocationContext } from 'mixins/RouterMixin';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 
 const FilelistSession = React.createClass({
-	mixins: [ RouteContext ],
+	mixins: [ LocationContext ],
 	render() {
 		const { user, location, state } = this.props.item;
 

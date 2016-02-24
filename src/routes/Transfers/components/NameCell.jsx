@@ -4,7 +4,7 @@ import { FileNameFormatter } from 'utils/IconFormat';
 import Popup from 'components/semantic/Popup';
 
 
-const NameCaption = ({ cellData, rowData, location }) => (
+const NameCaption = ({ cellData, rowData }) => (
 	<Popup 
 		triggerClassName="name" 
 		className="basic target" 

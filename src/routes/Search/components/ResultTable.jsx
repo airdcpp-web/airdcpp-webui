@@ -11,6 +11,8 @@ import TypeConvert from 'utils/TypeConvert';
 import { TableUserMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
+import { LocationContext } from 'mixins/RouterMixin';
+
 
 const getUserCaption = (cellData) => {
 	let caption = cellData.user.nicks;
@@ -21,18 +23,18 @@ const getUserCaption = (cellData) => {
 	return caption;
 };
 
-const UserCell = ({ location, cellData, rowData, ...props }) => (
+const UserCell = ({ cellData, rowData, ...props }) => (
 	<TableUserMenu 
 		text={ getUserCaption(cellData) } 
 		user={ cellData.user }
 		directory={ rowData.path }
-		location={ location }
 		userIcon={ 'simple' }
 		ids={ [ 'browse', 'message' ] }
 	/>
 );
 
 const ResultTable = React.createClass({
+	mixins: [ LocationContext ],
 	_rowClassNameGetter(rowData) {
 		return TypeConvert.dupeToStringType(rowData.dupe);
 	},
@@ -81,7 +83,6 @@ const ResultTable = React.createClass({
 					flexGrow={8}
 					cell={
 						<FileDownloadCell 
-							location={ this.props.location }
 							handler={ SearchActions.download } 
 							userGetter={ (rowData) => rowData.users.user }
 						/>  
@@ -119,7 +120,7 @@ const ResultTable = React.createClass({
 					width={120}
 					columnKey="users"
 					flexGrow={3}
-					cell={ <UserCell location={this.props.location}/> }
+					cell={ <UserCell/> }
 				/>
 				<Column
 					name="Last modified"

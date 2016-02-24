@@ -7,11 +7,6 @@ import History from 'utils/History';
 const SessionNewButton = React.createClass({
 	propTypes: {
 		/**
-		 * Location object
-		 */
-		location: React.PropTypes.object.isRequired,
-
-		/**
 		 * Base URL of the section
 		 */
 		url: React.PropTypes.string.isRequired,
@@ -20,6 +15,10 @@ const SessionNewButton = React.createClass({
 		 * Title of the button
 		 */
 		title: React.PropTypes.node.isRequired,
+	},
+
+	contextTypes: {
+		routerLocation: React.PropTypes.object.isRequired,
 	},
 
 	getDefaultProps() {
@@ -31,7 +30,7 @@ const SessionNewButton = React.createClass({
 	onClick: function (evt) {
 		evt.preventDefault();
 
-		History.pushSidebar(this.props.location, this.props.url);
+		History.pushSidebar(this.context.routerLocation, this.props.url);
 	},
 
 	render: function () {

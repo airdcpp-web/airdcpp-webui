@@ -56,11 +56,6 @@ export default function (Component) {
 		}).isRequired,
 
 		/**
-		 * Router location
-		 */
-		location: React.PropTypes.object.isRequired,
-
-		/**
 		 * No icon is added by default
 		 * Set the 'simple' to use a single color icon for all users
 		 */

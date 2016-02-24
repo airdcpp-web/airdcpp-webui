@@ -12,6 +12,8 @@ import { Column } from 'fixed-data-table';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, SpeedCell, AbbreviatedDurationCell, IpCell } from 'components/table/Cell';
 
+import { LocationContext } from 'mixins/RouterMixin';
+
 import '../style.css';
 
 
@@ -22,6 +24,7 @@ const FlagsCell = ({ cellData }) => (
 );
 
 const Transfers = React.createClass({
+	mixins: [ LocationContext ],
 	isPositive(cellData, rowData) {
 		return cellData > 0;
 	},
@@ -50,7 +53,7 @@ const Transfers = React.createClass({
 					width={150}
 					flexGrow={4}
 					columnKey="user"
-					cell={ <UserCell location={ this.props.location }/> }
+					cell={ <UserCell/> }
 				/>
 				<Column
 					name="Name"
@@ -69,7 +72,7 @@ const Transfers = React.createClass({
 				/>
 				<Column
 					name="Status"
-					width={130}
+					width={140}
 					flexGrow={4}
 					columnKey="status"
 					cell={ <StatusCell/> }

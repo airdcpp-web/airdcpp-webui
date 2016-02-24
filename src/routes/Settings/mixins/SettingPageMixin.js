@@ -19,12 +19,12 @@ const SettingPageMixin = function () {
 
 		contextTypes: {
 			onSettingsChanged: React.PropTypes.func,
-			location: React.PropTypes.object,
+			routerLocation: React.PropTypes.object,
 		},
 
 		childContextTypes: {
 			onSettingsChanged: React.PropTypes.func.isRequired,
-			location: React.PropTypes.object.isRequired
+			routerLocation: React.PropTypes.object.isRequired
 		},
 
 		componentWillMount() {
@@ -34,7 +34,7 @@ const SettingPageMixin = function () {
 		getChildContext() {
 			return {
 				onSettingsChanged: this.onSettingsChangedInternal,
-				location: this.context.location || this.props.location,
+				routerLocation: this.context.routerLocation || this.props.location,
 			};
 		},
 

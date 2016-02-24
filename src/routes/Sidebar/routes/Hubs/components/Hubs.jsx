@@ -39,7 +39,6 @@ const ItemHandler = {
 	itemHeaderGetter(session, location, actionMenu) {
 		return (
 			<ActionMenu 
-				location={ location } 
 				caption={ session.identity.name } 
 				actions={ HubActions } 
 				itemData={ session } 

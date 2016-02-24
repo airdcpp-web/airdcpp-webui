@@ -16,7 +16,7 @@ import AwayIcon from './AwayIcon';
 
 const MobileMenu = React.createClass({
 	contextTypes: {
-		history: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired
 	},
 
 	componentDidMount() {
@@ -34,7 +34,7 @@ const MobileMenu = React.createClass({
 	onClickSecondary(url, evt) {
 		evt.preventDefault();
 
-		if (!this.context.history.isActive(url)) {
+		if (!this.context.router.isActive(url)) {
 			History.pushSidebar(this.props.location, url);
 		}
 

@@ -28,7 +28,6 @@ const ShareDirectoryLayout = React.createClass({
 					columnKey="path"
 					cell={
 						<ActionCell 
-							location={ this.props.location }
 							actions={ ShareRootActions }
 							ids={[ 'edit', 'remove' ]}
 						/> 

@@ -21,7 +21,7 @@ const SessionDropdown = ({ menuItems, newButton, unreadInfoStore }) => {
 	);
 };
 
-const ItemHeader = ({ itemIcon, itemHeader, location, activeItem, actionMenu }) => (
+const ItemHeader = ({ itemIcon, itemHeader, activeItem, actionMenu }) => (
 	<div className="session-header">
 		{ itemIcon }
 		{ itemHeader }
@@ -29,13 +29,6 @@ const ItemHeader = ({ itemIcon, itemHeader, location, activeItem, actionMenu }) 
 );
 
 const TopMenuLayout = React.createClass({
-	propTypes: {
-		/**
-		 * Location object
-		 */
-		location: React.PropTypes.object.isRequired,
-	},
-
 	render() {
 		const content = this.props.children;
 		return (

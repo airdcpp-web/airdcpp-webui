@@ -12,36 +12,39 @@ const MessageComposer = React.createClass({
 		 * Handles sending of the message. Receives the text as param.
 		 */
 		handleSend: React.PropTypes.func.isRequired,
-		location: React.PropTypes.object.isRequired,
 	},
 
-	getStorageKey(props) {
-		return 'last_message_' + props.location.pathname;
+	contextTypes: {
+		routerLocation: React.PropTypes.object.isRequired,
+	},
+
+	getStorageKey(context) {
+		return 'last_message_' + context.routerLocation.pathname;
 	},
 
 	saveText() {
 		const { text } = this.state;
-		BrowserUtils.saveSessionProperty(this.getStorageKey(this.props), text);
+		BrowserUtils.saveSessionProperty(this.getStorageKey(this.context), text);
 	},
 
-	loadState(props) {
+	loadState(context) {
 		return {
-			text: BrowserUtils.loadSessionProperty(this.getStorageKey(props), ''),
+			text: BrowserUtils.loadSessionProperty(this.getStorageKey(context), ''),
 		};
 	},
 
 	getInitialState: function () {
-		return this.loadState(this.props);
+		return this.loadState(this.context);
 	},
 
 	componentWillUnmount() {
 		this.saveText();
 	},
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.location.pathname !== this.props.location.pathname) {
+	componentWillReceiveProps(nextProps, nextContext) {
+		if (nextContext.routerLocation.pathname !== this.context.routerLocation.pathname) {
 			this.saveText();
-			this.setState(this.loadState(nextProps));
+			this.setState(this.loadState(nextContext));
 		}
 	},
 

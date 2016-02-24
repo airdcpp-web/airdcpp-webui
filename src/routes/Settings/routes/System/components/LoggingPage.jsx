@@ -39,7 +39,13 @@ const LoggingPage = React.createClass({
 						description={ <a href={ LinkConstants.LOG_HELP_URL } target="_blank">Variable information for Filename and Format fields</a> }
 					/>
 					<Accordion className="styled" controlled={ true }>
-						{ sections.map(section => <LogSection ref={ section } section={ section }/>) }
+						{ sections.map(section => 
+							<LogSection 
+								key={ section }
+								ref={ section } 
+								section={ section }
+							/>
+						) }
 					</Accordion>
 				</div>
 			</div>

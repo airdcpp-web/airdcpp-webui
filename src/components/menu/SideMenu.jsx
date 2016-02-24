@@ -15,13 +15,13 @@ import { getIconMenuItem } from './MenuItem';
 
 const SideMenu = React.createClass({
 	contextTypes: {
-		history: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired
 	},
 
 	onClick(url, evt) {
 		evt.preventDefault();
 
-		if (this.context.history.isActive(url)) {
+		if (this.context.router.isActive(url)) {
 			History.replaceSidebarData(this.props.location, { close: true });
 			return;
 		}
