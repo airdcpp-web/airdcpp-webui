@@ -51,6 +51,12 @@ export const Lifecycle = {
 		invariant(route, 'Route not provided for Lifecycle mixin');
 		invariant(this.routerWillLeave, 'routerWillLeave must exist with Lifecycle mixin');
 
-		router.setRouteLeaveHook(route, this.routerWillLeave);
+		this.removeRouteLeaveHook = router.setRouteLeaveHook(route, this.routerWillLeave);
+	},
+
+	componentWillUnmount() {
+		// React router will remove the hook only when leaving the route
+		// Components may be unmounted without leaving the route when socket connection is closed, which requires manual cleanup
+		this.removeRouteLeaveHook();
 	},
 };

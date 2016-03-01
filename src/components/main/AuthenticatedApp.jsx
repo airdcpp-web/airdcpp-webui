@@ -87,11 +87,13 @@ const AuthenticatedApp = React.createClass({
 	componentWillUpdate(nextProps, nextState) {
 		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
 			// Reconnect (but not too fast)
-			console.log('Socket closed, attempting to reconnect in 2 seconds');
+			console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
 			setTimeout(() => LoginActions.connect(this.state.token), 2000);
 		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
+
+			console.log('UI: Redirecting to login page');
 			this.context.router.replace({
 				state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
 				pathname: '/login',
