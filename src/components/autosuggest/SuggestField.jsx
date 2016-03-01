@@ -26,19 +26,27 @@ const SuggestField = React.createClass({
 		button: React.PropTypes.element,
 
 		placeholder: React.PropTypes.string,
-		initialValue: React.PropTypes.string,
+
+		formValue: React.PropTypes.string,
 	},
 
 	getInitialState() {
 		return {
-			text: this.props.initialValue ? this.props.initialValue : '',
+			text: this.props.formValue,
 		};
 	},
 
 	getDefaultProps() {
 		return {
 			autoFocus: true,
+			formValue: '',
 		};
+	},
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.formValue !== this.props.formValue) {
+			this.setState({ text: nextProps.formValue });
+		}
 	},
 
 	handleSubmit(event, suggestion) {
@@ -97,6 +105,7 @@ const SuggestField = React.createClass({
 		const suggestField = (
 			<Autosuggest 
 				{ ...other }
+				initialValue={ this.props.formValue }
 				inputProps={ inputAttributes } 
 				onSuggestionSelected={ this.onSuggestionSelected }
 			/>

@@ -15,7 +15,7 @@ const AutoSuggestField = t.form.Form.templates.textbox.clone({
 					placeholder={ locals.attrs.placeholder }
 					data={ locals.attrs.suggestionGetter() }
 					onChange={ locals.onChange }
-					initialValue={ locals.value }
+					formValue={ locals.value }
 				/>
 			</div>
 		);
