@@ -102,9 +102,9 @@ const ResultTable = React.createClass({
 					flexGrow={1}
 				/>
 				<Column
-					name="Relevancy"
+					name="Relevance"
 					width={60}
-					columnKey="relevancy"
+					columnKey="relevance"
 					cell={ <DecimalCell/> }
 					flexGrow={1}
 				/>
