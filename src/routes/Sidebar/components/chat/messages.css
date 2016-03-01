@@ -10,7 +10,7 @@
 
 .message-view,
 .chat.session {
-	flex: 100 1 0%;
+	flex: 100 100 0%;
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
