@@ -1,7 +1,7 @@
 const MODULE_URL = 'queue/v0';
 
 export const StatusEnum = {
-	QUEUED: 'queue',
+	QUEUED: 'queued',
 	DOWNLOAD_FAILED: 'download_failed',
 	RECHECK: 'recheck',
 	DOWNLOADED: 'downloaded', // no queued files
