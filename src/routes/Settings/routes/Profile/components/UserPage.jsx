@@ -12,7 +12,7 @@ const Entry = {
 	setting_profile: t.Num,
 };
 
-const Personal = React.createClass({
+const UserPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	onFieldSetting(id, fieldOptions, formValue) {
 		if (id === 'setting_profile') {
@@ -46,4 +46,4 @@ const Personal = React.createClass({
 	}
 });
 
-export default Personal;
+export default UserPage;

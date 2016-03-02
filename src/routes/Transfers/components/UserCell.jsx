@@ -17,7 +17,7 @@ const UserCell = ({ cellData, rowData }) => (
 	<TableUserMenu 
 		user={ cellData }
 		userIcon={ null }
-		ids={ [ 'browse', 'message' ] }
+		ids={ [ 'browse', 'message', 'divider', 'removeSource', 'removeFile' ] }
 		text={ <UserCaption rowData={ rowData } cellData={ cellData }/> }
 	>
 		<TableActionMenu 

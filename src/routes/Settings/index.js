@@ -4,7 +4,7 @@ module.exports = {
 	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [
-				require('./routes/Personal'),
+				require('./routes/Profile'),
 				require('./routes/Connectivity'),
 				require('./routes/SpeedLimits'),
 				require('./routes/Downloads'),

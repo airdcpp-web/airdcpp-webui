@@ -18,7 +18,6 @@ const AwayPage = React.createClass({
 				<SettingForm
 					ref="form"
 					formItems={Entry}
-					onFieldSetting={this.onFieldSetting}
 				/>
 			</div>
 		);

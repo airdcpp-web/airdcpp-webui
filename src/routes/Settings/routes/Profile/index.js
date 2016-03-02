@@ -1,22 +1,25 @@
 module.exports = {
-	path: 'personal',
+	path: 'profile',
 	
 	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
-				path: 'profile', 
-				component: require('./components/UserProfilePage').default, 
+				path: 'user', 
+				component: require('./components/UserPage').default, 
 			}, {
 				path: 'away', 
 				component: require('./components/AwayPage').default, 
+			}, {
+				path: 'miscellaneous', 
+				component: require('./components/MiscPage').default, 
 			} ]);
-		}, 'settings-personal-children');
+		}, 'settings-profile-children');
 	},
 
 	getComponent(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, require('../../components/SettingSection').default);
-		}, 'settings-personal');
+		}, 'settings-profile');
 	},
 };
 

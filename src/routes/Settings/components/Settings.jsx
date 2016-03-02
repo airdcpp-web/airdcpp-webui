@@ -12,18 +12,24 @@ import '../style.css';
 
 const menu = [
 	{
-		url: 'personal',
-		title: 'Personal',
+		url: 'profile',
+		title: 'Profile',
 		icon: 'user',
 		menuItems: [
 			{ 
-				title: 'User profile', 
-				url: 'profile' 
+				title: 'User', 
+				url: 'user' 
 			}, { 
 				title: 'Away mode', 
 				url: 'away' 
+			}, 
+		],
+		advancedMenuItems: [
+			{ 
+				title: 'Miscellaneous', 
+				url: 'miscellaneous' 
 			},
-		]
+		],
 	}, {
 		url: 'connectivity',
 		title: 'Connectivity',
@@ -38,8 +44,7 @@ const menu = [
 		advancedMenuItems: [
 			{ 
 				title: 'IPv4 connectivity (manual)', 
-				url: 
-				'v4' 
+				url: 'v4' 
 			}, {
 				title: 'IPv6 connectivity (manual)', 
 				url: 'v6' 
