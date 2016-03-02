@@ -17,13 +17,13 @@ const UserCell = ({ cellData, rowData }) => (
 	<TableUserMenu 
 		user={ cellData }
 		userIcon={ null }
-		ids={ [ 'browse', 'message', 'divider', 'removeSource', 'removeFile' ] }
+		ids={ [ 'browse', 'message' ] }
 		text={ <UserCaption rowData={ rowData } cellData={ cellData }/> }
 	>
 		<TableActionMenu 
 			itemData={ rowData }
 			actions={ TransferActions } 
-			ids={ [ 'force', 'disconnect' ] }
+			ids={ [ 'force', 'disconnect', 'divider', 'removeSource', 'removeFile' ] }
 		/>
 	</TableUserMenu>
 );

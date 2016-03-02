@@ -61,6 +61,11 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 		ids = [ 'divider', ...ids ];
 	}
 
+	// The last element should never be divider
+	if (ids[ids.length-1] === 'divider') {
+		ids.pop();
+	}
+
 	return {
 		actionIds: ids,
 		itemData: props.itemData,
