@@ -43,7 +43,17 @@ export const PasswordDialog = function (title, text, onApproved) {
 	const dialogOptions = {
 		icon: 'yellow lock',
 		approveCaption: 'Set password',
-		content: text,
+
+		// A hack to cheat browser not to use autofill for the real password field
+		// (some browsers can be really desperate with finding login forms...)
+		// https://github.com/airdcpp-web/airdcpp-webclient/issues/100
+		content: (
+			<div>
+				<input style={{ display: 'none' }}/>
+				<input type="password" style={{ display: 'none' }}/>
+				{ text }
+			</div>
+		),
 		title: title,
 	};
 
