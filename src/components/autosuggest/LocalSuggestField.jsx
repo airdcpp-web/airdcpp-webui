@@ -32,7 +32,7 @@ export default React.createClass({
 		}
 
 		this.setState({ 
-			suggestions: newValue ? this.filterSuggestions(newValue) : this.props.data,
+			suggestions: newValue ? this.filterSuggestions(newValue) : [],
 		});
 	},
 
