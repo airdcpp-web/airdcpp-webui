@@ -107,9 +107,9 @@ const ShareDirectoryDialog = React.createClass({
 				fieldOptions['disabled'] = true;
 			}
 			
-			fieldOptions['attrs'] = {
+			fieldOptions['attrs'] = Object.assign(fieldOptions['attrs'] || {}, {
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
-			};
+			});
 		} else if (id === 'virtual_name') {
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;

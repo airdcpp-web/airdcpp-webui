@@ -67,6 +67,12 @@ const SettingPageMixin = function () {
 		},
 
 		routerWillLeave(nextLocation) {
+			// Are we opening a dialog?
+			// Check later if this is fixed by https://github.com/reactjs/react-router/pull/3107
+			if (nextLocation.pathname.indexOf(this.props.location.pathName) === -1) {
+				return null;
+			}
+
 			if (this.changedProperties.size > 0 && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT)) {
 				return 'You have unsaved changes. Are you sure you want to leave?';
 			}

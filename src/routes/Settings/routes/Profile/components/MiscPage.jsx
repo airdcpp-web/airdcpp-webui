@@ -10,30 +10,15 @@ import t from 'utils/tcomb-form';
 import '../style.css';
 
 const Entry = {
-	//nmdc_encoding: t.Str,
 	auto_follow_redirects: t.Bool,
 	disconnect_offline_users: t.Bool,
+	disconnect_hubs_noreg: t.Bool,
 };
-
-/*const Encodings = [
-	'Central_Europe.cp1250',
-	'Cyrillic.cp1251',
-	'Western_Europe.cp1252',
-	'Greek.cp1253',
-	'Turkish.cp1254',
-	'Hebrew.cp1255',
-];*/
 
 const MiscPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	onFieldSetting(id, fieldOptions, formValue) {
 		if (id === 'nmdc_encoding') {
-			/*fieldOptions['factory'] = t.form.Textbox;
-			fieldOptions['template'] = AutoSuggestField;
-			fieldOptions['attrs'] = {
-				suggestionGetter: () => Encodings,
-				alwaysList: true,
-			};*/
 			fieldOptions['help'] = (
 				<div>
 					Encoding setting is only used in NMDC hub. ADC hubs will always use UTF-8 encoding.
@@ -57,6 +42,9 @@ const MiscPage = React.createClass({
 
 	render() {
 		let entry = Entry;
+
+		// The locale-specific system encoding is used on Windows by default
+		// while other system use UTF-8
 		if (LoginStore.systemInfo.platform !== 'windows') {
 			entry = Object.assign({}, entry, {
 				nmdc_encoding: t.Str,

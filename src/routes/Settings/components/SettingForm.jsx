@@ -69,10 +69,14 @@ const SettingForm = React.createClass({
 			fieldOptions['legend'] = legend;
 		}
 
-		// Path?
-		if (sourceItem.type == 'file_path' || sourceItem.type == 'directory_path') {
+		// Path? 
+		// TODO: implement dialog also for file paths
+		if (/*sourceItem.type === 'file_path' ||*/ sourceItem.type === 'directory_path') {
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = BrowseField;
+			fieldOptions['attrs'] = {
+				isFile: sourceItem.type === 'file_path'
+			};
 		} else if (sourceItem.type === 'long_text') {
 			fieldOptions['type'] = 'textarea';
 		}

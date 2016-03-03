@@ -27,6 +27,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 				subHeader: locals.label,
 				initialPath: locals.value ? locals.value : '',
 				historyId: locals.attrs && !locals.value ? locals.attrs.historyId : undefined,
+				isFile: locals.attrs.isFile,
 			});
 		};
 
