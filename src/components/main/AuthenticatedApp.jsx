@@ -40,6 +40,15 @@ const AuthenticatedApp = React.createClass({
 		router: React.PropTypes.object
 	},
 
+	updateTitle() {
+		let title = 'AirDC++ Web Client';
+		if (LoginStore.systemInfo) {
+			title = LoginStore.systemInfo.hostname + ' - ' + title;
+		}
+
+		document.title = title;
+	},
+
 	onSocketAuthenticated() {
 		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
 			PrivateChatActions.fetchSessions();
@@ -62,6 +71,8 @@ const AuthenticatedApp = React.createClass({
 		}
 
 		SystemActions.fetchAway();
+
+		this.updateTitle();
 	},
 
 	componentWillMount() {
@@ -98,6 +109,8 @@ const AuthenticatedApp = React.createClass({
 				state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
 				pathname: '/login',
 			});
+
+			this.updateTitle();
 		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
 			this.onSocketAuthenticated();
 		}

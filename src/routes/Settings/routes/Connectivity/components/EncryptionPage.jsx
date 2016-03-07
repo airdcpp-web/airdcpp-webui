@@ -2,6 +2,8 @@ import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
+import Message from 'components/semantic/Message';
+
 import t from 'utils/tcomb-form';
 
 const Entry = {
@@ -33,6 +35,10 @@ const Encryption = React.createClass({
 				/>
 
 				<div className="ui form header">Certificate files</div>
+				<Message
+					icon="blue info"
+					description="New certificates will be used after the client is restarted"
+				/>
 				<SettingForm
 					ref="path-form"
 					formItems={PathEntry}
