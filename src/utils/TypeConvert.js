@@ -1,17 +1,12 @@
-import { DupeEnum } from 'constants/DupeConstants';
 import { UrgencyEnum } from 'constants/UrgencyConstants';
 
 export default {
-	dupeToStringType: function (dupeEnum) {
-		switch (dupeEnum) {
-			case DupeEnum.SHARE_PARTIAL: return 'dupe share partial';
-			case DupeEnum.SHARE_FULL: return 'dupe share full';
-			case DupeEnum.QUEUE_PARTIAL: return 'dupe queue partial';
-			case DupeEnum.QUEUE_FULL: return 'dupe queue full';
-			case DupeEnum.QUEUE_FINISHED: return 'dupe queue finished';
-			case DupeEnum.SHARE_QUEUE: return 'dupe share queue';
-			default: return '';
+	dupeToStringType: function (dupeInfo) {
+		if (!dupeInfo) {
+			return '';
 		}
+
+		return 'dupe ' + dupeInfo.id.replace('_', ' ');
 	},
 
 	userOnlineStatusToColor: function (flags) {

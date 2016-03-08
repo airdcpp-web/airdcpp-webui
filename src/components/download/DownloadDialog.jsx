@@ -16,7 +16,6 @@ import { RouteContext } from 'mixins/RouterMixin';
 import DownloadFileBrowser from './DownloadFileBrowser';
 import { PathList, AccordionTargets } from './DownloadTargets';
 
-import TypeConvert from 'utils/TypeConvert';
 import FileUtils from 'utils/FileUtils';
 import BrowserUtils from 'utils/BrowserUtils';
 
@@ -121,13 +120,15 @@ const DownloadDialog = React.createClass({
 		this.fetchPaths(HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR, 'history_paths');
 
 		const { itemInfo } = this.props;
-		const dupeName = TypeConvert.dupeToStringType(itemInfo.dupe);
-		if (dupeName.indexOf('queue') > -1) {
-			this.fetchDupePaths(QueueConstants.DUPE_PATHS_URL);
-		}
+		if (itemInfo.dupe) {
+			const dupeId = itemInfo.dupe.id;
+			if (dupeId.indexOf('queue') > -1 || dupeId.indexOf('finished') > -1) {
+				this.fetchDupePaths(QueueConstants.DUPE_PATHS_URL);
+			}
 
-		if (dupeName.indexOf('share') > -1) {
-			this.fetchDupePaths(ShareConstants.DUPE_PATHS_URL);
+			if (dupeId.indexOf('share') > -1) {
+				this.fetchDupePaths(ShareConstants.DUPE_PATHS_URL);
+			}
 		}
 	},
 

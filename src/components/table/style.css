@@ -25,13 +25,13 @@
 .virtual-table .cell-wrapper.dupe.queue.full, 
 .virtual-table .cell-wrapper.dupe.queue.full span,
 .virtual-table .cell-wrapper.dupe.queue.full a {
-	color: orange !important;
+	color: #FFA500 !important;
 }
 
 .virtual-table .cell-wrapper.dupe.queue.partial, 
 .virtual-table .cell-wrapper.dupe.queue.partial span,
 .virtual-table .cell-wrapper.dupe.queue.partial a {
-	color: #C1933E !important;
+	color: #FFCA68 !important;
 }
 
 .virtual-table .cell-wrapper.dupe.share.full, 
@@ -46,10 +46,16 @@
 	color: #FFA2FF !important;
 }
 
-.virtual-table .cell-wrapper.dupe.queue.finished, 
-.virtual-table .cell-wrapper.dupe.queue.finished span,
-.virtual-table .cell-wrapper.dupe.queue.finished a {
-	color: green;
+.virtual-table .cell-wrapper.dupe.finished.full, 
+.virtual-table .cell-wrapper.dupe.finished.full span,
+.virtual-table .cell-wrapper.dupe.finished.full a {
+	color: green !important;
+}
+
+.virtual-table .cell-wrapper.dupe.finished.partial, 
+.virtual-table .cell-wrapper.dupe.finished.partial span,
+.virtual-table .cell-wrapper.dupe.finished.partial a {
+	color: #79FF79 !important;
 }
 
 .public_fixedDataTable_bodyRow a i:hover {

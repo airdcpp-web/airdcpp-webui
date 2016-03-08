@@ -1,10 +1,11 @@
 export const DupeEnum = {
-	NONE: 0,
-	SHARE_PARTIAL: 1,
-	SHARE_FULL: 2,
-	QUEUE_PARTIAL: 3,
-	QUEUE_FULL: 4,
-	QUEUE_FINISHED: 5,
-	SHARE_QUEUE: 6,
+	NONE: 'none',
+	SHARE_PARTIAL: 'share_partial',
+	SHARE_FULL: 'share_full',
+	QUEUE_PARTIAL: 'queue_partial',
+	QUEUE_FULL: 'queue_full',
+	FINISHED_PARTIAL: 'finished_partial',
+	FINISHED_FULL: 'finished_full',
+	SHARE_QUEUE: 'share_queue',
 }
 ;
