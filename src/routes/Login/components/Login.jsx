@@ -64,7 +64,7 @@ const BottomMessage = () => {
 const ENTER_KEY_CODE = 13;
 
 const Login = React.createClass({
-	mixins: [ Reflux.connect(LoginStore) ],
+	mixins: [ Reflux.connect(LoginStore, 'login') ],
 	contextTypes: {
 		router: React.PropTypes.object
 	},
@@ -76,12 +76,12 @@ const Login = React.createClass({
 	},
 
 	componentWillUpdate(nextProps, nextState) {
-		if (nextState.socketAuthenticated) {
+		if (nextState.login.socketAuthenticated) {
 			const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
 			this.context.router.replace({
 				pathname: nextPath,
 			});
-		} else if (this.state.loading && nextState.lastError !== null) {
+		} else if (this.state.loading && nextState.login.lastError !== null) {
 			this.setState({ loading: false });
 		}
 	},
@@ -98,7 +98,6 @@ const Login = React.createClass({
 		evt.preventDefault();
 
 		if (username === '' || password === '') {
-			this.setState({ lastError: 'Please enter both username and password' });
 			return;
 		}
 
@@ -128,7 +127,7 @@ const Login = React.createClass({
 							<SubmitButton
 								onSubmit={ this.onSubmit }
 								loading={ this.state.loading }
-								allowLogin={ this.state.allowLogin }
+								allowLogin={ LoginStore.allowLogin }
 							/>
 						</div>
 
@@ -136,8 +135,8 @@ const Login = React.createClass({
 					</form>
 
 					<ErrorBox 
-						userLoggedIn={this.state.userLoggedIn} 
-						lastError={this.state.lastError}
+						userLoggedIn={ LoginStore.isLoggedIn } 
+						lastError={ LoginStore.lastError }
 					/>
 				</div>
 			</div>

@@ -160,6 +160,10 @@ const LoginStore = Reflux.createStore({
 	get showNewUserIntro() {
 		return this.loginProperties[LoginConstants.RUN_WIZARD];
 	},
+
+	get allowLogin() {
+		return this._allowLogin;
+	}
 });
 
 export default LoginStore;

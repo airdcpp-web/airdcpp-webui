@@ -35,7 +35,7 @@ const showSideBar = (props) => {
 };
 
 const AuthenticatedApp = React.createClass({
-	mixins: [ Reflux.connect(LoginStore), SetContainerSize ],
+	mixins: [ Reflux.connect(LoginStore, 'login'), SetContainerSize ],
 	contextTypes: {
 		router: React.PropTypes.object
 	},
@@ -76,7 +76,7 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	componentWillMount() {
-		if (this.state.socketAuthenticated) {
+		if (this.state.login.socketAuthenticated) {
 			this.onSocketAuthenticated();
 		}
 
@@ -96,11 +96,11 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	componentWillUpdate(nextProps, nextState) {
-		if (nextState.userLoggedIn && this.state.socketAuthenticated && !nextState.socketAuthenticated) {
+		if (nextState.login.userLoggedIn && this.state.login.socketAuthenticated && !nextState.login.socketAuthenticated) {
 			// Reconnect (but not too fast)
 			console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
-			setTimeout(() => LoginActions.connect(this.state.token), 2000);
-		} else if (this.state.userLoggedIn && !nextState.userLoggedIn) {
+			setTimeout(() => LoginActions.connect(this.state.login.token), 2000);
+		} else if (this.state.login.userLoggedIn && !nextState.login.userLoggedIn) {
 			// Go to the login page as we don't have a valid session anymore
 			// Return to this page if the session was lost (instead of having logged out) 
 
@@ -111,16 +111,16 @@ const AuthenticatedApp = React.createClass({
 			});
 
 			this.updateTitle();
-		} else if (!this.state.socketAuthenticated && nextState.socketAuthenticated) {
+		} else if (!this.state.login.socketAuthenticated && nextState.login.socketAuthenticated) {
 			this.onSocketAuthenticated();
 		}
 	},
 
 	render() {
 		invariant(this.props.children, 'AuthenticatedApp should always have children');
-		if (!this.state.socketAuthenticated) {
+		if (!this.state.login.socketAuthenticated) {
 			// Dim the screen until the server can be reached (we can't do anything without the socket)
-			return <SocketConnectStatus active={true} lastError={this.state.lastError}/>;
+			return <SocketConnectStatus active={true} lastError={this.state.login.lastError}/>;
 		}
 
 

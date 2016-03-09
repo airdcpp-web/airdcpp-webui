@@ -7,7 +7,7 @@ import ActivityStore from 'stores/ActivityStore';
 
 
 const AwayIcon = React.createClass({
-	mixins: [ Reflux.connect(ActivityStore) ],
+	mixins: [ Reflux.connect(ActivityStore, 'activityState') ],
 
 	isAway() {
 		return ActivityStore.away !== AwayEnum.OFF;
