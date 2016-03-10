@@ -22,7 +22,9 @@ export const QueueActions = Reflux.createActions([
 	} },
 	{ 'setBundlePriority': { 
 		asyncResult: true,
-		displayName: 'Set priority' 
+	} },
+	{ 'setBundleAutoPriority': { 
+		asyncResult: true,
 	} },
 	{ 'removeBundle': { 
 		asyncResult: true, 
@@ -96,6 +98,15 @@ QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
 	let that = this;
 	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundleId, {
 		priority: newPrio
+	})
+		.then(that.completed)
+		.catch(that.failed);
+});
+
+QueueActions.setBundleAutoPriority.listen(function (bundleId, autoPrio) {
+	let that = this;
+	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundleId, {
+		auto_priority: autoPrio
 	})
 		.then(that.completed)
 		.catch(that.failed);

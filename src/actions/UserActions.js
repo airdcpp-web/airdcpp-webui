@@ -40,6 +40,7 @@ export const UserActions = Reflux.createActions([
 		filter: checkFlags,
 		icon: IconConstants.FILELIST
 	} },
+	'divider',
 	{ 'ignore': { 
 		asyncResult: true,	
 		displayName: 'Ignore messages', 

@@ -1,4 +1,5 @@
 import React from 'react';
+import deepEqual from 'deep-equal';
 
 import { PriorityEnum } from 'constants/QueueConstants';
 import QueueActions from 'actions/QueueActions';
@@ -24,12 +25,16 @@ const PriorityMenu = React.createClass({
 		item: React.PropTypes.object.isRequired,
 	},
 
-	setPriority: function (priority) {
-		QueueActions.setBundlePriority(this.props.item.id, priority.id);
+	setPriority: function (priorityId) {
+		QueueActions.setBundlePriority(this.props.item.id, priorityId);
+	},
+
+	toggleAutoPriority: function () {
+		QueueActions.setBundleAutoPriority(this.props.item.id, !this.props.itemPrio.auto);
 	},
 
 	shouldComponentUpdate: function (nextProps, nextState) {
-		return nextProps.item.priority.id !== this.props.item.priority.id;
+		return !deepEqual(nextProps.item.priority, this.props.item.priority);
 	},
 
 	getPriorityListItem: function (priority) {
@@ -37,7 +42,7 @@ const PriorityMenu = React.createClass({
 			<DropdownItem 
 				key={ priority.id }
 				active={ this.props.item.priority.id === priority.id } 
-				onClick={ () => this.setPriority(priority) }
+				onClick={ () => this.setPriority(priority.id) }
 			>
 				{ priority.str }
 			</DropdownItem>
@@ -45,7 +50,11 @@ const PriorityMenu = React.createClass({
 	},
 
 	render: function () {
-		const caption = this.props.itemPrio.str;
+		let caption = this.props.itemPrio.str;
+		if (this.props.itemPrio.auto) {
+			caption += ' (auto)';
+		}
+
 		if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
 			return (
 				<EmptyDropdown
@@ -54,9 +63,21 @@ const PriorityMenu = React.createClass({
 			);
 		}
 
+		let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
+		children.push(<div key="divider" className="ui divider"/>);
+		children.push(
+			<DropdownItem 
+				key="auto"
+				active={ this.props.itemPrio.auto } 
+				onClick={ this.toggleAutoPriority }
+			>
+				Auto
+			</DropdownItem>
+		);
+
 		return (
 			<TableDropdown caption={ caption } className="priority-menu">
-				{ Object.keys(PriorityEnum.properties).map((prioKey) => this.getPriorityListItem(PriorityEnum.properties[prioKey])) }
+				{ children }
 			</TableDropdown>
 		);
 	}
