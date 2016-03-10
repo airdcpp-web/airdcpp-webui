@@ -9,6 +9,7 @@ const Entry = {
 	alt_search_auto: t.Bool,
 	alt_search_max_sources: t.Positive,
 	max_sources_match_queue: t.Positive,
+	allow_match_full_list: t.Bool,
 };
 
 const SearchMatchingPage = React.createClass({
