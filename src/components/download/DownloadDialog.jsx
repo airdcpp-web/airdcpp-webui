@@ -97,23 +97,6 @@ const DownloadDialog = React.createClass({
 		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error('Failed to fetch paths', requestPath, error.message));
 	},
 
-	fetchDupePaths(requestPath) {
-		const { itemInfo } = this.props;
-
-		let data = {};
-		if (FileUtils.isDirectory(itemInfo.path)) {
-			data['path'] = itemInfo.path;
-		} else {
-			data['tth'] = itemInfo.tth;
-		}
-
-		SocketService.post(requestPath, data)
-			.then(data => this.setState({ 
-				dupe_paths: this.state.dupe_paths.concat(data.map(path => FileUtils.getParentPath(path, FileUtils)))
-			}))
-			.catch(error => console.error('Failed to fetch dupe paths', requestPath, error.message));
-	},
-
 	componentDidMount() {
 		this.fetchPaths(ShareConstants.GROUPED_ROOTS_GET_URL, 'share_paths');
 		this.fetchPaths(FavoriteDirectoryConstants.DIRECTORIES_URL, 'favorite_paths');
@@ -121,14 +104,9 @@ const DownloadDialog = React.createClass({
 
 		const { itemInfo } = this.props;
 		if (itemInfo.dupe) {
-			const dupeId = itemInfo.dupe.id;
-			if (dupeId.indexOf('queue') > -1 || dupeId.indexOf('finished') > -1) {
-				this.fetchDupePaths(QueueConstants.DUPE_PATHS_URL);
-			}
-
-			if (dupeId.indexOf('share') > -1) {
-				this.fetchDupePaths(ShareConstants.DUPE_PATHS_URL);
-			}
+			this.setState({ 
+				dupe_paths: itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils))
+			});
 		}
 	},
 

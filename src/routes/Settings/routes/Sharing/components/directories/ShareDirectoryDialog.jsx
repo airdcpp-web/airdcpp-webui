@@ -68,7 +68,10 @@ const ShareDirectoryDialog = React.createClass({
 
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
-			const sourceData = FormUtils.valueMapToInfo({ virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) });
+			const sourceData = FormUtils.valueMapToInfo({ 
+				virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) 
+			});
+			
 			return Promise.resolve(sourceData);
 		}
 
@@ -84,7 +87,10 @@ const ShareDirectoryDialog = React.createClass({
 			return SocketService.post(ShareRootConstants.ROOT_POST_URL, changedFields);
 		}
 
-		return SocketService.post(ShareRootConstants.ROOT_UPDATE_URL, Object.assign(changedFields, { path: this.props.rootEntry.path }));
+		return SocketService.post(ShareRootConstants.ROOT_UPDATE_URL, {
+			path: this.props.rootEntry.path,
+			...changedFields,
+		});
 	},
 
 	getFieldProfiles() {

@@ -41,17 +41,21 @@ const ShareDirectoryLayout = React.createClass({
 					cell={ <SizeCell/> }
 					flexGrow={2}
 				/>
+				{/*<Column
+					name="Content"
+					width={150}
+					columnKey="content"
+				/>*/}
 				<Column
 					name="Virtual name"
 					width={100}
 					columnKey="virtual_name"
-					flexGrow={4}
+					flexGrow={5}
 				/>
 				<Column
 					name="Profiles"
-					width={60}
+					width={65}
 					columnKey="profiles"
-					flexGrow={1}
 				/>
 				<Column
 					name="Last refreshed"
