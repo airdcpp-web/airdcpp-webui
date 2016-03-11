@@ -15,9 +15,15 @@ const NewLayout = React.createClass({
 		subHeader: React.PropTypes.any,
 	},
 
+	getDefaultProps() {
+		return {
+			className: '',
+		};
+	},
+
 	render: function () {
 		return (
-			<div className="new-layout">
+			<div className={ 'new-layout ' + this.props.className }>
 				<LayoutHeader
 					className="new"
 					title={ this.props.title }

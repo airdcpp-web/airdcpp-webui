@@ -80,7 +80,7 @@ div.dropdown:not(.table-items) {
 	padding: 5px 5px;
 }
 
-.layout.header .left .content {
+.layout.header.icon .left .content {
 	width: 90%;
 }
 

@@ -8,6 +8,7 @@ const LayoutHeader = ({ className, icon, component, size, title, subHeader }) =>
 
 	const mainClassName = classNames(
 		'header layout',
+		{ 'icon': icon },
 		className,
 	);
 

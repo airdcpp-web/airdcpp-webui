@@ -112,7 +112,7 @@ const SuggestField = React.createClass({
 		);
 
 		const fieldStyle = classNames(
-			'ui fluid action input',
+			'ui fluid input',
 			{ 'action': button },
 			className,
 		);

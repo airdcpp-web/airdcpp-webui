@@ -7,7 +7,7 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, ActionCell, DurationCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
-import ProfileDropdown from './ProfileDropdown';
+import ShareProfileFilter from 'components/table/ShareProfileFilter';
 import RefreshCell from './RefreshCell';
 
 import AccessConstants from 'constants/AccessConstants';
@@ -20,7 +20,7 @@ const ShareDirectoryLayout = React.createClass({
 		return (
 			<VirtualTable
 				store={ ShareRootStore }
-				customFilter={ <ProfileDropdown/> }
+				customFilter={ <ShareProfileFilter/> }
 			>
 				<Column
 					name="Path"

@@ -8,12 +8,12 @@ import TableFilterDecorator from 'decorators/TableFilterDecorator';
 
 const defaultItem = { name: 'All profiles', id: null };
 
-const ProfileDropdown = React.createClass({
+const ShareProfileFilter = React.createClass({
 	propTypes: {
 		/**
 		 * Callback after selecting a profile
 		 */
-		onFilterUpdated: React.PropTypes.func.isRequired,
+		onFilterUpdated: React.PropTypes.func,
 	},
 
 	getInitialState() {
@@ -24,7 +24,9 @@ const ProfileDropdown = React.createClass({
 
 	onClick: function (profile) {
 		this.props.onFilterUpdated(profile.id);
-		this.setState({ selectedProfile: profile });
+		this.setState({ 
+			selectedProfile: profile 
+		});
 	},
 
 	getDropdownItem: function (profile) {
@@ -56,4 +58,4 @@ const ProfileDropdown = React.createClass({
 	}
 });
 
-export default ShareProfileDecorator(TableFilterDecorator(ProfileDropdown, 'profiles'), false);
+export default ShareProfileDecorator(TableFilterDecorator(ShareProfileFilter, 'profiles'), false);

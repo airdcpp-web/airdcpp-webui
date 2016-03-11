@@ -29,3 +29,9 @@
 	height: 100%;
 	overflow: hidden;
 }
+
+.new-layout.filelist .dropdown {
+	margin-top: 10px;
+	color: gray;
+	float: right;
+}
