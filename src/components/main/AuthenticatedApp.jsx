@@ -11,8 +11,8 @@ import ActivityTracker from './ActivityTracker';
 import Notifications from './Notifications';
 import BrowserUtils from 'utils/BrowserUtils';
 
-import MobileLayout from './MobileLayout';
-import MainLayout from './MainLayout';
+import MainLayoutMobile from './MainLayoutMobile';
+import MainLayoutNormal from './MainLayoutNormal';
 
 import SocketConnectStatus from './SocketConnectStatus';
 import SetContainerSize from 'mixins/SetContainerSize';
@@ -132,7 +132,7 @@ const AuthenticatedApp = React.createClass({
 			});
 		}
 
-		const LayoutElement = BrowserUtils.useMobileLayout() ? MobileLayout : MainLayout;
+		const LayoutElement = BrowserUtils.useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
 		return (
 			<div id="authenticated-app">
 				<ActivityTracker/>

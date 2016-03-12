@@ -24,6 +24,21 @@ html.ios, html.ios body {
 	}
 }
 
+.site-header .header-content {
+	width: 100%;
+	background-image: url('../images/AirDCPlusPlus.png') !important;
+	background-repeat: no-repeat !important;
+}
+
+.site-header .right {
+	display: flex;
+	margin-left: auto!important;
+}
+
+.site-header .left {
+	display: flex;
+	margin-right: auto!important;
+}
 
 .login-grid .column {
 	max-width: 650px;

@@ -12,7 +12,7 @@ const IconMenuItem = ({ urgencies, icon, title, indexLink, ...props }) => {
 	return (
 		<LinkElement { ...props }>
 			<CountLabel className="mini" urgencies={urgencies}/>
-			<i className={ icon + ' icon' }></i>
+			<i className={ icon + ' caption icon' }></i>
 			{ title }
 		</LinkElement>
 	);

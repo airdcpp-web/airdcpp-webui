@@ -1,14 +1,16 @@
 'use strict';
 import React from 'react';
-import Logo from '../../../images/AirDCPlusPlus.png';
 
-const SiteHeader = ({ content }) => (
+
+const SiteHeader = ({ leftContent, rightContent }) => (
 	<div className="ui fixed inverted menu site-header">
 		<div className="ui header-content">
-			<div href="#" className="header item">
-				<img className="logo" src={ Logo }/>
+			<div className="left">
+				{ leftContent }
 			</div>
-			{ content }
+			<div className="right">
+				{ rightContent }
+			</div>
 		</div>
 	</div>
 );

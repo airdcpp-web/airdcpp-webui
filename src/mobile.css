@@ -1,24 +1,31 @@
+#mobile-layout .ui.site-content {
+	padding-top: 50px;
+	padding-bottom: 5px;
+}
+
+/* Site header menu */
+#mobile-layout .site-header .header-content {
+	background-position: center center;
+	background-size: 30px 30px;
+	display: flex;
+	height: 45px;
+	padding-top: 3px;
+}
+
+#mobile-layout .site-header .menu-button .label {
+	margin-left: 0px;
+}
+
+/* Navigation menu */
 #mobile-menu {
 	z-index: 100 !important;
 	max-width: 200px;
 	padding-bottom: 10px;
+	/* Allow dropdown menu items to escape the sidebar: https://github.com/Semantic-Org/Semantic-UI/issues/1410 */
+	overflow: visible !important;
 }
 
-#mobile-layout .ui.site-content {
-	padding-top: 60px;
-	padding-bottom: 5px;
-}
-
-#mobile-layout .site-header .container {
-	width: 100%;
-}
-
-#mobile-layout .site-header .right {
-	display: flex;
-	margin-left: auto!important;
-}
-
-#mobile-menu i.icon {
+#mobile-menu i.caption.icon {
 	float: none !important;
 	margin: 0 .5em 0 0 !important;
 }
@@ -27,20 +34,17 @@
 	height: 20px;
 }
 
-#mobile-menu a.logout {
-	margin: 15px auto;
-}
-
-#mobile-menu a.logout:before {
-	width: 0px;
-}
-
-#mobile-menu .actions {
+#mobile-menu .icon-panel {
 	display: flex;
 	justify-content: space-around;
 	margin-top: 20px;
 }
 
+#mobile-menu .icon-panel i {
+	float: none !important;
+}
+
+/* Dialogs */
 .download-dialog .dropdown a.item {
 	display: flex !important;
 	justify-content: space-between;

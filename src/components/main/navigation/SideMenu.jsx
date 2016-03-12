@@ -4,13 +4,9 @@ import React from 'react';
 
 import History from 'utils/History';
 
-import StatisticsIcons from './StatisticsIcons';
-import PerformanceTools from './PerformanceTools';
-import TouchIcon from './TouchIcon';
-import AwayIcon from './AwayIcon';
-
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
-import { getIconMenuItem } from './MenuItem';
+import { getIconMenuItem } from 'components/menu/MenuItem';
+import IconPanel from './IconPanel';
 
 
 const SideMenu = React.createClass({
@@ -41,14 +37,7 @@ const SideMenu = React.createClass({
 					</div>
 				) : null }
 				<div className="ui divider"/>
-				<div>
-					<StatisticsIcons className="ui centered inverted mini list"/>
-				</div>
-				<div className="touch-icon">
-					<AwayIcon/>
-					<TouchIcon/>
-					{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
-				</div>
+				<IconPanel/>
 			</div>
 		);
 	}

@@ -27,6 +27,11 @@ const StatisticsIcon = ({ icon, bytes, formatter }) => {
 
 const StatisticsBar = React.createClass({
 	mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
+	getDefaultProps() {
+		return {
+			className: '',
+		};
+	},
 
 	onSocketConnected(addSocketListener) {
 		addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
@@ -59,7 +64,7 @@ const StatisticsBar = React.createClass({
 
 	render: function () {
 		return (
-			<div className={this.props.className}>
+			<div className={ 'ui centered inverted mini list statistics-icons ' + this.props.className }>
 				<StatisticsIcon 
 					icon={ IconConstants.DOWNLOAD }
 					bytes={ this.state.speed_down }

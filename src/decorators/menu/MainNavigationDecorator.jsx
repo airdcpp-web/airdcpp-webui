@@ -13,7 +13,7 @@ import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 
-const MainNavigationItems = [
+const MainMenuItems = [
 	{
 		title: 'Home',
 		url: '/',
@@ -33,7 +33,11 @@ const MainNavigationItems = [
 		url: '/transfers',
 		icon: IconConstants.TRANSFERS,
 		access: AccessConstants.TRANSFERS,
-	}, {
+	}
+];
+
+const ConfigMenuItems = [
+	{
 		title: 'Favorites',
 		url: '/favorite-hubs',
 		icon: IconConstants.FAVORITE,
@@ -101,7 +105,8 @@ export default function (Component) {
 				<Component 
 					{...this.props} 
 					secondaryMenuItems={ SecondaryMenuItems.filter(filterItem) } 
-					mainMenuItems={ MainNavigationItems.filter(filterItem) }
+					mainMenuItems={ MainMenuItems.filter(filterItem) }
+					configMenuItems={ ConfigMenuItems.filter(filterItem) }
 					logoutItem={ LogoutItem }
 				/>
 			);

@@ -7,7 +7,7 @@ import FilelistActions from 'actions/FilelistActions';
 import ShareProfileSelector from './ShareProfileSelector';
 
 
-const Messages = React.createClass({
+const FilelistNew = React.createClass({
 	_handleSubmit(nick, user) {
 		FilelistActions.createSession(this.props.location, user);
 	},
@@ -26,4 +26,4 @@ const Messages = React.createClass({
 	}
 });
 
-export default Messages;
+export default FilelistNew;

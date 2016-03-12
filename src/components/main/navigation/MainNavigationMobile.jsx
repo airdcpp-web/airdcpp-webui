@@ -3,18 +3,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Dropdown from 'components/semantic/Dropdown';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
-import { getIconMenuItem } from './MenuItem';
+import { getIconMenuItem } from 'components/menu/MenuItem';
 
 import History from 'utils/History';
-
-import StatisticsIcons from './StatisticsIcons';
-import PerformanceTools from './PerformanceTools';
-import TouchIcon from './TouchIcon';
-import AwayIcon from './AwayIcon';
+import IconPanel from './IconPanel';
 
 
-const MobileMenu = React.createClass({
+const MainNavigationMobile = React.createClass({
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
@@ -47,22 +44,30 @@ const MobileMenu = React.createClass({
 	},
 
 	render() {
-		const { secondaryMenuItems, mainMenuItems, logoutItem } = this.props;
+		const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem } = this.props;
+		const moreCaption = (
+			<div>
+				<i className="ellipsis horizontal caption icon"></i>
+				More...
+			</div>
+		);
+
 		return (
-			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
+			<div id="mobile-menu" className="ui left vertical inverted sidebar menu">
 				{ mainMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
+				<Dropdown caption={ moreCaption } triggerIcon="">
+					{ configMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
+					<div className="divider"></div>
+					{ getIconMenuItem(logoutItem.onClick, logoutItem) }
+				</Dropdown>
+
 				<div className="separator"></div>
+
 				{ secondaryMenuItems.map(getIconMenuItem.bind(this, this.onClickSecondary)) }
-				{ getIconMenuItem(logoutItem.onClick, logoutItem) }
-				<div className="actions">
-					<StatisticsIcons className="ui centered inverted mini list"/>
-					<AwayIcon/>
-					<TouchIcon/>
-					{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
-				</div>
+				<IconPanel/>
 			</div>
 		);
 	},
 });
 
-export default MainNavigationDecorator(MobileMenu);
+export default MainNavigationDecorator(MainNavigationMobile);

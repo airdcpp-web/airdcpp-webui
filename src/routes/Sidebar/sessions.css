@@ -6,6 +6,10 @@
 	margin: 0px !important;
 }
 
+.session-container.horizontal a.button-new {
+  padding: .78571429em 1.1em !important;
+}
+
 .session-container.vertical {
   padding: 20px;
   display: flex;

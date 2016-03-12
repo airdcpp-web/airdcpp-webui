@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SiteHeader from './SiteHeader';
-import MobileMenu from 'components/menu/MobileMenu';
+import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import MenuIcon from 'components/menu/MenuIcon';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
@@ -30,15 +30,8 @@ const reduceItemUrgency = (map, menuItem) => {
 	return map;
 };
 
-const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }) => (
-	<div className="right">
-		{ sidebar ? 
-			<Button 
-				className="item" 
-				caption="Back" 
-				icon="blue angle left"
-				onClick={ onClickBack }
-			/> : null }
+const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu }) => (
+	<div className="menu-button">
 		<MenuIcon 
 			urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
 			onClick={ onClickMenu }
@@ -47,7 +40,7 @@ const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu
 	</div>
 ));
 
-const MobileLayout = React.createClass({
+const MainLayoutMobile = React.createClass({
 	getInitialState() {
 		return {
 			menuVisible: false,
@@ -63,27 +56,31 @@ const MobileLayout = React.createClass({
 	},
 
 	render() {
-		const { children, sidebar, secondaryMenuItems, mainMenuItems } = this.props;
+		const { children, sidebar } = this.props;
 		
 		return (
 			<div className={this.props.className} id="mobile-layout">
 				{ this.state.menuVisible ? (
-					<MobileMenu
+					<MainNavigation
 						location={ this.props.location }
-						secondaryMenuItems={ secondaryMenuItems } 
-						mainMenuItems={ mainMenuItems }
 						onClose={ this.onClickMenu }
 					/>
 				) : null }
 				<div className="pusher sidebar-context" id="mobile-layout-inner">
 					<SiteHeader 
-						content={
+						leftContent={
 							<HeaderContent
 								onClickMenu={ this.onClickMenu }
-								onClickBack={ this.onClickBack }
-								secondaryMenuItems={ secondaryMenuItems }
-								sidebar={ sidebar }
 							/>
+						}
+						rightContent={
+							sidebar ? 
+								<Button 
+									className="item" 
+									caption="Back" 
+									icon="blue angle left"
+									onClick={ this.onClickBack }
+								/> : null
 						}
 					/>
 					{ sidebar }
@@ -96,4 +93,4 @@ const MobileLayout = React.createClass({
 	}
 });
 
-export default MobileLayout;
+export default MainLayoutMobile;

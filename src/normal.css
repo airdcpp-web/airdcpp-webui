@@ -11,9 +11,10 @@
 	padding-bottom: 10px;
 }
 
-.site-header .header-content {
+#normal-layout .site-header .header-content {
 	display: flex;
-	width: 100%;
+	background-position: 10px center;
+	background-size: 40px 40px;
 }
 
 /* Sidemenu start */
@@ -41,12 +42,6 @@
 	padding: 10px 8px;
 }
 
-#side-menu .mini.list {
-	margin-left: 10px;
-	margin-right: auto;
-	font-size: 9.5px !important;
-}
-
 #side-menu .item>.label {
 	position: absolute;
 	top: 7px;
@@ -57,13 +52,15 @@
 	margin-top: 0px;
 }
 
-.touch-icon {
+#side-menu .icon-panel .touch-icons {
 	text-align: center;
 	margin-top: 10px;
 }
 
-.touch-icon > i {
-	margin: 0px !important;
+#side-menu .icon-panel .statistics-icons {
+	margin-left: 10px;
+	margin-right: auto;
+	font-size: 9.5px !important;
 }
 
 /* Sidemenu end */
