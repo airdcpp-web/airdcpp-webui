@@ -1,18 +1,11 @@
 #mobile-layout .ui.site-content {
-	padding-top: 50px;
+	padding-top: 60px;
 	padding-bottom: 5px;
 }
 
 /* Site header menu */
-#mobile-layout .site-header .header-content {
-	background-position: center center;
-	background-size: 30px 30px;
-	display: flex;
-	height: 45px;
-	padding-top: 3px;
-}
 
-#mobile-layout .site-header .menu-button .label {
+#mobile-layout .site-header .header-content .label {
 	margin-left: 0px;
 }
 
@@ -32,6 +25,12 @@
 
 #mobile-menu .separator {
 	height: 20px;
+}
+
+/* Semantic has issues with right vertical menu */
+#mobile-menu .dropdown.right .menu {
+	right: 100%;
+	border-radius: .28571429rem 0 .28571429rem .28571429rem;
 }
 
 #mobile-menu .icon-panel {

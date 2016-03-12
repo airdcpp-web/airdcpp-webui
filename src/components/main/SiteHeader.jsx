@@ -1,16 +1,17 @@
 'use strict';
 import React from 'react';
 
+import { IndexLink } from 'react-router';
+import Logo from '../../../images/AirDCPlusPlus.png';
 
-const SiteHeader = ({ leftContent, rightContent }) => (
+
+const SiteHeader = ({ content }) => (
 	<div className="ui fixed inverted menu site-header">
 		<div className="ui header-content">
-			<div className="left">
-				{ leftContent }
-			</div>
-			<div className="right">
-				{ rightContent }
-			</div>
+			<IndexLink to="/" className="item">
+				<img className="logo" src={ Logo }/>
+			</IndexLink>
+			{ content }
 		</div>
 	</div>
 );

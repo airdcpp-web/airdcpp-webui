@@ -53,9 +53,9 @@ const MainNavigationMobile = React.createClass({
 		);
 
 		return (
-			<div id="mobile-menu" className="ui left vertical inverted sidebar menu">
+			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
 				{ mainMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
-				<Dropdown caption={ moreCaption } triggerIcon="">
+				<Dropdown caption={ moreCaption } className="right" triggerIcon="">
 					{ configMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
 					<div className="divider"></div>
 					{ getIconMenuItem(logoutItem.onClick, logoutItem) }

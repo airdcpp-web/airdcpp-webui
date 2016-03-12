@@ -12,10 +12,10 @@
 }
 
 #mobile-layout #sidebar {
-	padding: 40px 5px 5px 5px;
+	padding: 50px 5px 5px 5px;
 }
 
-#mobile-layout #sidebar-container > div {
+#mobile-layout #sidebar-container .session-container {
   padding: 10px;
 }
 

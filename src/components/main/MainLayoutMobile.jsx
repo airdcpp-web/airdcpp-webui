@@ -30,8 +30,15 @@ const reduceItemUrgency = (map, menuItem) => {
 	return map;
 };
 
-const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu }) => (
-	<div className="menu-button">
+const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }) => (
+	<div className="right">
+		{ sidebar ? 
+			<Button 
+				className="item" 
+				caption="Back" 
+				icon="blue angle left"
+				onClick={ onClickBack }
+			/> : null }
 		<MenuIcon 
 			urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
 			onClick={ onClickMenu }
@@ -68,19 +75,12 @@ const MainLayoutMobile = React.createClass({
 				) : null }
 				<div className="pusher sidebar-context" id="mobile-layout-inner">
 					<SiteHeader 
-						leftContent={
+						content={
 							<HeaderContent
 								onClickMenu={ this.onClickMenu }
+								onClickBack={ this.onClickBack }
+								sidebar={ sidebar }
 							/>
-						}
-						rightContent={
-							sidebar ? 
-								<Button 
-									className="item" 
-									caption="Back" 
-									icon="blue angle left"
-									onClick={ this.onClickBack }
-								/> : null
 						}
 					/>
 					{ sidebar }

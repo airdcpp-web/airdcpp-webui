@@ -70,7 +70,7 @@ const SystemLog = React.createClass({
 	render: function () {
 		return (
 			<div className="simple-layout">
-				<div className="ui segment">
+				<div className="wrapper">
 					<LayoutHeader
 						icon="blue history"
 						title="Events"

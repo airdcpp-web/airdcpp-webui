@@ -23,7 +23,7 @@ const MainLayout = React.createClass({
 				{ sidebar }
 				<div className="pusher">
 					<SiteHeader 
-						rightContent={ <MainNavigation/> }
+						content={ <MainNavigation/> }
 					/>
 					<div className="ui site-content">
 						{ children }
