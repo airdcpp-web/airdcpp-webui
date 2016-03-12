@@ -20,7 +20,7 @@ const filterAccess = ({ itemData }, action) => {
 const filterItem = (props, filter, actionId) => {
 	const action = props.actions[actionId];
 	if (!action) {
-		invariant(actionId === 'divider', 'No action for action ID');
+		invariant(actionId === 'divider', 'No action for action ID: ' + actionId);
 		return true;
 	}
 

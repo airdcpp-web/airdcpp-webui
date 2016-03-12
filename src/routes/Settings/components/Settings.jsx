@@ -109,18 +109,13 @@ const menu = [
 		icon: 'tasks',
 		menuItems: [
 			{ 
-				title: 'Directories', 
-				url: 'directories', 
-				noSave: true, 
-				fullWidth: true 
+				title: 'Refresh options', 
+				url: 'refresh-options' 
 			}, { 
 				title: 'Share profiles', 
 				url: 'profiles', 
 				noSave: true 
-			}, { 
-				title: 'Refresh options', 
-				url: 'refresh-options' 
-			},
+			}
 		],
 		advancedMenuItems: [
 			{ 

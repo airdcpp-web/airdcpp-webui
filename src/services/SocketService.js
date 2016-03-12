@@ -5,6 +5,7 @@ const options = {
 	url: window.location.host,
 	secure: window.location.protocol === 'https:',
 	autoReconnect: false,
+	reconnectInterval: 5,
 	userSession: true,
 	logLevel: 4,
 	ignoredConsoleEvents: [

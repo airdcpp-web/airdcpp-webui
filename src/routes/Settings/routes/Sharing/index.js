@@ -4,15 +4,6 @@ module.exports = {
 	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
-				path: 'directories', 
-				component: require('./components/ShareDirectoriesPage').default,
-				childRoutes: [
-					{
-						path: 'root', 
-						component: require('./components/directories/ShareDirectoryDialog').default, 
-					}
-				]
-			}, {
 				path: 'profiles', 
 				component: require('./components/ShareProfilesPage').default,
 			}, {

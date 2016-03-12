@@ -43,6 +43,11 @@ const ConfigMenuItems = [
 		icon: IconConstants.FAVORITE,
 		access: AccessConstants.FAVORITE_HUBS_VIEW,
 	}, {
+		title: 'Share',
+		url: '/share',
+		icon: IconConstants.FOLDER,
+		access: AccessConstants.SETTINGS_VIEW,
+	}, {
 		title: 'Settings',
 		url: '/settings',
 		icon: IconConstants.SETTINGS,

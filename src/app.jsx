@@ -57,6 +57,7 @@ const routeConfig = [
 			require('./routes/Search'),
 			require('./routes/Settings'),
 			require('./routes/Transfers'),
+			require('./routes/Share'),
 			{ 
 				component: require('./routes/Sidebar/components/Sidebar').default,
 				path: 'sidebar',
