@@ -42,8 +42,13 @@ const ShareDirectoryDialog = React.createClass({
 	getInitialState() {
 		this._isNew = !this.props.rootEntry;
 
+		const sourceData = FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry));
+		if (this._isNew) {
+			sourceData.profiles.value = [ this.props.defaultProfile.id ];
+		}
+
 		return {
-			sourceData: FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry)),
+			sourceData,
 			virtualNames: [],
 		};
 	},

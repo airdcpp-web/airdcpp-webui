@@ -65,7 +65,13 @@ export default function (Component, listHidden, addSize = true) {
 				return <Loader text="Loading profiles"/>;
 			}
 
-			return <Component {...this.props} {...this.state}/>;
+			return (
+				<Component 
+					{...this.props} 
+					profiles={ this.state.profiles }
+					defaultProfile={ this.state.profiles.find(profile => profile.default) }
+				/>
+			);
 		},
 	});
 

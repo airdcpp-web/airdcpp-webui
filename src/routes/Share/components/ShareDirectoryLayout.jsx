@@ -44,16 +44,16 @@ const ShareDirectoryLayout = React.createClass({
 				}
 			>
 				<Column
-					name="Virtual name"
-					width={120}
-					columnKey="virtual_name"
-					flexGrow={5}
+					name="Path"
+					width={200}
+					columnKey="path"
 					cell={
 						<FileActionCell 
 							actions={ ShareRootActions }
 							ids={[ 'edit', 'remove' ]}
 						/> 
 					}
+					flexGrow={10}
 				/>
 				<Column
 					name="Size"
@@ -66,12 +66,6 @@ const ShareDirectoryLayout = React.createClass({
 					name="Content"
 					width={150}
 					columnKey="type"
-				/>
-				<Column
-					name="Path"
-					width={200}
-					columnKey="path"
-					flexGrow={10}
 				/>
 				<Column
 					name="Profiles"
