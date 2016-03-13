@@ -43,7 +43,7 @@ export default function (Component, propertyName = 'any') {
 		},
 
 		render() {
-			if (!this.state.filterId) {
+			if (this.state.filterId === null) {
 				return null;
 			}
 
