@@ -8,7 +8,7 @@ const options = {
 	reconnectInterval: 5,
 	userSession: true,
 	logLevel: 4,
-	ignoredConsoleEvents: [
+	ignoredListenerEvents: [
 		'transfer_statistics',
 		'hash_statistics',
 		'hub_counts_updated',

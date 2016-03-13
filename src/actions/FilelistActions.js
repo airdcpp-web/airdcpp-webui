@@ -118,7 +118,7 @@ FilelistActions.createSession.listen(function (location, user, directory = '/') 
 
 FilelistActions.ownList.listen(function (location, profile) {
 	let session = FilelistSessionStore.getSession(LoginStore.cid);
-	if (session && session.profile === profile) {
+	if (session && session.share_profile.id === profile) {
 		this.completed(location, profile, session);
 		return;
 	}
@@ -167,7 +167,7 @@ FilelistActions.createSession.failed.listen(function (error) {
 });
 
 FilelistActions.refreshShare.listen(function ({ session, directory }) {
-	ShareActions.refreshVirtual(directory.path, session.profile);
+	ShareActions.refreshVirtual(directory.path, session.share_profile.id);
 });
 
 export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELISTS_EDIT);
