@@ -35,8 +35,13 @@
 
 #mobile-menu .icon-panel {
 	display: flex;
+	margin: 20px 20px 10px 20px;
+}
+
+#mobile-menu .icon-panel .touch-icons {
+	display: flex;
 	justify-content: space-around;
-	margin-top: 20px;
+	flex: 1;
 }
 
 #mobile-menu .icon-panel i {
