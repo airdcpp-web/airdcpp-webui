@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "1.0.0-beta5",
+  "version": "1.0.0",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -50,7 +50,7 @@
       
     "autoprefixer": "^6.0.3",
     "babel-core": "^6.5.1",
-    "babel-eslint": "^6.0.0-beta",
+    "babel-eslint": "^6.0.0-beta.6",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
@@ -62,7 +62,7 @@
     "compression": "^1.6.0",
     "compression-webpack-plugin": "0.2.0",
     "css-loader": "^0.23.0",
-    "eslint": "2.2.0",
+    "eslint": "^2.4.0",
     "eslint-plugin-babel": "^3.1.0",
     "eslint-plugin-react": "^4.0.0",
     "express": "^4.13.3",
