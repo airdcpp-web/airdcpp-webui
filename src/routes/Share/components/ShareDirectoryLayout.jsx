@@ -5,7 +5,7 @@ import ShareRootActions from 'actions/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, ActionCell, DurationCell, FileActionCell } from 'components/table/Cell';
+import { SizeCell, DurationCell, FileActionCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
 import ShareProfileFilter from 'components/table/ShareProfileFilter';
@@ -66,6 +66,14 @@ const ShareDirectoryLayout = React.createClass({
 					name="Content"
 					width={150}
 					columnKey="type"
+					hideWidth={1000}
+				/>
+				<Column
+					name="Virtual name"
+					width={120}
+					columnKey="virtual_name"
+					flexGrow={5}
+					//hideWidth={600}
 				/>
 				<Column
 					name="Profiles"
