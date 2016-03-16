@@ -53,7 +53,7 @@ WebUserActions.remove.listen(function (user) {
 		rejectCaption: "Don't remove",
 	};
 
-	ConfirmDialog(options).then(() => this.confirmed(user));
+	ConfirmDialog(options, this.confirmed.bind(this, user));
 });
 
 WebUserActions.remove.confirmed.listen(function (user) {
