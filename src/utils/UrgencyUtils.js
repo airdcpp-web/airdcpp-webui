@@ -1,4 +1,4 @@
-//import { SeverityEnum } from 'constants/EventConstants';
+import { UrgencyEnum } from 'constants/UrgencyConstants';
 
 // Returns the maximum urgency from the map of urgencies (or undefined if all counts are 0)
 const maxUrgency = (urgencyMap) => {
@@ -23,13 +23,28 @@ const toUrgencyMap = (source, urgencies) => {
 	}, {});
 };
 
+const messageSessionMapper = (item, urgencyMappings) => {
+	return UrgencyUtils.toUrgencyMap(item.unread_messages, urgencyMappings);
+};
+
+const simpleSessionMapper = (item) => {
+	// TODO: mark sessions as read first
+	/*if (!item.read) {
+		return {
+			[UrgencyEnum.HIGH]: 1,
+		};
+	}*/
+
+	return {};
+};
+
 const UrgencyUtils = {
 	// Get urgencyMap [urgency: numberOfSessions] for a list of sessions
-	getSessionUrgencies(sessions, urgencies, infoProperty) {
+	getSessionUrgencies(sessions, urgencyGetter) {
 		const counts = {};
 
 		sessions.forEach(session => {
-			const urgencyMap = toUrgencyMap(session[infoProperty], urgencies);
+			const urgencyMap = urgencyGetter(session);
 			const max = maxUrgency(urgencyMap);
 			if (max) {
 				appendToMap(counts, max);
@@ -43,5 +58,7 @@ const UrgencyUtils = {
 export default Object.assign(UrgencyUtils, {
 	maxUrgency,
 	toUrgencyMap,
+	messageSessionMapper,
+	simpleSessionMapper,
 	appendToMap,
 });

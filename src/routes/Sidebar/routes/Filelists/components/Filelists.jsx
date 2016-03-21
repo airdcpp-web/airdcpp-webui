@@ -54,6 +54,7 @@ const Filelists = React.createClass({
 				disableSideMenu={true}
 				editAccess={ AccessConstants.FILELISTS_EDIT }
 				actions={ FilelistActions }
+				unreadInfoStore={ FilelistSessionStore }
 
 				{ ...ItemHandler }
 			>

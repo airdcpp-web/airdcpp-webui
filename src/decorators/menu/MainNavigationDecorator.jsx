@@ -3,8 +3,8 @@ import Reflux from 'reflux';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-import 'stores/FilelistSessionStore'; // must be required here for now
-import 'stores/ViewFileStore'; // must be required here for now
+import FilelistSessionStore from 'stores/FilelistSessionStore'; // must be required here for now
+import ViewFileStore from 'stores/ViewFileStore'; // must be required here for now
 import EventStore from 'stores/EventStore';
 
 import LoginActions from 'actions/LoginActions';
@@ -72,11 +72,13 @@ const SecondaryMenuItems = [
 		title: 'Filelists',
 		url: '/filelists',
 		icon: 'blue browser',
+		unreadInfoStore: FilelistSessionStore,
 		access: AccessConstants.FILELISTS_VIEW,
 	}, {
 		title: 'Files',
 		url: '/files',
 		icon: 'blue file',
+		unreadInfoStore: ViewFileStore,
 		access: AccessConstants.VIEW_FILE_VIEW,
 	}, {
 		title: 'Events',
@@ -104,7 +106,14 @@ const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
 	const MainNavigationDecorator = React.createClass({
-		mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions'), Reflux.connect(HubSessionStore, 'hubSessions'), Reflux.connect(EventStore, 'logMessages') ],
+		mixins: [ 
+			Reflux.connect(PrivateChatSessionStore, 'chatSessions'), 
+			Reflux.connect(HubSessionStore, 'hubSessions'), 
+			Reflux.connect(EventStore, 'logMessages'),
+
+			Reflux.connect(ViewFileStore, 'viewFileSessions'),
+			Reflux.connect(FilelistSessionStore, 'filelistSessions'),
+		],
 		render() {
 			return (
 				<Component 

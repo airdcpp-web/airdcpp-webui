@@ -70,7 +70,7 @@ const SessionLayout = React.createClass({
 		/**
 		 * Function receiving the circular color label in front of the item
 		 */
-		itemStatusGetter: React.PropTypes.func.isRequired,
+		itemStatusGetter: React.PropTypes.func,
 
 		/**
 		 * Session actions (should contain 'removeSession')
@@ -218,15 +218,23 @@ const SessionLayout = React.createClass({
 		}
 	},
 
+	getItemStatus(item) {
+		if (this.props.itemStatusGetter) {
+			return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(item) }/>;
+		}
+
+		return this.props.itemIconGetter(item);
+	},
+
 	getMenuItem(item) {
 		return (
 			<SessionMenuItem 
 				key={ item.id } 
-				url={this.getUrl(item.id)}
-				nameGetter={this.props.itemNameGetter}
+				url={ this.getUrl(item.id) }
+				name={ this.props.itemNameGetter(item) }
 				unreadInfoStore={ this.props.unreadInfoStore }
-				statusGetter={this.props.itemStatusGetter}
-				item={item}
+				status={ this.getItemStatus(item) }
+				item={ item }
 			/>
 		);
 	},

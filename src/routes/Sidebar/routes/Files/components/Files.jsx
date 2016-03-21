@@ -18,10 +18,6 @@ const ItemHandler = {
 		return session.name;
 	},
 
-	itemStatusGetter(session) {
-		return null;
-	},
-
 	itemDescriptionGetter(session) {
 		return null;
 	},
@@ -58,6 +54,7 @@ const Files = React.createClass({
 				disableSideMenu={true}
 				editAccess={ AccessConstants.VIEW_FILE_EDIT }
 				actions={ ViewFileActions }
+				unreadInfoStore={ ViewFileStore }
 
 				{ ...ItemHandler }
 			>

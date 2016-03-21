@@ -3,7 +3,7 @@ import update from 'react-addons-update';
 import MessageUtils from 'utils/MessageUtils';
 import UrgencyUtils from 'utils/UrgencyUtils';
 
-const SessionStoreDecorator = function (store, actions, urgencyMappings) {
+const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) {
 	let sessions = [];
 	let activeSession = null;
 
@@ -16,12 +16,16 @@ const SessionStoreDecorator = function (store, actions, urgencyMappings) {
 		store.trigger(sessions);
 	});
 
-	store.getTotalUrgencies = () => {
-		return UrgencyUtils.getSessionUrgencies(sessions, urgencyMappings, 'unread_messages');
+	store.getItemUrgencies = (item) => {
+		if (messageUrgencyMappings) {
+			return UrgencyUtils.messageSessionMapper(item, messageUrgencyMappings);
+		}
+
+		return UrgencyUtils.simpleSessionMapper(item);
 	};
 
-	store.getItemUrgencies = (item) => {
-		return UrgencyUtils.toUrgencyMap(item.unread_messages, urgencyMappings);
+	store.getTotalUrgencies = () => {
+		return UrgencyUtils.getSessionUrgencies(sessions, store.getItemUrgencies);
 	};
 
 	store.getSession = (id) => {
