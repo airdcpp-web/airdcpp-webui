@@ -34,7 +34,12 @@
 	max-height: 99%;
 }
 
-/* The fullscreen mode conflicts with sidebar styles in Webkit-based browsers */
-.file-session video::-webkit-media-controls-fullscreen-button {
-    display: none;
+/* The fullscreen mode conflicts with layout styles in Webkit-based browsers */
+:-webkit-full-screen-ancestor:not(iframe) {
+    max-width: inherit !important;
+    overflow-x: initial;
+}
+
+:-webkit-full-screen-ancestor:not(iframe) #side-menu {
+    visibility: hidden;
 }
