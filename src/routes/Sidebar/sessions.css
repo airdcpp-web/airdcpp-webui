@@ -129,6 +129,10 @@
   overflow: hidden;
 }
 
+.session-layout .sub.header img {
+  vertical-align: text-top;
+}
+
 .session-container.horizontal .menu-column .session-item .left-content {
   display: flex;
   overflow: hidden;

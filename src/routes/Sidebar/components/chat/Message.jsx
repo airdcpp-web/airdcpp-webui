@@ -1,10 +1,8 @@
 'use strict';
 
 import React from 'react';
+import TextDecorator from 'components/TextDecorator';
 import ValueFormat from 'utils/ValueFormat';
-
-import ReactEmoji from 'react-emoji';
-import Linkify from 'react-linkify';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
 
@@ -33,11 +31,10 @@ const TimeStamp = ({ message }) => (
 
 const MessageText = ({ message, emojify }) => (
 	<div className="message-text">
-		<Linkify properties={{ target: '_blank' }}>
-			{ !emojify ? message.text : ReactEmoji.emojify(message.text, {
-				emojiType: 'twemoji'
-			})}
-		</Linkify>
+		<TextDecorator
+			emojify={ emojify }
+			text={ message.text }
+		/>
 	</div>
 );
 

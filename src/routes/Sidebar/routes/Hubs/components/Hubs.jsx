@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Linkify from 'react-linkify';
+import TextDecorator from 'components/TextDecorator';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
@@ -26,9 +26,10 @@ const ItemHandler = {
 
 	itemDescriptionGetter(session) {
 		return (
-			<Linkify properties={{ target: '_blank' }}>
-				{ session.identity.description }
-			</Linkify>
+			<TextDecorator
+				text={ session.identity.description }
+				emojify={ true }
+			/>
 		);
 	},
 

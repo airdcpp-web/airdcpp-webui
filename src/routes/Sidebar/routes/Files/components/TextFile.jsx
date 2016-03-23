@@ -6,7 +6,7 @@ import SocketService from 'services/SocketService';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import Message from 'components/semantic/Message';
 
-import Linkify from 'react-linkify';
+import TextDecorator from 'components/TextDecorator';
 
 
 const TextFile = React.createClass({
@@ -73,9 +73,9 @@ const TextFile = React.createClass({
 
 		return (
 			<pre>
-				<Linkify properties={{ target: '_blank' }}>
-					{ this.state.text }
-				</Linkify>
+				<TextDecorator
+					text={ this.state.text }
+				/>
 			</pre>
 		);
 	},

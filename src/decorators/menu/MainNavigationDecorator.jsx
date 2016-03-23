@@ -3,8 +3,8 @@ import Reflux from 'reflux';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-import FilelistSessionStore from 'stores/FilelistSessionStore'; // must be required here for now
-import ViewFileStore from 'stores/ViewFileStore'; // must be required here for now
+import FilelistSessionStore from 'stores/FilelistSessionStore';
+import ViewFileStore from 'stores/ViewFileStore';
 import EventStore from 'stores/EventStore';
 
 import LoginActions from 'actions/LoginActions';
