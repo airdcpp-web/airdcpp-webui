@@ -4,7 +4,10 @@ import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import Accordion from 'components/semantic/Accordion';
+
+import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
+
 import LogSection from './LogSection';
 import Message from 'components/semantic/Message';
 
@@ -36,7 +39,7 @@ const LoggingPage = React.createClass({
 					<div className="ui header">Sections</div>
 					<Message
 						icon="blue info"
-						description={ <a href={ LinkConstants.LOG_HELP_URL } target="_blank">Variable information for Filename and Format fields</a> }
+						description={ <ExternalLink url={ LinkConstants.LOG_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
 					/>
 					<Accordion className="styled" controlled={ true }>
 						{ sections.map(section => 

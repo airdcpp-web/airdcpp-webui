@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 
 import SettingForm from 'routes/Settings/components/SettingForm';
@@ -28,7 +29,7 @@ const SpeedPage = React.createClass({
 			<div className="speed-settings">
 				<div className="ui message">
 					Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, 
-					such as <a href={ LinkConstants.SPEEDTEST_URL } target="_blank">Speedtest.net</a>, to test your speed.
+					such as <ExternalLink url={ LinkConstants.SPEEDTEST_URL }>Speedtest.net</ExternalLink>, to test your speed.
 				</div>
 				<SettingForm
 					ref="form"

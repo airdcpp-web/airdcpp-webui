@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import LinkConstants from 'constants/LinkConstants';
 
 import ActionButton from 'components/ActionButton';
+import ExternalLink from 'components/ExternalLink';
 import Message from 'components/semantic/Message';
 
 import LoginActions from 'actions/LoginActions';
@@ -34,7 +35,7 @@ const NewUserIntro = () => {
 					</li>
 					</ul>
 					<p>
-						Visit the <a href={ LinkConstants.HOME_PAGE_URL } target="_blank">home page</a> for more information about the client and its features.
+						Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information about the client and its features.
 					</p>
 					<ActionButton 
 						action={ LoginActions.newUserIntroSeen }
