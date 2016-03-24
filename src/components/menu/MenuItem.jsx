@@ -2,21 +2,17 @@
 
 import React from 'react';
 
-import { Link, IndexLink } from 'react-router';
+import { Link } from 'react-router';
 import CountLabel from 'components/CountLabel';
 
 
-const IconMenuItem = ({ urgencies, icon, title, indexLink, ...props }) => {
-	const LinkElement = indexLink ? IndexLink : Link;
-
-	return (
-		<LinkElement { ...props }>
-			<CountLabel className="mini" urgencies={urgencies}/>
-			<i className={ icon + ' caption icon' }></i>
-			{ title }
-		</LinkElement>
-	);
-};
+const IconMenuItem = ({ urgencies, icon, title, indexLink, ...props }) => (
+	<Link { ...props }>
+		<CountLabel className="mini" urgencies={ urgencies }/>
+		<i className={ icon + ' caption icon' }></i>
+		{ title }
+	</Link>
+);
 
 IconMenuItem.propTypes = {
 	urgencies: React.PropTypes.object,
@@ -24,26 +20,15 @@ IconMenuItem.propTypes = {
 	title: React.PropTypes.node.isRequired,
 };
 
-IconMenuItem.contextTypes = {
-	history: React.PropTypes.object.isRequired
-};
 
-
-const TextMenuItem = ({ title, indexLink, ...props }) => {
-	const LinkElement = indexLink ? IndexLink : Link;
-	return (
-		<LinkElement { ...props }>
-			{title}
-		</LinkElement>
-	);
-};
+const TextMenuItem = ({ title, indexLink, ...props }) => (
+	<Link { ...props }>
+		{ title }
+	</Link>
+);
 
 TextMenuItem.propTypes = {
 	title: React.PropTypes.node.isRequired,
-};
-
-TextMenuItem.contextTypes = {
-	history: React.PropTypes.object.isRequired
 };
 
 
@@ -55,9 +40,9 @@ const getMenuItem = (onClick, item, ContentElement) => {
 			{ ...other }
 			to={ url } 
 			activeClassName="active" 
-			onClick={ onClick ? (evt) => onClick(url, evt) : undefined }
+			onClick={ onClick ? evt => onClick(url, evt) : undefined }
 			className={ 'item ' + (className ? className : '') }
-			indexLink={ url === '/' }
+			onlyActiveOnIndex={ url === '/' }
 			urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null }
 		/>
 	);
