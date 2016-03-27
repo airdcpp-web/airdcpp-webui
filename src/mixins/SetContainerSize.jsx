@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import throttle from 'lodash/throttle';
 import ReactDOM from 'react-dom';
 
 
@@ -15,9 +15,9 @@ const SetContainerSize = {
 	componentDidMount : function () {
 		const win = window;
 		if (win.addEventListener) {
-			win.addEventListener('resize', _.throttle(this._update, 250), false);
+			win.addEventListener('resize', throttle(this._update, 250), false);
 		} else if (win.attachEvent) {
-			win.attachEvent('onresize', _.throttle(this._update, 250));
+			win.attachEvent('onresize', throttle(this._update, 250));
 		} else {
 			win.onresize = this._update;
 		}
@@ -32,9 +32,9 @@ const SetContainerSize = {
 	componentWillUnmount() {
 		const win = window;
 		if (win.removeEventListener) {
-			win.removeEventListener('resize', _.throttle(this._update, 250), false);
+			win.removeEventListener('resize', throttle(this._update, 250), false);
 		} else if (win.removeEvent) {
-			win.removeEvent('onresize', _.throttle(this._update, 250), false);
+			win.removeEvent('onresize', throttle(this._update, 250), false);
 		} else {
 			win.onresize = null;
 		}

@@ -6,7 +6,7 @@ xcopy index.html dist
 xcopy favicon.ico dist
 
 SET NODE_ENV=production
-npm run webpack --progress
+npm run webpack
 
 pause
 
