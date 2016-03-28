@@ -7,7 +7,8 @@ import OverlayConstants from 'constants/OverlayConstants';
 
 
 const History = useRouterHistory(createHistory)({
-	basename: getBasePath(),		
+	// Remove the trailing slash from base path
+	basename: getBasePath().slice(0, -1),		
 });
 
 
