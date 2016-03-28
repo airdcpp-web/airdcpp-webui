@@ -19,6 +19,7 @@ const UserLimitPage = React.createClass({
 				<AutoValuePanel
 					ref="auto-form"
 					formItems={Auto}
+					type="mcn"
 				/>
 			</div>
 		);

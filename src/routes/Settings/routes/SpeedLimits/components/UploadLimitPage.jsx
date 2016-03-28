@@ -26,6 +26,7 @@ const UploadLimitPage = React.createClass({
 				<AutoValuePanel
 					ref="auto-form"
 					formItems={Auto}
+					type="upload"
 				/>
 
 				<SettingForm

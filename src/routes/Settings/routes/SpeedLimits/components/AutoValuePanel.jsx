@@ -8,25 +8,38 @@ import SettingConstants from 'constants/SettingConstants';
 
 const AutoValuePanel = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
+	propTypes: {
+		/**
+		 * Form items to list
+		 */
+		formItems: React.PropTypes.object.isRequired,
+
+		/**
+		 * Type of the value section (from the setting key)
+		 */
+		type: React.PropTypes.string.isRequired,
+	},
+
+	getAutoKey() {
+		return this.props.type + '_auto_limits';
+	},
 
 	// Fetch auto settings when enabling auto detection
-	onFieldChanged(id, formValue, hasChanges) {
-		const detectFieldId = Object.keys(this.props.formItems)[0];
-		if (id[0] !== detectFieldId || !formValue[detectFieldId]) {
+	onFieldChanged(changedKey, formValue, hasChanges) {
+		const autoSettingKey = this.getAutoKey();
+		if (changedKey !== autoSettingKey || !formValue[autoSettingKey]) {
 			return null;
 		}
 
 		return SocketService.post(SettingConstants.ITEMS_INFO_URL, { 
-			keys: Object.keys(this.props.formItems).slice(1), 
+			keys: Object.keys(this.props.formItems).filter(key => key !== autoSettingKey), 
 			force_auto_values: true 
 		});
 	},
 
 	// Disable other fields when auto detection is enabled
-	onFieldSetting(id, fieldOptions, formValue) {
-		const detectFieldId = Object.keys(this.props.formItems)[0];
-
-		if (formValue[detectFieldId] && id !== detectFieldId) {
+	onFieldSetting(settingKey, fieldOptions, formValue) {
+		if (formValue[this.getAutoKey()] && settingKey !== this.getAutoKey()) {
 			fieldOptions['disabled'] = true;
 		}
 	},
@@ -36,9 +49,9 @@ const AutoValuePanel = React.createClass({
 			<div className="detection-settings ui segment">
 				<SettingForm
 					ref="form"
-					formItems={this.props.formItems}
-					onFieldChanged={this.onFieldChanged}
-					onFieldSetting={this.onFieldSetting}
+					formItems={ this.props.formItems }
+					onFieldChanged={ this.onFieldChanged }
+					onFieldSetting={ this.onFieldSetting }
 				/>
 			</div>
 		);

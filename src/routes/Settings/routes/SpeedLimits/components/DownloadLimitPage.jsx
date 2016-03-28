@@ -18,7 +18,8 @@ const DownloadLimitPage = React.createClass({
 			<div className="download-limit-settings">
 				<AutoValuePanel
 					ref="auto-form"
-					formItems={Auto}
+					formItems={ Auto }
+					type="download"
 				/>
 			</div>
 		);
