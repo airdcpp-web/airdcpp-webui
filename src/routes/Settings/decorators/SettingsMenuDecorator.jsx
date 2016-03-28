@@ -6,10 +6,10 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 const sectionToUrl = (section, parent) => {
 	if (typeof parent === 'object') {
-		return 'settings/' + parent.url + '/' + section;
+		return '/settings/' + parent.url + '/' + section;
 	}
 
-	return 'settings/' + section;
+	return '/settings/' + section;
 };
 
 export default (Component) => {
