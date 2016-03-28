@@ -26,8 +26,8 @@ const getViewerElement = (item) => {
 	return null;
 };
 
-const getUri = (tth) => {
-	return '/view/' + tth + '?auth=' + LoginStore.token; 
+const getUrl = (tth) => {
+	return getBasePath() + 'view/' + tth + '?auth=' + LoginStore.token; 
 };
 
 const FileSession = React.createClass({
@@ -46,7 +46,7 @@ const FileSession = React.createClass({
 			child = (
 				<ViewerElement 
 					item={ item }
-					url={ getUri(item.tth) }
+					url={ getUrl(item.tth) }
 					type={ item.mime_type }
 					extension={ item.type.str }
 				/>

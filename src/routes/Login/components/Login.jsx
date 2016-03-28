@@ -7,6 +7,8 @@ import LoginStore from 'stores/LoginStore';
 import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
 
+import '../style.css';
+
 
 const ErrorBox = ({ lastError }) => {
 	if (lastError === null) {
