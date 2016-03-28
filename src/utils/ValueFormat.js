@@ -86,9 +86,9 @@ const Format = {
 		const finish = Moment().add(time, 'seconds');
 
 		// Change the relative units temporarily
-		Moment.locale('en', abbreviatedRelativeUnits);
+		Moment.updateLocale('en', abbreviatedRelativeUnits);
 		const ret = now.to(finish);
-		Moment.locale('en', normalRelativeUnits);
+		Moment.updateLocale('en', normalRelativeUnits);
 
 		return ret;
 	},
