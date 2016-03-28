@@ -11,7 +11,24 @@
   <!-- content section -->
   <section class="ui dimmable blurring minimal" id="container-main"></section>
 
-  <!-- Initialize SPA -->
-  <script type="text/javascript" src="/js/main.entry.js"></script>
+  <!-- Initialize SPA>
+  <script type="text/javascript" src="/js/main.entry.js"></script-->
+	
+	<script type="text/javascript">
+		function getBasePath(data) {
+			const pathTokens = window.location.pathname.split('/');		
+			
+			// All basenames must used a fixed prefix because of URL routing
+			if (pathTokens.length > 1 && pathTokens[1].indexOf('airdcpp') === 0) {		
+				return '/' + pathTokens[1] + '/';		
+			}		
+			
+			return '/';		
+		}
+
+		var script = document.createElement('script');
+		script.src = getBasePath() + "js/main.entry.js";
+		document.body.appendChild(script);
+	</script>
 </body>
 </html>
