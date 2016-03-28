@@ -1,3 +1,5 @@
+import 'utils/webpack';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -18,7 +20,6 @@ import './utils/semantic';
 import 'style.css';
 
 
-__webpack_public_path__ = getBasePath();
 Reflux.use(RefluxPromise(Promise));
 
 if (LoginStore.token) {

@@ -34,23 +34,13 @@ html.ios, html.ios body {
 	margin-left: auto!important;
 }
 
-.login-grid .column {
-	max-width: 650px;
-	width: 95% !important;
-}
-
 section#container-main,
-.login-grid, 
 .main-layout, 
 #authenticated-app, 
 .pusher,
 .ui.site-content,
 .full-height {
 	height: 100%;
-}
-
-.login-grid {
-	margin: 0px !important;
 }
 
 .ui.checkbox.floating {
