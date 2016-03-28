@@ -53,6 +53,18 @@ const Form = React.createClass({
 		 * Header for the form
 		 */
 		title: React.PropTypes.node,
+
+		/**
+		 * Default values to set for the form if there is no current value
+		 * Format: key: value
+		 */
+		defaultValues: React.PropTypes.object,
+	},
+
+	getDefaultProps() {
+		return {
+			defaultValues: {},
+		};
 	},
 
 	getInitialState() {
@@ -96,7 +108,13 @@ const Form = React.createClass({
 
 		// Get a simple key-value map for the form
 		return Object.keys(sourceData).reduce((valueMap, key) => {
-			valueMap[key] = sourceData[key].value;
+			// Use the default value if there is nothing set
+			if (!sourceData[key].value && this.props.defaultValues[key]) {
+				valueMap[key] = this.props.defaultValues[key];
+			} else {
+				valueMap[key] = sourceData[key].value;
+			}
+
 			return valueMap;
 		}, {});
 	},
@@ -108,10 +126,10 @@ const Form = React.createClass({
 		this.setState({ formValue: newValue });
 	},
 
-	onFieldChanged(value, valueKey, kind) {
-		// Make sure that we have the converted value
+	onFieldChanged(value, valueKey) {
+		// Make sure that we have the converted value for the custom 
+		// change handler (in case there are transforms for this field)
 		const result = this.refs.form.getComponent(valueKey).validate();
-
 		const key = valueKey[0];
 		value[key] = result.value;
 
@@ -126,9 +144,12 @@ const Form = React.createClass({
 			}
 		}
 
-		this.setState({ formValue: value });
+		this.setState({ 
+			formValue: value 
+		});
 	},
 
+	// Handle an API error
 	_handleError(error) {
 		if (error.code === 422) {
 			this.setState({ error: error.json });
@@ -139,18 +160,26 @@ const Form = React.createClass({
 		throw error;
 	},
 
-	save() {
-		let value = this.refs.form.getValue();
-		if (value) {
-			// Filter the changed settings
-			const changedSettingArray = Object.keys(value).reduce((settings, valueKey) => {
-				if (deepEqual(this.sourceData[valueKey].value, value[valueKey])) {
-					return settings;
-				}
+	// Reduces an object of current form values that don't match the source data
+	reduceChangedValues(formValue, changedValues, valueKey) {
+		if (!deepEqual(this.sourceData[valueKey].value, formValue[valueKey])) {
+			changedValues[valueKey] = formValue[valueKey];
+		}
 
-				settings[valueKey] = value[valueKey];
-				return settings;
-			}, {}); 
+		return changedValues;
+	},
+
+	// Calls props.onSave with changed form values
+	save() {
+		let validatedFormValue = this.refs.form.getValue();
+		if (validatedFormValue) {
+
+			// Filter the changed settings
+			const settingKeys = Object.keys(validatedFormValue);
+			const changedSettingArray = settingKeys.reduce(
+				this.reduceChangedValues.bind(this, validatedFormValue), 
+				{}
+			); 
 
 			return this.props.onSave(changedSettingArray).catch(this._handleError);
 		}
@@ -158,7 +187,8 @@ const Form = React.createClass({
 		return Promise.reject(new Error('Validation failed'));
 	},
 
-	getFieldOptions(optionsObject, settingKey) {
+	// Reduces an array of field setting objects by calling props.onFieldSetting
+	fieldOptionReducer(optionsObject, settingKey) {
 		if (this.props.onFieldSetting) {
 			optionsObject[settingKey] = {};
 			this.props.onFieldSetting(settingKey, optionsObject[settingKey], this.state.formValue, this.sourceData);
@@ -167,14 +197,13 @@ const Form = React.createClass({
 		return optionsObject;
 	},
 
-	render: function () {
-		if (!this.sourceData) {
-			return <Loader text="Loading form data"/>;
-		}
-
+	// Returns an options object for Tcomb form
+	getFieldOptions() {
 		const options = {};
-		options['fields'] = Object.keys(this.sourceData).reduce(this.getFieldOptions, {});
+		options['fields'] = Object.keys(this.sourceData).reduce(this.fieldOptionReducer, {});
 
+		// Do we have an error object from the API?
+		// Show the error message for the respective field
 		const { error } = this.state;
 		if (error) {
 			options.fields[error.field] = options.fields[error.field] || {};
@@ -184,16 +213,33 @@ const Form = React.createClass({
 			});
 		}
 
+		return options;
+	},
+
+	render: function () {
+		if (!this.sourceData) {
+			return <Loader text="Loading form data"/>;
+		}
+
+		let formHeader = null;
+		if (this.props.title) {
+			formHeader = (
+				<div className="ui form header">
+					{ this.props.title } 
+				</div>
+			);
+		}
+
 		return (
 			<div className="form">
-				{ this.props.title ? <div className="ui form header">{ this.props.title } </div> : null }
+				{ formHeader }
 				<TcombForm
 					ref="form"
-					type={t.struct(this.props.formItems)}
-					options={options}
-					value={this.state.formValue}
-					onChange={this.onFieldChanged}
-					context={this.props.context}
+					type={ t.struct(this.props.formItems) }
+					options={ this.getFieldOptions() }
+					value={ this.state.formValue }
+					onChange={ this.onFieldChanged }
+					context={ this.props.context }
 				/>
 			</div>);
 	}

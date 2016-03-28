@@ -4,9 +4,9 @@
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"sourceType": "module",
-    "ecmaFeatures": {
+		"ecmaFeatures": {
 			"jsx": true
-    },
+		},
 	},
 	
 	"plugins": [

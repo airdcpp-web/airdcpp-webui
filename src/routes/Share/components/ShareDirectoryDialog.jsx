@@ -43,10 +43,6 @@ const ShareDirectoryDialog = React.createClass({
 		this._isNew = !this.props.rootEntry;
 
 		const sourceData = FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry));
-		if (this._isNew) {
-			sourceData.profiles.value = [ this.props.defaultProfile.id ];
-		}
-
 		return {
 			sourceData,
 			virtualNames: [],
@@ -168,6 +164,10 @@ const ShareDirectoryDialog = React.createClass({
 					onFieldSetting={this.onFieldSetting}
 					onSave={this.onSave}
 					sourceData={this.state.sourceData}
+					defaultValues={ {
+						// Add the default profile for new entries
+						profiles: [ this.props.defaultProfile.id ],
+					} }
 					context={ context }
 				/>
 			</Modal>

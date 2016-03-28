@@ -127,19 +127,18 @@ const WebUserDialog = React.createClass({
 		return (
 			<Modal 
 				className="web-user" 
-				title={title} 
-				onApprove={this.save} 
-				closable={false} 
+				title={ title } 
+				onApprove={ this.save } 
+				closable={ false } 
 				icon={ "user" } 
-				{...this.props}
+				{ ...this.props }
 			>
 				<Form
 					ref="form"
-					formItems={entry}
-					onFieldChanged={this.onFieldChanged}
-					onFieldSetting={this.onFieldSetting}
-					onSave={this.onSave}
-					sourceData={this.state.sourceData}
+					formItems={ entry }
+					onFieldSetting={ this.onFieldSetting }
+					onSave={ this.onSave }
+					sourceData={ this.state.sourceData }
 					context={ context }
 				/>
 			</Modal>
