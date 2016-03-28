@@ -6,7 +6,10 @@ import { useRouterHistory } from 'react-router';
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-const History = (useRouterHistory(createHistory))();
+const History = useRouterHistory(createHistory)({
+	// Remove the trailing slash from base path
+	basename: getBasePath().slice(0, -1),		
+});
 
 
 const mergeOverlayData = (locationState, overlayId, data) => {

@@ -57,8 +57,4 @@ export default {
 	preferTouch() {
 		return md.mobile() ? true : false;
 	},
-
-	get mobileDetect() {
-		return md;
-	},
 };
