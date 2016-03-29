@@ -1,11 +1,11 @@
 import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
+import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import { ConnectionModeEnum } from 'constants/SettingConstants';
 
 const ProtocolPage = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
+	mixins: [ ChildFormMixin('form') ],
 	convertValue(key) {
 		return key + '_' + this.props.protocol;
 	},

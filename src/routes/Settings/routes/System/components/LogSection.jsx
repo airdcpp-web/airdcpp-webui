@@ -1,13 +1,13 @@
 import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
+import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
 import '../style.css';
 
 
 const LogSection = React.createClass({
-	mixins: [ SettingPageMixin('title', 'content') ],
+	mixins: [ ChildFormMixin('title', 'content') ],
 
 	convertKey(suffix) {
 		return 'log_' + this.props.section + (suffix ? ('_' + suffix) : '');

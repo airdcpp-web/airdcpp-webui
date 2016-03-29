@@ -1,13 +1,13 @@
 import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
+import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import SocketService from 'services/SocketService';
 import SettingConstants from 'constants/SettingConstants';
 
 
 const AutoValuePanel = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
+	mixins: [ ChildFormMixin('form') ],
 	propTypes: {
 		/**
 		 * Form items to list

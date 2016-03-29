@@ -1,22 +1,24 @@
 import React from 'react';
 
+import invariant from 'invariant';
 import Promise from 'utils/Promise';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+import { Lifecycle } from 'mixins/RouterMixin';
 
 
-const SettingPageMixin = function () {
+export const SettingPageMixin = function () {
 	const refs = Array.prototype.slice.call(arguments);
 
 	const Mixin = {
+		mixins: [ Lifecycle ],
 		propTypes: {
 			onSettingsChanged: React.PropTypes.func,
 			location: React.PropTypes.object,
 		},
 
 		contextTypes: {
-			router: React.PropTypes.object.isRequired,
 			onSettingsChanged: React.PropTypes.func,
 			routerLocation: React.PropTypes.object,
 		},
@@ -29,11 +31,7 @@ const SettingPageMixin = function () {
 		componentDidMount() {
 			this.changedProperties = new Set();
 
-			const { route } = this.props;
-			if (route) {
-				const { router } = this.context;
-				router.setRouteLeaveHook(route, this.routerWillLeave);
-			}
+			invariant(refs.every(ref => this.refs[ref].hasOwnProperty('save')), 'Invalid refs supplied');
 		},
 
 		getChildContext() {
@@ -51,12 +49,6 @@ const SettingPageMixin = function () {
 		},
 
 		onSettingsChangedInternal(id, value, hasChanges) {
-			if (this.context.onSettingsChanged) {
-				// Only the topmost mixin keeps track of changed settings
-				this.context.onSettingsChanged(id, value, hasChanges);
-				return;
-			}
-
 			if (hasChanges) {
 				this.changedProperties.add(...id);
 			} else {
@@ -78,6 +70,24 @@ const SettingPageMixin = function () {
 			}
 
 			return null;
+		},
+	};
+
+	return Mixin;
+};
+
+export const ChildFormMixin = function () {
+	const refs = Array.prototype.slice.call(arguments);
+
+	const Mixin = {
+		save() {
+			const promises = refs.map(ref => this.refs[ref].save());
+			return Promise.all(promises);
+		},
+
+		onSettingsChangedInternal(id, value, hasChanges) {
+			// Only the topmost mixin keeps track of changed settings
+			this.context.onSettingsChanged(id, value, hasChanges);
 		},
 	};
 
