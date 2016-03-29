@@ -31,7 +31,9 @@ const SettingForm = React.createClass({
 	},
 
 	onSettingsReceived(data) {
-		this.setState({ sourceData: Object.assign(this.state.sourceData || {}, data) });
+		this.setState({ 
+			sourceData: Object.assign({}, data) 
+		});
 	},
 
 	componentDidMount() {
@@ -126,11 +128,13 @@ const SettingForm = React.createClass({
 				<Form
 					{ ...this.props }
 					ref="form"
-					onFieldChanged={this.onFieldChanged}
-					onFieldSetting={this.onFieldSetting}
-					sourceData={this.state.sourceData}
-					onSave={this.onSave}
-					context={{ location: this.context.routerLocation }}
+					onFieldChanged={ this.onFieldChanged }
+					onFieldSetting={ this.onFieldSetting }
+					sourceData={ this.state.sourceData }
+					onSave={ this.onSave }
+					context={{ 
+						location: this.context.routerLocation 
+					}}
 				/>
 			</div>);
 	}
