@@ -50,9 +50,9 @@ export const SettingPageMixin = function () {
 
 		onSettingsChangedInternal(id, value, hasChanges) {
 			if (hasChanges) {
-				this.changedProperties.add(...id);
+				this.changedProperties.add(id);
 			} else {
-				this.changedProperties.delete(...id);
+				this.changedProperties.delete(id);
 			}
 
 			this.props.onSettingsChanged(this.changedProperties.size > 0);
