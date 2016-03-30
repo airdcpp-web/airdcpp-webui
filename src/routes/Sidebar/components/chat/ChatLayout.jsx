@@ -85,6 +85,7 @@ const ChatLayout = React.createClass({
 				{ hasChatAccess ? null : <Message description="You aren't allowed to send new messages" idcon="blue info"/> }
 				<MessageView 
 					messages={ this.state.messages }
+					session={ this.props.session }
 				/>
 				{ hasChatAccess ? (
 					<MessageComposer 

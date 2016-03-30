@@ -5,11 +5,23 @@ export default function (Component) {
 	let shouldScrollBottom = false;
 
 	const ScrollDecorator = React.createClass({
+		propTypes: {
+			/**
+			 * The container will always be scrolled to bottom if the session changes
+			 */
+			session: React.PropTypes.any,
+		},
+
 		componentDidMount: function () {
 			this._scrollToBottom();
 		},
 
-		componentWillUpdate: function () {
+		componentWillUpdate: function (nextProps, nextState) {
+			if (nextProps.session !== this.props.session) {
+				shouldScrollBottom = true;
+				return;
+			}
+
 			let node = ReactDOM.findDOMNode(this.refs.scrollableContainer);
 			if (!node) {
 				shouldScrollBottom = false;
@@ -20,7 +32,7 @@ export default function (Component) {
 			shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
 		},
 		 
-		componentDidUpdate: function () {
+		componentDidUpdate: function (prevProps, prevState) {
 			if (shouldScrollBottom) {
 				this._scrollToBottom();
 			}
