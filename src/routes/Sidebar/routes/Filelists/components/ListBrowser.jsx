@@ -147,6 +147,7 @@ const ListBrowser = React.createClass({
 					rootPath="/"
 					itemClickHandler={ this._handleClickDirectory }
 					selectedNameFormatter={ this.selectedNameFormatter }
+					entityId={ item.id } // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
 				/>
 
 				<VirtualTable
