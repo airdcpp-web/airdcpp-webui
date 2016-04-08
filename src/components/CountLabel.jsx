@@ -6,12 +6,12 @@ import classNames from 'classnames';
 
 const CountLabel = ({ urgencies, empty, size, className, circular }) => {
 	if (!urgencies) {
-		return <span/>;
+		return null;
 	}
 
 	const max = UrgencyUtils.maxUrgency(urgencies);
 	if (!max) {
-		return <span/>;
+		return null;
 	}
 
 	const labelClassName = classNames(

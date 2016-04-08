@@ -15,12 +15,13 @@ const getCaption = (state) => {
 		case CCPMEnum.CONNECTED: return 'Direct encrypted channel established';
 		case CCPMEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
 		case CCPMEnum.DISCONNECTED: return 'Direct encrypted channel available';
+		default: return null;
 	}
 };
 
 const CCPMState = ({ contextGetter, item }) => {
 	if (!item.ccpm_state.supported) {
-		return <span/>;
+		return null;
 	}
 	
 	const state = item.ccpm_state.id;

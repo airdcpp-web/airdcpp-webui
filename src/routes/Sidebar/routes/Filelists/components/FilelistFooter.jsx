@@ -8,7 +8,7 @@ import BrowserUtils from 'utils/BrowserUtils';
 
 const FilelistFooter = ({ item }) => {
 	if (BrowserUtils.useMobileLayout()) {
-		return <span/>;
+		return null;
 	}
 
 	let locationText = item.location.type.str;

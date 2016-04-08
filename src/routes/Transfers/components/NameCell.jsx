@@ -16,7 +16,7 @@ const NameCaption = ({ cellData, rowData }) => (
 
 const NameCell = ({ cellData, rowData, ...props }) => {
 	if (!cellData) {
-		return <span/>;
+		return null;
 	}
 
 	return (

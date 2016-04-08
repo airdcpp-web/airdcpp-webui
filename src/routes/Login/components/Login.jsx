@@ -12,7 +12,7 @@ import '../style.css';
 
 const ErrorBox = ({ lastError }) => {
 	if (lastError === null) {
-		return <span/>;
+		return null;
 	}
 
 	return (
@@ -25,7 +25,7 @@ const ErrorBox = ({ lastError }) => {
 
 const SubmitButton = ({ onSubmit, loading, allowLogin }) => {
 	if (!allowLogin) {
-		return <span/>;
+		return null;
 	}
 
 	if (loading) {
@@ -45,7 +45,7 @@ const SubmitButton = ({ onSubmit, loading, allowLogin }) => {
 
 const BottomMessage = () => {
 	if (process.env.DEMO_MODE !== '1') {
-		return <span/>;
+		return null;
 	}
 
 	return (

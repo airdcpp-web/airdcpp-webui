@@ -35,7 +35,9 @@ const SessionMenuItem = React.createClass({
 			<Link to={ this.props.url } className="item session-item" onClick={ this.onClick } activeClassName="active">
 				<div className="left-content">
 					{ status }
-					{ name }
+					<span className="session-name">
+						{ name }
+					</span>
 				</div>
 
 				{ this.props.unreadInfoStore ? <CountLabel urgencies={ unreadInfoStore.getItemUrgencies(item) }/> : null }

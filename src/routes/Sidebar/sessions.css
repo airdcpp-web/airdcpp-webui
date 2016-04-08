@@ -49,8 +49,7 @@
   align-items: center;
 }
 
-.session-container.vertical .session-header > div,
-.session-container.vertical .session-header > span {
+.session-container.vertical .session-header > div {
   max-width: 90%;
   padding: .82857143em 0.4285714em;
   line-height: 1.2;
@@ -113,7 +112,7 @@
   flex: 1;
 }
 
-.session-container.horizontal .menu-column .session-item span,
+.session-container.horizontal .menu-column .session-item span.session-name,
 .session-container .session-header .dropdown .caption {
   overflow: hidden;
   white-space: nowrap;

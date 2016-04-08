@@ -9,7 +9,7 @@ import BrowserUtils from 'utils/BrowserUtils';
 
 const FileFooter = ({ item }) => {
 	if (BrowserUtils.useMobileLayout()) {
-		return <span/>;
+		return null;
 	}
 
 	return (

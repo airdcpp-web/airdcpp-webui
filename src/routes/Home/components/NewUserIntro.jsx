@@ -12,7 +12,7 @@ import LoginStore from 'stores/LoginStore';
 
 const NewUserIntro = () => {
 	if (!LoginStore.showNewUserIntro) {
-		return <span/>;
+		return null;
 	}
 
 	return (

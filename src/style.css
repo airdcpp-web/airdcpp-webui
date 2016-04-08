@@ -91,10 +91,6 @@ div.dropdown:not(.table-items) {
 	display: flex;
 }
 
-.layout.header .content > span {
-	display: block;
-}
-
 .layout.header > div {
 	margin-bottom: 0px;
 }

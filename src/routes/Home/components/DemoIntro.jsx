@@ -6,7 +6,7 @@ import Message from 'components/semantic/Message';
 
 const DemoIntro = () => {
 	if (process.env.DEMO_MODE !== '1') {
-		return <span/>;
+		return null;
 	}
 
 	return (
