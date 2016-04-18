@@ -1,3 +1,6 @@
 export NODE_ENV=production
-sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
-nodejs server.js $@
+
+# Allow binding to port 80
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+
+node server.js --bindAddress=${1-0.0.0.0} --port=80
