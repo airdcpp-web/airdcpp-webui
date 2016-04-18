@@ -9,7 +9,7 @@ var minimist = require('minimist');
 var argv = minimist(process.argv.slice(2), {
 	default: {
 		apiHost: 'localhost:5600',
-		bind4: '0.0.0.0',
+		bindAddress: '0.0.0.0',
 		port: 3000
 	}
 });
@@ -60,26 +60,20 @@ app.get('*', function (req, res) {
 });
 
 // Listen
-function listen(bindAddress, protocol) {
-	var ret = app.listen(argv.port, bindAddress, function (err) {
-		if (err) {
-			console.error('Failed to listen on ' + bindAddress + ': ' + err);
-			return;
-		}
-		
-		console.log('Listening ' + bindAddress + ':' + argv.port);
-	});
+var listener = app.listen(argv.port, argv.bindAddress, function (err) {
+	var fullAddress = listener.address().address + ':' + listener.address().port;
+	if (err) {
+		console.error('Failed to listen on ' + fullAddress + ': ' + err);
+		return;
+	}
 	
-	ret.on('upgrade', function (req, socket, head) {
-		console.log('Upgrade to websocket', req.headers['x-forwarded-for'] || req.connection.remoteAddress);
-		proxy.ws(req, socket, head);
-	});
-	
-	return ret;
-}
+	console.log('Listening ' + fullAddress);
+});
 
-listen(argv.bind4, 'v4');
-//listen('[::]', 'v6');
+listener.on('upgrade', function (req, socket, head) {
+	console.log('Upgrade to websocket', req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+	proxy.ws(req, socket, head);
+});
 
 console.log('API address: ' + argv.apiHost);
 console.log('');
