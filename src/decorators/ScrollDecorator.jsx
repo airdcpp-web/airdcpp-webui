@@ -17,7 +17,7 @@ export default function (Component) {
 		},
 
 		componentWillUpdate: function (nextProps, nextState) {
-			if (nextProps.session !== this.props.session) {
+			if (nextProps.session && nextProps.session.id !== this.props.session.id) {
 				shouldScrollBottom = true;
 				return;
 			}
