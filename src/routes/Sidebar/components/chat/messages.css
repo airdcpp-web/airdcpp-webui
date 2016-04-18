@@ -68,7 +68,7 @@
 .message-list .message-text {
 	flex: 1;
 	overflow: hidden;
-	white-space: pre-line;
+	white-space: pre-wrap;
 }
 
 .chat-message .message-text {
