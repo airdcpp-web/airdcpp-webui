@@ -36,14 +36,6 @@ var releasePlugins = [
 	
 	new webpack.optimize.OccurenceOrderPlugin(),
 	new webpack.optimize.DedupePlugin(),
-	
-	new CompressionPlugin({
-		asset: "[file].gz",
-		algorithm: "zopfli",
-		test: /\.js$/,
-		threshold: 0,
-		minRatio: 0
-	}),
 ];
 
 var debugPlugins = [
@@ -52,6 +44,19 @@ var debugPlugins = [
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
+
+// Demo server will compress the files on fly
+if (release && !demo) {
+	plugins.push(
+		new CompressionPlugin({
+			asset: "[file].gz",
+			algorithm: "zopfli",
+			test: /\.js$/,
+			threshold: 0,
+			minRatio: 0
+		})
+	);
+}
 
 // ENTRY
 var entries = [ './src/app.jsx' ]; 

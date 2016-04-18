@@ -43,7 +43,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 	app.use(require('webpack-hot-middleware')(compiler));
 } else {
-	app.use('/', express.static('dist'));
+	app.use('/', express.static('demo'));
 	app.use(compression());
 }
 
