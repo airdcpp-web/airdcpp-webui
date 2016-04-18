@@ -12,7 +12,7 @@ import IconConstants from 'constants/IconConstants';
 
 const StatisticsIcon = ({ icon, bytes, formatter }) => {
 	if (bytes === 0) {
-		return <span/>;
+		return null;
 	}
 
 	return (

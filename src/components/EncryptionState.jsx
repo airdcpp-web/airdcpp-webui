@@ -43,7 +43,7 @@ const InfoMessage = ({ info, encryption }) => (
 
 const EncryptionState = ({ encryption, alwaysVisible }) => {
 	if (!encryption) {
-		return alwaysVisible ? <i className="grey lock icon"/> : <span/>;
+		return alwaysVisible ? <i className="grey lock icon"/> : null;
 	}
 
 	const info = encryptionToInfo(encryption);
