@@ -78,10 +78,15 @@ const MessageComposer = React.createClass({
 	},
 
 	_sendText() {
-		var text = this.state.text.trim();
+		// Trim only from end to allow chat messages such as " +help" to be
+		// sent to other users
+		// This will also prevent sending empty messages
+		const text = this.state.text.replace(/\s+$/, '');
+
 		if (text) {
 			this.props.handleSend(text);
 		}
+
 		this.setState({ text: '' });
 	}
 });
