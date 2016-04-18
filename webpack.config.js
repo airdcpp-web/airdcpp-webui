@@ -38,9 +38,9 @@ var releasePlugins = [
 	new webpack.optimize.DedupePlugin(),
 	
 	new CompressionPlugin({
-		asset: "{file}.gz",
-		algorithm: "gzip",
-		regExp: /\.js$/,
+		asset: "[file].gz",
+		algorithm: "zopfli",
+		test: /\.js$/,
 		threshold: 0,
 		minRatio: 0
 	}),
