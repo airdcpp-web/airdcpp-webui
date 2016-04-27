@@ -116,7 +116,7 @@ const Login = React.createClass({
 							<div className="field">
 								<div className="ui left icon input">
 									<i className="user icon"></i>
-									<input type="text" name="username" placeholder="Username" ref="username"/>
+									<input type="text" name="username" placeholder="Username" ref="username" autoFocus={ true }/>
 								</div>
 							</div>
 							<div className="field">
