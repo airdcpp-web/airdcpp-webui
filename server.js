@@ -8,6 +8,7 @@ var minimist = require('minimist');
 
 var argv = minimist(process.argv.slice(2), {
 	default: {
+		apiSecure: false,
 		apiHost: 'localhost:5600',
 		bindAddress: '0.0.0.0',
 		port: 3000
@@ -20,7 +21,7 @@ var app = express();
 
 // Set proxy
 var proxy = new httpProxy.createProxyServer({
-  target: argv.apiHost
+  target: (argv.apiSecure ? 'https://' : 'http://') + argv.apiHost
 });
 
 proxy.on('error', function (err, req, res) {
@@ -75,5 +76,5 @@ listener.on('upgrade', function (req, socket, head) {
 	proxy.ws(req, socket, head);
 });
 
-console.log('API address: ' + argv.apiHost);
+console.log('API address: ' + proxy.options.target);
 console.log('');
