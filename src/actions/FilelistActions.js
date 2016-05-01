@@ -99,7 +99,7 @@ FilelistActions.reloadDirectory.listen(function ({ directory, session }) {
 
 FilelistActions.createSession.listen(function (location, user, directory = '/') {
 	let session = FilelistSessionStore.getSession(user.cid);
-	if (session) {
+	if (session && session.user.hub_url === user.hub_url) {
 		this.completed(location, user, directory, session);
 		return;
 	}
