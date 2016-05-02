@@ -2,7 +2,7 @@
 
 AirDC++ Web UI written in Javascript. Communicates with AirDC++ Core via [AirDC++ Web API](https://github.com/airdcpp/airdcpp-webapi).
 
-This package should be downloaded directly only for development purposes; end users will get it through other projects, such as [AirDC++ Web Client](https://github.com/maksis/airdcpp-webclient).
+This package should be downloaded directly only for development purposes; end users will get it through other projects, such as [AirDC++ Web Client](https://airdcpp-web.github.io).
 
 ## Installing dependencies
 
