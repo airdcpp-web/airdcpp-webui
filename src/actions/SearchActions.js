@@ -16,10 +16,7 @@ SearchActions.download.listen((itemData, downloadData) => {
 });
 
 SearchActions.download.failed.listen((itemData, error) => {
-	NotificationActions.error({
-		title: itemData.itemInfo.name,
-		message: 'Failed to queue the item: ' + error.message
-	});
+	NotificationActions.apiError('Failed to queue the item ' + itemData.itemInfo.name, error);
 });
 
 export default SearchActions;

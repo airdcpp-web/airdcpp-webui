@@ -2,7 +2,6 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-//import NotificationActions from 'actions/NotificationActions';
 import QueueActions from 'actions/QueueActions';
 
 import { default as TransferConstants, StatusEnum } from 'constants/TransferConstants';
@@ -67,26 +66,5 @@ TransferActions.removeFile.listen(function (transfer) {
 TransferActions.removeSource.listen(function (transfer) {
 	return QueueActions.removeSource(transfer);
 });
-
-/*TransferActions.removeFile.listen(function (transfer) {
-	const that = this;
-	return SocketService.post(TransferConstants.REMOVE_URL + '/' + transfer.id)
-		.then(that.completed)
-		.catch(that.failed);
-});
-
-TransferActions.removeFile.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to remove from queue',
-		message: error.message,
-	});
-});*/
-
-/*TransferActions.disconnect.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Refresh failed',
-		message: error.message,
-	});
-});*/
 
 export default TransferActions;

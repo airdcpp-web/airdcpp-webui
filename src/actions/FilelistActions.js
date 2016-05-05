@@ -74,10 +74,7 @@ FilelistActions.download.listen((itemData, downloadData) => {
 });
 
 FilelistActions.download.failed.listen((itemData, error) => {
-	NotificationActions.error({
-		title: itemData.itemInfo.name,
-		message: 'Failed to queue the item: ' + error.message,
-	});
+	NotificationActions.apiError('Failed to queue the item ' + itemData.itemInfo.name, error);
 });
 
 FilelistActions.changeDirectory.listen(function (cid, path) {
@@ -160,10 +157,7 @@ FilelistActions.createSession.completed.listen(function (location, user, directo
 });
 
 FilelistActions.createSession.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to create filelist session',
-		message: error.message,
-	});
+	NotificationActions.apiError('Failed to create filelist session', error);
 });
 
 FilelistActions.refreshShare.listen(function ({ session, directory }) {

@@ -97,10 +97,7 @@ HubActions.createSession.completed.listen(function (location, session) {
 });
 
 HubActions.createSession.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to create hub session',
-		message: error.message,
-	});
+	NotificationActions.apiError('Failed to create hub session', error);
 });
 
 export default SessionActionDecorator(

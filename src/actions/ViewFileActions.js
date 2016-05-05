@@ -45,10 +45,7 @@ ViewFileActions.createSession.completed.listen(function (location, file, session
 });
 
 ViewFileActions.createSession.failed.listen(function (error) {
-	NotificationActions.error({ 
-		title: 'Failed to create viewed file',
-		message: error.message,
-	});
+	NotificationActions.apiError('Failed to create viewed file', error);
 });
 
 export default SessionActionDecorator(ViewFileActions, ViewFileConstants.MODULE_URL, AccessConstants.VIEW_FILE_EDIT);

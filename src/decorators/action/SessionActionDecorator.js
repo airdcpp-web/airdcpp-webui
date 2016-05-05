@@ -38,10 +38,7 @@ export default function (actions, moduleUrl, editAccess) {
 	});
 
 	SessionActions.removeSession.failed.listen(function (session, error) {
-		NotificationActions.error({ 
-			title: 'Failed to remove session: ' + session.id,
-			message: error.message,
-		});
+		NotificationActions.apiError('Failed to remove session ' + session.id, error);
 	});
 
 	return Object.assign(actions, SessionActions);

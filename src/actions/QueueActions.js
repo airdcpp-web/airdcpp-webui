@@ -136,7 +136,7 @@ QueueActions.removeFinished.listen(function () {
 });
 
 QueueActions.removeFinished.completed.listen(function (data) {
-	NotificationActions.error({ 
+	NotificationActions.success({ 
 		title: 'Action completed',
 		message: data.count > 0 ? data.count + ' bundles were removed' : 'No bundles were removed',
 	});
@@ -186,17 +186,14 @@ QueueActions.removeFile.listen(function (item) {
 });
 
 QueueActions.removeFile.completed.listen(function (target, data) {
-	NotificationActions.error({ 
+	NotificationActions.success({ 
 		title: 'Queued file removed',
 		message: 'The file ' + target + ' was removed from queue',
 	});
 });
 
 QueueActions.removeFile.failed.listen(function (target, error) {
-	NotificationActions.error({ 
-		title: 'Failed to remove ' + target,
-		message: error.message,
-	});
+	NotificationActions.apiError('Failed to remove ' + target, error);
 });
 
 QueueActions.removeSource.listen(function (item) {
@@ -210,7 +207,7 @@ QueueActions.removeSource.listen(function (item) {
 });
 
 QueueActions.removeSource.completed.listen(function (user, data) {
-	NotificationActions.error({ 
+	NotificationActions.info({ 
 		title: 'Source removed',
 		message: 'The user ' + user.nicks + ' was removed from ' + data.count + ' files',
 	});
