@@ -10,8 +10,9 @@
 	height: 100%;
 }
 
-@supports (-webkit-appearance:none) and (not (-ms-accelerator:true)) {
-	/* webkit specific CSS */
+@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) 
+{ @media {
+	/* Safari specific CSS */
 	.filelist-browser {
 		height: calc(100% - 95px);
 	}
@@ -19,7 +20,7 @@
 	#mobile-layout .filelist-browser {
 		height: calc(100% - 60px);
 	}
-}
+}}
 
 .filelist-browser .ui.segment {
 	margin-bottom: 10px;
