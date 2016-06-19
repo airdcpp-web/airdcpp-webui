@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import { default as EventConstants } from 'constants/EventConstants';
+import { default as EventConstants, SeverityEnum } from 'constants/EventConstants';
 import { EventActions } from 'actions/EventActions';
 
 import { LogMessageUrgencies } from 'constants/UrgencyConstants';
@@ -40,7 +40,7 @@ const EventStore = Reflux.createStore({
 	},
 
 	onLogMessage: function (data) {
-		if (!this._info) {
+		if (!this._info || data.severity === SeverityEnum.NOTIFY) {
 			return;
 		}
 
