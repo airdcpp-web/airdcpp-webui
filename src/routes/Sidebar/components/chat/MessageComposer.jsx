@@ -71,7 +71,7 @@ const MessageComposer = React.createClass({
 	},
 
 	_onKeyDown: function (event) {
-		if (event.keyCode === ENTER_KEY_CODE) {
+		if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
 			event.preventDefault();
 			this._sendText();
 		}
