@@ -92,6 +92,7 @@
   display: flex !important;
   justify-content: space-between;
   height: 35px;
+  padding: .68571429em .92857143em !important;
 }
 
 .session-container .session-status {
