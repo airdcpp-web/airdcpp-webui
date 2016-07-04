@@ -23,7 +23,6 @@ import 'semantic-ui/components/popup.min.css';
 import 'semantic-ui/components/progress.min.css';
 import 'semantic-ui/components/reset.min.css';
 import 'semantic-ui/components/progress.min.css';
-import 'semantic-ui/components/search.min.css';
 import 'semantic-ui/components/segment.min.css';
 import 'semantic-ui/components/sidebar.min.css';
 import 'semantic-ui/components/site.min.css';
