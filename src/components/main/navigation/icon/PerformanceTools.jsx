@@ -1,16 +1,12 @@
 import React from 'react';
 
 import Perf from 'react-addons-perf';
+import BrowserUtils from 'utils/BrowserUtils';
+
 
 const PerformanceTools = React.createClass({
-	getInitialState() {
-		return {
-			running: false
-		};
-	},
-
 	onClick: function (evt) {
-		const nextRunning = !this.state.running;
+		const nextRunning = !BrowserUtils.loadSessionProperty('perf_profiling');
 		if (nextRunning) {
 			Perf.start();
 			console.log('Performance measurement started');
@@ -21,11 +17,11 @@ const PerformanceTools = React.createClass({
 			Perf.printWasted(measurements);
 		}
 
-		this.setState({ running: nextRunning });
+		BrowserUtils.saveSessionProperty('perf_profiling', nextRunning);
 	},
 
 	render: function () {
-		const color = this.state.running ? 'blue' : 'grey';
+		const color = BrowserUtils.loadSessionProperty('perf_profiling') ? 'blue' : 'grey';
 		return <i className={ color + ' link large lab icon' } onClick={ this.onClick }></i>;
 	}
 });
