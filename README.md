@@ -1,4 +1,4 @@
-# airdcpp-webui
+# airdcpp-webui [![npm version](https://img.shields.io/npm/v/airdcpp-webui.svg?style=flat)](https://www.npmjs.com/package/airdcpp-webui)
 
 AirDC++ Web UI written in Javascript. Communicates with AirDC++ Core via [AirDC++ Web API](https://github.com/airdcpp/airdcpp-webapi).
 
