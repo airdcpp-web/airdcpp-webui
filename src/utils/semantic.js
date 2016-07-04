@@ -1,9 +1,4 @@
-import 'semantic-ui/semantic.min.css';
-
-// Requiring the styles separately would reduce the gzipped size by about 30 kilobytes
-// Possibly change later, the changed order of rules causes issues that need to be fixed
-
-/*import 'semantic-ui/components/accordion.min.css';
+import 'semantic-ui/components/accordion.min.css';
 import 'semantic-ui/components/breadcrumb.min.css';
 import 'semantic-ui/components/button.min.css';
 import 'semantic-ui/components/checkbox.min.css';
@@ -33,7 +28,7 @@ import 'semantic-ui/components/segment.min.css';
 import 'semantic-ui/components/sidebar.min.css';
 import 'semantic-ui/components/site.min.css';
 import 'semantic-ui/components/table.min.css';
-import 'semantic-ui/components/transition.min.css';*/
+import 'semantic-ui/components/transition.min.css';
 
 import 'semantic-ui/components/accordion';
 import 'semantic-ui/components/checkbox';
