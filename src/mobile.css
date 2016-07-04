@@ -31,6 +31,7 @@
 #mobile-menu .dropdown.right .menu {
 	right: 100%;
 	border-radius: .28571429rem 0 .28571429rem .28571429rem;
+	left: auto !important;
 }
 
 #mobile-menu .icon-panel {
