@@ -64,7 +64,7 @@ export const RowWrapperCell = React.createClass({
 		}
 
 		return (
-			<div className={ 'cell-wrapper ' + className } {...this.props}>
+			<div className={ 'cell-wrapper ' + className }>
 				{ React.cloneElement(children, {
 					cellData: rowData[columnKey],
 					rowData: rowData,
@@ -76,10 +76,10 @@ export const RowWrapperCell = React.createClass({
 });
 
 // Column header
-export const HeaderCell = ({ onClick, label, ...props }) => (
-	<Cell {...props}>
-		<a onClick={onClick}>
-			{label}
+export const HeaderCell = ({ onClick, label, columnKey, ...props }) => (
+	<Cell { ...props }>
+		<a onClick={ onClick }>
+			{ label }
 		</a>
 	</Cell>
 );

@@ -6,8 +6,8 @@ import { Link } from 'react-router';
 import CountLabel from 'components/CountLabel';
 
 
-const IconMenuItem = ({ urgencies, icon, title, indexLink, ...props }) => (
-	<Link { ...props }>
+const IconMenuItem = ({ urgencies, icon, title, indexLink, linkProps }) => (
+	<Link { ...linkProps }>
 		<CountLabel className="mini" urgencies={ urgencies }/>
 		<i className={ icon + ' caption icon' }></i>
 		{ title }
@@ -18,11 +18,12 @@ IconMenuItem.propTypes = {
 	urgencies: React.PropTypes.object,
 	icon: React.PropTypes.string.isRequired,
 	title: React.PropTypes.node.isRequired,
+	urgencies: React.PropTypes.object,
 };
 
 
-const TextMenuItem = ({ title, indexLink, ...props }) => (
-	<Link { ...props }>
+const TextMenuItem = ({ title, indexLink, linkProps }) => (
+	<Link { ...linkProps }>
 		{ title }
 	</Link>
 );
@@ -38,11 +39,13 @@ const getMenuItem = (onClick, item, ContentElement) => {
 		<ContentElement 
 			key={ url }
 			{ ...other }
-			to={ url } 
-			activeClassName="active" 
-			onClick={ onClick ? evt => onClick(url, evt) : undefined }
-			className={ 'item ' + (className ? className : '') }
-			onlyActiveOnIndex={ url === '/' }
+			linkProps={{
+				to: url,
+				activeClassName: 'active',
+				onClick: onClick ? evt => onClick(url, evt) : undefined,
+				className: 'item ' + (className ? className : ''),
+				onlyActiveOnIndex: url === '/'
+			}}
 			urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null }
 		/>
 	);

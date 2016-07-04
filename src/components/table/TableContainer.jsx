@@ -174,16 +174,21 @@ const TableContainer = React.createClass({
 		}
 
 		return React.cloneElement(column, {
-			header: (<HeaderCell onClick={this._sortRowsBy.bind(null, columnKey)} label={name}/>),
+			header: (
+				<HeaderCell 
+					onClick={ this._sortRowsBy.bind(null, columnKey) } 
+					label={ name }
+				/>
+			),
 			flexGrow: flexGrow,
 			width: width,
 			isResizable: !mobileView,
 			allowCellsRecycling: true,
 			cell: (			
 				<RowWrapperCell 
-					dataLoader={this.props.dataLoader} 
-					renderCondition={renderCondition} 
-					rowClassNameGetter={rowClassNameGetter}
+					dataLoader={ this.props.dataLoader } 
+					renderCondition={ renderCondition } 
+					rowClassNameGetter={ rowClassNameGetter }
 				>
 					{ cell ? cell : <TextCell/> }
 				</RowWrapperCell>
