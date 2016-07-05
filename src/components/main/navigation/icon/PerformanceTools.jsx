@@ -18,6 +18,7 @@ const PerformanceTools = React.createClass({
 		}
 
 		BrowserUtils.saveSessionProperty('perf_profiling', nextRunning);
+		this.forceUpdate();
 	},
 
 	render: function () {

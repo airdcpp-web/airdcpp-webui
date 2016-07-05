@@ -58,29 +58,29 @@ const ListBrowser = React.createClass({
 
 		const { item, location } = this.props;
 
-		const data = History.getSidebarData(location);
-		if (!data || !data.directory) {
+		const locationData = History.getSidebarData(location);
+		if (!locationData || !locationData.directory) {
 			// We need an initial path for our history
-			History.replaceSidebarData(location, { directory: item.location.path }, true);
-		} else if (item.location.path !== data.directory) {
+			History.replaceSidebarData(location, { directory: item.location.path });
+		} else if (item.location.path !== locationData.directory) {
 			// Opening an existing list from another directory?
-			this.sendChangeDirectory(data.directory);
+			this.sendChangeDirectory(locationData.directory);
 		}
 	},
 
 	componentWillReceiveProps(nextProps) {
-		const { directory } = History.getSidebarData(nextProps.location);
-		if (!directory || nextProps.item.location.path === directory) {
+		const nextLocationData = History.getSidebarData(nextProps.location);
+		if (!nextLocationData.directory || nextProps.item.location.path === nextLocationData.directory) {
 			return;
 		}
 
-		const currentData = History.getSidebarData(this.props.location);
-		if (currentData && currentData.directory !== directory) {
+		const currentLocationData = History.getSidebarData(this.props.location);
+		if (currentLocationData && currentLocationData.directory !== nextLocationData.directory) {
 			// It's our change
-			this.sendChangeDirectory(directory);
+			this.sendChangeDirectory(nextLocationData.directory);
 		} else {
 			// Change initiated by another session/GUI, update our location
-			History.replaceSidebarData(nextProps.location, { directory: this.props.item.location.path });
+			History.replaceSidebarData(nextProps.location, { directory: nextProps.item.location.path });
 		}
 	},
 
