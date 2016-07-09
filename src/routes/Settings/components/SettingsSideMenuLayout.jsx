@@ -51,7 +51,7 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
 const SideMenuLayout = ({ children, ...other }) => (
 	<div className="grid-layout">
 		<TopMenu {...other}/>
-		<div className={ 'ui segment grid settings-grid-layout' }>
+		<div className={ 'ui segment grid main' }>
 			<SideMenu {...other}/>
 			<Content {...other}>
 				{ children }

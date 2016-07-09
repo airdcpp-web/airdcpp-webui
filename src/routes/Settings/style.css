@@ -75,8 +75,9 @@
   margin-bottom: 5px;
 }
 
-.settings-grid-layout {
+.settings-layout .main.grid {
   overflow-y: auto;
+  padding: 0px;
 }
 
 .settings-layout .mobile .section-content {
