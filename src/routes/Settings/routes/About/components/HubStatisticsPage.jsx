@@ -24,7 +24,7 @@ const HubStatisticsPage = React.createClass({
 	render() {
 		const { stats } = this.props;
 		return (
-			<div className="ui grid two column about-grid">
+			<div className="ui grid two column">
 				<Row title="Total users" text={stats.total_users}/>
 				<Row title="Unique users" text={stats.unique_users + ' (' + stats.unique_user_percentage.toFixed(2) + ' %)'}/>
 				<Row title="Total share" text={ValueFormat.formatSize(stats.total_share)}/>

@@ -14,26 +14,8 @@
   max-width: 100%;
 }
 
-.settings-layout .settings-page-header {
+.settings-layout .layout.header {
 	margin-bottom: 20px;
-}
-
-.settings-layout .detect-panel {
-	margin-top: 30px;
-}
-
-.settings-layout .detect-panel .header.column > div {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: inherit !important;
-}
-
-.settings-layout .detect-panel .header.column {
-  max-width: 200px;
-}
-
-.settings-layout .detect-panel .detect-button {
-	margin-top: 20px;
 }
 
 .settings-layout .setting-form {
@@ -66,7 +48,6 @@
   justify-content: space-between;
   margin-bottom: 20px;
 }
-
 .settings-layout > div,
 .settings-layout .mobile .section-content {
   display: flex;
@@ -84,7 +65,7 @@
   padding-bottom: 5px;
 }
 
-.settings-grid-layout .section-content {
+.settings-layout .full .section-content {
   height: 100%;
   padding-bottom: 2px;
 }
@@ -109,7 +90,7 @@
   margin: 0px 5px;
 }
 
-.settings-layout .grid-layout .top-menu i {
+.settings-layout .full .top-menu i {
   display: none;
 }
 
@@ -118,6 +99,6 @@
   flex-shrink: 0;
 }
 
-.settings-layout .section-content.about .grid {
+.settings-layout .options > .grid {
   margin: 0px;
 }

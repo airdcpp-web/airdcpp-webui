@@ -9,6 +9,9 @@ import ConnectivityConstants from 'constants/ConnectivityConstants';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
+import '../style.css';
+
+
 const formatStatus = (status) => {
 	let ret = status.text;
 	if (status.auto_detect) {
@@ -94,7 +97,7 @@ const DetectPanel = React.createClass({
 		return (
 			<div className="ui segment detect-panel">
 				<h3 className="header">Current auto detection status</h3>
-				<div className="ui grid two column detect-grid">
+				<div className="ui grid two column">
 					<StatusRow title="IPv4 connectivity" status={status.status_v4} running={this.state.detectingV4}/>
 					<StatusRow title="IPv6 connectivity" status={status.status_v6} running={this.state.detectingV6}/>
 				</div>
@@ -102,7 +105,7 @@ const DetectPanel = React.createClass({
 					<Button 
 						className="detect-button"
 						caption="Detect now"
-						icon={ "gray configure" } 
+						icon="gray configure"
 						disabled={ !status.status_v4.auto_detect && !status.status_v6.auto_detect }
 						loading={ this.state.detectingV6 || this.state.detectingV4 } 
 						onClick={this.handleDetect}

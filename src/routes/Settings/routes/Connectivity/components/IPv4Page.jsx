@@ -17,7 +17,7 @@ const IPv4 = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="v4-settings">
+			<div>
 				<ProtocolPage
 					ref="form"
 					formItems={Entry}

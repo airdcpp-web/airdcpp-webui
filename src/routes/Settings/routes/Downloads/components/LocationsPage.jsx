@@ -13,7 +13,7 @@ const LocationsPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="personal-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

@@ -1,11 +1,11 @@
-.hashing-settings .grid {
+.settings-layout .hash-database.grid {
 	padding: 10px 0px 15px 0px;
 }
 
-.hashing-settings .grid .row {
+.settings-layout .hash-database.grid .row {
 	padding: 5px 0px;
 }
 
-.share-profiles-settings .browse.button {
+.settings-layout .sharing.profiles .browse.button {
 	margin-top: 10px;
 }

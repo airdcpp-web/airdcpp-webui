@@ -21,7 +21,7 @@ const SharingOptionsPage = React.createClass({
 	mixins: [ SettingPageMixin('form', 'skiplist') ],
 	render() {
 		return (
-			<div className="sharing-options-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

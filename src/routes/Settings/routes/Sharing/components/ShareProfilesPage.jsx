@@ -12,6 +12,9 @@ import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
+import '../style.css';
+
+
 const Row = ({ profile, contextGetter, location }) => (
 	<tr>
 		<td>
@@ -55,7 +58,7 @@ const ShareProfilesPage = React.createClass({
 
 	render() {
 		return (
-			<div className="share-profiles-settings">
+			<div>
 				<Button
 					icon="plus icon"
 					onClick={this._handleAddProfile}

@@ -8,10 +8,10 @@
 	font-weight: bold;
 }
 
-.logging-settings .log-section.active {
+.settings-layout .system.logging .log-section.active {
 	background-color: whitesmoke;
 }
 
-.logging-settings .field-log_directory {
+.settings-layout .system.logging .field-log_directory {
 	margin-bottom: 25px !important;
 }

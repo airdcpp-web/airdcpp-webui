@@ -20,7 +20,7 @@ const HistoryPage = React.createClass({
 	mixins: [ SettingPageMixin('messages', 'histories') ],
 	render() {
 		return (
-			<div className="histories-settings">
+			<div>
 				<SettingForm
 					//title="Miscellaneous"
 					ref="histories"

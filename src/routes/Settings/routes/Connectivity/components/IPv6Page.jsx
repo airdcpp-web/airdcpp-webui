@@ -17,7 +17,7 @@ const IPv6 = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="v6-settings">
+			<div>
 				<ProtocolPage
 					ref="form"
 					formItems={Entry}

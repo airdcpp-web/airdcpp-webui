@@ -18,7 +18,7 @@ const DownloadOptionsPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="skipping-options-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

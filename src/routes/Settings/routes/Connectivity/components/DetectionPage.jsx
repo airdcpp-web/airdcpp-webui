@@ -10,7 +10,7 @@ const DetectionPage = React.createClass({
 
 	render() {
 		return (
-			<div className="detection-settings">
+			<div>
 				<DetectPanel/>
 			</div>
 		);

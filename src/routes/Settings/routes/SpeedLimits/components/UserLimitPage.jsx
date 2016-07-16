@@ -15,7 +15,7 @@ const UserLimitPage = React.createClass({
 	mixins: [ SettingPageMixin('auto-form') ],
 	render() {
 		return (
-			<div className="user-limit-settings">
+			<div>
 				<AutoValuePanel
 					ref="auto-form"
 					formItems={Auto}

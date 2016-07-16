@@ -15,7 +15,7 @@ const RefreshOptionsPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="refresh-options-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

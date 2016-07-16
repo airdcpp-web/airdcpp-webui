@@ -14,7 +14,7 @@ const Encryption = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="encryption-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

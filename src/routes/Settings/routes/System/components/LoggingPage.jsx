@@ -30,7 +30,7 @@ const LoggingPage = React.createClass({
 	mixins: [ SettingPageMixin('form', ...sections) ],
 	render() {
 		return (
-			<div className="logging-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

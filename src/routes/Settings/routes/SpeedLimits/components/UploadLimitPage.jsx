@@ -22,7 +22,7 @@ const UploadLimitPage = React.createClass({
 	mixins: [ SettingPageMixin('auto-form', 'manual-form') ],
 	render() {
 		return (
-			<div className="upload-limit-settings">
+			<div>
 				<AutoValuePanel
 					ref="auto-form"
 					formItems={Auto}

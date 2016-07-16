@@ -18,16 +18,14 @@ const AboutPage = React.createClass({
 		const buildDate = Moment(new Date(JSON.parse(UI_BUILD_DATE))).format('LLL');
 
 		return (
-				<div className="about-page">
-					<div className="ui grid two column about-grid">
-						<Row title="Application version" text={stats.client_version}/>
-						<Row title="Web UI version" text={UI_VERSION}/>
-						<Row title="Web UI build date" text={buildDate}/>
-						<Row title="Started" text={ValueFormat.formatRelativeTime(stats.client_started)}/>
-						<Row title="Active sessions" text={stats.active_sessions}/>
-						<Row title="Server threads" text={stats.server_threads}/>
-					</div>
-				</div>
+			<div className="ui grid two column">
+				<Row title="Application version" text={stats.client_version}/>
+				<Row title="Web UI version" text={UI_VERSION}/>
+				<Row title="Web UI build date" text={buildDate}/>
+				<Row title="Started" text={ValueFormat.formatRelativeTime(stats.client_started)}/>
+				<Row title="Active sessions" text={stats.active_sessions}/>
+				<Row title="Server threads" text={stats.server_threads}/>
+			</div>
 		);
 	},
 });

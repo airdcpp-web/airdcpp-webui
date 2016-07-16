@@ -18,7 +18,7 @@ const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
 	);
 
 	return (
-		<div className="ui settings top-menu">
+		<div className="ui top-menu">
 			<Dropdown className="selection fluid" caption={ caption }>
 				{ parentMenuItems }
 			</Dropdown>

@@ -46,7 +46,7 @@ const AutoValuePanel = React.createClass({
 
 	render() {
 		return (
-			<div className="detection-settings ui segment">
+			<div className="ui segment">
 				<SettingForm
 					ref="form"
 					formItems={ this.props.formItems }

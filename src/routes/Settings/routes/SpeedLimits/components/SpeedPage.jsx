@@ -26,7 +26,7 @@ const SpeedPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="speed-settings">
+			<div>
 				<div className="ui message">
 					Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, 
 					such as <ExternalLink url={ LinkConstants.SPEEDTEST_URL }>Speedtest.net</ExternalLink>, to test your speed.

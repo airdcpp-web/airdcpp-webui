@@ -16,7 +16,7 @@ const SearchMatchingPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="search-matching-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

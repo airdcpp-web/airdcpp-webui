@@ -16,15 +16,13 @@ const TransferStatisticsPage = React.createClass({
 		const totalDown = stats.session_downloaded + stats.start_total_downloaded;
 
 		return (
-				<div className="about-page">
-					<div className="ui grid two column about-grid">
-						<Row title="Total downloaded" text={ValueFormat.formatSize(totalDown)}/>
-						<Row title="Total uploaded" text={ValueFormat.formatSize(totalUp)}/>
-						<Header title="Session"/>
-						<Row title="Session downloaded" text={ValueFormat.formatSize(stats.session_downloaded)}/>
-						<Row title="Session uploaded" text={ValueFormat.formatSize(stats.session_uploaded)}/>
-					</div>
-				</div>
+			<div className="ui grid two column">
+				<Row title="Total downloaded" text={ValueFormat.formatSize(totalDown)}/>
+				<Row title="Total uploaded" text={ValueFormat.formatSize(totalUp)}/>
+				<Header title="Session"/>
+				<Row title="Session downloaded" text={ValueFormat.formatSize(stats.session_downloaded)}/>
+				<Row title="Session uploaded" text={ValueFormat.formatSize(stats.session_uploaded)}/>
+			</div>
 		);
 	},
 });

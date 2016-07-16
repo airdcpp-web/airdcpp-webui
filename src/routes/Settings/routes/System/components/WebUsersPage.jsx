@@ -9,7 +9,7 @@ import WebUserLayout from './users/WebUserLayout';
 const WebUsersPage = React.createClass({
 	render() {
 		return (
-			<div className="web-users-settings">
+			<div>
 				<div className="table-actions">
 					<ActionButton 
 						action={ WebUserActions.create } 

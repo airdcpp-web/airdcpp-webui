@@ -22,7 +22,7 @@ const EventPage = React.createClass({
 	mixins: [ SettingPageMixin('events') ],
 	render() {
 		return (
-			<div className="histories-settings">
+			<div>
 				<SettingForm
 					ref="events"
 					formItems={Entry}

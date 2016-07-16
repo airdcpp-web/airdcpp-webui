@@ -20,7 +20,7 @@ const SkippingOptionsPage = React.createClass({
 	mixins: [ SettingPageMixin('form', 'skiplist') ],
 	render() {
 		return (
-			<div className="skipping-options-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

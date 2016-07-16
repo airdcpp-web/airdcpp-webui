@@ -15,7 +15,7 @@ const DownloadLimitPage = React.createClass({
 	mixins: [ SettingPageMixin('auto-form') ],
 	render() {
 		return (
-			<div className="download-limit-settings">
+			<div>
 				<AutoValuePanel
 					ref="auto-form"
 					formItems={ Auto }

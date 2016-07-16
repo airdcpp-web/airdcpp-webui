@@ -16,7 +16,7 @@ const HashingPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="hashing-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

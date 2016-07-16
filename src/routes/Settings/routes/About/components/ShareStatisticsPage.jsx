@@ -16,7 +16,7 @@ const ShareStatisticsPage = React.createClass({
 		const { stats } = this.props;
 		const averageFileAge = Moment.duration(stats.average_file_age*1000).humanize();
 		return (
-			<div className="ui grid two column about-grid">
+			<div className="ui grid two column">
 				<Row title="Total share size" text={ValueFormat.formatSize(stats.total_size)}/>
 				<Row title="Total files" text={stats.total_file_count + ' (' + stats.unique_file_percentage.toFixed(2) + ' % unique)'}/>
 				<Row title="Total directories" text={stats.total_directory_count}/>

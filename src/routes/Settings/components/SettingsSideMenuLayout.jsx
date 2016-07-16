@@ -35,12 +35,11 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
 	<div className={ 'thirteen wide stretched column ' + contentClassname }>
 		<div className="ui segment">
 			<LayoutHeader
-				className="settings-page-header"
 				title={ currentMenuItem.title }
 				icon={ parent.icon + ' green' }
 				component={ saveButton }
 			/>
-			<div className="">
+			<div className="options">
 				{ children }
 			</div>
 		</div>
@@ -49,9 +48,9 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
 
 
 const SideMenuLayout = ({ children, ...other }) => (
-	<div className="grid-layout">
+	<div className="full">
 		<TopMenu {...other}/>
-		<div className={ 'ui segment grid main' }>
+		<div className="ui segment grid main">
 			<SideMenu {...other}/>
 			<Content {...other}>
 				{ children }

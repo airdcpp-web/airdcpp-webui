@@ -1,0 +1,17 @@
+.settings-layout .detect-panel {
+  margin-top: 30px;
+}
+
+.settings-layout .detect-panel .header.column > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: inherit !important;
+}
+
+.settings-layout .detect-panel .header.column {
+  max-width: 200px;
+}
+
+.settings-layout .detect-panel .detect-button {
+  margin-top: 20px;
+}

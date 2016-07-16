@@ -52,7 +52,7 @@ const MiscPage = React.createClass({
 		}
 
 		return (
-			<div className="misc-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={entry}

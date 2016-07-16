@@ -32,7 +32,7 @@ const ProtocolPage = React.createClass({
 
 	render() {
 		return (
-			<div className="detection-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={this.props.formItems}

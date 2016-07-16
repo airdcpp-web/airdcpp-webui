@@ -14,7 +14,7 @@ const AwayPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="away-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

@@ -14,7 +14,7 @@ const LimiterPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="limiter-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}

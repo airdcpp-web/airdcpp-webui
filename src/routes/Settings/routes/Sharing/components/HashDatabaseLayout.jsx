@@ -13,6 +13,8 @@ import LoginStore from 'stores/LoginStore';
 
 import ValueFormat from 'utils/ValueFormat';
 
+import '../style.css';
+
 
 const OptimizeLayout = ({ startHandler, checkboxState, checkboxHandler, running }) => (
 	<div className="optimize-layout">
@@ -95,9 +97,9 @@ const HashDatabaseLayout = React.createClass({
 		}
 
 		return (
-			<div className="ui segment detect-panel">
+			<div className="ui segment hash-database">
 				<h3 className="header">Hash database</h3>
-				<div className="ui grid two column hash-database-grid">
+				<div className="ui grid two column">
 					<SizeRow title="File index size" size={status.file_index_size}/>
 					<SizeRow title="Hash store size" size={status.hash_store_size}/>
 				</div>

@@ -15,7 +15,7 @@ const PortsPage = React.createClass({
 	mixins: [ SettingPageMixin('form') ],
 	render() {
 		return (
-			<div className="ports-settings">
+			<div>
 				<SettingForm
 					ref="form"
 					formItems={Entry}
