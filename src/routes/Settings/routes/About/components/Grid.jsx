@@ -2,6 +2,9 @@
 
 import React from 'react';
 
+import '../style.css';
+
+
 export const Row = ({ title, text }) => (
 	<div className="ui row">
 		<div className="four wide column">
@@ -16,7 +19,7 @@ export const Row = ({ title, text }) => (
 );
 
 export const Header = ({ title }) => (
-	<div className="ui blue header">
+	<div className="ui blue section header">
 		{ title }
 	</div>
 );
