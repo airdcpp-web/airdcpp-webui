@@ -1,8 +1,10 @@
 import React from 'react';
 
-//import Autosuggest from 'react-autosuggest';
 import SuggestionRenderer from './SuggestionRenderer';
 import SuggestField from './SuggestField';
+
+import escapeStringRegexp from 'escape-string-regexp';
+
 
 export default React.createClass({
 	propTypes: {
@@ -18,7 +20,7 @@ export default React.createClass({
 	},
 
 	filterSuggestions(text) {
-		const regex = new RegExp('^' + text, 'i');
+		const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
 		return this.props.data.filter(str => regex.test(str));
 	},
 

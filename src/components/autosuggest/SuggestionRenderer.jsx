@@ -1,15 +1,12 @@
 import React from 'react';
 
+import escapeStringRegexp from 'escape-string-regexp';
+
 import './style.css';
 
 
-const escapeRegexCharacters = (str) => {
-	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-};
-
 const SuggestionRenderer = function (searchText, suggestionText, description = null) {
-	const escapedInput = escapeRegexCharacters(searchText);
-	const matchRegex = new RegExp('\\b' + escapedInput, 'i');
+	const matchRegex = new RegExp('\\b' + escapeStringRegexp(searchText), 'i');
 
 	const firstMatchIndex = suggestionText.search(matchRegex);
 
