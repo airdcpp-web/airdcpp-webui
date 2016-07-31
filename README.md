@@ -6,7 +6,9 @@ This package should be downloaded directly only for development purposes; end us
 
 ## Installing dependencies
 
-You must have [Node](https://nodejs.org/en/) installed before continuing. The following commands should be run in the main directory of the cloned repository.
+You must have [Node](https://nodejs.org/en/) installed before continuing. It's also recommended to ensure that your version of Node comes with npm 3 or newer (check with `npm -v`) as older versions may cause errors during the build process. See [this guide](https://docs.npmjs.com/getting-started/installing-node) for upgrading instructions.
+
+The following commands should be run in the main directory of the cloned repository.
 
 Install dependencies:
 
