@@ -15,6 +15,9 @@ module.exports = {
 			}, {
 				path: 'search-matching', 
 				component: require('./components/SearchMatchingPage').default, 
+			}, {
+				path: 'priorities', 
+				component: require('./components/PrioritiesPage').default, 
 			} ]);
 		}, 'settings-downloads-children');
 	},

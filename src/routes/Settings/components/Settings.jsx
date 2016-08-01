@@ -101,6 +101,9 @@ const menu = [
 			}, { 
 				title: 'Download options', 
 				url: 'download-options' 
+			}, { 
+				title: 'Priorities', 
+				url: 'priorities' 
 			}
 		],
 	}, {
