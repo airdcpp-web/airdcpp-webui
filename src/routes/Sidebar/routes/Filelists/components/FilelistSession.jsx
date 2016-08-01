@@ -4,7 +4,7 @@ import React from 'react';
 import ListBrowser from './ListBrowser';
 import FilelistFooter from './FilelistFooter';
 
-import { RouterContext, LocationContext } from 'mixins/RouterMixin';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
@@ -24,7 +24,7 @@ const FilelistSession = React.createClass({
 			);
 		}
 
-		if (state.id !== 'loaded' || !location) {
+		if ((state.id !== 'loaded' && state.id !== 'download_failed') || !location) {
 			return <Loader text={ state.str }/>;
 		}
 

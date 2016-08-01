@@ -3,7 +3,6 @@ import React from 'react';
 import FilelistActions from 'actions/FilelistActions';
 
 import TypeConvert from 'utils/TypeConvert';
-import Message from 'components/semantic/Message';
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/menu/DropdownMenu';
 
@@ -17,7 +16,9 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
+import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';
+import Message from 'components/semantic/Message';
 
 
 const ListBrowser = React.createClass({
@@ -89,7 +90,17 @@ const ListBrowser = React.createClass({
 	},
 
 	emptyRowsNodeGetter() {
-		const { location } = this.props.item;
+		const { location, state } = this.props.item;
+
+		if (state.id === 'download_failed') {
+			return (
+				<Message 
+					icon={ IconConstants.ERROR }
+					title="Download failed"
+					description={ state.str }
+				/>
+			);
+		}
 
 		// The list finished downloading but the view hasn't updated yet
 		if (location.type.files !== 0 || location.type.directories !== 0) {

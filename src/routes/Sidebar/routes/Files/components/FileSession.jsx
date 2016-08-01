@@ -1,7 +1,10 @@
 'use strict';
 import React from 'react';
 
+import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';
+import Message from 'components/semantic/Message';
+
 import LoginStore from 'stores/LoginStore';
 
 import AudioFile from './AudioFile';
@@ -34,6 +37,16 @@ const FileSession = React.createClass({
 	render() {
 		const { item } = this.props;
 		if (item.state.id !== 'downloaded') {
+			if (item.state.id === 'download_failed') {
+				return (
+					<Message 
+						icon={ IconConstants.ERROR }
+						title="Download failed"
+						description={ item.state.str }
+					/>
+				);
+			}
+
 			return <Loader text={ item.state.str }/>;
 		}
 
