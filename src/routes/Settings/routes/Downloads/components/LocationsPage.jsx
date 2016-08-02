@@ -53,9 +53,4 @@ const LocationsPage = React.createClass({
 	}
 });
 
-/*							<div className="ui large header">
-								<i className="blue info icon"/>
-								Path variables
-							</div>*/
-
 export default LocationsPage;

@@ -72,9 +72,18 @@
 }
 
 .chat-message .message-text {
+	padding-right: 60px;
+}
+
+.chat-message .normal .message-text {
 	margin-top: 5px;
 	clear: both;
-	padding-right: 60px;
+}
+
+.chat-message .third-person .message-text {
+	display: flex;
+	float: left;
+	margin-left: 3px;
 }
 
 .status-message .message-text {
@@ -101,6 +110,14 @@
 
 .chat-message .message-author-name {
 	color: steelblue !important;
+}
+
+.chat-message .third-person .message-author-name {
+	display: flex !important;
+}
+
+.chat-message .third-person .message-author-name .dropdown {
+	margin-left: 3px;
 }
 
 /*.chat-message.op .message-author-name {

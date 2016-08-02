@@ -39,8 +39,12 @@ export default function (actions, sessionUrl, editAccess) {
 
 	ChatActions.sendMessage.listen(function (id, text) {
 		let that = this;
+
+		const thirdPerson = text.indexOf('/me ') == 0;
+
 		SocketService.post(sessionUrl + '/' + id + '/message', { 
-			text 
+			text: thirdPerson ? text.substring(4) : text,
+			third_person: thirdPerson,
 		})
 			.then(that.completed)
 			.catch(that.failed.bind(that, id));

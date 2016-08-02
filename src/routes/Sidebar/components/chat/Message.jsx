@@ -9,6 +9,7 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 
 const Author = ({ message, dropdownContextGetter }) => (
 	<div className="header message-author-name">
+		{ message.third_person ? (<span>*</span>) : null }
 		<UserMenu 
 			contextGetter={ dropdownContextGetter } 
 			triggerIcon={null} 
@@ -46,18 +47,19 @@ MessageText.propTypes = {
 
 const ChatMessage = ({ message, ...other }) => (
 		<div className={ 'ui item message-list-item chat-message ' + message.from.flags.join(' ')}>
-			<Author 
-				message={ message } 
-				{ ...other }
-			/>
 			<TimeStamp 
 				message={ message }
 			/>
-
-			<MessageText 
-				message={ message }
-				emojify={ message.from.flags.indexOf('bot') === -1 } // No emojis to bot messages as they are likely to contain false matches
-			/>
+			<div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
+				<Author 
+					message={ message } 
+					{ ...other }
+				/>
+				<MessageText 
+					message={ message }
+					emojify={ message.from.flags.indexOf('bot') === -1 } // No emojis to bot messages as they are likely to contain false matches
+				/>
+			</div>
 		</div>
 );
 
