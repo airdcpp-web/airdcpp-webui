@@ -111,10 +111,6 @@
 	font-size: small;
 }
 
-.chat-message .message-author-name {
-	color: steelblue !important;
-}
-
 .chat-message .third-person .message-author-name {
 	display: flex !important;
 }
@@ -123,14 +119,18 @@
 	margin-left: 3px;
 }
 
+.chat-message .message-author-name .caption {
+	color: steelblue !important;
+}
+
 /*.chat-message.op .message-author-name {
 	color: orange !important;
 }*/
 
-.chat-message.me .message-author-name {
+.chat-message.me .message-author-name .caption {
 	color: black !important;
 }
 
-.chat-message.bot .message-author-name {
+.chat-message.bot .message-author-name .caption {
 	color: darkgoldenrod !important;
 }

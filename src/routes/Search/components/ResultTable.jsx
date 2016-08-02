@@ -6,6 +6,7 @@ import SearchViewStore from 'stores/SearchViewStore';
 import { Column } from 'fixed-data-table';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/table/Cell';
+import { TableActionMenu } from 'components/menu/DropdownMenu';
 
 import TypeConvert from 'utils/TypeConvert';
 import { TableUserMenu } from 'components/menu/DropdownMenu';
@@ -31,6 +32,21 @@ const UserCell = ({ cellData, rowData, ...props }) => (
 		userIcon={ 'simple' }
 		ids={ [ 'browse', 'message' ] }
 	/>
+);
+
+const NameCell = ({ rowData, ...props }) => (
+	<FileDownloadCell 
+		handler={ SearchActions.download } 
+		userGetter={ (rowData) => rowData.users.user }
+		rowData={ rowData }
+		{ ...props }
+	>
+		<TableActionMenu 
+			actions={ SearchActions } 
+			ids={ [ 'result' ] } 
+			itemData={ rowData }
+		/>
+	</FileDownloadCell>
 );
 
 const ResultTable = React.createClass({
@@ -89,10 +105,7 @@ const ResultTable = React.createClass({
 					columnKey="name"
 					flexGrow={8}
 					cell={
-						<FileDownloadCell 
-							handler={ SearchActions.download } 
-							userGetter={ (rowData) => rowData.users.user }
-						/>  
+						<NameCell/>
 					}
 				/>
 				<Column

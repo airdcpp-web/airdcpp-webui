@@ -5,4 +5,5 @@ export default {
 	WEB_USER_MODAL_ID: 'web-user-modal',
 	SIDEBAR_ID: 'sidebar',
 	FILE_BROWSER_MODAL: 'browse-modal',
+	SEARCH_RESULT_MODAL: 'search-modal',
 };

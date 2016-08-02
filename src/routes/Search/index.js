@@ -6,6 +6,9 @@ module.exports = {
 			cb(null, [ {
 				path: 'download', 
 				component: require('components/download/DownloadDialog').default, 
+			}, {
+				path: 'result', 
+				component: require('./components/ResultDialog').default, 
 			} ]);
 		}, 'search-children');
 	},
