@@ -3,7 +3,7 @@ import CountLabel from 'components/CountLabel';
 
 const MenuIcon = ({ urgencies, className, onClick }) => (
 	<div className={ 'icon-menu ' + className }> 
-		<i className="content link icon" onClick={onClick}></i>
+		<i className="content link icon" onClick={onClick}/>
 		<CountLabel 
 			urgencies={ urgencies }
 			size="mini"

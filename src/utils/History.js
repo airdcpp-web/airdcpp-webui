@@ -1,4 +1,5 @@
 import update from 'react-addons-update';
+import invariant from 'invariant';
 
 import { createHistory } from 'history';
 import { useRouterHistory } from 'react-router';
@@ -39,7 +40,7 @@ const getOverlayState = (currentLocation, overlayId, data) => {
 	return mergeOverlayData(state, overlayId, data || {});
 };
 
-const OverlayHelpers = {
+const Helpers = {
 	pushModal: function (currentLocation, pathname, overlayId, data) {
 		const state = getOverlayState(currentLocation, 'modal_' + overlayId, data);
 		History.push({ 
@@ -88,6 +89,17 @@ const OverlayHelpers = {
 	getSidebarData: function (currentLocation) {
 		return currentLocation.state[OverlayConstants.SIDEBAR_ID].data;
 	},
+
+	// Uses replace instead if the next path matches the current one regardless of the state or other properties
+	// Note that the regular history functions will ignore fully identical locations in any case so there's no need to check that manually
+	pushUnique: function (nextLocation, currentLocation) {
+		invariant(currentLocation, 'pushUnique: current location was not supplied');
+		if (nextLocation.pathname !== currentLocation.pathname) {
+			History.push(nextLocation);
+		} else {
+			History.replace(nextLocation);
+		}
+	},
 };
 
-export default Object.assign(History, OverlayHelpers);
+export default Object.assign(History, Helpers);

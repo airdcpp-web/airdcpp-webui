@@ -123,12 +123,12 @@ DownloadableItemActions.search.listen(function (data) {
 	const { itemInfo } = data;
 	const searchString = itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
 
-	History.push({
+	History.pushUnique({
 		pathname: '/search',
 		state: {
 			searchString,
 		}
-	});
+	}, data.location);
 });
 
 export default DownloadableItemActions;

@@ -4,6 +4,7 @@ import SocketService from 'services/SocketService';
 import { HistoryEnum } from 'constants/HistoryConstants';
 import SearchConstants from 'constants/SearchConstants';
 
+import History from 'utils/History';
 import HistoryInput from 'components/autosuggest/HistoryInput';
 
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
@@ -35,6 +36,11 @@ const Search = React.createClass({
 		const { state } = props.location;
 		if (state && state.searchString && state.searchString !== this.state.searchString) {
 			this.search(state.searchString);
+
+			// Avoid searching for it again
+			History.replace({
+				pathname: props.location.pathname,
+			});
 		}
 	},
 

@@ -9,7 +9,7 @@ import CountLabel from 'components/CountLabel';
 const IconMenuItem = ({ urgencies, icon, title, indexLink, linkProps }) => (
 	<Link { ...linkProps }>
 		<CountLabel className="mini" urgencies={ urgencies }/>
-		<i className={ icon + ' caption icon' }></i>
+		<i className={ icon + ' caption icon' }/>
 		{ title }
 	</Link>
 );

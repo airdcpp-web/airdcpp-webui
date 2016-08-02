@@ -80,8 +80,11 @@
 	clear: both;
 }
 
-.chat-message .third-person .message-text {
+.chat-message .third-person {
 	display: flex;
+}
+
+.chat-message .third-person .message-text {
 	float: left;
 	margin-left: 3px;
 }
