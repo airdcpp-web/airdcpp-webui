@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SearchActions from 'actions/SearchActions';
-import SearchStore from 'stores/SearchStore';
+import SearchViewStore from 'stores/SearchViewStore';
 
 import { Column } from 'fixed-data-table';
 import VirtualTable from 'components/table/VirtualTable';
@@ -74,7 +74,14 @@ const ResultTable = React.createClass({
 			<VirtualTable
 				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 				rowClassNameGetter={ this._rowClassNameGetter }
-				store={ SearchStore }
+				store={ SearchViewStore }
+				/*footerData={ !this.props.searchString ? null :
+					(
+						<div className="search-string">
+							<i>{ this.props.searchString }</i>
+						</div>
+					)
+				}*/
 			>
 				<Column
 					name="Name"

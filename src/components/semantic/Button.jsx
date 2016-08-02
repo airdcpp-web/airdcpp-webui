@@ -12,7 +12,7 @@ const Button = ({ className, loading, icon, caption, loadingCaption, disabled, .
 
 	return (
 		<div className={ buttonStyle } { ...other }>
-			{ icon ? <i className={ icon + ' icon' }></i> : null }
+			{ icon ? <i className={ icon + ' icon' }/> : null }
 			{ caption }
 		</div>
 	);

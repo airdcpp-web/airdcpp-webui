@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DownloadActions from 'actions/DownloadActions';
+import DownloadableItemActions from 'actions/DownloadableItemActions';
 
 
 export default function (Component) {
@@ -15,7 +15,7 @@ export default function (Component) {
 		return (
 			<Component 
 				caption={ caption } 
-				actions={ DownloadActions }
+				actions={ DownloadableItemActions }
 				itemData={ data } 
 				{ ...other }
 			/>

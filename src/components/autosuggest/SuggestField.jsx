@@ -27,25 +27,29 @@ const SuggestField = React.createClass({
 
 		placeholder: React.PropTypes.string,
 
-		formValue: React.PropTypes.string,
+		/**
+		 * Default input value to show
+		 * The input will also be updated accordingly when a different stored value is received
+		 */
+		storedValue: React.PropTypes.string,
 	},
 
 	getInitialState() {
 		return {
-			text: this.props.formValue,
+			text: this.props.storedValue,
 		};
 	},
 
 	getDefaultProps() {
 		return {
 			autoFocus: true,
-			formValue: '',
+			storedValue: '',
 		};
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.formValue !== this.props.formValue) {
-			this.setState({ text: nextProps.formValue });
+		if (nextProps.storedValue !== this.props.storedValue) {
+			this.setState({ text: nextProps.storedValue });
 		}
 	},
 
@@ -105,7 +109,7 @@ const SuggestField = React.createClass({
 		const suggestField = (
 			<Autosuggest 
 				{ ...other }
-				initialValue={ this.props.formValue }
+				initialValue={ this.props.storedValue }
 				inputProps={ inputAttributes } 
 				onSuggestionSelected={ this.onSuggestionSelected }
 			/>

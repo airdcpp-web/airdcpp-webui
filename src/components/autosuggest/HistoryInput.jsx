@@ -47,8 +47,8 @@ export default React.createClass({
 	render() {
 		return (
 			<LocalSuggestField 
+				{ ...this.props }
 				data={ this.state.history }
-				placeholder="Enter search string..."
 				submitHandler={ this.handleSubmit }
 				button={ 
 					<Button

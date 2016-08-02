@@ -1,4 +1,5 @@
 import React from 'react';
+
 import SocketService from 'services/SocketService';
 import { HistoryEnum } from 'constants/HistoryConstants';
 import SearchConstants from 'constants/SearchConstants';
@@ -15,14 +16,36 @@ import ResultTable from './ResultTable';
 const SEARCH_PERIOD = 4000;
 
 const Search = React.createClass({
-	_handleSearch(text) {
+	getInitialState() {
+		return {
+			searchString: '',
+			running: false
+		};
+	},
+
+	componentWillMount() {
+		this.checkLocationState(this.props);
+	},
+
+	componentWillUpdate(nextProps, nextState) {
+		this.checkLocationState(nextProps);
+	},
+
+	checkLocationState(props) {
+		const { state } = props.location;
+		if (state && state.searchString && state.searchString !== this.state.searchString) {
+			this.search(state.searchString);
+		}
+	},
+
+	search(searchString) {
 		console.log('Searching');
 
 		clearTimeout(this._searchTimeout);
 
 		SocketService.post(SearchConstants.QUERY_URL, {
 			query: {
-				pattern: text,
+				pattern: searchString,
 			}
 		})
 			.then(this.onSearchPosted)
@@ -31,20 +54,17 @@ const Search = React.createClass({
 			);
 
 		this.setState({
-			searchString: text,
+			searchString,
 			running: true 
 		});
 	},
 
 	onSearchPosted(data) {
-		this._searchTimeout = setTimeout(() => this.setState({ running:false }), data.queue_time + SEARCH_PERIOD);
-	},
-
-	getInitialState() {
-		return {
-			searchString: null,
-			running: false
-		};
+		this._searchTimeout = setTimeout(() => {
+			this.setState({ 
+				running: false,
+			});
+		}, data.queue_time + SEARCH_PERIOD);
 	},
 
 	render() {
@@ -54,16 +74,18 @@ const Search = React.createClass({
 					<div className="search-container">
 						<div className="search-area">
 							<HistoryInput 
-								historyId={HistoryEnum.SEARCH} 
-								submitHandler={this._handleSearch} 
-								running={this.state.running}
+								historyId={ HistoryEnum.SEARCH } 
+								submitHandler={ this.search } 
+								running={ this.state.running }
+								storedValue={ this.state.searchString }
+								placeholder="Enter search string..."
 							/>
 						</div>
 					</div>
 					<ResultTable 
-						searchString={this.state.searchString} 
-						running={this.state.running}
-						location={this.props.location}
+						searchString={ this.state.searchString } 
+						running={ this.state.running }
+						location={ this.props.location }
 					/>
 				</div>
 			</OfflineHubMessageDecorator>
