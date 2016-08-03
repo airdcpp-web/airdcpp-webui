@@ -1,10 +1,11 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import DownloadableItemActions from 'actions/DownloadableItemActions';
 
 
 export default function (Component) {
-	const DownloadMenu = ({ handler, user, itemInfo, caption, ...other }, { routerLocation }) => {
+	const DownloadMenu = ({ handler, user, itemInfo, caption, className, ...other }, { routerLocation }) => {
 		const data = {
 			user,
 			handler,
@@ -14,6 +15,7 @@ export default function (Component) {
 		
 		return (
 			<Component 
+				className={ classNames('download', className) }
 				caption={ caption } 
 				actions={ DownloadableItemActions }
 				itemData={ data } 

@@ -8,7 +8,6 @@ import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
 import FilelistActions from 'actions/FilelistActions';
-import SearchActions from 'actions/SearchActions';
 import ViewFileActions from 'actions/ViewFileActions';
 
 

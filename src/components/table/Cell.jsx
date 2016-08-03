@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { TableActionMenu } from 'components/menu/DropdownMenu';
+import { TableActionMenu, TableDownloadMenu } from 'components/menu/DropdownMenu';
 import ValueFormat from 'utils/ValueFormat';
 import { FileNameFormatter, IpFormatter } from 'utils/IconFormat';
-import { TableDownloadMenu } from 'components/menu/DropdownMenu';
 import Checkbox from 'components/semantic/Checkbox';
 
-//import { Cell } from 'fixed-data-table';
 
 export const FileActionCell = ({ cellData, rowData, ...props }) => (
 	<TableActionMenu 

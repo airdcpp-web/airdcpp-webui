@@ -1,11 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import UserActions from 'actions/UserActions';
 import FileUtils from 'utils/FileUtils';
 import { UserIconFormatter } from 'utils/IconFormat';
 
 export default function (Component) {
-	const UserMenu = ({ text, userIcon, directory, user, ...other }) => {
+	const UserMenu = ({ text, userIcon, directory, user, className, ...other }) => {
 		let nicks = text;
 		if (!nicks) {
 			nicks = user.nicks ? user.nicks : user.nick;
@@ -14,7 +15,7 @@ export default function (Component) {
 		let caption = nicks;
 		if (userIcon) {
 			caption = (
-				<div className="icon-caption">
+				<div className={ classNames('icon-caption', userIcon) }>
 					{ userIcon === 'simple' ? <i className="blue user icon"/> : <UserIconFormatter size="large" flags={ user.flags }/> }
 					{ nicks }
 				</div>
@@ -29,7 +30,7 @@ export default function (Component) {
 		return (
 			<Component 
 				{ ...other }
-				className="user-menu"
+				className={ classNames('user-menu', className) }
 				caption={ caption } 
 				actions={ UserActions } 
 				itemData={ data }

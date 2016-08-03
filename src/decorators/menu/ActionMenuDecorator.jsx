@@ -112,7 +112,7 @@ export default function (Component) {
 		// Convert ID to DropdownItem
 		getItem(menu, actionId, index) {
 			if (actionId === 'divider') {
-				return <div key={ 'divider' + index } className="ui divider"></div>;
+				return <div key={ 'divider' + index } className="ui divider"/>;
 			}
 
 			// A custom element

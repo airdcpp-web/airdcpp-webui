@@ -24,6 +24,30 @@ const getUserCaption = (cellData) => {
 	return caption;
 };
 
+/*const UserCell = ({ cellData, rowData, ...props }, context) => {
+	if (cellData.count === 1) {
+		return (
+			<TableUserMenu 
+				//text={ cellData.user.nicks } 
+				user={ cellData.user }
+				directory={ rowData.path }
+				userIcon={ 'simple' }
+				ids={ [ 'browse', 'message' ] }
+			/>
+		);
+	}
+
+	return (
+		<a onClick={ () => SearchActions.result(rowData, context.routerLocation) }>
+			 { cellData.count + ' users' }
+		</a>
+	);
+};
+
+UserCell.contextTypes = {
+	routerLocation: React.PropTypes.object
+};*/
+
 const UserCell = ({ cellData, rowData, ...props }) => (
 	<TableUserMenu 
 		text={ getUserCaption(cellData) } 
@@ -31,7 +55,13 @@ const UserCell = ({ cellData, rowData, ...props }) => (
 		directory={ rowData.path }
 		userIcon={ 'simple' }
 		ids={ [ 'browse', 'message' ] }
-	/>
+	>
+		<TableActionMenu 
+			actions={ SearchActions } 
+			ids={ [ 'result' ] } 
+			itemData={ rowData }
+		/>
+	</TableUserMenu>
 );
 
 const NameCell = ({ rowData, ...props }) => (
@@ -91,22 +121,13 @@ const ResultTable = React.createClass({
 				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 				rowClassNameGetter={ this._rowClassNameGetter }
 				store={ SearchViewStore }
-				/*footerData={ !this.props.searchString ? null :
-					(
-						<div className="search-string">
-							<i>{ this.props.searchString }</i>
-						</div>
-					)
-				}*/
 			>
 				<Column
 					name="Name"
 					width={200}
 					columnKey="name"
 					flexGrow={8}
-					cell={
-						<NameCell/>
-					}
+					cell={ <NameCell/> }
 				/>
 				<Column
 					name="Size"

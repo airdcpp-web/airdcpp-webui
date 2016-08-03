@@ -27,3 +27,22 @@
 	display: flex;
 	flex-direction: column;
 }
+
+
+.result.modal td.path {
+	word-break: break-all;
+}
+
+.result.modal td {
+	max-width: 250px;
+}
+
+/* Can't be applied to dropdown cells */
+.result.modal td:not(.user) {
+	overflow-x: hidden;
+}
+
+.result.modal .download.dropdown {
+	max-width: 150px;
+	margin-top: 10px;
+}

@@ -154,6 +154,24 @@ const Helpers = {
 		return currentLocation.state[OverlayConstants.SIDEBAR_ID].data;
 	},
 
+	// Remove overlay from the location state
+	removeOverlay: function (location, overlayId) {
+		const { state } = location;
+		const { returnTo } = state[overlayId];
+		invariant(overlayId, 'Return address or overlay id missing when closing an overlay');
+
+		delete state[overlayId];
+		
+		if (returnTo) {
+			History.replace({
+				state, 
+				pathname: returnTo,
+			});
+		} else {
+			History.goBack();
+		}
+	},
+
 	// Uses replace instead if the next path matches the current one regardless of the state or other properties
 	// Note that the regular history functions will ignore fully identical locations in any case so there's no need to check that manually
 	pushUnique: function (nextLocation, currentLocation) {

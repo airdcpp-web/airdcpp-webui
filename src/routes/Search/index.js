@@ -9,6 +9,12 @@ module.exports = {
 			}, {
 				path: 'result', 
 				component: require('./components/ResultDialog').default, 
+				childRoutes: [
+					{
+						path: 'download', 
+						component: require('components/download/DownloadDialog').default, 
+					}
+				]
 			} ]);
 		}, 'search-children');
 	},
