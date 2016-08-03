@@ -24,30 +24,6 @@ const getUserCaption = (cellData) => {
 	return caption;
 };
 
-/*const UserCell = ({ cellData, rowData, ...props }, context) => {
-	if (cellData.count === 1) {
-		return (
-			<TableUserMenu 
-				//text={ cellData.user.nicks } 
-				user={ cellData.user }
-				directory={ rowData.path }
-				userIcon={ 'simple' }
-				ids={ [ 'browse', 'message' ] }
-			/>
-		);
-	}
-
-	return (
-		<a onClick={ () => SearchActions.result(rowData, context.routerLocation) }>
-			 { cellData.count + ' users' }
-		</a>
-	);
-};
-
-UserCell.contextTypes = {
-	routerLocation: React.PropTypes.object
-};*/
-
 const UserCell = ({ cellData, rowData, ...props }) => (
 	<TableUserMenu 
 		text={ getUserCaption(cellData) } 

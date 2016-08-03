@@ -33,6 +33,8 @@ const UserResult = ({ result }) => (
 	</tr>
 );
 
+const resultSort = (a, b) => a.users.user.nicks.localeCompare(b.users.user.nicks);
+
 const UserResultTable = ({ results }) => (
 	<div className="users">
 		<h2>Users</h2>
@@ -48,7 +50,7 @@ const UserResultTable = ({ results }) => (
 				</tr>
 			</thead>
 			<tbody>
-				{ results.map(result => 
+				{ results.sort(resultSort).map(result => 
 					<UserResult 
 						key={ result.id }
 						result={ result }

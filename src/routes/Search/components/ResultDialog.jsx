@@ -59,6 +59,7 @@ const ResultDialog = React.createClass({
 				title={ parentResult.name }
 				closable={ true } 
 				icon={ <FileIcon typeInfo={ parentResult.type }/> } 
+				fullHeight={ true }
 				{...this.props}
 			>
 				<ResultInfoGrid parentResult={ parentResult }/>

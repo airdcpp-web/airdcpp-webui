@@ -29,9 +29,9 @@
 }
 
 
-.result.modal td.path {
+/*.result.modal td.path {
 	word-break: break-all;
-}
+}*/
 
 .result.modal td {
 	max-width: 250px;

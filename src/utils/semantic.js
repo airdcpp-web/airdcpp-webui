@@ -1,6 +1,7 @@
 import 'semantic-ui/components/accordion.min.css';
 import 'semantic-ui/components/breadcrumb.min.css';
 import 'semantic-ui/components/button.min.css';
+//import 'semantic-ui/components/card.min.css';
 import 'semantic-ui/components/checkbox.min.css';
 import 'semantic-ui/components/container.min.css';
 import 'semantic-ui/components/dimmer.min.css';
