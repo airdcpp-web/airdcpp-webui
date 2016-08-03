@@ -9,9 +9,12 @@ module.exports = {
 			}, {
 				path: 'add', 
 				component: require('./components/ShareDirectoryDialog').default, 
-			}, {
-				path: '**/browse',
-				component: require('components/filebrowser/FileBrowserDialog').default,
+				childRoutes: [
+					{
+						path: 'browse', 
+						component: require('components/filebrowser/FileBrowserDialog').default, 
+					}
+				]
 			} ]);
 		}, 'share-children');
 	},

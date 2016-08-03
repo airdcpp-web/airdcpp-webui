@@ -12,6 +12,55 @@ const History = useRouterHistory(createHistory)({
 	basename: getBasePath().slice(0, -1),		
 });
 
+// Returns paths for currently open modals
+const getModalPaths = (state) => {
+	 return Object.keys(state).reduce((modalPaths, key) => {
+		if (key.indexOf(OverlayConstants.MODAL_PREFIX) === 0) {
+			modalPaths.push(state[key].pathname);
+		}
+
+		return modalPaths;
+	}, []);
+};
+
+// Returns the current pathname with modals stripped
+const getModelessPath = (location) => {
+	let pathname = location.pathname;
+	if (!location.state) {
+		return pathname;
+	}
+
+	const modalPaths = getModalPaths(location.state);
+
+	while (1) {
+		// Do we have a modal with this path?
+		if (modalPaths.indexOf(pathname) === -1) {
+			break;
+		}
+
+		// Use the parent path
+		const index = pathname.indexOf('/', 1);
+		if (index === -1) {
+			break;
+		}
+
+		pathname = pathname.substring(0, index);
+	}
+
+	return pathname;
+};
+
+// Returns a new location state object without any modals 
+const createModelessState = (state) => {
+	return Object.keys(state).reduce((newState, key) => {
+		if (key.indexOf(OverlayConstants.MODAL_PREFIX) !== 0) {
+			newState[key] = state[key];
+		}
+
+		return newState;
+	}, {});
+};
+
 
 const mergeOverlayData = (locationState, overlayId, data) => {
 	return update(locationState, { 
@@ -21,28 +70,43 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 	});
 };
 
-const getOverlayState = (currentLocation, overlayId, data) => {
+// Push a new sidebar state or merge the data into an existing one (if the sidebar is open already) 
+const getSidebarState = (currentLocation, data) => {
 	console.assert(currentLocation, 'Current location not supplied for overlay creation');
 	console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
 
-	const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
-	if (!state[overlayId]) {
-		// Creating the overlay
-		state[overlayId] = {
-			returnTo: currentLocation.pathname,
-			data: data || {}
+	const state = currentLocation.state ? createModelessState(currentLocation.state) : {};
+	if (!state[OverlayConstants.SIDEBAR_ID]) {
+		// We are opening the sidebar
+		state[OverlayConstants.SIDEBAR_ID] = {
+			returnTo: getModelessPath(currentLocation),
+			data: data || {},
 		};
 
 		return state;
 	}
 
-	// Merge the new data
-	return mergeOverlayData(state, overlayId, data || {});
+	// Sidebar is open already, merge the new data
+	return mergeOverlayData(state, OverlayConstants.SIDEBAR_ID, data || {});
+};
+
+const addModalState = (currentLocation, overlayId, data, pathname) => {
+	console.assert(currentLocation, 'Current location not supplied for overlay creation');
+	console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
+
+	const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
+	state[overlayId] = {
+		//returnTo: currentLocation.pathname,
+		data: data || {},
+		pathname,
+	};
+
+	return state;
 };
 
 const Helpers = {
 	pushModal: function (currentLocation, pathname, overlayId, data) {
-		const state = getOverlayState(currentLocation, 'modal_' + overlayId, data);
+		const state = addModalState(currentLocation, overlayId, data, pathname);
 		History.push({ 
 			state, 
 			pathname
@@ -50,18 +114,18 @@ const Helpers = {
 	},
 
 	replaceSidebar: function (currentLocation, pathname, data) {
-		const state = getOverlayState(currentLocation, OverlayConstants.SIDEBAR_ID, data);
+		const state = getSidebarState(currentLocation, data);
 		History.replace({
-			state, 
+			state,
 			pathname,
 		});
 	},
 
 	pushSidebar: function (currentLocation, pathname, data) {
 		// replaceState is invoked automatically if the path hasn't changed
-		const state = getOverlayState(currentLocation, OverlayConstants.SIDEBAR_ID, data);
+		const state = getSidebarState(currentLocation, data);
 		History.push({
-			state, 
+			state,
 			pathname,
 		});
 	},

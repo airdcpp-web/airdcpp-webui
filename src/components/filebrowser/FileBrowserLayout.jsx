@@ -21,7 +21,7 @@ import './style.css';
 const CreateDirectory = ({ handleAction }) => (
 	<Accordion>
 		<div className="title create-section">
-			<i className="dropdown icon"></i>
+			<i className="dropdown icon"/>
 			Create directory
 		</div>
 

@@ -63,6 +63,8 @@ const Modal = React.createClass({
 			promise.then(this.props.hide).catch(() => this.setState({ saving: false }));
 			return false;
 		}
+
+		return true;
 	},
 
 	componentDidMount() {
@@ -104,17 +106,17 @@ const Modal = React.createClass({
 				{this.props.onApprove ? (
 					<div className="actions">
 						<div className={ approveStyle }>
-							<i className={ IconConstants.SAVE + ' icon' }></i>
+							<i className={ IconConstants.SAVE + ' icon' }/>
 							{this.props.approveCaption}
 						</div>
 						<div className="ui cancel red basic button">
-							<i className="remove icon"></i>
+							<i className="remove icon"/>
 							Cancel
 						</div>
 				</div>) : (
 					<div className="actions">
 						<div className="ui cancel button">
-							<i className="remove icon"></i>
+							<i className="remove icon"/>
 							Close
 						</div>
 					</div>

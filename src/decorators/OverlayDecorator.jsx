@@ -66,13 +66,18 @@ export default function (Component, semanticModuleName) {
 			if (this.changeHistoryState) {
 				const { state } = this.props.location;
 				const { returnTo } = state[this.props.overlayId];
-				invariant(returnTo && this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
+				invariant(this.props.overlayId, 'Return address or overlay id missing when closing an overlay');
+
 				delete state[this.props.overlayId];
 				
-				History.replace({
-					state, 
-					pathname: returnTo,
-				});
+				if (returnTo) {
+					History.replace({
+						state, 
+						pathname: returnTo,
+					});
+				} else {
+					History.goBack();
+				}
 			}
 
 			if (this.props.onHidden) {

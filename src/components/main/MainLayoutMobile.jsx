@@ -7,6 +7,8 @@ import MenuIcon from 'components/menu/MenuIcon';
 import UrgencyUtils from 'utils/UrgencyUtils';
 import History from 'utils/History';
 import Button from 'components/semantic/Button';
+
+import OverlayHandlerDecorator from 'decorators/main/OverlayHandlerDecorator';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 import 'mobile.css';
@@ -93,4 +95,4 @@ const MainLayoutMobile = React.createClass({
 	}
 });
 
-export default MainLayoutMobile;
+export default OverlayHandlerDecorator(MainLayoutMobile);

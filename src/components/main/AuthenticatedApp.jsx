@@ -17,8 +17,6 @@ import MainLayoutNormal from './MainLayoutNormal';
 import SocketConnectStatus from './SocketConnectStatus';
 import SetContainerSize from 'mixins/SetContainerSize';
 
-import ModalHandlerDecorator from 'decorators/main/ModalHandlerDecorator';
-
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
@@ -26,13 +24,6 @@ import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 
-import OverlayConstants from 'constants/OverlayConstants';
-
-
-const showSideBar = (props) => {
-	return props.location.state &&
-		props.location.state[OverlayConstants.SIDEBAR_ID];
-};
 
 const AuthenticatedApp = React.createClass({
 	mixins: [ Reflux.connect(LoginStore, 'login'), SetContainerSize ],
@@ -79,20 +70,6 @@ const AuthenticatedApp = React.createClass({
 		if (this.state.login.socketAuthenticated) {
 			this.onSocketAuthenticated();
 		}
-
-		if (showSideBar(this.props)) {
-			this.previousChildren = <div/>;
-		}
-	},
-
-	componentWillReceiveProps(nextProps) {
-		if (showSideBar(nextProps)) {
-			if (!this.previousChildren) {
-				this.previousChildren = this.props.children;
-			}
-		} else {
-			this.previousChildren = null;
-		}
 	},
 
 	componentWillUpdate(nextProps, nextState) {
@@ -123,26 +100,17 @@ const AuthenticatedApp = React.createClass({
 			return <SocketConnectStatus active={true} lastError={this.state.login.lastError}/>;
 		}
 
-
-		let sidebar = null;
-		if (showSideBar(this.props)) {
-			sidebar = React.cloneElement(this.props.children, { 
-				overlayId: OverlayConstants.SIDEBAR_ID,
-				overlayContext: '.sidebar-context',
-			});
-		}
-
 		const LayoutElement = BrowserUtils.useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
 		return (
 			<div id="authenticated-app">
 				<ActivityTracker/>
 				<Notifications location={ this.props.location }/>
-				<LayoutElement className="pushable main-layout" sidebar={ sidebar } { ...this.props }>
-					{ this.previousChildren ? this.previousChildren : this.props.children }
+				<LayoutElement className="pushable main-layout" /*sidebar={ sidebar }*/ { ...this.props }>
+					{ this.props.children }
 				</LayoutElement>
 			</div>
 		);
 	}
 });
 
-export default ModalHandlerDecorator(AuthenticatedApp);
+export default AuthenticatedApp;

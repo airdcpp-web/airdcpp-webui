@@ -4,6 +4,8 @@ import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
 import SiteHeader from './SiteHeader';
 
+import OverlayHandlerDecorator from 'decorators/main/OverlayHandlerDecorator';
+
 import 'normal.css';
 
 const { PropTypes } = React;
@@ -35,4 +37,4 @@ const MainLayout = React.createClass({
 	}
 });
 
-export default MainLayout;
+export default OverlayHandlerDecorator(MainLayout);

@@ -1,9 +1,13 @@
+const MODAL_PREFIX = 'modal_';
 export default {
-	FAVORITE_MODAL_ID: 'favorite-modal',
-	DOWNLOAD_MODAL_ID: 'download-modal',
-	SHARE_ROOT_MODAL_ID: 'share-root-modal',
-	WEB_USER_MODAL_ID: 'web-user-modal',
 	SIDEBAR_ID: 'sidebar',
-	FILE_BROWSER_MODAL: 'browse-modal',
-	SEARCH_RESULT_MODAL: 'search-modal',
+	MODAL_PREFIX: MODAL_PREFIX,
+
+	// All listed modals must use the prefix
+	FAVORITE_MODAL_ID: MODAL_PREFIX + 'favorite',
+	DOWNLOAD_MODAL_ID: MODAL_PREFIX + 'download',
+	SHARE_ROOT_MODAL_ID: MODAL_PREFIX + 'share-root',
+	WEB_USER_MODAL_ID: MODAL_PREFIX + 'web-user',
+	FILE_BROWSER_MODAL: MODAL_PREFIX + 'file-browser',
+	SEARCH_RESULT_MODAL: MODAL_PREFIX + 'search',
 };
