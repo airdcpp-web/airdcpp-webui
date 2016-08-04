@@ -28,18 +28,15 @@
 	flex-direction: column;
 }
 
+@media only screen and (min-width: 767px) {
+	.result.modal td {
+		max-width: 250px;
+	}
 
-/*.result.modal td.path {
-	word-break: break-all;
-}*/
-
-.result.modal td {
-	max-width: 250px;
-}
-
-/* Can't be applied to dropdown cells */
-.result.modal td:not(.user) {
-	overflow-x: hidden;
+	/* Can't be applied to dropdown cells */
+	.result.modal td:not(.user) {
+		overflow-x: hidden;
+	}
 }
 
 .result.modal .download.dropdown {

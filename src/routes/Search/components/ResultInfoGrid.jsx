@@ -23,7 +23,7 @@ const GridRow = ({ title, text }) => (
 
 const ResultInfoGrid = ({ parentResult }) => (
 	<div className="ui segment">
-		<div className="ui grid two column">
+		<div className="ui grid stackable two column">
 			<GridRow title="Content/Type" text={ parentResult.type.str }/>
 			<GridRow title="Size" text={ ValueFormat.formatSize(parentResult.size) }/>
 			<GridRow title="Last modified" text={ ValueFormat.formatRelativeTime(parentResult.time) }/>

@@ -11,12 +11,12 @@ const UserResult = ({ result }) => (
 		<td className="user">
 			<UserMenu 
 				userIcon={ true }
-				user={ result.users.user }
+				user={ result.user }
 				directory={ result.path }
 			/>
 		</td>
 		<td className="hubs">
-			{ result.users.user.hub_names }
+			{ result.user.hub_names }
 		</td>
 		<td className="connection">
 			{ ValueFormat.formatConnection(result.connection) }
@@ -33,7 +33,7 @@ const UserResult = ({ result }) => (
 	</tr>
 );
 
-const resultSort = (a, b) => a.users.user.nicks.localeCompare(b.users.user.nicks);
+const resultSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
 
 const UserResultTable = ({ results }) => (
 	<div className="users">
@@ -52,7 +52,7 @@ const UserResultTable = ({ results }) => (
 			<tbody>
 				{ results.sort(resultSort).map(result => 
 					<UserResult 
-						key={ result.id }
+						key={ result.user.cid }
 						result={ result }
 					/>) }
 			</tbody>

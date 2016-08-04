@@ -117,6 +117,7 @@ const ResultTable = React.createClass({
 					width={80}
 					columnKey="type"
 					flexGrow={1}
+					hideWidth={600}
 				/>
 				<Column
 					name="Relevance"
@@ -131,6 +132,7 @@ const ResultTable = React.createClass({
 					columnKey="connection"
 					cell={ <ConnectionCell/> }
 					flexGrow={2}
+					hideWidth={600}
 				/>
 				<Column
 					name="Users"
@@ -138,6 +140,7 @@ const ResultTable = React.createClass({
 					columnKey="users"
 					flexGrow={3}
 					cell={ <UserCell/> }
+					hideWidth={600}
 				/>
 				<Column
 					name="Last modified"
@@ -145,12 +148,14 @@ const ResultTable = React.createClass({
 					columnKey="time"
 					cell={ <DurationCell/> }
 					flexGrow={1}
+					hideWidth={800}
 				/>
 				<Column
 					name="Slots"
 					width={60}
 					columnKey="slots"
 					flexGrow={1}
+					hideWidth={800}
 				/>
 			</VirtualTable>
 		);
