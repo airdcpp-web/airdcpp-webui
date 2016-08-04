@@ -70,8 +70,8 @@
 	height: 100%;
 }
 
-.public_fixedDataTable_header a {
-	color:black;
+.public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
+	color: black;
 }
 
 .table.dropdown .trigger {

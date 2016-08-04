@@ -4,7 +4,7 @@ import WebUserActions from 'actions/WebUserActions';
 import WebUserStore from 'stores/WebUserStore';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { ActionCell, DurationCell } from 'components/table/Cell';
+import { ActionMenuCell, DurationCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
 import AccessConstants from 'constants/AccessConstants';
@@ -29,7 +29,7 @@ const WebUserLayout = React.createClass({
 					width={200}
 					columnKey="username"
 					cell={
-						<ActionCell 
+						<ActionMenuCell 
 							actions={ WebUserActions }
 							ids={[ 'edit', 'remove' ]}
 						/> 

@@ -1,12 +1,8 @@
 import React from 'react';
 
-import { Cell } from 'fixed-data-table';
-
-// Cell components that are used internally by the table
-
 
 // Generic wrapper for all cells that will handle data loading
-export const RowWrapperCell = React.createClass({
+const RowWrapperCell = React.createClass({
 	getInitialState() {
 		return {
 			rowData: null,
@@ -75,30 +71,4 @@ export const RowWrapperCell = React.createClass({
 	}
 });
 
-// Column header
-export const HeaderCell = ({ onClick, label, columnKey, ...props }) => (
-	<Cell { ...props }>
-		<a onClick={ onClick }>
-			{ label }
-		</a>
-	</Cell>
-);
-
-const getCellContent = (cellData) => {
-	if (typeof cellData === 'object') {
-		return Array.isArray(cellData) ? cellData.length : cellData.str;
-	}
-
-	if (typeof cellData === 'boolean') {
-		return cellData ? 'Yes' : 'No';
-	}
-
-	return cellData;
-};
-
-// Default cell
-export const TextCell = ({ cellData, ...props }) => (
-	<span className="plain text cell">
-		{ getCellContent(cellData) }
-	</span>
-);
+export default RowWrapperCell;

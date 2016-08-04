@@ -11,8 +11,8 @@ import QueueStore from 'stores/QueueStore';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
-import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
-//import { LocationContext } from 'mixins/RouterMixin';
+import { ActionLinkCell, FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import '../style.css';
 
@@ -22,7 +22,7 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 );
 
 const Queue = React.createClass({
-	//mixins: [ LocationContext ],
+	mixins: [ LocationContext ],
 	isActive(cellData, rowData) {
 		return !rowData.status.finished;
 	},
@@ -100,6 +100,7 @@ const Queue = React.createClass({
 					columnKey="sources"
 					renderCondition={ this.isActive }
 					flexGrow={1}
+					cell={ <ActionLinkCell action={ QueueActions.sources }/> }
 				/>
 				<Column
 					name="Time left"

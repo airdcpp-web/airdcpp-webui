@@ -9,7 +9,8 @@ import TableActions from 'actions/TableActions';
 import BrowserUtils from 'utils/BrowserUtils';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
-import { TextCell, RowWrapperCell, HeaderCell } from './BaseCell';
+import RowWrapperCell from './RowWrapperCell';
+import { TextCell, HeaderCell } from './Cell';
 
 const TABLE_ROW_HEIGHT = 50;
 const { PropTypes } = React;

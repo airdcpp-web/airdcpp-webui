@@ -10,4 +10,5 @@ export default {
 	WEB_USER_MODAL_ID: MODAL_PREFIX + 'web-user',
 	FILE_BROWSER_MODAL: MODAL_PREFIX + 'file-browser',
 	SEARCH_RESULT_MODAL: MODAL_PREFIX + 'search',
+	BUNDLE_SOURCE_MODAL: MODAL_PREFIX + 'bundle-sources',
 };

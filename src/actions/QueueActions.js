@@ -2,10 +2,12 @@
 import Reflux from 'reflux';
 import { default as QueueConstants } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
+import History from 'utils/History';
 
+import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 import { PriorityEnum } from 'constants/QueueConstants';
-import AccessConstants from 'constants/AccessConstants';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
@@ -69,6 +71,9 @@ export const QueueActions = Reflux.createActions([
 		asyncResult: true,
 	} },
 	{ 'removeSource': { 
+		asyncResult: true,
+	} },
+	{ 'sources': { 
 		asyncResult: true,
 	} },
 ]);
@@ -211,6 +216,10 @@ QueueActions.removeSource.completed.listen(function (user, data) {
 		title: 'Source removed',
 		message: 'The user ' + user.nicks + ' was removed from ' + data.count + ' files',
 	});
+});
+
+QueueActions.sources.listen(function (data, location) {
+	History.pushModal(location, location.pathname + '/sources', OverlayConstants.BUNDLE_SOURCE_MODAL, { bundle: data });
 });
 
 export default QueueActions;

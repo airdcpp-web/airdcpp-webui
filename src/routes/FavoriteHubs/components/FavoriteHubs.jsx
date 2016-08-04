@@ -7,7 +7,7 @@ import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { Column } from 'fixed-data-table';
-import { CheckboxCell, ActionCell } from 'components/table/Cell';
+import { CheckboxCell, ActionMenuCell } from 'components/table/Cell';
 import ConnectStateCell from './ConnectStateCell';
 
 import { TableActionMenu } from 'components/menu/DropdownMenu';
@@ -74,7 +74,7 @@ const FavoriteHubs = React.createClass({
 					columnKey="name"
 					flexGrow={6}
 					cell={ 
-						<ActionCell 
+						<ActionMenuCell 
 							actions={ FavoriteHubActions } 
 							ids={[ 'edit', 'remove' ]}
 						/> 
