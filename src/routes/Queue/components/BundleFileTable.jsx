@@ -6,13 +6,12 @@ import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
 import StatusCell from './StatusCell';
-import QueueBundleViewStore from 'stores/QueueBundleViewStore';
+import QueueFileViewStore from 'stores/QueueFileViewStore';
+import { FilterMethod } from 'constants/TableConstants';
 
-import { ActionMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
-import { ActionLinkCell, FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
-import { LocationContext } from 'mixins/RouterMixin';
+import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/table/Cell';
 
 import '../style.css';
 
@@ -21,19 +20,14 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 	<PriorityMenu 
 		itemPrio={ cellData } 
 		item={ rowData }
-		prioAction={ QueueActions.setBundlePriority }
-		autoPrioAction={ QueueActions.setBundleAutoPriority }
+		prioAction={ QueueActions.setFilePriority }
+		autoPrioAction={ QueueActions.setFileAutoPriority }
 	/>
 );
 
-const Queue = React.createClass({
-	mixins: [ LocationContext ],
+const BundleFileTable = React.createClass({
 	isActive(cellData, rowData) {
 		return !rowData.status.finished;
-	},
-
-	isFinished(cellData, rowData) {
-		return rowData.status.finished;
 	},
 
 	isRunning(cellData, rowData) {
@@ -54,18 +48,12 @@ const Queue = React.createClass({
 		return (
 			<VirtualTable
 				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-				store={ QueueBundleViewStore }
-				footerData={ 
-					<ActionMenu 
-						className="top left pointing"
-						caption="Actions..." 
-						actions={ QueueActions }
-						header="Queue actions"
-						triggerIcon="chevron up"
-						ids={ [ 'removeFinished', 'divider', 'resume', 'pause' ]}
-						button={true}
-					/>
-				}
+				store={ QueueFileViewStore }
+				defaultFilter={ {
+					pattern: this.props.bundle.id,
+					method: FilterMethod.EXACT,
+					property: 'bundle',
+				} }
 			>
 				<Column
 					name="Name"
@@ -75,7 +63,7 @@ const Queue = React.createClass({
 					cell={ 
 						<FileActionCell 
 							actions={ QueueActions } 
-							ids={[ 'content', 'sources', 'divider', 'searchBundle', 'removeBundle', 'divider', 'rescan', 'forceShare' ]}
+							ids={[ 'searchFile', 'removeFile' ]}
 						/> 
 					}
 				/>
@@ -85,13 +73,6 @@ const Queue = React.createClass({
 					columnKey="size"
 					cell={ <SizeCell/> }
 					flexGrow={1}
-				/>
-				<Column
-					name="Type/content"
-					width={150}
-					columnKey="type"
-					hideWidth={1000}
-					cell={ <ActionLinkCell action={ QueueActions.content }/> }
 				/>
 				<Column
 					name="Status"
@@ -106,7 +87,6 @@ const Queue = React.createClass({
 					columnKey="sources"
 					renderCondition={ this.isActive }
 					flexGrow={1}
-					cell={ <ActionLinkCell action={ QueueActions.sources }/> }
 				/>
 				<Column
 					name="Time left"
@@ -131,24 +111,9 @@ const Queue = React.createClass({
 					cell={ <PriorityCell/> }
 					flexGrow={1}
 				/>
-				<Column
-					name="Added"
-					width={100}
-					columnKey="time_added"
-					cell={ <DurationCell/> }
-					hideWidth={1400}
-				/>
-				<Column
-					name="Finished"
-					width={100}
-					columnKey="time_finished"
-					cell={ <DurationCell/> }
-					renderCondition={ this.isFinished }
-					hideWidth={1200}
-				/>
 			</VirtualTable>
 		);
 	}
 });
 
-export default Queue;
+export default BundleFileTable;

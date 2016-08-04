@@ -2,7 +2,6 @@ import React from 'react';
 import deepEqual from 'deep-equal';
 
 import { PriorityEnum } from 'constants/QueueConstants';
-import QueueActions from 'actions/QueueActions';
 
 import TableDropdown from 'components/semantic/TableDropdown';
 import DropdownItem from 'components/semantic/DropdownItem';
@@ -23,14 +22,18 @@ const PriorityMenu = React.createClass({
 		 * Item with priority properties
 		 */
 		item: React.PropTypes.object.isRequired,
+
+		prioAction: React.PropTypes.func.isRequired,
+
+		autoPrioAction: React.PropTypes.func.isRequired,
 	},
 
 	setPriority: function (priorityId) {
-		QueueActions.setBundlePriority(this.props.item.id, priorityId);
+		this.props.prioAction(this.props.item, priorityId);
 	},
 
 	toggleAutoPriority: function () {
-		QueueActions.setBundleAutoPriority(this.props.item.id, !this.props.itemPrio.auto);
+		this.props.autoPrioAction(this.props.item, !this.props.itemPrio.auto);
 	},
 
 	shouldComponentUpdate: function (nextProps, nextState) {

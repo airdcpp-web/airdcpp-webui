@@ -44,6 +44,7 @@ export default {
 
 	BUNDLES_URL: MODULE_URL + '/bundles',
 	BUNDLE_URL: MODULE_URL + '/bundle',
+	FILE_URL: MODULE_URL + '/file',
 
 	BUNDLE_ADDED: 'bundle_added',
 	BUNDLE_REMOVED: 'bundle_removed',

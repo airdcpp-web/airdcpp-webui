@@ -3,6 +3,9 @@ import React from 'react';
 import SocketService from 'services/SocketService';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import { FilterMethod } from 'constants/TableConstants';
+
+
 export default function (Component, propertyName = 'any') {
 	const TableFilterDecorator = React.createClass({
 		mixins: [ PureRenderMixin ],
@@ -34,7 +37,7 @@ export default function (Component, propertyName = 'any') {
 		onFilterUpdated(pattern) {
 			const data = {
 				pattern: pattern,
-				method: 0,
+				method: FilterMethod.PARTIAL,
 				property: propertyName,
 			};
 

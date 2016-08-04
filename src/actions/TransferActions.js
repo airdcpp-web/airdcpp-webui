@@ -60,7 +60,7 @@ TransferActions.disconnect.listen(function (transfer) {
 });
 
 TransferActions.removeFile.listen(function (transfer) {
-	return QueueActions.removeFile(transfer);
+	return QueueActions.removeFile.confirmed(transfer);
 });
 
 TransferActions.removeSource.listen(function (transfer) {

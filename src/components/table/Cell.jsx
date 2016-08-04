@@ -56,11 +56,17 @@ export const ActionMenuCell = ({ cellData, rowData, ...props }) => (
 	/>
 );
 
-export const ActionLinkCell = ({ cellData, rowData, action, ...props }, context) => (
-	<a className="plain link cell" onClick={ () => action(rowData, context.routerLocation) }>
-		{ getCellContent(cellData) }
-	</a>
-);
+export const ActionLinkCell = ({ cellData, rowData, action, ...props }, context) => {
+	if (action.filter && !action.filter(rowData)) {
+		return <TextCell cellData={ cellData } rowData={ rowData } { ...props }/>;
+	}
+
+	return (
+		<a className="plain link cell" onClick={ () => action(rowData, context.routerLocation) }>
+			{ getCellContent(cellData) }
+		</a>
+	);
+};
 
 ActionLinkCell.contextTypes = {
 	routerLocation: React.PropTypes.object.isRequired,

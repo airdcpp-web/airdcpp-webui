@@ -10,6 +10,7 @@ const TableActions = Reflux.createActions([
 	{ 'setSort': { asyncResult: true } },
 	{ 'close': { asyncResult: true } },
 	{ 'pause': { asyncResult: true } },
+	{ 'createFilter': { asyncResult: true } },
 	'init',
 	'clear',
 ]);
@@ -51,5 +52,10 @@ TableActions.pause.listen(function (viewUrl, pause) {
 		paused: pause,
 	}, viewUrl, this);
 });
+
+TableActions.createFilter.listen(function (viewUrl, filterData) {
+	return SocketService.post(viewUrl + '/filter', filterData);
+});
+
 
 export default TableActions;

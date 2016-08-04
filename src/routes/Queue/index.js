@@ -6,6 +6,9 @@ module.exports = {
 			cb(null, [ {
 				path: 'sources', 
 				component: require('./components/SourceDialog').default,
+			}, {
+				path: 'content', 
+				component: require('./components/BundleFileDialog.jsx').default,
 			} ]);
 		}, 'queue-children');
 	},

@@ -11,4 +11,5 @@ export default {
 	FILE_BROWSER_MODAL: MODAL_PREFIX + 'file-browser',
 	SEARCH_RESULT_MODAL: MODAL_PREFIX + 'search',
 	BUNDLE_SOURCE_MODAL: MODAL_PREFIX + 'bundle-sources',
+	BUNDLE_CONTENT_MODAL: MODAL_PREFIX + 'bundle-content',
 };

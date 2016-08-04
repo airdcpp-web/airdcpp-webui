@@ -36,4 +36,7 @@ export default {
 	INFO: 'blue info',
 	WARNING: 'yellow warning sign',
 	ERROR: 'red warning circle',
+
+	FILE: 'file outline',
+	USER: 'user',
 };

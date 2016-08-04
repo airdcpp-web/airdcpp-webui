@@ -36,6 +36,11 @@ const VirtualTable = React.createClass({
 		 * Custom filter that will be displayed in addition to regular text filter
 		 */
 		customFilter: React.PropTypes.node,
+
+		/**
+		 * Default filter that is always applied for items
+		 */
+		defaultFilter: React.PropTypes.object,
 	},
 
 	componentWillMount() {
@@ -79,10 +84,14 @@ const VirtualTable = React.createClass({
 	},
 
 	start(entityId) {
-		const { store } = this.props;
+		const { store, defaultFilter } = this.props;
 
 		TableActions.init(store.viewUrl, entityId);
 		TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
+
+		if (defaultFilter) {
+			TableActions.createFilter(store.viewUrl, defaultFilter);
+		}
 	},
 
 	close() {

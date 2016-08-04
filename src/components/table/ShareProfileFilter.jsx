@@ -49,7 +49,7 @@ const ShareProfileFilter = React.createClass({
 		return (
 			<Dropdown className="top right pointing" caption={this.getCaption()} triggerIcon="filter" button={true}>
 				<div className="header">
-					<i className="filter icon"></i>
+					<i className="filter icon"/>
 					Filter by profile
 				</div>
 				{ [ defaultItem, ...this.props.profiles ].map(this.getDropdownItem) }

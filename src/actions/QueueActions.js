@@ -14,6 +14,10 @@ import NotificationActions from 'actions/NotificationActions';
 
 
 const finishedFailed = bundle => bundle.status.failed && bundle.status.finished;
+const fileNotFinished = file => file.time_finished === 0;
+const isDirectoryBundle = bundle => bundle.type.id === 'directory';
+const hasSources = bundle => bundle.sources.total > 0;
+
 
 export const QueueActions = Reflux.createActions([
 	{ 'searchBundle': { 
@@ -67,14 +71,40 @@ export const QueueActions = Reflux.createActions([
 		icon: IconConstants.ERROR,
 		filter: finishedFailed,
 	} },
-	{ 'removeFile': { 
+	{ 'searchFile': { 
 		asyncResult: true,
+		access: AccessConstants.QUEUE_EDIT, 
+		displayName: 'Search for alternates', 
+		icon: IconConstants.SEARCH,
+	} },
+	{ 'setFilePriority': { 
+		asyncResult: true,
+	} },
+	{ 'setFileAutoPriority': { 
+		asyncResult: true,
+	} },
+	{ 'removeFile': { 
+		asyncResult: true, 
+		children: [ 'confirmed' ], 
+		displayName: 'Remove',
+		access: AccessConstants.QUEUE_EDIT,
+		icon: IconConstants.REMOVE,
+		filter: fileNotFinished,
 	} },
 	{ 'removeSource': { 
 		asyncResult: true,
 	} },
 	{ 'sources': { 
-		asyncResult: true,
+		asyncResult: false,
+		displayName: 'Manage sources...', 
+		icon: IconConstants.USER,
+		filter: hasSources,
+	} },
+	{ 'content': { 
+		asyncResult: false,
+		displayName: 'Manage files...', 
+		icon: IconConstants.FILE,
+		filter: isDirectoryBundle,
 	} },
 ]);
 
@@ -99,18 +129,18 @@ const shareBundle = (bundle, skipScan, action) => {
 };
 
 
-QueueActions.setBundlePriority.listen(function (bundleId, newPrio) {
+QueueActions.setBundlePriority.listen(function (bundle, newPrio) {
 	let that = this;
-	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundleId, {
+	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundle.id, {
 		priority: newPrio
 	})
 		.then(that.completed)
 		.catch(that.failed);
 });
 
-QueueActions.setBundleAutoPriority.listen(function (bundleId, autoPrio) {
+QueueActions.setBundleAutoPriority.listen(function (bundle, autoPrio) {
 	let that = this;
-	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundleId, {
+	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundle.id, {
 		auto_priority: autoPrio
 	})
 		.then(that.completed)
@@ -168,7 +198,9 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 
 QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	let that = this;
-	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/remove', { remove_finished: removeFinished })
+	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/remove', { 
+		remove_finished: removeFinished,
+	})
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -180,11 +212,30 @@ QueueActions.searchBundle.listen(function (bundle) {
 		.catch(this.failed);
 });
 
-QueueActions.removeFile.listen(function (item) {
+QueueActions.removeFile.shouldEmit = function (file) {
+	if (file.status.finished) {
+		this.confirmed(file, false);
+	} else {
+		const options = {
+			title: this.displayName,
+			content: 'Are you sure that you want to remove the file ' + file.name + '?',
+			icon: this.icon,
+			approveCaption: 'Remove file',
+			rejectCaption: "Don't remove",
+			checkboxCaption: 'Remove on disk',
+		};
+
+		ConfirmDialog(options, this.confirmed.bind(this, file));
+	}
+	return false;
+};
+
+QueueActions.removeFile.confirmed.listen(function (item, removeFinished) {
 	const that = this;
 	const { target } = item;
 	return SocketService.post(QueueConstants.REMOVE_FILE_URL, {
-		target
+		target,
+		remove_finished: removeFinished,
 	})
 		.then(that.completed.bind(that, target))
 		.catch(that.failed);
@@ -220,6 +271,35 @@ QueueActions.removeSource.completed.listen(function (user, data) {
 
 QueueActions.sources.listen(function (data, location) {
 	History.pushModal(location, location.pathname + '/sources', OverlayConstants.BUNDLE_SOURCE_MODAL, { bundle: data });
+});
+
+QueueActions.content.listen(function (data, location) {
+	History.pushModal(location, location.pathname + '/content', OverlayConstants.BUNDLE_CONTENT_MODAL, { bundle: data });
+});
+
+QueueActions.searchFile.listen(function (file) {
+	let that = this;
+	return SocketService.post(QueueConstants.FILE_URL + '/' + file.id + '/search')
+		.then(that.completed)
+		.catch(this.failed);
+});
+
+QueueActions.setFilePriority.listen(function (file, newPrio) {
+	let that = this;
+	return SocketService.patch(QueueConstants.FILE_URL + '/' + file.id, {
+		priority: newPrio
+	})
+		.then(that.completed)
+		.catch(that.failed);
+});
+
+QueueActions.setFileAutoPriority.listen(function (file, autoPrio) {
+	let that = this;
+	return SocketService.patch(QueueConstants.FILE_URL + '/' + file.id, {
+		auto_priority: autoPrio
+	})
+		.then(that.completed)
+		.catch(that.failed);
 });
 
 export default QueueActions;
