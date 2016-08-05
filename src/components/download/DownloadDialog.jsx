@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'components/semantic/Modal';
 
 import { PriorityEnum } from 'constants/QueueConstants';
-import QueueConstants from 'constants/QueueConstants';
 import ShareConstants from 'constants/ShareConstants';
 import { default as HistoryConstants, HistoryEnum } from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
@@ -97,7 +96,7 @@ const DownloadDialog = React.createClass({
 		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error('Failed to fetch paths', requestPath, error.message));
 	},
 
-	componentDidMount() {
+	componentWillMount() {
 		this.fetchPaths(ShareConstants.GROUPED_ROOTS_GET_URL, 'share_paths');
 		this.fetchPaths(FavoriteDirectoryConstants.DIRECTORIES_URL, 'favorite_paths');
 		this.fetchPaths(HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR, 'history_paths');

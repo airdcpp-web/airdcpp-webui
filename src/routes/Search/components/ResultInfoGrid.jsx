@@ -4,6 +4,7 @@ import SearchActions from 'actions/SearchActions';
 import ValueFormat from 'utils/ValueFormat';
 
 import { DownloadMenu } from 'components/menu/DropdownMenu';
+import { DupeEnum } from 'constants/DupeConstants';
 
 
 const formatText = (text) => text ? text : '(unknown)';
@@ -15,9 +16,30 @@ const GridRow = ({ title, text }) => (
 			{ title }
 			</div>
 		</div>
-		<div className="twelve wide column">
+		<div className="thirteen wide column">
 			{ formatText(text) }
 		</div>
+	</div>
+);
+
+const DupeStrings = {
+	[DupeEnum.NONE]: 'None',
+	[DupeEnum.SHARE_PARTIAL]: 'Share (partial)',
+	[DupeEnum.SHARE_FULL]: 'Share (full)',
+	[DupeEnum.QUEUE_PARTIAL]: 'Queue (partial)',
+	[DupeEnum.QUEUE_FULL]: 'Queue (full)',
+	[DupeEnum.FINISHED_PARTIAL]: 'Finished (partial)',
+	[DupeEnum.FINISHED_FULL]: 'Finished (full)',
+	[DupeEnum.SHARE_QUEUE]: 'Share and queue',
+};
+
+const DupePaths = ({ paths }) => (
+	<div className="dupe-paths">
+		{ paths.map(path => (
+			<div className="path">
+				{ path }
+			</div>
+		)) }
 	</div>
 );
 
@@ -28,6 +50,8 @@ const ResultInfoGrid = ({ parentResult }) => (
 			<GridRow title="Size" text={ ValueFormat.formatSize(parentResult.size) }/>
 			<GridRow title="Last modified" text={ ValueFormat.formatRelativeTime(parentResult.time) }/>
 			{ parentResult.type.id === 'file' ? <GridRow title="TTH" text={ parentResult.tth }/> : null }
+			{ !parentResult.dupe ? null : <GridRow title="Dupe type" text={ DupeStrings[parentResult.dupe.id] }/> }
+			{ !parentResult.dupe ? null : <GridRow title="Dupe paths" text={ <DupePaths paths={ parentResult.dupe.paths }/> }/> }
 		</div>
 
 		<DownloadMenu 

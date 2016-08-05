@@ -69,7 +69,7 @@ const AccordionTargets = React.createClass({
 		return (
 			<div key={ parent.name }>
 				<div className="title">
-					<i className="dropdown icon"></i>
+					<i className="dropdown icon"/>
 					{ parent.name }
 				</div>
 
