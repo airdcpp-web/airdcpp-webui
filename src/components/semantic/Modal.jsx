@@ -74,7 +74,10 @@ const Modal = React.createClass({
 			onDeny: this.onDeny,
 			closable: this.props.closable,
 			detachable: false,
-			allowMultiple: true
+			allowMultiple: true,
+			//debug: true,
+			//verbose: true,
+			//name: 'Modal',
 		});
 	},
 

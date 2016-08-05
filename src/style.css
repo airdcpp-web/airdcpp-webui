@@ -115,6 +115,14 @@ div.dropdown:not(.table-items) {
 	height: 65vh;
 }
 
+/* Ensure that open modals are dimmed when a confirm dialog is displayed */
+.ui.dimmer.confirm {
+	z-index: 1002;
+}
+.confirm-dialog {
+	z-index: 1003 !important;
+}
+
 .confirm-dialog .description, 
 .input.dialog {
 	display: flex !important;

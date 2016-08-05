@@ -49,14 +49,25 @@ const ConfirmDialog = React.createClass({
 	},
 
 	componentDidMount() {
+		// We can't use the same context as for modals
+		// because the dimmer wouldn't work correctly then
+		// (the new dimmer would never be set active because the dimmable object is set to dimmed already)
+		// Track https://github.com/Semantic-Org/Semantic-UI/issues/4055
 		const settings = {
-			movePopup:false,
-			onHidden:this.onHidden,
+			context: '#container-main',
+			movePopup: false,
+			onHidden: this.onHidden,
 			onApprove: this.onApprove,
 			onDeny: this.onDeny,
 			closable: false,
 			detachable: false,
-			allowMultiple: true
+			allowMultiple: true,
+			//debug: true,
+			//verbose: true,
+			//name: 'Confirm',
+			dimmerSettings: {
+				dimmerName: 'confirm',
+			},
 		};
 
 		let dom = ReactDOM.findDOMNode(this);
@@ -85,38 +96,40 @@ const ConfirmDialog = React.createClass({
 	},
 
 	render: function () {
-		return (<div className="ui basic modal confirm-dialog">
-			<div className="header">
-				{ this.props.title }
-			</div>
-			<div className="image content">
-				<div className="image">
-					<i className={ this.props.icon + ' icon'}></i>
+		return (
+			<div className="ui basic modal confirm-dialog">
+				<div className="header">
+					{ this.props.title }
 				</div>
-				<div className="description">
-					{ this.props.content }
-					{ this.props.checkboxCaption ? (	
-						<Checkbox 
-							checked={false} 
-							onChange={ this.onCheckboxValueChanged }
-							caption={ this.props.checkboxCaption }
-						/>
-					) : null }
-				</div>
-			</div>
-			<div className="actions">
-				<div className="two fluid ui inverted buttons">
-					<div className="ui cancel red basic inverted button">
-						<i className="remove icon"></i>
-						{ this.props.rejectCaption }
+				<div className="image content">
+					<div className="image">
+						<i className={ this.props.icon + ' icon'}/>
 					</div>
-					<div className="ui ok green basic inverted button">
-						<i className="checkmark icon"></i>
-						{ this.props.approveCaption }
+					<div className="description">
+						{ this.props.content }
+						{ this.props.checkboxCaption ? (	
+							<Checkbox 
+								checked={false} 
+								onChange={ this.onCheckboxValueChanged }
+								caption={ this.props.checkboxCaption }
+							/>
+						) : null }
 					</div>
 				</div>
+				<div className="actions">
+					<div className="two fluid ui inverted buttons">
+						<div className="ui cancel red basic inverted button">
+							<i className="remove icon"/>
+							{ this.props.rejectCaption }
+						</div>
+						<div className="ui ok green basic inverted button">
+							<i className="checkmark icon"/>
+							{ this.props.approveCaption }
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>);
+		);
 	}
 });
 

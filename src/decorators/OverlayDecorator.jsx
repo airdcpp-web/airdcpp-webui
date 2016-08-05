@@ -2,7 +2,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import invariant from 'invariant';
 import { Lifecycle } from 'mixins/RouterMixin';
 
 import History from 'utils/History';

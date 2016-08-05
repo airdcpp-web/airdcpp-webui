@@ -14,7 +14,7 @@ import NotificationActions from 'actions/NotificationActions';
 
 
 const finishedFailed = bundle => bundle.status.failed && bundle.status.finished;
-const fileNotFinished = file => file.time_finished === 0;
+//const fileNotFinished = file => file.time_finished === 0;
 const isDirectoryBundle = bundle => bundle.type.id === 'directory';
 const hasSources = bundle => bundle.sources.total > 0;
 
@@ -89,7 +89,7 @@ export const QueueActions = Reflux.createActions([
 		displayName: 'Remove',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.REMOVE,
-		filter: fileNotFinished,
+		//filter: fileNotFinished,
 	} },
 	{ 'removeSource': { 
 		asyncResult: true,
@@ -213,20 +213,16 @@ QueueActions.searchBundle.listen(function (bundle) {
 });
 
 QueueActions.removeFile.shouldEmit = function (file) {
-	if (file.status.finished) {
-		this.confirmed(file, false);
-	} else {
-		const options = {
-			title: this.displayName,
-			content: 'Are you sure that you want to remove the file ' + file.name + '?',
-			icon: this.icon,
-			approveCaption: 'Remove file',
-			rejectCaption: "Don't remove",
-			checkboxCaption: 'Remove on disk',
-		};
+	const options = {
+		title: this.displayName,
+		content: 'Are you sure that you want to remove the file ' + file.name + '?',
+		icon: this.icon,
+		approveCaption: 'Remove file',
+		rejectCaption: "Don't remove",
+		checkboxCaption: 'Remove on disk',
+	};
 
-		ConfirmDialog(options, this.confirmed.bind(this, file));
-	}
+	ConfirmDialog(options, this.confirmed.bind(this, file));
 	return false;
 };
 
@@ -237,8 +233,8 @@ QueueActions.removeFile.confirmed.listen(function (item, removeFinished) {
 		target,
 		remove_finished: removeFinished,
 	})
-		.then(that.completed.bind(that, target))
-		.catch(that.failed);
+		.then(QueueActions.removeFile.completed.bind(that, target))
+		.catch(QueueActions.removeFile.failed);
 });
 
 QueueActions.removeFile.completed.listen(function (target, data) {

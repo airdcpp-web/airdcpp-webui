@@ -38,9 +38,9 @@ const VirtualTable = React.createClass({
 		customFilter: React.PropTypes.node,
 
 		/**
-		 * Default filter that is always applied for items
+		 * Filter that is always applied for source items (those will never be displayed or included in the total count)
 		 */
-		defaultFilter: React.PropTypes.object,
+		sourceFilter: React.PropTypes.object,
 	},
 
 	componentWillMount() {
@@ -84,14 +84,10 @@ const VirtualTable = React.createClass({
 	},
 
 	start(entityId) {
-		const { store, defaultFilter } = this.props;
+		const { store, sourceFilter } = this.props;
 
-		TableActions.init(store.viewUrl, entityId);
+		TableActions.init(store.viewUrl, entityId, sourceFilter);
 		TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
-
-		if (defaultFilter) {
-			TableActions.createFilter(store.viewUrl, defaultFilter);
-		}
 	},
 
 	close() {

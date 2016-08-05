@@ -6,11 +6,14 @@ import Progress from 'components/semantic/Progress';
 
 
 const getStatusClass = (cellData, rowData) => {
+	if (cellData.finished) {
+		return 'success';
+	}
+
 	const statusId = cellData.id;
 	return classNames(
-			{ 'grey': statusId === StatusEnum.QUEUED && rowData.speed === 0 },
-			{ 'blue': statusId === StatusEnum.QUEUED && rowData.speed > 0 },
-			{ 'success': cellData.finished }
+			{ 'grey': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed === 0 },
+			{ 'blue': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed > 0 },
 		);
 };
 

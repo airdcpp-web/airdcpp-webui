@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import History from 'utils/History';
 import OverlayConstants from 'constants/OverlayConstants';
 
 // DOM nodes of open modals
@@ -89,6 +90,13 @@ export default function (Component) {
 				// We must always have children
 				this.previousChildren = <div/>;
 			}
+		},
+
+		componentWillUnmount() {
+			// Connection lost, remove all modals
+			Object.keys(modalNodes).forEach(key => {
+				History.removeOverlay(this.props.location, key);
+			});
 		},
 
 		componentWillReceiveProps(nextProps) {

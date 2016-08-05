@@ -6,10 +6,9 @@ import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
 import StatusCell from './StatusCell';
+
 import QueueFileViewStore from 'stores/QueueFileViewStore';
 import { FilterMethod } from 'constants/TableConstants';
-
-import Message from 'components/semantic/Message';
 
 import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/table/Cell';
 
@@ -34,22 +33,11 @@ const BundleFileTable = React.createClass({
 		return rowData.speed > 0;
 	},
 
-	emptyRowsNodeGetter() {
-		return (
-			<Message 
-				title="The queue is empty"
-				icon="file outline"
-				description="New items can be queued from search or filelists"
-			/>
-		);
-	},
-
 	render() {
 		return (
 			<VirtualTable
-				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 				store={ QueueFileViewStore }
-				defaultFilter={ {
+				sourceFilter={ {
 					pattern: this.props.bundle.id,
 					method: FilterMethod.EXACT,
 					property: 'bundle',
