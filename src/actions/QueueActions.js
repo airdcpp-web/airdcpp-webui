@@ -45,6 +45,12 @@ export const QueueActions = Reflux.createActions([
 		displayName: 'Remove finished bundles', 
 		icon: IconConstants.REMOVE,
 	} },
+	{ 'removeBundleSource': { 
+		asyncResult: true,
+		access: AccessConstants.QUEUE_EDIT, 
+		displayName: 'Remove source', 
+		icon: IconConstants.REMOVE,
+	} },
 	{ 'pause': { 
 		asyncResult: true, 
 		displayName: 'Pause all',
@@ -166,6 +172,13 @@ QueueActions.forceShare.listen(function (bundle) {
 QueueActions.removeFinished.listen(function () {
 	let that = this;
 	return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_finished')
+		.then(that.completed)
+		.catch(that.failed);
+});
+
+QueueActions.removeBundleSource.listen(function ({ source, bundle }) {
+	let that = this;
+	return SocketService.delete(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/source/' + source.user.cid)
 		.then(that.completed)
 		.catch(that.failed);
 });

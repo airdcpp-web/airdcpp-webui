@@ -1,20 +1,28 @@
 import React from 'react';
 
+import QueueActions from 'actions/QueueActions';
 import ValueFormat from 'utils/ValueFormat';
 
-import { UserMenu } from 'components/menu/DropdownMenu';
-
-import IconConstants from 'constants/IconConstants';
-import Button from 'components/semantic/Button';
+import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
 
 
-const Source = ({ source, handleRemove }) => (
+const Source = ({ source, bundle }) => (
 	<tr>
 		<td className="user">
 			<UserMenu 
 				userIcon={ true }
 				user={ source.user }
-			/>
+				ids={ [ 'browse', 'message' ] }
+			>
+				<ActionMenu 
+					actions={ QueueActions } 
+					ids={ [ 'removeBundleSource' ]} 
+					itemData={ {
+						source,
+						bundle,
+					} }
+				/>
+			</UserMenu>
 		</td>
 		<td className="hubs">
 			{ source.user.hub_names }
@@ -28,19 +36,12 @@ const Source = ({ source, handleRemove }) => (
 		<td className="size">
 			{ ValueFormat.formatSize(source.size) }
 		</td>
-		<td className="remove">
-			<Button
-				caption="Remove"
-				icon={ IconConstants.REMOVE }
-				onClick={ () => handleRemove(source) }
-			/>
-		</td>
 	</tr>
 );
 
 const userSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
 
-const SourceTable = ({ sources, handleRemove }) => (
+const SourceTable = ({ sources, bundle }) => (
 	<div className="sources">
 		<h2>Sources</h2>
 		<table className="ui striped table">
@@ -51,7 +52,6 @@ const SourceTable = ({ sources, handleRemove }) => (
 					<th>Last known speed</th>
 					<th>Files</th>
 					<th>Size</th>
-					<th/>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,7 +59,7 @@ const SourceTable = ({ sources, handleRemove }) => (
 					<Source 
 						key={ source.user.cid }
 						source={ source }
-						handleRemove={ handleRemove }
+						bundle={ bundle }
 					/>) }
 			</tbody>
 		</table>

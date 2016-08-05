@@ -50,4 +50,5 @@ export default {
 	BUNDLE_REMOVED: 'bundle_removed',
 	BUNDLE_UPDATED: 'bundle_updated',
 	BUNDLE_STATUS: 'bundle_status',
+	BUNDLE_SOURCES: 'bundle_sources',
 };

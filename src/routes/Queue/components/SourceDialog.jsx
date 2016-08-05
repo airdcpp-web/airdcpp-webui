@@ -5,6 +5,7 @@ import QueueConstants from 'constants/QueueConstants';
 
 import SocketService from 'services/SocketService';
 import { LocationContext, RouteContext } from 'mixins/RouterMixin';
+import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import { FileIcon } from 'utils/IconFormat';
 import IconConstants from 'constants/IconConstants';
@@ -16,7 +17,7 @@ import SourceTable from './SourceTable';
 
 
 const SourceDialog = React.createClass({
-	mixins: [ LocationContext, RouteContext ],
+	mixins: [ LocationContext, RouteContext, SocketSubscriptionMixin() ],
 
 	getInitialState() {
 		return {
@@ -27,6 +28,16 @@ const SourceDialog = React.createClass({
 
 	componentDidMount() {
 		this.fetchSources();
+	},
+
+	onSocketConnected(addSocketListener) {
+		addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, this.onSourcesUpdated);
+	},
+
+	onSourcesUpdated(bundle) {
+		if (bundle.id === this.props.bundle.id) {
+			this.fetchSources();
+		}
 	},
 
 	onSourcesReceived(data) {
@@ -45,16 +56,6 @@ const SourceDialog = React.createClass({
 		SocketService.get(QueueConstants.BUNDLE_URL + '/' + this.props.bundle.id + '/sources')
 			.then(this.onSourcesReceived)
 			.catch(this.onSourcesFailed);
-	},
-
-	onRemoveFailed(error) {
-		
-	},
-
-	handleRemove(source) {
-		SocketService.delete(QueueConstants.BUNDLE_URL + '/' + this.props.bundle.id + '/source/' + source.user.cid)
-			.then(this.fetchSources)
-			.catch(this.onRemoveFailed);
 	},
 
 	render: function () {
@@ -81,7 +82,7 @@ const SourceDialog = React.createClass({
 					) : (
 						<SourceTable 
 							sources={ this.state.sources }
-							handleRemove={ this.handleRemove }
+							bundle={ bundle }
 						/>
 					)
 				}
