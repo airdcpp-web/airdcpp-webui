@@ -40,6 +40,8 @@ const FavoriteHubs = React.createClass({
 			case ConnectStateEnum.DISCONNECTED:
 				return 'disconnected'; 
 		}
+
+		return '';
 	},
 
 	onChangeAutoConnect(checked, rowData) {
@@ -50,7 +52,6 @@ const FavoriteHubs = React.createClass({
 		const footerData = (
 			<ActionButton 
 				action={ FavoriteHubActions.create }
-				args={ [ this.props.location ] }
 			/>
 		);
 

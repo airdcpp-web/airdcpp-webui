@@ -4,6 +4,7 @@ import { TableActionMenu, TableDownloadMenu } from 'components/menu/DropdownMenu
 import ValueFormat from 'utils/ValueFormat';
 import { FileNameFormatter, IpFormatter } from 'utils/IconFormat';
 import Checkbox from 'components/semantic/Checkbox';
+import { showAction } from 'utils/ActionUtils';
 import { Cell } from 'fixed-data-table';
 
 
@@ -57,7 +58,7 @@ export const ActionMenuCell = ({ cellData, rowData, ...props }) => (
 );
 
 export const ActionLinkCell = ({ cellData, rowData, action, ...props }, context) => {
-	if (action.filter && !action.filter(rowData)) {
+	if (!showAction(action, rowData)) {
 		return <TextCell cellData={ cellData } rowData={ rowData } { ...props }/>;
 	}
 

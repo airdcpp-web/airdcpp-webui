@@ -2,19 +2,10 @@ import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
 
-import LoginStore from 'stores/LoginStore';
+import { actionFilter, actionAccess } from 'utils/ActionUtils';
 import DropdownItem from 'components/semantic/DropdownItem';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
-
-const filterAction = ({ itemData }, action) => {
-	return !action.filter || action.filter(itemData);
-};
-
-const filterAccess = ({ itemData }, action) => {
-	invariant(!action.hasOwnProperty('access') || action.access, 'Invalid access supplied for an action ' + action.displayName);
-	return !action.access || LoginStore.hasAccess(action.access);
-};
 
 // Returns true if the provided ID matches the specified filter
 const filterItem = (props, filter, actionId) => {
@@ -24,7 +15,7 @@ const filterItem = (props, filter, actionId) => {
 		return true;
 	}
 
-	return filter(props, action);
+	return filter(action, props.itemData);
 };
 
 // Get IDs matching the provided filter
@@ -46,12 +37,12 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 
 	// Only return a single error for each menu
 	// Note the filtering order (no-access will be preferred over filtered)
-	ids = filterItems(props, filterAccess, ids);
+	ids = filterItems(props, actionFilter, ids);
 	if (!ids) {
 		return 'no-access';
 	}
 
-	ids = filterItems(props, filterAction, ids);
+	ids = filterItems(props, actionAccess, ids);
 	if (!ids) {
 		return 'filtered';
 	}

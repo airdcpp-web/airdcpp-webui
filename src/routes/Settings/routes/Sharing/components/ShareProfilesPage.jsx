@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom';
 
 import ShareProfileActions from 'actions/ShareProfileActions';
 
-import Button from 'components/semantic/Button';
-import ValueFormat from 'utils/ValueFormat';
-
-import FilelistActions from 'actions/FilelistActions';
 import ActionButton from 'components/ActionButton';
+import ValueFormat from 'utils/ValueFormat';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import '../style.css';
 
@@ -21,14 +19,9 @@ const Row = ({ profile, contextGetter, location }) => (
 			<ActionMenu 
 				caption={ <strong>{profile.name}</strong> } 
 				actions={ ShareProfileActions } 
-				ids={ profile.default ? [ 'edit', 'remove' ] : [ 'edit', 'default', 'remove' ]} 
+				ids={ profile.default ? [ 'browse', 'divider', 'edit', 'remove' ] : [ 'browse', 'divider', 'edit', 'default', 'remove' ]} 
 				itemData={ profile }
 				contextGetter={ contextGetter }
-			/>
-			<ActionButton 
-				action={ FilelistActions.ownList }
-				args={ [ location, profile.id ] }
-				className="basic browse"
 			/>
 		</td>
 		<td>
@@ -41,10 +34,7 @@ const Row = ({ profile, contextGetter, location }) => (
 );
 
 const ShareProfilesPage = React.createClass({
-	_handleAddProfile() {
-		ShareProfileActions.create();
-	},
-
+	mixins: [ LocationContext ],
 	getRow(profile) {
 		return (
 			<Row 
@@ -59,10 +49,8 @@ const ShareProfilesPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<Button
-					icon="plus icon"
-					onClick={this._handleAddProfile}
-					caption="Add profile"
+				<ActionButton
+					action={ ShareProfileActions.create }
 				/>
 
 				<table className="ui striped table">

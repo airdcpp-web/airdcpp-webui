@@ -5,8 +5,11 @@ import WebUserActions from 'actions/WebUserActions';
 import ActionButton from 'components/ActionButton';
 import WebUserLayout from './users/WebUserLayout';
 
+import { LocationContext } from 'mixins/RouterMixin';
+
 
 const WebUsersPage = React.createClass({
+	mixins: [ LocationContext ],
 	render() {
 		return (
 			<div>
@@ -18,7 +21,6 @@ const WebUsersPage = React.createClass({
 				</div>
 				<WebUserLayout 
 					className="user-layout" 
-					location={ this.props.location }
 				/>
 			</div>
 		);

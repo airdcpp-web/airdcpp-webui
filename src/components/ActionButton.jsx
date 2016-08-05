@@ -1,24 +1,35 @@
 import React from 'react';
-import invariant from 'invariant';
 
 import Button from 'components/semantic/Button';
-import LoginStore from 'stores/LoginStore';
+import { showAction } from 'utils/ActionUtils';
 
 
-const ActionButton = ({ action, args, icon = true, ...other }) => {
-	invariant(!action.hasOwnProperty('access') || action.access, 'Invalid access supplied for an action ' + action.displayName);
-	if (action.access && !LoginStore.hasAccess(action.access)) {
+const ActionButton = ({ action, itemData, icon = true, ...other }, { routerLocation }) => {
+	if (!showAction(action, itemData)) {
 		return null;
 	}
 
 	return (
 		<Button
 			icon={ icon ? action.icon : '' }
-			onClick={ () => args ? action(...args) : action() }
+			onClick={ () => itemData ? action(itemData, routerLocation) : action(routerLocation) }
 			caption={ action.displayName }
 			{ ...other }
 		/>
 	);
 };
+
+ActionButton.propTypes = {
+	action: React.PropTypes.func,
+
+	itemData: React.PropTypes.object,
+
+	icon: React.PropTypes.bool,
+};
+
+ActionButton.contextTypes = {
+	routerLocation: React.PropTypes.object.isRequired,
+};
+
 
 export default ActionButton;

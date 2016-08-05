@@ -5,6 +5,8 @@ import SocketService from 'services/SocketService';
 
 import InputDialog from 'components/semantic/InputDialog';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
+
+import FilelistActions from 'actions/FilelistActions';
 import NotificationActions from 'actions/NotificationActions';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
@@ -39,6 +41,12 @@ const ShareProfileActions = Reflux.createActions([
 		displayName: 'Remove profile', 
 		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.REMOVE },
+	},	
+	{ 'browse': { 
+		asyncResult: true, 
+		displayName: 'Browse files', 
+		access: AccessConstants.FILELISTS_VIEW, 
+		icon: IconConstants.FILELIST },
 	},
 ]);
 
@@ -118,6 +126,10 @@ ShareProfileActions.remove.confirmed.listen(function (profile) {
 	return SocketService.delete(ShareProfileConstants.PROFILE_URL + '/' + profile.id)
 		.then(ShareProfileActions.remove.completed.bind(that, profile))
 		.catch(ShareProfileActions.remove.failed.bind(that, profile));
+});
+
+ShareProfileActions.browse.listen(function (profile, location) {
+	return FilelistActions.ownList(location, profile.id);
 });
 
 export default ShareProfileActions;

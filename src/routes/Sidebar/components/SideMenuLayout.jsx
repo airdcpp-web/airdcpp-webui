@@ -38,7 +38,7 @@ const SideMenuLayout = React.createClass({
 							/*component={ 
 								<ActionButton 
 									action={ this.props.closeAction } 
-									args={ [ activeItem ] }
+									itemData={ activeItem }
 									icon={ false }
 								/>
 							}*/

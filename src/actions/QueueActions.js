@@ -14,9 +14,9 @@ import NotificationActions from 'actions/NotificationActions';
 
 
 const finishedFailed = bundle => bundle.status.failed && bundle.status.finished;
-//const fileNotFinished = file => file.time_finished === 0;
+const itemNotFinished = file => file.time_finished === 0;
 const isDirectoryBundle = bundle => bundle.type.id === 'directory';
-const hasSources = bundle => bundle.sources.total > 0;
+const hasSources = bundle => bundle.sources.total > 0 && itemNotFinished(bundle);
 
 
 export const QueueActions = Reflux.createActions([

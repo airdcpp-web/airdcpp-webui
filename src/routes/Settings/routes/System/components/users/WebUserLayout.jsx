@@ -8,7 +8,6 @@ import { ActionMenuCell, DurationCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table';
 
 import AccessConstants from 'constants/AccessConstants';
-import { LocationContext } from 'mixins/RouterMixin';
 
 
 export const PermissionsCell = ({ cellData }) => (
@@ -18,7 +17,6 @@ export const PermissionsCell = ({ cellData }) => (
 );
 
 const WebUserLayout = React.createClass({
-	mixins: [ LocationContext ],
 	render() {
 		return (
 			<VirtualTable
