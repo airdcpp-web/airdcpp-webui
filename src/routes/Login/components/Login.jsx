@@ -115,13 +115,13 @@ const Login = React.createClass({
 						<div className="ui stacked segment">
 							<div className="field">
 								<div className="ui left icon input">
-									<i className="user icon"></i>
+									<i className="user icon"/>
 									<input type="text" name="username" placeholder="Username" ref="username" autoFocus={ true }/>
 								</div>
 							</div>
 							<div className="field">
 								<div className="ui left icon input">
-									<i className="lock icon"></i>
+									<i className="lock icon"/>
 									<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
 								</div>
 							</div>

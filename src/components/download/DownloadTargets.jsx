@@ -12,7 +12,7 @@ const EmptyMessage = () => (
 
 const PathItem = ({ path, downloadHandler }) => (
 	<div className="item">
-		<i className="yellow folder icon"></i>
+		<i className="yellow folder icon"/>
 		<div className="content">
 			<a onClick={ evt => downloadHandler(path) }>
 				{ path }

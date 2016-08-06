@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FileNameFormatter } from 'utils/IconFormat';
+import FormattedFile from 'components/format/FormattedFile';
 import Popup from 'components/semantic/Popup';
 
 
@@ -20,7 +20,7 @@ const NameCell = ({ cellData, rowData, ...props }) => {
 	}
 
 	return (
-		<FileNameFormatter 
+		<FormattedFile 
 			typeInfo={ rowData.type }
 			caption={ <NameCaption cellData={ cellData } rowData={ rowData }/> }
 		/>

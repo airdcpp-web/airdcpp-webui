@@ -17,6 +17,8 @@ const ConnectStateCell = React.createClass({
 			case ConnectStateEnum.DISCONNECTED:
 				return 'green video play';
 		}
+
+		return '';
 	},
 
 	getClickAction() {
@@ -25,6 +27,7 @@ const ConnectStateCell = React.createClass({
 			case ConnectStateEnum.CONNECTED:
 				return () => HubActions.removeSession({ id: this.props.cellData.current_hub_id });
 			case ConnectStateEnum.DISCONNECTED:
+			default:
 				return () => HubActions.createSession(this.context.routerLocation, this.props.rowData.hub_url);
 		}
 	},

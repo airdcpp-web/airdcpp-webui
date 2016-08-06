@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import ShareProfileActions from 'actions/ShareProfileActions';
 
@@ -13,7 +12,7 @@ import { LocationContext } from 'mixins/RouterMixin';
 import '../style.css';
 
 
-const Row = ({ profile, contextGetter, location }) => (
+const Row = ({ profile, location }) => (
 	<tr>
 		<td>
 			<ActionMenu 
@@ -21,7 +20,6 @@ const Row = ({ profile, contextGetter, location }) => (
 				actions={ ShareProfileActions } 
 				ids={ profile.default ? [ 'browse', 'divider', 'edit', 'remove' ] : [ 'browse', 'divider', 'edit', 'default', 'remove' ]} 
 				itemData={ profile }
-				contextGetter={ contextGetter }
 			/>
 		</td>
 		<td>
@@ -40,7 +38,6 @@ const ShareProfilesPage = React.createClass({
 			<Row 
 				key={ profile.id } 
 				profile={ profile } 
-				contextGetter={ () => ReactDOM.findDOMNode(this) }
 				location={ this.props.location }
 			/>
 		);

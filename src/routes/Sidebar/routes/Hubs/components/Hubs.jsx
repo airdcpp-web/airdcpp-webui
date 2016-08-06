@@ -12,7 +12,7 @@ import TypeConvert from 'utils/TypeConvert';
 import AccessConstants from 'constants/AccessConstants';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-import { HubIconFormatter } from 'utils/IconFormat';
+import HubIcon from 'components/icon/HubIcon';
 
 
 const ItemHandler = {
@@ -34,7 +34,7 @@ const ItemHandler = {
 	},
 
 	itemIconGetter(session) {
-		return <HubIconFormatter size="large" hub={session} />;
+		return <HubIcon size="large" hub={session} />;
 	},
 
 	itemHeaderGetter(session, location, actionMenu) {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import TypeConvert from 'utils/TypeConvert';
 import { UserMenu } from 'components/menu/DropdownMenu';
-import { UserIconFormatter } from 'utils/IconFormat';
+import UserIcon from 'components/icon/UserIcon';
 
 export default (ItemHandler, itemMenuIds) => {
 	const UserItemHandlerDecorator = {
@@ -20,7 +20,7 @@ export default (ItemHandler, itemMenuIds) => {
 		},
 
 		itemIconGetter(session) {
-			return <UserIconFormatter size="large" flags={session.user.flags} />;
+			return <UserIcon size="large" flags={session.user.flags} />;
 		},
 
 		itemHeaderGetter(session, location, actionMenu) {

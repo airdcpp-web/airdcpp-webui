@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'components/semantic/Modal';
 import { LocationContext, RouteContext } from 'mixins/RouterMixin';
 
-import { FileIcon } from 'utils/IconFormat';
+import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from './BundleFileTable';
 
 

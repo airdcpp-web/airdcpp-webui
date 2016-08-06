@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 const LayoutHeader = ({ className, icon, component, size, title, subHeader }) => {
 	if (typeof icon === 'string') {
-		icon = <i className={ icon + ' icon' }></i>;
+		icon = <i className={ icon + ' icon' }/>;
 	}
 
 	const mainClassName = classNames(

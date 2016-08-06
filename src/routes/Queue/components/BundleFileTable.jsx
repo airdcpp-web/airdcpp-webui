@@ -64,7 +64,7 @@ const BundleFileTable = React.createClass({
 				/>
 				<Column
 					name="Status"
-					width={120}
+					width={40}
 					flexGrow={3}
 					columnKey="status"
 					cell={ <StatusCell/> }

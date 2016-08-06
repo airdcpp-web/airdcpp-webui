@@ -27,7 +27,7 @@ const DownloadFileBrowser = React.createClass({
 
 		const formatedCaption = (
 			<div className="download-handler" onClick={ () => this.props.downloadHandler(this.state.currentPath) }>
-				<i className="green download link icon"></i>
+				<i className="green download link icon"/>
 				<a>{ caption }</a>
 			</div>
 		);

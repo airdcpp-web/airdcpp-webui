@@ -37,7 +37,7 @@ const SessionNewButton = React.createClass({
 		return (
 			<Link to={this.props.url} className={ 'item button-new ' + this.props.className } onClick={this.onClick}>
 				<div>
-					<i className="plus icon"></i>
+					<i className="plus icon"/>
 					{this.props.title}
 				</div>
 			</Link>

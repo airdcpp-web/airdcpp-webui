@@ -3,12 +3,13 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import './style.css';
 
+
 const Section = ({ caption, onClick }) => (
 	<div className="path-token">
 		<a className="section" onClick={ onClick }>
 			{ caption }
 		</a>
-		<i className="right chevron icon divider"></i>
+		<i className="right chevron icon divider"/>
 	</div>
 );
 

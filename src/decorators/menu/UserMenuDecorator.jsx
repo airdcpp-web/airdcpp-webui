@@ -3,7 +3,8 @@ import classNames from 'classnames';
 
 import UserActions from 'actions/UserActions';
 import FileUtils from 'utils/FileUtils';
-import { UserIconFormatter } from 'utils/IconFormat';
+
+import UserIcon from 'components/icon/UserIcon';
 
 export default function (Component) {
 	const UserMenu = ({ text, userIcon, directory, user, className, ...other }) => {
@@ -16,7 +17,7 @@ export default function (Component) {
 		if (userIcon) {
 			caption = (
 				<div className={ classNames('icon-caption', userIcon) }>
-					{ userIcon === 'simple' ? <i className="blue user icon"/> : <UserIconFormatter size="large" flags={ user.flags }/> }
+					{ userIcon === 'simple' ? <i className="blue user icon"/> : <UserIcon size="large" flags={ user.flags }/> }
 					{ nicks }
 				</div>
 			);

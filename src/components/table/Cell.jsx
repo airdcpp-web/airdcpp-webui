@@ -2,7 +2,10 @@ import React from 'react';
 
 import { TableActionMenu, TableDownloadMenu } from 'components/menu/DropdownMenu';
 import ValueFormat from 'utils/ValueFormat';
-import { FileNameFormatter, IpFormatter } from 'utils/IconFormat';
+
+import FormattedFile from 'components/format/FormattedFile';
+import FormattedIp from 'components/format/FormattedIp';
+
 import Checkbox from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
 import { Cell } from 'fixed-data-table';
@@ -39,7 +42,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }) => (
 export const FileActionCell = ({ cellData, rowData, ...props }) => (
 	<TableActionMenu 
 		caption={ 
-			<FileNameFormatter 
+			<FormattedFile 
 				typeInfo={ rowData.type }
 				caption={ cellData }
 			/>
@@ -104,7 +107,7 @@ export const AbbreviatedDurationCell = ({ cellData }) => (
 );
 
 export const IpCell = ({ cellData }) => (
-	<IpFormatter item={ cellData }/>
+	<FormattedIp item={ cellData }/>
 );
 
 export const ConnectionCell = ({ cellData }) => (
@@ -122,7 +125,7 @@ export const DecimalCell = ({ cellData }) => (
 export const FileDownloadCell = ({ cellData, rowData, clickHandlerGetter, userGetter, ...props }) => (
 	<TableDownloadMenu 
 		caption={ 
-			<FileNameFormatter 
+			<FormattedFile 
 				typeInfo={ rowData.type }
 				onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowData) : null }
 				caption={ cellData }

@@ -37,12 +37,12 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 
 	// Only return a single error for each menu
 	// Note the filtering order (no-access will be preferred over filtered)
-	ids = filterItems(props, actionFilter, ids);
+	ids = filterItems(props, actionAccess, ids);
 	if (!ids) {
 		return 'no-access';
 	}
 
-	ids = filterItems(props, actionAccess, ids);
+	ids = filterItems(props, actionFilter, ids);
 	if (!ids) {
 		return 'filtered';
 	}

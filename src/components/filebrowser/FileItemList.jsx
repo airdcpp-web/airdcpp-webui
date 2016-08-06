@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FileNameFormatter } from 'utils/IconFormat';
+import FormattedFile from 'components/format/FormattedFile';
 import ValueFormat from 'utils/ValueFormat';
 
 
@@ -9,7 +9,7 @@ const FileItem = ({ item, itemClickHandler }) => {
 	return (
 		<tr>
 			<td>
-				<FileNameFormatter 
+				<FormattedFile 
 					typeInfo={ item.type } 
 					onClick={ isFile ? null : evt => itemClickHandler(item.name) }
 					caption={ item.name }

@@ -6,7 +6,7 @@ import SearchConstants from 'constants/SearchConstants';
 import SocketService from 'services/SocketService';
 import { LocationContext, RouteContext } from 'mixins/RouterMixin';
 
-import { FileIcon } from 'utils/IconFormat';
+import FileIcon from 'components/icon/FileIcon';
 import IconConstants from 'constants/IconConstants';
 
 import Loader from 'components/semantic/Loader';

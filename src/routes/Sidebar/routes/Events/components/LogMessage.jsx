@@ -18,7 +18,7 @@ const LogMessage = ({ message }) => {
 	return (
 		<div className="log-message">
 			<div className="ui message-info">
-				<i className={ getIcon(message.severity) + ' icon' }></i>
+				<i className={ getIcon(message.severity) + ' icon' }/>
 				<div className="timestamp">{ ValueFormat.formatTimestamp(message.time) }</div>
 			</div>
 			<div className="message-text">

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IpFormatter } from 'utils/IconFormat';
+import FormattedIp from 'components/format/FormattedIp';
 import ValueFormat from 'utils/ValueFormat';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
@@ -25,7 +25,7 @@ const UserResult = ({ result }) => (
 			{ result.slots.str }
 		</td>
 		<td className="ip">
-			<IpFormatter item={ result.ip }/>
+			<FormattedIp item={ result.ip }/>
 		</td>
 		<td className="path">
 			{ result.path }

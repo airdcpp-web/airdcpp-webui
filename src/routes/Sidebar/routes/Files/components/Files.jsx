@@ -7,7 +7,7 @@ import ViewFileStore from 'stores/ViewFileStore';
 import ViewFileActions from 'actions/ViewFileActions';
 
 import AccessConstants from 'constants/AccessConstants';
-import { FileIcon } from 'utils/IconFormat';
+import FileIcon from 'components/icon/FileIcon';
 import Message from 'components/semantic/Message';
 
 import '../style.css';
