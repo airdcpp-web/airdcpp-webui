@@ -46,7 +46,7 @@ const BundleFileTable = React.createClass({
 				<Column
 					name="Name"
 					width={200}
-					flexGrow={4}
+					flexGrow={20}
 					columnKey="name"
 					cell={ 
 						<FileActionCell 
@@ -57,24 +57,22 @@ const BundleFileTable = React.createClass({
 				/>
 				<Column
 					name="Size"
-					width={60}
+					width={70}
 					columnKey="size"
 					cell={ <SizeCell/> }
 					flexGrow={1}
 				/>
 				<Column
 					name="Status"
-					width={40}
-					flexGrow={3}
+					width={120}
 					columnKey="status"
 					cell={ <StatusCell/> }
 				/>
 				<Column
 					name="Sources"
-					width={60}
+					width={65}
 					columnKey="sources"
 					renderCondition={ this.isActive }
-					flexGrow={1}
 				/>
 				<Column
 					name="Time left"
@@ -85,11 +83,10 @@ const BundleFileTable = React.createClass({
 				/>
 				<Column
 					name="Speed"
-					width={50}
+					width={55}
 					columnKey="speed"
 					cell={ <SpeedCell/> }
 					renderCondition={ this.isRunning }
-					flexGrow={1}
 				/>
 				<Column
 					name="Priority"

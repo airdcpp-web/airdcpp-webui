@@ -23,6 +23,7 @@ const PrioritiesPage = React.createClass({
 		return (
 			<div>
 				<SettingForm
+					title="File priorities"
 					ref="form"
 					formItems={Entry}
 				/>

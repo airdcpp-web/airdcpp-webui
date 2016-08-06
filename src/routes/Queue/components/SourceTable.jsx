@@ -28,7 +28,7 @@ const Source = ({ source, bundle }) => (
 			{ source.user.hub_names }
 		</td>
 		<td className="speed">
-			{ ValueFormat.formatSpeed(source.last_speed) }
+			{ source.last_speed > 0 ? ValueFormat.formatSpeed(source.last_speed) : null }
 		</td>
 		<td className="files">
 			{ source.files }
