@@ -50,6 +50,9 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 	// Show a divider before submenus
 	if (subMenu && hasPreviousItems) {
 		ids = [ 'divider', ...ids ];
+	} else if (ids[0] === 'divider') {
+		// First menu should never start with a divider
+		ids.shift();
 	}
 
 	// The last element should never be divider

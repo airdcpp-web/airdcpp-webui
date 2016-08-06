@@ -36,7 +36,7 @@ const DupeStrings = {
 const DupePaths = ({ paths }) => (
 	<div className="dupe-paths">
 		{ paths.map(path => (
-			<div className="path">
+			<div key={ path } className="path">
 				{ path }
 			</div>
 		)) }
