@@ -8,6 +8,7 @@ import t from 'utils/tcomb-form';
 const Entry = {
 	history_search_max: t.Positive,
 	history_download_max: t.Positive,
+	history_chat_log_lines: t.Positive,
 };
 
 const MessageEntry = {

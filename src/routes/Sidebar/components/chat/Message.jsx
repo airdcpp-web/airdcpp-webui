@@ -70,7 +70,7 @@ ChatMessage.propTypes = {
 
 const StatusMessage = ({ message }) => (
 	<div className={ 'ui item message-list-item status-message ' + message.severity }>
-		<TimeStamp message={ message }/>
+		{ !message.time ? null : <TimeStamp message={ message }/> }
 		<MessageText 
 			message={ message }
 			emojify={ false }
