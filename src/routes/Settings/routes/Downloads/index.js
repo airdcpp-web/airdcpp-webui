@@ -6,6 +6,12 @@ module.exports = {
 			cb(null, [ {
 				path: 'locations', 
 				component: require('./components/LocationsPage').default, 
+				childRoutes: [
+					{
+						path: 'directory', 
+						component: require('./components/FavoriteDirectoryDialog').default, 
+					}
+				]
 			}, {
 				path: 'download-options', 
 				component: require('./components/DownloadOptionsPage').default, 

@@ -98,7 +98,7 @@ const DownloadDialog = React.createClass({
 
 	componentWillMount() {
 		this.fetchPaths(ShareConstants.GROUPED_ROOTS_GET_URL, 'share_paths');
-		this.fetchPaths(FavoriteDirectoryConstants.DIRECTORIES_URL, 'favorite_paths');
+		this.fetchPaths(FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL, 'favorite_paths');
 		this.fetchPaths(HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR, 'history_paths');
 
 		const { itemInfo } = this.props;

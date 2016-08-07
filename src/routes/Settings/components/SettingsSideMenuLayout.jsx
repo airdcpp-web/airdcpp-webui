@@ -32,7 +32,7 @@ const TopMenu = ({ parentMenuItems }) => (
 );
 
 const Content = ({ contentClassname, currentMenuItem, parent, saveButton, children }) => (
-	<div className={ 'thirteen wide stretched column ' + contentClassname }>
+	<div className={ 'thirteen wide column ' + contentClassname }>
 		<div className="ui segment">
 			<LayoutHeader
 				title={ currentMenuItem.title }
@@ -50,7 +50,7 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
 const SideMenuLayout = ({ children, ...other }) => (
 	<div className="full">
 		<TopMenu {...other}/>
-		<div className="ui segment grid main">
+		<div id="setting-scroll-context" className="ui segment grid main">
 			<SideMenu {...other}/>
 			<Content {...other}>
 				{ children }

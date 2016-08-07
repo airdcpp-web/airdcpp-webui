@@ -7,7 +7,11 @@ import Message from 'components/semantic/Message';
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
+import FavoriteDirectoryTable from './FavoriteDirectoryTable';
+import LayoutHeader from 'components/semantic/LayoutHeader';
+
 import t from 'utils/tcomb-form';
+
 
 const Entry = {
 	download_directory: t.Str,
@@ -48,6 +52,11 @@ const LocationsPage = React.createClass({
 						</span>
 					}
 				/>
+
+				<div className="ui segment setting-form">
+					<LayoutHeader title="Favorite download directories" icon="yellow folder" size="normal"/>
+					<FavoriteDirectoryTable/>
+				</div>
 			</div>
 		);
 	}

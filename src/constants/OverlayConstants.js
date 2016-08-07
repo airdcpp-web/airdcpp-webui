@@ -12,4 +12,5 @@ export default {
 	SEARCH_RESULT_MODAL: MODAL_PREFIX + 'search',
 	BUNDLE_SOURCE_MODAL: MODAL_PREFIX + 'bundle-sources',
 	BUNDLE_CONTENT_MODAL: MODAL_PREFIX + 'bundle-content',
+	FAVORITE_DIRECTORY_MODAL: MODAL_PREFIX + 'favorite-directory',
 };

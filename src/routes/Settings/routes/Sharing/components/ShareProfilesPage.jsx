@@ -12,7 +12,7 @@ import { LocationContext } from 'mixins/RouterMixin';
 import '../style.css';
 
 
-const Row = ({ profile, location }) => (
+const Row = ({ profile }) => (
 	<tr>
 		<td>
 			<ActionMenu 
@@ -20,6 +20,7 @@ const Row = ({ profile, location }) => (
 				actions={ ShareProfileActions } 
 				ids={ profile.default ? [ 'browse', 'divider', 'edit', 'remove' ] : [ 'browse', 'divider', 'edit', 'default', 'remove' ]} 
 				itemData={ profile }
+				contextGetter={ _ => '#setting-scroll-context' }
 			/>
 		</td>
 		<td>
@@ -38,7 +39,6 @@ const ShareProfilesPage = React.createClass({
 			<Row 
 				key={ profile.id } 
 				profile={ profile } 
-				location={ this.props.location }
 			/>
 		);
 	},

@@ -27,7 +27,7 @@ const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
 
 			<Dropdown className="selection fluid" caption={ currentMenuItem.title }>
 			 	{ menuItems }
-				<div className="ui divider" style={advancedMenuStyle}></div>
+				<div className="ui divider" style={advancedMenuStyle}/>
 				<div className="header" style={advancedMenuStyle}>Advanced</div>
 				{ advancedMenuItems }
 			</Dropdown>
@@ -40,7 +40,7 @@ const TopMenuLayout = (props) => {
 	return (
 		<div className="mobile">
 			<MenuSection { ...props }/>
-			<div className={ props.contentClassname }>
+			<div id="setting-scroll-context" className={ props.contentClassname }>
 				{ props.saveButton }
 				{ props.children }
 			</div>
