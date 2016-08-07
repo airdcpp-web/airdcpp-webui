@@ -17,7 +17,7 @@ const MessageView = React.createClass({
 				<ChatMessage
 					key={ message.chat_message.id }
 					message={ message.chat_message }
-					dropdownContextGetter={ this.props.dropdownContextGetter }
+					dropdownContextGetter={ _ => '.chat.session' }
 				/>
 			);
 		}

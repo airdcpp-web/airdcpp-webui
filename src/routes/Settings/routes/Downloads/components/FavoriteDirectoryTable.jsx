@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import FavoriteDirectoryActions from 'actions/FavoriteDirectoryActions';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
@@ -14,8 +13,6 @@ import SocketService from 'services/SocketService';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
-
-//import '../style.css';
 
 
 const Row = ({ directory }) => (

@@ -13,6 +13,7 @@ const Source = ({ source, bundle }) => (
 				userIcon={ true }
 				user={ source.user }
 				ids={ [ 'browse', 'message' ] }
+				contextGetter={ _ => '.source.modal' }
 			>
 				<ActionMenu 
 					actions={ QueueActions } 

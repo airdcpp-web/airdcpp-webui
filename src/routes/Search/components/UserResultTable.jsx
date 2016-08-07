@@ -13,6 +13,8 @@ const UserResult = ({ result }) => (
 				userIcon={ true }
 				user={ result.user }
 				directory={ result.path }
+				ids={ [ 'browse', 'message' ] }
+				contextGetter={ _ => '.result.modal' }
 			/>
 		</td>
 		<td className="hubs">
