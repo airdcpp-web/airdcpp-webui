@@ -226,15 +226,15 @@ const SessionLayout = React.createClass({
 		return this.props.itemIconGetter(item);
 	},
 
-	getMenuItem(item) {
+	getSessionMenuItem(sessionItem) {
 		return (
 			<SessionMenuItem 
-				key={ item.id } 
-				url={ this.getUrl(item.id) }
-				name={ this.props.itemNameGetter(item) }
+				key={ sessionItem.id } 
+				url={ this.getUrl(sessionItem.id) }
+				name={ this.props.itemNameGetter(sessionItem) }
 				unreadInfoStore={ this.props.unreadInfoStore }
-				status={ this.getItemStatus(item) }
-				item={ item }
+				status={ this.getItemStatus(sessionItem) }
+				sessionItem={ sessionItem }
 			/>
 		);
 	},
@@ -318,7 +318,7 @@ const SessionLayout = React.createClass({
 
 	render() {
 		// Menu items
-		const menuItems = this.props.items.map(this.getMenuItem);
+		const sessionMenuItems = this.props.items.map(this.getSessionMenuItem);
 
 		// Children
 		const children = this.getChildren();
@@ -331,9 +331,9 @@ const SessionLayout = React.createClass({
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
 				activeItem={ this.state.activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
-				closeAction={ this.props.actions.removeSession }
+				closeAction={ this.props.actions['removeSession'] }
 				newButton={ this.getNewButton() }
-				menuItems={ menuItems }
+				sessionMenuItems={ sessionMenuItems }
 			>
 				{ children }
 			</Component>

@@ -36,8 +36,15 @@
 }
 
 .session-container.vertical .menu-bar .content-left {
-  /*max-width: calc(100% - 90px);*/
   width: 100%;
+}
+
+.session-container.vertical .menu-bar .close-button.item:before {
+  background: none !important;
+}
+
+.session-container.vertical .menu-bar .close-button.item {
+  box-shadow: none !important;
 }
 
 .session-container.vertical .menu-bar .content-left > .ui.dropdown {
@@ -65,7 +72,6 @@
 
 .session-container.vertical .session-header .ui.dropdown > i {
   margin: 0px 5px;
-  /*display: none;*/
 }
 
 .session-container.vertical .menu-bar {

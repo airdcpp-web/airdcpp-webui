@@ -18,7 +18,7 @@ const Message = ({ className, title, description, icon, isError }) => {
 
 	return (
 		<div className={ style }>
-			{ (icon ? <i className={ icon + ' icon' }></i> : null) }
+			{ (icon ? <i className={ icon + ' icon' }/> : null) }
 			<div className="content">
 				<div className="header">
 					{ title }

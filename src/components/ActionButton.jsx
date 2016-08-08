@@ -11,7 +11,7 @@ const ActionButton = ({ action, itemData, icon = true, ...other }, { routerLocat
 
 	return (
 		<Button
-			icon={ icon ? action.icon : '' }
+			icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : '' }
 			onClick={ () => itemData ? action(itemData, routerLocation) : action(routerLocation) }
 			caption={ action.displayName }
 			{ ...other }
@@ -24,7 +24,10 @@ ActionButton.propTypes = {
 
 	itemData: React.PropTypes.object,
 
-	icon: React.PropTypes.bool,
+	icon: React.PropTypes.oneOfType([
+		React.PropTypes.bool,
+		React.PropTypes.string,
+	]),
 };
 
 ActionButton.contextTypes = {

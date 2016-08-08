@@ -5,45 +5,48 @@ import History from 'utils/History';
 
 import CountLabel from 'components/CountLabel';
 
-const SessionMenuItem = React.createClass({
-	propTypes: {
-		/**
-		 * Item URL
-		 */
-		url: React.PropTypes.string.isRequired,
 
-		name: React.PropTypes.node.isRequired,
+const onClickItem = (evt, routerLocation, url) => {
+	evt.preventDefault();
 
-		unreadInfoStore: React.PropTypes.object.isRequired,
+	History.pushSidebar(routerLocation, url);
+};
 
-		status: React.PropTypes.node.isRequired,
-	},
+const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url }, { routerLocation }) => (
+	<Link 
+		to={ url } 
+		className="item session-item" 
+		onClick={ evt => onClickItem(evt, routerLocation, url) } 
+		activeClassName="active"
+	>
+		<div className="left-content">
+			{ status }
+			<span className="session-name">
+				{ name }
+			</span>
+		</div>
 
-	contextTypes: {
-		routerLocation: React.PropTypes.object.isRequired,
-	},
+		{ unreadInfoStore ? <CountLabel urgencies={ unreadInfoStore.getItemUrgencies(sessionItem) }/> : null }
+	</Link>
+);
 
-	onClick: function (evt) {
-		evt.preventDefault();
+SessionMenuItem.propTypes = {
+	/**
+	 * Item URL
+	 */
+	url: React.PropTypes.string.isRequired,
 
-		History.pushSidebar(this.context.routerLocation, this.props.url);
-	},
+	name: React.PropTypes.node.isRequired,
 
-	render: function () {
-		const { item, status, name, unreadInfoStore } = this.props;
-		return (
-			<Link to={ this.props.url } className="item session-item" onClick={ this.onClick } activeClassName="active">
-				<div className="left-content">
-					{ status }
-					<span className="session-name">
-						{ name }
-					</span>
-				</div>
+	unreadInfoStore: React.PropTypes.object.isRequired,
 
-				{ this.props.unreadInfoStore ? <CountLabel urgencies={ unreadInfoStore.getItemUrgencies(item) }/> : null }
-			</Link>
-		);
-	}
-});
+	status: React.PropTypes.node.isRequired,
+
+	sessionItem: React.PropTypes.object.isRequired,
+};
+
+SessionMenuItem.contextTypes = {
+	routerLocation: React.PropTypes.object.isRequired,
+};
 
 export default SessionMenuItem;
