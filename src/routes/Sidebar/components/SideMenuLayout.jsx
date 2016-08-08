@@ -1,13 +1,13 @@
 import React from 'react';
 
-import ActionButton from 'components/ActionButton';
+//import ActionButton from 'components/ActionButton';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
 
 const SideMenuLayout = ({ 
 			activeItem, sessionMenuItems, newButton,
 			itemIcon, itemHeader, children,
-			itemDescriptionGetter, closeAction,
+			itemDescriptionGetter,
 	}) => {
 
 	if (newButton) {
@@ -34,14 +34,15 @@ const SideMenuLayout = ({
 						icon={ itemIcon }
 						title={ <div className="title">{ itemHeader }</div> }
 						subHeader={ itemDescriptionGetter(activeItem) }
-						component={ 
+						/*component={ 
 							<ActionButton 
-								className="small"
+								className="small basic"
 								action={ closeAction } 
 								itemData={ activeItem }
 								icon={ false }
+								//icon="gray remove"
 							/>
-						}
+						}*/
 					/>) : null }
 					{ activeItem ? <div className="ui divider"/> : null }
 					{ children }
@@ -59,7 +60,7 @@ SideMenuLayout.propTypes = {
 	sessionMenuItems: React.PropTypes.array.isRequired,
 	children: React.PropTypes.node.isRequired,
 	itemDescriptionGetter: React.PropTypes.func.isRequired,
-	closeAction: React.PropTypes.func.isRequired,
+	//closeAction: React.PropTypes.func.isRequired,
 };
 
 export default SideMenuLayout;
