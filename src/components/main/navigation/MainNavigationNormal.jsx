@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import { getTextMenuItem, getIconMenuItem } from 'components/menu/MenuItem';
 import Dropdown from 'components/semantic/Dropdown';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
@@ -17,15 +16,15 @@ const MainNavigationNormal = React.createClass({
 	},
 	
 	render() {
-		const { configMenuItems, mainMenuItems, logoutItem } = this.props;
+		const { configMenuItems, mainMenuItems, logoutItem, menuItemGetter } = this.props;
 		return (
 			<div className="item right">
-				{ mainMenuItems.map(item => getTextMenuItem(null, item)) }
+				{ mainMenuItems.map(item => menuItemGetter(null, false, item)) }
 
 				<Dropdown className="top right">
-					{ configMenuItems.map(item => getIconMenuItem(null, item)) }
-					<div className="divider"></div>
-					{ getIconMenuItem(logoutItem.onClick, logoutItem) }
+					{ configMenuItems.map(item => menuItemGetter(null, true, item)) }
+					<div className="divider"/>
+					{ menuItemGetter(logoutItem.onClick, true, logoutItem) }
 				</Dropdown>
 			</div>
 		);

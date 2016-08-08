@@ -3,7 +3,7 @@ import invariant from 'invariant';
 import classNames from 'classnames';
 
 import { actionFilter, actionAccess } from 'utils/ActionUtils';
-import DropdownItem from 'components/semantic/DropdownItem';
+import { MenuItemLink } from 'components/semantic/MenuItem';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
 
@@ -116,10 +116,13 @@ export default function (Component) {
 
 			const action = menu.actions[actionId];
 			return (
-				<DropdownItem key={ actionId } onClick={ () => action(menu.itemData, this.context.routerLocation) }>
-					<i className={ action.icon + ' icon' }/>
+				<MenuItemLink 
+					key={ actionId } 
+					onClick={ () => action(menu.itemData, this.context.routerLocation) }
+					icon={ action.icon }
+				>
 					{ action.displayName }
-				</DropdownItem>);
+				</MenuItemLink>);
 		},
 
 		// Reduce menus to an array of DropdownItems

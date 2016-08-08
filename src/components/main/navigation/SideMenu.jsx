@@ -5,7 +5,6 @@ import React from 'react';
 import History from 'utils/History';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
-import { getIconMenuItem } from 'components/menu/MenuItem';
 import IconPanel from './IconPanel';
 
 
@@ -26,13 +25,13 @@ const SideMenu = React.createClass({
 	},
 
 	render() {
-		const { secondaryMenuItems } = this.props;
+		const { secondaryMenuItems, menuItemGetter } = this.props;
 		return (
 			<div id="side-menu">
 				{ secondaryMenuItems.length > 0 ? (
 					<div className="content">
 						<div className="ui labeled icon vertical small inverted menu">
-							{ secondaryMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
+							{ secondaryMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
 						</div>
 					</div>
 				) : null }

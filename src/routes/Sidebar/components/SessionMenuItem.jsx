@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { Link } from 'react-router';
+import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 import History from 'utils/History';
-
-import CountLabel from 'components/CountLabel';
 
 
 const onClickItem = (evt, routerLocation, url) => {
@@ -13,11 +11,11 @@ const onClickItem = (evt, routerLocation, url) => {
 };
 
 const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url }, { routerLocation }) => (
-	<Link 
-		to={ url } 
-		className="item session-item" 
-		onClick={ evt => onClickItem(evt, routerLocation, url) } 
-		activeClassName="active"
+	<RouterMenuItemLink 
+		url={ url } 
+		className="session-item" 
+		onClick={ evt => onClickItem(evt, routerLocation, url) }
+		urgencies={ unreadInfoStore ? unreadInfoStore.getItemUrgencies(sessionItem) : null }
 	>
 		<div className="left-content">
 			{ status }
@@ -25,9 +23,7 @@ const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url }, { 
 				{ name }
 			</span>
 		</div>
-
-		{ unreadInfoStore ? <CountLabel urgencies={ unreadInfoStore.getItemUrgencies(sessionItem) }/> : null }
-	</Link>
+	</RouterMenuItemLink>
 );
 
 SessionMenuItem.propTypes = {

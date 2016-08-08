@@ -1,6 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
@@ -102,6 +104,23 @@ const LogoutItem = {
 	onClick: onClickLogout,
 };
 
+
+const menuItemGetter = (onClick, showIcon, item) => {
+	const { title, icon, unreadInfoStore, ...other } = item;
+	return (
+		<RouterMenuItemLink 
+			key={ item.url }
+			{ ...other }
+			icon={ showIcon ? (icon + ' navigation') : null }
+			onClick={ onClick ? evt => onClick(item.url, evt) : undefined }
+			urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null }
+		>
+			{ title }
+		</RouterMenuItemLink>
+	);
+};
+
+
 const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
@@ -122,6 +141,7 @@ export default function (Component) {
 					mainMenuItems={ MainMenuItems.filter(filterItem) }
 					configMenuItems={ ConfigMenuItems.filter(filterItem) }
 					logoutItem={ LogoutItem }
+					menuItemGetter={ menuItemGetter }
 				/>
 			);
 		}

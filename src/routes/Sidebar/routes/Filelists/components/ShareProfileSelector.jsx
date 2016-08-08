@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
-import DropdownItem from 'components/semantic/DropdownItem';
+import { MenuItemLink } from 'components/semantic/MenuItem';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
@@ -20,12 +20,12 @@ const ShareProfileSelector = React.createClass({
 
 	getDropdownItem: function (profile) {
 		return (
-			<DropdownItem 
+			<MenuItemLink 
 				key={ profile.id } 
 				onClick={ () => this.props.onProfileChanged(profile.id) }
 			>
 				{ profile.name }
-			</DropdownItem>
+			</MenuItemLink>
 		);
 	},
 

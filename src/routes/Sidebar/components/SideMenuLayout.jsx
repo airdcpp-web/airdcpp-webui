@@ -5,8 +5,9 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 
 const SideMenuLayout = ({ 
-			activeItem, sessionMenuItems, newButton,
+			activeItem, sessions, newButton,
 			itemIcon, itemHeader, children,
+			sessionMenuItemGetter,
 			itemDescriptionGetter,
 	}) => {
 
@@ -20,9 +21,9 @@ const SideMenuLayout = ({
 		<div className="ui grid session-container horizontal">
 			<div className="four wide column menu-column">
 				{ newButton }
-				{ (sessionMenuItems.length ? 
+				{ (sessions.length ? 
 					<div className="ui vertical secondary menu">
-						{ sessionMenuItems }
+						{ sessions.map(sessionMenuItemGetter) }
 					</div> : null)
 				}
 			</div>
@@ -57,7 +58,8 @@ SideMenuLayout.propTypes = {
 	newButton: React.PropTypes.node,
 	itemIcon: React.PropTypes.node,
 	itemHeader: React.PropTypes.node,
-	sessionMenuItems: React.PropTypes.array.isRequired,
+	sessionMenuItemGetter: React.PropTypes.func.isRequired,
+	sessions: React.PropTypes.array.isRequired,
 	children: React.PropTypes.node.isRequired,
 	itemDescriptionGetter: React.PropTypes.func.isRequired,
 	//closeAction: React.PropTypes.func.isRequired,

@@ -1,16 +1,35 @@
 import React from 'react';
 import BrowserUtils from 'utils/BrowserUtils';
+import IconConstants from 'constants/IconConstants';
 
 import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/semantic/Dropdown';
+import { MenuItemLink } from 'components/semantic/MenuItem';
 import MenuIcon from 'components/menu/MenuIcon';
 
 
-const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore }) => {
+const getCloseAllItem = (sessions, closeAction) => {
+	return (
+		<MenuItemLink 
+			onClick={ () => sessions.forEach(session => closeAction(session)) }
+			icon={ IconConstants.REMOVE }
+		>
+			Close all
+		</MenuItemLink>
+	);
+};
+
+const SessionDropdown = ({ sessions, sessionMenuItemGetter, newButton, unreadInfoStore, closeAction }) => {
 	// Don't add nesting for items to preserve Semantic UI's CSS
 	// There should always be something to show if we are rendering the menu
 	const hideStyle = { display: 'none' };
-	const sessionMenuStyle = sessionMenuItems.length === 0 ? hideStyle : null;
+
+	const sessionMenuStyle = sessions.length === 0 ? hideStyle : null;
+
+	let sessionMenuItems = null;
+	if (sessions.length > 0) {
+		sessionMenuItems = [ ...sessions.map(sessionMenuItemGetter), <div className="ui divider"/>, getCloseAllItem(sessions, closeAction) ];
+	}
 
 	return (
 		<Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
@@ -76,7 +95,8 @@ TopMenuLayout.propTypes = {
 	newButton: React.PropTypes.node,
 	itemIcon: React.PropTypes.node,
 	itemHeader: React.PropTypes.node,
-	sessionMenuItems: React.PropTypes.array.isRequired,
+	sessionMenuItemGetter: React.PropTypes.func.isRequired,
+	sessions: React.PropTypes.array.isRequired,
 	children: React.PropTypes.node.isRequired,
 	closeAction: React.PropTypes.func.isRequired,
 };

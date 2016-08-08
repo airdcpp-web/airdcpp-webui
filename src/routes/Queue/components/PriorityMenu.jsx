@@ -4,7 +4,7 @@ import deepEqual from 'deep-equal';
 import { PriorityEnum } from 'constants/QueueConstants';
 
 import TableDropdown from 'components/semantic/TableDropdown';
-import DropdownItem from 'components/semantic/DropdownItem';
+import { MenuItemLink } from 'components/semantic/MenuItem';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
 import AccessConstants from 'constants/AccessConstants';
@@ -42,13 +42,13 @@ const PriorityMenu = React.createClass({
 
 	getPriorityListItem: function (priority) {
 		return (
-			<DropdownItem 
+			<MenuItemLink 
 				key={ priority.id }
 				active={ this.props.item.priority.id === priority.id } 
 				onClick={ () => this.setPriority(priority.id) }
 			>
 				{ priority.str }
-			</DropdownItem>
+			</MenuItemLink>
 		);
 	},
 
@@ -69,13 +69,13 @@ const PriorityMenu = React.createClass({
 		let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
 		children.push(<div key="divider" className="ui divider"/>);
 		children.push(
-			<DropdownItem 
+			<MenuItemLink 
 				key="auto"
 				active={ this.props.itemPrio.auto } 
 				onClick={ this.toggleAutoPriority }
 			>
 				Auto
-			</DropdownItem>
+			</MenuItemLink>
 		);
 
 		return (

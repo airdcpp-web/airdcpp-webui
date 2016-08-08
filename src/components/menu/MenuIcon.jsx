@@ -1,7 +1,9 @@
 import React from 'react';
 import CountLabel from 'components/CountLabel';
 
-const MenuIcon = ({ urgencies, className, onClick }) => (
+
+// A plain menu icon trigger for dropdowns (with urgency label support)
+const MenuIcon = ({ urgencies, className = '', onClick }) => (
 	<div className={ 'icon-menu ' + className }> 
 		<i className="content link icon" onClick={onClick}/>
 		<CountLabel 
@@ -12,10 +14,6 @@ const MenuIcon = ({ urgencies, className, onClick }) => (
 		/>
 	</div>
 );
-
-MenuIcon.defaultProps = {
-	className: '',
-};
 
 MenuIcon.propTypes = {
 	urgencies: React.PropTypes.object,

@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 
 
 const sectionToUrl = (section, parent) => {
@@ -63,12 +63,13 @@ export default (Component) => {
 			}
 
 			return (
-				<MenuItemLink 
+				<RouterMenuItemLink 
 					key={ url } 
 					url={ url } 
-					title={ obj.title }
 					icon={ obj.icon ? ('green ' + obj.icon) : null }
-				/>
+				>
+					{ obj.title }
+				</RouterMenuItemLink>
 			);
 		},
 

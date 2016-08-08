@@ -317,10 +317,6 @@ const SessionLayout = React.createClass({
 	},
 
 	render() {
-		// Menu items
-		const sessionMenuItems = this.props.items.map(this.getSessionMenuItem);
-
-		// Children
 		const children = this.getChildren();
 
 		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
@@ -333,7 +329,8 @@ const SessionLayout = React.createClass({
 				unreadInfoStore={ this.props.unreadInfoStore }
 				closeAction={ this.props.actions['removeSession'] }
 				newButton={ this.getNewButton() }
-				sessionMenuItems={ sessionMenuItems }
+				sessionMenuItemGetter={ this.getSessionMenuItem }
+				sessions={ this.props.items }
 			>
 				{ children }
 			</Component>

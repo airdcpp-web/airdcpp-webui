@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
-import DropdownItem from 'components/semantic/DropdownItem';
+import { MenuItemLink } from 'components/semantic/MenuItem';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import TableFilterDecorator from 'decorators/TableFilterDecorator';
@@ -31,13 +31,13 @@ const ShareProfileFilter = React.createClass({
 
 	getDropdownItem: function (profile) {
 		return (
-			<DropdownItem 
+			<MenuItemLink 
 				key={ profile.id }
 				active={ this.state.selectedProfile ? this.state.selectedProfile.id === profile.id : false } 
 				onClick={ () => this.onClick(profile) }
 			>
 				{ profile.name }
-			</DropdownItem>
+			</MenuItemLink>
 		);
 	},
 

@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 
 import Dropdown from 'components/semantic/Dropdown';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
-import { getIconMenuItem } from 'components/menu/MenuItem';
 
 import History from 'utils/History';
 import IconPanel from './IconPanel';
@@ -44,26 +43,26 @@ const MainNavigationMobile = React.createClass({
 	},
 
 	render() {
-		const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem } = this.props;
+		const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem, menuItemGetter } = this.props;
 		const moreCaption = (
 			<div>
-				<i className="ellipsis horizontal caption icon"></i>
+				<i className="ellipsis horizontal caption icon"/>
 				More...
 			</div>
 		);
 
 		return (
 			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
-				{ mainMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
+				{ mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
 				<Dropdown caption={ moreCaption } className="right" triggerIcon="">
-					{ configMenuItems.map(getIconMenuItem.bind(this, this.onClick)) }
-					<div className="divider"></div>
-					{ getIconMenuItem(logoutItem.onClick, logoutItem) }
+					{ configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
+					<div className="divider"/>
+					{ menuItemGetter(logoutItem.onClick, true, logoutItem) }
 				</Dropdown>
 
-				<div className="separator"></div>
+				<div className="separator"/>
 
-				{ secondaryMenuItems.map(getIconMenuItem.bind(this, this.onClickSecondary)) }
+				{ secondaryMenuItems.map(menuItemGetter.bind(this, this.onClickSecondary, true)) }
 				<IconPanel/>
 			</div>
 		);
