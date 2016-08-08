@@ -22,18 +22,10 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import Dropdown from 'components/semantic/Dropdown';
+import { MenuItemLink } from 'components/semantic/MenuItem';
 
 import './style.css';
 
-
-const MenuItem = ({ active, list, title, onClick }) => (
-	<a className={ 'item ' + (active ? 'active' : '')	} onClick={ onClick }>
-		{ title }
-		{ list ? (
-			<div className="ui small right label"> { list.length } </div>
-		) : null }
-	</a>
-);
 
 const NormalLayout = ({ menuItems, section }) => (
 	<div className="ui grid normal layout">
@@ -76,7 +68,7 @@ const DownloadDialog = React.createClass({
 		 */
 		itemInfo: React.PropTypes.shape({
 			path: React.PropTypes.string,
-			dupe: React.PropTypes.number,
+			dupe: React.PropTypes.object,
 			name: React.PropTypes.string,
 			type: React.PropTypes.object
 		}),
@@ -123,12 +115,16 @@ const DownloadDialog = React.createClass({
 
 	getMenuItem(section) {
 		return (
-			<MenuItem key={ section.key } 
-				title={section.name} 
+			<MenuItemLink 
+				key={ section.key }
 				onClick={ () => this.setState({ active: section.key }) } 
 				active={ this.state.active === section.key }
-				list={section.list}
-			/>
+			>
+				{ section.name }
+				{ section.list ? (
+					<div className="ui small right label"> { section.list.length } </div>
+				) : null }
+			</MenuItemLink>
 		);
 	},
 

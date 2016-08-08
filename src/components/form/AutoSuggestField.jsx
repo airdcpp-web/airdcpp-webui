@@ -9,7 +9,7 @@ import 'components/autosuggest/style.css';
 
 const shouldRenderSuggestions = (locals, value) => {
 	if (value.length === 0) {
-		return locals.attrs.alwaysList ? true : false;
+		return locals.config.alwaysList ? true : false;
 	}
 
 	return true;
@@ -21,7 +21,7 @@ const AutoSuggestField = t.form.Form.templates.textbox.clone({
 			<div className="ui fluid input">
 				<LocalSuggestField 
 					placeholder={ locals.attrs.placeholder }
-					data={ locals.attrs.suggestionGetter() }
+					data={ locals.config.suggestionGetter() }
 					onChange={ locals.onChange }
 					storedValue={ locals.value ? locals.value : '' }
 					shouldRenderSuggestions={ shouldRenderSuggestions.bind(this, locals) }

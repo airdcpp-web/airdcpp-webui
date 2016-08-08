@@ -97,7 +97,6 @@ TopMenuLayout.propTypes = {
 	itemHeader: React.PropTypes.node,
 	sessionMenuItemGetter: React.PropTypes.func.isRequired,
 	sessions: React.PropTypes.array.isRequired,
-	children: React.PropTypes.node.isRequired,
 	closeAction: React.PropTypes.func.isRequired,
 };
 

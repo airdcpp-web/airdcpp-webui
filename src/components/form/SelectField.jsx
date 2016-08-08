@@ -21,7 +21,7 @@ const TagValue = React.createClass({
 		return (
 			<a className="ui label" onClick={this.onClick}>
 				{ this.props.children }
-				<i className="delete icon"></i>
+				<i className="delete icon"/>
 			</a>
 		);
 	}
@@ -38,7 +38,6 @@ const ReactSelect = t.form.Form.templates.select.clone({
 
 		return (
 			<Select
-				//name={locals.attrs.name}
 				value={locals.value}
 				options={options}
 				onChange={onChange}

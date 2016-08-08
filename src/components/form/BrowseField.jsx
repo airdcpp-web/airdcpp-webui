@@ -26,8 +26,8 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 				onConfirm: onConfirm,
 				subHeader: locals.label,
 				initialPath: locals.value ? locals.value : '',
-				historyId: locals.attrs && !locals.value ? locals.attrs.historyId : undefined,
-				isFile: locals.attrs.isFile,
+				historyId: locals.config && !locals.value ? locals.config.historyId : undefined,
+				isFile: locals.config.isFile,
 			});
 		};
 
@@ -48,13 +48,13 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 					ref={ input => { 
 						_input = input;
 					} }
-					value={locals.value}
-					onChange={onChange}
+					value={ locals.value }
+					onChange={ onChange }
 				/>
 				{ hasAccess ? (
 					<Button
 						caption="Browse"
-						onClick={showBrowseDialog}
+						onClick={ showBrowseDialog }
 					/>
 				) : null }
 			</div>

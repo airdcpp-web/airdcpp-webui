@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import EventActions from 'actions/EventActions';
 import EventStore from 'stores/EventStore';
@@ -45,7 +46,7 @@ const MessageView = ScrollDecorator(React.createClass({
 }));
 
 const SystemLog = React.createClass({
-	mixins: [ Reflux.connect(EventStore, 'messages'), ],
+	mixins: [ LocationContext, Reflux.connect(EventStore, 'messages'), ],
 	componentWillMount: function () {
 		EventActions.setActive(true);
 		EventActions.setRead();

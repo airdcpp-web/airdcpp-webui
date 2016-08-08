@@ -76,7 +76,7 @@ const SettingForm = React.createClass({
 		if (/*sourceItem.type === 'file_path' ||*/ sourceItem.type === 'directory_path') {
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = BrowseField;
-			fieldOptions['attrs'] = {
+			fieldOptions['config'] = {
 				isFile: sourceItem.type === 'file_path'
 			};
 		} else if (sourceItem.type === 'long_text') {

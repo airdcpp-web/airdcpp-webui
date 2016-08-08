@@ -90,13 +90,13 @@ const FavoriteDirectoryDialog = React.createClass({
 				fieldOptions['disabled'] = true;
 			}
 			
-			fieldOptions['attrs'] = Object.assign(fieldOptions['attrs'] || {}, {
+			fieldOptions['config'] = Object.assign(fieldOptions['config'] || {}, {
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
 			});
 		} else if (id === 'name') {
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;
-			fieldOptions['attrs'] = {
+			fieldOptions['config'] = {
 				suggestionGetter: () => this.state.virtualNames,
 			};
 		}
