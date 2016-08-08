@@ -57,7 +57,7 @@
     "react-addons-perf": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.0.0",
     "react-addons-update": "^15.0.0",
-    "react-autosuggest": "^3.5.0",
+    "react-autosuggest": "^4.0.0",
     "react-dom": "^15.0.0",
     "react-emoji": "^0.4.1",
     "react-grid-layout": "^0.13.0",

@@ -44,8 +44,8 @@ const RemoteSuggestField = React.createClass({
 		this.setState({ suggestions: data });
 	},
 
-	renderSuggestion(suggestionObj, { value }) {
-		return SuggestionRenderer(value, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
+	renderSuggestion(suggestionObj, { query }) {
+		return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
 	},
 
 	render() {

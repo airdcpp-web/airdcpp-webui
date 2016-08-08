@@ -38,8 +38,8 @@ export default React.createClass({
 		});
 	},
 
-	renderSuggestion(dataItem, { value }) {
-		return SuggestionRenderer(value, dataItem);
+	renderSuggestion(dataItem, { query }) {
+		return SuggestionRenderer(query, dataItem);
 	},
 
 	getSuggestionValue(suggestion) {
