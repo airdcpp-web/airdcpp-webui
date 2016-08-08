@@ -43,6 +43,7 @@ const FilelistActions = Reflux.createActions([
 	} },
 	{ 'download': { asyncResult: true } },
 	{ 'findNfo': { asyncResult: true } },
+	{ 'setRead': { asyncResult: true } },
 ]);
 
 FilelistActions.download.listen((itemData, downloadData) => {
@@ -162,6 +163,13 @@ FilelistActions.createSession.failed.listen(function (error) {
 
 FilelistActions.refreshShare.listen(function ({ session, directory }) {
 	ShareActions.refreshVirtual(directory.path, session.share_profile.id);
+});
+
+FilelistActions.setRead.listen(function (id) {
+	let that = this;
+	SocketService.post(FilelistConstants.SESSION_URL + '/' + id + '/read')
+		.then(that.completed)
+		.catch(that.failed);
 });
 
 export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELISTS_EDIT);

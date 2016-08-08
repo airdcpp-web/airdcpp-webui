@@ -4,6 +4,8 @@ import React from 'react';
 import ListBrowser from './ListBrowser';
 import FilelistFooter from './FilelistFooter';
 
+import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
+
 import { LocationContext } from 'mixins/RouterMixin';
 
 import Loader from 'components/semantic/Loader';
@@ -12,8 +14,14 @@ import Message from 'components/semantic/Message';
 
 const FilelistSession = React.createClass({
 	mixins: [ LocationContext ],
+	componentWillUpdate(nextProps, nextState) {
+		if (this.props.session.state.id !== 'loaded' && nextProps.session.state.id === 'loaded') {
+			this.props.actions.setRead(this.props.session.id);
+		}
+	},
+
 	render() {
-		const { user, location, state } = this.props.item;
+		const { user, location, state } = this.props.session;
 
 		if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('me') === -1) {
 			return (
@@ -35,11 +43,11 @@ const FilelistSession = React.createClass({
 				/>
 
 				<FilelistFooter
-					item={ this.props.item }
+					session={ this.props.session }
 				/>
 			</div>
 		);
 	},
 });
 
-export default FilelistSession;
+export default ActiveSessionDecorator(FilelistSession);

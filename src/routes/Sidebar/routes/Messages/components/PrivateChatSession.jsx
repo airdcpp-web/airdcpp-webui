@@ -6,7 +6,6 @@ import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from './MessageFooter';
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
-import PrivateChatActions from 'actions/PrivateChatActions';
 
 import AccessConstants from 'constants/AccessConstants';
 import { LocationContext } from 'mixins/RouterMixin';
@@ -15,19 +14,19 @@ import { LocationContext } from 'mixins/RouterMixin';
 const ChatSession = React.createClass({
 	mixins: [ LocationContext ],
 	render() {
-		const { item, location } = this.props;
+		const { session, location, actions } = this.props;
 		return (
 			<div className="private chat session">
 				<ChatLayout
 					location={ location }
 					chatAccess={ AccessConstants.PRIVATE_CHAT_SEND }
 					messageStore={ PrivateChatMessageStore }
-					chatActions={ PrivateChatActions }
-					session={ item }
+					actions={ actions }
+					session={ session }
 				/>
 
 				<MessageFooter
-					item={ item }
+					session={ session }
 					contextGetter={ () => ReactDOM.findDOMNode(this) }
 				/>
 			</div>

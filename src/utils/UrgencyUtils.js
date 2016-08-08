@@ -29,11 +29,11 @@ const messageSessionMapper = (item, urgencyMappings) => {
 
 const simpleSessionMapper = (item) => {
 	// TODO: mark sessions as read first
-	/*if (!item.read) {
+	if (!item.read) {
 		return {
 			[UrgencyEnum.HIGH]: 1,
 		};
-	}*/
+	}
 
 	return {};
 };

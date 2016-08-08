@@ -291,16 +291,17 @@ const SessionLayout = React.createClass({
 
 	getChildren() {
 		const { activeItem } = this.state;
-		const { children, items } = this.props;
+		const { children, items, actions, activeId } = this.props;
 		if (History.getSidebarData(this.props.location).pending) {
 			// The session was just created
 			return <Loader text="Waiting for server response"/>;
 		} else if (activeItem) {
 			// We have a session
 			return React.cloneElement(this.props.children, { 
-				item: activeItem 
+				session: activeItem,
+				actions: actions,
 			});
-		} else if (this.props.activeId || (!children && items.length !== 0)) {
+		} else if (activeId || (!children && items.length !== 0)) {
 			// Redirecting to a new page
 			return <Loader text="Loading session"/>;
 		} else if (!this.hasEditAccess() && items.length === 0) {

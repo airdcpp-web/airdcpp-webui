@@ -5,6 +5,7 @@ import Message from 'components/semantic/Message';
 import MessageComposer from './MessageComposer';
 import MessageView from './MessageView';
 
+import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import LoginStore from 'stores/LoginStore';
 
 import './messages.css';
@@ -21,7 +22,7 @@ const ChatLayout = React.createClass({
 
 		messageStore: React.PropTypes.object.isRequired,
 
-		chatActions: React.PropTypes.object.isRequired,
+		actions: React.PropTypes.object.isRequired,
 	},
 
 	onMessagesChanged(messages, id) {
@@ -40,42 +41,33 @@ const ChatLayout = React.createClass({
 		};
 	},
 
-	setSession(id) {
-		const { chatActions } = this.props;
-		chatActions.sessionChanged(id);
-		if (!id) {
-			return;
-		}
-
-		chatActions.setRead(id);
-
+	onSessionActivated(id) {
 		const messages = this.props.messageStore.getMessages()[id];
 		if (!messages) {
 			this.setState({ messages: null });
 
-			chatActions.fetchMessages(id);
+			this.props.actions.fetchMessages(id);
 		} else {
 			this.setState({ messages: messages });
 		}
 	},
 
 	componentDidMount() {
-		this.setSession(this.props.session.id);
+		this.onSessionActivated(this.props.session.id);
 	},
 
 	componentWillUnmount() {
 		this.unsubscribe();
-		this.setSession(null);
 	},
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.session.id != nextProps.session.id) {
-			this.setSession(nextProps.session.id);
+			this.onSessionActivated(nextProps.session.id);
 		}
 	},
 
 	handleSend(message) {
-		this.props.chatActions.sendMessage(this.props.session.id, message);
+		this.props.actions.sendMessage(this.props.session.id, message);
 	},
 
 	render() {
@@ -97,4 +89,4 @@ const ChatLayout = React.createClass({
 	},
 });
 
-export default ChatLayout;
+export default ActiveSessionDecorator(ChatLayout);

@@ -11,6 +11,7 @@ import MenuIcon from 'components/menu/MenuIcon';
 const getCloseAllItem = (sessions, closeAction) => {
 	return (
 		<MenuItemLink 
+			key="close"
 			onClick={ () => sessions.forEach(session => closeAction(session)) }
 			icon={ IconConstants.REMOVE }
 		>
@@ -28,7 +29,7 @@ const SessionDropdown = ({ sessions, sessionMenuItemGetter, newButton, unreadInf
 
 	let sessionMenuItems = null;
 	if (sessions.length > 0) {
-		sessionMenuItems = [ ...sessions.map(sessionMenuItemGetter), <div className="ui divider"/>, getCloseAllItem(sessions, closeAction) ];
+		sessionMenuItems = [ ...sessions.map(sessionMenuItemGetter), <div key="divider" className="ui divider"/>, getCloseAllItem(sessions, closeAction) ];
 	}
 
 	return (

@@ -72,4 +72,10 @@ MenuItemLink.propTypes = {
 	active: React.PropTypes.bool,
 };
 
+export const MenuHeader = ({ className, children, ...other }) => (
+ 	<div className={ classNames('header', className) } { ...other }>
+ 		{ children }
+ 	</div>
+);
+
 //export default MenuItemLink;

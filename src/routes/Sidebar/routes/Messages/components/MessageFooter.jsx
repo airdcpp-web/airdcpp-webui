@@ -19,24 +19,24 @@ const getCaption = (state) => {
 	}
 };
 
-const CCPMState = ({ contextGetter, item }) => {
-	if (!item.ccpm_state.supported) {
+const CCPMState = ({ contextGetter, session }) => {
+	if (!session.ccpm_state.supported) {
 		return null;
 	}
 	
-	const state = item.ccpm_state.id;
+	const state = session.ccpm_state.id;
 	const ids = [ state === CCPMEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
 
 	return (
 		<SessionFooter>
 			<div className="ccpm-state">
-				<EncryptionState encryption={ item.ccpm_state.encryption } alwaysVisible={ true }/>
+				<EncryptionState encryption={ session.ccpm_state.encryption } alwaysVisible={ true }/>
 				<ActionMenu
 					caption={ getCaption(state) }
 					actions={ PrivateChatActions }
 					ids={ ids }
 					contextGetter={ contextGetter }
-					itemData={ item }
+					itemData={ session }
 				/>
 			</div>
 		</SessionFooter>

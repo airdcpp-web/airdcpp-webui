@@ -18,14 +18,14 @@ const HubFooter = React.createClass({
 		/**
 		 * Currently active session (required)
 		 */
-		item: React.PropTypes.any,
+		session: React.PropTypes.any,
 
 		userlistToggle: React.PropTypes.node.isRequired,
 	},
 
 	onSocketConnected(addSocketListener) {
 		const url = HubConstants.SESSION_URL;
-		addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, this.props.item.id);
+		addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, this.props.session.id);
 	},
 
 	getInitialState() {
@@ -43,7 +43,7 @@ const HubFooter = React.createClass({
 	},
 
 	fetchCounts() {
-		SocketService.get(HubConstants.SESSION_URL + '/' + this.props.item.id + '/counts')
+		SocketService.get(HubConstants.SESSION_URL + '/' + this.props.session.id + '/counts')
 			.then(this.onCountsReceived)
 			.catch(error => console.error('Failed to fetch hub counts', error.message));
 	},
@@ -53,22 +53,22 @@ const HubFooter = React.createClass({
 	},
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.item.id !== this.props.item.id) {
+		if (prevProps.session.id !== this.props.session.id) {
 			this.fetchCounts();
 		}
 	},
 
 	render: function () {
-		const { userlistToggle, item } = this.props;
+		const { userlistToggle, session } = this.props;
 		const { shared, users } = this.state;
 
 		const averageShare = ValueFormat.formatSize(users > 0 ? (shared / users) : 0);
 
 		let userCaption = users + ' users';
-		if (item.connect_state.encryption) {
+		if (session.connect_state.encryption) {
 			userCaption = (
 				<span>
-					<EncryptionState encryption={ item.connect_state.encryption }/>
+					<EncryptionState encryption={ session.connect_state.encryption }/>
 					{ userCaption }
 				</span>
 			);

@@ -61,6 +61,13 @@ const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) 
 			data = MessageUtils.checkUnread(data, actions, id);
 		}
 
+		if (data.read === false && id === activeSession) {
+			data = {
+				...data,
+				read: true,
+			};
+		} 
+
 		sessions[sessions.indexOf(session)] = update(session, { $merge: data });
 		store.trigger(sessions);
 	};

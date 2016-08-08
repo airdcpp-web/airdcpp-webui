@@ -57,13 +57,13 @@ const ListBrowser = React.createClass({
 		//router.setRouteLeaveHook(route, this.routerWillLeave);
 
 
-		const { item, location } = this.props;
+		const { session, location } = this.props;
 
 		const locationData = History.getSidebarData(location);
 		if (!locationData || !locationData.directory) {
 			// We need an initial path for our history
-			History.replaceSidebarData(location, { directory: item.location.path });
-		} else if (item.location.path !== locationData.directory) {
+			History.replaceSidebarData(location, { directory: session.location.path });
+		} else if (session.location.path !== locationData.directory) {
 			// Opening an existing list from another directory?
 			this.sendChangeDirectory(locationData.directory);
 		}
@@ -71,7 +71,7 @@ const ListBrowser = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		const nextLocationData = History.getSidebarData(nextProps.location);
-		if (!nextLocationData.directory || nextProps.item.location.path === nextLocationData.directory) {
+		if (!nextLocationData.directory || nextProps.session.location.path === nextLocationData.directory) {
 			return;
 		}
 
@@ -81,16 +81,16 @@ const ListBrowser = React.createClass({
 			this.sendChangeDirectory(nextLocationData.directory);
 		} else {
 			// Change initiated by another session/GUI, update our location
-			History.replaceSidebarData(nextProps.location, { directory: nextProps.item.location.path });
+			History.replaceSidebarData(nextProps.location, { directory: nextProps.session.location.path });
 		}
 	},
 
 	sendChangeDirectory(directory) {
-		FilelistActions.changeDirectory(this.props.item.user.cid, directory);
+		FilelistActions.changeDirectory(this.props.session.user.cid, directory);
 	},
 
 	emptyRowsNodeGetter() {
-		const { location, state } = this.props.item;
+		const { location, state } = this.props.session;
 
 		if (state.id === 'download_failed') {
 			return (
@@ -122,7 +122,7 @@ const ListBrowser = React.createClass({
 
 	onClickDirectory(cellData, rowData) {
 		if (rowData.type.id === 'directory') {
-			return () => this._handleClickDirectory(this.props.item.location.path + cellData + '/');
+			return () => this._handleClickDirectory(this.props.session.location.path + cellData + '/');
 		}
 
 		return undefined;
@@ -132,14 +132,14 @@ const ListBrowser = React.createClass({
 		return (
 			<DownloadMenu 
 				caption={ caption }
-				user={ this.props.item.user }
-				itemInfo={ this.props.item.location }
+				user={ this.props.session.user }
+				itemInfo={ this.props.session.location }
 				handler={ FilelistActions.download } 
 			>
 				<ActionMenu
 					itemData={ {
-						directory: this.props.item.location,
-						session: this.props.item,
+						directory: this.props.session.location,
+						session: this.props.session,
 					} }
 					actions={ FilelistActions }
 					ids={ [ 'reloadDirectory', 'refreshShare' ] } 
@@ -149,24 +149,24 @@ const ListBrowser = React.createClass({
 	},
 
 	render() {
-		const { item } = this.props;
+		const { session } = this.props;
 		return (
 			<div className="filelist-browser">
 				<BrowserBar 
-					path={ item.location.path }
+					path={ session.location.path }
 					separator="/"
 					rootPath="/"
 					itemClickHandler={ this._handleClickDirectory }
 					selectedNameFormatter={ this.selectedNameFormatter }
-					entityId={ item.id } // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
+					entityId={ session.id } // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
 				/>
 
 				<VirtualTable
 					emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
 					rowClassNameGetter={ this._rowClassNameGetter }
 					store={ FilelistViewStore }
-					entityId={ item.id }
-					viewId={ item.location.path }
+					entityId={ session.id }
+					viewId={ session.location.path }
 					sessionStore={ FilelistSessionStore }
 				>
 					<Column
@@ -176,7 +176,7 @@ const ListBrowser = React.createClass({
 						cell={
 							<FileDownloadCell 
 								clickHandlerGetter={ this.onClickDirectory }
-								userGetter={ _ => item.user }
+								userGetter={ _ => session.user }
 								handler={ FilelistActions.download } 
 							/> 
 						}

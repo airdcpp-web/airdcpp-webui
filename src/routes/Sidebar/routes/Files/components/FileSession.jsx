@@ -12,6 +12,7 @@ import ImageFile from './ImageFile';
 import TextFile from './TextFile';
 import VideoFile from './VideoFile';
 
+import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import FileFooter from './FileFooter';
 
 
@@ -35,22 +36,22 @@ const getUrl = (tth) => {
 
 const FileSession = React.createClass({
 	render() {
-		const { item } = this.props;
-		if (item.state.id !== 'downloaded') {
-			if (item.state.id === 'download_failed') {
+		const { session } = this.props;
+		if (session.state.id !== 'downloaded') {
+			if (session.state.id === 'download_failed') {
 				return (
 					<Message 
 						icon={ IconConstants.ERROR }
 						title="Download failed"
-						description={ item.state.str }
+						description={ session.state.str }
 					/>
 				);
 			}
 
-			return <Loader text={ item.state.str }/>;
+			return <Loader text={ session.state.str }/>;
 		}
 
-		const ViewerElement = getViewerElement(item);
+		const ViewerElement = getViewerElement(session);
 
 		let child;
 		if (!ViewerElement) {
@@ -58,23 +59,23 @@ const FileSession = React.createClass({
 		} else {
 			child = (
 				<ViewerElement 
-					item={ item }
-					url={ getUrl(item.tth) }
-					type={ item.mime_type }
-					extension={ item.type.str }
+					item={ session }
+					url={ getUrl(session.tth) }
+					type={ session.mime_type }
+					extension={ session.type.str }
 				/>
 			);
 		}
 
 		return (
-			<div className={ 'file-session ' + item.type.str + ' ' + item.type.content_type }>
+			<div className={ 'file-session ' + session.type.str + ' ' + session.type.content_type }>
 				<div className="file-content">
 					{ child }
 				</div>
-				<FileFooter item={ item }/>
+				<FileFooter item={ session }/>
 			</div>
 		);
 	},
 });
 
-export default FileSession;
+export default ActiveSessionDecorator(FileSession);

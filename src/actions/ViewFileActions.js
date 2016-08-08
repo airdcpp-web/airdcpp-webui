@@ -14,6 +14,7 @@ import AccessConstants from 'constants/AccessConstants';
 
 const ViewFileActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
+	{ 'setRead': { asyncResult: true } },
 ]);
 
 ViewFileActions.createSession.listen(function ({ location, itemInfo, user }, isText) {
@@ -46,6 +47,13 @@ ViewFileActions.createSession.completed.listen(function (location, file, session
 
 ViewFileActions.createSession.failed.listen(function (error) {
 	NotificationActions.apiError('Failed to create viewed file', error);
+});
+
+ViewFileActions.setRead.listen(function (id) {
+	let that = this;
+	SocketService.post(ViewFileConstants.SESSION_URL + '/' + id + '/read')
+		.then(that.completed)
+		.catch(that.failed);
 });
 
 export default SessionActionDecorator(ViewFileActions, ViewFileConstants.MODULE_URL, AccessConstants.VIEW_FILE_EDIT);

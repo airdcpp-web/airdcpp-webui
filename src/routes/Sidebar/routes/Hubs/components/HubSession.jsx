@@ -9,7 +9,6 @@ import HubUserTable from './HubUserTable';
 
 import HubMessageStore from 'stores/HubMessageStore';
 
-import HubActions from 'actions/HubActions';
 import { ConnectStateEnum } from 'constants/HubConstants';
 import AccessConstants from 'constants/AccessConstants';
 import { LocationContext } from 'mixins/RouterMixin';
@@ -21,7 +20,7 @@ import '../style.css';
 
 
 const getStorageKey = (props) => {
-	return 'view_userlist_' + props.item.id;
+	return 'view_userlist_' + props.session.id;
 };
 
 const checkList = (props) => {
@@ -41,7 +40,7 @@ const HubSession = React.createClass({
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.item.id !== this.props.item.id && this.state.showList !== checkList(nextProps)) {
+		if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
 			this.toggleListState();
 		}
 	},
@@ -51,15 +50,15 @@ const HubSession = React.createClass({
 	},
 
 	getMessage() {
-		const { item } = this.props;
-		const connectState = item.connect_state.id;
+		const { session } = this.props;
+		const connectState = session.connect_state.id;
 
-		if (connectState === ConnectStateEnum.PASSWORD && !item.connect_state.has_password) {
+		if (connectState === ConnectStateEnum.PASSWORD && !session.connect_state.has_password) {
 			return (
 				<HubActionPrompt 
 					title="Password required"
 					icon="lock"
-					content={ <PasswordPrompt hub={ item }/> }
+					content={ <PasswordPrompt hub={ session }/> }
 				/>
 			);
 		}
@@ -69,7 +68,7 @@ const HubSession = React.createClass({
 				<HubActionPrompt 
 					title="Redirect requested"
 					icon="forward mail"
-					content={ <RedirectPrompt hub={ item }/> }
+					content={ <RedirectPrompt hub={ session }/> }
 				/>
 			);
 		}
@@ -84,7 +83,7 @@ const HubSession = React.createClass({
 	},
 
 	render() {
-		const { item } = this.props;
+		const { session, actions } = this.props;
 		const { showList } = this.state;
 
 		const checkbox = (
@@ -101,19 +100,19 @@ const HubSession = React.createClass({
 				{ this.getMessage() }
 				{ showList ? (
 						<HubUserTable
-							item={ item }
+							session={ session }
 						/>
 					) : (
 						<ChatLayout
 							messageStore={ HubMessageStore }
-							chatActions={ HubActions }
+							actions={ actions }
 							chatAccess={ AccessConstants.HUBS_SEND }
-							session={ this.props.item }
+							session={ session }
 						/>
 				) }
 				<HubFooter
 					userlistToggle={ checkbox }
-					item={ item }
+					session={ session }
 				/>
 			</div>
 		);

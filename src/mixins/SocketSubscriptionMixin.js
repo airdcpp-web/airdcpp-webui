@@ -8,7 +8,7 @@ const SocketSubscriptionMixin = (sessionStore) => {
 	const removeSocketSubscriptions = (props, removeSocketListeners) => {
 		let entityExists = true;
 		if (sessionStore) {
-			entityExists = sessionStore.getSession(props.item.id) ? true : false;
+			entityExists = sessionStore.getSession(props.session.id) ? true : false;
 		}
 
 		removeSocketListeners(entityExists);
@@ -26,7 +26,7 @@ const SocketSubscriptionMixin = (sessionStore) => {
 				return;
 			}
 
-			if (this.props.item.id !== prevProps.item.id) {
+			if (this.props.session.id !== prevProps.session.id) {
 				removeSocketSubscriptions(prevProps, this.removeSocketListeners);
 				this.onSocketConnected(this.addSocketListener);
 			}

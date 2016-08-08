@@ -6,20 +6,20 @@ import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFoot
 import BrowserUtils from 'utils/BrowserUtils';
 
 
-const FilelistFooter = ({ item }) => {
+const FilelistFooter = ({ session }) => {
 	if (BrowserUtils.useMobileLayout()) {
 		return null;
 	}
 
-	let locationText = item.location.type.str;
+	let locationText = session.location.type.str;
 	if (locationText.length > 0) {
-		locationText = ValueFormat.formatSize(item.location.size) + ' (' + locationText + ')';
+		locationText = ValueFormat.formatSize(session.location.size) + ' (' + locationText + ')';
 	}
 
 	return (
 		<SessionFooter>
 			<FooterItem label="Directory size" text={ locationText }/>
-			<FooterItem label="Total list size" text={ ValueFormat.formatSize(item.total_size) }/>
+			<FooterItem label="Total list size" text={ ValueFormat.formatSize(session.total_size) }/>
 		</SessionFooter>
 	);
 };
