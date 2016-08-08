@@ -43,7 +43,7 @@
 }
 
 .message-list {
-	margin-right:10px !important;
+	margin-right: 10px !important;
 }
 
 .chat-message .message-author-name {
@@ -91,7 +91,7 @@
 
 .status-message .message-text {
 	font-size: small;
-	color: lightgray;
+	color: rgba(0,0,0,.50);
 	float: left;
 }
 
