@@ -19,7 +19,7 @@ const AwayIcon = React.createClass({
 
 	render: function () {
 		const iconColor = this.isAway() ? 'yellow' : 'grey';
-		return <i className={ iconColor + ' away-state link large wait icon' } onClick={ this.onClick }></i>;
+		return <i className={ iconColor + ' away-state link large wait icon' } onClick={ this.onClick }/>;
 	}
 });
 

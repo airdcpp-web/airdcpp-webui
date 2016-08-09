@@ -23,7 +23,7 @@ const PerformanceTools = React.createClass({
 
 	render: function () {
 		const color = BrowserUtils.loadSessionProperty('perf_profiling') ? 'blue' : 'grey';
-		return <i className={ color + ' link large lab icon' } onClick={ this.onClick }></i>;
+		return <i className={ color + ' link large lab icon' } onClick={ this.onClick }/>;
 	}
 });
 

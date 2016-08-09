@@ -15,7 +15,7 @@ const TouchIcon = React.createClass({
 		}
 
 		const touchIconColor = LocalSettingStore.touchModeEnabled ? 'blue' : 'grey';
-		return <i className={ touchIconColor + ' link large pointing up icon' } onClick={ this.onClick }></i>;
+		return <i className={ touchIconColor + ' link large pointing up icon' } onClick={ this.onClick }/>;
 	}
 });
 

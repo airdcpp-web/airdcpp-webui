@@ -32,11 +32,7 @@
 	width: inherit;
 }
 
-#side-menu a.item {
-	padding: 10px 8px;
-}
-
-#side-menu .item>.label {
+#side-menu .navigation .item>.label {
 	position: absolute;
 	top: 7px;
 	right: 7px;
@@ -50,6 +46,10 @@
 #side-menu .icon-panel .touch-icons {
 	text-align: center;
 	margin-top: 10px;
+}
+
+#side-menu .icon-panel .touch-icons .item {
+	padding: 10px 8px;
 }
 
 /* Allows up to 3 touch icons to be displayed */
