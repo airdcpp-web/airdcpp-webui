@@ -6,7 +6,7 @@
 	margin: 0px !important;
 }
 
-.session-container.horizontal a.button-new {
+.session-container.horizontal .menu-column .item.new {
   padding: .78571429em 1.1em !important;
 }
 

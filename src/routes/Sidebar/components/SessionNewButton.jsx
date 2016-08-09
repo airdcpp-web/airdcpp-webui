@@ -1,48 +1,42 @@
 import React from 'react';
-
-import { Link } from 'react-router';
 import History from 'utils/History';
 
+import IconConstants from 'constants/IconConstants';
+import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 
-const SessionNewButton = React.createClass({
-	propTypes: {
-		/**
-		 * Base URL of the section
-		 */
-		url: React.PropTypes.string.isRequired,
 
-		/**
-		 * Title of the button
-		 */
-		title: React.PropTypes.node.isRequired,
-	},
+const onClick = (evt, url, routerLocation) => {
+	evt.preventDefault();
 
-	contextTypes: {
-		routerLocation: React.PropTypes.object.isRequired,
-	},
+	History.pushSidebar(routerLocation, url);
+};
 
-	getDefaultProps() {
-		return {
-			className: '',
-		};
-	},
+const SessionNewButton = ({ url, title, className = '' }, { routerLocation }) => (
+	<RouterMenuItemLink 
+		key="button-new" 
+		className={ 'new ' + className }
+		icon={ IconConstants.CREATE }
+		url={ url } 
+		onClick={ evt => onClick(evt, url, routerLocation) }
+	>
+		{ title }
+	</RouterMenuItemLink>
+);
 
-	onClick: function (evt) {
-		evt.preventDefault();
+SessionNewButton.propTypes = {
+	/**
+	 * Base URL of the section
+	 */
+	url: React.PropTypes.string.isRequired,
 
-		History.pushSidebar(this.context.routerLocation, this.props.url);
-	},
+	/**
+	 * Title of the button
+	 */
+	title: React.PropTypes.node.isRequired,
+};
 
-	render: function () {
-		return (
-			<Link to={this.props.url} className={ 'item button-new ' + this.props.className } onClick={this.onClick}>
-				<div>
-					<i className="plus icon"/>
-					{this.props.title}
-				</div>
-			</Link>
-		);
-	}
-});
+SessionNewButton.contextTypes = {
+	routerLocation: React.PropTypes.object.isRequired,
+};
 
 export default SessionNewButton;

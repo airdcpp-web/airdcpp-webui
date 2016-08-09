@@ -17,6 +17,9 @@ import LoginStore from 'stores/LoginStore';
 import BrowserUtils from 'utils/BrowserUtils';
 import { LocationContext } from 'mixins/RouterMixin';
 
+import IconConstants from 'constants/IconConstants';
+import { MenuItemLink } from 'components/semantic/MenuItem';
+
 
 const SessionLayout = React.createClass({
 	mixins: [ LocationContext ],
@@ -313,6 +316,23 @@ const SessionLayout = React.createClass({
 		return children;
 	},
 
+	getListActionMenu() {
+		if (!this.hasEditAccess()) {
+			return null;
+		}
+
+		const { actions, items } = this.props;
+		return (
+			<MenuItemLink 
+				key="close"
+				onClick={ () => items.forEach(session => actions.removeSession(session)) }
+				icon={ IconConstants.REMOVE }
+			>
+				Close all
+			</MenuItemLink>
+		);
+	},
+
 	hasEditAccess() {
 		return LoginStore.hasAccess(this.props.editAccess);
 	},
@@ -328,10 +348,10 @@ const SessionLayout = React.createClass({
 				itemDescriptionGetter={ this.props.itemDescriptionGetter }
 				activeItem={ this.state.activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
-				closeAction={ this.props.actions['removeSession'] }
+				closeAction={ this.props.actions.removeSession }
 				newButton={ this.getNewButton() }
-				sessionMenuItemGetter={ this.getSessionMenuItem }
-				sessions={ this.props.items }
+				sessionMenuItems={ this.props.items.map(this.getSessionMenuItem) }
+				listActionMenuGetter={ this.getListActionMenu }
 			>
 				{ children }
 			</Component>

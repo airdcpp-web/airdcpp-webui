@@ -1,37 +1,19 @@
 import React from 'react';
 import BrowserUtils from 'utils/BrowserUtils';
-import IconConstants from 'constants/IconConstants';
 
 import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/semantic/Dropdown';
-import { MenuItemLink } from 'components/semantic/MenuItem';
 import MenuIcon from 'components/menu/MenuIcon';
 
 
-const getCloseAllItem = (sessions, closeAction) => {
-	return (
-		<MenuItemLink 
-			key="close"
-			onClick={ () => sessions.forEach(session => closeAction(session)) }
-			icon={ IconConstants.REMOVE }
-		>
-			Close all
-		</MenuItemLink>
-	);
-};
-
-const SessionDropdown = ({ sessions, sessionMenuItemGetter, newButton, unreadInfoStore, closeAction }) => {
+const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAction, listActionMenuGetter }) => {
 	// Don't add nesting for items to preserve Semantic UI's CSS
 	// There should always be something to show if we are rendering the menu
 	const hideStyle = { display: 'none' };
 
-	const sessionMenuStyle = sessions.length === 0 ? hideStyle : null;
+	const sessionMenuStyle = sessionMenuItems.length === 0 ? hideStyle : null;
 
-	let sessionMenuItems = null;
-	if (sessions.length > 0) {
-		sessionMenuItems = [ ...sessions.map(sessionMenuItemGetter), <div key="divider" className="ui divider"/>, getCloseAllItem(sessions, closeAction) ];
-	}
-
+	const listActionMenu = listActionMenuGetter();
 	return (
 		<Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
 		 	<div className="header" style={ newButton ? null : hideStyle }>
@@ -43,6 +25,8 @@ const SessionDropdown = ({ sessions, sessionMenuItemGetter, newButton, unreadInf
 				Current sessions
 			</div>
 			{ sessionMenuItems }
+			{ listActionMenu ? <div className="ui divider"/> : null }
+			{ listActionMenu }
 		</Dropdown>
 	);
 };
@@ -96,9 +80,9 @@ TopMenuLayout.propTypes = {
 	newButton: React.PropTypes.node,
 	itemIcon: React.PropTypes.node,
 	itemHeader: React.PropTypes.node,
-	sessionMenuItemGetter: React.PropTypes.func.isRequired,
-	sessions: React.PropTypes.array.isRequired,
+	sessionMenuItems: React.PropTypes.array.isRequired,
 	closeAction: React.PropTypes.func.isRequired,
+	listActionMenuGetter: React.PropTypes.func.isRequired,
 };
 
 export default TopMenuLayout;

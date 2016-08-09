@@ -1,19 +1,17 @@
 import React from 'react';
 
-//import ActionButton from 'components/ActionButton';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
 
 const SideMenuLayout = ({ 
-			activeItem, sessions, newButton,
+			activeItem, sessionMenuItems, newButton,
 			itemIcon, itemHeader, children,
-			sessionMenuItemGetter,
 			itemDescriptionGetter,
 	}) => {
 
 	if (newButton) {
 		newButton = React.cloneElement(newButton, { 
-			className: newButton.props.className + 'ui fluid button' 
+			className: newButton.props.className + ' ui fluid button' 
 		});
 	}
 
@@ -21,30 +19,22 @@ const SideMenuLayout = ({
 		<div className="ui grid session-container horizontal">
 			<div className="four wide column menu-column">
 				{ newButton }
-				{ (sessions.length ? 
+				{ (sessionMenuItems.length ? 
 					<div className="ui vertical secondary menu">
-						{ sessions.map(sessionMenuItemGetter) }
+						{ sessionMenuItems}
 					</div> : null)
 				}
 			</div>
 			<div className="twelve wide stretched column content-column session">
 				<div className="ui segment session-layout">
 					{ activeItem ? (
-					<LayoutHeader
-						className="session-header"
-						icon={ itemIcon }
-						title={ <div className="title">{ itemHeader }</div> }
-						subHeader={ itemDescriptionGetter(activeItem) }
-						/*component={ 
-							<ActionButton 
-								className="small basic"
-								action={ closeAction } 
-								itemData={ activeItem }
-								icon={ false }
-								//icon="gray remove"
-							/>
-						}*/
-					/>) : null }
+						<LayoutHeader
+							className="session-header"
+							icon={ itemIcon }
+							title={ <div className="title">{ itemHeader }</div> }
+							subHeader={ itemDescriptionGetter(activeItem) }
+						/>
+					) : null }
 					{ activeItem ? <div className="ui divider"/> : null }
 					{ children }
 				</div>
@@ -58,10 +48,8 @@ SideMenuLayout.propTypes = {
 	newButton: React.PropTypes.node,
 	itemIcon: React.PropTypes.node,
 	itemHeader: React.PropTypes.node,
-	sessionMenuItemGetter: React.PropTypes.func.isRequired,
-	sessions: React.PropTypes.array.isRequired,
+	sessionMenuItems: React.PropTypes.array.isRequired,
 	itemDescriptionGetter: React.PropTypes.func.isRequired,
-	//closeAction: React.PropTypes.func.isRequired,
 };
 
 export default SideMenuLayout;
