@@ -15,6 +15,7 @@ import Message from 'components/semantic/Message';
 const FilelistSession = React.createClass({
 	mixins: [ LocationContext ],
 	componentWillUpdate(nextProps, nextState) {
+		// Filelist are marked as unread after loading a new directory
 		if (this.props.session.state.id !== 'loaded' && nextProps.session.state.id === 'loaded') {
 			this.props.actions.setRead(this.props.session.id);
 		}

@@ -28,8 +28,25 @@ const filterItems = (props, filter, actionIds) => {
 	return ids;
 };
 
+const filterExtraDividers = (ids) => {
+	return ids.filter((item, pos) => {
+		if (item !== 'divider') {
+			return true;
+		}
+
+		// The first or last element can't be a divider
+		if (pos === 0 || pos === ids.length - 1) {
+			return false;
+		}
+
+		// Check if the next element is also a divider 
+		// (the last one would always be removed in the previous check)
+		return ids[pos+1] !== 'divider';
+	});
+};
+
 // Get IDs to display from the specified menu
-const parseMenu = (props, subMenu, hasPreviousItems) => {
+const parseMenu = (props, hasPreviousMenuItems) => {
 	let { ids } = props;
 	if (!ids) {
 		ids = Object.keys(props.actions);
@@ -47,17 +64,12 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 		return 'filtered';
 	}
 
-	// Show a divider before submenus
-	if (subMenu && hasPreviousItems) {
-		ids = [ 'divider', ...ids ];
-	} else if (ids[0] === 'divider') {
-		// First menu should never start with a divider
-		ids.shift();
-	}
+	// Remove unwanted dividers
+	ids = filterExtraDividers(ids);
 
-	// The last element should never be divider
-	if (ids[ids.length-1] === 'divider') {
-		ids.pop();
+	// Always add a divider before submenus
+	if (hasPreviousMenuItems) {
+		ids = [ 'divider', ...ids ];
 	}
 
 	return {
@@ -67,6 +79,7 @@ const parseMenu = (props, subMenu, hasPreviousItems) => {
 	};
 };
 
+// This should be used only for constructed menus, not for id arrays
 const notError = (id) => typeof id !== 'string';
 
 
@@ -103,7 +116,7 @@ export default function (Component) {
 			return nextProps.itemData !== this.props.itemData;
 		},
 
-		// Convert ID to DropdownItem
+		// Convert ID to menu link element
 		getItem(menu, actionId, index) {
 			if (actionId === 'divider') {
 				return <div key={ 'divider' + index } className="ui divider"/>;
@@ -137,7 +150,7 @@ export default function (Component) {
 			const menus = [ parseMenu(this.props) ];
 			if (children) {
 				React.Children.map(children, child => {
-					menus.push(parseMenu(child.props, true, notError(menus[0])));
+					menus.push(parseMenu(child.props, notError(menus[0])));
 				});
 			}
 
