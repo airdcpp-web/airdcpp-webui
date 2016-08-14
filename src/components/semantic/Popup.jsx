@@ -36,6 +36,12 @@ const Popup = React.createClass({
 		};
 	},
 
+	componentWillUnmount() {
+		if (this.node) {
+			this.hide();
+		}
+	},
+
 	createPortal: function () {
 		// Create portal
 		this.node = document.createElement('div');
@@ -53,7 +59,12 @@ const Popup = React.createClass({
 		document.body.appendChild(this.node);
 	},
 
-	hide: function () {
+	hide() {
+		let dom = ReactDOM.findDOMNode(this);
+		$(dom).popup('hide');
+	},
+
+	onHidden: function () {
 		if (!this.node) {
 			// onHidden called when the popup was removed manually
 			return;
@@ -98,7 +109,7 @@ const Popup = React.createClass({
 			on: this.props.onHover ? 'hover' : 'click',
 			movePopup: false,
 			popup: this.node,
-			onHidden: () => this.hide(),
+			onHidden: _ => this.onHidden(),
 			...this.props.settings,
 		};
 
