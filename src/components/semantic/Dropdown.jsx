@@ -38,6 +38,8 @@ const Dropdown = React.createClass({
 		 * Render as button
 		 */
 		button: React.PropTypes.bool,
+
+		leftIcon: React.PropTypes.bool,
 	},
 
 	componentDidMount() {
@@ -81,20 +83,23 @@ const Dropdown = React.createClass({
 			'item',
 			this.props.className,
 			{ 'labeled button': this.props.button },
+			{ 'left-icon': this.props.leftIcon },
 			'icon',
 		);
 
 		let icon = this.props.triggerIcon;
 		if (typeof icon === 'string') {
-			icon = <i className={ this.props.triggerIcon + ' icon' }></i>;
+			icon = <i className={ this.props.triggerIcon + ' trigger icon' }/>;
 		}
 
 		return (
 			<div className={ className }>
+				{ this.props.leftIcon ? icon : null }
 				<DropdownCaption>
 					{ this.props.caption }
 				</DropdownCaption>
-				{ icon }
+				{ this.props.leftIcon ? null : icon }
+
 				<div className="menu">
 					{ this.props.header ? (
 						<div className="header">

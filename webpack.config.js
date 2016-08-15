@@ -88,9 +88,7 @@ module.exports = {
 				test: /\.css$/, 
 				include: [
 					path.resolve(__dirname, 'src'),
-					path.resolve(__dirname, 'node_modules/semantic-ui/dist'),
-					path.resolve(__dirname, 'node_modules/react-select/dist'),
-					path.resolve(__dirname, 'node_modules/fixed-data-table/dist') 
+					path.resolve(__dirname, 'node_modules')
 				], 
 				loader: 'style-loader!css-loader' 
 			}, { 

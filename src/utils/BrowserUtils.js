@@ -35,7 +35,9 @@ export default {
 	saveLocalProperty(storageKey, data) {
 		saveProperty(localStorage, storageKey, data);
 	},
-
+	removeLocalProperty(storageKey) {
+		localStorage.removeItem(storageKey);
+	},
 	loadSessionProperty(storageKey, defaultData) {
 		return loadProperty(sessionStorage, storageKey, defaultData);
 	},
@@ -43,7 +45,9 @@ export default {
 	saveSessionProperty(storageKey, data) {
 		saveProperty(sessionStorage, storageKey, data);
 	},
-
+	removeSessionProperty(storageKey) {
+		sessionStorage.removeItem(storageKey);
+	},
 	hasTouchSupport() {
 		 return 'ontouchstart' in document.documentElement // works on most browsers
 		 	 || 'onmsgesturechange' in window; // works on ie10

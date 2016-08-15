@@ -5,12 +5,11 @@ import DownloadableItemActions from 'actions/DownloadableItemActions';
 
 
 export default function (Component) {
-	const DownloadMenu = ({ handler, user, itemInfo, caption, className, ...other }, { routerLocation }) => {
+	const DownloadMenu = ({ handler, user, itemInfo, caption, className, ...other }) => {
 		const data = {
 			user,
 			handler,
 			itemInfo,
-			location: routerLocation
 		};
 		
 		return (
@@ -22,10 +21,6 @@ export default function (Component) {
 				{ ...other }
 			/>
 		);
-	};
-
-	DownloadMenu.contextTypes = {
-		routerLocation: React.PropTypes.object.isRequired,
 	};
 
 	DownloadMenu.propTypes = {

@@ -13,4 +13,5 @@ export default {
 	BUNDLE_SOURCE_MODAL: MODAL_PREFIX + 'bundle-sources',
 	BUNDLE_CONTENT_MODAL: MODAL_PREFIX + 'bundle-content',
 	FAVORITE_DIRECTORY_MODAL: MODAL_PREFIX + 'favorite-directory',
+	HOME_WIDGET_MODAL: MODAL_PREFIX + 'home_widget',
 };

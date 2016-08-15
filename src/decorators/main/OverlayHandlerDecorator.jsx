@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import invariant from 'invariant';
 
 import History from 'utils/History';
 import OverlayConstants from 'constants/OverlayConstants';
@@ -39,16 +40,16 @@ export default function (Component) {
 		getOverlay(key, props) {
 			const { state } = props.location;
 			const modalComponent = getLastChildren(props.children);
-			const ret = React.cloneElement(modalComponent, { 
+			const ret = React.cloneElement(modalComponent, {
+				// Pass the location data as props
+				// Note: isRequired can't be used in proptypes because the element is cloned
+				...state[key].data,
+
 				onHidden: () => {
 					removeNode(key);
 				},
 
 				overlayId: key,
-
-				// Pass the location data as props
-				// Note: isRequired can't be used in proptypes because the element is cloned
-				...state[key].data
 			});
 
 			return ret;
@@ -111,6 +112,12 @@ export default function (Component) {
 		},
 
 		render() {
+			invariant(
+				Object.keys(modalNodes).length === 0 || 
+				(this.props.location.state && Object.keys(this.props.location.state).some(key => key.indexOf(OverlayConstants.MODAL_PREFIX) === 0)), 
+				'There are no modals in the location state but modal nodes exist'
+			);
+
 			let sidebar = null;
 			if (showSidebar(this.props)) {
 				sidebar = React.cloneElement(this.props.children, { 

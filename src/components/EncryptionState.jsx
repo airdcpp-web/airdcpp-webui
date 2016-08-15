@@ -41,7 +41,7 @@ const InfoMessage = ({ info, encryption }) => (
 	</div>
 );
 
-const EncryptionState = ({ encryption, alwaysVisible }) => {
+const EncryptionState = ({ encryption, alwaysVisible, boundary }) => {
 	if (!encryption) {
 		return alwaysVisible ? <i className="grey lock icon"/> : null;
 	}
@@ -57,10 +57,21 @@ const EncryptionState = ({ encryption, alwaysVisible }) => {
 					<i className={ info.icon + ' corner icon' }/>
 				</i>
 			}
+			settings={ {
+				boundary,
+			} }
 		>
 			<InfoMessage info={ info } encryption={ encryption }/>
 		</Popup>
 	);
+};
+
+EncryptionState.propTypes = {
+	encryption: React.PropTypes.object,
+	boundary: React.PropTypes.string,
+
+	/* Show the lock icon even when there is no encryption */
+	alwaysVisible: React.PropTypes.bool,
 };
 
 export default EncryptionState;

@@ -109,25 +109,25 @@ DownloadableItemActions.findNfo.listen(function (data) {
 	FilelistActions.findNfo(data);
 });
 
-DownloadableItemActions.downloadTo.listen(function (handlerData) {
-	const { pathname } = handlerData.location;
+DownloadableItemActions.downloadTo.listen(function (handlerData, location) {
+	const { pathname } = location;
 	
-	History.pushModal(handlerData.location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
+	History.pushModal(location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
 		downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
-		itemInfo:handlerData.itemInfo
+		itemInfo: handlerData.itemInfo
 	});
 });
 
-DownloadableItemActions.search.listen(function (data) {
-	const { itemInfo } = data;
-	const searchString = itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
+DownloadableItemActions.search.listen(function (handlerData, location) {
+	const { itemInfo } = handlerData;
+	const searchString = !itemInfo.tth || itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
 
 	History.pushUnique({
 		pathname: '/search',
 		state: {
 			searchString,
 		}
-	}, data.location);
+	}, location);
 });
 
 export default DownloadableItemActions;

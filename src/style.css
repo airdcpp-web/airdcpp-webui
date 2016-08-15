@@ -68,6 +68,14 @@ div.dropdown:not(.table-items) {
 	cursor:pointer;
 }
 
+.ui.popup:not(.table) {
+  word-break: break-all;
+}
+
+.ui.dropdown.left-icon i.trigger {
+	flex-shrink: 0;
+}
+
 /* Layout header start */
 
 .layout.header {

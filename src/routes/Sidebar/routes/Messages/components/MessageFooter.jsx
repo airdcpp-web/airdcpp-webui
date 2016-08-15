@@ -30,7 +30,11 @@ const CCPMState = ({ contextGetter, session }) => {
 	return (
 		<SessionFooter>
 			<div className="ccpm-state">
-				<EncryptionState encryption={ session.ccpm_state.encryption } alwaysVisible={ true }/>
+				<EncryptionState 
+					encryption={ session.ccpm_state.encryption } 
+					alwaysVisible={ true }
+					boundary="#sidebar"
+				/>
 				<ActionMenu
 					caption={ getCaption(state) }
 					actions={ PrivateChatActions }

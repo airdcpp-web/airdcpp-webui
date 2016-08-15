@@ -17,7 +17,7 @@ const StatisticsIcon = ({ icon, bytes, formatter }) => {
 
 	return (
 		<div className="item">
-			<i className={ icon + ' icon'}></i>
+			<i className={ icon + ' icon'}/>
 			<div className="content">
 				<div className="header">{ formatter(bytes) }</div>
 			</div>

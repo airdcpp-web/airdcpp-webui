@@ -5,3 +5,26 @@
 #home .ui.message .button {
   margin-top: 10px;
 }
+
+#home .content.widget {
+  max-height: calc(100% - 45px);
+}
+
+#home .content.widget > div {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+#home .react-grid-item .header-row {
+	display: flex;
+	flex: 0 0 45px;
+}
+
+#home .react-grid-item .header-row .header {
+	flex: 1;
+	height: 100%;
+}
+
+#home .create-widget {
+	max-width: 200px;
+}

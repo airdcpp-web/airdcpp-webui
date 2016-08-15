@@ -46,14 +46,16 @@ const onEnterSidebar = (nextProps, replace) => {
 	}
 };
 
+const { path, ...indexRoute } = require('./routes/Home');
 const routeConfig = [
 	require('./routes/Login'),
 	{ 
 		component: require('./components/main/AuthenticatedApp').default,
 		path: '/',
 		onEnter: requireAuth,
-		indexRoute: require('./routes/Home'),
+		indexRoute: indexRoute,
 		childRoutes: [
+			require('./routes/Home'),
 			require('./routes/FavoriteHubs'),
 			require('./routes/Queue'),
 			require('./routes/Search'),

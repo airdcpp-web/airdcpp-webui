@@ -1,0 +1,27 @@
+#home .rss .content.widget {
+	display: flex;
+  flex-direction: column;
+}
+
+#home .rss .content.widget .extra.content {
+	color: rgba(0,0,0,.4);
+}
+
+#home .rss .divided.list {
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 100%;
+}
+
+#home .rss .divided.list .item {
+	flex-shrink: 0;
+}
+
+#home .rss .divided.list .item .description {
+	margin-left: 20px;
+}
+
+#home .rss .content.widget .rss {
+	display: flex;
+	flex-direction: column;
+}

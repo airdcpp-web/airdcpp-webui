@@ -23,7 +23,7 @@ export default function (Component, semanticModuleName) {
 			/**
 			 * Removes portal from DOM
 			 */
-			onHidden: React.PropTypes.func,
+			onHidden: React.PropTypes.func.isRequired,
 
 			/**
 			 * Returns to the location that was active before opening the overlay
@@ -31,7 +31,7 @@ export default function (Component, semanticModuleName) {
 			onHide: React.PropTypes.func,
 
 			location: React.PropTypes.object.isRequired,
-			overlayId: React.PropTypes.any,
+			overlayId: React.PropTypes.any.isRequired,
 		},
 
 		componentWillReceiveProps(nextProps) {
