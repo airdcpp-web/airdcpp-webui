@@ -4,10 +4,6 @@ import Modal from 'components/semantic/Modal';
 import { RouteContext } from 'mixins/RouterMixin';
 import Promise from 'utils/Promise';
 
-//import IconConstants from 'constants/IconConstants';
-
-//import Message from 'components/semantic/Message';
-
 import t from 'utils/tcomb-form';
 
 const TcombForm = t.form.Form;
@@ -45,12 +41,7 @@ const WidgetDialog = React.createClass({
 
 	render: function () {
 		const { widgetInfo, location, settings, ...overlayProps } = this.props;
-		const { formSettings, name, icon } = widgetInfo;
-
-		/*const CommonSettings = t.struct({
-			name: t.Str,
-		}, 'Generic settings');
-*/
+		const { formSettings, name, icon, fieldOptions } = widgetInfo;
 
 		const Entry = {
 			name: t.Str,
@@ -75,6 +66,13 @@ const WidgetDialog = React.createClass({
 					ref="form"
 					type={ t.struct(Entry) }
 					value={ settings }
+					options={{
+						fields: {
+							widget: {
+								fields: fieldOptions,
+							},
+						},
+					}}
 				/>
 			</Modal>
 		);

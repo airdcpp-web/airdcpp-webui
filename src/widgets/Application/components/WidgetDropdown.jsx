@@ -21,12 +21,13 @@ const getWidgetItem = (widgetInfo, location) => {
 	);
 };
 
-const WidgetDropdown = ({ widgets, onClickItem, ...widgetProps }, { routerLocation }) => (
+const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, { routerLocation }) => (
 	<Dropdown 
 		caption="Add widget..."
 		className="create-widget"
 		button={ true }
 		//icon={ IconConstants.CREATE }
+		contextGetter={ _ => '.' + componentId }
 		{ ...widgetProps }
 	>
 		{ WidgetStore.widgets

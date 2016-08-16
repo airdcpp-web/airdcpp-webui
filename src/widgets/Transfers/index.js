@@ -7,7 +7,7 @@ module.exports = {
 		w: 5,
 		h: 5,
 		minW: 2,
-		minH: 3,
+		minH: 4,
 	},
 };
 

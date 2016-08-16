@@ -57,8 +57,8 @@ const Transfers = StatisticsDecorator(({ stats }) => (
 		<TransferItem header="Downloads" description={ stats.downloads }/>
 		<TransferItem header="Uploads" description={ stats.uploads }/>
 		<TransferItem header="Running bundles" description={ stats.download_bundles }/>
-		<TransferItem header="Downloaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
-		<TransferItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_downloaded) }/>
+		<TransferItem header="Downloaded" description={ ValueFormat.formatSize(stats.session_downloaded) }/>
+		<TransferItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
 	</div>
 ), TransferConstants.TRANSFERRED_BYTES_URL, null, 10);
 
@@ -133,13 +133,15 @@ const TransferSpeed = React.createClass({
 
 		return (
 			<div className="transfers-container">
-				<SpeedChart
-					trafficSeries={ trafficSeries }
-					maxDownload={ maxDownload }
-					maxUpload={ maxUpload }
-					width={ width }
-					height={ height }
-				/>
+				{ width < 400 ? null : (
+					<SpeedChart
+						trafficSeries={ trafficSeries }
+						maxDownload={ maxDownload }
+						maxUpload={ maxUpload }
+						width={ width }
+						height={ height }
+					/>
+				) }
 				<Transfers
 					stats={ stats }
 				/>

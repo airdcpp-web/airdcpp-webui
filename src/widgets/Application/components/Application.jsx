@@ -42,7 +42,9 @@ const Application = React.createClass({
 				<Transfers
 					stats={ this.props.stats }
 				/>
-				<WidgetDropdown/>
+				<WidgetDropdown
+					componentId={ this.props.componentId }
+				/>
 			</div>
     );
 	}

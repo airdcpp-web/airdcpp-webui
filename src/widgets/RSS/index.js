@@ -8,6 +8,12 @@ module.exports = {
 	formSettings: {
 		feed_url: t.Str,
 	},
+	fieldOptions: {
+		feed_url: {
+			legend: 'Feed URL',
+			help: 'RSS and Atom feeds are supported',
+		},
+	},
 	size: {
 		w: 3,
 		h: 5,
