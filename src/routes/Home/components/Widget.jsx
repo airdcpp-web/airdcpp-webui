@@ -10,11 +10,10 @@ import Dropdown from 'components/semantic/Dropdown';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
 
-const Widget = ({ widgetInfo, settings, componentId, widgetId, children, className, onEdit, onRemove, style, ...widgetProps }) => {
+const Widget = ({ widgetInfo, settings, componentId, children, className, onEdit, onRemove, ...widgetProps }) => {
 	return (
 		<div 
-			className={ classNames('card', className, componentId, widgetId) } 
-			style={ style }
+			className={ classNames('card', className, componentId, widgetInfo.typeId) } 
 			{ ...widgetProps }
 		>
 			<div className="content header-row">

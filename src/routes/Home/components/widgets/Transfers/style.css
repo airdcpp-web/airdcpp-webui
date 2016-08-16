@@ -1,0 +1,8 @@
+#home .transfers .content.widget > div {
+	flex-direction: row;
+}
+
+#home .transfers .content.widget .extra.content {
+	padding-left: 10px;
+	flex: 0;
+}

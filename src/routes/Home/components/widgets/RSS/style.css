@@ -3,10 +3,6 @@
   flex-direction: column;
 }
 
-#home .rss .content.widget .extra.content {
-	color: rgba(0,0,0,.4);
-}
-
 #home .rss .divided.list {
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -21,7 +17,6 @@
 	margin-left: 20px;
 }
 
-#home .rss .content.widget .rss {
-	display: flex;
+#home .rss .content.widget > div {
 	flex-direction: column;
 }

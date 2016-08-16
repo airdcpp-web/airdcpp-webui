@@ -9,7 +9,7 @@ import { MenuItemLink } from 'components/semantic/MenuItem';
 const getWidgetItem = (widgetInfo, onClickItem) => {
 	return (
 		<MenuItemLink 
-			key={ widgetInfo.id }
+			key={ widgetInfo.typeId }
 			onClick={ () => onClickItem(widgetInfo) }
 			icon={ widgetInfo.icon }
 		>

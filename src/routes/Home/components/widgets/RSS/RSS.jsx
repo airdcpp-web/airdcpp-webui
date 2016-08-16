@@ -14,7 +14,8 @@ import ValueFormat from 'utils/ValueFormat';
 import './style.css';
 
 
-const Entry = ({ entry, location, componentId }) => {
+const Entry = ({ entry, location, feedUrl }) => {
+	const date = entry.pubDate ? entry.pubDate : entry.updated;
 	return (
 		<div className="item">
 			<div className="header">
@@ -22,13 +23,16 @@ const Entry = ({ entry, location, componentId }) => {
 					leftIcon={ true }
 					caption={ entry.title }
 					actions={ RSSActions }
-					itemData={ entry }
+					itemData={ {
+						entry,
+						feedUrl,
+					} }
 					//contextGetter={ _ => '.' + componentId + ' .list.rss' }
 				/>
 			</div>
 
 			<div className="description">
-				{ entry.pubDate ? ValueFormat.formatRelativeTime(Date.parse(entry.pubDate) / 1000) : null }
+				{ date ? ValueFormat.formatRelativeTime(Date.parse(date) / 1000) : null }
 			</div>
 		</div>
 	);
@@ -48,6 +52,21 @@ const Footer = RedrawDecorator(({ lastUpdated, handleUpdate }) => (
 	</div>
 ), 60);
 
+const getEntryKey = (entry) => {
+	if (entry.guid && entry.guid.content) {
+		return entry.guid.content;
+	}
+
+	if (entry.guid) {
+		return entry.guid;
+	}
+
+	if (entry.id && entry.id.content) {
+		return entry.id.content;
+	}
+
+	return entry.id;
+};
 
 const RSS = React.createClass({
 	propTypes: {
@@ -62,6 +81,10 @@ const RSS = React.createClass({
 	},
 
 	fetchFeed(feedUrl) {
+		if (this.state.entries) {
+			this.setState({ entries: null });
+		}
+
 		$.getJSON('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%20%3D%20\'' + 
 			encodeURIComponent(feedUrl) + '\'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', 
 
@@ -73,7 +96,6 @@ const RSS = React.createClass({
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.settings.feed_url !== this.props.settings.feed_url) {
-			this.setState({ entries: null });
 			this.fetchFeed(nextProps.settings.feed_url);
 		}
 	},
@@ -85,34 +107,46 @@ const RSS = React.createClass({
 		};
 	},
 
+	setError(error) {
+		this.setState({
+			error
+		});
+	},
+
 	onFeedFetched(data) {
 		if (!data.results) {
-			this.setState({
-				error: 'The URL is invalid or the feed is empty',
-			});
-
+			this.setError('The URL is invalid or the feed is empty');
 			return;
 		}
 
 		if (data.results.error) {
-			this.setState({
-				error: data.results.error.description,
-			});
-
+			this.setError(data.results.error.description);
 			return;
 		}
 
-		if (!data.results.rss || !data.results.rss.channel || !data.results.rss.channel.item) {
-			this.setState({
-				error: 'Invalid feed',
-			});
+		let entries = [];
+		if (data.results.rss) {
+			if (!data.results.rss.channel || !data.results.rss.channel.item) {
+				this.setError('Invalid/unsupported feed');
+				return;
+			}
 
+			entries = data.results.rss.channel.item;
+		} else if (data.results.feed) {
+			if (!data.results.feed.entry) {
+				this.setError('Invalid/unsupported feed');
+				return;
+			}
+
+			entries = data.results.feed.entry;
+		} else {
+			this.setError('No "rss" or "feed" tag was found');
 			return;
 		}
 
 		this.setState({
 			error: null,
-			entries: data.results.rss.channel.item,
+			entries,
 			lastUpdated: Date.now() / 1000,
 		});
 	},
@@ -132,14 +166,15 @@ const RSS = React.createClass({
 		}
 
 		return (
-			<div className="rss">
+			<div className="rss-container">
 				<div className="ui divided list rss">
 				  { 
 			  		this.state.entries.map(entry => (
 			  			<Entry 
-			  				key={ entry.guid && entry.guid.content ? entry.guid.content : entry.guid } 
+			  				key={ getEntryKey(entry) } 
 			  				entry={ entry }
-			  				componentId={ this.props.componentId }
+			  				//componentId={ this.props.componentId }
+			  				feedUrl={ this.props.settings.feed_url }
 			  			/>
 			  		))
 				  }
@@ -154,10 +189,10 @@ const RSS = React.createClass({
 });
 
 export default {
-	id: 'rss',
+	typeId: 'rss',
 	component: RSS,
 	name: 'RSS feed',
-	icon: 'rss',
+	icon: 'orange rss',
 	formSettings: {
 		feed_url: t.Str,
 	},

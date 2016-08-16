@@ -13,6 +13,7 @@
 #home .content.widget > div {
 	max-height: 100%;
 	max-width: 100%;
+	display: flex;
 }
 
 #home .react-grid-item .header-row {
@@ -27,4 +28,9 @@
 
 #home .create-widget {
 	max-width: 200px;
+}
+
+#home .content.widget .extra.content,
+#home .content.widget .extra.content .header {
+	color: rgba(0,0,0,.4);
 }
