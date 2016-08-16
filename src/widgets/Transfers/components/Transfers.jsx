@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Charts, ChartContainer, ChartRow, YAxis, AreaChart } from 'react-timeseries-charts';
-import { TimeSeries, TimeRange } from 'pondjs';
+import { TimeSeries } from 'pondjs';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 import ValueFormat from 'utils/ValueFormat';
@@ -14,14 +14,25 @@ import TransferConstants from 'constants/TransferConstants';
 import '../style.css';
 
 
-const addSpeed = (points, down, up) => [
-	...points,
-	[
-		Date.now(),
-		down,
-		up,
-	]
-];
+const IDLE_CHECK_PERIOD = 3000;
+const MAX_EVENTS = 1800; // 30 minutes when transfers are running
+
+const addSpeed = (points, down, up) => {
+	const ret = [
+		...points,
+		[
+			Date.now(),
+			down,
+			up,
+		]
+	];
+
+	if (ret.length > MAX_EVENTS) {
+		ret.shift();
+	}
+
+	return ret;
+};
 
 const SpeedChart = ({ trafficSeries, maxDownload, maxUpload, width, height }) => (
 	<ChartContainer timeRange={ trafficSeries.timerange() } width={ Math.max(width - 120, 0) }>
@@ -53,7 +64,7 @@ const TransferItem = ({ header, description }) => (
 );
 
 const Transfers = StatisticsDecorator(({ stats }) => (
-	<div className="ui list tiny extra content">
+	<div className="ui list info tiny">
 		<TransferItem header="Downloads" description={ stats.downloads }/>
 		<TransferItem header="Uploads" description={ stats.uploads }/>
 		<TransferItem header="Running bundles" description={ stats.download_bundles }/>
@@ -61,6 +72,7 @@ const Transfers = StatisticsDecorator(({ stats }) => (
 		<TransferItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
 	</div>
 ), TransferConstants.TRANSFERRED_BYTES_URL, null, 10);
+
 
 const TransferSpeed = React.createClass({
 	mixins: [ SetContainerSize, SocketSubscriptionMixin() ],
@@ -92,7 +104,7 @@ const TransferSpeed = React.createClass({
 
 	componentDidMount() {
 		// Add zero values when there is no traffic
-		this.idleInterval = setInterval(this.checkIdle, 1000);
+		this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
 	},
 
 	componentWillUnmount() {
@@ -105,7 +117,7 @@ const TransferSpeed = React.createClass({
 
 	checkIdle() {
 		const { points } = this.state;
-		if (points[points.length-1][0] + 1000 <= Date.now()) {
+		if (points[points.length-1][0] + IDLE_CHECK_PERIOD - 200 <= Date.now()) {
 			this.setState({
 				points: addSpeed(points, 0, 0),
 			});
@@ -130,10 +142,11 @@ const TransferSpeed = React.createClass({
 		};
 
 		const trafficSeries = new TimeSeries(data);
+		const noGraph = width < 400;
 
 		return (
 			<div className="transfers-container">
-				{ width < 400 ? null : (
+				{ noGraph ? null : (
 					<SpeedChart
 						trafficSeries={ trafficSeries }
 						maxDownload={ maxDownload }
@@ -144,6 +157,7 @@ const TransferSpeed = React.createClass({
 				) }
 				<Transfers
 					stats={ stats }
+					noGraph={ noGraph }
 				/>
 			</div>
     );

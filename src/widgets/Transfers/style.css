@@ -2,7 +2,7 @@
 	flex-direction: row;
 }
 
-#home .transfers .content.widget .extra.content {
+#home .transfers .content.widget .info.list {
 	padding-left: 10px;
 	margin-top: 0px;
 	flex: 0;
