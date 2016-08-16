@@ -6,7 +6,6 @@ import DemoIntro from './DemoIntro';
 import NewUserIntro from './NewUserIntro';
 
 import Widget from './Widget';
-import WidgetDropdown from './WidgetDropdown';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { LocationContext } from 'mixins/RouterMixin';
@@ -57,8 +56,6 @@ const Home = React.createClass({
 			<div id="home">
 				<DemoIntro/>
 				<NewUserIntro/>
-
-				<WidgetDropdown/>
 				<ResponsiveReactGridLayout 
 					className="ui cards layout"
 					rowHeight={50} 
@@ -71,18 +68,6 @@ const Home = React.createClass({
 
 					draggableHandle=".react-grid-item .header-row .header"
 				>
-					{/*<WidgetDropdown
-						key="widget-dropdown"
-						data-grid={ {
-							i: 'widget-dropdown',
-							x: 0,
-							y: 0,
-							w: 2,
-							h: 1,
-						} }
-				  	widgets={ widgets }
-				  	onClickItem={ this.onCreateWidget }
-					/>*/}
 					{ this.state.layout
 							.map(this.mapWidget)
 							.filter(widget => widget) }

@@ -5,6 +5,7 @@ import WidgetActions from 'actions/WidgetActions';
 import reject from 'lodash/reject';
 import BrowserUtils from 'utils/BrowserUtils';
 
+import Application from 'widgets/Application';
 import RSS from 'widgets/RSS';
 import Transfers from 'widgets/Transfers';
 
@@ -49,6 +50,7 @@ const createDefaultWidget = (x, y, widgetInfo, name, settings, suffix = '_defaul
 
 // CONSTANTS
 const widgets = [
+	Application,
 	RSS,
 	Transfers,
 ];
@@ -65,10 +67,12 @@ const WidgetStore = Reflux.createStore({
 		} else {
 			// Initialize the default layout
 			this.layout = [
-				createDefaultWidget(0, 0, Transfers, Transfers.name),
-				createDefaultWidget(9, 0, RSS, 'Application releases', {
+				createDefaultWidget(0, 0, Application, Application.name),
+				createDefaultWidget(2, 0, RSS, 'Client releases', {
 					feed_url: 'https://github.com/airdcpp-web/airdcpp-webclient/releases.atom',
 				}, '_releases'),
+
+				createDefaultWidget(5, 0, Transfers, Transfers.name),
 			];
 		}
 	},

@@ -7,7 +7,7 @@ import ValueFormat from 'utils/ValueFormat';
 
 import ShareConstants from 'constants/ShareConstants';
 
-import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
+import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
 import { Row } from './Grid';
 
@@ -27,4 +27,4 @@ const ShareStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(ShareStatisticsPage, ShareConstants.STATS_URL, 'No files shared', 60);
+export default StatisticsDecorator(ShareStatisticsPage, ShareConstants.STATS_URL, 'No files shared', 60);

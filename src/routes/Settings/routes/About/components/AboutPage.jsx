@@ -7,7 +7,7 @@ import Moment from 'moment';
 import { Row } from './Grid';
 
 import SystemConstants from 'constants/SystemConstants';
-import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
+import StatisticsDecorator from 'decorators/StatisticsDecorator';
 import ValueFormat from 'utils/ValueFormat';
 
 
@@ -30,4 +30,4 @@ const AboutPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(AboutPage, SystemConstants.STATS_URL, null, 5);
+export default StatisticsDecorator(AboutPage, SystemConstants.STATS_URL, null, 5);

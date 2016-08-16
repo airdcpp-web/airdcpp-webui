@@ -41,8 +41,6 @@ Widget.propTypes = {
 	settings: React.PropTypes.object.isRequired,
 
 	componentId: React.PropTypes.string.isRequired,
-
-	onEdit: React.PropTypes.func.isRequired,
 };
 
 export default Widget;

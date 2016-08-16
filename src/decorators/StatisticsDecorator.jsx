@@ -37,6 +37,10 @@ export default function (Component, fetchUrl, unavailableMessage, fetchIntervalS
 				return null;
 			}
 
+			if (this.props.stats) {
+				Object.assign(stats, this.props.stats);
+			}
+
 			if (stats === undefined) {
 				return (
 					<Message
@@ -46,7 +50,7 @@ export default function (Component, fetchUrl, unavailableMessage, fetchIntervalS
 				);
 			}
 
-			return <Component {...this.props} {...this.state}/>;
+			return <Component {...this.props} stats={ stats }/>;
 		},
 	});
 

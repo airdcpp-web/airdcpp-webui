@@ -3,6 +3,9 @@ import React from 'react';
 import { Charts, ChartContainer, ChartRow, YAxis, AreaChart } from 'react-timeseries-charts';
 import { TimeSeries, TimeRange } from 'pondjs';
 
+import StatisticsDecorator from 'decorators/StatisticsDecorator';
+import ValueFormat from 'utils/ValueFormat';
+
 import SetContainerSize from 'mixins/SetContainerSize';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
@@ -16,7 +19,7 @@ const addSpeed = (points, down, up) => [
 	[
 		Date.now(),
 		down,
-		-up,
+		up,
 	]
 ];
 
@@ -49,13 +52,15 @@ const TransferItem = ({ header, description }) => (
 	</div>
 );
 
-const Transfers = ({ stats }) => (
+const Transfers = StatisticsDecorator(({ stats }) => (
 	<div className="ui list tiny extra content">
 		<TransferItem header="Downloads" description={ stats.downloads }/>
 		<TransferItem header="Uploads" description={ stats.uploads }/>
 		<TransferItem header="Running bundles" description={ stats.download_bundles }/>
+		<TransferItem header="Downloaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
+		<TransferItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_downloaded) }/>
 	</div>
-);
+), TransferConstants.TRANSFERRED_BYTES_URL, null, 10);
 
 const TransferSpeed = React.createClass({
 	mixins: [ SetContainerSize, SocketSubscriptionMixin() ],

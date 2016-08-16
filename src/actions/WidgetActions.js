@@ -9,6 +9,10 @@ import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
 
+const notAlwaysShow = ({ widgetInfo }) => {
+	return !widgetInfo.alwaysShow;
+};
+
 const WidgetActions = Reflux.createActions([
 	{ 'create': { 
 		displayName: 'Add widget',
@@ -24,6 +28,7 @@ const WidgetActions = Reflux.createActions([
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove widget',
+		filter: notAlwaysShow,
 		icon: IconConstants.REMOVE },
 	},
 ]);
@@ -33,9 +38,7 @@ WidgetActions.create.listen(function (widgetInfo, location) {
 	History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
 		widgetInfo,
 		settings: {
-			common: {
-				name: widgetInfo.name,
-			}
+			name: widgetInfo.name,
 		},
 		onSave: settings => WidgetActions.create.saved(id, settings, widgetInfo),
 	});

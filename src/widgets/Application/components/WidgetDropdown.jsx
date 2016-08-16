@@ -23,13 +23,15 @@ const getWidgetItem = (widgetInfo, location) => {
 
 const WidgetDropdown = ({ widgets, onClickItem, ...widgetProps }, { routerLocation }) => (
 	<Dropdown 
-		caption="Create widget"
+		caption="Add widget..."
 		className="create-widget"
 		button={ true }
 		//icon={ IconConstants.CREATE }
 		{ ...widgetProps }
 	>
-		{ WidgetStore.widgets.map(widgetInfo => getWidgetItem(widgetInfo, routerLocation)) }
+		{ WidgetStore.widgets
+			.filter(widgetInfo => !widgetInfo.alwaysShow)
+			.map(widgetInfo => getWidgetItem(widgetInfo, routerLocation)) }
 	</Dropdown>
 );
 

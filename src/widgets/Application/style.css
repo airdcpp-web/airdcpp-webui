@@ -1,0 +1,11 @@
+#home .application .content.widget > div {
+	flex-direction: column;
+}
+
+#home .application .content.widget {
+	display: flex;
+}
+
+#home .application .ui.list {
+	flex-grow: 100;
+}

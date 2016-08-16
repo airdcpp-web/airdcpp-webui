@@ -6,7 +6,7 @@ import ValueFormat from 'utils/ValueFormat';
 import { Row, Header } from './Grid';
 
 import TransferConstants from 'constants/TransferConstants';
-import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
+import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
 const TransferStatisticsPage = React.createClass({
 	render() {
@@ -27,4 +27,4 @@ const TransferStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(TransferStatisticsPage, TransferConstants.TRANSFERRED_BYTES_URL, null, 5);
+export default StatisticsDecorator(TransferStatisticsPage, TransferConstants.TRANSFERRED_BYTES_URL, null, 5);

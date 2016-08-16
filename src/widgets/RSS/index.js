@@ -9,7 +9,7 @@ module.exports = {
 		feed_url: t.Str,
 	},
 	size: {
-		w: 4,
+		w: 3,
 		h: 5,
 		minW: 2,
 		minH: 3,

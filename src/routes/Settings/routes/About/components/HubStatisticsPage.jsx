@@ -6,7 +6,7 @@ import ValueFormat from 'utils/ValueFormat';
 
 import HubConstants from 'constants/HubConstants';
 
-import StatisticsPageDecorator from '../decorators/StatisticsPageDecorator';
+import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
 import { Row, Header } from './Grid';
 
@@ -36,4 +36,4 @@ const HubStatisticsPage = React.createClass({
 	},
 });
 
-export default StatisticsPageDecorator(HubStatisticsPage, HubConstants.STATS_URL, 'No hubs online', 10);
+export default StatisticsDecorator(HubStatisticsPage, HubConstants.STATS_URL, 'No hubs online', 10);
