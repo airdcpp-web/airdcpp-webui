@@ -1,17 +1,15 @@
 import React from 'react';
 
-import t from 'utils/tcomb-form';
-
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-import RSSActions from './RSSActions';
+import RSSActions from '../actions/RSSActions';
 import RedrawDecorator from 'decorators/RedrawDecorator';
 
 import ValueFormat from 'utils/ValueFormat';
 
-import './style.css';
+import '../style.css';
 
 
 const Entry = ({ entry, location, feedUrl }) => {
@@ -188,18 +186,4 @@ const RSS = React.createClass({
 	}
 });
 
-export default {
-	typeId: 'rss',
-	component: RSS,
-	name: 'RSS feed',
-	icon: 'orange rss',
-	formSettings: {
-		feed_url: t.Str,
-	},
-	size: {
-		w: 4,
-		h: 5,
-		minW: 2,
-		minH: 3,
-	},
-};
+export default RSS;

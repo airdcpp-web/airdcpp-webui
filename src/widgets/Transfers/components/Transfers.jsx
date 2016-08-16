@@ -8,7 +8,7 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import TransferConstants from 'constants/TransferConstants';
 
-import './style.css';
+import '../style.css';
 
 
 const addSpeed = (points, down, up) => [
@@ -143,15 +143,4 @@ const TransferSpeed = React.createClass({
 	}
 });
 
-export default {
-	typeId: 'transfers',
-	component: TransferSpeed,
-	name: 'Transfers',
-	icon: 'exchange',
-	size: {
-		w: 7,
-		h: 5,
-		minW: 2,
-		minH: 3,
-	},
-};
+export default TransferSpeed;

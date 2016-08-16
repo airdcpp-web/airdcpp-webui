@@ -1,16 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import IconConstants from 'constants/IconConstants';
-
-//import WidgetActions from 'actions/WidgetActions';
-//import { ActionMenu } from 'components/menu/DropdownMenu';
-
-import Dropdown from 'components/semantic/Dropdown';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import WidgetActions from 'actions/WidgetActions';
+import { ActionMenu } from 'components/menu/DropdownMenu';
 
 
-const Widget = ({ widgetInfo, settings, componentId, children, className, onEdit, onRemove, ...widgetProps }) => {
+const Widget = ({ widgetInfo, settings, componentId, children, className, ...widgetProps }) => {
 	return (
 		<div 
 			className={ classNames('card', className, componentId, widgetInfo.typeId) } 
@@ -22,23 +17,16 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, onEdit
 			    { settings.name }
 			  </div>
 
-				<Dropdown 
+				<ActionMenu 
 					className="widget-menu right top pointing"
-					//contextGetter={ _ => '.react-grid-item.' + componentId }
-				>
-					<MenuItemLink 
-						onClick={ onEdit }
-						icon={ IconConstants.EDIT }
-					>
-						Edit
-					</MenuItemLink> 
-					<MenuItemLink 
-						onClick={ onRemove }
-						icon={ IconConstants.REMOVE }
-					>
-						Remove
-					</MenuItemLink>
-				</Dropdown>
+					actions={ WidgetActions }
+					ids={ [ 'edit', 'remove' ] }
+					itemData={{
+						id: componentId,
+						widgetInfo,
+						settings,
+					}}
+				/>
 			</div>
 			<div className="content widget">
 				{ widgetInfo.formSettings && !settings.widget ? 'Widget settings were not found' : children }

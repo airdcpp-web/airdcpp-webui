@@ -5,12 +5,15 @@ import React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
+import WidgetActions from 'actions/WidgetActions';
+import WidgetStore from 'stores/WidgetStore';
 
-const getWidgetItem = (widgetInfo, onClickItem) => {
+
+const getWidgetItem = (widgetInfo, location) => {
 	return (
 		<MenuItemLink 
 			key={ widgetInfo.typeId }
-			onClick={ () => onClickItem(widgetInfo) }
+			onClick={ () => WidgetActions.create(widgetInfo, location) }
 			icon={ widgetInfo.icon }
 		>
 			{ widgetInfo.name }
@@ -18,7 +21,7 @@ const getWidgetItem = (widgetInfo, onClickItem) => {
 	);
 };
 
-const WidgetDropdown = ({ widgets, onClickItem, ...widgetProps }) => (
+const WidgetDropdown = ({ widgets, onClickItem, ...widgetProps }, { routerLocation }) => (
 	<Dropdown 
 		caption="Create widget"
 		className="create-widget"
@@ -26,20 +29,12 @@ const WidgetDropdown = ({ widgets, onClickItem, ...widgetProps }) => (
 		//icon={ IconConstants.CREATE }
 		{ ...widgetProps }
 	>
-		{ widgets.map(widgetInfo => getWidgetItem(widgetInfo, onClickItem)) }
+		{ WidgetStore.widgets.map(widgetInfo => getWidgetItem(widgetInfo, routerLocation)) }
 	</Dropdown>
 );
 
-WidgetDropdown.propTypes = {
-	/**
-	 * Priority object
-	 */
-	onClickItem: React.PropTypes.func.isRequired,
-
-	/**
-	 * Item with priority properties
-	 */
-	widgets: React.PropTypes.array.isRequired,
+WidgetDropdown.contextTypes = {
+	routerLocation: React.PropTypes.object.isRequired,
 };
 
 export default WidgetDropdown;
