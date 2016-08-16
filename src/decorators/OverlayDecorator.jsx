@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Lifecycle } from 'mixins/RouterMixin';
+import invariant from 'invariant';
 
 import History from 'utils/History';
 
@@ -23,7 +24,7 @@ export default function (Component, semanticModuleName) {
 			/**
 			 * Removes portal from DOM
 			 */
-			onHidden: React.PropTypes.func.isRequired,
+			onHidden: React.PropTypes.func,
 
 			/**
 			 * Returns to the location that was active before opening the overlay
@@ -31,7 +32,7 @@ export default function (Component, semanticModuleName) {
 			onHide: React.PropTypes.func,
 
 			location: React.PropTypes.object.isRequired,
-			overlayId: React.PropTypes.any.isRequired,
+			overlayId: React.PropTypes.any, // Required
 		},
 
 		componentWillReceiveProps(nextProps) {
@@ -41,6 +42,7 @@ export default function (Component, semanticModuleName) {
 		},
 
 		showOverlay(componentSettings = {}) {
+			invariant(this.props.overlayId, 'OverlayDecorator: overlayId missing');
 			const settings = Object.assign(componentSettings, {
 				onHidden: this.onHidden,
 				onHide: this.onHide,

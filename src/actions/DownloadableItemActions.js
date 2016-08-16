@@ -89,24 +89,24 @@ DownloadableItemActions.download.listen(function (data) {
 	return data.handler(data, { target_name: data.itemInfo.name });
 });
 
-DownloadableItemActions.viewText.listen(function (data) {
-	ViewFileActions.createSession(data, true);
+DownloadableItemActions.viewText.listen(function (data, location) {
+	ViewFileActions.createSession(data, true, location);
 });
 
-DownloadableItemActions.viewVideo.listen(function (data) {
-	ViewFileActions.createSession(data, false);
+DownloadableItemActions.viewVideo.listen(function (data, location) {
+	ViewFileActions.createSession(data, false, location);
 });
 
-DownloadableItemActions.viewAudio.listen(function (data) {
-	ViewFileActions.createSession(data, false);
+DownloadableItemActions.viewAudio.listen(function (data, location) {
+	ViewFileActions.createSession(data, false, location);
 });
 
-DownloadableItemActions.viewImage.listen(function (data) {
-	ViewFileActions.createSession(data, false);
+DownloadableItemActions.viewImage.listen(function (data, location) {
+	ViewFileActions.createSession(data, false, location);
 });
 
-DownloadableItemActions.findNfo.listen(function (data) {
-	FilelistActions.findNfo(data);
+DownloadableItemActions.findNfo.listen(function (data, location) {
+	FilelistActions.findNfo(data, location);
 });
 
 DownloadableItemActions.downloadTo.listen(function (handlerData, location) {

@@ -27,7 +27,6 @@ export default (ItemHandler, itemMenuIds) => {
 			const { user } = session;
 			return (
 				<UserMenu 
-					location={ location }
 					user={ user } 
 					ids={ itemMenuIds }
 				>

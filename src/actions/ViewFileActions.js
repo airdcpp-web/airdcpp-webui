@@ -17,7 +17,7 @@ const ViewFileActions = Reflux.createActions([
 	{ 'setRead': { asyncResult: true } },
 ]);
 
-ViewFileActions.createSession.listen(function ({ location, itemInfo, user }, isText) {
+ViewFileActions.createSession.listen(function ({ itemInfo, user }, isText, location) {
 	let session = ViewFileStore.getSession(itemInfo.tth);
 	if (session) {
 		this.completed(location, itemInfo, session);

@@ -109,7 +109,7 @@ export default function (Component) {
 		},
 
 		contextTypes: {
-			routerLocation: React.PropTypes.object,
+			routerLocation: React.PropTypes.object.isRequired,
 		},
 
 		shouldComponentUpdate: function (nextProps, nextState) {
