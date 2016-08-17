@@ -6,7 +6,7 @@ import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileActionCell } from 'components/table/Cell';
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 
 import ShareProfileFilter from 'components/table/ShareProfileFilter';
 

@@ -8,7 +8,7 @@ import FormattedIp from 'components/format/FormattedIp';
 
 import Checkbox from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
-import { Cell } from 'fixed-data-table';
+import { Cell } from 'fixed-data-table-2';
 
 
 const getCellContent = (cellData) => {

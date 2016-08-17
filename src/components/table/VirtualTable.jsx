@@ -7,7 +7,7 @@ import TableContainer from './TableContainer';
 import RowDataLoader from './RowDataLoader';
 
 import './style.css';
-import 'fixed-data-table/dist/fixed-data-table.css';
+import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 
 const VirtualTable = React.createClass({

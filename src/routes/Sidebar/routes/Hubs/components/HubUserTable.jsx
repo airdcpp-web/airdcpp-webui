@@ -3,7 +3,7 @@ import React from 'react';
 import HubSessionStore from 'stores/HubSessionStore';
 import HubUserViewStore from 'stores/HubUserViewStore';
 
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, ConnectionCell, IpCell } from 'components/table/Cell';
 

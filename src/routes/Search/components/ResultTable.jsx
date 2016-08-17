@@ -3,7 +3,7 @@ import React from 'react';
 import SearchActions from 'actions/SearchActions';
 import SearchViewStore from 'stores/SearchViewStore';
 
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/table/Cell';
 import { TableActionMenu } from 'components/menu/DropdownMenu';

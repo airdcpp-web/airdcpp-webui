@@ -14,7 +14,7 @@ import History from 'utils/History';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 
 import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';

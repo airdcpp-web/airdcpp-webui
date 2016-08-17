@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "1.1.2-beta2",
+  "version": "1.1.2-beta3",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -43,7 +43,7 @@
     "eslint-plugin-react": "^6.0.0",
     "express": "^4.13.3",
     "file-loader": "^0.9.0",
-    "fixed-data-table": "^0.6.0",
+    "fixed-data-table-2": "^0.7.2",
     "history": "^2.0.0",
     "http-proxy": "^1.12.0",
     "invariant": "^2.2.0",
@@ -58,7 +58,7 @@
     "react-addons-perf": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.0.0",
     "react-addons-update": "^15.0.0",
-    "react-autosuggest": "^4.0.0",
+    "react-autosuggest": "^5.0.0",
     "react-dom": "^15.0.0",
     "react-emoji": "^0.4.1",
     "react-grid-layout": "^0.13.0",

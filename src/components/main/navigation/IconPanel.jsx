@@ -3,7 +3,6 @@ import React from 'react';
 
 import StatisticsIcons from './icon/StatisticsIcons';
 import PerformanceTools from './icon/PerformanceTools';
-import TouchIcon from './icon/TouchIcon';
 import AwayIcon from './icon/AwayIcon';
 
 
@@ -12,7 +11,6 @@ const IconPanel = ({ leftContent, rightContent }) => (
 		<StatisticsIcons/>
 		<div className="touch-icons">
 			<AwayIcon/>
-			<TouchIcon/>
 			{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
 		</div>
 	</div>

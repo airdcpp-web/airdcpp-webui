@@ -1,5 +1,5 @@
 import React from 'react';
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 
 import QueueActions from 'actions/QueueActions';
 import VirtualTable from 'components/table/VirtualTable';

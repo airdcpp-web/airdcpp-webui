@@ -6,7 +6,7 @@ import FavoriteHubStore from 'stores/FavoriteHubStore';
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 import { CheckboxCell, ActionMenuCell } from 'components/table/Cell';
 import ConnectStateCell from './ConnectStateCell';
 

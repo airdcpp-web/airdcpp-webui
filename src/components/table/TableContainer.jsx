@@ -1,14 +1,11 @@
 import React from 'react';
-import Reflux from 'reflux';
 
-import { Table } from 'fixed-data-table';
+import { Table } from 'fixed-data-table-2';
 import SetContainerSize from 'mixins/SetContainerSize';
-import TouchScrollArea	from './TouchScrollArea';
 
 import TableActions from 'actions/TableActions';
 import BrowserUtils from 'utils/BrowserUtils';
 
-import LocalSettingStore from 'stores/LocalSettingStore';
 import RowWrapperCell from './RowWrapperCell';
 import { TextCell, HeaderCell } from './Cell';
 
@@ -24,7 +21,7 @@ function convertEndToRows(pixels) {
 }
 
 const TableContainer = React.createClass({
-	mixins: [ SetContainerSize, Reflux.listenTo(LocalSettingStore, 'onLocalSettingsChanged') ],
+	mixins: [ SetContainerSize ],
 
 	propTypes: {
 
@@ -47,21 +44,10 @@ const TableContainer = React.createClass({
 		dataLoader: PropTypes.any.isRequired,
 	},
 
-	onLocalSettingsChanged() {
-		this.forceUpdate();
-	},
-
 	getInitialProps() {
 		return {
 			rowClassNameGetter: null,
 			entityId: null
-		};
-	},
-
-	getInitialState() {
-		return {
-			top: 0,
-			left: 0,
 		};
 	},
 
@@ -145,14 +131,6 @@ const TableContainer = React.createClass({
 		});
 	},
 
-	// Fitted-table
-	handleScroll : function (left, top) {
-		this.setState({
-			top: top,
-			left: left
-		});
-	},
-
 	convertColumn(column) {
 		if (column.props.hideWidth > this.state.width) {
 			return null;
@@ -198,40 +176,29 @@ const TableContainer = React.createClass({
 	},
 	
 	render: function () {
-		//console.log('Render table container, scroll top: ' + this.state.top);
-
 		// Update and insert generic columns props
 		const children = React.Children.map(this.props.children, this.convertColumn);
 
-		const touchMode = LocalSettingStore.touchModeEnabled;
 		return (
-			<TouchScrollArea 
-				ref="touchScrollArea"
-				handleScroll={this.handleScroll} 
-				onScrollStart={this._onScrollStart} 
-				onScrollEnd={this._onScrollEnd} 
-				touchMode={touchMode}
-			>
+			<div className="table">
 				<Table
 					ref="table"
 
 					width={this.state.width}
-					height={this.state.height-50} 
+					height={this.state.height} 
 					onContentHeightChange={this._onContentHeightChange}
-					scrollTop={this.state.top}
-					scrollLeft={this.state.left}
-					overflowX={touchMode ? 'hidden' : 'auto'}
-					overflowY={touchMode ? 'hidden' : 'auto'}
 
 					rowHeight={50}
 					rowsCount={this.props.store.rowCount}
 					headerHeight={50}
 					isColumnResizing={this.isColumnResizing}
 					onColumnResizeEndCallback={this._onColumnResizeEndCallback}
+
+					touchScrollEnabled={ true }
 				>
 					{children}
 				</Table>
-			</TouchScrollArea>
+			</div>
 		);
 	}
 });

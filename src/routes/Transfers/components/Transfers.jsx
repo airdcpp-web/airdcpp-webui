@@ -8,7 +8,7 @@ import NameCell from './NameCell';
 import StatusCell from './StatusCell';
 import UserCell from './UserCell';
 
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, SpeedCell, AbbreviatedDurationCell, IpCell } from 'components/table/Cell';
 

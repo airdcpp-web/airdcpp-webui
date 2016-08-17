@@ -5,7 +5,7 @@ import WebUserStore from 'stores/WebUserStore';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { ActionMenuCell, DurationCell } from 'components/table/Cell';
-import { Column } from 'fixed-data-table';
+import { Column } from 'fixed-data-table-2';
 
 import AccessConstants from 'constants/AccessConstants';
 
