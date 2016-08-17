@@ -4,23 +4,15 @@ import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
 import WidgetDropdown from './WidgetDropdown';
 
-//import LinkConstants from 'constants/LinkConstants';
 import SystemConstants from 'constants/SystemConstants';
 
+import { ListItem } from 'components/semantic/List';
 import ValueFormat from 'utils/ValueFormat';
 
-//import ExternalLink from 'components/ExternalLink';
 import LoginStore from 'stores/LoginStore';
 
 import '../style.css';
 
-
-const ListItem = ({ header, description }) => (
-	<div className="item">
-		<div className="header">{ header }</div>
-		{ description }
-	</div>
-);
 
 const Transfers = StatisticsDecorator(({ stats }) => (
 	<div className="ui list">

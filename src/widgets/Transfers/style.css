@@ -3,7 +3,16 @@
 }
 
 #home .transfers .content.widget .info.list {
-	padding-left: 10px;
+	margin-left: 10px;
 	margin-top: 0px;
-	flex: 0;
+	flex: 0 0 auto;
+}
+
+#home .transfers .content.widget .graph {
+	flex-grow: 100;
+	overflow: hidden;
+}
+
+#home .transfers .content.widget .section-separator {
+	margin-top: 10px;
 }

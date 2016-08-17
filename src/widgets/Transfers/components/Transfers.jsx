@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { Charts, ChartContainer, ChartRow, YAxis, AreaChart } from 'react-timeseries-charts';
 import { TimeSeries } from 'pondjs';
+
+import { ListItem } from 'components/semantic/List';
+import SpeedChart from './SpeedChart';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 import ValueFormat from 'utils/ValueFormat';
@@ -10,6 +12,7 @@ import SetContainerSize from 'mixins/SetContainerSize';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import TransferConstants from 'constants/TransferConstants';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import '../style.css';
 
@@ -34,48 +37,25 @@ const addSpeed = (points, down, up) => {
 	return ret;
 };
 
-const SpeedChart = ({ trafficSeries, maxDownload, maxUpload, width, height }) => (
-	<ChartContainer timeRange={ trafficSeries.timerange() } width={ Math.max(width - 120, 0) }>
-		<ChartRow height={ Math.max(height - 50, 0) }>
-			<Charts>
-			<AreaChart
-				axis="traffic"
-				series={ trafficSeries }
-				columns={{ up: [ 'in' ], down: [ 'out' ] }}
-			/>
-			</Charts>
-			<YAxis
-				id="traffic"
-				label="Traffic (bps)"
-				min={ -maxUpload } max={ maxDownload }
-				absolute={true}
-				width="60"
-				type="linear"
-			/>
-		</ChartRow>
-	</ChartContainer>
-);
-
-const TransferItem = ({ header, description }) => (
-	<div className="item">
-		<div className="header">{ header }</div>
-		{ description }
+/*const SpeedChart = ({ trafficSeries, maxDownload, maxUpload, width, height }) => (
+	<div className="graph">
+		Test
 	</div>
-);
+);*/
 
 const Transfers = StatisticsDecorator(({ stats }) => (
 	<div className="ui list info tiny">
-		<TransferItem header="Downloads" description={ stats.downloads }/>
-		<TransferItem header="Uploads" description={ stats.uploads }/>
-		<TransferItem header="Running bundles" description={ stats.download_bundles }/>
-		<TransferItem header="Downloaded" description={ ValueFormat.formatSize(stats.session_downloaded) }/>
-		<TransferItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
+		<ListItem header="Downloads" description={ stats.downloads }/>
+		<ListItem header="Uploads" description={ stats.uploads }/>
+		<div className="section-separator"/>
+		<ListItem header="Downloaded" description={ ValueFormat.formatSize(stats.session_downloaded) }/>
+		<ListItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
 	</div>
 ), TransferConstants.TRANSFERRED_BYTES_URL, null, 10);
 
 
 const TransferSpeed = React.createClass({
-	mixins: [ SetContainerSize, SocketSubscriptionMixin() ],
+	mixins: [ SetContainerSize, SocketSubscriptionMixin(), PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Current widget settings
@@ -142,11 +122,11 @@ const TransferSpeed = React.createClass({
 		};
 
 		const trafficSeries = new TimeSeries(data);
-		const noGraph = width < 400;
+		const noInfo = width < 300;
 
 		return (
 			<div className="transfers-container">
-				{ noGraph ? null : (
+				{ false ? null : (
 					<SpeedChart
 						trafficSeries={ trafficSeries }
 						maxDownload={ maxDownload }
@@ -155,10 +135,11 @@ const TransferSpeed = React.createClass({
 						height={ height }
 					/>
 				) }
-				<Transfers
-					stats={ stats }
-					noGraph={ noGraph }
-				/>
+				{ noInfo ? null : (
+					<Transfers
+						stats={ stats }
+					/>
+				) }
 			</div>
     );
 	}

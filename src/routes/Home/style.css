@@ -8,12 +8,14 @@
 
 #home .content.widget {
   max-height: calc(100% - 45px);
+  display: flex;
 }
 
 #home .content.widget > div {
 	max-height: 100%;
 	max-width: 100%;
 	display: flex;
+	width: 100%;
 }
 
 #home .react-grid-item .header-row {
