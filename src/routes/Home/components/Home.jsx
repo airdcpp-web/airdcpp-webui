@@ -67,6 +67,7 @@ const Home = React.createClass({
 					cols={{ xlg: 14, lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
 
 					draggableHandle=".react-grid-item .header-row .header"
+					layouts={ {} } // https://github.com/STRML/react-grid-layout/issues/320
 				>
 					{ this.state.layout
 							.map(this.mapWidget)
