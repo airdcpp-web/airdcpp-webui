@@ -57,6 +57,8 @@ const Dropdown = React.createClass({
 		const settings = {
 			direction: this.props.direction,
 			action: 'hide',
+			//debug: true,
+			//verbose: true,
 		};
 
 		if (this.props.contextGetter) {

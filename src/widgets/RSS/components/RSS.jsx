@@ -12,7 +12,7 @@ import ValueFormat from 'utils/ValueFormat';
 import '../style.css';
 
 
-const Entry = ({ entry, location, feedUrl }) => {
+const Entry = ({ entry, location, feedUrl, componentId }) => {
 	const date = entry.pubDate ? entry.pubDate : entry.updated;
 	return (
 		<div className="item">
@@ -25,7 +25,7 @@ const Entry = ({ entry, location, feedUrl }) => {
 						entry,
 						feedUrl,
 					} }
-					//contextGetter={ _ => '.' + componentId + ' .list.rss' }
+					//contextGetter={ _ => '.' + componentId + ' .list.rss' } // TODO
 				/>
 			</div>
 
@@ -171,7 +171,7 @@ const RSS = React.createClass({
 			  			<Entry 
 			  				key={ getEntryKey(entry) } 
 			  				entry={ entry }
-			  				//componentId={ this.props.componentId }
+			  				componentId={ this.props.componentId }
 			  				feedUrl={ this.props.settings.feed_url }
 			  			/>
 			  		))

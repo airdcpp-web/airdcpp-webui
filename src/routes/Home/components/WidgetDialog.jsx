@@ -1,6 +1,9 @@
 import React from 'react';
+
+import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
 
+import IconConstants from 'constants/IconConstants';
 import { RouteContext } from 'mixins/RouterMixin';
 import Promise from 'utils/Promise';
 
@@ -73,6 +76,11 @@ const WidgetDialog = React.createClass({
 							},
 						},
 					}}
+				/>
+
+				<Message
+					description="Widgets and their positions are browser-specific"
+					icon={ IconConstants.INFO }
 				/>
 			</Modal>
 		);
