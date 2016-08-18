@@ -82,7 +82,7 @@ const TableContainer = React.createClass({
 	},
 
 	_onScrollStart(horizontal, vertical) {
-		//console.log("Scrolling started: " + vertical, this.props.store.viewName);
+		//console.log('Scrolling started: ' + vertical, this.props.store.viewUrl);
 		console.assert(this.props.store.active, 'Sending pause for an inactive view');
 		TableActions.pause(this.props.store.viewUrl, true);
 	},
@@ -94,7 +94,7 @@ const TableContainer = React.createClass({
 
 		clearTimeout(this._scrollTimer);
 		this._scrollTimer = setTimeout(this.updateRowRange, 500);
-		//console.log("Scrolling ended: " + vertical, this.props.store.viewName);
+		//console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
 	},
 
 	_sortRowsBy(sortProperty) {
@@ -195,6 +195,9 @@ const TableContainer = React.createClass({
 					onColumnResizeEndCallback={this._onColumnResizeEndCallback}
 
 					touchScrollEnabled={ true }
+
+					onScrollStart={this._onScrollStart}
+					onScrollEnd={this._onScrollEnd}
 				>
 					{children}
 				</Table>
