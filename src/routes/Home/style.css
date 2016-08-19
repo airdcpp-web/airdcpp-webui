@@ -17,6 +17,7 @@
 	max-width: 100%;
 	display: flex;
 	width: 100%;
+	flex: 1;
 }
 
 #home .react-grid-item .header-row {

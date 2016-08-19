@@ -28,6 +28,10 @@
 	flex-direction: column;
 }
 
+.search-layout .virtual-table {
+	height: calc(100% - 50px);
+}
+
 @media only screen and (min-width: 767px) {
 	.result.modal td {
 		max-width: 250px;
