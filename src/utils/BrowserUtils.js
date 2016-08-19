@@ -1,8 +1,3 @@
-import MobileDetect from 'mobile-detect';
-
-const md = new MobileDetect(window.navigator.userAgent);
-
-
 const loadProperty = (storage, storageKey, defaultData) => {
 	if (storageKey) {
 		const savedItem = storage.getItem(storageKey);
@@ -55,10 +50,6 @@ export default {
 	},
 
 	useMobileLayout() {
-		return window.innerWidth < 700 || md.phone();
-	},
-
-	preferTouch() {
-		return md.mobile() ? true : false;
+		return window.innerWidth < 700;
 	},
 };

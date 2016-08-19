@@ -9,6 +9,7 @@ const chalk = require('chalk');
 
 // PLUGINS
 var plugins = [
+	new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Those are about 40 kilobytes
 	new webpack.optimize.CommonsChunkPlugin({
 		minChunks: 3,
 		children: true,
