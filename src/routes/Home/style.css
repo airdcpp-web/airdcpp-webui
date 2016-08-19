@@ -16,11 +16,12 @@
 	max-width: 100%;
 	display: flex;
 	width: 100%;
+	height: 100%;
 }
 
 #home .react-grid-item .header-row {
 	display: flex;
-	flex: 0 0 45px;
+	flex: 0 0 auto;
 }
 
 #home .react-grid-item .header-row .header {

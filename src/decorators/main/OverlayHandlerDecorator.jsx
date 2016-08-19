@@ -112,12 +112,6 @@ export default function (Component) {
 		},
 
 		render() {
-			invariant(
-				Object.keys(modalNodes).length === 0 || 
-				(this.props.location.state && Object.keys(this.props.location.state).some(key => key.indexOf(OverlayConstants.MODAL_PREFIX) === 0)), 
-				'There are no modals in the location state but modal nodes exist'
-			);
-
 			let sidebar = null;
 			if (showSidebar(this.props)) {
 				sidebar = React.cloneElement(this.props.children, { 

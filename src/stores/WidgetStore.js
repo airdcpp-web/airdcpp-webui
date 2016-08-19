@@ -121,7 +121,7 @@ const WidgetStore = Reflux.createStore({
 
 	onLayoutChange(layout) {
 		BrowserUtils.saveLocalProperty(LAYOUT_STORAGE_KEY, {
-			version: UI_VERSION,
+			version: 1,
 			items: layout,
 		});
 
