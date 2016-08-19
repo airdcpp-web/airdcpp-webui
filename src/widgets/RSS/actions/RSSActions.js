@@ -43,6 +43,7 @@ RSSActions.openLink.listen(function ({ entry, feedUrl }, location) {
 		link = entry.link.href;
 
 		if (entry.link.href[0] === '/' && entry.link.href[1] !== '/') {
+			// Relative paths, add the base URL (at least Github seems to use these)
 			const urlLocation = getLocation(feedUrl);
 			link = urlLocation.protocol + '//' + urlLocation.host + link;
 		}

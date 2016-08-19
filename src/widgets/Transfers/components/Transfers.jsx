@@ -37,12 +37,6 @@ const addSpeed = (points, down, up) => {
 	return ret;
 };
 
-/*const SpeedChart = ({ trafficSeries, maxDownload, maxUpload, width, height }) => (
-	<div className="graph">
-		Test
-	</div>
-);*/
-
 const Transfers = StatisticsDecorator(({ stats }) => (
 	<div className="ui list info tiny">
 		<ListItem header="Downloads" description={ stats.downloads }/>
@@ -56,13 +50,6 @@ const Transfers = StatisticsDecorator(({ stats }) => (
 
 const TransferSpeed = React.createClass({
 	mixins: [ SetContainerSize, SocketSubscriptionMixin(), PureRenderMixin ],
-	propTypes: {
-		/**
-		 * Current widget settings
-		 */
-		//settings: React.PropTypes.object.isRequired,
-	},
-
 	getInitialState() {
 		return {
 			points: [

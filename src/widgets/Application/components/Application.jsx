@@ -18,7 +18,6 @@ const Transfers = StatisticsDecorator(({ stats }) => (
 	<div className="ui list">
 		<ListItem header="Logged in as" description={ LoginStore.user }/>
 		<ListItem header="Client started" description={ ValueFormat.formatRelativeTime(stats.client_started) }/>
-		{/*<TransferItem header="Client version" description={ stats.client_version }/>*/}
 		<ListItem header="Active sessions" description={ stats.active_sessions }/>
 	</div>
 ), SystemConstants.STATS_URL, 'Failed to fetch information', 10);

@@ -1,7 +1,5 @@
 import React from 'react';
 
-//import IconConstants from 'constants/IconConstants';
-
 import Dropdown from 'components/semantic/Dropdown';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
@@ -26,7 +24,6 @@ const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, {
 		caption="Add widget..."
 		className="create-widget"
 		button={ true }
-		//icon={ IconConstants.CREATE }
 		contextGetter={ _ => '.' + componentId }
 		{ ...widgetProps }
 	>

@@ -154,7 +154,6 @@ const RSS = React.createClass({
 			return (
 				<Message
 					description={ this.state.error }
-					//icon={ IconConstants.ERROR }
 				/>
 			);
 		}
