@@ -9,7 +9,7 @@ import HistoryInput from 'components/autosuggest/HistoryInput';
 
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
-//import Message from 'components/semantic/Message';
+import Button from 'components/semantic/Button';
 
 import '../style.css';
 import ResultTable from './ResultTable';
@@ -82,9 +82,16 @@ const Search = React.createClass({
 							<HistoryInput 
 								historyId={ HistoryEnum.SEARCH } 
 								submitHandler={ this.search } 
-								running={ this.state.running }
+								disabled={ this.state.running }
 								storedValue={ this.state.searchString }
 								placeholder="Enter search string..."
+								button={ 
+									<Button
+										icon="search icon"
+										caption="Search"
+										loading={ this.state.running }
+									/>
+								}
 							/>
 						</div>
 					</div>

@@ -5,7 +5,6 @@ import HistoryConstants from 'constants/HistoryConstants';
 import HistoryActions from 'actions/HistoryActions';
 
 import LocalSuggestField from './LocalSuggestField';
-import Button from 'components/semantic/Button';
 
 
 export default React.createClass({
@@ -50,13 +49,6 @@ export default React.createClass({
 				{ ...this.props }
 				data={ this.state.history }
 				submitHandler={ this.handleSubmit }
-				button={ 
-					<Button
-						icon="search icon"
-						caption="Search"
-						loading={ this.props.running }
-					/>
-				}
 			/>
 		);
 	},

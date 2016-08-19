@@ -32,6 +32,11 @@ const SuggestField = React.createClass({
 		 * The input will also be updated accordingly when a different stored value is received
 		 */
 		storedValue: React.PropTypes.string,
+
+		/**
+		 * Disables the field action button
+		 */
+		disabled: React.PropTypes.bool,
 	},
 
 	getInitialState() {
@@ -127,7 +132,7 @@ const SuggestField = React.createClass({
 					{ suggestField }
 					{ React.cloneElement(button, {
 						onClick: evt => this.handleSubmit(evt),
-						disabled: this.isSubmitDisabled(),
+						disabled: this.isSubmitDisabled() || this.props.disabled,
 					}) }
 				</div>
 			);
