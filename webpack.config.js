@@ -27,14 +27,14 @@ var plugins = [
 	}),
 ];
 
-var releasePlugins = [	
+var releasePlugins = [
 	new webpack.optimize.UglifyJsPlugin({
-		compress: {
-			warnings: false
-		}
+		sourceMap: true
 	}),
-	
-	new webpack.optimize.OccurenceOrderPlugin(),
+	new webpack.LoaderOptionsPlugin({
+		minimize: true,
+		debug: false
+	}),
 	new webpack.optimize.DedupePlugin(),
 ];
 
@@ -77,7 +77,7 @@ module.exports = {
 	},
 
 	// cheap-module-source-map doesn't seem to work with Uglify
-	devtool: release ? '#module-source-map' : '#cheap-module-source-map',
+	devtool: release ? 'module-source-map' : 'cheap-module-source-map',
 	module: {
 		loaders: [
 			{ 
@@ -93,21 +93,32 @@ module.exports = {
 				loader: 'style-loader!css-loader' 
 			}, { 
 				test: /\.(jpg|png)$/, 
-				loader: 'file-loader?name=images/[name].[ext]' 
+				loader: 'file' ,
+				query: {
+					limit: 100000,
+					name: 'images/[name].[ext]' // No name for URLs
+				}
 			}, { 
 				test: /\.(woff|woff2|eot|ttf|svg)$/, 
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'node_modules/semantic-ui/dist') 
 				], 
-				loader: 'url-loader?limit=100000&name=assets/[hash].[ext]' // No name for URLs
+				loader: 'url',
+				query: {
+					limit: 100000,
+					name: 'assets/[hash].[ext]' // No name for URLs
+				}
 			},
 		]
 	},
 	
 	resolve: {
+		modules: [
+			path.resolve('./src'),
+			'node_modules'
+		],
 		extensions: [ '', '.js', '.jsx' ],
-		root: path.resolve('./src'),
 		alias: {
 			'semantic-ui' : path.join(__dirname, 'node_modules/semantic-ui/dist')
 		}
