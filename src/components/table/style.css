@@ -69,13 +69,11 @@
 .virtual-table {
 	height: 100%;
 	width: 100%;
-	display: flex;
-	flex-direction: column;
 }
 
 .virtual-table .table {
 	width: 100%;
-	flex-grow: 100;
+	height: calc(100% - 50px);
 }
 
 .public_fixedDataTable_header a, .public_fixedDataTableCell_main a {

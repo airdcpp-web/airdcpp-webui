@@ -91,7 +91,7 @@ const WidgetStore = Reflux.createStore({
 			...widgetInfo.size
 		});
 
-		console.log('Widget added', this.layout);
+		//console.log('Widget added', this.layout);
 		this.trigger(this.layout);
 	},
 
@@ -128,7 +128,7 @@ const WidgetStore = Reflux.createStore({
 		this.layout = layout;
 
 		this.trigger(this.layout);
-		console.log('New layout', layout);
+		//console.log('New layout', layout);
 	},
 });
 
