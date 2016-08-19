@@ -18,4 +18,5 @@
 
 #home .rss .content.widget > div {
 	flex-direction: column;
+	height: 100%;
 }

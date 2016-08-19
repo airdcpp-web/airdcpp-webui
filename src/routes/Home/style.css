@@ -9,6 +9,7 @@
 #home .content.widget {
   max-height: calc(100% - 45px);
   display: flex;
+  overflow: hidden;
 }
 
 #home .content.widget > div {
@@ -16,7 +17,6 @@
 	max-width: 100%;
 	display: flex;
 	width: 100%;
-	height: 100%;
 }
 
 #home .react-grid-item .header-row {
