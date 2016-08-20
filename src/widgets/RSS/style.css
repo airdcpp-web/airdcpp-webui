@@ -12,6 +12,10 @@
 	flex-shrink: 0;
 }
 
+#home .rss .divided.list .item .header {
+	display: flex;
+}
+
 #home .rss .divided.list .item .description {
 	margin-left: 20px;
 }

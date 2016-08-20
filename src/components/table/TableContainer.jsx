@@ -180,7 +180,7 @@ const TableContainer = React.createClass({
 		const children = React.Children.map(this.props.children, this.convertColumn);
 
 		return (
-			<div className="table">
+			<div className="table-container-wrapper">
 				<Table
 					ref="table"
 

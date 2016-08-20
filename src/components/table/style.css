@@ -74,7 +74,7 @@
 	overflow: hidden;
 }
 
-.virtual-table .table {
+.virtual-table .table-container-wrapper {
 	width: 100%;
 	flex: 1 1 auto;
 
