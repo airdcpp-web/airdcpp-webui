@@ -53,13 +53,13 @@ export const QueueActions = Reflux.createActions([
 	} },
 	{ 'pause': { 
 		asyncResult: true, 
-		displayName: 'Pause all',
+		displayName: 'Pause all bundles',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.PAUSE,
 	} },
 	{ 'resume': { 
 		asyncResult: true, 
-		displayName: 'Resume all',
+		displayName: 'Resume all bundles',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.PLAY,
 	} },

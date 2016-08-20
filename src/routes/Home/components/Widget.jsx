@@ -26,7 +26,11 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
 						widgetInfo,
 						settings,
 					}}
-				/>
+				>
+					{ !widgetInfo.actionMenu ? null : (
+						<ActionMenu { ...widgetInfo.actionMenu }/>
+					) }
+				</ActionMenu>
 			</div>
 			<div className="content widget">
 				{ widgetInfo.formSettings && !settings.widget ? 'Widget settings were not found' : children }
