@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TimeSeries } from 'pondjs';
 
+import Loader from 'components/semantic/Loader';
 import StatColumn from './StatColumn';
 import SpeedChart from './SpeedChart';
 
@@ -48,18 +49,7 @@ const Transfers = React.createClass({
 			],
 			maxDownload: 0,
 			maxUpload: 0,
-			stats: {
-				downloads: 0,
-				uploads: 0,
-				download_bundles: 0,
-			}
 		};
-	},
-
-	fetchStats() {
-		SocketService.get(TransferConstants.STATISTICS_URL)
-			.then(this.onStatsReceived)
-			.catch(error => console.error('Failed to fetch transfer statistics', error.message));
 	},
 
 	componentDidMount() {
@@ -86,6 +76,12 @@ const Transfers = React.createClass({
 		}
 	},
 
+	fetchStats() {
+		SocketService.get(TransferConstants.STATISTICS_URL)
+			.then(this.onStatsReceived)
+			.catch(error => console.error('Failed to fetch transfer statistics', error.message));
+	},
+
 	onStatsReceived(stats) {
 		stats = Object.assign({}, this.state.stats, stats);
 
@@ -99,6 +95,10 @@ const Transfers = React.createClass({
 
 	render() {
 		const { points, maxDownload, maxUpload, width, height, stats } = this.state;
+		if (!stats) {
+			return <Loader inline={ true }/>;
+		}
+
 		const data = {
 			name: 'traffic',
 			columns: [ 'time', 'in', 'out' ],
@@ -110,15 +110,13 @@ const Transfers = React.createClass({
 
 		return (
 			<div className="transfers-container">
-				{ false ? null : (
-					<SpeedChart
-						trafficSeries={ trafficSeries }
-						maxDownload={ maxDownload }
-						maxUpload={ maxUpload }
-						width={ width }
-						height={ height }
-					/>
-				) }
+				<SpeedChart
+					trafficSeries={ trafficSeries }
+					maxDownload={ maxDownload }
+					maxUpload={ maxUpload }
+					width={ width }
+					height={ height }
+				/>
 				{ noInfo ? null : (
 					<StatColumn
 						stats={ stats }
