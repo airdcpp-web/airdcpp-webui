@@ -44,11 +44,12 @@ RouterMenuItemLink.propTypes = {
 };
 
 
-export const MenuItemLink = ({ className, icon, children, onClick, active }) => {
+export const MenuItemLink = ({ className, icon, children, onClick, active, disabled }) => {
 	const itemClass = classNames(
 		'item',
 		className,
-		{ 'active': active	}
+		{ 'active': active },
+		{ 'disabled': disabled },
 	);
 
 	return (

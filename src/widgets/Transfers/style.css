@@ -16,3 +16,7 @@
 #home .transfers .content.widget .section-separator {
 	margin-top: 10px;
 }
+
+#home .transfers .stats .popup.trigger {
+	border-bottom: 1px dotted;
+}

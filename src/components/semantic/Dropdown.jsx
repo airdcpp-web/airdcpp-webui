@@ -94,18 +94,19 @@ const Dropdown = React.createClass({
 			icon = <i className={ this.props.triggerIcon + ' trigger icon' }/>;
 		}
 
+		const { leftIcon, caption, header } = this.props;
 		return (
 			<div className={ className }>
-				{ this.props.leftIcon ? icon : null }
+				{ leftIcon && caption ? icon : null }
 				<DropdownCaption>
-					{ this.props.caption }
+					{ caption ? caption : icon }
 				</DropdownCaption>
-				{ this.props.leftIcon ? null : icon }
+				{ leftIcon || !caption ? null : icon }
 
 				<div className="menu">
-					{ this.props.header ? (
+					{ header ? (
 						<div className="header">
-							{ this.props.header }
+							{ header }
 						</div>
 					) : null }
 					{ this.props.children }

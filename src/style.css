@@ -151,4 +151,8 @@ div.dropdown:not(.table-items) {
 	width: 100% !important;
 }
 
+.limiter-config .remove {
+	margin-top: 10px;
+}
+
 /* Dialogs end */

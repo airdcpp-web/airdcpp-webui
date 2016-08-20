@@ -2,14 +2,12 @@ import React from 'react';
 
 import { TimeSeries } from 'pondjs';
 
-import { ListItem } from 'components/semantic/List';
+import StatColumn from './StatColumn';
 import SpeedChart from './SpeedChart';
-
-import StatisticsDecorator from 'decorators/StatisticsDecorator';
-import ValueFormat from 'utils/ValueFormat';
 
 import SetContainerSize from 'mixins/SetContainerSize';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
+import SocketService from 'services/SocketService';
 
 import TransferConstants from 'constants/TransferConstants';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -37,18 +35,7 @@ const addSpeed = (points, down, up) => {
 	return ret;
 };
 
-const Transfers = StatisticsDecorator(({ stats }) => (
-	<div className="ui list info tiny">
-		<ListItem header="Downloads" description={ stats.downloads }/>
-		<ListItem header="Uploads" description={ stats.uploads }/>
-		<div className="section-separator"/>
-		<ListItem header="Downloaded" description={ ValueFormat.formatSize(stats.session_downloaded) }/>
-		<ListItem header="Uploaded" description={ ValueFormat.formatSize(stats.session_uploaded) }/>
-	</div>
-), TransferConstants.TRANSFERRED_BYTES_URL, null, 10);
-
-
-const TransferSpeed = React.createClass({
+const Transfers = React.createClass({
 	mixins: [ SetContainerSize, SocketSubscriptionMixin(), PureRenderMixin ],
 	getInitialState() {
 		return {
@@ -69,7 +56,15 @@ const TransferSpeed = React.createClass({
 		};
 	},
 
+	fetchStats() {
+		SocketService.get(TransferConstants.STATISTICS_URL)
+			.then(this.onStatsReceived)
+			.catch(error => console.error('Failed to fetch transfer statistics', error.message));
+	},
+
 	componentDidMount() {
+		this.fetchStats();
+
 		// Add zero values when there is no traffic
 		this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
 	},
@@ -92,6 +87,8 @@ const TransferSpeed = React.createClass({
 	},
 
 	onStatsReceived(stats) {
+		stats = Object.assign({}, this.state.stats, stats);
+
 		this.setState({
 			points: addSpeed(this.state.points, stats.speed_down, stats.speed_up),
 			maxDownload: Math.max(stats.speed_down, this.state.maxDownload),
@@ -123,7 +120,7 @@ const TransferSpeed = React.createClass({
 					/>
 				) }
 				{ noInfo ? null : (
-					<Transfers
+					<StatColumn
 						stats={ stats }
 					/>
 				) }
@@ -132,4 +129,4 @@ const TransferSpeed = React.createClass({
 	}
 });
 
-export default TransferSpeed;
+export default Transfers;
