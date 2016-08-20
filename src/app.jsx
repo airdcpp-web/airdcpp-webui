@@ -19,6 +19,8 @@ import './utils/semantic';
 
 import 'style.css';
 
+global.Promise = Promise;
+
 
 Reflux.use(RefluxPromise(Promise));
 

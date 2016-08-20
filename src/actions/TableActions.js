@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import Promise from 'utils/Promise';
 
 import SocketService from 'services/SocketService';
 

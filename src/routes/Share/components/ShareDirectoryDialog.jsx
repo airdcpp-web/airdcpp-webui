@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
-import Promise from 'utils/Promise';
 
 import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';

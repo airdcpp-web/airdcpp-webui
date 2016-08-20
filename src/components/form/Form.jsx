@@ -1,5 +1,4 @@
 import React from 'react';
-import Promise from 'utils/Promise';
 
 import NotificationActions from 'actions/NotificationActions';
 import Loader from 'components/semantic/Loader';

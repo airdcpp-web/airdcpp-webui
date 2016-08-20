@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
-import Promise from 'utils/Promise';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import invariant from 'invariant';
-import Promise from 'utils/Promise';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';

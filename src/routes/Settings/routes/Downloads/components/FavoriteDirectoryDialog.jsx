@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
-import Promise from 'utils/Promise';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';

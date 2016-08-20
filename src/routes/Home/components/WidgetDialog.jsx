@@ -5,7 +5,6 @@ import Modal from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
 import { RouteContext } from 'mixins/RouterMixin';
-import Promise from 'utils/Promise';
 
 import t from 'utils/tcomb-form';
 
