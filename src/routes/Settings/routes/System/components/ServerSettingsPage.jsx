@@ -2,7 +2,9 @@ import React from 'react';
 import SettingForm from 'routes/Settings/components/SettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
+import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
+import SystemActions from 'actions/SystemActions';
 
 import t from 'utils/tcomb-form';
 
@@ -28,9 +30,22 @@ const ServerSettingsPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<Message 
-					description="New settings will take effect after restarting the client"
+				{/*<Message 
+					description={ (
+						<div>
+							<div>
+								New settings will take effect after restarting the management interface
+							</div>
+							<ActionButton 
+								action={ SystemActions.restartWeb }
+							/>
+						</div>
+					) }
 					icon="blue info"
+				/>*/}
+
+				<ActionButton 
+					action={ SystemActions.restartWeb }
 				/>
 
 				<div className="ui header">HTTP</div>
