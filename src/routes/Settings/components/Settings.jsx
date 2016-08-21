@@ -197,6 +197,9 @@ const Settings = React.createClass({
 					}, { 
 						title: 'Logging', 
 						url: 'logging',
+					}, { 
+						title: 'Web server', 
+						url: 'server-settings',
 					},
 				],
 			} ];

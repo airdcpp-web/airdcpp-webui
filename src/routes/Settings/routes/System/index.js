@@ -15,6 +15,9 @@ module.exports = {
 			}, {
 				path: 'logging', 
 				component: require('./components/LoggingPage').default,
+			}, {
+				path: 'server-settings', 
+				component: require('./components/ServerSettingsPage').default,
 			} ]);
 		}, 'settings-system-children');
 	},
