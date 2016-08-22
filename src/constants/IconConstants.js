@@ -5,6 +5,7 @@ export default {
 	DISCONNECT: 'remove circle',
 	DEFAULT: 'blue pin',
 	LOCK: 'lock',
+	POWER: 'red power',
 
 	RELOAD: 'blue refresh',
 	REFRESH: 'green refresh',

@@ -1,3 +1,5 @@
+import SystemActions from 'actions/SystemActions';
+
 module.exports = {
 	typeId: 'application',
 	component: require('./components/Application').default,
@@ -9,6 +11,10 @@ module.exports = {
 		h: 5,
 		minW: 2,
 		minH: 4,
+	},
+	actionMenu: {
+		actions: SystemActions,
+		ids: [ 'shutdown' ],
 	},
 };
 

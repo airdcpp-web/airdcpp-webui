@@ -19,6 +19,13 @@ export const SystemActions = Reflux.createActions([
 		access: AccessConstants.ADMIN,
 		icon: IconConstants.REFRESH,
 	} },
+	{ 'shutdown': { 
+		asyncResult: true,
+		children: [ 'confirmed' ], 
+		displayName: 'Shut down application',
+		access: AccessConstants.ADMIN,
+		icon: IconConstants.POWER,
+	} },
 ]);
 
 SystemActions.fetchAway.listen(function () {
@@ -52,6 +59,25 @@ SystemActions.restartWeb.shouldEmit = function () {
 SystemActions.restartWeb.confirmed.listen(function () {
 	let that = this;
 	SocketService.post(SystemConstants.MODULE_URL + '/restart_web')
+		.then(that.completed)
+		.catch(that.failed);
+});
+
+SystemActions.shutdown.shouldEmit = function () {
+	const options = {
+		title: this.displayName,
+		content: 'Are you sure that you wish to shut down the application?',
+		icon: this.icon,
+		approveCaption: 'Continue and shut down',
+		rejectCaption: 'Cancel',
+	};
+
+	ConfirmDialog(options, this.confirmed.bind(this));
+};
+
+SystemActions.shutdown.confirmed.listen(function () {
+	let that = this;
+	SocketService.post(SystemConstants.MODULE_URL + '/shutdown')
 		.then(that.completed)
 		.catch(that.failed);
 });
