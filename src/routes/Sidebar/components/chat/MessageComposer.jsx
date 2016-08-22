@@ -2,6 +2,7 @@
 import React from 'react';
 
 import BrowserUtils from 'utils/BrowserUtils';
+import NotificationActions from 'actions/NotificationActions';
 
 const ENTER_KEY_CODE = 13;
 
@@ -59,7 +60,7 @@ const MessageComposer = React.createClass({
 					onKeyDown={this._onKeyDown}
 				/>
 				<div className="blue large ui icon button" onClick={ this._sendText }>
-					<i className="send icon"></i>
+					<i className="send icon"/>
 				</div>
 			</div>
 		);
@@ -83,7 +84,13 @@ const MessageComposer = React.createClass({
 		const text = this.state.text.replace(/\s+$/, '');
 
 		if (text) {
-			this.props.handleSend(text);
+			if (text[0] === '/' && text.indexOf('/me') !== 0) {
+				NotificationActions.info({
+					title: 'Unknown command: ' + text,
+				});
+			} else {
+				this.props.handleSend(text);
+			}
 		}
 
 		this.setState({ text: '' });

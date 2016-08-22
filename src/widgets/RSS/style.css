@@ -5,6 +5,7 @@
 
 #home .rss .divided.list {
 	overflow-y: auto;
+	overflow-x: hidden;
 	flex: 1;
 }
 
