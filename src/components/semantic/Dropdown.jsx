@@ -57,6 +57,7 @@ const Dropdown = React.createClass({
 		const settings = {
 			direction: this.props.direction,
 			action: 'hide',
+			showOnFocus: false, // It can become focused when opening a modal
 			//debug: true,
 			//verbose: true,
 		};
