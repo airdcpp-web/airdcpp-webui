@@ -1,8 +1,10 @@
 import React from 'react';
+import invariant from 'invariant';
+import classNames from 'classnames';
+
 import Popup from './Popup';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import invariant from 'invariant';
 import DropdownCaption from './DropdownCaption';
 
 
@@ -27,7 +29,6 @@ const TableDropdown = React.createClass({
 	getDefaultProps() {
 		return {
 			linkCaption: true,
-			className: '',
 		};
 	},
 
@@ -67,7 +68,7 @@ const TableDropdown = React.createClass({
 		};
 
 		return (
-			<div className={ 'table dropdown ' + this.props.className }>
+			<div className={ classNames('table dropdown', this.props.className) }>
 				<Popup 
 					className="basic dropdown-content" 
 					trigger={ trigger } 

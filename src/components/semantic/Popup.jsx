@@ -103,9 +103,12 @@ const Popup = React.createClass({
 
 		this.createPortal();
 
-		const children = React.cloneElement(this.props.children, {
-			hide: this.hide,
-		});
+		let { children } = this.props;
+		if (typeof children.type !== 'string') {
+			children = React.cloneElement(children, {
+				hide: this.hide,
+			});
+		}
 
 		ReactDOM.render(children, this.node);
 
