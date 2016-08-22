@@ -28,29 +28,8 @@ const LocationsPage = React.createClass({
 				/>
 
 				<Message 
-					description={
-						<span>
-							<div className="ui small header">Path variables</div>
-
-							<ul>
-								<li>
-									<strong>%[username]</strong> - Replace with the name of the web user who queued the item (or with the system username if the download is initiated from the Windows GUI)
-								</li>
-							</ul>
-
-							<p>
-								<ExternalLink url={ LinkConstants.LOG_HELP_URL }>Available time formating variables</ExternalLink>
-							</p>
-
-							<p>
-								<strong>
-									Example:
-								</strong>
-								<br/>
-								<i>/home/%[username]/Downloads/%Y-%m-%d/</i> (will be replaced with <i>/home/mywebuser/Downloads/2016-08-02/</i>)
-							</p>
-						</span>
-					}
+					description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Available path variables</ExternalLink> }
+					icon="blue info"
 				/>
 
 				<div className="ui segment setting-form">

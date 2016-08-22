@@ -39,7 +39,7 @@ const LoggingPage = React.createClass({
 					<div className="ui header">Sections</div>
 					<Message
 						icon="blue info"
-						description={ <ExternalLink url={ LinkConstants.LOG_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
+						description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
 					/>
 					<Accordion className="styled" controlled={ true }>
 						{ sections.map(section => 
