@@ -31,24 +31,34 @@ const getWidgetInfoById = (id) => {
 	return widgets.find(item => item.typeId === widgetType);
 };
 
-const createDefaultWidget = (x, y, widgetInfo, name, settings, suffix = '_default') => {
-	const item = {
-		i: widgetInfo.typeId + suffix,
-		x,
-		y,
-		...widgetInfo.size,
-	};
+const createWidget = (layouts, widgetInfo, id, x, y) => {
+	// Add the same widget for all layouts (we are lazy and use the same size for all layouts)
+	Object.keys(cols).forEach(key => {
+		layouts[key] = layouts[key] || [];
+		layouts[key] = layouts[key].concat({ 
+			i: id, 
+			x: x || layouts[key].length * 2 % (cols[key] || 12), 
+			y: y || 0, 
+			...widgetInfo.size
+		});
+	});
+};
 
-	saveSettings(item.i, {
+const createDefaultWidget = (layouts, widgetInfo, x, y, name, settings, suffix = '_default') => {
+	const id = widgetInfo.typeId + suffix;
+	createWidget(layouts, widgetInfo, id, x, y);
+
+	saveSettings(id, {
 		name,
 		widget: settings,
 	});
-
-	return item;
 };
 
 
 // CONSTANTS
+const cols = { xlg: 14, lg: 10, sm: 6, xs: 4, xxs: 2 };
+const breakpoints = { xlg: 1600, lg: 1100, sm: 768, xs: 480, xxs: 0 };
+
 const widgets = [
 	Application,
 	RSS,
@@ -61,50 +71,56 @@ const LAYOUT_STORAGE_KEY = 'home_layout';
 const WidgetStore = Reflux.createStore({
 	listenables: WidgetActions,
 	init: function () {
-		let layout = BrowserUtils.loadLocalProperty(LAYOUT_STORAGE_KEY);
-		if (layout && layout.items) {
-			this.layout = layout.items;
+		let layoutInfo = BrowserUtils.loadLocalProperty(LAYOUT_STORAGE_KEY);
+		if (layoutInfo && layoutInfo.items) {
+			if (layoutInfo.version === 1) {
+				// Convert old layouts
+				this.layouts = {};
+				Object.keys(cols).forEach(key => {
+					this.layouts[key] = layoutInfo.items;
+				});
+			} else {
+				this.layouts = layoutInfo.items;
+			}
 		} else {
 			// Initialize the default layout
-			this.layout = [
-				createDefaultWidget(0, 0, Application, Application.name),
-				createDefaultWidget(2, 0, RSS, 'Client releases', {
-					feed_url: 'https://github.com/airdcpp-web/airdcpp-webclient/releases.atom',
-				}, '_releases'),
-
-				createDefaultWidget(5, 0, Transfers, Transfers.name),
-			];
+			this.layouts = {};
+			createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
+			createDefaultWidget(this.layouts, RSS, 2, 0, 'Client releases', {
+				feed_url: 'https://github.com/airdcpp-web/airdcpp-webclient/releases.atom',
+			}, '_releases');
+			createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
 		}
 	},
 
 	getInitialState: function () {
-		return this.layout;
+		return this.layouts;
 	},
 
 	onCreateSaved(id, settings, widgetInfo) {
 		saveSettings(id, settings);
 
-		this.layout = this.layout.concat({ 
-			i: id, 
-			x: this.layout.length * 2 % (this.cols || 12), 
-			y: 0, 
-			...widgetInfo.size
-		});
+		createWidget(this.layouts, widgetInfo, id);
 
 		//console.log('Widget added', this.layout);
-		this.trigger(this.layout);
+		this.trigger(this.layouts);
 	},
 
 	onEditSaved(id, settings) {
 		saveSettings(id, settings);
-		this.trigger(this.layout);
+		this.trigger(this.layouts);
 	},
 
 	onRemoveConfirmed(id) {
 		BrowserUtils.removeLocalProperty(idToSettingKey(id));
 
-		this.layout = reject(this.layout, { i: id });
-		this.trigger(this.layout);
+		Object.keys(cols).forEach(key => {
+			if (this.layouts[key]) {
+				this.layouts[key] = reject(this.layouts[key], { i: id });
+			}
+		});
+
+		this.trigger(this.layouts);
 	},
 
 	getWidgetInfoById: getWidgetInfoById,
@@ -114,20 +130,23 @@ const WidgetStore = Reflux.createStore({
 		return widgets;
 	},
 
-	onBreakpointChange(breakpoint, cols) {
-		this.cols = cols;
-		this.trigger(this.layout);
+	get cols() {
+		return cols;
 	},
 
-	onLayoutChange(layout) {
+	get breakpoints() {
+		return breakpoints;
+	},
+
+	onLayoutChange(layout, layouts) {
 		BrowserUtils.saveLocalProperty(LAYOUT_STORAGE_KEY, {
-			version: 1,
-			items: layout,
+			version: 2,
+			items: layouts,
 		});
 
-		this.layout = layout;
+		this.layouts = layouts;
 
-		this.trigger(this.layout);
+		this.trigger(this.layouts);
 		//console.log('New layout', layout);
 	},
 });

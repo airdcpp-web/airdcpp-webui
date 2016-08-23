@@ -78,7 +78,7 @@ module.exports = {
 	},
 
 	// cheap-module-source-map doesn't seem to work with Uglify
-	devtool: release ? 'module-source-map' : 'eval-source-map',
+	devtool: release ? 'module-source-map' : 'module-source-map',
 	module: {
 		loaders: [
 			{ 

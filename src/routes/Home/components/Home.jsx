@@ -22,7 +22,12 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
 const Home = React.createClass({
-	mixins: [ LocationContext, Reflux.connect(WidgetStore, 'layout') ],
+	mixins: [ LocationContext, Reflux.connect(WidgetStore, 'layouts') ],
+	getInitialState() {
+		return {
+			breakpoint: 'lg',
+		};
+	},
 
 	// Convert a layout entry to a component
 	mapWidget(layoutItem) {
@@ -51,6 +56,12 @@ const Home = React.createClass({
 		);
 	},
 
+	onBreakpointChange(breakpoint, cols) {
+		this.setState({
+			breakpoint,
+		});
+	},
+
 	render() {
 		return (
 			<div id="home">
@@ -61,15 +72,15 @@ const Home = React.createClass({
 					rowHeight={50} 
 					width={1200}
 					onLayoutChange={ WidgetStore.onLayoutChange }
-					onBreakpointChange={ WidgetStore.onBreakpointChange }
+					onBreakpointChange={ this.onBreakpointChange }
 
-					breakpoints={{ xlg: 1600, lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-					cols={{ xlg: 14, lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+					breakpoints={ WidgetStore.breakpoints }
+					cols={ WidgetStore.cols }
 
 					draggableHandle=".react-grid-item .header-row .header"
-					layouts={ {} } // https://github.com/STRML/react-grid-layout/issues/320
+					layouts={ this.state.layouts }
 				>
-					{ this.state.layout
+					{ this.state.layouts[this.state.breakpoint]
 							.map(this.mapWidget)
 							.filter(widget => widget) }
 				</ResponsiveReactGridLayout>
