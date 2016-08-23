@@ -80,22 +80,23 @@ const Dropdown = React.createClass({
 	},
 
 	render: function () {
+		const { leftIcon, caption, header, button, triggerIcon } = this.props;
 		const className = classNames(
 			'ui',
 			'dropdown',
 			'item',
 			this.props.className,
-			{ 'labeled button': this.props.button },
-			{ 'left-icon': this.props.leftIcon },
+			{ 'button': button },
+			{ 'labeled': button && caption },
+			{ 'left-icon': leftIcon },
 			'icon',
 		);
 
-		let icon = this.props.triggerIcon;
+		let icon = triggerIcon;
 		if (typeof icon === 'string') {
-			icon = <i className={ this.props.triggerIcon + ' trigger icon' }/>;
+			icon = <i className={ triggerIcon + ' trigger icon' }/>;
 		}
 
-		const { leftIcon, caption, header } = this.props;
 		return (
 			<div className={ className }>
 				{ leftIcon && caption ? icon : null }

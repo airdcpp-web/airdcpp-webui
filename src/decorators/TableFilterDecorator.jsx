@@ -34,10 +34,10 @@ export default function (Component, propertyName = 'any') {
 			this.setState({ filterId: data.id });
 		},
 
-		onFilterUpdated(pattern) {
+		onFilterUpdated(pattern, method = FilterMethod.PARTIAL) {
 			const data = {
-				pattern: pattern,
-				method: FilterMethod.PARTIAL,
+				pattern,
+				method,
 				property: propertyName,
 			};
 

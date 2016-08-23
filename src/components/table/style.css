@@ -22,6 +22,19 @@
 	margin-left: 10px;
 }
 
+.table-footer .filter .dropdown.button {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.table-footer .filter .dropdown .trigger.icon {
+	margin-right: 0px;
+}
+
+.table-footer .filter input {
+	width: 90%;
+}
+
 .virtual-table .cell-wrapper.dupe.queue.full, 
 .virtual-table .cell-wrapper.dupe.queue.full span,
 .virtual-table .cell-wrapper.dupe.queue.full a {

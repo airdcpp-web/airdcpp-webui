@@ -31,8 +31,16 @@ const ActionInput = React.createClass({
 		this.props.handleAction(this.state.value);
 	},
 
+	getDefaultProps() {
+		return {
+			type: 'text',
+		};
+	},
+
 	getInitialState: function () {
-		return { value: '' };
+		return { 
+			value: '' 
+		};
 	},
 
 	handleChange: function (event) {
@@ -42,7 +50,11 @@ const ActionInput = React.createClass({
 	render: function () {
 		return (
 			<div className="ui action input">
-				<input type="text" placeholder={this.props.placeholder} onChange={this.handleChange}/>
+				<input 
+					type={ this.props.type }
+					placeholder={this.props.placeholder} 
+					onChange={this.handleChange}
+				/>
 				<Button
 					icon={ this.props.icon }
 					onClick={ this.handleClick }
