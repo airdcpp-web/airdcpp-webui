@@ -70,6 +70,7 @@ const FilterBox = React.createClass({
 		});
 
 		setTimeout(_ => this.onFilterUpdated());
+		this.refs.input.focus();
 	},
 
 	getFilterMethod(method) {
@@ -93,7 +94,11 @@ const FilterBox = React.createClass({
 					onChange={ this.onTextChanged } 
 					value={ this.state.value }
 				>
-					<input placeholder={ getPlaceholder(this.state.method) } type="text"/>
+					<input 
+						ref="input"
+						placeholder={ getPlaceholder(this.state.method) } 
+						type="text"
+					/>
 					<Dropdown 
 						className="filter-method right top pointing"
 						button={ true }

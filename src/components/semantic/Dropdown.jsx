@@ -40,6 +40,8 @@ const Dropdown = React.createClass({
 		button: React.PropTypes.bool,
 
 		leftIcon: React.PropTypes.bool,
+
+		settings: React.PropTypes.object,
 	},
 
 	componentDidMount() {
@@ -58,6 +60,7 @@ const Dropdown = React.createClass({
 			direction: this.props.direction,
 			action: 'hide',
 			showOnFocus: false, // It can become focused when opening a modal
+			...this.props.settings,
 			//debug: true,
 			//verbose: true,
 		};
