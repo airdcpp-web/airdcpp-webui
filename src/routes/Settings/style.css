@@ -70,10 +70,6 @@
   padding-bottom: 2px;
 }
 
-.settings-layout .mobile .layout.header .left {
-  display: none;
-}
-
 .settings-layout .top-menu {
   display: flex;
   align-items: center;
