@@ -14,8 +14,6 @@ Install dependencies:
 
     $ npm install
 
-You can skip Semantic UI installation when prompted.
-
 ## Production build
 
 #### Windows
