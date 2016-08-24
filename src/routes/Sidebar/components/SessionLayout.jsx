@@ -317,11 +317,11 @@ const SessionLayout = React.createClass({
 	},
 
 	getListActionMenu() {
-		if (!this.hasEditAccess()) {
+		const { actions, items } = this.props;
+		if (!this.hasEditAccess() || items.length === 0) {
 			return null;
 		}
 
-		const { actions, items } = this.props;
 		return (
 			<MenuItemLink 
 				key="close"

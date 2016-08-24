@@ -51,6 +51,12 @@
   float: left;
 }
 
+.session-container.vertical .menu-bar .content-left > .ui.dropdown .menu {
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .session-container.vertical .session-header {
   display: flex;
   align-items: center;
