@@ -1,4 +1,4 @@
-# airdcpp-webui [![npm version](https://img.shields.io/npm/v/airdcpp-webui.svg?style=flat)](https://www.npmjs.com/package/airdcpp-webui)
+# airdcpp-webui [![Travis][build-badge]][build] [![npm package][npm-badge]][npm]
 
 AirDC++ Web UI written in Javascript. Communicates with AirDC++ Core via [AirDC++ Web API](https://github.com/airdcpp/airdcpp-webapi).
 
@@ -49,3 +49,9 @@ The UI must be built first.
 Run the following command:
 
     $ npm run serve
+
+[build-badge]: https://img.shields.io/travis/airdcpp-web/airdcpp-webui/master.svg?style=flat-square
+[build]: https://travis-ci.org/airdcpp-web/airdcpp-webui
+
+[npm-badge]: https://img.shields.io/npm/v/airdcpp-webui.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/airdcpp-webui
