@@ -103,7 +103,7 @@ module.exports = {
 				test: /\.(woff|woff2|eot|ttf|svg)$/, 
 				include: [
 					path.resolve(__dirname, 'src'),
-					path.resolve(__dirname, 'node_modules/semantic-ui/dist') 
+					path.resolve(__dirname, 'node_modules/semantic-ui-css') 
 				], 
 				loader: 'url',
 				query: {
@@ -121,7 +121,7 @@ module.exports = {
 		],
 		extensions: [ '', '.js', '.jsx' ],
 		alias: {
-			'semantic-ui' : path.join(__dirname, 'node_modules/semantic-ui/dist')
+			'semantic-ui' : path.join(__dirname, 'node_modules/semantic-ui-css')
 		}
 	},
 
