@@ -7,3 +7,6 @@ node_js:
 script:
 - npm run lint
 - npm run build
+notifications:
+  email:
+    on_failure: change
