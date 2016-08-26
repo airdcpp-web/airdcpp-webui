@@ -12,22 +12,22 @@ import AccessConstants from 'constants/AccessConstants';
 import '../style.css';
 
 
-const userItems = UserItemHandlerDecorator({}, [ 'message' ]);
+const UserItemHandler = UserItemHandlerDecorator([ 'message' ]);
 const ItemHandler = {
 	itemLabelGetter(session) {
 		return null;
 	},
 
 	itemNameGetter(session) {
-		return session.share_profile ? session.share_profile.str : userItems.itemNameGetter(session);
+		return session.share_profile ? session.share_profile.str : UserItemHandler.itemNameGetter(session);
 	},
 
 	itemIconGetter(session) {
-		return session.share_profile ? <i className="large green server icon"/> : userItems.itemIconGetter(session);
+		return session.share_profile ? <i className="large green server icon"/> : UserItemHandler.itemIconGetter(session);
 	},
 
 	itemStatusGetter(session) {
-		return session.share_profile ? 'blue' : userItems.itemStatusGetter(session);
+		return session.share_profile ? 'blue' : UserItemHandler.itemStatusGetter(session);
 	},
 
 	itemHeaderGetter(session, location, actionMenu) {
@@ -35,7 +35,7 @@ const ItemHandler = {
 			return actionMenu;
 		}
 
-		return userItems.itemHeaderGetter(session, location, actionMenu);
+		return UserItemHandler.itemHeaderGetter(session, location, actionMenu);
 	},
 };
 

@@ -81,6 +81,11 @@ const SessionLayout = React.createClass({
 		actions: React.PropTypes.object.isRequired,
 
 		/**
+		 * Session actions to show in the action menu
+		 */
+		actionIds: React.PropTypes.array,
+
+		/**
 		 * Item ID that is currently active (if any)
 		 */
 		activeId: React.PropTypes.any,
@@ -248,13 +253,19 @@ const SessionLayout = React.createClass({
 			return null;
 		}
 
-		const { actions, itemNameGetter, itemHeaderGetter } = this.props;
+		const { actions, actionIds, itemNameGetter, itemHeaderGetter } = this.props;
+
+		let ids = [ 'removeSession' ];
+		if (actionIds) {
+			ids = [ ...actionIds, 'divider', ...ids ];
+		}
+
 		const actionMenu = (
 			<ActionMenu 
 				caption={ itemNameGetter(activeItem) }
 				actions={ actions }
 				itemData={ activeItem }
-				ids={ [ 'removeSession' ] }
+				ids={ ids }
 			/>
 		);
 

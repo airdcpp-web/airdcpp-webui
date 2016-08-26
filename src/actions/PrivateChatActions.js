@@ -71,5 +71,5 @@ PrivateChatActions.createSession.failed.listen(function (error) {
 });
 
 export default SessionActionDecorator(
-	ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL), PrivateChatConstants.MODULE_URL, AccessConstants.PRIVATE_CHAT_EDIT
+	ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL, AccessConstants.PRIVATE_CHAT_EDIT), PrivateChatConstants.MODULE_URL, AccessConstants.PRIVATE_CHAT_EDIT
 );

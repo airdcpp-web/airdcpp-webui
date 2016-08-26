@@ -117,9 +117,9 @@ export default function (Component) {
 		},
 
 		// Convert ID to menu link element
-		getItem(menu, actionId, index) {
+		getItem(menu, menuIndex, actionId, itemIndex) {
 			if (actionId === 'divider') {
-				return <div key={ 'divider' + index } className="ui divider"/>;
+				return <div key={ 'divider' + menuIndex + '_' + itemIndex } className="ui divider"/>;
 			}
 
 			// A custom element
@@ -139,8 +139,8 @@ export default function (Component) {
 		},
 
 		// Reduce menus to an array of DropdownItems
-		reduceMenus(items, menu) {
-			items.push(...menu.actionIds.map(this.getItem.bind(this, menu)));
+		reduceMenus(items, menu, index) {
+			items.push(...menu.actionIds.map(this.getItem.bind(this, menu, index)));
 			return items;
 		},
 

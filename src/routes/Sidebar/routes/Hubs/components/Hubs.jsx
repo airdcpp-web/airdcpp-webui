@@ -36,19 +36,6 @@ const ItemHandler = {
 	itemIconGetter(session) {
 		return <HubIcon size="large" hub={session} />;
 	},
-
-	itemHeaderGetter(session, location, actionMenu) {
-		return (
-			<ActionMenu 
-				caption={ session.identity.name } 
-				actions={ HubActions } 
-				itemData={ session } 
-				ids={ [ 'reconnect', 'favorite'/*, 'clear'*/ ] }
-			>
-				{ actionMenu }
-			</ActionMenu>
-		);
-	},
 };
 
 const Hubs = React.createClass({
@@ -73,6 +60,7 @@ const Hubs = React.createClass({
 				newButtonCaption="Connect"
 				editAccess={ AccessConstants.HUBS_EDIT }
 				actions={ HubActions } 
+				actionIds={ [ 'reconnect', 'favorite', 'clear' ] }
 
 				unreadInfoStore={ HubSessionStore }
 				{ ...ItemHandler }

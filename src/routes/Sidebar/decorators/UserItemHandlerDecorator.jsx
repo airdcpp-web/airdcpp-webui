@@ -4,7 +4,7 @@ import TypeConvert from 'utils/TypeConvert';
 import { UserMenu } from 'components/menu/DropdownMenu';
 import UserIcon from 'components/icon/UserIcon';
 
-export default (ItemHandler, itemMenuIds) => {
+export default (itemMenuIds) => {
 	const UserItemHandlerDecorator = {
 		itemNameGetter(session) {
 			return session.user.nicks;
@@ -36,5 +36,5 @@ export default (ItemHandler, itemMenuIds) => {
 		},
 	};
 
-	return Object.assign(ItemHandler, UserItemHandlerDecorator);
+	return UserItemHandlerDecorator;
 };

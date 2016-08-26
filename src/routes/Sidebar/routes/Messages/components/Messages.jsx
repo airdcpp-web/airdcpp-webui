@@ -27,8 +27,9 @@ const Messages = React.createClass({
 				unreadInfoStore={ PrivateChatSessionStore }
 				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
 				actions={ PrivateChatActions }
+				actionIds={ [ 'clear' ] }
 
-				{ ...UserItemHandlerDecorator({ }, [ 'browse' ]) }
+				{ ...UserItemHandlerDecorator([ 'browse' ]) }
 			>
 				{ this.props.children }
 			</SessionLayout>

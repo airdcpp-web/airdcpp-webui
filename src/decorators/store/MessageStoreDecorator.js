@@ -1,5 +1,6 @@
 import update from 'react-addons-update';
 
+import MessageUtils from 'utils/MessageUtils';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 
@@ -36,11 +37,6 @@ export default function (store, actions, sessionStore, access) {
 			message.is_read = true;
 		}
 
-		// Message limit exceed?
-		if (messages.length > sessionStore.getSession(sessionId).total_messages) {
-			messages.shift();
-		}
-
 		addMessage(sessionId, { [type]: message });
 	};
 
@@ -52,8 +48,14 @@ export default function (store, actions, sessionStore, access) {
 		onMessageReceived(sessionId, data, 'log_message');
 	};
 
-	store._onSessionRemoved = (data) => {
-		delete messages[data.id];
+	store._onSessionUpdated = (session, sessionId) => {
+		// Message limit exceed or messages were cleared?
+		messages[sessionId] = MessageUtils.checkSplice(messages[sessionId], session.total_messages);
+		store.trigger(messages[sessionId], sessionId);
+	};
+
+	store._onSessionRemoved = (session) => {
+		delete messages[session.id];
 	};
 
 	store.onSocketDisconnected = () => {
