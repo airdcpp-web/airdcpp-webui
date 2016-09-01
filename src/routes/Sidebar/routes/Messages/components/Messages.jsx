@@ -29,7 +29,7 @@ const Messages = React.createClass({
 				actions={ PrivateChatActions }
 				actionIds={ [ 'clear' ] }
 
-				{ ...UserItemHandlerDecorator([ 'browse' ]) }
+				{ ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
 			>
 				{ this.props.children }
 			</SessionLayout>

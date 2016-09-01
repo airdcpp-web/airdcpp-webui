@@ -6,6 +6,7 @@ import FilelistActions from 'actions/FilelistActions';
 
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
+import NotificationActions from 'actions/NotificationActions';
 
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
@@ -68,15 +69,29 @@ UserActions.browse.listen(function (userData, location) {
 UserActions.ignore.listen(function (userData, location) {
 	let that = this;
 	return SocketService.post(UserConstants.IGNORE_URL + '/' + userData.user.cid)
-		.then(that.completed)
+		.then(that.completed.bind(that, userData))
 		.catch(that.failed);
 });
 
 UserActions.unignore.listen(function (userData, location) {
 	let that = this;
 	return SocketService.delete(UserConstants.IGNORE_URL + '/' + userData.user.cid)
-		.then(that.completed)
+		.then(that.completed.bind(that, userData))
 		.catch(that.failed);
+});
+
+UserActions.ignore.completed.listen(function (userData) {
+	NotificationActions.info({ 
+		title: userData.user.nick ? userData.user.nick : userData.user.nicks + ' was added in ignored users',
+		uid: userData.user.cid,
+	});
+});
+
+UserActions.unignore.completed.listen(function (userData) {
+	NotificationActions.info({ 
+		title: userData.user.nick ? userData.user.nick : userData.user.nicks + ' was removed from ignored users',
+		uid: userData.user.cid,
+	});
 });
 
 export default UserActions;
