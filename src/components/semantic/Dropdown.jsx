@@ -6,6 +6,9 @@ import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import DropdownCaption from './DropdownCaption';
 
+import 'semantic-ui/components/dropdown';
+import 'semantic-ui/components/dropdown.min.css';
+
 
 const Dropdown = React.createClass({
 	mixins: [ PureRenderMixin ],

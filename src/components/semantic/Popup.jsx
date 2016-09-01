@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import 'semantic-ui/components/popup';
+import 'semantic-ui/components/popup.min.css';
+
+
 const Popup = React.createClass({
 	mixins: [ PureRenderMixin ],
 	propTypes: {

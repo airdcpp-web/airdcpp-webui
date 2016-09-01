@@ -6,6 +6,10 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 import IconConstants from 'constants/IconConstants';
 
+import 'semantic-ui/components/modal';
+import 'semantic-ui/components/modal.min.css';
+
+
 const Modal = React.createClass({
 	propTypes: {
 		/**

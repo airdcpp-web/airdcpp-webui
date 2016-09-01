@@ -2,6 +2,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import 'semantic-ui/components/loader.min.css';
+
 
 const Loader = ({ text, className, inline, size }) => {
 	const style = classNames(

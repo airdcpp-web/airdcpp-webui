@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 
 import Checkbox from 'components/semantic/Checkbox';
 
+import 'semantic-ui/components/modal';
+import 'semantic-ui/components/modal.min.css';
+
 
 const ConfirmDialog = React.createClass({
 	propTypes: {

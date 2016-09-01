@@ -2,6 +2,9 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import 'semantic-ui/components/button.min.css';
+
+
 const Button = ({ className, loading, icon, caption, loadingCaption, disabled, ...other }) => {
 	const buttonStyle = classNames(
 		'ui button',

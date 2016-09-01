@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import 'semantic-ui/components/checkbox';
+import 'semantic-ui/components/checkbox.min.css';
+
+
 const Checkbox = React.createClass({
 	mixins: [ PureRenderMixin ],
 	propTypes: {

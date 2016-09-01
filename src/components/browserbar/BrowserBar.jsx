@@ -3,6 +3,8 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import './style.css';
 
+import 'semantic-ui/components/breadcrumb.min.css';
+
 
 const Section = ({ caption, onClick }) => (
 	<div className="path-token">

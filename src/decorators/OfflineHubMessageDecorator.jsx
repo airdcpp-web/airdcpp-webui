@@ -8,7 +8,7 @@ import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 
 
-// Disables the component of there are no online hubs
+// Disables the component if there are no online hubs
 const OfflineHubMessageDecorator = React.createClass({
 	mixins: [ Reflux.ListenerMixin ],
 	propTypes: {

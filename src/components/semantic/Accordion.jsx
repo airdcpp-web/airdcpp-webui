@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import 'semantic-ui/components/accordion';
+import 'semantic-ui/components/accordion.min.css';
+
 import classNames from 'classnames';
 
 
