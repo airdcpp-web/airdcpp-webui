@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import classNames from 'classnames';
 
 import BrowserUtils from 'utils/BrowserUtils';
 import NotificationActions from 'actions/NotificationActions';
@@ -50,24 +51,36 @@ const MessageComposer = React.createClass({
 	},
 
 	render: function () {
+		const mobile = BrowserUtils.useMobileLayout();
+		const className = classNames(
+			'ui form composer',
+			{ 'small': mobile },
+			{ 'large': !mobile },
+		);
+
 		return (
-			<div className="ui form composer">
+			<div className= { className }>
 				<textarea
-					rows={ BrowserUtils.useMobileLayout() ? 1 : 2 }
+					rows={ mobile ? 1 : 2 }
 					name="message"
-					value={this.state.text}
-					onChange={this._onChange}
-					onKeyDown={this._onKeyDown}
+					value={ this.state.text }
+					onChange={ this._onChange }
+					onKeyDown={ this._onKeyDown }
 				/>
-				<div className="blue large ui icon button" onClick={ this._sendText }>
+				<div 
+					className="blue large ui icon button" 
+					onClick={ this._sendText }
+				>
 					<i className="send icon"/>
 				</div>
 			</div>
 		);
 	},
 
-	_onChange: function (event, value) {
-		this.setState({ text: event.target.value });
+	_onChange: function (event) {
+		this.setState({ 
+			text: event.target.value 
+		});
 	},
 
 	_onKeyDown: function (event) {

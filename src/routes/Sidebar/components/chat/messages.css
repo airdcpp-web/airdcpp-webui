@@ -13,7 +13,6 @@
 	flex: 100 100 0%;
 	display: flex;
 	flex-direction: column;
-	overflow: auto;
 }
 
 .message-section {
@@ -35,11 +34,9 @@
 	border-radius: 0 .28571429rem .28571429rem 0;
 }
 
-.message-view .ui.button i {
-	position: relative;
-	top: 40%;
-	transform: translateY(-50%);
+.message-view .composer.large .ui.button i {
 	vertical-align: -webkit-baseline-middle !important;
+	vertical-align: -moz-middle-with-baseline !important;
 }
 
 .message-list {

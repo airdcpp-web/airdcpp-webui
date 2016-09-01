@@ -76,7 +76,7 @@ const Search = React.createClass({
 	render() {
 		return (
 			<OfflineHubMessageDecorator offlineMessage="You must to be connected to at least one hub in order to perform searches">
-				<div className="search-layout full-height">
+				<div className="search-layout">
 					<div className="search-container">
 						<div className="search-area">
 							<HistoryInput 

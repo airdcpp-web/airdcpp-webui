@@ -1,9 +1,3 @@
-/* Fixes "initial" style added by semantic on ios devices */
-html.ios, html.ios body {
-	min-height: 100% !important;
-	height: 100% !important;
-}
-
 @media (max-width: 700px) {
 	body {
 		background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
@@ -38,9 +32,8 @@ section#container-main,
 .main-layout, 
 #authenticated-app, 
 .pusher,
-.ui.site-content,
-.full-height {
-	height: 100%;
+.ui.site-content {
+	height: 100vh;
 }
 
 .ui.checkbox.floating {

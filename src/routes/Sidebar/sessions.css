@@ -11,7 +11,7 @@
 }
 
 .session-container.vertical {
-  padding: 20px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
 }
@@ -25,10 +25,10 @@
 }
 
 .session-layout {
-  flex: 100 1 0%;
+  flex: 100 100 auto;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .session-container.vertical .menu-bar {
@@ -83,7 +83,6 @@
 .session-container.vertical .menu-bar {
   border-radius: 0px !important;
   padding-bottom: 0px;
-  margin-bottom: 15px;
 }
 
 #mobile-layout .session-container.vertical .menu-bar {
@@ -115,7 +114,7 @@
 .session-container.horizontal .menu-column {
   display: flex !important;
   flex-direction: column;
-  padding-right: 0px;
+  padding-right: 0px !important;
 }
 
 .session-container.horizontal .menu-column .menu {
@@ -160,6 +159,7 @@
   color: grey;
   display: flex;
   flex: 1;
+  align-items: flex-end;
 }
 
 .session-footer .info-grid > div {
