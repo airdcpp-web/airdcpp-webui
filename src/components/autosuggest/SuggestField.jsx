@@ -90,7 +90,7 @@ const SuggestField = React.createClass({
 
 		if (event.keyCode === 13 && !event.isDefaultPrevented()) {
 			// Hide the suggestion menu
-			this.props.onChange(null, true);
+			this.props.onSuggestionsClearRequested();
 
 			this.handleSubmit(event);
 		}

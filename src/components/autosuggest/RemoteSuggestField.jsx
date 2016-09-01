@@ -27,7 +27,7 @@ const RemoteSuggestField = React.createClass({
 
 	onSuggestionsFetchRequested({ value }) {
 		SocketService.post(this.props.url, { 
-			value, 
+			pattern: value, 
 			max_results: 7 
 		})
 			.then(this.onSuggestionsReceived)
