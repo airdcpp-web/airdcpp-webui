@@ -11,6 +11,7 @@ import FilelistActions from 'actions/FilelistActions';
 import ViewFileActions from 'actions/ViewFileActions';
 
 
+const isSearchable = ({ itemInfo }) => itemInfo.name || itemInfo.tth;
 const notMe = ({ user }) => user.flags.indexOf('me') === -1;
 const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
 const isPicture = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
@@ -82,6 +83,7 @@ export const DownloadableItemActions = Reflux.createActions([
 		displayName: 'Search',
 		access: AccessConstants.SEARCH,
 		icon: IconConstants.SEARCH,
+		filter: isSearchable, // Example: root directory in filelists can't be searched for
 	} }
 ]);
 
