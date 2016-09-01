@@ -15,9 +15,8 @@ const SuggestField = React.createClass({
 
 		/**
 		 * Function to call when the input text was changed
-		 * Receives the new text as an argument (or null if the suggestion list should be cleared)
 		 */
-		onChange: React.PropTypes.func.isRequired,
+		onChange: React.PropTypes.func,
 
 		/**
 		 * Providing a button element makes the input accept custom inputs when pressing enter
@@ -65,10 +64,14 @@ const SuggestField = React.createClass({
 		}
 	},
 
-	onTextChange(evt, { newValue, method }) {
-		this.setState({ text: newValue });
+	onTextChange(evt, { newValue }) {
+		this.setState({ 
+			text: newValue 
+		});
 
-		this.props.onChange(newValue, method === 'type');
+		if (this.props.onChange) {
+			this.props.onChange(newValue);
+		}
 	},
 
 	isSubmitDisabled() {

@@ -24,17 +24,15 @@ export default React.createClass({
 		return this.props.data.filter(str => regex.test(str));
 	},
 
-	onTextChange(newValue, typed) {
-		if (this.props.onChange) {
-			this.props.onChange(newValue);
-		}
-
-		if (!typed) {
-			return;
-		}
-
+	onSuggestionsFetchRequested({ value }) {
 		this.setState({ 
-			suggestions: newValue ? this.filterSuggestions(newValue) : [],
+			suggestions: this.filterSuggestions(value),
+		});
+	},
+
+	onSuggestionsClearRequested() {
+		this.setState({
+			suggestions: []
 		});
 	},
 
@@ -53,7 +51,9 @@ export default React.createClass({
 				renderSuggestion={ this.renderSuggestion }
 				getSuggestionValue={ this.getSuggestionValue }
 				suggestions={ this.state.suggestions }
-				onChange={ this.onTextChange }
+				onChange={ this.props.onChange }
+				onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
+				onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
 			/>
 		);
 	},

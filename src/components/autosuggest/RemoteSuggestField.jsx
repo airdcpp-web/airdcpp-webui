@@ -25,23 +25,27 @@ const RemoteSuggestField = React.createClass({
 		return suggestionObj[this.props.valueField];
 	},
 
-	onTextChanged(pattern, typed) {
-		if (!pattern || !typed) {
-			return;
-		}
-
+	onSuggestionsFetchRequested({ value }) {
 		SocketService.post(this.props.url, { 
-			pattern, 
+			value, 
 			max_results: 7 
 		})
 			.then(this.onSuggestionsReceived)
 			.catch(error => 
-				console.log('Failed to fetch nicks: ' + error)
+				console.log('Failed to fetch suggestions: ' + error)
 			);
 	},
 
+	onSuggestionsClearRequested() {
+		this.setState({
+			suggestions: []
+		});
+	},
+
 	onSuggestionsReceived(data) {
-		this.setState({ suggestions: data });
+		this.setState({ 
+			suggestions: data 
+		});
 	},
 
 	renderSuggestion(suggestionObj, { query }) {
@@ -55,7 +59,8 @@ const RemoteSuggestField = React.createClass({
 				suggestions={ this.state.suggestions }
 				renderSuggestion={ this.renderSuggestion }
 				getSuggestionValue={ this.getSuggestionValue }
-				onChange={ this.onTextChanged }
+				onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
+				onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
 			/>
 		);
 	},
