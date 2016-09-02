@@ -57,16 +57,17 @@ const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) 
 		}
 
 		// Active tab?
-		if (data.unread_messages && id === activeSession) {
-			data = MessageUtils.checkUnread(data, actions, id);
+		if (id === activeSession) {
+			if (data.unread_messages) {
+				data = MessageUtils.checkUnread(data, actions, id);
+			} else if (data.read === false) {
+				actions.setRead(id);
+				data = {
+					...data,
+					read: true,
+				};
+			}
 		}
-
-		if (data.read === false && id === activeSession) {
-			data = {
-				...data,
-				read: true,
-			};
-		} 
 
 		sessions[sessions.indexOf(session)] = update(session, { $merge: data });
 		store.trigger(sessions);
