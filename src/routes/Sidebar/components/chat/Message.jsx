@@ -45,42 +45,61 @@ MessageText.propTypes = {
 };
 
 
-const ChatMessage = ({ message, ...other }) => (
-		<div className={ 'ui item message-list-item chat-message ' + message.from.flags.join(' ')}>
-			<TimeStamp 
-				message={ message }
-			/>
-			<div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
-				<Author 
-					message={ message } 
-					{ ...other }
+const ChatMessage = React.createClass({
+	propTypes: {
+		message: React.PropTypes.object.isRequired,
+	},
+
+	shouldComponentUpdate() {
+		return false;
+	},
+
+	render() {
+		const { message, ...other } = this.props;
+		
+		return (
+			<div className={ 'ui item message-list-item chat-message ' + message.from.flags.join(' ')}>
+				<TimeStamp 
+					message={ message }
 				/>
+				<div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
+					<Author 
+						message={ message } 
+						{ ...other }
+					/>
+					<MessageText 
+						message={ message }
+						emojify={ message.from.flags.indexOf('bot') === -1 } // No emojis to bot messages as they are likely to contain false matches
+					/>
+				</div>
+			</div>
+		);
+	}
+});
+
+
+const StatusMessage = React.createClass({
+	propTypes: {
+		message: React.PropTypes.object.isRequired,
+	},
+
+	shouldComponentUpdate() {
+		return false;
+	},
+
+	render() {
+		const { message } = this.props;
+		
+		return (
+			<div className={ 'ui item message-list-item status-message ' + message.severity }>
+				{ !message.time ? null : <TimeStamp message={ message }/> }
 				<MessageText 
 					message={ message }
-					emojify={ message.from.flags.indexOf('bot') === -1 } // No emojis to bot messages as they are likely to contain false matches
+					emojify={ false }
 				/>
 			</div>
-		</div>
-);
-
-ChatMessage.propTypes = {
-	message: React.PropTypes.object.isRequired,
-};
-
-
-const StatusMessage = ({ message }) => (
-	<div className={ 'ui item message-list-item status-message ' + message.severity }>
-		{ !message.time ? null : <TimeStamp message={ message }/> }
-		<MessageText 
-			message={ message }
-			emojify={ false }
-		/>
-	</div>
-);
-
-StatusMessage.propTypes = {
-	message: React.PropTypes.object.isRequired,
-};
-
+		);
+	}
+});
 
 export { ChatMessage, StatusMessage };
