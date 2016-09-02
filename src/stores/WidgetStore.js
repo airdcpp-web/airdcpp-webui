@@ -89,11 +89,11 @@ const WidgetStore = Reflux.createStore({
 		} else {
 			// Initialize the default layout
 			this.layouts = {};
-			createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
-			createDefaultWidget(this.layouts, RSS, 2, 0, 'Client releases', {
+			this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
+			this.layouts = createDefaultWidget(this.layouts, RSS, 2, 0, 'Client releases', {
 				feed_url: 'https://github.com/airdcpp-web/airdcpp-webclient/releases.atom',
 			}, '_releases');
-			createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
+			this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
 		}
 	},
 
