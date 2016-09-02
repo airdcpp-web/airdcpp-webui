@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 
 import SiteHeader from './SiteHeader';
 import MainNavigation from 'components/main/navigation/MainNavigationMobile';
@@ -32,22 +33,37 @@ const reduceItemUrgency = (map, menuItem) => {
 	return map;
 };
 
-const HeaderContent = MainNavigationDecorator(({ secondaryMenuItems, onClickMenu, onClickBack, sidebar }) => (
-	<div className="right">
-		{ sidebar ? 
-			<Button 
-				className="item" 
-				caption="Back" 
-				icon="blue angle left"
-				onClick={ onClickBack }
-			/> : null }
-		<MenuIcon 
-			urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
-			onClick={ onClickMenu }
-			className="item"
-		/>
-	</div>
-));
+const HeaderContent = MainNavigationDecorator(React.createClass({
+	mixins: [ Reflux.ListenerMixin ],
+	componentDidMount() {
+		this.props.secondaryMenuItems.forEach(item => {
+			if (item.unreadInfoStore) {
+				this.listenTo(item.unreadInfoStore, _ => this.forceUpdate());
+			}
+		});
+	},
+
+	render() {
+		const { secondaryMenuItems, onClickMenu, onClickBack, sidebar } = this.props;
+		
+		return (
+			<div className="right">
+				{ sidebar ? 
+					<Button 
+						className="item" 
+						caption="Back" 
+						icon="blue angle left"
+						onClick={ onClickBack }
+					/> : null }
+				<MenuIcon 
+					urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
+					onClick={ onClickMenu }
+					className="item"
+				/>
+			</div>
+		);
+	}
+}));
 
 const MainLayoutMobile = React.createClass({
 	getInitialState() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+import { PureRouterMenuItemLink } from 'components/semantic/MenuItem';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
@@ -104,19 +104,19 @@ const LogoutItem = {
 	onClick: onClickLogout,
 };
 
-
 const menuItemGetter = (onClick, showIcon, item) => {
-	const { title, icon, unreadInfoStore, ...other } = item;
+	const { title, icon, unreadInfoStore, url, className } = item;
 	return (
-		<RouterMenuItemLink 
-			key={ item.url }
-			{ ...other }
+		<PureRouterMenuItemLink 
+			key={ url }
+			url={ url }
+			className={ className }
 			icon={ showIcon ? (icon + ' navigation') : null }
-			onClick={ onClick ? evt => onClick(item.url, evt) : undefined }
-			urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null }
+			onClick={ onClick ? evt => onClick(url, evt) : undefined }
+			unreadInfoStore={ unreadInfoStore }
 		>
 			{ title }
-		</RouterMenuItemLink>
+		</PureRouterMenuItemLink>
 	);
 };
 
@@ -125,14 +125,14 @@ const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
 	const MainNavigationDecorator = React.createClass({
-		mixins: [ 
-			Reflux.connect(PrivateChatSessionStore, 'chatSessions'), 
-			Reflux.connect(HubSessionStore, 'hubSessions'), 
-			Reflux.connect(EventStore, 'logMessages'),
+		contextTypes: {
+			routerLocation: React.PropTypes.object.isRequired,
+		},
 
-			Reflux.connect(ViewFileStore, 'viewFileSessions'),
-			Reflux.connect(FilelistSessionStore, 'filelistSessions'),
-		],
+		shouldComponentUpdate(nextProps, nextState, nextContext) {
+			return nextContext.routerLocation.pathname !== this.context.routerLocation.pathname;
+		},
+
 		render() {
 			return (
 				<Component 
