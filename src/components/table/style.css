@@ -126,7 +126,6 @@
 }
 
 .table.dropdown .trigger span {
-  text-overflow: ellipsis;
   flex: 1;
 }
 

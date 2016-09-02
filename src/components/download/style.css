@@ -8,6 +8,11 @@
   flex-direction: column;
 }
 
+.download-dialog .main-content .list {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 .download-dialog .content > div, .download-dialog .ui.grid .column, 
 .download-dialog .main-content {
 	height: 100%;

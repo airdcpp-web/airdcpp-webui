@@ -8,7 +8,7 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 
 const UserResult = ({ result }) => (
 	<tr>
-		<td className="user">
+		<td className="user dropdown">
 			<UserMenu 
 				userIcon={ true }
 				user={ result.user }
@@ -39,7 +39,7 @@ const resultSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
 
 const UserResultTable = ({ results }) => (
 	<div className="users">
-		<h2>Users</h2>
+		<h2>{ 'Users (' + results.length + ')' }</h2>
 		<table className="ui striped table">
 			<thead>
 				<tr>

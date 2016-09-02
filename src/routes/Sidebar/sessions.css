@@ -129,7 +129,6 @@
 .session-container .session-header .dropdown .caption {
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .session-container .session-header .title .dropdown {
@@ -137,7 +136,6 @@
 }
 
 .session-layout .sub.header {
-  text-overflow: ellipsis;
   overflow: hidden;
 }
 

@@ -8,7 +8,7 @@ import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
 
 const Source = ({ source, bundle }) => (
 	<tr>
-		<td className="user">
+		<td className="user dropdown">
 			<UserMenu 
 				userIcon={ true }
 				user={ source.user }

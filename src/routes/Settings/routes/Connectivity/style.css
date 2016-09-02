@@ -4,7 +4,6 @@
 
 .settings-layout .detect-panel .header.column > div {
   overflow: hidden;
-  text-overflow: ellipsis;
   line-height: inherit !important;
 }
 

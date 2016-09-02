@@ -1,6 +1,6 @@
 #home .rss .content.widget {
 	display: flex;
-  flex-direction: column;
+	flex-direction: column;
 }
 
 #home .rss .divided.list {
@@ -11,10 +11,6 @@
 
 #home .rss .divided.list .item {
 	flex-shrink: 0;
-}
-
-#home .rss .divided.list .item .header {
-	display: flex;
 }
 
 #home .rss .divided.list .item .description {

@@ -65,7 +65,6 @@
 
 .browserbar .section-caption {
 	overflow: hidden;
-	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 100%;
 	line-height: 1.2;

@@ -37,11 +37,10 @@
 	.result.modal td {
 		max-width: 250px;
 	}
+}
 
-	/* Can't be applied to dropdown cells */
-	.result.modal td:not(.user) {
-		overflow-x: hidden;
-	}
+.result.modal .dupe-paths .path {
+	overflow-x: hidden;
 }
 
 .result.modal .download.dropdown {

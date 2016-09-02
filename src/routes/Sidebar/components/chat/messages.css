@@ -109,10 +109,6 @@
 	font-size: small;
 }
 
-.chat-message .third-person .message-author-name {
-	display: flex !important;
-}
-
 .chat-message .third-person .message-author-name .dropdown {
 	margin-left: 3px;
 }

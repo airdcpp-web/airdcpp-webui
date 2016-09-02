@@ -1,3 +1,7 @@
+* {
+	text-overflow: ellipsis;
+}
+
 @media (max-width: 700px) {
 	body {
 		background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
@@ -41,10 +45,6 @@ section#container-main,
 	margin: 10px 0px;
 }
 
-.dropdown.user .icon-caption {
-	display: flex;
-}
-
 .dropdown.user-menu .icon-caption .icons {
 	max-height: 1em;
 }
@@ -54,7 +54,7 @@ section#container-main,
 }
 
 div.dropdown:not(.table-items) {
-  display: flex !important;
+  display: inline-flex !important;
 }
 
 .popup.trigger:hover {
@@ -92,10 +92,6 @@ div.dropdown:not(.table-items) {
 	margin-right: 10px;
 }
 
-.layout.header .content > div {
-	display: flex;
-}
-
 .layout.header > div {
 	margin-bottom: 0px;
 }
@@ -108,6 +104,19 @@ div.dropdown:not(.table-items) {
 
 
 /* Dialogs start */
+
+.modal.full .layout.header .content {
+	overflow: hidden;
+}
+
+.modal.full table {
+	table-layout: fixed;
+}
+
+/* Can't be applied to dropdown cells */
+.modal.full td:not(.dropdown) {
+	overflow-x: hidden;
+}
 
 .modal.full > .content {
 	overflow-y: auto;
