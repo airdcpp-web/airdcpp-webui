@@ -14,7 +14,10 @@ const PerformanceTools = React.createClass({
 			Perf.stop();
 
 			const measurements = Perf.getLastMeasurements();
+			Perf.printInclusive(measurements);
+			Perf.printExclusive(measurements);
 			Perf.printWasted(measurements);
+			//Perf.printOperations(measurements);
 		}
 
 		BrowserUtils.saveSessionProperty('perf_profiling', nextRunning);

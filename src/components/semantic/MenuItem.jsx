@@ -10,59 +10,6 @@ import CountLabel from 'components/CountLabel';
 import Icon from 'components/semantic/Icon';
 
 
-/*export const MainMenuItemLink = React.createClass({
-	mixins: [ Reflux.ListenerMixin ],
-	contextTypes: {
-		router: React.PropTypes.object.isRequired,
-	},
-
-	getInitialState() {
-		const { unreadInfoStore } = this.props.item;
-		return {
-			urgencies: unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null,
-		};
-	},
-
-	shouldComponentUpdate(nextProps, nextState) {
-		const isActive = this.context.router.isActive(this.props.item.url, this.props.item.url === '/');
-		if (isActive !== this.isActive) {
-			this.isActive = isActive;
-			return true;
-		}
-
-		return !deepEqual(nextState.urgencies, this.state.urgencies);
-	},
-
-	componentDidMount() {
-		const { unreadInfoStore } = this.props.item;
-		if (unreadInfoStore) {
-			this.listenTo(unreadInfoStore, this.onStoreUpdated);
-		}
-	},
-
-	onStoreUpdated() {
-		this.setState({
-			urgencies: this.props.item.unreadInfoStore.getTotalUrgencies(),
-		});
-	},
-
-	render() {
-		const { item, showIcon, onClick } = this.props;
-		const { title, icon, className, url } = item;
-		return (
-			<RouterMenuItemLink 
-				url={ url }
-				className={ className }
-				icon={ showIcon ? (icon + ' navigation') : null }
-				onClick={ onClick ? evt => onClick(url, evt) : undefined }
-				urgencies={ this.state.urgencies }
-			>
-				{ title }
-			</RouterMenuItemLink>
-		);
-	}
-});*/
-
 // A component that will re-render only when urgencies or active state are updated
 // TODO: session code doesn't work with SessionMenuItem yet
 export const PureRouterMenuItemLink = React.createClass({
