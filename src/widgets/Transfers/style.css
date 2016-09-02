@@ -20,3 +20,7 @@
 #home .transfers .stats .popup.trigger {
 	border-bottom: 1px dotted;
 }
+
+.limiter-config .remove.button {
+	margin-top: 5px;
+}
