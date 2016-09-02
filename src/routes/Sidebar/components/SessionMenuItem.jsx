@@ -16,13 +16,11 @@ const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url }, { 
 		className="session-item" 
 		onClick={ evt => onClickItem(evt, routerLocation, url) }
 		urgencies={ unreadInfoStore ? unreadInfoStore.getItemUrgencies(sessionItem) : null }
+		icon={ status }
 	>
-		<div className="left-content">
-			{ status }
-			<span className="session-name">
-				{ name }
-			</span>
-		</div>
+		<span className="session-name">
+			{ name }
+		</span>
 	</RouterMenuItemLink>
 );
 

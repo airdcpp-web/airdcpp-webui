@@ -1,9 +1,11 @@
 'use strict';
 import React from 'react';
+
 import classNames from 'classnames';
 
 import { Link } from 'react-router';
 import CountLabel from 'components/CountLabel';
+import Icon from 'components/semantic/Icon';
 
 
 export const RouterMenuItemLink = ({ url, className, icon, children, onClick, urgencies }) => {
@@ -15,7 +17,7 @@ export const RouterMenuItemLink = ({ url, className, icon, children, onClick, ur
 			onClick={ onClick }
 			onlyActiveOnIndex={ url === '/' }
 		>
-			{ icon ? <i className={ 'icon ' + icon }/> : null }
+			<Icon icon={ icon }/>
 			{ children }
 			{ urgencies ? <CountLabel urgencies={ urgencies }/> : null }
 		</Link>
@@ -33,7 +35,7 @@ RouterMenuItemLink.propTypes = {
 	 */
 	children: React.PropTypes.any.isRequired,
 
-	icon: React.PropTypes.string,
+	icon: React.PropTypes.node,
 
 	/**
 	 * For overriding the default link action (still gives the active class style)
@@ -54,7 +56,7 @@ export const MenuItemLink = ({ className, icon, children, onClick, active, disab
 
 	return (
 		<a className={ itemClass } onClick={ onClick }>
-			{ icon ? <i className={ 'icon ' + icon }/> : null }
+			<Icon icon={ icon }/>
 			{ children }
 		</a>
 	);
