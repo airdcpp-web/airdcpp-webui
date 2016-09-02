@@ -1,4 +1,5 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
@@ -14,7 +15,7 @@ import LoginStore from 'stores/LoginStore';
 import '../style.css';
 
 
-const Transfers = StatisticsDecorator(({ stats }) => (
+const Statistics = StatisticsDecorator(({ stats }) => (
 	<div className="ui list">
 		<ListItem header="Logged in as" description={ LoginStore.user }/>
 		<ListItem header="Client started" description={ ValueFormat.formatRelativeTime(stats.client_started) }/>
@@ -23,6 +24,7 @@ const Transfers = StatisticsDecorator(({ stats }) => (
 ), SystemConstants.STATS_URL, 'Failed to fetch information', 10);
 
 const Application = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 
 	},
@@ -30,9 +32,7 @@ const Application = React.createClass({
 	render() {
 		return (
 			<div className="application-container">
-				<Transfers
-					stats={ this.props.stats }
-				/>
+				<Statistics/>
 				<WidgetDropdown
 					componentId={ this.props.componentId }
 				/>

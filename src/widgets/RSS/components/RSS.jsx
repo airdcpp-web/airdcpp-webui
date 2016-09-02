@@ -1,4 +1,5 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
@@ -67,6 +68,7 @@ const getEntryKey = (entry) => {
 };
 
 const RSS = React.createClass({
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Current widget settings

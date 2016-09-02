@@ -2,6 +2,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import invariant from 'invariant';
+import { LocationContext } from 'mixins/RouterMixin';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
@@ -26,7 +27,11 @@ import SystemActions from 'actions/SystemActions';
 
 
 const AuthenticatedApp = React.createClass({
-	mixins: [ Reflux.connect(LoginStore, 'login'), SetContainerSize ],
+	mixins: [ 
+		Reflux.connect(LoginStore, 'login'), 
+		SetContainerSize,
+		LocationContext,
+	],
 	contextTypes: {
 		router: React.PropTypes.object
 	},
@@ -104,7 +109,7 @@ const AuthenticatedApp = React.createClass({
 		return (
 			<div id="authenticated-app">
 				<ActivityTracker/>
-				<Notifications location={ this.props.location }/>
+				<Notifications/>
 				<LayoutElement className="pushable main-layout" /*sidebar={ sidebar }*/ { ...this.props }>
 					{ this.props.children }
 				</LayoutElement>

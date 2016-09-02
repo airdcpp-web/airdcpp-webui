@@ -26,6 +26,10 @@ const Notifications = React.createClass({
 
 	_notificationSystem: null,
 
+	contextTypes: {
+		routerLocation: React.PropTypes.object.isRequired,
+	},
+
 	_addNotification: function (level, notification) {
 		if ('Notification' in window && Notification.permission === 'granted') {
 			this.showNativeNotification(level, notification);
@@ -120,7 +124,7 @@ const Notifications = React.createClass({
 				action: {
 					label: 'View events',
 					callback: severity === SeverityEnum.NOTIFY ? null : () => { 
-						History.pushSidebar(this.props.location, 'events'); 
+						History.pushSidebar(this.context.routerLocation, 'events'); 
 					}
 				}
 			});
@@ -145,7 +149,7 @@ const Notifications = React.createClass({
 			action: {
 				label: 'View file',
 				callback: () => { 
-					History.pushSidebar(this.props.location, '/files/session/' + file.id); 
+					History.pushSidebar(this.context.routerLocation, '/files/session/' + file.id); 
 				}
 			}
 		});
@@ -164,7 +168,7 @@ const Notifications = React.createClass({
 			action: {
 				label: 'View message',
 				callback: () => { 
-					History.pushSidebar(this.props.location, '/messages/session/' + cid); 
+					History.pushSidebar(this.context.routerLocation, '/messages/session/' + cid); 
 				}
 			}
 		});

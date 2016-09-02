@@ -23,10 +23,12 @@ const toUrgencyMap = (source, urgencies) => {
 	}, {});
 };
 
+// Returns urgency mapping for a message session with an "unread_messages" property
 const messageSessionMapper = (item, urgencyMappings) => {
 	return UrgencyUtils.toUrgencyMap(item.unread_messages, urgencyMappings);
 };
 
+// Returns urgency mapping for a session with a simple "read" property
 const simpleSessionMapper = (item) => {
 	if (!item.read) {
 		return {

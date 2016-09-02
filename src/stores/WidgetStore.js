@@ -33,25 +33,29 @@ const getWidgetInfoById = (id) => {
 
 const createWidget = (layouts, widgetInfo, id, x, y) => {
 	// Add the same widget for all layouts (we are lazy and use the same size for all layouts)
-	Object.keys(cols).forEach(key => {
-		layouts[key] = layouts[key] || [];
-		layouts[key] = layouts[key].concat({ 
+	return Object.keys(cols).reduce((reducedLayouts, key) => {
+		reducedLayouts[key] = layouts[key] || [];
+		reducedLayouts[key] = reducedLayouts[key].concat({ 
 			i: id, 
-			x: x || layouts[key].length * 2 % (cols[key] || 12), 
+			x: x || reducedLayouts[key].length * 2 % (cols[key] || 12), 
 			y: y || 0, 
 			...widgetInfo.size
 		});
-	});
+
+		return reducedLayouts;
+	}, {});
 };
 
 const createDefaultWidget = (layouts, widgetInfo, x, y, name, settings, suffix = '_default') => {
 	const id = widgetInfo.typeId + suffix;
-	createWidget(layouts, widgetInfo, id, x, y);
+	const newLayout = createWidget(layouts, widgetInfo, id, x, y);
 
 	saveSettings(id, {
 		name,
 		widget: settings,
 	});
+
+	return newLayout;
 };
 
 
@@ -100,7 +104,7 @@ const WidgetStore = Reflux.createStore({
 	onCreateSaved(id, settings, widgetInfo) {
 		saveSettings(id, settings);
 
-		createWidget(this.layouts, widgetInfo, id);
+		this.layouts = createWidget(this.layouts, widgetInfo, id);
 
 		//console.log('Widget added', this.layout);
 		this.trigger(this.layouts);
@@ -108,17 +112,21 @@ const WidgetStore = Reflux.createStore({
 
 	onEditSaved(id, settings) {
 		saveSettings(id, settings);
+
+		this.layouts = Object.assign({}, this.layouts);
 		this.trigger(this.layouts);
 	},
 
 	onRemoveConfirmed(id) {
 		BrowserUtils.removeLocalProperty(idToSettingKey(id));
 
-		Object.keys(cols).forEach(key => {
+		this.layouts = Object.keys(cols).reduce((layouts, key) => {
 			if (this.layouts[key]) {
-				this.layouts[key] = reject(this.layouts[key], { i: id });
+				layouts[key] = reject(this.layouts[key], { i: id });
 			}
-		});
+
+			return layouts;
+		}, {});
 
 		this.trigger(this.layouts);
 	},
@@ -144,7 +152,7 @@ const WidgetStore = Reflux.createStore({
 			items: layouts,
 		});
 
-		this.layouts = layouts;
+		this.layouts = Object.assign({}, layouts);
 
 		this.trigger(this.layouts);
 		//console.log('New layout', layout);
