@@ -15,6 +15,7 @@ export default {
 	HOME: 'home',
 	FILELIST: 'browser',
 	SEARCH: 'search',
+	SEARCH_ALTERNATES: 'green zoom',
 	FAVORITE: 'yellow star',
 	HUB: 'sitemap',
 	QUEUE: 'olive arrow circle down',

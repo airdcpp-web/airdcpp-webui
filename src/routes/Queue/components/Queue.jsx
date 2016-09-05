@@ -75,7 +75,15 @@ const Queue = React.createClass({
 					cell={ 
 						<FileActionCell 
 							actions={ QueueActions } 
-							ids={[ 'content', 'sources', 'divider', 'searchBundle', 'removeBundle', 'divider', 'rescan', 'forceShare' ]}
+							ids={[ 
+								'content', 'sources', 
+								'divider', 
+								'search', 'searchBundleAlternates',
+								'divider', 
+								'removeBundle', 
+								'divider', 
+								'rescan', 'forceShare' 
+							]}
 						/> 
 					}
 				/>

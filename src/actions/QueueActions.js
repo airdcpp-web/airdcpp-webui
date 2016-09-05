@@ -10,21 +10,30 @@ import { PriorityEnum } from 'constants/QueueConstants';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
+
+import DownloadableItemActions from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
 
 
 const finishedFailed = bundle => bundle.status.failed && bundle.status.finished;
-const itemNotFinished = file => file.time_finished === 0;
+const itemNotFinished = item => item.time_finished === 0;
 const isDirectoryBundle = bundle => bundle.type.id === 'directory';
 const hasSources = bundle => bundle.sources.total > 0 && itemNotFinished(bundle);
 
 
 export const QueueActions = Reflux.createActions([
-	{ 'searchBundle': { 
+	{ 'search': { 
+		asyncResult: true,
+		access: AccessConstants.SEARCH, 
+		displayName: 'Search (foreground)', 
+		icon: IconConstants.SEARCH,
+	} },
+	{ 'searchBundleAlternates': { 
 		asyncResult: true,
 		access: AccessConstants.QUEUE_EDIT, 
 		displayName: 'Search for alternates', 
-		icon: IconConstants.SEARCH,
+		icon: IconConstants.SEARCH_ALTERNATES,
+		filter: itemNotFinished,
 	} },
 	{ 'setBundlePriority': { 
 		asyncResult: true,
@@ -77,11 +86,12 @@ export const QueueActions = Reflux.createActions([
 		icon: IconConstants.ERROR,
 		filter: finishedFailed,
 	} },
-	{ 'searchFile': { 
+	{ 'searchFileAlternates': { 
 		asyncResult: true,
 		access: AccessConstants.QUEUE_EDIT, 
 		displayName: 'Search for alternates', 
-		icon: IconConstants.SEARCH,
+		icon: IconConstants.SEARCH_ALTERNATES,
+		filter: itemNotFinished,
 	} },
 	{ 'setFilePriority': { 
 		asyncResult: true,
@@ -95,7 +105,6 @@ export const QueueActions = Reflux.createActions([
 		displayName: 'Remove',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.REMOVE,
-		//filter: fileNotFinished,
 	} },
 	{ 'removeSource': { 
 		asyncResult: true,
@@ -179,8 +188,8 @@ QueueActions.removeFinished.listen(function () {
 QueueActions.removeBundleSource.listen(function ({ source, bundle }) {
 	let that = this;
 	return SocketService.delete(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/source/' + source.user.cid)
-		.then(that.completed)
-		.catch(that.failed);
+		.then(that.completed.bind(that, source, bundle))
+		.catch(that.failed.bind(that, source, bundle));
 });
 
 QueueActions.removeFinished.completed.listen(function (data) {
@@ -214,15 +223,35 @@ QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/remove', { 
 		remove_finished: removeFinished,
 	})
-		.then(that.completed)
-		.catch(this.failed);
+		.then(that.completed.bind(that, bundle))
+		.catch(that.failed.bind(that, bundle));
 });
 
-QueueActions.searchBundle.listen(function (bundle) {
+QueueActions.search.listen(function (itemInfo, location) {
+	return DownloadableItemActions.search({ 
+		itemInfo,
+	}, location);
+});
+
+QueueActions.searchBundleAlternates.listen(function (bundle) {
 	let that = this;
 	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/search')
-		.then(that.completed)
-		.catch(this.failed);
+		.then(that.completed.bind(that, bundle))
+		.catch(that.failed.bind(that, bundle));
+});
+
+QueueActions.searchBundleAlternates.completed.listen(function (bundle, data) {
+	NotificationActions.success({ 
+		title: 'Action completed',
+		message: 'The bundle ' + bundle.name + ' was searched for alternates',
+	});
+});
+
+QueueActions.searchBundleAlternates.failed.listen(function (bundle, error) {
+	NotificationActions.error({ 
+		title: 'Action failed',
+		message: 'Failed to search the bundle ' + bundle.name + ' for alternates: ' + error.message,
+	});
 });
 
 QueueActions.removeFile.shouldEmit = function (file) {
@@ -247,7 +276,7 @@ QueueActions.removeFile.confirmed.listen(function (item, removeFinished) {
 		remove_finished: removeFinished,
 	})
 		.then(QueueActions.removeFile.completed.bind(that, target))
-		.catch(QueueActions.removeFile.failed);
+		.catch(QueueActions.removeFile.failed.bind(that, target));
 });
 
 QueueActions.removeFile.completed.listen(function (target, data) {
@@ -268,7 +297,7 @@ QueueActions.removeSource.listen(function (item) {
 		user,
 	})
 		.then(that.completed.bind(that, user))
-		.catch(this.failed);
+		.catch(that.failed.bind(that, user));
 });
 
 QueueActions.removeSource.completed.listen(function (user, data) {
@@ -286,11 +315,25 @@ QueueActions.content.listen(function (data, location) {
 	History.pushModal(location, location.pathname + '/content', OverlayConstants.BUNDLE_CONTENT_MODAL, { bundle: data });
 });
 
-QueueActions.searchFile.listen(function (file) {
+QueueActions.searchFileAlternates.listen(function (file) {
 	let that = this;
 	return SocketService.post(QueueConstants.FILE_URL + '/' + file.id + '/search')
-		.then(that.completed)
-		.catch(this.failed);
+		.then(that.completed.bind(that, file))
+		.catch(this.failed.bind(that, file));
+});
+
+QueueActions.searchFileAlternates.completed.listen(function (file, data) {
+	NotificationActions.success({ 
+		title: 'Action completed',
+		message: 'The file ' + file.name + ' was searched for alternates',
+	});
+});
+
+QueueActions.searchFileAlternates.failed.listen(function (file, error) {
+	NotificationActions.error({ 
+		title: 'Action failed',
+		message: 'Failed to search the file ' + file.name + ' for alternates: ' + error.message,
+	});
 });
 
 QueueActions.setFilePriority.listen(function (file, newPrio) {
@@ -298,8 +341,8 @@ QueueActions.setFilePriority.listen(function (file, newPrio) {
 	return SocketService.patch(QueueConstants.FILE_URL + '/' + file.id, {
 		priority: newPrio
 	})
-		.then(that.completed)
-		.catch(that.failed);
+		.then(that.completed.bind(that, file))
+		.catch(that.failed.bind(that, file));
 });
 
 QueueActions.setFileAutoPriority.listen(function (file, autoPrio) {
@@ -307,8 +350,8 @@ QueueActions.setFileAutoPriority.listen(function (file, autoPrio) {
 	return SocketService.patch(QueueConstants.FILE_URL + '/' + file.id, {
 		auto_priority: autoPrio
 	})
-		.then(that.completed)
-		.catch(that.failed);
+		.then(that.completed.bind(that, file))
+		.catch(that.failed.bind(that, file));
 });
 
 export default QueueActions;

@@ -51,7 +51,11 @@ const BundleFileTable = React.createClass({
 					cell={ 
 						<FileActionCell 
 							actions={ QueueActions } 
-							ids={[ 'searchFile', 'removeFile' ]}
+							ids={[ 
+								'search', 'searchFileAlternates', 
+								'divider',
+								'removeFile' 
+							]}
 						/> 
 					}
 				/>
