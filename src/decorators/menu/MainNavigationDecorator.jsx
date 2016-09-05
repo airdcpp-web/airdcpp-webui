@@ -130,7 +130,8 @@ export default function (Component) {
 		},
 
 		shouldComponentUpdate(nextProps, nextState, nextContext) {
-			return nextContext.routerLocation.pathname !== this.context.routerLocation.pathname;
+			// Location state or path has changed?
+			return nextContext.routerLocation !== this.context.routerLocation;
 		},
 
 		render() {
