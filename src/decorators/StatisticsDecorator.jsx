@@ -5,7 +5,7 @@ import Message from 'components/semantic/Message';
 
 // Decorator for statistics pages that fetch the content from API
 export default function (Component, fetchUrl, unavailableMessage, fetchIntervalSeconds = 0) {
-	const StatisticsPageDecorator = React.createClass({
+	const StatisticsDecorator = React.createClass({
 		componentDidMount() {
 			this.fetchStats();
 		},
@@ -54,5 +54,5 @@ export default function (Component, fetchUrl, unavailableMessage, fetchIntervalS
 		},
 	});
 
-	return StatisticsPageDecorator;
+	return StatisticsDecorator;
 }

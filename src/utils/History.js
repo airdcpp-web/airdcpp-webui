@@ -71,7 +71,7 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 };
 
 // Push a new sidebar state or merge the data into an existing one (if the sidebar is open already) 
-const getSidebarState = (currentLocation, data) => {
+const getSidebarState = (currentLocation, data = {}) => {
 	console.assert(currentLocation, 'Current location not supplied for overlay creation');
 	console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
 
@@ -80,7 +80,7 @@ const getSidebarState = (currentLocation, data) => {
 		// We are opening the sidebar
 		state[OverlayConstants.SIDEBAR_ID] = {
 			returnTo: getModelessPath(currentLocation),
-			data: data || {},
+			data,
 		};
 
 		return state;
@@ -90,14 +90,14 @@ const getSidebarState = (currentLocation, data) => {
 	return mergeOverlayData(state, OverlayConstants.SIDEBAR_ID, data || {});
 };
 
-const addModalState = (currentLocation, overlayId, data, pathname) => {
+const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
 	console.assert(currentLocation, 'Current location not supplied for overlay creation');
 	console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
 
 	const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
 	state[overlayId] = {
 		//returnTo: currentLocation.pathname,
-		data: data || {},
+		data,
 		pathname,
 	};
 

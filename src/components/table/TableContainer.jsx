@@ -182,8 +182,6 @@ const TableContainer = React.createClass({
 		return (
 			<div className="table-container-wrapper">
 				<Table
-					ref="table"
-
 					width={this.state.width}
 					height={this.state.height} 
 					onContentHeightChange={this._onContentHeightChange}
