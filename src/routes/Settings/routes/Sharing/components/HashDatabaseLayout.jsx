@@ -1,10 +1,9 @@
 import React from 'react';
 import SocketService from 'services/SocketService';
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import Checkbox from 'components/semantic/Checkbox';
 import Button from 'components/semantic/Button';
-import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import HashConstants from 'constants/HashConstants';
@@ -55,32 +54,10 @@ const SizeRow = ({ title, size }) => (
 );
 
 const HashDatabaseLayout = React.createClass({
-	mixins: [ SocketSubscriptionMixin() ],
-	onSocketConnected(addSocketListener) {
-		addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, this.onStatusReceived);
-	},
-
 	getInitialState() {
 		return {
-			status: null,
 			verify: false,
 		};
-	},
-
-	componentDidMount() {
-		this.updateStatus();
-	},
-
-	onStatusReceived(data) {
-		this.setState({ status: data });
-	},
-
-	updateStatus() {
-		SocketService.get(HashConstants.DATABASE_STATUS_URL)
-			.then(this.onStatusReceived)
-			.catch(error => 
-				console.error('Failed to get status: ' + error)
-			);
 	},
 
 	handleOptimize() {
@@ -91,17 +68,13 @@ const HashDatabaseLayout = React.createClass({
 	},
 
 	render() {
-		const { status } = this.state;
-		if (!status) {
-			return <Loader text="Loading database status" inline={false}/>;
-		}
-
+		const { status } = this.props;
 		return (
 			<div className="ui segment hash-database">
 				<h3 className="header">Hash database</h3>
 				<div className="ui grid two column">
-					<SizeRow title="File index size" size={status.file_index_size}/>
-					<SizeRow title="Hash store size" size={status.hash_store_size}/>
+					<SizeRow title="File index size" size={ status.file_index_size }/>
+					<SizeRow title="Hash store size" size={ status.hash_store_size }/>
 				</div>
 				{ LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT) ? (
 					<OptimizeLayout
@@ -115,4 +88,11 @@ const HashDatabaseLayout = React.createClass({
 	}
 });
 
-export default HashDatabaseLayout;
+export default DataProviderDecorator(HashDatabaseLayout, {
+	urls: {
+		status: HashConstants.DATABASE_STATUS_URL,
+	},
+	onSocketConnected: (addSocketListener, { refetchData }) => {
+		addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, refetchData);
+	},
+});

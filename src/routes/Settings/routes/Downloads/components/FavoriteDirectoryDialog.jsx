@@ -35,24 +35,6 @@ const FavoriteDirectoryDialog = React.createClass({
 		};
 	},
 
-	componentDidMount() {
-		this.fetchDirectories();
-	},
-
-	onDirectoriesReceived(data) {
-		this.setState({
-			virtualNames: data.map(item => item.name, []),
-		});
-	},
-
-	fetchDirectories() {
-		SocketService.get(FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL)
-			.then(this.onDirectoriesReceived)
-			.catch(error => 
-				console.error('Failed to load directories: ' + error)
-			);
-	},
-
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
 			const sourceData = FormUtils.valueMapToInfo({ 
@@ -96,16 +78,12 @@ const FavoriteDirectoryDialog = React.createClass({
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;
 			fieldOptions['config'] = {
-				suggestionGetter: () => this.state.virtualNames,
+				suggestionGetter: () => this.props.virtualNames,
 			};
 		}
 	},
 
 	render: function () {
-		if (!this.state.virtualNames) {
-			return null;
-		}
-
 		const title = this._isNew ? 'Add favorite directory' : 'Edit favorite directory';
 
 		const context = {
@@ -135,4 +113,11 @@ const FavoriteDirectoryDialog = React.createClass({
 	}
 });
 
-export default FavoriteDirectoryDialog;
+export default DataProviderDecorator(FavoriteDirectoryDialog, {
+	urls: {
+		virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+	},
+	dataConverters: {
+		virtualNames: data => data.map(item => item.name, []),
+	},
+});

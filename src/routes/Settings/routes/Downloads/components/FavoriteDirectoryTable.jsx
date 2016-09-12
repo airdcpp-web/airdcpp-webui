@@ -4,15 +4,10 @@ import FavoriteDirectoryActions from 'actions/FavoriteDirectoryActions';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 
 import ActionButton from 'components/ActionButton';
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
 
-import IconConstants from 'constants/IconConstants';
-import SocketService from 'services/SocketService';
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 
 const Row = ({ directory }) => (
@@ -32,77 +27,42 @@ const Row = ({ directory }) => (
 	</tr>
 );
 
-const FavoriteDirectoryPage = React.createClass({
-	mixins: [ SocketSubscriptionMixin() ],
-	onSocketConnected(addSocketListener) {
-		addSocketListener(FavoriteDirectoryConstants.MODULE_URL, FavoriteDirectoryConstants.DIRECTORIES_UPDATED, this.onDirectoriesReceived);
+const getRow = (directory) => {
+	return (
+		<Row 
+			key={ directory.path } 
+			directory={ directory }
+		/>
+	);
+};
+
+const FavoriteDirectoryPage = ({ directories }) => (
+	<div id="directory-table">
+		<ActionButton
+			action={ FavoriteDirectoryActions.create }
+		/>
+
+		{ directories.length === 0 ? null : (
+				<table className="ui striped table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Path</th>
+						</tr>
+					</thead>
+					<tbody>
+						{ directories.map(getRow) }
+					</tbody>
+				</table>
+			) }
+	</div>
+);
+
+export default DataProviderDecorator(FavoriteDirectoryPage, {
+	urls: {
+		directories: FavoriteDirectoryConstants.DIRECTORIES_URL,
 	},
-
-	getInitialState() {
-		return {
-			directories: null,
-		};
+	onSocketConnected: (addSocketListener, { refetchData }) => {
+		addSocketListener(FavoriteDirectoryConstants.MODULE_URL, FavoriteDirectoryConstants.DIRECTORIES_UPDATED, refetchData);
 	},
-
-	componentDidMount() {
-		this.fetchDirectories();
-	},
-
-	onDirectoriesReceived(data) {
-		this.setState({
-			directories: data,
-		});
-	},
-
-	fetchDirectories() {
-		SocketService.get(FavoriteDirectoryConstants.DIRECTORIES_URL)
-			.then(this.onDirectoriesReceived)
-			.catch(error => 
-				console.error('Failed to load directories: ' + error)
-			);
-	},
-
-	getRow(directory) {
-		return (
-			<Row 
-				key={ directory.path } 
-				directory={ directory }
-			/>
-		);
-	},
-
-	render() {
-		if (!this.state.directories) {
-			return <Loader text="Loading directories"/>;
-		}
-
-		return (
-			<div id="directory-table">
-				<ActionButton
-					action={ FavoriteDirectoryActions.create }
-				/>
-
-				{ this.state.directories.length === 0 ? (
-						<Message
-							title="No directories configured"
-							icon={ IconConstants.SETTINGS }
-						/>
-					) : (
-						<table className="ui striped table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Path</th>
-								</tr>
-							</thead>
-							<tbody>
-							{ this.state.directories.map(this.getRow) }
-							</tbody>
-						</table>
-					) }
-			</div>
-		);
-	}
 });
-
-export default FavoriteDirectoryPage;
