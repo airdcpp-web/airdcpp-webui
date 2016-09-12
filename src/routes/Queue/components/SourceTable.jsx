@@ -79,7 +79,8 @@ const SourceTable = ({ sources, bundle, error }) => {
 							key={ source.user.cid }
 							source={ source }
 							bundle={ bundle }
-						/>) }
+						/>
+					) }
 				</tbody>
 			</table>
 		</div>

@@ -21,10 +21,9 @@ const SourceDialog = React.createClass({
 				fullHeight={ true }
 				{...this.props}
 			>
-					<SourceTable 
-						bundle={ bundle }
-					/>
-				}
+				<SourceTable 
+					bundle={ bundle }
+				/>
 			</Modal>
 		);
 	}
