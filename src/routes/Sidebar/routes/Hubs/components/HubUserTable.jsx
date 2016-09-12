@@ -25,13 +25,7 @@ const NickCell = ({ cellData, rowData, ...props }) => (
 const HubUserTable = React.createClass({
 	propTypes: {
 		session: React.PropTypes.object, // required
-
-		//location: React.PropTypes.object, // required
 	},
-
-	//contextTypes: {
-	//	routerLocation: React.PropTypes.object.isRequired,
-	//},
 
 	rowClassNameGetter(user) {
 		return user.flags.join(' ');
@@ -125,6 +119,12 @@ const HubUserTable = React.createClass({
 					columnKey="ip6"
 					flexGrow={3}
 					cell={ <IpCell/> }
+				/>
+				<Column
+					name="Upload slots"
+					width={60}
+					columnKey="upload_slots"
+					flexGrow={3}
 				/>
 			</VirtualTable>
 		);

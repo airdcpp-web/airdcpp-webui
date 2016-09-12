@@ -36,9 +36,14 @@ export default function (Component, settings) {
 			 */
 			dataConverters: React.PropTypes.func,
 
-
+			/**
+			 * Text to show while loading data (use null to disable spinner)
+			 */
 			loaderText: React.PropTypes.node,
 
+			/**
+			 * Should the decorated components handle data fetching failures?
+			 */
 			renderOnError: React.PropTypes.bool,
 		},
 

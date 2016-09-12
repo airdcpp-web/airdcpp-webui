@@ -20,6 +20,10 @@ const getCellContent = (cellData) => {
 		return cellData ? 'Yes' : 'No';
 	}
 
+	if (cellData === 0) {
+		return null;
+	}
+
 	return cellData;
 };
 
