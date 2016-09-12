@@ -104,6 +104,7 @@ export default function (Component, settings) {
 				.catch(this.onDataFetchFailed);
 		},
 
+		// Convert the data array to key-value props
 		reduceData(reduced, data, index) {
 			const { urls, dataConverters } = this.props;
 			const propKey = Object.keys(urls)[index];
@@ -112,10 +113,9 @@ export default function (Component, settings) {
 		},
 
 		onDataFetched(values) {
-			// Convert the data array to key-value props
-			this.setState({
-				data: values.reduce(this.reduceData, {}),
-			});
+			const data = values.reduce(this.reduceData, {});
+
+			this.mergeData(data);
 		},
 
 		onDataFetchFailed(error) {
