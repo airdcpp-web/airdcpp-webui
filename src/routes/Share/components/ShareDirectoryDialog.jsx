@@ -117,11 +117,13 @@ const ShareDirectoryDialog = React.createClass({
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
 			});
 		} else if (id === 'virtual_name') {
+			fieldOptions['help'] = 'Directories sharing the same virtual name will be merged in filelist';
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;
 			fieldOptions['config'] = {
 				suggestionGetter: () => this.state.virtualNames,
 			};
+
 		}
 	},
 
