@@ -12,7 +12,7 @@ const ShareProfileDecorator = function (Component, listHidden, addSize = true) {
 		}
 
 		return {
-			profile,
+			...profile,
 			name,
 		};
 	};

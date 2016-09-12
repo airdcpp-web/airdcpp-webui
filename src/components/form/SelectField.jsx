@@ -1,7 +1,6 @@
-'use strict';
-
 import React from 'react';
 import Select from 'react-select';
+import invariant from 'invariant';
 
 import t from 'utils/tcomb-form';
 
@@ -36,6 +35,7 @@ const ReactSelect = t.form.Form.templates.select.clone({
 		// translate the option model from tcomb to react-select
 		const options = locals.options.map(({ value, text }) => ({ value, label: text }));
 
+		invariant(locals.value.every(selectedOption => options.find(anyOption => anyOption.value === selectedOption)), 'All current values were not found from the option list');
 		return (
 			<Select
 				value={locals.value}

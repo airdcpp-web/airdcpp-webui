@@ -165,7 +165,7 @@ const ShareDirectoryDialog = React.createClass({
 					sourceData={this.state.sourceData}
 					defaultValues={ {
 						// Add the default profile for new entries
-						profiles: [ this.props.profiles.find(profile => profile.default) ],
+						profiles: [ this.props.profiles.find(profile => profile.default).id ],
 					} }
 					context={ context }
 				/>

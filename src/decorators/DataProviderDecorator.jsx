@@ -34,7 +34,7 @@ export default function (Component, settings) {
 			 * Key-value map of prop names and functions 
 			 * Converter functions receives the fetched data as parameter
 			 */
-			dataConverters: React.PropTypes.func,
+			dataConverters: React.PropTypes.object,
 
 			/**
 			 * Text to show while loading data (use null to disable spinner)

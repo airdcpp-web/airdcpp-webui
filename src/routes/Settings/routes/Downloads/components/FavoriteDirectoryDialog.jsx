@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
