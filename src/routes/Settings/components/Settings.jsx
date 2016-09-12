@@ -26,6 +26,10 @@ const menu = [
 		],
 		advancedMenuItems: [
 			{ 
+				title: 'Ignored users', 
+				url: 'ignored-users',
+				noSave: true,
+			}, { 
 				title: 'Miscellaneous', 
 				url: 'miscellaneous' 
 			},

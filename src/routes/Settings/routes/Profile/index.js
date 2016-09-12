@@ -10,6 +10,9 @@ module.exports = {
 				path: 'away', 
 				component: require('./components/AwayPage').default, 
 			}, {
+				path: 'ignored-users', 
+				component: require('./components/IgnorePage').default, 
+			}, {
 				path: 'miscellaneous', 
 				component: require('./components/MiscPage').default, 
 			} ]);

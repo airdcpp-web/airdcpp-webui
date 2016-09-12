@@ -4,8 +4,7 @@ export default {
 	IGNORES_URL: MODULE_URL + '/ignores',
 	IGNORE_URL: MODULE_URL + '/ignore',
 
-	/*PROFILE_ADDED: 'share_profile_added',
-	PROFILE_UPDATED: 'share_profile_updated',
-	PROFILE_REMOVED: 'share_profile_removed',*/
+	IGNORE_ADDED: 'ignored_user_added',
+	IGNORE_REMOVED: 'ignored_user_removed',
 }
 ;
