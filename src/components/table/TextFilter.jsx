@@ -102,6 +102,7 @@ const FilterBox = React.createClass({
 					<Dropdown 
 						className="filter-method right top pointing"
 						button={ true }
+						direction="upward"
 					>
 						<div className="header">Match type</div>
 						{ Object.keys(FilterMethod)
