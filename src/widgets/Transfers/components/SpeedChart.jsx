@@ -1,9 +1,19 @@
 import React from 'react';
 
-import { Charts, ChartContainer, ChartRow, YAxis, AreaChart } from 'react-timeseries-charts';
+import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler } from 'react-timeseries-charts';
 import SetContainerSize from 'mixins/SetContainerSize';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+
+const upDownStyler = styler([
+	{ 
+		key: 'in',
+		color: '#C8D5B8',
+	}, {
+		key: 'out', 
+		color: 'lightcoral',
+	}
+]);
 
 const SpeedChart = React.createClass({
 	mixins: [ SetContainerSize, PureRenderMixin ],
@@ -23,6 +33,7 @@ const SpeedChart = React.createClass({
 								axis="traffic"
 								series={ trafficSeries }
 								columns={{ up: [ 'in' ], down: [ 'out' ] }}
+								style={ upDownStyler }
 							/>
 						</Charts>
 						<YAxis
