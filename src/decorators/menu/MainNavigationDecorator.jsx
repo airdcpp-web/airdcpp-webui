@@ -1,5 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
 
 import { PureRouterMenuItemLink } from 'components/semantic/MenuItem';
 

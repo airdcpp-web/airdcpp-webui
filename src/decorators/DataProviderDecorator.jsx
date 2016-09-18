@@ -126,7 +126,7 @@ export default function (Component, settings) {
 		},
 
 		render() {
-			const { loaderText, dataConverter, onSocketConnected, urls, renderOnError, ...other } = this.props;
+			const { loaderText, dataConverter, onSocketConnected, urls, renderOnError, ...other } = this.props; // eslint-disable-line
 			const { data, error } = this.state;
 
 			if (!data && !error) {

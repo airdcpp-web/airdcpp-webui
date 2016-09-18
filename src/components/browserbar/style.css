@@ -53,6 +53,14 @@
 * Tested with download dialog (as it was the most narrow one)
 */
 
+.browserbar .section-caption {
+	max-width: 450px;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 100%;
+	line-height: 1.2;
+}
+
 @media (max-width: 700px) {
 	.browserbar .section-caption {
 		max-width: 150px;
@@ -63,12 +71,4 @@
 	.browserbar .section-caption {
 		max-width: 200px;
 	}
-}
-
-.browserbar .section-caption {
-	max-width: 450px;
-	overflow: hidden;
-	white-space: nowrap;
-	width: 100%;
-	line-height: 1.2;
 }
