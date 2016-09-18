@@ -53,8 +53,12 @@ section#container-main,
 	margin-right: 5px !important;
 }
 
-div.dropdown:not(.table-items) {
+.dropdown:not(.table-items):not(.fluid) {
   display: inline-flex !important;
+}
+
+.dropdown.fluid {
+  display: flex !important;
 }
 
 .popup.trigger:hover {

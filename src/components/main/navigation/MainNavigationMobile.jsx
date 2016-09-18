@@ -54,7 +54,11 @@ const MainNavigationMobile = React.createClass({
 		return (
 			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
 				{ mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-				<Dropdown caption={ moreCaption } className="right" triggerIcon="">
+				<Dropdown 
+					caption={ moreCaption } 
+					className="right fluid" 
+					triggerIcon=""
+				>
 					{ configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
 					<div className="divider"/>
 					{ menuItemGetter(logoutItem.onClick, true, logoutItem) }
