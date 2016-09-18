@@ -28,14 +28,10 @@
 	margin: 0px !important;
 }
 
-.browserbar.overflow .ui.dropdown .menu {
+.browserbar.overflow .path-token.current > div {
 	left: auto !important;
 	right: 0 !important;
-}
-
-.browserbar .ui.dropdown {
-	margin-right: 0px !important;
-	display: flex;
+	align-items: baseline;
 }
 
 .browserbar .ui.dropdown .angle.down.icon {
@@ -51,19 +47,26 @@
 	width: 100% !important;
 }
 
+/* 
+* Max width is meant to prevent the parent directory
+* from going off-screen if the current directory is really long (thus preventing navigation)
+* Tested with download dialog (as it was the most narrow one)
+*/
+
 @media (max-width: 700px) {
 	.browserbar .section-caption {
 		max-width: 150px;
 	}
 }
 
-@media (max-width: 1000) {
+@media (max-width: 1000px) {
 	.browserbar .section-caption {
 		max-width: 200px;
 	}
 }
 
 .browserbar .section-caption {
+	max-width: 450px;
 	overflow: hidden;
 	white-space: nowrap;
 	width: 100%;
