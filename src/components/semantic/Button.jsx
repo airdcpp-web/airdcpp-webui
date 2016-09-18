@@ -1,6 +1,9 @@
+/* @flow */
+
 import React from 'react';
 
 import classNames from 'classnames';
+import Icon from 'components/semantic/Icon';
 
 import 'semantic-ui/components/button.min.css';
 
@@ -15,7 +18,7 @@ const Button = ({ className, loading, icon, caption, loadingCaption, disabled, .
 
 	return (
 		<div className={ buttonStyle } { ...other }>
-			{ icon ? <i className={ icon + ' icon' }/> : null }
+			<Icon icon={ icon }/>
 			{ caption }
 		</div>
 	);

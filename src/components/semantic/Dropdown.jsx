@@ -4,7 +4,9 @@ import invariant from 'invariant';
 
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import DropdownCaption from './DropdownCaption';
+import Icon from './Icon';
 
 import 'semantic-ui/components/dropdown';
 import 'semantic-ui/components/dropdown.min.css';
@@ -92,17 +94,12 @@ const Dropdown = React.createClass({
 			'dropdown',
 			'item',
 			this.props.className,
-			{ 'button': button },
+			{ 'icon button': button },
 			{ 'labeled': button && caption },
 			{ 'left-icon': leftIcon },
-			'icon',
 		);
 
-		let icon = triggerIcon;
-		if (typeof icon === 'string') {
-			icon = <i className={ triggerIcon + ' trigger icon' }/>;
-		}
-
+		let icon = <Icon icon={ triggerIcon } className="trigger"/>;
 		return (
 			<div className={ className }>
 				{ leftIcon && caption ? icon : null }
