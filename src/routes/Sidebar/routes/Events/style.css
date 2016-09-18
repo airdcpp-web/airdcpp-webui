@@ -24,16 +24,21 @@
 	width: 100%;
 }
 
-#sidebar .simple-layout .message-list {
+
+#sidebar .system-log .message-list {
 	width: 100%;
 }
 
-#sidebar .simple-layout .message-info {
+#sidebar .system-log .message-info {
 	display: flex;
 	margin-top: 10px;
 	margin-bottom: 5px;
 }
 
-#sidebar .simple-layout .timestamp {
+#sidebar .system-log .timestamp {
 	color: gray;
+}
+
+#sidebar .system-log .message-text {
+	overflow: hidden;
 }

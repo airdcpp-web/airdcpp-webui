@@ -48,8 +48,8 @@
 }
 
 /* 
-* Max width is meant to prevent the parent directory
-* from going off-screen if the current directory is really long (thus preventing navigation)
+* Max width is meant to prevent the parent directory from going off-screen
+* if the currently selected directory is really long (thus preventing navigation)
 * Tested with download dialog (as it was the most narrow one)
 */
 
