@@ -80,8 +80,6 @@ const Dropdown = React.createClass({
 
 	getDefaultProps() {
 		return {
-			caption: null,
-			className: '',
 			triggerIcon: 'angle down',
 			direction: 'auto',
 		};

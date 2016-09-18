@@ -11,7 +11,7 @@ const ActionButton = ({ action, itemData, icon = true, ...other }, { routerLocat
 
 	return (
 		<Button
-			icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : '' }
+			icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : null }
 			onClick={ () => itemData ? action(itemData, routerLocation) : action(routerLocation) }
 			caption={ action.displayName }
 			{ ...other }
