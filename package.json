@@ -69,6 +69,7 @@
     "react-grid-layout": "^0.13.0",
     "react-linkify": "^0.1.1",
     "react-notification-system": "^0.2.5",
+    "react-resizable-box": "^1.7.0",
     "react-router": "^2.0.0",
     "react-select": "^1.0.0-rc",
     "react-timeseries-charts": "^0.10.0",
