@@ -53,19 +53,17 @@ const Sidebar = React.createClass({
 	},
 
 	render() {
-		// Ref hack because of https://github.com/bokuweb/react-resizable-box/issues/45
 		return (
 			<Resizable
-				ref={ c => {
-					if (c) {
-						ReactDOM.findDOMNode(c).setAttribute('id', 'sidebar');
-					}
-				} }
 				width={ Math.min(this.initialWidth, window.innerWidth) }
 				height={ window.innerHeight }
 				minWidth={ 500 }
-				maxWidth={ window.innerWidth }
-				customClass="ui right vertical sidebar" 
+				maxWidth={ window.innerWidth } 
+
+				extendsProps={{
+					id: 'sidebar',
+					className: 'ui right vertical sidebar',
+				}}
 
 				isResizable={
 					{ top:false, right:false, bottom:false, left: !BrowserUtils.useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
