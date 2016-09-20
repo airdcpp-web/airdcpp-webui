@@ -119,7 +119,8 @@ module.exports = {
 			path.resolve('./src'),
 			'node_modules'
 		],
-		extensions: [ '', '.js', '.jsx' ],
+		extensions: [ '.js', '.jsx' ],
+		enforceExtension: false,
 		alias: {
 			'semantic-ui' : path.join(__dirname, 'node_modules/semantic-ui-css')
 		}

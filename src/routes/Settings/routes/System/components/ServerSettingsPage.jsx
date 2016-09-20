@@ -23,6 +23,9 @@ const TlsEntry = {
 
 const Generic = {
 	web_server_threads: t.Positive,
+	default_idle_timeout: t.Positive,
+	ping_interval: t.Positive,
+	ping_timeout: t.Positive,
 };
 
 const ServerSettingsPage = React.createClass({
