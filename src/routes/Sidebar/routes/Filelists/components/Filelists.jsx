@@ -37,26 +37,31 @@ const ItemHandler = {
 
 		return UserItemHandler.itemHeaderGetter(session, location, actionMenu);
 	},
+
+	itemDescriptionGetter(session) {
+		return session.share_profile ? null : UserItemHandler.itemDescriptionGetter(session);
+	},
 };
 
 const Filelists = React.createClass({
 	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 
 	render() {
+		const { params, ...other } = this.props;
 		return (
 			<SessionLayout 
-				activeId={this.props.params ? this.props.params.id : null}
+				activeId={ params.id }
 				baseUrl="filelists"
 				itemUrl="filelists/session"
-				location={this.props.location} 
-				items={this.state.filelists}
+				items={ this.state.filelists }
 				newButtonCaption="Open new"
-				disableSideMenu={true}
+				disableSideMenu={ true }
 				editAccess={ AccessConstants.FILELISTS_EDIT }
 				actions={ FilelistActions }
 				unreadInfoStore={ FilelistSessionStore }
 
 				{ ...ItemHandler }
+				{ ...other }
 			>
 				{ this.props.children }
 			</SessionLayout>

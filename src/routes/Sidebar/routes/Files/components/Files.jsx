@@ -44,12 +44,12 @@ const Files = React.createClass({
 			);
 		}
 
+		const { params, ...other } = this.props;
 		return (
 			<SessionLayout 
-				activeId={ this.props.params ? this.props.params.id : null }
+				activeId={ params.id }
 				baseUrl="files"
 				itemUrl="files/session"
-				location={this.props.location} 
 				items={ this.state.files }
 				disableSideMenu={true}
 				editAccess={ AccessConstants.VIEW_FILE_EDIT }
@@ -57,6 +57,7 @@ const Files = React.createClass({
 				unreadInfoStore={ ViewFileStore }
 
 				{ ...ItemHandler }
+				{ ...other }
 			>
 				{ this.props.children }
 			</SessionLayout>

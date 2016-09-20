@@ -16,13 +16,13 @@ const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
 	render() {
+		const { params, ...other } = this.props;
 		return (
 			<SessionLayout 
-				activeId={this.props.params ? this.props.params.id : null}
+				activeId={ params.id }
 				baseUrl="messages"
 				itemUrl="messages/session"
-				location={this.props.location}
-				items={this.state.chatSessions}
+				items={ this.state.chatSessions }
 				newButtonCaption="New session"
 				unreadInfoStore={ PrivateChatSessionStore }
 				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
@@ -30,6 +30,7 @@ const Messages = React.createClass({
 				actionIds={ [ 'clear' ] }
 
 				{ ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
+				{ ...other }
 			>
 				{ this.props.children }
 			</SessionLayout>

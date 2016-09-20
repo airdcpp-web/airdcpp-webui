@@ -5,12 +5,15 @@ import invariant from 'invariant';
 import BrowserUtils from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import OverlayDecorator from 'decorators/OverlayDecorator';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Resizable from 'react-resizable-box';
+import SetContainerSize from 'mixins/SetContainerSize';
 
 import '../style.css';
 
 
 const Sidebar = React.createClass({
+	mixins: [ PureRenderMixin, SetContainerSize ],
 	propTypes: {
 		context: React.PropTypes.string,
 	},
@@ -46,6 +49,7 @@ const Sidebar = React.createClass({
 
 	onResizeStop(direction, styleSize, { width }) {
 		BrowserUtils.saveLocalProperty('sidebar_width', width);
+		this.setState({ width });
 	},
 
 	render() {
@@ -64,12 +68,14 @@ const Sidebar = React.createClass({
 				customClass="ui right vertical sidebar" 
 
 				isResizable={
-					{ top:false, right:false, bottom:false, left:true, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
+					{ top:false, right:false, bottom:false, left: !BrowserUtils.useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
 				}
 				onResizeStop={ this.onResizeStop }
 			>
 				<div id="sidebar-container">
-					{ this.state.visible ? this.props.children : <Loader text=""/> }
+					{ !this.state.visible ? <Loader text=""/> : React.cloneElement(this.props.children, {
+						width: this.state.width,
+					}) }
 				</div>
 			</Resizable>
 		);

@@ -6,6 +6,10 @@
   padding: .78571429em 1.1em !important;
 }
 
+.session-container.horizontal .ui.vertical.menu .item>i.icon {
+  margin: 0 .35714286em 0 0 !important;
+}
+
 .session-container.vertical {
   padding: 15px;
   display: flex;

@@ -58,7 +58,7 @@ const SessionLayout = React.createClass({
 		/**
 		 * Function receiving an item object that returns the description (subheader) of the item
 		 */
-		itemDescriptionGetter: React.PropTypes.func,
+		itemDescriptionGetter: React.PropTypes.func.isRequired,
 
 		/**
 		 * Function receiving an item object that returns icon for a item
@@ -127,7 +127,7 @@ const SessionLayout = React.createClass({
 	},
 
 	findItem(items, id) {
-		return items.find(item => item.id == id); // Ignore the type because of local storage
+		return items.find(item => item.id === id);
 	},
 
 	componentWillReceiveProps(nextProps) {
@@ -351,7 +351,10 @@ const SessionLayout = React.createClass({
 	render() {
 		const children = this.getChildren();
 
-		const Component = this.props.disableSideMenu || BrowserUtils.useMobileLayout() ? TopMenuLayout : SideMenuLayout;
+		const { disableSideMenu, width } = this.props;
+		const useTopMenu = disableSideMenu || BrowserUtils.useMobileLayout() || width < 700;
+		
+		const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
 		return (
 			<Component 
 				itemIcon={ this.getItemIcon() }

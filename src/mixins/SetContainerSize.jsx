@@ -2,6 +2,7 @@ import throttle from 'lodash/throttle';
 import ReactDOM from 'react-dom';
 
 
+// Update the container width and height when the browser window is being resized
 const SetContainerSize = {
 	getInitialState: function () {
 		return {
