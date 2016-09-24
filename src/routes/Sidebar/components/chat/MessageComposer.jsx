@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import BrowserUtils from 'utils/BrowserUtils';
-import NotificationActions from 'actions/NotificationActions';
+import ChatCommandHandler from './ChatCommandHandler';
 
 const ENTER_KEY_CODE = 13;
 
@@ -11,13 +11,36 @@ const ENTER_KEY_CODE = 13;
 const MessageComposer = React.createClass({
 	propTypes: {
 		/**
-		 * Handles sending of the message. Receives the text as param.
+		 * Actions for this chat session type
 		 */
-		handleSend: React.PropTypes.func.isRequired,
+		actions: React.PropTypes.object.isRequired,
+		session: React.PropTypes.object.isRequired,
 	},
 
 	contextTypes: {
 		routerLocation: React.PropTypes.object.isRequired,
+	},
+
+	handleCommand(text) {
+		let command, params;
+
+		{
+			// Parse the command
+			const whitespace = text.indexOf(' ');
+			if (whitespace === -1) {
+				command = text.substr(1);
+			} else {
+				command = text.substr(1, whitespace - 1);
+				params = text.substr(whitespace + 1);
+			}
+		}
+
+		ChatCommandHandler(this.props).handle(command, params);
+	},
+
+	handleSend(message) {
+		const { actions, session } = this.props;
+		actions.sendMessage(session, message);
 	},
 
 	getStorageKey(context) {
@@ -97,12 +120,10 @@ const MessageComposer = React.createClass({
 		const text = this.state.text.replace(/\s+$/, '');
 
 		if (text) {
-			if (text[0] === '/' && text.indexOf('/me') !== 0) {
-				NotificationActions.info({
-					title: 'Unknown command: ' + text,
-				});
+			if (text[0] === '/') {
+				this.handleCommand(text);
 			} else {
-				this.props.handleSend(text);
+				this.handleSend(text);
 			}
 		}
 

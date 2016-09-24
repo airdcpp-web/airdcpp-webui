@@ -66,10 +66,6 @@ const ChatLayout = React.createClass({
 		}
 	},
 
-	handleSend(message) {
-		this.props.actions.sendMessage(this.props.session.id, message);
-	},
-
 	render() {
 		const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
 		return (
@@ -81,7 +77,8 @@ const ChatLayout = React.createClass({
 				/>
 				{ hasChatAccess ? (
 					<MessageComposer 
-						handleSend={ this.handleSend }
+						session={ this.props.session }
+						actions={ this.props.actions }
 					/>
 				) : null }
 			</div>
