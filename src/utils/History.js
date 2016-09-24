@@ -113,6 +113,23 @@ const Helpers = {
 		});
 	},
 
+	// Returns modal IDs from currentLocation
+	getModalIds(currentLocation) {
+		if (!currentLocation.state) {
+			return null;
+		}
+
+		// Check all modal entries that don't exist in current props
+		const ids = Object.keys(currentLocation.state)
+			.filter(key => key.indexOf(OverlayConstants.MODAL_PREFIX) === 0);
+
+		return ids.length > 0 ? ids : null;
+	},
+
+	hasSidebar(currentLocation) {
+		return currentLocation.state && currentLocation.state[OverlayConstants.SIDEBAR_ID];
+	},
+
 	replaceSidebar: function (currentLocation, pathname, data) {
 		const state = getSidebarState(currentLocation, data);
 		History.replace({

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import invariant from 'invariant';
 
 import History from 'utils/History';
 import OverlayConstants from 'constants/OverlayConstants';
@@ -31,8 +30,7 @@ const getLastChildren = (currentChild) => {
 };
 
 const showSidebar = (props) => {
-	return props.location.state &&
-		props.location.state[OverlayConstants.SIDEBAR_ID];
+	return History.hasSidebar(props.location);
 };
 
 export default function (Component) {
@@ -66,24 +64,17 @@ export default function (Component) {
 		},
 
 		checkModals(props) {
-			if (!props.location.state) {
+			const modals = History.getModalIds(props.location);
+			if (!modals) {
 				return false;
 			}
 
-			let hasModals = false;
+			// Open all modals that don't currently have a node
+			modals
+				.filter(id => !modalNodes[id])
+				.forEach(id => this.createModal(id, props));
 
-			// Check all modal entries that don't exist in current props
-			Object.keys(props.location.state).forEach(key => {
-				if (key.indexOf(OverlayConstants.MODAL_PREFIX) === 0) {
-					if (!modalNodes[key]) {
-						this.createModal(key, props);
-					}
-
-					hasModals = true;
-				}
-			});
-
-			return hasModals;
+			return true;
 		},
 
 		componentWillMount() {
