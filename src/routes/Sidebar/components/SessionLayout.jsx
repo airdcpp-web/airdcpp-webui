@@ -209,7 +209,54 @@ const SessionLayout = React.createClass({
 		return '/' + this.props.baseUrl + '/new';
 	},
 
+	pushSession(session) {
+		History.pushSidebar(this.props.location, this.getUrl(session.id));
+	},
+
+	onKeyDown(event) {
+		const { keyCode, altKey } = event;
+
+		if (keyCode >= 49 && keyCode <= 57 && altKey) {
+			// Alt + 1-9
+			event.preventDefault();
+
+			const newSession = this.props.items[keyCode - 49];
+			if (newSession) {
+				this.pushSession(newSession);
+			}
+		} else if (altKey && (keyCode === 38 || keyCode === 40)) {
+			// Arrow up/down
+			event.preventDefault();
+
+			const item = this.findItem(this.props.items, this.props.activeId);
+			const currentIndex = this.props.items.indexOf(item);
+			if (currentIndex === -1) {
+				return;
+			}
+
+			const newSession = this.props.items[keyCode === 38 ? currentIndex - 1 : currentIndex + 1];
+			if (newSession) {
+				this.pushSession(newSession);
+			}
+		} else if (altKey && keyCode === 45) {
+			// Insert
+			event.preventDefault();
+
+			History.replaceSidebar(this.props.location, this.getNewUrl());
+		} else if (altKey && keyCode === 46) {
+			// Delete
+			event.preventDefault();
+
+			const item = this.findItem(this.props.items, this.props.activeId);
+			if (item) {
+				this.props.actions.removeSession(item);
+			}
+		}
+	},
+
 	componentWillMount() {
+		window.addEventListener('keydown', this.onKeyDown);
+
 		// Opening an item directly? Or no items?
 		if (this.checkActiveItem(this.props)) {
 			return;
@@ -224,6 +271,10 @@ const SessionLayout = React.createClass({
 			// Load the first session
 			this.redirectTo(this.props.items[0].id);
 		}
+	},
+
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.onKeyDown);;
 	},
 
 	getItemStatus(item) {
