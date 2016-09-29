@@ -80,36 +80,44 @@ module.exports = {
 	// cheap-module-source-map doesn't seem to work with Uglify
 	devtool: release ? 'module-source-map' : 'module-source-map',
 	module: {
-		loaders: [
+		rules: [
 			{ 
 				test: /\.(js|jsx)$/, 
 				include: /src/, 
-				loader: 'babel' 
+				use: 'babel' 
 			}, { 
 				test: /\.css$/, 
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'node_modules')
 				], 
-				loader: 'style-loader!css-loader' 
+				use: [ 'style-loader', 'css-loader' ]
 			}, { 
 				test: /\.(jpg|png)$/, 
-				loader: 'file' ,
-				query: {
-					limit: 100000,
-					name: 'images/[name].[ext]' // No name for URLs
-				}
+				use: [
+					{
+						loader: "file-loader",
+						options: {
+							limit: 100000,
+							name: 'images/[name].[ext]'
+						}
+					}
+				]
 			}, { 
 				test: /\.(woff|woff2|eot|ttf|svg)$/, 
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'node_modules/semantic-ui-css') 
 				], 
-				loader: 'url',
-				query: {
-					limit: 100000,
-					name: 'assets/[hash].[ext]' // No name for URLs
-				}
+				use: [
+					{
+						loader: "url-loader",
+						options: {
+							limit: 100000,
+							name: 'assets/[hash].[ext]'
+						}
+					}
+				]
 			},
 		]
 	},
