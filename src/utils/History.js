@@ -14,7 +14,7 @@ const History = useRouterHistory(createHistory)({
 
 // Returns paths for currently open modals
 const getModalPaths = (state) => {
-	 return Object.keys(state).reduce((modalPaths, key) => {
+	return Object.keys(state).reduce((modalPaths, key) => {
 		if (key.indexOf(OverlayConstants.MODAL_PREFIX) === 0) {
 			modalPaths.push(state[key].pathname);
 		}
