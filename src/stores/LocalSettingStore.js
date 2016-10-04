@@ -32,7 +32,7 @@ const Settings = [
 		title: 'Error events',
 	}, {
 		key: LocalSettings.UNREAD_LABEL_DELAY,
-		defaultValue: 0,
+		defaultValue: 2,
 		title: 'Delay for marking sessions as read',
 		unit: 'seconds',
 	}

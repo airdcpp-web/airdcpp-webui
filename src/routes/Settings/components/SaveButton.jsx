@@ -17,7 +17,7 @@ const SaveButton = React.createClass({
 		 */
 		saveHandler: React.PropTypes.func.isRequired,
 
-		local: React.PropTypes.bool.isRequired,
+		local: React.PropTypes.bool,
 	},
 
 	getInitialState() {
