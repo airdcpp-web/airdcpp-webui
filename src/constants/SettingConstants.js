@@ -13,6 +13,17 @@ export const ConnectionModeEnum = {
 	INCOMING_PASSIVE: 2,
 };
 
+export const LocalSettings = {
+	NOTIFY_PM_USER: 'notify_pm_user',
+	NOTIFY_PM_BOT: 'notify_pm_bot',
+	NOTIFY_BUNDLE_STATUS: 'notify_bundle_status',
+
+	NOTIFY_EVENTS_INFO: 'notify_events_info',
+	NOTIFY_EVENTS_WARNING: 'notify_events_warning',
+	NOTIFY_EVENTS_ERROR: 'notify_events_error',
+	
+	UNREAD_LABEL_DELAY: 'unread_label_delay',
+};
 
 export default {
 	MODULE_URL: MODULE_URL,

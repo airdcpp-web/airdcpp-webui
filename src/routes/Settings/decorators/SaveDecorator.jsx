@@ -1,6 +1,7 @@
 'use strict';
-
 import React from 'react';
+
+import Message from 'components/semantic/Message';
 import SaveButton from '../components/SaveButton';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -46,16 +47,28 @@ export default (Component, saveButtonClass = '') => {
 		},
 
 		render() {
+			const { currentMenuItem } = this.props;
 			const children = React.cloneElement(this.props.children, {
 				ref: 'children',
 				onSettingsChanged: this.onSettingsChanged
 			});
 
-			const saveButton = (!this.props.currentMenuItem.noSave ? (
+			let message;
+			if (currentMenuItem.local) {
+				message = (
+					<Message 
+						description="Settings listed on this page are browser-specific"
+						icon="blue info"
+					/>
+				);
+			}
+
+			const saveButton = (!currentMenuItem.noSave ? (
 				<SaveButton 
-					saveHandler={this.handleSave} 
-					hasChanges={this.state.hasChanges}
+					saveHandler={ this.handleSave } 
+					hasChanges={ this.state.hasChanges }
 					className={ saveButtonClass }
+					local={ currentMenuItem.local }
 				/>
 			) : null);
 
@@ -64,6 +77,7 @@ export default (Component, saveButtonClass = '') => {
 					{ ...this.props }
 					saveButton={ saveButton }
 					children={ children }
+					message={ message }
 				/>
 			);
 		},

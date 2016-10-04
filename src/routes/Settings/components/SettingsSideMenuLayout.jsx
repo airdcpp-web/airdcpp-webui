@@ -31,7 +31,7 @@ const TopMenu = ({ parentMenuItems }) => (
 	</div>
 );
 
-const Content = ({ contentClassname, currentMenuItem, parent, saveButton, children }) => (
+const Content = ({ contentClassname, currentMenuItem, parent, saveButton, children, message }) => (
 	<div className={ 'thirteen wide column ' + contentClassname }>
 		<div className="ui segment">
 			<LayoutHeader
@@ -40,6 +40,7 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
 				component={ saveButton }
 			/>
 			<div className="options">
+				{ message }
 				{ children }
 			</div>
 		</div>

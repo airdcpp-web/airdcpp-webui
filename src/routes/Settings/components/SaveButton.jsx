@@ -16,6 +16,8 @@ const SaveButton = React.createClass({
 		 * Error details
 		 */
 		saveHandler: React.PropTypes.func.isRequired,
+
+		local: React.PropTypes.bool.isRequired,
 	},
 
 	getInitialState() {
@@ -36,21 +38,24 @@ const SaveButton = React.createClass({
 	},
 
 	render: function () {
+		const { local, hasChanges, className } = this.props;
+
+		const hasAccess = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+
 		let title;
-		let hasAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
 		if (!hasAccess) {
 			title = 'No save permission';
 		} else {
-			title = this.props.hasChanges ? 'Save changes' : 'No unsaved changes';
+			title = hasChanges ? 'Save changes' : 'No unsaved changes';
 		}
 
 		return (
 			<Button 
-				className={ 'save ' + this.props.className }
+				className={ 'save ' + className }
 				caption={ title }
-				icon={ (hasAccess && this.props.hasChanges ? 'green checkmark' : null) } 
+				icon={ (hasAccess && hasChanges ? 'green checkmark' : null) } 
 				loading={ this.state.saving } 
-				disabled={ !this.props.hasChanges || !hasAccess }
+				disabled={ !hasChanges || !hasAccess }
 				onClick={ this.onClick }
 			/>
 		);
