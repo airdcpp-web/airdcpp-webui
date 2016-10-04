@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import { ConnectionModeEnum } from 'constants/SettingConstants';
@@ -33,7 +33,7 @@ const ProtocolPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<SettingForm
+				<RemoteSettingForm
 					ref="form"
 					formItems={this.props.formItems}
 					onFieldSetting={this.onFieldSetting}

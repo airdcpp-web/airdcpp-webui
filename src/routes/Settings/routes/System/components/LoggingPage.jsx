@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import Accordion from 'components/semantic/Accordion';
@@ -31,7 +31,7 @@ const LoggingPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<SettingForm
+				<RemoteSettingForm
 					ref="form"
 					formItems={Entry}
 				/>

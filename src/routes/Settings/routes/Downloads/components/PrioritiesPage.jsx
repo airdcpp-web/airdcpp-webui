@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
@@ -22,12 +22,12 @@ const PrioritiesPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<SettingForm
+				<RemoteSettingForm
 					title="File priorities"
 					ref="form"
 					formItems={Entry}
 				/>
-				<SettingForm
+				<RemoteSettingForm
 					title="High priority files"
 					ref="high-files"
 					formItems={HighPrioEntry}

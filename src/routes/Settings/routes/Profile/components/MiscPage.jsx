@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import LoginStore from 'stores/LoginStore';
@@ -53,7 +53,7 @@ const MiscPage = React.createClass({
 
 		return (
 			<div>
-				<SettingForm
+				<RemoteSettingForm
 					ref="form"
 					formItems={entry}
 					onFieldSetting={this.onFieldSetting}

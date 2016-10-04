@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
@@ -54,7 +54,7 @@ const LogSection = React.createClass({
 		return (
 			<div className={ this.getChildClass('log-section') }>
 				<div className={ this.getChildClass('title') }>
-					<SettingForm
+					<RemoteSettingForm
 						ref="title"
 						formItems={ Title }
 						onFieldChanged={ this.onEnableStateChanged }
@@ -63,7 +63,7 @@ const LogSection = React.createClass({
 				</div>
 
 				<div className={ this.getChildClass('content') }>
-					<SettingForm
+					<RemoteSettingForm
 						ref="content"
 						formItems={ Content }
 						onFieldSetting={ this.onContentSetting }

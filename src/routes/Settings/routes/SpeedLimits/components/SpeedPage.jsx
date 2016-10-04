@@ -3,7 +3,7 @@ import React from 'react';
 import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import t from 'utils/tcomb-form';
@@ -31,7 +31,7 @@ const SpeedPage = React.createClass({
 					Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, 
 					such as <ExternalLink url={ LinkConstants.SPEEDTEST_URL }>Speedtest.net</ExternalLink>, to test your speed.
 				</div>
-				<SettingForm
+				<RemoteSettingForm
 					ref="form"
 					formItems={Entry}
 					//onFieldSetting={this.onFieldSetting}

@@ -1,7 +1,4 @@
 import React from 'react';
-import SettingConstants from 'constants/SettingConstants';
-
-import SocketService from 'services/SocketService';
 import NotificationActions from 'actions/NotificationActions';
 
 import FormUtils from 'utils/FormUtils';
@@ -10,6 +7,7 @@ import BrowseField from 'components/form/BrowseField';
 import Form from 'components/form/Form';
 
 import t from 'utils/tcomb-form';
+
 
 const SettingForm = React.createClass({
 	contextTypes: {
@@ -22,6 +20,10 @@ const SettingForm = React.createClass({
 		 * Form items to list
 		 */
 		formItems: React.PropTypes.object.isRequired,
+
+		onFetchSettings: React.PropTypes.func.isRequired,
+
+		onSave: React.PropTypes.func.isRequired,
 	},
 
 	getInitialState() {
@@ -41,11 +43,7 @@ const SettingForm = React.createClass({
 	},
 
 	fetchSettings() {
-		const keys = Object.keys(this.props.formItems);
-
-		SocketService.post(SettingConstants.ITEMS_INFO_URL, { 
-			keys: keys
-		})
+		this.props.onFetchSettings()
 			.then(this.onSettingsReceived)
 			.catch(error => 
 				NotificationActions.apiError('Failed to fetch settings', error)
@@ -114,7 +112,7 @@ const SettingForm = React.createClass({
 	},
 
 	onSave(changedSettingArray) {
-		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedSettingArray)
+		return this.props.onSave(changedSettingArray)
 			.then(this.fetchSettings);
 	},
 
@@ -124,19 +122,18 @@ const SettingForm = React.createClass({
 
 	render: function () {
 		return (
-			<div className="setting-form">
-				<Form
-					{ ...this.props }
-					ref="form"
-					onFieldChanged={ this.onFieldChanged }
-					onFieldSetting={ this.onFieldSetting }
-					sourceData={ this.state.sourceData }
-					onSave={ this.onSave }
-					context={{ 
-						location: this.context.routerLocation 
-					}}
-				/>
-			</div>);
+			<Form
+				{ ...this.props }
+				ref="form"
+				onFieldChanged={ this.onFieldChanged }
+				onFieldSetting={ this.onFieldSetting }
+				sourceData={ this.state.sourceData }
+				onSave={ this.onSave }
+				context={{ 
+					location: this.context.routerLocation 
+				}}
+			/>
+		);
 	}
 });
 

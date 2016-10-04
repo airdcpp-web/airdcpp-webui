@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import SocketService from 'services/SocketService';
@@ -47,7 +47,7 @@ const AutoValuePanel = React.createClass({
 	render() {
 		return (
 			<div className="ui segment">
-				<SettingForm
+				<RemoteSettingForm
 					ref="form"
 					formItems={ this.props.formItems }
 					onFieldChanged={ this.onFieldChanged }

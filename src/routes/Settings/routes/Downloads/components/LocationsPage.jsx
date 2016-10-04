@@ -4,7 +4,7 @@ import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import FavoriteDirectoryTable from './FavoriteDirectoryTable';
@@ -22,7 +22,7 @@ const LocationsPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<SettingForm
+				<RemoteSettingForm
 					ref="form"
 					formItems={Entry}
 				/>

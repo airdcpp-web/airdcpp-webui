@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import ActionButton from 'components/ActionButton';
@@ -53,7 +53,7 @@ const ServerSettingsPage = React.createClass({
 
 				<div className="ui header">HTTP</div>
 				<div className="ui segment">
-					<SettingForm
+					<RemoteSettingForm
 						ref="plain"
 						formItems={PlainEntry}
 					/>
@@ -61,7 +61,7 @@ const ServerSettingsPage = React.createClass({
 
 				<div className="ui header">HTTPS</div>
 				<div className="ui segment">
-					<SettingForm
+					<RemoteSettingForm
 						ref="tls"
 						formItems={TlsEntry}
 					/>
@@ -74,7 +74,7 @@ const ServerSettingsPage = React.createClass({
 
 				<div className="ui header">Advanced</div>
 				<div className="ui segment">
-					<SettingForm
+					<RemoteSettingForm
 						ref="generic"
 						formItems={Generic}
 					/>

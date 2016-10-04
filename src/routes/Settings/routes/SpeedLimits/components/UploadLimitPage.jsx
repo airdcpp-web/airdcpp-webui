@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingForm from 'routes/Settings/components/SettingForm';
+import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import AutoValuePanel from './AutoValuePanel';
@@ -29,7 +29,7 @@ const UploadLimitPage = React.createClass({
 					type="upload"
 				/>
 
-				<SettingForm
+				<RemoteSettingForm
 					title="Manually set"
 					ref="manual-form"
 					formItems={Manual}
