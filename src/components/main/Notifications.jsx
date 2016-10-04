@@ -167,8 +167,10 @@ const Notifications = React.createClass({
 			return;
 		}
 
-		if (message.reply_to.flags.indexOf('bot') > -1 && !LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
-			return;
+		if (message.reply_to.flags.indexOf('bot') > -1) {
+			if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
+				return;
+			}
 		} else if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_USER)) {
 			return;
 		}

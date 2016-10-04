@@ -36,16 +36,15 @@ const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
 };
 
 
-const TopMenuLayout = (props) => {
-	return (
-		<div className="mobile">
-			<MenuSection { ...props }/>
-			<div id="setting-scroll-context" className={ props.contentClassname }>
-				{ props.saveButton }
-				{ props.children }
-			</div>
+const TopMenuLayout = ({ saveButton, children, contentClassname, message, ...other }) => (
+	<div className="mobile">
+		<MenuSection { ...other }/>
+		<div id="setting-scroll-context" className={ contentClassname }>
+			{ saveButton }
+			{ message }
+			{ children }
 		</div>
-	);
-};
+	</div>
+);
 
 export default SaveDecorator(TopMenuLayout, 'fluid');
