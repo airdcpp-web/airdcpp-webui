@@ -13,6 +13,9 @@ import NotificationActions from 'actions/NotificationActions';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import History from 'utils/History';
 
+import LocalSettingStore from 'stores/LocalSettingStore';
+import { LocalSettings } from 'constants/SettingConstants';
+
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import Logo from '../../../images/AirDCPlusPlus.png';
@@ -101,6 +104,7 @@ const Notifications = React.createClass({
 	getSeverityStr(severity) {
 		switch (severity) {
 			case SeverityEnum.NOTIFY: return 'Information';
+			case SeverityEnum.INFO: return 'INFO';
 			case SeverityEnum.ERROR: return 'ERROR';
 			case SeverityEnum.WARNING: return 'WARNING';
 			default: return null;
@@ -109,9 +113,6 @@ const Notifications = React.createClass({
 
 	_onLogMessage(message) {
 		const { text, id, severity } = message;
-		if (severity === SeverityEnum.INFO) {
-			return;
-		}
 
 		const notification = {
 			title: this.getSeverityStr(severity),
@@ -130,9 +131,14 @@ const Notifications = React.createClass({
 			});
 		}
 
-		if (severity === SeverityEnum.WARNING) {
+
+		if (severity === SeverityEnum.NOTIFY) {
+			NotificationActions.info(notification);
+		} else if (severity === SeverityEnum.INFO && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)) {
+			NotificationActions.info(notification);
+		} else if (severity === SeverityEnum.WARNING && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)) {
 			NotificationActions.warning(notification);
-		} else {
+		} else if (severity === SeverityEnum.ERROR && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)) {
 			NotificationActions.error(notification);
 		}
 	},
@@ -161,6 +167,12 @@ const Notifications = React.createClass({
 			return;
 		}
 
+		if (message.reply_to.flags.indexOf('bot') > -1 && !LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
+			return;
+		} else if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_USER)) {
+			return;
+		}
+
 		NotificationActions.info({
 			title: message.from.nick,
 			message: message.text,
@@ -175,6 +187,10 @@ const Notifications = React.createClass({
 	},
 
 	_onBundleStatus: function (bundle) {
+		if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
+			return;
+		}
+
 		let text;
 		let level;
 		switch (bundle.status.id) {

@@ -139,6 +139,10 @@ const menu = [
 		icon: 'browser',
 		menuItems: [
 			{ 
+				title: 'Notifications', 
+				url: 'notifications',
+				local: true,
+			}, { 
 				title: 'Histories', 
 				url: 'histories' 
 			}, { 

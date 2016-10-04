@@ -4,6 +4,9 @@ module.exports = {
 	getChildRoutes(location, cb) {
 		require.ensure([], (require) => {
 			cb(null, [ {
+				path: 'notifications', 
+				component: require('./components/NotificationPage').default, 
+			}, {
 				path: 'histories', 
 				component: require('./components/HistoryPage').default, 
 			}, {
