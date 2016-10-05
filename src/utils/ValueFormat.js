@@ -22,6 +22,7 @@ const normalRelativeUnits = {
 	relativeTime:	Moment.localeData('en')._relativeTime
 };
 
+
 const byteUnits = [ 'kB','MB','GB','TB','PB','EB','ZB','YB' ];
 const bitUnits = [ ' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit' ];
 
@@ -57,12 +58,29 @@ const Format = {
 		return Math.max(bits, 0.0).toFixed(2) + bitUnits[i] + '/s';
 	},
 
+	// http://momentjs.com/docs/#/displaying/from/
 	formatRelativeTime: function (time) {
 		if (time === 0) {
 			return '';
 		}
 
 		return Moment.unix(time).from(Moment());
+	},
+
+	// http://momentjs.com/docs/#/displaying/calendar-time/
+	formatCalendarTime: function (time) {
+		if (time === 0) {
+			return '';
+		}
+
+		return Moment.unix(time).calendar(null, {
+			sameDay: '[Today]',
+			nextDay: '[Tomorrow]',
+			nextWeek: 'dddd',
+			lastDay: '[Yesterday]',
+			lastWeek: '[Last] dddd',
+			sameElse: 'DD/MM/YYYY'
+		});
 	},
 
 	formatDateTime: function (time) {
@@ -81,6 +99,7 @@ const Format = {
 		return Moment.unix(time).format('YYYY-MM-DD');
 	},
 
+	// http://momentjs.com/docs/#/displaying/to/
 	formatAbbreviatedDuration: function (time) {
 		const now = Moment();
 		const finish = Moment().add(time, 'seconds');
