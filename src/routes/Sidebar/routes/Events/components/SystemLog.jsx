@@ -8,15 +8,14 @@ import EventStore from 'stores/EventStore';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import ActionButton from 'components/ActionButton';
 import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
 
-import { StatusMessage } from 'routes/Sidebar/components/chat/Message';
-import ScrollDecorator from 'decorators/ScrollDecorator';
+import Message from 'components/semantic/Message';
+import MessageView from 'components/messages/MessageView';
 
 import '../style.css';
 
 
-const MessageView = ScrollDecorator(React.createClass({
+const EventMessages = React.createClass({
 	render: function () {
 		const { messages } = this.props;
 		if (!messages) {
@@ -31,22 +30,20 @@ const MessageView = ScrollDecorator(React.createClass({
 			);
 		}
 
-		const messageList = messages.map(function (message) {
-			return (
-				<StatusMessage 
-					key={ message.id } 
-					message={ message }
-				/>
-			);
+		const messageList = messages.map(message => {
+			return {
+				log_message: message,
+			};
 		});
 
 		return (
-			<div ref="messageList" className="message-list ui segment">
-				{ messageList }
-			</div>
+			<MessageView 
+				className="ui segment"
+				messages={ messageList }
+			/>
 		);
 	}
-}));
+});
 
 const SystemLog = React.createClass({
 	mixins: [ LocationContext, Reflux.connect(EventStore, 'messages'), ],
@@ -86,7 +83,7 @@ const SystemLog = React.createClass({
 					/>
 					
 					<div className="layout-content system-log">
-						<MessageView messages={ this.state.messages }/>
+						<EventMessages messages={ this.state.messages }/>
 					</div>
 				</div>
 			</div>

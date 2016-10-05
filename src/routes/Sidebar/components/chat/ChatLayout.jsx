@@ -3,12 +3,12 @@ import React from 'react';
 
 import Message from 'components/semantic/Message';
 import MessageComposer from './MessageComposer';
-import MessageView from './MessageView';
+import MessageView from 'components/messages/MessageView';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import LoginStore from 'stores/LoginStore';
 
-import './messages.css';
+import './chat.css';
 
 
 const ChatLayout = React.createClass({

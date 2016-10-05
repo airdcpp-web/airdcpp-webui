@@ -1,0 +1,34 @@
+/* Layout */
+
+/*.ui.segment.session-layout {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.message-view {
+	clear: both;
+}
+
+.message-view,
+.chat.session {
+	flex: 100 100 0%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: hidden;
+}
+
+.message-section {
+	flex:1;
+	overflow-y: auto;
+	margin-bottom:10px;
+}
+
+.message-list {
+	margin-right: 10px !important;
+}*/
+
+.message-list .item .text {
+	overflow: hidden;
+	white-space: pre-wrap;
+}

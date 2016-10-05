@@ -7,6 +7,8 @@ import ScrollDecorator from 'decorators/ScrollDecorator';
 import { ChatMessage, StatusMessage } from './Message';
 import ValueFormat from 'utils/ValueFormat';
 
+import './messages.css';
+
 
 const getMessageDay = (message) => {
 	const time = message.chat_message ? message.chat_message.time : message.log_message.time;
