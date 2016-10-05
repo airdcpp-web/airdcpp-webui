@@ -91,7 +91,7 @@ const MessageComposer = React.createClass({
 					onKeyDown={ this._onKeyDown }
 				/>
 				<div 
-					className="blue large ui icon button" 
+					className="blue large ui icon send button" 
 					onClick={ this._sendText }
 				>
 					<i className="send icon"/>

@@ -10,7 +10,7 @@ import ActionButton from 'components/ActionButton';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
-import LogMessage from './LogMessage';
+import { StatusMessage } from 'routes/Sidebar/components/chat/Message';
 import ScrollDecorator from 'decorators/ScrollDecorator';
 
 import '../style.css';
@@ -33,7 +33,10 @@ const MessageView = ScrollDecorator(React.createClass({
 
 		const messageList = messages.map(function (message) {
 			return (
-				<LogMessage key={ message.id } message={message}/>
+				<StatusMessage 
+					key={ message.id } 
+					message={ message }
+				/>
 			);
 		});
 

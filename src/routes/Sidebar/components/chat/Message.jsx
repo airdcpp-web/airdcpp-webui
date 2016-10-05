@@ -1,19 +1,24 @@
 'use strict';
-
 import React from 'react';
+
 import TextDecorator from 'components/TextDecorator';
 import ValueFormat from 'utils/ValueFormat';
+
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
+import { SeverityEnum } from 'constants/EventConstants';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
 
 
+// Message sections
 const Author = ({ message, dropdownContextGetter }) => (
-	<div className="header message-author-name">
-		{ message.third_person ? (<span>*</span>) : null }
+	<div className="header author">
+		{ message.third_person && <span>*</span> }
 		<UserMenu 
 			contextGetter={ dropdownContextGetter } 
-			triggerIcon={null} 
-			noIcon={true} 
+			triggerIcon={ null } 
+			noIcon={ true } 
 			user={ message.from }
 		/>
 	</div>
@@ -25,13 +30,13 @@ Author.propTypes = {
 };
 
 const TimeStamp = ({ message }) => (
-	<div className="message-time">
+	<div className="time">
 		{ ValueFormat.formatTimestamp(message.time) }
 	</div>
 );
 
 const MessageText = ({ message, emojify }) => (
-	<div className="message-text">
+	<div className="text">
 		<TextDecorator
 			emojify={ emojify }
 			text={ message.text }
@@ -45,6 +50,7 @@ MessageText.propTypes = {
 };
 
 
+// Main message types
 const ChatMessage = React.createClass({
 	propTypes: {
 		message: React.PropTypes.object.isRequired,
@@ -58,7 +64,7 @@ const ChatMessage = React.createClass({
 		const { message, ...other } = this.props;
 		
 		return (
-			<div className={ 'ui item message-list-item chat-message ' + message.from.flags.join(' ')}>
+			<div className={ 'ui item chat ' + message.from.flags.join(' ')}>
 				<TimeStamp 
 					message={ message }
 				/>
@@ -78,6 +84,15 @@ const ChatMessage = React.createClass({
 });
 
 
+const getSeverityIcon = (severity) => {
+	switch (severity) {
+		case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
+		case SeverityEnum.WARNING: return IconConstants.WARNING;
+		case SeverityEnum.ERROR: return IconConstants.ERROR;
+		default: return '';
+	}
+};
+
 const StatusMessage = React.createClass({
 	propTypes: {
 		message: React.PropTypes.object.isRequired,
@@ -91,8 +106,9 @@ const StatusMessage = React.createClass({
 		const { message } = this.props;
 		
 		return (
-			<div className={ 'ui item message-list-item status-message ' + message.severity }>
-				{ !message.time ? null : <TimeStamp message={ message }/> }
+			<div className={ 'ui item status ' + message.severity }>
+				<Icon icon={ getSeverityIcon(message.severity) }/>
+				{ message.time && <TimeStamp message={ message }/> }
 				<MessageText 
 					message={ message }
 					emojify={ false }

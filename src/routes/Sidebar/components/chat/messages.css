@@ -1,3 +1,5 @@
+/* Layout */
+
 .ui.segment.session-layout {
 	flex: 1;
 	display: flex;
@@ -22,98 +24,82 @@
 	margin-bottom:10px;
 }
 
-.message-view .composer {
-	display: flex;
-}
-
-.message-view .composer textarea, .message-view .composer textarea:focus {
-	resize: none;
-	border-radius: .28571429rem 0 0 .28571429rem;
-}
-
-.message-view .ui.button {
-	border-radius: 0 .28571429rem .28571429rem 0;
-}
-
-.message-view .composer.large .ui.button i {
-	vertical-align: -webkit-baseline-middle !important;
-	vertical-align: -moz-middle-with-baseline !important;
-}
-
 .message-list {
 	margin-right: 10px !important;
 }
 
-.chat-message .message-author-name {
-	float: left;
+
+/* Composer */
+.chat.session .composer {
+	display: flex;
 }
 
-.message-time {
+.chat.session .composer textarea, 
+.chat.session .composer textarea:focus {
+	resize: none;
+	border-radius: .28571429rem 0 0 .28571429rem;
+}
+
+.chat.session .composer .send.button {
+	border-radius: 0 .28571429rem .28571429rem 0;
+}
+
+.chat.session .composer.large .send.button i {
+	vertical-align: -webkit-baseline-middle !important;
+	vertical-align: -moz-middle-with-baseline !important;
+}
+
+
+/* Messages common */
+.chat.session .item .time {
 	float:right;
 	color: lightgray;
+	font-size: small;
 }
 
-.chat-message {
-	margin-top: 5px;
-}
-
-.status-message {
-	width: 100%;
-  display: flex !important;
-  flex-direction: row-reverse;
-}
-
-.message-list .message-text {
+.chat.session .message-list .item .text {
 	flex: 1;
 	overflow: hidden;
 	white-space: pre-wrap;
 }
 
-.chat-message .message-text {
+
+/* Chat messages */
+.chat.session .chat.item {
+	margin-top: 5px;
+}
+
+.chat.session .chat.item .author {
+	float: left;
+}
+
+.chat.session .chat.item .text {
 	padding-right: 60px;
 }
 
-.chat-message .normal .message-text {
+.chat.session .chat.item .normal .text {
 	margin-top: 5px;
 	clear: both;
 }
 
-.chat-message .third-person {
+.chat.session .chat.item .third-person {
 	display: flex;
 }
 
-.chat-message .third-person .message-text {
+.chat.session .chat.item .third-person .text {
 	float: left;
 	margin-left: 3px;
 }
 
-.status-message .message-text {
-	font-size: small;
-	color: rgba(0,0,0,.50);
-	float: left;
-}
-
-.status-message.warning .message-text {
-	color: orange;
-}
-
-.status-message.error .message-text {
-	color: red;
-}
-
-.chat-message img {
+.chat.session .chat.item img {
 	vertical-align: middle;
 }
 
-.message-list .message-time {
-	font-size: small;
-}
-
-.chat-message .third-person .message-author-name .dropdown {
+.chat.session .chat.item .third-person .author .dropdown {
 	margin-left: 3px;
 }
 
-.chat-message .message-author-name .caption {
+.chat.session .chat.item .author .caption {
 	color: steelblue !important;
 }
 
@@ -121,10 +107,36 @@
 	color: orange !important;
 }*/
 
-.chat-message.me .message-author-name .caption {
+.chat.session .chat.item.me .author .caption {
 	color: black !important;
 }
 
-.chat-message.bot .message-author-name .caption {
+.chat.session .chat.item.bot .author .caption {
 	color: darkgoldenrod !important;
+}
+
+
+/* Status messages */
+.chat.session .status.item {
+	width: 100%;
+  display: flex !important;
+  flex-direction: row-reverse;
+}
+
+.chat.session .status.item .text {
+	font-size: small;
+	color: rgba(0,0,0,.50);
+	float: left;
+}
+
+.chat.session .status.item i {
+	display: none !important;
+}
+
+.chat.session .status.item.warning .text {
+	color: orange;
+}
+
+.chat.session .status.item.error .text {
+	color: red;
 }
