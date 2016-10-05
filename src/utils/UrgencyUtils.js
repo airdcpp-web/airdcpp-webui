@@ -1,8 +1,18 @@
 import { UrgencyEnum } from 'constants/UrgencyConstants';
 
+// Get an array of urgencies that are larger than 0
+const getValidUrgencyArray = (urgencies) => {
+	return Object.keys(urgencies).filter(urgency => urgencies[urgency] > 0);
+};
+
+// Always convert empty objects to null
+const validateUrgencies = (urgencies) => {
+	return getValidUrgencyArray(urgencies).length > 0 ? urgencies : null;
+};
+
 // Returns the maximum urgency from the map of urgencies (or undefined if all counts are 0)
-const maxUrgency = (urgencyMap) => {
-	const validUrgencies = Object.keys(urgencyMap).filter(urgency => urgencyMap[urgency] > 0);
+const maxUrgency = (urgencies) => {
+	const validUrgencies = getValidUrgencyArray(urgencies);
 	if (validUrgencies.length === 0) {
 		return undefined;
 	}
@@ -17,10 +27,10 @@ const appendToMap = (counts, urgency) => {
 
 // Convert regular type -> count mapping to urgency -> count map
 const toUrgencyMap = (source, urgencies) => {
-	return Object.keys(source).reduce((map, key) => {
+	return validateUrgencies(Object.keys(source).reduce((map, key) => {
 		map[urgencies[key]] = source[key];
 		return map;
-	}, {});
+	}, {}));
 };
 
 // Returns urgency mapping for a message session with an "unread_messages" property
@@ -36,23 +46,25 @@ const simpleSessionMapper = (item) => {
 		};
 	}
 
-	return {};
+	return null;
 };
 
 const UrgencyUtils = {
 	// Get urgencyMap [urgency: numberOfSessions] for a list of sessions
 	getSessionUrgencies(sessions, urgencyGetter) {
-		const counts = {};
-
-		sessions.forEach(session => {
+		const urgencies = sessions.reduce((reduced, session) => {
 			const urgencyMap = urgencyGetter(session);
-			const max = maxUrgency(urgencyMap);
-			if (max) {
-				appendToMap(counts, max);
+			if (urgencyMap) {
+				const max = maxUrgency(urgencyMap);
+				if (max) {
+					appendToMap(reduced, max);
+				}
 			}
-		});
 
-		return counts;
+			return reduced;
+		}, {});
+
+		return validateUrgencies(urgencies);
 	},
 };
 
@@ -62,4 +74,5 @@ export default Object.assign(UrgencyUtils, {
 	messageSessionMapper,
 	simpleSessionMapper,
 	appendToMap,
+	validateUrgencies,
 });

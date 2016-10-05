@@ -15,7 +15,7 @@ import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import 'mobile.css';
 
 
-const reduceItemUrgency = (map, menuItem) => {
+const reduceMenuItemUrgency = (map, menuItem) => {
 	if (!menuItem.unreadInfoStore) {
 		return map;
 	}
@@ -48,15 +48,16 @@ const HeaderContent = MainNavigationDecorator(React.createClass({
 		
 		return (
 			<div className="right">
-				{ sidebar ? 
+				{ sidebar && (
 					<Button 
 						className="item" 
 						caption="Back" 
 						icon="blue angle left"
 						onClick={ onClickBack }
-					/> : null }
+					/>
+				) }
 				<MenuIcon 
-					urgencies={ secondaryMenuItems.reduce(reduceItemUrgency, {}) }
+					urgencies={ UrgencyUtils.validateUrgencies(secondaryMenuItems.reduce(reduceMenuItemUrgency, {})) }
 					onClick={ onClickMenu }
 					className="item"
 				/>
