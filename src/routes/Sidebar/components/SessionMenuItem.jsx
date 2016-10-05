@@ -15,8 +15,9 @@ const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url }, { 
 		url={ url } 
 		className="session-item" 
 		onClick={ evt => onClickItem(evt, routerLocation, url) }
-		urgencies={ unreadInfoStore ? unreadInfoStore.getItemUrgencies(sessionItem) : null }
 		icon={ status }
+		sessionId={ sessionItem.id }
+		unreadInfoStore={ unreadInfoStore }
 	>
 		<span className="session-name">
 			{ name }

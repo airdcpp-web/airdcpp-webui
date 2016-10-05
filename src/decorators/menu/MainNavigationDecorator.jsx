@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PureRouterMenuItemLink } from 'components/semantic/MenuItem';
+import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
@@ -106,7 +106,7 @@ const LogoutItem = {
 const menuItemGetter = (onClick, showIcon, item) => {
 	const { title, icon, unreadInfoStore, url, className } = item;
 	return (
-		<PureRouterMenuItemLink 
+		<RouterMenuItemLink 
 			key={ url }
 			url={ url }
 			className={ className }
@@ -115,7 +115,7 @@ const menuItemGetter = (onClick, showIcon, item) => {
 			unreadInfoStore={ unreadInfoStore }
 		>
 			{ title }
-		</PureRouterMenuItemLink>
+		</RouterMenuItemLink>
 	);
 };
 

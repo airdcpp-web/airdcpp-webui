@@ -162,3 +162,17 @@ section#container-main,
 }
 
 /* Dialogs end */
+
+
+/* Count label transitions */
+
+.label-transition-leave {
+  opacity: 1;
+}
+
+.label-transition-leave.label-transition-leave-active {
+  opacity: 0.01;
+  transition: opacity 1500ms ease-in;
+}
+
+/* Count label transitions end */

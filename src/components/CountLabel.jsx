@@ -4,15 +4,12 @@ import UrgencyUtils from 'utils/UrgencyUtils';
 import TypeConvert from 'utils/TypeConvert';
 import classNames from 'classnames';
 
-const CountLabel = ({ urgencies, empty, size, className, circular }) => {
-	if (!urgencies) {
-		return null;
-	}
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+
+const CountLabel = ({ urgencies, empty, size, className, circular }) => {
+	// We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
 	const max = UrgencyUtils.maxUrgency(urgencies);
-	if (!max) {
-		return null;
-	}
 
 	const labelClassName = classNames(
 		'ui count label',
@@ -49,4 +46,23 @@ CountLabel.defaultProps = {
 	circular: false,
 };
 
-export default CountLabel;
+
+// Rendering a single child with ReactCSSTransitionGroup: https://facebook.github.io/react/docs/animation.html
+const FirstChild = (props) => {
+	const childrenArray = React.Children.toArray(props.children);
+	return childrenArray[0] || null;
+};
+
+// Fade out the label when there are no counts
+const AnimatedCountLabel = (props) => (
+	<ReactCSSTransitionGroup
+		component={ FirstChild }
+		transitionName="label-transition"
+		transitionEnterTimeout={ 100 }
+		transitionLeaveTimeout={ 1500 }
+	>
+		{ props.urgencies && <CountLabel key="label" { ...props }/> }
+	</ReactCSSTransitionGroup>
+);
+
+export default AnimatedCountLabel;

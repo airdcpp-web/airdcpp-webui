@@ -12,7 +12,7 @@ import Icon from 'components/semantic/Icon';
 
 // A component that will re-render only when urgencies or active state are updated
 // TODO: session code doesn't work with SessionMenuItem yet
-export const PureRouterMenuItemLink = React.createClass({
+export const RouterMenuItemLink = React.createClass({
 	mixins: [ Reflux.ListenerMixin ],
 	contextTypes: {
 		router: React.PropTypes.object.isRequired,
@@ -40,17 +40,22 @@ export const PureRouterMenuItemLink = React.createClass({
 
 		unreadInfoStore: React.PropTypes.object,
 
-		session: React.PropTypes.object,
+		/**
+		 * Session objects are immutable so we must always 
+		 * fetch a fresh one from unreadInfoStore when the object is needed
+		 */
+		sessionId: React.PropTypes.any,
 	},
 
 	getUrgencies() {
-		const { unreadInfoStore, session } = this.props;
+		const { unreadInfoStore, sessionId } = this.props;
 		if (!unreadInfoStore) {
 			return null;
 		}
 
-		if (session) {
-			return unreadInfoStore.getItemUrgencies(session);
+		if (sessionId) {
+			const session = unreadInfoStore.getSession(sessionId);
+			return session ? unreadInfoStore.getItemUrgencies(session) : null;
 		}
 
 		return unreadInfoStore.getTotalUrgencies();
@@ -64,7 +69,7 @@ export const PureRouterMenuItemLink = React.createClass({
 
 	shouldComponentUpdate(nextProps, nextState) {
 		// Session updated/changed?
-		if (nextProps.session !== this.props.session) {
+		if (nextProps.sessionId !== this.props.sessionId) {
 			return true;
 		}
 
@@ -93,8 +98,9 @@ export const PureRouterMenuItemLink = React.createClass({
 	},
 
 	render() {
-		const { onClick, className, icon, url, children } = this.props;
+		const { onClick, className, icon, url, children, unreadInfoStore } = this.props;
 		const { urgencies } = this.state;
+
 		return (
 			<Link 
 				to={ url } 
@@ -105,49 +111,11 @@ export const PureRouterMenuItemLink = React.createClass({
 			>
 				<Icon icon={ icon }/>
 				{ children }
-				{ urgencies ? <CountLabel urgencies={ urgencies }/> : null }
+				{ unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
 			</Link>
 		);
 	}
 });
-
-
-export const RouterMenuItemLink = ({ url, className, icon, children, onClick, urgencies }) => {
-	return (
-		<Link 
-			to={ url } 
-			className={ classNames('item', className) } 
-			activeClassName="active" 
-			onClick={ onClick }
-			onlyActiveOnIndex={ url === '/' }
-		>
-			<Icon icon={ icon }/>
-			{ children }
-			{ urgencies ? <CountLabel urgencies={ urgencies }/> : null }
-		</Link>
-	);
-};
-
-RouterMenuItemLink.propTypes = {
-	/**
-	 * Item URL
-	 */
-	url: React.PropTypes.string.isRequired,
-
-	/**
-	 * Title of the button
-	 */
-	children: React.PropTypes.any.isRequired,
-
-	icon: React.PropTypes.node,
-
-	/**
-	 * For overriding the default link action (still gives the active class style)
-	 */
-	onClick: React.PropTypes.func,
-
-	urgencies: React.PropTypes.object,
-};
 
 
 export const MenuItemLink = ({ className, icon, children, onClick, active, disabled }) => {
@@ -184,5 +152,3 @@ export const MenuHeader = ({ className, children, ...other }) => (
  		{ children }
  	</div>
 );
-
-//export default MenuItemLink;
