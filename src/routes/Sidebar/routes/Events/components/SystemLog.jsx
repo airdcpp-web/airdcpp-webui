@@ -38,7 +38,7 @@ const EventMessages = React.createClass({
 
 		return (
 			<MessageView 
-				className="ui segment"
+				className="events"
 				messages={ messageList }
 			/>
 		);
@@ -81,7 +81,7 @@ const SystemLog = React.createClass({
 							/>
 						}
 					/>
-					
+					<div className="ui divider top"/>
 					<div className="layout-content system-log">
 						<EventMessages messages={ this.state.messages }/>
 					</div>

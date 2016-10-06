@@ -15,13 +15,15 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
-	margin-top: 10px;
 	flex: 1 1 100%;
 }
 
 #sidebar .simple-layout .layout-content > div {
-	overflow-y: auto;
 	width: 100%;
+}
+
+#sidebar .simple-layout .divider.top {
+	margin-bottom: 5px;
 }
 
 
