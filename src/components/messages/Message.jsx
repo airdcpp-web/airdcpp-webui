@@ -108,7 +108,7 @@ const StatusMessage = React.createClass({
 		return (
 			<div className={ 'ui item status ' + message.severity }>
 				<Icon icon={ getSeverityIcon(message.severity) }/>
-				{ message.time && <TimeStamp message={ message }/> }
+				{ message.time ? <TimeStamp message={ message }/> : null }
 				<MessageText 
 					message={ message }
 					emojify={ false }

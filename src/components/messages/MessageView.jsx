@@ -19,6 +19,27 @@ const isToday = (message) => {
 	return getMessageDay(message) === new Date().getDate();
 };
 
+const isHistoryItem = (message) => {
+	const time = message.chat_message ? message.chat_message.time : message.log_message.time;
+	return time === 0; 
+};
+
+const showDivider = (index, messageList) => {
+	const currentMessage = messageList[index];
+
+	// First message? History log won't count
+	if (index === 0 || (index === 1 && isHistoryItem(messageList[index-1]))) {
+		// Don't show for message that were received today
+		if (!isToday(currentMessage) && !isHistoryItem(currentMessage)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	return getMessageDay(messageList[index-1]) !== getMessageDay(currentMessage);
+};
+
 
 const MessageView = React.createClass({
 	propTypes: {
@@ -27,13 +48,14 @@ const MessageView = React.createClass({
 
 	getMessageListItem(reduced, message, index, messageList) {
 		// Push a divider when the date was changed
-		if ((index === 0 && !isToday(message)) || (index > 0 && getMessageDay(messageList[index-1]) !== getMessageDay(message))) {
+		if (showDivider(index, messageList)) {
 			const messageObj = message.chat_message ? message.chat_message : message.log_message;
 			reduced.push(
 				<div 
 					key={ `divider${messageObj.id}` }
-					className="ui horizontal divider"
+					className="ui horizontal date divider"
 				>
+					<i className="calendar icon"/>
 					{ ValueFormat.formatCalendarTime(messageObj.time) }
 				</div>
 			);

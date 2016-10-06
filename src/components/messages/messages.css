@@ -28,7 +28,16 @@
 	margin-right: 10px !important;
 }*/
 
+.message-section {
+	flex: 1;
+	overflow-y: auto;
+}
+
 .message-list .item .text {
 	overflow: hidden;
 	white-space: pre-wrap;
+}
+
+.message-list .date.divider i {
+	margin-right: 5px;
 }

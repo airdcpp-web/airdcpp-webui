@@ -20,7 +20,7 @@ const PopupEntry = {
 };
 
 const Entry = {
-	[LocalSettings.UNREAD_LABEL_DELAY]: t.Num,
+	[LocalSettings.UNREAD_LABEL_DELAY]: t.Positive,
 };
 
 const NotificationPage = React.createClass({
