@@ -69,9 +69,7 @@ const HubUserTable = React.createClass({
 					width={170}
 					columnKey="nick"
 					flexGrow={8}
-					cell={ 
-						<NickCell/> 
-					}
+					cell={ <NickCell/> }
 				/>
 				<Column
 					name="Share size"

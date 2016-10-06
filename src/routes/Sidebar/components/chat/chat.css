@@ -98,7 +98,7 @@
 }
 
 .chat.session .chat.item.bot .author .caption {
-	color: gray !important;
+	color: rgba(0,0,0,.40) !important;
 }
 
 

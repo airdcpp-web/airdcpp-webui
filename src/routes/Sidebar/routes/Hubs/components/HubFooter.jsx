@@ -78,9 +78,9 @@ const HubFooter = React.createClass({
 		return (
 			<SessionFooter>
 				<FooterItem text={ userCaption }/>
-				{ window.innerWidth > 700 ? (
+				{ window.innerWidth > 700 && (
 					<FooterItem text={ ValueFormat.formatSize(shared) + ' (' + averageShare + '/user)' }/> 
-				): null }
+				) }
 				<div className="userlist-button">
 					{ userlistToggle }
 				</div>

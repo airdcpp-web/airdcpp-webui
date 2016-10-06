@@ -10,7 +10,9 @@ import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import History from 'utils/History';
+
 //import { Lifecycle } from 'mixins/RouterMixin';
+//import NotificationActions from 'actions/NotificationActions';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
@@ -25,6 +27,8 @@ const ListBrowser = React.createClass({
 	/*mixins: [ Lifecycle ],
 
 	// Disabled, doesn't work (investigate later)
+	// Add RouteContext to parent before enabling
+
 	componentWillUnmount() {
 		clearTimeout(this.historyLeaveTimeout);
 	},
@@ -32,8 +36,11 @@ const ListBrowser = React.createClass({
 	routerWillLeave(nextLocation) {
 		if (this.hasClickedDirectory && !this.historyLeaveTimeout && nextLocation.pathname !== this.props.location.pathname) {
 			this.historyLeaveTimeout = setTimeout(() => this.historyLeaveTimeout = null, 2000);
+			NotificationActions.info('Click back again to leave this filelist');
 			return false;
 		}
+
+		return true;
 	},
 
 	contextTypes: {
@@ -53,10 +60,6 @@ const ListBrowser = React.createClass({
 	},
 
 	componentWillMount() {
-		//const { route, router } = this.context;
-		//router.setRouteLeaveHook(route, this.routerWillLeave);
-
-
 		const { session, location } = this.props;
 
 		const locationData = History.getSidebarData(location);

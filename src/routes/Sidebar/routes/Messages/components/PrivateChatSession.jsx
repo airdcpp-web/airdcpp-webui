@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from './MessageFooter';
@@ -27,7 +26,6 @@ const ChatSession = React.createClass({
 
 				<MessageFooter
 					session={ session }
-					contextGetter={ () => ReactDOM.findDOMNode(this) }
 				/>
 			</div>
 		);

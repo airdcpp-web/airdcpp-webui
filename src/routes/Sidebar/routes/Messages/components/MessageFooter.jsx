@@ -19,13 +19,13 @@ const getCaption = (state) => {
 	}
 };
 
-const CCPMState = ({ contextGetter, session }) => {
+const CCPMState = ({ session }) => {
 	if (!session.ccpm_state.supported) {
 		return null;
 	}
 	
 	const state = session.ccpm_state.id;
-	const ids = [ state === CCPMEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
+	const actionIds = [ state === CCPMEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
 
 	return (
 		<SessionFooter>
@@ -38,8 +38,7 @@ const CCPMState = ({ contextGetter, session }) => {
 				<ActionMenu
 					caption={ getCaption(state) }
 					actions={ PrivateChatActions }
-					ids={ ids }
-					contextGetter={ contextGetter }
+					ids={ actionIds }
 					itemData={ session }
 				/>
 			</div>
