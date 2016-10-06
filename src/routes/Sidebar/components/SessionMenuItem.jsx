@@ -1,20 +1,19 @@
 import React from 'react';
 
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
-import History from 'utils/History';
 
 
-const onClickItem = (evt, routerLocation, url) => {
+const onClickItem = (evt, sessionItem, pushSession) => {
 	evt.preventDefault();
 
-	History.pushSidebar(routerLocation, url);
+	pushSession(sessionItem);
 };
 
-const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url }, { routerLocation }) => (
+const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url, pushSession }) => (
 	<RouterMenuItemLink 
 		url={ url } 
 		className="session-item" 
-		onClick={ evt => onClickItem(evt, routerLocation, url) }
+		onClick={ evt => onClickItem(evt, sessionItem, pushSession) }
 		icon={ status }
 		sessionId={ sessionItem.id }
 		unreadInfoStore={ unreadInfoStore }
@@ -38,10 +37,8 @@ SessionMenuItem.propTypes = {
 	status: React.PropTypes.node.isRequired,
 
 	sessionItem: React.PropTypes.object.isRequired,
-};
 
-SessionMenuItem.contextTypes = {
-	routerLocation: React.PropTypes.object.isRequired,
+	pushSession: React.PropTypes.func.isRequired,
 };
 
 export default SessionMenuItem;

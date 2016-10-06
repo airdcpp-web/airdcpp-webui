@@ -294,6 +294,7 @@ const SessionLayout = React.createClass({
 				unreadInfoStore={ this.props.unreadInfoStore }
 				status={ this.getItemStatus(sessionItem) }
 				sessionItem={ sessionItem }
+				pushSession={ this.pushSession }
 			/>
 		);
 	},
@@ -340,6 +341,10 @@ const SessionLayout = React.createClass({
 		return this.props.itemIconGetter(activeItem);
 	},
 
+	pushNew() {
+		History.pushSidebar(this.props.location, this.getNewUrl());
+	},
+
 	getNewButton() {
 		if (!this.hasEditAccess() || !this.props.newButtonCaption) {
 			return null;
@@ -348,8 +353,9 @@ const SessionLayout = React.createClass({
 		return (
 			<SessionNewButton 
 				key="new-button" 
-				title={this.props.newButtonCaption} 
-				url={this.getNewUrl()} 
+				title={ this.props.newButtonCaption } 
+				url={ this.getNewUrl() } 
+				pushNew={ this.pushNew }
 			/>
 		);
 	},

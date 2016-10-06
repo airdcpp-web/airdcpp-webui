@@ -1,23 +1,24 @@
 import React from 'react';
-import History from 'utils/History';
+import classNames from 'classnames';
 
 import IconConstants from 'constants/IconConstants';
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 
 
-const onClick = (evt, url, routerLocation) => {
+const onClick = (evt, pushNew) => {
 	evt.preventDefault();
 
-	History.pushSidebar(routerLocation, url);
+	pushNew();
 };
 
-const SessionNewButton = ({ url, title, className = '' }, { routerLocation }) => (
+
+const SessionNewButton = ({ url, title, pushNew, className }) => (
 	<RouterMenuItemLink 
 		key="button-new" 
-		className={ 'new ' + className }
+		className={ classNames('new', className) }
 		icon={ IconConstants.CREATE }
 		url={ url } 
-		onClick={ evt => onClick(evt, url, routerLocation) }
+		onClick={ evt => onClick(evt, pushNew) }
 	>
 		{ title }
 	</RouterMenuItemLink>
@@ -33,10 +34,8 @@ SessionNewButton.propTypes = {
 	 * Title of the button
 	 */
 	title: React.PropTypes.node.isRequired,
-};
 
-SessionNewButton.contextTypes = {
-	routerLocation: React.PropTypes.object.isRequired,
+	pushNew: React.PropTypes.func.isRequired,
 };
 
 export default SessionNewButton;

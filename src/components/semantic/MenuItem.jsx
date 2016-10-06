@@ -81,7 +81,11 @@ export const RouterMenuItemLink = React.createClass({
 		}
 
 		// Urgencies updated
-		return !deepEqual(nextState.urgencies, this.state.urgencies);
+		if (!deepEqual(nextState.urgencies, this.state.urgencies)) {
+			return true;
+		}
+
+		return false;
 	},
 
 	componentDidMount() {
