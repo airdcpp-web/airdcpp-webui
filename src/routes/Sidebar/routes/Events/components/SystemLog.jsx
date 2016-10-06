@@ -15,39 +15,36 @@ import MessageView from 'components/messages/MessageView';
 import '../style.css';
 
 
-const EventMessages = React.createClass({
-	render: function () {
-		const { messages } = this.props;
-		if (!messages) {
-			return <Loader text="Loading messages"/>;
-		}
+const mapViewMessage = message => {
+	return {
+		log_message: message,
+	};
+};
 
-		if (messages.length === 0) {
-			return (
-				<Message 
-					description="No messages to show"
-				/>
-			);
-		}
+const EventMessages = ({ messages }) => {
+	if (!messages) {
+		return <Loader text="Loading messages"/>;
+	}
 
-		const messageList = messages.map(message => {
-			return {
-				log_message: message,
-			};
-		});
-
+	if (messages.length === 0) {
 		return (
-			<MessageView 
-				className="events"
-				messages={ messageList }
+			<Message 
+				description="No messages to show"
 			/>
 		);
 	}
-});
+
+	return (
+		<MessageView 
+			className="events"
+			messages={ messages.map(mapViewMessage) }
+		/>
+	);
+};
 
 const SystemLog = React.createClass({
 	mixins: [ LocationContext, Reflux.connect(EventStore, 'messages'), ],
-	componentWillMount: function () {
+	componentWillMount() {
 		EventActions.setActive(true);
 		EventActions.setRead();
 
@@ -62,10 +59,6 @@ const SystemLog = React.createClass({
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return nextState.messages !== this.state.messages;
-	},
-
-	_handleClear() {
-		EventActions.clear();
 	},
 
 	render: function () {
