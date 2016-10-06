@@ -66,7 +66,7 @@ const FavoriteHubs = React.createClass({
 					name="State"
 					width={45}
 					columnKey="connect_state"
-					cell={ editAccess ? <ConnectStateCell/> : null }
+					cell={ editAccess && <ConnectStateCell/> }
 					flexGrow={3}
 				/>
 				<Column
@@ -92,12 +92,12 @@ const FavoriteHubs = React.createClass({
 					name="Auto connect"
 					width={65}
 					columnKey="auto_connect"
-					cell={ editAccess ? (
+					cell={ editAccess && (
 							<CheckboxCell 
 								onChange={ this.onChangeAutoConnect } 
 								type="toggle"
 							/>
-					) : null }
+					) }
 				/>
 				<Column
 					name="Share profile"

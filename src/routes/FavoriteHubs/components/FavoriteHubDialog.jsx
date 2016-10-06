@@ -99,7 +99,14 @@ const FavoriteHubDialog = React.createClass({
 	render: function () {
 		const title = this._isNew ? 'Add favorite hub' : 'Edit favorite hub';
 		return (
-			<Modal className="fav-hub" title={title} onApprove={this.save} closable={false} icon={ IconConstants.FAVORITE } {...this.props}>
+			<Modal 
+				className="fav-hub" 
+				title={title} 
+				onApprove={this.save} 
+				closable={false} 
+				icon={ IconConstants.FAVORITE } 
+				{...this.props}
+			>
 				<Form
 					ref="form"
 					title="User information"

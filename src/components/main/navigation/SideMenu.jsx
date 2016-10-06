@@ -28,13 +28,13 @@ const SideMenu = React.createClass({
 		const { secondaryMenuItems, menuItemGetter } = this.props;
 		return (
 			<div id="side-menu">
-				{ secondaryMenuItems.length > 0 ? (
+				{ secondaryMenuItems.length > 0 && (
 					<div className="content navigation">
 						<div className="ui labeled icon vertical small inverted menu">
 							{ secondaryMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
 						</div>
 					</div>
-				) : null }
+				) }
 				<div className="ui divider"/>
 				<IconPanel/>
 			</div>

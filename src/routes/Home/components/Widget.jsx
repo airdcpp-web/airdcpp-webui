@@ -27,7 +27,7 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
 						settings,
 					}}
 				>
-					{ !widgetInfo.actionMenu ? null : (
+					{ !!widgetInfo.actionMenu && (
 						<ActionMenu { ...widgetInfo.actionMenu }/>
 					) }
 				</ActionMenu>

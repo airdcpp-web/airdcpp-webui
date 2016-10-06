@@ -145,7 +145,7 @@ export default function (Component) {
 		},
 
 		render() {
-			let { ids, actions, children, ...other } = this.props;
+			let { ids, actions, children, ...other } = this.props; // eslint-disable-line
 
 			const menus = [ parseMenu(this.props) ];
 			if (children) {

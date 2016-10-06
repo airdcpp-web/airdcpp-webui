@@ -67,13 +67,13 @@ const ResultTable = React.createClass({
 		}
 
 		if (!this.props.searchString) {
-			return process.env.DEMO_MODE === '1' ? (
+			return process.env.DEMO_MODE === '1' && (
 				<Message 
 					title="Demo content available"
 					icon="idea"
 					description={ 'Use the search string "demo" to receive results from the demo share' }
 				/>
-			) : null;
+			);
 		}
 
 		return (

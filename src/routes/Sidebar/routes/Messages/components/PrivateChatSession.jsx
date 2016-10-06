@@ -10,7 +10,7 @@ import AccessConstants from 'constants/AccessConstants';
 import { LocationContext } from 'mixins/RouterMixin';
 
 
-const ChatSession = React.createClass({
+const PrivateChatSession = React.createClass({
 	mixins: [ LocationContext ],
 	render() {
 		const { session, location, actions } = this.props;
@@ -32,4 +32,4 @@ const ChatSession = React.createClass({
 	},
 });
 
-export default ChatSession;
+export default PrivateChatSession;

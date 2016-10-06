@@ -51,12 +51,12 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 					value={ locals.value }
 					onChange={ onChange }
 				/>
-				{ hasAccess ? (
+				{ hasAccess && (
 					<Button
 						caption="Browse"
 						onClick={ showBrowseDialog }
 					/>
-				) : null }
+				) }
 			</div>
 		);
 	}

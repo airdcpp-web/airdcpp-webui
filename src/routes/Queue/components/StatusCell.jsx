@@ -20,7 +20,11 @@ const getStatusClass = (cellData, rowData) => {
 const StatusCell = ({ cellData, rowData, ...props }) => {
 	if (cellData.failed) {
 		// There isn't much space for other information
-		return <span className="error">{ cellData.str }</span>;
+		return (
+			<span className="error">
+				{ cellData.str }
+			</span>
+		);
 	}
 
 	return (

@@ -183,7 +183,7 @@ const FileBrowser = React.createClass({
 		const rootName = this._isWindows ? 'Computer' : 'Root';
 		return (
 			<div className="file-browser">
-				{ this.state.error ? (<Message isError={true} title="Failed to load content" description={this.state.error}/>) : null }
+				{ !!this.state.error && <Message isError={true} title="Failed to load content" description={this.state.error}/> }
 				<BrowserBar 
 					path={ this.state.currentDirectory }
 					separator={ this._pathSeparator } 

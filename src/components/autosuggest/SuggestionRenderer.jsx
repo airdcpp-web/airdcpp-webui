@@ -33,11 +33,11 @@ const SuggestionRenderer = function (searchText, suggestionText, description = n
 			<div className="header">
 				{ title }
 			</div>
-			{ description ? (
+			{ !!description && (
 				<div className="description">
 					{ description }
 				</div>
-			) : null }
+			) }
 		</div>
 	);
 };

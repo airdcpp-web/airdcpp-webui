@@ -12,8 +12,6 @@ import Reflux from 'reflux';
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
-import OverlayConstants from 'constants/OverlayConstants';
-
 import 'array.prototype.find';
 import './utils/semantic';
 
@@ -41,14 +39,16 @@ const requireAuth = (nextState, replace) => {
 
 const onEnterSidebar = (nextProps, replace) => {
 	// Don't allow sidebar to be accessed with a direct link
-	if (!nextProps.location.state || !nextProps.location.state[OverlayConstants.SIDEBAR_ID]) {
+	if (!History.hasSidebar(nextProps.location)) {
 		replace({
 			pathname: '/',
 		});
 	}
 };
 
-const { path, ...indexRoute } = require('./routes/Home');
+// Path can't be passed to indexRoute
+const { path, ...indexRoute } = require('./routes/Home'); // eslint-disable-line
+
 const routeConfig = [
 	require('./routes/Login'),
 	{ 

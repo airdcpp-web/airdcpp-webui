@@ -86,12 +86,12 @@ const MainLayoutMobile = React.createClass({
 		
 		return (
 			<div className={this.props.className} id="mobile-layout">
-				{ this.state.menuVisible ? (
+				{ this.state.menuVisible && (
 					<MainNavigation
 						location={ this.props.location }
 						onClose={ this.onClickMenu }
 					/>
-				) : null }
+				) }
 				<div className="pusher sidebar-context" id="mobile-layout-inner">
 					<SiteHeader 
 						content={
