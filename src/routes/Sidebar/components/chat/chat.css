@@ -8,10 +8,6 @@
 	overflow-y: hidden;
 }
 
-.chat.session .message-view {
-	clear: both;
-}
-
 .chat.session .message-section {
 	margin-bottom: 10px;
 }
@@ -93,16 +89,16 @@
 	color: steelblue !important;
 }
 
-/*.chat-message.op .message-author-name {
-	color: orange !important;
-}*/
+.chat.session .chat.item.op .author .caption {
+	color: darkgoldenrod !important;
+}
 
 .chat.session .chat.item.me .author .caption {
 	color: black !important;
 }
 
 .chat.session .chat.item.bot .author .caption {
-	color: darkgoldenrod !important;
+	color: gray !important;
 }
 
 
