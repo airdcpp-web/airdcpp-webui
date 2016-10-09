@@ -32,6 +32,11 @@ proxy.on('error', function (err, req, res) {
 
 console.log('');
 
+// Proxying of viewed files must be defined before the generic static file handling
+app.get("/view/*", function(req, res){ 
+	proxy.web(req, res);
+});
+
 // Env-specific configuration
 if (process.env.NODE_ENV !== 'production') {
 	var webpack = require('webpack');
@@ -46,19 +51,29 @@ if (process.env.NODE_ENV !== 'production') {
 	}));
 
 	app.use(require('webpack-hot-middleware')(compiler));
+	
+	// Setup static file handling
+	// https://github.com/ampedandwired/html-webpack-plugin/issues/145#issuecomment-170554832
+	app.use('*', function (req, res, next) {
+		var filename = path.join(compiler.outputPath, 'index.html');
+		compiler.outputFileSystem.readFile(filename, function(err, result){
+			if (err) {
+				return next(err);
+			}
+			res.set('content-type','text/html');
+			res.send(result);
+			res.end();
+		});
+	});
 } else {
 	app.use('/', express.static(process.env.DEMO_MODE === '1' ? 'demo' : 'dist'));
 	app.use(compression());
+	
+	// Setup static file handling
+	app.get('*', function (req, res) {
+		res.sendFile(path.join(__dirname, 'index.html'));
+	});
 }
-
-app.get("/view/*", function(req, res){ 
-  proxy.web(req, res);
-});
-
-// Setup static file handling
-app.get('*', function (req, res) {
-	res.sendFile(path.join(__dirname, 'index.html'));
-});
 
 // Listen
 var listener = app.listen(argv.port, argv.bindAddress, function (err) {

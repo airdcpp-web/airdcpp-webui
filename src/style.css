@@ -10,14 +10,14 @@
 
 @media (min-width: 700px) and (max-width: 1440px) {
 	section#container-main {
-		background: url("../images/background_1500px.jpg") no-repeat;
+		background: url('../resources/images/background_1500px.jpg') no-repeat;
 		background-size: cover;
 	}
 }
 
 @media (min-width: 1440px) {
 	section#container-main {
-		background: url("../images/background_3460px.jpg") no-repeat;
+		background: url('../resources/images/background_3460px.jpg') no-repeat;
 		background-size: cover;
 	}
 }

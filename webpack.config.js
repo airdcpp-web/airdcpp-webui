@@ -1,6 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
+
 var CompressionPlugin = require("compression-webpack-plugin");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+// Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
+if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
+	process.env.NODE_ENV = 'production';
+}
 
 const release = (process.env.NODE_ENV === 'production');
 const demo = (process.env.DEMO_MODE === '1');
@@ -26,6 +33,12 @@ var plugins = [
 		'UI_VERSION': JSON.stringify(require("./package.json").version),
 		'UI_BUILD_DATE': JSON.stringify((new Date).getTime()),
 	}),
+	
+	new HtmlWebpackPlugin({
+		template: 'resources/index.ejs',
+		favicon: 'resources/favicon.ico',
+		inject: false
+	})
 ];
 
 var releasePlugins = [
@@ -68,13 +81,15 @@ if (!release) {
 console.log(chalk.bold('[webpack] Release: ' + release));
 console.log(chalk.bold('[webpack] Demo mode: ' + demo));
 
+var chunkFilename = release ? 'js/[name].[chunkhash].chunk.js' : 'js/[name].chunk.js';
+
 module.exports = {
 	entry: entries,
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'js/[name].entry.js',
-		chunkFilename: 'js/[name].chunk.js',
+		filename: 'js/[name].[hash].entry.js',
+		chunkFilename: chunkFilename,
 	},
 
 	// cheap-module-source-map doesn't seem to work with Uglify
@@ -86,21 +101,17 @@ module.exports = {
 				include: /src/, 
 				use: 'babel' 
 			}, { 
-				test: /\.css$/, 
-				include: [
-					path.resolve(__dirname, 'src'),
-					path.resolve(__dirname, 'node_modules')
-				], 
+				test: /\.css$/,
 				use: [ 'style-loader', 'css-loader' ]
 			}, { 
-				test: /\.(jpg|png)$/, 
+				test: /\.(jpg|png)$/,
 				use: [
 					{
 						loader: "file-loader",
 						options: {
 							limit: 100000,
-							name: 'images/[name].[ext]'
-						}
+							name: 'images/[name].[hash].[ext]',
+						},
 					}
 				]
 			}, { 
@@ -125,6 +136,7 @@ module.exports = {
 	resolve: {
 		modules: [
 			path.resolve('./src'),
+			path.resolve('./resources'),
 			'node_modules'
 		],
 		extensions: [ '.js', '.jsx' ],

@@ -16,13 +16,6 @@ Install dependencies:
 
 ## Production build
 
-#### Windows
-
-Run ``scripts/build-prod-windows.bat``
-
-
-#### Other operating systems
-
 Run the command
 
     $ npm run build

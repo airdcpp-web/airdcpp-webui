@@ -5,9 +5,10 @@ import classNames from 'classnames';
 import 'semantic-ui/components/loader.min.css';
 
 
-const Loader = ({ text, className, inline, size }) => {
+const Loader = ({ text, className, inline, size, inverted }) => {
 	const style = classNames(
 		'ui active  loader',
+		{ 'inverted': inverted },
 		{ 'inline': inline },
 		{ 'text': !inline }, // Should be used even if there is no text because of styling
 		className,

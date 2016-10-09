@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { IndexLink } from 'react-router';
-import Logo from '../../../images/AirDCPlusPlus.png';
+import Logo from 'images/AirDCPlusPlus.png';
 
 
 const SiteHeader = ({ content }) => (

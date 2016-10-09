@@ -10,10 +10,6 @@
 <body>
   <!-- content section -->
   <section class="ui dimmable blurring minimal" id="container-main"></section>
-
-  <!-- Initialize SPA>
-  <script type="text/javascript" src="/js/main.entry.js"></script-->
-	
 	<script type="text/javascript">
 		function getBasePath(data) {
 			const pathTokens = window.location.pathname.split('/');		
@@ -26,8 +22,9 @@
 			return '/';		
 		}
 
+		// We must inject the main chunk dynamically as well because the final path is not known on compile time
 		var script = document.createElement('script');
-		script.src = getBasePath() + "js/main.entry.js";
+		script.src = getBasePath() + "<%= htmlWebpackPlugin.files.chunks.main.entry%>";
 		document.body.appendChild(script);
 	</script>
 </body>

@@ -18,7 +18,7 @@ import { LocalSettings } from 'constants/SettingConstants';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
-import Logo from '../../../images/AirDCPlusPlus.png';
+import Logo from 'images/AirDCPlusPlus.png';
 
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
