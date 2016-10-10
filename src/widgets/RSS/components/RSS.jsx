@@ -147,7 +147,7 @@ const RSS = React.createClass({
 
 	onFeedFetched(data) {
 		if (!data.results) {
-			this.setError('The URL is invalid or the feed is empty');
+			this.setError('The URL is invalid, the feed is empty or there is a temporary issue with the feed service');
 			return;
 		}
 

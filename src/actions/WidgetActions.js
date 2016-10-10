@@ -50,7 +50,7 @@ WidgetActions.create.listen(function (widgetInfo, location) {
 WidgetActions.edit.listen(function ({ id, widgetInfo, settings }, location) {
 	History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
 		widgetInfo,
-		settings: Object.assign({}, widgetInfo.defaultSettings, settings), // Merge with defaults in case new settings have been added
+		settings,
 		onSave: settings => WidgetActions.edit.saved(id, settings),
 	});
 });
