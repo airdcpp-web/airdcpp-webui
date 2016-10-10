@@ -41,21 +41,22 @@ export const RouterMenuItemLink = React.createClass({
 		unreadInfoStore: React.PropTypes.object,
 
 		/**
-		 * Session objects are immutable so we must always 
-		 * fetch a fresh one from unreadInfoStore when the object is needed
+		 * Session object
 		 */
-		sessionId: React.PropTypes.any,
+		session: React.PropTypes.object,
 	},
 
 	getUrgencies() {
-		const { unreadInfoStore, sessionId } = this.props;
+		const { unreadInfoStore, session } = this.props;
 		if (!unreadInfoStore) {
 			return null;
 		}
 
-		if (sessionId) {
-			const session = unreadInfoStore.getSession(sessionId);
-			return session ? unreadInfoStore.getItemUrgencies(session) : null;
+		if (session) {
+			// Session objects are immutable so the one received via props
+			// may be outdated already
+			const currentSession = unreadInfoStore.getSession(session.id);
+			return currentSession ? unreadInfoStore.getItemUrgencies(currentSession) : null;
 		}
 
 		return unreadInfoStore.getTotalUrgencies();
@@ -68,8 +69,8 @@ export const RouterMenuItemLink = React.createClass({
 	},
 
 	shouldComponentUpdate(nextProps, nextState) {
-		// Session updated/changed?
-		if (nextProps.sessionId !== this.props.sessionId) {
+		// Session (or its properties) updated/changed?
+		if (nextProps.session !== this.props.session) {
 			return true;
 		}
 

@@ -26,7 +26,7 @@ const ChatLayout = React.createClass({
 	},
 
 	onMessagesChanged(messages, id) {
-		if (id != this.props.session.id) { // NOTE: this should allow type conversion
+		if (id !== this.props.session.id) {
 			return;
 		}
 
@@ -70,18 +70,18 @@ const ChatLayout = React.createClass({
 		const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
 		return (
 			<div className="message-view">
-				{ hasChatAccess ? null : <Message description="You aren't allowed to send new messages" idcon="blue info"/> }
+				{ !hasChatAccess && <Message description="You aren't allowed to send new messages" idcon="blue info"/> }
 				<MessageView 
 					className="chat"
 					messages={ this.state.messages }
 					session={ this.props.session }
 				/>
-				{ hasChatAccess ? (
+				{ hasChatAccess && (
 					<MessageComposer 
 						session={ this.props.session }
 						actions={ this.props.actions }
 					/>
-				) : null }
+				) }
 			</div>
 		);
 	},

@@ -15,7 +15,7 @@ const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url, push
 		className="session-item" 
 		onClick={ evt => onClickItem(evt, sessionItem, pushSession) }
 		icon={ status }
-		sessionId={ sessionItem.id }
+		session={ sessionItem }
 		unreadInfoStore={ unreadInfoStore }
 	>
 		<span className="session-name">
