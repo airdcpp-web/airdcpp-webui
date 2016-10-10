@@ -15,7 +15,7 @@ var argv = minimist(process.argv.slice(2), {
 });
 
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
 	console.error('This server is not supported in production environment');
 	return;
 }
