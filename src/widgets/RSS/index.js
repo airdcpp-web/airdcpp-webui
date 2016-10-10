@@ -7,12 +7,19 @@ module.exports = {
 	icon: 'orange rss',
 	formSettings: {
 		feed_url: t.Str,
+		feed_cache_minutes: t.Positive,
 	},
 	fieldOptions: {
 		feed_url: {
 			legend: 'Feed URL',
 			help: 'RSS and Atom feeds are supported',
 		},
+		feed_cache_minutes: {
+			legend: 'Minumum refetch interval (minutes)',
+		},
+	},
+	defaultSettings: {
+		feed_cache_minutes: 60,
 	},
 	size: {
 		w: 3,

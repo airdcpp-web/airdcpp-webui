@@ -5,15 +5,16 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-import RSSActions from '../actions/RSSActions';
 import RedrawDecorator from 'decorators/RedrawDecorator';
+import RSSActions from '../actions/RSSActions';
 
+import BrowserUtils from 'utils/BrowserUtils';
 import ValueFormat from 'utils/ValueFormat';
 
 import '../style.css';
 
 
-const Entry = ({ entry, location, feedUrl, componentId }) => {
+const Entry = ({ entry, feedUrl, componentId }) => {
 	const date = entry.pubDate ? entry.pubDate : entry.updated;
 	return (
 		<div className="item">
@@ -42,12 +43,16 @@ Entry.propTypes = {
 	 * Feed entry
 	 */
 	entry: React.PropTypes.object.isRequired,
+
+	feedUrl: React.PropTypes.string.isRequired,
+
+	componentId: React.PropTypes.string.isRequired,
 };
 
 const Footer = RedrawDecorator(({ lastUpdated, handleUpdate }) => (
 	<div className="extra content">
 		<i className="icon refresh link" onClick={ handleUpdate }/>
-		{ lastUpdated ? 'Last updated: ' + ValueFormat.formatRelativeTime(lastUpdated) : null }
+		{ lastUpdated ? 'Last updated: ' + ValueFormat.formatRelativeTime(lastUpdated / 1000) : null }
 	</div>
 ), 60);
 
@@ -67,6 +72,9 @@ const getEntryKey = (entry) => {
 	return entry.id;
 };
 
+
+const idToCacheKey = id => 'rss_feed_cache_' + id;
+
 const RSS = React.createClass({
 	mixins: [ PureRenderMixin ],
 	propTypes: {
@@ -74,10 +82,14 @@ const RSS = React.createClass({
 		 * Current widget settings
 		 */
 		settings: React.PropTypes.object.isRequired,
+
+		componentId: React.PropTypes.string.isRequired,
 	},
 
 	componentWillMount() {
-		this.fetchFeed(this.props.settings.feed_url);
+		if (!this.state.entries) {
+			this.fetchFeed(this.props.settings.feed_url);
+		}
 	},
 
 	fetchFeed(feedUrl) {
@@ -100,10 +112,30 @@ const RSS = React.createClass({
 		}
 	},
 
+	getCachedFeedInfo() {
+		const feedInfo = BrowserUtils.loadSessionProperty(idToCacheKey(this.props.componentId));
+		if (feedInfo) {
+			const feedDate = new Date(feedInfo.date).getTime();
+			const lastValidDate = feedDate + (this.props.settings.feed_cache_minutes * 60 * 1000);
+
+			if (lastValidDate >= Date.now()) {
+				console.log('RSS: cached feed will be used (expires in ' + (lastValidDate - Date.now()) / 60 / 1000 + ' minutes)');
+				return feedInfo;
+			} else {
+				console.log('RSS: cached feed had expired ' + (Date.now() - lastValidDate) / 60 / 1000 + ' minutes ago');
+			}
+		} else {
+			console.log('RSS: no cached feed');
+		}
+
+		return null;
+	},
+
 	getInitialState() {
+		const feedInfo = this.getCachedFeedInfo();
 		return {
-			entries: null,
 			error: null,
+			...feedInfo,
 		};
 	},
 
@@ -144,10 +176,15 @@ const RSS = React.createClass({
 			return;
 		}
 
+		BrowserUtils.saveSessionProperty(idToCacheKey(this.props.componentId), {
+			entries,
+			date: Date.now(),
+		});
+
 		this.setState({
 			error: null,
 			entries,
-			lastUpdated: Date.now() / 1000,
+			date: Date.now(),
 		});
 	},
 
@@ -164,6 +201,7 @@ const RSS = React.createClass({
 			return <Loader text="Loading feed" inline={true}/>;
 		}
 
+		const feedUrl = this.props.settings.feed_url;
 		return (
 			<div className="rss-container">
 				<div className="ui divided list rss">
@@ -173,14 +211,14 @@ const RSS = React.createClass({
 			  				key={ getEntryKey(entry) } 
 			  				entry={ entry }
 			  				componentId={ this.props.componentId }
-			  				feedUrl={ this.props.settings.feed_url }
+			  				feedUrl={ feedUrl }
 			  			/>
 			  		))
 				  }
 				</div>
 				<Footer
-					lastUpdated={ this.state.lastUpdated }
-					handleUpdate={ _ => this.fetchFeed(this.props.settings.feed_url) }
+					lastUpdated={ this.state.date }
+					handleUpdate={ _ => this.fetchFeed(feedUrl) }
 				/>
 			</div>
 		);

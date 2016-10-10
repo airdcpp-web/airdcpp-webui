@@ -39,6 +39,9 @@ WidgetActions.create.listen(function (widgetInfo, location) {
 		widgetInfo,
 		settings: {
 			name: widgetInfo.name,
+			widget: {
+				...widgetInfo.defaultSettings,
+			},
 		},
 		onSave: settings => WidgetActions.create.saved(id, settings, widgetInfo),
 	});
@@ -47,7 +50,7 @@ WidgetActions.create.listen(function (widgetInfo, location) {
 WidgetActions.edit.listen(function ({ id, widgetInfo, settings }, location) {
 	History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
 		widgetInfo,
-		settings, 
+		settings: Object.assign({}, widgetInfo.defaultSettings, settings), // Merge with defaults in case new settings have been added
 		onSave: settings => WidgetActions.edit.saved(id, settings),
 	});
 });

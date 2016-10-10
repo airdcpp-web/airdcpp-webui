@@ -19,7 +19,19 @@ const idToWidgetType = (id) => {
 };
 
 const getWidgetSettings = (id) => {
-	return BrowserUtils.loadLocalProperty(idToSettingKey(id), { });
+	const settings = BrowserUtils.loadLocalProperty(idToSettingKey(id), { });
+
+	// Add new default settings
+	const widgetInfo = getWidgetInfoById(id);
+	if (widgetInfo && widgetInfo.defaultSettings) {
+		Object.keys(widgetInfo.defaultSettings).forEach(key => {
+			if (!settings.widget.hasOwnProperty(key)) {
+				settings.widget[key] = widgetInfo.defaultSettings[key];
+			}
+		});
+	}
+
+	return settings;
 };
 
 const saveSettings = (id, settings) => {
