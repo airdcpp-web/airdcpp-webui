@@ -20,6 +20,10 @@ const HubSessionStore = Reflux.createStore({
 		return this.getSessions().find(session => session.connect_state.id === 'connected');
 	},
 
+	getSessionByUrl(hubUrl) {
+		return this.getSessions().find(session => session.hub_url === hubUrl); 
+	},
+
 	onSocketConnected(addSocketListener) {
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_CREATED, this._onSessionCreated);
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_REMOVED, this._onSessionRemoved);
