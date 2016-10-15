@@ -60,7 +60,7 @@ const FileBrowser = React.createClass({
 
 	getInitialState() {
 		this._pathSeparator = LoginStore.systemInfo.path_separator;
-		this._isWindows = LoginStore.systemInfo.platform == 'windows';
+		this._isWindows = LoginStore.systemInfo.platform === 'windows';
 
 		let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
 		if (!currentDirectory) {

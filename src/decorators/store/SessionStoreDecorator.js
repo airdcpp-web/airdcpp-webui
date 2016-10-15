@@ -29,7 +29,7 @@ const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) 
 	};
 
 	store.getSession = (id) => {
-		return sessions.find(session => session.id == id);
+		return sessions.find(session => session.id === id);
 	};
 
 	store.getSessions = () => {

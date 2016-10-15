@@ -89,7 +89,7 @@ const LoginStore = Reflux.createStore({
 
 	// Can't connect to the server or session not valid
 	onConnectFailed(error) {
-		if (error.code == 400) {
+		if (error.code === 400) {
 			this.reset();
 			this._lastError = 'Session lost';
 		} else { 

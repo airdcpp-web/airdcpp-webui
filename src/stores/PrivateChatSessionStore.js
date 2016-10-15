@@ -9,6 +9,7 @@ import SessionStoreDecorator from 'decorators/store/SessionStoreDecorator';
 import { PrivateMessageUrgencies } from 'constants/UrgencyConstants';
 import AccessConstants from 'constants/AccessConstants';
 
+
 const PrivateChatSessionStore = Reflux.createStore({
 	getInitialState: function () {
 		return this.getSessions();
