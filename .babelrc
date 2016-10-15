@@ -24,6 +24,10 @@
           }]
         }]
       ],
+    },
+    "test": {
+      // https://facebook.github.io/jest/docs/tutorial-webpack.html
+      "plugins": ["transform-es2015-modules-commonjs"]
     }
   }
 }
