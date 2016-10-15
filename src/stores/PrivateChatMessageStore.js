@@ -4,7 +4,6 @@ import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
 import MessageStoreDecorator from 'decorators/store/MessageStoreDecorator';
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import AccessConstants from 'constants/AccessConstants';
 
@@ -24,5 +23,5 @@ const PrivateChatMessageStore = Reflux.createStore({
 	},
 });
 
-export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions, PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW)
+export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions, AccessConstants.PRIVATE_CHAT_VIEW)
 ;

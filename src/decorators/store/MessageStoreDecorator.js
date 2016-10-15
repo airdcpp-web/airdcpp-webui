@@ -9,7 +9,7 @@ const filterListed = (messageList, message) => {
 	return !messageList.find(existingMessage => MessageUtils.getListMessageId(existingMessage) === id);
 };
 
-export default function (store, actions, sessionStore, access) {
+export default function (store, actions, access) {
 	// Message arrays mapped by session IDs 
 	let messages = {};
 
@@ -46,14 +46,6 @@ export default function (store, actions, sessionStore, access) {
 			if (MessageUtils.getListMessageId(lastMessage) >= message.id) {
 				return;
 			}
-		}
-
-		// Active tab?
-		if (!message.is_read && sessionId === sessionStore.getActiveSession()) {
-			message = {
-				...message,
-				is_read: true,
-			};
 		}
 
 		addMessage(sessionId, { [type]: message });
