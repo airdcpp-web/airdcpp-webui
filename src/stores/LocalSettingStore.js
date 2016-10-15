@@ -33,7 +33,7 @@ const Settings = [
 	}, {
 		key: LocalSettings.UNREAD_LABEL_DELAY,
 		defaultValue: 2,
-		title: 'Delay for marking sessions as read',
+		title: 'Delay for marking chat sessions as read',
 		unit: 'seconds',
 	}
 ];

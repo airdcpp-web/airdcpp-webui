@@ -87,4 +87,4 @@ const ChatLayout = React.createClass({
 	},
 });
 
-export default ActiveSessionDecorator(ChatLayout);
+export default ActiveSessionDecorator(ChatLayout, true);

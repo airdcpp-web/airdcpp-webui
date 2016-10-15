@@ -6,7 +6,7 @@ import { LocalSettings } from 'constants/SettingConstants';
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function (Component) {
+export default function (Component, useReadDelay) {
 	const ActiveSessionDecorator = React.createClass({
 		propTypes: {
 			session: React.PropTypes.any, // Required (cloned)
@@ -29,7 +29,8 @@ export default function (Component) {
 				return;
 			}
 
-			this.readTimeout = setTimeout(_ => this.setRead(id), LocalSettingStore.getValue(LocalSettings.UNREAD_LABEL_DELAY) * 1000);
+			const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
+			this.readTimeout = setTimeout(_ => this.setRead(id), timeout);
 		},
 
 		componentDidMount() {
