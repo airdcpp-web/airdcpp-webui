@@ -28,10 +28,10 @@ const MessageUtils = {
 				}, {}
 			);
 
-			data = Object.assign({},
-				data,
-				{ unread_messages: unreadInfo }
-			);
+			data = {
+				...data,
+				unread_messages: unreadInfo,
+			};
 		}
 
 		return data;
@@ -47,7 +47,15 @@ const MessageUtils = {
 		checkSplice(messages, cacheMessageCount);
 
 		return messages;
-	}
+	},
+
+	getListMessageId(message) {
+		return message.chat_message ? message.chat_message.id : message.log_message.id;
+	},
+
+	getListMessageTime(message) {
+		return message.chat_message ? message.chat_message.time : message.log_message.time;
+	},
 };
 
 export default Object.assign(MessageUtils, { 
