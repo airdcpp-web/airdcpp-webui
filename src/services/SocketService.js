@@ -15,6 +15,6 @@ const options = {
 	],
 };
 
-let Socket = ApiSocket(options, WebSocket);
+let Socket = ApiSocket(options, window.WebSocket);
 
 export default Socket;

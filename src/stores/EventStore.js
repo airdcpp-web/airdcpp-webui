@@ -14,8 +14,8 @@ import MessageUtils from 'utils/MessageUtils';
 const EventStore = Reflux.createStore({
 	listenables: EventActions,
 	init: function () {
-		this._logMessages = null;
-		this._info = null;
+		this._logMessages = undefined;
+		this._info = undefined;
 		this._active = false;
 	},
 
@@ -27,15 +27,12 @@ const EventStore = Reflux.createStore({
 		this._active = active;
 	},
 
-	onFetchMessagesCompleted: function (data) {
-		this._logMessages = data;
+	onFetchMessagesCompleted: function (cacheMessages) {
+		this._logMessages = MessageUtils.mergeCacheMessages(cacheMessages, this._logMessages);;
 		this.trigger(this._logMessages);
 	},
 
 	onFetchInfoCompleted: function (data) {
-		// If the socket was disconnected
-		this._logMessages = null;
-		
 		this.onLogInfo(data);
 	},
 
@@ -44,11 +41,8 @@ const EventStore = Reflux.createStore({
 			return;
 		}
 
-		this._logMessages = MessageUtils.handleMessage(data, this._logMessages, this._info.total_messages);
-
-		if (this._logMessages) {
-			this.trigger(this._logMessages);
-		}
+		this._logMessages = MessageUtils.pushMessage(data, this._logMessages);
+		this.trigger(this._logMessages);
 	},
 
 	onLogInfo: function (newInfo) {
@@ -56,10 +50,9 @@ const EventStore = Reflux.createStore({
 			newInfo = MessageUtils.checkUnread(newInfo, EventActions);
 		}
 
-		// In case the log was cleared
 		this._logMessages = MessageUtils.checkSplice(this._logMessages, newInfo.total_messages);
-
 		this._info = newInfo;
+
 		this.trigger(this._logMessages);
 	},
 
@@ -79,7 +72,11 @@ const EventStore = Reflux.createStore({
 		const url = EventConstants.MODULE_URL;
 		addSocketListener(url, EventConstants.MESSAGE, this.onLogMessage);
 		addSocketListener(url, EventConstants.COUNTS, this.onLogInfo);
-	}
+	},
+
+	onSocketDisconnected() {
+		this._logMessages = undefined;
+	},
 });
 
 export default SocketSubscriptionDecorator(EventStore, AccessConstants.EVENTS_VIEW);
