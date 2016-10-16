@@ -9,7 +9,6 @@ import ShareActions from 'actions/ShareActions';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
@@ -95,8 +94,8 @@ FilelistActions.reloadDirectory.listen(function ({ directory, session }) {
 		.catch(error => that.failed(session, error));
 });
 
-FilelistActions.createSession.listen(function (location, user, directory = '/') {
-	let session = FilelistSessionStore.getSession(user.cid);
+FilelistActions.createSession.listen(function (location, user, sessionStore, directory = '/') {
+	const session = sessionStore.getSession(user.cid);
 	if (session && session.user.hub_url === user.hub_url) {
 		this.completed(location, user, directory, session);
 		return;

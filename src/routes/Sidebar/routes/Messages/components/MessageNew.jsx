@@ -4,11 +4,12 @@ import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import NewLayout from 'routes/Sidebar/components/NewLayout';
 
 import PrivateChatActions from 'actions/PrivateChatActions';
+import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 
 const MessageNew = React.createClass({
 	_handleSubmit(nick, user) {
-		PrivateChatActions.createSession(this.props.location, user);
+		PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
 	},
 
 	render() {

@@ -4,6 +4,9 @@ import Reflux from 'reflux';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import FilelistActions from 'actions/FilelistActions';
 
+import FilelistSessionStore from 'stores/FilelistSessionStore';
+import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 import NotificationActions from 'actions/NotificationActions';
@@ -59,11 +62,11 @@ export const UserActions = Reflux.createActions([
 ]);
 
 UserActions.message.listen(function (userData, location) {
-	PrivateChatActions.createSession(location, userData.user);
+	PrivateChatActions.createSession(location, userData.user, PrivateChatSessionStore);
 });
 
 UserActions.browse.listen(function (userData, location) {
-	FilelistActions.createSession(location, userData.user, userData.directory);
+	FilelistActions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
 });
 
 UserActions.ignore.listen(function (userData, location) {

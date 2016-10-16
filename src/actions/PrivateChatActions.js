@@ -4,7 +4,6 @@ import PrivateChatConstants from 'constants/PrivateChatConstants';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import NotificationActions from 'actions/NotificationActions';
 import AccessConstants from 'constants/AccessConstants';
@@ -44,8 +43,8 @@ PrivateChatActions.disconnectCCPM.listen(function (session) {
 		.catch(that.failed);
 });
 
-PrivateChatActions.createSession.listen(function (location, user) {
-	let session = PrivateChatSessionStore.getSession(user.cid);
+PrivateChatActions.createSession.listen(function (location, user, sessionStore) {
+	let session = sessionStore.getSession(user.cid);
 	if (session) {
 		this.completed(location, user, session);
 		return;

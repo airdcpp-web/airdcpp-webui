@@ -2,14 +2,16 @@ import React from 'react';
 
 import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import NewLayout from 'routes/Sidebar/components/NewLayout';
+
 import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import ShareProfileSelector from './ShareProfileSelector';
 
 
 const FilelistNew = React.createClass({
 	_handleSubmit(nick, user) {
-		FilelistActions.createSession(this.props.location, user);
+		FilelistActions.createSession(this.props.location, user, FilelistSessionStore);
 	},
 
 	onProfileChanged(profileId) {

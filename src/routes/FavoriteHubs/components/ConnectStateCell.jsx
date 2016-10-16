@@ -1,7 +1,10 @@
 import React from 'react';
 
 import HubActions from 'actions/HubActions';
+import HubSessionStore from 'stores/HubSessionStore';
+
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
+
 
 const ConnectStateCell = React.createClass({
 	contextTypes: {
@@ -28,7 +31,7 @@ const ConnectStateCell = React.createClass({
 				return () => HubActions.removeSession({ id: this.props.cellData.current_hub_id });
 			case ConnectStateEnum.DISCONNECTED:
 			default:
-				return () => HubActions.createSession(this.context.routerLocation, this.props.rowData.hub_url);
+				return () => HubActions.createSession(this.context.routerLocation, this.props.rowData.hub_url, HubSessionStore);
 		}
 	},
 

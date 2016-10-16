@@ -5,7 +5,6 @@ import ViewFileConstants from 'constants/ViewFileConstants';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
-import ViewFileStore from 'stores/ViewFileStore';
 import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
@@ -17,8 +16,8 @@ const ViewFileActions = Reflux.createActions([
 	{ 'setRead': { asyncResult: true } },
 ]);
 
-ViewFileActions.createSession.listen(function ({ itemInfo, user }, isText, location) {
-	let session = ViewFileStore.getSession(itemInfo.tth);
+ViewFileActions.createSession.listen(function ({ itemInfo, user }, isText, location, sessionStore) {
+	let session = sessionStore.getSession(itemInfo.tth);
 	if (session) {
 		this.completed(location, itemInfo, session);
 		return;

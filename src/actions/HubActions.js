@@ -4,7 +4,6 @@ import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 
 import History from 'utils/History';
-import HubSessionStore from 'stores/HubSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
 import ChatActionDecorator from 'decorators/action/ChatActionDecorator';
@@ -77,8 +76,8 @@ HubActions.reconnect.listen(function (hub) {
 		.catch(this.failed);
 });
 
-HubActions.createSession.listen(function (location, hubUrl) {
-	const session = HubSessionStore.getSessionByUrl(hubUrl);
+HubActions.createSession.listen(function (location, hubUrl, sessionStore) {
+	const session = sessionStore.getSessionByUrl(hubUrl);
 	if (session) {
 		this.completed(location, session);
 		return;

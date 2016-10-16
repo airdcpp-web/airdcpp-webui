@@ -4,11 +4,12 @@ import HubSearchInput from 'components/autosuggest/HubSearchInput';
 import NewLayout from 'routes/Sidebar/components/NewLayout';
 
 import HubActions from 'actions/HubActions';
+import HubSessionStore from 'stores/HubSessionStore';
 
 
 const HubNew = React.createClass({
 	_handleConnect(hubUrl) {
-		HubActions.createSession(this.props.location, hubUrl);
+		HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
 	},
 
 	render() {

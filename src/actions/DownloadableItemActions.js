@@ -10,6 +10,8 @@ import AccessConstants from 'constants/AccessConstants';
 import FilelistActions from 'actions/FilelistActions';
 import ViewFileActions from 'actions/ViewFileActions';
 
+import ViewFileStore from 'stores/ViewFileStore';
+
 
 const isSearchable = ({ itemInfo }) => itemInfo.name || itemInfo.tth;
 const notMe = ({ user }) => user.flags.indexOf('me') === -1;
@@ -92,19 +94,19 @@ DownloadableItemActions.download.listen(function (data) {
 });
 
 DownloadableItemActions.viewText.listen(function (data, location) {
-	ViewFileActions.createSession(data, true, location);
+	ViewFileActions.createSession(data, true, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewVideo.listen(function (data, location) {
-	ViewFileActions.createSession(data, false, location);
+	ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewAudio.listen(function (data, location) {
-	ViewFileActions.createSession(data, false, location);
+	ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewImage.listen(function (data, location) {
-	ViewFileActions.createSession(data, false, location);
+	ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.findNfo.listen(function (data, location) {
