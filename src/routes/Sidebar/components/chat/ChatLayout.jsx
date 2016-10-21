@@ -42,13 +42,18 @@ const ChatLayout = React.createClass({
 	},
 
 	onSessionActivated(id) {
-		const messages = this.props.messageStore.getMessages()[id];
-		if (!messages) {
-			this.setState({ messages: null });
+		const { messageStore, actions } = this.props;
+		
+		if (!messageStore.isSessionInitialized(id)) {
+			this.setState({ 
+				messages: null 
+			});
 
-			this.props.actions.fetchMessages(id);
+			actions.fetchMessages(id);
 		} else {
-			this.setState({ messages: messages });
+			this.setState({ 
+				messages: messageStore.getSessionMessages(id) 
+			});
 		}
 	},
 

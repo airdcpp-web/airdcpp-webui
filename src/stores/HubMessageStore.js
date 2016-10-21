@@ -9,10 +9,6 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 const HubMessageStore = Reflux.createStore({
-	getInitialState: function () {
-		return this.getMessages();
-	},
-
 	onSocketConnected(addSocketListener) {
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_MESSAGE, this._onChatMessage);
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_STATUS_MESSAGE, this._onStatusMessage);

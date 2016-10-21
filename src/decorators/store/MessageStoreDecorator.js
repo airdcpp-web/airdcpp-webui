@@ -2,18 +2,26 @@ import MessageUtils from 'utils/MessageUtils';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 
-export default function (store, actions, access) {
+const MessageStoreDecorator = function (store, actions, access) {
 	// Message arrays mapped by session IDs 
-	let messages = {};
+	let messages = new Map();
+
+	// Keep track of session IDs for which message fetching has been initialized
+	let initializedSession = new Set();
+
 
 	const onFetchMessagesCompleted = (sessionId, cacheMessages) => {
-		messages[sessionId] = MessageUtils.mergeCacheMessages(cacheMessages, messages[sessionId]);
-		store.trigger(messages[sessionId], sessionId);
+		messages.set(sessionId, MessageUtils.mergeCacheMessages(cacheMessages, messages.get(sessionId)));
+		store.trigger(messages.get(sessionId), sessionId);
+	};
+
+	const onFetchMessages = (sessionId) => {
+		initializedSession.add(sessionId);
 	};
 
 	const onMessageReceived = (sessionId, message, type) => {
-		messages[sessionId] = MessageUtils.pushMessage({ [type]: message }, messages[sessionId]);
-		store.trigger(messages[sessionId], sessionId);
+		messages.set(sessionId, MessageUtils.pushMessage({ [type]: message }, messages.get(sessionId)));
+		store.trigger(messages.get(sessionId), sessionId);
 	};
 
 	store._onChatMessage = (data, sessionId) => {
@@ -26,21 +34,26 @@ export default function (store, actions, access) {
 
 	store._onSessionUpdated = (session, sessionId) => {
 		// Message limit exceed or messages were cleared?
-		messages[sessionId] = MessageUtils.checkSplice(messages[sessionId], session.total_messages);
-		store.trigger(messages[sessionId], sessionId);
+		messages.set(sessionId, MessageUtils.checkSplice(messages.get(sessionId), session.total_messages));
+		store.trigger(messages.get(sessionId), sessionId);
 	};
 
 	store._onSessionRemoved = (session) => {
-		delete messages[session.id];
+		messages.delete(session.id);
+		initializedSession.delete(session.id);
 	};
 
 	store.onSocketDisconnected = () => {
-		messages = {};
+		messages.clear();
+		initializedSession.clear();
 	};
 
-	store.getMessages = () => messages;
-	store.getSessionMessages = sessionId => messages[sessionId];
+	store.getSessionMessages = sessionId => messages.get(sessionId);
+	store.isSessionInitialized = sessionId => initializedSession.has(sessionId);
 
+	store.listenTo(actions.fetchMessages, onFetchMessages);
 	store.listenTo(actions.fetchMessages.completed, onFetchMessagesCompleted);
 	return SocketSubscriptionDecorator(store, access);
-}
+};
+
+export default MessageStoreDecorator;

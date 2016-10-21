@@ -9,10 +9,6 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 const PrivateChatMessageStore = Reflux.createStore({
-	getInitialState: function () {
-		return this.getMessages();
-	},
-
 	onSocketConnected(addSocketListener) {
 		const url = PrivateChatConstants.MODULE_URL;
 		addSocketListener(url, PrivateChatConstants.MESSAGE, this._onChatMessage);
