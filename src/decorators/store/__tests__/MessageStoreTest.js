@@ -76,4 +76,19 @@ describe('message store', () => {
 
 		expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(messages);
 	});
+
+	test('should remove session data', () => {
+		PrivateChatActions.fetchMessages.completed(sessionId, messages);
+		jest.runAllTimers();
+
+		expect(PrivateChatMessageStore.isSessionInitialized(sessionId));
+		expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(messages);
+
+		PrivateChatMessageStore._onSessionRemoved({
+			id: sessionId,
+		});
+
+		expect(!PrivateChatMessageStore.isSessionInitialized(sessionId));
+		expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(undefined);
+	});
 });
