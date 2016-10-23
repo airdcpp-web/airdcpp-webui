@@ -10,7 +10,7 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
-import FileSystemConstants from 'constants/FileSystemConstants';
+import FilesystemConstants from 'constants/FilesystemConstants';
 import History from 'utils/History';
 import OverlayConstants from 'constants/OverlayConstants';
 
@@ -82,7 +82,7 @@ ShareActions.addExclude.listen(function (location) {
 	History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL, {
 		onConfirm: this.saved.bind(this),
 		subHeader: 'Add excluded path',
-		historyId: FileSystemConstants.LOCATION_DOWNLOAD,
+		historyId: FilesystemConstants.LOCATION_DOWNLOAD,
 	});
 });
 
