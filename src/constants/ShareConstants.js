@@ -9,5 +9,12 @@ export default {
 	REFRESH_URL: MODULE_URL + '/refresh',
 	REFRESH_PATHS_URL: MODULE_URL + '/refresh/paths',
 	REFRESH_VIRTUAL_URL: MODULE_URL + '/refresh/virtual',
+
+	EXCLUDES_URL: MODULE_URL + '/excludes',
+	EXCLUDE_ADD_URL: MODULE_URL + '/exclude/add',
+	EXCLUDE_REMOVE_URL: MODULE_URL + '/exclude/remove',
+
+	EXCLUDE_ADDED: 'exclude_added',
+	EXCLUDE_REMOVED: 'exclude_removed',
 }
 ;

@@ -3,11 +3,11 @@ import React from 'react';
 import ShareProfileActions from 'actions/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
-import ValueFormat from 'utils/ValueFormat';
-
 import { ActionMenu } from 'components/menu/DropdownMenu';
+
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import { LocationContext } from 'mixins/RouterMixin';
+import ValueFormat from 'utils/ValueFormat';
 
 import '../style.css';
 

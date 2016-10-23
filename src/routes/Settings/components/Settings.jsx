@@ -131,6 +131,10 @@ const menu = [
 			}, { 
 				title: 'Hashing', 
 				url: 'hashing' 
+			}, { 
+				title: 'Excluded paths', 
+				url: 'excludes',
+				noSave: true
 			},
 		],
 	}, {

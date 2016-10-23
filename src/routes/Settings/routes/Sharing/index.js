@@ -15,6 +15,9 @@ module.exports = {
 			}, {
 				path: 'refresh-options', 
 				component: require('./components/RefreshOptionsPage').default, 
+			}, {
+				path: 'excludes', 
+				component: require('./components/ExcludePage').default, 
 			} ]);
 		}, 'settings-sharing-children');
 	},
