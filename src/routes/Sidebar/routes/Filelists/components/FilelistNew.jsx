@@ -15,7 +15,7 @@ const FilelistNew = React.createClass({
 	},
 
 	onProfileChanged(profileId) {
-		FilelistActions.ownList(this.props.location, profileId);
+		FilelistActions.ownList(this.props.location, profileId, FilelistSessionStore);
 	},
 
 	render() {

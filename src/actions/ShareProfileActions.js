@@ -7,6 +7,7 @@ import InputDialog from 'components/semantic/InputDialog';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
 import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
@@ -129,7 +130,7 @@ ShareProfileActions.remove.confirmed.listen(function (profile) {
 });
 
 ShareProfileActions.browse.listen(function (profile, location) {
-	return FilelistActions.ownList(location, profile.id);
+	return FilelistActions.ownList(location, profile.id, FilelistSessionStore);
 });
 
 export default ShareProfileActions;

@@ -113,8 +113,8 @@ FilelistActions.createSession.listen(function (location, user, sessionStore, dir
 		.catch(that.failed);
 });
 
-FilelistActions.ownList.listen(function (location, profile) {
-	let session = FilelistSessionStore.getSession(LoginStore.cid);
+FilelistActions.ownList.listen(function (location, profile, sessionStore) {
+	let session = sessionStore.getSession(LoginStore.cid);
 	if (session && session.share_profile.id === profile) {
 		this.completed(location, profile, session);
 		return;
