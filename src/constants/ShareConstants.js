@@ -14,7 +14,7 @@ export default {
 	EXCLUDE_ADD_URL: MODULE_URL + '/exclude/add',
 	EXCLUDE_REMOVE_URL: MODULE_URL + '/exclude/remove',
 
-	EXCLUDE_ADDED: 'exclude_added',
-	EXCLUDE_REMOVED: 'exclude_removed',
+	EXCLUDE_ADDED: 'share_exclude_added',
+	EXCLUDE_REMOVED: 'share_exclude_removed',
 }
 ;
