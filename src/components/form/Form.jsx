@@ -3,7 +3,7 @@ import React from 'react';
 import NotificationActions from 'actions/NotificationActions';
 import Loader from 'components/semantic/Loader';
 
-import deepEqual from 'deep-equal';
+import isEqual from 'lodash/isEqual';
 
 import t from 'utils/tcomb-form';
 import './style.css';
@@ -133,7 +133,7 @@ const Form = React.createClass({
 		value[key] = result.value;
 
 		if (this.props.onFieldChanged) {
-			const promise = this.props.onFieldChanged(key, value, !deepEqual(this.sourceData[key].value, value[key]));
+			const promise = this.props.onFieldChanged(key, value, !isEqual(this.sourceData[key].value, value[key]));
 			if (promise) {
 				promise
 					.then(this.onUserSettingsReceived.bind(this, value))
@@ -161,7 +161,7 @@ const Form = React.createClass({
 
 	// Reduces an object of current form values that don't match the source data
 	reduceChangedValues(formValue, changedValues, valueKey) {
-		if (!deepEqual(this.sourceData[valueKey].value, formValue[valueKey])) {
+		if (!isEqual(this.sourceData[valueKey].value, formValue[valueKey])) {
 			changedValues[valueKey] = formValue[valueKey];
 		}
 

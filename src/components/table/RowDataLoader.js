@@ -1,7 +1,7 @@
 import SocketService from 'services/SocketService';
 import update from 'react-addons-update';
 
-import deepEqual from 'deep-equal';
+import isEqual from 'lodash/isEqual';
 
 const NUMBER_OF_ROWS_PER_REQUEST = 10;
 const DEBUG = false;
@@ -26,7 +26,7 @@ class RowDataLoader {
 		let old = this._data[index];
 
 		// Objects equal most of the time
-		if (old === item || deepEqual(this._data[index], item)) {
+		if (old === item || isEqual(this._data[index], item)) {
 			return updated;
 		}
 
@@ -150,7 +150,7 @@ class RowDataLoader {
 
 		for (let i=0; i < rows.length; i++) {
 			const rowIndex = start+i;
-			if (!deepEqual(this._data[rowIndex], rows[i])) {
+			if (!isEqual(this._data[rowIndex], rows[i])) {
 				this._data[rowIndex] = rows[i];
 
 				if (this._pendingRequest[rowIndex]) {

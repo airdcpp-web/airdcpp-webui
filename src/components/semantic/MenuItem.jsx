@@ -3,7 +3,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import classNames from 'classnames';
-import deepEqual from 'deep-equal';
+import isEqual from 'lodash/isEqual';
 
 import { Link } from 'react-router';
 import CountLabel from 'components/CountLabel';
@@ -82,7 +82,7 @@ export const RouterMenuItemLink = React.createClass({
 		}
 
 		// Urgencies updated
-		if (!deepEqual(nextState.urgencies, this.state.urgencies)) {
+		if (!isEqual(nextState.urgencies, this.state.urgencies)) {
 			return true;
 		}
 

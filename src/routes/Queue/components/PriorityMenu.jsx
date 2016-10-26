@@ -1,5 +1,5 @@
 import React from 'react';
-import deepEqual from 'deep-equal';
+import isEqual from 'lodash/isEqual';
 
 import { PriorityEnum } from 'constants/QueueConstants';
 
@@ -37,7 +37,7 @@ const PriorityMenu = React.createClass({
 	},
 
 	shouldComponentUpdate: function (nextProps, nextState) {
-		return !deepEqual(nextProps.item.priority, this.props.item.priority);
+		return !isEqual(nextProps.item.priority, this.props.item.priority);
 	},
 
 	getPriorityListItem: function (priority) {
