@@ -33,14 +33,6 @@ Start the server by running
 
 Changes made to the source will be updated instantly to the browser while the server is running (there is no need to run the build command).
 
-#### Serving production build files (won't work on Windows)
-
-The UI must be built first.
-
-Run the following command:
-
-    $ npm run serve
-
 [build-badge]: https://img.shields.io/travis/airdcpp-web/airdcpp-webui/master.svg?style=flat-square
 [build]: https://travis-ci.org/airdcpp-web/airdcpp-webui
 
