@@ -93,7 +93,7 @@ module.exports = {
 			{ 
 				test: /\.(js|jsx)$/, 
 				include: /src/, 
-				use: 'babel' 
+				use: 'babel-loader' 
 			}, { 
 				test: /\.css$/,
 				use: [ 'style-loader', 'css-loader' ]
