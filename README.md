@@ -21,25 +21,15 @@ Run the command
     $ npm run build
     
 
-## Using the integrated web server
+## Running the integrated development server
 
 The integrated server connects to AirDC++ Web API through the default port 5600. When the server is running, open your browser and navigate to http://localhost:3000
 
-#### Development mode
-
-Start the server by running
+You may start the server by running
 
     $ npm start
 
 Changes made to the source will be updated instantly to the browser while the server is running (there is no need to run the build command).
-
-#### Serving production build files (won't work on Windows)
-
-The UI must be built first.
-
-Run the following command:
-
-    $ npm run serve
 
 [build-badge]: https://img.shields.io/travis/airdcpp-web/airdcpp-webui/master.svg?style=flat-square
 [build]: https://travis-ci.org/airdcpp-web/airdcpp-webui
