@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import 'semantic-ui/components/popup';
@@ -56,10 +55,6 @@ const Popup = React.createClass({
 		}
 
 		this.node.className = className;
-
-		if (this.props.style) {
-			CSSPropertyOperations.setValueForStyles(this.node, this.props.style);
-		}
 		document.body.appendChild(this.node);
 	},
 
