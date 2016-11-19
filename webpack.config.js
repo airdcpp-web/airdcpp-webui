@@ -49,7 +49,6 @@ var releasePlugins = [
 		minimize: true,
 		debug: false
 	}),
-	new webpack.optimize.DedupePlugin(),
 	new CompressionPlugin({
 		asset: "[file].gz",
 		algorithm: "zopfli",
