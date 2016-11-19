@@ -18,7 +18,7 @@ import LoginStore from 'stores/LoginStore';
 import { LocationContext } from 'mixins/RouterMixin';
 
 
-const ShareDirectoryLayout = React.createClass({
+const Share = React.createClass({
 	mixins: [ LocationContext ],
 	render() {
 		const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
@@ -92,4 +92,4 @@ const ShareDirectoryLayout = React.createClass({
 	}
 });
 
-export default ShareDirectoryLayout;
+export default Share;
