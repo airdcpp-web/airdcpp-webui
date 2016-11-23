@@ -30,6 +30,11 @@ const Dropdown = React.createClass({
 		]),
 
 		/**
+		 * Show trigger icon on the left side of the caption instead of after it
+		 */
+		leftIcon: React.PropTypes.bool,
+
+		/**
 		 * Direction to render
 		 */
 		direction: React.PropTypes.string,
@@ -43,8 +48,6 @@ const Dropdown = React.createClass({
 		 * Render as button
 		 */
 		button: React.PropTypes.bool,
-
-		leftIcon: React.PropTypes.bool,
 
 		settings: React.PropTypes.object,
 	},
@@ -107,11 +110,11 @@ const Dropdown = React.createClass({
 				{ leftIcon || !caption ? null : icon }
 
 				<div className="menu">
-					{ header ? (
+					{ header && (
 						<div className="header">
 							{ header }
 						</div>
-					) : null }
+					) }
 					{ this.props.children }
 				</div>
 			</div>

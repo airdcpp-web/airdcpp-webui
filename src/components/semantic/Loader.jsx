@@ -38,8 +38,6 @@ Loader.propTypes = {
 
 Loader.defaultProps = {
 	text: 'Loading',
-	className: '',
-	size: '',
 };
 
 export default Loader

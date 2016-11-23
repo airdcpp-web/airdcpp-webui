@@ -84,7 +84,7 @@ const Popup = React.createClass({
 		const pixelsFromBottom = window.innerHeight - parentRect.bottom;
 		if (position.indexOf('bottom') >= 0 && pixelsFromBottom < 350 && pixelsFromBottom < parentRect.top) {
 			// Random value and hope that there are no popups larger than this
-			// The popup could be rendered before determining but don"t go there yet (and hope that the table is being improved before it"s needed)
+			// The popup could be rendered before determining but don"t go there yet (and hope that the table is being improved before it's needed)
 			position = 'top left';
 		}  
 

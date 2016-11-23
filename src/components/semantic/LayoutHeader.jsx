@@ -1,11 +1,11 @@
 import React from 'react';
+
+import Icon from 'components/semantic/Icon';
+
 import classNames from 'classnames';
 
-const LayoutHeader = ({ className, icon, component, size, title, subHeader }) => {
-	if (typeof icon === 'string') {
-		icon = <i className={ icon + ' icon' }/>;
-	}
 
+const LayoutHeader = ({ className, icon, component, size, title, subHeader }) => {
 	const mainClassName = classNames(
 		'header layout',
 		{ 'icon': icon },
@@ -20,10 +20,12 @@ const LayoutHeader = ({ className, icon, component, size, title, subHeader }) =>
 	return (
 		<div className={ mainClassName }>
 			<div className={ headerClassName }>
-				{ icon }
+				<Icon icon={ icon }/>
 				<div className="content">
 					{ title }
-					<div className="sub header">{ subHeader }</div>
+					<div className="sub header">
+						{ subHeader }
+					</div>
 				</div>
 			</div>
 			{ component }

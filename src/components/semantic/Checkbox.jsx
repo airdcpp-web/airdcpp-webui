@@ -72,11 +72,11 @@ const Checkbox = React.createClass({
 		return (
 			<div className={ checkboxStyle }>
 				<input type="checkbox" defaultChecked={ checked }/>
-				{ caption ? (
+				{ caption && (
 					<label>
 						{ caption }
 					</label>
-					) : null }
+					) }
 			</div>);
 	},
 });

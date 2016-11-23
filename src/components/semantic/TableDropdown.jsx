@@ -60,7 +60,8 @@ const TableDropdown = React.createClass({
 			<div className="trigger">
 				<i className="large angle down icon"/>
 				{ this.props.linkCaption ? caption : null }
-			</div>);
+			</div>
+		);
 
 		// Settings
 		const settings = {

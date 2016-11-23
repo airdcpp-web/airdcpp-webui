@@ -14,7 +14,7 @@ const InputField = React.createClass({
 		const { content, ...other } = this.props;
 		return (
 			<div className="ui input dialog">
-				{content}
+				{ content }
 				<input { ...other}/>
 			</div>
 		);

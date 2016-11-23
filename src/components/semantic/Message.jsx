@@ -1,6 +1,9 @@
 import React from 'react';
 
+import Icon from 'components/semantic/Icon';
+
 import classNames from 'classnames';
+
 
 const Message = ({ className, title, description, icon, isError }) => {
 	const style = classNames(
@@ -12,13 +15,13 @@ const Message = ({ className, title, description, icon, isError }) => {
 
 	if (description && typeof description !== 'string') {
 		description = React.cloneElement(description, {
-			className: description.props.className + ' description'
+			className: classNames(description.props.className, 'description'),
 		});
 	}
 
 	return (
 		<div className={ style }>
-			{ (icon ? <i className={ icon + ' icon' }/> : null) }
+			<Icon icon={ icon }/>
 			<div className="content">
 				<div className="header">
 					{ title }
