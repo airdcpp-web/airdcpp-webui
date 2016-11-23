@@ -53,7 +53,6 @@ const Hubs = React.createClass({
 			<SessionLayout 
 				activeId={ parseNumericId(params) }
 				baseUrl="hubs"
-				itemUrl="hubs/session"
 				items={ this.state.hubSessions } 
 				newButtonCaption="Connect"
 				editAccess={ AccessConstants.HUBS_EDIT }

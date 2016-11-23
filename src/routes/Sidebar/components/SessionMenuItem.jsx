@@ -6,7 +6,7 @@ import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 const onClickItem = (evt, sessionItem, pushSession) => {
 	evt.preventDefault();
 
-	pushSession(sessionItem);
+	pushSession(sessionItem.id);
 };
 
 const SessionMenuItem = ({ sessionItem, status, name, unreadInfoStore, url, pushSession }) => (

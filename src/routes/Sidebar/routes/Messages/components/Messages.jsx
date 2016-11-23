@@ -21,7 +21,6 @@ const Messages = React.createClass({
 			<SessionLayout 
 				activeId={ params.id }
 				baseUrl="messages"
-				itemUrl="messages/session"
 				items={ this.state.chatSessions }
 				newButtonCaption="New session"
 				unreadInfoStore={ PrivateChatSessionStore }

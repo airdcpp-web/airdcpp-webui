@@ -49,7 +49,6 @@ const Files = React.createClass({
 			<SessionLayout 
 				activeId={ params.id }
 				baseUrl="files"
-				itemUrl="files/session"
 				items={ this.state.files }
 				disableSideMenu={true}
 				editAccess={ AccessConstants.VIEW_FILE_EDIT }

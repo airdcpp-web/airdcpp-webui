@@ -52,7 +52,6 @@ const Filelists = React.createClass({
 			<SessionLayout 
 				activeId={ params.id }
 				baseUrl="filelists"
-				itemUrl="filelists/session"
 				items={ this.state.filelists }
 				newButtonCaption="Open new"
 				disableSideMenu={ true }

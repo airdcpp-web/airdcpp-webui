@@ -21,6 +21,10 @@ import IconConstants from 'constants/IconConstants';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
 
+const findItem = (items, id) => {
+	return items.find(item => item.id === id);
+};
+
 const SessionLayout = React.createClass({
 	mixins: [ LocationContext ],
 	propTypes: {
@@ -33,11 +37,6 @@ const SessionLayout = React.createClass({
 		 * Location object
 		 */
 		location: React.PropTypes.object.isRequired,
-
-		/**
-		 * Item URL
-		 */
-		itemUrl: React.PropTypes.string.isRequired,
 
 		/**
 		 * Array of the items to list
@@ -118,18 +117,40 @@ const SessionLayout = React.createClass({
 		};
 	},
 
+	// HELPERS
 	getUrl(id) {
-		return '/' + this.props.itemUrl + '/' + id;
+		return '/' + this.props.baseUrl + '/session/' + id;
 	},
 
-	redirectTo(id) {
+	getNewUrl() {
+		if (!this.props.newButtonCaption || !this.hasEditAccess()) {
+			return '/' + this.props.baseUrl;
+		}
+
+		return '/' + this.props.baseUrl + '/new';
+	},
+
+	getStorageKey(props) {
+		return props.baseUrl + '_last_active';
+	},
+
+	pushSession(id) {
+		History.pushSidebar(this.props.location, this.getUrl(id));
+	},
+
+	replaceSession(id) {
 		History.replaceSidebar(this.props.location, this.getUrl(id));
 	},
 
-	findItem(items, id) {
-		return items.find(item => item.id === id);
+	pushNew() {
+		History.pushSidebar(this.props.location, this.getNewUrl());
 	},
 
+	hasEditAccess() {
+		return LoginStore.hasAccess(this.props.editAccess);
+	},
+
+	// LIFECYCLE/REACT
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.activeId && (nextProps.items.length === 0 || nextProps.children)) {
 			// Don't redirect to it if the "new session" layout is open
@@ -148,7 +169,7 @@ const SessionLayout = React.createClass({
 
 
 		let newItemPos = 0;
-		const oldItem = this.findItem(this.props.items, this.props.activeId);
+		const oldItem = findItem(this.props.items, this.props.activeId);
 		if (oldItem) {
 			// Find the old position and use the item in that position (if possible)
 			newItemPos = this.props.items.indexOf(oldItem);
@@ -158,11 +179,7 @@ const SessionLayout = React.createClass({
 			}
 		}
 
-		this.redirectTo(nextProps.items[newItemPos].id);
-	},
-
-	getStorageKey(props) {
-		return props.baseUrl + '_last_active';
+		this.replaceSession(nextProps.items[newItemPos].id);
 	},
 
 	// Common logic for selecting the item to display (after mounting or session updates)
@@ -174,7 +191,7 @@ const SessionLayout = React.createClass({
 		const { pending } = History.getSidebarData(routerLocation);
 
 		// Update the active item
-		const activeItem = this.findItem(props.items, props.activeId);
+		const activeItem = findItem(props.items, props.activeId);
 		if (activeItem) {
 			if (pending) {
 				// Disable pending state
@@ -201,18 +218,6 @@ const SessionLayout = React.createClass({
 		return false;
 	},
 
-	getNewUrl() {
-		if (!this.props.newButtonCaption || !this.hasEditAccess()) {
-			return '/' + this.props.baseUrl;
-		}
-
-		return '/' + this.props.baseUrl + '/new';
-	},
-
-	pushSession(session) {
-		History.pushSidebar(this.props.location, this.getUrl(session.id));
-	},
-
 	onKeyDown(event) {
 		const { keyCode, altKey } = event;
 
@@ -222,13 +227,13 @@ const SessionLayout = React.createClass({
 
 			const newSession = this.props.items[keyCode - 49];
 			if (newSession) {
-				this.pushSession(newSession);
+				this.pushSession(newSession.id);
 			}
 		} else if (altKey && (keyCode === 38 || keyCode === 40)) {
 			// Arrow up/down
 			event.preventDefault();
 
-			const item = this.findItem(this.props.items, this.props.activeId);
+			const item = findItem(this.props.items, this.props.activeId);
 			const currentIndex = this.props.items.indexOf(item);
 			if (currentIndex === -1) {
 				return;
@@ -236,7 +241,7 @@ const SessionLayout = React.createClass({
 
 			const newSession = this.props.items[keyCode === 38 ? currentIndex - 1 : currentIndex + 1];
 			if (newSession) {
-				this.pushSession(newSession);
+				this.pushSession(newSession.id);
 			}
 		} else if (altKey && keyCode === 45) {
 			// Insert
@@ -247,7 +252,7 @@ const SessionLayout = React.createClass({
 			// Delete
 			event.preventDefault();
 
-			const item = this.findItem(this.props.items, this.props.activeId);
+			const item = findItem(this.props.items, this.props.activeId);
 			if (item) {
 				this.props.actions.removeSession(item);
 			}
@@ -264,12 +269,12 @@ const SessionLayout = React.createClass({
 
 		// See if we have something stored
 		let lastId = BrowserUtils.loadLocalProperty(this.getStorageKey(this.props));
-		if (lastId && this.findItem(this.props.items, lastId)) {
+		if (lastId && findItem(this.props.items, lastId)) {
 			// Previous session exists
-			this.redirectTo(lastId);
+			this.replaceSession(lastId);
 		} else if (this.props.items.length > 0) {
 			// Load the first session
-			this.redirectTo(this.props.items[0].id);
+			this.replaceSession(this.props.items[0].id);
 		}
 	},
 
@@ -277,6 +282,7 @@ const SessionLayout = React.createClass({
 		window.removeEventListener('keydown', this.onKeyDown);;
 	},
 
+	// COMPONENT GETTERS
 	getItemStatus(item) {
 		if (this.props.itemStatusGetter) {
 			return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(item) }/>;
@@ -341,10 +347,6 @@ const SessionLayout = React.createClass({
 		return this.props.itemIconGetter(activeItem);
 	},
 
-	pushNew() {
-		History.pushSidebar(this.props.location, this.getNewUrl());
-	},
-
 	getNewButton() {
 		if (!this.hasEditAccess() || !this.props.newButtonCaption) {
 			return null;
@@ -399,10 +401,6 @@ const SessionLayout = React.createClass({
 				Close all
 			</MenuItemLink>
 		);
-	},
-
-	hasEditAccess() {
-		return LoginStore.hasAccess(this.props.editAccess);
 	},
 
 	render() {
