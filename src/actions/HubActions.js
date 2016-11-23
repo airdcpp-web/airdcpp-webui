@@ -6,8 +6,8 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
-import ChatActionDecorator from 'decorators/action/ChatActionDecorator';
-import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
+import ChatActionDecorator from './decorators/ChatActionDecorator';
+import SessionActionDecorator from './decorators/SessionActionDecorator';
 
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';

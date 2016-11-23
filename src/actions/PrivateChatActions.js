@@ -9,8 +9,8 @@ import NotificationActions from 'actions/NotificationActions';
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
-import ChatActionDecorator from 'decorators/action/ChatActionDecorator';
-import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
+import ChatActionDecorator from './decorators/ChatActionDecorator';
+import SessionActionDecorator from './decorators/SessionActionDecorator';
 
 
 const PrivateChatActions = Reflux.createActions([

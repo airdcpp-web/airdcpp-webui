@@ -4,9 +4,10 @@ import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
 import SiteHeader from './SiteHeader';
 
-import OverlayHandlerDecorator from 'decorators/main/OverlayHandlerDecorator';
+import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
 
 import 'normal.css';
+
 
 const { PropTypes } = React;
 

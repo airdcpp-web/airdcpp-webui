@@ -79,7 +79,7 @@
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.0",
     "redbox-react": "^1.1.1",
-    "reflux": "^5.0.1",
+    "reflux": "^0.4.1",
     "reflux-promise": "^1.0.4",
     "rimraf": "^2.4.3",
     "semantic-ui-css": "^2.2.1",

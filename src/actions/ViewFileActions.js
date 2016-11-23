@@ -7,7 +7,7 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
-import SessionActionDecorator from 'decorators/action/SessionActionDecorator';
+import SessionActionDecorator from './decorators/SessionActionDecorator';
 import AccessConstants from 'constants/AccessConstants';
 
 

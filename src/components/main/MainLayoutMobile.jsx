@@ -9,7 +9,7 @@ import UrgencyUtils from 'utils/UrgencyUtils';
 import History from 'utils/History';
 import Button from 'components/semantic/Button';
 
-import OverlayHandlerDecorator from 'decorators/main/OverlayHandlerDecorator';
+import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 import 'mobile.css';
