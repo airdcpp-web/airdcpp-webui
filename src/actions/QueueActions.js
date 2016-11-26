@@ -223,8 +223,8 @@ QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/remove', { 
 		remove_finished: removeFinished,
 	})
-		.then(that.completed.bind(that, bundle))
-		.catch(that.failed.bind(that, bundle));
+		.then(QueueActions.removeBundle.completed.bind(that, bundle))
+		.catch(QueueActions.removeBundle.failed.bind(that, bundle));
 });
 
 QueueActions.search.listen(function (itemInfo, location) {

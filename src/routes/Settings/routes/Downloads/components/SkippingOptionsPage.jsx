@@ -5,7 +5,6 @@ import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 import t from 'utils/tcomb-form';
 
 const Entry = {
-	download_skip_zero_byte: t.Bool,
 	dont_download_shared: t.Bool,
 	dont_download_queued: t.Bool,
 	download_dupe_min_size: t.Positive,
