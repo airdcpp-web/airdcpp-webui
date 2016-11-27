@@ -21,3 +21,9 @@
 .download-dialog .download-handler {
 	display: flex;
 }
+
+.download-dialog .disk-info {
+	color: black;
+	font-size: 90%;
+	font-style: italic;
+}

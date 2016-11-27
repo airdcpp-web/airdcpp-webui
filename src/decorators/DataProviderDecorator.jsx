@@ -15,9 +15,12 @@ export default function (Component, settings) {
 
 			/**
 			 * Key-value map of prop names and API urls
-			 * Value may also be a function which receives the props as an argument
+			 * Value may also be a function which receives the props and SocketService as argument and performs the data fetch
 			 */
-			urls: React.PropTypes.object, // REQUIRED
+			urls: React.PropTypes.oneOfType([
+				React.PropTypes.object,
+				React.PropTypes.func,
+			]), // REQUIRED
 
 			/**
 			 * Called when the socket is connected
@@ -93,7 +96,7 @@ export default function (Component, settings) {
 			const promises = Object.keys(this.props.urls).map(key => {
 				let url = this.props.urls[key];
 				if (typeof url === 'function') {
-					url = url(this.props);
+					return url(this.props, SocketService);
 				}
 
 				return SocketService.get(url);

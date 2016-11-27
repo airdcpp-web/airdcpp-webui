@@ -13,7 +13,8 @@ import SocketService from 'services/SocketService';
 import { RouteContext } from 'mixins/RouterMixin';
 
 import DownloadFileBrowser from './DownloadFileBrowser';
-import { PathList, AccordionTargets } from './DownloadTargets';
+import PathList from './PathList';
+import AccordionTargets from './AccordionTargets';
 
 import FileUtils from 'utils/FileUtils';
 import BrowserUtils from 'utils/BrowserUtils';

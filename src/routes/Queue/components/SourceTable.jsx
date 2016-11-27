@@ -89,7 +89,7 @@ const SourceTable = ({ sources, bundle, error }) => {
 
 export default DataProviderDecorator(SourceTable, {
 	urls: {
-		sources: ({ bundle }) => QueueConstants.BUNDLE_URL + '/' + bundle.id + '/sources',
+		sources: ({ bundle }, socket) => socket.get(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/sources'),
 	},
 	onSocketConnected: (addSocketListener, { refetchData, props }) => {
 		addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, (data) => {
