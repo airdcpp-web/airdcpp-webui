@@ -9,7 +9,6 @@ import IconConstants from 'constants/IconConstants';
 
 import HistoryActions from 'actions/HistoryActions';
 
-import SocketService from 'services/SocketService';
 import { RouteContext } from 'mixins/RouterMixin';
 
 import DownloadFileBrowser from './DownloadFileBrowser';
@@ -18,6 +17,7 @@ import AccordionTargets from './AccordionTargets';
 
 import FileUtils from 'utils/FileUtils';
 import BrowserUtils from 'utils/BrowserUtils';
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -76,30 +76,44 @@ const DownloadDialog = React.createClass({
 	},
 
 	getInitialState() {
-		return {
-			active: 'history',
-			share_paths: [],
-			dupe_paths: [],
-			favorite_paths: [],
-			history_paths: []
-		};
-	},
+		const { historyPaths, sharePaths, favoritePaths, itemInfo } = this.props;
+		const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils)) : [];
 
-	fetchPaths(requestPath, stateId) {
-		SocketService.get(requestPath).then(data => this.setState({ [stateId]: data })).catch(error => console.error('Failed to fetch paths', requestPath, error.message));
-	},
+		this.sections = [
+			{
+				name: 'Previous',
+				key: 'history',
+				list: historyPaths,
+				component: <PathList key="history" paths={ historyPaths } downloadHandler={ this.handleDownload }/>
+			}, {
+				name: 'Shared',
+				key: 'shared',
+				list: sharePaths,
+				component: <AccordionTargets groupedPaths={ sharePaths } downloadHandler={ this.handleDownload }/>
+			}, {
+				name: 'Favorites',
+				key: 'favorites',
+				list: favoritePaths,
+				component: <AccordionTargets groupedPaths={ favoritePaths } downloadHandler={ this.handleDownload }/>
+			}, {
+				name: 'Dupes',
+				key: 'dupes',
+				list: dupePaths,
+				component: <PathList key="dupes" paths={ dupePaths } downloadHandler={ this.handleDownload }/>
+			}
+		];
 
-	componentWillMount() {
-		this.fetchPaths(ShareConstants.GROUPED_ROOTS_GET_URL, 'share_paths');
-		this.fetchPaths(FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL, 'favorite_paths');
-		this.fetchPaths(HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR, 'history_paths');
-
-		const { itemInfo } = this.props;
-		if (itemInfo.dupe) {
-			this.setState({ 
-				dupe_paths: itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils))
+		if (LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW)) {
+			this.sections.push({
+				name: 'Browse',
+				key: 'browse',
+				component: <DownloadFileBrowser history={ historyPaths } downloadHandler={ this.handleDownload }/>
 			});
 		}
+
+		return {
+			active: 'history',
+		};
 	},
 
 	handleDownload(path) {
@@ -122,48 +136,18 @@ const DownloadDialog = React.createClass({
 				active={ this.state.active === section.key }
 			>
 				{ section.name }
-				{ section.list ? (
-					<div className="ui small right label"> { section.list.length } </div>
-				) : null }
+				{ section.list && (
+					<div className="ui small right label"> 
+						{ section.list.length }
+					</div>
+				) }
 			</MenuItemLink>
 		);
 	},
 
 	render: function () {
-		const sections = [
-			{
-				name: 'Previous',
-				key: 'history',
-				list: this.state.history_paths,
-				component: <PathList paths={ this.state.history_paths } downloadHandler={ this.handleDownload }/>
-			}, {
-				name: 'Shared',
-				key: 'shared',
-				list: this.state.share_paths,
-				component: <AccordionTargets groupedPaths={ this.state.share_paths } downloadHandler={ this.handleDownload }/>
-			}, {
-				name: 'Favorites',
-				key: 'favorites',
-				list: this.state.favorite_paths,
-				component: <AccordionTargets groupedPaths={ this.state.favorite_paths } downloadHandler={ this.handleDownload }/>
-			}, {
-				name: 'Dupes',
-				key: 'dupes',
-				list: this.state.dupe_paths,
-				component: <PathList paths={ this.state.dupe_paths } downloadHandler={ this.handleDownload }/>
-			}
-		];
-
-		if (LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW)) {
-			sections.push({
-				name: 'Browse',
-				key: 'browse',
-				component: <DownloadFileBrowser history={ this.state.history_paths } downloadHandler={ this.handleDownload }/>
-			});
-		}
-
-		const section = sections.find(section => section.key === this.state.active);
-		const menuItems = sections.map(this.getMenuItem);
+		const section = this.sections.find(section => section.key === this.state.active);
+		const menuItems = this.sections.map(this.getMenuItem);
 
 		const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
 		return (
@@ -171,10 +155,10 @@ const DownloadDialog = React.createClass({
 				ref="modal" 
 				className="download-dialog" 
 				title="Download" 
-				closable={true} 
+				closable={ true } 
 				icon={ IconConstants.DOWNLOAD }
-				fullHeight={true}
-				{...this.props}
+				fullHeight={ true }
+				{ ...this.props }
 			>
 				<Component
 					menuItems={ menuItems }
@@ -184,4 +168,10 @@ const DownloadDialog = React.createClass({
 	}
 });
 
-export default DownloadDialog;
+export default DataProviderDecorator(DownloadDialog, {
+	urls: {
+		sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+		favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+		historyPaths: HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR,
+	},
+});

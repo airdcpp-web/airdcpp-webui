@@ -7,12 +7,6 @@ import ValueFormat from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 
 
-const EmptyMessage = () => (
-	<Message
-		title="No paths to display"
-	/>
-);
-
 const PathItem = ({ pathInfo, downloadHandler }) => (
 	<div className="item">
 		<i className="yellow folder icon"/>
@@ -57,7 +51,11 @@ PathList.PropTypes = {
 
 export default (props) => {
 	if (props.paths.length === 0) {
-		return <EmptyMessage/>;
+		return (
+			<Message
+				title="No paths to display"
+			/>
+		);
 	}
 
 	return <PathList { ...props }/>;

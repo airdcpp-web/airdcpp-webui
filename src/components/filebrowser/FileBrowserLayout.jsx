@@ -198,7 +198,8 @@ const FileBrowser = React.createClass({
 				/>
 				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>
-	);}
+		);
+	}
 });
 
 export default FileBrowser;
