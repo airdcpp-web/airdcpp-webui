@@ -68,7 +68,7 @@ FilelistActions.download.listen((itemData, downloadData) => {
 
 	// Directory
 	data['list_path'] = itemData.itemInfo.path;
-	SocketService.post(FilelistConstants.MODULE_URL + '/download_directory', data)
+	SocketService.post(FilelistConstants.MODULE_URL + '/directory_download', data)
 		.then(FilelistActions.download.completed)
 		.catch(error => FilelistActions.download.failed(itemData, error));
 });
