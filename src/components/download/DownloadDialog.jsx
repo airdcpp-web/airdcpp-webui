@@ -84,7 +84,7 @@ const DownloadDialog = React.createClass({
 				name: 'Previous',
 				key: 'history',
 				list: historyPaths,
-				component: <PathList key="history" paths={ historyPaths } downloadHandler={ this.handleDownload }/>
+				component: <PathList paths={ historyPaths } downloadHandler={ this.handleDownload }/>
 			}, {
 				name: 'Shared',
 				key: 'shared',
@@ -99,7 +99,7 @@ const DownloadDialog = React.createClass({
 				name: 'Dupes',
 				key: 'dupes',
 				list: dupePaths,
-				component: <PathList key="dupes" paths={ dupePaths } downloadHandler={ this.handleDownload }/>
+				component: <PathList paths={ dupePaths } downloadHandler={ this.handleDownload }/>
 			}
 		];
 
@@ -161,6 +161,7 @@ const DownloadDialog = React.createClass({
 				{ ...this.props }
 			>
 				<Component
+					key={ section.key } // Ensure that section-specific data is refetched
 					menuItems={ menuItems }
 					section={ section }
 				/>
