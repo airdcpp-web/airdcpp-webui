@@ -88,16 +88,8 @@ const WidgetStore = Reflux.createStore({
 	listenables: WidgetActions,
 	init: function () {
 		let layoutInfo = BrowserUtils.loadLocalProperty(LAYOUT_STORAGE_KEY);
-		if (layoutInfo && layoutInfo.items) {
-			if (layoutInfo.version === 1) {
-				// Convert old layouts
-				this.layouts = {};
-				Object.keys(cols).forEach(key => {
-					this.layouts[key] = layoutInfo.items;
-				});
-			} else {
-				this.layouts = layoutInfo.items;
-			}
+		if (layoutInfo && layoutInfo.items && layoutInfo.version === 2) {
+			this.layouts = layoutInfo.items;
 		} else {
 			// Initialize the default layout
 			this.layouts = {};
@@ -118,7 +110,6 @@ const WidgetStore = Reflux.createStore({
 
 		this.layouts = createWidget(this.layouts, widgetInfo, id);
 
-		//console.log('Widget added', this.layout);
 		this.trigger(this.layouts);
 	},
 
@@ -167,7 +158,6 @@ const WidgetStore = Reflux.createStore({
 		this.layouts = Object.assign({}, layouts);
 
 		this.trigger(this.layouts);
-		//console.log('New layout', layout);
 	},
 });
 
