@@ -78,6 +78,9 @@ var chunkFilename = release ? 'js/[name].[chunkhash].chunk.js' : 'js/[name].chun
 
 module.exports = {
 	entry: entries,
+	performance: { // The following asset(s) exceed the recommended size limit (250 kB)
+		hints: false 
+	},
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
