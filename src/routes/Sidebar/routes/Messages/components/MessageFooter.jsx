@@ -20,7 +20,7 @@ const getCaption = (state) => {
 };
 
 const CCPMState = ({ session }) => {
-	if (!session.ccpm_state.supported) {
+	if (session.user.flags.indexOf('ccpm') === -1) {
 		return null;
 	}
 	

@@ -17,7 +17,7 @@ import '../style.css';
 
 const Statistics = StatisticsDecorator(({ stats }) => (
 	<div className="ui list">
-		<ListItem header="Logged in as" description={ LoginStore.user }/>
+		<ListItem header="Logged in as" description={ LoginStore.user.username }/>
 		<ListItem header="Client started" description={ ValueFormat.formatRelativeTime(stats.client_started) }/>
 		<ListItem header="Active sessions" description={ stats.active_sessions }/>
 	</div>

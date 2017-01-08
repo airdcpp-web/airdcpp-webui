@@ -24,7 +24,7 @@ const ShareProfileSelector = React.createClass({
 				key={ profile.id } 
 				onClick={ () => this.props.onProfileChanged(profile.id) }
 			>
-				{ profile.name }
+				{ profile.str }
 			</MenuItemLink>
 		);
 	},

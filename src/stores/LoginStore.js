@@ -12,7 +12,10 @@ import LoginConstants from 'constants/LoginConstants';
 const LoginStore = Reflux.createStore({
 	listenables: LoginActions,
 	init: function () {
-		this.loginProperties = BrowserUtils.loadSessionProperty('login_properties', {});
+		this.loginProperties = BrowserUtils.loadSessionProperty('login_properties', {
+			session: null,
+			system: null,
+		});
 
 		this._allowLogin = true;
 		this._lastError = null;
@@ -48,10 +51,7 @@ const LoginStore = Reflux.createStore({
 			allowLogin: this._allowLogin,
 			lastError: this._lastError,
 			socketAuthenticated: this._socketAuthenticated,
-
-			token: this.token,
-			user: this.user,
-			userLoggedIn: this.isLoggedIn,
+			session: this.session,
 		};
 	},
 
@@ -138,19 +138,15 @@ const LoginStore = Reflux.createStore({
 	},
 
 	get user() {
-		return this.loginProperties.user;
+		return this.session ? this.session.user : null;
 	},
 
-	get token() {
+	get session() {
+		return this.loginProperties.session;
+	},
+
+	get authToken() {
 		return this.loginProperties.token;
-	},
-
-	get cid() {
-		return this.loginProperties.cid;
-	},
-
-	get isLoggedIn() {
-		return !!this.loginProperties.user;
 	},
 
 	get systemInfo() {

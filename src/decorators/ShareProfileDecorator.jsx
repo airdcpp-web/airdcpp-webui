@@ -6,7 +6,7 @@ import ValueFormat from 'utils/ValueFormat';
 
 const ShareProfileDecorator = function (Component, listHidden, addSize = true) {
 	const convertProfile = (profile) => {
-		let name = profile.name;
+		let name = profile.str;
 		if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
 			name += ' (' + ValueFormat.formatSize(profile.size) + ')';
 		}

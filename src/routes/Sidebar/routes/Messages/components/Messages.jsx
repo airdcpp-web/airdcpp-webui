@@ -33,7 +33,7 @@ const Messages = React.createClass({
 			>
 				{ this.props.children }
 			</SessionLayout>
-	);
+		);
 	}
 });
 

@@ -82,7 +82,7 @@ ShareProfileActions.edit.listen(function (profile) {
 
 	const inputOptions = {
 		placeholder: 'Enter name',
-		defaultValue: profile.plain_name,
+		defaultValue: profile.name,
 	};
 
 	InputDialog(dialogOptions, inputOptions, this.saved.bind(this, profile));

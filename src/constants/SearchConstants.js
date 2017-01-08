@@ -1,7 +1,9 @@
 const MODULE_URL = 'search/v0';
+const INSTANCE_URL = MODULE_URL + '/instance/0';
 export default {
 	MODULE_URL: MODULE_URL,
-	QUERY_URL: MODULE_URL + '/query',
+	INSTANCE_URL: INSTANCE_URL,
 
-	RESULT_URL: MODULE_URL + '/result',
+	HUB_SEARCH_URL: INSTANCE_URL + '/hub_search',
+	RESULT_URL: INSTANCE_URL + '/result',
 };

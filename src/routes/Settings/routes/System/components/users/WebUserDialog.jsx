@@ -90,10 +90,10 @@ const WebUserDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(WebUserConstants.USER_POST_URL, changedFields);
+			return SocketService.post(WebUserConstants.USER_URL, changedFields);
 		}
 
-		return SocketService.post(WebUserConstants.USER_UPDATE_URL, Object.assign(changedFields, { username: this.props.user.username }));
+		return SocketService.patch(WebUserConstants.USER_URL + '/' + this.props.user.id, changedFields);
 	},
 
 	onFieldSetting(id, fieldOptions, formValue) {
@@ -101,7 +101,7 @@ const WebUserDialog = React.createClass({
 			fieldOptions['factory'] = t.form.Select;
 			fieldOptions['template'] = PermissionSelector;
 			fieldOptions['options'] = Object.keys(AccessConstants).reduce(reducePermissions, []);
-			fieldOptions['disabled'] = !this._isNew && this.props.user.username === LoginStore.user;
+			fieldOptions['disabled'] = !this._isNew && this.props.user.username === LoginStore.user.username;
 		} else if (id === 'password') {
 			fieldOptions['type'] = 'password';
 			if (!this._isNew) {
@@ -130,7 +130,7 @@ const WebUserDialog = React.createClass({
 				title={ title } 
 				onApprove={ this.save } 
 				closable={ false } 
-				icon={ "user" } 
+				icon="user" 
 				{ ...this.props }
 			>
 				<Form

@@ -192,13 +192,13 @@ const ListBrowser = React.createClass({
 						cell={ <SizeCell/> }
 						flexGrow={1}
 					/>
-					{/*<Column
+					<Column
 						name="Type"
 						width={70}
 						columnKey="type"
 						flexGrow={1}
 						hideWidth={ 500 }
-					/>*/}
+					/>
 					<Column
 						name="Last modified"
 						width={80}

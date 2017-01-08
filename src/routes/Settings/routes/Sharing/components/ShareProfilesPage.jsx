@@ -16,7 +16,7 @@ const Row = ({ profile }) => (
 	<tr>
 		<td>
 			<ActionMenu 
-				caption={ <strong>{profile.name}</strong> } 
+				caption={ <strong>{ profile.str }</strong> } 
 				actions={ ShareProfileActions } 
 				ids={ profile.default ? [ 'browse', 'divider', 'edit', 'remove' ] : [ 'browse', 'divider', 'edit', 'default', 'remove' ]} 
 				itemData={ profile }

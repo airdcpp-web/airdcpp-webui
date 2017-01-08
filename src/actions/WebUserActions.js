@@ -14,7 +14,7 @@ import IconConstants from 'constants/IconConstants';
 import LoginStore from 'stores/LoginStore';
 
 const isOther = (user) => {
-	return user.username !== LoginStore.user;
+	return user.id !== LoginStore.user.id;
 };
 
 const WebUserActions = Reflux.createActions([
@@ -58,7 +58,7 @@ WebUserActions.remove.listen(function (user) {
 
 WebUserActions.remove.confirmed.listen(function (user) {
 	const that = this;
-	return SocketService.post(WebUserConstants.USER_DELETE_URL, { username: user.username })
+	return SocketService.delete(WebUserConstants.USER_URL + '/' + user.id)
 		.then(WebUserActions.remove.completed.bind(that, user))
 		.catch(WebUserActions.remove.failed.bind(that, user));
 });

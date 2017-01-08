@@ -137,7 +137,7 @@ const Login = React.createClass({
 					</form>
 
 					<ErrorBox 
-						userLoggedIn={ LoginStore.isLoggedIn } 
+						userLoggedIn={ !!LoginStore.session } 
 						lastError={ LoginStore.lastError }
 					/>
 				</div>

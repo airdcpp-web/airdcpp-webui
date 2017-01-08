@@ -114,7 +114,7 @@ FilelistActions.createSession.listen(function (location, user, sessionStore, dir
 });
 
 FilelistActions.ownList.listen(function (location, profile, sessionStore) {
-	let session = sessionStore.getSession(LoginStore.cid);
+	let session = sessionStore.getSession(LoginStore.systemInfo.cid);
 	if (session && session.share_profile.id === profile) {
 		this.completed(location, profile, session);
 		return;
@@ -149,7 +149,7 @@ const openSession = (location, cid, directory) => {
 };
 
 FilelistActions.ownList.completed.listen(function (location, profile, session) {
-	openSession(location, LoginStore.cid, '/');
+	openSession(location, LoginStore.systemInfo.cid, '/');
 });
 
 FilelistActions.createSession.completed.listen(function (location, user, directory, session) {

@@ -49,10 +49,11 @@ const Search = React.createClass({
 
 		clearTimeout(this._searchTimeout);
 
-		SocketService.post(SearchConstants.QUERY_URL, {
+		SocketService.post(SearchConstants.HUB_SEARCH_URL, {
 			query: {
 				pattern: searchString,
-			}
+			},
+			manual: true,
 		})
 			.then(this.onSearchPosted)
 			.catch(error => 

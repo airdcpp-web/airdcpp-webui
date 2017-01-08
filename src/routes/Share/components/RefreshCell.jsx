@@ -2,14 +2,14 @@ import React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
 import ShareActions from 'actions/ShareActions';
-import { RefreshStateEnum } from 'constants/ShareRootConstants';
+import { StateEnum } from 'constants/ShareRootConstants';
 import ValueFormat from 'utils/ValueFormat';
 import Loader from 'components/semantic/Loader';
 
 
 const RefreshCell = ({ rowData, cellData }) => {
-	const state = rowData.refresh_state;
-	if (state.id !== RefreshStateEnum.NORMAL) {
+	const state = rowData.status;
+	if (state.id !== StateEnum.NORMAL) {
 		return <Loader size="small" inline={ true } text={ state.str }/>;
 	}
 

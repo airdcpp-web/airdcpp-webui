@@ -36,18 +36,19 @@ const ShareProfileFilter = React.createClass({
 				active={ this.state.selectedProfile ? this.state.selectedProfile.id === profile.id : false } 
 				onClick={ () => this.onClick(profile) }
 			>
-				{ profile.name }
+				{ profile.str }
 			</MenuItemLink>
 		);
 	},
 
-	getCaption() {
-		return this.state.selectedProfile.name;
-	},
-
 	render: function () {
 		return (
-			<Dropdown className="top right pointing" caption={this.getCaption()} triggerIcon="filter" button={true}>
+			<Dropdown 
+				className="top right pointing" 
+				caption={ this.state.selectedProfile.str } 
+				triggerIcon="filter" 
+				button={true}
+			>
 				<div className="header">
 					<i className="filter icon"/>
 					Filter by profile
