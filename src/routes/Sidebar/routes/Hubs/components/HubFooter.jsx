@@ -65,10 +65,10 @@ const HubFooter = React.createClass({
 		const averageShare = ValueFormat.formatSize(users > 0 ? (shared / users) : 0);
 
 		let userCaption = users + ' users';
-		if (session.connect_state.encryption) {
+		if (session.encryption) {
 			userCaption = (
 				<span>
-					<EncryptionState encryption={ session.connect_state.encryption }/>
+					<EncryptionState encryption={ session.encryption }/>
 					{ userCaption }
 				</span>
 			);

@@ -6,7 +6,7 @@ import History from 'utils/History';
 
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
-import { PriorityEnum } from 'constants/QueueConstants';
+import { PriorityEnum } from 'constants/PriorityConstants';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';

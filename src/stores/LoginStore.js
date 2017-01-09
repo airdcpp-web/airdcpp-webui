@@ -75,7 +75,14 @@ const LoginStore = Reflux.createStore({
 	},
 
 	onNewUserIntroSeen() {
-		const newProps = Object.assign({}, this.loginProperties, { [LoginConstants.RUN_WIZARD]: false });
+		const newProps = {
+			...this.loginProperties,
+			system: {
+				...this.loginProperties.system,
+				[LoginConstants.WIZARD_PENDING]: false,
+			}
+		};
+
 		this.setLoginProperties(newProps);
 
 		this.trigger(this.getState());
@@ -100,7 +107,7 @@ const LoginStore = Reflux.createStore({
 	},
 
 	hasAccess(access) {
-		const { permissions } = this.loginProperties;
+		const { permissions } = this.loginProperties.session.user;
 		return permissions.indexOf(access) !== -1 || permissions.indexOf(AccessConstants.ADMIN) !== -1;
 	},
 
@@ -154,7 +161,7 @@ const LoginStore = Reflux.createStore({
 	},
 
 	get showNewUserIntro() {
-		return this.loginProperties[LoginConstants.RUN_WIZARD];
+		return this.loginProperties.system[LoginConstants.WIZARD_PENDING];
 	},
 
 	get allowLogin() {

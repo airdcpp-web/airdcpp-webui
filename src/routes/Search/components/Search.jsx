@@ -1,7 +1,9 @@
 import React from 'react';
 
 import SocketService from 'services/SocketService';
+
 import { HistoryEnum } from 'constants/HistoryConstants';
+import { PriorityEnum } from 'constants/PriorityConstants';
 import SearchConstants from 'constants/SearchConstants';
 
 import History from 'utils/History';
@@ -53,7 +55,7 @@ const Search = React.createClass({
 			query: {
 				pattern: searchString,
 			},
-			manual: true,
+			priority: PriorityEnum.HIGH,
 		})
 			.then(this.onSearchPosted)
 			.catch(error => 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import { PriorityEnum } from 'constants/QueueConstants';
+import { PriorityEnum } from 'constants/PriorityConstants';
 import ShareConstants from 'constants/ShareConstants';
 import { default as HistoryConstants, HistoryEnum } from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';

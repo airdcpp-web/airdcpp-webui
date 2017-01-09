@@ -9,11 +9,10 @@ export const StatusEnum = {
 
 export default {
 	MODULE_URL: MODULE_URL,
+	TRANSFER_URL: MODULE_URL + '/transfer',
+	
 	TRANSFERRED_BYTES_URL: MODULE_URL + '/tranferred_bytes',
 	STATISTICS_URL: MODULE_URL + '/stats',
-
-	FORCE_URL: MODULE_URL + '/force',
-	DISCONNECT_URL: MODULE_URL + '/disconnect',
 
 	STATISTICS: 'transfer_statistics'
 };

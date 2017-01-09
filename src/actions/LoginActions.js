@@ -31,7 +31,7 @@ LoginActions.activity.listen(function (away) {
 
 LoginActions.newUserIntroSeen.listen(function (away) {
 	let that = this;
-	return SocketService.post(SettingConstants.ITEMS_SET_URL, { [LoginConstants.RUN_WIZARD]: false })
+	return SocketService.post(SettingConstants.ITEMS_SET_URL, { [LoginConstants.WIZARD_PENDING]: false })
 		.then(that.completed)
 		.catch(that.failed);
 });

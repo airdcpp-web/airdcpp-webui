@@ -1,7 +1,7 @@
 import React from 'react';
 import isEqual from 'lodash/isEqual';
 
-import { PriorityEnum } from 'constants/QueueConstants';
+import { PriorityEnum } from 'constants/PriorityConstants';
 
 import TableDropdown from 'components/semantic/TableDropdown';
 import { MenuItemLink } from 'components/semantic/MenuItem';

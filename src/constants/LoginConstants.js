@@ -4,5 +4,5 @@ export default {
 	CONNECT_URL:	'session/v0/socket',
 	ACTIVITY_URL:	'session/v0/activity',
 
-	RUN_WIZARD: 'run_wizard',
+	WIZARD_PENDING: 'wizard_pending',
 };

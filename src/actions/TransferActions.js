@@ -47,14 +47,14 @@ const TransferActions = Reflux.createActions([
 
 TransferActions.force.listen(function (transfer) {
 	const that = this;
-	return SocketService.post(TransferConstants.FORCE_URL + '/' + transfer.id)
+	return SocketService.post(TransferConstants.TRANSFER_URL + '/' + transfer.id + '/force')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 TransferActions.disconnect.listen(function (transfer) {
 	const that = this;
-	return SocketService.post(TransferConstants.DISCONNECT_URL + '/' + transfer.id)
+	return SocketService.post(TransferConstants.TRANSFER_URL + '/' + transfer.id + '/disconnect')
 		.then(that.completed)
 		.catch(that.failed);
 });
