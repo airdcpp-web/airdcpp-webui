@@ -4,9 +4,7 @@ export default {
 
 	GROUPED_DIRECTORIES_URL: MODULE_URL + '/directories',
 	DIRECTORIES_URL: MODULE_URL + '/directories_flat',
-	DIRECTORY_POST_URL: MODULE_URL + '/directory/add',
-	DIRECTORY_UPDATE_URL: MODULE_URL + '/directory/update',
-	DIRECTORY_DELETE_URL: MODULE_URL + '/directory/remove',
+	DIRECTORY_URL: MODULE_URL + '/directory',
 
 	DIRECTORIES_UPDATED: 'favorite_directories_updated',
 }

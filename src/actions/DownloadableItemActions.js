@@ -13,6 +13,7 @@ import ViewFileActions from 'actions/ViewFileActions';
 import ViewFileStore from 'stores/ViewFileStore';
 
 
+const isAdc = ({ user }) => user.flags.indexOf('nmdc') === -1;
 const isSearchable = ({ itemInfo }) => itemInfo.name || itemInfo.tth;
 const notMe = ({ user }) => user.flags.indexOf('me') === -1;
 const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
@@ -22,7 +23,7 @@ const isAudio = ({ itemInfo }) => itemInfo.type.content_type === 'audio';
 const sizeValid = ({ itemInfo }) => itemInfo.size < 200*1024*1024; // 200 MB, the web server isn't suitable for sending large files
 
 const viewText = data => !isDirectory(data) && !isPicture(data) && !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256*1024;
-const findNfo = data => isDirectory(data) && notMe(data);
+const findNfo = data => isDirectory(data) && notMe(data) && isAdc(data);
 
 const viewVideo = data => isVideo(data) && sizeValid(data);
 const viewAudio = data => isAudio(data) && sizeValid(data);

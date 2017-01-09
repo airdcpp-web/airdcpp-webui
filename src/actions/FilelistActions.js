@@ -17,6 +17,7 @@ import IconConstants from 'constants/IconConstants';
 
 
 const isMe = ({ session }) => session.user.flags.indexOf('me') !== -1;
+const isPartialList = ({ session }) => session.partial;
 
 const FilelistActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
@@ -26,6 +27,7 @@ const FilelistActions = Reflux.createActions([
 		displayName: 'Reload',
 		access: AccessConstants.FILELISTS_VIEW,
 		icon: IconConstants.RELOAD,
+		filter: isPartialList,
 	} },
 	{ 'refreshShare': { 
 		asyncResult: true,

@@ -15,7 +15,7 @@ const EventStore = Reflux.createStore({
 	listenables: EventActions,
 	init: function () {
 		this._logMessages = undefined;
-		this._info = undefined;
+		this._messageCacheInfo = undefined;
 		this._active = false;
 	},
 
@@ -33,11 +33,11 @@ const EventStore = Reflux.createStore({
 	},
 
 	onFetchInfoCompleted: function (data) {
-		this.onLogInfo(data);
+		this.onLogInfoReceived(data);
 	},
 
 	onLogMessage: function (data) {
-		if (!this._info || data.severity === SeverityEnum.NOTIFY) {
+		if (!this._messageCacheInfo || data.severity === SeverityEnum.NOTIFY) {
 			return;
 		}
 
@@ -45,23 +45,23 @@ const EventStore = Reflux.createStore({
 		this.trigger(this._logMessages);
 	},
 
-	onLogInfo: function (newInfo) {
+	onLogInfoReceived: function (cacheInfoNew) {
 		if (this._active) {
-			newInfo = MessageUtils.checkUnread(newInfo, EventActions);
+			cacheInfoNew = MessageUtils.checkUnread(cacheInfoNew, EventActions);
 		}
 
-		this._logMessages = MessageUtils.checkSplice(this._logMessages, newInfo.total_messages);
-		this._info = newInfo;
+		this._logMessages = MessageUtils.checkSplice(this._logMessages, cacheInfoNew.total);
+		this._messageCacheInfo = cacheInfoNew;
 
 		this.trigger(this._logMessages);
 	},
 
 	getTotalUrgencies() {
-		if (!this._info) {
+		if (!this._messageCacheInfo) {
 			return null;
 		}
 
-		return UrgencyUtils.toUrgencyMap(this._info.unread_messages, LogMessageUrgencies);
+		return UrgencyUtils.toUrgencyMap(this._messageCacheInfo.unread, LogMessageUrgencies);
 	},
 
 	get logMessages() {
@@ -71,7 +71,7 @@ const EventStore = Reflux.createStore({
 	onSocketConnected(addSocketListener) {
 		const url = EventConstants.MODULE_URL;
 		addSocketListener(url, EventConstants.MESSAGE, this.onLogMessage);
-		addSocketListener(url, EventConstants.COUNTS, this.onLogInfo);
+		addSocketListener(url, EventConstants.COUNTS, this.onLogInfoReceived);
 	},
 
 	onSocketDisconnected() {

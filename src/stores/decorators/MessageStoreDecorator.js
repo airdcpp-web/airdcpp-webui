@@ -33,8 +33,12 @@ const MessageStoreDecorator = function (store, actions, access) {
 	};
 
 	store._onSessionUpdated = (session, sessionId) => {
+		if (!session.message_counts) {
+			return;
+		}
+
 		// Message limit exceed or messages were cleared?
-		messages.set(sessionId, MessageUtils.checkSplice(messages.get(sessionId), session.total_messages));
+		messages.set(sessionId, MessageUtils.checkSplice(messages.get(sessionId), session.message_counts.total));
 		store.trigger(messages.get(sessionId), sessionId);
 	};
 

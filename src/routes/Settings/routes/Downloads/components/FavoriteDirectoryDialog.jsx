@@ -54,13 +54,10 @@ const FavoriteDirectoryDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(FavoriteDirectoryConstants.DIRECTORY_POST_URL, changedFields);
+			return SocketService.post(FavoriteDirectoryConstants.DIRECTORY_URL, changedFields);
 		}
 
-		return SocketService.post(FavoriteDirectoryConstants.DIRECTORY_UPDATE_URL, {
-			path: this.props.directoryEntry.path,
-			...changedFields,
-		});
+		return SocketService.patch(FavoriteDirectoryConstants.DIRECTORY_URL + '/' + this.props.directoryEntry.id, changedFields);
 	},
 
 	onFieldSetting(id, fieldOptions, formValue) {

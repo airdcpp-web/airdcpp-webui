@@ -29,22 +29,22 @@ const MessageUtils = {
 	// Update the data with unread info that is marked as read
 	// Marks the session as read also in the backend
 	checkUnread(data, actions, entityId) {
-		if (!data.unread_messages && data.read === false) {
+		if (!data.message_counts && data.read === false) {
 			// Non-chat session
 			actions.setRead(entityId);
 			data = {
 				...data,
 				read: true,
 			};
-		} else if (data.unread_messages &&
-			!Object.keys(data.unread_messages).every(key => data.unread_messages[key] === 0)) {
+		} else if (data.message_counts &&
+			!Object.keys(data.message_counts.unread).every(key => data.message_counts.unread[key] === 0)) {
 			// Chat session
 
 			// Reset unread counts
 			actions.setRead(entityId);
 
 			// Don't flash unread counts in the UI
-			const unreadInfo = Object.keys(data.unread_messages).reduce(
+			const unreadCounts = Object.keys(data.message_counts.unread).reduce(
 				(reduced, key) => {
 					reduced[key] = 0;
 					return reduced;
@@ -53,7 +53,10 @@ const MessageUtils = {
 
 			data = {
 				...data,
-				unread_messages: unreadInfo,
+				message_counts: {
+					...data.message_counts,
+					unread: unreadCounts,
+				}
 			};
 		}
 

@@ -20,9 +20,19 @@ const FilelistNew = React.createClass({
 
 	render() {
 		return (
-			<NewLayout title="Open list" subHeader="Start browsing a new filelist" icon="sitemap" className="filelist">
-				<UserSearchInput submitHandler={this._handleSubmit} offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"/>
- 				<ShareProfileSelector onProfileChanged={ this.onProfileChanged }/>
+			<NewLayout 
+				title="Open list" 
+				subHeader="Start browsing a new filelist" 
+				icon="sitemap" 
+				className="filelist"
+			>
+				<UserSearchInput 
+					submitHandler={ this._handleSubmit } 
+					offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"
+				/>
+ 				<ShareProfileSelector 
+ 					onProfileChanged={ this.onProfileChanged }
+ 				/>
 			</NewLayout>
 		);
 	}

@@ -1,3 +1,4 @@
+import MessageUtils from 'utils/MessageUtils';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
@@ -22,7 +23,14 @@ const messages = [
 
 const clearMessages = () => {
 	PrivateChatMessageStore._onSessionUpdated({
-		total_messages: 0,
+		message_counts: {
+			total: 0,
+			unread: {
+				bot: 0,
+				user: 0,
+				status: 0,
+			}
+		}
 	}, sessionId);
 };
 
@@ -46,6 +54,37 @@ describe('message store', () => {
 		clearMessages();
 
 		expect(PrivateChatMessageStore.getSessionMessages(sessionId).length).toEqual(0);
+	});
+
+	test('should reset unread counts for active sessions', () => {
+		const sessionData = {
+			message_counts: {
+				total: 5,
+				unread: {
+					user: 1,
+					bot: 1,
+					status: 1,
+				}
+			},
+		};
+
+		const actions = {
+			setRead: jest.fn(),
+		};
+
+		const data = MessageUtils.checkUnread(sessionData, actions, 0);
+
+		expect(actions.setRead).toBeCalled();
+		expect(data).toEqual({
+			message_counts: {
+				total: 5,
+				unread: {
+					user: 0,
+					bot: 0,
+					status: 0,
+				}
+			},
+		});
 	});
 
 	test('should handle messages received during fetching', () => {

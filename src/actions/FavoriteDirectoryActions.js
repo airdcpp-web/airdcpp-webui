@@ -52,7 +52,7 @@ FavoriteDirectoryActions.remove.listen(function (directory) {
 
 FavoriteDirectoryActions.remove.confirmed.listen(function (directory) {
 	const that = this;
-	return SocketService.post(FavoriteDirectoryConstants.DIRECTORY_DELETE_URL, { path: directory.path })
+	return SocketService.delete(FavoriteDirectoryConstants.DIRECTORY_URL + '/' + directory.id)
 		.then(FavoriteDirectoryActions.remove.completed.bind(that, directory))
 		.catch(FavoriteDirectoryActions.remove.failed.bind(that, directory));
 });

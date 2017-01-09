@@ -6,7 +6,7 @@ import { MenuItemLink } from 'components/semantic/MenuItem';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import TableFilterDecorator from 'decorators/TableFilterDecorator';
 
-const defaultItem = { name: 'All profiles', id: null };
+const defaultItem = { str: 'All profiles', id: null };
 
 const ShareProfileFilter = React.createClass({
 	propTypes: {
