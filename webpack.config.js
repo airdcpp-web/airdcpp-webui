@@ -37,7 +37,8 @@ var plugins = [
 	new HtmlWebpackPlugin({
 		template: 'resources/index.ejs',
 		favicon: 'resources/favicon.ico',
-		inject: false
+		inject: false,
+		googleAnalytics: demo
 	})
 ];
 
