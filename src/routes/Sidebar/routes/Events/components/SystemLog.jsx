@@ -48,7 +48,7 @@ const SystemLog = React.createClass({
 		EventActions.setActive(true);
 		EventActions.setRead();
 
-		if (!this.state.messages) {
+		if (!EventStore.isInitialized()) {
 			EventActions.fetchMessages();
 		}
 	},

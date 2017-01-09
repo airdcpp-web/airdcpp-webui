@@ -16,28 +16,37 @@ const EventStore = Reflux.createStore({
 	init: function () {
 		this._logMessages = undefined;
 		this._messageCacheInfo = undefined;
-		this._active = false;
+		this._viewActive = false;
+		this._initialized = false;
 	},
 
-	getInitialState: function () {
+	isInitialized() {
+		return this._initialized;
+	},
+
+	getInitialState() {
 		return this._logMessages;
 	},
 
 	onSetActive(active) {
-		this._active = active;
+		this._viewActive = active;
 	},
 
-	onFetchMessagesCompleted: function (cacheMessages) {
+	onFetchMessages() {
+		this._initialized = true;
+	},
+
+	onFetchMessagesCompleted(cacheMessages) {
 		this._logMessages = MessageUtils.mergeCacheMessages(cacheMessages, this._logMessages);;
 		this.trigger(this._logMessages);
 	},
 
-	onFetchInfoCompleted: function (data) {
+	onFetchInfoCompleted(data) {
 		this.onLogInfoReceived(data);
 	},
 
-	onLogMessage: function (data) {
-		if (!this._messageCacheInfo || data.severity === SeverityEnum.NOTIFY) {
+	onLogMessage(data) {
+		if (data.severity === SeverityEnum.NOTIFY) {
 			return;
 		}
 
@@ -45,8 +54,8 @@ const EventStore = Reflux.createStore({
 		this.trigger(this._logMessages);
 	},
 
-	onLogInfoReceived: function (cacheInfoNew) {
-		if (this._active) {
+	onLogInfoReceived(cacheInfoNew) {
+		if (this._viewActive) {
 			cacheInfoNew = MessageUtils.checkUnread(cacheInfoNew, EventActions);
 		}
 
