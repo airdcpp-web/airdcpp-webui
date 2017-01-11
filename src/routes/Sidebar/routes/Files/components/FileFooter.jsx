@@ -12,11 +12,12 @@ const FileFooter = ({ item }) => {
 		return null;
 	}
 
+	const downloadState = item.download_state;
 	return (
 		<SessionFooter>
 			<FooterItem 
-				label={ item.downloaded ? 'Downloaded' : 'Opened' } 
-				text={ ValueFormat.formatRelativeTime(item.time_finished) }
+				label={ downloadState ? 'Downloaded' : 'Opened' } 
+				text={ ValueFormat.formatRelativeTime(downloadState ? downloadState.time_finished : item.time_opened) }
 			/>
 		</SessionFooter>
 	);

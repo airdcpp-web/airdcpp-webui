@@ -11,13 +11,13 @@ import TextDecorator from 'components/TextDecorator';
 
 const TextFile = React.createClass({
 	componentWillMount() {
-		if (this.props.item.state.id === 'downloaded') {
+		if (this.props.item.content_ready) {
 			this.fetchText(this.props.item);
 		}
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.item.state.id !== 'downloaded') {
+		if (!nextProps.item.content_ready) {
 			return;
 		}
 
@@ -26,7 +26,7 @@ const TextFile = React.createClass({
 			this.setState(this.getInitialState());
 		}
 
-		if (idChanged || this.props.item.state.id !== 'downloaded') {
+		if (idChanged || !this.props.item.content_ready) {
 			this.fetchText(nextProps.item);
 		}
 	},
@@ -57,13 +57,15 @@ const TextFile = React.createClass({
 	},
 
 	render() {
-		const { state } = this.props.item;
-		if (state.id === 'downloaded' && !this.state.text) {
-			if (this.state.error) {
+		const { item } = this.props;
+		const { text, error } = this.state;
+
+		if (item.content_ready && !text) {
+			if (error) {
 				return (
 					<Message
 						title="Failed to fetch content"
-						description={ this.state.error }
+						description={ error }
 					/>
 				);
 			}
@@ -74,7 +76,7 @@ const TextFile = React.createClass({
 		return (
 			<pre>
 				<TextDecorator
-					text={ this.state.text }
+					text={ text }
 				/>
 			</pre>
 		);

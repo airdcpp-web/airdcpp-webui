@@ -37,18 +37,18 @@ const getUrl = (tth) => {
 const FileSession = React.createClass({
 	render() {
 		const { session } = this.props;
-		if (session.state.id !== 'downloaded') {
-			if (session.state.id === 'download_failed') {
+		if (!session.content_ready) {
+			if (session.download_state.id === 'download_failed') {
 				return (
 					<Message 
 						icon={ IconConstants.ERROR }
 						title="Download failed"
-						description={ session.state.str }
+						description={ session.download_state.str }
 					/>
 				);
 			}
 
-			return <Loader text={ session.state.str }/>;
+			return <Loader text={ session.download_state.str }/>;
 		}
 
 		const ViewerElement = getViewerElement(session);
