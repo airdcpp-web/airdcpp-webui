@@ -12,10 +12,7 @@ import LoginConstants from 'constants/LoginConstants';
 const LoginStore = Reflux.createStore({
 	listenables: LoginActions,
 	init: function () {
-		this.loginProperties = BrowserUtils.loadSessionProperty('login_properties', {
-			session: null,
-			system: null,
-		});
+		this.loginProperties = BrowserUtils.loadSessionProperty('login_properties', {});
 
 		this._allowLogin = true;
 		this._lastError = null;
@@ -51,7 +48,7 @@ const LoginStore = Reflux.createStore({
 			allowLogin: this._allowLogin,
 			lastError: this._lastError,
 			socketAuthenticated: this._socketAuthenticated,
-			session: this.session,
+			hasSession: this.hasSession,
 		};
 	},
 
@@ -77,10 +74,7 @@ const LoginStore = Reflux.createStore({
 	onNewUserIntroSeen() {
 		const newProps = {
 			...this.loginProperties,
-			system: {
-				...this.loginProperties.system,
-				[LoginConstants.WIZARD_PENDING]: false,
-			}
+			[LoginConstants.WIZARD_PENDING]: false,
 		};
 
 		this.setLoginProperties(newProps);
@@ -107,7 +101,7 @@ const LoginStore = Reflux.createStore({
 	},
 
 	hasAccess(access) {
-		const { permissions } = this.loginProperties.session.user;
+		const { permissions } = this.loginProperties.user;
 		return permissions.indexOf(access) !== -1 || permissions.indexOf(AccessConstants.ADMIN) !== -1;
 	},
 
@@ -145,11 +139,11 @@ const LoginStore = Reflux.createStore({
 	},
 
 	get user() {
-		return this.session ? this.session.user : null;
+		return this.loginProperties.user;
 	},
 
-	get session() {
-		return this.loginProperties.session;
+	get hasSession() {
+		return !!this.loginProperties.user;
 	},
 
 	get authToken() {
@@ -157,11 +151,11 @@ const LoginStore = Reflux.createStore({
 	},
 
 	get systemInfo() {
-		return this.loginProperties.system;
+		return this.loginProperties.system_info;
 	},
 
 	get showNewUserIntro() {
-		return this.loginProperties.system[LoginConstants.WIZARD_PENDING];
+		return this.loginProperties[LoginConstants.WIZARD_PENDING];
 	},
 
 	get allowLogin() {

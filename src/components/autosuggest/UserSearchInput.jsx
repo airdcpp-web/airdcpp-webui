@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HubConstants from 'constants/HubConstants';
+import UserConstants from 'constants/UserConstants';
 
 import RemoteSuggestField from './RemoteSuggestField';
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
@@ -13,7 +13,7 @@ const UserSearchInput = ({ offlineMessage, submitHandler }) => (
 				submitHandler={ submitHandler }
 				valueField="nick"
 				descriptionField="hub_name"
-				url={ HubConstants.SEARCH_NICKS_URL }
+				url={ UserConstants.SEARCH_NICKS_URL }
 			/>
 	</OfflineHubMessageDecorator>
 );

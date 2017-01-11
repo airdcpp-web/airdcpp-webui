@@ -6,25 +6,27 @@ import Moment from 'moment';
 
 import { Row } from './Grid';
 
-import SystemConstants from 'constants/SystemConstants';
+import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
+import SystemConstants from 'constants/SystemConstants';
 import ValueFormat from 'utils/ValueFormat';
 
 
 const AboutPage = React.createClass({
 	render() {
 		const { stats } = this.props;
+		const systemInfo = LoginStore.systemInfo;
 
 		const buildDate = Moment(new Date(JSON.parse(UI_BUILD_DATE))).format('LLL');
 
 		return (
 			<div className="ui grid two column">
-				<Row title="Application version" text={stats.client_version}/>
-				<Row title="Web UI version" text={UI_VERSION}/>
-				<Row title="Web UI build date" text={buildDate}/>
-				<Row title="Started" text={ValueFormat.formatRelativeTime(stats.client_started)}/>
-				<Row title="Active sessions" text={stats.active_sessions}/>
-				<Row title="Server threads" text={stats.server_threads}/>
+				<Row title="Application version" text={ systemInfo.client_version }/>
+				<Row title="Web UI version" text={ UI_VERSION }/>
+				<Row title="Web UI build date" text={ buildDate }/>
+				<Row title="Started" text={ ValueFormat.formatRelativeTime(systemInfo.client_started) }/>
+				<Row title="Active sessions" text={ stats.active_sessions }/>
+				<Row title="Server threads" text={ stats.server_threads }/>
 			</div>
 		);
 	},

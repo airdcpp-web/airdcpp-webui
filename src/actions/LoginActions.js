@@ -22,14 +22,16 @@ export const LoginActions = Reflux.createActions([
 ]);
 
 
-LoginActions.activity.listen(function (away) {
+LoginActions.activity.listen(function () {
 	let that = this;
-	return SocketService.post(LoginConstants.ACTIVITY_URL)
+	return SocketService.post(LoginConstants.ACTIVITY_URL, {
+		user_active: true,
+	})
 		.then(that.completed)
 		.catch(that.failed);
 });
 
-LoginActions.newUserIntroSeen.listen(function (away) {
+LoginActions.newUserIntroSeen.listen(function () {
 	let that = this;
 	return SocketService.post(SettingConstants.ITEMS_SET_URL, { [LoginConstants.WIZARD_PENDING]: false })
 		.then(that.completed)

@@ -17,7 +17,7 @@ import IconConstants from 'constants/IconConstants';
 
 
 const isMe = ({ session }) => session.user.flags.indexOf('me') !== -1;
-const isPartialList = ({ session }) => session.partial;
+const isPartialList = ({ session }) => session.partial_list;
 
 const FilelistActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },

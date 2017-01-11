@@ -39,7 +39,7 @@ export default function (actions, sessionUrl, editAccess) {
 
 	ChatActions.sendMessage.listen(function (session, text, thirdPerson = false) {
 		let that = this;
-		SocketService.post(sessionUrl + '/' + session.id + '/message', { 
+		SocketService.post(sessionUrl + '/' + session.id + '/chat_message', { 
 			text,
 			third_person: thirdPerson,
 		})

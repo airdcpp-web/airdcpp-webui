@@ -6,11 +6,11 @@ export const ConnectStateEnum = {
 	PASSWORD: 'password',
 	CONNECTED: 'connected',
 	DISCONNECTED: 'disconnected',
+	KEYPRINT_ERROR: 'keyprint_mismatch',
 };
 
 export default {
 	MODULE_URL: MODULE_URL,
-	SEARCH_NICKS_URL: MODULE_URL + '/search_nicks',
 	STATS_URL: MODULE_URL + '/stats',
 
 	//HUB_SESSIONS_URL: MODULE_URL + '/sessions',

@@ -23,8 +23,7 @@ const ActivityTracker = React.createClass({
 		this.aliveInterval = setInterval(this.checkAlive, 2000);
 		this.lastAlive = (new Date()).getTime();
 
-		// Avoid long breaks if the page is refreshed often
-		this.checkActivity();
+		LoginActions.activity();
 	},
 
 	componentWillUnmount() {
@@ -56,8 +55,8 @@ const ActivityTracker = React.createClass({
 			return;
 		}
 
-		userActive = false;
 		LoginActions.activity();
+		userActive = false;
 	},
 
 	onUserActivity() {
@@ -65,12 +64,11 @@ const ActivityTracker = React.createClass({
 			return;
 		}
 
-		// Change the state instantly when whe get back
+		// Change the state instantly when the user came back
+		userActive = true;
 		if (ActivityStore.away === AwayEnum.IDLE) {
 			LoginActions.activity();
 		}
-
-		userActive = true;
 	},
 
 	render() {

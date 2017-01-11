@@ -22,12 +22,12 @@ global.Promise = Promise;
 
 Reflux.use(RefluxPromise(Promise));
 
-if (LoginStore.session) {
+if (LoginStore.hasSession) {
 	LoginActions.connect(LoginStore.authToken);
 }
 
 const requireAuth = (nextState, replace) => {
-	if (!LoginStore.session) {
+	if (!LoginStore.hasSession) {
 		replace({ 
 			state: {
 				nextPath: nextState.location.pathname,

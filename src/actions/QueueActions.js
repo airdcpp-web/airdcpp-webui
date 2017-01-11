@@ -293,9 +293,7 @@ QueueActions.removeFile.failed.listen(function (target, error) {
 QueueActions.removeSource.listen(function (item) {
 	let that = this;
 	const { user } = item;
-	return SocketService.post(QueueConstants.REMOVE_SOURCE_URL, {
-		user,
-	})
+	return SocketService.post(QueueConstants.SOURCE_URL + '/' + user.cid)
 		.then(that.completed.bind(that, user))
 		.catch(that.failed.bind(that, user));
 });

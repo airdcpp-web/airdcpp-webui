@@ -9,7 +9,7 @@ import HubActions from 'actions/HubActions';
 const HubActionPrompt = ({ icon, title, content }) => (
 	<div className="ui icon message hub-action-prompt">
 		<h3 className="ui header">
-			<i className={ icon + ' icon'}></i>
+			<i className={ icon + ' icon'}/>
 			<div className="content">
 				{ title }
 			</div>
@@ -50,7 +50,7 @@ const RedirectPrompt = ({ hub }) => (
 	<Button
 		icon="green play"
 		onClick={ _ => HubActions.redirect(hub) }
-		caption={ 'Accept redirect to ' + hub.connect_state.hub_url }
+		caption={ 'Accept redirect to ' + hub.connect_state.data.hub_url }
 	/>
 );
 
