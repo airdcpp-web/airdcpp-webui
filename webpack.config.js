@@ -60,8 +60,7 @@ var releasePlugins = [
 ];
 
 var debugPlugins = [
-	new webpack.HotModuleReplacementPlugin(),
-	new webpack.NoErrorsPlugin()
+	new webpack.HotModuleReplacementPlugin()
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);

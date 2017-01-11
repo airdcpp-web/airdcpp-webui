@@ -1,5 +1,3 @@
-import QueueActions from 'actions/QueueActions';
-
 module.exports = {
 	typeId: 'transfers',
 	component: require('./components/Transfers').default,
@@ -12,7 +10,7 @@ module.exports = {
 		minH: 5,
 	},
 	actionMenu: {
-		actions: QueueActions,
+		actions: require('actions/QueueActions'),
 		ids: [ 'resume', 'pause' ],
 	},
 };
