@@ -1,4 +1,4 @@
-const MODULE_URL = 'filelists/v0';
+const MODULE_URL = 'filelists';
 export default {
 	MODULE_URL: MODULE_URL,
 	SESSIONS_URL: MODULE_URL + '/sessions',

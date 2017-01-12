@@ -2,7 +2,7 @@ import ApiSocket from 'airdcpp-apisocket/dist/SocketBase';
 
 
 const options = {
-	url: window.location.host + getBasePath(),
+	url: window.location.host + getBasePath() + 'api/v1/',
 	secure: window.location.protocol === 'https:',
 	autoReconnect: false,
 	reconnectInterval: 5,

@@ -1,4 +1,4 @@
-const MODULE_URL = 'hash/v0';
+const MODULE_URL = 'hash';
 export default {
 	MODULE_URL: MODULE_URL,
 	OPTIMIZE_DATABASE_URL: MODULE_URL + '/optimize_database',

@@ -1,4 +1,4 @@
-const MODULE_URL = 'favorite_directories/v0';
+const MODULE_URL = 'favorite_directories';
 export default {
 	MODULE_URL: MODULE_URL,
 

@@ -1,4 +1,4 @@
-const MODULE_URL = 'share_profiles/v0';
+const MODULE_URL = 'share_profiles';
 export default {
 	MODULE_URL: MODULE_URL,
 	PROFILES_URL: MODULE_URL + '/profiles',

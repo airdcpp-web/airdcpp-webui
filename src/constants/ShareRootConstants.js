@@ -1,4 +1,4 @@
-const MODULE_URL = 'share_roots/v0';
+const MODULE_URL = 'share_roots';
 
 export const StateEnum = {
 	NORMAL: 'normal',

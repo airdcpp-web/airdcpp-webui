@@ -1,4 +1,4 @@
-const MODULE_URL = 'view_files/v0';
+const MODULE_URL = 'view_files';
 export default {
 	MODULE_URL: MODULE_URL,
 	SESSIONS_URL: MODULE_URL + '/sessions',

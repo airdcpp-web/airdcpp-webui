@@ -1,4 +1,4 @@
-const MODULE_URL = 'connectivity/v0';
+const MODULE_URL = 'connectivity';
 export default {
 	MODULE_URL: MODULE_URL,
 	DETECT_URL: MODULE_URL + '/detect',

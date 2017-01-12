@@ -1,4 +1,4 @@
-const MODULE_URL = 'filesystem/v0';
+const MODULE_URL = 'filesystem';
 export default {
 	MODULE_URL: MODULE_URL,
 	LIST_URL: MODULE_URL + '/list_items',

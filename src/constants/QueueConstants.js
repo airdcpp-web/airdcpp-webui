@@ -1,4 +1,4 @@
-const MODULE_URL = 'queue/v0';
+const MODULE_URL = 'queue';
 
 export const StatusEnum = {
 	QUEUED: 'queued',

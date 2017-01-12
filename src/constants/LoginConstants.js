@@ -1,8 +1,6 @@
+const MODULE_URL = 'session';
 export default {
-	LOGIN_URL:	'session/v0/auth',
-	LOGOUT_URL: 'session/v0/auth',
-	CONNECT_URL:	'session/v0/socket',
-	ACTIVITY_URL:	'session/v0/activity',
+	ACTIVITY_URL:	MODULE_URL + '/activity',
 
 	WIZARD_PENDING: 'wizard_pending',
 };

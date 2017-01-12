@@ -1,4 +1,4 @@
-const MODULE_URL = 'system/v0';
+const MODULE_URL = 'system';
 
 export const AwayEnum = {
 	OFF: 'off',

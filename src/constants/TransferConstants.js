@@ -1,4 +1,4 @@
-const MODULE_URL = 'transfers/v0';
+const MODULE_URL = 'transfers';
 
 export const StatusEnum = {
 	WAITING: 'waiting',

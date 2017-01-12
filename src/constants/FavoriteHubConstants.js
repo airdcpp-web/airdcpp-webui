@@ -1,4 +1,4 @@
-const MODULE_URL = 'favorite_hubs/v0';
+const MODULE_URL = 'favorite_hubs';
 
 export const ConnectStateEnum = {
 	DISCONNECTED: 0,

@@ -1,4 +1,4 @@
-const MODULE_URL = 'share/v0';
+const MODULE_URL = 'share';
 export default {
 	MODULE_URL: MODULE_URL,
 

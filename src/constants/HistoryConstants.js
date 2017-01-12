@@ -1,4 +1,4 @@
-const MODULE_URL = 'histories/v0';
+const MODULE_URL = 'histories';
 
 export const HistoryEnum = {
 	SEARCH: 'search_pattern',

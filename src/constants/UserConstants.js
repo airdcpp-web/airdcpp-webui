@@ -1,4 +1,4 @@
-const MODULE_URL = 'users/v0';
+const MODULE_URL = 'users';
 export default {
 	MODULE_URL: MODULE_URL,
 	SEARCH_NICKS_URL: MODULE_URL + '/search_nicks',

@@ -1,4 +1,4 @@
-const MODULE_URL = 'web_users/v0';
+const MODULE_URL = 'web_users';
 
 export default {
 	MODULE_URL: MODULE_URL,

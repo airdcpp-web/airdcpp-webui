@@ -1,4 +1,4 @@
-const MODULE_URL = 'settings/v0';
+const MODULE_URL = 'settings';
 
 export const SettingProfileEnum = {
 	NORMAL: 0, 

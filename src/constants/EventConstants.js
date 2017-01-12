@@ -1,4 +1,4 @@
-const MODULE_URL = 'events/v0';
+const MODULE_URL = 'events';
 
 export const SeverityEnum = {
 	NOTIFY: 'notify',

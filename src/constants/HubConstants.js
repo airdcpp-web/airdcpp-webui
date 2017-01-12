@@ -1,4 +1,4 @@
-const MODULE_URL = 'hubs/v0';
+const MODULE_URL = 'hubs';
 
 export const ConnectStateEnum = {
 	REDIRECT: 'redirect',
