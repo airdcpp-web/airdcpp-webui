@@ -26,9 +26,9 @@ export default {
 	BUNDLE_URL: MODULE_URL + '/bundle',
 	FILE_URL: MODULE_URL + '/file',
 
-	BUNDLE_ADDED: 'bundle_added',
-	BUNDLE_REMOVED: 'bundle_removed',
-	BUNDLE_UPDATED: 'bundle_updated',
-	BUNDLE_STATUS: 'bundle_status',
-	BUNDLE_SOURCES: 'bundle_sources',
+	BUNDLE_ADDED: 'queue_bundle_added',
+	BUNDLE_REMOVED: 'queue_bundle_removed',
+	BUNDLE_UPDATED: 'queue_bundle_updated',
+	BUNDLE_STATUS: 'queue_bundle_status',
+	BUNDLE_SOURCES: 'queue_bundle_sources',
 };
