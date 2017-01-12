@@ -27,7 +27,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "airdcpp-apisocket": "^0.1.4",
+    "airdcpp-apisocket": "^1.0.0-beta",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^6.5.1",
     "babel-eslint": "^7.0.0",
