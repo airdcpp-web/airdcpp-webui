@@ -10,7 +10,7 @@ module.exports = {
 		minH: 5,
 	},
 	actionMenu: {
-		actions: require('actions/QueueActions'),
+		actions: require('actions/QueueActions').default,
 		ids: [ 'resume', 'pause' ],
 	},
 };

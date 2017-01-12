@@ -11,7 +11,7 @@ module.exports = {
 		minH: 4,
 	},
 	actionMenu: {
-		actions: require('actions/SystemActions'),
+		actions: require('actions/SystemActions').default,
 		ids: [ 'shutdown' ],
 	},
 };

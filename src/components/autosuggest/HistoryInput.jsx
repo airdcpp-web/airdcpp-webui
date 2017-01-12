@@ -13,7 +13,7 @@ export default React.createClass({
 		/**
 		 * ID of the history section
 		 */
-		historyId: React.PropTypes.number.isRequired,
+		historyId: React.PropTypes.string.isRequired,
 	},
 
 	getInitialState() {
@@ -27,7 +27,7 @@ export default React.createClass({
 	},
 
 	loadHistory() {
-		SocketService.get(HistoryConstants.ITEMS_URL + '/' + this.props.historyId)
+		SocketService.get(HistoryConstants.STRINGS_URL + '/' + this.props.historyId)
 			.then(data => {
 				this.setState({ history: data });
 			})

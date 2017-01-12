@@ -7,10 +7,10 @@ export const HistoryActions = Reflux.createActions([
 	{ 'add': { asyncResult: true } },
 ]);
 
-HistoryActions.add.listen(function (historyId, item) {
+HistoryActions.add.listen(function (historyId, string) {
 	let that = this;
-	return SocketService.post(HistoryConstants.ITEM_URL + '/' + historyId, { 
-		item,
+	return SocketService.post(HistoryConstants.STRING_URL + '/' + historyId, { 
+		string,
 	})
 		.then(that.completed)
 		.catch(that.failed);

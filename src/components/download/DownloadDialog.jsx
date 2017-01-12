@@ -173,6 +173,6 @@ export default DataProviderDecorator(DownloadDialog, {
 	urls: {
 		sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
 		favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-		historyPaths: HistoryConstants.ITEMS_URL + '/' + HistoryEnum.DOWNLOAD_DIR,
+		historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryEnum.DOWNLOAD_DIR,
 	},
 });

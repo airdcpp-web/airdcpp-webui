@@ -1,5 +1,5 @@
 import React from 'react';
-import RecentHubConstants from 'constants/RecentHubConstants';
+import HistoryConstants from 'constants/HistoryConstants';
 
 import RemoteSuggestField from './RemoteSuggestField';
 import Button from 'components/semantic/Button';
@@ -10,7 +10,7 @@ const HubSearchInput = ({ submitHandler }) => (
 		submitHandler={ submitHandler }
 		valueField="hub_url"
 		descriptionField="name"
-		url={ RecentHubConstants.SEARCH_URL }
+		url={ HistoryConstants.HUBS_SEARCH_URL }
 		button={ 
 			<Button
 				icon="green play"
