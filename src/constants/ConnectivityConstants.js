@@ -4,8 +4,8 @@ export default {
 	DETECT_URL: MODULE_URL + '/detect',
 	STATUS_URL: MODULE_URL + '/status',
 
-	CONNECTIVITY_MESSAGE: 'connectivity_message',
-	CONNECTIVITY_STARTED: 'connectivity_started',
-	CONNECTIVITY_FINISHED: 'connectivity_finished',
+	CONNECTIVITY_MESSAGE: 'connectivity_detection_message',
+	CONNECTIVITY_STARTED: 'connectivity_detection_started',
+	CONNECTIVITY_FINISHED: 'connectivity_detection_finished',
 }
 ;
