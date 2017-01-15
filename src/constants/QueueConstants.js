@@ -2,16 +2,12 @@ const MODULE_URL = 'queue';
 
 export const StatusEnum = {
 	QUEUED: 'queued',
-	DOWNLOAD_FAILED: 'download_failed',
+	DOWNLOAD_FAILED: 'download_error',
 	RECHECK: 'recheck',
-	DOWNLOADED: 'downloaded', // no queued files
-	MOVED: 'moved', // all files moved
-	FAILED_MISSING: 'scan_failed_files_missing',
-	SHARING_FAILED: 'scan_failed',
-	FINISHED: 'finished', // no missing files, ready for hashing
-	HASHING: 'hashing',
-	HASH_FAILED: 'hash_failed',
-	HASHED: 'hashed',
+	DOWNLOADED: 'downloaded', // no queued files remaining
+	COMPLETION_VALIDATION_RUNNING: 'completion_validation_running', // running validation hooks (such as share scanner)
+	COMPLETION_VALIDATION_ERROR: 'completion_validation_error',
+	COMPLETED: 'completed', // ready for sharing
 	SHARED: 'shared'
 };
 

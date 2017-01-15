@@ -26,7 +26,7 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 
 const BundleFileTable = React.createClass({
 	isActive(cellData, rowData) {
-		return !rowData.status.finished;
+		return !rowData.status.downloaded;
 	},
 
 	isRunning(cellData, rowData) {

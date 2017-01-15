@@ -1,6 +1,6 @@
 'use strict';
 import Reflux from 'reflux';
-import { default as QueueConstants } from 'constants/QueueConstants';
+import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 import History from 'utils/History';
 
@@ -15,7 +15,7 @@ import DownloadableItemActions from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
 
 
-const finishedFailed = bundle => bundle.status.failed && bundle.status.finished;
+const bundleValidationFailed = bundle => bundle.status.id === StatusEnum.COMPLETION_VALIDATION_ERROR;
 const itemNotFinished = item => item.time_finished === 0;
 const isDirectoryBundle = bundle => bundle.type.id === 'directory';
 const hasSources = bundle => bundle.sources.total > 0 && itemNotFinished(bundle);
@@ -48,10 +48,10 @@ export const QueueActions = Reflux.createActions([
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.REMOVE,
 	} },
-	{ 'removeFinished': { 
+	{ 'removeCompleted': { 
 		asyncResult: true,
 		access: AccessConstants.QUEUE_EDIT, 
-		displayName: 'Remove finished bundles', 
+		displayName: 'Remove completed bundles', 
 		icon: IconConstants.REMOVE,
 	} },
 	{ 'removeBundleSource': { 
@@ -77,14 +77,14 @@ export const QueueActions = Reflux.createActions([
 		displayName: 'Rescan for errors',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.REFRESH,
-		filter: finishedFailed,
+		filter: bundleValidationFailed,
 	} },
 	{ 'forceShare': { 
 		asyncResult: true, 
 		displayName: 'Force in share',
 		access: AccessConstants.QUEUE_EDIT,
 		icon: IconConstants.ERROR,
-		filter: finishedFailed,
+		filter: bundleValidationFailed,
 	} },
 	{ 'searchFileAlternates': { 
 		asyncResult: true,
@@ -132,9 +132,9 @@ const setBundlePriorities = (prio, action) => {
 		);
 };
 
-const shareBundle = (bundle, skipScan, action) => {
+const shareBundle = (bundle, skipValidation, action) => {
 	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/share', { 
-		skip_scan: skipScan, 
+		skip_validation: skipValidation, 
 	})
 		.then(() => 
 			action.completed(bundle))
@@ -178,11 +178,18 @@ QueueActions.forceShare.listen(function (bundle) {
 	shareBundle(bundle, true, QueueActions.forceShare);
 });
 
-QueueActions.removeFinished.listen(function () {
+QueueActions.removeCompleted.listen(function () {
 	let that = this;
-	return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_finished')
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_completed')
 		.then(that.completed)
 		.catch(that.failed);
+});
+
+QueueActions.removeCompleted.completed.listen(function (data) {
+	NotificationActions.success({ 
+		title: 'Action completed',
+		message: data.count > 0 ? data.count + ' completed bundles were removed' : 'No bundles were removed',
+	});
 });
 
 QueueActions.removeBundleSource.listen(function ({ source, bundle }) {
@@ -192,16 +199,9 @@ QueueActions.removeBundleSource.listen(function ({ source, bundle }) {
 		.catch(that.failed.bind(that, source, bundle));
 });
 
-QueueActions.removeFinished.completed.listen(function (data) {
-	NotificationActions.success({ 
-		title: 'Action completed',
-		message: data.count > 0 ? data.count + ' bundles were removed' : 'No bundles were removed',
-	});
-});
-
 QueueActions.removeBundle.shouldEmit = function (bundle) {
-	if (bundle.status.finished) {
-		// No need to confirm finished bundles
+	if (bundle.status.completed) {
+		// No need to confirm completed bundles
 		this.confirmed(bundle, false);
 	} else {
 		const options = {

@@ -197,38 +197,32 @@ const Notifications = React.createClass({
 		let level;
 		switch (bundle.status.id) {
 			case StatusEnum.QUEUED: {
-				text = 'The bundle has been added in queue';
+				text = 'Bundle was added in queue';
 				level = 'info';
 				break;
 			}
-			case StatusEnum.DOWNLOAD_FAILED: {
-				text = 'Download failed: ' + bundle.status.str;
+			case StatusEnum.DOWNLOAD_ERROR: {
+				text = 'Download error: ' + bundle.status.str;
 				level = 'error';
 				break;
 			};
-			case StatusEnum.FAILED_MISSING:
-			case StatusEnum.SHARING_FAILED: {
-				text = 'Scanning failed for the bundle: ' + bundle.status.str;
-				level = 'error';
-				break;
-			};
-			case StatusEnum.FINISHED: {
-				text = 'The bundle has finished downloading';
+			case StatusEnum.COMPLETION_VALIDATION_RUNNING: {
+				text = 'Validating downloaded bundle';
 				level = 'info';
 				break;
 			};
-			case StatusEnum.HASH_FAILED: {
-				text = 'Failed to hash the bundle: ' + bundle.status.str;
+			case StatusEnum.COMPLETION_VALIDATION_ERROR: {
+				text = `Bundle content validation failed: ${bundle.status.hook_error.str} (${bundle.status.hook_error.hook_name})`;
 				level = 'error';
 				break;
 			};
-			case StatusEnum.HASHED: {
-				text = 'The bundle has finished hashing';
+			case StatusEnum.COMPLETED: {
+				text = 'Bundle was completed successfully';
 				level = 'info';
 				break;
 			};
 			case StatusEnum.SHARED: {
-				text = 'The bundle has been added in share';
+				text = 'Bundle was added in share';
 				level = 'info';
 				break;
 			};

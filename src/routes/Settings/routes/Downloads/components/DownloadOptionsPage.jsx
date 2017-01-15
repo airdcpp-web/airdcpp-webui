@@ -9,8 +9,6 @@ const Entry = {
 	min_segment_size: t.Positive,
 	new_segment_min_speed: t.Positive,
 	allow_slow_overlap: t.Bool,
-	share_finished_bundles: t.Bool,
-	finished_no_hash: t.Bool,
 	finished_remove_exit: t.Bool,
 };
 

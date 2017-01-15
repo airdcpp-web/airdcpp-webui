@@ -6,7 +6,7 @@ import Progress from 'components/semantic/Progress';
 
 
 const getStatusClass = (cellData, rowData) => {
-	if (cellData.finished) {
+	if (cellData.completed) {
 		return 'success';
 	}
 

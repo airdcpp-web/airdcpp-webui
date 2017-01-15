@@ -29,11 +29,11 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 const Queue = React.createClass({
 	mixins: [ LocationContext ],
 	isActive(cellData, rowData) {
-		return !rowData.status.finished;
+		return !rowData.status.downloaded;
 	},
 
-	isFinished(cellData, rowData) {
-		return rowData.status.finished;
+	isDownloaded(cellData, rowData) {
+		return rowData.status.downloaded;
 	},
 
 	isRunning(cellData, rowData) {
@@ -62,7 +62,7 @@ const Queue = React.createClass({
 						actions={ QueueActions }
 						header="Queue actions"
 						triggerIcon="chevron up"
-						ids={ [ 'removeFinished', 'divider', 'resume', 'pause' ]}
+						ids={ [ 'removeCompleted', 'divider', 'resume', 'pause' ]}
 						button={true}
 					/>
 				}
@@ -151,7 +151,7 @@ const Queue = React.createClass({
 					width={100}
 					columnKey="time_finished"
 					cell={ <DurationCell/> }
-					renderCondition={ this.isFinished }
+					renderCondition={ this.isDownloaded }
 					hideWidth={1200}
 				/>
 			</VirtualTable>
