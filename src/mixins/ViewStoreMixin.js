@@ -118,7 +118,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 		},
 
 		addMessageListener() {
-			this._removeMessageListener = SocketService.addLocalListener(this._viewName + '_updated', this._handleUpdate, entityId);
+			this._removeMessageListener = SocketService.addViewUpdateListener(this._viewName, this._handleUpdate, entityId);
 		},
 
 		get items() {

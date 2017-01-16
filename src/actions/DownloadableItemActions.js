@@ -15,7 +15,7 @@ import ViewFileStore from 'stores/ViewFileStore';
 
 const isAdc = ({ user }) => user.flags.indexOf('nmdc') === -1;
 const isSearchable = ({ itemInfo }) => itemInfo.name || itemInfo.tth;
-const notMe = ({ user }) => user.flags.indexOf('me') === -1;
+const notSelf = ({ user }) => user.flags.indexOf('self') === -1;
 const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
 const isPicture = ({ itemInfo }) => itemInfo.type.content_type === 'picture';
 const isVideo = ({ itemInfo }) => itemInfo.type.content_type === 'video';
@@ -36,14 +36,14 @@ export const DownloadableItemActions = Reflux.createActions([
 		displayName: 'Download', 
 		access: AccessConstants.DOWNLOAD, 
 		icon: IconConstants.DOWNLOAD,
-		filter: notMe,
+		filter: notSelf,
 	} },
 	{ 'downloadTo': { 
 		asyncResult: true,	
 		displayName: 'Download to...',
 		access: AccessConstants.DOWNLOAD, 
 		icon: IconConstants.DOWNLOAD_TO,
-		filter: notMe,
+		filter: notSelf,
 	} }, 
 	'divider',
 	{ 'viewText': {

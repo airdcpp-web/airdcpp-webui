@@ -16,7 +16,7 @@ import SocketService from 'services/SocketService';
 
 
 const checkFlags = ({ user }) => {
-	return user.flags.indexOf('me') === -1 && user.flags.indexOf('hidden') === -1;
+	return user.flags.indexOf('self') === -1 && user.flags.indexOf('hidden') === -1;
 };
 
 const checkIgnore = ({ user }) => {

@@ -7,7 +7,7 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 	let hasSocket = false;
 
 	const addSocketListener = (apiModuleUrl, event, callback, entityId) => {
-		let subscription = SocketService.addSocketListener(apiModuleUrl, event, callback, entityId);
+		let subscription = SocketService.addListener(apiModuleUrl, event, callback, entityId);
 		socketSubscriptions.push(subscription);
 		return subscription;
 	};

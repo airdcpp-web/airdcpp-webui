@@ -17,7 +17,7 @@ const FilelistSession = React.createClass({
 	render() {
 		const { user, location, state } = this.props.session;
 
-		if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('me') === -1) {
+		if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('self') === -1) {
 			return (
 				<Message 
 					title="User offline"

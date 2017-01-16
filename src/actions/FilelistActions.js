@@ -16,7 +16,7 @@ import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 
-const isMe = ({ session }) => session.user.flags.indexOf('me') !== -1;
+const isMe = ({ session }) => session.user.flags.indexOf('self') !== -1;
 const isPartialList = ({ session }) => session.partial_list;
 
 const FilelistActions = Reflux.createActions([
@@ -123,7 +123,7 @@ FilelistActions.ownList.listen(function (location, profile, sessionStore) {
 	}
 
 	let that = this;
-	SocketService.post(FilelistConstants.SESSIONS_URL + '/me', {
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/self', {
 		share_profile: profile,
 	})
 		.then((data) => that.completed(location, profile, data))

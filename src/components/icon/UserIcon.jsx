@@ -21,7 +21,7 @@ const getCornerIcon = (flags) => {
 		return 'yellow privacy';
 	}
 
-	if (flags.indexOf('me') > -1) {
+	if (flags.indexOf('self') > -1) {
 		return 'blue star';
 	}
 

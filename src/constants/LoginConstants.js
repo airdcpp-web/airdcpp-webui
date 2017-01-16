@@ -1,4 +1,4 @@
-const MODULE_URL = 'session';
+const MODULE_URL = 'sessions';
 export default {
 	ACTIVITY_URL:	MODULE_URL + '/activity',
 
