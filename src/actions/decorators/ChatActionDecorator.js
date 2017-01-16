@@ -32,10 +32,22 @@ export default function (actions, sessionUrl, editAccess) {
 
 	ChatActions.setRead.listen(function (id) {
 		let that = this;
-		SocketService.post(sessionUrl + '/' + id + '/read')
+		SocketService.post(sessionUrl + '/' + id + '/messages/read')
 			.then(that.completed)
 			.catch(that.failed);
 	});
+
+	ChatActions.clear.listen(function (session) {
+		let that = this;
+		SocketService.delete(sessionUrl + '/' + session.id + '/messages')
+			.then(that.completed.bind(that, session))
+			.catch(that.failed.bind(that, session));
+	});
+
+	ChatActions.clear.failed.listen(function (session, error) {
+		NotificationActions.apiError('Failed to clear chat messages', error, session.id);
+	});
+
 
 	ChatActions.sendMessage.listen(function (session, text, thirdPerson = false) {
 		let that = this;
@@ -49,17 +61,6 @@ export default function (actions, sessionUrl, editAccess) {
 
 	ChatActions.sendMessage.failed.listen(function (session, error) {
 		NotificationActions.apiError('Failed to send chat message', error, session.id);
-	});
-
-	ChatActions.clear.listen(function (session) {
-		let that = this;
-		SocketService.post(sessionUrl + '/' + session.id + '/clear')
-			.then(that.completed.bind(that, session))
-			.catch(that.failed.bind(that, session));
-	});
-
-	ChatActions.clear.failed.listen(function (session, error) {
-		NotificationActions.apiError('Failed to clear chat messages', error, session.id);
 	});
 
 	return Object.assign(actions, ChatActions);
