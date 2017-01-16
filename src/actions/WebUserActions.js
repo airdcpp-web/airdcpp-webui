@@ -58,7 +58,7 @@ WebUserActions.remove.listen(function (user) {
 
 WebUserActions.remove.confirmed.listen(function (user) {
 	const that = this;
-	return SocketService.delete(WebUserConstants.USER_URL + '/' + user.id)
+	return SocketService.delete(WebUserConstants.USERS_URL + '/' + user.id)
 		.then(WebUserActions.remove.completed.bind(that, user))
 		.catch(WebUserActions.remove.failed.bind(that, user));
 });

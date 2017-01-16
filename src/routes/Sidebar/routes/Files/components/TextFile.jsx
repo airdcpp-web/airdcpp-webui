@@ -39,7 +39,7 @@ const TextFile = React.createClass({
 	},
 
 	fetchText(item) {
-		SocketService.get(ViewFileConstants.SESSION_URL + '/' + item.id + '/text')
+		SocketService.get(ViewFileConstants.SESSIONS_URL + '/' + item.id + '/text')
 			.then(this.onTextReceive)
 			.catch(this.onTextFailed);
 	},

@@ -11,8 +11,8 @@ export default {
 	REFRESH_VIRTUAL_URL: MODULE_URL + '/refresh/virtual',
 
 	EXCLUDES_URL: MODULE_URL + '/excludes',
-	EXCLUDE_ADD_URL: MODULE_URL + '/exclude/add',
-	EXCLUDE_REMOVE_URL: MODULE_URL + '/exclude/remove',
+	EXCLUDES_ADD_URL: MODULE_URL + '/excludes/add',
+	EXCLUDES_REMOVE_URL: MODULE_URL + '/excludes/remove',
 
 	EXCLUDE_ADDED: 'share_exclude_added',
 	EXCLUDE_REMOVED: 'share_exclude_removed',

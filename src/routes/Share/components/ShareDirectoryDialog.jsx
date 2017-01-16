@@ -84,10 +84,10 @@ const ShareDirectoryDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(ShareRootConstants.ROOT_URL, changedFields);
+			return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
 		}
 
-		return SocketService.patch(ShareRootConstants.ROOT_URL + '/' + this.props.rootEntry.id, changedFields);
+		return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry.id, changedFields);
 	},
 
 	getFieldProfiles() {

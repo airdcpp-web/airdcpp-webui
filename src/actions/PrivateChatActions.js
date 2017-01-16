@@ -31,14 +31,14 @@ const PrivateChatActions = Reflux.createActions([
 
 PrivateChatActions.connectCCPM.listen(function (session) {
 	let that = this;
-	SocketService.post(PrivateChatConstants.SESSION_URL + '/' + session.id + '/ccpm')
+	SocketService.post(PrivateChatConstants.SESSIONS_URL + '/' + session.id + '/ccpm')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 PrivateChatActions.disconnectCCPM.listen(function (session) {
 	let that = this;
-	SocketService.delete(PrivateChatConstants.SESSION_URL + '/' + session.id + '/ccpm')
+	SocketService.delete(PrivateChatConstants.SESSIONS_URL + '/' + session.id + '/ccpm')
 		.then(that.completed)
 		.catch(that.failed);
 });
@@ -51,7 +51,7 @@ PrivateChatActions.createSession.listen(function (location, user, sessionStore) 
 	}
 
 	let that = this;
-	SocketService.post(PrivateChatConstants.SESSION_URL, {
+	SocketService.post(PrivateChatConstants.SESSIONS_URL, {
 		user: {
 			cid: user.cid,
 			hub_url: user.hub_url,
@@ -70,5 +70,5 @@ PrivateChatActions.createSession.failed.listen(function (error) {
 });
 
 export default SessionActionDecorator(
-	ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSION_URL, AccessConstants.PRIVATE_CHAT_EDIT), PrivateChatConstants.MODULE_URL, AccessConstants.PRIVATE_CHAT_EDIT
+	ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSIONS_URL, AccessConstants.PRIVATE_CHAT_EDIT), PrivateChatConstants.SESSIONS_URL, AccessConstants.PRIVATE_CHAT_EDIT
 );

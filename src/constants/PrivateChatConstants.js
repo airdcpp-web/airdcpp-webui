@@ -9,7 +9,6 @@ export const CCPMEnum = {
 export default {
 	MODULE_URL: MODULE_URL,
 	SESSIONS_URL: MODULE_URL + '/sessions',
-	SESSION_URL: MODULE_URL + '/session',
 
 	SESSION_CREATED: 'private_chat_created',
 	SESSION_REMOVED: 'private_chat_removed',

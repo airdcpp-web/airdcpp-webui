@@ -18,7 +18,7 @@ export const SearchActions = Reflux.createActions([
 ]);
 
 SearchActions.download.listen((itemData, downloadData) => {
-	return SocketService.post(SearchConstants.RESULT_URL + '/' + itemData.itemInfo.id + '/download', downloadData)
+	return SocketService.post(SearchConstants.RESULTS_URL + '/' + itemData.itemInfo.id + '/download', downloadData)
 		.then(SearchActions.download.completed)
 		.catch(error => SearchActions.download.failed(itemData, error));
 });

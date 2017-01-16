@@ -133,7 +133,7 @@ const setBundlePriorities = (prio, action) => {
 };
 
 const shareBundle = (bundle, skipValidation, action) => {
-	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/share', { 
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/share', { 
 		skip_validation: skipValidation, 
 	})
 		.then(() => 
@@ -146,7 +146,7 @@ const shareBundle = (bundle, skipValidation, action) => {
 
 QueueActions.setBundlePriority.listen(function (bundle, newPrio) {
 	let that = this;
-	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundle.id, {
+	return SocketService.patch(QueueConstants.BUNDLES_URL + '/' + bundle.id, {
 		priority: newPrio
 	})
 		.then(that.completed)
@@ -155,7 +155,7 @@ QueueActions.setBundlePriority.listen(function (bundle, newPrio) {
 
 QueueActions.setBundleAutoPriority.listen(function (bundle, autoPrio) {
 	let that = this;
-	return SocketService.patch(QueueConstants.BUNDLE_URL + '/' + bundle.id, {
+	return SocketService.patch(QueueConstants.BUNDLES_URL + '/' + bundle.id, {
 		auto_priority: autoPrio
 	})
 		.then(that.completed)
@@ -194,7 +194,7 @@ QueueActions.removeCompleted.completed.listen(function (data) {
 
 QueueActions.removeBundleSource.listen(function ({ source, bundle }) {
 	let that = this;
-	return SocketService.delete(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/source/' + source.user.cid)
+	return SocketService.delete(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/sources/' + source.user.cid)
 		.then(that.completed.bind(that, source, bundle))
 		.catch(that.failed.bind(that, source, bundle));
 });
@@ -220,7 +220,7 @@ QueueActions.removeBundle.shouldEmit = function (bundle) {
 
 QueueActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
 	let that = this;
-	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/remove', { 
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/remove', { 
 		remove_finished: removeFinished,
 	})
 		.then(QueueActions.removeBundle.completed.bind(that, bundle))
@@ -235,7 +235,7 @@ QueueActions.search.listen(function (itemInfo, location) {
 
 QueueActions.searchBundleAlternates.listen(function (bundle) {
 	let that = this;
-	return SocketService.post(QueueConstants.BUNDLE_URL + '/' + bundle.id + '/search')
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/search')
 		.then(that.completed.bind(that, bundle))
 		.catch(that.failed.bind(that, bundle));
 });
@@ -293,7 +293,7 @@ QueueActions.removeFile.failed.listen(function (target, error) {
 QueueActions.removeSource.listen(function (item) {
 	let that = this;
 	const { user } = item;
-	return SocketService.post(QueueConstants.SOURCE_URL + '/' + user.cid)
+	return SocketService.post(QueueConstants.SOURCES_URL + '/' + user.cid)
 		.then(that.completed.bind(that, user))
 		.catch(that.failed.bind(that, user));
 });
@@ -315,7 +315,7 @@ QueueActions.content.listen(function (data, location) {
 
 QueueActions.searchFileAlternates.listen(function (file) {
 	let that = this;
-	return SocketService.post(QueueConstants.FILE_URL + '/' + file.id + '/search')
+	return SocketService.post(QueueConstants.FILES_URL + '/' + file.id + '/search')
 		.then(that.completed.bind(that, file))
 		.catch(this.failed.bind(that, file));
 });
@@ -336,7 +336,7 @@ QueueActions.searchFileAlternates.failed.listen(function (file, error) {
 
 QueueActions.setFilePriority.listen(function (file, newPrio) {
 	let that = this;
-	return SocketService.patch(QueueConstants.FILE_URL + '/' + file.id, {
+	return SocketService.patch(QueueConstants.FILES_URL + '/' + file.id, {
 		priority: newPrio
 	})
 		.then(that.completed.bind(that, file))
@@ -345,7 +345,7 @@ QueueActions.setFilePriority.listen(function (file, newPrio) {
 
 QueueActions.setFileAutoPriority.listen(function (file, autoPrio) {
 	let that = this;
-	return SocketService.patch(QueueConstants.FILE_URL + '/' + file.id, {
+	return SocketService.patch(QueueConstants.FILES_URL + '/' + file.id, {
 		auto_priority: autoPrio
 	})
 		.then(that.completed.bind(that, file))

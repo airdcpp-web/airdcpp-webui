@@ -36,21 +36,21 @@ const HubActions = Reflux.createActions([
 
 HubActions.password.listen(function (hub, password) {
 	let that = this;
-	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/password', { password: password })
+	SocketService.post(HubConstants.SESSIONS_URL + '/' + hub.id + '/password', { password: password })
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.redirect.listen(function (hub) {
 	let that = this;
-	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/redirect')
+	SocketService.post(HubConstants.SESSIONS_URL + '/' + hub.id + '/redirect')
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
 
 HubActions.favorite.listen(function (hub) {
 	let that = this;
-	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/favorite')
+	SocketService.post(HubConstants.SESSIONS_URL + '/' + hub.id + '/favorite')
 		.then(that.completed.bind(that, hub))
 		.catch(that.failed.bind(that, hub));
 });
@@ -71,7 +71,7 @@ HubActions.favorite.failed.listen(function (hub, error) {
 
 HubActions.reconnect.listen(function (hub) {
 	let that = this;
-	SocketService.post(HubConstants.SESSION_URL + '/' + hub.id + '/reconnect')
+	SocketService.post(HubConstants.SESSIONS_URL + '/' + hub.id + '/reconnect')
 		.then(that.completed)
 		.catch(this.failed);
 });
@@ -84,7 +84,7 @@ HubActions.createSession.listen(function (location, hubUrl, sessionStore) {
 	}
 
 	let that = this;
-	SocketService.post(HubConstants.SESSION_URL, {
+	SocketService.post(HubConstants.SESSIONS_URL, {
 		hub_url: hubUrl,
 	})
 		.then(that.completed.bind(that, location))
@@ -100,5 +100,5 @@ HubActions.createSession.failed.listen(function (error) {
 });
 
 export default SessionActionDecorator(
-	ChatActionDecorator(HubActions, HubConstants.SESSION_URL, AccessConstants.HUBS_EDIT), HubConstants.MODULE_URL, AccessConstants.HUBS_EDIT
+	ChatActionDecorator(HubActions, HubConstants.SESSIONS_URL, AccessConstants.HUBS_EDIT), HubConstants.SESSIONS_URL, AccessConstants.HUBS_EDIT
 );

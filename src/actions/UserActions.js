@@ -71,14 +71,14 @@ UserActions.browse.listen(function (userData, location) {
 
 UserActions.ignore.listen(function (userData, location) {
 	let that = this;
-	return SocketService.post(UserConstants.IGNORE_URL + '/' + userData.user.cid)
+	return SocketService.post(UserConstants.IGNORES_URL + '/' + userData.user.cid)
 		.then(that.completed.bind(that, userData))
 		.catch(that.failed);
 });
 
 UserActions.unignore.listen(function (userData, location) {
 	let that = this;
-	return SocketService.delete(UserConstants.IGNORE_URL + '/' + userData.user.cid)
+	return SocketService.delete(UserConstants.IGNORES_URL + '/' + userData.user.cid)
 		.then(that.completed.bind(that, userData))
 		.catch(that.failed);
 });

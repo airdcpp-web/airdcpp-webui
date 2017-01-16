@@ -81,7 +81,7 @@ const UserResultTable = ({ results, error }) => {
 
 export default DataProviderDecorator(UserResultTable, {
 	urls: {
-		results: ({ parentResult }, socket) => socket.get(SearchConstants.RESULT_URL + '/' + parentResult.id + '/children'),
+		results: ({ parentResult }, socket) => socket.get(SearchConstants.RESULTS_URL + '/' + parentResult.id + '/children'),
 	},
 	renderOnError: true,
 });

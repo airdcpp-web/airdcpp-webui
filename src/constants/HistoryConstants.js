@@ -13,5 +13,4 @@ export default {
 	HUBS_SEARCH_URL: MODULE_URL + '/hubs/search',
 
 	STRINGS_URL: MODULE_URL + '/strings',
-	STRING_URL: MODULE_URL + '/string',
 };

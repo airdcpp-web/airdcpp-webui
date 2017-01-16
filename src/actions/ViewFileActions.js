@@ -33,7 +33,7 @@ ViewFileActions.createSession.listen(function ({ itemInfo, user }, isText, locat
 	};
 
 	let that = this;
-	SocketService.post(ViewFileConstants.SESSION_URL, file)
+	SocketService.post(ViewFileConstants.SESSIONS_URL, file)
 		.then((data) => that.completed(location, file, data))
 		.catch(that.failed);
 });
@@ -50,9 +50,9 @@ ViewFileActions.createSession.failed.listen(function (error) {
 
 ViewFileActions.setRead.listen(function (id) {
 	let that = this;
-	SocketService.post(ViewFileConstants.SESSION_URL + '/' + id + '/read')
+	SocketService.post(ViewFileConstants.SESSIONS_URL + '/' + id + '/read')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
-export default SessionActionDecorator(ViewFileActions, ViewFileConstants.MODULE_URL, AccessConstants.VIEW_FILE_EDIT);
+export default SessionActionDecorator(ViewFileActions, ViewFileConstants.SESSIONS_URL, AccessConstants.VIEW_FILE_EDIT);

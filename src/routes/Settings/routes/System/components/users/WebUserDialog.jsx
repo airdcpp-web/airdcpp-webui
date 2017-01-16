@@ -90,10 +90,10 @@ const WebUserDialog = React.createClass({
 
 	onSave(changedFields) {
 		if (this._isNew) {
-			return SocketService.post(WebUserConstants.USER_URL, changedFields);
+			return SocketService.post(WebUserConstants.USERS_URL, changedFields);
 		}
 
-		return SocketService.patch(WebUserConstants.USER_URL + '/' + this.props.user.id, changedFields);
+		return SocketService.patch(WebUserConstants.USERS_URL + '/' + this.props.user.id, changedFields);
 	},
 
 	onFieldSetting(id, fieldOptions, formValue) {

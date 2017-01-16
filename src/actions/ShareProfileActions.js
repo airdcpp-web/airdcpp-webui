@@ -67,7 +67,7 @@ ShareProfileActions.create.listen(function () {
 });
 
 ShareProfileActions.create.saved.listen(function (name) {
-	return SocketService.post(ShareProfileConstants.PROFILE_URL, { name: name })
+	return SocketService.post(ShareProfileConstants.PROFILES_URL, { name: name })
 		.then(ShareProfileActions.create.completed)
 		.catch(ShareProfileActions.create.failed);
 });
@@ -90,14 +90,14 @@ ShareProfileActions.edit.listen(function (profile) {
 
 ShareProfileActions.default.listen(function (profile) {
 	const that = this;
-	return SocketService.post(ShareProfileConstants.PROFILE_URL + '/' + profile.id + '/default')
+	return SocketService.post(ShareProfileConstants.PROFILES_URL + '/' + profile.id + '/default')
 		.then(ShareProfileActions.default.completed.bind(that, profile))
 		.catch(ShareProfileActions.default.failed.bind(that, profile));
 });
 
 ShareProfileActions.edit.saved.listen(function (profile, name) {
 	const that = this;
-	return SocketService.patch(ShareProfileConstants.PROFILE_URL + '/' + profile.id, { name: name })
+	return SocketService.patch(ShareProfileConstants.PROFILES_URL + '/' + profile.id, { name: name })
 		.then(ShareProfileActions.edit.completed.bind(that, profile))
 		.catch(ShareProfileActions.edit.failed.bind(that, profile));
 });
@@ -124,7 +124,7 @@ ShareProfileActions.remove.listen(function (profile) {
 
 ShareProfileActions.remove.confirmed.listen(function (profile) {
 	const that = this;
-	return SocketService.delete(ShareProfileConstants.PROFILE_URL + '/' + profile.id)
+	return SocketService.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id)
 		.then(ShareProfileActions.remove.completed.bind(that, profile))
 		.catch(ShareProfileActions.remove.failed.bind(that, profile));
 });

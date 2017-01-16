@@ -8,5 +8,5 @@ export const ConnectStateEnum = {
 
 export default {
 	MODULE_URL: MODULE_URL,
-	HUB_URL: MODULE_URL + '/hub',
+	HUBS_URL: MODULE_URL,
 };

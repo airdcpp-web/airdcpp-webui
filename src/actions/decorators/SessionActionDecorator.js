@@ -6,7 +6,7 @@ import NotificationActions from 'actions/NotificationActions';
 import IconConstants from 'constants/IconConstants';
 
 
-export default function (actions, moduleUrl, editAccess) {
+export default function (actions, sessionsUrl, editAccess) {
 	const SessionActions = Reflux.createActions([
 		{ 'fetchSessions': { asyncResult: true } },
 		{ 'removeSession': { 
@@ -21,7 +21,7 @@ export default function (actions, moduleUrl, editAccess) {
 
 	SessionActions.fetchSessions.listen(function () {
 		let that = this;
-		SocketService.get(moduleUrl + '/sessions')
+		SocketService.get(sessionsUrl)
 			.then(that.completed)
 			.catch(that.failed);
 	});
@@ -32,7 +32,7 @@ export default function (actions, moduleUrl, editAccess) {
 
 	SessionActions.removeSession.listen(function (session) {
 		let that = this;
-		SocketService.delete(moduleUrl + '/session/' + session.id)
+		SocketService.delete(sessionsUrl + '/' + session.id)
 			.then(that.completed.bind(this, session))
 			.catch(that.failed.bind(this, session));
 	});

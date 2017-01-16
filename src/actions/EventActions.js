@@ -27,13 +27,13 @@ EventActions.fetchInfo.listen(function () {
 
 EventActions.fetchMessages.listen(function () {
 	let that = this;
-	return SocketService.get(EventConstants.GET_URL + '/0')
+	return SocketService.get(EventConstants.MESSAGES_URL + '/0')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
 EventActions.clear.listen(function () {
-	return SocketService.post(EventConstants.CLEAR_URL);
+	return SocketService.delete(EventConstants.MESSAGES_URL);
 });
 
 EventActions.setRead.listen(function () {

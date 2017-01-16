@@ -13,8 +13,7 @@ export default {
 	MODULE_URL: MODULE_URL,
 	STATS_URL: MODULE_URL + '/stats',
 
-	//HUB_SESSIONS_URL: MODULE_URL + '/sessions',
-	SESSION_URL: MODULE_URL + '/session',
+	SESSIONS_URL: MODULE_URL + '/sessions',
 
 	SESSION_CREATED: 'hub_created',
 	SESSION_REMOVED: 'hub_removed',

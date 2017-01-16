@@ -24,7 +24,7 @@ const HubFooter = React.createClass({
 	},
 
 	onSocketConnected(addSocketListener) {
-		const url = HubConstants.SESSION_URL;
+		const url = HubConstants.SESSIONS_URL;
 		addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, this.props.session.id);
 	},
 
@@ -43,7 +43,7 @@ const HubFooter = React.createClass({
 	},
 
 	fetchCounts() {
-		SocketService.get(HubConstants.SESSION_URL + '/' + this.props.session.id + '/counts')
+		SocketService.get(HubConstants.SESSIONS_URL + '/' + this.props.session.id + '/counts')
 			.then(this.onCountsReceived)
 			.catch(error => console.error('Failed to fetch hub counts', error.message));
 	},

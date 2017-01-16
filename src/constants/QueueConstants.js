@@ -16,11 +16,10 @@ export default {
 
 	DUPE_PATHS_URL: MODULE_URL + '/find_dupe_paths',
 	REMOVE_FILE_URL: MODULE_URL + '/remove_file',
-	SOURCE_URL: MODULE_URL + '/source',
+	SOURCES_URL: MODULE_URL + '/sources',
 
 	BUNDLES_URL: MODULE_URL + '/bundles',
-	BUNDLE_URL: MODULE_URL + '/bundle',
-	FILE_URL: MODULE_URL + '/file',
+	FILES_URL: MODULE_URL + '/files',
 
 	BUNDLE_ADDED: 'queue_bundle_added',
 	BUNDLE_REMOVED: 'queue_bundle_removed',

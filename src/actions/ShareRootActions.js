@@ -52,7 +52,7 @@ ShareRootActions.remove.listen(function (root) {
 
 ShareRootActions.remove.confirmed.listen(function (root) {
 	const that = this;
-	return SocketService.delete(ShareRootConstants.ROOT_URL + '/' + root.id)
+	return SocketService.delete(ShareRootConstants.ROOTS_URL + '/' + root.id)
 		.then(ShareRootActions.remove.completed.bind(that, root))
 		.catch(ShareRootActions.remove.failed.bind(that, root));
 });

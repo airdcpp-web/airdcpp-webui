@@ -9,8 +9,8 @@ export const SeverityEnum = {
 
 export default {
 	MODULE_URL: MODULE_URL,
-	GET_URL: MODULE_URL + '/messages',
-	CLEAR_URL: MODULE_URL + '/clear',
+	MESSAGES_URL: MODULE_URL,
+	
 	READ_URL: MODULE_URL + '/read',
 	INFO_URL: MODULE_URL + '/counts',
 

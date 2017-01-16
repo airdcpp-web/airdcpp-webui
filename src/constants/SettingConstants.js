@@ -28,9 +28,9 @@ export const LocalSettings = {
 export default {
 	MODULE_URL: MODULE_URL,
 
-	ITEMS_GET_URL: MODULE_URL + '/items/get',
-	ITEMS_SET_URL: MODULE_URL + '/items/set',
-	ITEMS_RESET_URL: MODULE_URL + '/items/reset',
-	ITEMS_INFO_URL: MODULE_URL + '/items/info',
+	ITEMS_GET_URL: MODULE_URL + '/get',
+	ITEMS_SET_URL: MODULE_URL + '/set',
+	ITEMS_RESET_URL: MODULE_URL + '/reset',
+	ITEMS_INFO_URL: MODULE_URL + '/infos',
 }
 ;

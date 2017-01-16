@@ -87,7 +87,7 @@ ShareActions.addExclude.listen(function (location) {
 });
 
 ShareActions.addExclude.saved.listen(function (path) {
-	return SocketService.post(ShareConstants.EXCLUDE_ADD_URL, { path })
+	return SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path })
 		.then(ShareActions.addExclude.completed)
 		.catch(ShareActions.addExclude.failed);
 });
@@ -110,7 +110,7 @@ ShareActions.removeExclude.listen(function (path) {
 
 ShareActions.removeExclude.confirmed.listen(function (path) {
 	const that = this;
-	return SocketService.post(ShareConstants.EXCLUDE_REMOVE_URL, { path })
+	return SocketService.post(ShareConstants.EXCLUDES_REMOVE_URL, { path })
 		.then(ShareActions.removeExclude.completed.bind(that, path))
 		.catch(ShareActions.removeExclude.failed.bind(that, path));
 });

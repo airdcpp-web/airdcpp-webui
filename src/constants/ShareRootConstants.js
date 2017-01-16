@@ -8,8 +8,7 @@ export const StateEnum = {
 
 export default {
 	MODULE_URL: MODULE_URL,
-	ROOTS_URL: MODULE_URL + '/roots',
-	ROOT_URL: MODULE_URL + '/root',
+	ROOTS_URL: MODULE_URL,
 
 	CREATED: 'share_root_created',
 	UPDATED: 'share_root_updated',

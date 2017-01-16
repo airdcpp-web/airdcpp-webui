@@ -9,7 +9,7 @@ export const HistoryActions = Reflux.createActions([
 
 HistoryActions.add.listen(function (historyId, string) {
 	let that = this;
-	return SocketService.post(HistoryConstants.STRING_URL + '/' + historyId, { 
+	return SocketService.post(HistoryConstants.STRINGS_URL + '/' + historyId, { 
 		string,
 	})
 		.then(that.completed)

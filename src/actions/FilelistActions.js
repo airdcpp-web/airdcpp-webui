@@ -61,7 +61,7 @@ FilelistActions.download.listen((itemData, downloadData) => {
 			time,
 		});
 
-		SocketService.post(QueueConstants.BUNDLE_URL + '/file', data)
+		SocketService.post(QueueConstants.BUNDLES_URL + '/file', data)
 			.then(FilelistActions.download.completed)
 			.catch(error => FilelistActions.download.failed(itemData, error));
 
@@ -70,7 +70,7 @@ FilelistActions.download.listen((itemData, downloadData) => {
 
 	// Directory
 	data['list_path'] = itemData.itemInfo.path;
-	SocketService.post(FilelistConstants.MODULE_URL + '/directory_download', data)
+	SocketService.post(FilelistConstants.DIRECTORY_DOWNLOADS_URL, data)
 		.then(FilelistActions.download.completed)
 		.catch(error => FilelistActions.download.failed(itemData, error));
 });
@@ -81,14 +81,14 @@ FilelistActions.download.failed.listen((itemData, error) => {
 
 FilelistActions.changeDirectory.listen(function (cid, path) {
 	let that = this;
-	SocketService.post(FilelistConstants.SESSION_URL + '/' + cid + '/directory', { list_path: path })
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + cid + '/directory', { list_path: path })
 		.then(data => that.completed(cid, data))
 		.catch(error => that.failed(cid, error));
 });
 
 FilelistActions.reloadDirectory.listen(function ({ directory, session }) {
 	let that = this;
-	SocketService.post(FilelistConstants.SESSION_URL + '/' + session.id + '/directory', { 
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + session.id + '/directory', { 
 		list_path: directory.path,
 		reload: true,
 	})
@@ -104,7 +104,7 @@ FilelistActions.createSession.listen(function (location, user, sessionStore, dir
 	}
 
 	let that = this;
-	SocketService.post(FilelistConstants.SESSION_URL, {
+	SocketService.post(FilelistConstants.SESSIONS_URL, {
 		user: {
 			cid: user.cid,
 			hub_url: user.hub_url,
@@ -123,7 +123,7 @@ FilelistActions.ownList.listen(function (location, profile, sessionStore) {
 	}
 
 	let that = this;
-	SocketService.post(FilelistConstants.SESSION_URL + '/me', {
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/me', {
 		share_profile: profile,
 	})
 		.then((data) => that.completed(location, profile, data))
@@ -168,9 +168,9 @@ FilelistActions.refreshShare.listen(function ({ session, directory }) {
 
 FilelistActions.setRead.listen(function (id) {
 	let that = this;
-	SocketService.post(FilelistConstants.SESSION_URL + '/' + id + '/read')
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + id + '/read')
 		.then(that.completed)
 		.catch(that.failed);
 });
 
-export default SessionActionDecorator(FilelistActions, FilelistConstants.MODULE_URL, AccessConstants.FILELISTS_EDIT);
+export default SessionActionDecorator(FilelistActions, FilelistConstants.SESSIONS_URL, AccessConstants.FILELISTS_EDIT);
