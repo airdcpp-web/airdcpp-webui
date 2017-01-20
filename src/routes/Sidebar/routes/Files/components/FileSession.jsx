@@ -31,7 +31,7 @@ const getViewerElement = (item) => {
 };
 
 const getUrl = (tth) => {
-	return getBasePath() + 'view/' + tth + '?auth=' + LoginStore.authToken; 
+	return getBasePath() + 'view/' + tth + '?auth_token=' + LoginStore.authToken; 
 };
 
 const FileSession = React.createClass({

@@ -147,7 +147,7 @@ const LoginStore = Reflux.createStore({
 	},
 
 	get authToken() {
-		return this.loginProperties.token;
+		return this.loginProperties.auth_token;
 	},
 
 	get systemInfo() {

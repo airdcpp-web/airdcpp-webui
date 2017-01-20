@@ -23,7 +23,7 @@ const isAudio = ({ itemInfo }) => itemInfo.type.content_type === 'audio';
 const sizeValid = ({ itemInfo }) => itemInfo.size < 200*1024*1024; // 200 MB, the web server isn't suitable for sending large files
 
 const viewText = data => !isDirectory(data) && !isPicture(data) && !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256*1024;
-const findNfo = data => isDirectory(data) && notMe(data) && isAdc(data);
+const findNfo = data => isDirectory(data) && notSelf(data) && isAdc(data);
 
 const viewVideo = data => isVideo(data) && sizeValid(data);
 const viewAudio = data => isAudio(data) && sizeValid(data);
