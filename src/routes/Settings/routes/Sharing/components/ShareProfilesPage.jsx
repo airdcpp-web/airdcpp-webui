@@ -5,6 +5,9 @@ import ShareProfileActions from 'actions/ShareProfileActions';
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
+import { Link } from 'react-router';
+import Message from 'components/semantic/Message';
+
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import { LocationContext } from 'mixins/RouterMixin';
 import ValueFormat from 'utils/ValueFormat';
@@ -46,6 +49,13 @@ const ShareProfilesPage = React.createClass({
 	render() {
 		return (
 			<div>
+				<Message 
+					description={ 
+						<span>
+							Share profiles are configured for individual directories from the <Link to="/share">Share</Link> page.
+						</span>
+					}
+				/>
 				<ActionButton
 					action={ ShareProfileActions.create }
 				/>

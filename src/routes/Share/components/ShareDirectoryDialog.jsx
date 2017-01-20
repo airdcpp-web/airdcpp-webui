@@ -22,6 +22,8 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import SelectField from 'components/form/SelectField';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
+import '../style.css';
+
 
 const ProfileList = t.refinement(t.list(t.Num), (n) => {
 	return n.length > 0;
@@ -101,6 +103,8 @@ const ShareDirectoryDialog = React.createClass({
 				factory: t.form.Select,
 				template: SelectField,
 				options: this.getFieldProfiles(),
+				help: 'New share profiles can be created from application settings',
+				label: 'Share profiles',
 			});
 		} else if (id === 'path') {
 			if (this._isNew) {
@@ -114,7 +118,7 @@ const ShareDirectoryDialog = React.createClass({
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
 			});
 		} else if (id === 'virtual_name') {
-			fieldOptions['help'] = 'Directories sharing the same virtual name will be merged in filelist';
+			fieldOptions['help'] = 'Directories with identical virtual names will be merged in filelist';
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;
 			fieldOptions['config'] = {
