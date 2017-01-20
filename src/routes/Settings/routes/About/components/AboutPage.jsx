@@ -24,6 +24,8 @@ const AboutPage = React.createClass({
 				<Row title="Application version" text={ systemInfo.client_version }/>
 				<Row title="Web UI version" text={ UI_VERSION }/>
 				<Row title="Web UI build date" text={ buildDate }/>
+				<Row title="API version" text={ systemInfo.api_version }/>
+				<Row title="API feature level" text={ systemInfo.api_feature_level }/>
 				<Row title="Started" text={ ValueFormat.formatRelativeTime(systemInfo.client_started) }/>
 				<Row title="Active sessions" text={ stats.active_sessions }/>
 				<Row title="Server threads" text={ stats.server_threads }/>
