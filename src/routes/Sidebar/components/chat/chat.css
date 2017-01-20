@@ -93,7 +93,7 @@
 	color: darkgoldenrod !important;
 }
 
-.chat.session .chat.item.me .author .caption {
+.chat.session .chat.item.self .author .caption {
 	color: black !important;
 }
 
