@@ -61,7 +61,7 @@ TransferActions.disconnect.listen(function (transfer) {
 
 TransferActions.removeFile.listen(function (transfer) {
 	return QueueActions.removeFile.confirmed({
-		id: transfer.queue_id,
+		id: transfer.queue_file_id,
 		target: transfer.target,
 	});
 });
