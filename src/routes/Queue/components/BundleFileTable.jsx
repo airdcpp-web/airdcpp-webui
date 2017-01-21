@@ -20,7 +20,6 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 		itemPrio={ cellData } 
 		item={ rowData }
 		prioAction={ QueueActions.setFilePriority }
-		autoPrioAction={ QueueActions.setFileAutoPriority }
 	/>
 );
 

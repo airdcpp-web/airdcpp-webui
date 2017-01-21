@@ -24,16 +24,14 @@ const PriorityMenu = React.createClass({
 		item: React.PropTypes.object.isRequired,
 
 		prioAction: React.PropTypes.func.isRequired,
-
-		autoPrioAction: React.PropTypes.func.isRequired,
 	},
 
 	setPriority: function (priorityId) {
 		this.props.prioAction(this.props.item, priorityId);
 	},
 
-	toggleAutoPriority: function () {
-		this.props.autoPrioAction(this.props.item, !this.props.itemPrio.auto);
+	setAutoPriority: function () {
+		this.setPriority(PriorityEnum.DEFAULT);
 	},
 
 	shouldComponentUpdate: function (nextProps, nextState) {
@@ -72,7 +70,7 @@ const PriorityMenu = React.createClass({
 			<MenuItemLink 
 				key="auto"
 				active={ this.props.itemPrio.auto } 
-				onClick={ this.toggleAutoPriority }
+				onClick={ this.setAutoPriority }
 			>
 				Auto
 			</MenuItemLink>

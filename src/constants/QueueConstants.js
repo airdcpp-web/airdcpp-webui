@@ -15,7 +15,6 @@ export default {
 	MODULE_URL: MODULE_URL,
 
 	DUPE_PATHS_URL: MODULE_URL + '/find_dupe_paths',
-	REMOVE_FILE_URL: MODULE_URL + '/remove_file',
 	SOURCES_URL: MODULE_URL + '/sources',
 
 	BUNDLES_URL: MODULE_URL + '/bundles',

@@ -22,7 +22,6 @@ const PriorityCell = ({ cellData, rowData, ...props }) => (
 		itemPrio={ cellData } 
 		item={ rowData }
 		prioAction={ QueueActions.setBundlePriority }
-		autoPrioAction={ QueueActions.setBundleAutoPriority }
 	/>
 );
 

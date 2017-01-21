@@ -38,9 +38,6 @@ export const QueueActions = Reflux.createActions([
 	{ 'setBundlePriority': { 
 		asyncResult: true,
 	} },
-	{ 'setBundleAutoPriority': { 
-		asyncResult: true,
-	} },
 	{ 'removeBundle': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
@@ -96,9 +93,6 @@ export const QueueActions = Reflux.createActions([
 	{ 'setFilePriority': { 
 		asyncResult: true,
 	} },
-	{ 'setFileAutoPriority': { 
-		asyncResult: true,
-	} },
 	{ 'removeFile': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
@@ -144,19 +138,10 @@ const shareBundle = (bundle, skipValidation, action) => {
 };
 
 
-QueueActions.setBundlePriority.listen(function (bundle, newPrio) {
+QueueActions.setBundlePriority.listen(function (bundle, priority) {
 	let that = this;
-	return SocketService.patch(QueueConstants.BUNDLES_URL + '/' + bundle.id, {
-		priority: newPrio
-	})
-		.then(that.completed)
-		.catch(that.failed);
-});
-
-QueueActions.setBundleAutoPriority.listen(function (bundle, autoPrio) {
-	let that = this;
-	return SocketService.patch(QueueConstants.BUNDLES_URL + '/' + bundle.id, {
-		auto_priority: autoPrio
+	return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/priority', {
+		priority
 	})
 		.then(that.completed)
 		.catch(that.failed);
@@ -270,9 +255,8 @@ QueueActions.removeFile.shouldEmit = function (file) {
 
 QueueActions.removeFile.confirmed.listen(function (item, removeFinished) {
 	const that = this;
-	const { target } = item;
-	return SocketService.post(QueueConstants.REMOVE_FILE_URL, {
-		target,
+	const { target, id } = item;
+	return SocketService.post(QueueConstants.FILES_URL + '/' + id + '/remove', {
 		remove_finished: removeFinished,
 	})
 		.then(QueueActions.removeFile.completed.bind(that, target))
@@ -334,19 +318,10 @@ QueueActions.searchFileAlternates.failed.listen(function (file, error) {
 	});
 });
 
-QueueActions.setFilePriority.listen(function (file, newPrio) {
+QueueActions.setFilePriority.listen(function (file, priority) {
 	let that = this;
-	return SocketService.patch(QueueConstants.FILES_URL + '/' + file.id, {
-		priority: newPrio
-	})
-		.then(that.completed.bind(that, file))
-		.catch(that.failed.bind(that, file));
-});
-
-QueueActions.setFileAutoPriority.listen(function (file, autoPrio) {
-	let that = this;
-	return SocketService.patch(QueueConstants.FILES_URL + '/' + file.id, {
-		auto_priority: autoPrio
+	return SocketService.post(QueueConstants.FILES_URL + '/' + file.id + '/priority', {
+		priority
 	})
 		.then(that.completed.bind(that, file))
 		.catch(that.failed.bind(that, file));
