@@ -15,7 +15,7 @@ module.exports = {
 			help: 'RSS and Atom feeds are supported',
 		},
 		feed_cache_minutes: {
-			legend: 'Minumum refetch interval (minutes)',
+			legend: 'Minimum refetch interval (minutes)',
 		},
 	},
 	defaultSettings: {
