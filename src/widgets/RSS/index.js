@@ -1,4 +1,4 @@
-const t = require('utils/tcomb-form');
+const t = require('utils/tcomb-form').default;
 
 module.exports = {
 	typeId: 'rss',
