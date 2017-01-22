@@ -144,7 +144,7 @@ const Notifications = React.createClass({
 	},
 
 	_onViewFileDownloaded(file) {
-		if (!file.downloaded) {
+		if (!file.content_ready) {
 			return;
 		}
 
