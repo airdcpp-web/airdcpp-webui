@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 import t from 'utils/tcomb-form';
 
 import Checkbox from 'components/semantic/Checkbox';

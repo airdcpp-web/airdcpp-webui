@@ -1,4 +1,4 @@
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 
 const checkSplice = (messages, cacheMessageCount) => {
 	if (messages) {

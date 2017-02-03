@@ -1,4 +1,4 @@
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 import invariant from 'invariant';
 
 import { createHistory } from 'history';

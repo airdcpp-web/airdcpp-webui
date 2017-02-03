@@ -1,4 +1,4 @@
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 
 import MessageUtils from 'utils/MessageUtils';
 import UrgencyUtils from 'utils/UrgencyUtils';
