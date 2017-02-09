@@ -13,6 +13,7 @@ const Entry = {
 	auto_follow_redirects: t.Bool,
 	disconnect_offline_users: t.Bool,
 	disconnect_hubs_noreg: t.Bool,
+	min_search_interval: t.Positive,
 };
 
 const MiscPage = React.createClass({
