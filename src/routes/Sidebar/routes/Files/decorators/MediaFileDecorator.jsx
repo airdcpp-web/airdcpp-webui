@@ -49,7 +49,7 @@ export default function (Component) {
 			}
 
 			// Use autoplay only for recently opened files
-			const diff = Moment.duration(Moment().diff(Moment.unix(item.time_finished)));
+			const diff = Moment.duration(Moment().diff(Moment.unix(item.time_opened)));
 			const autoPlay = diff.asMinutes() <= 1;
 
 			const mediaProps = {

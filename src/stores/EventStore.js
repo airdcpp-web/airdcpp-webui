@@ -85,6 +85,7 @@ const EventStore = Reflux.createStore({
 
 	onSocketDisconnected() {
 		this._logMessages = undefined;
+		this._initialized = false;
 	},
 });
 
