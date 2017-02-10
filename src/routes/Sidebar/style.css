@@ -29,3 +29,15 @@
 .ui.visible.overlay.sidebar {
   transition: transform 250ms !important;
 }
+
+.new-layout {
+	padding: 5px;
+}
+
+.new-layout .recents.list {
+	margin-top: 35px;
+}
+
+.new-layout > .header {
+	margin-bottom: 15px;
+}

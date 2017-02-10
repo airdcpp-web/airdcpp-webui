@@ -73,6 +73,10 @@ section#container-main,
 	flex-shrink: 0;
 }
 
+.divided.list .item .description {
+	font-size: 90%;
+}
+
 /* Layout header start */
 
 .layout.header {
@@ -98,10 +102,6 @@ section#container-main,
 
 .layout.header > div {
 	margin-bottom: 0px;
-}
-
-.header.new {
-	margin-bottom: 25px;
 }
 
 /* Layout header end */
