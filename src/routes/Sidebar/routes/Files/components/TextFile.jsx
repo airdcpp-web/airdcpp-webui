@@ -2,8 +2,6 @@
 import React from 'react';
 
 import Loader from 'components/semantic/Loader';
-import SocketService from 'services/SocketService';
-import ViewFileConstants from 'constants/ViewFileConstants';
 import Message from 'components/semantic/Message';
 
 import TextDecorator from 'components/TextDecorator';
@@ -12,7 +10,7 @@ import TextDecorator from 'components/TextDecorator';
 const TextFile = React.createClass({
 	componentWillMount() {
 		if (this.props.item.content_ready) {
-			this.fetchText(this.props.item);
+			this.fetchText(this.props.url);
 		}
 	},
 
@@ -27,7 +25,7 @@ const TextFile = React.createClass({
 		}
 
 		if (idChanged || !this.props.item.content_ready) {
-			this.fetchText(nextProps.item);
+			this.fetchText(nextProps.url);
 		}
 	},
 
@@ -38,21 +36,20 @@ const TextFile = React.createClass({
 		};
 	},
 
-	fetchText(item) {
-		SocketService.get(ViewFileConstants.SESSIONS_URL + '/' + item.id + '/text')
-			.then(this.onTextReceive)
-			.catch(this.onTextFailed);
+	fetchText(url) {
+		$.get(url, this.onTextReceived, 'text')
+			.fail(this.onTextFailed);
 	},
 
 	onTextFailed(error) {
 		this.setState({ 
-			error: error.message,
+			error: error.responseText,
 		});
 	},
 
-	onTextReceive(data) {
+	onTextReceived(text) {
 		this.setState({ 
-			text: data.text,
+			text,
 		});
 	},
 

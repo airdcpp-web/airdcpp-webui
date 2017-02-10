@@ -52,7 +52,7 @@ LayoutHeader.propTypes = {
 	/**
 	 * Icon to display
 	 */
-	icon: React.PropTypes.node.isRequired,
+	icon: React.PropTypes.node,
 
 	/**
 	 * Component to display on the right side of the header

@@ -99,11 +99,12 @@ const RSS = React.createClass({
 
 		$.getJSON('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%20%3D%20\'' + 
 			encodeURIComponent(feedUrl) + '\'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', 
-
-		res => {
-			console.log('RSS feed received', res);
-			this.onFeedFetched(res.query);
-		}, 'jsonp');
+			res => {
+				console.log('RSS feed received', res);
+				this.onFeedFetched(res.query);
+			}, 
+			'jsonp'
+		);
 	},
 
 	componentWillReceiveProps(nextProps) {
