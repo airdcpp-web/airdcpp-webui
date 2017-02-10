@@ -8,6 +8,13 @@
     "transform-es2015-function-name",
     "transform-object-assign",
     "transform-react-display-name",
+    "syntax-async-functions",
+    "transform-regenerator",
+		["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+    }]
   ],
   "env": {
     // only enable it when process.env.NODE_ENV is 'development' or undefined

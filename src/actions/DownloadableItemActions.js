@@ -2,18 +2,19 @@
 import Reflux from 'reflux';
 
 import History from 'utils/History';
+import NotificationActions from 'actions/NotificationActions';
 import OverlayConstants from 'constants/OverlayConstants';
+import SocketService from 'services/SocketService';
+import { sleep } from 'utils/Promise';
 
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
-import FilelistActions from 'actions/FilelistActions';
 import ViewFileActions from 'actions/ViewFileActions';
-
 import ViewFileStore from 'stores/ViewFileStore';
 
 
-const isAdc = ({ user }) => user.flags.indexOf('nmdc') === -1;
+const isAsch = ({ user }) => user.flags.indexOf('asch') !== -1;
 const isSearchable = ({ itemInfo }) => itemInfo.name || itemInfo.tth;
 const notSelf = ({ user }) => user.flags.indexOf('self') === -1;
 const isDirectory = ({ itemInfo }) => itemInfo.type.id === 'directory';
@@ -23,7 +24,7 @@ const isAudio = ({ itemInfo }) => itemInfo.type.content_type === 'audio';
 const sizeValid = ({ itemInfo }) => itemInfo.size < 200*1024*1024; // 200 MB, the web server isn't suitable for sending large files
 
 const viewText = data => !isDirectory(data) && !isPicture(data) && !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256*1024;
-const findNfo = data => isDirectory(data) && notSelf(data) && isAdc(data);
+const findNfo = data => isDirectory(data) && notSelf(data) && isAsch(data);
 
 const viewVideo = data => isVideo(data) && sizeValid(data);
 const viewAudio = data => isAudio(data) && sizeValid(data);
@@ -119,8 +120,59 @@ DownloadableItemActions.viewImage.listen(function (data, location) {
 	ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
-DownloadableItemActions.findNfo.listen(function (data, location) {
-	FilelistActions.findNfo(data, location);
+DownloadableItemActions.findNfo.listen(async function (data, location) {
+	try {
+		// Get a new instance
+		let instance = await SocketService.post('search/instances', {
+			expiration_minutes: 1,
+		});
+
+		// Post the search
+		await SocketService.post(`search/instances/${instance.id}/user_search`, {
+			user: data.user,
+			query: {
+				extensions: [ 'nfo' ],
+				max_size: 256 * 1024,
+			},
+			options: {
+				path: data.itemInfo.path,
+				max_results: 1,
+			}
+		});
+
+		// Wait for the results to arrive
+		for (let i = 0; i < 5; i++) {
+			await sleep(500);
+
+			instance = await SocketService.get(`search/instances/${instance.id}`);
+			if (instance.result_count > 0) {
+				break;
+			}
+		}
+
+		if (instance.result_count > 0) {
+			// Open the first result for viewing
+			const results = await SocketService.get(`search/instances/${instance.id}/results/0/1`);
+
+			DownloadableItemActions.viewText({
+				itemInfo: results[0],
+				user: data.user,
+			}, location);
+
+			this.completed(data, location);
+		} else {
+			this.failed(data, 'No NFO results were received');
+		}
+	} catch (error) {
+		this.failed(data, error.message);
+	}
+});
+
+DownloadableItemActions.findNfo.failed.listen(function (data, errorMessage) {
+	NotificationActions.info({ 
+		title: data.itemInfo.name,
+		message: errorMessage,
+	});
 });
 
 DownloadableItemActions.search.listen(function (handlerData, location) {
