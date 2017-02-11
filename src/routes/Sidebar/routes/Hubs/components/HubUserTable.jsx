@@ -119,9 +119,9 @@ const HubUserTable = React.createClass({
 					cell={ <IpCell/> }
 				/>
 				<Column
-					name="Upload slots"
-					width={60}
-					columnKey="upload_slots"
+					name="Files"
+					width={70}
+					columnKey="file_count"
 					flexGrow={3}
 				/>
 			</VirtualTable>
