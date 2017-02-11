@@ -46,18 +46,12 @@ const CloseButton = ({ closeAction, activeItem }) => {
 	);
 };
 
-const SessionItemHeader = ({ itemIcon, itemHeader, activeItem, actionMenu }) => {
-	if (!activeItem) {
-		return null;
-	}
-
-	return (
-		<div className="session-header">
-			{ itemIcon }
-			{ itemHeader }
-		</div>
-	);
-};
+const SessionItemHeader = ({ itemHeaderIcon, itemHeaderTitle, activeItem, actionMenu }) => (
+	<div className="session-header">
+		{ itemHeaderIcon }
+		{ itemHeaderTitle }
+	</div>
+);
 
 const TopMenuLayout = ({ children, ...props }) => (
 	<div className="session-container vertical">
@@ -76,10 +70,10 @@ const TopMenuLayout = ({ children, ...props }) => (
 );
 
 TopMenuLayout.propTypes = {
+	itemHeaderTitle: React.PropTypes.node.isRequired,
+	itemHeaderIcon: React.PropTypes.node.isRequired,
 	activeItem: React.PropTypes.object,
 	newButton: React.PropTypes.node,
-	itemIcon: React.PropTypes.node,
-	itemHeader: React.PropTypes.node,
 	sessionMenuItems: React.PropTypes.array.isRequired,
 	closeAction: React.PropTypes.func.isRequired,
 	listActionMenuGetter: React.PropTypes.func.isRequired,

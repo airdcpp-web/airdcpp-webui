@@ -23,7 +23,7 @@ const ItemHandler = {
 		return TypeConvert.hubOnlineStatusToColor(session.connect_state.id);
 	},
 
-	itemDescriptionGetter(session) {
+	itemHeaderDescriptionGetter(session) {
 		return (
 			<TextDecorator
 				text={ session.identity.description }
@@ -32,8 +32,8 @@ const ItemHandler = {
 		);
 	},
 
-	itemIconGetter(session) {
-		return <HubIcon size="large" hub={session} />;
+	itemHeaderIconGetter(session) {
+		return <HubIcon size="large" hub={ session } />;
 	},
 };
 
@@ -54,7 +54,9 @@ const Hubs = React.createClass({
 				activeId={ parseNumericId(params) }
 				baseUrl="hubs"
 				items={ this.state.hubSessions } 
-				newButtonCaption="Connect"
+				newCaption="Connect"
+				newDescription="Connect to a new hub"
+				newIcon="sitemap"
 				editAccess={ AccessConstants.HUBS_EDIT }
 				actions={ HubActions } 
 				actionIds={ [ 'reconnect', 'favorite', 'clear' ] }

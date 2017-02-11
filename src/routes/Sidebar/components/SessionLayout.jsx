@@ -11,6 +11,8 @@ import '../sessions.css';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import SessionNewButton from './SessionNewButton';
 import SessionMenuItem from './SessionMenuItem';
+
+import Icon from 'components/semantic/Icon';
 import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
@@ -44,30 +46,30 @@ const SessionLayout = React.createClass({
 		items: React.PropTypes.array.isRequired,
 
 		/**
-		 * Function receiving an item object that returns the display name
-		 */
-		itemNameGetter: React.PropTypes.func.isRequired,
-
-		/**
 		 * Function receiving an item object that returns header for the currently active item
 		 * If no function is supplied, the item name will be used
 		 */
-		itemHeaderGetter: React.PropTypes.func,
+		itemHeaderTitleGetter: React.PropTypes.func,
 
 		/**
 		 * Function receiving an item object that returns the description (subheader) of the item
 		 */
-		itemDescriptionGetter: React.PropTypes.func.isRequired,
+		itemHeaderDescriptionGetter: React.PropTypes.func.isRequired,
 
 		/**
 		 * Function receiving an item object that returns icon for a item
 		 */
-		itemIconGetter: React.PropTypes.func.isRequired,
+		itemHeaderIconGetter: React.PropTypes.func.isRequired,
 
 		/**
 		 * Store containing information about unread items
 		 */
 		unreadInfoStore: React.PropTypes.object,
+
+		/**
+		 * Function receiving an item object that returns the display name
+		 */
+		itemNameGetter: React.PropTypes.func.isRequired,
 
 		/**
 		 * Function receiving the circular color label in front of the item
@@ -92,7 +94,17 @@ const SessionLayout = React.createClass({
 		/**
 		 * Label for button that opens a new session
 		 */
-		newButtonCaption: React.PropTypes.any,
+		newCaption: React.PropTypes.any,
+
+		/**
+		 * Label for button that opens a new session
+		 */
+		newDescription: React.PropTypes.any,
+
+		/**
+		 * Label for button that opens a new session
+		 */
+		newIcon: React.PropTypes.any,
 
 		/**
 		 * Set to false if the side menu should never be shown (the session will use all width that is available)  
@@ -123,7 +135,7 @@ const SessionLayout = React.createClass({
 	},
 
 	getNewUrl() {
-		if (!this.props.newButtonCaption || !this.hasEditAccess()) {
+		if (!this.props.newCaption || !this.hasEditAccess()) {
 			return '/' + this.props.baseUrl;
 		}
 
@@ -288,7 +300,7 @@ const SessionLayout = React.createClass({
 			return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(item) }/>;
 		}
 
-		return this.props.itemIconGetter(item);
+		return <Icon icon={ this.props.itemHeaderIconGetter(item) }/>;
 	},
 
 	getSessionMenuItem(sessionItem) {
@@ -305,13 +317,13 @@ const SessionLayout = React.createClass({
 		);
 	},
 
-	getItemHeader() {
+	getItemHeaderTitle() {
+		const { actions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
+
 		const { activeItem } = this.state;
 		if (!activeItem) {
-			return null;
+			return <div>{ this.props.newCaption }</div>;
 		}
-
-		const { actions, actionIds, itemNameGetter, itemHeaderGetter } = this.props;
 
 		let ids = [ 'removeSession' ];
 		if (actionIds) {
@@ -328,8 +340,8 @@ const SessionLayout = React.createClass({
 		);
 
 		// Use the header getter only if there is a getter that returns a valid value
-		if (itemHeaderGetter) {
-			const header = itemHeaderGetter(activeItem, this.props.location, actionMenu);
+		if (itemHeaderTitleGetter) {
+			const header = itemHeaderTitleGetter(activeItem, this.props.location, actionMenu);
 			if (header) {
 				return header;
 			}
@@ -338,24 +350,31 @@ const SessionLayout = React.createClass({
 		return actionMenu;
 	},
 
-	getItemIcon() {
+	getItemHeaderDescription() {
 		const { activeItem } = this.state;
+		const { itemHeaderDescriptionGetter, newDescription } = this.props;
 		if (!activeItem) {
-			return null;
+			return newDescription;
 		}
 
-		return this.props.itemIconGetter(activeItem);
+		return itemHeaderDescriptionGetter(activeItem);
+	},
+
+	getItemHeaderIcon() {
+		const { activeItem } = this.state;
+		const { itemHeaderIconGetter, newIcon } = this.props;
+		return <Icon icon={ activeItem ? itemHeaderIconGetter(activeItem) : newIcon }/>;
 	},
 
 	getNewButton() {
-		if (!this.hasEditAccess() || !this.props.newButtonCaption) {
+		if (!this.hasEditAccess() || !this.props.newCaption) {
 			return null;
 		}
 
 		return (
 			<SessionNewButton 
 				key="new-button" 
-				title={ this.props.newButtonCaption } 
+				title={ this.props.newCaption } 
 				url={ this.getNewUrl() } 
 				pushNew={ this.pushNew }
 			/>
@@ -412,9 +431,10 @@ const SessionLayout = React.createClass({
 		const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
 		return (
 			<Component 
-				itemIcon={ this.getItemIcon() }
-				itemHeader={ this.getItemHeader() }
-				itemDescriptionGetter={ this.props.itemDescriptionGetter }
+				itemHeaderTitle={ this.getItemHeaderTitle() }
+				itemHeaderDescription={ this.getItemHeaderDescription() }
+				itemHeaderIcon={ this.getItemHeaderIcon() }
+
 				activeItem={ this.state.activeItem }
 				unreadInfoStore={ this.props.unreadInfoStore }
 				closeAction={ this.props.actions.removeSession }

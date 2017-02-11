@@ -68,8 +68,8 @@ const FileSession = React.createClass({
 		}
 
 		return (
-			<div className={ 'file-session ' + session.type.str + ' ' + session.type.content_type }>
-				<div className="file-content">
+			<div className={ 'file session ' + session.type.str + ' ' + session.type.content_type }>
+				<div className="content">
 					{ child }
 				</div>
 				<FileFooter item={ session }/>

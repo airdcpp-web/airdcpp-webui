@@ -27,17 +27,28 @@
 
 .animating.ui.overlay.sidebar,
 .ui.visible.overlay.sidebar {
-  transition: transform 250ms !important;
+	transition: transform 250ms !important;
 }
 
-.new-layout {
+.session.new {
+	flex: 100 100 0%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: hidden;
 	padding: 5px;
+	margin-top: 10px;
 }
 
-.new-layout .recents.list {
+.session.new .recents {
+	flex: 100 100 0%;
+	display: flex;
+	flex-direction: column;
 	margin-top: 35px;
+	overflow-y: hidden;
 }
 
-.new-layout > .header {
-	margin-bottom: 15px;
+.session.new .recents .list {
+	flex: 100 100 0%;
+	overflow-y: auto;
+	overflow-x: hidden;
 }

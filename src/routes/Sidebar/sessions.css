@@ -57,6 +57,7 @@
 .session-container.vertical .session-header {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .session-container.vertical .session-header > div {

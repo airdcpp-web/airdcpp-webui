@@ -4,9 +4,9 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 
 const SideMenuLayout = ({ 
-			activeItem, sessionMenuItems, newButton,
-			itemIcon, itemHeader, children,
-			itemDescriptionGetter,
+		sessionMenuItems, newButton,
+		itemHeaderIcon, itemHeaderTitle, children,
+		itemHeaderDescription,
 	}) => {
 
 	if (newButton) {
@@ -27,15 +27,13 @@ const SideMenuLayout = ({
 			</div>
 			<div className="twelve wide stretched column content-column session">
 				<div className="ui segment session-layout">
-					{ activeItem ? (
-						<LayoutHeader
-							className="session-header"
-							icon={ itemIcon }
-							title={ <div className="title">{ itemHeader }</div> }
-							subHeader={ itemDescriptionGetter(activeItem) }
-						/>
-					) : null }
-					{ activeItem ? <div className="ui divider"/> : null }
+					<LayoutHeader
+						className="session-header"
+						icon={ itemHeaderIcon }
+						title={ <div className="title">{ itemHeaderTitle }</div> }
+						subHeader={ itemHeaderDescription }
+					/>
+					<div className="ui divider"/>
 					{ children }
 				</div>
 			</div>
@@ -44,12 +42,12 @@ const SideMenuLayout = ({
 };
 
 SideMenuLayout.propTypes = {
-	activeItem: React.PropTypes.object,
 	newButton: React.PropTypes.node,
-	itemIcon: React.PropTypes.node,
-	itemHeader: React.PropTypes.node,
 	sessionMenuItems: React.PropTypes.array.isRequired,
-	itemDescriptionGetter: React.PropTypes.func.isRequired,
+
+	itemHeaderTitle: React.PropTypes.node,
+	itemHeaderIcon: React.PropTypes.node,
+	itemHeaderDescription: React.PropTypes.func.isRequired,
 };
 
 export default SideMenuLayout;

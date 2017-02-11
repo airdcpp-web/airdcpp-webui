@@ -1,7 +1,7 @@
 import React from 'react';
 
 import UserSearchInput from 'components/autosuggest/UserSearchInput';
-import NewLayout from 'routes/Sidebar/components/NewLayout';
+import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
@@ -28,19 +28,18 @@ const MessageNew = React.createClass({
 
 	render() {
 		return (
-			<NewLayout 
-				title="Send message" 
-				subHeader="Start a new private chat session" 
-				icon="comments"
-				recentUrl={ HistoryConstants.PRIVATE_CHATS_URL }
-				recentTitleRenderer={ this.recentUserRender }
-				hasSession={ this.hasSession }
-			>
+			<div className="session new"> 
 				<UserSearchInput 
 					submitHandler={ this.handleSubmit } 
 					offlineMessage="You must to be connected to at least one hub in order to send private messages"
 				/>
-			</NewLayout>
+				<RecentLayout
+					url={ HistoryConstants.PRIVATE_CHATS_URL }
+					hasSession={ this.hasSession }
+					entryTitleRenderer={ this.recentUserRender }
+					entryIcon="comments"
+				/>
+			</div>
 		);
 	}
 });

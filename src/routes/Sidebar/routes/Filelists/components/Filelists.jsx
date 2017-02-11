@@ -22,24 +22,20 @@ const ItemHandler = {
 		return session.share_profile ? session.share_profile.str : UserItemHandler.itemNameGetter(session);
 	},
 
-	itemIconGetter(session) {
-		return session.share_profile ? <i className="large green server icon"/> : UserItemHandler.itemIconGetter(session);
-	},
-
 	itemStatusGetter(session) {
 		return session.share_profile ? 'blue' : UserItemHandler.itemStatusGetter(session);
 	},
 
-	itemHeaderGetter(session, location, actionMenu) {
-		if (session.share_profile) {
-			return actionMenu;
-		}
-
-		return UserItemHandler.itemHeaderGetter(session, location, actionMenu);
+	itemHeaderTitleGetter(session, location, actionMenu) {
+		return session.share_profile ? actionMenu : UserItemHandler.itemHeaderTitleGetter(session, location, actionMenu);
 	},
 
-	itemDescriptionGetter(session) {
-		return session.share_profile ? null : UserItemHandler.itemDescriptionGetter(session);
+	itemHeaderDescriptionGetter(session) {
+		return session.share_profile ? null : UserItemHandler.itemHeaderDescriptionGetter(session);
+	},
+
+	itemHeaderIconGetter(session) {
+		return session.share_profile ? 'large green server' : UserItemHandler.itemHeaderIconGetter(session);
 	},
 };
 
@@ -47,13 +43,15 @@ const Filelists = React.createClass({
 	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 
 	render() {
-		const { params, ...other } = this.props;
+		const { children, params, ...other } = this.props;
 		return (
 			<SessionLayout 
 				activeId={ params.id }
 				baseUrl="filelists"
 				items={ this.state.filelists }
-				newButtonCaption="Open new"
+				newCaption="Open filelist"
+				newDescription="Start browsing a new filelist" 
+				newIcon="browser" 
 				disableSideMenu={ true }
 				editAccess={ AccessConstants.FILELISTS_EDIT }
 				actions={ FilelistActions }
@@ -62,7 +60,7 @@ const Filelists = React.createClass({
 				{ ...ItemHandler }
 				{ ...other }
 			>
-				{ this.props.children }
+				{ children }
 			</SessionLayout>
 		);
 	}

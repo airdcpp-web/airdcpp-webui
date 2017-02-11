@@ -154,7 +154,7 @@ const ListBrowser = React.createClass({
 	render() {
 		const { session } = this.props;
 		return (
-			<div className="filelist-browser">
+			<div className="browser">
 				<BrowserBar 
 					path={ session.location.path }
 					separator="/"

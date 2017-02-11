@@ -1,7 +1,7 @@
 import React from 'react';
 
 import UserSearchInput from 'components/autosuggest/UserSearchInput';
-import NewLayout from 'routes/Sidebar/components/NewLayout';
+import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import FilelistActions from 'actions/FilelistActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
@@ -33,15 +33,7 @@ const FilelistNew = React.createClass({
 
 	render() {
 		return (
-			<NewLayout 
-				title="Open list" 
-				subHeader="Start browsing a new filelist" 
-				icon="browser" 
-				className="filelist"
-				recentUrl={ HistoryConstants.FILELISTS_URL }
-				recentTitleRenderer={ this.recentUserRender }
-				hasSession={ this.hasSession }
-			>
+			<div className="session new">
 				<UserSearchInput 
 					submitHandler={ this.handleSubmit } 
 					offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"
@@ -49,7 +41,13 @@ const FilelistNew = React.createClass({
  				<ShareProfileSelector 
  					onProfileChanged={ this.onProfileChanged }
  				/>
-			</NewLayout>
+				<RecentLayout
+					url={ HistoryConstants.FILELISTS_URL }
+					hasSession={ this.hasSession }
+					entryTitleRenderer={ this.recentUserRender }
+					entryIcon="browser"
+				/>
+			</div>
 		);
 	}
 });

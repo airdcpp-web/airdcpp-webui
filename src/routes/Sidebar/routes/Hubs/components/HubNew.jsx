@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HubSearchInput from 'components/autosuggest/HubSearchInput';
-import NewLayout from 'routes/Sidebar/components/NewLayout';
+import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
@@ -28,18 +28,17 @@ const HubNew = React.createClass({
 
 	render() {
 		return (
-			<NewLayout 
-				title="Connect" 
-				subHeader="Connect to a new hub" 
-				icon="sitemap"
-				recentUrl={ HistoryConstants.HUBS_URL }
-				recentTitleRenderer={ this.recentHubRender }
-				hasSession={ this.hasSession }
-			>
+			<div className="session new">
 				<HubSearchInput 
 					submitHandler={ this.handleConnect }
 				/>
-			</NewLayout>
+				<RecentLayout
+					url={ HistoryConstants.HUBS_URL }
+					hasSession={ this.hasSession }
+					entryTitleRenderer={ this.recentHubRender }
+					entryIcon="sitemap"
+				/>
+			</div>
 		);
 	}
 });

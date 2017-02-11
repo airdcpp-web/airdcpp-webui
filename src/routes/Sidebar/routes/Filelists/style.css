@@ -2,40 +2,41 @@
 	flex: 1 100 100%;
 }
 
-.filelist-browser, .filelist-browser .virtual-table {
+.filelist.session .browser, 
+.filelist.session .browser .virtual-table {
 	height: calc(100% - 35px);
 }
 
-#mobile-layout .filelist-browser {
+#mobile-layout .filelist.session .browser {
 	height: 100%;
 }
 
-#mobile-layout .filelist-browser {
+#mobile-layout .filelist.session .browser {
 	height: calc(100% - 10px);
 }
 
 @media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) 
 { @media {
 	/* Safari specific CSS */
-	.filelist-browser {
+	.filelist.session .browser {
 		height: calc(100% - 95px);
 	}
 
-	#mobile-layout .filelist-browser {
+	#mobile-layout .filelist.session. .browser {
 		height: calc(100% - 60px);
 	}
 }}
 
-.filelist-browser .ui.segment {
+.filelist.session .browser .ui.segment {
 	margin-bottom: 10px;
 }
 
-.filelist-session {
+.filelist.session {
 	height: 100%;
 	overflow: hidden;
 }
 
-.new-layout.filelist .dropdown {
+.session.new .profile.dropdown {
 	margin-top: 10px;
 	color: gray;
 	float: right;

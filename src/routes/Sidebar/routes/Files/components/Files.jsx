@@ -18,16 +18,16 @@ const ItemHandler = {
 		return session.name;
 	},
 
-	itemDescriptionGetter(session) {
-		return null;
-	},
-
-	itemIconGetter(session) {
-		return <FileIcon typeInfo={ session.type }/>;
-	},
-
 	itemLabelGetter(session) {
 		return null;
+	},
+
+	itemHeaderDescriptionGetter(session) {
+		return null;
+	},
+
+	itemHeaderIconGetter(session) {
+		return <FileIcon typeInfo={ session.type }/>;
 	},
 };
 

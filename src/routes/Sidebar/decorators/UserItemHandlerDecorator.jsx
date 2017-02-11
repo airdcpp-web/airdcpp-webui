@@ -15,15 +15,15 @@ export default (itemMenuIds) => {
 			return TypeConvert.userOnlineStatusToColor(flags);
 		},
 
-		itemDescriptionGetter(session) {
+		itemHeaderDescriptionGetter(session) {
 			return session.user.hub_names;
 		},
 
-		itemIconGetter(session) {
-			return <UserIcon size="large" flags={session.user.flags} />;
+		itemHeaderIconGetter(session) {
+			return <UserIcon size="large" flags={ session.user.flags } />;
 		},
 
-		itemHeaderGetter(session, location, actionMenu) {
+		itemHeaderTitleGetter(session, location, actionMenu) {
 			const { user } = session;
 			return (
 				<UserMenu 

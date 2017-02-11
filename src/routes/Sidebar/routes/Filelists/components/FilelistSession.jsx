@@ -31,7 +31,7 @@ const FilelistSession = React.createClass({
 		}
 
 		return (
-			<div className="filelist-session">
+			<div className="filelist session">
 				<ListBrowser
 					{ ...this.props }
 				/>
