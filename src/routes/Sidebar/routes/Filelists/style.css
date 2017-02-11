@@ -39,5 +39,5 @@
 .session.new .profile.dropdown {
 	margin-top: 10px;
 	color: gray;
-	float: right;
+	align-self: flex-end;
 }
