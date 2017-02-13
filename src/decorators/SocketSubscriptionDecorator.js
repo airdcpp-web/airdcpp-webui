@@ -6,10 +6,13 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 	let socketSubscriptions = [];
 	let hasSocket = false;
 
-	const addSocketListener = (apiModuleUrl, event, callback, entityId) => {
-		let subscription = SocketService.addListener(apiModuleUrl, event, callback, entityId);
+	const addSocketListener = (apiModuleUrl, event, callback, entityId, access) => {
+		if (access && !LoginStore.hasAccess(access)) {
+			return;
+		}
+
+		const subscription = SocketService.addListener(apiModuleUrl, event, callback, entityId);
 		socketSubscriptions.push(subscription);
-		return subscription;
 	};
 
 	const removeSocketListeners = (entityExists) => { 

@@ -106,7 +106,7 @@ const Transfers = React.createClass({
 		};
 
 		const trafficSeries = new TimeSeries(data);
-		const noInfo = width < 300;
+		const showInfoColumn = width >= 300;
 
 		return (
 			<div className="transfers-container">
@@ -117,13 +117,13 @@ const Transfers = React.createClass({
 					width={ width }
 					height={ height }
 				/>
-				{ noInfo ? null : (
+				{ showInfoColumn && (
 					<StatColumn
 						stats={ stats }
 					/>
 				) }
 			</div>
-    );
+		);
 	}
 });
 

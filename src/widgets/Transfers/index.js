@@ -1,6 +1,7 @@
 module.exports = {
 	typeId: 'transfers',
 	component: require('./components/Transfers').default,
+	access: require('constants/AccessConstants').default.TRANSFERS,
 	name: 'Transfers',
 	icon: 'exchange',
 	size: {

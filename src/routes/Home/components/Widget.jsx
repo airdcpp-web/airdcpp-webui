@@ -1,11 +1,26 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import WidgetActions from 'actions/WidgetActions';
-import { ActionMenu } from 'components/menu/DropdownMenu';
+import LoginStore from 'stores/LoginStore';
 
+import { ActionMenu } from 'components/menu/DropdownMenu';
+import WidgetActions from 'actions/WidgetActions';
+
+
+const getError = (widgetInfo, settings) => {
+	if (widgetInfo.formSettings && !settings.widget) {
+		return 'Widget settings were not found';
+	}
+
+	if (widgetInfo.access && !LoginStore.hasAccess(widgetInfo.access)) {
+		return "You aren't permitted to access this widget";
+	}
+
+	return null;
+};
 
 const Widget = ({ widgetInfo, settings, componentId, children, className, ...widgetProps }) => {
+	const error = getError(widgetInfo, settings);
 	return (
 		<div 
 			className={ classNames('card', className, componentId, widgetInfo.typeId) } 
@@ -27,13 +42,11 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
 						settings,
 					}}
 				>
-					{ !!widgetInfo.actionMenu && (
-						<ActionMenu { ...widgetInfo.actionMenu }/>
-					) }
+					{ !!widgetInfo.actionMenu && <ActionMenu { ...widgetInfo.actionMenu }/> }
 				</ActionMenu>
 			</div>
 			<div className="content widget">
-				{ widgetInfo.formSettings && !settings.widget ? 'Widget settings were not found' : children }
+				{ error ? error : children }
 			</div>
 		</div>
 	);

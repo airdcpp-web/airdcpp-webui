@@ -5,9 +5,10 @@ import ValueFormat from 'utils/ValueFormat';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import AccessConstants from 'constants/AccessConstants';
 import HashConstants from 'constants/HashConstants';
-import TransferConstants from 'constants/TransferConstants';
 import IconConstants from 'constants/IconConstants';
+import TransferConstants from 'constants/TransferConstants';
 
 
 const StatisticsIcon = ({ icon, bytes, formatter }) => {
@@ -34,8 +35,8 @@ const StatisticsBar = React.createClass({
 	},
 
 	onSocketConnected(addSocketListener) {
-		addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
-		addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived);
+		addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, null, AccessConstants.TRANSFERS);
+		addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, null, AccessConstants.SETTINGS_VIEW);
 	},
 
 	fetchStats() {

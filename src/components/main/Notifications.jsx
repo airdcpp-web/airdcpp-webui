@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import AccessConstants from 'constants/AccessConstants';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
@@ -19,9 +20,6 @@ import { LocalSettings } from 'constants/SettingConstants';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import Logo from 'images/AirDCPlusPlus.png';
-
-import LoginStore from 'stores/LoginStore';
-import AccessConstants from 'constants/AccessConstants';
 
 
 const Notifications = React.createClass({
@@ -83,22 +81,13 @@ const Notifications = React.createClass({
 	},
 
 	onSocketConnected(addSocketListener) {
-		if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
-			addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this._onPrivateMessage);
-		}
+		addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this._onPrivateMessage, null, AccessConstants.PRIVATE_CHAT_VIEW);
 
-		if (LoginStore.hasAccess(AccessConstants.QUEUE_VIEW)) {
-			addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this._onBundleStatus);
-			addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus);
-		}
+		addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this._onBundleStatus, null, AccessConstants.QUEUE_VIEW);
+		addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this._onBundleStatus, null, AccessConstants.QUEUE_VIEW);
 
-		if (LoginStore.hasAccess(AccessConstants.EVENTS_VIEW)) {
-			addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this._onLogMessage);
-		}
-
-		if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {
-			addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this._onViewFileDownloaded);
-		}
+		addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this._onLogMessage, null, AccessConstants.EVENTS_VIEW);
+		addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this._onViewFileDownloaded, null, AccessConstants.VIEW_FILE_VIEW);
 	},
 
 	getSeverityStr(severity) {
