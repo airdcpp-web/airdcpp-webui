@@ -7,6 +7,8 @@ import ValueFormat from 'utils/ValueFormat';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { ListItem } from 'components/semantic/List';
 
+import HistoryConstants from 'constants/HistoryConstants';
+
 
 const RecentLayout = DataProviderDecorator(RedrawDecorator(({ entries, entryTitleRenderer, hasSession, entryIcon }) => {
 	if (entries.length === 0) {
@@ -33,7 +35,7 @@ const RecentLayout = DataProviderDecorator(RedrawDecorator(({ entries, entryTitl
 	);
 }), {
 	urls: {
-		entries: ({ url }, socket) => socket.get(url + '/10'),
+		entries: ({ entryType }, socket) => socket.get(HistoryConstants.SESSIONS_URL + '/' + entryType + '/0'),
 	},
 });
 
@@ -46,7 +48,7 @@ RecentLayout.propTypes = {
 	/**
 	 * URL for fetching the recent entries
 	 */
-	url: React.PropTypes.string.isRequired,
+	entryType: React.PropTypes.string.isRequired,
 
 	/**
 	 * Renders the recent entry title

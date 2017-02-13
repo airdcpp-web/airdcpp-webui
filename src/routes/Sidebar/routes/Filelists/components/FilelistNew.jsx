@@ -7,7 +7,7 @@ import FilelistActions from 'actions/FilelistActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import ShareProfileSelector from './ShareProfileSelector';
-import HistoryConstants from 'constants/HistoryConstants';
+import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
 const FilelistNew = React.createClass({
@@ -22,7 +22,7 @@ const FilelistNew = React.createClass({
 	recentUserRender(entry) {
 		return (
 			<a onClick={ _ => this.handleSubmit(null, entry.user) }>
-				{ entry.user.nicks }
+				{ entry.user.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
 			</a> 
 		);
 	},
@@ -42,7 +42,7 @@ const FilelistNew = React.createClass({
  					onProfileChanged={ this.onProfileChanged }
  				/>
 				<RecentLayout
-					url={ HistoryConstants.FILELISTS_URL }
+					entryType={ HistoryEntryEnum.FILELIST }
 					hasSession={ this.hasSession }
 					entryTitleRenderer={ this.recentUserRender }
 					entryIcon="browser"

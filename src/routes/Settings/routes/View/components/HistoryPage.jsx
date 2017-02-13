@@ -17,21 +17,31 @@ const MessageEntry = {
 	history_log_messages: t.Positive,
 };
 
+const SessionEntry = {
+	history_hub_sessions: t.Positive,
+	history_pm_sessions: t.Positive,
+	history_filelist_sessions: t.Positive,
+};
+
 const HistoryPage = React.createClass({
-	mixins: [ SettingPageMixin('messages', 'histories') ],
+	mixins: [ SettingPageMixin('messages', 'histories', 'sessions') ],
 	render() {
 		return (
 			<div>
 				<RemoteSettingForm
 					//title="Miscellaneous"
 					ref="histories"
-					formItems={Entry}
+					formItems={ Entry }
 				/>
-
 				<RemoteSettingForm
 					title="Maximum number of messages to cache"
 					ref="messages"
-					formItems={MessageEntry}
+					formItems={ MessageEntry }
+				/>
+				<RemoteSettingForm
+					title="Maximum number of previously opened sessions"
+					ref="sessions"
+					formItems={ SessionEntry }
 				/>
 			</div>
 		);

@@ -6,7 +6,7 @@ import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import HistoryConstants from 'constants/HistoryConstants';
+import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
 const HubNew = React.createClass({
@@ -33,7 +33,7 @@ const HubNew = React.createClass({
 					submitHandler={ this.handleConnect }
 				/>
 				<RecentLayout
-					url={ HistoryConstants.HUBS_URL }
+					entryType={ HistoryEntryEnum.HUB }
 					hasSession={ this.hasSession }
 					entryTitleRenderer={ this.recentHubRender }
 					entryIcon="sitemap"

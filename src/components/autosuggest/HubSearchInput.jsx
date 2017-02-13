@@ -1,5 +1,5 @@
 import React from 'react';
-import HistoryConstants from 'constants/HistoryConstants';
+import { default as HistoryConstants, HistoryEntryEnum } from 'constants/HistoryConstants';
 
 import RemoteSuggestField from './RemoteSuggestField';
 import Button from 'components/semantic/Button';
@@ -10,7 +10,7 @@ const HubSearchInput = ({ submitHandler }) => (
 		submitHandler={ submitHandler }
 		valueField="hub_url"
 		descriptionField="name"
-		url={ HistoryConstants.HUBS_SEARCH_URL }
+		url={ HistoryConstants.SESSIONS_URL + '/' + HistoryEntryEnum.HUB + '/search' }
 		button={ 
 			<Button
 				icon="green play"

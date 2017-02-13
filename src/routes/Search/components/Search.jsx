@@ -2,7 +2,7 @@ import React from 'react';
 
 import SocketService from 'services/SocketService';
 
-import { HistoryEnum } from 'constants/HistoryConstants';
+import { HistoryStringEnum } from 'constants/HistoryConstants';
 import { PriorityEnum } from 'constants/PriorityConstants';
 import SearchConstants from 'constants/SearchConstants';
 
@@ -83,7 +83,7 @@ const Search = React.createClass({
 					<div className="search-container">
 						<div className="search-area">
 							<HistoryInput 
-								historyId={ HistoryEnum.SEARCH } 
+								historyId={ HistoryStringEnum.SEARCH } 
 								submitHandler={ this.search } 
 								disabled={ this.state.running }
 								storedValue={ this.state.searchString }

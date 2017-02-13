@@ -3,7 +3,7 @@ import Modal from 'components/semantic/Modal';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
 import ShareConstants from 'constants/ShareConstants';
-import { default as HistoryConstants, HistoryEnum } from 'constants/HistoryConstants';
+import { default as HistoryConstants, HistoryStringEnum } from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -124,7 +124,7 @@ const DownloadDialog = React.createClass({
 			priority: PriorityEnum.DEFAULT
 		});
 
-		HistoryActions.add(HistoryEnum.DOWNLOAD_DIR, path);
+		HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
 		this.refs.modal.hide();
 	},
 
@@ -173,6 +173,6 @@ export default DataProviderDecorator(DownloadDialog, {
 	urls: {
 		sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
 		favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-		historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryEnum.DOWNLOAD_DIR,
+		historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
 	},
 });

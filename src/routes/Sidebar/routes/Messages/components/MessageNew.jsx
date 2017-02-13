@@ -6,7 +6,7 @@ import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
-import HistoryConstants from 'constants/HistoryConstants';
+import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
 const MessageNew = React.createClass({
@@ -34,7 +34,7 @@ const MessageNew = React.createClass({
 					offlineMessage="You must to be connected to at least one hub in order to send private messages"
 				/>
 				<RecentLayout
-					url={ HistoryConstants.PRIVATE_CHATS_URL }
+					entryType={ HistoryEntryEnum.PRIVATE_CHAT }
 					hasSession={ this.hasSession }
 					entryTitleRenderer={ this.recentUserRender }
 					entryIcon="comments"
