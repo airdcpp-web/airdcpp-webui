@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+import LoginStore from 'stores/LoginStore';
 
 
 const sectionToUrl = (section, parent) => {
@@ -22,6 +23,7 @@ export default (Component) => {
 			parent: React.PropTypes.object,
 			menuItems: React.PropTypes.array, // required
 			advancedMenuItems: React.PropTypes.array,
+			location: React.PropTypes.object, // required
 		},
 
 		checkChildren(props) {
@@ -54,6 +56,10 @@ export default (Component) => {
 		},
 
 		getMenuItem(obj, parent, showIcon) {
+			if (obj.access && !LoginStore.hasAccess(obj.access)) {
+				return null;
+			}
+
 			let url = sectionToUrl(obj.url, parent);
 
 			// Browsing is smoother when the child page is loaded directly

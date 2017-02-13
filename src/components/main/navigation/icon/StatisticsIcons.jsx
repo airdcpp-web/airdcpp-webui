@@ -6,6 +6,8 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
+
 import HashConstants from 'constants/HashConstants';
 import IconConstants from 'constants/IconConstants';
 import TransferConstants from 'constants/TransferConstants';
@@ -40,9 +42,11 @@ const StatisticsBar = React.createClass({
 	},
 
 	fetchStats() {
-		SocketService.get(TransferConstants.STATISTICS_URL)
-			.then(this.onStatsReceived)
-			.catch(error => console.error('Failed to fetch transfer statistics', error.message));
+		if (LoginStore.hasAccess(AccessConstants.TRANSFERS)) {
+			SocketService.get(TransferConstants.STATISTICS_URL)
+				.then(this.onStatsReceived)
+				.catch(error => console.error('Failed to fetch transfer statistics', error.message));
+		}
 	},
 
 	componentDidMount() {

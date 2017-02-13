@@ -164,16 +164,37 @@ const menu = [
 				url: 'application' 
 			}, { 
 				title: 'Transfer statistics', 
-				url: 'transfers' 
+				url: 'transfers',
+				access: AccessConstants.TRANSFERS,
 			}, { 
 				title: 'Share statistics', 
 				url: 'share' 
 			}, { 
 				title: 'Hub statistics', 
-				url: 'hubs' 
+				url: 'hubs',
+				access: AccessConstants.HUBS_VIEW,
 			},
 		],
-	},
+	}, {
+		url: 'system',
+		title: 'System',
+		icon: 'settings',
+		access: AccessConstants.ADMIN,
+		menuItems: [
+			{ 
+				title: 'Users', 
+				url: 'users', 
+				noSave: true, 
+				fullWidth: true 
+			}, { 
+				title: 'Logging', 
+				url: 'logging',
+			}, { 
+				title: 'Web server', 
+				url: 'server-settings',
+			},
+		],
+	}
 ];
 
 const MainLayout = SettingsMenuDecorator(({ menuItems, children, currentMenuItem }) => {
@@ -194,31 +215,8 @@ const MainLayout = SettingsMenuDecorator(({ menuItems, children, currentMenuItem
 // Only to pass menu items to the decorated component
 const Settings = React.createClass({
 	render() {
-		let menuItems = menu;
-		if (LoginStore.hasAccess(AccessConstants.ADMIN)) {
-			menuItems = [ ...menu, {
-				url: 'system',
-				title: 'System',
-				icon: 'settings',
-				menuItems: [
-					{ 
-						title: 'Users', 
-						url: 'users', 
-						noSave: true, 
-						fullWidth: true 
-					}, { 
-						title: 'Logging', 
-						url: 'logging',
-					}, { 
-						title: 'Web server', 
-						url: 'server-settings',
-					},
-				],
-			} ];
-		}
-
 		return (
-			<MainLayout { ...this.props } menuItems={ menuItems }/>
+			<MainLayout { ...this.props } menuItems={ menu }/>
 		);
 	},
 });
