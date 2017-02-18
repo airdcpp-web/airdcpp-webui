@@ -122,9 +122,9 @@ const MessageComposer = React.createClass({
 		if (text) {
 			if (text[0] === '/') {
 				this.handleCommand(text);
-			} else {
-				this.handleSend(text);
 			}
+
+			this.handleSend(text);
 		}
 
 		this.setState({ text: '' });
