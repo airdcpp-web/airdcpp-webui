@@ -47,7 +47,7 @@ SideMenuLayout.propTypes = {
 
 	itemHeaderTitle: React.PropTypes.node,
 	itemHeaderIcon: React.PropTypes.node,
-	itemHeaderDescription: React.PropTypes.func.isRequired,
+	itemHeaderDescription: React.PropTypes.node.isRequired,
 };
 
 export default SideMenuLayout;

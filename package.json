@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.0.0-beta7",
+  "version": "2.0.0-beta8",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -27,7 +27,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "airdcpp-apisocket": "^1.0.0-beta3",
+    "airdcpp-apisocket": "^1.0.0-beta4",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^6.5.1",
     "babel-eslint": "^7.0.0",
