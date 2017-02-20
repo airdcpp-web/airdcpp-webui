@@ -75,7 +75,7 @@ const ChatMessage = React.createClass({
 					/>
 					<MessageText 
 						message={ message }
-						emojify={ message.from.flags.indexOf('bot') === -1 } // No emojis to bot messages as they are likely to contain false matches
+						emojify={ true }
 					/>
 				</div>
 			</div>
