@@ -23,6 +23,7 @@ export const LocalSettings = {
 	NOTIFY_EVENTS_ERROR: 'notify_events_error',
 	
 	UNREAD_LABEL_DELAY: 'unread_label_delay',
+	BACKGROUND_IMAGE_URL: 'background_image_url',
 };
 
 export default {

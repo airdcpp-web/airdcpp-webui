@@ -12,6 +12,9 @@ module.exports = {
 			}, {
 				path: 'events', 
 				component: require('./components/EventPage').default, 
+			}, {
+				path: 'miscellaneous', 
+				component: require('./components/MiscellaneousPage').default, 
 			} ]);
 		}, 'settings-view-children');
 	},

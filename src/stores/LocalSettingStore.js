@@ -35,6 +35,10 @@ const Settings = [
 		defaultValue: 0,
 		title: 'Delay for marking chat sessions as read',
 		unit: 'seconds',
+	}, {
+		key: LocalSettings.BACKGROUND_IMAGE_URL,
+		defaultValue: null,
+		title: 'Custom background image URL',
 	}
 ];
 

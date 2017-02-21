@@ -154,6 +154,13 @@ const menu = [
 				url: 'events' 
 			},
 		],
+		advancedMenuItems: [
+			{ 
+				title: 'Miscellaneous', 
+				url: 'miscellaneous',
+				local: true,
+			},
+		],
 	}, {
 		url: 'about',
 		title: 'About',

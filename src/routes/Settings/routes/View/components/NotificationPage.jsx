@@ -19,20 +19,11 @@ const PopupEntry = {
 	[LocalSettings.NOTIFY_EVENTS_ERROR]: t.Bool,
 };
 
-const Entry = {
-	[LocalSettings.UNREAD_LABEL_DELAY]: t.Positive,
-};
-
 const NotificationPage = React.createClass({
-	mixins: [ SettingPageMixin('popups', 'form') ],
+	mixins: [ SettingPageMixin('popups') ],
 	render() {
 		return (
 			<div>
-				<LocalSettingForm
-					ref="form"
-					formItems={ Entry }
-				/>
-
 				<LocalSettingForm
 					title="Popup notifications"
 					ref="popups"

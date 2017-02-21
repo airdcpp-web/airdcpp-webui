@@ -33,7 +33,7 @@ const OptimizeLayout = ({ startHandler, checkboxState, checkboxHandler, running 
 		<Button 
 			className="optimize-button"
 			caption="Optimize now"
-			icon={ "gray configure" }
+			icon="gray configure"
 			loading={ running } 
 			onClick={ startHandler }
 		/>
