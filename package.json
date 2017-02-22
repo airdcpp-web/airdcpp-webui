@@ -81,7 +81,7 @@
     "react-transform-hmr": "^1.0.0",
     "react-transition-group": "^1.0.0",
     "redbox-react": "^1.1.1",
-    "reflux": "^5.0.3",
+    "reflux": "^6.0.0",
     "reflux-promise": "^1.0.4",
     "rimraf": "^2.4.3",
     "semantic-ui-css": "^2.2.9",
