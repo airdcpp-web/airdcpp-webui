@@ -36,6 +36,7 @@
 	flex-direction: column;
 	overflow-y: hidden;
 	margin-top: 10px;
+	padding: 1px;
 }
 
 .session.new .recents {

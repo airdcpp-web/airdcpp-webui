@@ -26,6 +26,7 @@
 .chat.session .composer textarea:focus {
 	resize: none;
 	border-radius: .28571429rem 0 0 .28571429rem;
+	margin-left: 1px;
 }
 
 .chat.session .composer .send.button {
