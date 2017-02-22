@@ -5,11 +5,12 @@ import React from 'react';
 import { default as ReactLinkify, linkify } from 'react-linkify';
 
 // Convert :D, :P etc. to unicode
-// Increases the compressed bundle size by ~25 kilobytes so a simplified custom
+// Increases the compressed bundle size by ~20 kilobytes so a simplified custom
 // implementation could be considered that would only replace ascii emoticons
 import { emojify as emojisToUnicode } from 'react-emojione';
 
 import emoji from 'react-easy-emoji';
+import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';
 
 import History from 'utils/History';
 
@@ -45,6 +46,27 @@ const onClickLink = (evt, routerLocation) => {
 	}
 };
 
+const emojiRenderer = (code, string, key) => {
+	switch (code) {
+		case 'a9':      // © copyright
+		case 'ae':      // ® registered trademark
+		case '2122':    // ™ trademark
+			return string;
+	}
+
+
+	const renderer = makeTwemojiRenderer({
+		props: {
+			style: {
+				height: '20px',
+				width: '20px',
+			}
+		}
+	});
+
+	return renderer(code, string, key);
+};
+
 // Parses links from plain text and optionally emoticons as well
 const TextDecorator = ({ emojify = false, text }, { routerLocation }) => (
 	<ReactLinkify 
@@ -54,14 +76,7 @@ const TextDecorator = ({ emojify = false, text }, { routerLocation }) => (
 			onClick: evt => onClickLink(evt, routerLocation),
 		}}
 	>
-		{ !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), {
-			props: {
-				style: {
-					height: '20px',
-					width: '20px',
-				}
-			}
-		}) }
+		{ !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), emojiRenderer) }
 	</ReactLinkify>
 );
 
