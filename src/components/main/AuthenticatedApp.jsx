@@ -121,7 +121,12 @@ const AuthenticatedApp = React.createClass({
 		invariant(this.props.children, 'AuthenticatedApp should always have children');
 		if (!this.state.login.socketAuthenticated) {
 			// Dim the screen until the server can be reached (we can't do anything without the socket)
-			return <SocketConnectStatus active={true} lastError={this.state.login.lastError}/>;
+			return (
+				<SocketConnectStatus 
+					active={ true } 
+					lastError={ this.state.login.lastError }
+				/>
+			);
 		}
 
 		document.getElementById('container-main').style.backgroundImage = 'url(' + this.getBackgroundImage() + ')';
@@ -131,7 +136,7 @@ const AuthenticatedApp = React.createClass({
 			<div id="authenticated-app">
 				<ActivityTracker/>
 				<Notifications/>
-				<LayoutElement className="pushable main-layout" /*sidebar={ sidebar }*/ { ...this.props }>
+				<LayoutElement className="pushable main-layout" { ...this.props }>
 					{ this.props.children }
 				</LayoutElement>
 			</div>

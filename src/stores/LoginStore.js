@@ -33,7 +33,7 @@ const LoginStore = Reflux.createStore({
 			}
 		}
 
-		// We must handle disconnect sockets
+		// We must handle disconnected sockets
 		SocketService.onDisconnected = this.onSocketDisconnected;
 
 		this.getInitialState = this.getState;
