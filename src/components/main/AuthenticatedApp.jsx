@@ -16,7 +16,6 @@ import MainLayoutMobile from './MainLayoutMobile';
 import MainLayoutNormal from './MainLayoutNormal';
 
 import SocketConnectStatus from './SocketConnectStatus';
-import SetContainerSize from 'mixins/SetContainerSize';
 
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
@@ -25,17 +24,10 @@ import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 
-import { LocalSettings } from 'constants/SettingConstants';
-import LocalSettingStore from 'stores/LocalSettingStore';
-
-import Background1500px from '../../../resources/images/background_1500px.jpg';
-import Background3460px from '../../../resources/images/background_3460px.jpg';
-
 
 const AuthenticatedApp = React.createClass({
 	mixins: [ 
-		Reflux.connect(LoginStore, 'login'), 
-		SetContainerSize,
+		Reflux.connect(LoginStore, 'login'),
 		LocationContext,
 	],
 	contextTypes: {
@@ -49,19 +41,6 @@ const AuthenticatedApp = React.createClass({
 		}
 
 		document.title = title;
-	},
-
-	getBackgroundImage() {
-		const url = LocalSettingStore.getValue(LocalSettings.BACKGROUND_IMAGE_URL);
-		if (url) {
-			return url;
-		}
-
-		if (BrowserUtils.useMobileLayout()) {
-			return null;
-		}
-
-		return window.innerWidth < 1440 ? Background1500px : Background3460px;
 	},
 
 	onSocketAuthenticated() {
@@ -128,8 +107,6 @@ const AuthenticatedApp = React.createClass({
 				/>
 			);
 		}
-
-		document.getElementById('container-main').style.backgroundImage = 'url(' + this.getBackgroundImage() + ')';
 
 		const LayoutElement = BrowserUtils.useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
 		return (

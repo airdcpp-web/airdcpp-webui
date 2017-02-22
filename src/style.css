@@ -2,17 +2,13 @@
 	text-overflow: ellipsis;
 }
 
-@media (max-width: 700px) {
-	body {
-		background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
-	}
+body {
+	background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
 }
 
-@media (min-width: 700px) {
-	section#container-main {
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
+#background-wrapper {
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .site-header .header-content {

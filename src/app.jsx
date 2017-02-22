@@ -3,7 +3,9 @@ import 'utils/webpack';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import AppContainer from './AppContainer';
 import { Router } from 'react-router';
+
 import LoginStore from 'stores/LoginStore';
 import LoginActions from 'actions/LoginActions';
 import History from 'utils/History';
@@ -81,6 +83,8 @@ const routeConfig = [
 ];
 
 ReactDOM.render(
-	<Router history={ History } routes={routeConfig} />,
+	<AppContainer>
+		<Router history={ History } routes={routeConfig} />
+	</AppContainer>,
 	document.getElementById('container-main')
 );
