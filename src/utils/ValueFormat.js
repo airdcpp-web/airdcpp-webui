@@ -133,7 +133,12 @@ const formatSpeed = (bytesPerSecond) => {
 	return Format.formatSize(bytesPerSecond) + '/s';
 };
 
+const formatPercentage = (value) => {
+	return (value * 100).toFixed(2) + ' %';
+};
+
 export default {
 	...Format,
 	formatSpeed,
+	formatPercentage,
 };
