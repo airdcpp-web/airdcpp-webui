@@ -29,7 +29,7 @@ const HubStatisticsPage = React.createClass({
 				<Row title="Unique users" text={ stats.unique_users + ' (' + ValueFormat.formatPercentage(stats.unique_users, stats.total_users) + ')'}/>
 				<Row title="Active users" text={ stats.active_users + ' (' + ValueFormat.formatPercentage(stats.active_users, stats.unique_users) + ')'}/>
 				<Row title="Total share" text={ ValueFormat.formatSize(stats.total_share) }/>
-				<Row title="Average share per user" text={ ValueFormat.formatSize(stats.total_share, stats.unique_users) }/>
+				<Row title="Average share per user" text={ ValueFormat.formatSize(ValueFormat.formatAverage(stats.total_share, stats.unique_users)) }/>
 				<Row title="Average ADC download speed" text={ ValueFormat.formatConnection(stats.adc_down_per_user) }/>
 				<Row title="Average ADC upload speed" text={ ValueFormat.formatConnection(stats.adc_up_per_user) }/>
 				<Header title="Clients"/>
