@@ -1,6 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
 
+import Icon from 'components/semantic/Icon';
 import TypeConvert from 'utils/TypeConvert';
 
 
@@ -36,15 +36,14 @@ const getCornerIcon = (flags) => {
 	return null;
 };
 
-const UserIcon = ({ flags, size, className }) => {
-	const cornerIconClass = getCornerIcon(flags);
-	return (
-		<i className={ classNames(className, size, 'icons') }>
-			<i className={ getUserIcon(flags) }/>
-			{ cornerIconClass ? <i className={ cornerIconClass + ' corner icon' }/> : null }
-		</i>
-	);
-};
+const UserIcon = ({ flags, size, className }) => (
+	<Icon
+		className={ className }
+		size={ size }
+		icon={ getUserIcon(flags) }
+		cornerIcon={ getCornerIcon(flags) }
+	/>
+);
 
 UserIcon.propTypes = {
 	/**

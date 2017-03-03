@@ -1,5 +1,5 @@
 export default {
-	CREATE: 'plus icon',
+	CREATE: 'plus',
 	EDIT: 'edit',
 	REMOVE: 'red remove circle',
 	DISCONNECT: 'remove circle',
