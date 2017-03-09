@@ -48,7 +48,7 @@ const formatAuthor = (npmPackage, installedPackage) => {
 	}
 
 	if (npmPackage) {
-		return 'by' + npmPackage.publisher.username;
+		return 'by ' + npmPackage.publisher.username;
 	}
 
 	return null;
