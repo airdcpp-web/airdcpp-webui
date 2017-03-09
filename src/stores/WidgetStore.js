@@ -1,6 +1,7 @@
 import Reflux from 'reflux';
 
 import WidgetActions from 'actions/WidgetActions';
+import WidgetUtils from 'utils/WidgetUtils';
 
 import reject from 'lodash/reject';
 import BrowserUtils from 'utils/BrowserUtils';
@@ -11,18 +12,10 @@ import Transfers from 'widgets/Transfers';
 
 
 // HELPERS
-const idToSettingKey = (id) => 'widget_' + id;
-
-const idToWidgetType = (id) => {
-	const pos = id.indexOf('_');
-	return pos !== -1 ? id.substring(0, pos) : id;
-};
-
-const getWidgetSettings = (id) => {
-	const settings = BrowserUtils.loadLocalProperty(idToSettingKey(id), { });
+const getWidgetSettings = (id, widgetInfo) => {
+	const settings = BrowserUtils.loadLocalProperty(WidgetUtils.idToSettingKey(id), { });
 
 	// Add new default settings
-	const widgetInfo = getWidgetInfoById(id);
 	if (widgetInfo && widgetInfo.defaultSettings) {
 		Object.keys(widgetInfo.defaultSettings).forEach(key => {
 			if (!settings.widget.hasOwnProperty(key)) {
@@ -35,12 +28,7 @@ const getWidgetSettings = (id) => {
 };
 
 const saveSettings = (id, settings) => {
-	BrowserUtils.saveLocalProperty(idToSettingKey(id), settings);
-};
-
-const getWidgetInfoById = (id) => {
-	const widgetType = idToWidgetType(id);
-	return widgets.find(item => item.typeId === widgetType);
+	BrowserUtils.saveLocalProperty(WidgetUtils.idToSettingKey(id), settings);
 };
 
 const createWidget = (layouts, widgetInfo, id, x, y) => {
@@ -68,6 +56,11 @@ const createDefaultWidget = (layouts, widgetInfo, x, y, name, settings, suffix =
 	});
 
 	return newLayout;
+};
+
+const getWidgetInfoById = (id) => {
+	const widgetType = WidgetUtils.idToWidgetType(id);
+	return widgets.find(item => item.typeId === widgetType);
 };
 
 
@@ -121,7 +114,7 @@ const WidgetStore = Reflux.createStore({
 	},
 
 	onRemoveConfirmed(id) {
-		BrowserUtils.removeLocalProperty(idToSettingKey(id));
+		BrowserUtils.removeLocalProperty(WidgetUtils.idToSettingKey(id));
 
 		this.layouts = Object.keys(cols).reduce((layouts, key) => {
 			if (this.layouts[key]) {

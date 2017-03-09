@@ -34,7 +34,7 @@ const WidgetLayout = React.createClass({
 		}
 
 		const Component = widgetInfo.component;
-		const settings = WidgetStore.getWidgetSettings(layoutItem.i);
+		const settings = WidgetStore.getWidgetSettings(layoutItem.i, widgetInfo);
 
 		return (
 			<Widget

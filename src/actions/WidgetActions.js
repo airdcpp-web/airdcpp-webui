@@ -7,6 +7,7 @@ import OverlayConstants from 'constants/OverlayConstants';
 
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
+import WidgetUtils from 'utils/WidgetUtils';
 
 
 const notAlwaysShow = ({ widgetInfo }) => {
@@ -34,7 +35,7 @@ const WidgetActions = Reflux.createActions([
 ]);
 
 WidgetActions.create.listen(function (widgetInfo, location) {
-	const id = widgetInfo.typeId + '_' + Math.floor((Math.random() * 100000000) + 1);
+	const id = WidgetUtils.createId(widgetInfo);
 	History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
 		widgetInfo,
 		settings: {
