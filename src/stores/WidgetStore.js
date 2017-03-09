@@ -5,6 +5,10 @@ import WidgetActions from 'actions/WidgetActions';
 import reject from 'lodash/reject';
 import BrowserUtils from 'utils/BrowserUtils';
 
+import Application from 'widgets/Application';
+import RSS from 'widgets/RSS';
+import Transfers from 'widgets/Transfers';
+
 
 // HELPERS
 const idToSettingKey = (id) => 'widget_' + id;
@@ -72,9 +76,9 @@ const cols = { xlg: 14, lg: 10, sm: 6, xs: 4, xxs: 2 };
 const breakpoints = { xlg: 1600, lg: 1100, sm: 768, xs: 480, xxs: 0 };
 
 const widgets = [
-	require('widgets/Application'),
-	require('widgets/RSS'),
-	require('widgets/Transfers'),
+	Application,
+	RSS,
+	Transfers,
 ];
 
 const LAYOUT_STORAGE_KEY = 'home_layout';
