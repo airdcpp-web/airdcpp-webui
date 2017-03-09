@@ -38,6 +38,7 @@
     "babel-eslint": "^7.0.0",
     "babel-jest": "^19.0.0",
     "babel-loader": "^6.2.0",
+    "babel-plugin-module-resolver": "^2.5.0",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-plugin-transform-object-assign": "^6.5.0",
     "babel-plugin-transform-react-display-name": "^6.5.0",
@@ -47,6 +48,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "chalk": "^1.1.1",
     "classnames": "^2.2.0",
+    "compare-versions": "^3.0.0",
     "compression-webpack-plugin": "^0.3.1",
     "css-loader": "^0.26.0",
     "escape-string-regexp": "^1.0.5",
@@ -71,7 +73,7 @@
     "react": "^15.0.0",
     "react-addons-perf": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.0.0",
-    "react-autosuggest": "^8.0.0",
+    "react-autosuggest": "^9.0.0",
     "react-dom": "^15.0.0",
     "react-easy-emoji": "^1.0.4",
     "react-emojione": "^2.0.0",
@@ -90,7 +92,6 @@
     "reflux-promise": "^1.0.4",
     "rimraf": "^2.4.3",
     "semantic-ui-css": "^2.2.9",
-    "semver-compare": "^1.0.0",
     "style-loader": "^0.13.0",
     "tcomb-form": "^0.9.0",
     "tcomb-form-templates-semantic": "^0.1.1",
@@ -104,10 +105,10 @@
       "js",
       "jsx"
     ],
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/stubs/FileStub.js",
+      "\\.(css|less)$": "<rootDir>/jest/stubs/CSSStub.js"
+    },
     "setupFiles": [
       "./jest/setup.js"
     ]

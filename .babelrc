@@ -14,7 +14,14 @@
       "helpers": false,
       "polyfill": false,
       "regenerator": true,
+    }],
+    ["module-resolver", {
+      "root": ["./src", "./node_modules/semantic-ui-css"],
+      "alias": {
+        "semantic-ui": "semantic-ui-css"
+      }
     }]
+
   ],
   "env": {
     // only enable it when process.env.NODE_ENV is 'development' or undefined

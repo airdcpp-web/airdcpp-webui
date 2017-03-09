@@ -17,3 +17,6 @@ global.getBasePath = () => '/'
 
 global.localStorage = storageMock();
 global.sessionStorage = storageMock();
+
+window.$ = require('jquery');
+window.jQuery = require('jquery');
