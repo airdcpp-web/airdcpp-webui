@@ -28,6 +28,7 @@ export default {
 	FOLDER: 'yellow folder',
 	SAVE: 'green checkmark',
 
+	STOP: 'red stop',
 	PAUSE: 'blue pause',
 	PLAY: 'green play',
 

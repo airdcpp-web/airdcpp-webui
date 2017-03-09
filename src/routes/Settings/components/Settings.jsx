@@ -183,6 +183,23 @@ const menu = [
 			},
 		],
 	}, {
+		url: 'extensions',
+		title: 'Extensions',
+		icon: 'puzzle',
+		access: AccessConstants.ADMIN,
+		debugOnly: true,
+		menuItems: [
+			{ 
+				title: 'Manage installed', 
+				url: 'manage',
+				noSave: true,
+			}, { 
+				title: 'Extension catalog', 
+				url: 'packages', 
+				noSave: true,
+			}
+		],
+	}, {
 		url: 'system',
 		title: 'System',
 		icon: 'settings',

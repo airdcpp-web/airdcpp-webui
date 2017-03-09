@@ -55,26 +55,30 @@ export default (Component) => {
 			return menuItems.find(this.isItemActive);
 		},
 
-		getMenuItem(obj, parent, showIcon) {
-			if (obj.access && !LoginStore.hasAccess(obj.access)) {
+		getMenuItem(menuItemInfo, parent, showIcon) {
+			if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
 				return null;
 			}
 
-			let url = sectionToUrl(obj.url, parent);
+			if (menuItemInfo.access && !LoginStore.hasAccess(menuItemInfo.access)) {
+				return null;
+			}
+
+			let url = sectionToUrl(menuItemInfo.url, parent);
 
 			// Browsing is smoother when the child page is loaded directly
 			// Don't use the child URL for currently active parent so that the route is detected as active correctly
-			if (obj.menuItems && this.props.location.pathname.indexOf(url) !== 0) {
-				url = sectionToUrl(obj.menuItems[0].url, obj);
+			if (menuItemInfo.menuItems && this.props.location.pathname.indexOf(url) !== 0) {
+				url = sectionToUrl(menuItemInfo.menuItems[0].url, menuItemInfo);
 			}
 
 			return (
 				<RouterMenuItemLink 
 					key={ url } 
 					url={ url } 
-					icon={ obj.icon ? ('green ' + obj.icon) : null }
+					icon={ menuItemInfo.icon ? ('green ' + menuItemInfo.icon) : null }
 				>
-					{ obj.title }
+					{ menuItemInfo.title }
 				</RouterMenuItemLink>
 			);
 		},

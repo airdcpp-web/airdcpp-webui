@@ -11,6 +11,7 @@ module.exports = {
 				require('./routes/Sharing'),
 				require('./routes/View'),
 				require('./routes/System'),
+				require('./routes/Extensions'),
 				require('./routes/About'),
 				{
 					path: '**/**(/**)/browse',
