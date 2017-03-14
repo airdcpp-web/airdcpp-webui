@@ -3,12 +3,10 @@
 import React from 'react';
 
 import AccessConstants from 'constants/AccessConstants';
-import LoginStore from 'stores/LoginStore';
-
 import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
 
-
 import '../style.css';
+
 
 const menu = [
 	{

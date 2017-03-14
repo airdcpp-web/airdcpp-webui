@@ -26,6 +26,15 @@ export const LocalSettings = {
 	BACKGROUND_IMAGE_URL: 'background_image_url',
 };
 
+export const FieldTypes = {
+	NUMBER: 'number',
+	BOOLEAN: 'boolean',
+	STRING: 'string',
+	TEXT: 'text',
+	FILE_PATH: 'file_path',
+	DIRECTORY_PATH: 'directory_path',
+};
+
 export default {
 	MODULE_URL: MODULE_URL,
 

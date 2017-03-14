@@ -2,6 +2,7 @@ import React from 'react';
 import NotificationActions from 'actions/NotificationActions';
 
 import FormUtils from 'utils/FormUtils';
+import { FieldTypes } from 'constants/SettingConstants';
 
 import BrowseField from 'components/form/BrowseField';
 import Form from 'components/form/Form';
@@ -53,11 +54,11 @@ const SettingForm = React.createClass({
 	onFieldSetting(settingKey, fieldOptions, formValue, sourceData) {
 		const sourceItem = sourceData[settingKey];
 
-		const autoDetected = sourceItem.auto && sourceItem.value === formValue[settingKey];
-
+		// Title
 		if (sourceItem.title) {
 			let legend = sourceItem.title;
 
+			const autoDetected = sourceItem.auto && sourceItem.value === formValue[settingKey];
 			if (autoDetected) {
 				legend += ' (auto detected)';
 			}
@@ -69,16 +70,23 @@ const SettingForm = React.createClass({
 			fieldOptions['legend'] = legend;
 		}
 
-		// Path? 
-		// TODO: implement dialog also for file paths
-		if (/*sourceItem.type === 'file_path' ||*/ sourceItem.type === 'directory_path') {
-			fieldOptions['factory'] = t.form.Textbox;
-			fieldOptions['template'] = BrowseField;
-			fieldOptions['config'] = {
-				isFile: sourceItem.type === 'file_path'
-			};
-		} else if (sourceItem.type === 'long_text') {
-			fieldOptions['type'] = 'textarea';
+		// Field type
+		switch (sourceItem.type) {
+			case FieldTypes.TEXT: {
+				fieldOptions['type'] = 'textarea';
+				break;
+			} 
+			//case FieldTypes.FILE_PATH:
+			case FieldTypes.DIRECTORY_PATH: {
+				fieldOptions['factory'] = t.form.Textbox;
+				fieldOptions['template'] = BrowseField;
+
+				// TODO: file selector dialog
+				fieldOptions['config'] = {
+					isFile: sourceItem.type === FieldTypes.FILE_PATH
+				};
+			}
+			default:
 		}
 
 		// Enum select field?
