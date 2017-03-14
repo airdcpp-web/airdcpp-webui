@@ -1,7 +1,7 @@
 const MODULE_URL = 'filelists';
 export default {
 	MODULE_URL: MODULE_URL,
-	SESSIONS_URL: MODULE_URL + '/sessions',
+	SESSIONS_URL: MODULE_URL,
 
 	SESSION_CREATED: 'filelist_created',
 	SESSION_REMOVED: 'filelist_removed',

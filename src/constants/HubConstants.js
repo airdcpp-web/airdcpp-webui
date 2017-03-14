@@ -11,9 +11,9 @@ export const ConnectStateEnum = {
 
 export default {
 	MODULE_URL: MODULE_URL,
-	STATS_URL: MODULE_URL + '/stats',
+	SESSIONS_URL: MODULE_URL,
 
-	SESSIONS_URL: MODULE_URL + '/sessions',
+	STATS_URL: MODULE_URL + '/stats',
 
 	SESSION_CREATED: 'hub_created',
 	SESSION_REMOVED: 'hub_removed',

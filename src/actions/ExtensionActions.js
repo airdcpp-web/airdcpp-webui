@@ -108,7 +108,7 @@ ExtensionActions.installUrl.listen(function () {
 });
 
 ExtensionActions.installUrl.saved.listen(function (url, shasum) {
-	return SocketService.post(ExtensionConstants.EXTENSIONS_URL, { 
+	return SocketService.post(ExtensionConstants.DOWNLOAD_URL, { 
 		url,
 		shasum
 	})

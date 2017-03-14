@@ -9,6 +9,7 @@ import { sleep } from 'utils/Promise';
 
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
+import SearchConstants from 'constants/SearchConstants';
 
 import ViewFileActions from 'actions/ViewFileActions';
 import ViewFileStore from 'stores/ViewFileStore';
@@ -123,12 +124,12 @@ DownloadableItemActions.viewImage.listen(function (data, location) {
 DownloadableItemActions.findNfo.listen(async function (data, location) {
 	try {
 		// Get a new instance
-		let instance = await SocketService.post('search/instances', {
+		let instance = await SocketService.post(SearchConstants.INSTANCES_URL, {
 			expiration_minutes: 1,
 		});
 
 		// Post the search
-		await SocketService.post(`search/instances/${instance.id}/user_search`, {
+		await SocketService.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
 			user: data.user,
 			query: {
 				extensions: [ 'nfo' ],
@@ -144,7 +145,7 @@ DownloadableItemActions.findNfo.listen(async function (data, location) {
 		for (let i = 0; i < 5; i++) {
 			await sleep(500);
 
-			instance = await SocketService.get(`search/instances/${instance.id}`);
+			instance = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}`);
 			if (instance.result_count > 0) {
 				break;
 			}
@@ -152,7 +153,7 @@ DownloadableItemActions.findNfo.listen(async function (data, location) {
 
 		if (instance.result_count > 0) {
 			// Open the first result for viewing
-			const results = await SocketService.get(`search/instances/${instance.id}/results/0/1`);
+			const results = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`);
 
 			DownloadableItemActions.viewText({
 				itemInfo: results[0],

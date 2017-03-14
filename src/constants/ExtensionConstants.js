@@ -3,6 +3,7 @@ const MODULE_URL = 'extensions';
 export default {
 	MODULE_URL: MODULE_URL,
 	EXTENSIONS_URL: MODULE_URL,
+	DOWNLOAD_URL: MODULE_URL + '/download',
 
 	STARTED: 'extension_started',
 	STOPPED: 'extension_stopped',
