@@ -42,7 +42,7 @@ export default function (Component, semanticModuleName) {
 		},
 
 		showOverlay(componentSettings = {}) {
-			invariant(this.props.overlayId, 'OverlayDecorator: overlayId missing');
+			invariant(this.props.overlayId, 'OverlayDecorator: overlayId missing (remember to pass props to the overlay component)');
 			const settings = Object.assign(componentSettings, {
 				onHidden: this.onHidden,
 				onHide: this.onHide,

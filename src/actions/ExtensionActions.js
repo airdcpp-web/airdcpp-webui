@@ -13,8 +13,9 @@ import NotificationActions from 'actions/NotificationActions';
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
-//import LoginStore from 'stores/LoginStore';
 
+const isManaged = extension => extension.managed;
+const hasSettings = extension => extension.has_settings;
 
 const ExtensionActions = Reflux.createActions([
 	{ 'installNpm': { 
@@ -35,18 +36,31 @@ const ExtensionActions = Reflux.createActions([
 		children: [ 'confirmed' ], 
 		displayName: 'Uninstall',
 		icon: IconConstants.REMOVE },
+		filter: isManaged,
 	},
 	{ 'start': { 
 		asyncResult: true, 
 		displayName: 'Start',
 		icon: IconConstants.PLAY },
+		filter: isManaged,
 	},
 	{ 'stop': { 
 		asyncResult: true, 
 		displayName: 'Stop',
 		icon: IconConstants.STOP },
+		filter: isManaged,
 	},
+	{ 'configure': { 
+		children: [ 'saved' ],
+		displayName: 'Configure',
+		icon: IconConstants.EDIT,
+		filter: hasSettings,
+	} },
 ]);
+
+ExtensionActions.configure.listen(function (extension, location) {
+	History.pushModal(location, location.pathname + '/' + extension.id + '/configure', OverlayConstants.EXTENSION_CONFIGURE_MODAL, { extension });
+});
 
 ExtensionActions.start.listen(function (extension) {
 	const that = this;

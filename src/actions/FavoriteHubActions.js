@@ -15,15 +15,11 @@ import History from 'utils/History';
 
 export const FavoriteHubActions = Reflux.createActions([
 	{ 'create': {
-		asyncResult: true,
-		children: [ 'saved' ],
 		displayName: 'Add new',
 		access: AccessConstants.FAVORITE_HUBS_EDIT,
 		icon: IconConstants.CREATE 
 	} },
 	{ 'edit': { 
-		asyncResult: true,
-		children: [ 'saved' ],
 		displayName: 'Edit',
 		access: AccessConstants.FAVORITE_HUBS_EDIT,
 		icon: IconConstants.EDIT,

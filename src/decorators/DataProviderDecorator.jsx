@@ -103,8 +103,7 @@ export default function (Component, settings) {
 			});
 
 			Promise.all(promises)
-				.then(this.onDataFetched)
-				.catch(this.onDataFetchFailed);
+				.then(this.onDataFetched, this.onDataFetchFailed)
 		},
 
 		// Convert the data array to key-value props

@@ -1,4 +1,8 @@
 import invariant from 'invariant';
+import t from 'utils/tcomb-form';
+
+import { FieldTypes } from 'constants/SettingConstants';
+
 
 const parse = function (v) {
 	if (v === 'null') {
@@ -10,6 +14,25 @@ const parse = function (v) {
 
 const format = function (v) {
 	return String(v);
+};
+
+const typeToField = (type) => {
+	switch (type) {
+		case FieldTypes.NUMBER: return t.Positive;
+		case FieldTypes.BOOLEAN: return t.Bool;
+		case FieldTypes.STRING:
+		case FieldTypes.TEXT:
+		case FieldTypes.FILE_PATH:
+		case FieldTypes.DIRECTORY_PATH: return t.Str;
+		default: 
+	}
+
+	return null;
+};
+
+const parseFieldType = (info) => {
+	const fieldComponent = typeToField(info.type);
+	return info.optional ? t.maybe(fieldComponent) : fieldComponent;
 };
 
 export default {
@@ -39,6 +62,13 @@ export default {
 			};
 
 			return convertedData;
+		}, {});
+	},
+
+	parseFields(definitions) {
+		return Object.keys(definitions).reduce((reduced, key) => {
+			reduced[key] = parseFieldType(definitions[key]);
+			return reduced;
 		}, {});
 	},
 

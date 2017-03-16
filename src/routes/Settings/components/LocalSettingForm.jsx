@@ -35,7 +35,7 @@ const LocalSettingForm = React.createClass({
 					onSave={ this.onSave }
 				/>
 			</div>
-    );
+		);
 	}
 });
 

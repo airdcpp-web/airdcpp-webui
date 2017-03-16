@@ -54,6 +54,22 @@ const formatAuthor = (npmPackage, installedPackage) => {
 	return null;
 };
 
+const getCornerIcon = (installedPackage, hasUpdate) => {
+	if (!installedPackage) {
+		return null;
+	}
+
+	if (hasUpdate) {
+		return 'yellow warning circle';
+	}
+
+	if (!installedPackage.managed) {
+		return 'blue external square';
+	}
+
+	return 'green check circle';
+};
+
 
 const Extension = ({ npmPackage, installedPackage }) => {
 	const hasUpdate = installedPackage && npmPackage && versionCompare(installedPackage.version, npmPackage.version) < 0;
@@ -64,7 +80,7 @@ const Extension = ({ npmPackage, installedPackage }) => {
 				<Icon 
 					icon="puzzle" 
 					size="huge" 
-					cornerIcon={ hasUpdate ? 'yellow warning circle' : installedPackage && 'green check circle' }
+					cornerIcon={ getCornerIcon(installedPackage, hasUpdate) }
 				/>
 			</div>
 			<div className="content">
@@ -84,7 +100,7 @@ const Extension = ({ npmPackage, installedPackage }) => {
 						packageInfo={ npmPackage }
 					/>
 					<div>
-						{ !npmPackage && 'Non-listed extension' }
+						{ !npmPackage && (installedPackage && !installedPackage.managed ? 'Unmanaged extension' : 'Non-listed extension') }
 					</div>
 					<Version 
 						className={ npmPackage ? (!hasUpdate ? 'latest' : 'outdated') : null }
@@ -115,6 +131,13 @@ const Extension = ({ npmPackage, installedPackage }) => {
 					{ installedPackage && (
 							<ActionButton
 								action={ installedPackage.running ? ExtensionActions.stop : ExtensionActions.start }
+								className="right floated"
+								itemData={ installedPackage }
+							/>
+						) }
+					{ installedPackage && (
+							<ActionButton
+								action={ ExtensionActions.configure }
 								className="right floated"
 								itemData={ installedPackage }
 							/>

@@ -12,7 +12,7 @@ import t from 'utils/tcomb-form';
 
 const SettingForm = React.createClass({
 	contextTypes: {
-		onSettingsChanged: React.PropTypes.func.isRequired,
+		onSettingsChanged: React.PropTypes.func,
 		routerLocation: React.PropTypes.object.isRequired
 	},
 
@@ -110,7 +110,9 @@ const SettingForm = React.createClass({
 	},
 
 	onFieldChanged(id, value, hasChanges) {
-		this.context.onSettingsChanged(id, value, hasChanges);
+		if (this.context.onSettingsChanged) {
+			this.context.onSettingsChanged(id, value, hasChanges);
+		}
 
 		if (this.props.onFieldChanged) {
 			return this.props.onFieldChanged(id, value, hasChanges);

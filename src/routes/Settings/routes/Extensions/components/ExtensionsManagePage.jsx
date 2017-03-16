@@ -33,7 +33,7 @@ const LocalExtension = DataProviderDecorator(({ installedPackage, npmPackage }) 
 ), {
 	urls: {
 		npmPackage: ({ installedPackage }) => {
-			if (installedPackage.private) {
+			if (installedPackage.private || !installedPackage.managed) {
 				return Promise.resolve(null);
 			}
 

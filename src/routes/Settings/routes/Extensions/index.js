@@ -6,9 +6,21 @@ module.exports = {
 			cb(null, [ {
 				path: 'packages', 
 				component: require('./components/ExtensionsBrowsePage').default,
+				childRoutes: [
+					{
+						path: ':id/configure', 
+						component: require('./components/ExtensionsConfigureDialog').default, 
+					}
+				]
 			}, {
 				path: 'manage', 
 				component: require('./components/ExtensionsManagePage').default,
+				childRoutes: [
+					{
+						path: ':id/configure', 
+						component: require('./components/ExtensionsConfigureDialog').default, 
+					}
+				]
 			} ]);
 		}, 'settings-extensions-children');
 	},
