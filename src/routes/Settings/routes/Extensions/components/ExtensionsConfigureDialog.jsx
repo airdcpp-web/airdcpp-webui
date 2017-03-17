@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
+import Form from 'components/form/Form';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
@@ -8,16 +9,9 @@ import { RouteContext } from 'mixins/RouterMixin';
 import ExtensionConstants from 'constants/ExtensionConstants';
 import IconConstants from 'constants/IconConstants';
 
-import FormUtils from 'utils/FormUtils';
-import SettingForm from 'routes/Settings/components/SettingForm';
-
 
 const getSettingsUrl = (extensionId) => {
 	return ExtensionConstants.EXTENSIONS_URL + '/' + extensionId + '/settings';
-};
-
-const fetchSettings = (extensionId) => {
-	return SocketService.get(getSettingsUrl(extensionId) + '/infos');
 };
 
 const ExtensionsConfigureDialog = React.createClass({
@@ -31,26 +25,22 @@ const ExtensionsConfigureDialog = React.createClass({
 		return SocketService.patch(getSettingsUrl(this.props.extension.id), changedFields);
 	},
 
-	onFetchSettings() {
-		return fetchSettings(this.props.extension.id);
-	},
-
 	render: function () {
-		const { extension } = this.props;
+		const { extension, settings, fieldDefinitions, ...other } = this.props;
 		return (
 			<Modal 
-				{ ...this.props }
+				{ ...other }
 				className="extensions configure" 
 				title={ extension.name } 
 				onApprove={ this.save } 
 				closable={ false } 
 				icon={ IconConstants.EDIT }
 			>
-				<SettingForm
-					{ ...this.props }
+				<Form
 					ref="form"
-					onFetchSettings={ this.onFetchSettings }
 					onSave={ this.onSave }
+					fieldDefinitions={ fieldDefinitions }
+					value={ settings }
 				/>
 			</Modal>
 		);
@@ -59,9 +49,7 @@ const ExtensionsConfigureDialog = React.createClass({
 
 export default DataProviderDecorator(ExtensionsConfigureDialog, {
 	urls: {
-		formItems: ({ extension }) => fetchSettings(extension.id),
-	},
-	dataConverters: {
-		formItems: FormUtils.parseFields,
+		fieldDefinitions: ({ extension }) => SocketService.get(getSettingsUrl(extension.id) + '/definitions'),
+		settings: ({ extension }) => SocketService.get(getSettingsUrl(extension.id)),
 	},
 });

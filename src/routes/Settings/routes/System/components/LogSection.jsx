@@ -1,27 +1,23 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
-import t from 'utils/tcomb-form';
 import '../style.css';
 
 
 const LogSection = React.createClass({
-	mixins: [ ChildFormMixin('title', 'content') ],
-
 	convertKey(suffix) {
 		return 'log_' + this.props.section + (suffix ? ('_' + suffix) : '');
 	},
 
 	getInitialState() {
 		return {
-			enabled: null,
+			enabled: false,
 		};
 	},
 
-	onEnableStateReceived(data) {
+	onSettingsReceived(data) {
 		this.setState({
-			enabled: data[this.convertKey()].value,
+			enabled: data[this.convertKey()],
 		});
 	},
 
@@ -42,30 +38,30 @@ const LogSection = React.createClass({
 	},
 
 	render() {
-		const Title = {
-			[this.convertKey()]: t.Bool,
-		};
+		const Title = [
+			this.convertKey(),
+		];
 
-		const Content = {
-			[this.convertKey('file')]: t.Str,
-			[this.convertKey('format')]: t.Str,
-		};
+		const Content = [
+			this.convertKey('file'),
+			this.convertKey('format'),
+		];
 
 		return (
 			<div className={ this.getChildClass('log-section') }>
 				<div className={ this.getChildClass('title') }>
 					<RemoteSettingForm
-						ref="title"
-						formItems={ Title }
+						{ ...this.props }
+						keys={ Title }
 						onFieldChanged={ this.onEnableStateChanged }
-						onSourceDataChanged={ this.onEnableStateReceived }
+						onSourceValueUpdated={ this.onSettingsReceived }
 					/>
 				</div>
 
 				<div className={ this.getChildClass('content') }>
 					<RemoteSettingForm
-						ref="content"
-						formItems={ Content }
+						{ ...this.props }
+						keys={ Content }
 						onFieldSetting={ this.onContentSetting }
 					/>
 				</div>

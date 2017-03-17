@@ -1,27 +1,19 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
-import t from 'utils/tcomb-form';
+const Entry = [
+	'away_message',
+	'away_no_bots',
+	'away_idle_time',
+];
 
-const Entry = {
-	away_message: t.maybe(t.Str),
-	away_no_bots: t.Bool,
-	away_idle_time: t.Positive,
-};
-
-const AwayPage = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
-	render() {
-		return (
-			<div>
-				<RemoteSettingForm
-					ref="form"
-					formItems={Entry}
-				/>
-			</div>
-		);
-	}
-});
+const AwayPage = props => (
+	<div>
+		<RemoteSettingForm
+			{ ...props }
+			keys={ Entry }
+		/>
+	</div>
+);
 
 export default AwayPage;

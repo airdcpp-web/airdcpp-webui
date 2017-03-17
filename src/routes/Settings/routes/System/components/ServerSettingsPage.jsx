@@ -1,87 +1,80 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
 import SystemActions from 'actions/SystemActions';
 
-import t from 'utils/tcomb-form';
 
-const PlainEntry = {
-	web_plain_port: t.Range(1, 65535),
-	web_plain_bind_address: t.maybe(t.Str),
-};
+const PlainEntry = [
+	'web_plain_port',
+	'web_plain_bind_address',
+];
 
-const TlsEntry = {
-	web_tls_port: t.Range(1, 65535),
-	web_tls_bind_address: t.maybe(t.Str),
+const TlsEntry = [
+	'web_tls_port',
+	'web_tls_bind_address',
 
-	web_tls_certificate_path: t.maybe(t.Str),
-	web_tls_certificate_key_path: t.maybe(t.Str),
-};
+	'web_tls_certificate_path',
+	'web_tls_certificate_key_path',
+];
 
-const Generic = {
-	web_server_threads: t.Positive,
-	default_idle_timeout: t.Positive,
-	ping_interval: t.Positive,
-	ping_timeout: t.Positive,
-};
+const Generic = [
+	'web_server_threads',
+	'default_idle_timeout',
+	'ping_interval',
+	'ping_timeout',
+];
 
-const ServerSettingsPage = React.createClass({
-	mixins: [ SettingPageMixin('plain', 'tls', 'generic') ],
-	render() {
-		return (
-			<div>
-				{/*<Message 
-					description={ (
-						<div>
-							<div>
-								New settings will take effect after restarting the management interface
-							</div>
-							<ActionButton 
-								action={ SystemActions.restartWeb }
-							/>
-						</div>
-					) }
-					icon="blue info"
-				/>*/}
-
-				<ActionButton 
-					action={ SystemActions.restartWeb }
-				/>
-
-				<div className="ui header">HTTP</div>
-				<div className="ui segment">
-					<RemoteSettingForm
-						ref="plain"
-						formItems={PlainEntry}
+const ServerSettingsPage = props => (
+	<div>
+		{/*<Message 
+			description={ (
+				<div>
+					<div>
+						New settings will take effect after restarting the management interface
+					</div>
+					<ActionButton 
+						action={ SystemActions.restartWeb }
 					/>
 				</div>
+			) }
+			icon="blue info"
+		/>*/}
 
-				<div className="ui header">HTTPS</div>
-				<div className="ui segment">
-					<RemoteSettingForm
-						ref="tls"
-						formItems={TlsEntry}
-					/>
+		<ActionButton 
+			action={ SystemActions.restartWeb }
+		/>
 
-					<Message 
-						description="The default client certificate is used if the certificate paths are empty"
-						icon="blue info"
-					/>
-				</div>
+		<div className="ui header">HTTP</div>
+		<div className="ui segment">
+			<RemoteSettingForm
+				{ ...props }
+				keys={ PlainEntry }
+			/>
+		</div>
 
-				<div className="ui header">Advanced</div>
-				<div className="ui segment">
-					<RemoteSettingForm
-						ref="generic"
-						formItems={Generic}
-					/>
-				</div>
-			</div>
-		);
-	}
-});
+		<div className="ui header">HTTPS</div>
+		<div className="ui segment">
+			<RemoteSettingForm
+				{ ...props }
+				keys={ TlsEntry }
+			/>
+
+			<Message 
+				description="The default client certificate is used if the certificate paths are empty"
+				icon="blue info"
+			/>
+		</div>
+
+		<div className="ui header">Advanced</div>
+		<div className="ui segment">
+			<RemoteSettingForm
+				{ ...props }
+				keys={ Generic }
+			/>
+		</div>
+	</div>
+);
 
 export default ServerSettingsPage;

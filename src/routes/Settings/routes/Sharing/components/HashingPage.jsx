@@ -1,31 +1,23 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import HashDatabaseLayout from './HashDatabaseLayout';
 
-import t from 'utils/tcomb-form';
+const Entry = [
+	'max_hash_speed',
+	'max_total_hashers',
+	'max_volume_hashers',
+];
 
-const Entry = {
-	max_hash_speed: t.Positive,
-	max_total_hashers: t.Range(1),
-	max_volume_hashers: t.Range(1),
-};
+const HashingPage = props => (
+	<div>
+		<RemoteSettingForm
+			{ ...props }
+			keys={ Entry }
+		/>
 
-const HashingPage = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
-	render() {
-		return (
-			<div>
-				<RemoteSettingForm
-					ref="form"
-					formItems={Entry}
-				/>
-
-				<HashDatabaseLayout/>
-			</div>
-		);
-	}
-});
+		<HashDatabaseLayout/>
+	</div>
+);
 
 export default HashingPage;

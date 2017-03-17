@@ -1,29 +1,21 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
-import t from 'utils/tcomb-form';
+const Entry = [
+	'segmented_downloads',
+	'min_segment_size',
+	'new_segment_min_speed',
+	'allow_slow_overlap',
+	'finished_remove_exit',
+];
 
-const Entry = {
-	segmented_downloads: t.Bool,
-	min_segment_size: t.Positive,
-	new_segment_min_speed: t.Positive,
-	allow_slow_overlap: t.Bool,
-	finished_remove_exit: t.Bool,
-};
-
-const DownloadOptionsPage = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
-	render() {
-		return (
-			<div>
-				<RemoteSettingForm
-					ref="form"
-					formItems={Entry}
-				/>
-			</div>
-		);
-	}
-});
+const DownloadOptionsPage = props => (
+	<div>
+		<RemoteSettingForm
+			{ ...props }
+			keys={ Entry }
+		/>
+	</div>
+);
 
 export default DownloadOptionsPage;

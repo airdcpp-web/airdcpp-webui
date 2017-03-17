@@ -1,23 +1,12 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import SettingPageMixin from 'routes/Settings/mixins/SettingPageMixin';
 
 import LoginStore from 'stores/LoginStore';
-//import AutoSuggestField from 'components/form/AutoSuggestField';
-
-import t from 'utils/tcomb-form';
 
 import '../style.css';
 
-const Entry = {
-	auto_follow_redirects: t.Bool,
-	disconnect_offline_users: t.Bool,
-	disconnect_hubs_noreg: t.Bool,
-	min_search_interval: t.Positive,
-};
 
 const MiscPage = React.createClass({
-	mixins: [ SettingPageMixin('form') ],
 	onFieldSetting(id, fieldOptions, formValue) {
 		if (id === 'nmdc_encoding') {
 			fieldOptions['help'] = (
@@ -42,22 +31,25 @@ const MiscPage = React.createClass({
 	},
 
 	render() {
-		let entry = Entry;
+		const Entry = [
+			'auto_follow_redirects',
+			'disconnect_offline_users',
+			'disconnect_hubs_noreg',
+			'min_search_interval',
+		];
 
 		// The locale-specific system encoding is used on Windows by default
 		// while other system use UTF-8
 		if (LoginStore.systemInfo.platform !== 'windows') {
-			entry = Object.assign({}, entry, {
-				nmdc_encoding: t.Str,
-			});
+			Entry.push('nmdc_encoding');
 		}
 
 		return (
 			<div>
 				<RemoteSettingForm
-					ref="form"
-					formItems={entry}
-					onFieldSetting={this.onFieldSetting}
+					{ ...this.props }
+					keys={ Entry }
+					onFieldSetting={ this.onFieldSetting }
 				/>
 			</div>
 		);

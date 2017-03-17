@@ -76,13 +76,14 @@ const HashDatabaseLayout = React.createClass({
 					<SizeRow title="File index size" size={ status.file_index_size }/>
 					<SizeRow title="Hash store size" size={ status.hash_store_size }/>
 				</div>
-				{ LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT) ? (
+				{ LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT) && (
 					<OptimizeLayout
 						running={ status.maintenance_running }
 						startHandler={ this.handleOptimize }
 						checkboxState={ this.state.verify }
 						checkboxHandler={ (checked) => this.setState({ verify: checked }) }
-					/> ) : null }
+					/> 
+				) }
 			</div>
 		);
 	}

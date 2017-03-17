@@ -1,16 +1,14 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import { ConnectionModeEnum } from 'constants/SettingConstants';
 
 const ProtocolPage = React.createClass({
-	mixins: [ ChildFormMixin('form') ],
 	convertValue(key) {
 		return key + '_' + this.props.protocol;
 	},
 
-	onFieldSetting(id, fieldOptions, formValue, settingInfo) {
+	onFieldSetting(id, fieldOptions, formValue) {
 		const protocolEnabled = formValue[this.convertValue('connection_mode')] !== ConnectionModeEnum.INCOMING_DISABLED;
 		const autoDetect = formValue[this.convertValue('connection_auto')];
 
@@ -34,9 +32,8 @@ const ProtocolPage = React.createClass({
 		return (
 			<div>
 				<RemoteSettingForm
-					ref="form"
-					formItems={this.props.formItems}
-					onFieldSetting={this.onFieldSetting}
+					{ ...this.props }
+					onFieldSetting={ this.onFieldSetting }
 				/>
 			</div>
 		);

@@ -1,18 +1,16 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { ChildFormMixin } from 'routes/Settings/mixins/SettingPageMixin';
 
 import SocketService from 'services/SocketService';
 import SettingConstants from 'constants/SettingConstants';
 
 
 const AutoValuePanel = React.createClass({
-	mixins: [ ChildFormMixin('form') ],
 	propTypes: {
 		/**
 		 * Form items to list
 		 */
-		formItems: React.PropTypes.object.isRequired,
+		keys: React.PropTypes.array.isRequired,
 
 		/**
 		 * Type of the value section (from the setting key)
@@ -31,8 +29,8 @@ const AutoValuePanel = React.createClass({
 			return null;
 		}
 
-		return SocketService.post(SettingConstants.ITEMS_INFO_URL, { 
-			keys: Object.keys(this.props.formItems).filter(key => key !== autoSettingKey), 
+		return SocketService.post(SettingConstants.ITEMS_GET_URL, { 
+			keys: this.props.keys.filter(key => key !== autoSettingKey), 
 			force_auto_values: true 
 		});
 	},
@@ -48,8 +46,7 @@ const AutoValuePanel = React.createClass({
 		return (
 			<div className="ui segment">
 				<RemoteSettingForm
-					ref="form"
-					formItems={ this.props.formItems }
+					{ ...this.props }
 					onFieldChanged={ this.onFieldChanged }
 					onFieldSetting={ this.onFieldSetting }
 				/>
