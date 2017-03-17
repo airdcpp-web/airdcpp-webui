@@ -10,7 +10,7 @@
     "transform-react-display-name",
     "syntax-async-functions",
     "transform-regenerator",
-		["transform-runtime", {
+    ["transform-runtime", {
       "helpers": false,
       "polyfill": false,
       "regenerator": true,
@@ -21,18 +21,12 @@
         "semantic-ui": "semantic-ui-css"
       }
     }]
-
   ],
   "env": {
-    // only enable it when process.env.NODE_ENV is 'development' or undefined
     "development": {
       "plugins": [
         [ "react-transform", {
           "transforms": [{
-            "transform": "react-transform-hmr",
-            "imports": ["react"],
-            "locals": ["module"],
-          }, {
             "transform": "react-transform-catch-errors",
             "imports": ["react", "redbox-react"],
           }]

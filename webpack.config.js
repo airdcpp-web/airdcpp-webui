@@ -7,6 +7,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
 if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
 	process.env.NODE_ENV = 'production';
+} else if (!process.env.NODE_ENV) {
+	process.env.NODE_ENV = 'development';
 }
 
 const release = (process.env.NODE_ENV === 'production');
@@ -66,7 +68,7 @@ var debugPlugins = [
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-var entries = [ './src/app.jsx' ]; 
+var entries = [ './src/index.jsx' ]; 
 if (!release) {
 	entries.push('webpack-hot-middleware/client');
 }

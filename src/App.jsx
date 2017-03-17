@@ -1,9 +1,4 @@
-import 'utils/webpack';
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-import AppContainer from './AppContainer';
 import { Router } from 'react-router';
 
 import LoginStore from 'stores/LoginStore';
@@ -13,6 +8,16 @@ import History from 'utils/History';
 import Reflux from 'reflux';
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
+
+import { LocalSettings } from 'constants/SettingConstants';
+import LocalSettingStore from 'stores/LocalSettingStore';
+
+import Background1500px from '../resources/images/background_1500px.jpg';
+import Background3460px from '../resources/images/background_3460px.jpg';
+import BrowserUtils from 'utils/BrowserUtils';
+
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import SetContainerSize from 'mixins/SetContainerSize';
 
 import 'array.prototype.find';
 import './utils/semantic';
@@ -24,7 +29,7 @@ global.Promise = Promise;
 
 Reflux.use(RefluxPromise(Promise));
 
-if (LoginStore.hasSession) {
+if (LoginStore.hasSession && !LoginStore.socketAuthenticated) { // The socket may be connected already when using dev server
 	LoginActions.connect(LoginStore.authToken);
 }
 
@@ -82,9 +87,38 @@ const routeConfig = [
 	}
 ];
 
-ReactDOM.render(
-	<AppContainer>
-		<Router history={ History } routes={routeConfig} />
-	</AppContainer>,
-	document.getElementById('container-main')
-);
+const getBackgroundImage = () => {
+	const url = LocalSettingStore.getValue(LocalSettings.BACKGROUND_IMAGE_URL);
+	if (url) {
+		return url;
+	}
+
+	if (BrowserUtils.useMobileLayout()) {
+		return null;
+	}
+
+	return window.innerWidth < 1440 ? Background1500px : Background3460px;
+};
+
+
+const App = React.createClass({
+	mixins: [
+		SetContainerSize,
+		PureRenderMixin,
+	],
+
+	render() {
+		return (
+			<div id="background-wrapper" 
+				style={{
+				 backgroundImage: 'url(' + getBackgroundImage() + ')',
+				 height: '100%',
+				}}
+			>
+				<Router history={ History } routes={ routeConfig } />
+			</div>
+		);
+	}
+});
+
+export default App;
