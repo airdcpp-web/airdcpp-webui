@@ -2,7 +2,7 @@ import React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
 
-import SettingForm from './SettingForm';
+import Form from 'components/form/Form';
 
 
 const LocalSettingForm = React.createClass({
@@ -10,14 +10,22 @@ const LocalSettingForm = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		formItems: React.PropTypes.object.isRequired,
+		keys: React.PropTypes.array.isRequired,
 	},
 
-	onFetchSettings() {
-		return Promise.resolve(LocalSettingStore.getInfos(Object.keys(this.props.formItems)));
+	getInitialState() {
+		this.definitions = LocalSettingStore.getDefinitions(this.props.keys);
+
+		return {
+		 settings: LocalSettingStore.getState(),
+		};
 	},
 
 	onSave(changedSettingArray) {
+		this.setState({
+			settings: LocalSettingStore.getState(),
+		});
+
 		return Promise.resolve(LocalSettingStore.setValues(changedSettingArray));
 	},
 
@@ -26,13 +34,16 @@ const LocalSettingForm = React.createClass({
 	},
 
 	render: function () {
+		const { settings } = this.state;
+		const { formRef, ...otherProps } = this.props;
 		return (
 			<div className="local setting-form">
-				<SettingForm
-					{ ...this.props }
-					ref="form"
-					onFetchSettings={ this.onFetchSettings }
+				<Form
+					{ ...otherProps }
+					ref={ formRef }
 					onSave={ this.onSave }
+					fieldDefinitions={ this.definitions }
+					value={ settings }
 				/>
 			</div>
 		);

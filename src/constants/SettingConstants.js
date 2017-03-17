@@ -41,6 +41,6 @@ export default {
 	ITEMS_GET_URL: MODULE_URL + '/get',
 	ITEMS_SET_URL: MODULE_URL + '/set',
 	ITEMS_RESET_URL: MODULE_URL + '/reset',
-	ITEMS_INFO_URL: MODULE_URL + '/infos',
+	ITEMS_DEFINITIONS_URL: MODULE_URL + '/definitions',
 }
 ;

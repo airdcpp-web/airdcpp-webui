@@ -1,11 +1,12 @@
 import React from 'react';
-
-import NotificationActions from 'actions/NotificationActions';
-import Loader from 'components/semantic/Loader';
-
+import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
 
+import NotificationActions from 'actions/NotificationActions';
+
+import FormUtils from 'utils/FormUtils';
 import t from 'utils/tcomb-form';
+
 import './style.css';
 
 const TcombForm = t.form.Form;
@@ -15,7 +16,7 @@ const Form = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		formItems: React.PropTypes.object.isRequired,
+		fieldDefinitions: React.PropTypes.object.isRequired,
 
 		/**
 		 * Optional callback for appending field settings
@@ -41,12 +42,12 @@ const Form = React.createClass({
 		 * Optional callback that is called when the settings are received from the server
 		 * Receives the setting object as parameter
 		 */
-		onSourceDataChanged: React.PropTypes.func,
+		onSourceValueUpdated: React.PropTypes.func,
 
 		/**
 		 * Source value to use for initial data
 		 */
-		sourceData: React.PropTypes.object,
+		value: React.PropTypes.object.isRequired,
 
 		/**
 		 * Header for the form
@@ -57,90 +58,76 @@ const Form = React.createClass({
 		 * Default values to set for the form if there is no current value
 		 * Format: key: value
 		 */
-		defaultValues: React.PropTypes.object,
+		defaultValue: React.PropTypes.object,
+	},
+
+	contextTypes: {
+		onFieldChanged: React.PropTypes.func,
 	},
 
 	getDefaultProps() {
 		return {
-			defaultValues: {},
+			defaultValue: {},
 		};
 	},
 
 	getInitialState() {
 		return {
 			error: null,
-			formValue: null
+			currentValue: null
 		};
 	},
 
-	setSourceData(sourceData) {
-		const formValue = this.getValueMap(sourceData);
+	setValue(value) {
+		this.sourceValue = FormUtils.normalizeValue(value, this.props.fieldDefinitions, this.props.defaultValue);
 
-		if (this.props.onSourceDataChanged) {
-			this.props.onSourceDataChanged(sourceData);
+		if (this.props.onSourceValueUpdated) {
+			this.props.onSourceValueUpdated(this.sourceValue);
 		}
 
-		this.sourceData = sourceData;
-		this.setState({ formValue: formValue });
+		this.setState({ 
+			formValue: this.sourceValue 
+		});
 	},
 
 	componentWillMount() {
-		if (this.props.sourceData) {
-			this.setSourceData(this.props.sourceData);
-		}
+		this.setValue(this.props.value);
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.sourceData !== this.props.sourceData) {
-			this.setSourceData(nextProps.sourceData);
+		if (nextProps.value !== this.props.value) {
+			this.setValue(nextProps.value);
 		}
 	},
 
-	// Convert received settings to key-value map
-	getValueMap(sourceData) {
-		// Convert empty strings to nulls (that's what tcomb will use)
-		for (let key in sourceData) {
-			if (sourceData[key].value === '') {
-				sourceData[key].value = null;
-			}
-		}
+	// Merge new fields into current current form value
+	mergeFields(formValue, updatedFields) {
+		const mergedValue = {
+			...formValue, 
+			...FormUtils.normalizeValue(updatedFields, this.props.fieldDefinitions, this.props.defaultValue)
+		};
 
-		// Get a simple key-value map for the form
-		return Object.keys(sourceData).reduce((valueMap, key) => {
-			// Use the default value if there is nothing set
-			if (!sourceData[key].value && this.props.defaultValues[key]) {
-				valueMap[key] = this.props.defaultValues[key];
-			} else {
-				valueMap[key] = sourceData[key].value;
-			}
-
-			return valueMap;
-		}, {});
-	},
-
-	// Merge new settings to current values (don't change source data)
-	onUserSettingsReceived(formValue, data) {
-		const newValue = Object.assign({}, formValue, this.getValueMap(data));
-
-		this.setState({ formValue: newValue });
+		this.setState({ 
+			formValue: mergedValue 
+		});
 	},
 
 	onFieldChanged(value, valueKey) {
 		// Make sure that we have the converted value for the custom 
 		// change handler (in case there are transforms for this field)
-		const result = this.refs.form.getComponent(valueKey).validate();
+		const result = this.form.getComponent(valueKey).validate();
 		const key = valueKey[0];
 		value[key] = result.value;
 
 		if (this.props.onFieldChanged) {
-			const promise = this.props.onFieldChanged(key, value, !isEqual(this.sourceData[key].value, value[key]));
+			const promise = this.props.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
 			if (promise) {
-				promise
-					.then(this.onUserSettingsReceived.bind(this, value))
-					.catch(error => 
-						NotificationActions.apiError('Failed to update values', error)
-					);
+				promise.then(this.mergeFields.bind(this, value), error => NotificationActions.apiError('Failed to update values', error));
 			}
+		}
+
+		if (this.context.onFieldChanged) {
+			this.context.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
 		}
 
 		this.setState({ 
@@ -149,7 +136,7 @@ const Form = React.createClass({
 	},
 
 	// Handle an API error
-	_handleError(error) {
+	onSaveFailed(error) {
 		if (error.code === 422) {
 			this.setState({ error: error.json });
 		} else {
@@ -161,7 +148,7 @@ const Form = React.createClass({
 
 	// Reduces an object of current form values that don't match the source data
 	reduceChangedValues(formValue, changedValues, valueKey) {
-		if (!isEqual(this.sourceData[valueKey].value, formValue[valueKey])) {
+		if (!isEqual(this.sourceValue[valueKey], formValue[valueKey])) {
 			changedValues[valueKey] = formValue[valueKey];
 		}
 
@@ -170,17 +157,16 @@ const Form = React.createClass({
 
 	// Calls props.onSave with changed form values
 	save() {
-		let validatedFormValue = this.refs.form.getValue();
+		const validatedFormValue = this.form.getValue();
 		if (validatedFormValue) {
-
-			// Filter the changed settings
+			// Get the changed fields
 			const settingKeys = Object.keys(validatedFormValue);
-			const changedSettingArray = settingKeys.reduce(
+			const changedFields = settingKeys.reduce(
 				this.reduceChangedValues.bind(this, validatedFormValue), 
 				{}
 			); 
 
-			return this.props.onSave(changedSettingArray).catch(this._handleError);
+			return this.props.onSave(changedFields).catch(this.onSaveFailed);
 		}
 
 		return Promise.reject(new Error('Validation failed'));
@@ -188,9 +174,10 @@ const Form = React.createClass({
 
 	// Reduces an array of field setting objects by calling props.onFieldSetting
 	fieldOptionReducer(optionsObject, settingKey) {
+		optionsObject[settingKey] = FormUtils.parseFieldOptions(this.props.fieldDefinitions[settingKey]);;
+
 		if (this.props.onFieldSetting) {
-			optionsObject[settingKey] = {};
-			this.props.onFieldSetting(settingKey, optionsObject[settingKey], this.state.formValue, this.sourceData);
+			this.props.onFieldSetting(settingKey, optionsObject[settingKey], this.state.formValue);
 		}
 
 		return optionsObject;
@@ -199,7 +186,9 @@ const Form = React.createClass({
 	// Returns an options object for Tcomb form
 	getFieldOptions() {
 		const options = {};
-		options['fields'] = Object.keys(this.sourceData).reduce(this.fieldOptionReducer, {});
+
+		// Parent handlers
+		options['fields'] = Object.keys(this.props.fieldDefinitions).reduce(this.fieldOptionReducer, {});
 
 		// Do we have an error object from the API?
 		// Show the error message for the respective field
@@ -216,29 +205,25 @@ const Form = React.createClass({
 	},
 
 	render: function () {
-		if (!this.sourceData) {
-			return <Loader text="Loading form data"/>;
-		}
-
-		let formHeader = null;
-		if (this.props.title) {
-			formHeader = (
-				<div className="ui form header">
-					{ this.props.title } 
-				</div>
-			);
-		}
-
+		const { title, context, fieldDefinitions, className } = this.props;
+		const { formValue } = this.state;
 		return (
-			<div className="form">
-				{ formHeader }
+			<div className={ classNames('form', className) }>
+				{ title && (
+					<div className="ui form header">
+						{ title } 
+					</div>
+				) }
 				<TcombForm
-					ref="form"
-					type={ t.struct(this.props.formItems) }
+					ref={ c => {
+						if (c)
+							this.form = c;
+					} }
+					type={ t.struct(FormUtils.parseDefinitions(fieldDefinitions)) }
 					options={ this.getFieldOptions() }
-					value={ this.state.formValue }
+					value={ formValue }
 					onChange={ this.onFieldChanged }
-					context={ this.props.context }
+					context={ context }
 				/>
 			</div>);
 	}

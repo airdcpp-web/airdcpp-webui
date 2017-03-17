@@ -1,9 +1,10 @@
 import React from 'react';
 import SettingConstants from 'constants/SettingConstants';
 
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
 
-import SettingForm from './SettingForm';
+import Form from 'components/form/Form';
 
 
 const RemoteSettingForm = React.createClass({
@@ -11,17 +12,13 @@ const RemoteSettingForm = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		formItems: React.PropTypes.object.isRequired,
+		keys: React.PropTypes.array.isRequired,
+
+		formRef: React.PropTypes.func, // REQUIRED
 	},
 
-	onFetchSettings() {
-		return SocketService.post(SettingConstants.ITEMS_INFO_URL, { 
-			keys: Object.keys(this.props.formItems)
-		});
-	},
-
-	onSave(changedSettingArray) {
-		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedSettingArray);
+	onSave(changedValues) {
+		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.props.refetchData);
 	},
 
 	save() {
@@ -29,17 +26,24 @@ const RemoteSettingForm = React.createClass({
 	},
 
 	render: function () {
+		const { formRef, settings, fieldDefinitions, ...otherProps } = this.props;
 		return (
 			<div className="remote setting-form">
-				<SettingForm
-					{ ...this.props }
-					ref="form"
-					onFetchSettings={ this.onFetchSettings }
+				<Form
+					{ ...otherProps }
+					ref={ formRef }
 					onSave={ this.onSave }
+					fieldDefinitions={ fieldDefinitions }
+					value={ settings }
 				/>
 			</div>
 		);
 	}
 });
 
-export default RemoteSettingForm;
+export default DataProviderDecorator(RemoteSettingForm, {
+	urls: {
+		fieldDefinitions: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
+		settings: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
+	},
+});
