@@ -166,7 +166,7 @@ const Form = React.createClass({
 				{}
 			); 
 
-			return this.props.onSave(changedFields).catch(this.onSaveFailed);
+			return this.props.onSave(changedFields, validatedFormValue).catch(this.onSaveFailed);
 		}
 
 		return Promise.reject(new Error('Validation failed'));
@@ -174,7 +174,7 @@ const Form = React.createClass({
 
 	// Reduces an array of field setting objects by calling props.onFieldSetting
 	fieldOptionReducer(optionsObject, settingKey) {
-		optionsObject[settingKey] = FormUtils.parseFieldOptions(this.props.fieldDefinitions[settingKey]);;
+		optionsObject[settingKey] = FormUtils.parseFieldOptions(this.props.fieldDefinitions[settingKey]);
 
 		if (this.props.onFieldSetting) {
 			this.props.onFieldSetting(settingKey, optionsObject[settingKey], this.state.formValue);

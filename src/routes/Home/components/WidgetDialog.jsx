@@ -6,9 +6,8 @@ import Modal from 'components/semantic/Modal';
 import IconConstants from 'constants/IconConstants';
 import { RouteContext } from 'mixins/RouterMixin';
 
-import t from 'utils/tcomb-form';
-
-const TcombForm = t.form.Form;
+import Form from 'components/form/Form';
+import { FieldTypes } from 'constants/SettingConstants';
 
 
 const WidgetDialog = React.createClass({
@@ -32,27 +31,30 @@ const WidgetDialog = React.createClass({
 	},
 
 	save() {
-		const settings = this.refs.form.getValue();
-		if (settings) {
-			this.props.onSave(settings);
-			return Promise.resolve();
-		}
+		return this.refs.form.save();
+	},
 
-		return Promise.reject();
+	onSave(changedFields, value) {
+		const { name, ...formSettings } = value;
+		this.props.onSave({
+			name,
+			widget: formSettings
+		});
+		return Promise.resolve();
 	},
 
 	render: function () {
 		const { widgetInfo, location, settings, ...overlayProps } = this.props;
-		const { formSettings, name, icon, fieldOptions } = widgetInfo;
+		const { formSettings, name, icon } = widgetInfo;
 
 		const Entry = {
-			name: t.Str,
+			name: {
+				type: FieldTypes.STRING,
+			},
 		};
 
 		if (formSettings) {
-			Object.assign(Entry, {
-				widget: t.struct(formSettings),
-			});
+			Object.assign(Entry, formSettings);
 		}
 
 		return (
@@ -64,17 +66,14 @@ const WidgetDialog = React.createClass({
 				location={ location }
 				{ ...overlayProps }
 			>
-				<TcombForm
+				<Form
 					ref="form"
-					type={ t.struct(Entry) }
-					value={ settings }
-					options={{
-						fields: {
-							widget: {
-								fields: fieldOptions,
-							},
-						},
-					}}
+					value={ {
+						name: settings.name,
+						...settings.widget,
+					} }
+					fieldDefinitions={ Entry }
+					onSave={ this.onSave }
 				/>
 
 				<Message

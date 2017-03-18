@@ -1,4 +1,4 @@
-const t = require('utils/tcomb-form').default;
+const FieldTypes = require('constants/SettingConstants').FieldTypes;
 
 module.exports = {
 	typeId: 'rss',
@@ -6,16 +6,14 @@ module.exports = {
 	name: 'RSS feed',
 	icon: 'orange rss',
 	formSettings: {
-		feed_url: t.Str,
-		feed_cache_minutes: t.Positive,
-	},
-	fieldOptions: {
 		feed_url: {
-			legend: 'Feed URL',
+			title: 'Feed URL',
+			type: FieldTypes.STRING,
 			help: 'RSS and Atom feeds are supported',
 		},
 		feed_cache_minutes: {
-			legend: 'Minimum refetch interval (minutes)',
+			title: 'Minimum refetch interval (minutes)',
+			type: FieldTypes.NUMBER,
 		},
 	},
 	defaultSettings: {

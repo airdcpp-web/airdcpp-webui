@@ -11,9 +11,10 @@ import { RouteContext } from 'mixins/RouterMixin';
 import t from 'utils/tcomb-form';
 
 import Form from 'components/form/Form';
-import FormUtils from 'utils/FormUtils';
 
 import LoginStore from 'stores/LoginStore';
+
+import { FieldTypes } from 'constants/SettingConstants';
 
 import '../../style.css';
 
@@ -58,30 +59,38 @@ const AccessCaptions = {
 
 const reducePermissions = (options, key) => {
 	options.push({
-		value: AccessConstants[key],
-		text: AccessCaptions[key],
+		id: AccessConstants[key],
+		name: AccessCaptions[key],
 	});
 
 	return options;
 };
 
-
-const Entry = {
-	username: t.Str,
-	password: t.Str,
-	permissions: t.list(t.String),
+const getEntry = isNew => {
+	return {
+		username: {
+			type: FieldTypes.STRING,
+		},
+		password:{
+			type: FieldTypes.STRING,
+			title: isNew ? 'Password' : 'New password',
+			optional: !isNew,
+		},
+		permissions: {
+			type: FieldTypes.LIST_STRING,
+			values: Object.keys(AccessConstants).reduce(reducePermissions, []),
+		},
+	};
 };
 
 const WebUserDialog = React.createClass({
 	mixins: [ RouteContext ],
+	isNew() {
+		return !this.props.user;
+	},
 
-	getInitialState() {
-		this._isNew = !this.props.user;
-
-		return {
-			sourceData: FormUtils.valueMapToInfo(this.props.user, Object.keys(Entry)),
-			virtualNames: [],
-		};
+	componentWillMount() {
+		this.entry = getEntry(this.isNew());
 	},
 
 	save() {
@@ -89,7 +98,7 @@ const WebUserDialog = React.createClass({
 	},
 
 	onSave(changedFields) {
-		if (this._isNew) {
+		if (this.isNew()) {
 			return SocketService.post(WebUserConstants.USERS_URL, changedFields);
 		}
 
@@ -100,29 +109,17 @@ const WebUserDialog = React.createClass({
 		if (id === 'permissions') {
 			fieldOptions['factory'] = t.form.Select;
 			fieldOptions['template'] = PermissionSelector;
-			fieldOptions['options'] = Object.keys(AccessConstants).reduce(reducePermissions, []);
-			fieldOptions['disabled'] = !this._isNew && this.props.user.username === LoginStore.user.username;
+			fieldOptions['disabled'] = !this.isNew() && this.props.user.username === LoginStore.user.username;
 		} else if (id === 'password') {
 			fieldOptions['type'] = 'password';
-			if (!this._isNew) {
-				fieldOptions['label'] = 'New password (optional)';
-			}
 		} else if (id === 'username') {
-			fieldOptions['disabled'] = !this._isNew;
+			fieldOptions['disabled'] = !this.isNew();
 		}
 	},
 
 	render: function () {
-		const title = this._isNew ? 'Add web user' : 'Edit user ' + this.props.user.username;
-
-		const context = {
-			location: this.props.location,
-		};
-
-		let entry = Entry;
-		if (!this._isNew) {
-			entry = Object.assign({}, Entry, { password: t.maybe(t.Str) });
-		}
+		const { user, location, ...other } = this.props;
+		const title = this.isNew() ? 'Add web user' : 'Edit user ' + user.username;
 
 		return (
 			<Modal 
@@ -131,15 +128,18 @@ const WebUserDialog = React.createClass({
 				onApprove={ this.save } 
 				closable={ false } 
 				icon="user" 
-				{ ...this.props }
+				location={ location }
+				{ ...other }
 			>
 				<Form
 					ref="form"
-					formItems={ entry }
+					fieldDefinitions={ this.entry }
 					onFieldSetting={ this.onFieldSetting }
 					onSave={ this.onSave }
-					sourceData={ this.state.sourceData }
-					context={ context }
+					value={ this.props.user }
+					context={ {
+						location,
+					} }
 				/>
 			</Modal>
 		);

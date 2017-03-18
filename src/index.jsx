@@ -11,7 +11,3 @@ ReactDOM.render(
 	<App/>,
 	document.getElementById('container-main')
 );
-
-if (module.hot) {
-	module.hot.accept();
-}

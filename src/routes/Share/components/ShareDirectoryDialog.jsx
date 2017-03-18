@@ -5,9 +5,10 @@ import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
 import { RouteContext } from 'mixins/RouterMixin';
-import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
 import Message from 'components/semantic/Message';
 
@@ -17,64 +18,45 @@ import FormUtils from 'utils/FormUtils';
 import FileUtils from 'utils/FileUtils';
 
 import Form from 'components/form/Form';
-import BrowseField from 'components/form/BrowseField';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import SelectField from 'components/form/SelectField';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
 import '../style.css';
 
-
-const ProfileList = t.refinement(t.list(t.Num), (n) => {
-	return n.length > 0;
-});
-
+import { FieldTypes } from 'constants/SettingConstants';
 
 const Entry = {
-	path: t.Str,
-	virtual_name: t.Str,
-	profiles: ProfileList,
-	incoming: t.Bool,
+	path: {
+		type: FieldTypes.DIRECTORY_PATH,
+	},
+	virtual_name:{
+		type: FieldTypes.STRING,
+		help: 'Directories with identical virtual names will be merged in filelist',
+	},
+	profiles: {
+		type: FieldTypes.LIST_NUMBER,
+		title: 'Share profiles',
+		help: 'New share profiles can be created from application settings',
+	}, 
+	incoming: {
+		type: FieldTypes.BOOLEAN,
+	},
 };
 
 const ShareDirectoryDialog = React.createClass({
 	mixins: [ RouteContext ],
-
-	getInitialState() {
-		this._isNew = !this.props.rootEntry;
-
-		const sourceData = FormUtils.valueMapToInfo(this.props.rootEntry, Object.keys(Entry));
-		return {
-			sourceData,
-			virtualNames: [],
-		};
-	},
-
-	componentDidMount() {
-		this.fetchRoots();
-	},
-
-	onRootsReceived(data) {
-		this.setState({
-			virtualNames: data.map(item => item.name, []),
-		});
-	},
-
-	fetchRoots() {
-		SocketService.get(ShareConstants.GROUPED_ROOTS_GET_URL)
-			.then(this.onRootsReceived)
-			.catch(error => 
-				console.error('Failed to load roots: ' + error)
-			);
+	isNew() {
+		return !this.props.rootEntry;
 	},
 
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
-			const sourceData = FormUtils.valueMapToInfo({ 
+			const mergeFields = { 
 				virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) 
-			});
+			};
 			
-			return Promise.resolve(sourceData);
+			return Promise.resolve(mergeFields);
 		}
 
 		return null;
@@ -85,7 +67,7 @@ const ShareDirectoryDialog = React.createClass({
 	},
 
 	onSave(changedFields) {
-		if (this._isNew) {
+		if (this.isNew()) {
 			return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
 		}
 
@@ -94,7 +76,7 @@ const ShareDirectoryDialog = React.createClass({
 
 	getFieldProfiles() {
 		return this.props.profiles
-			.reduce(FormUtils.convertRawProfile, []);
+			.map(FormUtils.normalizeEnumValue);
 	},
 
 	onFieldSetting(id, fieldOptions, formValue) {
@@ -103,50 +85,33 @@ const ShareDirectoryDialog = React.createClass({
 				factory: t.form.Select,
 				template: SelectField,
 				options: this.getFieldProfiles(),
-				help: 'New share profiles can be created from application settings',
-				label: 'Share profiles',
 			});
 		} else if (id === 'path') {
-			if (this._isNew) {
-				fieldOptions['factory'] = t.form.Textbox;
-				fieldOptions['template'] = BrowseField;
-			} else {
-				fieldOptions['disabled'] = true;
-			}
-			
+			fieldOptions['disabled'] = !this.isNew();
 			fieldOptions['config'] = Object.assign({} || fieldOptions['config'], {
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
 			});
 		} else if (id === 'virtual_name') {
-			fieldOptions['help'] = 'Directories with identical virtual names will be merged in filelist';
 			fieldOptions['factory'] = t.form.Textbox;
 			fieldOptions['template'] = AutoSuggestField;
 			fieldOptions['config'] = {
-				suggestionGetter: () => this.state.virtualNames,
+				suggestionGetter: () => this.props.virtualNames,
 			};
 
 		}
 	},
 
 	render: function () {
-		if (!this.state.virtualNames) {
-			return null;
-		}
-
-		const title = this._isNew ? 'Add share directory' : 'Edit share directory';
-
-		const context = {
-			location: this.props.location,
-		};
-
+		const title = this.isNew() ? 'Add share directory' : 'Edit share directory';
+		const { rootEntry, ...other } = this.props;
 		return (
 			<Modal 
 				className="share-directory" 
-				title={title} 
-				onApprove={this.save} 
-				closable={false} 
+				title={ title } 
+				onApprove={ this.save } 
+				closable={ false } 
 				icon={ IconConstants.FOLDER } 
-				{...this.props}
+				{ ...other }
 			>
 				<Message 
 					title="Hashing information"
@@ -161,20 +126,29 @@ const ShareDirectoryDialog = React.createClass({
 				/>
 				<Form
 					ref="form"
-					formItems={Entry}
-					onFieldChanged={this.onFieldChanged}
-					onFieldSetting={this.onFieldSetting}
-					onSave={this.onSave}
-					sourceData={this.state.sourceData}
-					defaultValues={ {
+					fieldDefinitions={ Entry }
+					onFieldChanged={ this.onFieldChanged }
+					onFieldSetting={ this.onFieldSetting }
+					onSave={ this.onSave }
+					value={ rootEntry }
+					defaultValue={ {
 						// Add the default profile for new entries
 						profiles: [ this.props.profiles.find(profile => profile.default).id ],
 					} }
-					context={ context }
+					context={ {
+						location: this.props.location,
+					} }
 				/>
 			</Modal>
 		);
 	}
 });
 
-export default ShareProfileDecorator(ShareDirectoryDialog, false);
+export default DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {
+	urls: {
+		virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
+	},
+	dataConverters: {
+		virtualNames: data => data.map(item => item.name, []),
+	},
+});

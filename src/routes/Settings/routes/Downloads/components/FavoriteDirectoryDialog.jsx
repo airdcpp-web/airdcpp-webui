@@ -9,40 +9,35 @@ import SocketService from 'services/SocketService';
 import { RouteContext } from 'mixins/RouterMixin';
 
 import t from 'utils/tcomb-form';
+import { FieldTypes } from 'constants/SettingConstants';
 
-import FormUtils from 'utils/FormUtils';
 import FileUtils from 'utils/FileUtils';
 
 import Form from 'components/form/Form';
-import BrowseField from 'components/form/BrowseField';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
 
 const Entry = {
-	path: t.Str,
-	name: t.Str,
+	path: {
+		type: FieldTypes.DIRECTORY_PATH,
+	},
+	name:{
+		type: FieldTypes.STRING,
+	},
 };
 
 const FavoriteDirectoryDialog = React.createClass({
 	mixins: [ RouteContext ],
-
-	getInitialState() {
-		this._isNew = !this.props.directoryEntry;
-
-		const sourceData = FormUtils.valueMapToInfo(this.props.directoryEntry, Object.keys(Entry));
-		return {
-			sourceData,
-		};
+	isNew() {
+		return !this.props.directoryEntry;
 	},
 
 	onFieldChanged(id, value, hasChanges) {
 		if (id.indexOf('path') != -1) {
-			const sourceData = FormUtils.valueMapToInfo({ 
+			return Promise.resolve({
 				name: FileUtils.getLastDirectory(value.path, FileUtils) 
 			});
-			
-			return Promise.resolve(sourceData);
 		}
 
 		return null;
@@ -53,7 +48,7 @@ const FavoriteDirectoryDialog = React.createClass({
 	},
 
 	onSave(changedFields) {
-		if (this._isNew) {
+		if (this.isNew()) {
 			return SocketService.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
 		}
 
@@ -62,13 +57,7 @@ const FavoriteDirectoryDialog = React.createClass({
 
 	onFieldSetting(id, fieldOptions, formValue) {
 		if (id === 'path') {
-			if (this._isNew) {
-				fieldOptions['factory'] = t.form.Textbox;
-				fieldOptions['template'] = BrowseField;
-			} else {
-				fieldOptions['disabled'] = true;
-			}
-			
+			fieldOptions['disabled'] = !this.isNew();
 			fieldOptions['config'] = Object.assign(fieldOptions['config'] || {}, {
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
 			});
@@ -82,29 +71,26 @@ const FavoriteDirectoryDialog = React.createClass({
 	},
 
 	render: function () {
-		const title = this._isNew ? 'Add favorite directory' : 'Edit favorite directory';
-
-		const context = {
-			location: this.props.location,
-		};
-
+		const title = this.isNew() ? 'Add favorite directory' : 'Edit favorite directory';
 		return (
 			<Modal 
 				className="favorite-directory" 
-				title={title} 
-				onApprove={this.save} 
-				closable={false} 
+				title={ title } 
+				onApprove={ this.save } 
+				closable={ false } 
 				icon={ IconConstants.FOLDER } 
 				{...this.props}
 			>
 				<Form
 					ref="form"
-					formItems={Entry}
-					onFieldChanged={this.onFieldChanged}
-					onFieldSetting={this.onFieldSetting}
-					onSave={this.onSave}
-					sourceData={this.state.sourceData}
-					context={ context }
+					fieldDefinitions={Entry}
+					onFieldChanged={ this.onFieldChanged }
+					onFieldSetting={ this.onFieldSetting }
+					onSave={ this.onSave }
+					value={ this.props.directoryEntry }
+					context={ {
+						location: this.props.location,
+					} }
 				/>
 			</Modal>
 		);

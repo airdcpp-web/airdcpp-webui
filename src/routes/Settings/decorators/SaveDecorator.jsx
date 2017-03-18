@@ -72,13 +72,6 @@ export default (Component, saveButtonClass = '') => {
 			this.forceUpdate();
 		},
 
-		save() {
-			const promises = refs.map(ref => this.refs[ref].save());
-			this.changedProperties.clear();
-
-			return Promise.all(promises);
-		},
-
 		handleSave() {
 			const promises = this.forms.map(c => c.save());
 			this.changedProperties.clear();
@@ -109,6 +102,10 @@ export default (Component, saveButtonClass = '') => {
 			if (c) {
 				invariant(c.hasOwnProperty('save'), 'Invalid setting form component supplied for SaveDecorator (save property missing)');
 				this.forms.push(c);
+			} else {
+				// Switching to another page 
+				// Single forms shouldn't be unmounted otherwise, but using identifiers would still be safer...
+				this.forms = [];
 			}
 		},
 

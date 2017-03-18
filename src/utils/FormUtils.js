@@ -31,16 +31,32 @@ const typeToField = (info) => {
 		case FieldTypes.TEXT:
 		case FieldTypes.FILE_PATH:
 		case FieldTypes.DIRECTORY_PATH: return t.Str;
+		case FieldTypes.LIST_STRING: return t.list(t.Str);
+		case FieldTypes.LIST_NUMBER: return t.list(t.Num);
 		default: 
 	}
 
 	return null;
 };
 
+const isListType = type => type === FieldTypes.LIST_OBJECT || type === FieldTypes.LIST_STRING || type === FieldTypes.LIST_NUMBER;
+
 const parseFieldType = (info) => {
 	const fieldComponent = typeToField(info);
 	invariant(fieldComponent, 'Field type ' + info.type + ' is not supported');
 	return info.optional ? t.maybe(fieldComponent) : fieldComponent;
+};
+
+const parseDefinitions = (definitions) => {
+	return Object.keys(definitions).reduce((reduced, key) => {
+		if (definitions[key].type === FieldTypes.LIST_OBJECT) {
+			reduced[key] = t.list(parseDefinitions(definitions[key].valueDefinitions));
+		} else {
+			reduced[key] = parseFieldType(definitions[key]);
+		}
+		
+		return reduced;
+	}, {});
 };
 
 const normalizeField = (value) => {
@@ -69,6 +85,28 @@ const normalizeEnumValue = (rawItem) => {
 	};
 };
 
+const normalizeValue = (value, fieldDefinitions, defaultValue) => {
+	return Object.keys(fieldDefinitions).reduce((reducedValue, key) => {
+		if (value && value.hasOwnProperty(key)) {
+			const fieldValue = value[key];
+			if (fieldDefinitions[key].type === FieldTypes.LIST_OBJECT) {
+				// Normalize each list object
+				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, fieldDefinitions[key].valueDefinitions));
+			} else if (isListType(fieldDefinitions[key].type)) {
+				// Normalize each list value
+				reducedValue[key] = fieldValue.map(normalizeField);
+			} else {
+				reducedValue[key] = normalizeField(fieldValue);
+			}
+		} else if (!value) {
+			// Initialize empty value but don't merge missing fields into an existing value (we might be merging)
+			reducedValue[key] = defaultValue ? defaultValue[key] : null;
+		}
+
+		return reducedValue;
+	}, {});
+};
+
 const intTransformer = {
 	format: format,
 	parse: parse
@@ -77,27 +115,15 @@ const intTransformer = {
 export default {
 	// Migrates simple key -> value fields to an array that is compatible with the form
 	// undefined values will also be initialized with nulled property fields
-	normalizeValue: function (value, fieldDefinitions, defaultValue) {
-		return Object.keys(fieldDefinitions).reduce((reducedValue, key) => {
-			if (value && value.hasOwnProperty(key)) {
-				reducedValue[key] = normalizeField(value[key] === undefined ? defaultValue[key] : value[key]);
-			} else if (!value) {
-				// Initialize empty value but don't merge missing fields into an existing value (we might be merging)
-				reducedValue[key] = null;
-			}
+	normalizeValue,
 
-			return reducedValue;
-		}, {});
-	},
+	intTransformer,
+
+	normalizeEnumValue,
 
 	// Convert field definitions to tcomb type object
 	// Note that there are additional field options that need to be handled separately
-	parseDefinitions(definitions) {
-		return Object.keys(definitions).reduce((reduced, key) => {
-			reduced[key] = parseFieldType(definitions[key]);
-			return reduced;
-		}, {});
-	},
+	parseDefinitions,
 
 	parseFieldOptions(definitions) {
 		const options = {};
@@ -121,8 +147,9 @@ export default {
 			default:
 		}
 
-		// Title
+		// Captions
 		options['legend'] = definitions.title;
+		options['help'] = definitions.help;
 
 		// Enum select field?
 		if (definitions.values) {
