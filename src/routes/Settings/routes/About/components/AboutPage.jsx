@@ -4,7 +4,7 @@ import React from 'react';
 
 import Moment from 'moment';
 
-import { Row } from './Grid';
+import { Row } from 'components/semantic/Grid';
 
 import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator from 'decorators/StatisticsDecorator';

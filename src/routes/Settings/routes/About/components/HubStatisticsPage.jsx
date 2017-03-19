@@ -8,7 +8,7 @@ import HubConstants from 'constants/HubConstants';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
-import { Row, Header } from './Grid';
+import { Row, Header } from 'components/semantic/Grid';
 
 const HubStatisticsPage = React.createClass({
 	formatClient(uniqueUsers, client) {

@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import '../style.css';
-
 
 export const Row = ({ title, text }) => (
 	<div className="ui row">

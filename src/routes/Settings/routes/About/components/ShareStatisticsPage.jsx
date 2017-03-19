@@ -9,7 +9,7 @@ import ShareConstants from 'constants/ShareConstants';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
-import { Row, Header } from './Grid';
+import { Row, Header } from 'components/semantic/Grid';
 
 const ShareStatisticsPage = React.createClass({
 	render() {

@@ -3,7 +3,7 @@
 import React from 'react';
 
 import ValueFormat from 'utils/ValueFormat';
-import { Row, Header } from './Grid';
+import { Row, Header } from 'components/semantic/Grid';
 
 import TransferConstants from 'constants/TransferConstants';
 import StatisticsDecorator from 'decorators/StatisticsDecorator';

@@ -94,3 +94,11 @@
   margin-bottom: 10px;
   flex-shrink: 0;
 }
+
+.settings-layout .options > .ui.grid {
+  margin: 0px;
+}
+
+.settings-layout .options > .ui.grid .section.header {
+  padding-left: 1rem;
+}
