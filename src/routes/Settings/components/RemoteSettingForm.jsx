@@ -46,4 +46,11 @@ export default DataProviderDecorator(RemoteSettingForm, {
 		fieldDefinitions: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
 		settings: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
 	},
+	dataConverters: {
+		// Sort the data as the property order is random in the received JSON data
+		fieldDefinitions: (data, { keys }) => keys.reduce((reduced, key) => {
+			reduced[key] = data[key];
+			return reduced;
+		}, {}),
+	},
 });

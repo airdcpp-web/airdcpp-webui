@@ -29,7 +29,7 @@ global.Promise = Promise;
 
 Reflux.use(RefluxPromise(Promise));
 
-if (LoginStore.hasSession && !LoginStore.socketAuthenticated) { // The socket may be connected already when using dev server
+if (LoginStore.hasSession) {
 	LoginActions.connect(LoginStore.authToken);
 }
 

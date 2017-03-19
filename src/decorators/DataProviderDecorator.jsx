@@ -110,7 +110,7 @@ export default function (Component, settings) {
 		reduceData(reduced, data, index) {
 			const { urls, dataConverters } = this.props;
 			const propKey = Object.keys(urls)[index];
-			reduced[propKey] = dataConverters && dataConverters[propKey] ? dataConverters[propKey](data) : data;
+			reduced[propKey] = dataConverters && dataConverters[propKey] ? dataConverters[propKey](data, this.props) : data;
 			return reduced;
 		},
 
