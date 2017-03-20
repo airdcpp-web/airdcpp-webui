@@ -17,33 +17,40 @@ import Form from 'components/form/Form';
 import FormUtils from 'utils/FormUtils';
 
 
-const Fields = {
-	name: {
+const Fields = [
+	{
+		key: 'nick',
 		type: FieldTypes.STRING,
 	},
-	hub_url:{
+	{
+		key: 'hub_url',
 		type: FieldTypes.STRING,
 	},
-	hub_description: {
+	{
+		key: 'hub_description',
 		type: FieldTypes.STRING,
 		optional: true,
 	}, 
-	share_profile: {
+	{
+		key: 'share_profile',
 		type: FieldTypes.NUMBER,
 		optional: true,
 	}, 
-	auto_connect: {
+	{
+		key: 'auto_connect',
 		type: FieldTypes.BOOLEAN,
 	}, 
-	nick: {
+	{
+		key: 'nick',
 		type: FieldTypes.STRING,
 		optional: true,
 	}, 
-	user_description: {
+	{
+		key: 'user_description',
 		type: FieldTypes.STRING,
 		optional: true,
 	}
-};
+];
 
 const isAdcHub = hubUrl => hubUrl && (hubUrl.indexOf('adc://') === 0 || hubUrl.indexOf('adcs://') === 0);
 

@@ -20,36 +20,36 @@ const hasSettings = extension => extension.has_settings;
 const ExtensionActions = Reflux.createActions([
 	{ 'installNpm': { 
 		displayName: 'Install',
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE
+	} },
 	{ 'updateNpm': { 
 		displayName: 'Update',
-		icon: IconConstants.REFRESH },
-	},
+		icon: IconConstants.REFRESH
+	} },
 	{ 'installUrl': { 
 		displayName: 'Install from URL',
 		children: [ 'saved' ], 
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE
+	} },
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Uninstall',
-		icon: IconConstants.REMOVE },
+		icon: IconConstants.REMOVE,
 		filter: isManaged,
-	},
+	} },
 	{ 'start': { 
 		asyncResult: true, 
 		displayName: 'Start',
-		icon: IconConstants.PLAY },
+		icon: IconConstants.PLAY,
 		filter: isManaged,
-	},
+	} },
 	{ 'stop': { 
 		asyncResult: true, 
 		displayName: 'Stop',
-		icon: IconConstants.STOP },
+		icon: IconConstants.STOP,
 		filter: isManaged,
-	},
+	} },
 	{ 'configure': { 
 		children: [ 'saved' ],
 		displayName: 'Configure',

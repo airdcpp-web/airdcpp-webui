@@ -16,7 +16,7 @@ const Form = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		fieldDefinitions: React.PropTypes.object.isRequired,
+		fieldDefinitions: React.PropTypes.array.isRequired,
 
 		/**
 		 * Optional callback for appending field settings
@@ -47,7 +47,7 @@ const Form = React.createClass({
 		/**
 		 * Source value to use for initial data
 		 */
-		value: React.PropTypes.object.isRequired,
+		value: React.PropTypes.object,
 
 		/**
 		 * Header for the form
@@ -173,11 +173,11 @@ const Form = React.createClass({
 	},
 
 	// Reduces an array of field setting objects by calling props.onFieldSetting
-	fieldOptionReducer(optionsObject, settingKey) {
-		optionsObject[settingKey] = FormUtils.parseFieldOptions(this.props.fieldDefinitions[settingKey]);
+	fieldOptionReducer(optionsObject, def) {
+		optionsObject[def.key] = FormUtils.parseFieldOptions(def);
 
 		if (this.props.onFieldSetting) {
-			this.props.onFieldSetting(settingKey, optionsObject[settingKey], this.state.formValue);
+			this.props.onFieldSetting(def.key, optionsObject[def.key], this.state.formValue);
 		}
 
 		return optionsObject;
@@ -188,7 +188,7 @@ const Form = React.createClass({
 		const options = {};
 
 		// Parent handlers
-		options['fields'] = Object.keys(this.props.fieldDefinitions).reduce(this.fieldOptionReducer, {});
+		options['fields'] = this.props.fieldDefinitions.reduce(this.fieldOptionReducer, {});
 
 		// Do we have an error object from the API?
 		// Show the error message for the respective field

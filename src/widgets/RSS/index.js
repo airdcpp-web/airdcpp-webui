@@ -5,17 +5,19 @@ module.exports = {
 	component: require('./components/RSS').default,
 	name: 'RSS feed',
 	icon: 'orange rss',
-	formSettings: {
-		feed_url: {
+	formSettings: [
+		{
+			key: 'feed_url',
 			title: 'Feed URL',
 			type: FieldTypes.STRING,
 			help: 'RSS and Atom feeds are supported',
 		},
-		feed_cache_minutes: {
+		{
+			key: 'feed_cache_minutes',
 			title: 'Minimum refetch interval (minutes)',
 			type: FieldTypes.NUMBER,
 		},
-	},
+	],
 	defaultSettings: {
 		feed_cache_minutes: 60,
 	},

@@ -47,14 +47,15 @@ const WidgetDialog = React.createClass({
 		const { widgetInfo, location, settings, ...overlayProps } = this.props;
 		const { formSettings, name, icon } = widgetInfo;
 
-		const Entry = {
-			name: {
+		const Entry = [
+			{
+				key: 'name',
 				type: FieldTypes.STRING,
 			},
-		};
+		];
 
 		if (formSettings) {
-			Object.assign(Entry, formSettings);
+			Entry.push(...formSettings);
 		}
 
 		return (

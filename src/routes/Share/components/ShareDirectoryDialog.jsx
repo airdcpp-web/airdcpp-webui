@@ -26,23 +26,27 @@ import '../style.css';
 
 import { FieldTypes } from 'constants/SettingConstants';
 
-const Entry = {
-	path: {
+const Entry = [
+	{
+		key: 'path',
 		type: FieldTypes.DIRECTORY_PATH,
 	},
-	virtual_name:{
+	{
+		key: 'virtual_name',
 		type: FieldTypes.STRING,
 		help: 'Directories with identical virtual names will be merged in filelist',
 	},
-	profiles: {
+	{
+		key: 'profiles',
 		type: FieldTypes.LIST_NUMBER,
 		title: 'Share profiles',
 		help: 'New share profiles can be created from application settings',
 	}, 
-	incoming: {
+	{
+		key: 'incoming',
 		type: FieldTypes.BOOLEAN,
 	},
-};
+];
 
 const ShareDirectoryDialog = React.createClass({
 	mixins: [ RouteContext ],

@@ -67,20 +67,23 @@ const reducePermissions = (options, key) => {
 };
 
 const getEntry = isNew => {
-	return {
-		username: {
+	return [
+		{
+			key: 'username',
 			type: FieldTypes.STRING,
 		},
-		password:{
+		{
+			key: 'password',
 			type: FieldTypes.STRING,
 			title: isNew ? 'Password' : 'New password',
 			optional: !isNew,
 		},
-		permissions: {
+		{
+			key: 'permissions',
 			type: FieldTypes.LIST_STRING,
 			values: Object.keys(AccessConstants).reduce(reducePermissions, []),
 		},
-	};
+	];
 };
 
 const WebUserDialog = React.createClass({

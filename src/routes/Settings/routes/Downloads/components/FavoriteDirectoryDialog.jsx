@@ -18,14 +18,16 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
 
-const Entry = {
-	path: {
+const Entry = [
+	{
+		key: 'path',
 		type: FieldTypes.DIRECTORY_PATH,
 	},
-	name:{
+	{
+		key: 'name',
 		type: FieldTypes.STRING,
 	},
-};
+];
 
 const FavoriteDirectoryDialog = React.createClass({
 	mixins: [ RouteContext ],

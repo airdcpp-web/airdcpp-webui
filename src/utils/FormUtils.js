@@ -48,11 +48,11 @@ const parseFieldType = (info) => {
 };
 
 const parseDefinitions = (definitions) => {
-	return Object.keys(definitions).reduce((reduced, key) => {
-		if (definitions[key].type === FieldTypes.LIST_OBJECT) {
-			reduced[key] = t.list(parseDefinitions(definitions[key].valueDefinitions));
+	return definitions.reduce((reduced, def) => {
+		if (def.type === FieldTypes.LIST_OBJECT) {
+			reduced[def.key] = t.list(parseDefinitions(def.valueDefinitions));
 		} else {
-			reduced[key] = parseFieldType(definitions[key]);
+			reduced[def.key] = parseFieldType(def);
 		}
 		
 		return reduced;
@@ -86,13 +86,13 @@ const normalizeEnumValue = (rawItem) => {
 };
 
 const normalizeValue = (value, fieldDefinitions, defaultValue) => {
-	return Object.keys(fieldDefinitions).reduce((reducedValue, key) => {
+	return fieldDefinitions.reduce((reducedValue, { key, type, valueDefinitions }) => {
 		if (value && value.hasOwnProperty(key)) {
 			const fieldValue = value[key];
-			if (fieldDefinitions[key].type === FieldTypes.LIST_OBJECT) {
+			if (type === FieldTypes.LIST_OBJECT) {
 				// Normalize each list object
-				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, fieldDefinitions[key].valueDefinitions));
-			} else if (isListType(fieldDefinitions[key].type)) {
+				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, valueDefinitions));
+			} else if (isListType(type)) {
 				// Normalize each list value
 				reducedValue[key] = fieldValue.map(normalizeField);
 			} else {
@@ -125,11 +125,11 @@ export default {
 	// Note that there are additional field options that need to be handled separately
 	parseDefinitions,
 
-	parseFieldOptions(definitions) {
+	parseFieldOptions(definition) {
 		const options = {};
 
 		// Field type
-		switch (definitions.type) {
+		switch (definition.type) {
 			case FieldTypes.TEXT: {
 				options['type'] = 'textarea';
 				break;
@@ -141,27 +141,27 @@ export default {
 
 				// TODO: file selector dialog
 				options['config'] = {
-					isFile: definitions.type === FieldTypes.FILE_PATH
+					isFile: definition.type === FieldTypes.FILE_PATH
 				};
 			}
 			default:
 		}
 
 		// Captions
-		options['legend'] = definitions.title;
-		options['help'] = definitions.help;
+		options['legend'] = definition.title;
+		options['help'] = definition.help;
 
 		// Enum select field?
-		if (definitions.values) {
-			invariant(Array.isArray(definitions.values) && definitions.values.length > 0, 'Incorrect enum values supplied: ' + JSON.stringify(definitions.values));
+		if (definition.values) {
+			invariant(Array.isArray(definition.values) && definition.values.length > 0, 'Incorrect enum values supplied: ' + JSON.stringify(definition.values));
 			Object.assign(options, {
 				factory: t.form.Select,
-				options: definitions.values.map(normalizeEnumValue),
+				options: definition.values.map(normalizeEnumValue),
 				nullOption: false,
 			});
 
 			// Integer keys won't work, do string conversion
-			if (definitions.values[0].id === parseInt(definitions.values[0].id, 10)) {
+			if (definition.values[0].id === parseInt(definition.values[0].id, 10)) {
 				options['transformer'] = intTransformer;
 			}
 		}
