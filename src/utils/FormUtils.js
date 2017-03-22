@@ -69,10 +69,10 @@ const normalizeField = (value) => {
 			// Normalize each array item
 			invariant(value[0].hasOwnProperty('id'), 'Invalid array supplied for form property (id property is required for values)');
 			return value.map(normalizeField);
-		} else if (value === '') {
-			// Normalize empty strings to null, which is used by tcomb 
-			return null;
 		}
+	} else if (value === '') {
+		// Normalize empty strings to null, which is used by tcomb 
+		return null;
 	}
 
 	return value;

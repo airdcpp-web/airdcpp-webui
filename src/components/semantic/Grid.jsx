@@ -3,14 +3,14 @@
 import React from 'react';
 
 
-export const Row = ({ title, text }) => (
+export const Row = ({ title, text, titleWidth = 'four' }) => (
 	<div className="ui row">
-		<div className="four wide column">
+		<div className={ titleWidth + ' wide column' }>
 			<div className="ui tiny header">
 			{ title }
 			</div>
 		</div>
-		<div className="twelve wide column">
+		<div className="column">
 			{ text }
 		</div>
 	</div>

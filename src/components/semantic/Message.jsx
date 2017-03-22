@@ -5,7 +5,7 @@ import Icon from 'components/semantic/Icon';
 import classNames from 'classnames';
 
 
-const Message = ({ className, title, description, icon, isError }) => {
+const Message = ({ className, title, description, icon, isError, children }) => {
 	const style = classNames(
 		'ui message',
 		{ 'negative': isError },
@@ -27,6 +27,7 @@ const Message = ({ className, title, description, icon, isError }) => {
 					{ title }
 				</div>
 				{ description } 
+				{ children } 
 			</div>
 		</div>
 	);
