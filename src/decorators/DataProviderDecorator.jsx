@@ -88,12 +88,16 @@ export default function (Component, settings) {
 			});
 		},
 
-		refetchData() {
-			this.fetchData();
+		refetchData(keys) {
+			this.fetchData(keys);
 		},
 
-		fetchData() {
-			const promises = Object.keys(this.props.urls).map(key => {
+		fetchData(keys) {
+			if (!keys) {
+				keys = Object.keys(this.props.urls);
+			}
+
+			const promises = keys.map(key => {
 				let url = this.props.urls[key];
 				if (typeof url === 'function') {
 					return url(this.props, SocketService);
@@ -103,19 +107,19 @@ export default function (Component, settings) {
 			});
 
 			Promise.all(promises)
-				.then(this.onDataFetched, this.onDataFetchFailed);
+				.then(this.onDataFetched.bind(this, keys), this.onDataFetchFailed);
 		},
 
 		// Convert the data array to key-value props
-		reduceData(reduced, data, index) {
-			const { urls, dataConverters } = this.props;
-			const propKey = Object.keys(urls)[index];
-			reduced[propKey] = dataConverters && dataConverters[propKey] ? dataConverters[propKey](data, this.props) : data;
-			return reduced;
+		reduceData(keys, reducedData, data, index) {
+			const { dataConverters } = this.props;
+			const url = keys[index];
+			reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props) : data;
+			return reducedData;
 		},
 
-		onDataFetched(values) {
-			const data = values.reduce(this.reduceData, {});
+		onDataFetched(keys, values) {
+			const data = values.reduce(this.reduceData.bind(this, keys), {});
 
 			this.mergeData(data);
 		},

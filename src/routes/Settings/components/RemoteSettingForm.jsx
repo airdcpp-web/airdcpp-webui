@@ -18,7 +18,11 @@ const RemoteSettingForm = React.createClass({
 	},
 
 	onSave(changedValues) {
-		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.props.refetchData);
+		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.refetchValues);
+	},
+
+	refetchValues() {
+		this.props.refetchData([ 'settings' ]);
 	},
 
 	save() {
