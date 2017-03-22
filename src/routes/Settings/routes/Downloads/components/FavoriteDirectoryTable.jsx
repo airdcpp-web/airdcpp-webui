@@ -63,6 +63,6 @@ export default DataProviderDecorator(FavoriteDirectoryPage, {
 		directories: FavoriteDirectoryConstants.DIRECTORIES_URL,
 	},
 	onSocketConnected: (addSocketListener, { refetchData }) => {
-		addSocketListener(FavoriteDirectoryConstants.MODULE_URL, FavoriteDirectoryConstants.DIRECTORIES_UPDATED, refetchData);
+		addSocketListener(FavoriteDirectoryConstants.MODULE_URL, FavoriteDirectoryConstants.DIRECTORIES_UPDATED, _ => refetchData());
 	},
 });

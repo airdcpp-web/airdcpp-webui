@@ -44,8 +44,10 @@ export default DataProviderDecorator(NpmPackageLayout, {
 		packageCatalog: ({ objects }) => objects,
 	},
 	onSocketConnected: (addSocketListener, { refetchData }) => {
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchData);
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchData);
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchData);
+		const refetchInstalled = _ => refetchData([ 'installedPackages' ]);
+
+		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchInstalled);
+		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchInstalled);
+		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchInstalled);
 	},
 });

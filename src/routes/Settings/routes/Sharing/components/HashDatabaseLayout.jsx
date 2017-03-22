@@ -94,6 +94,6 @@ export default DataProviderDecorator(HashDatabaseLayout, {
 		status: HashConstants.DATABASE_STATUS_URL,
 	},
 	onSocketConnected: (addSocketListener, { refetchData }) => {
-		addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, refetchData);
+		addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, _ => refetchData());
 	},
 });

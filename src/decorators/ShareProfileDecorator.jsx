@@ -35,9 +35,9 @@ const ShareProfileDecorator = function (Component, listHidden, addSize = true) {
 			profiles: onProfilesReceived,
 		},
 		onSocketConnected: (addSocketListener, { refetchData }) => {
-			addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_ADDED, refetchData);
-			addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_UPDATED, refetchData);
-			addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_REMOVED, refetchData);
+			addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_ADDED, _ => refetchData());
+			addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_UPDATED, _ => refetchData());
+			addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_REMOVED, _ => refetchData());
 		},
 	});
 };

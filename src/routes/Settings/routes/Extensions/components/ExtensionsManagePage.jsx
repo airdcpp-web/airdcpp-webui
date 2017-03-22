@@ -85,8 +85,8 @@ export default DataProviderDecorator(ExtensionsManagePage, {
 		installedPackages: ExtensionConstants.EXTENSIONS_URL,
 	},
 	onSocketConnected: (addSocketListener, { refetchData }) => {
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchData);
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchData);
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchData);
+		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, _ => refetchData());
+		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, _ => refetchData());
+		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, _ => refetchData());
 	},
 });

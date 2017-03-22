@@ -1,4 +1,5 @@
 import React from 'react';
+import invariant from 'invariant';
 
 import SocketService from 'services/SocketService';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
@@ -89,6 +90,7 @@ export default function (Component, settings) {
 		},
 
 		refetchData(keys) {
+			invariant(!keys || (Array.isArray(keys) && keys.every(key => !!this.props.urls[key])), 'Invalid keys supplied to refetchData');
 			this.fetchData(keys);
 		},
 

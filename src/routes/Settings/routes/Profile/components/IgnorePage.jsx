@@ -69,7 +69,7 @@ export default DataProviderDecorator(IgnorePage, {
 		ignores: UserConstants.IGNORES_URL,
 	},
 	onSocketConnected: (addSocketListener, { refetchData }) => {
-		addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_ADDED, refetchData);
-		addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_REMOVED, refetchData);
+		addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_ADDED, _ => refetchData());
+		addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_REMOVED, _ => refetchData());
 	},
 });
