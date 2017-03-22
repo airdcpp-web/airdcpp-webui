@@ -20,7 +20,7 @@ const Form = React.createClass({
 
 		/**
 		 * Optional callback for appending field settings
-		 * Receives the object of already appended settings and the setting item received from API
+		 * Receives the field key, field definitions and the current form value as parameters
 		 */
 		onFieldSetting: React.PropTypes.func,
 
@@ -32,20 +32,22 @@ const Form = React.createClass({
 		onSave: React.PropTypes.func.isRequired,
 
 		/**
-		 * Optional callback that is called when a value was changed
-		 * Receives the new value and changed field id as parameter
+		 * Optional callback that is called when a field value was changed
+		 * Receives the field key, current form value value and boolean whether the field value is different from the source value
 		 * The function may return a promise containing new setting objects to be set as user selections
 		 */
-		onChange: React.PropTypes.func,
+		onFieldChanged: React.PropTypes.func,
 
 		/**
 		 * Optional callback that is called when the settings are received from the server
-		 * Receives the setting object as parameter
+		 * Receives the new source value object as parameter
 		 */
 		onSourceValueUpdated: React.PropTypes.func,
 
 		/**
 		 * Source value to use for initial data
+		 * If no value is provided, the initial value is initialized
+		 * with empty values (or fields from defaultValue)
 		 */
 		value: React.PropTypes.object,
 
@@ -74,29 +76,25 @@ const Form = React.createClass({
 	getInitialState() {
 		return {
 			error: null,
-			currentValue: null
+			formValue: {},
 		};
 	},
 
-	setValue(value) {
-		this.sourceValue = FormUtils.normalizeValue(value, this.props.fieldDefinitions, this.props.defaultValue);
+	setSourceValue(value) {
+		this.sourceValue = this.mergeFields(this.state.formValue, value);
 
 		if (this.props.onSourceValueUpdated) {
 			this.props.onSourceValueUpdated(this.sourceValue);
 		}
-
-		this.setState({ 
-			formValue: this.sourceValue 
-		});
 	},
 
 	componentWillMount() {
-		this.setValue(this.props.value);
+		this.setSourceValue(this.props.value);
 	},
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.value !== this.props.value) {
-			this.setValue(nextProps.value);
+			this.setSourceValue(nextProps.value);
 		}
 	},
 
@@ -110,6 +108,8 @@ const Form = React.createClass({
 		this.setState({ 
 			formValue: mergedValue 
 		});
+
+		return mergedValue;
 	},
 
 	onFieldChanged(value, valueKey) {
@@ -215,10 +215,7 @@ const Form = React.createClass({
 					</div>
 				) }
 				<TcombForm
-					ref={ c => {
-						if (c)
-							this.form = c;
-					} }
+					ref={ c => this.form = c }
 					type={ t.struct(FormUtils.parseDefinitions(fieldDefinitions)) }
 					options={ this.getFieldOptions() }
 					value={ formValue }
