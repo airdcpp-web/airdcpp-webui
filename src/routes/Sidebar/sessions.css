@@ -78,6 +78,13 @@
   margin: 0px 5px;
 }
 
+/* Fix a few inconsistencies between 'icon' and 'icons' classnames */
+.session-container.horizontal .session-header .header > i,
+.session-container.vertical .session-header > i {
+  width: inherit !important;
+  padding-top: .12285714em !important;
+}
+
 .session-container.vertical .menu-bar {
   border-radius: 0px !important;
   padding-bottom: 0px;

@@ -114,7 +114,11 @@
 }
 
 .table.dropdown .trigger i.angle.icon {
-    margin: 0px;
+  margin: 0px;
+}
+
+.table.dropdown .trigger .icon-caption .icon {
+	width: inherit !important;
 }
 
 .virtual-table .empty.dropdown.filtered:not(.no-access) > div {

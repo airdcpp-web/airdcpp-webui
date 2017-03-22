@@ -1,5 +1,5 @@
 const MODULE_URL = 'search';
-const INSTANCE_URL = MODULE_URL + '/instances/0';
+const INSTANCE_URL = MODULE_URL + '/0';
 export default {
 	MODULE_URL: MODULE_URL,
 	INSTANCE_URL: INSTANCE_URL,

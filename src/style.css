@@ -34,10 +34,6 @@ section#container-main,
 	margin: 10px 0px;
 }
 
-.dropdown.user-menu .icon-caption .icons {
-	max-height: 1em;
-}
-
 .inline-loader > .loader {
 	margin-right: 5px !important;
 }

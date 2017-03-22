@@ -17,7 +17,7 @@ const LocalSettingForm = React.createClass({
 		this.definitions = LocalSettingStore.getDefinitions(this.props.keys);
 
 		return {
-		 settings: LocalSettingStore.getState(),
+			settings: LocalSettingStore.getState(),
 		};
 	},
 

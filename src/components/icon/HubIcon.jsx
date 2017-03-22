@@ -1,21 +1,17 @@
 import React from 'react';
-import classNames from 'classnames';
 
+import Icon from 'components/semantic/Icon';
 import TypeConvert from 'utils/TypeConvert';
 
 
-const HubIcon = ({ hub, size }) => (
-	<i className={ classNames(size, 'icons') }>
-		<i className={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap icon' }/>
-	</i>
+const HubIcon = ({ hub, ...other }) => (
+	<Icon
+		{ ...other }
+		icon={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }
+	/>
 );
 
 HubIcon.propTypes = {
-	/**
-	 * Size of the icon
-	 */
-	size: React.PropTypes.string,
-
 	/**
 	 * Hub object
 	 */
