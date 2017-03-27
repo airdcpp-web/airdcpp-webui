@@ -33,7 +33,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "airdcpp-apisocket": "1.0.0-beta.11",
+    "airdcpp-apisocket": "1.0.0-beta.12",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^6.5.1",
     "babel-eslint": "^7.0.0",

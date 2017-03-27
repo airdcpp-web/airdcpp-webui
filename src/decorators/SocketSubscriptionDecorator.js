@@ -11,8 +11,8 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 			return;
 		}
 
-		const subscription = SocketService.addListener(apiModuleUrl, event, callback, entityId);
-		socketSubscriptions.push(subscription);
+		SocketService.addListener(apiModuleUrl, event, callback, entityId)
+			.then(removeHandler => socketSubscriptions.push(removeHandler));
 	};
 
 	const removeSocketListeners = (entityExists) => { 

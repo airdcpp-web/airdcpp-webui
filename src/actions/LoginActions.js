@@ -65,7 +65,7 @@ LoginActions.connect.failed.listen(function (token) {
 
 LoginActions.logout.listen(function () {
 	let that = this;
-	return SocketService.destroy()
+	return SocketService.logout()
 		.then(that.completed)
 		.catch(this.failed);
 });

@@ -1,4 +1,4 @@
-import ApiSocket from 'airdcpp-apisocket/dist/SocketBase';
+import ApiSocket from 'airdcpp-apisocket';
 
 
 const options = {
