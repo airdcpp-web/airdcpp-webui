@@ -14,44 +14,50 @@ import Message from 'components/semantic/Message';
 
 import t from 'utils/tcomb-form';
 
-import FormUtils from 'utils/FormUtils';
 import FileUtils from 'utils/FileUtils';
 
 import Form from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
-import SelectField from 'components/form/SelectField';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
 import '../style.css';
 
 import { FieldTypes } from 'constants/SettingConstants';
 
-const Entry = [
-	{
-		key: 'path',
-		type: FieldTypes.DIRECTORY_PATH,
-	},
-	{
-		key: 'virtual_name',
-		type: FieldTypes.STRING,
-		help: 'Directories with identical virtual names will be merged in filelist',
-	},
-	{
-		key: 'profiles',
-		type: FieldTypes.LIST_NUMBER,
-		title: 'Share profiles',
-		help: 'New share profiles can be created from application settings',
-	}, 
-	{
-		key: 'incoming',
-		type: FieldTypes.BOOLEAN,
-	},
-];
+const getFields = (profiles) => {
+	return [
+		{
+			key: 'path',
+			type: FieldTypes.DIRECTORY_PATH,
+		},
+		{
+			key: 'virtual_name',
+			type: FieldTypes.STRING,
+			help: 'Directories with identical virtual names will be merged in filelist',
+		},
+		{
+			key: 'profiles',
+			type: FieldTypes.LIST_NUMBER,
+			title: 'Share profiles',
+			help: 'New share profiles can be created from application settings',
+			values: profiles,
+			defaultValue: [ profiles.find(profile => profile.default).id ],
+		}, 
+		{
+			key: 'incoming',
+			type: FieldTypes.BOOLEAN,
+		},
+	];
+};
 
 const ShareDirectoryDialog = React.createClass({
 	mixins: [ RouteContext ],
 	isNew() {
 		return !this.props.rootEntry;
+	},
+
+	componentWillMount() {
+		this.fieldDefinitions = getFields(this.props.profiles);
 	},
 
 	onFieldChanged(id, value, hasChanges) {
@@ -78,19 +84,8 @@ const ShareDirectoryDialog = React.createClass({
 		return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry.id, changedFields);
 	},
 
-	getFieldProfiles() {
-		return this.props.profiles
-			.map(FormUtils.normalizeEnumValue);
-	},
-
 	onFieldSetting(id, fieldOptions, formValue) {
-		if (id === 'profiles') {
-			Object.assign(fieldOptions, {
-				factory: t.form.Select,
-				template: SelectField,
-				options: this.getFieldProfiles(),
-			});
-		} else if (id === 'path') {
+		if (id === 'path') {
 			fieldOptions['disabled'] = !this.isNew();
 			fieldOptions['config'] = Object.assign({} || fieldOptions['config'], {
 				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
@@ -130,15 +125,11 @@ const ShareDirectoryDialog = React.createClass({
 				/>
 				<Form
 					ref="form"
-					fieldDefinitions={ Entry }
+					fieldDefinitions={ this.fieldDefinitions }
 					onFieldChanged={ this.onFieldChanged }
 					onFieldSetting={ this.onFieldSetting }
 					onSave={ this.onSave }
 					value={ rootEntry }
-					defaultValue={ {
-						// Add the default profile for new entries
-						profiles: [ this.props.profiles.find(profile => profile.default).id ],
-					} }
 					context={ {
 						location: this.props.location,
 					} }

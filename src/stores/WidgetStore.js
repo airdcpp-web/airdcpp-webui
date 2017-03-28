@@ -16,10 +16,10 @@ const getWidgetSettings = (id, widgetInfo) => {
 	const settings = BrowserUtils.loadLocalProperty(WidgetUtils.idToSettingKey(id), { });
 
 	// Add new default settings
-	if (widgetInfo && widgetInfo.defaultSettings) {
-		Object.keys(widgetInfo.defaultSettings).forEach(key => {
+	if (widgetInfo && widgetInfo.formSettings) {
+		Object.keys(widgetInfo.formSettings).forEach(key => {
 			if (!settings.widget.hasOwnProperty(key)) {
-				settings.widget[key] = widgetInfo.defaultSettings[key];
+				settings.widget[key] = widgetInfo.formSettings[key].defaultValue;
 			}
 		});
 	}

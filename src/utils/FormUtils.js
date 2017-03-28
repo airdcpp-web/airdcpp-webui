@@ -4,6 +4,7 @@ import t from 'utils/tcomb-form';
 import { FieldTypes } from 'constants/SettingConstants';
 
 import BrowseField from 'components/form/BrowseField';
+import SelectField from 'components/form/SelectField';
 
 
 const parse = function (v) {
@@ -87,8 +88,8 @@ const normalizeEnumValue = (rawItem) => {
 	};
 };
 
-const normalizeValue = (value, fieldDefinitions, defaultValue) => {
-	return fieldDefinitions.reduce((reducedValue, { key, type, value_definitions }) => {
+const normalizeValue = (value, fieldDefinitions) => {
+	return fieldDefinitions.reduce((reducedValue, { key, type, value_definitions, defaultValue }) => {
 		if (value && value.hasOwnProperty(key)) {
 			const fieldValue = value[key];
 			if (type === FieldTypes.LIST_OBJECT) {
@@ -102,7 +103,7 @@ const normalizeValue = (value, fieldDefinitions, defaultValue) => {
 			}
 		} else if (!value) {
 			// Initialize empty value but don't merge missing fields into an existing value (we might be merging)
-			reducedValue[key] = defaultValue ? defaultValue[key] : null;
+			reducedValue[key] = defaultValue ? defaultValue : null;
 		}
 
 		return reducedValue;
@@ -162,8 +163,10 @@ export default {
 				nullOption: false,
 			});
 
-			// Integer keys won't work, do string conversion
-			if (definition.values[0].id === parseInt(definition.values[0].id, 10)) {
+			if (isListType(definition.type)) {
+				options['template'] = SelectField;
+			} else if (definition.values[0].id === parseInt(definition.values[0].id, 10)) {
+				// Integer keys won't work with the default template, do string conversion
 				options['transformer'] = intTransformer;
 			}
 		}

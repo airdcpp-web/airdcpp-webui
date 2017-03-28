@@ -51,6 +51,7 @@ const WidgetDialog = React.createClass({
 			{
 				key: 'name',
 				type: FieldTypes.STRING,
+				defaultValue: name,
 			},
 		];
 
@@ -69,7 +70,7 @@ const WidgetDialog = React.createClass({
 			>
 				<Form
 					ref="form"
-					value={ {
+					value={ settings && {
 						name: settings.name,
 						...settings.widget,
 					} }

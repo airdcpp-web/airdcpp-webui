@@ -16,11 +16,9 @@ module.exports = {
 			key: 'feed_cache_minutes',
 			title: 'Minimum refetch interval (minutes)',
 			type: FieldTypes.NUMBER,
+			defaultValue: 60,
 		},
 	],
-	defaultSettings: {
-		feed_cache_minutes: 60,
-	},
 	size: {
 		w: 3,
 		h: 5,

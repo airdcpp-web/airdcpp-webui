@@ -38,12 +38,6 @@ WidgetActions.create.listen(function (widgetInfo, location) {
 	const id = WidgetUtils.createId(widgetInfo);
 	History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
 		widgetInfo,
-		settings: {
-			name: widgetInfo.name,
-			widget: {
-				...widgetInfo.defaultSettings,
-			},
-		},
 		onSave: settings => WidgetActions.create.saved(id, settings, widgetInfo),
 	});
 });

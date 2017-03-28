@@ -47,7 +47,7 @@ const Form = React.createClass({
 		/**
 		 * Source value to use for initial data
 		 * If no value is provided, the initial value is initialized
-		 * with empty values (or fields from defaultValue)
+		 * with defaultValue from definitions
 		 */
 		value: React.PropTypes.object,
 
@@ -55,22 +55,10 @@ const Form = React.createClass({
 		 * Header for the form
 		 */
 		title: React.PropTypes.node,
-
-		/**
-		 * Default values to set for the form if there is no current value
-		 * Format: key: value
-		 */
-		defaultValue: React.PropTypes.object,
 	},
 
 	contextTypes: {
 		onFieldChanged: React.PropTypes.func,
-	},
-
-	getDefaultProps() {
-		return {
-			defaultValue: {},
-		};
 	},
 
 	getInitialState() {
@@ -102,7 +90,7 @@ const Form = React.createClass({
 	mergeFields(formValue, updatedFields) {
 		const mergedValue = {
 			...formValue, 
-			...FormUtils.normalizeValue(updatedFields, this.props.fieldDefinitions, this.props.defaultValue)
+			...FormUtils.normalizeValue(updatedFields, this.props.fieldDefinitions)
 		};
 
 		this.setState({ 
