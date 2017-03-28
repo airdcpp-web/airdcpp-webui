@@ -115,7 +115,7 @@ const Form = React.createClass({
 	onFieldChanged(value, valueKey) {
 		// Make sure that we have the converted value for the custom 
 		// change handler (in case there are transforms for this field)
-		const result = this.form.getComponent(valueKey).validate();
+		const result = this.form.getComponent(valueKey[0]).validate();
 		const key = valueKey[0];
 		value[key] = result.value;
 
@@ -180,6 +180,11 @@ const Form = React.createClass({
 			this.props.onFieldSetting(def.key, optionsObject[def.key], this.state.formValue);
 		}
 
+		if (def.value_definitions) {
+			optionsObject[def.key]['item'] = {};
+			optionsObject[def.key]['item']['fields'] = def.value_definitions.reduce(this.fieldOptionReducer, {});
+		}
+
 		return optionsObject;
 	},
 
@@ -216,7 +221,7 @@ const Form = React.createClass({
 				) }
 				<TcombForm
 					ref={ c => this.form = c }
-					type={ t.struct(FormUtils.parseDefinitions(fieldDefinitions)) }
+					type={ FormUtils.parseDefinitions(fieldDefinitions) }
 					options={ this.getFieldOptions() }
 					value={ formValue }
 					onChange={ this.onFieldChanged }

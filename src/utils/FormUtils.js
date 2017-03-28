@@ -48,15 +48,17 @@ const parseFieldType = (info) => {
 };
 
 const parseDefinitions = (definitions) => {
-	return definitions.reduce((reduced, def) => {
+	const ret = definitions.reduce((reduced, def) => {
 		if (def.type === FieldTypes.LIST_OBJECT) {
-			reduced[def.key] = t.list(parseDefinitions(def.valueDefinitions));
+			reduced[def.key] = t.list(parseDefinitions(def.value_definitions));
 		} else {
 			reduced[def.key] = parseFieldType(def);
 		}
 		
 		return reduced;
 	}, {});
+
+	return t.struct(ret);
 };
 
 const normalizeField = (value) => {
@@ -86,12 +88,12 @@ const normalizeEnumValue = (rawItem) => {
 };
 
 const normalizeValue = (value, fieldDefinitions, defaultValue) => {
-	return fieldDefinitions.reduce((reducedValue, { key, type, valueDefinitions }) => {
+	return fieldDefinitions.reduce((reducedValue, { key, type, value_definitions }) => {
 		if (value && value.hasOwnProperty(key)) {
 			const fieldValue = value[key];
 			if (type === FieldTypes.LIST_OBJECT) {
 				// Normalize each list object
-				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, valueDefinitions));
+				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, value_definitions));
 			} else if (isListType(type)) {
 				// Normalize each list value
 				reducedValue[key] = fieldValue.map(normalizeField);

@@ -41,6 +41,9 @@ const ExtensionsConfigureDialog = React.createClass({
 					onSave={ this.onSave }
 					fieldDefinitions={ fieldDefinitions }
 					value={ settings }
+					context={ {
+						location: this.props.location,
+					} }
 				/>
 			</Modal>
 		);
