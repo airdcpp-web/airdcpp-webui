@@ -94,24 +94,27 @@ section#container-main,
 
 /* Dialogs start */
 
-.modal.full .layout.header .content {
+.ui.modal.full .layout.header .content {
 	overflow: hidden;
 }
 
-.modal.full table {
+.ui.modal.full table {
 	table-layout: fixed;
 }
 
 /* Can't be applied to dropdown cells */
-.modal.full td:not(.dropdown) {
+.ui.modal.full td:not(.dropdown) {
 	overflow-x: hidden;
 }
 
-.modal.full > .content {
-	overflow-y: auto;
-	max-height: 65vh;
+.ui.modal.full > .content {
 	min-height: 350px;
 	height: 65vh;
+}
+
+.ui.modal > .content {
+	overflow-y: auto;
+	max-height: 65vh;
 }
 
 /* Ensure that open modals are dimmed when a confirm dialog is displayed */
