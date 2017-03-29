@@ -7,18 +7,6 @@ import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
 
 
-const parse = function (v) {
-	if (v === 'null') {
-		return null;
-	}
-
-	return parseInt(v, 10);
-};
-
-const format = function (v) {
-	return String(v);
-};
-
 const typeToField = (info) => {
 	switch (info.type) {
 		case FieldTypes.NUMBER: {
@@ -111,8 +99,8 @@ const normalizeValue = (value, fieldDefinitions) => {
 };
 
 const intTransformer = {
-	format: format,
-	parse: parse
+	parse: v => v === 'null' ? null : parseInt(v, 10),
+	format: v => String(v),
 };
 
 export default {
