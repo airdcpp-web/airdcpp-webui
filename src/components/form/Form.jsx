@@ -100,22 +100,31 @@ const Form = React.createClass({
 		return mergedValue;
 	},
 
-	onFieldChanged(value, valueKey) {
-		// Make sure that we have the converted value for the custom 
-		// change handler (in case there are transforms for this field)
-		const result = this.form.getComponent(valueKey[0]).validate();
+	onFieldChanged(value, valueKey, kind) {
 		const key = valueKey[0];
-		value[key] = result.value;
-
-		if (this.props.onFieldChanged) {
-			const promise = this.props.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
-			if (promise) {
-				promise.then(this.mergeFields.bind(this, value), error => NotificationActions.apiError('Failed to update values', error));
+		if (kind) {
+			// List action
+			if (kind === 'add') {
+				// Set default fields
+				const fieldDef = this.props.fieldDefinitions.find(def => def.key === key);
+				value[key][valueKey[1]] = FormUtils.normalizeValue(value[key][valueKey[1]], fieldDef.value_definitions);
 			}
-		}
+		} else {
+			// Make sure that we have the converted value for the custom 
+			// change handler (in case there are transforms for this field)
+			const result = this.form.getComponent(valueKey[0]).validate();
+			value[key] = result.value;
 
-		if (this.context.onFieldChanged) {
-			this.context.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
+			if (this.props.onFieldChanged) {
+				const promise = this.props.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
+				if (promise) {
+					promise.then(this.mergeFields.bind(this, value), error => NotificationActions.apiError('Failed to update values', error));
+				}
+			}
+
+			if (this.context.onFieldChanged) {
+				this.context.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
+			}
 		}
 
 		this.setState({ 
