@@ -39,6 +39,8 @@ const Modal = React.createClass({
 		 * Useful for modals with navigable, varying height content
 		 */
 		fullHeight: React.PropTypes.bool,
+
+		dynamicHeight: React.PropTypes.bool,
 	},
 
 	getDefaultProps() {
@@ -47,6 +49,7 @@ const Modal = React.createClass({
 			approveCaption: 'Save',
 			approveEnabled: true,
 			fullHeight: false,
+			dynamicHeight: false,
 		};
 	},
 
@@ -79,6 +82,7 @@ const Modal = React.createClass({
 			closable: this.props.closable,
 			detachable: false,
 			allowMultiple: true,
+			observeChanges: this.props.dynamicHeight,
 			//debug: true,
 			//verbose: true,
 			//name: 'Modal',

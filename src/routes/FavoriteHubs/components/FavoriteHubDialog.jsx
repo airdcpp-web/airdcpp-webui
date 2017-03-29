@@ -19,7 +19,7 @@ import FormUtils from 'utils/FormUtils';
 
 const Fields = [
 	{
-		key: 'nick',
+		key: 'name',
 		type: FieldTypes.STRING,
 	},
 	{

@@ -107,7 +107,9 @@ const Form = React.createClass({
 			if (kind === 'add') {
 				// Set default fields
 				const fieldDef = this.props.fieldDefinitions.find(def => def.key === key);
-				value[key][valueKey[1]] = FormUtils.normalizeValue(value[key][valueKey[1]], fieldDef.value_definitions);
+				if (fieldDef.value_definitions) {
+					value[key][valueKey[1]] = FormUtils.normalizeValue(value[key][valueKey[1]], fieldDef.value_definitions);
+				}
 			}
 		} else {
 			// Make sure that we have the converted value for the custom 

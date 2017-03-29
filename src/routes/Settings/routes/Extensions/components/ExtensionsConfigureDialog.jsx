@@ -35,6 +35,7 @@ const ExtensionsConfigureDialog = React.createClass({
 				onApprove={ this.save } 
 				closable={ false } 
 				icon={ IconConstants.EDIT }
+				dynamicHeight={ true }
 			>
 				<Form
 					ref="form"
