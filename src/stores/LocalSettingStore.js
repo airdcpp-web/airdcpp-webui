@@ -9,49 +9,49 @@ const SettingDefinitions = [
 	{
 		key: LocalSettings.NOTIFY_PM_USER,
 		type: FieldTypes.BOOLEAN,
-		defaultValue: true,
+		default_value: true,
 		title: 'Private messages (users)',
 	}, 
 	{
 		key: LocalSettings.NOTIFY_PM_BOT,
 		type: FieldTypes.BOOLEAN,
-		defaultValue: false,
+		default_value: false,
 		title: 'Private messages (bots)',
 	}, 
 	{
 		key: LocalSettings.NOTIFY_BUNDLE_STATUS,
 		type: FieldTypes.BOOLEAN,
-		defaultValue: true,
+		default_value: true,
 		title: 'Bundle status changes',
 	}, 
 	{
 		key: LocalSettings.NOTIFY_EVENTS_INFO,
 		type: FieldTypes.BOOLEAN,
-		defaultValue: false,
+		default_value: false,
 		title: 'Info events',
 	}, 
 	{
 		key: LocalSettings.NOTIFY_EVENTS_WARNING,
 		type: FieldTypes.BOOLEAN,
-		defaultValue: true,
+		default_value: true,
 		title: 'Warning events',
 	}, 
 	{
 		key: LocalSettings.NOTIFY_EVENTS_ERROR,
 		type: FieldTypes.BOOLEAN,
-		defaultValue: true,
+		default_value: true,
 		title: 'Error events',
 	}, 
 	{
 		key: LocalSettings.UNREAD_LABEL_DELAY,
 		type: FieldTypes.NUMBER,
-		defaultValue: 0,
+		default_value: 0,
 		title: 'Delay for marking chat sessions as read (seconds)',
 	}, 
 	{
 		key: LocalSettings.BACKGROUND_IMAGE_URL,
 		type: FieldTypes.STRING,
-		defaultValue: null,
+		default_value: null,
 		optional: true,
 		title: 'Custom background image URL',
 	}
@@ -86,7 +86,7 @@ const LocalSettingStore = Reflux.createStore({
 			return this.settings[key];
 		}
 		
-		return this.getDefinition(key).defaultValue;
+		return this.getDefinition(key).default_value;
 	},
 
 	// Append values for the provided key -> value object 

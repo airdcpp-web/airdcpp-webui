@@ -19,7 +19,7 @@ const getWidgetSettings = (id, widgetInfo) => {
 	if (widgetInfo && widgetInfo.formSettings) {
 		Object.keys(widgetInfo.formSettings).forEach(key => {
 			if (!settings.widget.hasOwnProperty(key)) {
-				settings.widget[key] = widgetInfo.formSettings[key].defaultValue;
+				settings.widget[key] = widgetInfo.formSettings[key].default_value;
 			}
 		});
 	}

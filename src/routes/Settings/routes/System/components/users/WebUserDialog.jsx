@@ -81,7 +81,7 @@ const getEntry = isNew => {
 		{
 			key: 'permissions',
 			type: FieldTypes.LIST_STRING,
-			values: Object.keys(AccessConstants).reduce(reducePermissions, []),
+			options: Object.keys(AccessConstants).reduce(reducePermissions, []),
 		},
 	];
 };

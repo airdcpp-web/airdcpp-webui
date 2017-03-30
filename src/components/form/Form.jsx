@@ -47,7 +47,7 @@ const Form = React.createClass({
 		/**
 		 * Source value to use for initial data
 		 * If no value is provided, the initial value is initialized
-		 * with defaultValue from definitions
+		 * with the default one from definitions
 		 */
 		value: React.PropTypes.object,
 
@@ -107,13 +107,13 @@ const Form = React.createClass({
 			if (kind === 'add') {
 				// Set default fields
 				const fieldDef = this.props.fieldDefinitions.find(def => def.key === key);
-				if (fieldDef.value_definitions) {
-					value[key][valueKey[1]] = FormUtils.normalizeValue(value[key][valueKey[1]], fieldDef.value_definitions);
+				if (fieldDef.definitions) {
+					value[key][valueKey[1]] = FormUtils.normalizeValue(value[key][valueKey[1]], fieldDef.definitions);
 				}
 			}
 		} else {
 			// Make sure that we have the converted value for the custom 
-			// change handler (in case there are transforms for this field)
+			// change handler (in case there are transforms for this field) 
 			const result = this.form.getComponent(valueKey[0]).validate();
 			value[key] = result.value;
 
@@ -179,9 +179,9 @@ const Form = React.createClass({
 			this.props.onFieldSetting(def.key, optionsObject[def.key], this.state.formValue);
 		}
 
-		if (def.value_definitions) {
+		if (def.definitions) {
 			optionsObject[def.key]['item'] = {};
-			optionsObject[def.key]['item']['fields'] = def.value_definitions.reduce(this.fieldOptionReducer, {});
+			optionsObject[def.key]['item']['fields'] = def.definitions.reduce(this.fieldOptionReducer, {});
 		}
 
 		return optionsObject;

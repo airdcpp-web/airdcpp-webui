@@ -40,8 +40,8 @@ const getFields = (profiles) => {
 			type: FieldTypes.LIST_NUMBER,
 			title: 'Share profiles',
 			help: 'New share profiles can be created from application settings',
-			values: profiles,
-			defaultValue: [ profiles.find(profile => profile.default).id ],
+			options: profiles,
+			default_value: [ profiles.find(profile => profile.default).id ],
 		}, 
 		{
 			key: 'incoming',

@@ -39,7 +39,7 @@ const parseFieldType = (info) => {
 const parseDefinitions = (definitions) => {
 	const ret = definitions.reduce((reduced, def) => {
 		if (def.type === FieldTypes.LIST_OBJECT) {
-			reduced[def.key] = t.list(parseDefinitions(def.value_definitions));
+			reduced[def.key] = t.list(parseDefinitions(def.definitions));
 		} else {
 			reduced[def.key] = parseFieldType(def);
 		}
@@ -76,13 +76,13 @@ const normalizeEnumValue = (rawItem) => {
 	};
 };
 
-const normalizeValue = (value, fieldDefinitions) => {
-	return fieldDefinitions.reduce((reducedValue, { key, type, value_definitions, defaultValue }) => {
+const normalizeValue = (value, valueDefinitions) => {
+	return valueDefinitions.reduce((reducedValue, { key, type, definitions, default_value }) => {
 		if (value && value.hasOwnProperty(key)) {
 			const fieldValue = value[key];
 			if (type === FieldTypes.LIST_OBJECT) {
 				// Normalize each list object
-				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, value_definitions));
+				reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, definitions));
 			} else if (isListType(type)) {
 				// Normalize each list value
 				reducedValue[key] = fieldValue.map(normalizeField);
@@ -91,7 +91,7 @@ const normalizeValue = (value, fieldDefinitions) => {
 			}
 		} else if (!value) {
 			// Initialize empty value but don't merge missing fields into an existing value (we might be merging)
-			reducedValue[key] = defaultValue ? defaultValue : null;
+			reducedValue[key] = default_value ? default_value : null;
 		}
 
 		return reducedValue;
@@ -143,17 +143,17 @@ export default {
 		options['help'] = definition.help;
 
 		// Enum select field?
-		if (definition.values) {
-			invariant(Array.isArray(definition.values) && definition.values.length > 0, 'Incorrect enum values supplied: ' + JSON.stringify(definition.values));
+		if (definition.options) {
+			invariant(Array.isArray(definition.options) && definition.options.length > 0, 'Incorrect enum options supplied: ' + JSON.stringify(definition.options));
 			Object.assign(options, {
 				factory: t.form.Select,
-				options: definition.values.map(normalizeEnumValue),
+				options: definition.options.map(normalizeEnumValue),
 				nullOption: false,
 			});
 
 			if (isListType(definition.type)) {
 				options['template'] = SelectField;
-			} else if (definition.values[0].id === parseInt(definition.values[0].id, 10)) {
+			} else if (definition.options[0].id === parseInt(definition.options[0].id, 10)) {
 				// Integer keys won't work with the default template, do string conversion
 				options['transformer'] = intTransformer;
 			}

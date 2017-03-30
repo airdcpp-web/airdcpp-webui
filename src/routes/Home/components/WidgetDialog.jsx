@@ -51,7 +51,7 @@ const WidgetDialog = React.createClass({
 			{
 				key: 'name',
 				type: FieldTypes.STRING,
-				defaultValue: name,
+				default_value: name,
 			},
 		];
 
