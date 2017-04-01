@@ -42,13 +42,13 @@ const UserResult = ({ result }) => (
 
 const resultSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
 
-const UserResultTable = ({ results, error }) => {
-	if (error) {
+const UserResultTable = ({ results, dataError }) => {
+	if (dataError) {
 		return (
 			<Message 
 				title="Failed to load user listing"
 				icon={ IconConstants.ERROR }
-				description={ error.message }
+				description={ dataError.message }
 			/>
 		);
 	}

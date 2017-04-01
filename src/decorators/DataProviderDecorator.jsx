@@ -127,7 +127,17 @@ export default function (Component, settings) {
 		},
 
 		onDataFetchFailed(error) {
-			NotificationActions.apiError('Failed to fetch data', error);
+			if (error.code && error.message) {
+				// API error
+				NotificationActions.apiError('Failed to fetch data', error);
+			} else {
+				// HTTP error
+				error = {
+					code: error.status,
+					message: error.statusText,
+				};
+			}
+
 			this.setState({
 				error,
 			});
@@ -138,11 +148,7 @@ export default function (Component, settings) {
 			const { data, error } = this.state;
 
 			if (!data && !error) {
-				if (!loaderText) {
-					return null;
-				}
-
-				return <Loader text={ loaderText }/>;
+				return loaderText && <Loader text={ loaderText }/>;
 			}
 
 			if (error && !renderOnError) {
@@ -152,7 +158,7 @@ export default function (Component, settings) {
 			return (
 				<Component
 					refetchData={ this.refetchData }
-					error={ error }
+					dataError={ error }
 					{ ...other }
 					{ ...data }
 				/>

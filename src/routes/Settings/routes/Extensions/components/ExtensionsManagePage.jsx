@@ -24,11 +24,12 @@ const convertNpmPackage = ({ name, description, version, _npmUser }) => {
 	};
 };
 
-const LocalExtension = DataProviderDecorator(({ installedPackage, npmPackage }) => (
+const LocalExtension = DataProviderDecorator(({ installedPackage, npmPackage, dataError }) => (
 	<Extension 
 		key={ installedPackage.name } 
 		installedPackage={ installedPackage } 
-		npmPackage={ npmPackage && convertNpmPackage(npmPackage) } 
+		npmPackage={ npmPackage && convertNpmPackage(npmPackage) }
+		npmError={ dataError }
 	/>
 ), {
 	urls: {
@@ -40,6 +41,7 @@ const LocalExtension = DataProviderDecorator(({ installedPackage, npmPackage }) 
 			return $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + installedPackage.name + '/latest');
 		},
 	},
+	renderOnError: true,
 });
 
 

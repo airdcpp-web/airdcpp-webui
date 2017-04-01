@@ -49,13 +49,13 @@ const Source = ({ source, bundle }) => (
 
 const userSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
 
-const SourceTable = ({ sources, bundle, error }) => {
-	if (error) {
+const SourceTable = ({ sources, bundle, dataError }) => {
+	if (dataError) {
 		return (
 			<Message 
 				title="Failed to load source listing"
 				icon={ IconConstants.ERROR }
-				description={ error.message }
+				description={ dataError.message }
 			/>
 		);
 	}

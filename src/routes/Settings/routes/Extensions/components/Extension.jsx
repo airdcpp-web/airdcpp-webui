@@ -70,8 +70,20 @@ const getCornerIcon = (installedPackage, hasUpdate) => {
 	return 'green check circle';
 };
 
+const formatNote = (installedPackage, npmError) => {
+	if (installedPackage && !installedPackage.managed) {
+		return 'Unmanaged extension';
+	}
 
-const Extension = ({ npmPackage, installedPackage }) => {
+	if (npmError) {
+		return `Failed to fetch information from the extension directory: ${npmError.message} (code ${npmError.code})`;
+	}
+
+	return 'Non-listed extension';
+};
+
+
+const Extension = ({ npmPackage, installedPackage, npmError }) => {
 	const hasUpdate = installedPackage && npmPackage && versionCompare(installedPackage.version, npmPackage.version) < 0;
 	const name = npmPackage ? npmPackage.name : installedPackage.name;
 	return (
@@ -100,7 +112,7 @@ const Extension = ({ npmPackage, installedPackage }) => {
 						packageInfo={ npmPackage }
 					/>
 					<div>
-						{ !npmPackage && (installedPackage && !installedPackage.managed ? 'Unmanaged extension' : 'Non-listed extension') }
+						{ !npmPackage && formatNote(installedPackage, npmError) }
 					</div>
 					<Version 
 						className={ npmPackage ? (!hasUpdate ? 'latest' : 'outdated') : null }
