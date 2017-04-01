@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
+import { PlatformEnum } from 'constants/SystemConstants';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -60,7 +61,7 @@ const FileBrowser = React.createClass({
 
 	getInitialState() {
 		this._pathSeparator = LoginStore.systemInfo.path_separator;
-		this._isWindows = LoginStore.systemInfo.platform === 'windows';
+		this._isWindows = LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
 
 		let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
 		if (!currentDirectory) {

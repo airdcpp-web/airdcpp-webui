@@ -2,6 +2,7 @@ import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import LoginStore from 'stores/LoginStore';
+import { PlatformEnum } from 'constants/SystemConstants';
 
 import '../style.css';
 
@@ -40,7 +41,7 @@ const MiscPage = React.createClass({
 
 		// The locale-specific system encoding is used on Windows by default
 		// while other system use UTF-8
-		if (LoginStore.systemInfo.platform !== 'windows') {
+		if (LoginStore.systemInfo.platform !== PlatformEnum.WINDOWS) {
 			Entry.push('nmdc_encoding');
 		}
 
