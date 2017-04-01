@@ -40,11 +40,6 @@ const CommandHandler = (sessionProps) => {
 		handle: (command, params) => {
 			if (commands[command]) {
 				commands[command].handler(params, sessionProps);
-			} else {
-				NotificationActions.info({
-					title: 'Unknown command: ' + command,
-					message: 'Use /help to list available commands',
-				});
 			}
 		}
 	};
