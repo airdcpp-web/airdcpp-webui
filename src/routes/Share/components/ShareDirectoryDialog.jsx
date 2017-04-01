@@ -37,7 +37,8 @@ const getFields = (profiles) => {
 		},
 		{
 			key: 'profiles',
-			type: FieldTypes.LIST_NUMBER,
+			type: FieldTypes.LIST,
+			item_type: FieldTypes.NUMBER,
 			title: 'Share profiles',
 			help: 'New share profiles can be created from application settings',
 			options: profiles,

@@ -33,9 +33,8 @@ export const FieldTypes = {
 	TEXT: 'text',
 	FILE_PATH: 'file_path',
 	DIRECTORY_PATH: 'directory_path',
-	LIST_OBJECT: 'list_object',
-	LIST_STRING: 'list_string',
-	LIST_NUMBER: 'list_number',
+	STRUCT: 'struct',
+	LIST: 'list',
 };
 
 export default {

@@ -179,11 +179,6 @@ const Form = React.createClass({
 			this.props.onFieldSetting(def.key, optionsObject[def.key], this.state.formValue);
 		}
 
-		if (def.definitions) {
-			optionsObject[def.key]['item'] = {};
-			optionsObject[def.key]['item']['fields'] = def.definitions.reduce(this.fieldOptionReducer, {});
-		}
-
 		return optionsObject;
 	},
 
