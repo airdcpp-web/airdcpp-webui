@@ -184,8 +184,6 @@ const menu = [
 		url: 'extensions',
 		title: 'Extensions',
 		icon: 'puzzle',
-		access: AccessConstants.ADMIN,
-		debugOnly: true,
 		menuItems: [
 			{ 
 				title: 'Manage installed', 

@@ -6,6 +6,7 @@ import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import InputDialog from 'components/semantic/InputDialog';
 
+import AccessConstants from 'constants/AccessConstants';
 import OverlayConstants from 'constants/OverlayConstants';
 import ExtensionConstants from 'constants/ExtensionConstants';
 import NotificationActions from 'actions/NotificationActions';
@@ -20,16 +21,19 @@ const hasSettings = extension => extension.has_settings;
 const ExtensionActions = Reflux.createActions([
 	{ 'installNpm': { 
 		displayName: 'Install',
-		icon: IconConstants.CREATE
+		icon: IconConstants.CREATE,
+		access: AccessConstants.ADMIN,
 	} },
 	{ 'updateNpm': { 
 		displayName: 'Update',
-		icon: IconConstants.REFRESH
+		icon: IconConstants.REFRESH,
+		access: AccessConstants.ADMIN,
 	} },
 	{ 'installUrl': { 
 		displayName: 'Install from URL',
 		children: [ 'saved' ], 
-		icon: IconConstants.CREATE
+		icon: IconConstants.CREATE,
+		access: AccessConstants.ADMIN,
 	} },
 	{ 'remove': { 
 		asyncResult: true, 
@@ -37,24 +41,28 @@ const ExtensionActions = Reflux.createActions([
 		displayName: 'Uninstall',
 		icon: IconConstants.REMOVE,
 		filter: isManaged,
+		access: AccessConstants.ADMIN,
 	} },
 	{ 'start': { 
 		asyncResult: true, 
 		displayName: 'Start',
 		icon: IconConstants.PLAY,
 		filter: isManaged,
+		access: AccessConstants.ADMIN,
 	} },
 	{ 'stop': { 
 		asyncResult: true, 
 		displayName: 'Stop',
 		icon: IconConstants.STOP,
 		filter: isManaged,
+		access: AccessConstants.ADMIN,
 	} },
 	{ 'configure': { 
 		children: [ 'saved' ],
 		displayName: 'Configure',
 		icon: IconConstants.EDIT,
 		filter: hasSettings,
+		access: AccessConstants.SETTINGS_EDIT,
 	} },
 ]);
 
