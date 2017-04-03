@@ -33,7 +33,7 @@ const ItemHandler = {
 	},
 
 	itemHeaderIconGetter(session) {
-		return <HubIcon size="large" hub={ session } />;
+		return <HubIcon hub={ session } />;
 	},
 };
 

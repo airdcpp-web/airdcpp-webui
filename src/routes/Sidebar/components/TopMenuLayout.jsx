@@ -25,7 +25,7 @@ const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAc
 				Current sessions
 			</div>
 			{ sessionMenuItems }
-			{ listActionMenu ? <div className="ui divider"/> : null }
+			{ listActionMenu && <div className="ui divider"/> }
 			{ listActionMenu }
 		</Dropdown>
 	);

@@ -20,7 +20,7 @@ export default (itemMenuIds) => {
 		},
 
 		itemHeaderIconGetter(session) {
-			return <UserIcon size="large" flags={ session.user.flags } />;
+			return <UserIcon flags={ session.user.flags } />;
 		},
 
 		itemHeaderTitleGetter(session, location, actionMenu) {

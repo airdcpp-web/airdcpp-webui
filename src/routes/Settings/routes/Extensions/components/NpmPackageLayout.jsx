@@ -21,7 +21,7 @@ const NpmPackageLayout = React.createClass({
 	},
 
 	render() {
-		const { packageCatalog, } = this.props;
+		const { packageCatalog } = this.props;
 		return (
 			<div className="extension-layout">
 				<div className="ui divider"/>

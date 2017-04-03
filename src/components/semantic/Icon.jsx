@@ -10,7 +10,7 @@ const Icon = ({ icon, size, className, cornerIcon }) => {
 
 	if (cornerIcon) {
 		return (
-			<i className={ classNames(size, className, 'icons') }>
+			<i className={ classNames(size, className, 'icon icons') }>
 				<i className={ classNames(icon, 'icon') }/>
 				<i className={ classNames(cornerIcon, 'corner icon') }/>
 			</i>

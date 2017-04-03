@@ -35,7 +35,7 @@ const ItemHandler = {
 	},
 
 	itemHeaderIconGetter(session) {
-		return session.share_profile ? 'large green server' : UserItemHandler.itemHeaderIconGetter(session);
+		return session.share_profile ? 'green server' : UserItemHandler.itemHeaderIconGetter(session);
 	},
 };
 
