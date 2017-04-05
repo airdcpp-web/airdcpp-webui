@@ -233,15 +233,7 @@ const SessionLayout = React.createClass({
 	onKeyDown(event) {
 		const { keyCode, altKey } = event;
 
-		if (keyCode >= 49 && keyCode <= 57 && altKey) {
-			// Alt + 1-9
-			event.preventDefault();
-
-			const newSession = this.props.items[keyCode - 49];
-			if (newSession) {
-				this.pushSession(newSession.id);
-			}
-		} else if (altKey && (keyCode === 38 || keyCode === 40)) {
+		if (altKey && (keyCode === 38 || keyCode === 40)) {
 			// Arrow up/down
 			event.preventDefault();
 
