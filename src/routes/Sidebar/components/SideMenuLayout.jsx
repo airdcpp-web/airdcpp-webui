@@ -19,7 +19,7 @@ const SideMenuLayout = ({
 		<div className="ui grid session-container horizontal">
 			<div className="four wide column menu-column">
 				{ newButton }
-				{ sessionMenuItems.length && (
+				{ !!sessionMenuItems.length && (
 						<div className="ui vertical secondary menu">
 							{ sessionMenuItems}
 						</div>
