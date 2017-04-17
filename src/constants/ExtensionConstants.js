@@ -5,6 +5,11 @@ export default {
 	EXTENSIONS_URL: MODULE_URL,
 	DOWNLOAD_URL: MODULE_URL + '/download',
 
+	ENGINES_URL: MODULE_URL + '/engines',
+	ENGINES_STATUS_URL: MODULE_URL + '/engines/status',
+
+	DEFAULT_ENGINE: 'node',
+
 	STARTED: 'extension_started',
 	STOPPED: 'extension_stopped',
 

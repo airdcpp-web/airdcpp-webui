@@ -5,6 +5,7 @@ import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 
+import EngineStatusMessage from './EngineStatusMessage';
 import Extension from './Extension';
 
 import { Link } from 'react-router';
@@ -73,6 +74,7 @@ const ExtensionsManagePage = React.createClass({
 
 		return (
 			<div className="extension-layout">
+				<EngineStatusMessage/>
 				<div className="ui divider"/>
 				<div className="ui divided items">
 					{ installedPackages.map(this.getItem) }
