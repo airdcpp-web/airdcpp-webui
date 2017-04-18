@@ -101,7 +101,7 @@ ExtensionActions.stop.failed.listen(function (extension, error) {
 ExtensionActions.installNpm.listen(function (npmPackage, location) {
 	$.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
 		const { tarball, shasum } = data.dist;
-		ExtensionActions.installUrl.saved(tarball, shasum);
+		ExtensionActions.installUrl.saved(tarball, npmPackage.name, shasum);
 	})
 		.fail(ExtensionActions.installNpm.failed);
 });
@@ -129,8 +129,9 @@ ExtensionActions.installUrl.listen(function () {
 	InputDialog(options, inputOptions, this.saved.bind(this));
 });
 
-ExtensionActions.installUrl.saved.listen(function (url, shasum) {
-	return SocketService.post(ExtensionConstants.DOWNLOAD_URL, { 
+ExtensionActions.installUrl.saved.listen(function (url, installId, shasum) {
+	return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
+		install_id: installId ? installId : url,
 		url,
 		shasum
 	})
