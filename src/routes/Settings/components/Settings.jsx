@@ -195,6 +195,12 @@ const menu = [
 				noSave: true,
 			}
 		],
+		advancedMenuItems: [
+			{ 
+				title: 'Extension options', 
+				url: 'extension-options',
+			},
+		],
 	}, {
 		url: 'system',
 		title: 'System',

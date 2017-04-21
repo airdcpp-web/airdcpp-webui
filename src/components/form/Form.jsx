@@ -163,7 +163,7 @@ const Form = React.createClass({
 			const changedFields = settingKeys.reduce(
 				this.reduceChangedValues.bind(this, validatedFormValue), 
 				{}
-			); 
+			);
 
 			return this.props.onSave(changedFields, validatedFormValue).catch(this.onSaveFailed);
 		}

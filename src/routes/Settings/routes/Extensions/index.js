@@ -21,6 +21,9 @@ module.exports = {
 						component: require('./components/ExtensionsConfigureDialog').default, 
 					}
 				]
+			}, {
+				path: 'extension-options', 
+				component: require('./components/ExtensionsOptionsPage').default
 			} ]);
 		}, 'settings-extensions-children');
 	},
