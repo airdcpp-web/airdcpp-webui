@@ -6,7 +6,7 @@ import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import EngineStatusMessage from './EngineStatusMessage';
-import Extension from './Extension';
+import Extension from './extension/Extension';
 
 import { Link } from 'react-router';
 import Message from 'components/semantic/Message';

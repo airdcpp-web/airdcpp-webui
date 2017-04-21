@@ -65,7 +65,7 @@ const Sidebar = React.createClass({
 					className: 'ui right vertical sidebar',
 				}}
 
-				isResizable={
+				enable={
 					{ top:false, right:false, bottom:false, left: !BrowserUtils.useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
 				}
 				onResizeStop={ this.onResizeStop }

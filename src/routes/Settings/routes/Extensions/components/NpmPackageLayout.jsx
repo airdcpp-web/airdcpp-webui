@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Extension from './Extension';
+import Extension from './extension/Extension';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
