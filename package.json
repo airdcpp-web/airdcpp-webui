@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.0.0-beta15",
+  "version": "2.0.0-beta16",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -38,7 +38,7 @@
     "babel-core": "^6.5.1",
     "babel-eslint": "^7.0.0",
     "babel-jest": "^19.0.0",
-    "babel-loader": "^6.2.0",
+    "babel-loader": "^7.0.0",
     "babel-plugin-module-resolver": "^2.5.0",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-transform-object-assign": "^6.5.0",
