@@ -20,8 +20,7 @@ const checkFlags = ({ user }) => {
 };
 
 const checkIgnore = ({ user }) => {
-	return (user.flags.indexOf('op') === -1 || user.flags.indexOf('bot') !== -1) && 
-		 user.flags.indexOf('ignored') === -1 &&
+	return user.flags.indexOf('ignored') === -1 &&
 		 checkFlags({ user });
 };
 
