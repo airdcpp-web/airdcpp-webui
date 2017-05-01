@@ -16,12 +16,18 @@ import '../style.css';
 
 const Entry = ({ entry, feedUrl, componentId }) => {
 	const date = entry.pubDate ? entry.pubDate : entry.updated;
+	
+	let title = typeof entry.title !== 'object' ? entry.title : entry.title.content;
+	if (typeof title !== 'string') {
+		title = 'Unsupported title type';
+	}
+
 	return (
 		<div className="item">
 			<div className="header">
 				<ActionMenu 
 					leftIcon={ true }
-					caption={ entry.title }
+					caption={ title }
 					actions={ RSSActions }
 					itemData={ {
 						entry,
