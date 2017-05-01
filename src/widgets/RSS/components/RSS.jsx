@@ -160,14 +160,14 @@ const RSS = React.createClass({
 		let entries = [];
 		if (data.results.rss) {
 			if (!data.results.rss.channel || !data.results.rss.channel.item) {
-				this.setError('Invalid/unsupported feed');
+				this.setError('Invalid/unsupported feed (no channel/item)');
 				return;
 			}
 
 			entries = data.results.rss.channel.item;
 		} else if (data.results.feed) {
 			if (!data.results.feed.entry) {
-				this.setError('Invalid/unsupported feed');
+				this.setError('Invalid/unsupported feed (no feed entry)');
 				return;
 			}
 
@@ -175,6 +175,16 @@ const RSS = React.createClass({
 		} else {
 			this.setError('No "rss" or "feed" tag was found');
 			return;
+		}
+
+		if (!Array.isArray(entries)) {
+			if (typeof entries !== 'object') {
+				this.setError('Invalid/unsupported feed (entries is not an array or an object)');
+				return;
+			}
+
+			// Single entry, convert to an array
+			entries = [ entries ];
 		}
 
 		BrowserUtils.saveSessionProperty(idToCacheKey(this.props.componentId), {
