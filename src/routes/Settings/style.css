@@ -1,13 +1,8 @@
 .settings-layout {
   padding-bottom: 30px;
-
   max-height: 100% !important;
   display: flex;
   flex-direction: column;
-}
-
-.content-column:not(.full-width) {
-  max-width: 900px;
 }
 
 .settings-layout .menu-column .menu {
