@@ -75,20 +75,34 @@ const widgets = [
 ];
 
 const LAYOUT_STORAGE_KEY = 'home_layout';
+const LAYOUT_VERSION = 3;
 
 
 const WidgetStore = Reflux.createStore({
 	listenables: WidgetActions,
 	init: function () {
 		let layoutInfo = BrowserUtils.loadLocalProperty(LAYOUT_STORAGE_KEY);
-		if (layoutInfo && layoutInfo.items && layoutInfo.version === 2) {
-			this.layouts = layoutInfo.items;
+		if (layoutInfo && layoutInfo.items) {
+			if (layoutInfo.version === LAYOUT_VERSION) {
+				this.layouts = layoutInfo.items;
+			} else if (layoutInfo.version === 2) {
+				this.layouts = layoutInfo.items;
+
+				// Replace the old release feed with the blog news feed
+				const releases = getWidgetSettings('rss_releases');
+				if (releases) {
+					this.onRemoveConfirmed('rss_releases');
+					this.layouts = createDefaultWidget(this.layouts, RSS, 2, 0, 'News', {
+						feed_url: 'https://airdcpp-web.github.io/feed.xml',
+					}, '_releases');
+				}
+			}
 		} else {
 			// Initialize the default layout
 			this.layouts = {};
 			this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
-			this.layouts = createDefaultWidget(this.layouts, RSS, 2, 0, 'Client releases', {
-				feed_url: 'https://github.com/airdcpp-web/airdcpp-webclient/releases.atom',
+			this.layouts = createDefaultWidget(this.layouts, RSS, 2, 0, 'News', {
+				feed_url: 'https://airdcpp-web.github.io/feed.xml',
 			}, '_releases');
 			this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
 		}
@@ -144,7 +158,7 @@ const WidgetStore = Reflux.createStore({
 
 	onLayoutChange(layout, layouts) {
 		BrowserUtils.saveLocalProperty(LAYOUT_STORAGE_KEY, {
-			version: 2,
+			version: LAYOUT_VERSION,
 			items: layouts,
 		});
 

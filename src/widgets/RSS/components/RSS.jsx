@@ -48,7 +48,14 @@ Entry.propTypes = {
 	/**
 	 * Feed entry
 	 */
-	entry: React.PropTypes.object.isRequired,
+	entry: React.PropTypes.shape({
+		title: React.PropTypes.oneOfType([
+			React.PropTypes.object,
+			React.PropTypes.string,
+		]).isRequired,
+		updated: React.PropTypes.string, // Atom feeds
+		pubDate: React.PropTypes.string, // RSS feeds
+	}),
 
 	feedUrl: React.PropTypes.string.isRequired,
 
