@@ -4,6 +4,7 @@ import LinkConstants from 'constants/LinkConstants';
 
 import ActionButton from 'components/ActionButton';
 import ExternalLink from 'components/ExternalLink';
+import TextDecorator from 'components/TextDecorator';
 import Message from 'components/semantic/Message';
 
 import LoginActions from 'actions/LoginActions';
@@ -37,6 +38,14 @@ const NewUserIntro = () => {
 					<p>
 						Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information about the client and its features.
 					</p>
+					<TextDecorator
+						text={ 
+							<p>
+								If you have questions, you may post them on the <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>GitHub tracker</ExternalLink> or 
+								join the dev/support hub: <span>{ LinkConstants.DEV_HUB_URL }</span>
+							</p>
+						}
+					/>
 					<ActionButton 
 						action={ LoginActions.newUserIntroSeen }
 					/>
