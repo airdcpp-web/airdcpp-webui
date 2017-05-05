@@ -21,8 +21,8 @@ export default {
 	INSTALLATION_SUCCEEDED: 'extension_installation_succeeded',
 	INSTALLATION_FAILED: 'extension_installation_failed',
 
-	NPM_PACKAGES_URL: 'https://airdcpp-npm.herokuapp.com/-/v1/search?text=keywords:airdcpp-extensions-public&size=100',
-	NPM_PACKAGE_URL: 'https://airdcpp-npm.herokuapp.com/',
+	NPM_PACKAGES_URL: 'https://npm.airdcpp.net/-/v1/search?text=keywords:airdcpp-extensions-public&size=100',
+	NPM_PACKAGE_URL: 'https://npm.airdcpp.net/',
 	NPM_HOMEPAGE_URL: 'https://www.npmjs.com/package/',
 }
 ;
