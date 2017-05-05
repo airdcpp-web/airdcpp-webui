@@ -1,8 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var CompressionPlugin = require("compression-webpack-plugin");
+var CompressionPlugin = require('compression-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var Visualizer = require('webpack-visualizer-plugin');
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
 if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
@@ -59,6 +60,9 @@ var releasePlugins = [
 		threshold: 0,
 		minRatio: 0
 	}),
+	new Visualizer({
+		filename: '../stats.html'
+	})
 ];
 
 var debugPlugins = [

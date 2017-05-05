@@ -100,7 +100,8 @@
     "url-loader": "^0.5.6",
     "webpack": "^2.2.0-rc",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.6.0"
+    "webpack-hot-middleware": "^2.6.0",
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "jest": {
     "moduleFileExtensions": [
