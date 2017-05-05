@@ -29,6 +29,15 @@ describe('widget store', () => {
 		expect(hasLayoutItems('rss_releases')).toEqual(true);
 
 		expect(hasLayoutItems('dummy')).toEqual(false);
+
+		const settings = WidgetStore.getWidgetSettings('rss_releases', RSS);
+		expect(settings).toEqual({
+			name: 'News',
+			widget: {
+				feed_url: 'https://airdcpp-web.github.io/feed.xml',
+				feed_cache_minutes: 60,
+			}
+		});
 	});
 
 
