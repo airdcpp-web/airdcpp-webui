@@ -13,6 +13,8 @@ import emoji from 'react-easy-emoji';
 import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';
 
 import History from 'utils/History';
+import HubActions from 'actions/HubActions';
+import HubSessionStore from 'stores/HubSessionStore';
 
 
 linkify.add('magnet:', {
@@ -30,6 +32,21 @@ linkify.add('magnet:', {
 	}
 });
 
+linkify.add('dchub://', {
+	validate: (text, pos, self) => {
+		const tail = text.slice(pos);
+		if (self.re.link_fuzzy.test(tail)) {
+			return tail.match(self.re.link_fuzzy)[0].length;
+		}
+
+		return 0;
+	}
+});
+
+// Aliases
+linkify.add('adc://', 'dchub://');
+linkify.add('adcs://', 'dchub://');
+
 
 const onClickLink = (evt, routerLocation) => {
 	const uri = evt.target.href;
@@ -43,6 +60,10 @@ const onClickLink = (evt, routerLocation) => {
 				searchString: tth,
 			}
 		}, routerLocation);
+	} else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
+		evt.preventDefault();
+
+		HubActions.createSession(routerLocation, uri, HubSessionStore);
 	}
 };
 

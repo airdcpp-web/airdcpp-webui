@@ -94,7 +94,7 @@
     "reflux-promise": "^1.0.4",
     "rimraf": "^2.4.3",
     "semantic-ui-css": "^2.2.9",
-    "style-loader": "^0.16.0",
+    "style-loader": "^0.17.0",
     "tcomb-form": "^0.9.0",
     "tcomb-form-templates-semantic": "^0.1.1",
     "url-loader": "^0.5.6",
