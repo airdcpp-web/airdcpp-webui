@@ -123,7 +123,7 @@ const parseTypeOptions = type => {
 };
 
 const parseFieldOptions = (definition) => {
-	const options = parseTypeOptions();
+	const options = parseTypeOptions(definition.type);
 
 	// List item options
 	if (definition.type == FieldTypes.LIST) {
