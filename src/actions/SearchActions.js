@@ -7,13 +7,23 @@ import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 import OverlayConstants from 'constants/OverlayConstants';
 
+import AccessConstants from 'constants/AccessConstants';
+import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
+
 
 export const SearchActions = Reflux.createActions([
 	{ 'result': { 
 		displayName: 'Result details',
-		icon: IconConstants.OPEN },
-	},
+		icon: IconConstants.OPEN 
+	} },
+	{ 'browseContent': { 
+		asyncResult: true,	
+		displayName: 'Browse content', 
+		access: AccessConstants.FILELISTS_EDIT,
+		icon: IconConstants.FILELIST
+	} },
 	{ 'download': { asyncResult: true } },
 ]);
 
@@ -25,6 +35,10 @@ SearchActions.download.listen((itemData, downloadData) => {
 
 SearchActions.download.failed.listen((itemData, error) => {
 	NotificationActions.apiError('Failed to queue the item ' + itemData.itemInfo.name, error);
+});
+
+SearchActions.browseContent.listen(function (data, location) {
+	FilelistActions.createSession(location, data.users.user, FilelistSessionStore, data.path);
 });
 
 SearchActions.result.listen(function (data, location) {

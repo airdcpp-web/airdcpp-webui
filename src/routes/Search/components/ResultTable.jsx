@@ -49,7 +49,7 @@ const NameCell = ({ rowData, ...props }) => (
 	>
 		<TableActionMenu 
 			actions={ SearchActions } 
-			ids={ [ 'result' ] } 
+			ids={ [ 'browseContent', 'result' ] } 
 			itemData={ rowData }
 		/>
 	</FileDownloadCell>
