@@ -1,7 +1,6 @@
 .file-browser .table-container {
 	overflow-y: auto;
 	overflow-x: hidden;
-	margin-top:10px;
 	flex: 1;
 }
 

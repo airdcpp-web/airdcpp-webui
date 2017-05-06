@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 
 import BrowserUtils from 'utils/BrowserUtils';
@@ -47,7 +46,12 @@ const Sidebar = React.createClass({
 		}
 	},
 
-	onResizeStop(direction, styleSize, { width }) {
+	onResizeStop(direction, styleSize, element, delta) {
+		if (!delta.width) {
+			return;
+		}
+
+		const width = this.state.width + delta.width;
 		BrowserUtils.saveLocalProperty('sidebar_width', width);
 		this.setState({ width });
 	},
