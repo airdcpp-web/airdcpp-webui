@@ -4,7 +4,7 @@ import FormattedFile from 'components/format/FormattedFile';
 import ValueFormat from 'utils/ValueFormat';
 
 
-const FileItem = ({ item, itemClickHandler }) => {
+const FileItem = ({ item, itemClickHandler, itemIconGetter }) => {
 	const isFile = item.type.id === 'file';
 	return (
 		<tr>
@@ -14,9 +14,10 @@ const FileItem = ({ item, itemClickHandler }) => {
 					onClick={ isFile ? null : evt => itemClickHandler(item.name) }
 					caption={ item.name }
 				/>
+				{ !!itemIconGetter && itemIconGetter(item) }
 			</td>
 			<td>
-				{ isFile ? ValueFormat.formatSize(item.size) : null }
+				{ !!isFile && ValueFormat.formatSize(item.size) }
 			</td>
 		</tr>
 	);
@@ -28,6 +29,11 @@ const FileItemList = React.createClass({
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
 		itemClickHandler: React.PropTypes.func.isRequired,
+
+		/**
+		 * Function handling the path selection. Receives the selected path as argument.
+		 */
+		itemIconGetter: React.PropTypes.func,
 
 		/**
 		 * Array of path objects to list
@@ -44,6 +50,7 @@ const FileItemList = React.createClass({
 	},
 
 	render: function () {
+		const { items, itemClickHandler, itemIconGetter } = this.props;
 		return (
 			<div className="table-container">
 				<table className="ui striped compact table">
@@ -54,11 +61,12 @@ const FileItemList = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						{ this.props.items.sort(this.sort).map(item => 
+						{ items.sort(this.sort).map(item => 
 							<FileItem 
-								key={item.name}
-								item={item}
-								itemClickHandler={ this.props.itemClickHandler }
+								key={ item.name }
+								item={ item }
+								itemClickHandler={ itemClickHandler }
+								itemIconGetter={ itemIconGetter }
 							/>) }
 					</tbody>
 				</table>

@@ -57,6 +57,11 @@ const FileBrowser = React.createClass({
 		 * Function to call when changing the directory. Receives the path as param.
 		 */
 		onDirectoryChanged: React.PropTypes.func,
+
+		/**
+		 * Getter for additional content displayed next to file/directory items
+		 */
+		itemIconGetter: React.PropTypes.func,
 	},
 
 	getInitialState() {
@@ -87,7 +92,6 @@ const FileBrowser = React.createClass({
 	getDefaultProps() {
 		return {
 			initialPath: '',
-			selectedNameFormatter: (element) => element,
 		};
 	},
 
@@ -180,22 +184,26 @@ const FileBrowser = React.createClass({
 			return <Loader text="Loading items"/>;
 		}
 
+		const { currentDirectory, error, items } = this.state;
+		const { selectedNameFormatter, itemIconGetter } = this.props;
+
 		const hasEditAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT);
 		const rootName = this._isWindows ? 'Computer' : 'Root';
 		return (
 			<div className="file-browser">
-				{ !!this.state.error && <Message isError={true} title="Failed to load content" description={this.state.error}/> }
+				{ !!error && <Message isError={true} title="Failed to load content" description={this.state.error}/> }
 				<BrowserBar 
-					path={ this.state.currentDirectory }
+					path={ currentDirectory }
 					separator={ this._pathSeparator } 
 					rootPath={ this.getRootPath() } 
 					rootName={ rootName } 
 					itemClickHandler={ this.fetchItems }
-					selectedNameFormatter={ this.props.selectedNameFormatter }
+					selectedNameFormatter={ selectedNameFormatter }
 				/>
 				<FileItemList 
-					items={ this.state.items } 
-					itemClickHandler={ this._handleSelect } 
+					items={ items } 
+					itemClickHandler={ this._handleSelect }
+					itemIconGetter={ itemIconGetter }
 				/>
 				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
 			</div>

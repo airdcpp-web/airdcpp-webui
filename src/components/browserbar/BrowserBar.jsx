@@ -17,7 +17,7 @@ const Section = ({ caption, onClick }) => (
 
 const SelectedSection = ({ selectedNameFormatter, caption, token }) => (
 	<div className="ui label current path-token section">
-		{ selectedNameFormatter(caption, token) }
+		{ !!selectedNameFormatter ? selectedNameFormatter(caption, token) : caption }
 	</div>
 );
 

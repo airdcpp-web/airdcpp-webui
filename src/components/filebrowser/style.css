@@ -11,8 +11,13 @@
 	height: 100%;
 }
 
-.file-browser .table i.download.link {
-	float:right;
+.file-browser .table td:first-child .file-name {
+  float: left;
+  max-width: calc(100% - 25px);
+}
+
+.file-browser .table td:first-child > i {
+  float: right;
 }
 
 .file-browser .table th:first-child {
