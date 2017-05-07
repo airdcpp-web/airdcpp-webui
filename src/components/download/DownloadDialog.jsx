@@ -145,7 +145,7 @@ const DownloadDialog = React.createClass({
 		);
 	},
 
-	render: function () {
+	render() {
 		const section = this.sections.find(section => section.key === this.state.active);
 		const menuItems = this.sections.map(this.getMenuItem);
 

@@ -14,6 +14,8 @@
 		"babel"
 	],
 	
+	"extends": ["plugin:react/recommended"],
+	
 	"rules": {
 		"array-bracket-spacing": [2, "always"],
 		"comma-dangle": [0, "always-multiline"],
