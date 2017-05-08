@@ -33,13 +33,20 @@ const MessageStoreDecorator = function (store, actions, access) {
 	};
 
 	store._onSessionUpdated = (session, sessionId) => {
-		if (!session.message_counts) {
+		if (!session.message_counts || !messages.get(sessionId)) {
 			return;
 		}
 
 		// Message limit exceed or messages were cleared?
-		messages.set(sessionId, MessageUtils.checkSplice(messages.get(sessionId), session.message_counts.total));
-		store.trigger(messages.get(sessionId), sessionId);
+		const splicedMessages = MessageUtils.checkSplice(messages.get(sessionId), session.message_counts.total);
+
+		// Don't update the messages if nothing has changed
+		// Session is updated when it's marked as read, which may happen simultaneously with the initial fetch. 
+		// Triggering an update would cause an incomplete message log being flashed to the user
+		if (splicedMessages !== messages.get(sessionId)) {
+			messages.set(sessionId, splicedMessages);
+			store.trigger(splicedMessages, sessionId);
+		}
 	};
 
 	store._onSessionRemoved = (session) => {
