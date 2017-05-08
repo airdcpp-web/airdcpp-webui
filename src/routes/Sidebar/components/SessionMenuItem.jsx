@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
@@ -28,17 +29,17 @@ SessionMenuItem.propTypes = {
 	/**
 	 * Item URL
 	 */
-	url: React.PropTypes.string.isRequired,
+	url: PropTypes.string.isRequired,
 
-	name: React.PropTypes.node.isRequired,
+	name: PropTypes.node.isRequired,
 
-	unreadInfoStore: React.PropTypes.object.isRequired,
+	unreadInfoStore: PropTypes.object.isRequired,
 
-	status: React.PropTypes.node.isRequired,
+	status: PropTypes.node.isRequired,
 
-	sessionItem: React.PropTypes.object.isRequired,
+	sessionItem: PropTypes.object.isRequired,
 
-	pushSession: React.PropTypes.func.isRequired,
+	pushSession: PropTypes.func.isRequired,
 };
 
 export default SessionMenuItem;

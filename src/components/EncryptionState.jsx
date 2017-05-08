@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Popup from 'components/semantic/Popup';
@@ -67,11 +68,11 @@ const EncryptionState = ({ encryption, alwaysVisible, boundary }) => {
 };
 
 EncryptionState.propTypes = {
-	encryption: React.PropTypes.object,
-	boundary: React.PropTypes.string,
+	encryption: PropTypes.object,
+	boundary: PropTypes.string,
 
 	/* Show the lock icon even when there is no encryption */
-	alwaysVisible: React.PropTypes.bool,
+	alwaysVisible: PropTypes.bool,
 };
 
 export default EncryptionState;

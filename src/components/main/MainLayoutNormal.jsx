@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
@@ -8,8 +9,6 @@ import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
 
 import 'normal.css';
 
-
-const { PropTypes } = React;
 
 const MainLayout = React.createClass({
 	propTypes: {

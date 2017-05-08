@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
@@ -13,7 +14,7 @@ const ShareProfileFilter = React.createClass({
 		/**
 		 * Callback after selecting a profile
 		 */
-		onFilterUpdated: React.PropTypes.func,
+		onFilterUpdated: PropTypes.func,
 	},
 
 	getInitialState() {

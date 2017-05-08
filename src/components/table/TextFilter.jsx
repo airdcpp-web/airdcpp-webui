@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { FilterMethod } from 'constants/TableConstants';
@@ -28,7 +29,7 @@ const getPlaceholder = (method) => {
 
 const FilterBox = React.createClass({
 	propTypes: {
-		viewUrl: React.PropTypes.string.isRequired,
+		viewUrl: PropTypes.string.isRequired,
 	},
 
 	getInitialState: function () {

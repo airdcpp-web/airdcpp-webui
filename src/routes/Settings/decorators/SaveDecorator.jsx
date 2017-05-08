@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 
@@ -14,19 +15,19 @@ import { Lifecycle } from 'mixins/RouterMixin';
 export default (Component, saveButtonClass = '') => {
 	const SaveDecorator = React.createClass({
 		propTypes: {
-			currentMenuItem: React.PropTypes.object.isRequired,
-			location: React.PropTypes.object,
+			currentMenuItem: PropTypes.object.isRequired,
+			location: PropTypes.object,
 		},
 
 		mixins: [ Lifecycle ],
 
 		contextTypes: {
-			routerLocation: React.PropTypes.object,
+			routerLocation: PropTypes.object,
 		},
 
 		childContextTypes: {
-			onFieldChanged: React.PropTypes.func.isRequired,
-			routerLocation: React.PropTypes.object.isRequired
+			onFieldChanged: PropTypes.func.isRequired,
+			routerLocation: PropTypes.object.isRequired
 		},
 
 		componentWillMount() {

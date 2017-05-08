@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
@@ -31,15 +32,15 @@ CountLabel.propTypes = {
 	/**
 	 * Urgency mapping [ urgency -> count ]
 	 */
-	urgencies: React.PropTypes.object,
+	urgencies: PropTypes.object,
 
-	size: React.PropTypes.string,
+	size: PropTypes.string,
 
-	circular: React.PropTypes.bool,
+	circular: PropTypes.bool,
 
-	empty: React.PropTypes.bool,
+	empty: PropTypes.bool,
 };
-	
+
 CountLabel.defaultProps = {
 	empty: false,
 	size: '',

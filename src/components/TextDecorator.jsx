@@ -1,5 +1,7 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 
 import { default as ReactLinkify, linkify } from 'react-linkify';
@@ -102,12 +104,12 @@ const TextDecorator = ({ emojify = false, text }, { routerLocation }) => (
 );
 
 TextDecorator.propTypes = {
-	text: React.PropTypes.string.isRequired,
-	emojify: React.PropTypes.bool,
+	text: PropTypes.string.isRequired,
+	emojify: PropTypes.bool,
 };
 
 TextDecorator.contextTypes = {
-	routerLocation: React.PropTypes.object.isRequired,
+	routerLocation: PropTypes.object.isRequired,
 };
 
 export default TextDecorator;

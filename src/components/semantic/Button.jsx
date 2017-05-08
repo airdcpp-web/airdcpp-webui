@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -26,22 +27,22 @@ Button.propTypes = {
 	/**
 	 * Icon class
 	 */
-	icon: React.PropTypes.string,
+	icon: PropTypes.string,
 
 	/**
 	 * Button caption
 	 */
-	caption: React.PropTypes.node.isRequired,
+	caption: PropTypes.node.isRequired,
 
 	/**
 	 * Disable button (the button will be disabled automatically when 'loading' is true)
 	 */
-	disabled: React.PropTypes.bool,
+	disabled: PropTypes.bool,
 
 	/**
 	 * Show spinner
 	 */
-	loading: React.PropTypes.bool,
+	loading: PropTypes.bool,
 };
 
 export default Button;

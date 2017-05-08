@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import invariant from 'invariant';
@@ -18,38 +19,38 @@ const Dropdown = React.createClass({
 		/**
 		 * Node to render as caption
 		 */
-		caption: React.PropTypes.node,
+		caption: PropTypes.node,
 
 		/**
 		 * Dropdown icon to display
 		 * If caption isn't specified, the icon will be used as main trigger
 		 */ 
-		triggerIcon: React.PropTypes.oneOfType([
-			React.PropTypes.string,
-			React.PropTypes.node,
+		triggerIcon: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.node,
 		]),
 
 		/**
 		 * Show trigger icon on the left side of the caption instead of after it
 		 */
-		leftIcon: React.PropTypes.bool,
+		leftIcon: PropTypes.bool,
 
 		/**
 		 * Direction to render
 		 */
-		direction: React.PropTypes.string,
+		direction: PropTypes.string,
 
 		/**
 		 * Returns DOM node used for checking whether the dropdown can fit on screen
 		 */
-		contextGetter: React.PropTypes.func,
+		contextGetter: PropTypes.func,
 
 		/**
 		 * Render as button
 		 */
-		button: React.PropTypes.bool,
+		button: PropTypes.bool,
 
-		settings: React.PropTypes.object,
+		settings: PropTypes.object,
 	},
 
 	componentDidMount() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
@@ -16,49 +17,49 @@ const Form = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		fieldDefinitions: React.PropTypes.array.isRequired,
+		fieldDefinitions: PropTypes.array.isRequired,
 
 		/**
 		 * Optional callback for appending field settings
 		 * Receives the field key, field definitions and the current form value as parameters
 		 */
-		onFieldSetting: React.PropTypes.func,
+		onFieldSetting: PropTypes.func,
 
 		/**
 		 * Called when the form is saved
 		 * Receives the changed fields as parameter
 		 * Must return promise
 		 */
-		onSave: React.PropTypes.func.isRequired,
+		onSave: PropTypes.func.isRequired,
 
 		/**
 		 * Optional callback that is called when a field value was changed
 		 * Receives the field key, current form value value and boolean whether the field value is different from the source value
 		 * The function may return a promise containing new setting objects to be set as user selections
 		 */
-		onFieldChanged: React.PropTypes.func,
+		onFieldChanged: PropTypes.func,
 
 		/**
 		 * Optional callback that is called when the settings are received from the server
 		 * Receives the new source value object as parameter
 		 */
-		onSourceValueUpdated: React.PropTypes.func,
+		onSourceValueUpdated: PropTypes.func,
 
 		/**
 		 * Source value to use for initial data
 		 * If no value is provided, the initial value is initialized
 		 * with the default one from definitions
 		 */
-		value: React.PropTypes.object,
+		value: PropTypes.object,
 
 		/**
 		 * Header for the form
 		 */
-		title: React.PropTypes.node,
+		title: PropTypes.node,
 	},
 
 	contextTypes: {
-		onFieldChanged: React.PropTypes.func,
+		onFieldChanged: PropTypes.func,
 	},
 
 	getInitialState() {

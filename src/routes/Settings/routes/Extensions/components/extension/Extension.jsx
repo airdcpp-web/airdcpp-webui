@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Moment from 'moment';
 
@@ -57,20 +58,20 @@ const formatNote = (installedPackage, npmError) => {
 const Extension = React.createClass({
 	mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
 	propTypes: {
-		npmPackage: React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			description: React.PropTypes.string.isRequired,
-			version: React.PropTypes.string.isRequired,
-			date: React.PropTypes.string,
-			publisher: React.PropTypes.shape({
-				username: React.PropTypes.string,
+		npmPackage: PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			version: PropTypes.string.isRequired,
+			date: PropTypes.string,
+			publisher: PropTypes.shape({
+				username: PropTypes.string,
 			}),
 		}),
-		installedPackage: React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			description: React.PropTypes.string.isRequired,
-			version: React.PropTypes.string.isRequired,
-			author: React.PropTypes.string,
+		installedPackage: PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			version: PropTypes.string.isRequired,
+			author: PropTypes.string,
 		}),
 	},
 

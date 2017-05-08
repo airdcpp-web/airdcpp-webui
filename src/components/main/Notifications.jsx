@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Reflux from 'reflux';
 
@@ -28,7 +29,7 @@ const Notifications = React.createClass({
 	_notificationSystem: null,
 
 	contextTypes: {
-		routerLocation: React.PropTypes.object.isRequired,
+		routerLocation: PropTypes.object.isRequired,
 	},
 
 	_addNotification: function (level, notification) {

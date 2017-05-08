@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import isEqual from 'lodash/isEqual';
 
@@ -16,14 +17,14 @@ const PriorityMenu = React.createClass({
 		/**
 		 * Priority object
 		 */
-		itemPrio: React.PropTypes.object.isRequired,
+		itemPrio: PropTypes.object.isRequired,
 
 		/**
 		 * Item with priority properties
 		 */
-		item: React.PropTypes.object.isRequired,
+		item: PropTypes.object.isRequired,
 
-		prioAction: React.PropTypes.func.isRequired,
+		prioAction: PropTypes.func.isRequired,
 	},
 
 	setPriority: function (priorityId) {

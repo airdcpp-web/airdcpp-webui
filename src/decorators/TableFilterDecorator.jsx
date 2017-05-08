@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import SocketService from 'services/SocketService';
@@ -13,7 +14,7 @@ export default function (Component, propertyName = 'any') {
 			/**
 			 * Callback after the profiles have been received
 			 */
-			viewUrl: React.PropTypes.string,
+			viewUrl: PropTypes.string,
 		},
 
 		getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Reflux from 'reflux';
 
@@ -68,7 +69,7 @@ const ENTER_KEY_CODE = 13;
 const Login = React.createClass({
 	mixins: [ Reflux.connect(LoginStore, 'login') ],
 	contextTypes: {
-		router: React.PropTypes.object
+		router: PropTypes.object
 	},
 
 	getInitialState() {

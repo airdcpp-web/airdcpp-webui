@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
@@ -18,12 +19,12 @@ const TableDropdown = React.createClass({
 		/**
 		 * Cell content to render
 		 */
-		caption: React.PropTypes.node.isRequired,
+		caption: PropTypes.node.isRequired,
 
 		/**
 		 * Trigger the dropdown when clicking on the caption
 		 */
-		linkCaption: React.PropTypes.bool,
+		linkCaption: PropTypes.bool,
 	},
 
 	getDefaultProps() {

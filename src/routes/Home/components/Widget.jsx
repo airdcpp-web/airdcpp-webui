@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -53,11 +54,11 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
 };
 
 Widget.propTypes = {
-	widgetInfo: React.PropTypes.object.isRequired,
+	widgetInfo: PropTypes.object.isRequired,
 
-	settings: React.PropTypes.object.isRequired,
+	settings: PropTypes.object.isRequired,
 
-	componentId: React.PropTypes.string.isRequired,
+	componentId: PropTypes.string.isRequired,
 };
 
 export default Widget;

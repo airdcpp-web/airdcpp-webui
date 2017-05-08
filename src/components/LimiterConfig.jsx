@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'components/semantic/Button';
@@ -13,12 +14,12 @@ import IconConstants from 'constants/IconConstants';
 const LimiterConfig = React.createClass({
 	mixins: [ PureRenderMixin ],
 	propTypes: {
-		limit: React.PropTypes.number.isRequired,
+		limit: PropTypes.number.isRequired,
 
 		/* Limiter API setting key to use for saving */
-		settingKey: React.PropTypes.string.isRequired,
+		settingKey: PropTypes.string.isRequired,
 
-		hide: React.PropTypes.func,
+		hide: PropTypes.func,
 	},
 
 	save(limit = 0) {

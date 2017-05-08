@@ -1,11 +1,11 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
-
-const { PropTypes } = React;
 
 
 const MainNavigationNormal = React.createClass({

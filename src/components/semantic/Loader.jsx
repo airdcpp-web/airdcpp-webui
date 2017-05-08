@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -32,8 +33,8 @@ const Loader = ({ text, className, inline, size, inverted }) => {
 };
 
 Loader.propTypes = {
-	text: React.PropTypes.node,
-	inline: React.PropTypes.bool,
+	text: PropTypes.node,
+	inline: PropTypes.bool,
 };
 
 Loader.defaultProps = {

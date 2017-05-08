@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import BrowserUtils from 'utils/BrowserUtils';
 
@@ -70,13 +71,13 @@ const TopMenuLayout = ({ children, ...props }) => (
 );
 
 TopMenuLayout.propTypes = {
-	itemHeaderTitle: React.PropTypes.node.isRequired,
-	itemHeaderIcon: React.PropTypes.node.isRequired,
-	activeItem: React.PropTypes.object,
-	newButton: React.PropTypes.node,
-	sessionMenuItems: React.PropTypes.array.isRequired,
-	closeAction: React.PropTypes.func.isRequired,
-	listActionMenuGetter: React.PropTypes.func.isRequired,
+	itemHeaderTitle: PropTypes.node.isRequired,
+	itemHeaderIcon: PropTypes.node.isRequired,
+	activeItem: PropTypes.object,
+	newButton: PropTypes.node,
+	sessionMenuItems: PropTypes.array.isRequired,
+	closeAction: PropTypes.func.isRequired,
+	listActionMenuGetter: PropTypes.func.isRequired,
 };
 
 export default TopMenuLayout;

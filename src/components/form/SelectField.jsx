@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import invariant from 'invariant';
@@ -9,7 +10,7 @@ import 'react-select/dist/react-select.css';
 
 const TagValue = React.createClass({
 	propTypes: {
-		value: React.PropTypes.object,
+		value: PropTypes.object,
 	},
 
 	onClick() {

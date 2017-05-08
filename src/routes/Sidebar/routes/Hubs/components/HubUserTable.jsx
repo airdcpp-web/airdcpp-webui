@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import HubSessionStore from 'stores/HubSessionStore';
@@ -24,7 +25,7 @@ const NickCell = ({ cellData, rowData, ...props }) => (
 
 const HubUserTable = React.createClass({
 	propTypes: {
-		session: React.PropTypes.object, // required
+		session: PropTypes.object, // required
 	},
 
 	rowClassNameGetter(user) {

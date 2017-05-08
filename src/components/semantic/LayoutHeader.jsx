@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon from 'components/semantic/Icon';
@@ -42,27 +43,27 @@ LayoutHeader.propTypes = {
 	/**
 	 * Header title
 	 */
-	title: React.PropTypes.node.isRequired,
+	title: PropTypes.node.isRequired,
 
 	/**
 	 * Subheader
 	 */
-	subHeader: React.PropTypes.node,
+	subHeader: PropTypes.node,
 
 	/**
 	 * Icon to display
 	 */
-	icon: React.PropTypes.node,
+	icon: PropTypes.node,
 
 	/**
 	 * Component to display on the right side of the header
 	 */
-	component: React.PropTypes.node,
+	component: PropTypes.node,
 
 	/**
 	 * Size of the header
 	 */
-	size: React.PropTypes.string,
+	size: PropTypes.string,
 };
 
 export default LayoutHeader

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 
@@ -18,9 +19,9 @@ export default function (Component, settings) {
 			 * Key-value map of prop names and API urls
 			 * Value may also be a function which receives the props and SocketService as argument and performs the data fetch
 			 */
-			urls: React.PropTypes.oneOfType([
-				React.PropTypes.object,
-				React.PropTypes.func,
+			urls: PropTypes.oneOfType([
+				PropTypes.object,
+				PropTypes.func,
 			]), // REQUIRED
 
 			/**
@@ -32,23 +33,23 @@ export default function (Component, settings) {
 			 *   props,
 			 * })
 			 */
-			onSocketConnected: React.PropTypes.func,
+			onSocketConnected: PropTypes.func,
 
 			/**
 			 * Key-value map of prop names and functions 
 			 * Converter functions receives the fetched data as parameter
 			 */
-			dataConverters: React.PropTypes.object,
+			dataConverters: PropTypes.object,
 
 			/**
 			 * Text to show while loading data (use null to disable spinner)
 			 */
-			loaderText: React.PropTypes.node,
+			loaderText: PropTypes.node,
 
 			/**
 			 * Should the decorated components handle data fetching failures?
 			 */
-			renderOnError: React.PropTypes.bool,
+			renderOnError: PropTypes.bool,
 		},
 
 		getDefaultProps() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
@@ -125,7 +126,7 @@ const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 export default function (Component) {
 	const MainNavigationDecorator = React.createClass({
 		contextTypes: {
-			routerLocation: React.PropTypes.object.isRequired,
+			routerLocation: PropTypes.object.isRequired,
 		},
 
 		shouldComponentUpdate(nextProps, nextState, nextContext) {

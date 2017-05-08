@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
@@ -13,12 +14,12 @@ const FileBrowserDialog = React.createClass({
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
 		 */
-		onConfirm: React.PropTypes.func,
+		onConfirm: PropTypes.func,
 
 		/**
 		 * Information about the item to download
 		 */
-		title: React.PropTypes.node,
+		title: PropTypes.node,
 	},
 
 	getDefaultProps() {

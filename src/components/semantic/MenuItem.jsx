@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Reflux from 'reflux';
 
@@ -15,35 +16,35 @@ import Icon from 'components/semantic/Icon';
 export const RouterMenuItemLink = React.createClass({
 	mixins: [ Reflux.ListenerMixin ],
 	contextTypes: {
-		router: React.PropTypes.object.isRequired,
+		router: PropTypes.object.isRequired,
 	},
 
 	propTypes: {
 		/**
 		 * Item URL
 		 */
-		url: React.PropTypes.string.isRequired,
+		url: PropTypes.string.isRequired,
 
 		/**
 		 * Title of the menu item
 		 */
-		children: React.PropTypes.any.isRequired,
+		children: PropTypes.any.isRequired,
 
-		icon: React.PropTypes.node,
+		icon: PropTypes.node,
 
-		className: React.PropTypes.string,
+		className: PropTypes.string,
 
 		/**
 		 * For overriding the default link action (still gives the active class style)
 		 */
-		onClick: React.PropTypes.func,
+		onClick: PropTypes.func,
 
-		unreadInfoStore: React.PropTypes.object,
+		unreadInfoStore: PropTypes.object,
 
 		/**
 		 * Session object
 		 */
-		session: React.PropTypes.object,
+		session: PropTypes.object,
 	},
 
 	getUrgencies() {
@@ -143,13 +144,13 @@ MenuItemLink.propTypes = {
 	/**
 	 * Title of the button
 	 */
-	children: React.PropTypes.any.isRequired,
+	children: PropTypes.any.isRequired,
 
-	icon: React.PropTypes.string,
+	icon: PropTypes.string,
 
-	onClick: React.PropTypes.func.isRequired,
+	onClick: PropTypes.func.isRequired,
 
-	active: React.PropTypes.bool,
+	active: PropTypes.bool,
 };
 
 export const MenuHeader = ({ className, children, ...other }) => (

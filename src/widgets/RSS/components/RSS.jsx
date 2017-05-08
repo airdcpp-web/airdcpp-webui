@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -48,18 +49,18 @@ Entry.propTypes = {
 	/**
 	 * Feed entry
 	 */
-	entry: React.PropTypes.shape({
-		title: React.PropTypes.oneOfType([
-			React.PropTypes.object,
-			React.PropTypes.string,
+	entry: PropTypes.shape({
+		title: PropTypes.oneOfType([
+			PropTypes.object,
+			PropTypes.string,
 		]).isRequired,
-		updated: React.PropTypes.string, // Atom feeds
-		pubDate: React.PropTypes.string, // RSS feeds
+		updated: PropTypes.string, // Atom feeds
+		pubDate: PropTypes.string, // RSS feeds
 	}),
 
-	feedUrl: React.PropTypes.string.isRequired,
+	feedUrl: PropTypes.string.isRequired,
 
-	componentId: React.PropTypes.string.isRequired,
+	componentId: PropTypes.string.isRequired,
 };
 
 const Footer = RedrawDecorator(({ lastUpdated, handleUpdate }) => (
@@ -94,9 +95,9 @@ const RSS = React.createClass({
 		/**
 		 * Current widget settings
 		 */
-		settings: React.PropTypes.object.isRequired,
+		settings: PropTypes.object.isRequired,
 
-		componentId: React.PropTypes.string.isRequired,
+		componentId: PropTypes.string.isRequired,
 	},
 
 	componentWillMount() {

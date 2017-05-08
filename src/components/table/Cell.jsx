@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { TableActionMenu, TableDownloadMenu } from 'components/menu/DropdownMenu';
@@ -77,7 +78,7 @@ export const ActionLinkCell = ({ cellData, rowData, action, ...props }, context)
 };
 
 ActionLinkCell.contextTypes = {
-	routerLocation: React.PropTypes.object.isRequired,
+	routerLocation: PropTypes.object.isRequired,
 };
 
 export const SizeCell = ({ cellData }) => (

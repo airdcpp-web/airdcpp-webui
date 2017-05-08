@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
@@ -7,7 +8,7 @@ const InputField = React.createClass({
 		/**
 		 * Action description
 		 */
-		content: React.PropTypes.node.isRequired,
+		content: PropTypes.node.isRequired,
 	},
 
 	render: function () {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'components/semantic/Button';
@@ -20,18 +21,18 @@ const ActionButton = ({ action, itemData, icon = true, ...other }, { routerLocat
 };
 
 ActionButton.propTypes = {
-	action: React.PropTypes.func,
+	action: PropTypes.func,
 
-	itemData: React.PropTypes.object,
+	itemData: PropTypes.object,
 
-	icon: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.string,
+	icon: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.string,
 	]),
 };
 
 ActionButton.contextTypes = {
-	routerLocation: React.PropTypes.object.isRequired,
+	routerLocation: PropTypes.object.isRequired,
 };
 
 

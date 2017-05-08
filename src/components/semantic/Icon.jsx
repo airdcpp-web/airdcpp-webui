@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -26,13 +27,13 @@ Icon.propTypes = {
 	/**
 	 * Icon class
 	 */
-	icon: React.PropTypes.node,
+	icon: PropTypes.node,
 
-	cornerIcon: React.PropTypes.string,
+	cornerIcon: PropTypes.string,
 
-	className: React.PropTypes.string,
+	className: PropTypes.string,
 
-	size: React.PropTypes.string,
+	size: PropTypes.string,
 };
 
 export default Icon;

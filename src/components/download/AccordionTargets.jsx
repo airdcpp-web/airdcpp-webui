@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Accordion from 'components/semantic/Accordion';
@@ -10,12 +11,12 @@ const AccordionTargets = React.createClass({
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		downloadHandler: React.PropTypes.func.isRequired,
+		downloadHandler: PropTypes.func.isRequired,
 
 		/**
 		 * Grouped paths to list
 		 */
-		groupedPaths: React.PropTypes.array.isRequired,
+		groupedPaths: PropTypes.array.isRequired,
 	},
 
 	formatParent(parent) {

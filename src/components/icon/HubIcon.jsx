@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon from 'components/semantic/Icon';
@@ -15,7 +16,7 @@ HubIcon.propTypes = {
 	/**
 	 * Hub object
 	 */
-	hub: React.PropTypes.object.isRequired,
+	hub: PropTypes.object.isRequired,
 };
 
 export default HubIcon;

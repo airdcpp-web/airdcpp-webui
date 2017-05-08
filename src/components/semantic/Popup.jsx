@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -14,21 +15,21 @@ const Popup = React.createClass({
 		/**
 		 * Additional settings for the Semantic UI popup
 		 */
-		settings: React.PropTypes.object,
+		settings: PropTypes.object,
 
 		/**
 		 * Element that will trigger the popup when clicking on it
 		 */
-		trigger: React.PropTypes.node.isRequired,
+		trigger: PropTypes.node.isRequired,
 
 		/**
 		 * Show the popup on hover instead of when clicking the element
 		 */
-		onHover: React.PropTypes.bool,
+		onHover: PropTypes.bool,
 
-		position: React.PropTypes.string,
+		position: PropTypes.string,
 
-		triggerClassName: React.PropTypes.string,
+		triggerClassName: PropTypes.string,
 	},
 
 	getDefaultProps() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import SuggestionRenderer from './SuggestionRenderer';
@@ -8,9 +9,9 @@ import escapeStringRegexp from 'escape-string-regexp';
 
 export default React.createClass({
 	propTypes: {
-		data: React.PropTypes.array.isRequired,
+		data: PropTypes.array.isRequired,
 
-		onChange: React.PropTypes.func,
+		onChange: PropTypes.func,
 	},
 
 	getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -13,29 +14,29 @@ const ConfirmDialog = React.createClass({
 		/**
 		 * Title of the modal
 		 */
-		title: React.PropTypes.node.isRequired,
+		title: PropTypes.node.isRequired,
 
 		/**
 		 * Content of the modal
 		 */
-		content: React.PropTypes.node.isRequired,
+		content: PropTypes.node.isRequired,
 
 		/**
 		 * Icon to display
 		 */
-		icon: React.PropTypes.string,
+		icon: PropTypes.string,
 
-		approveCaption: React.PropTypes.string,
-		rejectCaption: React.PropTypes.string,
+		approveCaption: PropTypes.string,
+		rejectCaption: PropTypes.string,
 
-		onApproved: React.PropTypes.func.isRequired,
-		onRejected: React.PropTypes.func,
+		onApproved: PropTypes.func.isRequired,
+		onRejected: PropTypes.func,
 
 		/**
 		 * Display a textbox if the caption is supplied
 		 * The checkbox value will be provided as an argument when the promise is resolved
 		 */
-		checkboxCaption: React.PropTypes.node,
+		checkboxCaption: PropTypes.node,
 	},
 
 	getDefaultProps() {

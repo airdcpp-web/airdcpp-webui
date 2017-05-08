@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -43,7 +44,7 @@ const showDivider = (index, messageList) => {
 
 const MessageView = React.createClass({
 	propTypes: {
-		messages: React.PropTypes.array,
+		messages: PropTypes.array,
 	},
 
 	getMessageListItem(reduced, message, index, messageList) {

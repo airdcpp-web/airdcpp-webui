@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Button from 'components/semantic/Button';
 
@@ -10,14 +11,14 @@ const SaveButton = React.createClass({
 		/**
 		 * Message title
 		 */
-		hasChanges: React.PropTypes.bool.isRequired,
+		hasChanges: PropTypes.bool.isRequired,
 
 		/**
 		 * Error details
 		 */
-		saveHandler: React.PropTypes.func.isRequired,
+		saveHandler: PropTypes.func.isRequired,
 
-		local: React.PropTypes.bool,
+		local: PropTypes.bool,
 	},
 
 	getInitialState() {

@@ -1,5 +1,7 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 
 import History from 'utils/History';
@@ -10,7 +12,7 @@ import IconPanel from './IconPanel';
 
 const SideMenu = React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: PropTypes.object.isRequired
 	},
 
 	onClick(url, evt) {

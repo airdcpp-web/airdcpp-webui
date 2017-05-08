@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -41,9 +42,9 @@ const FileIcon = ({ typeInfo, onClick }) => {
 };
 
 FileIcon.propTypes = {
-	onClick: React.PropTypes.func,
+	onClick: PropTypes.func,
 
-	typeInfo: React.PropTypes.object.isRequired,
+	typeInfo: PropTypes.object.isRequired,
 };
 
 export default FileIcon;

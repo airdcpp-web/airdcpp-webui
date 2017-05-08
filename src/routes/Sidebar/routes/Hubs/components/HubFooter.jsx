@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import HubConstants from 'constants/HubConstants';
@@ -18,9 +19,9 @@ const HubFooter = React.createClass({
 		/**
 		 * Currently active session (required)
 		 */
-		session: React.PropTypes.any,
+		session: PropTypes.any,
 
-		userlistToggle: React.PropTypes.node.isRequired,
+		userlistToggle: PropTypes.node.isRequired,
 	},
 
 	onSocketConnected(addSocketListener) {

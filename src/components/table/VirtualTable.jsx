@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import TableActions from 'actions/TableActions';
@@ -15,32 +16,32 @@ const VirtualTable = React.createClass({
 		/**
 		 * Elements to append to the table footer
 		 */
-		footerData: React.PropTypes.node,
+		footerData: PropTypes.node,
 
 		/**
 		 * Returns a node to render if there are no rows to display
 		 */
-		emptyRowsNodeGetter: React.PropTypes.func,
+		emptyRowsNodeGetter: PropTypes.func,
 
 		/**
 		 * Possible ID of the current view (items will be cleared when the ID changes)
 		 */
-		viewId: React.PropTypes.any,
+		viewId: PropTypes.any,
 
 		/**
 		 * Store containing sessions (must be provided together with entityId)
 		 */
-		sessionStore: React.PropTypes.object,
+		sessionStore: PropTypes.object,
 
 		/**
 		 * Custom filter that will be displayed in addition to regular text filter
 		 */
-		customFilter: React.PropTypes.node,
+		customFilter: PropTypes.node,
 
 		/**
 		 * Filter that is always applied for source items (those will never be displayed or included in the total count)
 		 */
-		sourceFilter: React.PropTypes.object,
+		sourceFilter: PropTypes.object,
 	},
 
 	componentWillMount() {

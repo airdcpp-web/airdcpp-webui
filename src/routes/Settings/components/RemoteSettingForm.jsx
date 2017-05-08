@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import SettingConstants from 'constants/SettingConstants';
 
@@ -12,9 +13,9 @@ const RemoteSettingForm = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		keys: React.PropTypes.array.isRequired,
+		keys: PropTypes.array.isRequired,
 
-		formRef: React.PropTypes.func, // REQUIRED
+		formRef: PropTypes.func, // REQUIRED
 	},
 
 	onSave(changedValues) {

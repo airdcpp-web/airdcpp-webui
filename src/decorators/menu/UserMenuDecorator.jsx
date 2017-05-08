@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -47,29 +48,29 @@ export default function (Component) {
 		/**
 		 * Filelist directory to use for browsing the list
 		 */
-		directory: React.PropTypes.string,
+		directory: PropTypes.string,
 
 		/**
 		 * Hinted user
 		 */
-		user: React.PropTypes.shape({
-			cid: React.PropTypes.string,
-			hub_url: React.PropTypes.string
+		user: PropTypes.shape({
+			cid: PropTypes.string,
+			hub_url: PropTypes.string
 		}).isRequired,
 
 		/**
 		 * No icon is added by default
 		 * Set the 'simple' to use a single color icon for all users
 		 */
-		userIcon: React.PropTypes.oneOfType([
-			React.PropTypes.bool,
-			React.PropTypes.string,
+		userIcon: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.string,
 		]),
 
 		/**
 		 * Optional custom caption to use
 		 */
-		text : React.PropTypes.node,
+		text : PropTypes.node,
 	};
 
 	return UserMenu;

@@ -1,5 +1,7 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -12,7 +14,7 @@ import IconPanel from './IconPanel';
 
 const MainNavigationMobile = React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: PropTypes.object.isRequired
 	},
 
 	componentDidMount() {

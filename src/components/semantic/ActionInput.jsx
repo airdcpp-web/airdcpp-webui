@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'components/semantic/Button';
@@ -9,22 +10,22 @@ const ActionInput = React.createClass({
 		/**
 		 * Button caption
 		 */
-		caption: React.PropTypes.string.isRequired,
+		caption: PropTypes.string.isRequired,
 
 		/**
 		 * Button icon
 		 */
-		icon: React.PropTypes.string.isRequired,
+		icon: PropTypes.string.isRequired,
 
 		/**
 		 * Input placeholder
 		 */
-		placeholder: React.PropTypes.string.isRequired,
+		placeholder: PropTypes.string.isRequired,
 
 		/**
 		 * Function to call with the value
 		 */
-		handleAction: React.PropTypes.func.isRequired
+		handleAction: PropTypes.func.isRequired
 	},
 
 	handleClick() {

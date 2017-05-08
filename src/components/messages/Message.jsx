@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import TextDecorator from 'components/TextDecorator';
@@ -25,8 +26,8 @@ const Author = ({ message, dropdownContextGetter }) => (
 );
 
 Author.propTypes = {
-	message: React.PropTypes.object.isRequired,
-	dropdownContextGetter: React.PropTypes.func.isRequired,
+	message: PropTypes.object.isRequired,
+	dropdownContextGetter: PropTypes.func.isRequired,
 };
 
 const TimeStamp = ({ message }) => (
@@ -45,15 +46,15 @@ const MessageText = ({ message, emojify }) => (
 );
 
 MessageText.propTypes = {
-	message: React.PropTypes.object.isRequired,
-	emojify: React.PropTypes.bool.isRequired,
+	message: PropTypes.object.isRequired,
+	emojify: PropTypes.bool.isRequired,
 };
 
 
 // Main message types
 const ChatMessage = React.createClass({
 	propTypes: {
-		message: React.PropTypes.object.isRequired,
+		message: PropTypes.object.isRequired,
 	},
 
 	shouldComponentUpdate() {
@@ -95,7 +96,7 @@ const getSeverityIcon = (severity) => {
 
 const StatusMessage = React.createClass({
 	propTypes: {
-		message: React.PropTypes.object.isRequired,
+		message: PropTypes.object.isRequired,
 	},
 
 	shouldComponentUpdate() {

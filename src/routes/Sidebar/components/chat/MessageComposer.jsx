@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -13,12 +14,12 @@ const MessageComposer = React.createClass({
 		/**
 		 * Actions for this chat session type
 		 */
-		actions: React.PropTypes.object.isRequired,
-		session: React.PropTypes.object.isRequired,
+		actions: PropTypes.object.isRequired,
+		session: PropTypes.object.isRequired,
 	},
 
 	contextTypes: {
-		routerLocation: React.PropTypes.object.isRequired,
+		routerLocation: PropTypes.object.isRequired,
 	},
 
 	handleCommand(text) {

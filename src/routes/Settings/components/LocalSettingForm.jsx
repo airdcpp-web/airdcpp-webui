@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -10,7 +11,7 @@ const LocalSettingForm = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		keys: React.PropTypes.array.isRequired,
+		keys: PropTypes.array.isRequired,
 	},
 
 	getInitialState() {

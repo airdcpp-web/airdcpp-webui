@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -9,7 +10,7 @@ export default function (Component) {
 			/**
 			 * The container will always be scrolled to bottom if the session changes
 			 */
-			session: React.PropTypes.any,
+			session: PropTypes.any,
 		},
 
 		componentDidMount: function () {

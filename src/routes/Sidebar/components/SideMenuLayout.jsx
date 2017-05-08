@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
@@ -43,12 +44,12 @@ const SideMenuLayout = ({
 };
 
 SideMenuLayout.propTypes = {
-	newButton: React.PropTypes.node,
-	sessionMenuItems: React.PropTypes.array.isRequired,
+	newButton: PropTypes.node,
+	sessionMenuItems: PropTypes.array.isRequired,
 
-	itemHeaderTitle: React.PropTypes.node,
-	itemHeaderIcon: React.PropTypes.node,
-	itemHeaderDescription: React.PropTypes.node.isRequired,
+	itemHeaderTitle: PropTypes.node,
+	itemHeaderIcon: PropTypes.node,
+	itemHeaderDescription: PropTypes.node.isRequired,
 };
 
 export default SideMenuLayout;

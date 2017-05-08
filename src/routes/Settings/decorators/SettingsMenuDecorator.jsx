@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
@@ -16,14 +17,14 @@ const sectionToUrl = (section, parent) => {
 export default (Component) => {
 	const MenuDecorator = React.createClass({
 		contextTypes: {
-			router: React.PropTypes.object.isRequired
+			router: PropTypes.object.isRequired
 		},
 
 		propTypes: {
-			parent: React.PropTypes.object,
-			menuItems: React.PropTypes.array, // required
-			advancedMenuItems: React.PropTypes.array,
-			location: React.PropTypes.object, // required
+			parent: PropTypes.object,
+			menuItems: PropTypes.array, // required
+			advancedMenuItems: PropTypes.array,
+			location: PropTypes.object, // required
 		},
 
 		checkChildren(props) {

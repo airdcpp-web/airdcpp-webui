@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import TextFilter from './TextFilter';
@@ -40,9 +41,9 @@ const TableFooter = ({ store, customFilter, footerData }) => {
 };
 
 TableFooter.propTypes = {
-	customFilter: React.PropTypes.node,
-	footerData: React.PropTypes.node,
-	store: React.PropTypes.object.isRequired,
+	customFilter: PropTypes.node,
+	footerData: PropTypes.node,
+	store: PropTypes.object.isRequired,
 };
 
 export default TableFooter;

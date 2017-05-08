@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -11,31 +12,31 @@ const SuggestField = React.createClass({
 		 * Function to call when selecting suggestions
 		 * Receives the suggestion value and the suggestion object (only if selecting a suggestion)
 		 */
-		submitHandler: React.PropTypes.func,
+		submitHandler: PropTypes.func,
 
 		/**
 		 * Function to call when the input text was changed
 		 */
-		onChange: React.PropTypes.func,
+		onChange: PropTypes.func,
 
 		/**
 		 * Providing a button element makes the input accept custom inputs when pressing enter
 		 * The same submitHandler is called but without suggestion object
 		 */
-		button: React.PropTypes.element,
+		button: PropTypes.element,
 
-		placeholder: React.PropTypes.string,
+		placeholder: PropTypes.string,
 
 		/**
 		 * Default input value to show
 		 * The input will also be updated accordingly when a different stored value is received
 		 */
-		storedValue: React.PropTypes.string,
+		storedValue: PropTypes.string,
 
 		/**
 		 * Disables the field action button
 		 */
-		disabled: React.PropTypes.bool,
+		disabled: PropTypes.bool,
 	},
 
 	getInitialState() {

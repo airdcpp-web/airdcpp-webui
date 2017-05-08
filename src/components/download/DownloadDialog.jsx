@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
@@ -61,17 +62,17 @@ const DownloadDialog = React.createClass({
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
 		 */
-		downloadHandler: React.PropTypes.func,
+		downloadHandler: PropTypes.func,
 
 		/**
 		 * Information about the item to download
 		 * Required
 		 */
-		itemInfo: React.PropTypes.shape({
-			path: React.PropTypes.string,
-			dupe: React.PropTypes.object,
-			name: React.PropTypes.string,
-			type: React.PropTypes.object
+		itemInfo: PropTypes.shape({
+			path: PropTypes.string,
+			dupe: PropTypes.object,
+			name: PropTypes.string,
+			type: PropTypes.object
 		}),
 	},
 

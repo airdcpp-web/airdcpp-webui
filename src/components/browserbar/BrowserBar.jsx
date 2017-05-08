@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -27,33 +28,33 @@ const BrowserBar = React.createClass({
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		itemClickHandler: React.PropTypes.func.isRequired,
+		itemClickHandler: PropTypes.func.isRequired,
 
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		rootName: React.PropTypes.string,
+		rootName: PropTypes.string,
 
 		/**
 		 * Root path that will be appended to the beginning of the returned path
 		 */
-		rootPath: React.PropTypes.string.isRequired,
+		rootPath: PropTypes.string.isRequired,
 
 		/**
 		 * Root path that will be appended to the beginning of the returned path
 		 */
-		separator: React.PropTypes.string.isRequired,
+		separator: PropTypes.string.isRequired,
 
 		/**
 		 * Current path to display
 		 */
-		path: React.PropTypes.string.isRequired,
+		path: PropTypes.string.isRequired,
 
 		/**
 		 * Function returning the formated element for the current directory name
 		 * Receives the caption element and path token as parameters
 		 */
-		selectedNameFormatter: React.PropTypes.func.isRequired,
+		selectedNameFormatter: PropTypes.func.isRequired,
 	},
 
 	getDefaultProps() {

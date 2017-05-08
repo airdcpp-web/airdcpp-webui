@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -41,12 +42,12 @@ PathList.PropTypes = {
 	/**
 	 * Function handling the path selection. Receives the selected path as argument.
 	 */
-	downloadHandler: React.PropTypes.func.isRequired,
+	downloadHandler: PropTypes.func.isRequired,
 
 	/**
 	 * Array of paths to list
 	 */
-	paths: React.PropTypes.array.isRequired,
+	paths: PropTypes.array.isRequired,
 };
 
 export default (props) => {

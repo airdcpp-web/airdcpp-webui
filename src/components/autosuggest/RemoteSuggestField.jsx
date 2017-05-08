@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import SocketService from 'services/SocketService';
@@ -8,11 +9,11 @@ import SuggestionRenderer from './SuggestionRenderer';
 
 const RemoteSuggestField = React.createClass({
 	propTypes: {
-		valueField: React.PropTypes.string.isRequired,
+		valueField: PropTypes.string.isRequired,
 
-		descriptionField: React.PropTypes.string.isRequired,
+		descriptionField: PropTypes.string.isRequired,
 
-		url: React.PropTypes.string.isRequired,
+		url: PropTypes.string.isRequired,
 	},
 
 	getInitialState() {

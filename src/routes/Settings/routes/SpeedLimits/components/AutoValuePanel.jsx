@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
@@ -10,12 +11,12 @@ const AutoValuePanel = React.createClass({
 		/**
 		 * Form items to list
 		 */
-		keys: React.PropTypes.array.isRequired,
+		keys: PropTypes.array.isRequired,
 
 		/**
 		 * Type of the value section (from the setting key)
 		 */
-		type: React.PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
 	},
 
 	getAutoKey() {

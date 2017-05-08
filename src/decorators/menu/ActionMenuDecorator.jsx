@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
@@ -90,26 +91,26 @@ export default function (Component) {
 			/**
 			 * Item to be passed to the actions
 			 */
-			itemData: React.PropTypes.any,
+			itemData: PropTypes.any,
 
 			/**
 			 * Menu item actions
 			 */
-			actions: React.PropTypes.object.isRequired,
+			actions: PropTypes.object.isRequired,
 
 			/**
 			 * Action ids to filter from all actions
 			 */
-			ids: React.PropTypes.array,
+			ids: PropTypes.array,
 
 			/**
 			 * Use button style for the trigger
 			 */
-			button: React.PropTypes.bool,
+			button: PropTypes.bool,
 		},
 
 		contextTypes: {
-			routerLocation: React.PropTypes.object.isRequired,
+			routerLocation: PropTypes.object.isRequired,
 		},
 
 		shouldComponentUpdate: function (nextProps, nextState) {

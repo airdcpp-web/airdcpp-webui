@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Table } from 'fixed-data-table-2';
@@ -10,7 +11,6 @@ import RowWrapperCell from './RowWrapperCell';
 import { TextCell, HeaderCell } from './Cell';
 
 const TABLE_ROW_HEIGHT = 50;
-const { PropTypes } = React;
 
 function convertStartToRows(pixels) {
 	return Math.max(Math.floor(pixels / TABLE_ROW_HEIGHT), 0);

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
@@ -43,22 +44,22 @@ RecentLayout.propTypes = {
 	/**
 	 * Title of the button
 	 */
-	entryIcon: React.PropTypes.string.isRequired,
+	entryIcon: PropTypes.string.isRequired,
 
 	/**
 	 * URL for fetching the recent entries
 	 */
-	entryType: React.PropTypes.string.isRequired,
+	entryType: PropTypes.string.isRequired,
 
 	/**
 	 * Renders the recent entry title
 	 */
-	entryTitleRenderer: React.PropTypes.func.isRequired,
+	entryTitleRenderer: PropTypes.func.isRequired,
 
 	/**
 	 * Returns whether the recent entry is currently active
 	 */
-	hasSession: React.PropTypes.func.isRequired,
+	hasSession: PropTypes.func.isRequired,
 };
 
 export default RecentLayout;

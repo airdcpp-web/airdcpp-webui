@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -28,17 +29,17 @@ export default function (Component) {
 		/**
 		 * Possible user to be passed to the handler (when not used for items in a singleton entity)
 		 */
-		user: React.PropTypes.object.isRequired,
+		user: PropTypes.object.isRequired,
 
 		/**
 		 * Function for handling the download
 		 */
-		handler: React.PropTypes.func.isRequired,
+		handler: PropTypes.func.isRequired,
 
 		/**
 		 * Additional data to be passed to the handler
 		 */
-		itemInfo: React.PropTypes.any,
+		itemInfo: PropTypes.any,
 	};
 
 

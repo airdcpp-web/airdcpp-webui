@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import FormattedFile from 'components/format/FormattedFile';
@@ -28,17 +29,17 @@ const FileItemList = React.createClass({
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		itemClickHandler: React.PropTypes.func.isRequired,
+		itemClickHandler: PropTypes.func.isRequired,
 
 		/**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		itemIconGetter: React.PropTypes.func,
+		itemIconGetter: PropTypes.func,
 
 		/**
 		 * Array of path objects to list
 		 */
-		items: React.PropTypes.array.isRequired,
+		items: PropTypes.array.isRequired,
 	},
 
 	sort(a, b) {

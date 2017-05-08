@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -9,8 +10,8 @@ import { LocalSettings } from 'constants/SettingConstants';
 export default function (Component, useReadDelay) {
 	const ActiveSessionDecorator = React.createClass({
 		propTypes: {
-			session: React.PropTypes.any, // Required (cloned)
-			actions: React.PropTypes.object, // Required (cloned)
+			session: PropTypes.any, // Required (cloned)
+			actions: PropTypes.object, // Required (cloned)
 		},
 
 		setRead(id) {

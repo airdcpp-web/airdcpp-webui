@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import History from 'utils/History';
@@ -33,88 +34,88 @@ const SessionLayout = React.createClass({
 		/**
 		 * Unique ID of the section (used for storing and loading the previously open tab)
 		 */
-		baseUrl: React.PropTypes.string.isRequired,
+		baseUrl: PropTypes.string.isRequired,
 
 		/**
 		 * Location object
 		 */
-		location: React.PropTypes.object.isRequired,
+		location: PropTypes.object.isRequired,
 
 		/**
 		 * Array of the items to list
 		 */
-		items: React.PropTypes.array.isRequired,
+		items: PropTypes.array.isRequired,
 
 		/**
 		 * Function receiving an item object that returns header for the currently active item
 		 * If no function is supplied, the item name will be used
 		 */
-		itemHeaderTitleGetter: React.PropTypes.func,
+		itemHeaderTitleGetter: PropTypes.func,
 
 		/**
 		 * Function receiving an item object that returns the description (subheader) of the item
 		 */
-		itemHeaderDescriptionGetter: React.PropTypes.func.isRequired,
+		itemHeaderDescriptionGetter: PropTypes.func.isRequired,
 
 		/**
 		 * Function receiving an item object that returns icon for a item
 		 */
-		itemHeaderIconGetter: React.PropTypes.func.isRequired,
+		itemHeaderIconGetter: PropTypes.func.isRequired,
 
 		/**
 		 * Store containing information about unread items
 		 */
-		unreadInfoStore: React.PropTypes.object,
+		unreadInfoStore: PropTypes.object,
 
 		/**
 		 * Function receiving an item object that returns the display name
 		 */
-		itemNameGetter: React.PropTypes.func.isRequired,
+		itemNameGetter: PropTypes.func.isRequired,
 
 		/**
 		 * Function receiving the circular color label in front of the item
 		 */
-		itemStatusGetter: React.PropTypes.func,
+		itemStatusGetter: PropTypes.func,
 
 		/**
 		 * Session actions (should contain 'removeSession')
 		 */
-		actions: React.PropTypes.object.isRequired,
+		actions: PropTypes.object.isRequired,
 
 		/**
 		 * Session actions to show in the action menu
 		 */
-		actionIds: React.PropTypes.array,
+		actionIds: PropTypes.array,
 
 		/**
 		 * Item ID that is currently active (if any)
 		 */
-		activeId: React.PropTypes.any,
+		activeId: PropTypes.any,
 
 		/**
 		 * Label for button that opens a new session
 		 */
-		newCaption: React.PropTypes.any,
+		newCaption: PropTypes.any,
 
 		/**
 		 * Label for button that opens a new session
 		 */
-		newDescription: React.PropTypes.any,
+		newDescription: PropTypes.any,
 
 		/**
 		 * Label for button that opens a new session
 		 */
-		newIcon: React.PropTypes.any,
+		newIcon: PropTypes.any,
 
 		/**
 		 * Set to false if the side menu should never be shown (the session will use all width that is available)  
 		 */
-		disableSideMenu: React.PropTypes.bool,
+		disableSideMenu: PropTypes.bool,
 
 		/**
 		 * AccessConstant defining whether the user has edit permission 
 		 */
-		editAccess: React.PropTypes.string.isRequired,
+		editAccess: PropTypes.string.isRequired,
 	},
 	
 	getInitialProps() {

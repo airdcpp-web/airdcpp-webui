@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ActionInput from 'components/semantic/ActionInput';
@@ -22,12 +23,12 @@ HubActionPrompt.propTypes = {
 	/**
 	 * Message title
 	 */
-	title: React.PropTypes.node.isRequired,
+	title: PropTypes.node.isRequired,
 
 	/**
 	 * Children
 	 */
-	content: React.PropTypes.node.isRequired,
+	content: PropTypes.node.isRequired,
 };
 
 const PasswordPrompt = ({ hub }) => (

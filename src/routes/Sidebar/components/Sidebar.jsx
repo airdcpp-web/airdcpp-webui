@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 
@@ -14,7 +15,7 @@ import '../style.css';
 const Sidebar = React.createClass({
 	mixins: [ PureRenderMixin, SetContainerSize ],
 	propTypes: {
-		context: React.PropTypes.string,
+		context: PropTypes.string,
 	},
 
 	componentDidMount() {

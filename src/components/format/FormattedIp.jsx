@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import 'semantic-ui/components/flag.min.css';
@@ -11,7 +12,7 @@ const IpFormatter = ({ item }) => (
 );
 
 IpFormatter.propTypes = {
-	item: React.PropTypes.object.isRequired,
+	item: PropTypes.object.isRequired,
 };
 
 export default IpFormatter;

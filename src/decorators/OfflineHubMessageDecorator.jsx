@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Reflux from 'reflux';
 
@@ -16,7 +17,7 @@ const OfflineHubMessageDecorator = React.createClass({
 		/**
 		 * Function to call when pressing enter
 		 */
-		offlineMessage: React.PropTypes.any.isRequired
+		offlineMessage: PropTypes.any.isRequired
 	},
 
 	componentDidMount: function () {

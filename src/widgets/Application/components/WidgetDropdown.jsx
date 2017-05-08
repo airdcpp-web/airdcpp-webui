@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
@@ -34,7 +35,7 @@ const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, {
 );
 
 WidgetDropdown.contextTypes = {
-	routerLocation: React.PropTypes.object.isRequired,
+	routerLocation: PropTypes.object.isRequired,
 };
 
 export default WidgetDropdown;

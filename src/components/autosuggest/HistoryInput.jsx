@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import SocketService from 'services/SocketService';
 import HistoryConstants from 'constants/HistoryConstants';
@@ -13,7 +14,7 @@ export default React.createClass({
 		/**
 		 * ID of the history section
 		 */
-		historyId: React.PropTypes.string.isRequired,
+		historyId: PropTypes.string.isRequired,
 	},
 
 	getInitialState() {

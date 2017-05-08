@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import HubActions from 'actions/HubActions';
@@ -8,7 +9,7 @@ import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 const ConnectStateCell = React.createClass({
 	contextTypes: {
-		routerLocation: React.PropTypes.object.isRequired,
+		routerLocation: PropTypes.object.isRequired,
 	},
 
 	getIcon() {

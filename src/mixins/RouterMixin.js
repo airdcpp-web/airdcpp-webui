@@ -1,14 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 
 
 export const LocationContext = {
 	propTypes: {
-		location: React.PropTypes.object.isRequired,
+		location: PropTypes.object.isRequired,
 	},
 
 	childContextTypes: {
-		routerLocation: React.PropTypes.object.isRequired,
+		routerLocation: PropTypes.object.isRequired,
 	},
 
 	getChildContext() {
@@ -20,11 +21,11 @@ export const LocationContext = {
 
 export const RouteContext = {
 	propTypes: {
-		route: React.PropTypes.object.isRequired,
+		route: PropTypes.object.isRequired,
 	},
 
 	childContextTypes: {
-		route: React.PropTypes.object.isRequired,
+		route: PropTypes.object.isRequired,
 	},
 
 	getChildContext() {
@@ -36,12 +37,12 @@ export const RouteContext = {
 
 export const Lifecycle = {
 	contextTypes: {
-		route: React.PropTypes.object,
-		router: React.PropTypes.object.isRequired,
+		route: PropTypes.object,
+		router: PropTypes.object.isRequired,
 	},
 
 	propTypes: {
-		route: React.PropTypes.object,
+		route: PropTypes.object,
 	},
 
 	componentDidMount() {

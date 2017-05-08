@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CountLabel from 'components/CountLabel';
 
@@ -16,7 +17,7 @@ const MenuIcon = ({ urgencies, className = '', onClick }) => (
 );
 
 MenuIcon.propTypes = {
-	urgencies: React.PropTypes.object,
+	urgencies: PropTypes.object,
 };
 
 export default MenuIcon;

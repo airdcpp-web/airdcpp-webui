@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -28,14 +29,14 @@ SessionNewButton.propTypes = {
 	/**
 	 * Base URL of the section
 	 */
-	url: React.PropTypes.string.isRequired,
+	url: PropTypes.string.isRequired,
 
 	/**
 	 * Title of the button
 	 */
-	title: React.PropTypes.node.isRequired,
+	title: PropTypes.node.isRequired,
 
-	pushNew: React.PropTypes.func.isRequired,
+	pushNew: PropTypes.func.isRequired,
 };
 
 export default SessionNewButton;

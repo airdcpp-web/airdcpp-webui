@@ -1,5 +1,7 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Lifecycle } from 'mixins/RouterMixin';
@@ -24,15 +26,15 @@ export default function (Component, semanticModuleName) {
 			/**
 			 * Removes portal from DOM
 			 */
-			onHidden: React.PropTypes.func,
+			onHidden: PropTypes.func,
 
 			/**
 			 * Returns to the location that was active before opening the overlay
 			 */
-			onHide: React.PropTypes.func,
+			onHide: PropTypes.func,
 
-			location: React.PropTypes.object.isRequired,
-			overlayId: React.PropTypes.any, // Required
+			location: PropTypes.object.isRequired,
+			overlayId: PropTypes.any, // Required
 		},
 
 		componentWillReceiveProps(nextProps) {

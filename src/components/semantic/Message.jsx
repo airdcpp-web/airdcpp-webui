@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon from 'components/semantic/Icon';
@@ -37,16 +38,16 @@ Message.propTypes = {
 	/**
 	 * Message title
 	 */
-	title: React.PropTypes.node,
+	title: PropTypes.node,
 
 	/**
 	 * Message content
 	 */
-	description: React.PropTypes.node,
+	description: PropTypes.node,
 
-	isError: React.PropTypes.bool,
+	isError: PropTypes.bool,
 
-	icon: React.PropTypes.string,
+	icon: PropTypes.string,
 };
 
 export default Message

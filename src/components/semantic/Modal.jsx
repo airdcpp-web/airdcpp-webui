@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import OverlayDecorator from 'decorators/OverlayDecorator';
@@ -15,32 +16,32 @@ const Modal = React.createClass({
 		/**
 		 * Close the modal when clicking outside its boundaries
 		 */
-		closable: React.PropTypes.bool,
+		closable: PropTypes.bool,
 
 		/**
 		 * Function to call when the dialog is approved
 		 * If no handler is supplied, there will only be a plain close button
 		 */
-		onApprove: React.PropTypes.func,
+		onApprove: PropTypes.func,
 
 		/**
 		 * Caption for the approve button
 		 */
-		approveCaption: React.PropTypes.node,
+		approveCaption: PropTypes.node,
 
 		/**
 		 * Use disabled style for the approve button
 		 */
-		approveDisabled: React.PropTypes.bool,
+		approveDisabled: PropTypes.bool,
 
 		/**
 		 * The modal will always use the maximum allowed width when set,
 		 * instead of adjusting the height dynamically.
 		 * Useful for modals with navigable, varying height content
 		 */
-		fullHeight: React.PropTypes.bool,
+		fullHeight: PropTypes.bool,
 
-		dynamicHeight: React.PropTypes.bool,
+		dynamicHeight: PropTypes.bool,
 	},
 
 	getDefaultProps() {

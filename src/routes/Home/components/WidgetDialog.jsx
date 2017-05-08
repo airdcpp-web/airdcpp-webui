@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Message from 'components/semantic/Message';
@@ -17,17 +18,17 @@ const WidgetDialog = React.createClass({
 		/**
 		 * Current widget settings
 		 */
-		settings: React.PropTypes.object, // Required
+		settings: PropTypes.object, // Required
 
 		/**
 		 * Widget info object
 		 */
-		widgetInfo: React.PropTypes.object, // Required
+		widgetInfo: PropTypes.object, // Required
 
 		/**
 		 * Called when the form is saved
 		 */
-		onSave: React.PropTypes.func, // Required
+		onSave: PropTypes.func, // Required
 	},
 
 	save() {

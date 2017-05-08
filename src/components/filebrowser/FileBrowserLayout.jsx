@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -36,7 +37,7 @@ CreateDirectory.propTypes = {
 	/**
 	 * Function to call with the value
 	 */
-	handleAction: React.PropTypes.func.isRequired
+	handleAction: PropTypes.func.isRequired
 };
 
 
@@ -46,22 +47,22 @@ const FileBrowser = React.createClass({
 		 * Local storage ID used for saving/loading the last path
 		 * This will have priority over initialPath
 		 */
-		historyId: React.PropTypes.string,
+		historyId: PropTypes.string,
 
 		/**
 		 * Initial directory to show
 		 */
-		initialPath: React.PropTypes.string,
+		initialPath: PropTypes.string,
 
 		/**
 		 * Function to call when changing the directory. Receives the path as param.
 		 */
-		onDirectoryChanged: React.PropTypes.func,
+		onDirectoryChanged: PropTypes.func,
 
 		/**
 		 * Getter for additional content displayed next to file/directory items
 		 */
-		itemIconGetter: React.PropTypes.func,
+		itemIconGetter: PropTypes.func,
 	},
 
 	getInitialState() {

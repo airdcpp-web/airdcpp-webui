@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Message from 'components/semantic/Message';
@@ -16,13 +17,13 @@ const ChatLayout = React.createClass({
 		/**
 		 * Access required for sending messages
 		 */
-		chatAccess: React.PropTypes.string.isRequired,
+		chatAccess: PropTypes.string.isRequired,
 
-		session: React.PropTypes.any.isRequired,
+		session: PropTypes.any.isRequired,
 
-		messageStore: React.PropTypes.object.isRequired,
+		messageStore: PropTypes.object.isRequired,
 
-		actions: React.PropTypes.object.isRequired,
+		actions: PropTypes.object.isRequired,
 	},
 
 	onMessagesChanged(messages, id) {

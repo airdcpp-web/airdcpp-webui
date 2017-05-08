@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Reflux from 'reflux';
 import invariant from 'invariant';
@@ -31,7 +32,7 @@ const AuthenticatedApp = React.createClass({
 		LocationContext,
 	],
 	contextTypes: {
-		router: React.PropTypes.object
+		router: PropTypes.object
 	},
 
 	updateTitle() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon from 'components/semantic/Icon';
@@ -48,7 +49,7 @@ UserIcon.propTypes = {
 	/**
 	 * User flag array
 	 */
-	flags: React.PropTypes.array.isRequired,
+	flags: PropTypes.array.isRequired,
 };
 
 export default UserIcon;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -15,25 +16,25 @@ const Checkbox = React.createClass({
 		/**
 		 * Selection state
 		 */
-		checked: React.PropTypes.bool.isRequired,
+		checked: PropTypes.bool.isRequired,
 
 		/**
 		 * Handler for state changes (receives bool as argument)
 		 */
-		onChange: React.PropTypes.func.isRequired,
+		onChange: PropTypes.func.isRequired,
 
 		/**
 		 * Checkbox caption
 		 */
-		caption: React.PropTypes.node,
+		caption: PropTypes.node,
 
 		/**
 		 * Display type (slider or toggle), leave undefined for default
 		 */
-		type: React.PropTypes.string,
+		type: PropTypes.string,
 
-		disabled: React.PropTypes.bool,
-		floating: React.PropTypes.bool,
+		disabled: PropTypes.bool,
+		floating: PropTypes.bool,
 	},
 
 	componentDidMount() {

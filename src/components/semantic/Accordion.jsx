@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -9,7 +10,7 @@ import classNames from 'classnames';
 
 const Accordion = React.createClass({
 	propTypes: {
-		controlled: React.PropTypes.bool,
+		controlled: PropTypes.bool,
 		//activeIndexes: React.PropTypes.bool,
 	},
 

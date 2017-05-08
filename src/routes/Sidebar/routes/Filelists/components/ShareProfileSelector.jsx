@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
@@ -11,7 +12,7 @@ const ShareProfileSelector = React.createClass({
 		/**
 		 * Callback after selecting a profile
 		 */
-		onProfileChanged: React.PropTypes.func.isRequired,
+		onProfileChanged: PropTypes.func.isRequired,
 	},
 
 	onClick: function (profile) {
