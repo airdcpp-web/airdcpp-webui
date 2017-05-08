@@ -7,13 +7,12 @@ import Loader from 'components/semantic/Loader';
 import OverlayDecorator from 'decorators/OverlayDecorator';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Resizable from 'react-resizable-box';
-import SetContainerSize from 'mixins/SetContainerSize';
 
 import '../style.css';
 
 
 const Sidebar = React.createClass({
-	mixins: [ PureRenderMixin, SetContainerSize ],
+	mixins: [ PureRenderMixin ],
 	propTypes: {
 		context: PropTypes.string,
 	},
@@ -27,24 +26,22 @@ const Sidebar = React.createClass({
 			transition: 'overlay',
 			mobileTransition: 'overlay',
 			closable: !BrowserUtils.useMobileLayout(),
-			// Using onShow callback would cause a significant delay, do this via timeout instead
-			onVisible: () => setTimeout(this.onVisible, 350),
+			onShow: this.onVisible,
 		});
 	},
 
 	getInitialState() {
-		this.initialWidth = BrowserUtils.loadLocalProperty('sidebar_width', 1000);
 		return {
 			// Don't render the content while sidebar is animating
-			// Avoids issues if there are router transitions while the sidebar is animating (such as placing the content in the middle of the window)
-			visible: false,
+			// Avoids issues if there are router transitions while the sidebar is 
+			// animating (e.g. the content is placed in the middle of the window)
+			animating: true,
+			width: BrowserUtils.loadLocalProperty('sidebar_width', 1000),
 		};
 	},
 
 	onVisible() {
-		if (this.isMounted()) {
-			this.setState({ visible: true });
-		}
+		this.setState({ animating: false });
 	},
 
 	onResizeStop(direction, styleSize, element, delta) {
@@ -58,10 +55,11 @@ const Sidebar = React.createClass({
 	},
 
 	render() {
+		const { width, animating } = this.state;
 		return (
 			<Resizable
 				ref={ c => this.c = c }
-				width={ Math.min(this.initialWidth, window.innerWidth) }
+				width={ Math.min(width, window.innerWidth) }
 				height={ window.innerHeight }
 				minWidth={ 500 }
 				maxWidth={ window.innerWidth } 
@@ -77,8 +75,8 @@ const Sidebar = React.createClass({
 				onResizeStop={ this.onResizeStop }
 			>
 				<div id="sidebar-container">
-					{ !this.state.visible ? <Loader text=""/> : React.cloneElement(this.props.children, {
-						width: this.state.width,
+					{ animating ? <Loader text=""/> : React.cloneElement(this.props.children, {
+						width,
 					}) }
 				</div>
 			</Resizable>
