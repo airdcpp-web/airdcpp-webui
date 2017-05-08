@@ -7,3 +7,4 @@ npm-debug.log
 /demo
 npm-debug.log*
 stats.html
+/jest/cache

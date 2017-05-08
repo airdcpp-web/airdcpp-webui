@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export NODE_ENV=production
 
 # Allow binding to port 80

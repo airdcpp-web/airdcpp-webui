@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Ensure that we have the latest version
 git pull
 npm update

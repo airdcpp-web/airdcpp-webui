@@ -114,6 +114,7 @@
     },
     "setupFiles": [
       "./jest/setup.js"
-    ]
+    ],
+    "cacheDirectory": "./jest/cache/"
   }
 }
