@@ -18,16 +18,18 @@ const LocalSettingForm = React.createClass({
 		this.definitions = LocalSettingStore.getDefinitions(this.props.keys);
 
 		return {
-			settings: LocalSettingStore.getState(),
+			settings: LocalSettingStore.getValues(),
 		};
 	},
 
 	onSave(changedSettingArray) {
+		LocalSettingStore.setValues(changedSettingArray);
+
 		this.setState({
-			settings: LocalSettingStore.getState(),
+			settings: LocalSettingStore.getValues(),
 		});
 
-		return Promise.resolve(LocalSettingStore.setValues(changedSettingArray));
+		return Promise.resolve(null);
 	},
 
 	render: function () {

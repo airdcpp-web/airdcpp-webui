@@ -5,7 +5,7 @@ import BrowserUtils from 'utils/BrowserUtils';
 import { LocalSettings, FieldTypes } from 'constants/SettingConstants';
 
 
-const SettingDefinitions = [
+export const SettingDefinitions = [
 	{
 		key: LocalSettings.NOTIFY_PM_USER,
 		type: FieldTypes.BOOLEAN,
@@ -59,14 +59,10 @@ const SettingDefinitions = [
 
 
 // Settings are saved in local storage only after the default value has been modified
-// Default value fron 'Settings' object is returned otherwise
+// Default value from the respective definition is returned otherwise
 const LocalSettingStore = Reflux.createStore({
 	init: function () {
 		this.settings = BrowserUtils.loadLocalProperty('local_settings', {});
-	},
-
-	getState() {
-		return this.settings;
 	},
 
 	getDefinition(key) {
@@ -89,11 +85,18 @@ const LocalSettingStore = Reflux.createStore({
 		return this.getDefinition(key).default_value;
 	},
 
+	getValues() {
+		return SettingDefinitions.reduce((reduced, { key }) => {
+			reduced[key] = this.getValue(key);
+			return reduced;
+		}, {});
+	},
+
 	// Append values for the provided key -> value object 
 	setValues(items) {
 		this.settings = Object.assign({}, this.settings, items);
 		BrowserUtils.saveLocalProperty('local_settings', this.settings);
-		this.trigger(this.getState());
+		this.trigger(this.getValues());
 	},
 });
 
