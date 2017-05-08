@@ -6,12 +6,12 @@ import Loader from 'components/semantic/Loader';
 import StatColumn from './StatColumn';
 import SpeedChart from './SpeedChart';
 
-import SetContainerSize from 'mixins/SetContainerSize';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import SocketService from 'services/SocketService';
 
 import TransferConstants from 'constants/TransferConstants';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import Measure from 'react-measure';
 
 import '../style.css';
 
@@ -37,7 +37,7 @@ const addSpeed = (points, down, up) => {
 };
 
 const Transfers = React.createClass({
-	mixins: [ SetContainerSize, SocketSubscriptionMixin(), PureRenderMixin ],
+	mixins: [ SocketSubscriptionMixin(), PureRenderMixin ],
 	getInitialState() {
 		return {
 			points: [
@@ -94,7 +94,7 @@ const Transfers = React.createClass({
 	},
 
 	render() {
-		const { points, maxDownload, maxUpload, width, height, stats } = this.state;
+		const { points, maxDownload, maxUpload, stats } = this.state;
 		if (!stats) {
 			return <Loader inline={ true }/>;
 		}
@@ -106,23 +106,23 @@ const Transfers = React.createClass({
 		};
 
 		const trafficSeries = new TimeSeries(data);
-		const showInfoColumn = width >= 300;
-
 		return (
-			<div className="transfers-container">
-				<SpeedChart
-					trafficSeries={ trafficSeries }
-					maxDownload={ maxDownload }
-					maxUpload={ maxUpload }
-					width={ width }
-					height={ height }
-				/>
-				{ showInfoColumn && (
-					<StatColumn
-						stats={ stats }
-					/>
+			<Measure whitelist={ [ 'width' ] }>
+				{ dimensions => (
+					<div className="transfers-container">
+						<SpeedChart
+							trafficSeries={ trafficSeries }
+							maxDownload={ maxDownload }
+							maxUpload={ maxUpload }
+						/>
+						{ dimensions.width >= 300 && (
+							<StatColumn
+								stats={ stats }
+							/>
+						) }
+					</div>
 				) }
-			</div>
+			</Measure>
 		);
 	}
 });

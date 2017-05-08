@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Table } from 'fixed-data-table-2';
-import SetContainerSize from 'mixins/SetContainerSize';
 
 import TableActions from 'actions/TableActions';
 import BrowserUtils from 'utils/BrowserUtils';
 
+import Measure from 'react-measure';
 import RowWrapperCell from './RowWrapperCell';
 import { TextCell, HeaderCell } from './Cell';
 
@@ -21,8 +21,6 @@ function convertEndToRows(pixels) {
 }
 
 const TableContainer = React.createClass({
-	mixins: [ SetContainerSize ],
-
 	propTypes: {
 
 		/**
@@ -42,6 +40,13 @@ const TableContainer = React.createClass({
 
 		
 		dataLoader: PropTypes.any.isRequired,
+	},
+
+	getInitialState() {
+		return {
+			width: 0,
+			height: 0,
+		};
 	},
 
 	getInitialProps() {
@@ -156,31 +161,40 @@ const TableContainer = React.createClass({
 			),
 		});
 	},
+
+	onMeasure({ width, height }) {
+		this.setState({
+			width,
+			height,
+		});
+	},
 	
 	render: function () {
 		// Update and insert generic columns props
 		const children = React.Children.map(this.props.children, this.convertColumn);
 
 		return (
-			<div className="table-container-wrapper">
-				<Table
-					width={ this.state.width }
-					height={ this.state.height } 
+			<Measure onMeasure={ this.onMeasure }>
+				<div className="table-container-wrapper">
+					<Table
+						width={ this.state.width }
+						height={ this.state.height } 
 
-					rowHeight={ 50 }
-					rowsCount={ this.props.store.rowCount }
-					headerHeight={ 50 }
-					isColumnResizing={ this.isColumnResizing }
-					onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
+						rowHeight={ 50 }
+						rowsCount={ this.props.store.rowCount }
+						headerHeight={ 50 }
+						isColumnResizing={ this.isColumnResizing }
+						onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
 
-					touchScrollEnabled={ true }
+						touchScrollEnabled={ true }
 
-					onScrollStart={ this._onScrollStart }
-					onScrollEnd={ this._onScrollEnd }
-				>
-					{ children }
-				</Table>
-			</div>
+						onScrollStart={ this._onScrollStart }
+						onScrollEnd={ this._onScrollEnd }
+					>
+						{ children }
+					</Table>
+				</div>
+			</Measure>
 		);
 	}
 });

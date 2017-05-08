@@ -16,8 +16,7 @@ import Background1500px from '../resources/images/background_1500px.jpg';
 import Background3460px from '../resources/images/background_3460px.jpg';
 import BrowserUtils from 'utils/BrowserUtils';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import SetContainerSize from 'mixins/SetContainerSize';
+import Measure from 'react-measure';
 
 import 'array.prototype.find';
 import './utils/semantic';
@@ -101,14 +100,9 @@ const getBackgroundImage = () => {
 };
 
 
-const App = React.createClass({
-	mixins: [
-		SetContainerSize,
-		PureRenderMixin,
-	],
-
-	render() {
-		return (
+const App = _ => (
+	<Measure>
+		{ _ => (
 			<div id="background-wrapper" 
 				style={{
 				 backgroundImage: 'url(' + getBackgroundImage() + ')',
@@ -117,8 +111,8 @@ const App = React.createClass({
 			>
 				<Router history={ History } routes={ routeConfig } />
 			</div>
-		);
-	}
-});
+		) }
+	</Measure>
+);
 
 export default App;
