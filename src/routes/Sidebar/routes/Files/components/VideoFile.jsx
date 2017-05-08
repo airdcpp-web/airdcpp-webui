@@ -7,7 +7,10 @@ import MediaFileDecorator from '../decorators/MediaFileDecorator';
 const VideoFile = React.createClass({
 	render() {
 		return (
-			<video { ...this.props.mediaProps }/>
+			<video 
+				ref={ c => this.props.mediaRef(c) } 
+				{ ...this.props.mediaProps }
+			/>
 		);
 	}
 });

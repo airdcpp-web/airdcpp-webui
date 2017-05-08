@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default function (Component) {
 	let shouldScrollBottom = false;
@@ -23,13 +22,12 @@ export default function (Component) {
 				return;
 			}
 
-			let node = ReactDOM.findDOMNode(this.refs.scrollableContainer);
-			if (!node) {
+			if (!this.scrollable) {
 				shouldScrollBottom = false;
 				return;
 			}
 
-			const offSetFromBottom = node.scrollHeight - (node.scrollTop + node.offsetHeight);
+			const offSetFromBottom = this.scrollable.scrollHeight - (this.scrollable.scrollTop + this.scrollable.offsetHeight);
 			shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
 		},
 		 
@@ -40,16 +38,24 @@ export default function (Component) {
 		},
 
 		_scrollToBottom: function () {
-			let node = ReactDOM.findDOMNode(this.refs.scrollableContainer);
-			if (node) {
-				node.scrollTop = node.scrollHeight;
+			if (this.scrollable) {
+				this.scrollable.scrollTop = this.scrollable.scrollHeight;
 			}
 
 			shouldScrollBottom = false;
 		},
 
+		setScrollableRef(c) {
+			this.scrollable = c;
+		},
+
 		render() {
-			return <Component ref="scrollableContainer" {...this.props}/>;
+			return (
+				<Component 
+					{ ...this.props }
+					scrollableRef={ this.setScrollableRef }
+				/>
+			);
 		},
 	});
 

@@ -42,7 +42,7 @@ const TableDropdown = React.createClass({
 		invariant(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
 		return React.cloneElement(elem, {
 			onClick: () => {
-				this.refs.dropdownMenu.hide();
+				this.popupNode.hide();
 				
 				elem.props.onClick();
 			} 
@@ -72,10 +72,10 @@ const TableDropdown = React.createClass({
 		return (
 			<div className={ classNames('table dropdown', this.props.className) }>
 				<Popup 
+					ref={ c => this.popupNode = c }
 					className="basic dropdown-content" 
 					trigger={ trigger } 
 					settings={ settings } 
-					ref="dropdownMenu"
 					position="bottom left"
 				>
 					<div className="ui text menu vertical">

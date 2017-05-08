@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 
 import classNames from 'classnames';
@@ -59,12 +58,6 @@ const Dropdown = React.createClass({
 	},
 
 	init() {
-		if (!this.isMounted()) {
-			return;
-		}
-
-		const dom = ReactDOM.findDOMNode(this);
-
 		const settings = {
 			direction: this.props.direction,
 			action: 'hide',
@@ -79,7 +72,7 @@ const Dropdown = React.createClass({
 			invariant(settings['context'], 'Context missing from dropdown');
 		}
 
-		$(dom).dropdown(settings);
+		$(this.c).dropdown(settings);
 	},
 
 	getDefaultProps() {
@@ -103,8 +96,11 @@ const Dropdown = React.createClass({
 
 		let icon = <Icon icon={ triggerIcon } className="trigger"/>;
 		return (
-			<div className={ className }>
-				{ leftIcon && caption ? icon : null }
+			<div 
+				ref={ c => this.c = c } 
+				className={ className }
+			>
+				{ (leftIcon && caption) && icon }
 				<DropdownCaption>
 					{ caption ? caption : icon }
 				</DropdownCaption>

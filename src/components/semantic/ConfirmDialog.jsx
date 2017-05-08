@@ -74,8 +74,7 @@ const ConfirmDialog = React.createClass({
 			},
 		};
 
-		let dom = ReactDOM.findDOMNode(this);
-		$(dom).modal(settings).modal('show');
+		$(this.c).modal(settings).modal('show');
 	},
 
 	onDeny: function (el) {
@@ -101,7 +100,10 @@ const ConfirmDialog = React.createClass({
 
 	render: function () {
 		return (
-			<div className="ui basic modal confirm-dialog">
+			<div 
+				ref={ c => this.c = c } 
+				className="ui basic modal confirm-dialog"
+			>
 				<div className="header">
 					{ this.props.title }
 				</div>

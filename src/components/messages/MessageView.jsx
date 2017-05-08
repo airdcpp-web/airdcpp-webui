@@ -45,6 +45,7 @@ const showDivider = (index, messageList) => {
 const MessageView = React.createClass({
 	propTypes: {
 		messages: PropTypes.array,
+		scrollableRef: PropTypes.func,
 	},
 
 	getMessageListItem(reduced, message, index, messageList) {
@@ -88,9 +89,12 @@ const MessageView = React.createClass({
 	},
 
 	render: function () {
-		const { messages, className } = this.props;
+		const { messages, className, scrollableRef } = this.props;
 		return (
-			<div className={ classNames('message-section', className) }>
+			<div 
+				ref={ c => scrollableRef(c) }
+				className={ classNames('message-section', className) }
+			>
 				{ messages ? (
 					<div className="ui list message-list">
 						{ messages.reduce(this.getMessageListItem, []) }

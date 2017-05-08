@@ -76,7 +76,7 @@ const Modal = React.createClass({
 	},
 
 	componentDidMount() {
-		this.props.showOverlay({
+		this.props.showOverlay(this.c, {
 			movePopup:false,
 			onApprove: this.onApprove,
 			onDeny: this.onDeny,
@@ -104,7 +104,10 @@ const Modal = React.createClass({
 		);
 
 		return (
-			<div className={ mainClass }>
+			<div 
+				ref={ c => this.c = c }
+				className={ mainClass }
+			>
 				<LayoutHeader
 					title={ this.props.title }
 					icon={ this.props.icon }

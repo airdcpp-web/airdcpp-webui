@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Moment from 'moment';
 
@@ -33,13 +32,17 @@ export default function (Component) {
 		},
 		 
 		componentDidUpdate: function (prevProps, prevState) {
-			if (prevProps.item !== this.props.item && this.refs.media) {
-				ReactDOM.findDOMNode(this.refs.media).load();
+			if (prevProps.item !== this.props.item && this.media) {
+				this.media.load();
 			}
 		},
 
 		onMediaError(event) {
 			this.setState({ error: formatMediaError(event) });
+		},
+
+		setMediaRef(c) {
+			this.media = c;
 		},
 
 		render() {
@@ -61,8 +64,8 @@ export default function (Component) {
 
 			return (
 				<Component 
-					ref="media" 
-					{...this.props} 
+					{ ...this.props } 
+					mediaRef={ this.setMediaRef }
 					mediaProps={ mediaProps }
 				/>
 			);

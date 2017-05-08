@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import 'semantic-ui/components/accordion';
 import 'semantic-ui/components/accordion.min.css';
@@ -11,27 +10,9 @@ import classNames from 'classnames';
 const Accordion = React.createClass({
 	propTypes: {
 		controlled: PropTypes.bool,
-		//activeIndexes: React.PropTypes.bool,
 	},
 
-	/*componentWillReceiveProps(nextProps) {
-		if (!this.props.controlled || nextProps.activeIndexes === this.props.activeIndexes) {
-			return;
-		}
-
-		let dom = ReactDOM.findDOMNode(this);
-		nextProps.activeIndexes.forEach(id => {
-			if (nextProps.active) {
-				$(dom).accordion('open', id);
-			} else {
-				$(dom).accordion('close', id);
-			}
-		});
-	},*/
-
 	componentDidMount() {
-		let dom = ReactDOM.findDOMNode(this);
-
 		let settings = {};
 		if (this.props.controlled) {
 			settings = {
@@ -39,11 +20,7 @@ const Accordion = React.createClass({
 			};
 		}
 
-		$(dom).accordion(settings);
-
-		/*if (this.props.active) {
-			$(dom).accordion('open', 0);
-		}*/
+		$(this.c).accordion(settings);
 	},
 
 	getDefaultProps() {
@@ -60,7 +37,10 @@ const Accordion = React.createClass({
 
 		let { children } = this.props;
 		return (
-			<div className={ accordionStyle }>
+			<div 
+				ref={ c => this.c = c } 
+				className={ accordionStyle }
+			>
 				{ children }
 			</div>
 		);

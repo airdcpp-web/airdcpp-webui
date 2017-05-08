@@ -3,13 +3,13 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Lifecycle } from 'mixins/RouterMixin';
 import invariant from 'invariant';
 
 import History from 'utils/History';
 
 import '../style.css';
+
 
 export default function (Component, semanticModuleName) {
 	const OverlayDecorator = React.createClass({
@@ -43,20 +43,25 @@ export default function (Component, semanticModuleName) {
 			}
 		},
 
-		showOverlay(componentSettings = {}) {
+		showOverlay(c, componentSettings = {}) {
+			invariant(c, 'Component missing from showOverlay');
+
+			this.c = c;
+
 			invariant(this.props.overlayId, 'OverlayDecorator: overlayId missing (remember to pass props to the overlay component)');
 			const settings = Object.assign(componentSettings, {
 				onHidden: this.onHidden,
 				onHide: this.onHide,
 			});
 
-			let dom = ReactDOM.findDOMNode(this);
-			$(dom)[semanticModuleName](settings)[semanticModuleName]('show');
+			setTimeout(_ => {
+				$(this.c)[semanticModuleName](settings)[semanticModuleName]('show');
+			});
 		},
 
 		hide() {
-			let dom = ReactDOM.findDOMNode(this);
-			$(dom)[semanticModuleName]('hide');
+			invariant(this.c, 'Component not set when hiding overlay');
+			$(this.c)[semanticModuleName]('hide');
 		},
 
 		onHide() {
@@ -76,7 +81,14 @@ export default function (Component, semanticModuleName) {
 		},
 
 		render() {
-			return <Component {...this.props} {...this.state} showOverlay={this.showOverlay} hide={this.hide}/>;
+			return (
+				<Component 
+					{ ...this.props } 
+					{ ...this.state } 
+					showOverlay={ this.showOverlay } 
+					hide={ this.hide }
+				/>
+			);
 		}
 	});
 

@@ -3,7 +3,6 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Dropdown from 'components/semantic/Dropdown';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
@@ -25,8 +24,7 @@ const MainNavigationMobile = React.createClass({
 			onHidden: this.props.onClose,
 		};
 
-		let dom = ReactDOM.findDOMNode(this);
-		$(dom).sidebar(settings).sidebar('show');
+		$(this.c).sidebar(settings).sidebar('show');
 	},
 
 	onClickSecondary(url, evt) {
@@ -40,8 +38,7 @@ const MainNavigationMobile = React.createClass({
 	},
 
 	onClick(url, evt) {
-		let dom = ReactDOM.findDOMNode(this);
-		$(dom).sidebar('hide');
+		$(this.c).sidebar('hide');
 	},
 
 	render() {
@@ -54,7 +51,11 @@ const MainNavigationMobile = React.createClass({
 		);
 
 		return (
-			<div id="mobile-menu" className="ui right vertical inverted sidebar menu">
+			<div 
+				ref={ c => this.c = c }
+				id="mobile-menu" 
+				className="ui right vertical inverted sidebar menu"
+			>
 				{ mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
 				<Dropdown 
 					caption={ moreCaption } 

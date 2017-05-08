@@ -22,7 +22,7 @@ const Sidebar = React.createClass({
 		const context = $(this.props.overlayContext);
 		invariant(context.length !== 0, 'Invalid sidebar context');
 
-		this.props.showOverlay({
+		this.props.showOverlay(this.c.resizable, {
 			context: context,
 			transition: 'overlay',
 			mobileTransition: 'overlay',
@@ -60,6 +60,7 @@ const Sidebar = React.createClass({
 	render() {
 		return (
 			<Resizable
+				ref={ c => this.c = c }
 				width={ Math.min(this.initialWidth, window.innerWidth) }
 				height={ window.innerHeight }
 				minWidth={ 500 }

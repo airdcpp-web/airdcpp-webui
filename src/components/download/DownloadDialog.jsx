@@ -126,7 +126,7 @@ const DownloadDialog = React.createClass({
 		});
 
 		HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
-		this.refs.modal.hide();
+		this.modal.hide();
 	},
 
 	getMenuItem(section) {
@@ -153,7 +153,7 @@ const DownloadDialog = React.createClass({
 		const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
 		return (
 			<Modal 
-				ref="modal" 
+				ref={ c => this.modal = c }
 				className="download-dialog" 
 				title="Download" 
 				closable={ true } 

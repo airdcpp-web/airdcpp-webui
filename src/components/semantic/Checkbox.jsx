@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -44,17 +43,15 @@ const Checkbox = React.createClass({
 			onUnchecked: () => this.props.onChange(false),
 		};
 
-		let dom = ReactDOM.findDOMNode(this);
-		$(dom).checkbox(settings);
+		$(this.c).checkbox(settings);
 	},
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.checked != this.props.checked) {
-			let dom = ReactDOM.findDOMNode(this);
 			if (nextProps.checked) {
-				$(dom).checkbox('set checked');
+				$(this.c).checkbox('set checked');
 			} else {
-				$(dom).checkbox('set unchecked');
+				$(this.c).checkbox('set unchecked');
 			}
 		}
 	},
@@ -71,7 +68,10 @@ const Checkbox = React.createClass({
 		);
 
 		return (
-			<div className={ checkboxStyle }>
+			<div 
+				ref={ c => this.c = c }
+				className={ checkboxStyle }
+			>
 				<input type="checkbox" defaultChecked={ checked }/>
 				{ caption && (
 					<label>

@@ -60,8 +60,7 @@ const Popup = React.createClass({
 	},
 
 	hide() {
-		let dom = ReactDOM.findDOMNode(this);
-		$(dom).popup('hide');
+		$(this.triggerNode).popup('hide');
 	},
 
 	onHidden: function () {
@@ -70,8 +69,7 @@ const Popup = React.createClass({
 			return;
 		}
 
-		let button = this.refs.overlayTrigger;
-		$(button).popup('destroy');
+		$(this.triggerNode).popup('destroy');
 
 		ReactDOM.unmountComponentAtNode(this.node);
 		document.body.removeChild(this.node);
@@ -81,7 +79,7 @@ const Popup = React.createClass({
 	appendPosition(settings) {
 		let { position } = this.props;
 
-		const parentRect = this.refs.overlayTrigger.parentElement.getBoundingClientRect();
+		const parentRect = this.triggerNode.parentElement.getBoundingClientRect();
 		const pixelsFromBottom = window.innerHeight - parentRect.bottom;
 		if (position.indexOf('bottom') >= 0 && pixelsFromBottom < 350 && pixelsFromBottom < parentRect.top) {
 			// Random value and hope that there are no popups larger than this
@@ -123,7 +121,7 @@ const Popup = React.createClass({
 
 		this.appendPosition(settings);
 
-		$(this.refs.overlayTrigger).popup(settings).popup('show');
+		$(this.triggerNode).popup(settings).popup('show');
 	},
 
 	handleClick: function (el) {
@@ -132,7 +130,7 @@ const Popup = React.createClass({
 
 	render: function () {
 		const triggerProps = {
-			ref: 'overlayTrigger',
+			ref: c => this.triggerNode = c,
 			className: this.props.triggerClassName + ' popup trigger',
 		};
 

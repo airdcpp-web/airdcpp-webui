@@ -7,7 +7,10 @@ import MediaFileDecorator from '../decorators/MediaFileDecorator';
 const AudioFile = React.createClass({
 	render() {
 		return (
-			<audio { ...this.props.mediaProps }/>
+			<audio 
+				ref={ c => this.props.mediaRef(c) } 
+				{ ...this.props.mediaProps }
+			/>
 		);
 	}
 });
