@@ -30,10 +30,6 @@ const LocalSettingForm = React.createClass({
 		return Promise.resolve(LocalSettingStore.setValues(changedSettingArray));
 	},
 
-	save() {
-		return this.refs.form.save();
-	},
-
 	render: function () {
 		const { settings } = this.state;
 		const { formRef, ...otherProps } = this.props;

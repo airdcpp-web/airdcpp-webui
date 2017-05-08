@@ -60,7 +60,6 @@ const TableContainer = React.createClass({
 	// This will also be used for setting the initial rows
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.height !== this.state.height) {
-			this._onContentHeightChange();
 			this.updateRowRange();
 		} else if (prevProps.entityId !== this.props.entityId) {
 			this.updateRowRange();
@@ -114,23 +113,6 @@ const TableContainer = React.createClass({
 		this.forceUpdate(); // don't do this, use a store and put into this.state!
 	},
 
-	// Fitted-table
-	_onContentHeightChange : function (contentHeight) {
-		setTimeout(() => {
-			if (!this.refs.touchScrollArea) {
-				return;
-			}
-
-			let width = 0;
-			React.Children.forEach(this.props.children, function (child) {
-				if ('width' in child.props) {
-					width = width + child.props.width;
-				}
-			});
-			this.refs.touchScrollArea._onContentDimensionsChange(this.state.width, this.state.height-50, width, contentHeight);
-		});
-	},
-
 	convertColumn(column) {
 		if (column.props.hideWidth > this.state.width) {
 			return null;
@@ -182,22 +164,21 @@ const TableContainer = React.createClass({
 		return (
 			<div className="table-container-wrapper">
 				<Table
-					width={this.state.width}
-					height={this.state.height} 
-					onContentHeightChange={this._onContentHeightChange}
+					width={ this.state.width }
+					height={ this.state.height } 
 
-					rowHeight={50}
-					rowsCount={this.props.store.rowCount}
-					headerHeight={50}
-					isColumnResizing={this.isColumnResizing}
-					onColumnResizeEndCallback={this._onColumnResizeEndCallback}
+					rowHeight={ 50 }
+					rowsCount={ this.props.store.rowCount }
+					headerHeight={ 50 }
+					isColumnResizing={ this.isColumnResizing }
+					onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
 
 					touchScrollEnabled={ true }
 
-					onScrollStart={this._onScrollStart}
-					onScrollEnd={this._onScrollEnd}
+					onScrollStart={ this._onScrollStart }
+					onScrollEnd={ this._onScrollEnd }
 				>
-					{children}
+					{ children }
 				</Table>
 			</div>
 		);

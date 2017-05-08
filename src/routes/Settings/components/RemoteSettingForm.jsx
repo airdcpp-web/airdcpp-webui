@@ -30,10 +30,6 @@ const RemoteSettingForm = React.createClass({
 		this.props.refetchData([ 'settings' ]);
 	},
 
-	save() {
-		return this.refs.form.save();
-	},
-
 	render: function () {
 		const { formRef, settings, fieldDefinitions, ...otherProps } = this.props;
 		return (

@@ -48,13 +48,12 @@ const FileBrowserDialog = React.createClass({
 		const { currentPath } = this.state;
 		return (
 			<Modal
-				{...this.props}
-				ref="modal" 
-				title={this.props.title} 
-				onApprove={this.onConfirm} 
-				className="file-browser-dialog" 
-				closable={true}
-				fullHeight={true}
+				{ ...this.props }
+				className="file-browser-dialog"
+				title={ this.props.title } 
+				onApprove={ this.onConfirm }  
+				closable={ true }
+				fullHeight={ true }
 				approveDisabled={ currentPath.length === 0 }
 				approveCaption="Select"
 				icon="yellow folder open"

@@ -26,7 +26,7 @@ import Logo from 'images/AirDCPlusPlus.png';
 const Notifications = React.createClass({
 	mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, '_addNotification') ],
 
-	_notificationSystem: null,
+	notifications: null,
 
 	contextTypes: {
 		routerLocation: PropTypes.object.isRequired,
@@ -38,7 +38,7 @@ const Notifications = React.createClass({
 			return;
 		}
 
-		this._notificationSystem.addNotification(Object.assign(notification, {
+		this.notifications.addNotification(Object.assign(notification, {
 			level: level,
 			position: 'tl',
 			autoDismiss: 5
@@ -71,13 +71,13 @@ const Notifications = React.createClass({
 		if ('Notification' in window) {
 			Notification.requestPermission();
 		}
-
-		this._notificationSystem = this.refs.notificationSystem;
 	},
 
 	render: function () {
 		return (
-			<NotificationSystem ref="notificationSystem" />
+			<NotificationSystem 
+				ref={ c => this.notifications = c }
+			/>
 		);
 	},
 

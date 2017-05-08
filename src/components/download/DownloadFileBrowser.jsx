@@ -7,10 +7,6 @@ import LoginStore from 'stores/LoginStore';
 
 
 const DownloadFileBrowser = React.createClass({
-	handleDownload(path) {
-		this.refs.modal.hide();
-	},
-
 	onDirectoryChanged(path) {
 		this.setState({ currentPath: path });
 	},

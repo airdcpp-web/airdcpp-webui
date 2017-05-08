@@ -32,7 +32,7 @@ const WidgetDialog = React.createClass({
 	},
 
 	save() {
-		return this.refs.form.save();
+		return this.form.save();
 	},
 
 	onSave(changedFields, value) {
@@ -70,7 +70,7 @@ const WidgetDialog = React.createClass({
 				{ ...overlayProps }
 			>
 				<Form
-					ref="form"
+					ref={ c => this.form = c }
 					value={ settings && {
 						name: settings.name,
 						...settings.widget,

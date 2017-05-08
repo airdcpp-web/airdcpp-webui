@@ -74,7 +74,7 @@ const ShareDirectoryDialog = React.createClass({
 	},
 
 	save() {
-		return this.refs.form.save();
+		return this.form.save();
 	},
 
 	onSave(changedFields) {
@@ -125,7 +125,7 @@ const ShareDirectoryDialog = React.createClass({
 					}
 				/>
 				<Form
-					ref="form"
+					ref={ c => this.form = c }
 					fieldDefinitions={ this.fieldDefinitions }
 					onFieldChanged={ this.onFieldChanged }
 					onFieldSetting={ this.onFieldSetting }

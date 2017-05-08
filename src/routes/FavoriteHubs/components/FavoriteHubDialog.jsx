@@ -81,7 +81,7 @@ const FavoriteHubDialog = React.createClass({
 	},
 
 	save() {
-		return this.refs.form.save();
+		return this.form.save();
 	},
 
 	onSave(changedFields) {
@@ -116,7 +116,7 @@ const FavoriteHubDialog = React.createClass({
 				{ ...this.props }
 			>
 				<Form
-					ref="form"
+					ref={ c => this.form = c }
 					title="User information"
 					onFieldChanged={ this.onFieldChanged }
 					onFieldSetting={ this.onFieldSetting }

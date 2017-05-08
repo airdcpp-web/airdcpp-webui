@@ -78,7 +78,7 @@ const BrowserBar = React.createClass({
 	},
 
 	checkOverflow() {
-		const newOverflow = this.refs.breadcrumb.clientWidth > this.refs.wrapper.clientWidth;
+		const newOverflow = this.breadcrumb.clientWidth > this.wrapper.clientWidth;
 		if (newOverflow !== this.state.overflow) {
 			this.setState({ overflow: newOverflow });
 			console.log('overflow', newOverflow);
@@ -134,8 +134,8 @@ const BrowserBar = React.createClass({
 		const className = this.state.overflow ? 'overflow' : '';
 		return (
 			<div className={ 'ui segment browserbar ' + className }>
-				<div className="path-navigation" ref="wrapper">
-					<div className="ui breadcrumb" ref="breadcrumb">
+				<div className="path-navigation" ref={ c => this.wrapper = c }>
+					<div className="ui breadcrumb" ref={ c => this.breadcrumb = c }>
 						{ tokens.map(this.formatSection) }
 					</div>
 				</div>

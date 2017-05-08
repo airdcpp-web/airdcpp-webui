@@ -46,7 +46,7 @@ const FavoriteDirectoryDialog = React.createClass({
 	},
 
 	save() {
-		return this.refs.form.save();
+		return this.form.save();
 	},
 
 	onSave(changedFields) {
@@ -84,7 +84,7 @@ const FavoriteDirectoryDialog = React.createClass({
 				{...this.props}
 			>
 				<Form
-					ref="form"
+					ref={ c => this.form = c }
 					fieldDefinitions={Entry}
 					onFieldChanged={ this.onFieldChanged }
 					onFieldSetting={ this.onFieldSetting }

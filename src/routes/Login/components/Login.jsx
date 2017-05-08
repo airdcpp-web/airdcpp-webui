@@ -96,8 +96,8 @@ const Login = React.createClass({
 	},
 
 	onSubmit(evt) {
-		const username = this.refs.username.value;
-		const password = this.refs.password.value;
+		const username = this.username.value;
+		const password = this.password.value;
 		evt.preventDefault();
 
 		if (username === '' || password === '') {
@@ -117,13 +117,13 @@ const Login = React.createClass({
 							<div className="field">
 								<div className="ui left icon input">
 									<i className="user icon"/>
-									<input type="text" name="username" placeholder="Username" ref="username" autoFocus={ true }/>
+									<input type="text" name="username" placeholder="Username" ref={ c => this.username = c } autoFocus={ true }/>
 								</div>
 							</div>
 							<div className="field">
 								<div className="ui left icon input">
 									<i className="lock icon"/>
-									<input className="password" name="password" placeholder="Password" ref="password" type="password"/>
+									<input className="password" name="password" placeholder="Password" ref={ c => this.password = c } type="password"/>
 								</div>
 							</div>
 

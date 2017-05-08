@@ -71,7 +71,7 @@ const FilterBox = React.createClass({
 		});
 
 		setTimeout(_ => this.onFilterUpdated());
-		this.refs.input.focus();
+		this.input.focus();
 	},
 
 	getFilterMethod(method) {
@@ -96,7 +96,7 @@ const FilterBox = React.createClass({
 					value={ this.state.value }
 				>
 					<input 
-						ref="input"
+						ref={ c => this.input = c }
 						placeholder={ getPlaceholder(this.state.method) } 
 						type="text"
 					/>

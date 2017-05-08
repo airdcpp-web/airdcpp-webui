@@ -18,7 +18,7 @@ const ExtensionsConfigureDialog = React.createClass({
 	mixins: [ RouteContext ],
 
 	save() {
-		return this.refs.form.save();
+		return this.form.save();
 	},
 
 	onSave(changedFields) {
@@ -38,7 +38,7 @@ const ExtensionsConfigureDialog = React.createClass({
 				dynamicHeight={ true }
 			>
 				<Form
-					ref="form"
+					ref={ c => this.form = c }
 					onSave={ this.onSave }
 					fieldDefinitions={ fieldDefinitions }
 					value={ settings }

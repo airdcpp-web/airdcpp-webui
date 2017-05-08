@@ -98,7 +98,7 @@ const WebUserDialog = React.createClass({
 	},
 
 	save() {
-		return this.refs.form.save();
+		return this.form.save();
 	},
 
 	onSave(changedFields) {
@@ -136,7 +136,7 @@ const WebUserDialog = React.createClass({
 				{ ...other }
 			>
 				<Form
-					ref="form"
+					ref={ c => this.form = c }
 					fieldDefinitions={ this.entry }
 					onFieldSetting={ this.onFieldSetting }
 					onSave={ this.onSave }
