@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import invariant from 'invariant';
 
 import HubActions from 'actions/HubActions';
 import HubConstants from 'constants/HubConstants';
@@ -25,6 +26,8 @@ const HubSessionStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
+		invariant(this.getSessions().length === 0, 'No existing hub sessions should exist on socket connect');
+
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_CREATED, this._onSessionCreated);
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_REMOVED, this._onSessionRemoved);
 		addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_UPDATED, this._onSessionUpdated);

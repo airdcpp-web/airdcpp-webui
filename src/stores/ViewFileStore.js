@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import invariant from 'invariant';
 
 import ViewFileConstants from 'constants/ViewFileConstants';
 import ViewFileActions from 'actions/ViewFileActions';
@@ -15,6 +16,8 @@ const ViewFileSessionStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
+		invariant(this.getSessions().length === 0, 'No viewed files should exist on socket connect');
+
 		const url = ViewFileConstants.MODULE_URL;
 		addSocketListener(url, ViewFileConstants.SESSION_CREATED, this._onSessionCreated);
 		addSocketListener(url, ViewFileConstants.SESSION_REMOVED, this._onSessionRemoved);

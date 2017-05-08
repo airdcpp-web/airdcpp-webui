@@ -52,6 +52,10 @@ const MessageStoreDecorator = function (store, actions, access) {
 		initializedSession.clear();
 	};
 
+	store.hasMessages = _ => messages.size > 0;
+	store.hasInitializedSessions = _ => initializedSession.size > 0;
+
+
 	store.getSessionMessages = sessionId => messages.get(sessionId);
 	store.isSessionInitialized = sessionId => initializedSession.has(sessionId);
 

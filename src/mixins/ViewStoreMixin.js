@@ -4,6 +4,7 @@ import TableActions from 'actions/TableActions';
 import invariant from 'invariant';
 
 
+// TODO: this should be handled on component level (instead of using global stores)
 export default (defaultSortProperty, defaultSortAscending = true) => {
 	let active = false;
 	let totalCount = -1; // Not zero to avoid using emptyRowsNodeGetter when it's not wanted

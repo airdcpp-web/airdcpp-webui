@@ -71,6 +71,11 @@ const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) 
 		store.trigger(sessions);
 	};
 
+	store.onSocketDisconnected = () => {
+		sessions = [];
+		activeSession = null;
+	};
+
 	return store;
 };
 

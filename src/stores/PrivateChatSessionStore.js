@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import invariant from 'invariant';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/PrivateChatActions';
@@ -16,6 +17,8 @@ const PrivateChatSessionStore = Reflux.createStore({
 	},
 
 	onSocketConnected(addSocketListener) {
+		invariant(this.getSessions().length === 0, 'No existing private chat sessions should exist on socket connect');
+
 		const url = PrivateChatConstants.MODULE_URL;
 		addSocketListener(url, PrivateChatConstants.SESSION_CREATED, this._onSessionCreated);
 		addSocketListener(url, PrivateChatConstants.SESSION_REMOVED, this._onSessionRemoved);
