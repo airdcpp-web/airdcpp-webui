@@ -31,12 +31,13 @@ const Sidebar = React.createClass({
 	},
 
 	getInitialState() {
+		const width = BrowserUtils.loadLocalProperty('sidebar_width', 1000);
 		return {
 			// Don't render the content while sidebar is animating
 			// Avoids issues if there are router transitions while the sidebar is 
 			// animating (e.g. the content is placed in the middle of the window)
 			animating: true,
-			width: BrowserUtils.loadLocalProperty('sidebar_width', 1000),
+			width: Math.max(500, width),
 		};
 	},
 
