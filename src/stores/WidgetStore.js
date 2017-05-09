@@ -82,6 +82,7 @@ const LAYOUT_VERSION = 3;
 const WidgetStore = Reflux.createStore({
 	listenables: WidgetActions,
 	init: function () {
+		// Try to load saved ones
 		let layoutInfo = BrowserUtils.loadLocalProperty(LAYOUT_STORAGE_KEY);
 		if (layoutInfo && layoutInfo.items) {
 			if (layoutInfo.version === LAYOUT_VERSION) {
@@ -98,7 +99,9 @@ const WidgetStore = Reflux.createStore({
 					}, '_releases');
 				}
 			}
-		} else {
+		}
+
+		if (!this.layouts) {
 			// Initialize the default layout
 			this.layouts = {};
 			this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);

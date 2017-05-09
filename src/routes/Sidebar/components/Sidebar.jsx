@@ -45,12 +45,12 @@ const Sidebar = React.createClass({
 		this.setState({ animating: false });
 	},
 
-	onResizeStop(direction, styleSize, element, delta) {
+	onResizeStop(event, direction, element, delta) {
 		if (!delta.width) {
 			return;
 		}
 
-		const width = this.state.width + delta.width;
+		const width = element.clientWidth;
 		BrowserUtils.saveLocalProperty('sidebar_width', width);
 		this.setState({ width });
 	},
