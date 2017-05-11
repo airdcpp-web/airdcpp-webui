@@ -13,6 +13,17 @@ const getUserIcon = (flags) => {
 	return TypeConvert.userOnlineStatusToColor(flags) + ' user';
 };
 
+const flagTitles = {
+	bot: 'Bot',
+	op: 'Operator',
+	self: 'Me',
+	noconnect: 'No connectivity',
+	passive: 'Passive connectivity',
+	offline: 'Offline',
+	away: 'Away',
+	ignored: 'Messages ignored',
+};
+
 const getCornerIcon = (flags) => {
 	if (flags.indexOf('bot') > -1) {
 		return 'setting';
@@ -37,11 +48,25 @@ const getCornerIcon = (flags) => {
 	return null;
 };
 
+const getTitle = (flags) => {
+	const titles = flags.reduce((reduced, flag) => {
+		const title = flagTitles[flag];
+		if (title) {
+			reduced.push(title);
+		}
+
+		return reduced;
+	}, []);
+
+	return titles.toString();
+};
+
 const UserIcon = ({ flags, ...other }) => (
 	<Icon
 		{ ...other }
 		icon={ getUserIcon(flags) }
 		cornerIcon={ getCornerIcon(flags) }
+		title={ getTitle(flags) }
 	/>
 );
 
