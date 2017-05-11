@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -11,28 +12,8 @@ export default function (Component, propertyName = 'any') {
 	const TableFilterDecorator = React.createClass({
 		mixins: [ PureRenderMixin ],
 		propTypes: {
-			/**
-			 * Callback after the profiles have been received
-			 */
 			viewUrl: PropTypes.string,
-		},
-
-		getInitialState() {
-			return {
-				filterId: null,
-			};
-		},
-
-		componentDidMount() {
-			SocketService.post(this.props.viewUrl + '/filter').then(this.onFilterAdded);
-		},
-
-		onFilterAdded(data) {
-			if (!this.isMounted()) {
-				return;
-			}
-
-			this.setState({ filterId: data.id });
+			filter: PropTypes.object.isRequired,
 		},
 
 		onFilterUpdated(pattern, method = FilterMethod.PARTIAL) {
@@ -42,18 +23,24 @@ export default function (Component, propertyName = 'any') {
 				property: propertyName,
 			};
 
-			SocketService.put(this.props.viewUrl + '/filter/' + this.state.filterId, data)
+			const { viewUrl, filter } = this.props;
+			SocketService.put(viewUrl + '/filter/' + filter.id, data)
 				.catch(error => console.error('Failed to add table filter'));
 		},
 
 		render() {
-			if (this.state.filterId === null) {
-				return null;
-			}
-
-			return <Component {...this.props} onFilterUpdated={this.onFilterUpdated}/>;
+			return (
+				<Component 
+					{ ...this.props } 
+					onFilterUpdated={ this.onFilterUpdated }
+				/>
+			);
 		},
 	});
 
-	return TableFilterDecorator;
-}
+	return DataProviderDecorator(TableFilterDecorator, {
+		urls: {
+			filter: ({ viewUrl }, socket) => socket.post(viewUrl + '/filter'),
+		},
+	});
+};

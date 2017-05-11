@@ -1,8 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 // Generic wrapper for all cells that will handle data loading
 const RowWrapperCell = React.createClass({
+	propTypes: {
+		rowIndex: PropTypes.number, // required
+		dataLoader: PropTypes.object.isRequired,
+		width: PropTypes.number, // required
+	},
+
 	getInitialState() {
 		return {
 			rowData: null,
@@ -27,6 +34,10 @@ const RowWrapperCell = React.createClass({
 		}
 	},
 
+	componentWillUnmount() {
+		this.props.dataLoader.removePendingRequests(this.props.rowIndex, this.onDataLoaded);
+	},
+
 	loadData(rowIndex) {
 		return this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
 	},
@@ -37,9 +48,7 @@ const RowWrapperCell = React.createClass({
 	},
 
 	onDataLoaded(data) {
-		if (this.isMounted()) {
-			this.setState({ rowData: data });
-		}
+		this.setState({ rowData: data });
 	},
 
 	render() {
