@@ -42,5 +42,6 @@ export default function (Component, propertyName = 'any') {
 		urls: {
 			filter: ({ viewUrl }, socket) => socket.post(viewUrl + '/filter'),
 		},
+		loaderText: null,
 	});
 };

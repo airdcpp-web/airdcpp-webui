@@ -1,56 +1,49 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import SocketService from 'services/SocketService';
-import HistoryConstants from 'constants/HistoryConstants';
 
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
+
+import HistoryConstants from 'constants/HistoryConstants';
 import HistoryActions from 'actions/HistoryActions';
 
 import LocalSuggestField from './LocalSuggestField';
 
 
-export default React.createClass({
+const HistoryInput = React.createClass({
 	propTypes: {
 
 		/**
 		 * ID of the history section
 		 */
 		historyId: PropTypes.string.isRequired,
-	},
 
-	getInitialState() {
-		return {
-			history: [],
-		};
-	},
+		history: PropTypes.array.isRequired,
 
-	componentDidMount() {
-		this.loadHistory();
-	},
-
-	loadHistory() {
-		SocketService.get(HistoryConstants.STRINGS_URL + '/' + this.props.historyId)
-			.then(data => {
-				this.setState({ history: data });
-			})
-			.catch(error => 
-				console.error('Failed to load history: ' + error)
-			);
+		submitHandler: PropTypes.func.isRequired,
 	},
 
 	handleSubmit(text) {
 		HistoryActions.add(this.props.historyId, text);
 
-		this.loadHistory();
+		this.props.refetchData();
 		this.props.submitHandler(text);
 	},
 
 	render() {
+		const { submitHandler, historyId, history, ...other } = this.props; // eslint-disable-line
 		return (
 			<LocalSuggestField 
-				{ ...this.props }
-				data={ this.state.history }
+				{ ...other }
+				data={ history }
 				submitHandler={ this.handleSubmit }
 			/>
 		);
 	},
+});
+
+export default DataProviderDecorator(HistoryInput, {
+	urls: {
+		history: ({ historyId }, socket) => socket.get(HistoryConstants.STRINGS_URL + '/' + historyId),
+	},
+	loaderText: null,
 });
