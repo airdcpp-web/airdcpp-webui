@@ -111,7 +111,14 @@ export default function (Component) {
 				});
 			}
 
-			return <Component {...this.props} sidebar={ sidebar } children={ this.previousChildren ? this.previousChildren : this.props.children }/>;
+			return (
+				<Component 
+					{...this.props} 
+					sidebar={ sidebar } 
+				>
+					{ this.previousChildren ? this.previousChildren : this.props.children }
+				</Component>
+			);
 		},
 	});
 

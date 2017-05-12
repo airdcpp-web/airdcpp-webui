@@ -136,9 +136,10 @@ export default (Component, saveButtonClass = '') => {
 				<Component 
 					{ ...this.props }
 					saveButton={ saveButton }
-					children={ children }
 					message={ message }
-				/>
+				>
+					{ children }
+				</Component>
 			);
 		},
 	});
