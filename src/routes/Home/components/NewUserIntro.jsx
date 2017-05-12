@@ -23,9 +23,10 @@ const NewUserIntro = () => {
 				<div className="new-user-message">
 					<ul>
 					<li>
-						You might want to go through at least each main page of <Link to="/settings">the client settings</Link> before you start.
+						Add a few directories that are shared to other users from the <Link to="/share">Share</Link> page.
 					</li>
 					<li>
+						You might want to go through at least each main page of <Link to="/settings">the client settings</Link> before you start.&nbsp;
 						<strong>
 							It's important that you <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
 							because the client won't be able to utilize your bandwidth efficiently otherwise.
