@@ -70,7 +70,12 @@ export default function (Component, settings) {
 		},
 
 		componentWillMount() {
+			this.mounted = true;
 			this.fetchData();
+		},
+
+		componentWillUnmount() {
+			this.mounted = false;
 		},
 
 		onSocketConnected(addSocketListener) {
@@ -122,6 +127,10 @@ export default function (Component, settings) {
 		},
 
 		onDataFetched(keys, values) {
+			if (!this.mounted) {
+				return;
+			}
+
 			const data = values.reduce(this.reduceData.bind(this, keys), {});
 
 			this.mergeData(data);

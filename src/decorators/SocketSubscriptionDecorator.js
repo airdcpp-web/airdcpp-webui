@@ -2,7 +2,7 @@ import SocketService from 'services/SocketService';
 import LoginStore from 'stores/LoginStore';
 
 
-const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo') => {
+const SocketSubscriptionDecorator = (store, access) => {
 	let socketSubscriptions = [];
 	let hasSocket = false;
 
@@ -57,8 +57,10 @@ const SocketSubscriptionDecorator = (store, access, listenToFunction = 'listenTo
 		}
 	};
 
-	// Listen to authentication status changes
-	store[listenToFunction](LoginStore, _loginStoreListener);
+	if ('listenTo' in store) {
+		// Listen to authentication status changes (stores only)
+		store.listenTo(LoginStore, _loginStoreListener);
+	}
 
 	// We have a socket already (happens when used together with the socket subscription mixin)
 	if (LoginStore.socketAuthenticated) {

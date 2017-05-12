@@ -3,12 +3,10 @@ import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 
 // For React components
 const SocketSubscriptionMixin = (sessionStore) => {
-	let unsubscribe;
-
 	const removeSocketSubscriptions = (props, removeSocketListeners) => {
 		let entityExists = true;
 		if (sessionStore) {
-			entityExists = sessionStore.getSession(props.session.id) ? true : false;
+			entityExists = !!sessionStore.getSession(props.session.id);
 		}
 
 		removeSocketListeners(entityExists);
@@ -32,16 +30,10 @@ const SocketSubscriptionMixin = (sessionStore) => {
 			}
 		},
 
-		// Emulates the listenTo property that stores have
-		addStoreListener(store, bind) {
-			unsubscribe = store.listen(bind);
-		},
-
 		componentWillUnmount() {
 			removeSocketSubscriptions(this.props, this.removeSocketListeners);
-			unsubscribe();
 		}
-	}, null, 'addStoreListener');
+	});
 };
 
 export default SocketSubscriptionMixin;

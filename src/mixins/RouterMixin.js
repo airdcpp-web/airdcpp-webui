@@ -13,7 +13,7 @@ export const LocationContext = {
 
 	getChildContext() {
 		return {
-			routerLocation: this.props.location || this.context.location,
+			routerLocation: this.props.location,
 		};
 	},
 };
