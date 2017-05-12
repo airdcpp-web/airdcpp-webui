@@ -23,7 +23,7 @@ linkify.add('magnet:', {
 	validate: (text, pos, self) => {
 		const tail = text.slice(pos);
 		if (!self.re.magnet) {
-			self.re.magnet = new RegExp('^(\\?xt=.{64,})');
+			self.re.magnet = /^(\?xt=urn:[a-zA-Z0-9:]+:[a-zA-Z0-9]{32,128}(&[\S]+)?)/g;
 		}
 
 		if (self.re.magnet.test(tail)) {

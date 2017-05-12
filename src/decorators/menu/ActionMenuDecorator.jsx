@@ -136,7 +136,8 @@ export default function (Component) {
 					icon={ action.icon }
 				>
 					{ action.displayName }
-				</MenuItemLink>);
+				</MenuItemLink>
+			);
 		},
 
 		// Reduce menus to an array of DropdownItems

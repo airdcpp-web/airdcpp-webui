@@ -113,7 +113,7 @@ export default function (Component) {
 
 			return (
 				<Component 
-					{...this.props} 
+					{ ...this.props } 
 					sidebar={ sidebar } 
 				>
 					{ this.previousChildren ? this.previousChildren : this.props.children }
