@@ -7,7 +7,7 @@ const ExternalLink = ({ url, children, className = '' }) => (
 		className={ className }
 		href={ url } 
 		target="_blank"
-		rel="noreferrer"
+		rel="noopener noreferrer"
 	>
 		{ children }
 	</a>

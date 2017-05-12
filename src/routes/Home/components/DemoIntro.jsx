@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 
@@ -22,7 +23,7 @@ const DemoIntro = () => {
 							Most changes, such as browsing of filelists, are propagated to all active sessions.
 						</p>
 						<p>
-							Please visit the <a href={ LinkConstants.HOME_PAGE_URL } target="_blank">home page</a> for more information about the client and its features.
+							Please visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information about the client and its features.
 						</p>
 					</div>
 				) }
