@@ -68,11 +68,12 @@ const UserResultTable = ({ results, dataError }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{ results.sort(resultSort).map(result => 
+					{ results.sort(resultSort).map(result => (
 						<UserResult 
 							key={ result.user.cid }
 							result={ result }
-						/>) }
+						/>
+					)) }
 				</tbody>
 			</table>
 		</div>

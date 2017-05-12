@@ -74,13 +74,13 @@ const SourceTable = ({ sources, bundle, dataError }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{ sources.sort(userSort).map(source => 
+					{ sources.sort(userSort).map(source => (
 						<Source 
 							key={ source.user.cid }
 							source={ source }
 							bundle={ bundle }
 						/>
-					) }
+					)) }
 				</tbody>
 			</table>
 		</div>

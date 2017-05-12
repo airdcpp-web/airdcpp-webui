@@ -37,7 +37,7 @@ const Application = React.createClass({
 					componentId={ this.props.componentId }
 				/>
 			</div>
-    );
+		);
 	}
 });
 

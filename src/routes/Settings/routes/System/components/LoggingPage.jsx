@@ -36,13 +36,13 @@ const LoggingPage = props => (
 				description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
 			/>
 			<Accordion className="styled" controlled={ true }>
-				{ sections.map(section => 
+				{ sections.map(section => (
 					<LogSection 
 						{ ...props }
 						key={ section } 
 						section={ section }
 					/>
-				) }
+				)) }
 			</Accordion>
 		</div>
 	</div>

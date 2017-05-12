@@ -62,13 +62,14 @@ const FileItemList = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						{ items.sort(this.sort).map(item => 
+						{ items.sort(this.sort).map(item => (
 							<FileItem 
 								key={ item.name }
 								item={ item }
 								itemClickHandler={ itemClickHandler }
 								itemIconGetter={ itemIconGetter }
-							/>) }
+							/>
+						)) }
 					</tbody>
 				</table>
 			</div>
