@@ -56,14 +56,11 @@ const Modal = React.createClass({
 
 	getInitialState() {
 		return {
-			saving: false
+			saving: false,
 		};
 	},
 
-	onDeny: function (el) {
-	},
-
-	onApprove: function (el) {
+	onApprove(el) {
 		let { onApprove } = this.props;
 		if (onApprove) {
 			this.setState({ saving: true });
@@ -79,7 +76,6 @@ const Modal = React.createClass({
 		this.props.showOverlay(this.c, {
 			movePopup:false,
 			onApprove: this.onApprove,
-			onDeny: this.onDeny,
 			closable: this.props.closable,
 			detachable: false,
 			allowMultiple: true,
@@ -91,10 +87,11 @@ const Modal = React.createClass({
 	},
 
 	render: function () {
+		const { saving } = this.state;
 		const approveStyle = classNames(
 			'ui ok green basic button',
 			{ 'disabled': this.props.approveDisabled },
-			{ 'loading': this.state.saving },
+			{ 'loading': saving },
 		);
 
 		const mainClass = classNames(
@@ -118,25 +115,27 @@ const Modal = React.createClass({
 					{ this.props.children }
 				</div>
 
-				{this.props.onApprove ? (
+				{ this.props.onApprove ? (
 					<div className="actions">
 						<div className={ approveStyle }>
 							<i className={ IconConstants.SAVE + ' icon' }/>
-							{this.props.approveCaption}
+							{ this.props.approveCaption }
 						</div>
 						<div className="ui cancel red basic button">
 							<i className="remove icon"/>
 							Cancel
 						</div>
-				</div>) : (
+					</div>
+				) : (
 					<div className="actions">
 						<div className="ui cancel button">
 							<i className="remove icon"/>
 							Close
 						</div>
 					</div>
-				)}
-			</div>);
+				) }
+			</div>
+		);
 	}
 });
 
