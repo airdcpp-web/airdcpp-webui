@@ -13,11 +13,11 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 
 
 // Message sections
-const Author = ({ message, dropdownContextGetter }) => (
+const Author = ({ message, dropdownContext }) => (
 	<div className="header author">
 		{ message.third_person && <span>*</span> }
 		<UserMenu 
-			contextGetter={ dropdownContextGetter } 
+			contextElement={ dropdownContext } 
 			triggerIcon={ null } 
 			noIcon={ true } 
 			user={ message.from }
@@ -27,7 +27,7 @@ const Author = ({ message, dropdownContextGetter }) => (
 
 Author.propTypes = {
 	message: PropTypes.object.isRequired,
-	dropdownContextGetter: PropTypes.func.isRequired,
+	dropdownContext: PropTypes.string.isRequired,
 };
 
 const TimeStamp = ({ message }) => (

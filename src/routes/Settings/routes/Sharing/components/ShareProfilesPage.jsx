@@ -23,7 +23,7 @@ const Row = ({ profile }) => (
 				actions={ ShareProfileActions } 
 				ids={ profile.default ? [ 'browse', 'divider', 'edit', 'remove' ] : [ 'browse', 'divider', 'edit', 'default', 'remove' ]} 
 				itemData={ profile }
-				contextGetter={ _ => '#setting-scroll-context' }
+				contextElement="#setting-scroll-context"
 			/>
 		</td>
 		<td>

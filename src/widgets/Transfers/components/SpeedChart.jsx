@@ -23,10 +23,7 @@ const SpeedChart = React.createClass({
 		return (
 			<Measure>
 				{ dimensions => (
-					<div 
-						ref={ c => this.c = c }
-						className="graph"
-					>
+					<div className="graph">
 						<ChartContainer 
 							timeRange={ trafficSeries.timerange() } 
 							width={ dimensions.width }

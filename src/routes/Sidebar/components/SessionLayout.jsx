@@ -398,8 +398,13 @@ const SessionLayout = React.createClass({
 		return children;
 	},
 
-	getListActionMenu() {
+	handleCloseAll() {
 		const { actions, items } = this.props;
+		items.forEach(session => actions.removeSession(session));
+	},
+
+	getListActionMenu() {
+		const { items } = this.props;
 		if (!this.hasEditAccess() || items.length === 0) {
 			return null;
 		}
@@ -407,7 +412,7 @@ const SessionLayout = React.createClass({
 		return (
 			<MenuItemLink 
 				key="close"
-				onClick={ () => items.forEach(session => actions.removeSession(session)) }
+				onClick={ this.handleCloseAll }
 				icon={ IconConstants.REMOVE }
 			>
 				Close all

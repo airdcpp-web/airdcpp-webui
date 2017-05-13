@@ -34,7 +34,7 @@ const Entry = ({ entry, feedUrl, componentId }) => {
 						entry,
 						feedUrl,
 					} }
-					//contextGetter={ _ => '.' + componentId + ' .list.rss' } // TODO
+					//contextElement={ '.' + componentId + ' .list.rss' } // TODO
 				/>
 			</div>
 
@@ -102,8 +102,12 @@ const RSS = React.createClass({
 
 	componentWillMount() {
 		if (!this.state.entries) {
-			this.fetchFeed(this.props.settings.feed_url);
+			this.handleUpdate();
 		}
+	},
+
+	handleUpdate() {
+		this.fetchFeed(this.props.settings.feed_url);
 	},
 
 	fetchFeed(feedUrl) {
@@ -243,7 +247,7 @@ const RSS = React.createClass({
 				</div>
 				<Footer
 					lastUpdated={ this.state.date }
-					handleUpdate={ _ => this.fetchFeed(feedUrl) }
+					handleUpdate={ this.handleUpdate }
 				/>
 			</div>
 		);

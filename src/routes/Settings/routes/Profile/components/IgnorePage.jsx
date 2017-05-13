@@ -16,7 +16,7 @@ const Row = ({ ignoreInfo }) => (
 				ids={ [ 'unignore' ] } 
 				userIcon="simple"
 				user={ ignoreInfo.user }
-				contextGetter={ _ => '#setting-scroll-context' }
+				contextElement="#setting-scroll-context"
 			/>
 		</td>
 		<td>

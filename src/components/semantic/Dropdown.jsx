@@ -42,7 +42,7 @@ const Dropdown = React.createClass({
 		/**
 		 * Returns DOM node used for checking whether the dropdown can fit on screen
 		 */
-		contextGetter: PropTypes.func,
+		contextElement: PropTypes.string,
 
 		/**
 		 * Render as button
@@ -67,8 +67,8 @@ const Dropdown = React.createClass({
 			//verbose: true,
 		};
 
-		if (this.props.contextGetter) {
-			settings['context'] = this.props.contextGetter();
+		if (this.props.contextElement) {
+			settings['context'] = this.props.contextElement;
 			invariant(settings['context'], 'Context missing from dropdown');
 		}
 
@@ -107,7 +107,7 @@ const Dropdown = React.createClass({
 				{ leftIcon || !caption ? null : icon }
 
 				<div className="menu">
-					{ header && (
+					{ !!header && (
 						<div className="header">
 							{ header }
 						</div>

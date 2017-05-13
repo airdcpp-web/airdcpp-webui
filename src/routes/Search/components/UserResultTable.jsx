@@ -19,7 +19,7 @@ const UserResult = ({ result }) => (
 				user={ result.user }
 				directory={ result.path }
 				ids={ [ 'browse', 'message' ] }
-				contextGetter={ _ => '.result.modal' }
+				contextElement=".result.modal"
 			/>
 		</td>
 		<td className="hubs">

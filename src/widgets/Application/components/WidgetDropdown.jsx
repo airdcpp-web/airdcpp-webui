@@ -25,7 +25,7 @@ const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, {
 		caption="Add widget..."
 		className="create-widget"
 		button={ true }
-		contextGetter={ _ => '.' + componentId }
+		contextElement={ '.' + componentId }
 		{ ...widgetProps }
 	>
 		{ WidgetStore.widgets

@@ -18,7 +18,7 @@ const Row = ({ directory }) => (
 				actions={ FavoriteDirectoryActions } 
 				ids={ [ 'edit', 'remove' ]} 
 				itemData={ directory }
-				contextGetter={ _ => '#setting-scroll-context' }
+				contextElement="#setting-scroll-context"
 			/>
 		</td>
 		<td>

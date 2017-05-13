@@ -21,7 +21,7 @@ const Row = ({ path }) => (
 				actions={ ShareActions } 
 				ids={ [ 'removeExclude' ] } 
 				itemData={ path }
-				contextGetter={ _ => '#setting-scroll-context' }
+				contextElement="#setting-scroll-context"
 			/>
 		</td>
 	</tr>

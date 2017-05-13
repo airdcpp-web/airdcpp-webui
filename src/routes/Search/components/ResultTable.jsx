@@ -40,10 +40,12 @@ const UserCell = ({ cellData, rowData, ...props }) => (
 	</TableUserMenu>
 );
 
+const resultUserGetter = rowData => rowData.users.user;
+
 const NameCell = ({ rowData, ...props }) => (
 	<FileDownloadCell 
 		handler={ SearchActions.download } 
-		userGetter={ (rowData) => rowData.users.user }
+		userGetter={ resultUserGetter }
 		rowData={ rowData }
 		{ ...props }
 	>

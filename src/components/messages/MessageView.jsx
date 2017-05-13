@@ -69,14 +69,14 @@ const MessageView = React.createClass({
 				<ChatMessage
 					key={ message.chat_message.id }
 					message={ message.chat_message }
-					dropdownContextGetter={ _ => '.chat.session' }
+					dropdownContext=".chat.session"
 				/>
 			);
 		} else {
 			reduced.push(
 				<StatusMessage
-					key={message.log_message.id}
-					message={message.log_message}
+					key={ message.log_message.id }
+					message={ message.log_message }
 				/>
 			);
 		}
@@ -88,11 +88,12 @@ const MessageView = React.createClass({
 		return nextProps.messages !== this.props.messages;
 	},
 
+
 	render: function () {
 		const { messages, className, scrollableRef } = this.props;
 		return (
 			<div 
-				ref={ c => scrollableRef(c) }
+				ref={ scrollableRef }
 				className={ classNames('message-section', className) }
 			>
 				{ messages ? (
