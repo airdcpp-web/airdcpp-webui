@@ -63,5 +63,10 @@
 		"react/self-closing-comp": 2,
 
 		"react/sort-comp": 0,
+		
+		"react/jsx-no-bind": 0,
+		
+		"react/no-deprecated": 1,
+		"react/no-unescaped-entities": 1
 	},
 }

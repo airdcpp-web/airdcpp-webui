@@ -23,12 +23,12 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
-    "lint": "eslint src",
-    "lint-fix": "eslint --fix src",
+    "lint": "eslint --ext .jsx,.js src",
+    "lint-fix": "eslint --ext .jsx,.js --fix src",
     "start": "node server.js",
     "build-webpack": "webpack -p --progress",
-    "serve": "NODE_ENV=production node server.js",
     "build": "npm run clean && npm run build-webpack",
+    "build-debug": "npm run clean && webpack --progress",
     "test": "jest",
     "prepublish": "npm run build"
   },
