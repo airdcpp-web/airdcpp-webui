@@ -2,7 +2,6 @@ import React from 'react';
 import { Router } from 'react-router';
 
 import LoginStore from 'stores/LoginStore';
-import LoginActions from 'actions/LoginActions';
 import History from 'utils/History';
 
 import Reflux from 'reflux';
@@ -27,10 +26,6 @@ global.Promise = Promise;
 
 
 Reflux.use(RefluxPromise(Promise));
-
-if (LoginStore.hasSession) {
-	LoginActions.connect(LoginStore.authToken);
-}
 
 const requireAuth = (nextState, replace) => {
 	if (!LoginStore.hasSession) {

@@ -71,8 +71,14 @@ const AuthenticatedApp = React.createClass({
 	},
 
 	componentWillMount() {
-		if (this.state.login.socketAuthenticated) {
-			this.onSocketAuthenticated();
+		const { login } = this.state;
+		if (login.hasSession) {
+			if (login.socketAuthenticated) {
+				this.onSocketAuthenticated();
+			} else {
+				// The page was loaded with a cached session token, attempt to reconnect
+				LoginActions.connect(LoginStore.authToken);
+			}
 		}
 	},
 
