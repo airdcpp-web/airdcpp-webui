@@ -69,7 +69,7 @@ QueueActions.removeCompleted.completed.listen(function (data) {
 QueueActions.removeSource.listen(function (item) {
 	let that = this;
 	const { user } = item;
-	return SocketService.post(QueueConstants.SOURCES_URL + '/' + user.cid)
+	return SocketService.delete(QueueConstants.SOURCES_URL + '/' + user.cid)
 		.then(that.completed.bind(that, user))
 		.catch(that.failed.bind(that, user));
 });
