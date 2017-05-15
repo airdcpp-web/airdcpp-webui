@@ -14,7 +14,7 @@ import DropdownCaption from './DropdownCaption';
 // https://github.com/facebook/fixed-data-table/issues/180
 
 const TableDropdown = React.createClass({
-	mixins: [ PureRenderMixin ],
+	//mixins: [ PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Cell content to render
@@ -25,6 +25,10 @@ const TableDropdown = React.createClass({
 		 * Trigger the dropdown when clicking on the caption
 		 */
 		linkCaption: PropTypes.bool,
+	},
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.caption !== this.props.caption;
 	},
 
 	getDefaultProps() {

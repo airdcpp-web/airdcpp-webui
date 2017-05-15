@@ -44,34 +44,34 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }) => (
 	</Cell>
 );
 
-export const FileActionCell = ({ cellData, rowData, ...props }) => (
+export const FileActionCell = ({ cellData, rowDataGetter, ...props }) => (
 	<TableActionMenu 
 		caption={ 
 			<FormattedFile 
-				typeInfo={ rowData.type }
+				typeInfo={ rowDataGetter().type }
 				caption={ cellData }
 			/>
 		}
-		itemData={ rowData }
+		itemDataGetter={ rowDataGetter }
 		{ ...props }
 	/>
 );
 
-export const ActionMenuCell = ({ cellData, rowData, ...props }) => (
+export const ActionMenuCell = ({ cellData, rowDataGetter, ...props }) => (
 	<TableActionMenu 
 		caption={ cellData }
-		itemData={ rowData }
+		itemDataGetter={ rowDataGetter }
 		{ ...props }
 	/>
 );
 
-export const ActionLinkCell = ({ cellData, rowData, action, ...props }, context) => {
-	if (!showAction(action, rowData)) {
-		return <TextCell cellData={ cellData } rowData={ rowData } { ...props }/>;
+export const ActionLinkCell = ({ cellData, rowDataGetter, action, ...props }, context) => {
+	if (!showAction(action, rowDataGetter())) {
+		return <TextCell cellData={ cellData } rowDataGetter={ rowDataGetter } { ...props }/>;
 	}
 
 	return (
-		<a className="plain link cell" onClick={ () => action(rowData, context.routerLocation) }>
+		<a className="plain link cell" onClick={ () => action(rowDataGetter(), context.routerLocation) }>
 			{ getCellContent(cellData) }
 		</a>
 	);
@@ -127,26 +127,32 @@ export const DecimalCell = ({ cellData }) => (
 	</span>
 );
 
-export const FileDownloadCell = ({ cellData, rowData, clickHandlerGetter, userGetter, ...props }) => (
+export const FileDownloadCell = ({ cellData, rowDataGetter, clickHandlerGetter, userGetter, ...props }) => (
 	<TableDownloadMenu 
 		caption={ 
 			<FormattedFile 
-				typeInfo={ rowData.type }
-				onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowData) : null }
+				typeInfo={ rowDataGetter().type }
+				onClick={ !!clickHandlerGetter && clickHandlerGetter(cellData, rowDataGetter) }
 				caption={ cellData }
 			/>
 		} 
-		user={ userGetter(rowData) }
+		user={ userGetter(rowDataGetter()) }
 		linkCaption={ clickHandlerGetter ? false : true }
-		itemInfo={ rowData }
+		itemInfoGetter={ rowDataGetter }
 		{ ...props }
 	/>
 );
 
-export const CheckboxCell = ({ cellData, rowData, onChange, ...props }) => (
+export const CheckboxCell = ({ cellData, rowDataGetter, onChange, ...props }) => (
 	<Checkbox 
-		checked={cellData} 
-		onChange={ (checked) => onChange(checked, rowData) }
+		checked={ cellData } 
+		onChange={ checked => onChange(checked, rowDataGetter()) }
 		{ ...props }
 	/>
 );
+
+CheckboxCell.propTypes = {
+	rowDataGetter: PropTypes.func.isRequired,
+	cellData: PropTypes.bool.isRequired,
+	onChange: PropTypes.func.isRequired,
+};

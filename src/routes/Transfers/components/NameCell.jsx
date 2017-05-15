@@ -14,17 +14,25 @@ const NameCaption = ({ cellData, rowData }) => (
 	</Popup>
 );
 
-const NameCell = ({ cellData, rowData, ...props }) => {
-	if (!cellData) {
-		return null;
+class NameCell extends React.Component {
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.cellData !== this.props.cellData;
 	}
 
-	return (
-		<FormattedFile 
-			typeInfo={ rowData.type }
-			caption={ <NameCaption cellData={ cellData } rowData={ rowData }/> }
-		/>
-	);
-};
+	render() {
+		const { cellData, rowDataGetter } = this.props;
+		if (!cellData) {
+			return null;
+		}
+
+		const rowData = rowDataGetter();
+		return (
+			<FormattedFile 
+				typeInfo={ rowData.type }
+				caption={ <NameCaption cellData={ cellData } rowData={ rowData }/> }
+			/>
+		);
+	}
+}
 
 export default NameCell;

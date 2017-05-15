@@ -20,28 +20,34 @@ const sendPassword = (hub, password, action) => {
 		);
 };
 
+const hasPassword = item => item.has_password;
+const noPassword = item => !hasPassword(item);
+
 const FavoriteHubPasswordActions = Reflux.createActions([
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Set password',
 		access: AccessConstants.FAVORITE_HUBS_EDIT, 
-		icon: IconConstants.LOCK },
-	},
+		icon: IconConstants.LOCK,
+		filter: noPassword,
+	} },
 	{ 'change': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Change password',
 		access: AccessConstants.FAVORITE_HUBS_EDIT, 
-		icon: IconConstants.EDIT },
-	},
+		icon: IconConstants.EDIT,
+		filter: hasPassword,
+	} },
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove password',
 		access: AccessConstants.FAVORITE_HUBS_EDIT, 
-		icon: IconConstants.REMOVE },
-	},
+		icon: IconConstants.REMOVE,
+		filter: hasPassword,
+	} },
 ]);
 
 FavoriteHubPasswordActions.create.listen(function (hub) {

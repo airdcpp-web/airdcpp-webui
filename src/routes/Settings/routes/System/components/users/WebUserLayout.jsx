@@ -29,7 +29,6 @@ const WebUserLayout = React.createClass({
 					cell={
 						<ActionMenuCell 
 							actions={ WebUserActions }
-							ids={[ 'edit', 'remove' ]}
 						/> 
 					}
 					flexGrow={10}

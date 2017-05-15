@@ -45,6 +45,8 @@ const parseNumericId = (params) => {
 	return parseInt(params['id']);
 };
 
+//const hubActions = [ 'reconnect', 'favorite', 'clear' ];
+
 const Hubs = React.createClass({
 	mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
 	render() {
@@ -59,7 +61,7 @@ const Hubs = React.createClass({
 				newIcon="sitemap"
 				editAccess={ AccessConstants.HUBS_EDIT }
 				actions={ HubActions } 
-				actionIds={ [ 'reconnect', 'favorite', 'clear' ] }
+				//actionIds={ hubActions }
 
 				unreadInfoStore={ HubSessionStore }
 				{ ...ItemHandler }

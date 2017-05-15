@@ -10,6 +10,7 @@ import { TableActionMenu } from 'components/menu/DropdownMenu';
 
 import TypeConvert from 'utils/TypeConvert';
 import { TableUserMenu } from 'components/menu/DropdownMenu';
+import { UserFileActions } from 'actions/UserActions';
 import Message from 'components/semantic/Message';
 
 import { LocationContext } from 'mixins/RouterMixin';
@@ -24,35 +25,34 @@ const getUserCaption = (cellData) => {
 	return caption;
 };
 
-const UserCell = ({ cellData, rowData, ...props }) => (
+const UserCell = ({ cellData, rowDataGetter, ...props }) => (
 	<TableUserMenu 
 		text={ getUserCaption(cellData) } 
 		user={ cellData.user }
-		directory={ rowData.path }
+		directory={ rowDataGetter().path }
 		userIcon={ 'simple' }
-		ids={ [ 'browse', 'message' ] }
+		ids={ UserFileActions }
 	>
-		<TableActionMenu 
+		{/*<TableActionMenu 
 			actions={ SearchActions } 
 			ids={ [ 'result' ] } 
-			itemData={ rowData }
-		/>
+			itemDataGetter={ rowDataGetter }
+		/>*/}
 	</TableUserMenu>
 );
 
 const resultUserGetter = rowData => rowData.users.user;
 
-const NameCell = ({ rowData, ...props }) => (
+const NameCell = ({ rowDataGetter, ...props }) => (
 	<FileDownloadCell 
 		handler={ SearchActions.download } 
 		userGetter={ resultUserGetter }
-		rowData={ rowData }
+		rowDataGetter={ rowDataGetter }
 		{ ...props }
 	>
 		<TableActionMenu 
-			actions={ SearchActions } 
-			ids={ [ 'browseContent', 'result' ] } 
-			itemData={ rowData }
+			actions={ SearchActions }
+			itemDataGetter={ rowDataGetter }
 		/>
 	</FileDownloadCell>
 );

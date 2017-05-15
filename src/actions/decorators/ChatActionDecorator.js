@@ -16,7 +16,8 @@ export default function (actions, sessionUrl, editAccess) {
 			access: editAccess,
 			icon: IconConstants.CLEAR },
 		},
-		'activeChatChanged'
+		'activeChatChanged',
+		'divider'
 	]);
 
 	ChatActions.fetchMessages.listen(function (id) {

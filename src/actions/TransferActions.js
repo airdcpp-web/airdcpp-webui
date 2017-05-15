@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
 import QueueActions from 'actions/QueueActions';
+import QueueFileActions from 'actions/QueueFileActions';
 
 import { default as TransferConstants, StatusEnum } from 'constants/TransferConstants';
 import IconConstants from 'constants/IconConstants';
@@ -29,6 +30,7 @@ const TransferActions = Reflux.createActions([
 		access: AccessConstants.TRANSFERS, 
 		icon: IconConstants.DISCONNECT,
 	} },
+	'divider',
 	{ 'removeFile': { 
 		asyncResult: true,
 		displayName: 'Remove file from queue',
@@ -60,9 +62,10 @@ TransferActions.disconnect.listen(function (transfer) {
 });
 
 TransferActions.removeFile.listen(function (transfer) {
-	return QueueActions.removeFile.confirmed({
+	return QueueFileActions.removeFile.confirmed({
 		id: transfer.queue_file_id,
 		target: transfer.target,
+		name: transfer.name,
 	});
 });
 

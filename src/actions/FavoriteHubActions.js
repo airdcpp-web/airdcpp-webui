@@ -13,11 +13,14 @@ import AccessConstants from 'constants/AccessConstants';
 import History from 'utils/History';
 
 
+const noData = item => !item;
+
 export const FavoriteHubActions = Reflux.createActions([
 	{ 'create': {
 		displayName: 'Add new',
 		access: AccessConstants.FAVORITE_HUBS_EDIT,
-		icon: IconConstants.CREATE 
+		icon: IconConstants.CREATE,
+		filter: noData,
 	} },
 	{ 'edit': { 
 		displayName: 'Edit',
@@ -32,8 +35,8 @@ export const FavoriteHubActions = Reflux.createActions([
 		icon: IconConstants.REMOVE,
 	} },
 	{ 'update': { 
-		asyncResult: true },
-	},
+		asyncResult: true
+	} },
 ]);
 
 FavoriteHubActions.create.listen(function (location) {

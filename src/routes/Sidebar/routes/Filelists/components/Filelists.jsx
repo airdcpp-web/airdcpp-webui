@@ -5,7 +5,7 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import FilelistSessionStore from 'stores/FilelistSessionStore';
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
@@ -54,7 +54,7 @@ const Filelists = React.createClass({
 				newIcon="browser" 
 				disableSideMenu={ true }
 				editAccess={ AccessConstants.FILELISTS_EDIT }
-				actions={ FilelistActions }
+				actions={ FilelistSessionActions }
 				unreadInfoStore={ FilelistSessionStore }
 
 				{ ...ItemHandler }

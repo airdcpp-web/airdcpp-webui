@@ -36,7 +36,6 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
 				<ActionMenu 
 					className="widget-menu right top pointing"
 					actions={ WidgetActions }
-					ids={ [ 'edit', 'remove' ] }
 					itemData={{
 						id: componentId,
 						widgetInfo,

@@ -20,7 +20,7 @@ const getStatusClass = (cellData, rowData) => {
 		);
 };
 
-const StatusCell = ({ cellData, rowData, ...props }) => {
+const StatusCell = ({ cellData, rowDataGetter, ...props }) => {
 	if (cellData.id === StatusEnum.WAITING) {
 		return <Loader size="small" inline={ true } text={ cellData.str }/>;
 	}
@@ -29,6 +29,7 @@ const StatusCell = ({ cellData, rowData, ...props }) => {
 		return <span className="error">{ cellData.str }</span>;
 	}
 
+	const rowData = rowDataGetter();
 	let caption = cellData.str;
 	if (rowData.encryption) {
 		caption = (

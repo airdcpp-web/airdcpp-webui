@@ -1,6 +1,7 @@
 import React from 'react';
 
-import FilelistActions from 'actions/FilelistActions';
+import FilelistItemActions from 'actions/FilelistItemActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import TypeConvert from 'utils/TypeConvert';
 import BrowserBar from 'components/browserbar/BrowserBar';
@@ -89,7 +90,7 @@ const ListBrowser = React.createClass({
 	},
 
 	sendChangeDirectory(directory) {
-		FilelistActions.changeDirectory(this.props.session.user.cid, directory);
+		FilelistSessionActions.changeDirectory(this.props.session.user.cid, directory);
 	},
 
 	emptyRowsNodeGetter() {
@@ -123,12 +124,16 @@ const ListBrowser = React.createClass({
 		);
 	},
 
-	onClickDirectory(cellData, rowData) {
-		if (rowData.type.id === 'directory') {
+	onClickDirectory(cellData, rowDataGetter) {
+		if (rowDataGetter().type.id === 'directory') {
 			return () => this._handleClickDirectory(this.props.session.location.path + cellData + '/');
 		}
 
 		return undefined;
+	},
+
+	getCurrentDirectory() {
+		return this.props.session.location;
 	},
 
 	selectedNameFormatter(caption) {
@@ -136,19 +141,22 @@ const ListBrowser = React.createClass({
 			<DownloadMenu 
 				caption={ caption }
 				user={ this.props.session.user }
-				itemInfo={ this.props.session.location }
-				handler={ FilelistActions.download } 
+				itemInfoGetter={ this.getCurrentDirectory }
+				handler={ FilelistItemActions.download } 
 			>
 				<ActionMenu
 					itemData={ {
 						directory: this.props.session.location,
 						session: this.props.session,
 					} }
-					actions={ FilelistActions }
-					ids={ [ 'reloadDirectory', 'refreshShare' ] } 
+					actions={ FilelistItemActions }
 				/>
 			</DownloadMenu>
 		);
+	},
+
+	userGetter() {
+		return this.props.session.user;
 	},
 
 	render() {
@@ -179,8 +187,8 @@ const ListBrowser = React.createClass({
 						cell={
 							<FileDownloadCell 
 								clickHandlerGetter={ this.onClickDirectory }
-								userGetter={ _ => session.user }
-								handler={ FilelistActions.download } 
+								userGetter={ this.userGetter }
+								handler={ FilelistItemActions.download } 
 							/> 
 						}
 						flexGrow={8}

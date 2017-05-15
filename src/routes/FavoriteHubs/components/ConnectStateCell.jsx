@@ -25,14 +25,20 @@ const ConnectStateCell = React.createClass({
 		return '';
 	},
 
+	handleCreateSession() {
+		HubActions.createSession(this.context.routerLocation, this.props.rowDataGetter().hub_url, HubSessionStore);
+	},
+
+	handleRemoveSession() {
+		HubActions.removeSession({ id: this.props.cellData.current_hub_id });
+	},
+
 	getClickAction() {
 		switch (this.props.cellData.id) {
 			case ConnectStateEnum.CONNECTING:
-			case ConnectStateEnum.CONNECTED:
-				return () => HubActions.removeSession({ id: this.props.cellData.current_hub_id });
+			case ConnectStateEnum.CONNECTED: return this.handleRemoveSession;
 			case ConnectStateEnum.DISCONNECTED:
-			default:
-				return () => HubActions.createSession(this.context.routerLocation, this.props.rowData.hub_url, HubSessionStore);
+			default: return this.handleCreateSession;
 		}
 	},
 

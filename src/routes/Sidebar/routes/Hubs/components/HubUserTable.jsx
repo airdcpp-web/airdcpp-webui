@@ -15,10 +15,10 @@ import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
 
 
-const NickCell = ({ cellData, rowData, ...props }) => (
+const NickCell = ({ cellData, rowDataGetter, ...props }) => (
 	<TableUserMenu 
 		text={ cellData } 
-		user={ rowData }
+		user={ rowDataGetter() }
 		userIcon={ true }
 	/>
 );

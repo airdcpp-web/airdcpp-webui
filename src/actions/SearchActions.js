@@ -8,7 +8,7 @@ import IconConstants from 'constants/IconConstants';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import AccessConstants from 'constants/AccessConstants';
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -38,7 +38,7 @@ SearchActions.download.failed.listen((itemData, error) => {
 });
 
 SearchActions.browseContent.listen(function (data, location) {
-	FilelistActions.createSession(location, data.users.user, FilelistSessionStore, data.path);
+	FilelistSessionActions.createSession(location, data.users.user, FilelistSessionStore, data.path);
 });
 
 SearchActions.result.listen(function (data, location) {

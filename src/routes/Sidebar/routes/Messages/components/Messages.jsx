@@ -12,6 +12,9 @@ import AccessConstants from 'constants/AccessConstants';
 import '../style.css';
 
 
+const userActions = [ 'browse', 'ignore', 'unignore' ];
+const sessionActions = [ 'clear' ];
+
 const Messages = React.createClass({
 	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
@@ -28,9 +31,9 @@ const Messages = React.createClass({
 				unreadInfoStore={ PrivateChatSessionStore }
 				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
 				actions={ PrivateChatActions }
-				actionIds={ [ 'clear' ] }
+				actionIds={ sessionActions }
 
-				{ ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
+				{ ...UserItemHandlerDecorator(userActions) }
 				{ ...other }
 			>
 				{ this.props.children }

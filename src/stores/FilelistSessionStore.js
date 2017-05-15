@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import invariant from 'invariant';
 
 import FilelistConstants from 'constants/FilelistConstants';
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
@@ -25,5 +25,5 @@ const FilelistSessionStore = Reflux.createStore({
 	},
 });
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW), FilelistActions)
+export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW), FilelistSessionActions)
 ;

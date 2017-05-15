@@ -15,8 +15,7 @@ const Row = ({ directory }) => (
 		<td>
 			<ActionMenu 
 				caption={ <strong>{ directory.name }</strong> } 
-				actions={ FavoriteDirectoryActions } 
-				ids={ [ 'edit', 'remove' ]} 
+				actions={ FavoriteDirectoryActions }
 				itemData={ directory }
 				contextElement="#setting-scroll-context"
 			/>

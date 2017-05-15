@@ -318,9 +318,9 @@ const SessionLayout = React.createClass({
 			return <div>{ this.props.newCaption }</div>;
 		}
 
-		let ids = [ 'removeSession' ];
+		let ids;
 		if (actionIds) {
-			ids = [ ...actionIds, 'divider', ...ids ];
+			ids = [ ...actionIds, 'removeSession' ];
 		}
 
 		const actionMenu = (

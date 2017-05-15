@@ -34,7 +34,7 @@ const Share = React.createClass({
 						header="Share actions"
 						triggerIcon="chevron up"
 						ids={ [ 'create' ]}
-						button={true}
+						button={ true }
 					>
 						<ActionMenu 
 							actions={ ShareActions }
@@ -50,7 +50,6 @@ const Share = React.createClass({
 					cell={
 						<FileActionCell 
 							actions={ ShareRootActions }
-							ids={[ 'edit', 'remove' ]}
 						/> 
 					}
 					flexGrow={10}

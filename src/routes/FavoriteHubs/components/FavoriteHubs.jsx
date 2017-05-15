@@ -20,12 +20,11 @@ import { LocationContext } from 'mixins/RouterMixin';
 import '../style.css';
 
 
-const PasswordCell = ({ cellData, rowData }) => (
+const PasswordCell = ({ cellData, rowDataGetter }) => (
 	<TableActionMenu 
 		caption={ cellData ? <strong>Set</strong> : 'Not set' } 
 		actions={ FavoriteHubPasswordActions } 
-		ids={ cellData ? [ 'change', 'remove' ] : [ 'create' ] } 
-		itemData={ rowData }
+		itemDataGetter={ rowDataGetter }
 	/>
 );
 
@@ -76,8 +75,7 @@ const FavoriteHubs = React.createClass({
 					flexGrow={6}
 					cell={ 
 						<ActionMenuCell 
-							actions={ FavoriteHubActions } 
-							ids={[ 'edit', 'remove' ]}
+							actions={ FavoriteHubActions }
 						/> 
 					}
 				/>

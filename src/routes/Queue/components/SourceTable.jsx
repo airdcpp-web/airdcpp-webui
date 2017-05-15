@@ -2,7 +2,7 @@ import React from 'react';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
-import QueueActions from 'actions/QueueActions';
+import QueueBundleActions from 'actions/QueueBundleActions';
 import QueueConstants from 'constants/QueueConstants';
 
 import IconConstants from 'constants/IconConstants';
@@ -11,6 +11,7 @@ import Message from 'components/semantic/Message';
 import ValueFormat from 'utils/ValueFormat';
 
 import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
+import { UserFileActions } from 'actions/UserActions';
 
 
 const Source = ({ source, bundle }) => (
@@ -19,11 +20,11 @@ const Source = ({ source, bundle }) => (
 			<UserMenu 
 				userIcon={ true }
 				user={ source.user }
-				ids={ [ 'browse', 'message' ] }
+				ids={ UserFileActions }
 				contextElement=".source.modal"
 			>
 				<ActionMenu 
-					actions={ QueueActions } 
+					actions={ QueueBundleActions } 
 					ids={ [ 'removeBundleSource' ]} 
 					itemData={ {
 						source,

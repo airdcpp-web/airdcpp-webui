@@ -10,28 +10,29 @@ import IconConstants from 'constants/IconConstants';
 import WidgetUtils from 'utils/WidgetUtils';
 
 
-const notAlwaysShow = ({ widgetInfo }) => {
-	return !widgetInfo.alwaysShow;
-};
+const notAlwaysShow = ({ widgetInfo }) => !widgetInfo.alwaysShow;
+const noData = item => !item;
+
 
 const WidgetActions = Reflux.createActions([
 	{ 'create': { 
 		displayName: 'Add widget',
 		children: [ 'saved' ], 
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE,
+		filter: noData,
+	} },
 	{ 'edit': { 
 		displayName: 'Edit widget',
 		children: [ 'saved' ], 
-		icon: IconConstants.EDIT },
-	},
+		icon: IconConstants.EDIT,
+	} },
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove widget',
 		filter: notAlwaysShow,
-		icon: IconConstants.REMOVE },
-	},
+		icon: IconConstants.REMOVE,
+	} },
 ]);
 
 WidgetActions.create.listen(function (widgetInfo, location) {

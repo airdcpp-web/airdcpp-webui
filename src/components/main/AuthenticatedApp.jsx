@@ -20,7 +20,7 @@ import SocketConnectStatus from './SocketConnectStatus';
 
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
@@ -54,7 +54,7 @@ const AuthenticatedApp = React.createClass({
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.FILELISTS_VIEW)) {
-			FilelistActions.fetchSessions();
+			FilelistSessionActions.fetchSessions();
 		}
 
 		if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {

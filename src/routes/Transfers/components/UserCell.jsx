@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TransferActions from 'actions/TransferActions';
+import { UserFileActions } from 'actions/UserActions';
 
 import { TableActionMenu, TableUserMenu } from 'components/menu/DropdownMenu';
 import IconConstants from 'constants/IconConstants';
@@ -13,19 +14,27 @@ const UserCaption = ({ cellData, rowData }) => (
 	</div>
 );
 
-const UserCell = ({ cellData, rowData }) => (
-	<TableUserMenu 
-		user={ cellData }
-		userIcon={ null }
-		ids={ [ 'browse', 'message' ] }
-		text={ <UserCaption rowData={ rowData } cellData={ cellData }/> }
-	>
-		<TableActionMenu 
-			itemData={ rowData }
-			actions={ TransferActions } 
-			ids={ [ 'force', 'disconnect', 'divider', 'removeSource', 'removeFile' ] }
-		/>
-	</TableUserMenu>
-);
+class UserCell extends React.Component {
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.cellData !== this.props.cellData;
+	}
+
+	render() {
+		const { cellData, rowDataGetter } = this.props;
+		return (
+			<TableUserMenu 
+				user={ cellData }
+				userIcon={ null }
+				ids={ UserFileActions }
+				text={ <UserCaption rowData={ rowDataGetter() } cellData={ cellData }/> }
+			>
+				<TableActionMenu 
+					itemDataGetter={ rowDataGetter }
+					actions={ TransferActions } 
+				/>
+			</TableUserMenu>
+		);
+	}
+}
 
 export default UserCell;

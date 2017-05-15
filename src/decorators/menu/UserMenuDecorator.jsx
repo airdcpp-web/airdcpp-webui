@@ -7,37 +7,57 @@ import FileUtils from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
 
+
 export default function (Component) {
-	const UserMenu = ({ text, userIcon, directory, user, className, ...other }) => {
-		let nicks = text;
-		if (!nicks) {
-			nicks = user.nicks ? user.nicks : user.nick;
+	class UserMenu extends React.PureComponent {
+		constructor(props) {
+			super(props);
+
+			this.itemData = {};
+			Object.defineProperty(this.itemData, 'user', {
+				get: () => {
+					return this.props.user;
+				}
+			});
+			Object.defineProperty(this.itemData, 'directory', {
+				get: () => {
+					return FileUtils.getFilePath(this.props.directory);
+				}
+			});
 		}
 
-		let caption = nicks;
-		if (userIcon) {
-			caption = (
-				<div className={ classNames('icon-caption', userIcon) }>
-					{ userIcon === 'simple' ? <i className="blue user icon"/> : <UserIcon size="large" flags={ user.flags }/> }
-					{ nicks }
-				</div>
+		itemDataGetter = () => {
+			return this.itemData;
+		}
+
+		render() {
+			const { text, userIcon, user, className, ...other } = this.props;
+
+			let nicks = text;
+			if (!nicks) {
+				nicks = user.nicks ? user.nicks : user.nick;
+			}
+
+			let caption = nicks;
+			if (userIcon) {
+				caption = (
+					<div className={ classNames('icon-caption', userIcon) }>
+						{ userIcon === 'simple' ? <i className="blue user icon"/> : <UserIcon size="large" flags={ user.flags }/> }
+						{ nicks }
+					</div>
+				);
+			}
+
+			return (
+				<Component 
+					{ ...other }
+					className={ classNames('user-menu', className) }
+					caption={ caption }
+					actions={ UserActions } 
+					itemDataGetter={ this.itemDataGetter }
+				/>
 			);
 		}
-
-		const data = {
-			user: user,
-			directory: FileUtils.getFilePath(directory)
-		};
-
-		return (
-			<Component 
-				{ ...other }
-				className={ classNames('user-menu', className) }
-				caption={ caption } 
-				actions={ UserActions } 
-				itemData={ data }
-			/>
-		);
 	};
 
 	UserMenu.defaultProps = {

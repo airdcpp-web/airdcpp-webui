@@ -2,6 +2,7 @@ import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
 import QueueActions from 'actions/QueueActions';
+import QueueBundleActions from 'actions/QueueBundleActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
@@ -17,11 +18,11 @@ import { LocationContext } from 'mixins/RouterMixin';
 import '../style.css';
 
 
-const PriorityCell = ({ cellData, rowData, ...props }) => (
+const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
 	<PriorityMenu 
 		itemPrio={ cellData } 
-		item={ rowData }
-		prioAction={ QueueActions.setBundlePriority }
+		item={ rowDataGetter() }
+		prioAction={ QueueBundleActions.setBundlePriority }
 	/>
 );
 
@@ -61,8 +62,7 @@ const Queue = React.createClass({
 						actions={ QueueActions }
 						header="Queue actions"
 						triggerIcon="chevron up"
-						ids={ [ 'removeCompleted', 'divider', 'resume', 'pause' ]}
-						button={true}
+						button={ true }
 					/>
 				}
 			>
@@ -73,7 +73,7 @@ const Queue = React.createClass({
 					columnKey="name"
 					cell={ 
 						<FileActionCell 
-							actions={ QueueActions } 
+							actions={ QueueBundleActions } 
 							ids={[ 
 								'content', 'sources', 
 								'divider', 
@@ -98,7 +98,7 @@ const Queue = React.createClass({
 					width={150}
 					columnKey="type"
 					hideWidth={1000}
-					cell={ <ActionLinkCell action={ QueueActions.content }/> }
+					cell={ <ActionLinkCell action={ QueueBundleActions.content }/> }
 				/>
 				<Column
 					name="Status"
@@ -113,7 +113,7 @@ const Queue = React.createClass({
 					columnKey="sources"
 					renderCondition={ this.isActive }
 					flexGrow={1}
-					cell={ <ActionLinkCell action={ QueueActions.sources }/> }
+					cell={ <ActionLinkCell action={ QueueBundleActions.sources }/> }
 				/>
 				<Column
 					name="Time left"

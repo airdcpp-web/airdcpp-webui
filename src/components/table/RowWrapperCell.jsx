@@ -47,6 +47,10 @@ const RowWrapperCell = React.createClass({
 			nextProps.width !== this.props.width;
 	},
 
+	rowDataGetter() {
+		return this.state.rowData;
+	},
+
 	onDataLoaded(data) {
 		this.setState({ rowData: data });
 	},
@@ -72,7 +76,11 @@ const RowWrapperCell = React.createClass({
 			<div className={ 'cell-wrapper ' + className }>
 				{ React.cloneElement(children, {
 					cellData: rowData[columnKey],
-					rowData: rowData,
+
+					// Don't pass the actual row data to allow cells to skip 
+					// re-rendering using shallow equality checks when the row data is 
+					// updated without leaving them with an outdated item data
+					rowDataGetter: this.rowDataGetter,
 					...other,
 				}) }
 			</div>

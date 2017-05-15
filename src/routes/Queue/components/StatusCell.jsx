@@ -17,7 +17,7 @@ const getStatusClass = (cellData, rowData) => {
 		);
 };
 
-const StatusCell = ({ cellData, rowData, ...props }) => {
+const StatusCell = ({ cellData, rowDataGetter, ...props }) => {
 	if (cellData.failed) {
 		// There isn't much space for other information
 		return (
@@ -27,6 +27,7 @@ const StatusCell = ({ cellData, rowData, ...props }) => {
 		);
 	}
 
+	const rowData = rowDataGetter();
 	return (
 		<Progress 
 			className={ getStatusClass(cellData, rowData) }

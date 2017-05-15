@@ -10,24 +10,28 @@ import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
+
+const noData = item => !item;
+
 const ShareRootActions = Reflux.createActions([
 	{ 'create': { 
 		displayName: 'Add directory',
 		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE,
+		filter: noData,
+	} },
 	{ 'edit': { 
 		displayName: 'Edit directory',
 		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.EDIT },
-	},
+		icon: IconConstants.EDIT,
+	} },
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove directory',
 		access: AccessConstants.SETTINGS_EDIT,
-		icon: IconConstants.REMOVE },
-	},
+		icon: IconConstants.REMOVE,
+	} },
 ]);
 
 ShareRootActions.create.listen(function (data, location) {

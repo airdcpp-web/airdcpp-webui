@@ -6,7 +6,7 @@ import SocketService from 'services/SocketService';
 import InputDialog from 'components/semantic/InputDialog';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -15,40 +15,46 @@ import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
 
+const notDefault = item => !item.default;
+const noData = item => !item;
+
 const ShareProfileActions = Reflux.createActions([
 	{ 'create': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Add profile',
 		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE,
+		filter: noData,
+	} },
+	{ 'browse': { 
+		asyncResult: true, 
+		displayName: 'Browse files', 
+		access: AccessConstants.FILELISTS_VIEW, 
+		icon: IconConstants.FILELIST,
+	} },
+	'divider',
 	{ 'edit': { 
 		asyncResult: true, 
 		children: [ 'saved' ], 
 		displayName: 'Rename profile',
 		access: AccessConstants.SETTINGS_EDIT,  
-		icon: IconConstants.EDIT },
-	},
+		icon: IconConstants.EDIT,
+	} },
 	{ 'default': { 
 		asyncResult: true, 
 		displayName: 'Set as default', 
 		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.DEFAULT },
-	},
+		icon: IconConstants.DEFAULT,
+		filter: notDefault,
+	} },
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove profile', 
 		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.REMOVE },
-	},	
-	{ 'browse': { 
-		asyncResult: true, 
-		displayName: 'Browse files', 
-		access: AccessConstants.FILELISTS_VIEW, 
-		icon: IconConstants.FILELIST },
-	},
+		icon: IconConstants.REMOVE,
+	} },
 ]);
 
 ShareProfileActions.create.listen(function () {
@@ -130,7 +136,7 @@ ShareProfileActions.remove.confirmed.listen(function (profile) {
 });
 
 ShareProfileActions.browse.listen(function (profile, location) {
-	return FilelistActions.ownList(location, profile.id, FilelistSessionStore);
+	return FilelistSessionActions.ownList(location, profile.id, FilelistSessionStore);
 });
 
 export default ShareProfileActions;

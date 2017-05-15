@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { actionFilter, actionAccess } from 'utils/ActionUtils';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 
 // Returns true if the provided ID matches the specified filter
@@ -16,7 +17,7 @@ const filterItem = (props, filter, actionId) => {
 		return true;
 	}
 
-	return filter(action, props.itemData);
+	return filter(action, props.itemDataGetter ? props.itemDataGetter() : props.itemData);
 };
 
 // Get IDs matching the provided filter
@@ -50,7 +51,9 @@ const filterExtraDividers = (ids) => {
 const parseMenu = (props, hasPreviousMenuItems) => {
 	let { ids } = props;
 	if (!ids) {
-		ids = Object.keys(props.actions);
+		ids = Object.keys(props.actions).filter(id => {
+			return id === 'divider' || props.actions[id].displayName;
+		});
 	}
 
 	// Only return a single error for each menu
@@ -75,23 +78,48 @@ const parseMenu = (props, hasPreviousMenuItems) => {
 
 	return {
 		actionIds: ids,
-		itemData: props.itemData,
+		itemDataGetter: props.itemDataGetter ? props.itemDataGetter : _ => props.itemData,
 		actions: props.actions,
 	};
 };
 
-// This should be used only for constructed menus, not for id arrays
-const notError = (id) => typeof id !== 'string';
+// Convert ID to menu link element
+const getMenuItem = (menu, menuIndex, actionId, itemIndex, routerLocation) => {
+	if (actionId === 'divider') {
+		return <div key={ 'divider' + menuIndex + '_' + itemIndex } className="ui divider"/>;
+	}
 
+	// A custom element
+	if (typeof actionId !== 'string') {
+		return actionId;
+	}
+
+	const action = menu.actions[actionId];
+	return (
+		<MenuItemLink 
+			key={ actionId } 
+			onClick={ () => action(menu.itemDataGetter(), routerLocation) }
+			icon={ action.icon }
+		>
+			{ action.displayName }
+		</MenuItemLink>
+	);
+};
+
+// This should be used only for constructed menus, not for id arrays
+const notError = id => typeof id !== 'string';
 
 export default function (Component) {
 	const ActionMenu = React.createClass({
+		mixins: [ PureRenderMixin ],
 		propTypes: {
 
 			/**
 			 * Item to be passed to the actions
 			 */
 			itemData: PropTypes.any,
+
+			itemDataGetter: PropTypes.func,
 
 			/**
 			 * Menu item actions
@@ -107,42 +135,19 @@ export default function (Component) {
 			 * Use button style for the trigger
 			 */
 			button: PropTypes.bool,
+
+			caption: PropTypes.node,
 		},
 
 		contextTypes: {
 			routerLocation: PropTypes.object.isRequired,
 		},
 
-		shouldComponentUpdate: function (nextProps, nextState) {
-			return nextProps.itemData !== this.props.itemData;
-		},
-
-		// Convert ID to menu link element
-		getItem(menu, menuIndex, actionId, itemIndex) {
-			if (actionId === 'divider') {
-				return <div key={ 'divider' + menuIndex + '_' + itemIndex } className="ui divider"/>;
-			}
-
-			// A custom element
-			if (typeof actionId !== 'string') {
-				return actionId;
-			}
-
-			const action = menu.actions[actionId];
-			return (
-				<MenuItemLink 
-					key={ actionId } 
-					onClick={ () => action(menu.itemData, this.context.routerLocation) }
-					icon={ action.icon }
-				>
-					{ action.displayName }
-				</MenuItemLink>
-			);
-		},
-
 		// Reduce menus to an array of DropdownItems
-		reduceMenus(items, menu, index) {
-			items.push(...menu.actionIds.map(this.getItem.bind(this, menu, index)));
+		reduceMenus(items, menu, menuIndex) {
+			items.push(...menu.actionIds.map((actionId, actionIndex) => {
+				return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.routerLocation);
+			}));
 			return items;
 		},
 

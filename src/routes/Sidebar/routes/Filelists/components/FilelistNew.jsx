@@ -3,7 +3,7 @@ import React from 'react';
 import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import ShareProfileSelector from './ShareProfileSelector';
@@ -12,11 +12,11 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 const FilelistNew = React.createClass({
 	handleSubmit(nick, user) {
-		FilelistActions.createSession(this.props.location, user, FilelistSessionStore);
+		FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
 	},
 
 	onProfileChanged(profileId) {
-		FilelistActions.ownList(this.props.location, profileId, FilelistSessionStore);
+		FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
 	},
 
 	recentUserRender(entry) {

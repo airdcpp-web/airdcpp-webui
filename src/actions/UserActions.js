@@ -2,7 +2,7 @@
 import Reflux from 'reflux';
 
 import PrivateChatActions from 'actions/PrivateChatActions';
-import FilelistActions from 'actions/FilelistActions';
+import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
@@ -28,20 +28,22 @@ const checkUnignore = ({ user }) => {
 	return user.flags.indexOf('ignored') !== -1;
 };
 
-export const UserActions = Reflux.createActions([
+export const UserFileActions = [ 'message', 'browse' ];
+
+const UserActions = Reflux.createActions([
 	 { 'message': { 
 		asyncResult: true, 
 		displayName: 'Send message', 
 		access: AccessConstants.PRIVATE_CHAT_EDIT, 
 		filter: checkFlags,
-		icon: IconConstants.MESSAGE
+		icon: IconConstants.MESSAGE,
 	} },
 	{ 'browse': { 
 		asyncResult: true,	
 		displayName: 'Browse share', 
 		access: AccessConstants.FILELISTS_EDIT, 
 		filter: checkFlags,
-		icon: IconConstants.FILELIST
+		icon: IconConstants.FILELIST,
 	} },
 	'divider',
 	{ 'ignore': { 
@@ -65,7 +67,7 @@ UserActions.message.listen(function (userData, location) {
 });
 
 UserActions.browse.listen(function (userData, location) {
-	FilelistActions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
+	FilelistSessionActions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
 });
 
 UserActions.ignore.listen(function (userData, location) {
@@ -84,15 +86,17 @@ UserActions.unignore.listen(function (userData, location) {
 
 UserActions.ignore.completed.listen(function (userData) {
 	NotificationActions.info({ 
-		title: userData.user.nick ? userData.user.nick : userData.user.nicks + ' was added in ignored users',
+		title: userData.user.nick ? userData.user.nick : userData.user.nicks,
 		uid: userData.user.cid,
+		message: 'User was added in ignored users',
 	});
 });
 
 UserActions.unignore.completed.listen(function (userData) {
 	NotificationActions.info({ 
-		title: userData.user.nick ? userData.user.nick : userData.user.nicks + ' was removed from ignored users',
+		title: userData.user.nick ? userData.user.nick : userData.user.nicks,
 		uid: userData.user.cid,
+		message: 'User was removed from ignored users',
 	});
 });
 

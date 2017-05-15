@@ -13,27 +13,27 @@ import IconConstants from 'constants/IconConstants';
 
 import LoginStore from 'stores/LoginStore';
 
-const isOther = (user) => {
-	return user.id !== LoginStore.user.id;
-};
+const isOther = user => user.id !== LoginStore.user.id;
+const noData = data => !data;
+
 
 const WebUserActions = Reflux.createActions([
 	{ 'create': { 
 		displayName: 'Add user',
-		icon: IconConstants.CREATE },
-	},
+		icon: IconConstants.CREATE,
+		filter: noData,
+	} },
 	{ 'edit': { 
-		displayName: 'Edit user', 
-		//filter: isOther,
-		icon: IconConstants.EDIT },
-	},
+		displayName: 'Edit user',
+		icon: IconConstants.EDIT,
+	} },
 	{ 'remove': { 
 		asyncResult: true, 
 		children: [ 'confirmed' ], 
 		displayName: 'Remove user', 
 		filter: isOther,
-		icon: IconConstants.REMOVE },
-	},
+		icon: IconConstants.REMOVE,
+	} },
 ]);
 
 WebUserActions.create.listen(function (location) {

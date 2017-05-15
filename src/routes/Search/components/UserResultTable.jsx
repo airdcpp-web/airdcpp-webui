@@ -9,6 +9,7 @@ import Message from 'components/semantic/Message';
 import SearchConstants from 'constants/SearchConstants';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
+import { UserFileActions } from 'actions/UserActions';
 
 
 const UserResult = ({ result }) => (
@@ -18,7 +19,7 @@ const UserResult = ({ result }) => (
 				userIcon={ true }
 				user={ result.user }
 				directory={ result.path }
-				ids={ [ 'browse', 'message' ] }
+				ids={ UserFileActions }
 				contextElement=".result.modal"
 			/>
 		</td>

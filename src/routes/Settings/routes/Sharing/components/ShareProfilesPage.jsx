@@ -21,7 +21,6 @@ const Row = ({ profile }) => (
 			<ActionMenu 
 				caption={ <strong>{ profile.str }</strong> } 
 				actions={ ShareProfileActions } 
-				ids={ profile.default ? [ 'browse', 'divider', 'edit', 'remove' ] : [ 'browse', 'divider', 'edit', 'default', 'remove' ]} 
 				itemData={ profile }
 				contextElement="#setting-scroll-context"
 			/>

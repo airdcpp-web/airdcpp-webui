@@ -1,7 +1,7 @@
 import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueActions from 'actions/QueueActions';
+import QueueFileActions from 'actions/QueueFileActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from './PriorityMenu';
@@ -15,11 +15,11 @@ import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'co
 import '../style.css';
 
 
-const PriorityCell = ({ cellData, rowData, ...props }) => (
+const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
 	<PriorityMenu 
 		itemPrio={ cellData } 
-		item={ rowData }
-		prioAction={ QueueActions.setFilePriority }
+		item={ rowDataGetter() }
+		prioAction={ QueueFileActions.setFilePriority }
 	/>
 );
 
@@ -49,12 +49,7 @@ const BundleFileTable = React.createClass({
 					columnKey="name"
 					cell={ 
 						<FileActionCell 
-							actions={ QueueActions } 
-							ids={[ 
-								'search', 'searchFileAlternates', 
-								'divider',
-								'removeFile' 
-							]}
+							actions={ QueueFileActions }
 						/> 
 					}
 				/>
