@@ -58,7 +58,7 @@
     "eslint-plugin-react": "^7.0.0",
     "express": "^4.13.3",
     "file-loader": "^0.11.0",
-    "fixed-data-table-2": "0.7.15",
+    "fixed-data-table-2": "^0.7.17",
     "history": "^3.0.0",
     "html-webpack-plugin": "^2.22.0",
     "http-proxy": "^1.12.0",
