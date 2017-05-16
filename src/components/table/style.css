@@ -93,6 +93,9 @@
 
 	/* The table won't shrink properly without this */
 	height: calc(100% - 50px);
+
+	/* https://developers.google.com/web/updates/2017/01/scrolling-intervention */
+	touch-action: none;
 }
 
 .public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
