@@ -94,6 +94,15 @@ const Popup = React.createClass({
 		settings['position'] = position;
 	},
 
+	getContent() {
+		const { children } = this.props;
+		if (typeof children === 'function') {
+			return children();
+		}
+
+		return children;
+	},
+
 	show: function () {
 		if (this.node) {
 			return;
@@ -101,7 +110,7 @@ const Popup = React.createClass({
 
 		this.createPortal();
 
-		let { children } = this.props;
+		let children = this.getContent();
 		if (typeof children.type !== 'string') {
 			children = React.cloneElement(children, {
 				hide: this.hide,

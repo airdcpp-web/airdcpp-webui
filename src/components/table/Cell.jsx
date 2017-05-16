@@ -152,7 +152,7 @@ export const CheckboxCell = ({ cellData, rowDataGetter, onChange, ...props }) =>
 );
 
 CheckboxCell.propTypes = {
-	rowDataGetter: PropTypes.func.isRequired,
-	cellData: PropTypes.bool.isRequired,
+	rowDataGetter: PropTypes.func, // REQUIRED
+	cellData: PropTypes.bool, // REQUIRED
 	onChange: PropTypes.func.isRequired,
 };

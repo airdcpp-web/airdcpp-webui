@@ -51,6 +51,22 @@ const PriorityMenu = React.createClass({
 		);
 	},
 
+	getChildren() {
+		let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
+		children.push(<div key="divider" className="ui divider"/>);
+		children.push(
+			<MenuItemLink 
+				key="auto"
+				active={ this.props.itemPrio.auto } 
+				onClick={ this.setAutoPriority }
+			>
+				Auto
+			</MenuItemLink>
+		);
+
+		return children;
+	},
+
 	render: function () {
 		let caption = this.props.itemPrio.str;
 		if (this.props.itemPrio.auto) {
@@ -65,21 +81,12 @@ const PriorityMenu = React.createClass({
 			);
 		}
 
-		let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
-		children.push(<div key="divider" className="ui divider"/>);
-		children.push(
-			<MenuItemLink 
-				key="auto"
-				active={ this.props.itemPrio.auto } 
-				onClick={ this.setAutoPriority }
-			>
-				Auto
-			</MenuItemLink>
-		);
-
 		return (
-			<TableDropdown caption={ caption } className="priority-menu">
-				{ children }
+			<TableDropdown 
+				caption={ caption } 
+				className="priority-menu"
+			>
+				{ this.getChildren }
 			</TableDropdown>
 		);
 	}

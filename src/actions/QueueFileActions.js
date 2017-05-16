@@ -63,23 +63,22 @@ QueueFileActions.removeFile.shouldEmit = function (file) {
 
 QueueFileActions.removeFile.confirmed.listen(function (item, removeFinished) {
 	const that = this;
-	const { target, id } = item;
-	return SocketService.post(QueueConstants.FILES_URL + '/' + id + '/remove', {
+	return SocketService.post(QueueConstants.FILES_URL + '/' + item.id + '/remove', {
 		remove_finished: removeFinished,
 	})
-		.then(QueueFileActions.removeFile.completed.bind(that, target))
-		.catch(QueueFileActions.removeFile.failed.bind(that, target));
+		.then(QueueFileActions.removeFile.completed.bind(that, item))
+		.catch(QueueFileActions.removeFile.failed.bind(that, item));
 });
 
-QueueFileActions.removeFile.completed.listen(function (target, data) {
+QueueFileActions.removeFile.completed.listen(function ({ name }, data) {
 	NotificationActions.success({ 
-		title: 'Queued file removed',
-		message: 'The file ' + target + ' was removed from queue',
+		title: name,
+		message: 'File was removed from queue',
 	});
 });
 
-QueueFileActions.removeFile.failed.listen(function (target, error) {
-	NotificationActions.apiError('Failed to remove ' + target, error);
+QueueFileActions.removeFile.failed.listen(function ({ name }, error) {
+	NotificationActions.apiError(name, error);
 });
 
 QueueFileActions.searchFileAlternates.listen(function (file) {

@@ -144,14 +144,14 @@ export default function (Component) {
 		},
 
 		// Reduce menus to an array of DropdownItems
-		reduceMenus(items, menu, menuIndex) {
+		reduceMenuItems(items, menu, menuIndex) {
 			items.push(...menu.actionIds.map((actionId, actionIndex) => {
 				return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.routerLocation);
 			}));
 			return items;
 		},
 
-		render() {
+		getMenus() {
 			let { ids, actions, children, ...other } = this.props; // eslint-disable-line
 
 			const menus = [ parseMenu(this.props) ];
@@ -160,6 +160,21 @@ export default function (Component) {
 					menus.push(parseMenu(child.props, notError(menus[0])));
 				});
 			}
+
+			return menus;
+		},
+
+		getChildren() {
+			const menus = this.getMenus();
+			return menus
+						.filter(notError)
+						.reduce(this.reduceMenuItems, []);
+		},
+
+		render() {
+			let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props; // eslint-disable-line
+
+			const menus = this.getMenus();
 
 			// Are there any items to show?
 			if (!menus.some(notError)) {
@@ -182,11 +197,8 @@ export default function (Component) {
 			}
 
 			return (
-				<Component {...other}>
-					{ menus
-						.filter(notError)
-						.reduce(this.reduceMenus, []) 
-					}
+				<Component { ...other }>
+					{ this.getChildren }
 				</Component>
 			);
 		},

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import Popup from './Popup';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+//import PureRenderMixin from 'react-addons-pure-render-mixin';
 import DropdownCaption from './DropdownCaption';
 
 
@@ -25,6 +25,8 @@ const TableDropdown = React.createClass({
 		 * Trigger the dropdown when clicking on the caption
 		 */
 		linkCaption: PropTypes.bool,
+
+		children: PropTypes.func.isRequired,
 	},
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -51,6 +53,16 @@ const TableDropdown = React.createClass({
 				elem.props.onClick();
 			} 
 		});
+	},
+
+	getChildren() {
+		return (
+			<div className="ui text menu vertical">
+				<div className="ui dropdown item table-items">
+					{ this.props.children().map(this.addCloseHandler) }
+				</div>
+			</div>
+		);
 	},
 
 	render: function () {
@@ -82,11 +94,7 @@ const TableDropdown = React.createClass({
 					settings={ settings } 
 					position="bottom left"
 				>
-					<div className="ui text menu vertical">
-						<div className="ui dropdown item table-items">
-							{ this.props.children.map(this.addCloseHandler) }
-						</div>
-					</div>
+					{ this.getChildren }
 				</Popup>
 				{ this.props.linkCaption ? null : caption }
 			</div>);

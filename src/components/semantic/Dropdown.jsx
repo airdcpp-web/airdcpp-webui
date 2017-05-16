@@ -52,16 +52,41 @@ const Dropdown = React.createClass({
 		settings: PropTypes.object,
 	},
 
+	getInitialState() {
+		return {
+			visible: false,
+		};
+	},
+
 	componentDidMount() {
 		// Use timeout to allow all parents finish mounting (otherwise we get no context)
 		setTimeout(this.init);
 	},
 
+	onShow() {
+		this.setState({
+			visible: true,
+		});
+	},
+
+	onHide() {
+		this.setState({
+			visible: false,
+		});
+	},
+
+	hide() {
+		// Don't hide before the click event is processed by React
+		setTimeout(_ => $(this.c).dropdown('hide'));
+	},
+
 	init() {
 		const settings = {
 			direction: this.props.direction,
-			action: 'hide',
+			action: this.hide,
 			showOnFocus: false, // It can become focused when opening a modal
+			onShow: this.onShow,
+			onHide: this.onHide,
 			...this.props.settings,
 			//debug: true,
 			//verbose: true,
@@ -80,6 +105,20 @@ const Dropdown = React.createClass({
 			triggerIcon: 'angle down',
 			direction: 'auto',
 		};
+	},
+
+	getMenuItems() {
+		if (!this.state.visible) {
+			// The menu wouldn't load otherwise
+			return <div className="item"/>;
+		}
+
+		const { children } = this.props;
+		if (typeof children === 'function') {
+			return children();
+		}
+
+		return children;
 	},
 
 	render: function () {
@@ -112,7 +151,7 @@ const Dropdown = React.createClass({
 							{ header }
 						</div>
 					) }
-					{ this.props.children }
+					{ this.getMenuItems() }
 				</div>
 			</div>
 		);
