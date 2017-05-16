@@ -320,7 +320,7 @@ const SessionLayout = React.createClass({
 
 		let ids;
 		if (actionIds) {
-			ids = [ ...actionIds, 'removeSession' ];
+			ids = [ ...actionIds, 'divider', 'removeSession' ];
 		}
 
 		const actionMenu = (

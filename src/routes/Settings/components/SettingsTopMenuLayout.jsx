@@ -27,8 +27,8 @@ const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
 
 			<Dropdown className="selection fluid" caption={ currentMenuItem.title }>
 			 	{ menuItems }
-				<div className="ui divider" style={advancedMenuStyle}/>
-				<div className="header" style={advancedMenuStyle}>Advanced</div>
+				<div className="ui divider" style={ advancedMenuStyle }/>
+				<div className="header" style={ advancedMenuStyle }>Advanced</div>
 				{ advancedMenuItems }
 			</Dropdown>
 		</div>

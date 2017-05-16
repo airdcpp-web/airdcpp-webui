@@ -58,6 +58,10 @@ section#container-main,
 	flex-shrink: 0;
 }
 
+.ui.dropdown .menu .header {
+	display: flex;
+}
+
 .divided.list .item .description {
 	font-size: 90%;
 }

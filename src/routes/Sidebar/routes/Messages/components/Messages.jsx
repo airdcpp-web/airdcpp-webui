@@ -12,7 +12,6 @@ import AccessConstants from 'constants/AccessConstants';
 import '../style.css';
 
 
-const userActions = [ 'browse', 'ignore', 'unignore' ];
 const sessionActions = [ 'clear' ];
 
 const Messages = React.createClass({
@@ -33,7 +32,7 @@ const Messages = React.createClass({
 				actions={ PrivateChatActions }
 				actionIds={ sessionActions }
 
-				{ ...UserItemHandlerDecorator(userActions) }
+				{ ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
 				{ ...other }
 			>
 				{ this.props.children }

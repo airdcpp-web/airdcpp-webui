@@ -48,7 +48,7 @@ const ShareProfileFilter = React.createClass({
 				className="top right pointing" 
 				caption={ this.state.selectedProfile.str } 
 				triggerIcon="filter" 
-				button={true}
+				button={ true }
 			>
 				<div className="header">
 					<i className="filter icon"/>

@@ -11,18 +11,12 @@ import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
 import AccessConstants from 'constants/AccessConstants';
-import IconConstants from 'constants/IconConstants';
 
 
 const FilelistSessionActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
 	{ 'changeDirectory': { asyncResult: true } },
-	{ 'ownList': { 
-		asyncResult: true,
-		displayName: 'Browse files',
-		access: AccessConstants.FILELISTS_VIEW,
-		icon: IconConstants.OPEN,
-	} },
+	{ 'ownList': { asyncResult: true } },
 	{ 'setRead': { asyncResult: true } },
 ]);
 

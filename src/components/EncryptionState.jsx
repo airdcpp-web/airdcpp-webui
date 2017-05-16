@@ -42,29 +42,39 @@ const InfoMessage = ({ info, encryption }) => (
 	</div>
 );
 
-const EncryptionState = ({ encryption, alwaysVisible, boundary }) => {
-	if (!encryption) {
-		return alwaysVisible ? <i className="grey lock icon"/> : null;
+class EncryptionState extends React.PureComponent {
+	getChildren = () => {
+		const { encryption } = this.props;
+
+		const info = encryptionToInfo(encryption);
+		return <InfoMessage info={ info } encryption={ encryption }/>;
 	}
 
-	const info = encryptionToInfo(encryption);
-	return (
-		<Popup 
-			triggerClassName="encryption" 
-			className="basic encryption content" 
-			trigger={ 
-				<i className="link icon icons">
-					<i className={ info.iconColor + ' lock icon' }/>
-					<i className={ info.icon + ' corner icon' }/>
-				</i>
-			}
-			settings={ {
-				boundary,
-			} }
-		>
-			<InfoMessage info={ info } encryption={ encryption }/>
-		</Popup>
-	);
+	render() {
+		const { encryption, alwaysVisible, boundary } = this.props;
+		if (!encryption) {
+			return alwaysVisible ? <i className="grey lock icon"/> : null;
+		}
+
+		const info = encryptionToInfo(encryption);
+		return (
+			<Popup 
+				triggerClassName="encryption" 
+				className="basic encryption content" 
+				trigger={ 
+					<i className="link icon icons">
+						<i className={ info.iconColor + ' lock icon' }/>
+						<i className={ info.icon + ' corner icon' }/>
+					</i>
+				}
+				settings={ {
+					boundary,
+				} }
+			>
+				{ this.getChildren }
+			</Popup>
+		);
+	}
 };
 
 EncryptionState.propTypes = {
