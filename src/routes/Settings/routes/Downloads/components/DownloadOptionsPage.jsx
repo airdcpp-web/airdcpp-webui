@@ -7,6 +7,7 @@ const Entry = [
 	'new_segment_min_speed',
 	'allow_slow_overlap',
 	'finished_remove_exit',
+	'use_partial_sharing',
 ];
 
 const DownloadOptionsPage = props => (

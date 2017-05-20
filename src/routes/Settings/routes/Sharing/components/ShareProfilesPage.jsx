@@ -49,11 +49,18 @@ const ShareProfilesPage = React.createClass({
 		return (
 			<div>
 				<Message 
-					description={ 
-						<span>
-							Share profiles are configured for individual directories from the <Link to="/share">Share</Link> page.
-						</span>
+					description={
+						<div>
+							<p>
+								Queued files are shared via the partial file sharing feature in all hubs where the share 
+								has not been hidden, regardless of the configured share profiles.
+							</p>
+							<p>
+								Share profiles are assigned for individual directories from the <Link to="/share">Share</Link> page.
+							</p>
+						</div>
 					}
+					icon="blue info"
 				/>
 				<ActionButton
 					action={ ShareProfileActions.create }
