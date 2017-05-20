@@ -54,6 +54,7 @@ const ShareProfileActions = Reflux.createActions([
 		displayName: 'Remove profile', 
 		access: AccessConstants.SETTINGS_EDIT, 
 		icon: IconConstants.REMOVE,
+		filter: notDefault,
 	} },
 ]);
 
