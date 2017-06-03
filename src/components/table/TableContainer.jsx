@@ -162,7 +162,8 @@ const TableContainer = React.createClass({
 		});
 	},
 
-	onMeasure({ width, height }) {
+	onResize(contentRect) {
+		const { width, height } = contentRect.entry;
 		this.setState({
 			width,
 			height,
@@ -174,26 +175,31 @@ const TableContainer = React.createClass({
 		const children = React.Children.map(this.props.children, this.convertColumn);
 
 		return (
-			<Measure onMeasure={ this.onMeasure }>
-				<div className="table-container-wrapper">
-					<Table
-						width={ this.state.width }
-						height={ this.state.height } 
+			<Measure 
+				bounds={ true }
+				onResize={ this.onResize }
+			>
+				{ ({ measureRef }) => (
+					<div ref={ measureRef } className="table-container-wrapper">
+						<Table
+							width={ this.state.width }
+							height={ this.state.height } 
 
-						rowHeight={ 50 }
-						rowsCount={ this.props.store.rowCount }
-						headerHeight={ 50 }
-						isColumnResizing={ this.isColumnResizing }
-						onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
+							rowHeight={ 50 }
+							rowsCount={ this.props.store.rowCount }
+							headerHeight={ 50 }
+							isColumnResizing={ this.isColumnResizing }
+							onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
 
-						touchScrollEnabled={ true }
+							touchScrollEnabled={ true }
 
-						onScrollStart={ this._onScrollStart }
-						onScrollEnd={ this._onScrollEnd }
-					>
-						{ children }
-					</Table>
-				</div>
+							onScrollStart={ this._onScrollStart }
+							onScrollEnd={ this._onScrollEnd }
+						>
+							{ children }
+						</Table>
+					</div>
+				) }
 			</Measure>
 		);
 	}
