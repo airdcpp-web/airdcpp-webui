@@ -11,7 +11,7 @@ import SocketService from 'services/SocketService';
 
 import TransferConstants from 'constants/TransferConstants';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Measure from 'react-measure';
+import { withContentRect } from 'react-measure';
 
 import '../style.css';
 
@@ -36,7 +36,7 @@ const addSpeed = (points, down, up) => {
 	return ret;
 };
 
-const Transfers = React.createClass({
+const Transfers = withContentRect('bounds')(React.createClass({
 	mixins: [ SocketSubscriptionMixin(), PureRenderMixin ],
 	getInitialState() {
 		return {
@@ -94,6 +94,7 @@ const Transfers = React.createClass({
 	},
 
 	render() {
+		const { measureRef, contentRect } = this.props;
 		const { points, maxDownload, maxUpload, stats } = this.state;
 		if (!stats) {
 			return <Loader inline={ true }/>;
@@ -107,24 +108,20 @@ const Transfers = React.createClass({
 
 		const trafficSeries = new TimeSeries(data);
 		return (
-			<Measure whitelist={ [ 'width' ] }>
-				{ dimensions => (
-					<div className="transfers-container">
-						<SpeedChart
-							trafficSeries={ trafficSeries }
-							maxDownload={ maxDownload }
-							maxUpload={ maxUpload }
-						/>
-						{ dimensions.width >= 300 && (
-							<StatColumn
-								stats={ stats }
-							/>
-						) }
-					</div>
+			<div ref={ measureRef } className="transfers-container">
+				<SpeedChart
+					trafficSeries={ trafficSeries }
+					maxDownload={ maxDownload }
+					maxUpload={ maxUpload }
+				/>
+				{ contentRect.bounds.width >= 300 && (
+					<StatColumn
+						stats={ stats }
+					/>
 				) }
-			</Measure>
+			</div>
 		);
 	}
-});
+}));
 
 export default Transfers;

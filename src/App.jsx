@@ -96,9 +96,11 @@ const getBackgroundImage = () => {
 
 
 const App = _ => (
-	<Measure>
-		{ _ => (
-			<div id="background-wrapper" 
+	<Measure
+		bounds={ true }
+	>
+		{ ({ measureRef }) => (
+			<div ref={ measureRef } id="background-wrapper" 
 				style={{
 				 backgroundImage: 'url(' + getBackgroundImage() + ')',
 				 height: '100%',

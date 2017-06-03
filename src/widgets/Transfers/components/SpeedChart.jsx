@@ -3,7 +3,7 @@ import React from 'react';
 import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler } from 'react-timeseries-charts';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Measure from 'react-measure';
+import { withContentRect } from 'react-measure';
 
 
 const upDownStyler = styler([
@@ -16,44 +16,40 @@ const upDownStyler = styler([
 	}
 ]);
 
-const SpeedChart = React.createClass({
+const SpeedChart = withContentRect('bounds')(React.createClass({
 	mixins: [ PureRenderMixin ],
 	render() {
-		const { trafficSeries, maxDownload, maxUpload } = this.props;
+		const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect } = this.props;
 		return (
-			<Measure>
-				{ dimensions => (
-					<div className="graph">
-						<ChartContainer 
-							timeRange={ trafficSeries.timerange() } 
-							width={ dimensions.width }
-						>
-							<ChartRow 
-								height={ dimensions.height - 25 }
-							>
-								<Charts>
-									<AreaChart
-										axis="traffic"
-										series={ trafficSeries }
-										columns={{ up: [ 'in' ], down: [ 'out' ] }}
-										style={ upDownStyler }
-									/>
-								</Charts>
-								<YAxis
-									id="traffic"
-									label="Traffic (bps)"
-									min={ -maxUpload } max={ maxDownload }
-									absolute={true}
-									width="60"
-									type="linear"
-								/>
-							</ChartRow>
-						</ChartContainer>
-					</div>
-				) }
-			</Measure>
+			<div ref={ measureRef } className="graph">
+				<ChartContainer 
+					timeRange={ trafficSeries.timerange() } 
+					width={ contentRect.bounds.width }
+				>
+					<ChartRow 
+						height={ contentRect.bounds.height - 25 }
+					>
+						<Charts>
+							<AreaChart
+								axis="traffic"
+								series={ trafficSeries }
+								columns={{ up: [ 'in' ], down: [ 'out' ] }}
+								style={ upDownStyler }
+							/>
+						</Charts>
+						<YAxis
+							id="traffic"
+							label="Traffic (bps)"
+							min={ -maxUpload } max={ maxDownload }
+							absolute={true}
+							width="60"
+							type="linear"
+						/>
+					</ChartRow>
+				</ChartContainer>
+			</div>
 		);
 	}
-});
+}));
 
 export default SpeedChart;
