@@ -31,11 +31,16 @@
 
 .chat.session .composer .send.button {
 	border-radius: 0 .28571429rem .28571429rem 0;
+	width: 45px;
 }
 
 .chat.session .composer.large .send.button i {
 	vertical-align: -webkit-baseline-middle !important;
 	vertical-align: -moz-middle-with-baseline !important;
+}
+
+.chat.session .composer > .input {
+	width: calc(100% - 45px);
 }
 
 

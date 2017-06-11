@@ -5,9 +5,43 @@ import classNames from 'classnames';
 
 import BrowserUtils from 'utils/BrowserUtils';
 import ChatCommandHandler from './ChatCommandHandler';
+import { MentionsInput, Mention } from 'react-mentions';
+
+import UserConstants from 'constants/UserConstants';
+import SocketService from 'services/SocketService';
 
 const ENTER_KEY_CODE = 13;
 
+
+const getMentionFieldStyle = (mobileLayout) => {
+	return {
+		suggestions: {
+			list: {
+				width: 200,
+				overflow: 'auto',
+				position: 'absolute',
+				bottom: 14,
+				backgroundColor: 'white',
+				border: '1px solid rgba(0,0,0,0.15)',
+				fontSize: 10,
+			},
+
+			item: {
+				padding: '5px 15px',
+				borderBottom: '1px solid rgba(0,0,0,0.15)',
+
+				'&focused': {
+					background: 'rgba(0,0,0,.03)',
+					color: 'rgba(0,0,0,.95)',
+				},
+			},
+		},
+		input: {
+			minHeight: !mobileLayout ? 63 : 0,
+			maxHeight: 200,
+		},
+	};
+};
 
 const MessageComposer = React.createClass({
 	propTypes: {
@@ -59,7 +93,7 @@ const MessageComposer = React.createClass({
 		};
 	},
 
-	getInitialState: function () {
+	getInitialState() {
 		return this.loadState(this.context);
 	},
 
@@ -74,47 +108,20 @@ const MessageComposer = React.createClass({
 		}
 	},
 
-	render: function () {
-		const mobile = BrowserUtils.useMobileLayout();
-		const className = classNames(
-			'ui form composer',
-			{ 'small': mobile },
-			{ 'large': !mobile },
-		);
-
-		return (
-			<div className= { className }>
-				<textarea
-					rows={ mobile ? 1 : 2 }
-					name="message"
-					value={ this.state.text }
-					onChange={ this._onChange }
-					onKeyDown={ this._onKeyDown }
-				/>
-				<div 
-					className="blue large ui icon send button" 
-					onClick={ this._sendText }
-				>
-					<i className="send icon"/>
-				</div>
-			</div>
-		);
-	},
-
-	_onChange: function (event) {
+	handleChange(event) {
 		this.setState({ 
 			text: event.target.value 
 		});
 	},
 
-	_onKeyDown: function (event) {
+	onKeyDown(event) {
 		if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
 			event.preventDefault();
 			this._sendText();
 		}
 	},
 
-	_sendText() {
+	sendText() {
 		// Trim only from end to allow chat messages such as " +help" to be
 		// sent to other users
 		// This will also prevent sending empty messages
@@ -129,7 +136,58 @@ const MessageComposer = React.createClass({
 		}
 
 		this.setState({ text: '' });
-	}
+	},
+
+	mapUser(user) {
+		return {
+			id: user.cid,
+			display: user.nick + ' ',
+		};
+	},
+
+	findUsers(value, callback) {
+		const { session } = this.props;
+		SocketService.post(UserConstants.SEARCH_NICKS_URL, { 
+			pattern: value, 
+			max_results: 5,
+			hub_urls: session.hub_url ? [ session.hub_url ] : undefined,
+		})
+			.then(users => callback(users.map(this.mapUser)))
+			.catch(error => 
+				console.log('Failed to fetch suggestions: ' + error)
+			);
+	},
+
+	render: function () {
+		const mobile = BrowserUtils.useMobileLayout();
+		const className = classNames(
+			'ui form composer',
+			{ 'small': mobile },
+			{ 'large': !mobile },
+		);
+
+		return (
+			<div className= { className }>
+				<MentionsInput 
+					className="input"
+					value={ this.state.text } 
+					onChange={ this.handleChange }
+					onKeyDown={ this.onKeyDown }
+					style={ getMentionFieldStyle(mobile) }
+				>
+					<Mention trigger="@"
+						data={ this.findUsers }
+					/>
+					</MentionsInput>
+				<div 
+					className="blue large ui icon send button" 
+					onClick={ this.sendText }
+				>
+					<i className="send icon"/>
+				</div>
+			</div>
+		);
+	},
 });
 
 export default MessageComposer;
