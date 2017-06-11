@@ -1,21 +1,5 @@
 /* Add a few semantic styles manually because of different layout */
 
-.react-autosuggest__container ul, .Select-menu {
-	width:100%;
-	position: absolute;
-	left: 0;
-	-webkit-transform-origin: center top;
-	-ms-transform-origin: center top;
-	transform-origin: center top;
-	background: #fff;
-	border-radius: .28571429rem;
-	box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);
-	border: 1px solid #d4d4d5;
-	z-index: 998;
-	padding:0px;
-	margin:0px;
-}
-
 .ui.action.input .react-autosuggest__container input {
 	border-top-right-radius: 0!important;
 	border-bottom-right-radius: 0!important;
@@ -27,34 +11,13 @@
 	width: 100% !important;
 }
 
-.react-autosuggest__container li, .Select-menu .Select-option {
-	cursor: pointer;
-	display: block;
-	overflow: hidden;
-	font-size: 1em;
-	padding: .85714286em 1.14285714em;
-	color: rgba(0,0,0,.87);
-	line-height: 1.33;
-	border-bottom: 1px solid rgba(34,36,38,.1);
-}
-
-.Select-menu .Select-option:hover, 
-.Select-menu .Select-option.is-focused,
-.react-autosuggest__container li:hover {
-	background: #f9fafb;
-}
-
-.field.error .Select-control {
-	background: #FFF6F6;
-	border-color: #E0B4B4;
+.react-autosuggest__container ul, .Select-menu {
+	position: absolute;
+	padding:0px;
 }
 
 .react-autosuggest__container ul .description {
 	padding-top: 2px;
 	color: rgba(0,0,0,.7);
 	font-size: small;
-}
-
-.react-autosuggest__suggestion--focused, .react-autosuggest__container li:hover {
-	background: #f9fafb;
 }

@@ -3,7 +3,15 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Autosuggest from 'react-autosuggest';
+import { defaultTheme } from 'react-autosuggest/dist/theme';
 
+
+const theme = {
+	...defaultTheme,
+	suggestionsList: 'ui vertical fluid menu',
+	suggestion: 'link item',
+	suggestionHighlighted: 'link item active',
+};
 
 const SuggestField = React.createClass({
 	propTypes: {
@@ -118,6 +126,7 @@ const SuggestField = React.createClass({
 		const suggestField = (
 			<Autosuggest 
 				{ ...other }
+				theme={ theme }
 				initialValue={ this.props.storedValue }
 				inputProps={ inputAttributes } 
 				onSuggestionSelected={ this.onSuggestionSelected }

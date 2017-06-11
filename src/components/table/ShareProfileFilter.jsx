@@ -23,14 +23,14 @@ const ShareProfileFilter = React.createClass({
 		};
 	},
 
-	onClick: function (profile) {
+	onClick(profile) {
 		this.props.onFilterUpdated(profile.id);
 		this.setState({ 
 			selectedProfile: profile 
 		});
 	},
 
-	getDropdownItem: function (profile) {
+	getDropdownItem(profile) {
 		return (
 			<MenuItemLink 
 				key={ profile.id }
@@ -42,7 +42,7 @@ const ShareProfileFilter = React.createClass({
 		);
 	},
 
-	render: function () {
+	render() {
 		return (
 			<Dropdown 
 				className="top right pointing" 
