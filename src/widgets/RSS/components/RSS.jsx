@@ -60,7 +60,7 @@ Entry.propTypes = {
 		title: PropTypes.oneOfType([
 			PropTypes.object,
 			PropTypes.string,
-		]).isRequired,
+		]),
 		updated: PropTypes.string, // Atom feeds
 		pubDate: PropTypes.string, // RSS feeds
 	}),

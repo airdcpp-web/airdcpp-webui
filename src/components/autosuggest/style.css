@@ -11,9 +11,10 @@
 	width: 100% !important;
 }
 
-.react-autosuggest__container ul, .Select-menu {
+.react-autosuggest__container ul {
 	position: absolute;
-	padding:0px;
+	padding: 0px;
+	z-index: 998;
 }
 
 .react-autosuggest__container ul .description {
