@@ -15,20 +15,27 @@ import ValueFormat from 'utils/ValueFormat';
 import '../style.css';
 
 
-const Entry = ({ entry, feedUrl, componentId }) => {
-	const date = entry.pubDate ? entry.pubDate : entry.updated;
-	
-	let title = typeof entry.title !== 'object' ? entry.title : entry.title.content;
-	if (typeof title !== 'string') {
-		title = 'Unsupported title type';
+const parseTitle = (entry) => {
+	if (!entry.title) {
+		return '(title missing)';
 	}
 
+	let title = typeof entry.title !== 'object' ? entry.title : entry.title.content;
+	if (typeof title !== 'string') {
+		title = '(unsupported title format)';
+	}
+
+	return title;
+};
+
+const Entry = ({ entry, feedUrl, componentId }) => {
+	const date = entry.pubDate ? entry.pubDate : entry.updated;
 	return (
 		<div className="item">
 			<div className="header">
 				<ActionMenu 
 					leftIcon={ true }
-					caption={ title }
+					caption={ parseTitle(entry) }
 					actions={ RSSActions }
 					itemData={ {
 						entry,
