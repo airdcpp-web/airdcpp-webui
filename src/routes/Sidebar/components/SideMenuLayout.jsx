@@ -5,10 +5,10 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 
 const SideMenuLayout = ({ 
-		sessionMenuItems, newButton,
-		itemHeaderIcon, itemHeaderTitle, children,
-		itemHeaderDescription,
-	}) => {
+	sessionMenuItems, newButton,
+	itemHeaderIcon, itemHeaderTitle, children,
+	itemHeaderDescription,
+}) => {
 
 	if (newButton) {
 		newButton = React.cloneElement(newButton, { 
@@ -21,10 +21,10 @@ const SideMenuLayout = ({
 			<div className="four wide column menu-column">
 				{ newButton }
 				{ !!sessionMenuItems.length && (
-						<div className="ui vertical secondary menu">
-							{ sessionMenuItems}
-						</div>
-					)
+					<div className="ui vertical secondary menu">
+						{ sessionMenuItems}
+					</div>
+				)
 				}
 			</div>
 			<div className="twelve wide stretched column content-column session">

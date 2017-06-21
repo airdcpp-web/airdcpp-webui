@@ -91,10 +91,10 @@ const FavoriteHubs = React.createClass({
 					width={65}
 					columnKey="auto_connect"
 					cell={ editAccess && (
-							<CheckboxCell 
-								onChange={ this.onChangeAutoConnect } 
-								type="toggle"
-							/>
+						<CheckboxCell 
+							onChange={ this.onChangeAutoConnect } 
+							type="toggle"
+						/>
 					) }
 				/>
 				<Column

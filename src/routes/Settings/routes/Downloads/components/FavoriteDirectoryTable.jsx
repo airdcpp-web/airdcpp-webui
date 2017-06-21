@@ -42,18 +42,18 @@ const FavoriteDirectoryPage = ({ directories }) => (
 		/>
 
 		{ directories.length === 0 ? null : (
-				<table className="ui striped table">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Path</th>
-						</tr>
-					</thead>
-					<tbody>
-						{ directories.map(getRow) }
-					</tbody>
-				</table>
-			) }
+			<table className="ui striped table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Path</th>
+					</tr>
+				</thead>
+				<tbody>
+					{ directories.map(getRow) }
+				</tbody>
+			</table>
+		) }
 	</div>
 );
 

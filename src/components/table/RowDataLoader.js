@@ -138,8 +138,7 @@ class RowDataLoader {
 						delete this._pendingRequest[i];
 					}
 				}
-			}
-		);
+			});
 	}
 
 	onRowsReceived(start, rows) {

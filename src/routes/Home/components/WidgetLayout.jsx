@@ -74,8 +74,8 @@ const WidgetLayout = React.createClass({
 				layouts={ this.state.layouts }
 			>
 				{ this.state.layouts[this.state.breakpoint]
-						.map(this.mapWidget)
-						.filter(widget => widget) }
+					.map(this.mapWidget)
+					.filter(widget => widget) }
 			</ResponsiveReactGridLayout>
 		);
 	}

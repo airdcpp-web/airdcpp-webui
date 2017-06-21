@@ -71,9 +71,9 @@ const onClickLink = (evt, routerLocation) => {
 
 const emojiRenderer = (code, string, key) => {
 	switch (code) {
-		case 'a9':      // © copyright
-		case 'ae':      // ® registered trademark
-		case '2122':    // ™ trademark
+		case 'a9': // © copyright
+		case 'ae': // ® registered trademark
+		case '2122': // ™ trademark
 			return string;
 	}
 

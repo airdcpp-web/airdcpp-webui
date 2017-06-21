@@ -13,7 +13,7 @@ const GridRow = ({ title, text }) => (
 	<div className="ui row">
 		<div className="three wide column">
 			<div className="ui tiny header">
-			{ title }
+				{ title }
 			</div>
 		</div>
 		<div className="thirteen wide column">

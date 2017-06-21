@@ -75,7 +75,7 @@ const ShareProfilesPage = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-					{ this.props.profiles.map(this.getRow) }
+						{ this.props.profiles.map(this.getRow) }
 					</tbody>
 				</table>
 			</div>

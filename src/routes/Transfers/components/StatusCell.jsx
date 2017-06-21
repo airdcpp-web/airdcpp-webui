@@ -11,13 +11,13 @@ import Loader from 'components/semantic/Loader';
 const getStatusClass = (cellData, rowData) => {
 	const statusId = cellData.id;
 	return classNames(
-			{ 'grey': statusId === StatusEnum.WAITING },
-			{ 'blue': statusId === StatusEnum.RUNNING && rowData.download },
-			{ 'red': statusId === StatusEnum.RUNNING && !rowData.download },
-			{ 'green': statusId === StatusEnum.FINISHED && rowData.download },
-			{ 'brown': statusId === StatusEnum.FINISHED && !rowData.download },
-			{ 'red':  statusId === StatusEnum.FAILED },
-		);
+		{ 'grey': statusId === StatusEnum.WAITING },
+		{ 'blue': statusId === StatusEnum.RUNNING && rowData.download },
+		{ 'red': statusId === StatusEnum.RUNNING && !rowData.download },
+		{ 'green': statusId === StatusEnum.FINISHED && rowData.download },
+		{ 'brown': statusId === StatusEnum.FINISHED && !rowData.download },
+		{ 'red':  statusId === StatusEnum.FAILED },
+	);
 };
 
 const StatusCell = ({ cellData, rowDataGetter, ...props }) => {

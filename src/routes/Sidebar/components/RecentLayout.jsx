@@ -24,13 +24,13 @@ const RecentLayout = DataProviderDecorator(RedrawDecorator(({ entries, entryTitl
 			/>
 			<div className="ui relaxed divided list">
 				{ entries.map((entry, index) => (
-						<ListItem 
-							key={ index }
-							header={ entryTitleRenderer(entry) }
-							description={ entry.last_opened ? ('Opened ' + ValueFormat.formatRelativeTime(entry.last_opened)) : null }
-							icon={ (hasSession(entry) ? 'green ' : '') + entryIcon }
-						/>
-					)) }
+					<ListItem 
+						key={ index }
+						header={ entryTitleRenderer(entry) }
+						description={ entry.last_opened ? ('Opened ' + ValueFormat.formatRelativeTime(entry.last_opened)) : null }
+						icon={ (hasSession(entry) ? 'green ' : '') + entryIcon }
+					/>
+				)) }
 			</div>
 		</div>
 	);

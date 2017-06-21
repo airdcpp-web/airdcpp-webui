@@ -167,8 +167,8 @@ export default function (Component) {
 		getChildren() {
 			const menus = this.getMenus();
 			return menus
-						.filter(notError)
-						.reduce(this.reduceMenuItems, []);
+				.filter(notError)
+				.reduce(this.reduceMenuItems, []);
 		},
 
 		render() {

@@ -12,9 +12,9 @@ const getStatusClass = (cellData, rowData) => {
 
 	const statusId = cellData.id;
 	return classNames(
-			{ 'grey': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed === 0 },
-			{ 'blue': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed > 0 },
-		);
+		{ 'grey': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed === 0 },
+		{ 'blue': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed > 0 },
+	);
 };
 
 const StatusCell = ({ cellData, rowDataGetter, ...props }) => {

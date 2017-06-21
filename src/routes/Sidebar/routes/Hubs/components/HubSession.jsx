@@ -99,16 +99,16 @@ const HubSession = React.createClass({
 			<div className="hub chat session">
 				{ this.getMessage() }
 				{ showList ? (
-						<HubUserTable
-							session={ session }
-						/>
-					) : (
-						<ChatLayout
-							messageStore={ HubMessageStore }
-							actions={ actions }
-							chatAccess={ AccessConstants.HUBS_SEND }
-							session={ session }
-						/>
+					<HubUserTable
+						session={ session }
+					/>
+				) : (
+					<ChatLayout
+						messageStore={ HubMessageStore }
+						actions={ actions }
+						chatAccess={ AccessConstants.HUBS_SEND }
+						session={ session }
+					/>
 				) }
 				<HubFooter
 					userlistToggle={ checkbox }

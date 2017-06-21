@@ -25,8 +25,8 @@ const CommandHandler = (sessionProps) => {
 				NotificationActions.info({
 					title: 'Available commands',
 					message: Object.keys(commands)
-										.filter(command => showAction(commands[command]))
-										.join(', '),
+						.filter(command => showAction(commands[command]))
+						.join(', '),
 				});
 			}
 		},

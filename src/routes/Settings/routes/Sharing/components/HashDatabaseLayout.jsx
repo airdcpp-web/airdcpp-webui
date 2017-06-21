@@ -44,7 +44,7 @@ const SizeRow = ({ title, size }) => (
 	<div className="ui row compact">
 		<div className="three wide column">
 			<div className="ui tiny header">
-			{ title }
+				{ title }
 			</div>
 		</div>
 		<div className="twelve wide column">

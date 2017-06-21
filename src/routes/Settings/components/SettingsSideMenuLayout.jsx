@@ -10,7 +10,7 @@ const SideMenu = ({ menuItems, advancedMenuItems, menuItemToLink, parent }) => {
 		<div className="three wide column menu-column">
 			<div className="ui vertical secondary menu">
 				{ menuItems }
-				{ (advancedMenuItems ? 
+				{ !!advancedMenuItems && (
 					<div>
 						<div className="item header">
 							Advanced
@@ -19,7 +19,7 @@ const SideMenu = ({ menuItems, advancedMenuItems, menuItemToLink, parent }) => {
 							{ advancedMenuItems }
 						</div> 
 					</div>
-				: null) }
+				) }
 			</div>
 		</div>
 	);
