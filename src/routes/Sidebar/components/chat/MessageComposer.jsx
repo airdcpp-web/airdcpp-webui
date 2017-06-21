@@ -20,7 +20,8 @@ const getMentionFieldStyle = (mobileLayout) => {
 				width: 200,
 				overflow: 'auto',
 				position: 'absolute',
-				bottom: 14,
+				bottom: 3,
+				left: 17,
 				backgroundColor: 'white',
 				border: '1px solid rgba(0,0,0,0.15)',
 				fontSize: 10,
@@ -108,16 +109,16 @@ const MessageComposer = React.createClass({
 		}
 	},
 
-	handleChange(event) {
+	handleChange(event, markupValue, plainValue) {
 		this.setState({ 
-			text: event.target.value 
+			text: plainValue 
 		});
 	},
 
 	onKeyDown(event) {
 		if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
 			event.preventDefault();
-			this._sendText();
+			this.sendText();
 		}
 	},
 
@@ -141,7 +142,7 @@ const MessageComposer = React.createClass({
 	mapUser(user) {
 		return {
 			id: user.cid,
-			display: user.nick + ' ',
+			display: user.nick,
 		};
 	},
 
@@ -177,8 +178,9 @@ const MessageComposer = React.createClass({
 				>
 					<Mention trigger="@"
 						data={ this.findUsers }
+						appendSpaceOnAdd={ false }
 					/>
-					</MentionsInput>
+				</MentionsInput>
 				<div 
 					className="blue large ui icon send button" 
 					onClick={ this.sendText }
