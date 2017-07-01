@@ -21,6 +21,8 @@ const chalk = require('chalk');
 var plugins = [
 	new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Those are about 40 kilobytes
 	new webpack.optimize.CommonsChunkPlugin({
+		name: 'main', // must match the main entry
+		//async: 'vendors',
 		minChunks: 3,
 		children: true,
 	}),
@@ -72,9 +74,9 @@ var debugPlugins = [
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-var entries = [ './src/index.jsx' ]; 
+var mainEntries = [ './src/index.jsx' ]; 
 if (!release) {
-	entries.push('webpack-hot-middleware/client');
+	mainEntries.push('webpack-hot-middleware/client');
 }
 
 console.log(chalk.bold('[webpack] Release: ' + release));
@@ -83,7 +85,9 @@ console.log(chalk.bold('[webpack] Demo mode: ' + demo));
 var chunkFilename = release ? 'js/[name].[chunkhash].chunk.js' : 'js/[name].chunk.js';
 
 module.exports = {
-	entry: entries,
+	entry: {
+		main: mainEntries
+	},
 	performance: { // The following asset(s) exceed the recommended size limit (250 kB)
 		hints: false 
 	},
