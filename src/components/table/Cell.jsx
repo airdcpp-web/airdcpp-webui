@@ -132,7 +132,7 @@ export const FileDownloadCell = ({ cellData, rowDataGetter, clickHandlerGetter, 
 		caption={ 
 			<FormattedFile 
 				typeInfo={ rowDataGetter().type }
-				onClick={ !!clickHandlerGetter && clickHandlerGetter(cellData, rowDataGetter) }
+				onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter) : null }
 				caption={ cellData }
 			/>
 		} 

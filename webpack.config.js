@@ -48,6 +48,7 @@ var plugins = [
 ];
 
 var releasePlugins = [
+	new webpack.optimize.ModuleConcatenationPlugin(),
 	new webpack.optimize.UglifyJsPlugin({
 		sourceMap: true
 	}),

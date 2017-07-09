@@ -67,9 +67,6 @@ const ListBrowser = React.createClass({
 		if (!locationData || !locationData.directory) {
 			// We need an initial path for our history
 			History.replaceSidebarData(location, { directory: session.location.path });
-		} else if (session.location.path !== locationData.directory) {
-			// Opening an existing list from another directory?
-			this.sendChangeDirectory(locationData.directory);
 		}
 	},
 

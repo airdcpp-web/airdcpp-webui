@@ -16,21 +16,31 @@ import AccessConstants from 'constants/AccessConstants';
 const FilelistSessionActions = Reflux.createActions([
 	{ 'createSession': { asyncResult: true } },
 	{ 'changeDirectory': { asyncResult: true } },
+	{ 'changeHubUrl': { asyncResult: true } },
+	{ 'changeShareProfile': { asyncResult: true } },
 	{ 'ownList': { asyncResult: true } },
 	{ 'setRead': { asyncResult: true } },
 ]);
 
-FilelistSessionActions.changeDirectory.listen(function (cid, path) {
-	let that = this;
-	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + cid + '/directory', { list_path: path })
-		.then(data => that.completed(cid, data))
-		.catch(error => that.failed(cid, error));
-});
+// SESSION CREATION
+const openSession = (location, cid) => {
+	History.pushSidebar(location, '/filelists/session/' + cid, {
+		pending: true
+	});
+};
 
 FilelistSessionActions.createSession.listen(function (location, user, sessionStore, directory = '/') {
 	const session = sessionStore.getSession(user.cid);
-	if (session && session.user.hub_url === user.hub_url) {
-		this.completed(location, user, directory, session);
+	if (session) {
+		if (session.user.hub_url !== user.hub_url) {
+			FilelistSessionActions.changeHubUrl(session.id, user.hub_url);
+		}
+
+		if (directory !== '/' && session.location.path !== directory) {
+			FilelistSessionActions.changeDirectory(user.cid, directory);
+		}
+
+		this.completed(location, user, session);
 		return;
 	}
 
@@ -42,13 +52,25 @@ FilelistSessionActions.createSession.listen(function (location, user, sessionSto
 		},
 		directory: directory,
 	})
-		.then((data) => that.completed(location, user, directory, data))
+		.then((data) => that.completed(location, user, data))
 		.catch(that.failed);
+});
+
+FilelistSessionActions.createSession.completed.listen(function (location, user, session) {
+	openSession(location, user.cid);
+});
+
+FilelistSessionActions.createSession.failed.listen(function (error) {
+	NotificationActions.apiError('Failed to create filelist session', error);
 });
 
 FilelistSessionActions.ownList.listen(function (location, profile, sessionStore) {
 	let session = sessionStore.getSession(LoginStore.systemInfo.cid);
-	if (session && session.share_profile.id === profile) {
+	if (session) {
+		if (session.share_profile.id !== profile) {
+			FilelistSessionActions.changeShareProfile(session.id, profile);
+		}
+
 		this.completed(location, profile, session);
 		return;
 	}
@@ -61,28 +83,36 @@ FilelistSessionActions.ownList.listen(function (location, profile, sessionStore)
 		.catch(that.failed);
 });
 
-const openSession = (location, cid, directory) => {
-	History.pushSidebar(location, '/filelists/session/' + cid, { 
-		directory,
-		pending: true
-	});
-};
-
 FilelistSessionActions.ownList.completed.listen(function (location, profile, session) {
-	openSession(location, LoginStore.systemInfo.cid, '/');
+	openSession(location, LoginStore.systemInfo.cid);
 });
 
-FilelistSessionActions.createSession.completed.listen(function (location, user, directory, session) {
-	openSession(location, user.cid, directory);
-});
 
-FilelistSessionActions.createSession.failed.listen(function (error) {
-	NotificationActions.apiError('Failed to create filelist session', error);
-});
-
-FilelistSessionActions.setRead.listen(function (id) {
+// SESSION UPDATES
+FilelistSessionActions.changeHubUrl.listen(function (cid, hubUrl) {
 	let that = this;
-	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + id + '/read')
+	SocketService.patch(FilelistConstants.SESSIONS_URL + '/' + cid, { hub_url: hubUrl })
+		.then(data => that.completed(cid, data))
+		.catch(error => that.failed(cid, error));
+});
+
+FilelistSessionActions.changeShareProfile.listen(function (cid, profile) {
+	let that = this;
+	SocketService.patch(FilelistConstants.SESSIONS_URL + '/' + cid, { share_profile: profile })
+		.then(data => that.completed(cid, data))
+		.catch(error => that.failed(cid, error));
+});
+
+FilelistSessionActions.changeDirectory.listen(function (cid, path) {
+	let that = this;
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + cid + '/directory', { list_path: path })
+		.then(data => that.completed(cid, data))
+		.catch(error => that.failed(cid, error));
+});
+
+FilelistSessionActions.setRead.listen(function (cid) {
+	let that = this;
+	SocketService.post(FilelistConstants.SESSIONS_URL + '/' + cid + '/read')
 		.then(that.completed)
 		.catch(that.failed);
 });
