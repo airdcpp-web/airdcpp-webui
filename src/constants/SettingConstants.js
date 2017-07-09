@@ -6,11 +6,16 @@ export const SettingProfileEnum = {
 	LAN: 2
 };
 
-export const ConnectionModeEnum = {
+export const IncomingConnectionModeEnum = {
 	INCOMING_DISABLED: -1, 
 	INCOMING_ACTIVE: 0, 
 	INCOMING_ACTIVE_UPNP: 1,
 	INCOMING_PASSIVE: 2,
+};
+
+export const OutgoingConnectionModeEnum = {
+	OUTGOING_DIRECT: 0, 
+	OUTGOING_SOCKS: 1,
 };
 
 export const LocalSettings = {

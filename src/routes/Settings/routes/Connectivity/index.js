@@ -16,6 +16,9 @@ module.exports = {
 				path: 'ports', 
 				component: require('./components/PortsPage').default, 
 			}, {
+				path: 'proxies', 
+				component: require('./components/ProxiesPage').default, 
+			}, {
 				path: 'encryption', 
 				component: require('./components/EncryptionPage').default, 
 			} ]);

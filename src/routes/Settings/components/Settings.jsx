@@ -54,6 +54,9 @@ const menu = [
 				title: 'Ports (manual)', 
 				url: 'ports' 
 			}, { 
+				title: 'Proxies', 
+				url: 'proxies' 
+			}, { 
 				title: 'Encryption', 
 				url: 'encryption' 
 			},
