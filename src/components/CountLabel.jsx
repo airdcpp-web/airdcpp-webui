@@ -5,7 +5,7 @@ import UrgencyUtils from 'utils/UrgencyUtils';
 import TypeConvert from 'utils/TypeConvert';
 import classNames from 'classnames';
 
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 const CountLabel = ({ urgencies, empty, size, className, circular }) => {
@@ -48,7 +48,8 @@ CountLabel.defaultProps = {
 };
 
 
-// Rendering a single child with ReactCSSTransitionGroup: https://facebook.github.io/react/docs/animation.html
+// Rendering a single child with TransitionGroup: https://facebook.github.io/react/docs/animation.html#rendering-a-single-child
+// We don't any wrapping divs to avoid issues with Semantic CSS
 const FirstChild = (props) => {
 	const childrenArray = React.Children.toArray(props.children);
 	return childrenArray[0] || null;
@@ -56,14 +57,21 @@ const FirstChild = (props) => {
 
 // Fade out the label when there are no counts
 const AnimatedCountLabel = (props) => (
-	<ReactCSSTransitionGroup
+	<TransitionGroup
 		component={ FirstChild }
-		transitionName="label-transition"
-		transitionEnterTimeout={ 100 }
-		transitionLeaveTimeout={ 1500 }
 	>
-		{ props.urgencies && <CountLabel key="label" { ...props }/> }
-	</ReactCSSTransitionGroup>
+		{ props.urgencies && (
+			<CSSTransition
+				classNames="label-transition"
+				timeout={{ enter: 100, exit: 1500 }}
+			>
+				<CountLabel 
+					key="label" 
+					{ ...props }
+				/> 
+			</CSSTransition>
+		) }
+	</TransitionGroup>
 );
 
 export default AnimatedCountLabel;

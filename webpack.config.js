@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var CompressionPlugin = require('compression-webpack-plugin');
+var ZopfliPlugin = require('zopfli-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var Visualizer = require('webpack-visualizer-plugin');
 
@@ -56,7 +56,7 @@ var releasePlugins = [
 		minimize: true,
 		debug: false
 	}),
-	new CompressionPlugin({
+	new ZopfliPlugin({
 		asset: "[file].gz",
 		algorithm: "zopfli",
 		test: /\.js$/,

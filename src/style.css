@@ -158,11 +158,11 @@ section#container-main,
 
 /* Count label transitions */
 
-.label-transition-leave {
+.label-transition-exit {
   opacity: 1;
 }
 
-.label-transition-leave.label-transition-leave-active {
+.label-transition-exit.label-transition-exit-active {
   opacity: 0.01;
   transition: opacity 1500ms ease-in;
 }
