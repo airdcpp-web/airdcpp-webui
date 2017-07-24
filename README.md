@@ -1,8 +1,8 @@
 # airdcpp-webui [![Travis][build-badge]][build] [![npm package][npm-badge]][npm]
 
-AirDC++ Web UI written in Javascript. Communicates with AirDC++ Core via [AirDC++ Web API](https://github.com/airdcpp/airdcpp-webapi).
+>This package should be used directly only for development purposes; end users will get it through other projects, such as [AirDC++ Web Client](https://airdcpp-web.github.io). Normal feature request and bug reports should also be posted on [AirDC++ Web Client's issue tracker](https://github.com/airdcpp-web/airdcpp-webclient).
 
-This package should be downloaded directly only for development purposes; end users will get it through other projects, such as [AirDC++ Web Client](https://airdcpp-web.github.io).
+AirDC++ Web UI written in Javascript. Communicates with AirDC++ Core via [AirDC++ Web API](https://github.com/airdcpp/airdcpp-webapi).
 
 ## Installing dependencies
 
