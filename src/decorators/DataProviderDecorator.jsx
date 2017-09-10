@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import invariant from 'invariant';
 
 import SocketService from 'services/SocketService';
@@ -11,8 +12,10 @@ import NotificationActions from 'actions/NotificationActions';
 
 // A decorator that will provide a set of data fetched from the API as props
 export default function (Component, settings) {
-  const DataProviderDecorator = React.createClass({
+  const DataProviderDecorator = createReactClass({
+    displayName: 'DataProviderDecorator',
     mixins: [ SocketSubscriptionMixin() ],
+
     propTypes: {
 
       /**

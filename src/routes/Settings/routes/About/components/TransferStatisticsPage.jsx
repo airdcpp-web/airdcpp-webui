@@ -8,7 +8,7 @@ import { Row, Header } from 'components/semantic/Grid';
 import TransferConstants from 'constants/TransferConstants';
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
-const TransferStatisticsPage = React.createClass({
+class TransferStatisticsPage extends React.Component {
   render() {
     const { stats } = this.props;
 
@@ -24,7 +24,7 @@ const TransferStatisticsPage = React.createClass({
         <Row title="Session uploaded" text={ ValueFormat.formatSize(stats.session_uploaded) }/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default StatisticsDecorator(TransferStatisticsPage, TransferConstants.TRANSFERRED_BYTES_URL, null, 5);

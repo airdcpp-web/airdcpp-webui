@@ -41,8 +41,8 @@ CreateDirectory.propTypes = {
 };
 
 
-const FileBrowser = React.createClass({
-  propTypes: {
+class FileBrowser extends React.Component {
+  static propTypes = {
     /**
 		 * Local storage ID used for saving/loading the last path
 		 * This will have priority over initialPath
@@ -63,53 +63,52 @@ const FileBrowser = React.createClass({
 		 * Getter for additional content displayed next to file/directory items
 		 */
     itemIconGetter: PropTypes.func,
-  },
+  };
 
-  getInitialState() {
+  static defaultProps = {
+    initialPath: '',
+  };
+
+  constructor(props, context) {
+    super(props, context);
     this._pathSeparator = LoginStore.systemInfo.path_separator;
     this._isWindows = LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
 
     let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
     if (!currentDirectory) {
-      currentDirectory = this.props.initialPath.length === 0 ? this.getRootPath() : this.props.initialPath;
+      currentDirectory = props.initialPath.length === 0 ? this.getRootPath() : props.initialPath;
     }
 
-    return {
+    this.state = {
       currentDirectory,
       items: [],
       loading: true,
       error: null
     };
-  },
+  }
 
-  getStorageKey() {
+  getStorageKey = () => {
     if (!this.props.historyId) {
       return undefined;
     }
 
     return 'browse_' + this.props.historyId;
-  },
-
-  getDefaultProps() {
-    return {
-      initialPath: '',
-    };
-  },
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentDirectory !== this.state.currentDirectory) {
       this.onDirectoryChanged();
     }
-  },
+  }
 
   componentDidMount() {
     // Fire a change event in case something was loaded from localStorage
     this.onDirectoryChanged();
 		
     this.fetchItems(this.state.currentDirectory);
-  },
+  }
 
-  onDirectoryChanged() {
+  onDirectoryChanged = () => {
     // Save the location
     BrowserUtils.saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
 
@@ -117,9 +116,9 @@ const FileBrowser = React.createClass({
     if (this.props.onDirectoryChanged) {
       this.props.onDirectoryChanged(this.state.currentDirectory);
     }
-  },
+  };
 
-  fetchItems(path) {
+  fetchItems = (path) => {
     this.setState({ 
       error: null,
       loading: true
@@ -128,9 +127,9 @@ const FileBrowser = React.createClass({
     SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
       .then(this.onFetchSucceed.bind(this, path))
       .catch(this.onFetchFailed);
-  },
+  };
 
-  onFetchFailed(error) {
+  onFetchFailed = (error) => {
     if (!this.initialFetchCompleted) {
       // The path doesn't exists, go to root
       this.fetchItems(this.getRootPath());
@@ -141,9 +140,9 @@ const FileBrowser = React.createClass({
       error: error.message,
       loading: false
     });
-  },
+  };
 
-  onFetchSucceed(path, data) {
+  onFetchSucceed = (path, data) => {
     this.setState({ 
       currentDirectory: path,
       items: data,
@@ -151,19 +150,19 @@ const FileBrowser = React.createClass({
     });
 
     this.initialFetchCompleted = true;
-  },
+  };
 
-  _appendDirectoryName(directoryName) {
+  _appendDirectoryName = (directoryName) => {
     return this.state.currentDirectory + directoryName + this._pathSeparator;
-  },
+  };
 
-  _handleSelect(directoryName) {
+  _handleSelect = (directoryName) => {
     const nextPath = this._appendDirectoryName(directoryName);
 
     this.fetchItems(nextPath);
-  },
+  };
 
-  _createDirectory(directoryName) {
+  _createDirectory = (directoryName) => {
     this.setState({ 
       error: null
     });
@@ -174,13 +173,13 @@ const FileBrowser = React.createClass({
       .catch(error => this.setState({ 
         error: error.message
       }));
-  },
+  };
 
-  getRootPath() {
+  getRootPath = () => {
     return this._isWindows ? '' : '/';
-  },
+  };
 
-  render: function () {
+  render() {
     if (this.state.loading) {
       return <Loader text="Loading items"/>;
     }
@@ -210,6 +209,6 @@ const FileBrowser = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default FileBrowser;

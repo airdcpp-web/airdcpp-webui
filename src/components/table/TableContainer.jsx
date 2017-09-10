@@ -20,8 +20,8 @@ function convertEndToRows(pixels) {
   return Math.ceil(pixels / TABLE_ROW_HEIGHT);
 }
 
-const TableContainer = React.createClass({
-  propTypes: {
+class TableContainer extends React.Component {
+  static propTypes = {
 
     /**
 		 * Store implementing ViewStoreMixin that contains the items
@@ -40,27 +40,25 @@ const TableContainer = React.createClass({
 
 		
     dataLoader: PropTypes.any.isRequired,
-  },
+  };
 
-  getInitialState() {
-    return {
-      width: 0,
-      height: 0,
-    };
-  },
+  state = {
+    width: 0,
+    height: 0,
+  };
 
-  getInitialProps() {
+  getInitialProps = () => {
     return {
       rowClassNameGetter: null,
       entityId: null
     };
-  },
+  };
 
   componentWillMount() {
     this._columnWidths = { };
     this._isColumnResizing = false;
     this._scrollPosition = 0;
-  },
+  }
 
   // This will also be used for setting the initial rows
   componentDidUpdate(prevProps, prevState) {
@@ -69,13 +67,13 @@ const TableContainer = React.createClass({
     } else if (prevProps.entityId !== this.props.entityId) {
       this.updateRowRange();
     }
-  },
+  }
 
   componentWillUnmount() {
     clearTimeout(this._scrollTimer);
-  },
+  }
 
-  updateRowRange() {
+  updateRowRange = () => {
     const startRows = convertStartToRows(this._scrollPosition);
     const maxRows = convertEndToRows(this.state.height, true);
 
@@ -83,15 +81,15 @@ const TableContainer = React.createClass({
 
     console.assert(this.props.store.active, 'Posting data for an inactive view');
     TableActions.setRange(this.props.store.viewUrl, startRows, maxRows);
-  },
+  };
 
-  _onScrollStart(horizontal, vertical) {
+  _onScrollStart = (horizontal, vertical) => {
     //console.log('Scrolling started: ' + vertical, this.props.store.viewUrl);
     console.assert(this.props.store.active, 'Sending pause for an inactive view');
     TableActions.pause(this.props.store.viewUrl, true);
-  },
+  };
 
-  _onScrollEnd(horizontal, vertical) {
+  _onScrollEnd = (horizontal, vertical) => {
     this._scrollPosition = vertical;
     console.assert(this.props.store.active, 'Sending pause for an inactive view');
     TableActions.pause(this.props.store.viewUrl, false);
@@ -99,9 +97,9 @@ const TableContainer = React.createClass({
     clearTimeout(this._scrollTimer);
     this._scrollTimer = setTimeout(this.updateRowRange, 500);
     //console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
-  },
+  };
 
-  _sortRowsBy(sortProperty) {
+  _sortRowsBy = (sortProperty) => {
     const { store } = this.props;
 
     let sortAscending = true;
@@ -110,15 +108,15 @@ const TableContainer = React.createClass({
     }
 
     TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
-  },
+  };
 
-  _onColumnResizeEndCallback(newColumnWidth, dataKey) {
+  _onColumnResizeEndCallback = (newColumnWidth, dataKey) => {
     this._columnWidths[dataKey] = newColumnWidth;
     this._isColumnResizing = false;
     this.forceUpdate(); // don't do this, use a store and put into this.state!
-  },
+  };
 
-  convertColumn(column) {
+  convertColumn = (column) => {
     if (column.props.hideWidth > this.state.width) {
       return null;
     }
@@ -160,17 +158,17 @@ const TableContainer = React.createClass({
         </RowWrapperCell>
       ),
     });
-  },
+  };
 
-  onResize(contentRect) {
+  onResize = (contentRect) => {
     const { width, height } = contentRect.entry;
     this.setState({
       width,
       height,
     });
-  },
-	
-  render: function () {
+  };
+
+  render() {
     // Update and insert generic columns props
     const children = React.Children.map(this.props.children, this.convertColumn);
 
@@ -203,6 +201,6 @@ const TableContainer = React.createClass({
       </Measure>
     );
   }
-});
+}
 
 export default TableContainer;

@@ -10,12 +10,12 @@ import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
 import 'normal.css';
 
 
-const MainLayout = React.createClass({
-  propTypes: {
+class MainLayout extends React.Component {
+  static propTypes = {
     children: PropTypes.object.isRequired,
     sidebar: PropTypes.object,
     location: PropTypes.object.isRequired,
-  },
+  };
 
   render() {
     const { children, sidebar } = this.props;
@@ -35,6 +35,6 @@ const MainLayout = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default OverlayHandlerDecorator(MainLayout);

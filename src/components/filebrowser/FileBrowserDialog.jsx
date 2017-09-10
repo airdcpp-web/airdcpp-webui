@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import { RouteContext } from 'mixins/RouterMixin';
@@ -7,8 +8,10 @@ import { RouteContext } from 'mixins/RouterMixin';
 import FileBrowserLayout from './FileBrowserLayout';
 
 
-const FileBrowserDialog = React.createClass({
+const FileBrowserDialog = createReactClass({
+  displayName: 'FileBrowserDialog',
   mixins: [ RouteContext ],
+
   propTypes: {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -64,7 +67,7 @@ const FileBrowserDialog = React.createClass({
           historyId={ this.props.historyId }
         />
       </Modal>);
-  }
+  },
 });
 
 export default FileBrowserDialog;

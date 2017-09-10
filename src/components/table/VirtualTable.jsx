@@ -11,8 +11,8 @@ import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 
-const VirtualTable = React.createClass({
-  propTypes: {
+class VirtualTable extends React.Component {
+  static propTypes = {
     /**
 		 * Elements to append to the table footer
 		 */
@@ -42,22 +42,22 @@ const VirtualTable = React.createClass({
 		 * Filter that is always applied for source items (those will never be displayed or included in the total count)
 		 */
     sourceFilter: PropTypes.object,
-  },
+  };
 
   componentWillMount() {
     this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
 
     this.start(this.props.entityId);
-  },
+  }
 
   componentDidMount() {
     this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
-  },
+  }
 
   componentWillUnmount() {
     this.close();
     this.unsubscribe();
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.entityId !== this.props.entityId) {
@@ -74,29 +74,29 @@ const VirtualTable = React.createClass({
 
       TableActions.clear(this.props.store.viewUrl);
     }
-  },
+  }
 
-  moduleExists() {
+  moduleExists = () => {
     if (!this.props.entityId) {
       return true;
     }
 
     return this.props.sessionStore.getSession(this.props.entityId);
-  },
+  };
 
-  start(entityId) {
+  start = (entityId) => {
     const { store, sourceFilter } = this.props;
 
     TableActions.init(store.viewUrl, entityId, sourceFilter);
     TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
-  },
+  };
 
-  close() {
+  close = () => {
     // Don't send the close command if the session was removed
     TableActions.close(this.props.store.viewUrl, this.moduleExists());
-  },
+  };
 
-  render: function () {
+  render() {
     const { footerData, emptyRowsNodeGetter, ...other } = this.props;
 
     if (emptyRowsNodeGetter && this.props.store.totalCount === -1) {
@@ -124,6 +124,6 @@ const VirtualTable = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default VirtualTable;

@@ -4,8 +4,8 @@ import Perf from 'react-addons-perf';
 import BrowserUtils from 'utils/BrowserUtils';
 
 
-const PerformanceTools = React.createClass({
-  onClick: function (evt) {
+class PerformanceTools extends React.Component {
+  onClick = (evt) => {
     const nextRunning = !BrowserUtils.loadSessionProperty('perf_profiling');
     if (nextRunning) {
       Perf.start();
@@ -22,12 +22,12 @@ const PerformanceTools = React.createClass({
 
     BrowserUtils.saveSessionProperty('perf_profiling', nextRunning);
     this.forceUpdate();
-  },
+  };
 
-  render: function () {
+  render() {
     const color = BrowserUtils.loadSessionProperty('perf_profiling') ? 'blue' : 'grey';
     return <i className={ color + ' link large lab icon' } onClick={ this.onClick }/>;
   }
-});
+}
 
 export default PerformanceTools;

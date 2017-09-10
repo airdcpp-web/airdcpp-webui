@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import UserConstants from 'constants/UserConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
@@ -25,8 +27,10 @@ const Row = ({ ignoreInfo }) => (
   </tr>
 );
 
-const IgnorePage = React.createClass({
+const IgnorePage = createReactClass({
+  displayName: 'IgnorePage',
   mixins: [ LocationContext ],
+
   getRow(ignoreInfo) {
     return (
       <Row 
@@ -61,7 +65,7 @@ const IgnorePage = React.createClass({
         </table>
       </div>
     );
-  }
+  },
 });
 
 export default DataProviderDecorator(IgnorePage, {

@@ -12,7 +12,7 @@ import SystemConstants from 'constants/SystemConstants';
 import ValueFormat from 'utils/ValueFormat';
 
 
-const AboutPage = React.createClass({
+class AboutPage extends React.Component {
   render() {
     const { stats } = this.props;
     const systemInfo = LoginStore.systemInfo;
@@ -31,7 +31,7 @@ const AboutPage = React.createClass({
         <Row title="Server threads" text={ stats.server_threads }/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default StatisticsDecorator(AboutPage, SystemConstants.STATS_URL, null, 5);

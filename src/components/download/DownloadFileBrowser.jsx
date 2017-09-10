@@ -6,18 +6,12 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-const DownloadFileBrowser = React.createClass({
-  onDirectoryChanged(path) {
+class DownloadFileBrowser extends React.Component {
+  onDirectoryChanged = (path) => {
     this.setState({ currentPath: path });
-  },
+  };
 
-  getInitialState() {
-    return {
-      currentPath: this.getInitialPath(),
-    };
-  },
-
-  selectedNameFormatter(caption, token) {
+  selectedNameFormatter = (caption, token) => {
     if (token.length === 0) {
       // Drive listing on Windows isn't a good target
       return caption;
@@ -31,9 +25,9 @@ const DownloadFileBrowser = React.createClass({
     );
 
     return formatedCaption;
-  },
+  };
 
-  itemIconGetter({ name, type }) {
+  itemIconGetter = ({ name, type }) => {
     if (type.id === 'file') {
       return null;
     }
@@ -45,12 +39,16 @@ const DownloadFileBrowser = React.createClass({
         onClick={ () => this.props.downloadHandler(this.state.currentPath + name + separator) }
       />
     );
-  },
+  };
 
-  getInitialPath() {
+  getInitialPath = () => {
     const { history } = this.props;
     return history.length > 0 ? history[history.length-1] : '';
-  },
+  };
+
+  state = {
+    currentPath: this.getInitialPath(),
+  };
 
   render() {
     return (
@@ -63,6 +61,6 @@ const DownloadFileBrowser = React.createClass({
       />
     );
   }
-});
+}
 
 export default DownloadFileBrowser;

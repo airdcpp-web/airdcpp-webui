@@ -4,38 +4,36 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import '../style.css';
 
 
-const LogSection = React.createClass({
-  convertKey(suffix) {
+class LogSection extends React.Component {
+  state = {
+    enabled: false,
+  };
+
+  convertKey = (suffix) => {
     return 'log_' + this.props.section + (suffix ? ('_' + suffix) : '');
-  },
+  };
 
-  getInitialState() {
-    return {
-      enabled: false,
-    };
-  },
-
-  onSettingsReceived(data) {
+  onSettingsReceived = (data) => {
     this.setState({
       enabled: data[this.convertKey()],
     });
-  },
+  };
 
-  onEnableStateChanged(id, formValue, hasChanges) {
+  onEnableStateChanged = (id, formValue, hasChanges) => {
     this.setState({ enabled: formValue[id] });
-  },
+  };
 
-  onContentSetting(id, fieldOptions, formValue) {
+  onContentSetting = (id, fieldOptions, formValue) => {
     fieldOptions['disabled'] = !this.state.enabled;
-  },
+  };
 
-  getChildClass(className) {
+  getChildClass = (className) => {
     if (this.state.enabled) {
       return className + ' active';
     }
 
     return className;
-  },
+  };
 
   render() {
     const Title = [
@@ -68,6 +66,6 @@ const LogSection = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default LogSection;

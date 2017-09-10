@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import WebUserConstants from 'constants/WebUserConstants';
@@ -87,8 +88,10 @@ const getEntry = isNew => {
   ];
 };
 
-const WebUserDialog = React.createClass({
+const WebUserDialog = createReactClass({
+  displayName: 'WebUserDialog',
   mixins: [ RouteContext ],
+
   isNew() {
     return !this.props.user;
   },
@@ -147,7 +150,7 @@ const WebUserDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default WebUserDialog;

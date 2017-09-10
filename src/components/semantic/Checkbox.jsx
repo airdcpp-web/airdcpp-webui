@@ -2,15 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import 'semantic-ui/components/checkbox';
 import 'semantic-ui/components/checkbox.min.css';
 
 
-const Checkbox = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class Checkbox extends React.PureComponent {
+  static propTypes = {
 
     /**
 		 * Selection state
@@ -34,7 +32,7 @@ const Checkbox = React.createClass({
 
     disabled: PropTypes.bool,
     floating: PropTypes.bool,
-  },
+  };
 
   componentDidMount() {
     const settings = {
@@ -44,7 +42,7 @@ const Checkbox = React.createClass({
     };
 
     $(this.c).checkbox(settings);
-  },
+  }
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.checked != this.props.checked) {
@@ -54,9 +52,9 @@ const Checkbox = React.createClass({
         $(this.c).checkbox('set unchecked');
       }
     }
-  },
+  }
 
-  render: function () {
+  render() {
     const { className, checked, caption, type, disabled, floating } = this.props;
 
     const checkboxStyle = classNames(
@@ -79,7 +77,7 @@ const Checkbox = React.createClass({
           </label>
         ) }
       </div>);
-  },
-});
+  }
+}
 
 export default Checkbox;

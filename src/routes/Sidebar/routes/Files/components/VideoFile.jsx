@@ -4,7 +4,7 @@ import React from 'react';
 import MediaFileDecorator from '../decorators/MediaFileDecorator';
 
 
-const VideoFile = React.createClass({
+class VideoFile extends React.Component {
   render() {
     return (
       <video 
@@ -13,6 +13,6 @@ const VideoFile = React.createClass({
       />
     );
   }
-});
+}
 
 export default MediaFileDecorator(VideoFile);

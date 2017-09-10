@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Moment from 'moment';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
@@ -55,8 +56,10 @@ const formatNote = (installedPackage, npmError) => {
 };
 
 
-const Extension = React.createClass({
+const Extension = createReactClass({
+  displayName: 'Extension',
   mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
+
   propTypes: {
     npmPackage: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -154,7 +157,7 @@ const Extension = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default Extension;

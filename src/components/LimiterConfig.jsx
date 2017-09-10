@@ -4,31 +4,29 @@ import React from 'react';
 import Button from 'components/semantic/Button';
 import ActionInput from 'components/semantic/ActionInput';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import SettingConstants from 'constants/SettingConstants';
 import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
 
-const LimiterConfig = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class LimiterConfig extends React.PureComponent {
+  static propTypes = {
     limit: PropTypes.number.isRequired,
 
     /* Limiter API setting key to use for saving */
     settingKey: PropTypes.string.isRequired,
 
     hide: PropTypes.func,
-  },
+  };
 
-  save(limit = 0) {
+  save = (limit = 0) => {
     SocketService.post(SettingConstants.ITEMS_SET_URL, {
       [this.props.settingKey]: limit,
     });
 
     this.props.hide();
-  },
+  };
 
   render() {
     return (
@@ -52,6 +50,6 @@ const LimiterConfig = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default LimiterConfig;

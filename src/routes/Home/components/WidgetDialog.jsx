@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
 
@@ -11,7 +13,8 @@ import Form from 'components/form/Form';
 import { FieldTypes } from 'constants/SettingConstants';
 
 
-const WidgetDialog = React.createClass({
+const WidgetDialog = createReactClass({
+  displayName: 'WidgetDialog',
   mixins: [ RouteContext ],
 
   propTypes: {
@@ -85,7 +88,7 @@ const WidgetDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default WidgetDialog;

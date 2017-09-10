@@ -3,7 +3,6 @@ import React from 'react';
 import invariant from 'invariant';
 
 import classNames from 'classnames';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import DropdownCaption from './DropdownCaption';
 import Icon from './Icon';
@@ -12,9 +11,8 @@ import 'semantic-ui/components/dropdown';
 import 'semantic-ui/components/dropdown.min.css';
 
 
-const Dropdown = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class Dropdown extends React.PureComponent {
+  static propTypes = {
     /**
 		 * Node to render as caption
 		 */
@@ -50,37 +48,40 @@ const Dropdown = React.createClass({
     button: PropTypes.bool,
 
     settings: PropTypes.object,
-  },
+  };
 
-  getInitialState() {
-    return {
-      visible: false,
-    };
-  },
+  static defaultProps = {
+    triggerIcon: 'angle down',
+    direction: 'auto',
+  };
+
+  state = {
+    visible: false,
+  };
 
   componentDidMount() {
     // Use timeout to allow all parents finish mounting (otherwise we get no context)
     setTimeout(this.init);
-  },
+  }
 
-  onShow() {
+  onShow = () => {
     this.setState({
       visible: true,
     });
-  },
+  };
 
-  onHide() {
+  onHide = () => {
     this.setState({
       visible: false,
     });
-  },
+  };
 
-  hide() {
+  hide = () => {
     // Don't hide before the click event is processed by React
     setTimeout(_ => $(this.c).dropdown('hide'));
-  },
+  };
 
-  init() {
+  init = () => {
     const settings = {
       direction: this.props.direction,
       action: this.hide,
@@ -98,16 +99,9 @@ const Dropdown = React.createClass({
     }
 
     $(this.c).dropdown(settings);
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      triggerIcon: 'angle down',
-      direction: 'auto',
-    };
-  },
-
-  getMenuItems() {
+  getMenuItems = () => {
     if (!this.state.visible) {
       // The menu wouldn't load otherwise
       return <div className="item"/>;
@@ -119,9 +113,9 @@ const Dropdown = React.createClass({
     }
 
     return children;
-  },
+  };
 
-  render: function () {
+  render() {
     const { leftIcon, caption, header, button, triggerIcon } = this.props;
     const className = classNames(
       'ui',
@@ -156,6 +150,6 @@ const Dropdown = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default Dropdown;

@@ -11,8 +11,8 @@ import DropdownCaption from './DropdownCaption';
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
-const TableDropdown = React.createClass({
-  propTypes: {
+class TableDropdown extends React.Component {
+  static propTypes = {
     /**
 		 * Cell content to render
 		 */
@@ -24,19 +24,17 @@ const TableDropdown = React.createClass({
     linkCaption: PropTypes.bool,
 
     children: PropTypes.func.isRequired,
-  },
+  };
+
+  static defaultProps = {
+    linkCaption: true,
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.caption !== this.props.caption;
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      linkCaption: true,
-    };
-  },
-
-  addCloseHandler(elem) {
+  addCloseHandler = (elem) => {
     if (elem.type === 'div') {
       // Divider
       return elem;
@@ -50,9 +48,9 @@ const TableDropdown = React.createClass({
         elem.props.onClick();
       } 
     });
-  },
+  };
 
-  getChildren() {
+  getChildren = () => {
     return (
       <div className="ui text menu vertical">
         <div className="ui dropdown item table-items">
@@ -60,9 +58,9 @@ const TableDropdown = React.createClass({
         </div>
       </div>
     );
-  },
+  };
 
-  render: function () {
+  render() {
     let caption = (
       <DropdownCaption>
         { this.props.caption }
@@ -96,6 +94,6 @@ const TableDropdown = React.createClass({
         { this.props.linkCaption ? null : caption }
       </div>);
   }
-});
+}
 
 export default TableDropdown;

@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from './MessageFooter';
 
@@ -10,8 +12,10 @@ import AccessConstants from 'constants/AccessConstants';
 import { LocationContext } from 'mixins/RouterMixin';
 
 
-const PrivateChatSession = React.createClass({
+const PrivateChatSession = createReactClass({
+  displayName: 'PrivateChatSession',
   mixins: [ LocationContext ],
+
   render() {
     const { session, location, actions } = this.props;
     return (

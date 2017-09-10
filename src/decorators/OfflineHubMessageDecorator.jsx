@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import HubSessionStore from 'stores/HubSessionStore';
@@ -10,8 +11,10 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 // Disables the component if there are no online hubs
-const OfflineHubMessageDecorator = React.createClass({
+const OfflineHubMessageDecorator = createReactClass({
+  displayName: 'OfflineHubMessageDecorator',
   mixins: [ Reflux.ListenerMixin ],
+
   propTypes: {
 
     /**

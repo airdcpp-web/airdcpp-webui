@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import SiteHeader from './SiteHeader';
@@ -33,8 +34,10 @@ const reduceMenuItemUrgency = (map, menuItem) => {
   return map;
 };
 
-const HeaderContent = MainNavigationDecorator(React.createClass({
+const HeaderContent = MainNavigationDecorator(createReactClass({
+  displayName: 'HeaderContent',
   mixins: [ Reflux.ListenerMixin ],
+
   componentDidMount() {
     this.props.secondaryMenuItems.forEach(item => {
       if (item.unreadInfoStore) {
@@ -63,23 +66,21 @@ const HeaderContent = MainNavigationDecorator(React.createClass({
         />
       </div>
     );
-  }
+  },
 }));
 
-const MainLayoutMobile = React.createClass({
-  getInitialState() {
-    return {
-      menuVisible: false,
-    };
-  },
+class MainLayoutMobile extends React.Component {
+  state = {
+    menuVisible: false,
+  };
 
-  onClickMenu() {
+  onClickMenu = () => {
     this.setState({ menuVisible: !this.state.menuVisible });
-  },
+  };
 
-  onClickBack() {
+  onClickBack = () => {
     History.replaceSidebarData(this.props.location, { close: true });
-  },
+  };
 
   render() {
     const { children, sidebar } = this.props;
@@ -110,6 +111,6 @@ const MainLayoutMobile = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default OverlayHandlerDecorator(MainLayoutMobile);

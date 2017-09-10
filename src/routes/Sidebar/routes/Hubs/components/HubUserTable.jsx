@@ -23,16 +23,16 @@ const NickCell = ({ cellData, rowDataGetter, ...props }) => (
   />
 );
 
-const HubUserTable = React.createClass({
-  propTypes: {
+class HubUserTable extends React.Component {
+  static propTypes = {
     session: PropTypes.object, // required
-  },
+  };
 
-  rowClassNameGetter(user) {
+  rowClassNameGetter = (user) => {
     return user.flags.join(' ');
-  },
+  };
 
-  emptyRowsNodeGetter() {
+  emptyRowsNodeGetter = () => {
     const connectState = this.props.session.connect_state.id;
 
     if (connectState === ConnectStateEnum.DISCONNECTED) {
@@ -53,7 +53,7 @@ const HubUserTable = React.createClass({
         <Loader text={ text }/>
       </div>
     );
-  },
+  };
 
   render() {
     const { session } = this.props;
@@ -128,6 +128,6 @@ const HubUserTable = React.createClass({
       </VirtualTable>
     );
   }
-});
+}
 
 export default HubUserTable;

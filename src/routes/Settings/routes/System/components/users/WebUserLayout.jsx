@@ -16,7 +16,7 @@ export const PermissionsCell = ({ cellData }) => (
   </span>
 );
 
-const WebUserLayout = React.createClass({
+class WebUserLayout extends React.Component {
   render() {
     return (
       <VirtualTable
@@ -56,6 +56,6 @@ const WebUserLayout = React.createClass({
       </VirtualTable>
     );
   }
-});
+}
 
 export default WebUserLayout;

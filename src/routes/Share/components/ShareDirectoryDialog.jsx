@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -51,8 +52,10 @@ const getFields = (profiles) => {
   ];
 };
 
-const ShareDirectoryDialog = React.createClass({
+const ShareDirectoryDialog = createReactClass({
+  displayName: 'ShareDirectoryDialog',
   mixins: [ RouteContext ],
+
   isNew() {
     return !this.props.rootEntry;
   },
@@ -137,7 +140,7 @@ const ShareDirectoryDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {

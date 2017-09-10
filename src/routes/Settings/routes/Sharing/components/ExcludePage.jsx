@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ShareActions from 'actions/ShareActions';
 import ShareConstants from 'constants/ShareConstants';
 
@@ -27,8 +29,10 @@ const Row = ({ path }) => (
   </tr>
 );
 
-const ExcludePage = React.createClass({
+const ExcludePage = createReactClass({
+  displayName: 'ExcludePage',
   mixins: [ LocationContext ],
+
   getRow(path) {
     return (
       <Row 
@@ -76,7 +80,7 @@ const ExcludePage = React.createClass({
         ) }
       </div>
     );
-  }
+  },
 });
 
 export default DataProviderDecorator(ExcludePage, {

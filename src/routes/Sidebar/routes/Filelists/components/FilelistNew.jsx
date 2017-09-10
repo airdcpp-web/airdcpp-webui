@@ -10,26 +10,26 @@ import ShareProfileSelector from './ShareProfileSelector';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
-const FilelistNew = React.createClass({
-  handleSubmit(nick, user) {
+class FilelistNew extends React.Component {
+  handleSubmit = (nick, user) => {
     FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
-  },
+  };
 
-  onProfileChanged(profileId) {
+  onProfileChanged = (profileId) => {
     FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
-  },
+  };
 
-  recentUserRender(entry) {
+  recentUserRender = (entry) => {
     return (
       <a onClick={ _ => this.handleSubmit(null, entry.user) }>
         { entry.user.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
       </a> 
     );
-  },
+  };
 
-  hasSession(entry) {
+  hasSession = (entry) => {
     return FilelistSessionStore.getSession(entry.user.cid);
-  },
+  };
 
   render() {
     return (
@@ -50,6 +50,6 @@ const FilelistNew = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default FilelistNew;

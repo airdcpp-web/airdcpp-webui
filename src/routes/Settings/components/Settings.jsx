@@ -242,12 +242,12 @@ const MainLayout = SettingsMenuDecorator(({ menuItems, children, currentMenuItem
 });
 
 // Only to pass menu items to the decorated component
-const Settings = React.createClass({
+class Settings extends React.Component {
   render() {
     return (
       <MainLayout { ...this.props } menuItems={ menu }/>
     );
-  },
-});
+  }
+}
 
 export default Settings;

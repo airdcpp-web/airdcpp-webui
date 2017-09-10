@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import './style.css';
 
@@ -22,9 +21,8 @@ const SelectedSection = ({ selectedNameFormatter, caption, token }) => (
   </div>
 );
 
-const BrowserBar = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class BrowserBar extends React.PureComponent {
+  static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
@@ -55,37 +53,33 @@ const BrowserBar = React.createClass({
 		 * Receives the caption element and path token as parameters
 		 */
     selectedNameFormatter: PropTypes.func.isRequired,
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      rootName: 'Root',
-    };
-  },
+  static defaultProps = {
+    rootName: 'Root',
+  };
 
-  getInitialState() {
-    return {
-      overflow: false,
-    };
-  },
+  state = {
+    overflow: false,
+  };
 
   componentDidMount() {
     this.checkOverflow();
-  },
+  }
 
   componentDidUpdate() {
     this.checkOverflow();
-  },
+  }
 
-  checkOverflow() {
+  checkOverflow = () => {
     const newOverflow = this.breadcrumb.clientWidth > this.wrapper.clientWidth;
     if (newOverflow !== this.state.overflow) {
       this.setState({ overflow: newOverflow });
       console.log('overflow', newOverflow);
     }
-  },
+  };
 
-  onClick(token, index) {
+  onClick = (token, index) => {
     const tokens = this.tokenizePath();
     let path = this.props.rootPath;
 
@@ -94,17 +88,17 @@ const BrowserBar = React.createClass({
     }
 
     this.props.itemClickHandler(path);
-  },
+  };
 
-  formatName(token) {
+  formatName = (token) => {
     return (
       <div className="section-caption">
         { this.props.rootPath === token ? this.props.rootName : token }
       </div>
     );
-  },
+  };
 
-  formatSection(token, index) {
+  formatSection = (token, index) => {
     return (
       <Section 
         key={ token + index } 
@@ -112,23 +106,23 @@ const BrowserBar = React.createClass({
         caption={ this.formatName(token) }
       />
     );
-  },
+  };
 
-  tokenizePath() {
+  tokenizePath = () => {
     const { path, separator, rootPath } = this.props;
 
     return [ rootPath, ...path.split(separator).filter(t => t.length != 0) ];
-  },
+  };
 
-  parsePath() {
+  parsePath = () => {
     const tokens = this.tokenizePath();
     return {
       current: tokens[tokens.length-1],
       tokens: tokens.slice(0, tokens.length-1),
     };
-  },
+  };
 
-  render: function () {
+  render() {
     const { current, tokens } = this.parsePath();
 
     const className = this.state.overflow ? 'overflow' : '';
@@ -149,6 +143,6 @@ const BrowserBar = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default BrowserBar;

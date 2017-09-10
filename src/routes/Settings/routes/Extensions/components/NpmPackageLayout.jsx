@@ -8,8 +8,8 @@ import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import 'semantic-ui/components/item.min.css';
 
 
-const NpmPackageLayout = React.createClass({
-  getItem(npmPackage) {
+class NpmPackageLayout extends React.Component {
+  getItem = (npmPackage) => {
     const installedPackage = this.props.installedPackages.find(installedPackage => installedPackage.name === npmPackage.name);
     return (
       <Extension 
@@ -18,7 +18,7 @@ const NpmPackageLayout = React.createClass({
         installedPackage={ installedPackage }
       />
     );
-  },
+  };
 
   render() {
     const { packageCatalog } = this.props;
@@ -33,7 +33,7 @@ const NpmPackageLayout = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default DataProviderDecorator(NpmPackageLayout, {
   urls: {

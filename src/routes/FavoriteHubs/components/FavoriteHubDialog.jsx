@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
@@ -61,8 +62,10 @@ const getFieldProfiles = (profiles, url) => {
     .map(FormUtils.normalizeEnumValue);
 };
 
-const FavoriteHubDialog = React.createClass({
+const FavoriteHubDialog = createReactClass({
+  displayName: 'FavoriteHubDialog',
   mixins: [ RouteContext ],
+
   isNew() {
     return !this.props.hubEntry;
   },
@@ -126,7 +129,7 @@ const FavoriteHubDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default ShareProfileDecorator(FavoriteHubDialog, true);

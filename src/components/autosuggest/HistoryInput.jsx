@@ -9,8 +9,8 @@ import HistoryActions from 'actions/HistoryActions';
 import LocalSuggestField from './LocalSuggestField';
 
 
-const HistoryInput = React.createClass({
-  propTypes: {
+class HistoryInput extends React.Component {
+  static propTypes = {
 
     /**
 		 * ID of the history section
@@ -20,14 +20,14 @@ const HistoryInput = React.createClass({
     history: PropTypes.array.isRequired,
 
     submitHandler: PropTypes.func.isRequired,
-  },
+  };
 
-  handleSubmit(text) {
+  handleSubmit = (text) => {
     HistoryActions.add(this.props.historyId, text);
 
     this.props.refetchData();
     this.props.submitHandler(text);
-  },
+  };
 
   render() {
 		const { submitHandler, historyId, history, ...other } = this.props; // eslint-disable-line
@@ -38,8 +38,8 @@ const HistoryInput = React.createClass({
         submitHandler={ this.handleSubmit }
       />
     );
-  },
-});
+  }
+}
 
 export default DataProviderDecorator(HistoryInput, {
   urls: {

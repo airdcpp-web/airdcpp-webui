@@ -3,15 +3,15 @@ import React from 'react';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
-const InputField = React.createClass({
-  propTypes: {
+class InputField extends React.Component {
+  static propTypes = {
     /**
 		 * Action description
 		 */
     content: PropTypes.node.isRequired,
-  },
+  };
 
-  render: function () {
+  render() {
     const { content, ...other } = this.props;
     return (
       <div className="ui input dialog">
@@ -20,7 +20,7 @@ const InputField = React.createClass({
       </div>
     );
   }
-});
+}
 
 const InputDialog = function (dialogOptions, inputOptions, onApproved) {
   let inputText = inputOptions.defaultValue ? inputOptions.defaultValue : '';

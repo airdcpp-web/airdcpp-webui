@@ -24,7 +24,7 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 
-const ListBrowser = React.createClass({
+class ListBrowser extends React.Component {
   /*mixins: [ Lifecycle ],
 
 	// Disabled, doesn't work (investigate later)
@@ -49,16 +49,16 @@ const ListBrowser = React.createClass({
 		router: React.PropTypes.object.isRequired,
 	},*/
 
-  _rowClassNameGetter(rowData) {
+  _rowClassNameGetter = (rowData) => {
     return TypeConvert.dupeToStringType(rowData.dupe);
-  },
+  };
 
-  _handleClickDirectory(path) {
+  _handleClickDirectory = (path) => {
     this.hasClickedDirectory = true;
 
     // Handle it through location state data
     History.pushSidebarData(this.props.location, { directory: path });
-  },
+  };
 
   componentWillMount() {
     const { session, location } = this.props;
@@ -68,7 +68,7 @@ const ListBrowser = React.createClass({
       // We need an initial path for our history
       History.replaceSidebarData(location, { directory: session.location.path });
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     const nextLocationData = History.getSidebarData(nextProps.location);
@@ -84,13 +84,13 @@ const ListBrowser = React.createClass({
       // Change initiated by another session/GUI, update our location
       History.replaceSidebarData(nextProps.location, { directory: nextProps.session.location.path });
     }
-  },
+  }
 
-  sendChangeDirectory(directory) {
+  sendChangeDirectory = (directory) => {
     FilelistSessionActions.changeDirectory(this.props.session.user.cid, directory);
-  },
+  };
 
-  emptyRowsNodeGetter() {
+  emptyRowsNodeGetter = () => {
     const { location, state } = this.props.session;
 
     if (state.id === 'download_failed') {
@@ -119,21 +119,21 @@ const ListBrowser = React.createClass({
         description={ 'The directory is empty' }
       />
     );
-  },
+  };
 
-  onClickDirectory(cellData, rowDataGetter) {
+  onClickDirectory = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
       return () => this._handleClickDirectory(this.props.session.location.path + cellData + '/');
     }
 
     return undefined;
-  },
+  };
 
-  getCurrentDirectory() {
+  getCurrentDirectory = () => {
     return this.props.session.location;
-  },
+  };
 
-  selectedNameFormatter(caption) {
+  selectedNameFormatter = (caption) => {
     return (
       <DownloadMenu 
         caption={ caption }
@@ -150,11 +150,11 @@ const ListBrowser = React.createClass({
         />
       </DownloadMenu>
     );
-  },
+  };
 
-  userGetter() {
+  userGetter = () => {
     return this.props.session.user;
-  },
+  };
 
   render() {
     const { session } = this.props;
@@ -214,7 +214,7 @@ const ListBrowser = React.createClass({
         </VirtualTable>
       </div>
     );
-  },
-});
+  }
+}
 
 export default ListBrowser;

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
@@ -13,8 +15,10 @@ import EncryptionState from 'components/EncryptionState';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 
-const HubFooter = React.createClass({
+const HubFooter = createReactClass({
+  displayName: 'HubFooter',
   mixins: [ SocketSubscriptionMixin(HubSessionStore), PureRenderMixin ],
+
   propTypes: {
     /**
 		 * Currently active session (required)
@@ -87,7 +91,7 @@ const HubFooter = React.createClass({
         </div>
       </SessionFooter>
     );
-  }
+  },
 });
 
 export default HubFooter;

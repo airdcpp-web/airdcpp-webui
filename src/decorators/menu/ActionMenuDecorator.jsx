@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { actionFilter, actionAccess } from 'utils/ActionUtils';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 
 // Returns true if the provided ID matches the specified filter
@@ -110,9 +109,8 @@ const getMenuItem = (menu, menuIndex, actionId, itemIndex, routerLocation) => {
 const notError = id => typeof id !== 'string';
 
 export default function (Component) {
-  const ActionMenu = React.createClass({
-    mixins: [ PureRenderMixin ],
-    propTypes: {
+  class ActionMenu extends React.PureComponent {
+    static propTypes = {
 
       /**
 			 * Item to be passed to the actions
@@ -137,21 +135,21 @@ export default function (Component) {
       button: PropTypes.bool,
 
       caption: PropTypes.node,
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
       routerLocation: PropTypes.object.isRequired,
-    },
+    };
 
     // Reduce menus to an array of DropdownItems
-    reduceMenuItems(items, menu, menuIndex) {
+    reduceMenuItems = (items, menu, menuIndex) => {
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
         return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.routerLocation);
       }));
       return items;
-    },
+    };
 
-    getMenus() {
+    getMenus = () => {
 			let { ids, actions, children, ...other } = this.props; // eslint-disable-line
 
       const menus = [ parseMenu(this.props) ];
@@ -162,14 +160,14 @@ export default function (Component) {
       }
 
       return menus;
-    },
+    };
 
-    getChildren() {
+    getChildren = () => {
       const menus = this.getMenus();
       return menus
         .filter(notError)
         .reduce(this.reduceMenuItems, []);
-    },
+    };
 
     render() {
 			let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props; // eslint-disable-line
@@ -201,8 +199,8 @@ export default function (Component) {
           { this.getChildren }
         </Component>
       );
-    },
-  });
+    }
+  }
 
   return ActionMenu;
 }

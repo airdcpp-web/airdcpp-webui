@@ -9,28 +9,26 @@ import TableFilterDecorator from 'decorators/TableFilterDecorator';
 
 const defaultItem = { str: 'All profiles', id: null };
 
-const ShareProfileFilter = React.createClass({
-  propTypes: {
+class ShareProfileFilter extends React.Component {
+  static propTypes = {
     /**
 		 * Callback after selecting a profile
 		 */
     onFilterUpdated: PropTypes.func,
-  },
+  };
 
-  getInitialState() {
-    return {
-      selectedProfile: defaultItem,
-    };
-  },
+  state = {
+    selectedProfile: defaultItem,
+  };
 
-  onClick(profile) {
+  onClick = (profile) => {
     this.props.onFilterUpdated(profile.id);
     this.setState({ 
       selectedProfile: profile 
     });
-  },
+  };
 
-  getDropdownItem(profile) {
+  getDropdownItem = (profile) => {
     return (
       <MenuItemLink 
         key={ profile.id }
@@ -40,7 +38,7 @@ const ShareProfileFilter = React.createClass({
         { profile.str }
       </MenuItemLink>
     );
-  },
+  };
 
   render() {
     return (
@@ -58,6 +56,6 @@ const ShareProfileFilter = React.createClass({
       </Dropdown>
     );
   }
-});
+}
 
 export default ShareProfileDecorator(TableFilterDecorator(ShareProfileFilter, 'profiles'), false);

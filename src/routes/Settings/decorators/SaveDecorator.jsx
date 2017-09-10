@@ -1,6 +1,7 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import invariant from 'invariant';
 
 import Message from 'components/semantic/Message';
@@ -13,7 +14,9 @@ import { Lifecycle } from 'mixins/RouterMixin';
 
 
 export default (Component, saveButtonClass = '') => {
-  const SaveDecorator = React.createClass({
+  const SaveDecorator = createReactClass({
+    displayName: 'SaveDecorator',
+
     propTypes: {
       currentMenuItem: PropTypes.object.isRequired,
       location: PropTypes.object,

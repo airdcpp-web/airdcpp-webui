@@ -27,32 +27,30 @@ const getPlaceholder = (method) => {
   return ret + '...';
 };
 
-const FilterBox = React.createClass({
-  propTypes: {
+class FilterBox extends React.Component {
+  static propTypes = {
     viewUrl: PropTypes.string.isRequired,
-  },
+  };
 
-  getInitialState: function () {
-    return { 
-      value: '',
-      method: FilterMethod.PARTIAL,
-    };
-  },
+  state = { 
+    value: '',
+    method: FilterMethod.PARTIAL,
+  };
 
-  componentWillMount: function () {
+  componentWillMount() {
     this._timer = null;
-  },
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     clearTimeout(this._timer);
-  },
+  }
 
-  onFilterUpdated() {
+  onFilterUpdated = () => {
     const { value, method } = this.state;
     this.props.onFilterUpdated(value, method);
-  },
+  };
 
-  onTextChanged: function (event) {
+  onTextChanged = (event) => {
     this.setState({ 
       value: event.target.value 
     });
@@ -63,18 +61,18 @@ const FilterBox = React.createClass({
       this._timer = null;
       this.onFilterUpdated();
     }, 200);
-  },
+  };
 
-  onMethodChanged(method) {
+  onMethodChanged = (method) => {
     this.setState({ 
       method,
     });
 
     setTimeout(_ => this.onFilterUpdated());
     this.input.focus();
-  },
+  };
 
-  getFilterMethod(method) {
+  getFilterMethod = (method) => {
     const isCurrent = method === this.state.method;
     return (
       <MenuItemLink 
@@ -85,9 +83,9 @@ const FilterBox = React.createClass({
         { filterMethodToString(method) }
       </MenuItemLink>
     );
-  },
+  };
 
-  render: function () {
+  render() {
     return (
       <div className="text-filter">
         <div 
@@ -113,6 +111,6 @@ const FilterBox = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default TableFilterDecorator(FilterBox);

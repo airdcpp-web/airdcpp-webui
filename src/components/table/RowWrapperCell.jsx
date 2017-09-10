@@ -3,22 +3,20 @@ import PropTypes from 'prop-types';
 
 
 // Generic wrapper for all cells that will handle data loading
-const RowWrapperCell = React.createClass({
-  propTypes: {
+class RowWrapperCell extends React.Component {
+  static propTypes = {
     rowIndex: PropTypes.number, // required
     dataLoader: PropTypes.object.isRequired,
     width: PropTypes.number, // required
-  },
+  };
 
-  getInitialState() {
-    return {
-      rowData: null,
-    };
-  },
+  state = {
+    rowData: null,
+  };
 
   componentDidMount() {
     this.loadData(this.props.rowIndex);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.rowIndex !== this.props.rowIndex) {
@@ -32,28 +30,28 @@ const RowWrapperCell = React.createClass({
       // Avoid displaying old data
       this.setState({ rowData: null });
     }
-  },
+  }
 
   componentWillUnmount() {
     this.props.dataLoader.removePendingRequests(this.props.rowIndex, this.onDataLoaded);
-  },
+  }
 
-  loadData(rowIndex) {
+  loadData = (rowIndex) => {
     return this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
-  },
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.rowData !== this.state.rowData || 
    nextProps.width !== this.props.width;
-  },
+  }
 
-  rowDataGetter() {
+  rowDataGetter = () => {
     return this.state.rowData;
-  },
+  };
 
-  onDataLoaded(data) {
+  onDataLoaded = (data) => {
     this.setState({ rowData: data });
-  },
+  };
 
   render() {
     const { columnKey, children, renderCondition, rowClassNameGetter, ...other } = this.props;
@@ -86,6 +84,6 @@ const RowWrapperCell = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default RowWrapperCell;

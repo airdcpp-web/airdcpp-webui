@@ -8,8 +8,8 @@ import 'semantic-ui/components/modal';
 import 'semantic-ui/components/modal.min.css';
 
 
-const ConfirmDialog = React.createClass({
-  propTypes: {
+class ConfirmDialog extends React.Component {
+  static propTypes = {
 
     /**
 		 * Title of the modal
@@ -37,20 +37,16 @@ const ConfirmDialog = React.createClass({
 		 * The checkbox value will be provided as an argument when the promise is resolved
 		 */
     checkboxCaption: PropTypes.node,
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      approveCaption: 'Yes',
-      rejectCaption: 'No',
-    };
-  },
+  static defaultProps = {
+    approveCaption: 'Yes',
+    rejectCaption: 'No',
+  };
 
-  getInitialState() {
-    return {
-      checked: false,
-    };
-  },
+  state = {
+    checked: false,
+  };
 
   componentDidMount() {
     // We can't use the same context as for modals
@@ -75,30 +71,30 @@ const ConfirmDialog = React.createClass({
     };
 
     $(this.c).modal(settings).modal('show');
-  },
+  }
 
-  onDeny: function (el) {
+  onDeny = (el) => {
     if (this.props.onRejected) {
       this.props.onRejected(new Error('Denied'));
     }
-  },
+  };
 
-  onApprove: function (el) {
+  onApprove = (el) => {
     this.props.onApproved(this.state.checked);
-  },
+  };
 
-  onHidden() {
+  onHidden = () => {
     if (this.props.node) {
       ReactDOM.unmountComponentAtNode(this.props.node);
       document.body.removeChild(this.props.node);
     }
-  },
+  };
 
-  onCheckboxValueChanged(value) {
+  onCheckboxValueChanged = (value) => {
     this.setState({ checked: value });
-  },
+  };
 
-  render: function () {
+  render() {
     return (
       <div 
         ref={ c => this.c = c } 
@@ -137,7 +133,7 @@ const ConfirmDialog = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default function (options, onApproved, onRejected) {
   const node = document.createElement('div');

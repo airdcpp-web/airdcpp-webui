@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ShareProfileActions from 'actions/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
@@ -34,8 +36,10 @@ const Row = ({ profile }) => (
   </tr>
 );
 
-const ShareProfilesPage = React.createClass({
+const ShareProfilesPage = createReactClass({
+  displayName: 'ShareProfilesPage',
   mixins: [ LocationContext ],
+
   getRow(profile) {
     return (
       <Row 
@@ -80,7 +84,7 @@ const ShareProfilesPage = React.createClass({
         </table>
       </div>
     );
-  }
+  },
 });
 
 export default ShareProfileDecorator(ShareProfilesPage, false, false);

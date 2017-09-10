@@ -6,8 +6,8 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-const SaveButton = React.createClass({
-  propTypes: {
+class SaveButton extends React.Component {
+  static propTypes = {
     /**
 		 * Message title
 		 */
@@ -19,26 +19,24 @@ const SaveButton = React.createClass({
     saveHandler: PropTypes.func.isRequired,
 
     local: PropTypes.bool,
-  },
+  };
 
-  getInitialState() {
-    return {
-      saving: false
-    };
-  },
+  state = {
+    saving: false
+  };
 
-  toggleSaveState() {
+  toggleSaveState = () => {
     this.setState({ saving: !this.state.saving });
-  },
+  };
 
-  onClick() {
+  onClick = () => {
     this.toggleSaveState();
     this.props.saveHandler()
       .then(this.toggleSaveState)
       .catch(this.toggleSaveState);
-  },
+  };
 
-  render: function () {
+  render() {
     const { local, hasChanges, className } = this.props;
 
     const hasAccess = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
@@ -61,6 +59,6 @@ const SaveButton = React.createClass({
       />
     );
   }
-});
+}
 
 export default SaveButton;

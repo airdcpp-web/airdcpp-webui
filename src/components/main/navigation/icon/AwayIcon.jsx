@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import { AwayEnum } from 'constants/SystemConstants';
@@ -6,7 +7,8 @@ import SystemActions from 'actions/SystemActions';
 import ActivityStore from 'stores/ActivityStore';
 
 
-const AwayIcon = React.createClass({
+const AwayIcon = createReactClass({
+  displayName: 'AwayIcon',
   mixins: [ Reflux.connect(ActivityStore, 'activityState') ],
 
   isAway() {
@@ -20,7 +22,7 @@ const AwayIcon = React.createClass({
   render: function () {
     const iconColor = this.isAway() ? 'yellow' : 'grey';
     return <i className={ iconColor + ' away-state link large wait icon' } onClick={ this.onClick }/>;
-  }
+  },
 });
 
 export default AwayIcon;

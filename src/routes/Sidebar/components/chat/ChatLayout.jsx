@@ -12,8 +12,8 @@ import LoginStore from 'stores/LoginStore';
 import './chat.css';
 
 
-const ChatLayout = React.createClass({
-  propTypes: {
+class ChatLayout extends React.Component {
+  static propTypes = {
     /**
 		 * Access required for sending messages
 		 */
@@ -24,25 +24,26 @@ const ChatLayout = React.createClass({
     messageStore: PropTypes.object.isRequired,
 
     actions: PropTypes.object.isRequired,
-  },
+  };
 
-  onMessagesChanged(messages, id) {
+  constructor(props) {
+    super(props);
+    this.unsubscribe = props.messageStore.listen(this.onMessagesChanged);
+
+    this.state = {
+      messages: null,
+    };
+  }
+
+  onMessagesChanged = (messages, id) => {
     if (id !== this.props.session.id) {
       return;
     }
 
     this.setState({ messages: messages });
-  },
+  };
 
-  getInitialState() {
-    this.unsubscribe = this.props.messageStore.listen(this.onMessagesChanged);
-
-    return {
-      messages: null,
-    };
-  },
-
-  onSessionActivated(id) {
+  onSessionActivated = (id) => {
     const { messageStore, actions } = this.props;
 		
     if (!messageStore.isSessionInitialized(id)) {
@@ -56,21 +57,21 @@ const ChatLayout = React.createClass({
         messages: messageStore.getSessionMessages(id) 
       });
     }
-  },
+  };
 
   componentDidMount() {
     this.onSessionActivated(this.props.session.id);
-  },
+  }
 
   componentWillUnmount() {
     this.unsubscribe();
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.session.id != nextProps.session.id) {
       this.onSessionActivated(nextProps.session.id);
     }
-  },
+  }
 
   render() {
     const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
@@ -90,7 +91,7 @@ const ChatLayout = React.createClass({
         ) }
       </div>
     );
-  },
-});
+  }
+}
 
 export default ActiveSessionDecorator(ChatLayout, true);

@@ -1,6 +1,7 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import classNames from 'classnames';
@@ -13,8 +14,10 @@ import Icon from 'components/semantic/Icon';
 
 // A component that will re-render only when urgencies or active state are updated
 // TODO: session code doesn't work with SessionMenuItem yet
-export const RouterMenuItemLink = React.createClass({
+export const RouterMenuItemLink = createReactClass({
+  displayName: 'RouterMenuItemLink',
   mixins: [ Reflux.ListenerMixin ],
+
   contextTypes: {
     router: PropTypes.object.isRequired,
   },
@@ -120,7 +123,7 @@ export const RouterMenuItemLink = React.createClass({
         { unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
       </Link>
     );
-  }
+  },
 });
 
 

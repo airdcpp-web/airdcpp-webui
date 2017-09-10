@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import { LocationContext, RouteContext } from 'mixins/RouterMixin';
@@ -8,8 +9,10 @@ import FileIcon from 'components/icon/FileIcon';
 import SourceTable from './SourceTable';
 
 
-const SourceDialog = React.createClass({
+const SourceDialog = createReactClass({
+  displayName: 'SourceDialog',
   mixins: [ LocationContext, RouteContext ],
+
   render: function () {
     const { bundle } = this.props;
     return (
@@ -26,7 +29,7 @@ const SourceDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default SourceDialog;

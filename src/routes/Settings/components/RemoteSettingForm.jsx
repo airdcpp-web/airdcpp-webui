@@ -8,29 +8,29 @@ import SocketService from 'services/SocketService';
 import Form from 'components/form/Form';
 
 
-const RemoteSettingForm = React.createClass({
-  propTypes: {
+class RemoteSettingForm extends React.Component {
+  static propTypes = {
     /**
 		 * Form items to list
 		 */
     keys: PropTypes.array.isRequired,
 
     formRef: PropTypes.func, // REQUIRED
-  },
+  };
 
-  onSave(changedValues) {
+  onSave = (changedValues) => {
     if (Object.keys(changedValues).length === 0) {
       return Promise.resolve();
     }
 		
     return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.refetchValues);
-  },
+  };
 
-  refetchValues() {
+  refetchValues = () => {
     this.props.refetchData([ 'settings' ]);
-  },
+  };
 
-  render: function () {
+  render() {
     const { formRef, settings, fieldDefinitions, ...otherProps } = this.props;
     return (
       <div className="remote setting-form">
@@ -44,7 +44,7 @@ const RemoteSettingForm = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default DataProviderDecorator(RemoteSettingForm, {
   urls: {

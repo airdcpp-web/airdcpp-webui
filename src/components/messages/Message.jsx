@@ -52,14 +52,14 @@ MessageText.propTypes = {
 
 
 // Main message types
-const ChatMessage = React.createClass({
-  propTypes: {
+class ChatMessage extends React.Component {
+  static propTypes = {
     message: PropTypes.object.isRequired,
-  },
+  };
 
   shouldComponentUpdate() {
     return false;
-  },
+  }
 
   render() {
     const { message, ...other } = this.props;
@@ -82,7 +82,7 @@ const ChatMessage = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 const getSeverityIcon = (severity) => {
@@ -94,14 +94,14 @@ const getSeverityIcon = (severity) => {
   }
 };
 
-const StatusMessage = React.createClass({
-  propTypes: {
+class StatusMessage extends React.Component {
+  static propTypes = {
     message: PropTypes.object.isRequired,
-  },
+  };
 
   shouldComponentUpdate() {
     return false;
-  },
+  }
 
   render() {
     const { message } = this.props;
@@ -117,6 +117,6 @@ const StatusMessage = React.createClass({
       </div>
     );
   }
-});
+}
 
 export { ChatMessage, StatusMessage };

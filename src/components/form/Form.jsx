@@ -12,8 +12,8 @@ import './style.css';
 
 const TcombForm = t.form.Form;
 
-const Form = React.createClass({
-  propTypes: {
+class Form extends React.Component {
+  static propTypes = {
     /**
 		 * Form items to list
 		 */
@@ -56,39 +56,37 @@ const Form = React.createClass({
 		 * Header for the form
 		 */
     title: PropTypes.node,
-  },
+  };
 
-  contextTypes: {
+  static contextTypes = {
     onFieldChanged: PropTypes.func,
-  },
+  };
 
-  getInitialState() {
-    return {
-      error: null,
-      formValue: {},
-    };
-  },
+  state = {
+    error: null,
+    formValue: {},
+  };
 
-  setSourceValue(value) {
+  setSourceValue = (value) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value);
 
     if (this.props.onSourceValueUpdated) {
       this.props.onSourceValueUpdated(this.sourceValue);
     }
-  },
+  };
 
   componentWillMount() {
     this.setSourceValue(this.props.value);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setSourceValue(nextProps.value);
     }
-  },
+  }
 
   // Merge new fields into current current form value
-  mergeFields(formValue, updatedFields) {
+  mergeFields = (formValue, updatedFields) => {
     const mergedValue = {
       ...formValue, 
       ...FormUtils.normalizeValue(updatedFields, this.props.fieldDefinitions)
@@ -99,9 +97,9 @@ const Form = React.createClass({
     });
 
     return mergedValue;
-  },
+  };
 
-  onFieldChanged(value, valueKey, kind) {
+  onFieldChanged = (value, valueKey, kind) => {
     const key = valueKey[0];
     if (kind) {
       // List action
@@ -133,10 +131,10 @@ const Form = React.createClass({
     this.setState({ 
       formValue: value 
     });
-  },
+  };
 
   // Handle an API error
-  onSaveFailed(error) {
+  onSaveFailed = (error) => {
     if (error.code === 422) {
       this.setState({ error: error.json });
     } else {
@@ -144,19 +142,19 @@ const Form = React.createClass({
     }
 
     throw error;
-  },
+  };
 
   // Reduces an object of current form values that don't match the source data
-  reduceChangedValues(formValue, changedValues, valueKey) {
+  reduceChangedValues = (formValue, changedValues, valueKey) => {
     if (!isEqual(this.sourceValue[valueKey], formValue[valueKey])) {
       changedValues[valueKey] = formValue[valueKey];
     }
 
     return changedValues;
-  },
+  };
 
   // Calls props.onSave with changed form values
-  save() {
+  save = () => {
     const validatedFormValue = this.form.getValue();
     if (validatedFormValue) {
       // Get the changed fields
@@ -170,10 +168,10 @@ const Form = React.createClass({
     }
 
     return Promise.reject(new Error('Validation failed'));
-  },
+  };
 
   // Reduces an array of field setting objects by calling props.onFieldSetting
-  fieldOptionReducer(optionsObject, def) {
+  fieldOptionReducer = (optionsObject, def) => {
     optionsObject[def.key] = FormUtils.parseFieldOptions(def);
 
     if (this.props.onFieldSetting) {
@@ -181,10 +179,10 @@ const Form = React.createClass({
     }
 
     return optionsObject;
-  },
+  };
 
   // Returns an options object for Tcomb form
-  getFieldOptions() {
+  getFieldOptions = () => {
     const options = {};
 
     // Parent handlers
@@ -202,9 +200,9 @@ const Form = React.createClass({
     }
 
     return options;
-  },
+  };
 
-  render: function () {
+  render() {
     const { title, context, fieldDefinitions, className } = this.props;
     const { formValue } = this.state;
     return (
@@ -224,6 +222,6 @@ const Form = React.createClass({
         />
       </div>);
   }
-});
+}
 
 export default Form;

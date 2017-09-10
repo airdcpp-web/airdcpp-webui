@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Column } from 'fixed-data-table-2';
 
 import QueueActions from 'actions/QueueActions';
@@ -26,8 +27,10 @@ const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
   />
 );
 
-const Queue = React.createClass({
+const Queue = createReactClass({
+  displayName: 'Queue',
   mixins: [ LocationContext ],
+
   isActive(cellData, rowData) {
     return !rowData.status.downloaded;
   },
@@ -155,7 +158,7 @@ const Queue = React.createClass({
         />
       </VirtualTable>
     );
-  }
+  },
 });
 
 export default Queue;

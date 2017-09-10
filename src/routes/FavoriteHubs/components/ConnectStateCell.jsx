@@ -7,12 +7,12 @@ import HubSessionStore from 'stores/HubSessionStore';
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 
-const ConnectStateCell = React.createClass({
-  contextTypes: {
+class ConnectStateCell extends React.Component {
+  static contextTypes = {
     routerLocation: PropTypes.object.isRequired,
-  },
+  };
 
-  getIcon() {
+  getIcon = () => {
     switch (this.props.cellData.id) {
     case ConnectStateEnum.CONNECTING:
       return 'yellow remove';
@@ -23,26 +23,26 @@ const ConnectStateCell = React.createClass({
     }
 
     return '';
-  },
+  };
 
-  handleCreateSession() {
+  handleCreateSession = () => {
     HubActions.createSession(this.context.routerLocation, this.props.rowDataGetter().hub_url, HubSessionStore);
-  },
+  };
 
-  handleRemoveSession() {
+  handleRemoveSession = () => {
     HubActions.removeSession({ id: this.props.cellData.current_hub_id });
-  },
+  };
 
-  getClickAction() {
+  getClickAction = () => {
     switch (this.props.cellData.id) {
     case ConnectStateEnum.CONNECTING:
     case ConnectStateEnum.CONNECTED: return this.handleRemoveSession;
     case ConnectStateEnum.DISCONNECTED:
     default: return this.handleCreateSession;
     }
-  },
+  };
 
-  render: function () {
+  render() {
     return (
       <div className="connect-state">
         <i className={ 'icon large link ' + this.getIcon() } onClick={ this.getClickAction() }/>
@@ -50,6 +50,6 @@ const ConnectStateCell = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default ConnectStateCell;

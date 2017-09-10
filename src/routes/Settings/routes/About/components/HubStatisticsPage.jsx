@@ -10,8 +10,8 @@ import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
 import { Row, Header } from 'components/semantic/Grid';
 
-const HubStatisticsPage = React.createClass({
-  formatClient(uniqueUsers, client) {
+class HubStatisticsPage extends React.Component {
+  formatClient = (uniqueUsers, client) => {
     return (
       <Row
         key={ client.name }
@@ -19,7 +19,7 @@ const HubStatisticsPage = React.createClass({
         text={ client.count + ' (' + ValueFormat.formatPercentage(client.count, uniqueUsers) + ')' }
       />
     );
-  },
+  };
 
   render() {
     const { stats } = this.props;
@@ -36,7 +36,7 @@ const HubStatisticsPage = React.createClass({
         { stats.clients.map(this.formatClient.bind(this, stats.unique_users)) }
       </div>
     );
-  },
-});
+  }
+}
 
 export default StatisticsDecorator(HubStatisticsPage, HubConstants.STATS_URL, 'No hubs online', 10);

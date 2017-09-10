@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 import { LocationContext } from 'mixins/RouterMixin';
 
@@ -42,8 +43,10 @@ const EventMessages = ({ messages }) => {
   );
 };
 
-const SystemLog = React.createClass({
+const SystemLog = createReactClass({
+  displayName: 'SystemLog',
   mixins: [ LocationContext, Reflux.connect(EventStore, 'messages'), ],
+
   componentWillMount() {
     EventActions.setActive(true);
     EventActions.setRead();
@@ -81,7 +84,7 @@ const SystemLog = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default SystemLog;

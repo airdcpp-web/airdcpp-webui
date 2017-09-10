@@ -42,13 +42,13 @@ const showDivider = (index, messageList) => {
 };
 
 
-const MessageView = React.createClass({
-  propTypes: {
+class MessageView extends React.Component {
+  static propTypes = {
     messages: PropTypes.array,
     scrollableRef: PropTypes.func,
-  },
+  };
 
-  getMessageListItem(reduced, message, index, messageList) {
+  getMessageListItem = (reduced, message, index, messageList) => {
     // Push a divider when the date was changed
     if (showDivider(index, messageList)) {
       const messageObj = message.chat_message ? message.chat_message : message.log_message;
@@ -82,14 +82,13 @@ const MessageView = React.createClass({
     }
 
     return reduced;
-  },
+  };
 
-  shouldComponentUpdate: function (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return nextProps.messages !== this.props.messages;
-  },
+  }
 
-
-  render: function () {
+  render() {
     const { messages, className, scrollableRef } = this.props;
     return (
       <div 
@@ -105,7 +104,7 @@ const MessageView = React.createClass({
         ) }
       </div>
     );
-  },
-});
+  }
+}
 
 export default ScrollDecorator(MessageView);

@@ -34,8 +34,8 @@ const showSidebar = (props) => {
 };
 
 export default function (Component) {
-  const ModalHandlerDecorator = React.createClass({
-    getOverlay(key, props) {
+  class ModalHandlerDecorator extends React.Component {
+    getOverlay = (key, props) => {
       const { state } = props.location;
       const modalComponent = getLastChildren(props.children);
       const ret = React.cloneElement(modalComponent, {
@@ -51,9 +51,9 @@ export default function (Component) {
       });
 
       return ret;
-    },
+    };
 
-    createModal(key, props) {
+    createModal = (key, props) => {
       let node = document.createElement('div');
       modalNodes[key] = node;
 
@@ -61,9 +61,9 @@ export default function (Component) {
 
       // Don't use regular render as we want to pass (router) context as well
       ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getOverlay(key, props), node);
-    },
+    };
 
-    checkModals(props) {
+    checkModals = (props) => {
       const modals = History.getModalIds(props.location);
       if (!modals) {
         return false;
@@ -75,21 +75,21 @@ export default function (Component) {
         .forEach(id => this.createModal(id, props));
 
       return true;
-    },
+    };
 
     componentWillMount() {
       if (showSidebar(this.props) || this.checkModals(this.props)) {
         // We must always have children
         this.previousChildren = <div/>;
       }
-    },
+    }
 
     componentWillUnmount() {
       // Connection lost, remove all modals
       Object.keys(modalNodes).forEach(key => {
         History.removeOverlay(this.props.location, key);
       });
-    },
+    }
 
     componentWillReceiveProps(nextProps) {
       if (this.checkModals(nextProps) || showSidebar(nextProps)) {
@@ -100,7 +100,7 @@ export default function (Component) {
       } else {
         this.previousChildren = null;
       }
-    },
+    }
 
     render() {
       let sidebar = null;
@@ -119,8 +119,8 @@ export default function (Component) {
           { this.previousChildren ? this.previousChildren : this.props.children }
         </Component>
       );
-    },
-  });
+    }
+  }
 
   return ModalHandlerDecorator;
 }

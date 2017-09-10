@@ -7,19 +7,19 @@ import { MenuItemLink } from 'components/semantic/MenuItem';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 
 
-const ShareProfileSelector = React.createClass({
-  propTypes: {
+class ShareProfileSelector extends React.Component {
+  static propTypes = {
     /**
 		 * Callback after selecting a profile
 		 */
     onProfileChanged: PropTypes.func.isRequired,
-  },
+  };
 
-  onClick: function (profile) {
+  onClick = (profile) => {
     this.props.onProfileChanged(profile.id);
-  },
+  };
 
-  getDropdownItem: function (profile) {
+  getDropdownItem = (profile) => {
     return (
       <MenuItemLink 
         key={ profile.id } 
@@ -28,15 +28,15 @@ const ShareProfileSelector = React.createClass({
         { profile.str }
       </MenuItemLink>
     );
-  },
+  };
 
-  render: function () {
+  render() {
     return (
       <Dropdown className="profile top right pointing" caption="Browse own share..." triggerIcon="">
         { this.props.profiles.map(this.getDropdownItem) }
       </Dropdown>
     );
   }
-});
+}
 
 export default ShareProfileDecorator(ShareProfileSelector, false);

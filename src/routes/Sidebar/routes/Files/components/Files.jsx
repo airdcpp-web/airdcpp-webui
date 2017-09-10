@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
@@ -32,8 +33,10 @@ const ItemHandler = {
 };
 
 
-const Files = React.createClass({
+const Files = createReactClass({
+  displayName: 'Files',
   mixins: [ Reflux.connect(ViewFileStore, 'files') ],
+
   render() {
     if (this.state.files.length === 0) {
       return (
@@ -61,7 +64,7 @@ const Files = React.createClass({
         { this.props.children }
       </SessionLayout>
     );
-  }
+  },
 });
 
 export default Files;

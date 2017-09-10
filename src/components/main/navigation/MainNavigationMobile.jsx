@@ -11,10 +11,10 @@ import History from 'utils/History';
 import IconPanel from './IconPanel';
 
 
-const MainNavigationMobile = React.createClass({
-  contextTypes: {
+class MainNavigationMobile extends React.Component {
+  static contextTypes = {
     router: PropTypes.object.isRequired
-  },
+  };
 
   componentDidMount() {
     const settings = {
@@ -25,9 +25,9 @@ const MainNavigationMobile = React.createClass({
     };
 
     $(this.c).sidebar(settings).sidebar('show');
-  },
+  }
 
-  onClickSecondary(url, evt) {
+  onClickSecondary = (url, evt) => {
     evt.preventDefault();
 
     if (!this.context.router.isActive(url)) {
@@ -35,11 +35,11 @@ const MainNavigationMobile = React.createClass({
     }
 
     this.onClick(url, evt);
-  },
+  };
 
-  onClick(url, evt) {
+  onClick = (url, evt) => {
     $(this.c).sidebar('hide');
-  },
+  };
 
   render() {
     const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem, menuItemGetter } = this.props;
@@ -73,7 +73,7 @@ const MainNavigationMobile = React.createClass({
         <IconPanel/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default MainNavigationDecorator(MainNavigationMobile);

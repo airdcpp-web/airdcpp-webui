@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-
 import 'semantic-ui/components/popup';
 import 'semantic-ui/components/popup.min.css';
 
 
-const Popup = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class Popup extends React.PureComponent {
+  static propTypes = {
 
     /**
 		 * Additional settings for the Semantic UI popup
@@ -30,23 +27,21 @@ const Popup = React.createClass({
     position: PropTypes.string,
 
     triggerClassName: PropTypes.string,
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      settings: {},
-      position: 'bottom left',
-      triggerClassName: '',
-    };
-  },
+  static defaultProps = {
+    settings: {},
+    position: 'bottom left',
+    triggerClassName: '',
+  };
 
   componentWillUnmount() {
     if (this.node) {
       this.hide();
     }
-  },
+  }
 
-  createPortal: function () {
+  createPortal = () => {
     // Create portal
     this.node = document.createElement('div');
 
@@ -57,13 +52,13 @@ const Popup = React.createClass({
 
     this.node.className = className;
     document.body.appendChild(this.node);
-  },
+  };
 
-  hide() {
+  hide = () => {
     $(this.triggerNode).popup('hide');
-  },
+  };
 
-  onHidden: function () {
+  onHidden = () => {
     if (!this.node) {
       // onHidden called when the popup was removed manually
       return;
@@ -74,9 +69,9 @@ const Popup = React.createClass({
     ReactDOM.unmountComponentAtNode(this.node);
     document.body.removeChild(this.node);
     this.node = null;
-  },
+  };
 
-  appendPosition(settings) {
+  appendPosition = (settings) => {
     let { position } = this.props;
 
     const parentRect = this.triggerNode.parentElement.getBoundingClientRect();
@@ -92,18 +87,18 @@ const Popup = React.createClass({
     }
 
     settings['position'] = position;
-  },
+  };
 
-  getContent() {
+  getContent = () => {
     const { children } = this.props;
     if (typeof children === 'function') {
       return children();
     }
 
     return children;
-  },
+  };
 
-  show: function () {
+  show = () => {
     if (this.node) {
       return;
     }
@@ -131,13 +126,13 @@ const Popup = React.createClass({
     this.appendPosition(settings);
 
     $(this.triggerNode).popup(settings).popup('show');
-  },
+  };
 
-  handleClick: function (el) {
+  handleClick = (el) => {
     this.show();
-  },
+  };
 
-  render: function () {
+  render() {
     const triggerProps = {
       ref: c => this.triggerNode = c,
       className: this.props.triggerClassName + ' popup trigger',
@@ -155,6 +150,6 @@ const Popup = React.createClass({
       </span>
     );
   }
-});
+}
 
 export default Popup;

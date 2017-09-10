@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
@@ -14,7 +15,8 @@ import '../style.css';
 
 const sessionActions = [ 'clear' ];
 
-const Messages = React.createClass({
+const Messages = createReactClass({
+  displayName: 'Messages',
   mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
   render() {
@@ -38,7 +40,7 @@ const Messages = React.createClass({
         { this.props.children }
       </SessionLayout>
     );
-  }
+  },
 });
 
 export default Messages;

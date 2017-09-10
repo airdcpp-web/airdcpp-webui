@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import FavoriteHubActions from 'actions/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
@@ -28,8 +30,10 @@ const PasswordCell = ({ cellData, rowDataGetter }) => (
   />
 );
 
-const FavoriteHubs = React.createClass({
+const FavoriteHubs = createReactClass({
+  displayName: 'FavoriteHubs',
   mixins: [ LocationContext ],
+
   _rowClassNameGetter(rowData) {
     switch (rowData.connect_state.id) {
     case ConnectStateEnum.CONNECTING:
@@ -117,7 +121,7 @@ const FavoriteHubs = React.createClass({
         />
       </VirtualTable>
     );
-  }
+  },
 });
 
 export default FavoriteHubs;

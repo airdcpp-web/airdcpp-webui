@@ -6,23 +6,24 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 import Form from 'components/form/Form';
 
 
-const LocalSettingForm = React.createClass({
-  propTypes: {
+class LocalSettingForm extends React.Component {
+  static propTypes = {
     /**
 		 * Form items to list
 		 */
     keys: PropTypes.array.isRequired,
-  },
+  };
 
-  getInitialState() {
-    this.definitions = LocalSettingStore.getDefinitions(this.props.keys);
+  constructor(props) {
+    super(props);
+    this.definitions = LocalSettingStore.getDefinitions(props.keys);
 
-    return {
+    this.state = {
       settings: LocalSettingStore.getValues(),
     };
-  },
+  }
 
-  onSave(changedSettingArray) {
+  onSave = (changedSettingArray) => {
     LocalSettingStore.setValues(changedSettingArray);
 
     this.setState({
@@ -30,9 +31,9 @@ const LocalSettingForm = React.createClass({
     });
 
     return Promise.resolve(null);
-  },
+  };
 
-  render: function () {
+  render() {
     const { settings } = this.state;
     const { formRef, ...otherProps } = this.props;
     return (
@@ -47,6 +48,6 @@ const LocalSettingForm = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default LocalSettingForm;

@@ -12,8 +12,8 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-const PriorityMenu = React.createClass({
-  propTypes: {
+class PriorityMenu extends React.Component {
+  static propTypes = {
     /**
 		 * Priority object
 		 */
@@ -25,21 +25,21 @@ const PriorityMenu = React.createClass({
     item: PropTypes.object.isRequired,
 
     prioAction: PropTypes.func.isRequired,
-  },
+  };
 
-  setPriority: function (priorityId) {
+  setPriority = (priorityId) => {
     this.props.prioAction(this.props.item, priorityId);
-  },
+  };
 
-  setAutoPriority: function () {
+  setAutoPriority = () => {
     this.setPriority(PriorityEnum.DEFAULT);
-  },
+  };
 
-  shouldComponentUpdate: function (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
-  },
+  }
 
-  getPriorityListItem: function (priority) {
+  getPriorityListItem = (priority) => {
     return (
       <MenuItemLink 
         key={ priority.id }
@@ -49,9 +49,9 @@ const PriorityMenu = React.createClass({
         { priority.str }
       </MenuItemLink>
     );
-  },
+  };
 
-  getChildren() {
+  getChildren = () => {
     let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
     children.push(<div key="divider" className="ui divider"/>);
     children.push(
@@ -65,9 +65,9 @@ const PriorityMenu = React.createClass({
     );
 
     return children;
-  },
+  };
 
-  render: function () {
+  render() {
     let caption = this.props.itemPrio.str;
     if (this.props.itemPrio.auto) {
       caption += ' (auto)';
@@ -90,6 +90,6 @@ const PriorityMenu = React.createClass({
       </TableDropdown>
     );
   }
-});
+}
 
 export default PriorityMenu;

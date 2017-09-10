@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import { LocationContext } from 'mixins/RouterMixin';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
@@ -46,8 +48,10 @@ const LocalExtension = DataProviderDecorator(({ installedPackage, npmPackage, da
 });
 
 
-const ExtensionsManagePage = React.createClass({
+const ExtensionsManagePage = createReactClass({
+  displayName: 'ExtensionsManagePage',
   mixins: [ LocationContext ],
+
   getItem(extension) {
     return (
       <LocalExtension 
@@ -81,7 +85,7 @@ const ExtensionsManagePage = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default DataProviderDecorator(ExtensionsManagePage, {

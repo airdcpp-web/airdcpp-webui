@@ -9,22 +9,22 @@ import HubSessionStore from 'stores/HubSessionStore';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
-const HubNew = React.createClass({
-  handleConnect(hubUrl) {
+class HubNew extends React.Component {
+  handleConnect = (hubUrl) => {
     HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
-  },
+  };
 
-  hasSession(entry) {
+  hasSession = (entry) => {
     return HubSessionStore.getSessionByUrl(entry.hub_url);
-  },
+  };
 
-  recentHubRender(entry) {
+  recentHubRender = (entry) => {
     return (
       <a onClick={ _ => this.handleConnect(entry.hub_url) }>
         { entry.name }
       </a> 
     );
-  },
+  };
 
   render() {
     return (
@@ -41,6 +41,6 @@ const HubNew = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default HubNew;

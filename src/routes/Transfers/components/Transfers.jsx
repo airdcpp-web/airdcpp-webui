@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import TransferStore from 'stores/TransferStore';
 
 import Message from 'components/semantic/Message';
@@ -23,8 +25,10 @@ const FlagsCell = ({ cellData }) => (
   </span>
 );
 
-const Transfers = React.createClass({
+const Transfers = createReactClass({
+  displayName: 'Transfers',
   mixins: [ LocationContext ],
+
   isPositive(cellData, rowData) {
     return cellData > 0;
   },
@@ -111,7 +115,7 @@ const Transfers = React.createClass({
         />
       </VirtualTable>
     );
-  }
+  },
 });
 
 export default Transfers;

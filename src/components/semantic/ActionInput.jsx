@@ -2,11 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'components/semantic/Button';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-const ActionInput = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class ActionInput extends React.PureComponent {
+  static propTypes = {
     /**
 		 * Button caption
 		 */
@@ -26,29 +24,25 @@ const ActionInput = React.createClass({
 		 * Function to call with the value
 		 */
     handleAction: PropTypes.func.isRequired
-  },
+  };
 
-  handleClick() {
+  static defaultProps = {
+    type: 'text',
+  };
+
+  state = { 
+    value: '' 
+  };
+
+  handleClick = () => {
     this.props.handleAction(this.state.value);
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      type: 'text',
-    };
-  },
-
-  getInitialState: function () {
-    return { 
-      value: '' 
-    };
-  },
-
-  handleChange: function (event) {
+  handleChange = (event) => {
     this.setState({ value: event.target.value });
-  },
+  };
 
-  render: function () {
+  render() {
     return (
       <div className="ui action input">
         <input 
@@ -65,6 +59,6 @@ const ActionInput = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default ActionInput;

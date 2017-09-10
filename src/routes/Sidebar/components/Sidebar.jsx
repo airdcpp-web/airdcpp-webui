@@ -5,17 +5,28 @@ import invariant from 'invariant';
 import BrowserUtils from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import OverlayDecorator from 'decorators/OverlayDecorator';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Resizable from 'react-resizable-box';
 
 import '../style.css';
 
 
-const Sidebar = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class Sidebar extends React.PureComponent {
+  static propTypes = {
     context: PropTypes.string,
-  },
+  };
+
+  constructor(props) {
+    super(props);
+    const width = BrowserUtils.loadLocalProperty('sidebar_width', 1000);
+
+    this.state = {
+      // Don't render the content while sidebar is animating
+      // Avoids issues if there are router transitions while the sidebar is 
+      // animating (e.g. the content is placed in the middle of the window)
+      animating: true,
+      width: Math.max(500, width),
+    };
+  }
 
   componentDidMount() {
     const context = $(this.props.overlayContext);
@@ -28,24 +39,13 @@ const Sidebar = React.createClass({
       closable: !BrowserUtils.useMobileLayout(),
       onShow: this.onVisible,
     });
-  },
+  }
 
-  getInitialState() {
-    const width = BrowserUtils.loadLocalProperty('sidebar_width', 1000);
-    return {
-      // Don't render the content while sidebar is animating
-      // Avoids issues if there are router transitions while the sidebar is 
-      // animating (e.g. the content is placed in the middle of the window)
-      animating: true,
-      width: Math.max(500, width),
-    };
-  },
-
-  onVisible() {
+  onVisible = () => {
     this.setState({ animating: false });
-  },
+  };
 
-  onResizeStop(event, direction, element, delta) {
+  onResizeStop = (event, direction, element, delta) => {
     if (!delta.width) {
       return;
     }
@@ -53,7 +53,7 @@ const Sidebar = React.createClass({
     const width = element.clientWidth;
     BrowserUtils.saveLocalProperty('sidebar_width', width);
     this.setState({ width });
-  },
+  };
 
   render() {
     const { width, animating } = this.state;
@@ -82,7 +82,7 @@ const Sidebar = React.createClass({
         </div>
       </Resizable>
     );
-  },
-});
+  }
+}
 
 export default OverlayDecorator(Sidebar, 'sidebar');

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ShareActions from 'actions/ShareActions';
 import ShareRootActions from 'actions/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
@@ -18,8 +20,10 @@ import LoginStore from 'stores/LoginStore';
 import { LocationContext } from 'mixins/RouterMixin';
 
 
-const Share = React.createClass({
+const Share = createReactClass({
+  displayName: 'Share',
   mixins: [ LocationContext ],
+
   render() {
     const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
     return (
@@ -88,7 +92,7 @@ const Share = React.createClass({
         />
       </VirtualTable>
     );
-  }
+  },
 });
 
 export default Share;

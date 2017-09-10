@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import WebUserActions from 'actions/WebUserActions';
 
 import ActionButton from 'components/ActionButton';
@@ -8,8 +10,10 @@ import WebUserLayout from './users/WebUserLayout';
 import { LocationContext } from 'mixins/RouterMixin';
 
 
-const WebUsersPage = React.createClass({
+const WebUsersPage = createReactClass({
+  displayName: 'WebUsersPage',
   mixins: [ LocationContext ],
+
   render() {
     return (
       <div>
@@ -23,7 +27,7 @@ const WebUsersPage = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 export default WebUsersPage;

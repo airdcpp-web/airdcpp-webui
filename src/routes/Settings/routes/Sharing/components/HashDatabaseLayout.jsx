@@ -53,19 +53,17 @@ const SizeRow = ({ title, size }) => (
   </div>
 );
 
-const HashDatabaseLayout = React.createClass({
-  getInitialState() {
-    return {
-      verify: false,
-    };
-  },
+class HashDatabaseLayout extends React.Component {
+  state = {
+    verify: false,
+  };
 
-  handleOptimize() {
+  handleOptimize = () => {
     SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify: this.state.verify })
       .catch(error => 
         console.error('Failed to optimize database: ' + error)
       );
-  },
+  };
 
   render() {
     const { status } = this.props;
@@ -87,7 +85,7 @@ const HashDatabaseLayout = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default DataProviderDecorator(HashDatabaseLayout, {
   urls: {

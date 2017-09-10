@@ -7,43 +7,41 @@ import SuggestField from './SuggestField';
 import escapeStringRegexp from 'escape-string-regexp';
 
 
-export default React.createClass({
-  propTypes: {
+export default class extends React.Component {
+  static propTypes = {
     data: PropTypes.array.isRequired,
 
     onChange: PropTypes.func,
-  },
+  };
 
-  getInitialState() {
-    return {
-      suggestions: [],
-    };
-  },
+  state = {
+    suggestions: [],
+  };
 
-  filterSuggestions(text) {
+  filterSuggestions = (text) => {
     const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
     return this.props.data.filter(str => regex.test(str));
-  },
+  };
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     this.setState({ 
       suggestions: this.filterSuggestions(value),
     });
-  },
+  };
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
     });
-  },
+  };
 
-  renderSuggestion(dataItem, { query }) {
+  renderSuggestion = (dataItem, { query }) => {
     return SuggestionRenderer(query, dataItem);
-  },
+  };
 
-  getSuggestionValue(suggestion) {
+  getSuggestionValue = (suggestion) => {
     return suggestion;
-  },
+  };
 
   render() {
     return (
@@ -57,5 +55,5 @@ export default React.createClass({
         onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
       />
     );
-  },
-});
+  }
+}

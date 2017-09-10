@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
@@ -29,8 +30,10 @@ const Entry = [
   },
 ];
 
-const FavoriteDirectoryDialog = React.createClass({
+const FavoriteDirectoryDialog = createReactClass({
+  displayName: 'FavoriteDirectoryDialog',
   mixins: [ RouteContext ],
+
   isNew() {
     return !this.props.directoryEntry;
   },
@@ -96,7 +99,7 @@ const FavoriteDirectoryDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default DataProviderDecorator(FavoriteDirectoryDialog, {

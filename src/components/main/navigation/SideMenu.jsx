@@ -10,12 +10,12 @@ import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import IconPanel from './IconPanel';
 
 
-const SideMenu = React.createClass({
-  contextTypes: {
+class SideMenu extends React.Component {
+  static contextTypes = {
     router: PropTypes.object.isRequired
-  },
+  };
 
-  onClick(url, evt) {
+  onClick = (url, evt) => {
     evt.preventDefault();
 
     if (this.context.router.isActive(url)) {
@@ -24,7 +24,7 @@ const SideMenu = React.createClass({
     }
 
     History.pushSidebar(this.props.location, url);
-  },
+  };
 
   render() {
     const { secondaryMenuItems, menuItemGetter } = this.props;
@@ -42,6 +42,6 @@ const SideMenu = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default MainNavigationDecorator(SideMenu);

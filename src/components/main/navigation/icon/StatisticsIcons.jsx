@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import SocketService from 'services/SocketService';
 import ValueFormat from 'utils/ValueFormat';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
@@ -28,8 +30,10 @@ const StatisticsIcon = ({ icon, bytes, formatter }) => {
   );
 };
 
-const StatisticsBar = React.createClass({
+const StatisticsBar = createReactClass({
+  displayName: 'StatisticsBar',
   mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
+
   getDefaultProps() {
     return {
       className: '',
@@ -92,7 +96,7 @@ const StatisticsBar = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 export default StatisticsBar;

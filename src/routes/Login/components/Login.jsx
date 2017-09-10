@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import LoginActions from 'actions/LoginActions';
@@ -66,8 +67,10 @@ const BottomMessage = () => {
 
 const ENTER_KEY_CODE = 13;
 
-const Login = React.createClass({
+const Login = createReactClass({
+  displayName: 'Login',
   mixins: [ Reflux.connect(LoginStore, 'login') ],
+
   contextTypes: {
     router: PropTypes.object
   },
@@ -144,7 +147,7 @@ const Login = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default Login;

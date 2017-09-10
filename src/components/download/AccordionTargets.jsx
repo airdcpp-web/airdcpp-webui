@@ -6,8 +6,8 @@ import Message from 'components/semantic/Message';
 import PathList from './PathList';
 
 
-const AccordionTargets = React.createClass({
-  propTypes: {
+class AccordionTargets extends React.Component {
+  static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
@@ -17,9 +17,9 @@ const AccordionTargets = React.createClass({
 		 * Grouped paths to list
 		 */
     groupedPaths: PropTypes.array.isRequired,
-  },
+  };
 
-  formatParent(parent) {
+  formatParent = (parent) => {
     return (
       <div key={ parent.name }>
         <div className="title">
@@ -35,9 +35,9 @@ const AccordionTargets = React.createClass({
         </div>
       </div>
     );
-  },
+  };
 
-  render: function () {
+  render() {
     const { groupedPaths } = this.props;
     if (groupedPaths.length === 0) {
       return (
@@ -53,6 +53,6 @@ const AccordionTargets = React.createClass({
       </Accordion>
     );
   }
-});
+}
 
 export default AccordionTargets;

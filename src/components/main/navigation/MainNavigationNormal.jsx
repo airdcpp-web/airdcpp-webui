@@ -8,13 +8,13 @@ import Dropdown from 'components/semantic/Dropdown';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 
-const MainNavigationNormal = React.createClass({
-  propTypes: {
+class MainNavigationNormal extends React.Component {
+  static propTypes = {
     mainMenuItems: PropTypes.array.isRequired,
     configMenuItems: PropTypes.array.isRequired,
     logoutItem: PropTypes.object.isRequired,
-  },
-	
+  };
+
   render() {
     const { configMenuItems, mainMenuItems, logoutItem, menuItemGetter } = this.props;
     return (
@@ -28,7 +28,7 @@ const MainNavigationNormal = React.createClass({
         </Dropdown>
       </div>
     );
-  },
-});
+  }
+}
 
 export default MainNavigationDecorator(MainNavigationNormal);

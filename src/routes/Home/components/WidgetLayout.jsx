@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 import invariant from 'invariant';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -17,8 +18,10 @@ import 'semantic-ui/components/card.min.css';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
-const WidgetLayout = React.createClass({
+const WidgetLayout = createReactClass({
+  displayName: 'WidgetLayout',
   mixins: [ PureRenderMixin, Reflux.connect(WidgetStore, 'layouts') ],
+
   getInitialState() {
     return {
       breakpoint: 'lg',
@@ -78,7 +81,7 @@ const WidgetLayout = React.createClass({
           .filter(widget => widget) }
       </ResponsiveReactGridLayout>
     );
-  }
+  },
 });
 
 export default WidgetLayout;

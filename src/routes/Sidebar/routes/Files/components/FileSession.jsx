@@ -34,7 +34,7 @@ const getUrl = (tth) => {
   return getBasePath() + 'view/' + tth + '?auth_token=' + LoginStore.authToken; 
 };
 
-const FileSession = React.createClass({
+class FileSession extends React.Component {
   render() {
     const { session } = this.props;
     if (!session.content_ready) {
@@ -75,7 +75,7 @@ const FileSession = React.createClass({
         <FileFooter item={ session }/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default ActiveSessionDecorator(FileSession);

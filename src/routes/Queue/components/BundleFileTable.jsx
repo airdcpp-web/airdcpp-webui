@@ -23,14 +23,14 @@ const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
   />
 );
 
-const BundleFileTable = React.createClass({
-  isActive(cellData, rowData) {
+class BundleFileTable extends React.Component {
+  isActive = (cellData, rowData) => {
     return !rowData.status.downloaded;
-  },
+  };
 
-  isRunning(cellData, rowData) {
+  isRunning = (cellData, rowData) => {
     return rowData.speed > 0;
-  },
+  };
 
   render() {
     return (
@@ -97,6 +97,6 @@ const BundleFileTable = React.createClass({
       </VirtualTable>
     );
   }
-});
+}
 
 export default BundleFileTable;

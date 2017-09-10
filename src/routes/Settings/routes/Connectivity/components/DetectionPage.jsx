@@ -7,7 +7,7 @@ import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 
 
-const DetectionPage = React.createClass({
+class DetectionPage extends React.Component {
   render() {
     return (
       <div>
@@ -27,6 +27,6 @@ const DetectionPage = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default DetectionPage;

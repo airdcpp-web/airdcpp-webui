@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
@@ -96,28 +95,37 @@ const getEntryKey = (entry) => {
 
 const idToCacheKey = id => 'rss_feed_cache_' + id;
 
-const RSS = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class RSS extends React.PureComponent {
+  static propTypes = {
     /**
 		 * Current widget settings
 		 */
     settings: PropTypes.object.isRequired,
 
     componentId: PropTypes.string.isRequired,
-  },
+  };
+
+  constructor(props, context) {
+    super(props, context);
+    const feedInfo = this.getCachedFeedInfo();
+
+    this.state = {
+      error: null,
+      ...feedInfo,
+    };
+  }
 
   componentWillMount() {
     if (!this.state.entries) {
       this.handleUpdate();
     }
-  },
+  }
 
-  handleUpdate() {
+  handleUpdate = () => {
     this.fetchFeed(this.props.settings.feed_url);
-  },
+  };
 
-  fetchFeed(feedUrl) {
+  fetchFeed = (feedUrl) => {
     if (this.state.entries) {
       this.setState({ entries: null });
     }
@@ -129,15 +137,15 @@ const RSS = React.createClass({
       }, 
       'jsonp'
     );
-  },
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.settings.feed_url !== this.props.settings.feed_url) {
       this.fetchFeed(nextProps.settings.feed_url);
     }
-  },
+  }
 
-  getCachedFeedInfo() {
+  getCachedFeedInfo = () => {
     const feedInfo = BrowserUtils.loadSessionProperty(idToCacheKey(this.props.componentId));
     if (feedInfo) {
       const feedDate = new Date(feedInfo.date).getTime();
@@ -154,23 +162,15 @@ const RSS = React.createClass({
     }
 
     return null;
-  },
+  };
 
-  getInitialState() {
-    const feedInfo = this.getCachedFeedInfo();
-    return {
-      error: null,
-      ...feedInfo,
-    };
-  },
-
-  setError(error) {
+  setError = (error) => {
     this.setState({
       error
     });
-  },
+  };
 
-  onFeedFetched(data) {
+  onFeedFetched = (data) => {
     if (!data.results) {
       this.setError('The URL is invalid, the feed is empty or there is a temporary issue with the feed service');
       return;
@@ -221,7 +221,7 @@ const RSS = React.createClass({
       entries,
       date: Date.now(),
     });
-  },
+  };
 
   render() {
     if (this.state.error) {
@@ -258,6 +258,6 @@ const RSS = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default RSS;

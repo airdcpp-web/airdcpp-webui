@@ -24,8 +24,8 @@ const FileItem = ({ item, itemClickHandler, itemIconGetter }) => {
   );
 };
 
-const FileItemList = React.createClass({
-  propTypes: {
+class FileItemList extends React.Component {
+  static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
@@ -40,17 +40,17 @@ const FileItemList = React.createClass({
 		 * Array of path objects to list
 		 */
     items: PropTypes.array.isRequired,
-  },
+  };
 
-  sort(a, b) {
+  sort = (a, b) => {
     if (a.type.id !== b.type.id && (a.type.id === 'directory' || b.type.id === 'directory')) {
       return a.type.id === 'directory' ? -1 : 1;
     }
 
     return a.name.localeCompare(b.name);
-  },
+  };
 
-  render: function () {
+  render() {
     const { items, itemClickHandler, itemIconGetter } = this.props;
     return (
       <div className="table-container">
@@ -75,6 +75,6 @@ const FileItemList = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default FileItemList;

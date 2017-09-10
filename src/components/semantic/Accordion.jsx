@@ -7,10 +7,14 @@ import 'semantic-ui/components/accordion.min.css';
 import classNames from 'classnames';
 
 
-const Accordion = React.createClass({
-  propTypes: {
+class Accordion extends React.Component {
+  static propTypes = {
     controlled: PropTypes.bool,
-  },
+  };
+
+  static defaultProps = {
+    className: '',
+  };
 
   componentDidMount() {
     let settings = {};
@@ -21,15 +25,9 @@ const Accordion = React.createClass({
     }
 
     $(this.c).accordion(settings);
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      className: '',
-    };
-  },
-
-  render: function () {
+  render() {
     const accordionStyle = classNames(
       'ui accordion',
       this.props.className,
@@ -44,7 +42,7 @@ const Accordion = React.createClass({
         { children }
       </div>
     );
-  },
-});
+  }
+}
 
 export default Accordion;

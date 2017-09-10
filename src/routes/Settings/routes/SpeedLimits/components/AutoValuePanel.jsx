@@ -6,8 +6,8 @@ import SocketService from 'services/SocketService';
 import SettingConstants from 'constants/SettingConstants';
 
 
-const AutoValuePanel = React.createClass({
-  propTypes: {
+class AutoValuePanel extends React.Component {
+  static propTypes = {
     /**
 		 * Form items to list
 		 */
@@ -17,14 +17,14 @@ const AutoValuePanel = React.createClass({
 		 * Type of the value section (from the setting key)
 		 */
     type: PropTypes.string.isRequired,
-  },
+  };
 
-  getAutoKey() {
+  getAutoKey = () => {
     return this.props.type + '_auto_limits';
-  },
+  };
 
   // Fetch auto settings when enabling auto detection
-  onFieldChanged(changedKey, formValue, hasChanges) {
+  onFieldChanged = (changedKey, formValue, hasChanges) => {
     const autoSettingKey = this.getAutoKey();
     if (changedKey !== autoSettingKey || !formValue[autoSettingKey]) {
       return null;
@@ -34,14 +34,14 @@ const AutoValuePanel = React.createClass({
       keys: this.props.keys.filter(key => key !== autoSettingKey), 
       force_auto_values: true 
     });
-  },
+  };
 
   // Disable other fields when auto detection is enabled
-  onFieldSetting(settingKey, fieldOptions, formValue) {
+  onFieldSetting = (settingKey, fieldOptions, formValue) => {
     if (formValue[this.getAutoKey()] && settingKey !== this.getAutoKey()) {
       fieldOptions['disabled'] = true;
     }
-  },
+  };
 
   render() {
     return (
@@ -54,6 +54,6 @@ const AutoValuePanel = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default AutoValuePanel;

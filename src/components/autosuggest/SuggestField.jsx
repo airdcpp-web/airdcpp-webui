@@ -13,8 +13,8 @@ const theme = {
   suggestionHighlighted: 'link item active',
 };
 
-const SuggestField = React.createClass({
-  propTypes: {
+class SuggestField extends React.Component {
+  static propTypes = {
 
     /**
 		 * Function to call when selecting suggestions
@@ -45,35 +45,31 @@ const SuggestField = React.createClass({
 		 * Disables the field action button
 		 */
     disabled: PropTypes.bool,
-  },
+  };
 
-  getInitialState() {
-    return {
-      text: this.props.storedValue,
-    };
-  },
+  static defaultProps = {
+    autoFocus: true,
+    storedValue: '',
+  };
 
-  getDefaultProps() {
-    return {
-      autoFocus: true,
-      storedValue: '',
-    };
-  },
+  state = {
+    text: this.props.storedValue,
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.storedValue !== this.props.storedValue) {
       this.setState({ text: nextProps.storedValue });
     }
-  },
+  }
 
-  handleSubmit(event, suggestion) {
+  handleSubmit = (event, suggestion) => {
     if (this.props.submitHandler) {
       const value = suggestion ? this.props.getSuggestionValue(suggestion) : this.state.text;
       this.props.submitHandler(value, suggestion);
     }
-  },
+  };
 
-  onTextChange(evt, { newValue }) {
+  onTextChange = (evt, { newValue }) => {
     this.setState({ 
       text: newValue 
     });
@@ -81,17 +77,17 @@ const SuggestField = React.createClass({
     if (this.props.onChange) {
       this.props.onChange(newValue);
     }
-  },
+  };
 
-  isSubmitDisabled() {
+  isSubmitDisabled = () => {
     return this.state.text.length === 0;
-  },
+  };
 
-  getSuggestionValue(suggestion) {
+  getSuggestionValue = (suggestion) => {
     return suggestion;
-  },
+  };
 
-  onKeyDown: function (event) {
+  onKeyDown = (event) => {
     // Accept custom inputs only when there's a submit button
     if (!this.props.button || this.isSubmitDisabled()) {
       return;
@@ -103,14 +99,14 @@ const SuggestField = React.createClass({
 
       this.handleSubmit(event);
     }
-  },
+  };
 
-  onSuggestionSelected(event, { suggestion, suggestionValue, method }) {
+  onSuggestionSelected = (event, { suggestion, suggestionValue, method }) => {
     // No second 'Enter' event if the suggestion was selected
     event.preventDefault();
 
     this.handleSubmit(event, suggestion);
-  },
+  };
 
   render() {
     const { className, autoFocus, placeholder, button, ...other } = this.props;
@@ -156,7 +152,7 @@ const SuggestField = React.createClass({
         { suggestField }
       </div>
     );
-  },
-});
+  }
+}
 
 export default SuggestField;

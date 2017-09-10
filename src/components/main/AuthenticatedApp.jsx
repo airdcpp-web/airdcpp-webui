@@ -1,6 +1,7 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 import invariant from 'invariant';
 import { LocationContext } from 'mixins/RouterMixin';
@@ -26,11 +27,14 @@ import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 
 
-const AuthenticatedApp = React.createClass({
+const AuthenticatedApp = createReactClass({
+  displayName: 'AuthenticatedApp',
+
   mixins: [ 
     Reflux.connect(LoginStore, 'login'),
     LocationContext,
   ],
+
   contextTypes: {
     router: PropTypes.object
   },
@@ -125,7 +129,7 @@ const AuthenticatedApp = React.createClass({
         </LayoutElement>
       </div>
     );
-  }
+  },
 });
 
 export default AuthenticatedApp;

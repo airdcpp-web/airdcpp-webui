@@ -11,7 +11,7 @@ import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
 import { Row, Header } from 'components/semantic/Grid';
 
-const ShareStatisticsPage = React.createClass({
+class ShareStatisticsPage extends React.Component {
   render() {
     const { stats } = this.props;
     const averageFileAge = Moment.duration(stats.average_file_age*1000).humanize();
@@ -43,7 +43,7 @@ const ShareStatisticsPage = React.createClass({
         <Row title="Average matching time per text search" text={ stats.average_match_ms + ' ms' }/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default StatisticsDecorator(ShareStatisticsPage, ShareConstants.STATS_URL, 'No files shared', 60);

@@ -15,48 +15,48 @@ const sectionToUrl = (section, parent) => {
 };
 
 export default (Component) => {
-  const MenuDecorator = React.createClass({
-    contextTypes: {
+  class MenuDecorator extends React.Component {
+    static contextTypes = {
       router: PropTypes.object.isRequired
-    },
+    };
 
-    propTypes: {
+    static propTypes = {
       parent: PropTypes.object,
       menuItems: PropTypes.array, // required
       advancedMenuItems: PropTypes.array,
       location: PropTypes.object, // required
-    },
+    };
 
-    checkChildren(props) {
+    checkChildren = (props) => {
       if (!props.children) {
         this.context.router.replace({
           pathname: sectionToUrl(props.menuItems[0].url, props.parent)
         });
       }
-    },
+    };
 
     componentWillMount() {
       this.checkChildren(this.props);
-    },
+    }
 
     componentWillReceiveProps(nextProps) {
       this.checkChildren(nextProps);
-    },
+    }
 
-    isItemActive(item) {
+    isItemActive = (item) => {
       const { location, parent } = this.props;
       return location.pathname.indexOf(sectionToUrl(item.url, parent)) === 0;
-    },
+    };
 
-    findMenuItem(menuItems) {
+    findMenuItem = (menuItems) => {
       if (!menuItems) {
         return null;
       }
 
       return menuItems.find(this.isItemActive);
-    },
+    };
 
-    getMenuItem(menuItemInfo, parent, showIcon) {
+    getMenuItem = (menuItemInfo, parent, showIcon) => {
       if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
         return null;
       }
@@ -82,7 +82,7 @@ export default (Component) => {
           { menuItemInfo.title }
         </RouterMenuItemLink>
       );
-    },
+    };
 
     render() {
       const currentMenuItem = this.findMenuItem(this.props.menuItems) || this.findMenuItem(this.props.advancedMenuItems);
@@ -97,8 +97,8 @@ export default (Component) => {
           menuItemToLink={ this.getMenuItem }
         />
       );
-    },
-  });
+    }
+  }
 
   return MenuDecorator;
 };

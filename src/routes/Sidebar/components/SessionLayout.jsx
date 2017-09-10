@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
 
@@ -28,8 +30,10 @@ const findItem = (items, id) => {
   return items.find(item => item.id === id);
 };
 
-const SessionLayout = React.createClass({
+const SessionLayout = createReactClass({
+  displayName: 'SessionLayout',
   mixins: [ LocationContext ],
+
   propTypes: {
     /**
 		 * Unique ID of the section (used for storing and loading the previously open tab)
@@ -117,7 +121,7 @@ const SessionLayout = React.createClass({
 		 */
     editAccess: PropTypes.string.isRequired,
   },
-	
+
   getInitialProps() {
     return {
       sideMenu: true,
@@ -443,7 +447,7 @@ const SessionLayout = React.createClass({
         { children }
       </Component>
     );
-  }
+  },
 });
 
 export default SessionLayout;

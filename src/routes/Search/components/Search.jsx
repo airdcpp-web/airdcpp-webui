@@ -18,23 +18,21 @@ import ResultTable from './ResultTable';
 
 const SEARCH_PERIOD = 4000;
 
-const Search = React.createClass({
-  getInitialState() {
-    return {
-      searchString: '',
-      running: false
-    };
-  },
+class Search extends React.Component {
+  state = {
+    searchString: '',
+    running: false
+  };
 
   componentWillMount() {
     this.checkLocationState(this.props);
-  },
+  }
 
   componentWillUpdate(nextProps, nextState) {
     this.checkLocationState(nextProps);
-  },
+  }
 
-  checkLocationState(props) {
+  checkLocationState = (props) => {
     const { state } = props.location;
     if (state && state.searchString && state.searchString !== this.state.searchString) {
       this.search(state.searchString);
@@ -44,9 +42,9 @@ const Search = React.createClass({
         pathname: props.location.pathname,
       });
     }
-  },
+  };
 
-  search(searchString) {
+  search = (searchString) => {
     console.log('Searching');
 
     clearTimeout(this._searchTimeout);
@@ -66,15 +64,15 @@ const Search = React.createClass({
       searchString,
       running: true 
     });
-  },
+  };
 
-  onSearchPosted(data) {
+  onSearchPosted = (data) => {
     this._searchTimeout = setTimeout(() => {
       this.setState({ 
         running: false,
       });
     }, data.queue_time + SEARCH_PERIOD);
-  },
+  };
 
   render() {
     return (
@@ -107,6 +105,6 @@ const Search = React.createClass({
       </OfflineHubMessageDecorator>
     );
   }
-});
+}
 
 export default Search;

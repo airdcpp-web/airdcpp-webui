@@ -44,20 +44,20 @@ const getMentionFieldStyle = (mobileLayout) => {
   };
 };
 
-const MessageComposer = React.createClass({
-  propTypes: {
+class MessageComposer extends React.Component {
+  static propTypes = {
     /**
 		 * Actions for this chat session type
 		 */
     actions: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
-  },
+  };
 
-  contextTypes: {
+  static contextTypes = {
     routerLocation: PropTypes.object.isRequired,
-  },
+  };
 
-  handleCommand(text) {
+  handleCommand = (text) => {
     let command, params;
 
     {
@@ -72,57 +72,53 @@ const MessageComposer = React.createClass({
     }
 
     ChatCommandHandler(this.props).handle(command, params);
-  },
+  };
 
-  handleSend(message) {
+  handleSend = (message) => {
     const { actions, session } = this.props;
     actions.sendMessage(session, message);
-  },
+  };
 
-  getStorageKey(context) {
+  getStorageKey = (context) => {
     return 'last_message_' + context.routerLocation.pathname;
-  },
+  };
 
-  saveText() {
+  saveText = () => {
     const { text } = this.state;
     BrowserUtils.saveSessionProperty(this.getStorageKey(this.context), text);
-  },
+  };
 
-  loadState(context) {
+  loadState = (context) => {
     return {
       text: BrowserUtils.loadSessionProperty(this.getStorageKey(context), ''),
     };
-  },
-
-  getInitialState() {
-    return this.loadState(this.context);
-  },
+  };
 
   componentWillUnmount() {
     this.saveText();
-  },
+  }
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextContext.routerLocation.pathname !== this.context.routerLocation.pathname) {
       this.saveText();
       this.setState(this.loadState(nextContext));
     }
-  },
+  }
 
-  handleChange(event, markupValue, plainValue) {
+  handleChange = (event, markupValue, plainValue) => {
     this.setState({ 
       text: plainValue 
     });
-  },
+  };
 
-  onKeyDown(event) {
+  onKeyDown = (event) => {
     if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
       event.preventDefault();
       this.sendText();
     }
-  },
+  };
 
-  sendText() {
+  sendText = () => {
     // Trim only from end to allow chat messages such as " +help" to be
     // sent to other users
     // This will also prevent sending empty messages
@@ -137,16 +133,16 @@ const MessageComposer = React.createClass({
     }
 
     this.setState({ text: '' });
-  },
+  };
 
-  mapUser(user) {
+  mapUser = (user) => {
     return {
       id: user.cid,
       display: user.nick,
     };
-  },
+  };
 
-  findUsers(value, callback) {
+  findUsers = (value, callback) => {
     const { session } = this.props;
     SocketService.post(UserConstants.SEARCH_NICKS_URL, { 
       pattern: value, 
@@ -157,9 +153,11 @@ const MessageComposer = React.createClass({
       .catch(error => 
         console.log('Failed to fetch suggestions: ' + error)
       );
-  },
+  };
 
-  render: function () {
+  state = this.loadState(this.context);
+
+  render() {
     const mobile = BrowserUtils.useMobileLayout();
     const className = classNames(
       'ui form composer',
@@ -189,7 +187,7 @@ const MessageComposer = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
 export default MessageComposer;

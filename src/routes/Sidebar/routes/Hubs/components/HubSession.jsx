@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import BrowserUtils from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
@@ -27,8 +29,10 @@ const checkList = (props) => {
   return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
 };
 
-const HubSession = React.createClass({
+const HubSession = createReactClass({
+  displayName: 'HubSession',
   mixins: [ LocationContext ],
+
   componentWillMount() {
     this.showList = checkList(this.props);
   },

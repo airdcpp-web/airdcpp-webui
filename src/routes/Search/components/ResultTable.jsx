@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import SearchActions from 'actions/SearchActions';
 import SearchViewStore from 'stores/SearchViewStore';
 
@@ -57,8 +59,10 @@ const NameCell = ({ rowDataGetter, ...props }) => (
   </FileDownloadCell>
 );
 
-const ResultTable = React.createClass({
+const ResultTable = createReactClass({
+  displayName: 'ResultTable',
   mixins: [ LocationContext ],
+
   _rowClassNameGetter(rowData) {
     return TypeConvert.dupeToStringType(rowData.dupe);
   },
@@ -161,7 +165,7 @@ const ResultTable = React.createClass({
         />
       </VirtualTable>
     );
-  }
+  },
 });
 
 export default ResultTable;

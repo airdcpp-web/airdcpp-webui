@@ -11,8 +11,8 @@ import 'semantic-ui/components/modal';
 import 'semantic-ui/components/modal.min.css';
 
 
-const Modal = React.createClass({
-  propTypes: {
+class Modal extends React.Component {
+  static propTypes = {
     /**
 		 * Close the modal when clicking outside its boundaries
 		 */
@@ -42,25 +42,21 @@ const Modal = React.createClass({
     fullHeight: PropTypes.bool,
 
     dynamicHeight: PropTypes.bool,
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      closable: true,
-      approveCaption: 'Save',
-      approveEnabled: true,
-      fullHeight: false,
-      dynamicHeight: false,
-    };
-  },
+  static defaultProps = {
+    closable: true,
+    approveCaption: 'Save',
+    approveEnabled: true,
+    fullHeight: false,
+    dynamicHeight: false,
+  };
 
-  getInitialState() {
-    return {
-      saving: false,
-    };
-  },
+  state = {
+    saving: false,
+  };
 
-  onApprove(el) {
+  onApprove = (el) => {
     let { onApprove } = this.props;
     if (onApprove) {
       this.setState({ saving: true });
@@ -70,7 +66,7 @@ const Modal = React.createClass({
     }
 
     return true;
-  },
+  };
 
   componentDidMount() {
     this.props.showOverlay(this.c, {
@@ -84,9 +80,9 @@ const Modal = React.createClass({
       //verbose: true,
       //name: 'Modal',
     });
-  },
+  }
 
-  render: function () {
+  render() {
     const { saving } = this.state;
     const approveStyle = classNames(
       'ui ok green basic button',
@@ -137,6 +133,6 @@ const Modal = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default OverlayDecorator(Modal, 'modal');

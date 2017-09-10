@@ -124,15 +124,15 @@ const menuItemGetter = (onClick, showIcon, item) => {
 const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
-  const MainNavigationDecorator = React.createClass({
-    contextTypes: {
+  class MainNavigationDecorator extends React.Component {
+    static contextTypes = {
       routerLocation: PropTypes.object.isRequired,
-    },
+    };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
       // Location state or path has changed?
       return nextContext.routerLocation !== this.context.routerLocation;
-    },
+    }
 
     render() {
       return (
@@ -146,7 +146,7 @@ export default function (Component) {
         />
       );
     }
-  });
+  }
 
   return MainNavigationDecorator;
 }

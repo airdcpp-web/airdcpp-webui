@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import TextDecorator from 'components/TextDecorator';
@@ -47,8 +48,10 @@ const parseNumericId = (params) => {
 
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
-const Hubs = React.createClass({
+const Hubs = createReactClass({
+  displayName: 'Hubs',
   mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
+
   render() {
     const { params, ...other } = this.props;
     return (
@@ -70,7 +73,7 @@ const Hubs = React.createClass({
         { this.props.children }
       </SessionLayout>
     );
-  }
+  },
 });
 
 export default Hubs;

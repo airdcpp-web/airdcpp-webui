@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { LocationContext } from 'mixins/RouterMixin';
 
 import DemoIntro from './DemoIntro';
@@ -8,8 +9,10 @@ import WidgetLayout from './WidgetLayout';
 import '../style.css';
 
 
-const Home = React.createClass({
+const Home = createReactClass({
+  displayName: 'Home',
   mixins: [ LocationContext ],
+
   render() {
     return (
       <div id="home">
@@ -18,7 +21,7 @@ const Home = React.createClass({
         <WidgetLayout/>
       </div>
     );
-  }
+  },
 });
 
 export default Home;

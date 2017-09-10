@@ -1,5 +1,4 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
@@ -23,11 +22,10 @@ const Statistics = StatisticsDecorator(({ stats }) => (
   </div>
 ), SystemConstants.STATS_URL, 'Failed to fetch information', 10);
 
-const Application = React.createClass({
-  mixins: [ PureRenderMixin ],
-  propTypes: {
+class Application extends React.PureComponent {
+  static propTypes = {
 
-  },
+  };
 
   render() {
     return (
@@ -39,6 +37,6 @@ const Application = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default Application;

@@ -7,8 +7,8 @@ import { PlatformEnum } from 'constants/SystemConstants';
 import '../style.css';
 
 
-const MiscPage = React.createClass({
-  onFieldSetting(id, fieldOptions, formValue) {
+class MiscPage extends React.Component {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     if (id === 'nmdc_encoding') {
       fieldOptions['help'] = (
         <div>
@@ -29,7 +29,7 @@ const MiscPage = React.createClass({
         </div>
       );
     }
-  },
+  };
 
   render() {
     const Entry = [
@@ -55,6 +55,6 @@ const MiscPage = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default MiscPage;

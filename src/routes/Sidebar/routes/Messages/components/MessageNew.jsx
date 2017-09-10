@@ -9,22 +9,22 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
-const MessageNew = React.createClass({
-  handleSubmit(nick, user) {
+class MessageNew extends React.Component {
+  handleSubmit = (nick, user) => {
     PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
-  },
+  };
 
-  recentUserRender(entry) {
+  recentUserRender = (entry) => {
     return (
       <a onClick={ _ => this.handleSubmit(null, entry.user) }>
         { entry.user.nicks }
       </a> 
     );
-  },
+  };
 
-  hasSession(entry) {
+  hasSession = (entry) => {
     return PrivateChatSessionStore.getSession(entry.user.cid);
-  },
+  };
 
   render() {
     return (
@@ -42,6 +42,6 @@ const MessageNew = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default MessageNew;

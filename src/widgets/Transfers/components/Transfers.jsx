@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import { TimeSeries } from 'pondjs';
 
 import Loader from 'components/semantic/Loader';
@@ -36,8 +38,10 @@ const addSpeed = (points, down, up) => {
   return ret;
 };
 
-const Transfers = withContentRect('bounds')(React.createClass({
+const Transfers = withContentRect('bounds')(createReactClass({
+  displayName: 'Transfers',
   mixins: [ SocketSubscriptionMixin(), PureRenderMixin ],
+
   getInitialState() {
     return {
       points: [
@@ -121,7 +125,7 @@ const Transfers = withContentRect('bounds')(React.createClass({
         ) }
       </div>
     );
-  }
+  },
 }));
 
 export default Transfers;

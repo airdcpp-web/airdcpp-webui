@@ -17,33 +17,31 @@ const formatMediaError = (e) => {
 };
 
 export default function (Component) {
-  const MediaFileDecorator = React.createClass({
-    getInitialState() {
-      return {
-        error: null,
-      };
-    },
+  class MediaFileDecorator extends React.Component {
+    state = {
+      error: null,
+    };
 
-    componentWillUpdate: function (nextProps, nextState) {
+    componentWillUpdate(nextProps, nextState) {
       // Reset the error when switching items
       if (nextProps.item !== this.props.item && this.state.error) {
         this.setState({ error: null });
       }
-    },
-		 
-    componentDidUpdate: function (prevProps, prevState) {
+    }
+
+    componentDidUpdate(prevProps, prevState) {
       if (prevProps.item !== this.props.item && this.media) {
         this.media.load();
       }
-    },
+    }
 
-    onMediaError(event) {
+    onMediaError = (event) => {
       this.setState({ error: formatMediaError(event) });
-    },
+    };
 
-    setMediaRef(c) {
+    setMediaRef = (c) => {
       this.media = c;
-    },
+    };
 
     render() {
       const { item } = this.props;
@@ -69,8 +67,8 @@ export default function (Component) {
           mediaProps={ mediaProps }
         />
       );
-    },
-  });
+    }
+  }
 
   return MediaFileDecorator;
 }

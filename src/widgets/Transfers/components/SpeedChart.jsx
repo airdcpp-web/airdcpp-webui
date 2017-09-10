@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler } from 'react-timeseries-charts';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { withContentRect } from 'react-measure';
 
 
@@ -16,8 +15,7 @@ const upDownStyler = styler([
   }
 ]);
 
-const SpeedChart = withContentRect('bounds')(React.createClass({
-  mixins: [ PureRenderMixin ],
+const SpeedChart = withContentRect('bounds')(class extends React.PureComponent {
   render() {
     const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect } = this.props;
     return (
@@ -50,6 +48,6 @@ const SpeedChart = withContentRect('bounds')(React.createClass({
       </div>
     );
   }
-}));
+});
 
 export default SpeedChart;

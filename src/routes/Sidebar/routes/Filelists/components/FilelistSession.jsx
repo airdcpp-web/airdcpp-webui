@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ListBrowser from './ListBrowser';
 import FilelistFooter from './FilelistFooter';
 
@@ -12,8 +14,10 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 
-const FilelistSession = React.createClass({
+const FilelistSession = createReactClass({
+  displayName: 'FilelistSession',
   mixins: [ LocationContext ],
+
   render() {
     const { user, location, state } = this.props.session;
 

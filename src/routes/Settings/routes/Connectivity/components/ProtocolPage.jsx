@@ -3,12 +3,12 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import { IncomingConnectionModeEnum } from 'constants/SettingConstants';
 
-const ProtocolPage = React.createClass({
-  convertValue(key) {
+class ProtocolPage extends React.Component {
+  convertValue = (key) => {
     return key + '_' + this.props.protocol;
-  },
+  };
 
-  onFieldSetting(id, fieldOptions, formValue) {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     const protocolEnabled = formValue[this.convertValue('connection_mode')] !== IncomingConnectionModeEnum.INCOMING_DISABLED;
     const autoDetect = formValue[this.convertValue('connection_auto')];
 
@@ -26,7 +26,7 @@ const ProtocolPage = React.createClass({
     if (!protocolEnabled && id.indexOf('connection_auto') === 0) {
       fieldOptions['disabled'] = true;
     }
-  },
+  };
 
   render() {
     return (
@@ -38,6 +38,6 @@ const ProtocolPage = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default ProtocolPage;

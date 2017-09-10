@@ -3,6 +3,7 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Lifecycle } from 'mixins/RouterMixin';
 import invariant from 'invariant';
 
@@ -12,9 +13,11 @@ import '../style.css';
 
 
 export default function (Component, semanticModuleName) {
-  const OverlayDecorator = React.createClass({
+  const OverlayDecorator = createReactClass({
+    displayName: 'OverlayDecorator',
     mixins: [ Lifecycle ],
     changeHistoryState: true,
+
     routerWillLeave(nextLocation) {
       if (nextLocation.pathname.indexOf(this.props.location.pathname) !== 0) {
         this.changeHistoryState = false;
@@ -89,7 +92,7 @@ export default function (Component, semanticModuleName) {
           hide={ this.hide }
         />
       );
-    }
+    },
   });
 
   return OverlayDecorator;

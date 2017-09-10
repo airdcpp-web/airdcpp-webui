@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
 
 import AccessConstants from 'constants/AccessConstants';
@@ -23,9 +24,9 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import Logo from 'images/AirDCPlusPlus.png';
 
 
-const Notifications = React.createClass({
+const Notifications = createReactClass({
+  displayName: 'Notifications',
   mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, '_addNotification') ],
-
   notifications: null,
 
   contextTypes: {
@@ -233,7 +234,7 @@ const Notifications = React.createClass({
         }
       });
     }
-  }
+  },
 });
 
 export default Notifications;

@@ -7,26 +7,24 @@ import SuggestField from './SuggestField';
 import SuggestionRenderer from './SuggestionRenderer';
 
 
-const RemoteSuggestField = React.createClass({
-  propTypes: {
+class RemoteSuggestField extends React.Component {
+  static propTypes = {
     valueField: PropTypes.string.isRequired,
 
     descriptionField: PropTypes.string.isRequired,
 
     url: PropTypes.string.isRequired,
-  },
+  };
 
-  getInitialState() {
-    return {
-      suggestions: [],
-    };
-  },
+  state = {
+    suggestions: [],
+  };
 
-  getSuggestionValue(suggestionObj) {
+  getSuggestionValue = (suggestionObj) => {
     return suggestionObj[this.props.valueField];
-  },
+  };
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     SocketService.post(this.props.url, { 
       pattern: value, 
       max_results: 7 
@@ -35,23 +33,23 @@ const RemoteSuggestField = React.createClass({
       .catch(error => 
         console.log('Failed to fetch suggestions: ' + error)
       );
-  },
+  };
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
     });
-  },
+  };
 
-  onSuggestionsReceived(data) {
+  onSuggestionsReceived = (data) => {
     this.setState({ 
       suggestions: data 
     });
-  },
+  };
 
-  renderSuggestion(suggestionObj, { query }) {
+  renderSuggestion = (suggestionObj, { query }) => {
     return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
-  },
+  };
 
   render() {
     return (
@@ -64,7 +62,7 @@ const RemoteSuggestField = React.createClass({
         onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
       />
     );
-  },
-});
+  }
+}
 
 export default RemoteSuggestField;

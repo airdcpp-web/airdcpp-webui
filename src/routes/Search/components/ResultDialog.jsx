@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import { LocationContext, RouteContext } from 'mixins/RouterMixin';
@@ -9,8 +10,10 @@ import ResultInfoGrid from './ResultInfoGrid';
 import UserResultTable from './UserResultTable';
 
 
-const ResultDialog = React.createClass({
+const ResultDialog = createReactClass({
+  displayName: 'ResultDialog',
   mixins: [ LocationContext, RouteContext ],
+
   render: function () {
     const { parentResult } = this.props;
     return (
@@ -26,7 +29,7 @@ const ResultDialog = React.createClass({
         <UserResultTable parentResult={ parentResult }/>
       </Modal>
     );
-  }
+  },
 });
 
 export default ResultDialog;

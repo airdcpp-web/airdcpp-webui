@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
@@ -55,8 +56,10 @@ const MobileLayout = ({ menuItems, section }) => (
   </div>
 );
 
-const DownloadDialog = React.createClass({
+const DownloadDialog = createReactClass({
+  displayName: 'DownloadDialog',
   mixins: [ RouteContext ],
+
   propTypes: {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -167,7 +170,7 @@ const DownloadDialog = React.createClass({
           section={ section }
         />
       </Modal>);
-  }
+  },
 });
 
 export default DataProviderDecorator(DownloadDialog, {

@@ -4,7 +4,7 @@ import React from 'react';
 import MediaFileDecorator from '../decorators/MediaFileDecorator';
 
 
-const AudioFile = React.createClass({
+class AudioFile extends React.Component {
   render() {
     return (
       <audio 
@@ -13,6 +13,6 @@ const AudioFile = React.createClass({
       />
     );
   }
-});
+}
 
 export default MediaFileDecorator(AudioFile);

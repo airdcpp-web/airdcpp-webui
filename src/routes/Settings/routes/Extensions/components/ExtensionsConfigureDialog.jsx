@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 import Form from 'components/form/Form';
 
@@ -14,7 +15,8 @@ const getSettingsUrl = (extensionId) => {
   return ExtensionConstants.EXTENSIONS_URL + '/' + extensionId + '/settings';
 };
 
-const ExtensionsConfigureDialog = React.createClass({
+const ExtensionsConfigureDialog = createReactClass({
+  displayName: 'ExtensionsConfigureDialog',
   mixins: [ RouteContext ],
 
   save() {
@@ -48,7 +50,7 @@ const ExtensionsConfigureDialog = React.createClass({
         />
       </Modal>
     );
-  }
+  },
 });
 
 export default DataProviderDecorator(ExtensionsConfigureDialog, {

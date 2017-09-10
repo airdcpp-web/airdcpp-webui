@@ -7,12 +7,12 @@ import Message from 'components/semantic/Message';
 import TextDecorator from 'components/TextDecorator';
 
 
-const TextFile = React.createClass({
+class TextFile extends React.Component {
   componentWillMount() {
     if (this.props.item.content_ready) {
       this.fetchText(this.props.url);
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.item.content_ready) {
@@ -21,37 +21,33 @@ const TextFile = React.createClass({
 
     const idChanged = nextProps.item.id !== this.props.item.id;
     if (idChanged) {
-      this.setState(this.getInitialState());
+      this.setState({
+        text: null,
+        error: null,
+      });
     }
 
     if (idChanged || !this.props.item.content_ready) {
       this.fetchText(nextProps.url);
     }
-  },
+  }
 
-  getInitialState() {
-    return {
-      text: null,
-      error: null,
-    };
-  },
-
-  fetchText(url) {
+  fetchText = (url) => {
     $.get(url, this.onTextReceived, 'text')
       .fail(this.onTextFailed);
-  },
+  };
 
-  onTextFailed(error) {
+  onTextFailed = (error) => {
     this.setState({ 
       error: error.responseText,
     });
-  },
+  };
 
-  onTextReceived(text) {
+  onTextReceived = (text) => {
     this.setState({ 
       text,
     });
-  },
+  };
 
   render() {
     const { item } = this.props;
@@ -77,7 +73,7 @@ const TextFile = React.createClass({
         />
       </pre>
     );
-  },
-});
+  }
+}
 
 export default TextFile;

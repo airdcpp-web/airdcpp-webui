@@ -11,7 +11,7 @@ import { AwayEnum } from 'constants/SystemConstants';
 // Don't change this if the component is re-mounted
 let userActive = true;
 
-const ActivityTracker = React.createClass({
+class ActivityTracker extends React.Component {
   componentWillMount() {
     document.onmousemove = this.onUserActivity;
     document.onkeypress = this.onUserActivity;
@@ -24,7 +24,7 @@ const ActivityTracker = React.createClass({
     this.lastAlive = (new Date()).getTime();
 
     LoginActions.activity();
-  },
+  }
 
   componentWillUnmount() {
     document.onmousemove = null;
@@ -32,13 +32,13 @@ const ActivityTracker = React.createClass({
 
     clearTimeout(this.activityInteval);
     clearInterval(this.aliveInterval);
-  },
+  }
 
   shouldComponentUpdate() {
     return false;
-  },
+  }
 
-  checkAlive() {
+  checkAlive = () => {
     const currentTime = (new Date()).getTime();
     if (currentTime > (this.lastAlive + 30000)) { // Require 30 seconds of downtime
       console.log('Wake up detected');
@@ -48,18 +48,18 @@ const ActivityTracker = React.createClass({
     }
 
     this.lastAlive = currentTime;
-  },
+  };
 
-  checkActivity() {
+  checkActivity = () => {
     if (!userActive) {
       return;
     }
 
     LoginActions.activity();
     userActive = false;
-  },
+  };
 
-  onUserActivity() {
+  onUserActivity = () => {
     if (userActive) {
       return;
     }
@@ -69,11 +69,11 @@ const ActivityTracker = React.createClass({
     if (ActivityStore.away === AwayEnum.IDLE) {
       LoginActions.activity();
     }
-  },
+  };
 
   render() {
     return null;
   }
-});
+}
 
 export default ActivityTracker;
