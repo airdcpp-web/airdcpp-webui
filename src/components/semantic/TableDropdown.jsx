@@ -4,8 +4,6 @@ import invariant from 'invariant';
 import classNames from 'classnames';
 
 import Popup from './Popup';
-
-//import PureRenderMixin from 'react-addons-pure-render-mixin';
 import DropdownCaption from './DropdownCaption';
 
 
@@ -14,7 +12,6 @@ import DropdownCaption from './DropdownCaption';
 // https://github.com/facebook/fixed-data-table/issues/180
 
 const TableDropdown = React.createClass({
-	//mixins: [ PureRenderMixin ],
 	propTypes: {
 		/**
 		 * Cell content to render
