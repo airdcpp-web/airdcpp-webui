@@ -18,67 +18,67 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
 const WidgetLayout = React.createClass({
-	mixins: [ PureRenderMixin, Reflux.connect(WidgetStore, 'layouts') ],
-	getInitialState() {
-		return {
-			breakpoint: 'lg',
-		};
-	},
+  mixins: [ PureRenderMixin, Reflux.connect(WidgetStore, 'layouts') ],
+  getInitialState() {
+    return {
+      breakpoint: 'lg',
+    };
+  },
 
-	// Convert a layout entry to a component
-	mapWidget(layoutItem) {
-		const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i);
-		invariant(widgetInfo, 'Widget info missing');
-		if (!widgetInfo) {
-			return null;
-		}
+  // Convert a layout entry to a component
+  mapWidget(layoutItem) {
+    const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i);
+    invariant(widgetInfo, 'Widget info missing');
+    if (!widgetInfo) {
+      return null;
+    }
 
-		const Component = widgetInfo.component;
-		const settings = WidgetStore.getWidgetSettings(layoutItem.i, widgetInfo);
+    const Component = widgetInfo.component;
+    const settings = WidgetStore.getWidgetSettings(layoutItem.i, widgetInfo);
 
-		return (
-			<Widget
-				key={ layoutItem.i }
-				componentId={ layoutItem.i }
-				widgetInfo={ widgetInfo }
-				settings={ settings }
-				data-grid={ layoutItem }
-			>
-				<Component
-					settings={ settings.widget }
-					componentId={ layoutItem.i }
-				/>
-			</Widget>
-		);
-	},
+    return (
+      <Widget
+        key={ layoutItem.i }
+        componentId={ layoutItem.i }
+        widgetInfo={ widgetInfo }
+        settings={ settings }
+        data-grid={ layoutItem }
+      >
+        <Component
+          settings={ settings.widget }
+          componentId={ layoutItem.i }
+        />
+      </Widget>
+    );
+  },
 
-	onBreakpointChange(breakpoint, cols) {
-		this.setState({
-			breakpoint,
-		});
-	},
+  onBreakpointChange(breakpoint, cols) {
+    this.setState({
+      breakpoint,
+    });
+  },
 
-	render() {
-		return (
-			<ResponsiveReactGridLayout 
-				className="ui cards layout"
-				rowHeight={50} 
-				width={1200}
-				onLayoutChange={ WidgetStore.onLayoutChange }
-				onBreakpointChange={ this.onBreakpointChange }
+  render() {
+    return (
+      <ResponsiveReactGridLayout 
+        className="ui cards layout"
+        rowHeight={50} 
+        width={1200}
+        onLayoutChange={ WidgetStore.onLayoutChange }
+        onBreakpointChange={ this.onBreakpointChange }
 
-				breakpoints={ WidgetStore.breakpoints }
-				cols={ WidgetStore.cols }
+        breakpoints={ WidgetStore.breakpoints }
+        cols={ WidgetStore.cols }
 
-				draggableHandle=".react-grid-item .header-row .header"
-				layouts={ this.state.layouts }
-			>
-				{ this.state.layouts[this.state.breakpoint]
-					.map(this.mapWidget)
-					.filter(widget => widget) }
-			</ResponsiveReactGridLayout>
-		);
-	}
+        draggableHandle=".react-grid-item .header-row .header"
+        layouts={ this.state.layouts }
+      >
+        { this.state.layouts[this.state.breakpoint]
+          .map(this.mapWidget)
+          .filter(widget => widget) }
+      </ResponsiveReactGridLayout>
+    );
+  }
 });
 
 export default WidgetLayout;

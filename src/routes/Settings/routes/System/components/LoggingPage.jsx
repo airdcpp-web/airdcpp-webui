@@ -11,41 +11,41 @@ import LogSection from './LogSection';
 import Message from 'components/semantic/Message';
 
 const Entry = [
-	'log_directory',
+  'log_directory',
 ];
 
 const sections = [
-	'main',
-	'pm',
-	'downloads',
-	'uploads',
-	'syslog',
-	'status',
+  'main',
+  'pm',
+  'downloads',
+  'uploads',
+  'syslog',
+  'status',
 ];
 
 const LoggingPage = props => (
-	<div>
-		<RemoteSettingForm
-			{ ...props }
-			keys={ Entry }
-		/>
-		<div className="sections">
-			<div className="ui header">Sections</div>
-			<Message
-				icon="blue info"
-				description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
-			/>
-			<Accordion className="styled" controlled={ true }>
-				{ sections.map(section => (
-					<LogSection 
-						{ ...props }
-						key={ section } 
-						section={ section }
-					/>
-				)) }
-			</Accordion>
-		</div>
-	</div>
+  <div>
+    <RemoteSettingForm
+      { ...props }
+      keys={ Entry }
+    />
+    <div className="sections">
+      <div className="ui header">Sections</div>
+      <Message
+        icon="blue info"
+        description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
+      />
+      <Accordion className="styled" controlled={ true }>
+        { sections.map(section => (
+          <LogSection 
+            { ...props }
+            key={ section } 
+            section={ section }
+          />
+        )) }
+      </Accordion>
+    </div>
+  </div>
 );
 
 export default LoggingPage;

@@ -12,90 +12,90 @@ import DropdownCaption from './DropdownCaption';
 // https://github.com/facebook/fixed-data-table/issues/180
 
 const TableDropdown = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Cell content to render
 		 */
-		caption: PropTypes.node.isRequired,
+    caption: PropTypes.node.isRequired,
 
-		/**
+    /**
 		 * Trigger the dropdown when clicking on the caption
 		 */
-		linkCaption: PropTypes.bool,
+    linkCaption: PropTypes.bool,
 
-		children: PropTypes.func.isRequired,
-	},
+    children: PropTypes.func.isRequired,
+  },
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.caption !== this.props.caption;
-	},
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.caption !== this.props.caption;
+  },
 
-	getDefaultProps() {
-		return {
-			linkCaption: true,
-		};
-	},
+  getDefaultProps() {
+    return {
+      linkCaption: true,
+    };
+  },
 
-	addCloseHandler(elem) {
-		if (elem.type === 'div') {
-			// Divider
-			return elem;
-		}
+  addCloseHandler(elem) {
+    if (elem.type === 'div') {
+      // Divider
+      return elem;
+    }
 
-		invariant(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
-		return React.cloneElement(elem, {
-			onClick: () => {
-				this.popupNode.hide();
+    invariant(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
+    return React.cloneElement(elem, {
+      onClick: () => {
+        this.popupNode.hide();
 				
-				elem.props.onClick();
-			} 
-		});
-	},
+        elem.props.onClick();
+      } 
+    });
+  },
 
-	getChildren() {
-		return (
-			<div className="ui text menu vertical">
-				<div className="ui dropdown item table-items">
-					{ this.props.children().map(this.addCloseHandler) }
-				</div>
-			</div>
-		);
-	},
+  getChildren() {
+    return (
+      <div className="ui text menu vertical">
+        <div className="ui dropdown item table-items">
+          { this.props.children().map(this.addCloseHandler) }
+        </div>
+      </div>
+    );
+  },
 
-	render: function () {
-		let caption = (
-			<DropdownCaption>
-				{ this.props.caption }
-			</DropdownCaption>
-		);
+  render: function () {
+    let caption = (
+      <DropdownCaption>
+        { this.props.caption }
+      </DropdownCaption>
+    );
 
-		// Caption
-		const trigger = (
-			<div className="trigger">
-				<i className="large angle down icon"/>
-				{ this.props.linkCaption ? caption : null }
-			</div>
-		);
+    // Caption
+    const trigger = (
+      <div className="trigger">
+        <i className="large angle down icon"/>
+        { this.props.linkCaption ? caption : null }
+      </div>
+    );
 
-		// Settings
-		const settings = {
-			lastResort:true
-		};
+    // Settings
+    const settings = {
+      lastResort:true
+    };
 
-		return (
-			<div className={ classNames('table dropdown', this.props.className) }>
-				<Popup 
-					ref={ c => this.popupNode = c }
-					className="basic dropdown-content" 
-					trigger={ trigger } 
-					settings={ settings } 
-					position="bottom left"
-				>
-					{ this.getChildren }
-				</Popup>
-				{ this.props.linkCaption ? null : caption }
-			</div>);
-	}
+    return (
+      <div className={ classNames('table dropdown', this.props.className) }>
+        <Popup 
+          ref={ c => this.popupNode = c }
+          className="basic dropdown-content" 
+          trigger={ trigger } 
+          settings={ settings } 
+          position="bottom left"
+        >
+          { this.getChildren }
+        </Popup>
+        { this.props.linkCaption ? null : caption }
+      </div>);
+  }
 });
 
 export default TableDropdown;

@@ -14,109 +14,109 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 
 // Message sections
 const Author = ({ message, dropdownContext }) => (
-	<div className="header author">
-		{ message.third_person && <span>*</span> }
-		<UserMenu 
-			contextElement={ dropdownContext } 
-			triggerIcon={ null } 
-			noIcon={ true } 
-			user={ message.from }
-		/>
-	</div>
+  <div className="header author">
+    { message.third_person && <span>*</span> }
+    <UserMenu 
+      contextElement={ dropdownContext } 
+      triggerIcon={ null } 
+      noIcon={ true } 
+      user={ message.from }
+    />
+  </div>
 );
 
 Author.propTypes = {
-	message: PropTypes.object.isRequired,
-	dropdownContext: PropTypes.string.isRequired,
+  message: PropTypes.object.isRequired,
+  dropdownContext: PropTypes.string.isRequired,
 };
 
 const TimeStamp = ({ message }) => (
-	<div className="time">
-		{ ValueFormat.formatTimestamp(message.time) }
-	</div>
+  <div className="time">
+    { ValueFormat.formatTimestamp(message.time) }
+  </div>
 );
 
 const MessageText = ({ message, emojify }) => (
-	<div className="text">
-		<TextDecorator
-			emojify={ emojify }
-			text={ message.text }
-		/>
-	</div>
+  <div className="text">
+    <TextDecorator
+      emojify={ emojify }
+      text={ message.text }
+    />
+  </div>
 );
 
 MessageText.propTypes = {
-	message: PropTypes.object.isRequired,
-	emojify: PropTypes.bool.isRequired,
+  message: PropTypes.object.isRequired,
+  emojify: PropTypes.bool.isRequired,
 };
 
 
 // Main message types
 const ChatMessage = React.createClass({
-	propTypes: {
-		message: PropTypes.object.isRequired,
-	},
+  propTypes: {
+    message: PropTypes.object.isRequired,
+  },
 
-	shouldComponentUpdate() {
-		return false;
-	},
+  shouldComponentUpdate() {
+    return false;
+  },
 
-	render() {
-		const { message, ...other } = this.props;
+  render() {
+    const { message, ...other } = this.props;
 		
-		return (
-			<div className={ 'ui item chat ' + message.from.flags.join(' ')}>
-				<TimeStamp 
-					message={ message }
-				/>
-				<div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
-					<Author 
-						message={ message } 
-						{ ...other }
-					/>
-					<MessageText 
-						message={ message }
-						emojify={ true }
-					/>
-				</div>
-			</div>
-		);
-	}
+    return (
+      <div className={ 'ui item chat ' + message.from.flags.join(' ')}>
+        <TimeStamp 
+          message={ message }
+        />
+        <div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
+          <Author 
+            message={ message } 
+            { ...other }
+          />
+          <MessageText 
+            message={ message }
+            emojify={ true }
+          />
+        </div>
+      </div>
+    );
+  }
 });
 
 
 const getSeverityIcon = (severity) => {
-	switch (severity) {
-		case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
-		case SeverityEnum.WARNING: return IconConstants.WARNING;
-		case SeverityEnum.ERROR: return IconConstants.ERROR;
-		default: return '';
-	}
+  switch (severity) {
+  case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
+  case SeverityEnum.WARNING: return IconConstants.WARNING;
+  case SeverityEnum.ERROR: return IconConstants.ERROR;
+  default: return '';
+  }
 };
 
 const StatusMessage = React.createClass({
-	propTypes: {
-		message: PropTypes.object.isRequired,
-	},
+  propTypes: {
+    message: PropTypes.object.isRequired,
+  },
 
-	shouldComponentUpdate() {
-		return false;
-	},
+  shouldComponentUpdate() {
+    return false;
+  },
 
-	render() {
-		const { message } = this.props;
+  render() {
+    const { message } = this.props;
 		
-		return (
-			<div className={ 'ui item status ' + message.severity }>
-				<Icon icon={ getSeverityIcon(message.severity) }/>
-				{ message.time > 0 && <TimeStamp message={ message }/> }
-				<MessageText 
-					message={ message }
-					emojify={ false }
-				/>
-			</div>
-		);
-	}
+    return (
+      <div className={ 'ui item status ' + message.severity }>
+        <Icon icon={ getSeverityIcon(message.severity) }/>
+        { message.time > 0 && <TimeStamp message={ message }/> }
+        <MessageText 
+          message={ message }
+          emojify={ false }
+        />
+      </div>
+    );
+  }
 });
 
 export { ChatMessage, StatusMessage };

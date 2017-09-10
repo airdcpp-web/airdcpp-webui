@@ -7,20 +7,20 @@ import ActivityStore from 'stores/ActivityStore';
 
 
 const AwayIcon = React.createClass({
-	mixins: [ Reflux.connect(ActivityStore, 'activityState') ],
+  mixins: [ Reflux.connect(ActivityStore, 'activityState') ],
 
-	isAway() {
-		return ActivityStore.away !== AwayEnum.OFF;
-	},
+  isAway() {
+    return ActivityStore.away !== AwayEnum.OFF;
+  },
 
-	onClick: function (evt) {
-		SystemActions.setAway(!this.isAway());
-	},
+  onClick: function (evt) {
+    SystemActions.setAway(!this.isAway());
+  },
 
-	render: function () {
-		const iconColor = this.isAway() ? 'yellow' : 'grey';
-		return <i className={ iconColor + ' away-state link large wait icon' } onClick={ this.onClick }/>;
-	}
+  render: function () {
+    const iconColor = this.isAway() ? 'yellow' : 'grey';
+    return <i className={ iconColor + ' away-state link large wait icon' } onClick={ this.onClick }/>;
+  }
 });
 
 export default AwayIcon;

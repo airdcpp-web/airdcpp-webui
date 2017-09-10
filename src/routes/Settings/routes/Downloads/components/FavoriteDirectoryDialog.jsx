@@ -19,91 +19,91 @@ import AutoSuggestField from 'components/form/AutoSuggestField';
 
 
 const Entry = [
-	{
-		key: 'path',
-		type: FieldTypes.DIRECTORY_PATH,
-	},
-	{
-		key: 'name',
-		type: FieldTypes.STRING,
-	},
+  {
+    key: 'path',
+    type: FieldTypes.DIRECTORY_PATH,
+  },
+  {
+    key: 'name',
+    type: FieldTypes.STRING,
+  },
 ];
 
 const FavoriteDirectoryDialog = React.createClass({
-	mixins: [ RouteContext ],
-	isNew() {
-		return !this.props.directoryEntry;
-	},
+  mixins: [ RouteContext ],
+  isNew() {
+    return !this.props.directoryEntry;
+  },
 
-	onFieldChanged(id, value, hasChanges) {
-		if (id.indexOf('path') != -1) {
-			return Promise.resolve({
-				name: FileUtils.getLastDirectory(value.path, FileUtils) 
-			});
-		}
+  onFieldChanged(id, value, hasChanges) {
+    if (id.indexOf('path') != -1) {
+      return Promise.resolve({
+        name: FileUtils.getLastDirectory(value.path, FileUtils) 
+      });
+    }
 
-		return null;
-	},
+    return null;
+  },
 
-	save() {
-		return this.form.save();
-	},
+  save() {
+    return this.form.save();
+  },
 
-	onSave(changedFields) {
-		if (this.isNew()) {
-			return SocketService.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
-		}
+  onSave(changedFields) {
+    if (this.isNew()) {
+      return SocketService.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
+    }
 
-		return SocketService.patch(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + this.props.directoryEntry.id, changedFields);
-	},
+    return SocketService.patch(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + this.props.directoryEntry.id, changedFields);
+  },
 
-	onFieldSetting(id, fieldOptions, formValue) {
-		if (id === 'path') {
-			fieldOptions['disabled'] = !this.isNew();
-			fieldOptions['config'] = Object.assign(fieldOptions['config'] || {}, {
-				historyId: FilesystemConstants.LOCATION_DOWNLOAD,
-			});
-		} else if (id === 'name') {
-			fieldOptions['factory'] = t.form.Textbox;
-			fieldOptions['template'] = AutoSuggestField;
-			fieldOptions['config'] = {
-				suggestionGetter: () => this.props.virtualNames,
-			};
-		}
-	},
+  onFieldSetting(id, fieldOptions, formValue) {
+    if (id === 'path') {
+      fieldOptions['disabled'] = !this.isNew();
+      fieldOptions['config'] = Object.assign(fieldOptions['config'] || {}, {
+        historyId: FilesystemConstants.LOCATION_DOWNLOAD,
+      });
+    } else if (id === 'name') {
+      fieldOptions['factory'] = t.form.Textbox;
+      fieldOptions['template'] = AutoSuggestField;
+      fieldOptions['config'] = {
+        suggestionGetter: () => this.props.virtualNames,
+      };
+    }
+  },
 
-	render: function () {
-		const title = this.isNew() ? 'Add favorite directory' : 'Edit favorite directory';
-		return (
-			<Modal 
-				className="favorite-directory" 
-				title={ title } 
-				onApprove={ this.save } 
-				closable={ false } 
-				icon={ IconConstants.FOLDER } 
-				{...this.props}
-			>
-				<Form
-					ref={ c => this.form = c }
-					fieldDefinitions={Entry}
-					onFieldChanged={ this.onFieldChanged }
-					onFieldSetting={ this.onFieldSetting }
-					onSave={ this.onSave }
-					value={ this.props.directoryEntry }
-					context={ {
-						location: this.props.location,
-					} }
-				/>
-			</Modal>
-		);
-	}
+  render: function () {
+    const title = this.isNew() ? 'Add favorite directory' : 'Edit favorite directory';
+    return (
+      <Modal 
+        className="favorite-directory" 
+        title={ title } 
+        onApprove={ this.save } 
+        closable={ false } 
+        icon={ IconConstants.FOLDER } 
+        {...this.props}
+      >
+        <Form
+          ref={ c => this.form = c }
+          fieldDefinitions={Entry}
+          onFieldChanged={ this.onFieldChanged }
+          onFieldSetting={ this.onFieldSetting }
+          onSave={ this.onSave }
+          value={ this.props.directoryEntry }
+          context={ {
+            location: this.props.location,
+          } }
+        />
+      </Modal>
+    );
+  }
 });
 
 export default DataProviderDecorator(FavoriteDirectoryDialog, {
-	urls: {
-		virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-	},
-	dataConverters: {
-		virtualNames: data => data.map(item => item.name, []),
-	},
+  urls: {
+    virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+  },
+  dataConverters: {
+    virtualNames: data => data.map(item => item.name, []),
+  },
 });

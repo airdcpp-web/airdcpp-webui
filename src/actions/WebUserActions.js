@@ -18,49 +18,49 @@ const noData = data => !data;
 
 
 const WebUserActions = Reflux.createActions([
-	{ 'create': { 
-		displayName: 'Add user',
-		icon: IconConstants.CREATE,
-		filter: noData,
-	} },
-	{ 'edit': { 
-		displayName: 'Edit user',
-		icon: IconConstants.EDIT,
-	} },
-	{ 'remove': { 
-		asyncResult: true, 
-		children: [ 'confirmed' ], 
-		displayName: 'Remove user', 
-		filter: isOther,
-		icon: IconConstants.REMOVE,
-	} },
+  { 'create': { 
+    displayName: 'Add user',
+    icon: IconConstants.CREATE,
+    filter: noData,
+  } },
+  { 'edit': { 
+    displayName: 'Edit user',
+    icon: IconConstants.EDIT,
+  } },
+  { 'remove': { 
+    asyncResult: true, 
+    children: [ 'confirmed' ], 
+    displayName: 'Remove user', 
+    filter: isOther,
+    icon: IconConstants.REMOVE,
+  } },
 ]);
 
 WebUserActions.create.listen(function (location) {
-	History.pushModal(location, location.pathname + '/user', OverlayConstants.WEB_USER_MODAL_ID);
+  History.pushModal(location, location.pathname + '/user', OverlayConstants.WEB_USER_MODAL_ID);
 });
 
 WebUserActions.edit.listen(function (user, location) {
-	History.pushModal(location, location.pathname + '/user', OverlayConstants.WEB_USER_MODAL_ID, { user: user });
+  History.pushModal(location, location.pathname + '/user', OverlayConstants.WEB_USER_MODAL_ID, { user: user });
 });
 
 WebUserActions.remove.listen(function (user) {
-	const options = {
-		title: this.displayName,
-		content: 'Are you sure that you want to remove the user ' + user.username + '?',
-		icon: this.icon,
-		approveCaption: 'Remove user',
-		rejectCaption: "Don't remove",
-	};
+  const options = {
+    title: this.displayName,
+    content: 'Are you sure that you want to remove the user ' + user.username + '?',
+    icon: this.icon,
+    approveCaption: 'Remove user',
+    rejectCaption: "Don't remove",
+  };
 
-	ConfirmDialog(options, this.confirmed.bind(this, user));
+  ConfirmDialog(options, this.confirmed.bind(this, user));
 });
 
 WebUserActions.remove.confirmed.listen(function (user) {
-	const that = this;
-	return SocketService.delete(WebUserConstants.USERS_URL + '/' + user.id)
-		.then(WebUserActions.remove.completed.bind(that, user))
-		.catch(WebUserActions.remove.failed.bind(that, user));
+  const that = this;
+  return SocketService.delete(WebUserConstants.USERS_URL + '/' + user.id)
+    .then(WebUserActions.remove.completed.bind(that, user))
+    .catch(WebUserActions.remove.failed.bind(that, user));
 });
 
 export default WebUserActions;

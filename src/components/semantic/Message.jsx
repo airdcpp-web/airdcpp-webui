@@ -7,47 +7,47 @@ import classNames from 'classnames';
 
 
 const Message = ({ className, title, description, icon, isError, children }) => {
-	const style = classNames(
-		'ui message',
-		{ 'negative': isError },
-		{ 'icon': icon },
-		className,
-	);
+  const style = classNames(
+    'ui message',
+    { 'negative': isError },
+    { 'icon': icon },
+    className,
+  );
 
-	if (description && typeof description !== 'string') {
-		description = React.cloneElement(description, {
-			className: classNames(description.props.className, 'description'),
-		});
-	}
+  if (description && typeof description !== 'string') {
+    description = React.cloneElement(description, {
+      className: classNames(description.props.className, 'description'),
+    });
+  }
 
-	return (
-		<div className={ style }>
-			<Icon icon={ icon }/>
-			<div className="content">
-				<div className="header">
-					{ title }
-				</div>
-				{ description } 
-				{ children } 
-			</div>
-		</div>
-	);
+  return (
+    <div className={ style }>
+      <Icon icon={ icon }/>
+      <div className="content">
+        <div className="header">
+          { title }
+        </div>
+        { description } 
+        { children } 
+      </div>
+    </div>
+  );
 };
 
 Message.propTypes = {
-	/**
+  /**
 	 * Message title
 	 */
-	title: PropTypes.node,
+  title: PropTypes.node,
 
-	/**
+  /**
 	 * Message content
 	 */
-	description: PropTypes.node,
+  description: PropTypes.node,
 
-	isError: PropTypes.bool,
+  isError: PropTypes.bool,
 
-	icon: PropTypes.string,
+  icon: PropTypes.string,
 };
 
 export default Message

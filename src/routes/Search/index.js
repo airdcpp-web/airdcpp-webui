@@ -1,28 +1,28 @@
 module.exports = {
-	path: 'search',
+  path: 'search',
 	
-	getChildRoutes(location, cb) {
-		require.ensure([], (require) => {
-			cb(null, [ {
-				path: 'download', 
-				component: require('components/download/DownloadDialog').default, 
-			}, {
-				path: 'result', 
-				component: require('./components/ResultDialog').default, 
-				childRoutes: [
-					{
-						path: 'download', 
-						component: require('components/download/DownloadDialog').default, 
-					}
-				]
-			} ]);
-		}, 'search-children');
-	},
+  getChildRoutes(location, cb) {
+    require.ensure([], (require) => {
+      cb(null, [ {
+        path: 'download', 
+        component: require('components/download/DownloadDialog').default, 
+      }, {
+        path: 'result', 
+        component: require('./components/ResultDialog').default, 
+        childRoutes: [
+          {
+            path: 'download', 
+            component: require('components/download/DownloadDialog').default, 
+          }
+        ]
+      } ]);
+    }, 'search-children');
+  },
 
-	getComponent(location, cb) {
-		require.ensure([], (require) => {
-			cb(null, require('./components/Search').default);
-		}, 'search');
-	}
+  getComponent(location, cb) {
+    require.ensure([], (require) => {
+      cb(null, require('./components/Search').default);
+    }, 'search');
+  }
 };
 

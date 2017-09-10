@@ -11,45 +11,45 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
 const FilelistNew = React.createClass({
-	handleSubmit(nick, user) {
-		FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
-	},
+  handleSubmit(nick, user) {
+    FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
+  },
 
-	onProfileChanged(profileId) {
-		FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
-	},
+  onProfileChanged(profileId) {
+    FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
+  },
 
-	recentUserRender(entry) {
-		return (
-			<a onClick={ _ => this.handleSubmit(null, entry.user) }>
-				{ entry.user.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
-			</a> 
-		);
-	},
+  recentUserRender(entry) {
+    return (
+      <a onClick={ _ => this.handleSubmit(null, entry.user) }>
+        { entry.user.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
+      </a> 
+    );
+  },
 
-	hasSession(entry) {
-		return FilelistSessionStore.getSession(entry.user.cid);
-	},
+  hasSession(entry) {
+    return FilelistSessionStore.getSession(entry.user.cid);
+  },
 
-	render() {
-		return (
-			<div className="session new">
-				<UserSearchInput 
-					submitHandler={ this.handleSubmit } 
-					offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"
-				/>
+  render() {
+    return (
+      <div className="session new">
+        <UserSearchInput 
+          submitHandler={ this.handleSubmit } 
+          offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"
+        />
  				<ShareProfileSelector 
  					onProfileChanged={ this.onProfileChanged }
  				/>
-				<RecentLayout
-					entryType={ HistoryEntryEnum.FILELIST }
-					hasSession={ this.hasSession }
-					entryTitleRenderer={ this.recentUserRender }
-					entryIcon="browser"
-				/>
-			</div>
-		);
-	}
+        <RecentLayout
+          entryType={ HistoryEntryEnum.FILELIST }
+          hasSession={ this.hasSession }
+          entryTitleRenderer={ this.recentUserRender }
+          entryIcon="browser"
+        />
+      </div>
+    );
+  }
 });
 
 export default FilelistNew;

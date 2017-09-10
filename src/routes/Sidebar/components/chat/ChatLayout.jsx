@@ -13,84 +13,84 @@ import './chat.css';
 
 
 const ChatLayout = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Access required for sending messages
 		 */
-		chatAccess: PropTypes.string.isRequired,
+    chatAccess: PropTypes.string.isRequired,
 
-		session: PropTypes.any.isRequired,
+    session: PropTypes.any.isRequired,
 
-		messageStore: PropTypes.object.isRequired,
+    messageStore: PropTypes.object.isRequired,
 
-		actions: PropTypes.object.isRequired,
-	},
+    actions: PropTypes.object.isRequired,
+  },
 
-	onMessagesChanged(messages, id) {
-		if (id !== this.props.session.id) {
-			return;
-		}
+  onMessagesChanged(messages, id) {
+    if (id !== this.props.session.id) {
+      return;
+    }
 
-		this.setState({ messages: messages });
-	},
+    this.setState({ messages: messages });
+  },
 
-	getInitialState() {
-		this.unsubscribe = this.props.messageStore.listen(this.onMessagesChanged);
+  getInitialState() {
+    this.unsubscribe = this.props.messageStore.listen(this.onMessagesChanged);
 
-		return {
-			messages: null,
-		};
-	},
+    return {
+      messages: null,
+    };
+  },
 
-	onSessionActivated(id) {
-		const { messageStore, actions } = this.props;
+  onSessionActivated(id) {
+    const { messageStore, actions } = this.props;
 		
-		if (!messageStore.isSessionInitialized(id)) {
-			this.setState({ 
-				messages: null 
-			});
+    if (!messageStore.isSessionInitialized(id)) {
+      this.setState({ 
+        messages: null 
+      });
 
-			actions.fetchMessages(id);
-		} else {
-			this.setState({ 
-				messages: messageStore.getSessionMessages(id) 
-			});
-		}
-	},
+      actions.fetchMessages(id);
+    } else {
+      this.setState({ 
+        messages: messageStore.getSessionMessages(id) 
+      });
+    }
+  },
 
-	componentDidMount() {
-		this.onSessionActivated(this.props.session.id);
-	},
+  componentDidMount() {
+    this.onSessionActivated(this.props.session.id);
+  },
 
-	componentWillUnmount() {
-		this.unsubscribe();
-	},
+  componentWillUnmount() {
+    this.unsubscribe();
+  },
 
-	componentWillReceiveProps(nextProps) {
-		if (this.props.session.id != nextProps.session.id) {
-			this.onSessionActivated(nextProps.session.id);
-		}
-	},
+  componentWillReceiveProps(nextProps) {
+    if (this.props.session.id != nextProps.session.id) {
+      this.onSessionActivated(nextProps.session.id);
+    }
+  },
 
-	render() {
-		const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
-		return (
-			<div className="message-view">
-				{ !hasChatAccess && <Message description="You aren't allowed to send new messages"/> }
-				<MessageView 
-					className="chat"
-					messages={ this.state.messages }
-					session={ this.props.session }
-				/>
-				{ hasChatAccess && (
-					<MessageComposer 
-						session={ this.props.session }
-						actions={ this.props.actions }
-					/>
-				) }
-			</div>
-		);
-	},
+  render() {
+    const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
+    return (
+      <div className="message-view">
+        { !hasChatAccess && <Message description="You aren't allowed to send new messages"/> }
+        <MessageView 
+          className="chat"
+          messages={ this.state.messages }
+          session={ this.props.session }
+        />
+        { hasChatAccess && (
+          <MessageComposer 
+            session={ this.props.session }
+            actions={ this.props.actions }
+          />
+        ) }
+      </div>
+    );
+  },
 });
 
 export default ActiveSessionDecorator(ChatLayout, true);

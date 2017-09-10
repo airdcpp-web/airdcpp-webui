@@ -10,38 +10,38 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
 const MessageNew = React.createClass({
-	handleSubmit(nick, user) {
-		PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
-	},
+  handleSubmit(nick, user) {
+    PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
+  },
 
-	recentUserRender(entry) {
-		return (
-			<a onClick={ _ => this.handleSubmit(null, entry.user) }>
-				{ entry.user.nicks }
-			</a> 
-		);
-	},
+  recentUserRender(entry) {
+    return (
+      <a onClick={ _ => this.handleSubmit(null, entry.user) }>
+        { entry.user.nicks }
+      </a> 
+    );
+  },
 
-	hasSession(entry) {
-		return PrivateChatSessionStore.getSession(entry.user.cid);
-	},
+  hasSession(entry) {
+    return PrivateChatSessionStore.getSession(entry.user.cid);
+  },
 
-	render() {
-		return (
-			<div className="session new"> 
-				<UserSearchInput 
-					submitHandler={ this.handleSubmit } 
-					offlineMessage="You must to be connected to at least one hub in order to send private messages"
-				/>
-				<RecentLayout
-					entryType={ HistoryEntryEnum.PRIVATE_CHAT }
-					hasSession={ this.hasSession }
-					entryTitleRenderer={ this.recentUserRender }
-					entryIcon="comments"
-				/>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="session new"> 
+        <UserSearchInput 
+          submitHandler={ this.handleSubmit } 
+          offlineMessage="You must to be connected to at least one hub in order to send private messages"
+        />
+        <RecentLayout
+          entryType={ HistoryEntryEnum.PRIVATE_CHAT }
+          hasSession={ this.hasSession }
+          entryTitleRenderer={ this.recentUserRender }
+          entryIcon="comments"
+        />
+      </div>
+    );
+  }
 });
 
 export default MessageNew;

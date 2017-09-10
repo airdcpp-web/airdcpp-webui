@@ -14,77 +14,77 @@ import { LocationContext } from 'mixins/RouterMixin';
 
 
 const Row = ({ path }) => (
-	<tr>
-		<td>
-			<ActionMenu 
-				caption={ <strong>{ path }</strong> } 
-				actions={ ShareActions } 
-				ids={ [ 'removeExclude' ] } 
-				itemData={ path }
-				contextElement="#setting-scroll-context"
-			/>
-		</td>
-	</tr>
+  <tr>
+    <td>
+      <ActionMenu 
+        caption={ <strong>{ path }</strong> } 
+        actions={ ShareActions } 
+        ids={ [ 'removeExclude' ] } 
+        itemData={ path }
+        contextElement="#setting-scroll-context"
+      />
+    </td>
+  </tr>
 );
 
 const ExcludePage = React.createClass({
-	mixins: [ LocationContext ],
-	getRow(path) {
-		return (
-			<Row 
-				key={ path } 
-				path={ path } 
-			/>
-		);
-	},
+  mixins: [ LocationContext ],
+  getRow(path) {
+    return (
+      <Row 
+        key={ path } 
+        path={ path } 
+      />
+    );
+  },
 
-	render() {
-		const { excludes } = this.props;
-		return (
-			<div>
-				<Message
-					title={
-						<div>
-							<div>
+  render() {
+    const { excludes } = this.props;
+    return (
+      <div>
+        <Message
+          title={
+            <div>
+              <div>
 								Share must be refreshed for the changes to take effect
-							</div>
-							<br/>
-							<ActionButton
-								action={ ShareActions.refresh }
-							/>
-						</div>
-					}
-					icon={ IconConstants.INFO }
-				/>
+              </div>
+              <br/>
+              <ActionButton
+                action={ ShareActions.refresh }
+              />
+            </div>
+          }
+          icon={ IconConstants.INFO }
+        />
 
-				<ActionButton
-					action={ ShareActions.addExclude }
-					className="add"
-				/>
+        <ActionButton
+          action={ ShareActions.addExclude }
+          className="add"
+        />
 
-				{ excludes.length > 0 && (
-					<table className="ui striped table">
-						<thead>
-							<tr>
-								<th>Path</th>
-							</tr>
-						</thead>
-						<tbody>
-							{ excludes.map(this.getRow) }
-						</tbody>
-					</table>
-				) }
-			</div>
-		);
-	}
+        { excludes.length > 0 && (
+          <table className="ui striped table">
+            <thead>
+              <tr>
+                <th>Path</th>
+              </tr>
+            </thead>
+            <tbody>
+              { excludes.map(this.getRow) }
+            </tbody>
+          </table>
+        ) }
+      </div>
+    );
+  }
 });
 
 export default DataProviderDecorator(ExcludePage, {
-	urls: {
-		excludes: ShareConstants.EXCLUDES_URL,
-	},
-	onSocketConnected: (addSocketListener, { refetchData }) => {
-		addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, _ => refetchData());
-		addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, _ => refetchData());
-	},
+  urls: {
+    excludes: ShareConstants.EXCLUDES_URL,
+  },
+  onSocketConnected: (addSocketListener, { refetchData }) => {
+    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, _ => refetchData());
+    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, _ => refetchData());
+  },
 });

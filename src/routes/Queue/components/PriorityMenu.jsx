@@ -13,83 +13,83 @@ import LoginStore from 'stores/LoginStore';
 
 
 const PriorityMenu = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Priority object
 		 */
-		itemPrio: PropTypes.object.isRequired,
+    itemPrio: PropTypes.object.isRequired,
 
-		/**
+    /**
 		 * Item with priority properties
 		 */
-		item: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired,
 
-		prioAction: PropTypes.func.isRequired,
-	},
+    prioAction: PropTypes.func.isRequired,
+  },
 
-	setPriority: function (priorityId) {
-		this.props.prioAction(this.props.item, priorityId);
-	},
+  setPriority: function (priorityId) {
+    this.props.prioAction(this.props.item, priorityId);
+  },
 
-	setAutoPriority: function () {
-		this.setPriority(PriorityEnum.DEFAULT);
-	},
+  setAutoPriority: function () {
+    this.setPriority(PriorityEnum.DEFAULT);
+  },
 
-	shouldComponentUpdate: function (nextProps, nextState) {
-		return !isEqual(nextProps.item.priority, this.props.item.priority);
-	},
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return !isEqual(nextProps.item.priority, this.props.item.priority);
+  },
 
-	getPriorityListItem: function (priority) {
-		return (
-			<MenuItemLink 
-				key={ priority.id }
-				active={ this.props.item.priority.id === priority.id } 
-				onClick={ () => this.setPriority(priority.id) }
-			>
-				{ priority.str }
-			</MenuItemLink>
-		);
-	},
+  getPriorityListItem: function (priority) {
+    return (
+      <MenuItemLink 
+        key={ priority.id }
+        active={ this.props.item.priority.id === priority.id } 
+        onClick={ () => this.setPriority(priority.id) }
+      >
+        { priority.str }
+      </MenuItemLink>
+    );
+  },
 
-	getChildren() {
-		let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
-		children.push(<div key="divider" className="ui divider"/>);
-		children.push(
-			<MenuItemLink 
-				key="auto"
-				active={ this.props.itemPrio.auto } 
-				onClick={ this.setAutoPriority }
-			>
+  getChildren() {
+    let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
+    children.push(<div key="divider" className="ui divider"/>);
+    children.push(
+      <MenuItemLink 
+        key="auto"
+        active={ this.props.itemPrio.auto } 
+        onClick={ this.setAutoPriority }
+      >
 				Auto
-			</MenuItemLink>
-		);
+      </MenuItemLink>
+    );
 
-		return children;
-	},
+    return children;
+  },
 
-	render: function () {
-		let caption = this.props.itemPrio.str;
-		if (this.props.itemPrio.auto) {
-			caption += ' (auto)';
-		}
+  render: function () {
+    let caption = this.props.itemPrio.str;
+    if (this.props.itemPrio.auto) {
+      caption += ' (auto)';
+    }
 
-		if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
-			return (
-				<EmptyDropdown
-					caption={ caption }
-				/>
-			);
-		}
+    if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
+      return (
+        <EmptyDropdown
+          caption={ caption }
+        />
+      );
+    }
 
-		return (
-			<TableDropdown 
-				caption={ caption } 
-				className="priority-menu"
-			>
-				{ this.getChildren }
-			</TableDropdown>
-		);
-	}
+    return (
+      <TableDropdown 
+        caption={ caption } 
+        className="priority-menu"
+      >
+        { this.getChildren }
+      </TableDropdown>
+    );
+  }
 });
 
 export default PriorityMenu;

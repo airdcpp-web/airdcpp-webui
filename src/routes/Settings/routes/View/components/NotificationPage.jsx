@@ -7,23 +7,23 @@ import '../style.css';
 
 
 const PopupEntry = [
-	LocalSettings.NOTIFY_PM_USER,
-	LocalSettings.NOTIFY_PM_BOT,
-	LocalSettings.NOTIFY_BUNDLE_STATUS,
+  LocalSettings.NOTIFY_PM_USER,
+  LocalSettings.NOTIFY_PM_BOT,
+  LocalSettings.NOTIFY_BUNDLE_STATUS,
 
-	LocalSettings.NOTIFY_EVENTS_INFO,
-	LocalSettings.NOTIFY_EVENTS_WARNING,
-	LocalSettings.NOTIFY_EVENTS_ERROR,
+  LocalSettings.NOTIFY_EVENTS_INFO,
+  LocalSettings.NOTIFY_EVENTS_WARNING,
+  LocalSettings.NOTIFY_EVENTS_ERROR,
 ];
 
 const NotificationPage = props => (
-	<div>
-		<LocalSettingForm
-			title="Popup notifications"
-			{ ...props }
-			keys={ PopupEntry }
-		/>
-	</div>
+  <div>
+    <LocalSettingForm
+      title="Popup notifications"
+      { ...props }
+      keys={ PopupEntry }
+    />
+  </div>
 );
 
 export default NotificationPage;

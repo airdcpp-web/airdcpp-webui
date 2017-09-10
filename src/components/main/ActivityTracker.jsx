@@ -12,68 +12,68 @@ import { AwayEnum } from 'constants/SystemConstants';
 let userActive = true;
 
 const ActivityTracker = React.createClass({
-	componentWillMount() {
-		document.onmousemove = this.onUserActivity;
-		document.onkeypress = this.onUserActivity;
+  componentWillMount() {
+    document.onmousemove = this.onUserActivity;
+    document.onkeypress = this.onUserActivity;
 
-		// Notify the API regurarly if the user is active due to idle away tracking
-		this.activityInteval = setInterval(this.checkActivity, 60*1000);
+    // Notify the API regurarly if the user is active due to idle away tracking
+    this.activityInteval = setInterval(this.checkActivity, 60*1000);
 
-		// Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
-		this.aliveInterval = setInterval(this.checkAlive, 2000);
-		this.lastAlive = (new Date()).getTime();
+    // Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
+    this.aliveInterval = setInterval(this.checkAlive, 2000);
+    this.lastAlive = (new Date()).getTime();
 
-		LoginActions.activity();
-	},
+    LoginActions.activity();
+  },
 
-	componentWillUnmount() {
-		document.onmousemove = null;
-		document.onkeypress = null;
+  componentWillUnmount() {
+    document.onmousemove = null;
+    document.onkeypress = null;
 
-		clearTimeout(this.activityInteval);
-		clearInterval(this.aliveInterval);
-	},
+    clearTimeout(this.activityInteval);
+    clearInterval(this.aliveInterval);
+  },
 
-	shouldComponentUpdate() {
-		return false;
-	},
+  shouldComponentUpdate() {
+    return false;
+  },
 
-	checkAlive() {
-		const currentTime = (new Date()).getTime();
-		if (currentTime > (this.lastAlive + 30000)) { // Require 30 seconds of downtime
-			console.log('Wake up detected');
+  checkAlive() {
+    const currentTime = (new Date()).getTime();
+    if (currentTime > (this.lastAlive + 30000)) { // Require 30 seconds of downtime
+      console.log('Wake up detected');
 
-			// Woke up, disconnect the socket (it will be reconnected automatically)
-			SocketService.disconnect();
-		}
+      // Woke up, disconnect the socket (it will be reconnected automatically)
+      SocketService.disconnect();
+    }
 
-		this.lastAlive = currentTime;
-	},
+    this.lastAlive = currentTime;
+  },
 
-	checkActivity() {
-		if (!userActive) {
-			return;
-		}
+  checkActivity() {
+    if (!userActive) {
+      return;
+    }
 
-		LoginActions.activity();
-		userActive = false;
-	},
+    LoginActions.activity();
+    userActive = false;
+  },
 
-	onUserActivity() {
-		if (userActive) {
-			return;
-		}
+  onUserActivity() {
+    if (userActive) {
+      return;
+    }
 
-		// Change the state instantly when the user came back
-		userActive = true;
-		if (ActivityStore.away === AwayEnum.IDLE) {
-			LoginActions.activity();
-		}
-	},
+    // Change the state instantly when the user came back
+    userActive = true;
+    if (ActivityStore.away === AwayEnum.IDLE) {
+      LoginActions.activity();
+    }
+  },
 
-	render() {
-		return null;
-	}
+  render() {
+    return null;
+  }
 });
 
 export default ActivityTracker;

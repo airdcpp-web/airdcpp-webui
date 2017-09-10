@@ -6,17 +6,17 @@ import TypeConvert from 'utils/TypeConvert';
 
 
 const HubIcon = ({ hub, ...other }) => (
-	<Icon
-		{ ...other }
-		icon={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }
-	/>
+  <Icon
+    { ...other }
+    icon={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }
+  />
 );
 
 HubIcon.propTypes = {
-	/**
+  /**
 	 * Hub object
 	 */
-	hub: PropTypes.object.isRequired,
+  hub: PropTypes.object.isRequired,
 };
 
 export default HubIcon;

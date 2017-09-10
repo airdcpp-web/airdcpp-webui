@@ -7,36 +7,36 @@ import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 
 
 const onClick = (evt, pushNew) => {
-	evt.preventDefault();
+  evt.preventDefault();
 
-	pushNew();
+  pushNew();
 };
 
 
 const SessionNewButton = ({ url, title, pushNew, className }) => (
-	<RouterMenuItemLink 
-		key="button-new" 
-		className={ classNames('new', className) }
-		icon={ IconConstants.CREATE }
-		url={ url } 
-		onClick={ evt => onClick(evt, pushNew) }
-	>
-		{ title }
-	</RouterMenuItemLink>
+  <RouterMenuItemLink 
+    key="button-new" 
+    className={ classNames('new', className) }
+    icon={ IconConstants.CREATE }
+    url={ url } 
+    onClick={ evt => onClick(evt, pushNew) }
+  >
+    { title }
+  </RouterMenuItemLink>
 );
 
 SessionNewButton.propTypes = {
-	/**
+  /**
 	 * Base URL of the section
 	 */
-	url: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 
-	/**
+  /**
 	 * Title of the button
 	 */
-	title: PropTypes.node.isRequired,
+  title: PropTypes.node.isRequired,
 
-	pushNew: PropTypes.func.isRequired,
+  pushNew: PropTypes.func.isRequired,
 };
 
 export default SessionNewButton;

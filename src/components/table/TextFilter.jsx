@@ -10,109 +10,109 @@ import TableFilterDecorator from 'decorators/TableFilterDecorator';
 
 
 const filterMethodToString = (method) => {
-	switch (method) {
-		case FilterMethod.REGEX: return 'Regex';
-		case FilterMethod.WILDCARD: return 'Wildcard';
-		case FilterMethod.EXACT: return 'Exact';
-		default: return 'Partial';
-	}
+  switch (method) {
+  case FilterMethod.REGEX: return 'Regex';
+  case FilterMethod.WILDCARD: return 'Wildcard';
+  case FilterMethod.EXACT: return 'Exact';
+  default: return 'Partial';
+  }
 };
 
 const getPlaceholder = (method) => {
-	let ret = 'Filter';
-	if (method !== FilterMethod.PARTIAL) {
-		ret += ' (' + filterMethodToString(method).toLowerCase() + ')';
-	}
+  let ret = 'Filter';
+  if (method !== FilterMethod.PARTIAL) {
+    ret += ' (' + filterMethodToString(method).toLowerCase() + ')';
+  }
 
-	return ret + '...';
+  return ret + '...';
 };
 
 const FilterBox = React.createClass({
-	propTypes: {
-		viewUrl: PropTypes.string.isRequired,
-	},
+  propTypes: {
+    viewUrl: PropTypes.string.isRequired,
+  },
 
-	getInitialState: function () {
-		return { 
-			value: '',
-			method: FilterMethod.PARTIAL,
-		};
-	},
+  getInitialState: function () {
+    return { 
+      value: '',
+      method: FilterMethod.PARTIAL,
+    };
+  },
 
-	componentWillMount: function () {
-		this._timer = null;
-	},
+  componentWillMount: function () {
+    this._timer = null;
+  },
 
-	componentWillUnmount: function () {
-		clearTimeout(this._timer);
-	},
+  componentWillUnmount: function () {
+    clearTimeout(this._timer);
+  },
 
-	onFilterUpdated() {
-		const { value, method } = this.state;
-		this.props.onFilterUpdated(value, method);
-	},
+  onFilterUpdated() {
+    const { value, method } = this.state;
+    this.props.onFilterUpdated(value, method);
+  },
 
-	onTextChanged: function (event) {
-		this.setState({ 
-			value: event.target.value 
-		});
+  onTextChanged: function (event) {
+    this.setState({ 
+      value: event.target.value 
+    });
 
-		clearTimeout(this._timer);
+    clearTimeout(this._timer);
 
-		this._timer = setTimeout(() => {
-			this._timer = null;
-			this.onFilterUpdated();
-		}, 200);
-	},
+    this._timer = setTimeout(() => {
+      this._timer = null;
+      this.onFilterUpdated();
+    }, 200);
+  },
 
-	onMethodChanged(method) {
-		this.setState({ 
-			method,
-		});
+  onMethodChanged(method) {
+    this.setState({ 
+      method,
+    });
 
-		setTimeout(_ => this.onFilterUpdated());
-		this.input.focus();
-	},
+    setTimeout(_ => this.onFilterUpdated());
+    this.input.focus();
+  },
 
-	getFilterMethod(method) {
-		const isCurrent = method === this.state.method;
-		return (
-			<MenuItemLink 
-				key={ method }
-				onClick={ () => this.onMethodChanged(method) }
-				active={ isCurrent }
-			>
-				{ filterMethodToString(method) }
-			</MenuItemLink>
-		);
-	},
+  getFilterMethod(method) {
+    const isCurrent = method === this.state.method;
+    return (
+      <MenuItemLink 
+        key={ method }
+        onClick={ () => this.onMethodChanged(method) }
+        active={ isCurrent }
+      >
+        { filterMethodToString(method) }
+      </MenuItemLink>
+    );
+  },
 
-	render: function () {
-		return (
-			<div className="text-filter">
-				<div 
-					className="ui action input" 
-					onChange={ this.onTextChanged } 
-					value={ this.state.value }
-				>
-					<input 
-						ref={ c => this.input = c }
-						placeholder={ getPlaceholder(this.state.method) } 
-						type="text"
-					/>
-					<Dropdown 
-						className="filter-method right top pointing"
-						button={ true }
-						direction="upward"
-					>
-						<div className="header">Match type</div>
-						{ Object.keys(FilterMethod)
-							.map(key => this.getFilterMethod(FilterMethod[key])) }
-					</Dropdown>
-				</div>
-			</div>
-		);
-	}
+  render: function () {
+    return (
+      <div className="text-filter">
+        <div 
+          className="ui action input" 
+          onChange={ this.onTextChanged } 
+          value={ this.state.value }
+        >
+          <input 
+            ref={ c => this.input = c }
+            placeholder={ getPlaceholder(this.state.method) } 
+            type="text"
+          />
+          <Dropdown 
+            className="filter-method right top pointing"
+            button={ true }
+            direction="upward"
+          >
+            <div className="header">Match type</div>
+            { Object.keys(FilterMethod)
+              .map(key => this.getFilterMethod(FilterMethod[key])) }
+          </Dropdown>
+        </div>
+      </div>
+    );
+  }
 });
 
 export default TableFilterDecorator(FilterBox);

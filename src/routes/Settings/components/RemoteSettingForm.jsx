@@ -9,46 +9,46 @@ import Form from 'components/form/Form';
 
 
 const RemoteSettingForm = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Form items to list
 		 */
-		keys: PropTypes.array.isRequired,
+    keys: PropTypes.array.isRequired,
 
-		formRef: PropTypes.func, // REQUIRED
-	},
+    formRef: PropTypes.func, // REQUIRED
+  },
 
-	onSave(changedValues) {
-		if (Object.keys(changedValues).length === 0) {
-			return Promise.resolve();
-		}
+  onSave(changedValues) {
+    if (Object.keys(changedValues).length === 0) {
+      return Promise.resolve();
+    }
 		
-		return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.refetchValues);
-	},
+    return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.refetchValues);
+  },
 
-	refetchValues() {
-		this.props.refetchData([ 'settings' ]);
-	},
+  refetchValues() {
+    this.props.refetchData([ 'settings' ]);
+  },
 
-	render: function () {
-		const { formRef, settings, fieldDefinitions, ...otherProps } = this.props;
-		return (
-			<div className="remote setting-form">
-				<Form
-					{ ...otherProps }
-					ref={ formRef }
-					onSave={ this.onSave }
-					fieldDefinitions={ fieldDefinitions }
-					value={ settings }
-				/>
-			</div>
-		);
-	}
+  render: function () {
+    const { formRef, settings, fieldDefinitions, ...otherProps } = this.props;
+    return (
+      <div className="remote setting-form">
+        <Form
+          { ...otherProps }
+          ref={ formRef }
+          onSave={ this.onSave }
+          fieldDefinitions={ fieldDefinitions }
+          value={ settings }
+        />
+      </div>
+    );
+  }
 });
 
 export default DataProviderDecorator(RemoteSettingForm, {
-	urls: {
-		fieldDefinitions: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
-		settings: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
-	},
+  urls: {
+    fieldDefinitions: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
+    settings: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
+  },
 });

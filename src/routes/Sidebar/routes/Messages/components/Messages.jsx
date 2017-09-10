@@ -15,30 +15,30 @@ import '../style.css';
 const sessionActions = [ 'clear' ];
 
 const Messages = React.createClass({
-	mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
+  mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
-	render() {
-		const { params, ...other } = this.props;
-		return (
-			<SessionLayout 
-				activeId={ params.id }
-				baseUrl="messages"
-				items={ this.state.chatSessions }
-				newCaption="New session"
-				newDescription="Open a new private chat session"
-				newIcon="comments"
-				unreadInfoStore={ PrivateChatSessionStore }
-				editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
-				actions={ PrivateChatActions }
-				actionIds={ sessionActions }
+  render() {
+    const { params, ...other } = this.props;
+    return (
+      <SessionLayout 
+        activeId={ params.id }
+        baseUrl="messages"
+        items={ this.state.chatSessions }
+        newCaption="New session"
+        newDescription="Open a new private chat session"
+        newIcon="comments"
+        unreadInfoStore={ PrivateChatSessionStore }
+        editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
+        actions={ PrivateChatActions }
+        actionIds={ sessionActions }
 
-				{ ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
-				{ ...other }
-			>
-				{ this.props.children }
-			</SessionLayout>
-		);
-	}
+        { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
+        { ...other }
+      >
+        { this.props.children }
+      </SessionLayout>
+    );
+  }
 });
 
 export default Messages;

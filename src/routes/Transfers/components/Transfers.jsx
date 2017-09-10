@@ -18,100 +18,100 @@ import '../style.css';
 
 
 const FlagsCell = ({ cellData }) => (
-	<span className="plain flags cell">
-		{ cellData.join('') }
-	</span>
+  <span className="plain flags cell">
+    { cellData.join('') }
+  </span>
 );
 
 const Transfers = React.createClass({
-	mixins: [ LocationContext ],
-	isPositive(cellData, rowData) {
-		return cellData > 0;
-	},
+  mixins: [ LocationContext ],
+  isPositive(cellData, rowData) {
+    return cellData > 0;
+  },
 
-	isRunning(cellData, rowData) {
-		return rowData.speed > 0;
-	},
+  isRunning(cellData, rowData) {
+    return rowData.speed > 0;
+  },
 
-	emptyRowsNodeGetter() {
-		return (
-			<Message 
-				title="No active transfers"
-				icon="exchange"
-			/>
-		);
-	},
+  emptyRowsNodeGetter() {
+    return (
+      <Message 
+        title="No active transfers"
+        icon="exchange"
+      />
+    );
+  },
 
-	render() {
-		return (
-			<VirtualTable
-				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-				store={ TransferStore }
-			>
-				<Column
-					name="User"
-					width={150}
-					flexGrow={4}
-					columnKey="user"
-					cell={ <UserCell/> }
-				/>
-				<Column
-					name="Name"
-					width={150}
-					flexGrow={4}
-					columnKey="name"
-					cell={ <NameCell/> }
-				/>
-				<Column
-					name="Segment"
-					width={65}
-					columnKey="size"
-					cell={ <SizeCell/> }
-					renderCondition={ this.isPositive }
-					flexGrow={1}
-				/>
-				<Column
-					name="Status"
-					width={140}
-					flexGrow={4}
-					columnKey="status"
-					cell={ <StatusCell/> }
-				/>
-				<Column
-					name="Time left"
-					width={50}
-					columnKey="seconds_left"
-					renderCondition={ this.isRunning }
-					cell={ <AbbreviatedDurationCell/> }
-				/>
-				<Column
-					name="Speed"
-					width={50}
-					columnKey="speed"
-					cell={ <SpeedCell/> }
-					renderCondition={ this.isRunning }
-					flexGrow={1}
-				/>
-				<Column
-					name="Flags"
-					width={50}
-					columnKey="flags"
-					cell={ <FlagsCell/> }
-					renderCondition={ this.isRunning }
-					flexGrow={1}
-					hideWidth={800}
-				/>
-				<Column
-					name="IP"
-					width={120}
-					columnKey="ip"
-					flexGrow={1}
-					cell={ <IpCell/> }
-					hideWidth={1000}
-				/>
-			</VirtualTable>
-		);
-	}
+  render() {
+    return (
+      <VirtualTable
+        emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
+        store={ TransferStore }
+      >
+        <Column
+          name="User"
+          width={150}
+          flexGrow={4}
+          columnKey="user"
+          cell={ <UserCell/> }
+        />
+        <Column
+          name="Name"
+          width={150}
+          flexGrow={4}
+          columnKey="name"
+          cell={ <NameCell/> }
+        />
+        <Column
+          name="Segment"
+          width={65}
+          columnKey="size"
+          cell={ <SizeCell/> }
+          renderCondition={ this.isPositive }
+          flexGrow={1}
+        />
+        <Column
+          name="Status"
+          width={140}
+          flexGrow={4}
+          columnKey="status"
+          cell={ <StatusCell/> }
+        />
+        <Column
+          name="Time left"
+          width={50}
+          columnKey="seconds_left"
+          renderCondition={ this.isRunning }
+          cell={ <AbbreviatedDurationCell/> }
+        />
+        <Column
+          name="Speed"
+          width={50}
+          columnKey="speed"
+          cell={ <SpeedCell/> }
+          renderCondition={ this.isRunning }
+          flexGrow={1}
+        />
+        <Column
+          name="Flags"
+          width={50}
+          columnKey="flags"
+          cell={ <FlagsCell/> }
+          renderCondition={ this.isRunning }
+          flexGrow={1}
+          hideWidth={800}
+        />
+        <Column
+          name="IP"
+          width={120}
+          columnKey="ip"
+          flexGrow={1}
+          cell={ <IpCell/> }
+          hideWidth={1000}
+        />
+      </VirtualTable>
+    );
+  }
 });
 
 export default Transfers;

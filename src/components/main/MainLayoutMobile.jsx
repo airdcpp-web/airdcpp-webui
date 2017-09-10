@@ -16,100 +16,100 @@ import 'mobile.css';
 
 
 const reduceMenuItemUrgency = (map, menuItem) => {
-	if (!menuItem.unreadInfoStore) {
-		return map;
-	}
+  if (!menuItem.unreadInfoStore) {
+    return map;
+  }
 
-	const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
-	if (!urgencies) {
-		return map;
-	}
+  const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
+  if (!urgencies) {
+    return map;
+  }
 
-	const max = UrgencyUtils.maxUrgency(urgencies);
-	if (max) {
-		UrgencyUtils.appendToMap(map, max);
-	}
+  const max = UrgencyUtils.maxUrgency(urgencies);
+  if (max) {
+    UrgencyUtils.appendToMap(map, max);
+  }
 
-	return map;
+  return map;
 };
 
 const HeaderContent = MainNavigationDecorator(React.createClass({
-	mixins: [ Reflux.ListenerMixin ],
-	componentDidMount() {
-		this.props.secondaryMenuItems.forEach(item => {
-			if (item.unreadInfoStore) {
-				this.listenTo(item.unreadInfoStore, _ => this.forceUpdate());
-			}
-		});
-	},
+  mixins: [ Reflux.ListenerMixin ],
+  componentDidMount() {
+    this.props.secondaryMenuItems.forEach(item => {
+      if (item.unreadInfoStore) {
+        this.listenTo(item.unreadInfoStore, _ => this.forceUpdate());
+      }
+    });
+  },
 
-	render() {
-		const { secondaryMenuItems, onClickMenu, onClickBack, sidebar } = this.props;
+  render() {
+    const { secondaryMenuItems, onClickMenu, onClickBack, sidebar } = this.props;
 		
-		return (
-			<div className="right">
-				{ sidebar && (
-					<Button 
-						className="item" 
-						caption="Back" 
-						icon="blue angle left"
-						onClick={ onClickBack }
-					/>
-				) }
-				<MenuIcon 
-					urgencies={ UrgencyUtils.validateUrgencies(secondaryMenuItems.reduce(reduceMenuItemUrgency, {})) }
-					onClick={ onClickMenu }
-					className="item"
-				/>
-			</div>
-		);
-	}
+    return (
+      <div className="right">
+        { sidebar && (
+          <Button 
+            className="item" 
+            caption="Back" 
+            icon="blue angle left"
+            onClick={ onClickBack }
+          />
+        ) }
+        <MenuIcon 
+          urgencies={ UrgencyUtils.validateUrgencies(secondaryMenuItems.reduce(reduceMenuItemUrgency, {})) }
+          onClick={ onClickMenu }
+          className="item"
+        />
+      </div>
+    );
+  }
 }));
 
 const MainLayoutMobile = React.createClass({
-	getInitialState() {
-		return {
-			menuVisible: false,
-		};
-	},
+  getInitialState() {
+    return {
+      menuVisible: false,
+    };
+  },
 
-	onClickMenu() {
-		this.setState({ menuVisible: !this.state.menuVisible });
-	},
+  onClickMenu() {
+    this.setState({ menuVisible: !this.state.menuVisible });
+  },
 
-	onClickBack() {
-		History.replaceSidebarData(this.props.location, { close: true });
-	},
+  onClickBack() {
+    History.replaceSidebarData(this.props.location, { close: true });
+  },
 
-	render() {
-		const { children, sidebar } = this.props;
+  render() {
+    const { children, sidebar } = this.props;
 		
-		return (
-			<div className={this.props.className} id="mobile-layout">
-				{ this.state.menuVisible && (
-					<MainNavigation
-						location={ this.props.location }
-						onClose={ this.onClickMenu }
-					/>
-				) }
-				<div className="pusher sidebar-context" id="mobile-layout-inner">
-					<SiteHeader 
-						content={
-							<HeaderContent
-								onClickMenu={ this.onClickMenu }
-								onClickBack={ this.onClickBack }
-								sidebar={ sidebar }
-							/>
-						}
-					/>
-					{ sidebar }
-					<div className="ui site-content pusher">
-						{ children }
-					</div>
-				</div>
-			</div>
-		);
-	}
+    return (
+      <div className={this.props.className} id="mobile-layout">
+        { this.state.menuVisible && (
+          <MainNavigation
+            location={ this.props.location }
+            onClose={ this.onClickMenu }
+          />
+        ) }
+        <div className="pusher sidebar-context" id="mobile-layout-inner">
+          <SiteHeader 
+            content={
+              <HeaderContent
+                onClickMenu={ this.onClickMenu }
+                onClickBack={ this.onClickBack }
+                sidebar={ sidebar }
+              />
+            }
+          />
+          { sidebar }
+          <div className="ui site-content pusher">
+            { children }
+          </div>
+        </div>
+      </div>
+    );
+  }
 });
 
 export default OverlayHandlerDecorator(MainLayoutMobile);

@@ -9,45 +9,45 @@ import 'semantic-ui/components/item.min.css';
 
 
 const NpmPackageLayout = React.createClass({
-	getItem(npmPackage) {
-		const installedPackage = this.props.installedPackages.find(installedPackage => installedPackage.name === npmPackage.name);
-		return (
-			<Extension 
-				key={ npmPackage.name } 
-				npmPackage={ npmPackage } 
-				installedPackage={ installedPackage }
-			/>
-		);
-	},
+  getItem(npmPackage) {
+    const installedPackage = this.props.installedPackages.find(installedPackage => installedPackage.name === npmPackage.name);
+    return (
+      <Extension 
+        key={ npmPackage.name } 
+        npmPackage={ npmPackage } 
+        installedPackage={ installedPackage }
+      />
+    );
+  },
 
-	render() {
-		const { packageCatalog } = this.props;
-		return (
-			<div className="extension-layout">
-				<div className="ui divider"/>
-				{ packageCatalog.length > 0 && (
-					<div className="ui divided items">
-						{ packageCatalog.map(data => this.getItem(data.package)) }
-					</div>
-				) }
-			</div>
-		);
-	}
+  render() {
+    const { packageCatalog } = this.props;
+    return (
+      <div className="extension-layout">
+        <div className="ui divider"/>
+        { packageCatalog.length > 0 && (
+          <div className="ui divided items">
+            { packageCatalog.map(data => this.getItem(data.package)) }
+          </div>
+        ) }
+      </div>
+    );
+  }
 });
 
 export default DataProviderDecorator(NpmPackageLayout, {
-	urls: {
-		installedPackages: ExtensionConstants.EXTENSIONS_URL,
-		packageCatalog: () => $.getJSON(ExtensionConstants.NPM_PACKAGES_URL),
-	},
-	dataConverters: {
-		packageCatalog: ({ objects }) => objects,
-	},
-	onSocketConnected: (addSocketListener, { refetchData }) => {
-		const refetchInstalled = _ => refetchData([ 'installedPackages' ]);
+  urls: {
+    installedPackages: ExtensionConstants.EXTENSIONS_URL,
+    packageCatalog: () => $.getJSON(ExtensionConstants.NPM_PACKAGES_URL),
+  },
+  dataConverters: {
+    packageCatalog: ({ objects }) => objects,
+  },
+  onSocketConnected: (addSocketListener, { refetchData }) => {
+    const refetchInstalled = _ => refetchData([ 'installedPackages' ]);
 
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchInstalled);
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchInstalled);
-		addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchInstalled);
-	},
+    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchInstalled);
+    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchInstalled);
+    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchInstalled);
+  },
 });

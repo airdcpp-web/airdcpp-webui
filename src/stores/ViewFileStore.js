@@ -11,18 +11,18 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 const ViewFileSessionStore = Reflux.createStore({
-	getInitialState() {
-		return this.getSessions();
-	},
+  getInitialState() {
+    return this.getSessions();
+  },
 
-	onSocketConnected(addSocketListener) {
-		invariant(this.getSessions().length === 0, 'No viewed files should exist on socket connect');
+  onSocketConnected(addSocketListener) {
+    invariant(this.getSessions().length === 0, 'No viewed files should exist on socket connect');
 
-		const url = ViewFileConstants.MODULE_URL;
-		addSocketListener(url, ViewFileConstants.SESSION_CREATED, this._onSessionCreated);
-		addSocketListener(url, ViewFileConstants.SESSION_REMOVED, this._onSessionRemoved);
-		addSocketListener(url, ViewFileConstants.SESSION_UPDATED, this._onSessionUpdated);
-	},
+    const url = ViewFileConstants.MODULE_URL;
+    addSocketListener(url, ViewFileConstants.SESSION_CREATED, this._onSessionCreated);
+    addSocketListener(url, ViewFileConstants.SESSION_REMOVED, this._onSessionRemoved);
+    addSocketListener(url, ViewFileConstants.SESSION_UPDATED, this._onSessionUpdated);
+  },
 });
 
 export default SessionStoreDecorator(SocketSubscriptionDecorator(ViewFileSessionStore, AccessConstants.VIEW_FILE_VIEW), ViewFileActions)

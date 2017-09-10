@@ -7,60 +7,60 @@ import LoginStore from 'stores/LoginStore';
 
 
 const SaveButton = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Message title
 		 */
-		hasChanges: PropTypes.bool.isRequired,
+    hasChanges: PropTypes.bool.isRequired,
 
-		/**
+    /**
 		 * Error details
 		 */
-		saveHandler: PropTypes.func.isRequired,
+    saveHandler: PropTypes.func.isRequired,
 
-		local: PropTypes.bool,
-	},
+    local: PropTypes.bool,
+  },
 
-	getInitialState() {
-		return {
-			saving: false
-		};
-	},
+  getInitialState() {
+    return {
+      saving: false
+    };
+  },
 
-	toggleSaveState() {
-		this.setState({ saving: !this.state.saving });
-	},
+  toggleSaveState() {
+    this.setState({ saving: !this.state.saving });
+  },
 
-	onClick() {
-		this.toggleSaveState();
-		this.props.saveHandler()
-			.then(this.toggleSaveState)
-			.catch(this.toggleSaveState);
-	},
+  onClick() {
+    this.toggleSaveState();
+    this.props.saveHandler()
+      .then(this.toggleSaveState)
+      .catch(this.toggleSaveState);
+  },
 
-	render: function () {
-		const { local, hasChanges, className } = this.props;
+  render: function () {
+    const { local, hasChanges, className } = this.props;
 
-		const hasAccess = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+    const hasAccess = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
 
-		let title;
-		if (!hasAccess) {
-			title = 'No save permission';
-		} else {
-			title = hasChanges ? 'Save changes' : 'No unsaved changes';
-		}
+    let title;
+    if (!hasAccess) {
+      title = 'No save permission';
+    } else {
+      title = hasChanges ? 'Save changes' : 'No unsaved changes';
+    }
 
-		return (
-			<Button 
-				className={ 'save ' + className }
-				caption={ title }
-				icon={ (hasAccess && hasChanges ? 'green checkmark' : null) } 
-				loading={ this.state.saving } 
-				disabled={ !hasChanges || !hasAccess }
-				onClick={ this.onClick }
-			/>
-		);
-	}
+    return (
+      <Button 
+        className={ 'save ' + className }
+        caption={ title }
+        icon={ (hasAccess && hasChanges ? 'green checkmark' : null) } 
+        loading={ this.state.saving } 
+        disabled={ !hasChanges || !hasAccess }
+        onClick={ this.onClick }
+      />
+    );
+  }
 });
 
 export default SaveButton;

@@ -1,18 +1,18 @@
 const MODULE_URL = 'transfers';
 
 export const StatusEnum = {
-	WAITING: 'waiting',
-	RUNNING: 'running',
-	FAILED: 'failed',
-	FINISHED: 'finished',
+  WAITING: 'waiting',
+  RUNNING: 'running',
+  FAILED: 'failed',
+  FINISHED: 'finished',
 };
 
 export default {
-	MODULE_URL: MODULE_URL,
-	TRANSFERS_URL: MODULE_URL,
+  MODULE_URL: MODULE_URL,
+  TRANSFERS_URL: MODULE_URL,
 	
-	TRANSFERRED_BYTES_URL: MODULE_URL + '/tranferred_bytes',
-	STATISTICS_URL: MODULE_URL + '/stats',
+  TRANSFERRED_BYTES_URL: MODULE_URL + '/tranferred_bytes',
+  STATISTICS_URL: MODULE_URL + '/stats',
 
-	STATISTICS: 'transfer_statistics'
+  STATISTICS: 'transfer_statistics'
 };

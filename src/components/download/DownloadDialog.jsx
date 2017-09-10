@@ -30,150 +30,150 @@ import './style.css';
 
 
 const NormalLayout = ({ menuItems, section }) => (
-	<div className="ui grid normal layout">
-		<div className="four wide column">
-			<div className="ui vertical fluid tabular menu">
-				{ menuItems }
-			</div>
-		</div>
-		<div className="twelve wide stretched column">
-			<div className="ui segment main-content">
-				{ section.component }
-			</div>
-		</div>
-	</div>
+  <div className="ui grid normal layout">
+    <div className="four wide column">
+      <div className="ui vertical fluid tabular menu">
+        { menuItems }
+      </div>
+    </div>
+    <div className="twelve wide stretched column">
+      <div className="ui segment main-content">
+        { section.component }
+      </div>
+    </div>
+  </div>
 );
 
 const MobileLayout = ({ menuItems, section }) => (
-	<div className="mobile layout">
-		<Dropdown className="selection fluid" caption={ section.name }>
-			{ menuItems }
-		</Dropdown>
-		<div className="ui segment main-content">
-			{ section.component }
-		</div>
-	</div>
+  <div className="mobile layout">
+    <Dropdown className="selection fluid" caption={ section.name }>
+      { menuItems }
+    </Dropdown>
+    <div className="ui segment main-content">
+      { section.component }
+    </div>
+  </div>
 );
 
 const DownloadDialog = React.createClass({
-	mixins: [ RouteContext ],
-	propTypes: {
-		/**
+  mixins: [ RouteContext ],
+  propTypes: {
+    /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
 		 */
-		downloadHandler: PropTypes.func,
+    downloadHandler: PropTypes.func,
 
-		/**
+    /**
 		 * Information about the item to download
 		 * Required
 		 */
-		itemInfo: PropTypes.shape({
-			path: PropTypes.string,
-			dupe: PropTypes.object,
-			name: PropTypes.string,
-			type: PropTypes.object
-		}),
-	},
+    itemInfo: PropTypes.shape({
+      path: PropTypes.string,
+      dupe: PropTypes.object,
+      name: PropTypes.string,
+      type: PropTypes.object
+    }),
+  },
 
-	getInitialState() {
-		const { historyPaths, sharePaths, favoritePaths, itemInfo } = this.props;
-		const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils)) : [];
+  getInitialState() {
+    const { historyPaths, sharePaths, favoritePaths, itemInfo } = this.props;
+    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils)) : [];
 
-		this.sections = [
-			{
-				name: 'Previous',
-				key: 'history',
-				list: historyPaths,
-				component: <PathList paths={ historyPaths } downloadHandler={ this.handleDownload }/>
-			}, {
-				name: 'Shared',
-				key: 'shared',
-				list: sharePaths,
-				component: <AccordionTargets groupedPaths={ sharePaths } downloadHandler={ this.handleDownload }/>
-			}, {
-				name: 'Favorites',
-				key: 'favorites',
-				list: favoritePaths,
-				component: <AccordionTargets groupedPaths={ favoritePaths } downloadHandler={ this.handleDownload }/>
-			}, {
-				name: 'Dupes',
-				key: 'dupes',
-				list: dupePaths,
-				component: <PathList paths={ dupePaths } downloadHandler={ this.handleDownload }/>
-			}
-		];
+    this.sections = [
+      {
+        name: 'Previous',
+        key: 'history',
+        list: historyPaths,
+        component: <PathList paths={ historyPaths } downloadHandler={ this.handleDownload }/>
+      }, {
+        name: 'Shared',
+        key: 'shared',
+        list: sharePaths,
+        component: <AccordionTargets groupedPaths={ sharePaths } downloadHandler={ this.handleDownload }/>
+      }, {
+        name: 'Favorites',
+        key: 'favorites',
+        list: favoritePaths,
+        component: <AccordionTargets groupedPaths={ favoritePaths } downloadHandler={ this.handleDownload }/>
+      }, {
+        name: 'Dupes',
+        key: 'dupes',
+        list: dupePaths,
+        component: <PathList paths={ dupePaths } downloadHandler={ this.handleDownload }/>
+      }
+    ];
 
-		if (LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW)) {
-			this.sections.push({
-				name: 'Browse',
-				key: 'browse',
-				component: <DownloadFileBrowser history={ historyPaths } downloadHandler={ this.handleDownload }/>
-			});
-		}
+    if (LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW)) {
+      this.sections.push({
+        name: 'Browse',
+        key: 'browse',
+        component: <DownloadFileBrowser history={ historyPaths } downloadHandler={ this.handleDownload }/>
+      });
+    }
 
-		return {
-			active: 'history',
-		};
-	},
+    return {
+      active: 'history',
+    };
+  },
 
-	handleDownload(path) {
-		this.props.downloadHandler({
-			target_name: this.props.itemInfo.name, // possibly allow changing this later...
-			target_directory: path,
-			target_type: 0,
-			priority: PriorityEnum.DEFAULT
-		});
+  handleDownload(path) {
+    this.props.downloadHandler({
+      target_name: this.props.itemInfo.name, // possibly allow changing this later...
+      target_directory: path,
+      target_type: 0,
+      priority: PriorityEnum.DEFAULT
+    });
 
-		HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
-		this.modal.hide();
-	},
+    HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
+    this.modal.hide();
+  },
 
-	getMenuItem(section) {
-		return (
-			<MenuItemLink 
-				key={ section.key }
-				onClick={ () => this.setState({ active: section.key }) } 
-				active={ this.state.active === section.key }
-			>
-				{ section.name }
-				{ section.list && (
-					<div className="ui small right label"> 
-						{ section.list.length }
-					</div>
-				) }
-			</MenuItemLink>
-		);
-	},
+  getMenuItem(section) {
+    return (
+      <MenuItemLink 
+        key={ section.key }
+        onClick={ () => this.setState({ active: section.key }) } 
+        active={ this.state.active === section.key }
+      >
+        { section.name }
+        { section.list && (
+          <div className="ui small right label"> 
+            { section.list.length }
+          </div>
+        ) }
+      </MenuItemLink>
+    );
+  },
 
-	render() {
-		const section = this.sections.find(section => section.key === this.state.active);
-		const menuItems = this.sections.map(this.getMenuItem);
+  render() {
+    const section = this.sections.find(section => section.key === this.state.active);
+    const menuItems = this.sections.map(this.getMenuItem);
 
-		const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
-		return (
-			<Modal 
-				ref={ c => this.modal = c }
-				className="download-dialog" 
-				title="Download" 
-				closable={ true } 
-				icon={ IconConstants.DOWNLOAD }
-				fullHeight={ true }
-				{ ...this.props }
-			>
-				<Component
-					key={ section.key } // Ensure that section-specific data is refetched
-					menuItems={ menuItems }
-					section={ section }
-				/>
-			</Modal>);
-	}
+    const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
+    return (
+      <Modal 
+        ref={ c => this.modal = c }
+        className="download-dialog" 
+        title="Download" 
+        closable={ true } 
+        icon={ IconConstants.DOWNLOAD }
+        fullHeight={ true }
+        { ...this.props }
+      >
+        <Component
+          key={ section.key } // Ensure that section-specific data is refetched
+          menuItems={ menuItems }
+          section={ section }
+        />
+      </Modal>);
+  }
 });
 
 export default DataProviderDecorator(DownloadDialog, {
-	urls: {
-		sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
-		favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-		historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
-	},
+  urls: {
+    sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+    favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+    historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+  },
 });

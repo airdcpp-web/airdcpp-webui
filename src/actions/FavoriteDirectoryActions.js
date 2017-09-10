@@ -14,51 +14,51 @@ import AccessConstants from 'constants/AccessConstants';
 const noData = item => !item;
 
 const FavoriteDirectoryActions = Reflux.createActions([
-	{ 'create': { 
-		displayName: 'Add directory',
-		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.CREATE,
-		filter: noData,
-	} },
-	{ 'edit': { 
-		displayName: 'Edit directory',
-		access: AccessConstants.SETTINGS_EDIT, 
-		icon: IconConstants.EDIT,
-	} },
-	{ 'remove': { 
-		asyncResult: true, 
-		children: [ 'confirmed' ], 
-		displayName: 'Remove directory',
-		access: AccessConstants.SETTINGS_EDIT,
-		icon: IconConstants.REMOVE,
-	} },
+  { 'create': { 
+    displayName: 'Add directory',
+    access: AccessConstants.SETTINGS_EDIT, 
+    icon: IconConstants.CREATE,
+    filter: noData,
+  } },
+  { 'edit': { 
+    displayName: 'Edit directory',
+    access: AccessConstants.SETTINGS_EDIT, 
+    icon: IconConstants.EDIT,
+  } },
+  { 'remove': { 
+    asyncResult: true, 
+    children: [ 'confirmed' ], 
+    displayName: 'Remove directory',
+    access: AccessConstants.SETTINGS_EDIT,
+    icon: IconConstants.REMOVE,
+  } },
 ]);
 
 FavoriteDirectoryActions.create.listen(function (location) {
-	History.pushModal(location, location.pathname + '/directory', OverlayConstants.FAVORITE_DIRECTORY_MODAL);
+  History.pushModal(location, location.pathname + '/directory', OverlayConstants.FAVORITE_DIRECTORY_MODAL);
 });
 
 FavoriteDirectoryActions.edit.listen(function (directory, location) {
-	History.pushModal(location, location.pathname + '/directory', OverlayConstants.FAVORITE_DIRECTORY_MODAL, { directoryEntry: directory });
+  History.pushModal(location, location.pathname + '/directory', OverlayConstants.FAVORITE_DIRECTORY_MODAL, { directoryEntry: directory });
 });
 
 FavoriteDirectoryActions.remove.listen(function (directory) {
-	const options = {
-		title: this.displayName,
-		content: 'Are you sure that you want to remove the favorite directory ' + directory.name + '?',
-		icon: this.icon,
-		approveCaption: 'Remove directory',
-		rejectCaption: "Don't remove",
-	};
+  const options = {
+    title: this.displayName,
+    content: 'Are you sure that you want to remove the favorite directory ' + directory.name + '?',
+    icon: this.icon,
+    approveCaption: 'Remove directory',
+    rejectCaption: "Don't remove",
+  };
 
-	ConfirmDialog(options, this.confirmed.bind(this, directory));
+  ConfirmDialog(options, this.confirmed.bind(this, directory));
 });
 
 FavoriteDirectoryActions.remove.confirmed.listen(function (directory) {
-	const that = this;
-	return SocketService.delete(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + directory.id)
-		.then(FavoriteDirectoryActions.remove.completed.bind(that, directory))
-		.catch(FavoriteDirectoryActions.remove.failed.bind(that, directory));
+  const that = this;
+  return SocketService.delete(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + directory.id)
+    .then(FavoriteDirectoryActions.remove.completed.bind(that, directory))
+    .catch(FavoriteDirectoryActions.remove.failed.bind(that, directory));
 });
 
 export default FavoriteDirectoryActions;

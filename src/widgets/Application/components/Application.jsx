@@ -16,29 +16,29 @@ import '../style.css';
 
 
 const Statistics = StatisticsDecorator(({ stats }) => (
-	<div className="ui list">
-		<ListItem header="Logged in as" description={ LoginStore.user.username }/>
-		<ListItem header="Client started" description={ ValueFormat.formatRelativeTime(LoginStore.systemInfo.client_started) }/>
-		<ListItem header="Active sessions" description={ stats.active_sessions }/>
-	</div>
+  <div className="ui list">
+    <ListItem header="Logged in as" description={ LoginStore.user.username }/>
+    <ListItem header="Client started" description={ ValueFormat.formatRelativeTime(LoginStore.systemInfo.client_started) }/>
+    <ListItem header="Active sessions" description={ stats.active_sessions }/>
+  </div>
 ), SystemConstants.STATS_URL, 'Failed to fetch information', 10);
 
 const Application = React.createClass({
-	mixins: [ PureRenderMixin ],
-	propTypes: {
+  mixins: [ PureRenderMixin ],
+  propTypes: {
 
-	},
+  },
 
-	render() {
-		return (
-			<div className="application-container">
-				<Statistics/>
-				<WidgetDropdown
-					componentId={ this.props.componentId }
-				/>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="application-container">
+        <Statistics/>
+        <WidgetDropdown
+          componentId={ this.props.componentId }
+        />
+      </div>
+    );
+  }
 });
 
 export default Application;

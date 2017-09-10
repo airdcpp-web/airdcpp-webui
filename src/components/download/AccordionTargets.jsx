@@ -7,52 +7,52 @@ import PathList from './PathList';
 
 
 const AccordionTargets = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 */
-		downloadHandler: PropTypes.func.isRequired,
+    downloadHandler: PropTypes.func.isRequired,
 
-		/**
+    /**
 		 * Grouped paths to list
 		 */
-		groupedPaths: PropTypes.array.isRequired,
-	},
+    groupedPaths: PropTypes.array.isRequired,
+  },
 
-	formatParent(parent) {
-		return (
-			<div key={ parent.name }>
-				<div className="title">
-					<i className="dropdown icon"/>
-					{ parent.name }
-				</div>
+  formatParent(parent) {
+    return (
+      <div key={ parent.name }>
+        <div className="title">
+          <i className="dropdown icon"/>
+          { parent.name }
+        </div>
 
-				<div className="content">
-					<PathList 
-						paths={ parent.paths } 
-						downloadHandler={ this.props.downloadHandler }
-					/>
-				</div>
-			</div>
-		);
-	},
+        <div className="content">
+          <PathList 
+            paths={ parent.paths } 
+            downloadHandler={ this.props.downloadHandler }
+          />
+        </div>
+      </div>
+    );
+  },
 
-	render: function () {
-		const { groupedPaths } = this.props;
-		if (groupedPaths.length === 0) {
-			return (
-				<Message
-					title="No paths to display"
-				/>
-			);
-		}
+  render: function () {
+    const { groupedPaths } = this.props;
+    if (groupedPaths.length === 0) {
+      return (
+        <Message
+          title="No paths to display"
+        />
+      );
+    }
 
-		return (
-			<Accordion className="styled download-targets">
-				{ this.props.groupedPaths.map(this.formatParent) }
-			</Accordion>
-		);
-	}
+    return (
+      <Accordion className="styled download-targets">
+        { this.props.groupedPaths.map(this.formatParent) }
+      </Accordion>
+    );
+  }
 });
 
 export default AccordionTargets;

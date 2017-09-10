@@ -1,28 +1,28 @@
 module.exports = {
-	path: 'share',
+  path: 'share',
 	
-	getChildRoutes(location, cb) {
-		require.ensure([], (require) => {
-			cb(null, [ {
-				path: 'edit', 
-				component: require('./components/ShareDirectoryDialog').default, 
-			}, {
-				path: 'add', 
-				component: require('./components/ShareDirectoryDialog').default, 
-				childRoutes: [
-					{
-						path: 'browse', 
-						component: require('components/filebrowser/FileBrowserDialog').default, 
-					}
-				]
-			} ]);
-		}, 'share-children');
-	},
+  getChildRoutes(location, cb) {
+    require.ensure([], (require) => {
+      cb(null, [ {
+        path: 'edit', 
+        component: require('./components/ShareDirectoryDialog').default, 
+      }, {
+        path: 'add', 
+        component: require('./components/ShareDirectoryDialog').default, 
+        childRoutes: [
+          {
+            path: 'browse', 
+            component: require('components/filebrowser/FileBrowserDialog').default, 
+          }
+        ]
+      } ]);
+    }, 'share-children');
+  },
 
-	getComponent(location, cb) {
-		require.ensure([], (require) => {
-			cb(null, require('./components/Share').default);
-		}, 'share');
-	}
+  getComponent(location, cb) {
+    require.ensure([], (require) => {
+      cb(null, require('./components/Share').default);
+    }, 'share');
+  }
 };
 

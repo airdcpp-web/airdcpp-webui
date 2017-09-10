@@ -1,19 +1,19 @@
 const MODULE_URL = 'private_chat';
 
 export const CCPMEnum = {
-	DISCONNECTED: 'disconnected',
-	CONNECTING: 'connecting',
-	CONNECTED: 'connected',
+  DISCONNECTED: 'disconnected',
+  CONNECTING: 'connecting',
+  CONNECTED: 'connected',
 };
 
 export default {
-	MODULE_URL: MODULE_URL,
-	SESSIONS_URL: MODULE_URL,
+  MODULE_URL: MODULE_URL,
+  SESSIONS_URL: MODULE_URL,
 
-	SESSION_CREATED: 'private_chat_created',
-	SESSION_REMOVED: 'private_chat_removed',
-	SESSION_UPDATED: 'private_chat_updated',
+  SESSION_CREATED: 'private_chat_created',
+  SESSION_REMOVED: 'private_chat_removed',
+  SESSION_UPDATED: 'private_chat_updated',
 
-	MESSAGE: 'private_chat_message',
-	STATUS: 'private_chat_status',
+  MESSAGE: 'private_chat_message',
+  STATUS: 'private_chat_status',
 };

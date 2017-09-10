@@ -8,63 +8,63 @@ import SuggestionRenderer from './SuggestionRenderer';
 
 
 const RemoteSuggestField = React.createClass({
-	propTypes: {
-		valueField: PropTypes.string.isRequired,
+  propTypes: {
+    valueField: PropTypes.string.isRequired,
 
-		descriptionField: PropTypes.string.isRequired,
+    descriptionField: PropTypes.string.isRequired,
 
-		url: PropTypes.string.isRequired,
-	},
+    url: PropTypes.string.isRequired,
+  },
 
-	getInitialState() {
-		return {
-			suggestions: [],
-		};
-	},
+  getInitialState() {
+    return {
+      suggestions: [],
+    };
+  },
 
-	getSuggestionValue(suggestionObj) {
-		return suggestionObj[this.props.valueField];
-	},
+  getSuggestionValue(suggestionObj) {
+    return suggestionObj[this.props.valueField];
+  },
 
-	onSuggestionsFetchRequested({ value }) {
-		SocketService.post(this.props.url, { 
-			pattern: value, 
-			max_results: 7 
-		})
-			.then(this.onSuggestionsReceived)
-			.catch(error => 
-				console.log('Failed to fetch suggestions: ' + error)
-			);
-	},
+  onSuggestionsFetchRequested({ value }) {
+    SocketService.post(this.props.url, { 
+      pattern: value, 
+      max_results: 7 
+    })
+      .then(this.onSuggestionsReceived)
+      .catch(error => 
+        console.log('Failed to fetch suggestions: ' + error)
+      );
+  },
 
-	onSuggestionsClearRequested() {
-		this.setState({
-			suggestions: []
-		});
-	},
+  onSuggestionsClearRequested() {
+    this.setState({
+      suggestions: []
+    });
+  },
 
-	onSuggestionsReceived(data) {
-		this.setState({ 
-			suggestions: data 
-		});
-	},
+  onSuggestionsReceived(data) {
+    this.setState({ 
+      suggestions: data 
+    });
+  },
 
-	renderSuggestion(suggestionObj, { query }) {
-		return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
-	},
+  renderSuggestion(suggestionObj, { query }) {
+    return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
+  },
 
-	render() {
-		return (
-			<SuggestField 
-				{ ...this.props }
-				suggestions={ this.state.suggestions }
-				renderSuggestion={ this.renderSuggestion }
-				getSuggestionValue={ this.getSuggestionValue }
-				onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
-				onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
-			/>
-		);
-	},
+  render() {
+    return (
+      <SuggestField 
+        { ...this.props }
+        suggestions={ this.state.suggestions }
+        renderSuggestion={ this.renderSuggestion }
+        getSuggestionValue={ this.getSuggestionValue }
+        onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
+        onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
+      />
+    );
+  },
 });
 
 export default RemoteSuggestField;

@@ -12,131 +12,131 @@ import 'semantic-ui/components/modal.min.css';
 
 
 const Modal = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Close the modal when clicking outside its boundaries
 		 */
-		closable: PropTypes.bool,
+    closable: PropTypes.bool,
 
-		/**
+    /**
 		 * Function to call when the dialog is approved
 		 * If no handler is supplied, there will only be a plain close button
 		 */
-		onApprove: PropTypes.func,
+    onApprove: PropTypes.func,
 
-		/**
+    /**
 		 * Caption for the approve button
 		 */
-		approveCaption: PropTypes.node,
+    approveCaption: PropTypes.node,
 
-		/**
+    /**
 		 * Use disabled style for the approve button
 		 */
-		approveDisabled: PropTypes.bool,
+    approveDisabled: PropTypes.bool,
 
-		/**
+    /**
 		 * The modal will always use the maximum allowed width when set,
 		 * instead of adjusting the height dynamically.
 		 * Useful for modals with navigable, varying height content
 		 */
-		fullHeight: PropTypes.bool,
+    fullHeight: PropTypes.bool,
 
-		dynamicHeight: PropTypes.bool,
-	},
+    dynamicHeight: PropTypes.bool,
+  },
 
-	getDefaultProps() {
-		return {
-			closable: true,
-			approveCaption: 'Save',
-			approveEnabled: true,
-			fullHeight: false,
-			dynamicHeight: false,
-		};
-	},
+  getDefaultProps() {
+    return {
+      closable: true,
+      approveCaption: 'Save',
+      approveEnabled: true,
+      fullHeight: false,
+      dynamicHeight: false,
+    };
+  },
 
-	getInitialState() {
-		return {
-			saving: false,
-		};
-	},
+  getInitialState() {
+    return {
+      saving: false,
+    };
+  },
 
-	onApprove(el) {
-		let { onApprove } = this.props;
-		if (onApprove) {
-			this.setState({ saving: true });
-			let promise = onApprove();
-			promise.then(this.props.hide).catch(() => this.setState({ saving: false }));
-			return false;
-		}
+  onApprove(el) {
+    let { onApprove } = this.props;
+    if (onApprove) {
+      this.setState({ saving: true });
+      let promise = onApprove();
+      promise.then(this.props.hide).catch(() => this.setState({ saving: false }));
+      return false;
+    }
 
-		return true;
-	},
+    return true;
+  },
 
-	componentDidMount() {
-		this.props.showOverlay(this.c, {
-			movePopup:false,
-			onApprove: this.onApprove,
-			closable: this.props.closable,
-			detachable: false,
-			allowMultiple: true,
-			observeChanges: this.props.dynamicHeight,
-			//debug: true,
-			//verbose: true,
-			//name: 'Modal',
-		});
-	},
+  componentDidMount() {
+    this.props.showOverlay(this.c, {
+      movePopup:false,
+      onApprove: this.onApprove,
+      closable: this.props.closable,
+      detachable: false,
+      allowMultiple: true,
+      observeChanges: this.props.dynamicHeight,
+      //debug: true,
+      //verbose: true,
+      //name: 'Modal',
+    });
+  },
 
-	render: function () {
-		const { saving } = this.state;
-		const approveStyle = classNames(
-			'ui ok green basic button',
-			{ 'disabled': this.props.approveDisabled },
-			{ 'loading': saving },
-		);
+  render: function () {
+    const { saving } = this.state;
+    const approveStyle = classNames(
+      'ui ok green basic button',
+      { 'disabled': this.props.approveDisabled },
+      { 'loading': saving },
+    );
 
-		const mainClass = classNames(
-			'ui modal',
-			{ 'full': this.props.fullHeight },
-			this.props.className,
-		);
+    const mainClass = classNames(
+      'ui modal',
+      { 'full': this.props.fullHeight },
+      this.props.className,
+    );
 
-		return (
-			<div 
-				ref={ c => this.c = c }
-				className={ mainClass }
-			>
-				<LayoutHeader
-					title={ this.props.title }
-					icon={ this.props.icon }
-					subHeader={ this.props.subHeader }
-					size="medium"
-				/>
-				<div className="content">
-					{ this.props.children }
-				</div>
+    return (
+      <div 
+        ref={ c => this.c = c }
+        className={ mainClass }
+      >
+        <LayoutHeader
+          title={ this.props.title }
+          icon={ this.props.icon }
+          subHeader={ this.props.subHeader }
+          size="medium"
+        />
+        <div className="content">
+          { this.props.children }
+        </div>
 
-				{ this.props.onApprove ? (
-					<div className="actions">
-						<div className={ approveStyle }>
-							<i className={ IconConstants.SAVE + ' icon' }/>
-							{ this.props.approveCaption }
-						</div>
-						<div className="ui cancel red basic button">
-							<i className="remove icon"/>
+        { this.props.onApprove ? (
+          <div className="actions">
+            <div className={ approveStyle }>
+              <i className={ IconConstants.SAVE + ' icon' }/>
+              { this.props.approveCaption }
+            </div>
+            <div className="ui cancel red basic button">
+              <i className="remove icon"/>
 							Cancel
-						</div>
-					</div>
-				) : (
-					<div className="actions">
-						<div className="ui cancel button">
-							<i className="remove icon"/>
+            </div>
+          </div>
+        ) : (
+          <div className="actions">
+            <div className="ui cancel button">
+              <i className="remove icon"/>
 							Close
-						</div>
-					</div>
-				) }
-			</div>
-		);
-	}
+            </div>
+          </div>
+        ) }
+      </div>
+    );
+  }
 });
 
 export default OverlayDecorator(Modal, 'modal');

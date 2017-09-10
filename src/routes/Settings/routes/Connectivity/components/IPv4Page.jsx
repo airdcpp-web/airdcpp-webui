@@ -2,22 +2,22 @@ import React from 'react';
 import ProtocolPage from './ProtocolPage';
 
 const Entry = [
-	'connection_auto_v4',
-	'connection_bind_v4',
-	'connection_mode_v4',
-	'connection_ip_v4',
-	'connection_update_ip_v4',
-	'connection_ip_override_v4',
+  'connection_auto_v4',
+  'connection_bind_v4',
+  'connection_mode_v4',
+  'connection_ip_v4',
+  'connection_update_ip_v4',
+  'connection_ip_override_v4',
 ];
 
 const IPv4 = props => (
-	<div>
-		<ProtocolPage
-			{ ...props }
-			keys={ Entry }
-			protocol="v4"
-		/>
-	</div>
+  <div>
+    <ProtocolPage
+      { ...props }
+      keys={ Entry }
+      protocol="v4"
+    />
+  </div>
 );
 
 export default IPv4;

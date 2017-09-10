@@ -7,28 +7,28 @@ import SystemActions from 'actions/SystemActions';
 
 
 const PlainEntry = [
-	'web_plain_port',
-	'web_plain_bind_address',
+  'web_plain_port',
+  'web_plain_bind_address',
 ];
 
 const TlsEntry = [
-	'web_tls_port',
-	'web_tls_bind_address',
+  'web_tls_port',
+  'web_tls_bind_address',
 
-	'web_tls_certificate_path',
-	'web_tls_certificate_key_path',
+  'web_tls_certificate_path',
+  'web_tls_certificate_key_path',
 ];
 
 const Generic = [
-	'web_server_threads',
-	'default_idle_timeout',
-	'ping_interval',
-	'ping_timeout',
+  'web_server_threads',
+  'default_idle_timeout',
+  'ping_interval',
+  'ping_timeout',
 ];
 
 const ServerSettingsPage = props => (
-	<div>
-		{/*<Message 
+  <div>
+    {/*<Message 
 			description={ (
 				<div>
 					<div>
@@ -42,39 +42,39 @@ const ServerSettingsPage = props => (
 			icon="blue info"
 		/>*/}
 
-		<ActionButton 
-			action={ SystemActions.restartWeb }
-		/>
+    <ActionButton 
+      action={ SystemActions.restartWeb }
+    />
 
-		<div className="ui header">HTTP</div>
-		<div className="ui segment">
-			<RemoteSettingForm
-				{ ...props }
-				keys={ PlainEntry }
-			/>
-		</div>
+    <div className="ui header">HTTP</div>
+    <div className="ui segment">
+      <RemoteSettingForm
+        { ...props }
+        keys={ PlainEntry }
+      />
+    </div>
 
-		<div className="ui header">HTTPS</div>
-		<div className="ui segment">
-			<RemoteSettingForm
-				{ ...props }
-				keys={ TlsEntry }
-			/>
+    <div className="ui header">HTTPS</div>
+    <div className="ui segment">
+      <RemoteSettingForm
+        { ...props }
+        keys={ TlsEntry }
+      />
 
-			<Message 
-				description="The default client certificate is used if the certificate paths are empty"
-				icon="blue info"
-			/>
-		</div>
+      <Message 
+        description="The default client certificate is used if the certificate paths are empty"
+        icon="blue info"
+      />
+    </div>
 
-		<div className="ui header">Advanced</div>
-		<div className="ui segment">
-			<RemoteSettingForm
-				{ ...props }
-				keys={ Generic }
-			/>
-		</div>
-	</div>
+    <div className="ui header">Advanced</div>
+    <div className="ui segment">
+      <RemoteSettingForm
+        { ...props }
+        keys={ Generic }
+      />
+    </div>
+  </div>
 );
 
 export default ServerSettingsPage;

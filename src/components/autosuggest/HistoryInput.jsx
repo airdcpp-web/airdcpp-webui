@@ -10,40 +10,40 @@ import LocalSuggestField from './LocalSuggestField';
 
 
 const HistoryInput = React.createClass({
-	propTypes: {
+  propTypes: {
 
-		/**
+    /**
 		 * ID of the history section
 		 */
-		historyId: PropTypes.string.isRequired,
+    historyId: PropTypes.string.isRequired,
 
-		history: PropTypes.array.isRequired,
+    history: PropTypes.array.isRequired,
 
-		submitHandler: PropTypes.func.isRequired,
-	},
+    submitHandler: PropTypes.func.isRequired,
+  },
 
-	handleSubmit(text) {
-		HistoryActions.add(this.props.historyId, text);
+  handleSubmit(text) {
+    HistoryActions.add(this.props.historyId, text);
 
-		this.props.refetchData();
-		this.props.submitHandler(text);
-	},
+    this.props.refetchData();
+    this.props.submitHandler(text);
+  },
 
-	render() {
+  render() {
 		const { submitHandler, historyId, history, ...other } = this.props; // eslint-disable-line
-		return (
-			<LocalSuggestField 
-				{ ...other }
-				data={ history }
-				submitHandler={ this.handleSubmit }
-			/>
-		);
-	},
+    return (
+      <LocalSuggestField 
+        { ...other }
+        data={ history }
+        submitHandler={ this.handleSubmit }
+      />
+    );
+  },
 });
 
 export default DataProviderDecorator(HistoryInput, {
-	urls: {
-		history: ({ historyId }, socket) => socket.get(HistoryConstants.STRINGS_URL + '/' + historyId),
-	},
-	loaderText: null,
+  urls: {
+    history: ({ historyId }, socket) => socket.get(HistoryConstants.STRINGS_URL + '/' + historyId),
+  },
+  loaderText: null,
 });

@@ -16,118 +16,118 @@ import Loader from 'components/semantic/Loader';
 
 
 const NickCell = ({ cellData, rowDataGetter, ...props }) => (
-	<TableUserMenu 
-		text={ cellData } 
-		user={ rowDataGetter() }
-		userIcon={ true }
-	/>
+  <TableUserMenu 
+    text={ cellData } 
+    user={ rowDataGetter() }
+    userIcon={ true }
+  />
 );
 
 const HubUserTable = React.createClass({
-	propTypes: {
-		session: PropTypes.object, // required
-	},
+  propTypes: {
+    session: PropTypes.object, // required
+  },
 
-	rowClassNameGetter(user) {
-		return user.flags.join(' ');
-	},
+  rowClassNameGetter(user) {
+    return user.flags.join(' ');
+  },
 
-	emptyRowsNodeGetter() {
-		const connectState = this.props.session.connect_state.id;
+  emptyRowsNodeGetter() {
+    const connectState = this.props.session.connect_state.id;
 
-		if (connectState === ConnectStateEnum.DISCONNECTED) {
-			return (
-				<div className="offline-message">
-					<Message 
-						className="offline"
-						title="Not connected to the hub"
-						icon="plug"
-					/>
-				</div>
-			);
-		} 
+    if (connectState === ConnectStateEnum.DISCONNECTED) {
+      return (
+        <div className="offline-message">
+          <Message 
+            className="offline"
+            title="Not connected to the hub"
+            icon="plug"
+          />
+        </div>
+      );
+    } 
 
-		const text = connectState !== ConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist';
-		return (
-			<div className="loader-wrapper">
-				<Loader text={ text }/>
-			</div>
-		);
-	},
+    const text = connectState !== ConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist';
+    return (
+      <div className="loader-wrapper">
+        <Loader text={ text }/>
+      </div>
+    );
+  },
 
-	render() {
-		const { session } = this.props;
-		return (
-			<VirtualTable
-				store={ HubUserViewStore }
-				entityId={ session.id }
-				sessionStore={ HubSessionStore }
-				rowClassNameGetter={ this.rowClassNameGetter }
-				emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-			>
-				<Column
-					name="Nick"
-					width={170}
-					columnKey="nick"
-					flexGrow={8}
-					cell={ <NickCell/> }
-				/>
-				<Column
-					name="Share size"
-					width={85}
-					columnKey="share_size"
-					cell={ <SizeCell/> }
-					flexGrow={1}
-				/>
-				<Column
-					name="Description"
-					width={100}
-					columnKey="description"
-					flexGrow={1}
-				/>
-				<Column
-					name="Tag"
-					width={150}
-					columnKey="tag"
-					flexGrow={2}
-				/>
-				<Column
-					name="Upload speed"
-					width={80}
-					columnKey="upload_speed"
-					cell={ <ConnectionCell/> }
-					flexGrow={2}
-				/>
-				<Column
-					name="Download speed"
-					width={80}
-					columnKey="download_speed"
-					cell={ <ConnectionCell/> }
-					flexGrow={2}
-				/>
-				<Column
-					name="IP (v4)"
-					width={120}
-					columnKey="ip4"
-					flexGrow={3}
-					cell={ <IpCell/> }
-				/>
-				<Column
-					name="IP (v6)"
-					width={120}
-					columnKey="ip6"
-					flexGrow={3}
-					cell={ <IpCell/> }
-				/>
-				<Column
-					name="Files"
-					width={70}
-					columnKey="file_count"
-					flexGrow={3}
-				/>
-			</VirtualTable>
-		);
-	}
+  render() {
+    const { session } = this.props;
+    return (
+      <VirtualTable
+        store={ HubUserViewStore }
+        entityId={ session.id }
+        sessionStore={ HubSessionStore }
+        rowClassNameGetter={ this.rowClassNameGetter }
+        emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
+      >
+        <Column
+          name="Nick"
+          width={170}
+          columnKey="nick"
+          flexGrow={8}
+          cell={ <NickCell/> }
+        />
+        <Column
+          name="Share size"
+          width={85}
+          columnKey="share_size"
+          cell={ <SizeCell/> }
+          flexGrow={1}
+        />
+        <Column
+          name="Description"
+          width={100}
+          columnKey="description"
+          flexGrow={1}
+        />
+        <Column
+          name="Tag"
+          width={150}
+          columnKey="tag"
+          flexGrow={2}
+        />
+        <Column
+          name="Upload speed"
+          width={80}
+          columnKey="upload_speed"
+          cell={ <ConnectionCell/> }
+          flexGrow={2}
+        />
+        <Column
+          name="Download speed"
+          width={80}
+          columnKey="download_speed"
+          cell={ <ConnectionCell/> }
+          flexGrow={2}
+        />
+        <Column
+          name="IP (v4)"
+          width={120}
+          columnKey="ip4"
+          flexGrow={3}
+          cell={ <IpCell/> }
+        />
+        <Column
+          name="IP (v6)"
+          width={120}
+          columnKey="ip6"
+          flexGrow={3}
+          cell={ <IpCell/> }
+        />
+        <Column
+          name="Files"
+          width={70}
+          columnKey="file_count"
+          flexGrow={3}
+        />
+      </VirtualTable>
+    );
+  }
 });
 
 export default HubUserTable;

@@ -11,26 +11,26 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 
 const Entry = [
-	'download_directory',
+  'download_directory',
 ];
 
 const LocationsPage = props => (
-	<div>
-		<RemoteSettingForm
-			{ ...props }
-			keys={ Entry }
-		/>
+  <div>
+    <RemoteSettingForm
+      { ...props }
+      keys={ Entry }
+    />
 
-		<Message 
-			description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Available path variables</ExternalLink> }
-			icon="blue info"
-		/>
+    <Message 
+      description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Available path variables</ExternalLink> }
+      icon="blue info"
+    />
 
-		<div className="ui segment setting-form">
-			<LayoutHeader title="Favorite download directories" icon="yellow folder" size="normal"/>
-			<FavoriteDirectoryTable/>
-		</div>
-	</div>
+    <div className="ui segment setting-form">
+      <LayoutHeader title="Favorite download directories" icon="yellow folder" size="normal"/>
+      <FavoriteDirectoryTable/>
+    </div>
+  </div>
 );
 
 export default LocationsPage;

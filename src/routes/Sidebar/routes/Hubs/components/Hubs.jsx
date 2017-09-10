@@ -15,62 +15,62 @@ import HubIcon from 'components/icon/HubIcon';
 
 
 const ItemHandler = {
-	itemNameGetter(session) {
-		return session.identity.name;
-	},
+  itemNameGetter(session) {
+    return session.identity.name;
+  },
 
-	itemStatusGetter(session) {
-		return TypeConvert.hubOnlineStatusToColor(session.connect_state.id);
-	},
+  itemStatusGetter(session) {
+    return TypeConvert.hubOnlineStatusToColor(session.connect_state.id);
+  },
 
-	itemHeaderDescriptionGetter(session) {
-		return (
-			<TextDecorator
-				text={ session.identity.description }
-				emojify={ true }
-			/>
-		);
-	},
+  itemHeaderDescriptionGetter(session) {
+    return (
+      <TextDecorator
+        text={ session.identity.description }
+        emojify={ true }
+      />
+    );
+  },
 
-	itemHeaderIconGetter(session) {
-		return <HubIcon hub={ session } />;
-	},
+  itemHeaderIconGetter(session) {
+    return <HubIcon hub={ session } />;
+  },
 };
 
 const parseNumericId = (params) => {
-	if (!params) {
-		return null;
-	}
+  if (!params) {
+    return null;
+  }
 
-	return parseInt(params['id']);
+  return parseInt(params['id']);
 };
 
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
 const Hubs = React.createClass({
-	mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
-	render() {
-		const { params, ...other } = this.props;
-		return (
-			<SessionLayout 
-				activeId={ parseNumericId(params) }
-				baseUrl="hubs"
-				items={ this.state.hubSessions } 
-				newCaption="Connect"
-				newDescription="Connect to a new hub"
-				newIcon="sitemap"
-				editAccess={ AccessConstants.HUBS_EDIT }
-				actions={ HubActions } 
-				//actionIds={ hubActions }
+  mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
+  render() {
+    const { params, ...other } = this.props;
+    return (
+      <SessionLayout 
+        activeId={ parseNumericId(params) }
+        baseUrl="hubs"
+        items={ this.state.hubSessions } 
+        newCaption="Connect"
+        newDescription="Connect to a new hub"
+        newIcon="sitemap"
+        editAccess={ AccessConstants.HUBS_EDIT }
+        actions={ HubActions } 
+        //actionIds={ hubActions }
 
-				unreadInfoStore={ HubSessionStore }
-				{ ...ItemHandler }
-				{ ...other }
-			>
-				{ this.props.children }
-			</SessionLayout>
-		);
-	}
+        unreadInfoStore={ HubSessionStore }
+        { ...ItemHandler }
+        { ...other }
+      >
+        { this.props.children }
+      </SessionLayout>
+    );
+  }
 });
 
 export default Hubs;

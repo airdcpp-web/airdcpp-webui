@@ -8,43 +8,43 @@ import classNames from 'classnames';
 
 
 const Accordion = React.createClass({
-	propTypes: {
-		controlled: PropTypes.bool,
-	},
+  propTypes: {
+    controlled: PropTypes.bool,
+  },
 
-	componentDidMount() {
-		let settings = {};
-		if (this.props.controlled) {
-			settings = {
-				on: 'disabled',
-			};
-		}
+  componentDidMount() {
+    let settings = {};
+    if (this.props.controlled) {
+      settings = {
+        on: 'disabled',
+      };
+    }
 
-		$(this.c).accordion(settings);
-	},
+    $(this.c).accordion(settings);
+  },
 
-	getDefaultProps() {
-		return {
-			className: '',
-		};
-	},
+  getDefaultProps() {
+    return {
+      className: '',
+    };
+  },
 
-	render: function () {
-		const accordionStyle = classNames(
-			'ui accordion',
-			this.props.className,
-		);
+  render: function () {
+    const accordionStyle = classNames(
+      'ui accordion',
+      this.props.className,
+    );
 
-		let { children } = this.props;
-		return (
-			<div 
-				ref={ c => this.c = c } 
-				className={ accordionStyle }
-			>
-				{ children }
-			</div>
-		);
-	},
+    let { children } = this.props;
+    return (
+      <div 
+        ref={ c => this.c = c } 
+        className={ accordionStyle }
+      >
+        { children }
+      </div>
+    );
+  },
 });
 
 export default Accordion;

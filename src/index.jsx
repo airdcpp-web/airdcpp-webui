@@ -8,6 +8,6 @@ import App from './App';
 // Wrapper for hot reloading
 
 ReactDOM.render(
-	<App/>,
-	document.getElementById('container-main')
+  <App/>,
+  document.getElementById('container-main')
 );

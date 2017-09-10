@@ -12,118 +12,118 @@ import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 
 const VirtualTable = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Elements to append to the table footer
 		 */
-		footerData: PropTypes.node,
+    footerData: PropTypes.node,
 
-		/**
+    /**
 		 * Returns a node to render if there are no rows to display
 		 */
-		emptyRowsNodeGetter: PropTypes.func,
+    emptyRowsNodeGetter: PropTypes.func,
 
-		/**
+    /**
 		 * Possible ID of the current view (items will be cleared when the ID changes)
 		 */
-		viewId: PropTypes.any,
+    viewId: PropTypes.any,
 
-		/**
+    /**
 		 * Store containing sessions (must be provided together with entityId)
 		 */
-		sessionStore: PropTypes.object,
+    sessionStore: PropTypes.object,
 
-		/**
+    /**
 		 * Custom filter that will be displayed in addition to regular text filter
 		 */
-		customFilter: PropTypes.node,
+    customFilter: PropTypes.node,
 
-		/**
+    /**
 		 * Filter that is always applied for source items (those will never be displayed or included in the total count)
 		 */
-		sourceFilter: PropTypes.object,
-	},
+    sourceFilter: PropTypes.object,
+  },
 
-	componentWillMount() {
-		this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
+  componentWillMount() {
+    this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
 
-		this.start(this.props.entityId);
-	},
+    this.start(this.props.entityId);
+  },
 
-	componentDidMount() {
-		this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
-	},
+  componentDidMount() {
+    this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
+  },
 
-	componentWillUnmount() {
-		this.close();
-		this.unsubscribe();
-	},
+  componentWillUnmount() {
+    this.close();
+    this.unsubscribe();
+  },
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.entityId !== this.props.entityId) {
-			this.close();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entityId !== this.props.entityId) {
+      this.close();
 
-			this.start(nextProps.entityId);
-		}
+      this.start(nextProps.entityId);
+    }
 
-		if (nextProps.viewId != this.props.viewId) {
-			if (this.props.store.paused) {
-				// We need to receive the new items
-				TableActions.pause(this.props.store.viewUrl, false);
-			}
+    if (nextProps.viewId != this.props.viewId) {
+      if (this.props.store.paused) {
+        // We need to receive the new items
+        TableActions.pause(this.props.store.viewUrl, false);
+      }
 
-			TableActions.clear(this.props.store.viewUrl);
-		}
-	},
+      TableActions.clear(this.props.store.viewUrl);
+    }
+  },
 
-	moduleExists() {
-		if (!this.props.entityId) {
-			return true;
-		}
+  moduleExists() {
+    if (!this.props.entityId) {
+      return true;
+    }
 
-		return this.props.sessionStore.getSession(this.props.entityId);
-	},
+    return this.props.sessionStore.getSession(this.props.entityId);
+  },
 
-	start(entityId) {
-		const { store, sourceFilter } = this.props;
+  start(entityId) {
+    const { store, sourceFilter } = this.props;
 
-		TableActions.init(store.viewUrl, entityId, sourceFilter);
-		TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
-	},
+    TableActions.init(store.viewUrl, entityId, sourceFilter);
+    TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
+  },
 
-	close() {
-		// Don't send the close command if the session was removed
-		TableActions.close(this.props.store.viewUrl, this.moduleExists());
-	},
+  close() {
+    // Don't send the close command if the session was removed
+    TableActions.close(this.props.store.viewUrl, this.moduleExists());
+  },
 
-	render: function () {
-		const { footerData, emptyRowsNodeGetter, ...other } = this.props;
+  render: function () {
+    const { footerData, emptyRowsNodeGetter, ...other } = this.props;
 
-		if (emptyRowsNodeGetter && this.props.store.totalCount === -1) {
-			// Row count is unknown, don't flash the table
-			return <div className="virtual-table"/>;
-		}
+    if (emptyRowsNodeGetter && this.props.store.totalCount === -1) {
+      // Row count is unknown, don't flash the table
+      return <div className="virtual-table"/>;
+    }
 
-		if (emptyRowsNodeGetter && this.props.store.totalCount === 0) {
-			return emptyRowsNodeGetter();
-		}
+    if (emptyRowsNodeGetter && this.props.store.totalCount === 0) {
+      return emptyRowsNodeGetter();
+    }
 
-		//console.log('Render virtual table');
-		return (
-			<div className="virtual-table">
-				<TableContainer 
-					{ ...other }
-					dataLoader={this._dataLoader}
-				/>
+    //console.log('Render virtual table');
+    return (
+      <div className="virtual-table">
+        <TableContainer 
+          { ...other }
+          dataLoader={this._dataLoader}
+        />
 
-				<TableFooter
-					store={ this.props.store }
-					customFilter={ this.props.customFilter }
-					footerData={ footerData }
-				/>
-			</div>
-		);
-	}
+        <TableFooter
+          store={ this.props.store }
+          customFilter={ this.props.customFilter }
+          footerData={ footerData }
+        />
+      </div>
+    );
+  }
 });
 
 export default VirtualTable;

@@ -8,54 +8,54 @@ import escapeStringRegexp from 'escape-string-regexp';
 
 
 export default React.createClass({
-	propTypes: {
-		data: PropTypes.array.isRequired,
+  propTypes: {
+    data: PropTypes.array.isRequired,
 
-		onChange: PropTypes.func,
-	},
+    onChange: PropTypes.func,
+  },
 
-	getInitialState() {
-		return {
-			suggestions: [],
-		};
-	},
+  getInitialState() {
+    return {
+      suggestions: [],
+    };
+  },
 
-	filterSuggestions(text) {
-		const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
-		return this.props.data.filter(str => regex.test(str));
-	},
+  filterSuggestions(text) {
+    const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
+    return this.props.data.filter(str => regex.test(str));
+  },
 
-	onSuggestionsFetchRequested({ value }) {
-		this.setState({ 
-			suggestions: this.filterSuggestions(value),
-		});
-	},
+  onSuggestionsFetchRequested({ value }) {
+    this.setState({ 
+      suggestions: this.filterSuggestions(value),
+    });
+  },
 
-	onSuggestionsClearRequested() {
-		this.setState({
-			suggestions: []
-		});
-	},
+  onSuggestionsClearRequested() {
+    this.setState({
+      suggestions: []
+    });
+  },
 
-	renderSuggestion(dataItem, { query }) {
-		return SuggestionRenderer(query, dataItem);
-	},
+  renderSuggestion(dataItem, { query }) {
+    return SuggestionRenderer(query, dataItem);
+  },
 
-	getSuggestionValue(suggestion) {
-		return suggestion;
-	},
+  getSuggestionValue(suggestion) {
+    return suggestion;
+  },
 
-	render() {
-		return (
-			<SuggestField 
-				{ ...this.props }
-				renderSuggestion={ this.renderSuggestion }
-				getSuggestionValue={ this.getSuggestionValue }
-				suggestions={ this.state.suggestions }
-				onChange={ this.props.onChange }
-				onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
-				onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
-			/>
-		);
-	},
+  render() {
+    return (
+      <SuggestField 
+        { ...this.props }
+        renderSuggestion={ this.renderSuggestion }
+        getSuggestionValue={ this.getSuggestionValue }
+        suggestions={ this.state.suggestions }
+        onChange={ this.props.onChange }
+        onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
+        onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
+      />
+    );
+  },
 });

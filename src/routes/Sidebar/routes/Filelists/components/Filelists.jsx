@@ -14,56 +14,56 @@ import '../style.css';
 
 const UserItemHandler = UserItemHandlerDecorator([ 'message' ]);
 const ItemHandler = {
-	itemLabelGetter(session) {
-		return null;
-	},
+  itemLabelGetter(session) {
+    return null;
+  },
 
-	itemNameGetter(session) {
-		return session.share_profile ? session.share_profile.str : UserItemHandler.itemNameGetter(session);
-	},
+  itemNameGetter(session) {
+    return session.share_profile ? session.share_profile.str : UserItemHandler.itemNameGetter(session);
+  },
 
-	itemStatusGetter(session) {
-		return session.share_profile ? 'blue' : UserItemHandler.itemStatusGetter(session);
-	},
+  itemStatusGetter(session) {
+    return session.share_profile ? 'blue' : UserItemHandler.itemStatusGetter(session);
+  },
 
-	itemHeaderTitleGetter(session, location, actionMenu) {
-		return session.share_profile ? actionMenu : UserItemHandler.itemHeaderTitleGetter(session, location, actionMenu);
-	},
+  itemHeaderTitleGetter(session, location, actionMenu) {
+    return session.share_profile ? actionMenu : UserItemHandler.itemHeaderTitleGetter(session, location, actionMenu);
+  },
 
-	itemHeaderDescriptionGetter(session) {
-		return session.share_profile ? null : UserItemHandler.itemHeaderDescriptionGetter(session);
-	},
+  itemHeaderDescriptionGetter(session) {
+    return session.share_profile ? null : UserItemHandler.itemHeaderDescriptionGetter(session);
+  },
 
-	itemHeaderIconGetter(session) {
-		return session.share_profile ? 'green server' : UserItemHandler.itemHeaderIconGetter(session);
-	},
+  itemHeaderIconGetter(session) {
+    return session.share_profile ? 'green server' : UserItemHandler.itemHeaderIconGetter(session);
+  },
 };
 
 const Filelists = React.createClass({
-	mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
+  mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 
-	render() {
-		const { children, params, ...other } = this.props;
-		return (
-			<SessionLayout 
-				activeId={ params.id }
-				baseUrl="filelists"
-				items={ this.state.filelists }
-				newCaption="Open filelist"
-				newDescription="Start browsing a new filelist" 
-				newIcon="browser" 
-				disableSideMenu={ true }
-				editAccess={ AccessConstants.FILELISTS_EDIT }
-				actions={ FilelistSessionActions }
-				unreadInfoStore={ FilelistSessionStore }
+  render() {
+    const { children, params, ...other } = this.props;
+    return (
+      <SessionLayout 
+        activeId={ params.id }
+        baseUrl="filelists"
+        items={ this.state.filelists }
+        newCaption="Open filelist"
+        newDescription="Start browsing a new filelist" 
+        newIcon="browser" 
+        disableSideMenu={ true }
+        editAccess={ AccessConstants.FILELISTS_EDIT }
+        actions={ FilelistSessionActions }
+        unreadInfoStore={ FilelistSessionStore }
 
-				{ ...ItemHandler }
-				{ ...other }
-			>
-				{ children }
-			</SessionLayout>
-		);
-	}
+        { ...ItemHandler }
+        { ...other }
+      >
+        { children }
+      </SessionLayout>
+    );
+  }
 });
 
 export default Filelists;

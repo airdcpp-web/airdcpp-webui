@@ -9,54 +9,54 @@ import SettingConstants from 'constants/SettingConstants';
 
 
 export const LoginActions = Reflux.createActions([
-	{ 'login': { asyncResult: true } },
-	{ 'connect': { asyncResult: true } },
-	{ 'logout': { asyncResult: true } },
-	{ 'activity': { asyncResult: true } },
-	{ 'newUserIntroSeen': {
-		asyncResult: true,
-		displayName: "Close and don't show again",
-		access: AccessConstants.SETTINGS_EDIT,
-		icon: IconConstants.SAVE,
-	} },
+  { 'login': { asyncResult: true } },
+  { 'connect': { asyncResult: true } },
+  { 'logout': { asyncResult: true } },
+  { 'activity': { asyncResult: true } },
+  { 'newUserIntroSeen': {
+    asyncResult: true,
+    displayName: "Close and don't show again",
+    access: AccessConstants.SETTINGS_EDIT,
+    icon: IconConstants.SAVE,
+  } },
 ]);
 
 
 LoginActions.activity.listen(function () {
-	let that = this;
-	return SocketService.post(LoginConstants.ACTIVITY_URL, {
-		user_active: true,
-	})
-		.then(that.completed)
-		.catch(that.failed);
+  let that = this;
+  return SocketService.post(LoginConstants.ACTIVITY_URL, {
+    user_active: true,
+  })
+    .then(that.completed)
+    .catch(that.failed);
 });
 
 LoginActions.newUserIntroSeen.listen(function () {
-	let that = this;
-	return SocketService.post(SettingConstants.ITEMS_SET_URL, { [LoginConstants.WIZARD_PENDING]: false })
-		.then(that.completed)
-		.catch(that.failed);
+  let that = this;
+  return SocketService.post(SettingConstants.ITEMS_SET_URL, { [LoginConstants.WIZARD_PENDING]: false })
+    .then(that.completed)
+    .catch(that.failed);
 });
 
 LoginActions.login.listen(function (username, password) {
-	let that = this;
+  let that = this;
 
-	SocketService.connect(username, password, false)
-		.then(that.completed)
-		.catch(that.failed);
+  SocketService.connect(username, password, false)
+    .then(that.completed)
+    .catch(that.failed);
 });
 
 LoginActions.login.failed.listen(function (error) {
-	console.log('Logging in failed', error);
+  console.log('Logging in failed', error);
 });
 
 
 LoginActions.connect.listen(function (token) {
-	let that = this;
+  let that = this;
 
-	SocketService.reconnect(token)
-		.then(that.completed)
-		.catch(that.failed);
+  SocketService.reconnect(token)
+    .then(that.completed)
+    .catch(that.failed);
 });
 
 LoginActions.connect.failed.listen(function (token) {
@@ -64,10 +64,10 @@ LoginActions.connect.failed.listen(function (token) {
 });
 
 LoginActions.logout.listen(function () {
-	let that = this;
-	return SocketService.logout()
-		.then(that.completed)
-		.catch(this.failed);
+  let that = this;
+  return SocketService.logout()
+    .then(that.completed)
+    .catch(this.failed);
 });
 
 

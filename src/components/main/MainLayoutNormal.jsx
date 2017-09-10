@@ -11,30 +11,30 @@ import 'normal.css';
 
 
 const MainLayout = React.createClass({
-	propTypes: {
-		children: PropTypes.object.isRequired,
-		sidebar: PropTypes.object,
-		location: PropTypes.object.isRequired,
-	},
+  propTypes: {
+    children: PropTypes.object.isRequired,
+    sidebar: PropTypes.object,
+    location: PropTypes.object.isRequired,
+  },
 
-	render() {
-		const { children, sidebar } = this.props;
+  render() {
+    const { children, sidebar } = this.props;
 
-		return (
-			<div className={ this.props.className + ' sidebar-context' } id="normal-layout">
-				{ sidebar }
-				<div className="pusher">
-					<SiteHeader 
-						content={ <MainNavigation/> }
-					/>
-					<div className="ui site-content">
-						{ children }
-					</div>
-				</div>
-				<SideMenu location={ this.props.location }/>
-			</div>
-		);
-	}
+    return (
+      <div className={ this.props.className + ' sidebar-context' } id="normal-layout">
+        { sidebar }
+        <div className="pusher">
+          <SiteHeader 
+            content={ <MainNavigation/> }
+          />
+          <div className="ui site-content">
+            { children }
+          </div>
+        </div>
+        <SideMenu location={ this.props.location }/>
+      </div>
+    );
+  }
 });
 
 export default OverlayHandlerDecorator(MainLayout);

@@ -7,62 +7,62 @@ import LoginStore from 'stores/LoginStore';
 
 
 const DownloadFileBrowser = React.createClass({
-	onDirectoryChanged(path) {
-		this.setState({ currentPath: path });
-	},
+  onDirectoryChanged(path) {
+    this.setState({ currentPath: path });
+  },
 
-	getInitialState() {
-		return {
-			currentPath: this.getInitialPath(),
-		};
-	},
+  getInitialState() {
+    return {
+      currentPath: this.getInitialPath(),
+    };
+  },
 
-	selectedNameFormatter(caption, token) {
-		if (token.length === 0) {
-			// Drive listing on Windows isn't a good target
-			return caption;
-		}
+  selectedNameFormatter(caption, token) {
+    if (token.length === 0) {
+      // Drive listing on Windows isn't a good target
+      return caption;
+    }
 
-		const formatedCaption = (
-			<div className="download-handler" onClick={ () => this.props.downloadHandler(this.state.currentPath) }>
-				<i className="green download link icon"/>
-				<a>{ caption }</a>
-			</div>
-		);
+    const formatedCaption = (
+      <div className="download-handler" onClick={ () => this.props.downloadHandler(this.state.currentPath) }>
+        <i className="green download link icon"/>
+        <a>{ caption }</a>
+      </div>
+    );
 
-		return formatedCaption;
-	},
+    return formatedCaption;
+  },
 
-	itemIconGetter({ name, type }) {
-		if (type.id === 'file') {
-			return null;
-		}
+  itemIconGetter({ name, type }) {
+    if (type.id === 'file') {
+      return null;
+    }
 
-		const separator = LoginStore.systemInfo.path_separator;
-		return (
-			<i 
-				className="green download link icon"
-				onClick={ () => this.props.downloadHandler(this.state.currentPath + name + separator) }
-			/>
-		);
-	},
+    const separator = LoginStore.systemInfo.path_separator;
+    return (
+      <i 
+        className="green download link icon"
+        onClick={ () => this.props.downloadHandler(this.state.currentPath + name + separator) }
+      />
+    );
+  },
 
-	getInitialPath() {
-		const { history } = this.props;
-		return history.length > 0 ? history[history.length-1] : '';
-	},
+  getInitialPath() {
+    const { history } = this.props;
+    return history.length > 0 ? history[history.length-1] : '';
+  },
 
-	render() {
-		return (
-			<FileBrowserLayout 
-				initialPath={ this.getInitialPath() } 
-				selectedNameFormatter={ this.selectedNameFormatter }
-				onDirectoryChanged={ this.onDirectoryChanged }
-				historyId={ FilesystemConstants.LOCATION_DOWNLOAD }
-				itemIconGetter={ this.itemIconGetter }
-			/>
-		);
-	}
+  render() {
+    return (
+      <FileBrowserLayout 
+        initialPath={ this.getInitialPath() } 
+        selectedNameFormatter={ this.selectedNameFormatter }
+        onDirectoryChanged={ this.onDirectoryChanged }
+        historyId={ FilesystemConstants.LOCATION_DOWNLOAD }
+        itemIconGetter={ this.itemIconGetter }
+      />
+    );
+  }
 });
 
 export default DownloadFileBrowser;

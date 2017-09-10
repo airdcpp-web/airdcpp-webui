@@ -1,10 +1,10 @@
 module.exports = {
-	path: '/events',
+  path: '/events',
 	
-	getComponent(location, cb) {
-		require.ensure([], (require) => {
-			cb(null, require('./components/SystemLog').default);
-		}, 'events');
-	}
+  getComponent(location, cb) {
+    require.ensure([], (require) => {
+      cb(null, require('./components/SystemLog').default);
+    }, 'events');
+  }
 };
 

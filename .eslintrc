@@ -33,7 +33,7 @@
 		"no-unused-vars": [1, {args: none}],
 		"brace-style": [2, 1tbs],
 		"consistent-return": 2,
-		"indent": [1, "tab", {SwitchCase: 1}],
+		"indent": ["error", 2],
 		"no-multi-spaces": 2,
 		"no-dupe-class-members": 2,
 		"keyword-spacing": 2,

@@ -10,54 +10,54 @@ import TableFilterDecorator from 'decorators/TableFilterDecorator';
 const defaultItem = { str: 'All profiles', id: null };
 
 const ShareProfileFilter = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Callback after selecting a profile
 		 */
-		onFilterUpdated: PropTypes.func,
-	},
+    onFilterUpdated: PropTypes.func,
+  },
 
-	getInitialState() {
-		return {
-			selectedProfile: defaultItem,
-		};
-	},
+  getInitialState() {
+    return {
+      selectedProfile: defaultItem,
+    };
+  },
 
-	onClick(profile) {
-		this.props.onFilterUpdated(profile.id);
-		this.setState({ 
-			selectedProfile: profile 
-		});
-	},
+  onClick(profile) {
+    this.props.onFilterUpdated(profile.id);
+    this.setState({ 
+      selectedProfile: profile 
+    });
+  },
 
-	getDropdownItem(profile) {
-		return (
-			<MenuItemLink 
-				key={ profile.id }
-				active={ this.state.selectedProfile ? this.state.selectedProfile.id === profile.id : false } 
-				onClick={ () => this.onClick(profile) }
-			>
-				{ profile.str }
-			</MenuItemLink>
-		);
-	},
+  getDropdownItem(profile) {
+    return (
+      <MenuItemLink 
+        key={ profile.id }
+        active={ this.state.selectedProfile ? this.state.selectedProfile.id === profile.id : false } 
+        onClick={ () => this.onClick(profile) }
+      >
+        { profile.str }
+      </MenuItemLink>
+    );
+  },
 
-	render() {
-		return (
-			<Dropdown 
-				className="top right pointing" 
-				caption={ this.state.selectedProfile.str } 
-				triggerIcon="filter" 
-				button={ true }
-			>
-				<div className="header">
-					<i className="filter icon"/>
+  render() {
+    return (
+      <Dropdown 
+        className="top right pointing" 
+        caption={ this.state.selectedProfile.str } 
+        triggerIcon="filter" 
+        button={ true }
+      >
+        <div className="header">
+          <i className="filter icon"/>
 					Filter by profile
-				</div>
-				{ [ defaultItem, ...this.props.profiles ].map(this.getDropdownItem) }
-			</Dropdown>
-		);
-	}
+        </div>
+        { [ defaultItem, ...this.props.profiles ].map(this.getDropdownItem) }
+      </Dropdown>
+    );
+  }
 });
 
 export default ShareProfileDecorator(TableFilterDecorator(ShareProfileFilter, 'profiles'), false);

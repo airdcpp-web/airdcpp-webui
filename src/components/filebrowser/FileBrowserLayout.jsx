@@ -21,195 +21,195 @@ import './style.css';
 
 
 const CreateDirectory = ({ handleAction }) => (
-	<Accordion>
-		<div className="title create-section">
-			<i className="dropdown icon"/>
+  <Accordion>
+    <div className="title create-section">
+      <i className="dropdown icon"/>
 			Create directory
-		</div>
+    </div>
 
-		<div className="content create-section">
-			<ActionInput caption="Create" icon="plus" handleAction={ handleAction } placeholder="Directory name"/>
-		</div>
-	</Accordion>
+    <div className="content create-section">
+      <ActionInput caption="Create" icon="plus" handleAction={ handleAction } placeholder="Directory name"/>
+    </div>
+  </Accordion>
 );
 
 CreateDirectory.propTypes = {
-	/**
+  /**
 	 * Function to call with the value
 	 */
-	handleAction: PropTypes.func.isRequired
+  handleAction: PropTypes.func.isRequired
 };
 
 
 const FileBrowser = React.createClass({
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Local storage ID used for saving/loading the last path
 		 * This will have priority over initialPath
 		 */
-		historyId: PropTypes.string,
+    historyId: PropTypes.string,
 
-		/**
+    /**
 		 * Initial directory to show
 		 */
-		initialPath: PropTypes.string,
+    initialPath: PropTypes.string,
 
-		/**
+    /**
 		 * Function to call when changing the directory. Receives the path as param.
 		 */
-		onDirectoryChanged: PropTypes.func,
+    onDirectoryChanged: PropTypes.func,
 
-		/**
+    /**
 		 * Getter for additional content displayed next to file/directory items
 		 */
-		itemIconGetter: PropTypes.func,
-	},
+    itemIconGetter: PropTypes.func,
+  },
 
-	getInitialState() {
-		this._pathSeparator = LoginStore.systemInfo.path_separator;
-		this._isWindows = LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
+  getInitialState() {
+    this._pathSeparator = LoginStore.systemInfo.path_separator;
+    this._isWindows = LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
 
-		let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
-		if (!currentDirectory) {
-			currentDirectory = this.props.initialPath.length === 0 ? this.getRootPath() : this.props.initialPath;
-		}
+    let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
+    if (!currentDirectory) {
+      currentDirectory = this.props.initialPath.length === 0 ? this.getRootPath() : this.props.initialPath;
+    }
 
-		return {
-			currentDirectory,
-			items: [],
-			loading: true,
-			error: null
-		};
-	},
+    return {
+      currentDirectory,
+      items: [],
+      loading: true,
+      error: null
+    };
+  },
 
-	getStorageKey() {
-		if (!this.props.historyId) {
-			return undefined;
-		}
+  getStorageKey() {
+    if (!this.props.historyId) {
+      return undefined;
+    }
 
-		return 'browse_' + this.props.historyId;
-	},
+    return 'browse_' + this.props.historyId;
+  },
 
-	getDefaultProps() {
-		return {
-			initialPath: '',
-		};
-	},
+  getDefaultProps() {
+    return {
+      initialPath: '',
+    };
+  },
 
-	componentDidUpdate(prevProps, prevState) {
-		if (prevState.currentDirectory !== this.state.currentDirectory) {
-			this.onDirectoryChanged();
-		}
-	},
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentDirectory !== this.state.currentDirectory) {
+      this.onDirectoryChanged();
+    }
+  },
 
-	componentDidMount() {
-		// Fire a change event in case something was loaded from localStorage
-		this.onDirectoryChanged();
+  componentDidMount() {
+    // Fire a change event in case something was loaded from localStorage
+    this.onDirectoryChanged();
 		
-		this.fetchItems(this.state.currentDirectory);
-	},
+    this.fetchItems(this.state.currentDirectory);
+  },
 
-	onDirectoryChanged() {
-		// Save the location
-		BrowserUtils.saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
+  onDirectoryChanged() {
+    // Save the location
+    BrowserUtils.saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
 
-		// Props
-		if (this.props.onDirectoryChanged) {
-			this.props.onDirectoryChanged(this.state.currentDirectory);
-		}
-	},
+    // Props
+    if (this.props.onDirectoryChanged) {
+      this.props.onDirectoryChanged(this.state.currentDirectory);
+    }
+  },
 
-	fetchItems(path) {
-		this.setState({ 
-			error: null,
-			loading: true
-		});
+  fetchItems(path) {
+    this.setState({ 
+      error: null,
+      loading: true
+    });
 
-		SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
-			.then(this.onFetchSucceed.bind(this, path))
-			.catch(this.onFetchFailed);
-	},
+    SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
+      .then(this.onFetchSucceed.bind(this, path))
+      .catch(this.onFetchFailed);
+  },
 
-	onFetchFailed(error) {
-		if (!this.initialFetchCompleted) {
-			// The path doesn't exists, go to root
-			this.fetchItems(this.getRootPath());
-			return;
-		}
+  onFetchFailed(error) {
+    if (!this.initialFetchCompleted) {
+      // The path doesn't exists, go to root
+      this.fetchItems(this.getRootPath());
+      return;
+    }
 
-		this.setState({ 
-			error: error.message,
-			loading: false
-		});
-	},
+    this.setState({ 
+      error: error.message,
+      loading: false
+    });
+  },
 
-	onFetchSucceed(path, data) {
-		this.setState({ 
-			currentDirectory: path,
-			items: data,
-			loading: false
-		});
+  onFetchSucceed(path, data) {
+    this.setState({ 
+      currentDirectory: path,
+      items: data,
+      loading: false
+    });
 
-		this.initialFetchCompleted = true;
-	},
+    this.initialFetchCompleted = true;
+  },
 
-	_appendDirectoryName(directoryName) {
-		return this.state.currentDirectory + directoryName + this._pathSeparator;
-	},
+  _appendDirectoryName(directoryName) {
+    return this.state.currentDirectory + directoryName + this._pathSeparator;
+  },
 
-	_handleSelect(directoryName) {
-		const nextPath = this._appendDirectoryName(directoryName);
+  _handleSelect(directoryName) {
+    const nextPath = this._appendDirectoryName(directoryName);
 
-		this.fetchItems(nextPath);
-	},
+    this.fetchItems(nextPath);
+  },
 
-	_createDirectory(directoryName) {
-		this.setState({ 
-			error: null
-		});
+  _createDirectory(directoryName) {
+    this.setState({ 
+      error: null
+    });
 
-		const newPath = this.state.currentDirectory + directoryName + this._pathSeparator;
-		SocketService.post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
-			.then(data => this.fetchItems(this.state.currentDirectory))
-			.catch(error => this.setState({ 
-				error: error.message
-			}));
-	},
+    const newPath = this.state.currentDirectory + directoryName + this._pathSeparator;
+    SocketService.post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
+      .then(data => this.fetchItems(this.state.currentDirectory))
+      .catch(error => this.setState({ 
+        error: error.message
+      }));
+  },
 
-	getRootPath() {
-		return this._isWindows ? '' : '/';
-	},
+  getRootPath() {
+    return this._isWindows ? '' : '/';
+  },
 
-	render: function () {
-		if (this.state.loading) {
-			return <Loader text="Loading items"/>;
-		}
+  render: function () {
+    if (this.state.loading) {
+      return <Loader text="Loading items"/>;
+    }
 
-		const { currentDirectory, error, items } = this.state;
-		const { selectedNameFormatter, itemIconGetter } = this.props;
+    const { currentDirectory, error, items } = this.state;
+    const { selectedNameFormatter, itemIconGetter } = this.props;
 
-		const hasEditAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT);
-		const rootName = this._isWindows ? 'Computer' : 'Root';
-		return (
-			<div className="file-browser">
-				{ !!error && <Message isError={true} title="Failed to load content" description={this.state.error}/> }
-				<BrowserBar 
-					path={ currentDirectory }
-					separator={ this._pathSeparator } 
-					rootPath={ this.getRootPath() } 
-					rootName={ rootName } 
-					itemClickHandler={ this.fetchItems }
-					selectedNameFormatter={ selectedNameFormatter }
-				/>
-				<FileItemList 
-					items={ items } 
-					itemClickHandler={ this._handleSelect }
-					itemIconGetter={ itemIconGetter }
-				/>
-				{ this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
-			</div>
-		);
-	}
+    const hasEditAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT);
+    const rootName = this._isWindows ? 'Computer' : 'Root';
+    return (
+      <div className="file-browser">
+        { !!error && <Message isError={true} title="Failed to load content" description={this.state.error}/> }
+        <BrowserBar 
+          path={ currentDirectory }
+          separator={ this._pathSeparator } 
+          rootPath={ this.getRootPath() } 
+          rootName={ rootName } 
+          itemClickHandler={ this.fetchItems }
+          selectedNameFormatter={ selectedNameFormatter }
+        />
+        <FileItemList 
+          items={ items } 
+          itemClickHandler={ this._handleSelect }
+          itemIconGetter={ itemIconGetter }
+        />
+        { this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
+      </div>
+    );
+  }
 });
 
 export default FileBrowser;

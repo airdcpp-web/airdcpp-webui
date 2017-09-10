@@ -20,103 +20,103 @@ import '../style.css';
 
 
 const getStorageKey = (props) => {
-	return 'view_userlist_' + props.session.id;
+  return 'view_userlist_' + props.session.id;
 };
 
 const checkList = (props) => {
-	return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
+  return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
 };
 
 const HubSession = React.createClass({
-	mixins: [ LocationContext ],
-	componentWillMount() {
-		this.showList = checkList(this.props);
-	},
+  mixins: [ LocationContext ],
+  componentWillMount() {
+    this.showList = checkList(this.props);
+  },
 
-	getInitialState() {
-		return {
-			showList: checkList(this.props),
-		};
-	},
+  getInitialState() {
+    return {
+      showList: checkList(this.props),
+    };
+  },
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
-			this.toggleListState();
-		}
-	},
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
+      this.toggleListState();
+    }
+  },
 
-	toggleListState() {
-		this.setState({ showList: !this.state.showList });
-	},
+  toggleListState() {
+    this.setState({ showList: !this.state.showList });
+  },
 
-	getMessage() {
-		const { session } = this.props;
-		const connectState = session.connect_state.id;
+  getMessage() {
+    const { session } = this.props;
+    const connectState = session.connect_state.id;
 
-		if (connectState === ConnectStateEnum.PASSWORD && !session.connect_state.has_password) {
-			return (
-				<HubActionPrompt 
-					title="Password required"
-					icon="lock"
-					content={ <PasswordPrompt hub={ session }/> }
-				/>
-			);
-		}
+    if (connectState === ConnectStateEnum.PASSWORD && !session.connect_state.has_password) {
+      return (
+        <HubActionPrompt 
+          title="Password required"
+          icon="lock"
+          content={ <PasswordPrompt hub={ session }/> }
+        />
+      );
+    }
 
-		if (connectState === ConnectStateEnum.REDIRECT) {
-			return (
-				<HubActionPrompt 
-					title="Redirect requested"
-					icon="forward mail"
-					content={ <RedirectPrompt hub={ session }/> }
-				/>
-			);
-		}
+    if (connectState === ConnectStateEnum.REDIRECT) {
+      return (
+        <HubActionPrompt 
+          title="Redirect requested"
+          icon="forward mail"
+          content={ <RedirectPrompt hub={ session }/> }
+        />
+      );
+    }
 
-		return null;
-	},
+    return null;
+  },
 
-	onClickUsers() {
-		this.toggleListState();
+  onClickUsers() {
+    this.toggleListState();
 
-		BrowserUtils.saveSessionProperty(getStorageKey(this.props), this.state.showList);
-	},
+    BrowserUtils.saveSessionProperty(getStorageKey(this.props), this.state.showList);
+  },
 
-	render() {
-		const { session, actions } = this.props;
-		const { showList } = this.state;
+  render() {
+    const { session, actions } = this.props;
+    const { showList } = this.state;
 
-		const checkbox = (
-			<Checkbox
-				type="toggle"
-				caption="User list"
-				onChange={ this.onClickUsers }
-				checked={ showList }
-			/>
-		);
+    const checkbox = (
+      <Checkbox
+        type="toggle"
+        caption="User list"
+        onChange={ this.onClickUsers }
+        checked={ showList }
+      />
+    );
 
-		return (
-			<div className="hub chat session">
-				{ this.getMessage() }
-				{ showList ? (
-					<HubUserTable
-						session={ session }
-					/>
-				) : (
-					<ChatLayout
-						messageStore={ HubMessageStore }
-						actions={ actions }
-						chatAccess={ AccessConstants.HUBS_SEND }
-						session={ session }
-					/>
-				) }
-				<HubFooter
-					userlistToggle={ checkbox }
-					session={ session }
-				/>
-			</div>
-		);
-	},
+    return (
+      <div className="hub chat session">
+        { this.getMessage() }
+        { showList ? (
+          <HubUserTable
+            session={ session }
+          />
+        ) : (
+          <ChatLayout
+            messageStore={ HubMessageStore }
+            actions={ actions }
+            chatAccess={ AccessConstants.HUBS_SEND }
+            session={ session }
+          />
+        ) }
+        <HubFooter
+          userlistToggle={ checkbox }
+          session={ session }
+        />
+      </div>
+    );
+  },
 });
 
 export default HubSession;

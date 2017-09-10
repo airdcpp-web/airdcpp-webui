@@ -20,134 +20,134 @@ import '../../style.css';
 
 
 const AccessCaptions = {
-	ADMIN: 'Administrator',
+  ADMIN: 'Administrator',
 
-	SEARCH: 'Search',
-	DOWNLOAD: 'Download',
-	TRANSFERS: 'Transfers',
+  SEARCH: 'Search',
+  DOWNLOAD: 'Download',
+  TRANSFERS: 'Transfers',
 
-	EVENTS_VIEW: 'Events: View',
-	EVENTS_EDIT: 'Events: Edit',
+  EVENTS_VIEW: 'Events: View',
+  EVENTS_EDIT: 'Events: Edit',
 
-	QUEUE_VIEW: 'Queue: View',
-	QUEUE_EDIT: 'Queue: Modify',
+  QUEUE_VIEW: 'Queue: View',
+  QUEUE_EDIT: 'Queue: Modify',
 
-	FAVORITE_HUBS_VIEW: 'Favorite hubs: View',
-	FAVORITE_HUBS_EDIT: 'Favorite hubs: Modify',
+  FAVORITE_HUBS_VIEW: 'Favorite hubs: View',
+  FAVORITE_HUBS_EDIT: 'Favorite hubs: Modify',
 
-	SETTINGS_VIEW: 'Settings: View',
-	SETTINGS_EDIT: 'Settings: Edit',
+  SETTINGS_VIEW: 'Settings: View',
+  SETTINGS_EDIT: 'Settings: Edit',
 
-	FILESYSTEM_VIEW: 'Local filesystem: Browse',
-	FILESYSTEM_EDIT: 'Local filesystem: Edit',
+  FILESYSTEM_VIEW: 'Local filesystem: Browse',
+  FILESYSTEM_EDIT: 'Local filesystem: Edit',
 
-	HUBS_VIEW: 'Hubs: View',
-	HUBS_EDIT: 'Hubs: Modify',
-	HUBS_SEND: 'Hubs: Send messages',
+  HUBS_VIEW: 'Hubs: View',
+  HUBS_EDIT: 'Hubs: Modify',
+  HUBS_SEND: 'Hubs: Send messages',
 
-	PRIVATE_CHAT_VIEW: 'Private chat: View',
-	PRIVATE_CHAT_EDIT: 'Private chat: Modify',
-	PRIVATE_CHAT_SEND: 'Private chat: Send messages',
+  PRIVATE_CHAT_VIEW: 'Private chat: View',
+  PRIVATE_CHAT_EDIT: 'Private chat: Modify',
+  PRIVATE_CHAT_SEND: 'Private chat: Send messages',
 
-	FILELISTS_VIEW: 'Filelists: View',
-	FILELISTS_EDIT: 'Filelists: Modify',
+  FILELISTS_VIEW: 'Filelists: View',
+  FILELISTS_EDIT: 'Filelists: Modify',
 
-	VIEW_FILE_VIEW: 'Viewed files: View',
-	VIEW_FILE_EDIT: 'Viewed files: Modify',
+  VIEW_FILE_VIEW: 'Viewed files: View',
+  VIEW_FILE_EDIT: 'Viewed files: Modify',
 };
 
 
 const reducePermissions = (options, key) => {
-	options.push({
-		id: AccessConstants[key],
-		name: AccessCaptions[key],
-	});
+  options.push({
+    id: AccessConstants[key],
+    name: AccessCaptions[key],
+  });
 
-	return options;
+  return options;
 };
 
 const getEntry = isNew => {
-	return [
-		{
-			key: 'username',
-			type: FieldTypes.STRING,
-		},
-		{
-			key: 'password',
-			type: FieldTypes.STRING,
-			title: isNew ? 'Password' : 'New password',
-			optional: !isNew,
-		},
-		{
-			key: 'permissions',
-			type: FieldTypes.LIST,
-			item_type: FieldTypes.STRING,
-			options: Object.keys(AccessConstants).reduce(reducePermissions, []),
-		},
-	];
+  return [
+    {
+      key: 'username',
+      type: FieldTypes.STRING,
+    },
+    {
+      key: 'password',
+      type: FieldTypes.STRING,
+      title: isNew ? 'Password' : 'New password',
+      optional: !isNew,
+    },
+    {
+      key: 'permissions',
+      type: FieldTypes.LIST,
+      item_type: FieldTypes.STRING,
+      options: Object.keys(AccessConstants).reduce(reducePermissions, []),
+    },
+  ];
 };
 
 const WebUserDialog = React.createClass({
-	mixins: [ RouteContext ],
-	isNew() {
-		return !this.props.user;
-	},
+  mixins: [ RouteContext ],
+  isNew() {
+    return !this.props.user;
+  },
 
-	componentWillMount() {
-		this.entry = getEntry(this.isNew());
-	},
+  componentWillMount() {
+    this.entry = getEntry(this.isNew());
+  },
 
-	save() {
-		return this.form.save();
-	},
+  save() {
+    return this.form.save();
+  },
 
-	onSave(changedFields) {
-		if (this.isNew()) {
-			return SocketService.post(WebUserConstants.USERS_URL, changedFields);
-		}
+  onSave(changedFields) {
+    if (this.isNew()) {
+      return SocketService.post(WebUserConstants.USERS_URL, changedFields);
+    }
 
-		return SocketService.patch(WebUserConstants.USERS_URL + '/' + this.props.user.id, changedFields);
-	},
+    return SocketService.patch(WebUserConstants.USERS_URL + '/' + this.props.user.id, changedFields);
+  },
 
-	onFieldSetting(id, fieldOptions, formValue) {
-		if (id === 'permissions') {
-			fieldOptions['factory'] = t.form.Select;
-			fieldOptions['template'] = PermissionSelector;
-			fieldOptions['disabled'] = !this.isNew() && this.props.user.username === LoginStore.user.username;
-		} else if (id === 'password') {
-			fieldOptions['type'] = 'password';
-		} else if (id === 'username') {
-			fieldOptions['disabled'] = !this.isNew();
-		}
-	},
+  onFieldSetting(id, fieldOptions, formValue) {
+    if (id === 'permissions') {
+      fieldOptions['factory'] = t.form.Select;
+      fieldOptions['template'] = PermissionSelector;
+      fieldOptions['disabled'] = !this.isNew() && this.props.user.username === LoginStore.user.username;
+    } else if (id === 'password') {
+      fieldOptions['type'] = 'password';
+    } else if (id === 'username') {
+      fieldOptions['disabled'] = !this.isNew();
+    }
+  },
 
-	render: function () {
-		const { user, location, ...other } = this.props;
-		const title = this.isNew() ? 'Add web user' : 'Edit user ' + user.username;
+  render: function () {
+    const { user, location, ...other } = this.props;
+    const title = this.isNew() ? 'Add web user' : 'Edit user ' + user.username;
 
-		return (
-			<Modal 
-				className="web-user" 
-				title={ title } 
-				onApprove={ this.save } 
-				closable={ false } 
-				icon="user" 
-				location={ location }
-				{ ...other }
-			>
-				<Form
-					ref={ c => this.form = c }
-					fieldDefinitions={ this.entry }
-					onFieldSetting={ this.onFieldSetting }
-					onSave={ this.onSave }
-					value={ this.props.user }
-					context={ {
-						location,
-					} }
-				/>
-			</Modal>
-		);
-	}
+    return (
+      <Modal 
+        className="web-user" 
+        title={ title } 
+        onApprove={ this.save } 
+        closable={ false } 
+        icon="user" 
+        location={ location }
+        { ...other }
+      >
+        <Form
+          ref={ c => this.form = c }
+          fieldDefinitions={ this.entry }
+          onFieldSetting={ this.onFieldSetting }
+          onSave={ this.onSave }
+          value={ this.props.user }
+          context={ {
+            location,
+          } }
+        />
+      </Modal>
+    );
+  }
 });
 
 export default WebUserDialog;

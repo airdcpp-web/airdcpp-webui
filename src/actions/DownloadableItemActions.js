@@ -33,159 +33,159 @@ const viewImage = data => isPicture(data) && sizeValid(data);
 
 
 export const DownloadableItemActions = Reflux.createActions([
-	{ 'download': { 
-		asyncResult: true,	
-		displayName: 'Download', 
-		access: AccessConstants.DOWNLOAD, 
-		icon: IconConstants.DOWNLOAD,
-		filter: notSelf,
-	} },
-	{ 'downloadTo': { 
-		asyncResult: true,	
-		displayName: 'Download to...',
-		access: AccessConstants.DOWNLOAD, 
-		icon: IconConstants.DOWNLOAD_TO,
-		filter: notSelf,
-	} }, 
-	'divider',
-	{ 'viewText': {
-		asyncResult: true,	
-		displayName: 'View as text',
-		access: AccessConstants.VIEW_FILE_EDIT, 
-		icon: IconConstants.OPEN, 
-		filter: viewText,
-	} },
-	{ 'viewImage': {
-		asyncResult: true,	
-		displayName: 'View image',
-		access: AccessConstants.VIEW_FILE_EDIT, 
-		icon: IconConstants.OPEN, 
-		filter: viewImage,
-	} },
-	{ 'findNfo': {
-		asyncResult: true,	
-		displayName: 'Find NFO',
-		access: AccessConstants.VIEW_FILE_EDIT,
-		icon: IconConstants.FIND,
-		filter: findNfo,
-	} },
-	{ 'viewVideo': {
-		asyncResult: true,	
-		displayName: 'Play video',
-		access: AccessConstants.VIEW_FILE_EDIT,
-		icon: IconConstants.OPEN,
-		filter: viewVideo,
-	} },
-	{ 'viewAudio': {
-		asyncResult: true,	
-		displayName: 'Play audio',
-		access: AccessConstants.VIEW_FILE_EDIT,
-		icon: IconConstants.OPEN,
-		filter: viewAudio,
-	} },
-	{ 'search': {
-		asyncResult: true,	
-		displayName: 'Search',
-		access: AccessConstants.SEARCH,
-		icon: IconConstants.SEARCH,
-		filter: isSearchable, // Example: root directory in filelists can't be searched for
-	} }
+  { 'download': { 
+    asyncResult: true,	
+    displayName: 'Download', 
+    access: AccessConstants.DOWNLOAD, 
+    icon: IconConstants.DOWNLOAD,
+    filter: notSelf,
+  } },
+  { 'downloadTo': { 
+    asyncResult: true,	
+    displayName: 'Download to...',
+    access: AccessConstants.DOWNLOAD, 
+    icon: IconConstants.DOWNLOAD_TO,
+    filter: notSelf,
+  } }, 
+  'divider',
+  { 'viewText': {
+    asyncResult: true,	
+    displayName: 'View as text',
+    access: AccessConstants.VIEW_FILE_EDIT, 
+    icon: IconConstants.OPEN, 
+    filter: viewText,
+  } },
+  { 'viewImage': {
+    asyncResult: true,	
+    displayName: 'View image',
+    access: AccessConstants.VIEW_FILE_EDIT, 
+    icon: IconConstants.OPEN, 
+    filter: viewImage,
+  } },
+  { 'findNfo': {
+    asyncResult: true,	
+    displayName: 'Find NFO',
+    access: AccessConstants.VIEW_FILE_EDIT,
+    icon: IconConstants.FIND,
+    filter: findNfo,
+  } },
+  { 'viewVideo': {
+    asyncResult: true,	
+    displayName: 'Play video',
+    access: AccessConstants.VIEW_FILE_EDIT,
+    icon: IconConstants.OPEN,
+    filter: viewVideo,
+  } },
+  { 'viewAudio': {
+    asyncResult: true,	
+    displayName: 'Play audio',
+    access: AccessConstants.VIEW_FILE_EDIT,
+    icon: IconConstants.OPEN,
+    filter: viewAudio,
+  } },
+  { 'search': {
+    asyncResult: true,	
+    displayName: 'Search',
+    access: AccessConstants.SEARCH,
+    icon: IconConstants.SEARCH,
+    filter: isSearchable, // Example: root directory in filelists can't be searched for
+  } }
 ]);
 
 DownloadableItemActions.download.listen(function (data) {
-	return data.handler(data, { target_name: data.itemInfo.name });
+  return data.handler(data, { target_name: data.itemInfo.name });
 });
 
 DownloadableItemActions.downloadTo.listen(function (handlerData, location) {
-	const { pathname } = location;
+  const { pathname } = location;
 	
-	History.pushModal(location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
-		downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
-		itemInfo: handlerData.itemInfo
-	});
+  History.pushModal(location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
+    downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
+    itemInfo: handlerData.itemInfo
+  });
 });
 
 DownloadableItemActions.viewText.listen(function (data, location) {
-	ViewFileActions.createSession(data, true, location, ViewFileStore);
+  ViewFileActions.createSession(data, true, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewVideo.listen(function (data, location) {
-	ViewFileActions.createSession(data, false, location, ViewFileStore);
+  ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewAudio.listen(function (data, location) {
-	ViewFileActions.createSession(data, false, location, ViewFileStore);
+  ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewImage.listen(function (data, location) {
-	ViewFileActions.createSession(data, false, location, ViewFileStore);
+  ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.findNfo.listen(async function (data, location) {
-	try {
-		// Get a new instance
-		let instance = await SocketService.post(SearchConstants.INSTANCES_URL, {
-			expiration_minutes: 1,
-		});
+  try {
+    // Get a new instance
+    let instance = await SocketService.post(SearchConstants.INSTANCES_URL, {
+      expiration_minutes: 1,
+    });
 
-		// Post the search
-		await SocketService.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
-			user: data.user,
-			query: {
-				extensions: [ 'nfo' ],
-				max_size: 256 * 1024,
-			},
-			options: {
-				path: data.itemInfo.path,
-				max_results: 1,
-			}
-		});
+    // Post the search
+    await SocketService.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
+      user: data.user,
+      query: {
+        extensions: [ 'nfo' ],
+        max_size: 256 * 1024,
+      },
+      options: {
+        path: data.itemInfo.path,
+        max_results: 1,
+      }
+    });
 
-		// Wait for the results to arrive
-		for (let i = 0; i < 5; i++) {
-			await sleep(500);
+    // Wait for the results to arrive
+    for (let i = 0; i < 5; i++) {
+      await sleep(500);
 
-			instance = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}`);
-			if (instance.result_count > 0) {
-				break;
-			}
-		}
+      instance = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}`);
+      if (instance.result_count > 0) {
+        break;
+      }
+    }
 
-		if (instance.result_count > 0) {
-			// Open the first result for viewing
-			const results = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`);
+    if (instance.result_count > 0) {
+      // Open the first result for viewing
+      const results = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`);
 
-			DownloadableItemActions.viewText({
-				itemInfo: results[0],
-				user: data.user,
-			}, location);
+      DownloadableItemActions.viewText({
+        itemInfo: results[0],
+        user: data.user,
+      }, location);
 
-			this.completed(data, location);
-		} else {
-			this.failed(data, 'No NFO results were received');
-		}
-	} catch (error) {
-		this.failed(data, error.message);
-	}
+      this.completed(data, location);
+    } else {
+      this.failed(data, 'No NFO results were received');
+    }
+  } catch (error) {
+    this.failed(data, error.message);
+  }
 });
 
 DownloadableItemActions.findNfo.failed.listen(function (data, errorMessage) {
-	NotificationActions.info({ 
-		title: data.itemInfo.name,
-		message: errorMessage,
-	});
+  NotificationActions.info({ 
+    title: data.itemInfo.name,
+    message: errorMessage,
+  });
 });
 
 DownloadableItemActions.search.listen(function (handlerData, location) {
-	const { itemInfo } = handlerData;
-	const searchString = !itemInfo.tth || itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
+  const { itemInfo } = handlerData;
+  const searchString = !itemInfo.tth || itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
 
-	History.pushUnique({
-		pathname: '/search',
-		state: {
-			searchString,
-		}
-	}, location);
+  History.pushUnique({
+    pathname: '/search',
+    state: {
+      searchString,
+    }
+  }, location);
 });
 
 export default DownloadableItemActions;

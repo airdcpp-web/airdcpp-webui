@@ -12,80 +12,80 @@ import { FieldTypes } from 'constants/SettingConstants';
 
 
 const WidgetDialog = React.createClass({
-	mixins: [ RouteContext ],
+  mixins: [ RouteContext ],
 
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Current widget settings
 		 */
-		settings: PropTypes.object, // Required
+    settings: PropTypes.object, // Required
 
-		/**
+    /**
 		 * Widget info object
 		 */
-		widgetInfo: PropTypes.object, // Required
+    widgetInfo: PropTypes.object, // Required
 
-		/**
+    /**
 		 * Called when the form is saved
 		 */
-		onSave: PropTypes.func, // Required
-	},
+    onSave: PropTypes.func, // Required
+  },
 
-	save() {
-		return this.form.save();
-	},
+  save() {
+    return this.form.save();
+  },
 
-	onSave(changedFields, value) {
-		const { name, ...formSettings } = value;
-		this.props.onSave({
-			name,
-			widget: formSettings
-		});
-		return Promise.resolve();
-	},
+  onSave(changedFields, value) {
+    const { name, ...formSettings } = value;
+    this.props.onSave({
+      name,
+      widget: formSettings
+    });
+    return Promise.resolve();
+  },
 
-	render: function () {
-		const { widgetInfo, location, settings, ...overlayProps } = this.props;
-		const { formSettings, name, icon } = widgetInfo;
+  render: function () {
+    const { widgetInfo, location, settings, ...overlayProps } = this.props;
+    const { formSettings, name, icon } = widgetInfo;
 
-		const Entry = [
-			{
-				key: 'name',
-				type: FieldTypes.STRING,
-				default_value: name,
-			},
-		];
+    const Entry = [
+      {
+        key: 'name',
+        type: FieldTypes.STRING,
+        default_value: name,
+      },
+    ];
 
-		if (formSettings) {
-			Entry.push(...formSettings);
-		}
+    if (formSettings) {
+      Entry.push(...formSettings);
+    }
 
-		return (
-			<Modal 
-				className="home-widget" 
-				title={ name } 
-				onApprove={ this.save }
-				icon={ icon }
-				location={ location }
-				{ ...overlayProps }
-			>
-				<Form
-					ref={ c => this.form = c }
-					value={ settings && {
-						name: settings.name,
-						...settings.widget,
-					} }
-					fieldDefinitions={ Entry }
-					onSave={ this.onSave }
-				/>
+    return (
+      <Modal 
+        className="home-widget" 
+        title={ name } 
+        onApprove={ this.save }
+        icon={ icon }
+        location={ location }
+        { ...overlayProps }
+      >
+        <Form
+          ref={ c => this.form = c }
+          value={ settings && {
+            name: settings.name,
+            ...settings.widget,
+          } }
+          fieldDefinitions={ Entry }
+          onSave={ this.onSave }
+        />
 
-				<Message
-					description="Widgets and their positions are browser-specific"
-					icon={ IconConstants.INFO }
-				/>
-			</Modal>
-		);
-	}
+        <Message
+          description="Widgets and their positions are browser-specific"
+          icon={ IconConstants.INFO }
+        />
+      </Modal>
+    );
+  }
 });
 
 export default WidgetDialog;

@@ -2,62 +2,62 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function (Component) {
-	let shouldScrollBottom = false;
+  let shouldScrollBottom = false;
 
-	const ScrollDecorator = React.createClass({
-		propTypes: {
-			/**
+  const ScrollDecorator = React.createClass({
+    propTypes: {
+      /**
 			 * The container will always be scrolled to bottom if the session changes
 			 */
-			session: PropTypes.any,
-		},
+      session: PropTypes.any,
+    },
 
-		componentDidMount: function () {
-			this._scrollToBottom();
-		},
+    componentDidMount: function () {
+      this._scrollToBottom();
+    },
 
-		componentWillUpdate: function (nextProps, nextState) {
-			if (nextProps.session && nextProps.session.id !== this.props.session.id) {
-				shouldScrollBottom = true;
-				return;
-			}
+    componentWillUpdate: function (nextProps, nextState) {
+      if (nextProps.session && nextProps.session.id !== this.props.session.id) {
+        shouldScrollBottom = true;
+        return;
+      }
 
-			if (!this.scrollable) {
-				shouldScrollBottom = false;
-				return;
-			}
+      if (!this.scrollable) {
+        shouldScrollBottom = false;
+        return;
+      }
 
-			const offSetFromBottom = this.scrollable.scrollHeight - (this.scrollable.scrollTop + this.scrollable.offsetHeight);
-			shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
-		},
+      const offSetFromBottom = this.scrollable.scrollHeight - (this.scrollable.scrollTop + this.scrollable.offsetHeight);
+      shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
+    },
 		 
-		componentDidUpdate: function (prevProps, prevState) {
-			if (shouldScrollBottom) {
-				this._scrollToBottom();
-			}
-		},
+    componentDidUpdate: function (prevProps, prevState) {
+      if (shouldScrollBottom) {
+        this._scrollToBottom();
+      }
+    },
 
-		_scrollToBottom: function () {
-			if (this.scrollable) {
-				this.scrollable.scrollTop = this.scrollable.scrollHeight;
-			}
+    _scrollToBottom: function () {
+      if (this.scrollable) {
+        this.scrollable.scrollTop = this.scrollable.scrollHeight;
+      }
 
-			shouldScrollBottom = false;
-		},
+      shouldScrollBottom = false;
+    },
 
-		setScrollableRef(c) {
-			this.scrollable = c;
-		},
+    setScrollableRef(c) {
+      this.scrollable = c;
+    },
 
-		render() {
-			return (
-				<Component 
-					{ ...this.props }
-					scrollableRef={ this.setScrollableRef }
-				/>
-			);
-		},
-	});
+    render() {
+      return (
+        <Component 
+          { ...this.props }
+          scrollableRef={ this.setScrollableRef }
+        />
+      );
+    },
+  });
 
-	return ScrollDecorator;
+  return ScrollDecorator;
 }

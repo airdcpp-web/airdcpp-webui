@@ -7,13 +7,13 @@ import AwayIcon from './icon/AwayIcon';
 
 
 const IconPanel = ({ leftContent, rightContent }) => (
-	<div className="icon-panel">
-		<StatisticsIcons/>
-		<div className="touch-icons">
-			<AwayIcon/>
-			{ process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
-		</div>
-	</div>
+  <div className="icon-panel">
+    <StatisticsIcons/>
+    <div className="touch-icons">
+      <AwayIcon/>
+      { process.env.NODE_ENV !== 'production' ? <PerformanceTools/> : null }
+    </div>
+  </div>
 );
 
 export default IconPanel;

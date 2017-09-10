@@ -14,143 +14,143 @@ import Icon from 'components/semantic/Icon';
 // A component that will re-render only when urgencies or active state are updated
 // TODO: session code doesn't work with SessionMenuItem yet
 export const RouterMenuItemLink = React.createClass({
-	mixins: [ Reflux.ListenerMixin ],
-	contextTypes: {
-		router: PropTypes.object.isRequired,
-	},
+  mixins: [ Reflux.ListenerMixin ],
+  contextTypes: {
+    router: PropTypes.object.isRequired,
+  },
 
-	propTypes: {
-		/**
+  propTypes: {
+    /**
 		 * Item URL
 		 */
-		url: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
 
-		/**
+    /**
 		 * Title of the menu item
 		 */
-		children: PropTypes.any.isRequired,
+    children: PropTypes.any.isRequired,
 
-		icon: PropTypes.node,
+    icon: PropTypes.node,
 
-		className: PropTypes.string,
+    className: PropTypes.string,
 
-		/**
+    /**
 		 * For overriding the default link action (still gives the active class style)
 		 */
-		onClick: PropTypes.func,
+    onClick: PropTypes.func,
 
-		unreadInfoStore: PropTypes.object,
+    unreadInfoStore: PropTypes.object,
 
-		/**
+    /**
 		 * Session object
 		 */
-		session: PropTypes.object,
-	},
+    session: PropTypes.object,
+  },
 
-	getUrgencies() {
-		const { unreadInfoStore, session } = this.props;
-		if (!unreadInfoStore) {
-			return null;
-		}
+  getUrgencies() {
+    const { unreadInfoStore, session } = this.props;
+    if (!unreadInfoStore) {
+      return null;
+    }
 
-		if (session) {
-			// Session objects are immutable so the one received via props
-			// may be outdated already
-			const currentSession = unreadInfoStore.getSession(session.id);
-			return currentSession ? unreadInfoStore.getItemUrgencies(currentSession) : null;
-		}
+    if (session) {
+      // Session objects are immutable so the one received via props
+      // may be outdated already
+      const currentSession = unreadInfoStore.getSession(session.id);
+      return currentSession ? unreadInfoStore.getItemUrgencies(currentSession) : null;
+    }
 
-		return unreadInfoStore.getTotalUrgencies();
-	},
+    return unreadInfoStore.getTotalUrgencies();
+  },
 
-	getInitialState() {
-		return {
-			urgencies: this.getUrgencies(),
-		};
-	},
+  getInitialState() {
+    return {
+      urgencies: this.getUrgencies(),
+    };
+  },
 
-	shouldComponentUpdate(nextProps, nextState) {
-		// Session (or its properties) updated/changed?
-		if (nextProps.session !== this.props.session) {
-			return true;
-		}
+  shouldComponentUpdate(nextProps, nextState) {
+    // Session (or its properties) updated/changed?
+    if (nextProps.session !== this.props.session) {
+      return true;
+    }
 
-		// Active state changed?
-		const isActive = this.context.router.isActive(this.props.url, this.props.url === '/');
-		if (isActive !== this.isActive) {
-			this.isActive = isActive;
-			return true;
-		}
+    // Active state changed?
+    const isActive = this.context.router.isActive(this.props.url, this.props.url === '/');
+    if (isActive !== this.isActive) {
+      this.isActive = isActive;
+      return true;
+    }
 
-		// Urgencies updated
-		if (!isEqual(nextState.urgencies, this.state.urgencies)) {
-			return true;
-		}
+    // Urgencies updated
+    if (!isEqual(nextState.urgencies, this.state.urgencies)) {
+      return true;
+    }
 
-		return false;
-	},
+    return false;
+  },
 
-	componentDidMount() {
-		const { unreadInfoStore } = this.props;
-		if (unreadInfoStore) {
-			this.listenTo(unreadInfoStore, this.onStoreUpdated);
-		}
-	},
+  componentDidMount() {
+    const { unreadInfoStore } = this.props;
+    if (unreadInfoStore) {
+      this.listenTo(unreadInfoStore, this.onStoreUpdated);
+    }
+  },
 
-	onStoreUpdated() {
-		this.setState({
-			urgencies: this.getUrgencies(),
-		});
-	},
+  onStoreUpdated() {
+    this.setState({
+      urgencies: this.getUrgencies(),
+    });
+  },
 
-	render() {
-		const { onClick, className, icon, url, children, unreadInfoStore } = this.props;
-		const { urgencies } = this.state;
+  render() {
+    const { onClick, className, icon, url, children, unreadInfoStore } = this.props;
+    const { urgencies } = this.state;
 
-		return (
-			<Link 
-				to={ url } 
-				className={ classNames('item', className) } 
-				activeClassName="active" 
-				onClick={ onClick }
-				onlyActiveOnIndex={ url === '/' }
-			>
-				<Icon icon={ icon }/>
-				{ children }
-				{ unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
-			</Link>
-		);
-	}
+    return (
+      <Link 
+        to={ url } 
+        className={ classNames('item', className) } 
+        activeClassName="active" 
+        onClick={ onClick }
+        onlyActiveOnIndex={ url === '/' }
+      >
+        <Icon icon={ icon }/>
+        { children }
+        { unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
+      </Link>
+    );
+  }
 });
 
 
 export const MenuItemLink = ({ className, icon, children, onClick, active, disabled }) => {
-	const itemClass = classNames(
-		'item',
-		className,
-		{ 'active': active },
-		{ 'disabled': disabled },
-	);
+  const itemClass = classNames(
+    'item',
+    className,
+    { 'active': active },
+    { 'disabled': disabled },
+  );
 
-	return (
-		<a className={ itemClass } onClick={ onClick }>
-			<Icon icon={ icon }/>
-			{ children }
-		</a>
-	);
+  return (
+    <a className={ itemClass } onClick={ onClick }>
+      <Icon icon={ icon }/>
+      { children }
+    </a>
+  );
 };
 
 MenuItemLink.propTypes = {
-	/**
+  /**
 	 * Title of the button
 	 */
-	children: PropTypes.any.isRequired,
+  children: PropTypes.any.isRequired,
 
-	icon: PropTypes.string,
+  icon: PropTypes.string,
 
-	onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 
-	active: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 export const MenuHeader = ({ className, children, ...other }) => (

@@ -11,25 +11,25 @@ import { LocationContext } from 'mixins/RouterMixin';
 
 
 const PrivateChatSession = React.createClass({
-	mixins: [ LocationContext ],
-	render() {
-		const { session, location, actions } = this.props;
-		return (
-			<div className="private chat session">
-				<ChatLayout
-					location={ location }
-					chatAccess={ AccessConstants.PRIVATE_CHAT_SEND }
-					messageStore={ PrivateChatMessageStore }
-					actions={ actions }
-					session={ session }
-				/>
+  mixins: [ LocationContext ],
+  render() {
+    const { session, location, actions } = this.props;
+    return (
+      <div className="private chat session">
+        <ChatLayout
+          location={ location }
+          chatAccess={ AccessConstants.PRIVATE_CHAT_SEND }
+          messageStore={ PrivateChatMessageStore }
+          actions={ actions }
+          session={ session }
+        />
 
-				<MessageFooter
-					session={ session }
-				/>
-			</div>
-		);
-	},
+        <MessageFooter
+          session={ session }
+        />
+      </div>
+    );
+  },
 });
 
 export default PrivateChatSession;

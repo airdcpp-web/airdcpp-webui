@@ -10,37 +10,37 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 
 const HubNew = React.createClass({
-	handleConnect(hubUrl) {
-		HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
-	},
+  handleConnect(hubUrl) {
+    HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
+  },
 
-	hasSession(entry) {
-		return HubSessionStore.getSessionByUrl(entry.hub_url);
-	},
+  hasSession(entry) {
+    return HubSessionStore.getSessionByUrl(entry.hub_url);
+  },
 
-	recentHubRender(entry) {
-		return (
-			<a onClick={ _ => this.handleConnect(entry.hub_url) }>
-				{ entry.name }
-			</a> 
-		);
-	},
+  recentHubRender(entry) {
+    return (
+      <a onClick={ _ => this.handleConnect(entry.hub_url) }>
+        { entry.name }
+      </a> 
+    );
+  },
 
-	render() {
-		return (
-			<div className="session new">
-				<HubSearchInput 
-					submitHandler={ this.handleConnect }
-				/>
-				<RecentLayout
-					entryType={ HistoryEntryEnum.HUB }
-					hasSession={ this.hasSession }
-					entryTitleRenderer={ this.recentHubRender }
-					entryIcon="sitemap"
-				/>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="session new">
+        <HubSearchInput 
+          submitHandler={ this.handleConnect }
+        />
+        <RecentLayout
+          entryType={ HistoryEntryEnum.HUB }
+          hasSession={ this.hasSession }
+          entryTitleRenderer={ this.recentHubRender }
+          entryIcon="sitemap"
+        />
+      </div>
+    );
+  }
 });
 
 export default HubNew;

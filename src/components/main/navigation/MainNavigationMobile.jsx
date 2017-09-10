@@ -12,68 +12,68 @@ import IconPanel from './IconPanel';
 
 
 const MainNavigationMobile = React.createClass({
-	contextTypes: {
-		router: PropTypes.object.isRequired
-	},
+  contextTypes: {
+    router: PropTypes.object.isRequired
+  },
 
-	componentDidMount() {
-		const settings = {
-			context: '#mobile-layout',
-			transition: 'overlay',
-			mobileTransition: 'overlay',
-			onHidden: this.props.onClose,
-		};
+  componentDidMount() {
+    const settings = {
+      context: '#mobile-layout',
+      transition: 'overlay',
+      mobileTransition: 'overlay',
+      onHidden: this.props.onClose,
+    };
 
-		$(this.c).sidebar(settings).sidebar('show');
-	},
+    $(this.c).sidebar(settings).sidebar('show');
+  },
 
-	onClickSecondary(url, evt) {
-		evt.preventDefault();
+  onClickSecondary(url, evt) {
+    evt.preventDefault();
 
-		if (!this.context.router.isActive(url)) {
-			History.pushSidebar(this.props.location, url);
-		}
+    if (!this.context.router.isActive(url)) {
+      History.pushSidebar(this.props.location, url);
+    }
 
-		this.onClick(url, evt);
-	},
+    this.onClick(url, evt);
+  },
 
-	onClick(url, evt) {
-		$(this.c).sidebar('hide');
-	},
+  onClick(url, evt) {
+    $(this.c).sidebar('hide');
+  },
 
-	render() {
-		const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem, menuItemGetter } = this.props;
-		const moreCaption = (
-			<div>
-				<i className="ellipsis horizontal caption icon"/>
+  render() {
+    const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem, menuItemGetter } = this.props;
+    const moreCaption = (
+      <div>
+        <i className="ellipsis horizontal caption icon"/>
 				More...
-			</div>
-		);
+      </div>
+    );
 
-		return (
-			<div 
-				ref={ c => this.c = c }
-				id="mobile-menu" 
-				className="ui right vertical inverted sidebar menu"
-			>
-				{ mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-				<Dropdown 
-					caption={ moreCaption } 
-					className="right fluid" 
-					triggerIcon=""
-				>
-					{ configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-					<div className="divider"/>
-					{ menuItemGetter(logoutItem.onClick, true, logoutItem) }
-				</Dropdown>
+    return (
+      <div 
+        ref={ c => this.c = c }
+        id="mobile-menu" 
+        className="ui right vertical inverted sidebar menu"
+      >
+        { mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
+        <Dropdown 
+          caption={ moreCaption } 
+          className="right fluid" 
+          triggerIcon=""
+        >
+          { configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
+          <div className="divider"/>
+          { menuItemGetter(logoutItem.onClick, true, logoutItem) }
+        </Dropdown>
 
-				<div className="separator"/>
+        <div className="separator"/>
 
-				{ secondaryMenuItems.map(menuItemGetter.bind(this, this.onClickSecondary, true)) }
-				<IconPanel/>
-			</div>
-		);
-	},
+        { secondaryMenuItems.map(menuItemGetter.bind(this, this.onClickSecondary, true)) }
+        <IconPanel/>
+      </div>
+    );
+  },
 });
 
 export default MainNavigationDecorator(MainNavigationMobile);

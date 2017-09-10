@@ -19,76 +19,76 @@ import { LocationContext } from 'mixins/RouterMixin';
 
 
 const Share = React.createClass({
-	mixins: [ LocationContext ],
-	render() {
-		const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
-		return (
-			<VirtualTable
-				store={ ShareRootStore }
-				customFilter={ <ShareProfileFilter/> }
-				footerData={ 
-					<ActionMenu 
-						className="top left pointing"
-						caption="Actions..." 
-						actions={ ShareRootActions }
-						header="Share actions"
-						triggerIcon="chevron up"
-						ids={ [ 'create' ]}
-						button={ true }
-					>
-						<ActionMenu 
-							actions={ ShareActions }
-							ids={ [ 'refresh' ]}
-						/>
-					</ActionMenu>
-				}
-			>
-				<Column
-					name="Path"
-					width={200}
-					columnKey="path"
-					cell={
-						<FileActionCell 
-							actions={ ShareRootActions }
-						/> 
-					}
-					flexGrow={10}
-				/>
-				<Column
-					name="Size"
-					width={60}
-					columnKey="size"
-					cell={ <SizeCell/> }
-					flexGrow={2}
-				/>
-				<Column
-					name="Content"
-					width={150}
-					columnKey="type"
-					hideWidth={1000}
-				/>
-				<Column
-					name="Virtual name"
-					width={120}
-					columnKey="virtual_name"
-					flexGrow={5}
-					//hideWidth={600}
-				/>
-				<Column
-					name="Profiles"
-					width={65}
-					columnKey="profiles"
-				/>
-				<Column
-					name="Last refreshed"
-					width={80}
-					flexGrow={3}
-					columnKey="last_refresh_time"
-					cell={ editAccess ? <RefreshCell/> : <DurationCell/> }
-				/>
-			</VirtualTable>
-		);
-	}
+  mixins: [ LocationContext ],
+  render() {
+    const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+    return (
+      <VirtualTable
+        store={ ShareRootStore }
+        customFilter={ <ShareProfileFilter/> }
+        footerData={ 
+          <ActionMenu 
+            className="top left pointing"
+            caption="Actions..." 
+            actions={ ShareRootActions }
+            header="Share actions"
+            triggerIcon="chevron up"
+            ids={ [ 'create' ]}
+            button={ true }
+          >
+            <ActionMenu 
+              actions={ ShareActions }
+              ids={ [ 'refresh' ]}
+            />
+          </ActionMenu>
+        }
+      >
+        <Column
+          name="Path"
+          width={200}
+          columnKey="path"
+          cell={
+            <FileActionCell 
+              actions={ ShareRootActions }
+            /> 
+          }
+          flexGrow={10}
+        />
+        <Column
+          name="Size"
+          width={60}
+          columnKey="size"
+          cell={ <SizeCell/> }
+          flexGrow={2}
+        />
+        <Column
+          name="Content"
+          width={150}
+          columnKey="type"
+          hideWidth={1000}
+        />
+        <Column
+          name="Virtual name"
+          width={120}
+          columnKey="virtual_name"
+          flexGrow={5}
+          //hideWidth={600}
+        />
+        <Column
+          name="Profiles"
+          width={65}
+          columnKey="profiles"
+        />
+        <Column
+          name="Last refreshed"
+          width={80}
+          flexGrow={3}
+          columnKey="last_refresh_time"
+          cell={ editAccess ? <RefreshCell/> : <DurationCell/> }
+        />
+      </VirtualTable>
+    );
+  }
 });
 
 export default Share;

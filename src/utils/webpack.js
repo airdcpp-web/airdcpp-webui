@@ -7,13 +7,13 @@ __webpack_public_path__ = getBasePath();
 
 // Override the default onError function
 __webpack_require__.oe = (err) => {
-	// Notification actions may not work if the error happens during the initalization phase
-	console.error(err);
+  // Notification actions may not work if the error happens during the initalization phase
+  console.error(err);
 
-	NotificationActions.error({ 
-		title: err,
-		message: 'Try reloading the page if you have updated the UI recently',
-	});
+  NotificationActions.error({ 
+    title: err,
+    message: 'Try reloading the page if you have updated the UI recently',
+  });
 };
 
 

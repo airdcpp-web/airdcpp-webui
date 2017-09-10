@@ -11,18 +11,18 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 const FilelistSessionStore = Reflux.createStore({
-	getInitialState() {
-		return this.getSessions();
-	},
+  getInitialState() {
+    return this.getSessions();
+  },
 
-	onSocketConnected(addSocketListener) {
-		invariant(this.getSessions().length === 0, 'No existing filelist sessions should exist on socket connect');
+  onSocketConnected(addSocketListener) {
+    invariant(this.getSessions().length === 0, 'No existing filelist sessions should exist on socket connect');
 
-		const url = FilelistConstants.MODULE_URL;
-		addSocketListener(url, FilelistConstants.SESSION_CREATED, this._onSessionCreated);
-		addSocketListener(url, FilelistConstants.SESSION_REMOVED, this._onSessionRemoved);
-		addSocketListener(url, FilelistConstants.SESSION_UPDATED, this._onSessionUpdated);
-	},
+    const url = FilelistConstants.MODULE_URL;
+    addSocketListener(url, FilelistConstants.SESSION_CREATED, this._onSessionCreated);
+    addSocketListener(url, FilelistConstants.SESSION_REMOVED, this._onSessionRemoved);
+    addSocketListener(url, FilelistConstants.SESSION_UPDATED, this._onSessionUpdated);
+  },
 });
 
 export default SessionStoreDecorator(SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW), FilelistSessionActions)

@@ -8,57 +8,57 @@ import ExternalLink from 'components/ExternalLink';
 
 
 const InstallButton = ({ npmPackage, installedPackage, hasUpdate, ...other }) => {
-	if (installedPackage && !hasUpdate) {
-		return null;
-	}
+  if (installedPackage && !hasUpdate) {
+    return null;
+  }
 
-	return (
-		<ActionButton
-			action={ hasUpdate ? ExtensionActions.updateNpm : ExtensionActions.installNpm }
-			className="right floated primary"
-			itemData={ npmPackage }
-			{ ...other }
-		/>
-	);
+  return (
+    <ActionButton
+      action={ hasUpdate ? ExtensionActions.updateNpm : ExtensionActions.installNpm }
+      className="right floated primary"
+      itemData={ npmPackage }
+      { ...other }
+    />
+  );
 };
 
 const ExtensionActionButtons = ({ npmPackage, installedPackage, hasUpdate, installing }) => (
-	<div className="extra buttons">
-		{ installedPackage && (
-			<ActionButton
-				action={ ExtensionActions.remove }
-				className="right floated"
-				itemData={ installedPackage }
-			/>
-		) }
-		{ npmPackage && (
-			<InstallButton
-				npmPackage={ npmPackage }
-				installedPackage={ installedPackage }
-				hasUpdate={ hasUpdate }
-				loading={ installing }
-			/>
-		) }
-		{ npmPackage && (
-			<ExternalLink className="ui right floated button" url={ ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name }>
+  <div className="extra buttons">
+    { installedPackage && (
+      <ActionButton
+        action={ ExtensionActions.remove }
+        className="right floated"
+        itemData={ installedPackage }
+      />
+    ) }
+    { npmPackage && (
+      <InstallButton
+        npmPackage={ npmPackage }
+        installedPackage={ installedPackage }
+        hasUpdate={ hasUpdate }
+        loading={ installing }
+      />
+    ) }
+    { npmPackage && (
+      <ExternalLink className="ui right floated button" url={ ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name }>
 				Read more
-			</ExternalLink> 
-		) }
-		{ installedPackage && (
-			<ActionButton
-				action={ installedPackage.running ? ExtensionActions.stop : ExtensionActions.start }
-				className="right floated"
-				itemData={ installedPackage }
-			/>
-		) }
-		{ installedPackage && (
-			<ActionButton
-				action={ ExtensionActions.configure }
-				className="right floated"
-				itemData={ installedPackage }
-			/>
-		) }
-	</div>
+      </ExternalLink> 
+    ) }
+    { installedPackage && (
+      <ActionButton
+        action={ installedPackage.running ? ExtensionActions.stop : ExtensionActions.start }
+        className="right floated"
+        itemData={ installedPackage }
+      />
+    ) }
+    { installedPackage && (
+      <ActionButton
+        action={ ExtensionActions.configure }
+        className="right floated"
+        itemData={ installedPackage }
+      />
+    ) }
+  </div>
 );
 
 export default ExtensionActionButtons;
