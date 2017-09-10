@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 
 import Perf from 'react-addons-perf';
 import BrowserUtils from 'utils/BrowserUtils';
@@ -30,4 +30,4 @@ class PerformanceTools extends React.Component {
   }
 }
 
-export default PerformanceTools;
+export default PerformanceTools;*/
