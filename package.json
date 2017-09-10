@@ -82,7 +82,7 @@
     "react-measure": "^2.0.0",
     "react-mentions": "^1.2.1",
     "react-notification-system": "^0.2.15",
-    "react-resizable-box": "^2.1.0",
+    "re-resizable": "^3.0.0",
     "react-router": "^3.0.0",
     "react-select": "1.0.0-rc.5",
     "react-timeseries-charts": "^0.12.8",

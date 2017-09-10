@@ -5,7 +5,7 @@ import invariant from 'invariant';
 import BrowserUtils from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import OverlayDecorator from 'decorators/OverlayDecorator';
-import Resizable from 'react-resizable-box';
+import Resizable from 're-resizable';
 
 import '../style.css';
 
@@ -64,11 +64,8 @@ class Sidebar extends React.PureComponent {
         height={ window.innerHeight }
         minWidth={ 500 }
         maxWidth={ window.innerWidth } 
-
-        extendsProps={{
-          id: 'sidebar',
-          className: 'ui right vertical sidebar',
-        }}
+        id="sidebar"
+        className="ui right vertical sidebar"
 
         enable={
           { top:false, right:false, bottom:false, left: !BrowserUtils.useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
