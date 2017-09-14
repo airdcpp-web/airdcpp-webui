@@ -10,6 +10,8 @@ import Resizable from 're-resizable';
 import '../style.css';
 
 
+const MIN_WIDTH = 500;
+
 class Sidebar extends React.PureComponent {
   static propTypes = {
     context: PropTypes.string,
@@ -24,7 +26,7 @@ class Sidebar extends React.PureComponent {
       // Avoids issues if there are router transitions while the sidebar is 
       // animating (e.g. the content is placed in the middle of the window)
       animating: true,
-      width: Math.max(500, width),
+      width: Math.max(MIN_WIDTH, width),
     };
   }
 
@@ -62,7 +64,7 @@ class Sidebar extends React.PureComponent {
         ref={ c => this.c = c }
         width={ Math.min(width, window.innerWidth) }
         height={ window.innerHeight }
-        minWidth={ 500 }
+        minWidth={ Math.min(MIN_WIDTH, window.innerWidth) }
         maxWidth={ window.innerWidth } 
         id="sidebar"
         className="ui right vertical sidebar"
