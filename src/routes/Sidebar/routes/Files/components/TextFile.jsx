@@ -8,6 +8,15 @@ import TextDecorator from 'components/TextDecorator';
 
 
 class TextFile extends React.Component {
+  state = TextFile.getInitialState();
+
+  static getInitialState() {
+    return {
+      text: null,
+      error: null,
+    };
+  }
+
   componentWillMount() {
     if (this.props.item.content_ready) {
       this.fetchText(this.props.url);
@@ -21,10 +30,7 @@ class TextFile extends React.Component {
 
     const idChanged = nextProps.item.id !== this.props.item.id;
     if (idChanged) {
-      this.setState({
-        text: null,
-        error: null,
-      });
+      this.setState(TextFile.getInitialState());
     }
 
     if (idChanged || !this.props.item.content_ready) {
