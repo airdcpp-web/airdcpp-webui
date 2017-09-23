@@ -13,7 +13,7 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 
 
 // Message sections
-const Author = ({ message, dropdownContext }) => (
+const Author = ({ message, dropdownContext, direction = 'auto' }) => (
   <div className="header author">
     { message.third_person && <span>*</span> }
     <UserMenu 
@@ -21,6 +21,7 @@ const Author = ({ message, dropdownContext }) => (
       triggerIcon={ null } 
       noIcon={ true } 
       user={ message.from }
+      direction={ direction }
     />
   </div>
 );

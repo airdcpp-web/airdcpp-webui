@@ -25,6 +25,11 @@
 	border-bottom-left-radius: .28571429rem;
 }
 
+/* Internal class from re-resizable, causes height issues */
+.sidebar-context .__resizable_base {
+	display: none;
+}
+
 .animating.ui.overlay.sidebar,
 .ui.visible.overlay.sidebar {
 	transition: transform 250ms !important;

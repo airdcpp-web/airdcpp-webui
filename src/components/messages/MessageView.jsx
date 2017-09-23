@@ -42,46 +42,49 @@ const showDivider = (index, messageList) => {
 };
 
 
+const getMessageListItem = (reduced, message, index, messageList) => {
+  // Push a divider when the date was changed
+  if (showDivider(index, messageList)) {
+    const messageObj = message.chat_message ? message.chat_message : message.log_message;
+    reduced.push(
+      <div 
+        key={ `divider${messageObj.id}` }
+        className="ui horizontal date divider"
+      >
+        <i className="calendar icon"/>
+        { ValueFormat.formatCalendarTime(messageObj.time) }
+      </div>
+    );
+  }
+
+  // Push the message
+  if (message.chat_message) {
+    reduced.push(
+      <ChatMessage
+        key={ message.chat_message.id }
+        message={ message.chat_message }
+
+        /* Semantic UI can't determine the direction correctly from dropdown context, */
+        /* make some kind of estimation to prevent the menu from getting off-screen */
+        direction={ index > 3 ? 'upward' : 'downward' }
+      />
+    );
+  } else {
+    reduced.push(
+      <StatusMessage
+        key={ message.log_message.id }
+        message={ message.log_message }
+      />
+    );
+  }
+
+  return reduced;
+};
+
 class MessageView extends React.Component {
   static propTypes = {
     messages: PropTypes.array,
     scrollableRef: PropTypes.func,
-  };
-
-  getMessageListItem = (reduced, message, index, messageList) => {
-    // Push a divider when the date was changed
-    if (showDivider(index, messageList)) {
-      const messageObj = message.chat_message ? message.chat_message : message.log_message;
-      reduced.push(
-        <div 
-          key={ `divider${messageObj.id}` }
-          className="ui horizontal date divider"
-        >
-          <i className="calendar icon"/>
-          { ValueFormat.formatCalendarTime(messageObj.time) }
-        </div>
-      );
-    }
-
-    // Push the message
-    if (message.chat_message) {
-      reduced.push(
-        <ChatMessage
-          key={ message.chat_message.id }
-          message={ message.chat_message }
-          dropdownContext=".chat.session"
-        />
-      );
-    } else {
-      reduced.push(
-        <StatusMessage
-          key={ message.log_message.id }
-          message={ message.log_message }
-        />
-      );
-    }
-
-    return reduced;
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -97,7 +100,7 @@ class MessageView extends React.Component {
       >
         { messages ? (
           <div className="ui list message-list">
-            { messages.reduce(this.getMessageListItem, []) }
+            { messages.reduce(getMessageListItem, []) }
           </div>
         ) : (
           <Loader text="Loading messages"/>

@@ -62,8 +62,10 @@ class Sidebar extends React.PureComponent {
     return (
       <Resizable
         ref={ c => this.c = c }
-        width={ Math.min(width, window.innerWidth) }
-        height={ window.innerHeight }
+        size={ {
+          width: Math.min(width, window.innerWidth),
+          height: window.innerHeight,
+        } }
         minWidth={ Math.min(MIN_WIDTH, window.innerWidth) }
         maxWidth={ window.innerWidth } 
         id="sidebar"
