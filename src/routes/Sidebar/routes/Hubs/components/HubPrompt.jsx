@@ -6,18 +6,28 @@ import Button from 'components/semantic/Button';
 
 import HubActions from 'actions/HubActions';
 
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
 
-const HubActionPrompt = ({ icon, title, content }) => (
-  <div className="ui icon message hub-action-prompt">
-    <h3 className="ui header">
-      <i className={ icon + ' icon'}/>
-      <div className="content">
-        { title }
-      </div>
-    </h3>
-    { content }
-  </div>
-);
+
+// Main prompt (HUBS_EDIT permission is required for the content to be rendered)
+const HubActionPrompt = ({ icon, title, content }) => {
+  if (!LoginStore.hasAccess(AccessConstants.HUBS_EDIT)) {
+    return null;
+  }
+
+  return (
+    <div className="ui icon message hub-action-prompt">
+      <h3 className="ui header">
+        <i className={ icon + ' icon'}/>
+        <div className="content">
+          { title }
+        </div>
+      </h3>
+      { content }
+    </div>
+  );
+};
 
 HubActionPrompt.propTypes = {
   /**
@@ -31,6 +41,8 @@ HubActionPrompt.propTypes = {
   content: PropTypes.node.isRequired,
 };
 
+
+// Sub prompts
 const PasswordPrompt = ({ hub }) => (
   <div>
     <ActionInput 

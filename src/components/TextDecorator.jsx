@@ -14,6 +14,7 @@ import { emojify as emojisToUnicode } from 'react-emojione';
 import emoji from 'react-easy-emoji';
 import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';
 
+import { actionAccess } from 'utils/ActionUtils';
 import History from 'utils/History';
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
@@ -64,6 +65,10 @@ const onClickLink = (evt, routerLocation) => {
     }, routerLocation);
   } else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
     evt.preventDefault();
+
+    if (!actionAccess(HubActions.createSession)) {
+      return;
+    }
 
     HubActions.createSession(routerLocation, uri, HubSessionStore);
   }

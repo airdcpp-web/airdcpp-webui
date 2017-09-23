@@ -16,9 +16,18 @@ import AccessConstants from 'constants/AccessConstants';
 const showFav = hub => !hub.favorite_hub;
 
 const HubActions = Reflux.createActions([
-  { 'createSession': { asyncResult: true } },
-  { 'redirect': { asyncResult: true } },
-  { 'password': { asyncResult: true } },
+  { 'createSession': { 
+    asyncResult: true,
+    access: AccessConstants.HUBS_EDIT, 
+  } },
+  { 'redirect': { 
+    asyncResult: true,
+    access: AccessConstants.HUBS_EDIT,
+  } },
+  { 'password': { 
+    asyncResult: true,
+    access: AccessConstants.HUBS_EDIT,
+  } },
   { 'reconnect': { 
     asyncResult: true,
     displayName: 'Reconnect',
