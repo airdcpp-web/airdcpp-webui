@@ -14,10 +14,12 @@ import { emojify as emojisToUnicode } from 'react-emojione';
 import emoji from 'react-easy-emoji';
 import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';
 
-import { actionAccess } from 'utils/ActionUtils';
 import History from 'utils/History';
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
+
+import AccessConstants from 'constants/AccessConstants';
+import LoginStore from 'stores/LoginStore';
 
 
 linkify.add('magnet:', {
@@ -56,6 +58,10 @@ const onClickLink = (evt, routerLocation) => {
   if (uri.indexOf('magnet:?xt=urn:tree:tiger:') === 0) {
     evt.preventDefault();
 
+    if (!LoginStore.hasAccess(AccessConstants.SEARCH)) {
+      return;
+    }
+
     const tth = uri.slice(26, 26 + 39);
     History.pushUnique({
       pathname: '/search',
@@ -66,7 +72,7 @@ const onClickLink = (evt, routerLocation) => {
   } else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
     evt.preventDefault();
 
-    if (!actionAccess(HubActions.createSession)) {
+    if (!LoginStore.hasAccess(AccessConstants.HUBS_EDIT)) {
       return;
     }
 
