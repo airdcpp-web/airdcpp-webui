@@ -52,7 +52,7 @@ class BrowserBar extends React.PureComponent {
 		 * Function returning the formated element for the current directory name
 		 * Receives the caption element and path token as parameters
 		 */
-    selectedNameFormatter: PropTypes.func.isRequired,
+    selectedNameFormatter: PropTypes.func,
   };
 
   static defaultProps = {
@@ -75,7 +75,6 @@ class BrowserBar extends React.PureComponent {
     const newOverflow = this.breadcrumb.clientWidth > this.wrapper.clientWidth;
     if (newOverflow !== this.state.overflow) {
       this.setState({ overflow: newOverflow });
-      console.log('overflow', newOverflow);
     }
   };
 
