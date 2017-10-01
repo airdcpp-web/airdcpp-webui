@@ -63,10 +63,7 @@ const getMessageListItem = (reduced, message, index, messageList) => {
       <ChatMessage
         key={ message.chat_message.id }
         message={ message.chat_message }
-
-        /* Semantic UI can't determine the direction correctly from dropdown context, */
-        /* make some kind of estimation to prevent the menu from getting off-screen */
-        direction={ index > 3 ? 'upward' : 'downward' }
+        dropdownContext=".chat.session"
       />
     );
   } else {
