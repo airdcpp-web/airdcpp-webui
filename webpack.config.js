@@ -75,10 +75,12 @@ var debugPlugins = [
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-var mainEntries = [ './src/index.jsx' ]; 
+var mainEntries = [];
 if (!release) {
-	mainEntries.push('webpack-hot-middleware/client');
+	mainEntries.push('webpack-hot-middleware/client?reload=true');
+	mainEntries.push('react-hot-loader/patch');
 }
+mainEntries.push('./src/index.jsx'); 
 
 console.log(chalk.bold('[webpack] Release: ' + release));
 console.log(chalk.bold('[webpack] Demo mode: ' + demo));
