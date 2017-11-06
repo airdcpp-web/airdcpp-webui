@@ -1,19 +1,11 @@
-module.exports = {
-  path: 'home',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'widget', 
-        component: require('./components/WidgetDialog').default,
-      } ]);
-    }, 'home-children');
-  },
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/Home').default);
-    }, 'home');
+export default {
+  path: '/',
+  exact: true,
+  component: AsyncComponentDecorator(() => System.import('./components/Home')),
+  childRoutes: {
+    path: '/widget', 
+    component: AsyncComponentDecorator(() => System.import('./components/WidgetDialog')),
   }
 };
-

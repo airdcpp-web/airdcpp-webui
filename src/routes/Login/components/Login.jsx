@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
+import History from 'utils/History';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
@@ -71,10 +71,6 @@ const Login = createReactClass({
   displayName: 'Login',
   mixins: [ Reflux.connect(LoginStore, 'login') ],
 
-  contextTypes: {
-    router: PropTypes.object
-  },
-
   getInitialState() {
     return {
       loading: false,
@@ -84,7 +80,7 @@ const Login = createReactClass({
   componentWillUpdate(nextProps, nextState) {
     if (nextState.login.socketAuthenticated) {
       const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
-      this.context.router.replace({
+      History.replace({
         pathname: nextPath,
       });
     } else if (this.state.loading && nextState.login.lastError !== null) {

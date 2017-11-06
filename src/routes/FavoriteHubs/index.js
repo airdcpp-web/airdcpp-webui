@@ -1,22 +1,15 @@
-module.exports = {
-  path: 'favorite-hubs',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'edit', 
-        component: require('./components/FavoriteHubDialog').default, 
-      },{
-        path: 'new', 
-        component: require('./components/FavoriteHubDialog').default, 
-      } ]);
-    }, 'favorite-hubs-children');
-  },
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/FavoriteHubs').default);
-    }, 'favorite-hubs');
-  }
+export default {
+  path: '/favorite-hubs',
+  component: AsyncComponentDecorator(() => System.import('./components/FavoriteHubs')),
+  childRoutes: [
+    {
+      path: '/favorite-hubs/new',
+      component: AsyncComponentDecorator(() => System.import('./components/FavoriteHubDialog')),
+    }, {
+      path: '/favorite-hubs/edit',
+      component: AsyncComponentDecorator(() => System.import('./components/FavoriteHubDialog')),
+    }
+  ]
 };
-

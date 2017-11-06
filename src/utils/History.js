@@ -1,13 +1,12 @@
 import update from 'immutability-helper';
 import invariant from 'invariant';
 
-import { createHistory } from 'history';
-import { useRouterHistory } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
 
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-const History = useRouterHistory(createHistory)({
+const History = createHistory({
   // Remove the trailing slash from base path
   basename: getBasePath().slice(0, -1),		
 });
@@ -92,7 +91,7 @@ const getSidebarState = (currentLocation, data = {}) => {
 
 const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
   console.assert(currentLocation, 'Current location not supplied for overlay creation');
-  console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
+  console.assert(currentLocation.pathname, 'Invalid location object supplied for overlay creation');
 
   const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
   state[overlayId] = {

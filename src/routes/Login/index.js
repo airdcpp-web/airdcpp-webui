@@ -1,9 +1,7 @@
-module.exports = {
-  path: 'login',
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/Login').default);
-    }, 'login');
-  }
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
+
+export default {
+  path: '/login',
+  component: AsyncComponentDecorator(() => System.import('./components/Login')),
 };
 

@@ -7,7 +7,7 @@ import ShareProfileActions from 'actions/ShareProfileActions';
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';

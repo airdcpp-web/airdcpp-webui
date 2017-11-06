@@ -10,7 +10,7 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import EngineStatusMessage from './EngineStatusMessage';
 import Extension from './extension/Extension';
 
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
 
 

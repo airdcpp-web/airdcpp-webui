@@ -7,7 +7,7 @@ import Reflux from 'reflux';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
 
-import { Link } from 'react-router';
+import { NavLink, matchPath } from 'react-router-dom';
 import CountLabel from 'components/CountLabel';
 import Icon from 'components/semantic/Icon';
 
@@ -72,14 +72,18 @@ export const RouterMenuItemLink = createReactClass({
     };
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
     // Session (or its properties) updated/changed?
     if (nextProps.session !== this.props.session) {
       return true;
     }
 
     // Active state changed?
-    const isActive = this.context.router.isActive(this.props.url, this.props.url === '/');
+    const isActive = matchPath(this.props.url, {
+      path: nextContext.router.route.location.pathname,
+      exact: this.props.url === '/',
+    });
+
     if (isActive !== this.isActive) {
       this.isActive = isActive;
       return true;
@@ -111,17 +115,17 @@ export const RouterMenuItemLink = createReactClass({
     const { urgencies } = this.state;
 
     return (
-      <Link 
+      <NavLink 
+        exact={ url === '/' }
         to={ url } 
         className={ classNames('item', className) } 
         activeClassName="active" 
         onClick={ onClick }
-        onlyActiveOnIndex={ url === '/' }
       >
         <Icon icon={ icon }/>
         { children }
         { unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
-      </Link>
+      </NavLink>
     );
   },
 });

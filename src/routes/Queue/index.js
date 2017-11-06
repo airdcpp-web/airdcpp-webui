@@ -1,4 +1,21 @@
-module.exports = {
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
+
+export default {
+  path: '/queue',
+  component: AsyncComponentDecorator(() => System.import('./components/Queue')),
+  childRoutes: [
+    {
+      path: '/queue/sources',
+      component: AsyncComponentDecorator(() => System.import('./components/SourceDialog')),
+    }, {
+      path: '/queue/content',
+      component: AsyncComponentDecorator(() => System.import('./components/BundleFileDialog')),
+    }
+  ]
+};
+
+
+/*module.exports = {
   path: 'queue',
 
   getChildRoutes(location, cb) {
@@ -18,5 +35,5 @@ module.exports = {
       cb(null, require('./components/Queue').default);
     }, 'queue');
   }
-};
+};*/
 
