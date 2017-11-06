@@ -22,18 +22,7 @@ global.Promise = Promise;
 
 Reflux.use(RefluxPromise(Promise));
 
-/*const requireAuth = (nextState, replace) => {
-  if (!LoginStore.hasSession) {
-    replace({ 
-      state: {
-        nextPath: nextState.location.pathname,
-      },
-      pathname: '/login',
-    });
-  }
-};
-
-const onEnterSidebar = (nextProps, replace) => {
+/*const onEnterSidebar = (nextProps, replace) => {
   // Don't allow sidebar to be accessed with a direct link
   if (!History.hasSidebar(nextProps.location)) {
     replace({
