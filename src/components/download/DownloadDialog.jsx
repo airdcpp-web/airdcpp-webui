@@ -11,7 +11,7 @@ import IconConstants from 'constants/IconConstants';
 
 import HistoryActions from 'actions/HistoryActions';
 
-import { RouteContext } from 'mixins/RouterMixin';
+//import { RouteContext } from 'mixins/RouterMixin';
 
 import DownloadFileBrowser from './DownloadFileBrowser';
 import PathList from './PathList';
@@ -58,7 +58,6 @@ const MobileLayout = ({ menuItems, section }) => (
 
 const DownloadDialog = createReactClass({
   displayName: 'DownloadDialog',
-  mixins: [ RouteContext ],
 
   propTypes: {
     /**

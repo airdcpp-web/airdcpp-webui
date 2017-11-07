@@ -3,14 +3,11 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
-import { RouteContext } from 'mixins/RouterMixin';
-
 import FileBrowserLayout from './FileBrowserLayout';
 
 
 const FileBrowserDialog = createReactClass({
   displayName: 'FileBrowserDialog',
-  mixins: [ RouteContext ],
 
   propTypes: {
     /**

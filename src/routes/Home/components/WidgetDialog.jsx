@@ -7,15 +7,17 @@ import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import Form from 'components/form/Form';
 import { FieldTypes } from 'constants/SettingConstants';
 
+import WidgetActions from 'actions/WidgetActions';
+import WidgetStore from 'stores/WidgetStore';
+import WidgetUtils from 'utils/WidgetUtils';
+
 
 const WidgetDialog = createReactClass({
   displayName: 'WidgetDialog',
-  mixins: [ RouteContext ],
 
   propTypes: {
     /**
@@ -26,7 +28,7 @@ const WidgetDialog = createReactClass({
     /**
 		 * Widget info object
 		 */
-    widgetInfo: PropTypes.object, // Required
+    typeId: PropTypes.string, // Required
 
     /**
 		 * Called when the form is saved
@@ -40,16 +42,26 @@ const WidgetDialog = createReactClass({
 
   onSave(changedFields, value) {
     const { name, ...formSettings } = value;
-    this.props.onSave({
+    const settings = {
       name,
       widget: formSettings
-    });
+    };
+
+    const { id, typeId } = this.props;
+    if (!id) {
+      // New widget
+      WidgetActions.create.saved(WidgetUtils.createId(typeId), settings, typeId);
+    } else {
+      // Existing widget
+      WidgetActions.edit.saved(id, settings);
+    }
+
     return Promise.resolve();
   },
 
   render: function () {
-    const { widgetInfo, location, settings, ...overlayProps } = this.props;
-    const { formSettings, name, icon } = widgetInfo;
+    const { typeId, location, settings, ...overlayProps } = this.props;
+    const { formSettings, name, icon } = WidgetStore.getWidgetInfoById(typeId);
 
     const Entry = [
       {

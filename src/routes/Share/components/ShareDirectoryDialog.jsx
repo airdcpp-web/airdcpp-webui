@@ -9,7 +9,6 @@ import IconConstants from 'constants/IconConstants';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import Message from 'components/semantic/Message';
 
@@ -54,7 +53,6 @@ const getFields = (profiles) => {
 
 const ShareDirectoryDialog = createReactClass({
   displayName: 'ShareDirectoryDialog',
-  mixins: [ RouteContext ],
 
   isNew() {
     return !this.props.rootEntry;

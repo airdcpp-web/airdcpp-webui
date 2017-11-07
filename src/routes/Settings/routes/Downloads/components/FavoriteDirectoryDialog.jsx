@@ -7,7 +7,6 @@ import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import t from 'utils/tcomb-form';
 import { FieldTypes } from 'constants/SettingConstants';
@@ -32,7 +31,6 @@ const Entry = [
 
 const FavoriteDirectoryDialog = createReactClass({
   displayName: 'FavoriteDirectoryDialog',
-  mixins: [ RouteContext ],
 
   isNew() {
     return !this.props.directoryEntry;

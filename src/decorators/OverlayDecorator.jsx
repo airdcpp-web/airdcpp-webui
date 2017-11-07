@@ -3,8 +3,9 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import createReactClass from 'create-react-class';
-import { Lifecycle } from 'mixins/RouterMixin';
 import invariant from 'invariant';
 
 import History from 'utils/History';
@@ -15,29 +16,22 @@ import '../style.css';
 export default function (Component, semanticModuleName) {
   const OverlayDecorator = createReactClass({
     displayName: 'OverlayDecorator',
-    mixins: [ Lifecycle ],
-    changeHistoryState: true,
-
-    routerWillLeave(nextLocation) {
-      if (nextLocation.pathname.indexOf(this.props.location.pathname) !== 0) {
-        this.changeHistoryState = false;
-        this.hide();
-      }
-    },
+    closing: false,
 
     propTypes: {
-      /**
-			 * Removes portal from DOM
-			 */
-      onHidden: PropTypes.func,
-
-      /**
-			 * Returns to the location that was active before opening the overlay
-			 */
-      onHide: PropTypes.func,
-
       location: PropTypes.object.isRequired,
       overlayId: PropTypes.any, // Required
+    },
+
+    componentWillMount() {
+      this.node = document.createElement('div');
+      document.body.appendChild(this.node);
+    },
+
+    componentWillUnmount() {
+      if (!this.closing) {
+        this.hide();
+      }
     },
 
     componentWillReceiveProps(nextProps) {
@@ -68,30 +62,28 @@ export default function (Component, semanticModuleName) {
     },
 
     onHide() {
-      if (this.props.onHide) {
-        this.props.onHide();
-      }
+      this.closing = true;
     },
 
     onHidden() {
-      if (this.changeHistoryState) {
+      // Don't change the history state if we navigating back using the browser history
+      if (this.props.history.action !== 'POP') {
         History.removeOverlay(this.props.location, this.props.overlayId);
       }
 
-      if (this.props.onHidden) {
-        this.props.onHidden(this.changeHistoryState);
-      }
+      document.body.removeChild(this.node);
+      this.node = null;
     },
 
     render() {
-      return (
+      return ReactDOM.createPortal((
         <Component 
           { ...this.props } 
           { ...this.state } 
           showOverlay={ this.showOverlay } 
           hide={ this.hide }
         />
-      );
+      ), this.node);
     },
   });
 

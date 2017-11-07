@@ -21,20 +21,19 @@ import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 
-import { Route, Switch } from 'react-router';
+//import { Route, Switch } from 'react-router';
+import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 
 
 const routeConfig = [
   require('../../routes/Home').default,
   require('../../routes/FavoriteHubs').default,
   require('../../routes/Queue').default,
-  /*require('./routes/FavoriteHubs'),
-  require('./routes/Queue'),
-  require('./routes/Search'),
-  require('./routes/Settings'),
-  require('./routes/Transfers'),
-  require('./routes/Share'),
-  { 
+  require('../../routes/Search').default,
+  require('../../routes/Share').default,
+  require('../../routes/Transfers').default,
+  
+  /*{ 
     component: require('./routes/Sidebar/components/Sidebar').default,
     path: 'sidebar',
     onEnter: onEnterSidebar,
@@ -47,14 +46,6 @@ const routeConfig = [
     ]
   }*/
 ];
-
-const RouteWithSubRoutes = route => (
-  <Route path={ route.path } render={ props => (
-    // pass the sub-routes down to keep nesting
-    <route.component { ...props } routes={ route.childRoutes }/>
-  ) }
-  />
-);
 
 const AuthenticatedApp = createReactClass({
   mixins: [
@@ -92,11 +83,11 @@ const AuthenticatedApp = createReactClass({
         <ActivityTracker/>
         <Notifications/>
         <LayoutElement className="pushable main-layout" { ...this.props }>
-          <Switch>
-            { routeConfig.map((route, i) => (
-              <RouteWithSubRoutes key={ i } { ...route }/>
-            )) }
-          </Switch>
+          {/*<Switch>*/}
+          { routeConfig.map((route, i) => (
+            <RouteWithSubRoutes key={ i } { ...route }/>
+          )) }
+          {/*</Switch>*/}
         </LayoutElement>
       </div>
     );

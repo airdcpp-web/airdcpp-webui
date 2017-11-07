@@ -7,7 +7,6 @@ import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import { FieldTypes } from 'constants/SettingConstants';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import IconConstants from 'constants/IconConstants';
@@ -64,7 +63,6 @@ const getFieldProfiles = (profiles, url) => {
 
 const FavoriteHubDialog = createReactClass({
   displayName: 'FavoriteHubDialog',
-  mixins: [ RouteContext ],
 
   isNew() {
     return !this.props.hubEntry;

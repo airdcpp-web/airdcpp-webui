@@ -106,10 +106,7 @@ const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
 const Helpers = {
   pushModal: function (currentLocation, pathname, overlayId, data) {
     const state = addModalState(currentLocation, overlayId, data, pathname);
-    History.push({ 
-      state, 
-      pathname
-    });
+    History.push(pathname, state);
   },
 
   // Returns modal IDs from currentLocation
@@ -131,37 +128,25 @@ const Helpers = {
 
   replaceSidebar: function (currentLocation, pathname, data) {
     const state = getSidebarState(currentLocation, data);
-    History.replace({
-      state,
-      pathname,
-    });
+    History.replace(pathname, state);
   },
 
   pushSidebar: function (currentLocation, pathname, data) {
     // replaceState is invoked automatically if the path hasn't changed
     const state = getSidebarState(currentLocation, data);
-    History.push({
-      state,
-      pathname,
-    });
+    History.push(pathname, state);
   },
 
   // Append new location data when in sidebar layout and create a new history entry
   pushSidebarData: function (currentLocation, data) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
-    History.push({
-      state, 
-      pathname: currentLocation.pathname,
-    });
+    History.push(currentLocation.pathname, state);
   },
 
   // Append new location data when in sidebar layout without creating a new history entry
   replaceSidebarData: function (currentLocation, data) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
-    History.replace({ 
-      state, 
-      pathname: currentLocation.pathname,
-    });
+    History.replace(currentLocation.pathname, state);
   },
 
   // Shorthand function for receiving the data
@@ -179,10 +164,7 @@ const Helpers = {
     delete state[overlayId];
 		
     if (returnTo) {
-      History.replace({
-        state, 
-        pathname: returnTo,
-      });
+      History.replace(pathname, state);
     } else {
       History.goBack();
     }

@@ -100,7 +100,7 @@ DownloadableItemActions.downloadTo.listen(function (handlerData, location) {
   const { pathname } = location;
 	
   History.pushModal(location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
-    downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
+    //downloadHandler: downloadData => handlerData.handler(handlerData, downloadData),
     itemInfo: handlerData.itemInfo
   });
 });

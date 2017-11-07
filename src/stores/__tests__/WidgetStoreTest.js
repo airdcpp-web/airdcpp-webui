@@ -41,7 +41,7 @@ describe('widget store', () => {
   });
 
 
-  const widgetId = WidgetUtils.createId(RSS);
+  const widgetId = WidgetUtils.createId(RSS.typeId);
   const settings = {
     name: 'RSS feed',
     widget: {
@@ -51,7 +51,7 @@ describe('widget store', () => {
   };
 
   test('should handle widget actions', () => {
-    WidgetStore.onCreateSaved(widgetId, settings, RSS);
+    WidgetStore.onCreateSaved(widgetId, settings, RSS.typeId);
     expect(hasLayoutItems(widgetId)).toEqual(true);
     expect(WidgetStore.getWidgetSettings(widgetId)).toEqual(settings);
 

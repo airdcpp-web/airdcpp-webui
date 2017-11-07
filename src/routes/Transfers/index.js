@@ -1,10 +1,6 @@
-module.exports = {
-  path: 'transfers',
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/Transfers').default);
-    }, 'transfers');
-  }
+export default {
+  path: '/transfers',
+  component: AsyncComponentDecorator(() => System.import('./components/Transfers')),
 };
-

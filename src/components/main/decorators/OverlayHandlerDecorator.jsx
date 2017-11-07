@@ -64,6 +64,8 @@ export default function (Component) {
     };
 
     checkModals = (props) => {
+      return false;
+
       const modalIds = History.getModalIds(props.location);
       if (!modalIds) {
         return false;

@@ -7,7 +7,6 @@ import OverlayConstants from 'constants/OverlayConstants';
 
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
-import WidgetUtils from 'utils/WidgetUtils';
 
 
 const notAlwaysShow = ({ widgetInfo }) => !widgetInfo.alwaysShow;
@@ -36,18 +35,16 @@ const WidgetActions = Reflux.createActions([
 ]);
 
 WidgetActions.create.listen(function (widgetInfo, location) {
-  const id = WidgetUtils.createId(widgetInfo);
-  History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
-    widgetInfo,
-    onSave: settings => WidgetActions.create.saved(id, settings, widgetInfo),
+  History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, {
+    typeId: widgetInfo.typeId,
   });
 });
 
 WidgetActions.edit.listen(function ({ id, widgetInfo, settings }, location) {
   History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
-    widgetInfo,
+    typeId: widgetInfo.typeId,
+    id,
     settings,
-    onSave: settings => WidgetActions.edit.saved(id, settings),
   });
 });
 
