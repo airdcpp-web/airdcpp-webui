@@ -72,7 +72,7 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 // Push a new sidebar state or merge the data into an existing one (if the sidebar is open already) 
 const getSidebarState = (currentLocation, data = {}) => {
   console.assert(currentLocation, 'Current location not supplied for overlay creation');
-  console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
+  console.assert(currentLocation.pathname, 'Invalid location object supplied for overlay creation');
 
   const state = currentLocation.state ? createModelessState(currentLocation.state) : {};
   if (!state[OverlayConstants.SIDEBAR_ID]) {
@@ -164,7 +164,7 @@ const Helpers = {
     delete state[overlayId];
 		
     if (returnTo) {
-      History.replace(pathname, state);
+      History.replace(returnTo, state);
     } else {
       History.goBack();
     }

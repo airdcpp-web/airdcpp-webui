@@ -120,6 +120,8 @@ const SessionLayout = createReactClass({
 		 * AccessConstant defining whether the user has edit permission 
 		 */
     editAccess: PropTypes.string.isRequired,
+
+    //children: PropTypes.node.isRequired,
   },
 
   getInitialProps() {
@@ -292,12 +294,12 @@ const SessionLayout = createReactClass({
   },
 
   // COMPONENT GETTERS
-  getItemStatus(item) {
+  getItemStatus(sessionItem) {
     if (this.props.itemStatusGetter) {
-      return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(item) }/>;
+      return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(sessionItem) }/>;
     }
 
-    return <Icon icon={ this.props.itemHeaderIconGetter(item) }/>;
+    return <Icon icon={ this.props.itemHeaderIconGetter(sessionItem) }/>;
   },
 
   getSessionMenuItem(sessionItem) {

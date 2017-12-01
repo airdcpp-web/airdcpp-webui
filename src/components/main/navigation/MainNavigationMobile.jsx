@@ -3,6 +3,7 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import { matchPath } from 'react-router-dom';
 
 import Dropdown from 'components/semantic/Dropdown';
 import DropdownSection from 'components/semantic/DropdownSection';
@@ -31,7 +32,11 @@ class MainNavigationMobile extends React.Component {
   onClickSecondary = (url, evt) => {
     evt.preventDefault();
 
-    if (!this.context.router.isActive(url)) {
+    const isActive = matchPath(this.props.url, {
+      path: this.props.location.pathname
+    });
+
+    if (!isActive) {
       History.pushSidebar(this.props.location, url);
     }
 

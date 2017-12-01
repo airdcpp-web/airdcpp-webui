@@ -6,6 +6,7 @@ import BrowserUtils from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import OverlayDecorator from 'decorators/OverlayDecorator';
 import Resizable from 're-resizable';
+import History from 'utils/History';
 
 import '../style.css';
 
@@ -30,18 +31,37 @@ class Sidebar extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    const context = $(this.props.overlayContext);
-    invariant(context.length !== 0, 'Invalid sidebar context');
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.state.sidebar.data.close) {
+      $(this.c.resizable).sidebar('hide');
+    }
+  }
 
-    this.props.showOverlay(this.c.resizable, {
-      context: context,
+  componentDidMount() {
+    //const context = $(this.props.overlayContext);
+    //invariant(context.length !== 0, 'Invalid sidebar context');
+
+    $(this.c.resizable).sidebar({
+      context: '.sidebar-context',
       transition: 'overlay',
       mobileTransition: 'overlay',
       closable: !BrowserUtils.useMobileLayout(),
       onShow: this.onVisible,
-    });
+      onHidden: this.onHidden,
+    }).sidebar('show');
+
+    /*this.props.showOverlay(this.c.resizable, {
+      context: '.sidebar-context',
+      transition: 'overlay',
+      mobileTransition: 'overlay',
+      closable: !BrowserUtils.useMobileLayout(),
+      onShow: this.onVisible,
+    });*/
   }
+
+  onHidden = () => {
+    History.removeOverlay(this.props.location, 'sidebar');
+  };
 
   onVisible = () => {
     this.setState({ animating: false });
@@ -77,13 +97,13 @@ class Sidebar extends React.PureComponent {
         onResizeStop={ this.onResizeStop }
       >
         <div id="sidebar-container">
-          { animating ? <Loader text=""/> : React.cloneElement(this.props.children, {
+          { animating ? <Loader text=""/> : /*React.cloneElement(this.props.children, {
             width,
-          }) }
+          })*/this.props.children }
         </div>
       </Resizable>
     );
   }
 }
 
-export default OverlayDecorator(Sidebar, 'sidebar');
+export default /*OverlayDecorator(*/Sidebar/*, 'sidebar')*/;

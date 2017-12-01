@@ -1,22 +1,16 @@
-module.exports = {
-  path: '/hubs',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'session/:id', 
-        component: require('./components/HubSession').default,
-      }, {
-        path: 'new', 
-        component: require('./components/HubNew').default,
-      } ]);
-    }, 'hubs-children');
-  },
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/Hubs').default);
-    }, 'hubs');
-  }
+export default {
+  path: '/hubs',
+  component: AsyncComponentDecorator(() => System.import('./components/Hubs')),
+  childRoutes: [
+    {
+      path: '/hubs/session/:id',
+      component: AsyncComponentDecorator(() => System.import('./components/HubSession')),
+    }, {
+      path: '/hubs/new',
+      component: AsyncComponentDecorator(() => System.import('./components/HubNew')),
+    }
+  ]
 };
 

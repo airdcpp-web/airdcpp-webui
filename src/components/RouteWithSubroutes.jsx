@@ -14,7 +14,7 @@ const parseOverlayProps = (route, props) => {
 };
 
 const RouteWithSubRoutes = route => (
-  <Route path={ route.path } exact={ route.exact } render={ props => (
+  <Route path={ route.path } exact={ route.exact } location={ route.location } render={ props => (
     // pass the sub-routes down to keep nesting
     <route.component { ...props } routes={ route.childRoutes } { ...parseOverlayProps(route, props) }/>
   ) }

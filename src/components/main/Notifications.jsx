@@ -29,8 +29,8 @@ const Notifications = createReactClass({
   mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, '_addNotification') ],
   notifications: null,
 
-  contextTypes: {
-    routerLocation: PropTypes.object.isRequired,
+  propTypes: {
+    location: PropTypes.object.isRequired,
   },
 
   _addNotification: function (level, notification) {
@@ -116,7 +116,7 @@ const Notifications = createReactClass({
         action: {
           label: 'View events',
           callback: severity === SeverityEnum.NOTIFY ? null : () => { 
-            History.pushSidebar(this.context.routerLocation, 'events'); 
+            History.pushSidebar(this.props.location, 'events'); 
           }
         }
       });
@@ -146,7 +146,7 @@ const Notifications = createReactClass({
       action: {
         label: 'View file',
         callback: () => { 
-          History.pushSidebar(this.context.routerLocation, '/files/session/' + file.id); 
+          History.pushSidebar(this.props.location, '/files/session/' + file.id); 
         }
       }
     });
@@ -173,7 +173,7 @@ const Notifications = createReactClass({
       action: {
         label: 'View message',
         callback: () => { 
-          History.pushSidebar(this.context.routerLocation, '/messages/session/' + cid); 
+          History.pushSidebar(this.props.location, '/messages/session/' + cid); 
         }
       }
     });

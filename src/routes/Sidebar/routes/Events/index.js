@@ -1,10 +1,8 @@
-module.exports = {
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
+
+export default {
   path: '/events',
-	
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/SystemLog').default);
-    }, 'events');
-  }
+  component: AsyncComponentDecorator(() => System.import('./components/SystemLog')),
 };
+
 

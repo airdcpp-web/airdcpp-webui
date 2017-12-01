@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
+import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 import SideMenu from 'components/main/navigation/SideMenu';
+import Sidebar from 'routes/Sidebar/components/Sidebar';
 import SiteHeader from './SiteHeader';
 
 import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
@@ -18,20 +20,28 @@ class MainLayout extends React.Component {
   };
 
   render() {
-    const { children, sidebar } = this.props;
+    const { sidebar, className, location, mainRoutes, secondaryRoutes, previousLocation } = this.props;
 
     return (
-      <div className={ this.props.className + ' sidebar-context' } id="normal-layout">
-        { sidebar }
+      <div className={ className + ' sidebar-context' } id="normal-layout">
+        { sidebar && (
+          <Sidebar location={ location }>
+            { secondaryRoutes.map((route, i) => (
+              <RouteWithSubRoutes key={ i } { ...route }/>
+            )) }
+          </Sidebar>
+        ) }
         <div className="pusher">
           <SiteHeader 
-            content={ <MainNavigation/> }
+            content={ <MainNavigation location={ location }/> }
           />
           <div className="ui site-content">
-            { children }
+            { mainRoutes.map((route, i) => (
+              <RouteWithSubRoutes key={ i } { ...route } location={ previousLocation ? previousLocation : location }/>
+            )) }
           </div>
         </div>
-        <SideMenu location={ this.props.location }/>
+        <SideMenu location={ location }/>
       </div>
     );
   }

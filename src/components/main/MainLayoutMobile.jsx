@@ -10,6 +10,7 @@ import UrgencyUtils from 'utils/UrgencyUtils';
 import History from 'utils/History';
 import Button from 'components/semantic/Button';
 
+import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
@@ -83,29 +84,29 @@ class MainLayoutMobile extends React.Component {
   };
 
   render() {
-    const { children, sidebar } = this.props;
+    const { className, mainRoutes, secondaryRoutes, location } = this.props;
 		
     return (
-      <div className={this.props.className} id="mobile-layout">
+      <div className={ className } id="mobile-layout">
         { this.state.menuVisible && (
           <MainNavigation
-            location={ this.props.location }
+            location={ location }
             onClose={ this.onClickMenu }
           />
         ) }
-        <div className="pusher sidebar-context" id="mobile-layout-inner">
+        <div id="mobile-layout-inner">
           <SiteHeader 
             content={
               <HeaderContent
                 onClickMenu={ this.onClickMenu }
                 onClickBack={ this.onClickBack }
-                sidebar={ sidebar }
               />
             }
           />
-          { sidebar }
           <div className="ui site-content pusher">
-            { children }
+            { [ ...mainRoutes, ...secondaryRoutes ].map((route, i) => (
+              <RouteWithSubRoutes key={ i } { ...route } location={ location }/>
+            )) }
           </div>
         </div>
       </div>
@@ -113,4 +114,4 @@ class MainLayoutMobile extends React.Component {
   }
 }
 
-export default OverlayHandlerDecorator(MainLayoutMobile);
+export default MainLayoutMobile;

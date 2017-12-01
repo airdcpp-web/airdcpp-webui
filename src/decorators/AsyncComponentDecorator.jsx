@@ -1,6 +1,15 @@
 import React from 'react';
 import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 
+
+const getRoutes = (routes, overlaysOnly) => {
+  return routes
+    .filter(route => !!route.overlayId === overlaysOnly)
+    .map((route, i) => (
+      <RouteWithSubRoutes key={ i } { ...route } /*{ ...this.props.location.state }*//>
+    ));
+};
+
 // getComponent is a function that returns a promise for a component
 // It will not be called until the first mount
 export default function asyncComponent(getComponent) {
@@ -21,14 +30,15 @@ export default function asyncComponent(getComponent) {
     
     render() {
       const { Component } = this.state;
+      const { routes } = this.props;
       if (Component) {
         return [
-        	<span key="routes">
-        		{ this.props.routes && this.props.routes.map((route, i) => (
-              <RouteWithSubRoutes key={ i } { ...route } /*{ ...this.props.location.state }*//>
-            )) }
-        	</span>,
-        	<Component key="main" {...this.props} />
+        	<div key="overlays">
+            { !!routes && getRoutes(routes, true) }
+        	</div>,
+        	<Component key="main" { ...this.props }>
+            { !!routes && getRoutes(routes, false) }
+          </Component>
         ];
       }
       return null;

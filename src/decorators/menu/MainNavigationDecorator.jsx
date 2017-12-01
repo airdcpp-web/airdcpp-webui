@@ -125,13 +125,13 @@ const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
 
 export default function (Component) {
   class MainNavigationDecorator extends React.Component {
-    static contextTypes = {
-      routerLocation: PropTypes.object.isRequired,
+    static propTypes = {
+      location: PropTypes.object.isRequired,
     };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
       // Location state or path has changed?
-      return nextContext.routerLocation !== this.context.routerLocation;
+      return nextProps.location !== this.props.location;
     }
 
     render() {

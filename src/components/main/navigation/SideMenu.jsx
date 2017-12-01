@@ -8,6 +8,7 @@ import History from 'utils/History';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import IconPanel from './IconPanel';
+import { matchPath } from 'react-router-dom';
 
 
 class SideMenu extends React.Component {
@@ -18,12 +19,16 @@ class SideMenu extends React.Component {
   onClick = (url, evt) => {
     evt.preventDefault();
 
-    if (this.context.router.isActive(url)) {
-      History.replaceSidebarData(this.props.location, { close: true });
-      return;
-    }
+    const isActive = matchPath(url, {
+      path: this.props.location.pathname,
+      exact: this.props.location.pathname === '/',
+    });
 
-    History.pushSidebar(this.props.location, url);
+    if (isActive) {
+      History.replaceSidebarData(this.props.location, { close: true });
+    } else {
+      History.pushSidebar(this.props.location, url);
+    }
   };
 
   render() {
