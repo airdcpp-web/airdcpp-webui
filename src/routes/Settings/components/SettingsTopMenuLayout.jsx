@@ -12,13 +12,13 @@ const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
     <Dropdown 
       className="selection fluid" 
       caption={ parent.title }
-      icon={ 'green ' + parent.icon }
+      captionIcon={ 'green ' + parent.icon }
     >
       { parentMenuItems }
     </Dropdown>
 
     <Icon icon="large caret right"/>
-    
+
     <Dropdown 
       className="selection fluid" 
       caption={ currentMenuItem.title }
