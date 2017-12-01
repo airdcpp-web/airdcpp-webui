@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
+import DropdownSection from 'components/semantic/DropdownSection';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 import History from 'utils/History';
@@ -43,13 +44,6 @@ class MainNavigationMobile extends React.Component {
 
   render() {
     const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem, menuItemGetter } = this.props;
-    const moreCaption = (
-      <div>
-        <i className="ellipsis horizontal caption icon"/>
-				More...
-      </div>
-    );
-
     return (
       <div 
         ref={ c => this.c = c }
@@ -58,13 +52,17 @@ class MainNavigationMobile extends React.Component {
       >
         { mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
         <Dropdown 
-          caption={ moreCaption } 
+          caption="More..."
+          captionIcon="ellipsis horizontal caption" 
           className="right fluid" 
           triggerIcon=""
         >
-          { configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-          <div className="divider"/>
-          { menuItemGetter(logoutItem.onClick, true, logoutItem) }
+          <DropdownSection>
+            { configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
+          </DropdownSection>
+          <DropdownSection>
+            { menuItemGetter(logoutItem.onClick, true, logoutItem) }
+          </DropdownSection>
         </Dropdown>
 
         <div className="separator"/>

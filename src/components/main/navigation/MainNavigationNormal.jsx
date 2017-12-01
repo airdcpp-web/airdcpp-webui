@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
+import DropdownSection from 'components/semantic/DropdownSection';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
@@ -22,9 +23,12 @@ class MainNavigationNormal extends React.Component {
         { mainMenuItems.map(item => menuItemGetter(null, false, item)) }
 
         <Dropdown className="top right">
-          { configMenuItems.map(item => menuItemGetter(null, true, item)) }
-          <div className="divider"/>
-          { menuItemGetter(logoutItem.onClick, true, logoutItem) }
+          <DropdownSection>
+            { configMenuItems.map(item => menuItemGetter(null, true, item)) }
+          </DropdownSection>
+          <DropdownSection>
+            { menuItemGetter(logoutItem.onClick, true, logoutItem) }
+          </DropdownSection>
         </Dropdown>
       </div>
     );

@@ -4,6 +4,7 @@ import React from 'react';
 import { FilterMethod } from 'constants/TableConstants';
 
 import Dropdown from 'components/semantic/Dropdown';
+import DropdownSection from 'components/semantic/DropdownSection';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
 import TableFilterDecorator from 'decorators/TableFilterDecorator';
@@ -103,9 +104,10 @@ class FilterBox extends React.Component {
             button={ true }
             direction="upward"
           >
-            <div className="header">Match type</div>
-            { Object.keys(FilterMethod)
-              .map(key => this.getFilterMethod(FilterMethod[key])) }
+            <DropdownSection caption="Match type">
+              { Object.keys(FilterMethod)
+                .map(key => this.getFilterMethod(FilterMethod[key])) }
+            </DropdownSection>
           </Dropdown>
         </div>
       </div>

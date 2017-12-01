@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import invariant from 'invariant';
 
 import classNames from 'classnames';
@@ -108,15 +108,19 @@ class Dropdown extends React.PureComponent {
     }
 
     const { children } = this.props;
-    if (typeof children === 'function') {
-      return children();
-    }
 
-    return children;
+    return React.Children.map(children, (child, index) => {
+      return child.type.name !== 'DropdownSection' ? child : (
+        <Fragment key={ index }>
+          { child }
+          { (children.length && index !== children.length - 1) && <div className="ui divider"/> }
+        </Fragment>
+      );
+    });
   };
 
   render() {
-    const { leftIcon, caption, header, button, triggerIcon } = this.props;
+    const { leftIcon, caption, button, triggerIcon, captionIcon } = this.props;
     const className = classNames(
       'ui',
       'dropdown',
@@ -134,17 +138,12 @@ class Dropdown extends React.PureComponent {
         className={ className }
       >
         { (leftIcon && caption) && icon }
-        <DropdownCaption>
-          { caption ? caption : icon }
+        <DropdownCaption icon={ captionIcon }>
+          { !!caption ? caption : icon }
         </DropdownCaption>
         { leftIcon || !caption ? null : icon }
 
         <div className="menu">
-          { !!header && (
-            <div className="header">
-              { header }
-            </div>
-          ) }
           { this.getMenuItems() }
         </div>
       </div>

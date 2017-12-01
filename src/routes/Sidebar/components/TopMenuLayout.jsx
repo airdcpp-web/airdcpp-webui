@@ -4,33 +4,23 @@ import BrowserUtils from 'utils/BrowserUtils';
 
 import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/semantic/Dropdown';
+import DropdownSection from 'components/semantic/DropdownSection';
 import MenuIcon from 'components/menu/MenuIcon';
 
 
-const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAction, listActionMenuGetter }) => {
-  // Don't add nesting for items to preserve Semantic UI's CSS
-  // There should always be something to show if we are rendering the menu
-  const hideStyle = { display: 'none' };
-
-  const sessionMenuStyle = sessionMenuItems.length === 0 ? hideStyle : null;
-
-  const listActionMenu = listActionMenuGetter();
-  return (
-    <Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
-		 	<div className="header" style={ newButton ? null : hideStyle }>
-		 		New
-		 	</div>
-		 	{ newButton }
-      <div className="ui divider" style={ newButton ? sessionMenuStyle : hideStyle }/>
-      <div className="header" style={ sessionMenuStyle }>
-				Current sessions
-      </div>
+const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAction, listActionMenuGetter }) => (
+  <Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
+    <DropdownSection caption="New">
+      { newButton }
+    </DropdownSection>
+    <DropdownSection caption="Current sessions">
       { sessionMenuItems }
-      { listActionMenu && <div className="ui divider"/> }
-      { listActionMenu }
-    </Dropdown>
-  );
-};
+    </DropdownSection>
+    <DropdownSection>
+      { listActionMenuGetter() }
+    </DropdownSection>
+  </Dropdown>
+);
 
 const CloseButton = ({ closeAction, activeItem }) => {
   if (!activeItem || BrowserUtils.useMobileLayout()) {
