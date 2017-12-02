@@ -35,14 +35,14 @@ const FilelistItemActions = Reflux.createActions([
   { 'findNfo': { asyncResult: true } },
 ]);
 
-FilelistItemActions.download.listen((itemData, downloadData) => {
+FilelistItemActions.download.listen((itemInfo, user, downloadData) => {
   const data = {
-    user: itemData.user,
+    user,
     ...downloadData,
   };
 
-  if (itemData.itemInfo.type.id === 'file') {
-    const { tth, size, time } = itemData.itemInfo;
+  if (itemInfo.type.id === 'file') {
+    const { tth, size, time } = itemInfo;
     Object.assign(data, {
       tth,
       size,
@@ -51,20 +51,20 @@ FilelistItemActions.download.listen((itemData, downloadData) => {
 
     SocketService.post(QueueConstants.BUNDLES_URL + '/file', data)
       .then(FilelistItemActions.download.completed)
-      .catch(error => FilelistItemActions.download.failed(itemData, error));
+      .catch(error => FilelistItemActions.download.failed(itemInfo, error));
 
     return;
   }
 
   // Directory
-  data['list_path'] = itemData.itemInfo.path;
+  data['list_path'] = itemInfo.path;
   SocketService.post(FilelistConstants.DIRECTORY_DOWNLOADS_URL, data)
     .then(FilelistItemActions.download.completed)
-    .catch(error => FilelistItemActions.download.failed(itemData, error));
+    .catch(error => FilelistItemActions.download.failed(itemInfo, error));
 });
 
-FilelistItemActions.download.failed.listen((itemData, error) => {
-  NotificationActions.apiError('Failed to queue the item ' + itemData.itemInfo.name, error);
+FilelistItemActions.download.failed.listen((itemInfo, error) => {
+  NotificationActions.apiError('Failed to queue the item ' + itemInfo.name, error);
 });
 
 FilelistItemActions.reloadDirectory.listen(function ({ directory, session }) {

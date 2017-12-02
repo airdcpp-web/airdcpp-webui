@@ -120,8 +120,9 @@ const DownloadDialog = createReactClass({
   },
 
   handleDownload(path) {
-    this.props.downloadHandler({
-      target_name: this.props.itemInfo.name, // possibly allow changing this later...
+    const { downloadHandler, itemInfo, user } = this.props;
+    downloadHandler(itemInfo, user, {
+      target_name: itemInfo.name, // possibly allow changing this later...
       target_directory: path,
       target_type: 0,
       priority: PriorityEnum.DEFAULT

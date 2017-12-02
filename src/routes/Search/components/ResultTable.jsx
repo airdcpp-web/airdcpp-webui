@@ -47,7 +47,6 @@ const resultUserGetter = rowData => rowData.users.user;
 
 const NameCell = ({ rowDataGetter, ...props }) => (
   <FileDownloadCell 
-    handler={ SearchActions.download } 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
     { ...props }

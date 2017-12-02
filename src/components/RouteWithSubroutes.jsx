@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 
 
 const parseOverlayProps = (route, props) => {
-  if (route.overlayId) {
+  if (route.overlayId && props.location.state && props.location.state[route.overlayId]) {
     return {
       overlayId: route.overlayId,
       ...props.location.state[route.overlayId].data

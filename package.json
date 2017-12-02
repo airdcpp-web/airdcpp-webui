@@ -65,7 +65,7 @@
     "lodash": "^4.6.0",
     "minimist": "^1.2.0",
     "moment": "^2.19.3",
-    "pondjs": "^0.8.7",
+    "pondjs": "^0.8.8",
     "promise": "^8.0.1",
     "prop-types": "^15.6.0",
     "re-resizable": "^4.0.3",

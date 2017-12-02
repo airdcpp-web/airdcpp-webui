@@ -185,7 +185,6 @@ class ListBrowser extends React.Component {
               <FileDownloadCell 
                 clickHandlerGetter={ this.onClickDirectory }
                 userGetter={ this.userGetter }
-                handler={ FilelistItemActions.download } 
               /> 
             }
             flexGrow={8}

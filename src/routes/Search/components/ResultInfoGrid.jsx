@@ -59,7 +59,6 @@ const ResultInfoGrid = ({ parentResult }) => (
       button={ true }
       user={ parentResult.users.user }
       itemInfoGetter={ _ => parentResult }
-      handler={ SearchActions.download } 
     />
   </div>
 );

@@ -12,7 +12,7 @@ const getRoutes = (routes, overlaysOnly) => {
 
 // getComponent is a function that returns a promise for a component
 // It will not be called until the first mount
-export default function asyncComponent(getComponent) {
+export default function asyncComponent(getComponent, props) {
   return class AsyncComponent extends React.Component {
     static Component = null;
     state = { Component: AsyncComponent.Component };
@@ -36,7 +36,7 @@ export default function asyncComponent(getComponent) {
         	<div key="overlays">
             { !!routes && getRoutes(routes, true) }
         	</div>,
-        	<Component key="main" { ...this.props }>
+        	<Component key="main" { ...this.props } { ...props }>
             { !!routes && getRoutes(routes, false) }
           </Component>
         ];

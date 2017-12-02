@@ -10,10 +10,11 @@ export default function (Component) {
     constructor(props) {
       super(props);
 
-      this.itemData = {
-        handler: this.props.handler,
-      };
+      this.itemData = { };
 
+      // Since table cells are recycled, the same menu can be re-used for different items
+      // as it's not necessarily re-rendered due to performance reasons
+      // Use getters so that we get data for the current cell
       Object.defineProperty(this.itemData, 'user', {
         get: () => {
           return this.props.user;
@@ -48,18 +49,13 @@ export default function (Component) {
   DownloadMenu.propTypes = {
 
     /**
-		 * Possible user to be passed to the handler (when not used for items in a singleton entity)
-		 */
+     * Target user
+     */
     user: PropTypes.object.isRequired,
 
     /**
-		 * Function for handling the download
-		 */
-    handler: PropTypes.func.isRequired,
-
-    /**
-		 * Additional data to be passed to the handler
-		 */
+     * Context-specific item data getter
+     */
     itemInfoGetter: PropTypes.func.isRequired,
   };
 
