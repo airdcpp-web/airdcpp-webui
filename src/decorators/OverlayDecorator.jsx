@@ -67,7 +67,7 @@ export default function (Component, semanticModuleName) {
 
     onHidden() {
       // Don't change the history state if we navigating back using the browser history
-      if (this.props.history.action !== 'POP') {
+      if (History.action !== 'POP') {
         History.removeOverlay(this.props.location, this.props.overlayId);
       }
 
