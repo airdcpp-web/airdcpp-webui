@@ -72,7 +72,7 @@ export const RouterMenuItemLink = createReactClass({
     };
   },
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
+  /*shouldComponentUpdate(nextProps, nextState, nextContext) {
     // Session (or its properties) updated/changed?
     if (nextProps.session !== this.props.session) {
       return true;
@@ -95,7 +95,7 @@ export const RouterMenuItemLink = createReactClass({
     }
 
     return false;
-  },
+  },*/
 
   componentDidMount() {
     const { unreadInfoStore } = this.props;

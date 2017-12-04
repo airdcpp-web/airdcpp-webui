@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 
 
@@ -32,14 +32,14 @@ export default function asyncComponent(getComponent, props) {
       const { Component } = this.state;
       const { routes } = this.props;
       if (Component) {
-        return [
-        	<div key="overlays">
+        return (
+          <Fragment>
+            <Component { ...this.props } { ...props }>
+              { !!routes && getRoutes(routes, false) }
+            </Component>
             { !!routes && getRoutes(routes, true) }
-        	</div>,
-        	<Component key="main" { ...this.props } { ...props }>
-            { !!routes && getRoutes(routes, false) }
-          </Component>
-        ];
+          </Fragment>
+        );
       }
       return null;
     }

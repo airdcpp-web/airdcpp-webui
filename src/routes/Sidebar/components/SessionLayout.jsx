@@ -388,10 +388,10 @@ const SessionLayout = createReactClass({
       return <Loader text="Waiting for server response"/>;
     } else if (activeItem) {
       // We have a session
-      return React.cloneElement(this.props.children, { 
+      return React.Children.map(children, child => React.cloneElement(child, { 
         session: activeItem,
         actions: actions,
-      });
+      }));
     } else if (activeId || (!children && items.length !== 0)) {
       // Redirecting to a new page
       return <Loader text="Loading session"/>;

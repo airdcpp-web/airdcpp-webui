@@ -13,12 +13,15 @@ const parseOverlayProps = (route, props) => {
   return {};
 };
 
-const RouteWithSubRoutes = route => (
-  <Route path={ route.path } exact={ route.exact } location={ route.location } render={ props => (
-    // pass the sub-routes down to keep nesting
-    <route.component { ...props } routes={ route.childRoutes } { ...parseOverlayProps(route, props) }/>
-  ) }
-  />
-);
+const RouteWithSubRoutes = route => {
+  const { path, exact, location, childRoutes, ...other } = route;
+  return (
+    <Route path={ path } exact={ exact } location={ location } render={ props => (
+      // pass the sub-routes down to keep nesting
+      <route.component { ...props } { ...other } routes={ childRoutes } { ...parseOverlayProps(route, props) }/>
+    ) }
+    />
+  );
+};
 
 export default RouteWithSubRoutes;

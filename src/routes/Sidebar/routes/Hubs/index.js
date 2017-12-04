@@ -1,7 +1,7 @@
 import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
 export default {
-  path: '/hubs',
+  path: '/hubs/:session?/:id?',
   component: AsyncComponentDecorator(() => System.import('./components/Hubs')),
   childRoutes: [
     {

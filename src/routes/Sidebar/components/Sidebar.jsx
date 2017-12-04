@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import invariant from 'invariant';
 
 import BrowserUtils from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
-import OverlayDecorator from 'decorators/OverlayDecorator';
 import Resizable from 're-resizable';
 import History from 'utils/History';
 
@@ -38,9 +36,6 @@ class Sidebar extends React.PureComponent {
   }
 
   componentDidMount() {
-    //const context = $(this.props.overlayContext);
-    //invariant(context.length !== 0, 'Invalid sidebar context');
-
     $(this.c.resizable).sidebar({
       context: '.sidebar-context',
       transition: 'overlay',
@@ -49,14 +44,6 @@ class Sidebar extends React.PureComponent {
       onShow: this.onVisible,
       onHidden: this.onHidden,
     }).sidebar('show');
-
-    /*this.props.showOverlay(this.c.resizable, {
-      context: '.sidebar-context',
-      transition: 'overlay',
-      mobileTransition: 'overlay',
-      closable: !BrowserUtils.useMobileLayout(),
-      onShow: this.onVisible,
-    });*/
   }
 
   onHidden = () => {
@@ -97,13 +84,13 @@ class Sidebar extends React.PureComponent {
         onResizeStop={ this.onResizeStop }
       >
         <div id="sidebar-container">
-          { animating ? <Loader text=""/> : /*React.cloneElement(this.props.children, {
+          { animating ? <Loader text=""/> : /*React.Children.map(this.props.children, child => React.cloneElement(child, {
             width,
-          })*/this.props.children }
+          }))*/this.props.children }
         </div>
       </Resizable>
     );
   }
 }
 
-export default /*OverlayDecorator(*/Sidebar/*, 'sidebar')*/;
+export default Sidebar;

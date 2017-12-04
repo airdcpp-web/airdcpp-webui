@@ -39,7 +39,7 @@ const ItemHandler = {
 };
 
 const parseNumericId = (params) => {
-  if (!params) {
+  if (!params['id']) {
     return null;
   }
 
@@ -53,10 +53,10 @@ const Hubs = createReactClass({
   mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
 
   render() {
-    const { params, ...other } = this.props;
+    const { children, match, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ parseNumericId(params) }
+        activeId={ parseNumericId(match.params) }
         baseUrl="hubs"
         items={ this.state.hubSessions } 
         newCaption="Connect"
@@ -70,7 +70,7 @@ const Hubs = createReactClass({
         { ...ItemHandler }
         { ...other }
       >
-        { this.props.children }
+        { children }
       </SessionLayout>
     );
   },

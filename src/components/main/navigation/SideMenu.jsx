@@ -19,9 +19,8 @@ class SideMenu extends React.Component {
   onClick = (url, evt) => {
     evt.preventDefault();
 
-    const isActive = matchPath(url, {
-      path: this.props.location.pathname,
-      exact: this.props.location.pathname === '/',
+    const isActive = matchPath(this.props.location.pathname, {
+      path: url,
     });
 
     if (isActive) {
