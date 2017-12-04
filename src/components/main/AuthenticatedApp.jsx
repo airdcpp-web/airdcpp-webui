@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
@@ -26,19 +25,20 @@ const mainRoutes = [
   require('../../routes/FavoriteHubs').default,
   require('../../routes/Queue').default,
   require('../../routes/Search').default,
+  //require('../../routes/Settings').default,
   require('../../routes/Share').default,
   require('../../routes/Transfers').default,
 ];
 
 const secondaryRoutes = [
   require('../../routes/Sidebar/routes/Hubs').default,
-  /*require('../../routes/Sidebar/routes/Filelists').default,
+  require('../../routes/Sidebar/routes/Filelists').default,
   require('../../routes/Sidebar/routes/Messages').default,
-  require('../../routes/Sidebar/routes/Files').default,*/
+  require('../../routes/Sidebar/routes/Files').default,
   require('../../routes/Sidebar/routes/Events').default,
 ];
 
-class AuthenticatedApp extends React.PureComponent {
+class AuthenticatedApp extends React.Component {
   componentWillMount() {
     if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
       PrivateChatActions.fetchSessions();

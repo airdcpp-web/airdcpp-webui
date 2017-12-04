@@ -1,22 +1,16 @@
-module.exports = {
-  path: '/messages',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'session/:id', 
-        component: require('./components/PrivateChatSession').default, 
-      }, {
-        path: 'new', 
-        component: require('./components/MessageNew').default,
-      } ]);
-    }, 'messages-children');
-  },
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/Messages').default);
-    }, 'messages');
-  }
+export default {
+  path: '/messages/:session?/:id?',
+  component: AsyncComponentDecorator(() => System.import('./components/Messages')),
+  childRoutes: [
+    {
+      path: '/messages/session/:id',
+      component: AsyncComponentDecorator(() => System.import('./components/PrivateChatSession')),
+    }, {
+      path: '/messages/new',
+      component: AsyncComponentDecorator(() => System.import('./components/MessageNew')),
+    }
+  ]
 };
 

@@ -45,10 +45,10 @@ const Filelists = createReactClass({
   mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 
   render() {
-    const { children, params, ...other } = this.props;
+    const { children, match, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ params.id }
+        activeId={ match.params.id }
         baseUrl="filelists"
         items={ this.state.filelists }
         newCaption="Open filelist"

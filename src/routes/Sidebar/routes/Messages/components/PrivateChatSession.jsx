@@ -9,12 +9,10 @@ import MessageFooter from './MessageFooter';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
 import AccessConstants from 'constants/AccessConstants';
-import { LocationContext } from 'mixins/RouterMixin';
 
 
 const PrivateChatSession = createReactClass({
   displayName: 'PrivateChatSession',
-  mixins: [ LocationContext ],
 
   render() {
     const { session, location, actions } = this.props;

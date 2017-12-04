@@ -1,4 +1,4 @@
-module.exports = {
+/*module.exports = {
   path: '/filelists',
 	
   getChildRoutes(location, cb) {
@@ -24,5 +24,21 @@ module.exports = {
       cb(null, require('./components/Filelists').default);
     }, 'filelists');
   }
+};*/
+
+import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
+
+export default {
+  path: '/filelists/:session?/:id?',
+  component: AsyncComponentDecorator(() => System.import('./components/Filelists')),
+  childRoutes: [
+    {
+      path: '/filelists/session/:id',
+      component: AsyncComponentDecorator(() => System.import('./components/FilelistSession')),
+    }, {
+      path: '/filelists/new',
+      component: AsyncComponentDecorator(() => System.import('./components/FilelistNew')),
+    }
+  ]
 };
 

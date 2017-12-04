@@ -8,15 +8,12 @@ import FilelistFooter from './FilelistFooter';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 
-import { LocationContext } from 'mixins/RouterMixin';
-
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 
 const FilelistSession = createReactClass({
   displayName: 'FilelistSession',
-  mixins: [ LocationContext ],
 
   render() {
     const { user, location, state } = this.props.session;

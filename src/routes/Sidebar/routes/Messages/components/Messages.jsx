@@ -20,10 +20,10 @@ const Messages = createReactClass({
   mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
   render() {
-    const { params, ...other } = this.props;
+    const { match, children, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ params.id }
+        activeId={ match.params.id }
         baseUrl="messages"
         items={ this.state.chatSessions }
         newCaption="New session"
@@ -37,7 +37,7 @@ const Messages = createReactClass({
         { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
         { ...other }
       >
-        { this.props.children }
+        { children }
       </SessionLayout>
     );
   },

@@ -15,7 +15,7 @@ import 'normal.css';
 class MainLayout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    sidebar: PropTypes.node,
+    sidebar: PropTypes.boolean,
     location: PropTypes.object.isRequired,
   };
 

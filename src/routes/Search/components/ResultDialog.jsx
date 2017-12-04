@@ -2,8 +2,6 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
-import { LocationContext } from 'mixins/RouterMixin';
-
 import FileIcon from 'components/icon/FileIcon';
 
 import ResultInfoGrid from './ResultInfoGrid';
@@ -12,7 +10,6 @@ import UserResultTable from './UserResultTable';
 
 const ResultDialog = createReactClass({
   displayName: 'ResultDialog',
-  mixins: [ LocationContext ],
 
   render: function () {
     const { parentResult } = this.props;

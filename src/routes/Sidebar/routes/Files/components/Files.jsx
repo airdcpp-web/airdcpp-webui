@@ -38,7 +38,8 @@ const Files = createReactClass({
   mixins: [ Reflux.connect(ViewFileStore, 'files') ],
 
   render() {
-    if (this.state.files.length === 0) {
+    const { files } = this.state;
+    if (files.length === 0) {
       return (
         <Message
           title="No files to view"
@@ -47,12 +48,12 @@ const Files = createReactClass({
       );
     }
 
-    const { params, ...other } = this.props;
+    const { match, children, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ params.id }
+        activeId={ match.params.id }
         baseUrl="files"
-        items={ this.state.files }
+        items={ files }
         disableSideMenu={ true }
         editAccess={ AccessConstants.VIEW_FILE_EDIT }
         actions={ ViewFileActions }
@@ -61,7 +62,7 @@ const Files = createReactClass({
         { ...ItemHandler }
         { ...other }
       >
-        { this.props.children }
+        { children }
       </SessionLayout>
     );
   },
