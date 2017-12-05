@@ -7,10 +7,17 @@ import Reflux from 'reflux';
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
-import BackgroundWrapper from './components/main/BackgroundWrapper';
-
 import AuthenticatedApp from './components/main/AuthenticatedApp';
 import Login from './routes/Login';
+
+import { LocalSettings } from 'constants/SettingConstants';
+import LocalSettingStore from 'stores/LocalSettingStore';
+
+import Background1500px from '../resources/images/background_1500px.jpg';
+import Background3460px from '../resources/images/background_3460px.jpg';
+import BrowserUtils from 'utils/BrowserUtils';
+
+import Measure from 'react-measure';
 
 import 'array.prototype.find';
 import './utils/semantic';
@@ -31,15 +38,41 @@ Reflux.use(RefluxPromise(Promise));
   }
 };*/
 
+
+const getBackgroundImage = () => {
+  const url = LocalSettingStore.getValue(LocalSettings.BACKGROUND_IMAGE_URL);
+  if (url) {
+    return url;
+  }
+
+  if (BrowserUtils.useMobileLayout()) {
+    return null;
+  }
+
+  return window.innerWidth < 1440 ? Background1500px : Background3460px;
+};
+
+
 const App = _ => (
-  <BackgroundWrapper>
-    <Router history={ History }>
-      <Switch>
-        <Route path="/login" component={ Login.component }/>
-        <Route path="/" component={ AuthenticatedApp }/>
-      </Switch>
-    </Router>
-  </BackgroundWrapper>
+  <Router history={ History }>
+    <Measure
+      bounds={ true }
+    >
+      { ({ measureRef }) => (
+        <div ref={ measureRef } id="background-wrapper" 
+          style={{
+            backgroundImage: 'url(' + getBackgroundImage() + ')',
+            height: '100%',
+          }}
+        >
+          <Switch>
+            <Route path="/login" component={ Login.component }/>
+            <Route path="/" component={ AuthenticatedApp }/>
+          </Switch>
+        </div>
+      ) }
+    </Measure>
+  </Router>
 );
 
 export default App;

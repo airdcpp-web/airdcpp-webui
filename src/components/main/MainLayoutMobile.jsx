@@ -7,11 +7,9 @@ import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import MenuIcon from 'components/menu/MenuIcon';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
-import History from 'utils/History';
-import Button from 'components/semantic/Button';
 
 import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
-import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
+import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 import 'mobile.css';
@@ -48,18 +46,10 @@ const HeaderContent = MainNavigationDecorator(createReactClass({
   },
 
   render() {
-    const { secondaryMenuItems, onClickMenu, onClickBack, sidebar } = this.props;
+    const { secondaryMenuItems, onClickMenu } = this.props;
 		
     return (
       <div className="right">
-        { sidebar && (
-          <Button 
-            className="item" 
-            caption="Back" 
-            icon="blue angle left"
-            onClick={ onClickBack }
-          />
-        ) }
         <MenuIcon 
           urgencies={ UrgencyUtils.validateUrgencies(secondaryMenuItems.reduce(reduceMenuItemUrgency, {})) }
           onClick={ onClickMenu }
@@ -79,10 +69,6 @@ class MainLayoutMobile extends React.Component {
     this.setState({ menuVisible: !this.state.menuVisible });
   };
 
-  onClickBack = () => {
-    History.replaceSidebarData(this.props.location, { close: true });
-  };
-
   render() {
     const { className, mainRoutes, secondaryRoutes, location } = this.props;
 		
@@ -94,18 +80,18 @@ class MainLayoutMobile extends React.Component {
             onClose={ this.onClickMenu }
           />
         ) }
-        <div id="mobile-layout-inner">
+        <div className="pusher" id="mobile-layout-inner">
           <SiteHeader 
             content={
               <HeaderContent
                 onClickMenu={ this.onClickMenu }
-                onClickBack={ this.onClickBack }
+                location={ location }
               />
             }
           />
-          <div className="ui site-content pusher">
+          <div className="site-content">
             { [ ...mainRoutes, ...secondaryRoutes ].map((route, i) => (
-              <RouteWithSubRoutes key={ i } { ...route } location={ location }/>
+              <RouteWithSubRoutes key={ route.path } { ...route } location={ location }/>
             )) }
           </div>
         </div>
@@ -114,4 +100,4 @@ class MainLayoutMobile extends React.Component {
   }
 }
 
-export default MainLayoutMobile;
+export default SidebarHandlerDecorator(MainLayoutMobile);

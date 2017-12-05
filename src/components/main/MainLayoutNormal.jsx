@@ -7,15 +7,14 @@ import SideMenu from 'components/main/navigation/SideMenu';
 import Sidebar from 'routes/Sidebar/components/Sidebar';
 import SiteHeader from './SiteHeader';
 
-import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
+import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 
 import 'normal.css';
 
 
 class MainLayout extends React.Component {
   static propTypes = {
-    children: PropTypes.node.isRequired,
-    sidebar: PropTypes.boolean,
+    sidebar: PropTypes.bool,
     location: PropTypes.object.isRequired,
   };
 
@@ -23,11 +22,11 @@ class MainLayout extends React.Component {
     const { sidebar, className, location, mainRoutes, secondaryRoutes, previousLocation } = this.props;
 
     return (
-      <div className={ className + ' sidebar-context' } id="normal-layout">
+      <div className={ className + ' pushable sidebar-context' } id="normal-layout">
         { sidebar && (
           <Sidebar location={ location }>
             { secondaryRoutes.map((route, i) => (
-              <RouteWithSubRoutes key={ i } { ...route }/>
+              <RouteWithSubRoutes key={ route.path } { ...route }/>
             )) }
           </Sidebar>
         ) }
@@ -37,7 +36,7 @@ class MainLayout extends React.Component {
           />
           <div className="ui site-content">
             { mainRoutes.map((route, i) => (
-              <RouteWithSubRoutes key={ i } { ...route } location={ previousLocation ? previousLocation : location }/>
+              <RouteWithSubRoutes key={ route.path } { ...route } location={ previousLocation ? previousLocation : location }/>
             )) }
           </div>
         </div>
@@ -47,4 +46,4 @@ class MainLayout extends React.Component {
   }
 }
 
-export default OverlayHandlerDecorator(MainLayout);
+export default SidebarHandlerDecorator(MainLayout);

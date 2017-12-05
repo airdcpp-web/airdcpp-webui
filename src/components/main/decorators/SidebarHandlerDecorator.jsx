@@ -12,9 +12,8 @@ const showSidebar = (props) => {
   return History.hasSidebar(props.location);
 };
 
-
 export default function (Component) {
-  class OverlayHandlerDecorator extends React.Component {
+  class SidebarHandlerDecorator extends React.Component {
     componentWillMount() {
       if (showSidebar(this.props)) {
         // previousLocation must exist if overlays are present
@@ -48,5 +47,5 @@ export default function (Component) {
     }
   }
 
-  return OverlayHandlerDecorator;
+  return SidebarHandlerDecorator;
 }

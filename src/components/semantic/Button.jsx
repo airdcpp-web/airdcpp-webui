@@ -16,10 +16,10 @@ const Button = ({ className, loading, icon, caption, loadingCaption, disabled, .
   );
 
   return (
-    <div className={ buttonStyle } { ...other }>
+    <button className={ buttonStyle } { ...other }>
       <Icon icon={ icon }/>
       { caption }
-    </div>
+    </button>
   );
 };
 

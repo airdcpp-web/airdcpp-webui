@@ -14,6 +14,7 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
+  background-color: white;
 }
 
 .session-layout {
@@ -95,7 +96,7 @@
   margin-bottom: 10px;
 }
 
-#sidebar-container > div, 
+.session-container, 
 .session-layout, 
 .session-container.horizontal .column {
 	height: 100%;

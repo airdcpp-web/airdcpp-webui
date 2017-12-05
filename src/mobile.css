@@ -1,6 +1,7 @@
-#mobile-layout .ui.site-content {
+#mobile-layout .site-content {
 	padding-top: 60px;
 	padding-bottom: 5px;
+	height: 100%;
 }
 
 /* Site header menu */

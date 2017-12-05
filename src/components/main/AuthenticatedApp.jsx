@@ -70,7 +70,7 @@ class AuthenticatedApp extends React.Component {
         <ActivityTracker/>
         <Notifications location={ this.props.location }/>
         <MainLayout 
-          className="pushable main-layout" 
+          className="main-layout" 
           { ...this.props } 
           mainRoutes={ mainRoutes } 
           secondaryRoutes={ secondaryRoutes }

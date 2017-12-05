@@ -11,7 +11,7 @@ import '../style.css';
 
 const MIN_WIDTH = 500;
 
-class Sidebar extends React.PureComponent {
+class Sidebar extends React.Component {
   static propTypes = {
     context: PropTypes.string,
   };

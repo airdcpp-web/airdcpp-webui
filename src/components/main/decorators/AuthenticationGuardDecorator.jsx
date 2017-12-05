@@ -13,12 +13,13 @@ import SocketConnectStatus from './../SocketConnectStatus';
 
 const AuthenticationGuardDecorator = (Component) => {
   return createReactClass({
+    displayName: 'AuthenticationGuardDecorator',
     mixins: [ 
       Reflux.connect(LoginStore, 'login')
     ],
 
     contextTypes: {
-      router: PropTypes.object
+      location: PropTypes.object.isRequired,
     },
 
     updateTitle() {
