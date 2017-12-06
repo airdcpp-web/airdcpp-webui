@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -54,18 +53,18 @@ const getFields = (profiles) => {
   ];
 };
 
-const ShareDirectoryDialog = createReactClass({
-  displayName: 'ShareDirectoryDialog',
+class ShareDirectoryDialog extends React.Component {
+  static displayName = 'ShareDirectoryDialog';
 
-  isNew() {
+  isNew = () => {
     return !this.props.rootEntry;
-  },
+  };
 
   componentWillMount() {
     this.fieldDefinitions = getFields(this.props.profiles);
-  },
+  }
 
-  onFieldChanged(id, value, hasChanges) {
+  onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('path') != -1) {
       const mergeFields = { 
         virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) 
@@ -75,21 +74,21 @@ const ShareDirectoryDialog = createReactClass({
     }
 
     return null;
-  },
+  };
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields) {
+  onSave = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
     return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry.id, changedFields);
-  },
+  };
 
-  onFieldSetting(id, fieldOptions, formValue) {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions['disabled'] = !this.isNew();
       fieldOptions['config'] = Object.assign({} || fieldOptions['config'], {
@@ -103,9 +102,9 @@ const ShareDirectoryDialog = createReactClass({
       };
 
     }
-  },
+  };
 
-  render: function () {
+  render() {
     const title = this.isNew() ? 'Add share directory' : 'Edit share directory';
     const { rootEntry, ...other } = this.props;
     return (
@@ -138,8 +137,8 @@ const ShareDirectoryDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
 export default ModalRouteDecorator(
   DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {

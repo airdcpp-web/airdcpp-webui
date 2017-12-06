@@ -1,13 +1,14 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
+
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import WebUserConstants from 'constants/WebUserConstants';
 import AccessConstants from 'constants/AccessConstants';
 import PermissionSelector from './PermissionSelector';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import t from 'utils/tcomb-form';
 
@@ -88,31 +89,30 @@ const getEntry = isNew => {
   ];
 };
 
-const WebUserDialog = createReactClass({
-  displayName: 'WebUserDialog',
-  mixins: [ RouteContext ],
+class WebUserDialog extends React.Component {
+  static displayName = 'WebUserDialog';
 
-  isNew() {
+  isNew = () => {
     return !this.props.user;
-  },
+  };
 
   componentWillMount() {
     this.entry = getEntry(this.isNew());
-  },
+  }
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields) {
+  onSave = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
 
     return SocketService.patch(WebUserConstants.USERS_URL + '/' + this.props.user.id, changedFields);
-  },
+  };
 
-  onFieldSetting(id, fieldOptions, formValue) {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
       fieldOptions['factory'] = t.form.Select;
       fieldOptions['template'] = PermissionSelector;
@@ -122,9 +122,9 @@ const WebUserDialog = createReactClass({
     } else if (id === 'username') {
       fieldOptions['disabled'] = !this.isNew();
     }
-  },
+  };
 
-  render: function () {
+  render() {
     const { user, location, ...other } = this.props;
     const title = this.isNew() ? 'Add web user' : 'Edit user ' + user.username;
 
@@ -144,13 +144,10 @@ const WebUserDialog = createReactClass({
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ this.props.user }
-          context={ {
-            location,
-          } }
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default WebUserDialog;
+export default ModalRouteDecorator(WebUserDialog, OverlayConstants.WEB_USER_MODAL_ID, 'user');

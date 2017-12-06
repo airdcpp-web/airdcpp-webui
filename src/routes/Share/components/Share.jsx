@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 
-import createReactClass from 'create-react-class';
-
 import ShareActions from 'actions/ShareActions';
 import ShareRootActions from 'actions/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
@@ -20,8 +18,8 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-const Share = createReactClass({
-  displayName: 'Share',
+class Share extends React.Component {
+  static displayName = 'Share';
 
   render() {
     const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
@@ -94,7 +92,7 @@ const Share = createReactClass({
         <ShareDirectoryDialog/>
       </Fragment>
     );
-  },
-});
+  }
+}
 
 export default Share;
