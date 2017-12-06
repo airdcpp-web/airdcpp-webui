@@ -17,10 +17,14 @@ export default function (Component, semanticModuleName) {
   const OverlayDecorator = createReactClass({
     displayName: 'OverlayDecorator',
     closing: false,
+    returnOnClose: true,
 
     propTypes: {
-      location: PropTypes.object.isRequired,
-      overlayId: PropTypes.any, // Required
+      overlayId: PropTypes.any.isRequired,
+    },
+
+    contextTypes: {
+      router: PropTypes.object.isRequired,
     },
 
     componentWillMount() {
@@ -30,12 +34,13 @@ export default function (Component, semanticModuleName) {
 
     componentWillUnmount() {
       if (!this.closing) {
+        this.returnOnClose = false;
         this.hide();
       }
     },
 
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.location.state[this.props.overlayId].data.close) {
+    componentWillReceiveProps(nextProps, nextLocation) {
+      if (nextLocation.router.route.location.state[this.props.overlayId].data.close) {
         this.hide();
       }
     },
@@ -68,7 +73,7 @@ export default function (Component, semanticModuleName) {
     onHidden() {
       // Don't change the history state if we navigating back using the browser history
       if (History.action !== 'POP') {
-        History.removeOverlay(this.props.location, this.props.overlayId);
+        History.removeOverlay(this.context.router.route.location, this.props.overlayId, this.returnOnClose);
       }
 
       document.body.removeChild(this.node);

@@ -11,8 +11,6 @@ import IconConstants from 'constants/IconConstants';
 
 import HistoryActions from 'actions/HistoryActions';
 
-//import { RouteContext } from 'mixins/RouterMixin';
-
 import DownloadFileBrowser from './DownloadFileBrowser';
 import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';
@@ -20,6 +18,9 @@ import AccordionTargets from './AccordionTargets';
 import FileUtils from 'utils/FileUtils';
 import BrowserUtils from 'utils/BrowserUtils';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
+
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -64,7 +65,7 @@ const DownloadDialog = createReactClass({
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
 		 */
-    downloadHandler: PropTypes.func,
+    downloadHandler: PropTypes.func.isRequired,
 
     /**
 		 * Information about the item to download
@@ -173,10 +174,14 @@ const DownloadDialog = createReactClass({
   },
 });
 
-export default DataProviderDecorator(DownloadDialog, {
-  urls: {
-    sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
-    favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-    historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
-  },
-});
+export default ModalRouteDecorator(
+  DataProviderDecorator(DownloadDialog, {
+    urls: {
+      sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+      favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+      historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+    },
+  }),
+  OverlayConstants.DOWNLOAD_MODAL_ID,
+  'download'
+);

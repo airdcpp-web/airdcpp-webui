@@ -156,17 +156,19 @@ const Helpers = {
   },
 
   // Remove overlay from the location state
-  removeOverlay: function (location, overlayId) {
+  removeOverlay: function (location, overlayId, changeLocation = true) {
     const { state } = location;
     const { returnTo } = state[overlayId];
     invariant(overlayId, 'Return address or overlay id missing when closing an overlay');
 
     delete state[overlayId];
 		
-    if (returnTo) {
-      History.replace(returnTo, state);
-    } else {
-      History.goBack();
+    if (changeLocation) {
+      if (returnTo) {
+        History.replace(returnTo, state);
+      } else {
+        History.goBack();
+      }
     }
   },
 

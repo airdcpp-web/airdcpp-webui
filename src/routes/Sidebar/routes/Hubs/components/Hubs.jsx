@@ -1,6 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
+import { Route } from 'react-router';
 
 import TextDecorator from 'components/TextDecorator';
 
@@ -12,6 +13,8 @@ import HubActions from 'actions/HubActions';
 import TypeConvert from 'utils/TypeConvert';
 import AccessConstants from 'constants/AccessConstants';
 
+import HubSession from './HubSession';
+import HubNew from './HubNew';
 import HubIcon from 'components/icon/HubIcon';
 
 
@@ -53,7 +56,7 @@ const Hubs = createReactClass({
   mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
 
   render() {
-    const { children, match, ...other } = this.props;
+    const { match, ...other } = this.props;
     return (
       <SessionLayout 
         activeId={ parseNumericId(match.params) }
@@ -65,13 +68,13 @@ const Hubs = createReactClass({
         editAccess={ AccessConstants.HUBS_EDIT }
         actions={ HubActions } 
         //actionIds={ hubActions }
+        sessionLayout={ HubSession }
+        newLayout={ HubNew }
 
         unreadInfoStore={ HubSessionStore }
         { ...ItemHandler }
         { ...other }
-      >
-        { children }
-      </SessionLayout>
+      />
     );
   },
 });

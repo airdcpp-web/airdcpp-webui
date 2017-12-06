@@ -16,6 +16,7 @@ import Button from 'components/semantic/Button';
 import '../style.css';
 import ResultTable from './ResultTable';
 
+
 const SEARCH_PERIOD = 4000;
 
 class Search extends React.Component {

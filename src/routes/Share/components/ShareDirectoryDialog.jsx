@@ -6,6 +6,9 @@ import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
@@ -132,20 +135,21 @@ const ShareDirectoryDialog = createReactClass({
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ rootEntry }
-          context={ {
-            location: this.props.location,
-          } }
         />
       </Modal>
     );
   },
 });
 
-export default DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {
-  urls: {
-    virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
-  },
-  dataConverters: {
-    virtualNames: data => data.map(item => item.name, []),
-  },
-});
+export default ModalRouteDecorator(
+  DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {
+    urls: {
+      virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
+    },
+    dataConverters: {
+      virtualNames: data => data.map(item => item.name, []),
+    },
+  }),
+  OverlayConstants.SHARE_ROOT_MODAL_ID,
+  '(add|edit)'
+);

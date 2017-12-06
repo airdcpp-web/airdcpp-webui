@@ -46,6 +46,12 @@ class Sidebar extends React.Component {
     }).sidebar('show');
   }
 
+  componentWillUnmount() {
+    if (this.c) {
+      $(this.c.resizable).sidebar('hide');
+    }
+  }
+
   onHidden = () => {
     History.removeOverlay(this.props.location, 'sidebar');
   };

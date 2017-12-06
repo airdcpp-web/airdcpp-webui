@@ -11,6 +11,8 @@ import AccessConstants from 'constants/AccessConstants';
 import FileIcon from 'components/icon/FileIcon';
 import Message from 'components/semantic/Message';
 
+import FileSession from './FileSession';
+
 import '../style.css';
 
 
@@ -48,7 +50,7 @@ const Files = createReactClass({
       );
     }
 
-    const { match, children, ...other } = this.props;
+    const { match, ...other } = this.props;
     return (
       <SessionLayout 
         activeId={ match.params.id }
@@ -58,12 +60,11 @@ const Files = createReactClass({
         editAccess={ AccessConstants.VIEW_FILE_EDIT }
         actions={ ViewFileActions }
         unreadInfoStore={ ViewFileStore }
+        sessionLayout={ FileSession }
 
         { ...ItemHandler }
         { ...other }
-      >
-        { children }
-      </SessionLayout>
+      />
     );
   },
 });

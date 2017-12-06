@@ -11,6 +11,9 @@ import IconConstants from 'constants/IconConstants';
 import Form from 'components/form/Form';
 import { FieldTypes } from 'constants/SettingConstants';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
@@ -103,4 +106,8 @@ const WidgetDialog = createReactClass({
   },
 });
 
-export default WidgetDialog;
+export default ModalRouteDecorator(
+  WidgetDialog,
+  OverlayConstants.HOME_WIDGET_MODAL,
+  '/home/widget'
+);

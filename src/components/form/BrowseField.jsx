@@ -16,13 +16,13 @@ const BrowseField = t.form.Form.templates.textbox.clone({
   // override default implementation
   renderInput: (locals) => {
     let _input;
-
+    
     const onConfirm = (path) => {
       locals.onChange(path);
     };
 
     const showBrowseDialog = () => {
-      const { location } = locals.context;
+      const { location } = locals.context.router.route;
       History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL, {
         historyId: (locals.config && !locals.value) ? locals.config.historyId : undefined,
       });
@@ -39,7 +39,6 @@ const BrowseField = t.form.Form.templates.textbox.clone({
       { 'action': hasAccess },
     );
 
-    const { location } = locals.context;
     return (
       <div className={ fieldStyle }>
         <input
@@ -55,17 +54,12 @@ const BrowseField = t.form.Form.templates.textbox.clone({
             onClick={ showBrowseDialog }
           />
         ) }
-
-        { location.state[OverlayConstants.FILE_BROWSER_MODAL] && (
-          <FileBrowserDialog
-            overlayId={ OverlayConstants.FILE_BROWSER_MODAL }
-            onConfirm={ onConfirm }
-            subHeader={ locals.label }
-            initialPath={ locals.value ? locals.value : '' }
-            isFile={ locals.config.isFile }
-            location={ location }
-          />
-        ) }
+        <FileBrowserDialog
+          onConfirm={ onConfirm }
+          subHeader={ locals.label }
+          initialPath={ locals.value ? locals.value : '' }
+          isFile={ locals.config.isFile }
+        />
       </div>
     );
   }

@@ -23,9 +23,11 @@ import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
+import DownloadDialog from 'components/download/DownloadDialog';
+
 
 class ListBrowser extends React.Component {
-  /*mixins: [ Lifecycle ],
+  /*
 
 	// Disabled, doesn't work (investigate later)
 	// Add RouteContext to parent before enabling
@@ -42,11 +44,6 @@ class ListBrowser extends React.Component {
 		}
 
 		return true;
-	},
-
-	contextTypes: {
-		route: React.PropTypes.object.isRequired,
-		router: React.PropTypes.object.isRequired,
 	},*/
 
   _rowClassNameGetter = (rowData) => {
@@ -211,6 +208,7 @@ class ListBrowser extends React.Component {
             flexGrow={1}
           />
         </VirtualTable>
+        <DownloadDialog downloadHandler={ FilelistItemActions.download }/>
       </div>
     );
   }

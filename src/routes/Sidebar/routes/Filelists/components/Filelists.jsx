@@ -10,6 +10,9 @@ import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
+import FilelistNew from './FilelistNew';
+import FilelistSession from './FilelistSession';
+
 import '../style.css';
 
 
@@ -58,6 +61,8 @@ const Filelists = createReactClass({
         editAccess={ AccessConstants.FILELISTS_EDIT }
         actions={ FilelistSessionActions }
         unreadInfoStore={ FilelistSessionStore }
+        sessionLayout={ FilelistSession }
+        newLayout={ FilelistNew }
 
         { ...ItemHandler }
         { ...other }

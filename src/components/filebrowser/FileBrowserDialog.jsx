@@ -5,6 +5,9 @@ import Modal from 'components/semantic/Modal';
 
 import FileBrowserLayout from './FileBrowserLayout';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 
 const FileBrowserDialog = createReactClass({
   displayName: 'FileBrowserDialog',
@@ -66,8 +69,9 @@ const FileBrowserDialog = createReactClass({
           onDirectoryChanged={ this.onDirectoryChanged }
           historyId={ historyId }
         />
-      </Modal>);
+      </Modal>
+    );
   },
 });
 
-export default FileBrowserDialog;
+export default ModalRouteDecorator(FileBrowserDialog, OverlayConstants.FILE_BROWSER_MODAL, 'browse');

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Route } from 'react-router';
 
 import createReactClass from 'create-react-class';
 
@@ -121,6 +122,9 @@ const SessionLayout = createReactClass({
 		 */
     editAccess: PropTypes.string.isRequired,
 
+    sessionLayout: PropTypes.func.isRequired,
+
+    newLayout: PropTypes.func,
     //children: PropTypes.node.isRequired,
   },
 
@@ -137,7 +141,7 @@ const SessionLayout = createReactClass({
   },
 
   // HELPERS
-  getUrl(id) {
+  getSessionUrl(id) {
     return '/' + this.props.baseUrl + '/session/' + id;
   },
 
@@ -154,11 +158,11 @@ const SessionLayout = createReactClass({
   },
 
   pushSession(id) {
-    History.pushSidebar(this.props.location, this.getUrl(id));
+    History.pushSidebar(this.props.location, this.getSessionUrl(id));
   },
 
   replaceSession(id) {
-    History.replaceSidebar(this.props.location, this.getUrl(id));
+    History.replaceSidebar(this.props.location, this.getSessionUrl(id));
   },
 
   pushNew() {
@@ -171,7 +175,7 @@ const SessionLayout = createReactClass({
 
   // LIFECYCLE/REACT
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.activeId && (nextProps.items.length === 0 || nextProps.children)) {
+    if (nextProps.location.pathname === this.getNewUrl()) {
       // Don't redirect to it if the "new session" layout is open
       if (this.state.activeItem) {
         this.setState({ activeItem: null });
@@ -306,7 +310,7 @@ const SessionLayout = createReactClass({
     return (
       <SessionMenuItem 
         key={ sessionItem.id } 
-        url={ this.getUrl(sessionItem.id) }
+        url={ this.getSessionUrl(sessionItem.id) }
         name={ this.props.itemNameGetter(sessionItem) }
         unreadInfoStore={ this.props.unreadInfoStore }
         status={ this.getItemStatus(sessionItem) }
@@ -380,30 +384,6 @@ const SessionLayout = createReactClass({
     );
   },
 
-  getChildren() {
-    const { activeItem } = this.state;
-    const { children, items, actions, activeId } = this.props;
-    if (History.getSidebarData(this.props.location).pending) {
-      // The session was just created
-      return <Loader text="Waiting for server response"/>;
-    } else if (activeItem) {
-      // We have a session
-      return React.Children.map(children, child => React.cloneElement(child, { 
-        session: activeItem,
-        actions: actions,
-      }));
-    } else if (activeId || (!children && items.length !== 0)) {
-      // Redirecting to a new page
-      return <Loader text="Loading session"/>;
-    } else if (!this.hasEditAccess() && items.length === 0) {
-      // Nothing to show
-      return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
-    }
-
-    // New layout
-    return children;
-  },
-
   handleCloseAll() {
     const { actions, items } = this.props;
     items.forEach(session => actions.removeSession(session));
@@ -427,9 +407,13 @@ const SessionLayout = createReactClass({
   },
 
   render() {
-    const children = this.getChildren();
+    const { disableSideMenu, width, items, unreadInfoStore, actions, newLayout, sessionLayout, activeId } = this.props;
+    if (!this.hasEditAccess() && items.length === 0) {
+      // Nothing to show
+      return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
+    }
 
-    const { disableSideMenu, width } = this.props;
+    const { activeItem } = this.state;
     const useTopMenu = disableSideMenu || BrowserUtils.useMobileLayout() || width < 700;
 		
     const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
@@ -439,14 +423,38 @@ const SessionLayout = createReactClass({
         itemHeaderDescription={ this.getItemHeaderDescription() }
         itemHeaderIcon={ this.getItemHeaderIcon() }
 
-        activeItem={ this.state.activeItem }
-        unreadInfoStore={ this.props.unreadInfoStore }
-        closeAction={ this.props.actions.removeSession }
+        activeItem={ activeItem }
+        unreadInfoStore={ unreadInfoStore }
+        closeAction={ actions.removeSession }
         newButton={ this.getNewButton() }
-        sessionMenuItems={ this.props.items.map(this.getSessionMenuItem) }
+        sessionMenuItems={ items.map(this.getSessionMenuItem) }
         listActionMenuGetter={ this.getListActionMenu }
       >
-        { children }
+        <Route
+          path={ this.getSessionUrl(':id') }
+          render={ props => {
+            if (!activeItem) {
+              if (History.getSidebarData(this.props.location).pending) {
+                // The session was just created
+                return <Loader text="Waiting for server response"/>;
+              } else if (activeId || items.length !== 0) {
+                // Redirecting to a new page
+                return <Loader text="Loading session"/>;
+              }
+            }
+
+            // We have a session
+            return React.createElement(sessionLayout, {
+              ...props,
+              session: activeItem,
+              actions: actions,
+            });
+          } }
+        />
+        <Route
+          path={ this.getNewUrl() }
+          component={ newLayout }
+        />
       </Component>
     );
   },

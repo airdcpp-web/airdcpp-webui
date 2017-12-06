@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import DropdownCaption from './DropdownCaption';
 import Icon from './Icon';
 
+import 'semantic-ui/components/button.min.css'; // for button style
 import 'semantic-ui/components/dropdown';
 import 'semantic-ui/components/dropdown.min.css';
 
@@ -64,6 +65,12 @@ class Dropdown extends React.PureComponent {
     setTimeout(this.init);
   }
 
+  componentWillUnmount() {
+    if (this.c) {
+      $(this.c).dropdown('destroy');
+    }
+  }
+
   onShow = () => {
     this.setState({
       visible: true,
@@ -78,7 +85,9 @@ class Dropdown extends React.PureComponent {
 
   hide = () => {
     // Don't hide before the click event is processed by React
-    setTimeout(_ => $(this.c).dropdown('hide'));
+    setTimeout(_ => 
+      $(this.c).dropdown('hide')
+    );
   };
 
   init = () => {

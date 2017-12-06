@@ -18,7 +18,7 @@ const AuthenticationGuardDecorator = (Component) => {
       Reflux.connect(LoginStore, 'login')
     ],
 
-    contextTypes: {
+    propTypes: {
       location: PropTypes.object.isRequired,
     },
 

@@ -22,7 +22,10 @@ export default function (Component) {
     }
 
     componentWillReceiveProps(nextProps) {
-      if (showSidebar(nextProps)) {
+      // Save the return location for sidebar
+      // Also save the location before opening modals as they shouldn't be used as
+      // return locations
+      if (showSidebar(nextProps) || History.getModalIds(nextProps.location)) {
         if (!this.previousLocation) {
           this.previousLocation = this.props.location;
         }
@@ -41,7 +44,7 @@ export default function (Component) {
         <Component 
           { ...this.props } 
           sidebar={ sidebar } 
-          previousLocation={ this.previousLocation }
+          previousLocation={ sidebar ? this.previousLocation : null }
         />
       );
     }

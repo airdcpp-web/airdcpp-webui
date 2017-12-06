@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import createReactClass from 'create-react-class';
 
@@ -6,6 +6,7 @@ import FavoriteHubActions from 'actions/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
+import FavoriteHubDialog from './FavoriteHubDialog';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { Column } from 'fixed-data-table-2';
@@ -60,66 +61,69 @@ const FavoriteHubs = createReactClass({
 
     const editAccess = LoginStore.hasAccess(AccessConstants.ACCESS_HUBS_EDIT);
     return (
-      <VirtualTable
-        rowClassNameGetter={ this._rowClassNameGetter }
-        footerData={ footerData }
-        store={ FavoriteHubStore }
-      >
-        <Column
-          name="State"
-          width={45}
-          columnKey="connect_state"
-          cell={ editAccess && <ConnectStateCell/> }
-          flexGrow={3}
-        />
-        <Column
-          name="Name"
-          width={150}
-          columnKey="name"
-          flexGrow={6}
-          cell={ 
-            <ActionMenuCell 
-              actions={ FavoriteHubActions }
-            /> 
-          }
-        />
-        <Column
-          name="Address"
-          width={270}
-          columnKey="hub_url"
-          flexGrow={3}
-          hideWidth={ 700 }
-        />
-        <Column
-          name="Auto connect"
-          width={65}
-          columnKey="auto_connect"
-          cell={ editAccess && (
-            <CheckboxCell 
-              onChange={ this.onChangeAutoConnect } 
-              type="toggle"
-            />
-          ) }
-        />
-        <Column
-          name="Share profile"
-          width={100}
-          columnKey="share_profile"
-          flexGrow={1}
-        />
-        <Column
-          name="Nick"
-          width={100}
-          columnKey="nick"
-          flexGrow={1}
-        />
-        <Column
-          name="Password"
-          width={100}
-          columnKey="has_password"
-          cell={ <PasswordCell/> }
-        />
-      </VirtualTable>
+      <Fragment>
+        <VirtualTable
+          rowClassNameGetter={ this._rowClassNameGetter }
+          footerData={ footerData }
+          store={ FavoriteHubStore }
+        >
+          <Column
+            name="State"
+            width={45}
+            columnKey="connect_state"
+            cell={ editAccess && <ConnectStateCell/> }
+            flexGrow={3}
+          />
+          <Column
+            name="Name"
+            width={150}
+            columnKey="name"
+            flexGrow={6}
+            cell={ 
+              <ActionMenuCell 
+                actions={ FavoriteHubActions }
+              /> 
+            }
+          />
+          <Column
+            name="Address"
+            width={270}
+            columnKey="hub_url"
+            flexGrow={3}
+            hideWidth={ 700 }
+          />
+          <Column
+            name="Auto connect"
+            width={65}
+            columnKey="auto_connect"
+            cell={ editAccess && (
+              <CheckboxCell 
+                onChange={ this.onChangeAutoConnect } 
+                type="toggle"
+              />
+            ) }
+          />
+          <Column
+            name="Share profile"
+            width={100}
+            columnKey="share_profile"
+            flexGrow={1}
+          />
+          <Column
+            name="Nick"
+            width={100}
+            columnKey="nick"
+            flexGrow={1}
+          />
+          <Column
+            name="Password"
+            width={100}
+            columnKey="has_password"
+            cell={ <PasswordCell/> }
+          />
+        </VirtualTable>
+        <FavoriteHubDialog/>
+      </Fragment>
     );
   },
 });

@@ -2,6 +2,6 @@ import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
 export default {
   path: '/login',
-  component: AsyncComponentDecorator(() => System.import('./components/Login')),
+  component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "login" */ './components/Login')),
 };
 

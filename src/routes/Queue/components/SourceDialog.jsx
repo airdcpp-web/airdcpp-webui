@@ -2,6 +2,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 import FileIcon from 'components/icon/FileIcon';
 
 import SourceTable from './SourceTable';
@@ -29,4 +32,4 @@ const SourceDialog = createReactClass({
   },
 });
 
-export default SourceDialog;
+export default ModalRouteDecorator(SourceDialog, OverlayConstants.BUNDLE_SOURCE_MODAL, 'sources');

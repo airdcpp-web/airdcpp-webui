@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import createReactClass from 'create-react-class';
 
@@ -10,6 +10,7 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileActionCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table-2';
 
+import ShareDirectoryDialog from './ShareDirectoryDialog';
 import ShareProfileFilter from 'components/table/ShareProfileFilter';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
@@ -17,80 +18,81 @@ import RefreshCell from './RefreshCell';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
-import { LocationContext } from 'mixins/RouterMixin';
 
 
 const Share = createReactClass({
   displayName: 'Share',
-  mixins: [ LocationContext ],
 
   render() {
     const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
     return (
-      <VirtualTable
-        store={ ShareRootStore }
-        customFilter={ <ShareProfileFilter/> }
-        footerData={ 
-          <ActionMenu 
-            className="top left pointing"
-            caption="Actions..." 
-            actions={ ShareRootActions }
-            header="Share actions"
-            triggerIcon="chevron up"
-            ids={ [ 'create' ]}
-            button={ true }
-          >
+      <Fragment>
+        <VirtualTable
+          store={ ShareRootStore }
+          customFilter={ <ShareProfileFilter/> }
+          footerData={ 
             <ActionMenu 
-              actions={ ShareActions }
-              ids={ [ 'refresh' ]}
-            />
-          </ActionMenu>
-        }
-      >
-        <Column
-          name="Path"
-          width={200}
-          columnKey="path"
-          cell={
-            <FileActionCell 
+              className="top left pointing"
+              caption="Actions..." 
               actions={ ShareRootActions }
-            /> 
+              header="Share actions"
+              triggerIcon="chevron up"
+              ids={ [ 'create' ]}
+              button={ true }
+            >
+              <ActionMenu 
+                actions={ ShareActions }
+                ids={ [ 'refresh' ]}
+              />
+            </ActionMenu>
           }
-          flexGrow={10}
-        />
-        <Column
-          name="Size"
-          width={60}
-          columnKey="size"
-          cell={ <SizeCell/> }
-          flexGrow={2}
-        />
-        <Column
-          name="Content"
-          width={150}
-          columnKey="type"
-          hideWidth={1000}
-        />
-        <Column
-          name="Virtual name"
-          width={120}
-          columnKey="virtual_name"
-          flexGrow={5}
-          //hideWidth={600}
-        />
-        <Column
-          name="Profiles"
-          width={65}
-          columnKey="profiles"
-        />
-        <Column
-          name="Last refreshed"
-          width={80}
-          flexGrow={3}
-          columnKey="last_refresh_time"
-          cell={ editAccess ? <RefreshCell/> : <DurationCell/> }
-        />
-      </VirtualTable>
+        >
+          <Column
+            name="Path"
+            width={200}
+            columnKey="path"
+            cell={
+              <FileActionCell 
+                actions={ ShareRootActions }
+              /> 
+            }
+            flexGrow={10}
+          />
+          <Column
+            name="Size"
+            width={60}
+            columnKey="size"
+            cell={ <SizeCell/> }
+            flexGrow={2}
+          />
+          <Column
+            name="Content"
+            width={150}
+            columnKey="type"
+            hideWidth={1000}
+          />
+          <Column
+            name="Virtual name"
+            width={120}
+            columnKey="virtual_name"
+            flexGrow={5}
+            //hideWidth={600}
+          />
+          <Column
+            name="Profiles"
+            width={65}
+            columnKey="profiles"
+          />
+          <Column
+            name="Last refreshed"
+            width={80}
+            flexGrow={3}
+            columnKey="last_refresh_time"
+            cell={ editAccess ? <RefreshCell/> : <DurationCell/> }
+          />
+        </VirtualTable>
+        <ShareDirectoryDialog/>
+      </Fragment>
     );
   },
 });

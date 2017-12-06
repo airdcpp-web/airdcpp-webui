@@ -2,12 +2,6 @@ import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 
 export default {
   path: '/files/:session?/:id?',
-  component: AsyncComponentDecorator(() => System.import('./components/Files')),
-  childRoutes: [
-    {
-      path: '/files/session/:id',
-      component: AsyncComponentDecorator(() => System.import('./components/FileSession')),
-    }
-  ]
+  component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files/components/Files')),
 };
 

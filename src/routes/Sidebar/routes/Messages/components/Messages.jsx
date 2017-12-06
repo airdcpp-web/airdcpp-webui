@@ -10,6 +10,9 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
+import MessageNew from './MessageNew';
+import PrivateChatSession from './PrivateChatSession';
+
 import '../style.css';
 
 
@@ -33,6 +36,8 @@ const Messages = createReactClass({
         editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
         actions={ PrivateChatActions }
         actionIds={ sessionActions }
+        sessionLayout={ PrivateChatSession }
+        newLayout={ MessageNew }
 
         { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
         { ...other }

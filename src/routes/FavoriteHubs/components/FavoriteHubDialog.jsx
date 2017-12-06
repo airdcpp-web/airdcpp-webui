@@ -2,6 +2,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import { FieldTypes } from 'constants/SettingConstants';
@@ -130,4 +133,8 @@ const FavoriteHubDialog = createReactClass({
   },
 });
 
-export default ShareProfileDecorator(FavoriteHubDialog, true);
+export default ModalRouteDecorator(
+  ShareProfileDecorator(FavoriteHubDialog, true),
+  OverlayConstants.FAVORITE_HUB_MODAL_ID,
+  '(new|edit)',
+);

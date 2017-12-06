@@ -138,13 +138,13 @@ export default function (Component) {
     };
 
     static contextTypes = {
-      routerLocation: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
     };
 
     // Reduce menus to an array of DropdownItems
     reduceMenuItems = (items, menu, menuIndex) => {
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
-        return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.routerLocation);
+        return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.router.route.location);
       }));
       return items;
     };
