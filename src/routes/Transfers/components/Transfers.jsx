@@ -1,7 +1,5 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import TransferStore from 'stores/TransferStore';
 
 import Message from 'components/semantic/Message';
@@ -14,8 +12,6 @@ import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, SpeedCell, AbbreviatedDurationCell, IpCell } from 'components/table/Cell';
 
-import { LocationContext } from 'mixins/RouterMixin';
-
 import '../style.css';
 
 
@@ -25,26 +21,25 @@ const FlagsCell = ({ cellData }) => (
   </span>
 );
 
-const Transfers = createReactClass({
-  displayName: 'Transfers',
-  mixins: [ LocationContext ],
+class Transfers extends React.Component {
+  static displayName = 'Transfers';
 
-  isPositive(cellData, rowData) {
+  isPositive = (cellData, rowData) => {
     return cellData > 0;
-  },
+  };
 
-  isRunning(cellData, rowData) {
+  isRunning = (cellData, rowData) => {
     return rowData.speed > 0;
-  },
+  };
 
-  emptyRowsNodeGetter() {
+  emptyRowsNodeGetter = () => {
     return (
       <Message 
         title="No active transfers"
         icon="exchange"
       />
     );
-  },
+  };
 
   render() {
     return (
@@ -115,7 +110,7 @@ const Transfers = createReactClass({
         />
       </VirtualTable>
     );
-  },
-});
+  }
+}
 
 export default Transfers;

@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
 
@@ -19,10 +17,10 @@ import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
 
 
-const WidgetDialog = createReactClass({
-  displayName: 'WidgetDialog',
+class WidgetDialog extends React.Component {
+  static displayName = 'WidgetDialog';
 
-  propTypes: {
+  static propTypes = {
     /**
 		 * Current widget settings
 		 */
@@ -37,13 +35,13 @@ const WidgetDialog = createReactClass({
 		 * Called when the form is saved
 		 */
     onSave: PropTypes.func, // Required
-  },
+  };
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields, value) {
+  onSave = (changedFields, value) => {
     const { name, ...formSettings } = value;
     const settings = {
       name,
@@ -60,9 +58,9 @@ const WidgetDialog = createReactClass({
     }
 
     return Promise.resolve();
-  },
+  };
 
-  render: function () {
+  render() {
     const { typeId, location, settings, ...overlayProps } = this.props;
     const { formSettings, name, icon } = WidgetStore.getWidgetInfoById(typeId);
 
@@ -103,8 +101,8 @@ const WidgetDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
 export default ModalRouteDecorator(
   WidgetDialog,

@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import createReactClass from 'create-react-class';
 import { Column } from 'fixed-data-table-2';
 
 import QueueActions from 'actions/QueueActions';
@@ -17,7 +16,6 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
 import { ActionLinkCell, FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
-import { LocationContext } from 'mixins/RouterMixin';
 
 import '../style.css';
 
@@ -30,23 +28,22 @@ const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
   />
 );
 
-const Queue = createReactClass({
-  displayName: 'Queue',
-  mixins: [ LocationContext ],
+class Queue extends React.Component {
+  static displayName = 'Queue';
 
-  isActive(cellData, rowData) {
+  isActive = (cellData, rowData) => {
     return !rowData.status.downloaded;
-  },
+  };
 
-  isDownloaded(cellData, rowData) {
+  isDownloaded = (cellData, rowData) => {
     return rowData.status.downloaded;
-  },
+  };
 
-  isRunning(cellData, rowData) {
+  isRunning = (cellData, rowData) => {
     return rowData.speed > 0;
-  },
+  };
 
-  emptyRowsNodeGetter() {
+  emptyRowsNodeGetter = () => {
     return (
       <Message 
         title="The queue is empty"
@@ -54,7 +51,7 @@ const Queue = createReactClass({
         description="New items can be queued from search or filelists"
       />
     );
-  },
+  };
 
   render() {
     return (
@@ -165,7 +162,7 @@ const Queue = createReactClass({
         <BundleFileDialog/>
       </Fragment>
     );
-  },
-});
+  }
+}
 
 export default Queue;

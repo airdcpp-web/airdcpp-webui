@@ -83,7 +83,7 @@ const parseMenu = (props, hasPreviousMenuItems) => {
 };
 
 // Convert ID to menu link element
-const getMenuItem = (menu, menuIndex, actionId, itemIndex, routerLocation) => {
+const getMenuItem = (menu, menuIndex, actionId, itemIndex, location) => {
   if (actionId === 'divider') {
     return <div key={ 'divider' + menuIndex + '_' + itemIndex } className="ui divider"/>;
   }
@@ -97,7 +97,7 @@ const getMenuItem = (menu, menuIndex, actionId, itemIndex, routerLocation) => {
   return (
     <MenuItemLink 
       key={ actionId } 
-      onClick={ () => action(menu.itemDataGetter(), routerLocation) }
+      onClick={ () => action(menu.itemDataGetter(), location) }
       icon={ action.icon }
     >
       { action.displayName }

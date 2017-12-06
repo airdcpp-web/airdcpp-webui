@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
@@ -64,14 +63,14 @@ const getFieldProfiles = (profiles, url) => {
     .map(FormUtils.normalizeEnumValue);
 };
 
-const FavoriteHubDialog = createReactClass({
-  displayName: 'FavoriteHubDialog',
+class FavoriteHubDialog extends React.Component {
+  static displayName = 'FavoriteHubDialog';
 
-  isNew() {
+  isNew = () => {
     return !this.props.hubEntry;
-  },
+  };
 
-  onFieldChanged(id, value, hasChanges) {
+  onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('hub_url') !== -1) {
       if (!isAdcHub(value.hub_url) && value.share_profile !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
         // Reset share profile
@@ -82,21 +81,21 @@ const FavoriteHubDialog = createReactClass({
     }
 
     return null;
-  },
+  };
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields) {
+  onSave = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(FavoriteHubConstants.HUBS_URL, changedFields);
     }
 
     return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + this.props.hubEntry.id, changedFields);
-  },
+  };
 
-  onFieldSetting(id, fieldOptions, formValue) {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     if (id === 'share_profile') {
       Object.assign(fieldOptions, {
         help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
@@ -106,9 +105,9 @@ const FavoriteHubDialog = createReactClass({
         transformer: FormUtils.intTransformer,
       });
     }
-  },
+  };
 
-  render: function () {
+  render() {
     const title = this.isNew() ? 'Add favorite hub' : 'Edit favorite hub';
     return (
       <Modal 
@@ -130,8 +129,8 @@ const FavoriteHubDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
 export default ModalRouteDecorator(
   ShareProfileDecorator(FavoriteHubDialog, true),

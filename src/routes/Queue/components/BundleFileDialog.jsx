@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
@@ -9,10 +8,10 @@ import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from './BundleFileTable';
 
 
-const BundleFileDialog = createReactClass({
-  displayName: 'BundleFileDialog',
+class BundleFileDialog extends React.Component {
+  static displayName = 'BundleFileDialog';
 
-  render: function () {
+  render() {
     const { bundle } = this.props;
     return (
       <Modal 
@@ -28,7 +27,7 @@ const BundleFileDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
 export default ModalRouteDecorator(BundleFileDialog, OverlayConstants.BUNDLE_CONTENT_MODAL, 'content');

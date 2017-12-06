@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 
-import createReactClass from 'create-react-class';
-
 import FavoriteHubActions from 'actions/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
@@ -18,7 +16,6 @@ import ActionButton from 'components/ActionButton';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
-import { LocationContext } from 'mixins/RouterMixin';
 
 import '../style.css';
 
@@ -31,11 +28,10 @@ const PasswordCell = ({ cellData, rowDataGetter }) => (
   />
 );
 
-const FavoriteHubs = createReactClass({
-  displayName: 'FavoriteHubs',
-  mixins: [ LocationContext ],
+class FavoriteHubs extends React.Component {
+  static displayName = 'FavoriteHubs';
 
-  _rowClassNameGetter(rowData) {
+  _rowClassNameGetter = (rowData) => {
     switch (rowData.connect_state.id) {
     case ConnectStateEnum.CONNECTING:
       return 'connecting';
@@ -46,11 +42,11 @@ const FavoriteHubs = createReactClass({
     }
 
     return '';
-  },
+  };
 
-  onChangeAutoConnect(checked, rowData) {
+  onChangeAutoConnect = (checked, rowData) => {
     FavoriteHubActions.update(rowData, { auto_connect: checked });
-  },
+  };
 
   render() {
     const footerData = (
@@ -125,7 +121,7 @@ const FavoriteHubs = createReactClass({
         <FavoriteHubDialog/>
       </Fragment>
     );
-  },
-});
+  }
+}
 
 export default FavoriteHubs;

@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Route } from 'react-router';
 
-import createReactClass from 'create-react-class';
-
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
 
@@ -21,7 +19,6 @@ import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
 import BrowserUtils from 'utils/BrowserUtils';
-import { LocationContext } from 'mixins/RouterMixin';
 
 import IconConstants from 'constants/IconConstants';
 import { MenuItemLink } from 'components/semantic/MenuItem';
@@ -31,11 +28,10 @@ const findItem = (items, id) => {
   return items.find(item => item.id === id);
 };
 
-const SessionLayout = createReactClass({
-  displayName: 'SessionLayout',
-  mixins: [ LocationContext ],
+class SessionLayout extends React.Component {
+  static displayName = 'SessionLayout';
 
-  propTypes: {
+  static propTypes = {
     /**
 		 * Unique ID of the section (used for storing and loading the previously open tab)
 		 */
@@ -126,52 +122,50 @@ const SessionLayout = createReactClass({
 
     newLayout: PropTypes.func,
     //children: PropTypes.node.isRequired,
-  },
+  };
 
-  getInitialProps() {
+  state = {
+    activeItem: null
+  };
+
+  getInitialProps = () => {
     return {
       sideMenu: true,
     };
-  },
-
-  getInitialState() {
-    return {
-      activeItem: null
-    };
-  },
+  };
 
   // HELPERS
-  getSessionUrl(id) {
+  getSessionUrl = (id) => {
     return '/' + this.props.baseUrl + '/session/' + id;
-  },
+  };
 
-  getNewUrl() {
+  getNewUrl = () => {
     if (!this.props.newCaption || !this.hasEditAccess()) {
       return '/' + this.props.baseUrl;
     }
 
     return '/' + this.props.baseUrl + '/new';
-  },
+  };
 
-  getStorageKey(props) {
+  getStorageKey = (props) => {
     return props.baseUrl + '_last_active';
-  },
+  };
 
-  pushSession(id) {
+  pushSession = (id) => {
     History.pushSidebar(this.props.location, this.getSessionUrl(id));
-  },
+  };
 
-  replaceSession(id) {
+  replaceSession = (id) => {
     History.replaceSidebar(this.props.location, this.getSessionUrl(id));
-  },
+  };
 
-  pushNew() {
+  pushNew = () => {
     History.pushSidebar(this.props.location, this.getNewUrl());
-  },
+  };
 
-  hasEditAccess() {
+  hasEditAccess = () => {
     return LoginStore.hasAccess(this.props.editAccess);
-  },
+  };
 
   // LIFECYCLE/REACT
   componentWillReceiveProps(nextProps) {
@@ -203,12 +197,12 @@ const SessionLayout = createReactClass({
     }
 
     this.replaceSession(nextProps.items[newItemPos].id);
-  },
+  }
 
   // Common logic for selecting the item to display (after mounting or session updates)
   // Returns true active item selection was handled
   // Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
-  checkActiveItem(props) {
+  checkActiveItem = (props) => {
     // Did we just create this session?
     const routerLocation = props.location;
     const { pending } = History.getSidebarData(routerLocation);
@@ -239,9 +233,9 @@ const SessionLayout = createReactClass({
     }
 
     return false;
-  },
+  };
 
-  onKeyDown(event) {
+  onKeyDown = (event) => {
     const { keyCode, altKey } = event;
 
     if (altKey && (keyCode === 38 || keyCode === 40)) {
@@ -272,7 +266,7 @@ const SessionLayout = createReactClass({
         this.props.actions.removeSession(item);
       }
     }
-  },
+  };
 
   componentWillMount() {
     window.addEventListener('keydown', this.onKeyDown);
@@ -291,22 +285,22 @@ const SessionLayout = createReactClass({
       // Load the first session
       this.replaceSession(this.props.items[0].id);
     }
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onKeyDown);;
-  },
+  }
 
   // COMPONENT GETTERS
-  getItemStatus(sessionItem) {
+  getItemStatus = (sessionItem) => {
     if (this.props.itemStatusGetter) {
       return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(sessionItem) }/>;
     }
 
     return <Icon icon={ this.props.itemHeaderIconGetter(sessionItem) }/>;
-  },
+  };
 
-  getSessionMenuItem(sessionItem) {
+  getSessionMenuItem = (sessionItem) => {
     return (
       <SessionMenuItem 
         key={ sessionItem.id } 
@@ -318,9 +312,9 @@ const SessionLayout = createReactClass({
         pushSession={ this.pushSession }
       />
     );
-  },
+  };
 
-  getItemHeaderTitle() {
+  getItemHeaderTitle = () => {
     const { actions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
 
     const { activeItem } = this.state;
@@ -351,9 +345,9 @@ const SessionLayout = createReactClass({
     }
 
     return actionMenu;
-  },
+  };
 
-  getItemHeaderDescription() {
+  getItemHeaderDescription = () => {
     const { activeItem } = this.state;
     const { itemHeaderDescriptionGetter, newDescription } = this.props;
     if (!activeItem) {
@@ -361,15 +355,15 @@ const SessionLayout = createReactClass({
     }
 
     return itemHeaderDescriptionGetter(activeItem);
-  },
+  };
 
-  getItemHeaderIcon() {
+  getItemHeaderIcon = () => {
     const { activeItem } = this.state;
     const { itemHeaderIconGetter, newIcon } = this.props;
     return <Icon icon={ activeItem ? itemHeaderIconGetter(activeItem) : newIcon }/>;
-  },
+  };
 
-  getNewButton() {
+  getNewButton = () => {
     if (!this.hasEditAccess() || !this.props.newCaption) {
       return null;
     }
@@ -382,14 +376,14 @@ const SessionLayout = createReactClass({
         pushNew={ this.pushNew }
       />
     );
-  },
+  };
 
-  handleCloseAll() {
+  handleCloseAll = () => {
     const { actions, items } = this.props;
     items.forEach(session => actions.removeSession(session));
-  },
+  };
 
-  getListActionMenu() {
+  getListActionMenu = () => {
     const { items } = this.props;
     if (!this.hasEditAccess() || items.length === 0) {
       return null;
@@ -404,7 +398,7 @@ const SessionLayout = createReactClass({
 				Close all
       </MenuItemLink>
     );
-  },
+  };
 
   render() {
     const { disableSideMenu, width, items, unreadInfoStore, actions, newLayout, sessionLayout, activeId } = this.props;
@@ -457,7 +451,7 @@ const SessionLayout = createReactClass({
         />
       </Component>
     );
-  },
-});
+  }
+}
 
 export default SessionLayout;

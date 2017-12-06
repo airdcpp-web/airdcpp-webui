@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import FileIcon from 'components/icon/FileIcon';
@@ -14,10 +13,10 @@ import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-const ResultDialog = createReactClass({
-  displayName: 'ResultDialog',
+class ResultDialog extends React.Component {
+  static displayName = 'ResultDialog';
 
-  render: function () {
+  render() {
     const { parentResult } = this.props;
     return (
       <Modal 
@@ -33,7 +32,7 @@ const ResultDialog = createReactClass({
         <UserResultTable parentResult={ parentResult }/>
       </Modal>
     );
-  },
-});
+  }
+}
 
 export default ModalRouteDecorator(ResultDialog, OverlayConstants.SEARCH_RESULT_MODAL, 'result');

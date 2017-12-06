@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 
-import createReactClass from 'create-react-class';
-
 import SearchActions from 'actions/SearchActions';
 import SearchViewStore from 'stores/SearchViewStore';
 
@@ -59,14 +57,14 @@ const NameCell = ({ rowDataGetter, ...props }) => (
   </FileDownloadCell>
 );
 
-const ResultTable = createReactClass({
-  displayName: 'ResultTable',
+class ResultTable extends React.Component {
+  static displayName = 'ResultTable';
 
-  _rowClassNameGetter(rowData) {
+  _rowClassNameGetter = (rowData) => {
     return TypeConvert.dupeToStringType(rowData.dupe);
-  },
+  };
 
-  emptyRowsNodeGetter() {
+  emptyRowsNodeGetter = () => {
     if (this.props.running) {
       return null;
     }
@@ -94,7 +92,7 @@ const ResultTable = createReactClass({
         ) }
       />
     );
-  },
+  };
 
   render() {
     return (
@@ -168,7 +166,7 @@ const ResultTable = createReactClass({
         <ResultDialog/>
       </Fragment>
     );
-  },
-});
+  }
+}
 
 export default ResultTable;

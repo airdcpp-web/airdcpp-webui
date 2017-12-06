@@ -54,7 +54,7 @@ class MessageComposer extends React.Component {
   };
 
   static contextTypes = {
-    routerLocation: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
   };
 
   handleCommand = (text) => {
@@ -80,7 +80,7 @@ class MessageComposer extends React.Component {
   };
 
   getStorageKey = (context) => {
-    return 'last_message_' + context.routerLocation.pathname;
+    return 'last_message_' + context.router.route.location.pathname;
   };
 
   saveText = () => {
@@ -99,7 +99,7 @@ class MessageComposer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextContext.routerLocation.pathname !== this.context.routerLocation.pathname) {
+    if (nextContext.router.route.location.pathname !== this.context.router.route.location.pathname) {
       this.saveText();
       this.setState(this.loadState(nextContext));
     }

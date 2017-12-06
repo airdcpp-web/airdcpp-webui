@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
@@ -57,10 +56,10 @@ const MobileLayout = ({ menuItems, section }) => (
   </div>
 );
 
-const DownloadDialog = createReactClass({
-  displayName: 'DownloadDialog',
+class DownloadDialog extends React.Component {
+  static displayName = 'DownloadDialog';
 
-  propTypes: {
+  static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
@@ -77,10 +76,11 @@ const DownloadDialog = createReactClass({
       name: PropTypes.string,
       type: PropTypes.object
     }),
-  },
+  };
 
-  getInitialState() {
-    const { historyPaths, sharePaths, favoritePaths, itemInfo } = this.props;
+  constructor(props) {
+    super(props);
+    const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
     const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils)) : [];
 
     this.sections = [
@@ -115,12 +115,12 @@ const DownloadDialog = createReactClass({
       });
     }
 
-    return {
+    this.state = {
       active: 'history',
     };
-  },
+  }
 
-  handleDownload(path) {
+  handleDownload = (path) => {
     const { downloadHandler, itemInfo, user } = this.props;
     downloadHandler(itemInfo, user, {
       target_name: itemInfo.name, // possibly allow changing this later...
@@ -131,9 +131,9 @@ const DownloadDialog = createReactClass({
 
     HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
     this.modal.hide();
-  },
+  };
 
-  getMenuItem(section) {
+  getMenuItem = (section) => {
     return (
       <MenuItemLink 
         key={ section.key }
@@ -148,7 +148,7 @@ const DownloadDialog = createReactClass({
         ) }
       </MenuItemLink>
     );
-  },
+  };
 
   render() {
     const section = this.sections.find(section => section.key === this.state.active);
@@ -171,8 +171,8 @@ const DownloadDialog = createReactClass({
           section={ section }
         />
       </Modal>);
-  },
-});
+  }
+}
 
 export default ModalRouteDecorator(
   DataProviderDecorator(DownloadDialog, {

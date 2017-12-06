@@ -1,8 +1,6 @@
 'use strict';
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import HubMessageStore from 'stores/HubMessageStore';
 
 import BrowserUtils from 'utils/BrowserUtils';
@@ -28,30 +26,28 @@ const checkList = (props) => {
   return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
 };
 
-const HubSession = createReactClass({
-  displayName: 'HubSession',
+class HubSession extends React.Component {
+  static displayName = 'HubSession';
+
+  state = {
+    showList: checkList(this.props),
+  };
 
   componentWillMount() {
     this.showList = checkList(this.props);
-  },
-
-  getInitialState() {
-    return {
-      showList: checkList(this.props),
-    };
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
       this.toggleListState();
     }
-  },
+  }
 
-  toggleListState() {
+  toggleListState = () => {
     this.setState({ showList: !this.state.showList });
-  },
+  };
 
-  getMessage() {
+  getMessage = () => {
     const { session } = this.props;
     const connectState = session.connect_state.id;
 
@@ -76,13 +72,13 @@ const HubSession = createReactClass({
     }
 
     return null;
-  },
+  };
 
-  onClickUsers() {
+  onClickUsers = () => {
     this.toggleListState();
 
     BrowserUtils.saveSessionProperty(getStorageKey(this.props), this.state.showList);
-  },
+  };
 
   render() {
     const { session, actions } = this.props;
@@ -118,7 +114,7 @@ const HubSession = createReactClass({
         />
       </div>
     );
-  },
-});
+  }
+}
 
 export default HubSession;
