@@ -1,31 +1,3 @@
-module.exports = {
-  path: 'system',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'users', 
-        childRoutes: [
-          {
-            path: 'user', 
-            component: require('./components/users/WebUserDialog').default, 
-          }
-        ]
-      }, {
-        path: 'logging', 
-      }, {
-        path: 'server-settings', 
-      } ]);
-    }, 'settings-system-children');
-  },
-
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('../../components/SettingSection').default);
-    }, 'settings-system');
-  }
-};
-
 const AccessConstants = require('constants/AccessConstants').default;
 
 module.exports = {

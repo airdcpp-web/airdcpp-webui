@@ -14,8 +14,6 @@ class RemoteSettingForm extends React.Component {
 		 * Form items to list
 		 */
     keys: PropTypes.array.isRequired,
-
-    //formRef: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
