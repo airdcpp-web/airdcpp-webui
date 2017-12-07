@@ -60,4 +60,4 @@ const SideMenuLayout = ({ children, ...other }) => (
   </div>
 );
 
-export default SaveDecorator(SideMenuLayout);
+export default SideMenuLayout;

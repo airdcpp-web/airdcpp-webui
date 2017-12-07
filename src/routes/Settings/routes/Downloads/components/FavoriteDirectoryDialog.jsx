@@ -109,6 +109,6 @@ export default ModalRouteDecorator(
       virtualNames: data => data.map(item => item.name, []),
     },
   }),
-  OverlayConstants.FAVORITE_HUB_MODAL_ID,
+  OverlayConstants.FAVORITE_DIRECTORY_MODAL,
   'directory'
 );

@@ -1,14 +1,12 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
-import { LocationContext } from 'mixins/RouterMixin';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import EngineStatusMessage from './EngineStatusMessage';
 import Extension from './extension/Extension';
+import ExtensionsConfigureDialog from './ExtensionsConfigureDialog';
 
 import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
@@ -48,18 +46,17 @@ const LocalExtension = DataProviderDecorator(({ installedPackage, npmPackage, da
 });
 
 
-const ExtensionsManagePage = createReactClass({
-  displayName: 'ExtensionsManagePage',
-  mixins: [ LocationContext ],
+class ExtensionsManagePage extends React.Component {
+  static displayName = 'ExtensionsManagePage';
 
-  getItem(extension) {
+  getItem = (extension) => {
     return (
       <LocalExtension 
         key={ extension.name } 
         installedPackage={ extension } 
       />
     );
-  },
+  };
 
   render() {
     const { installedPackages } = this.props;
@@ -83,10 +80,11 @@ const ExtensionsManagePage = createReactClass({
         <div className="ui divided items">
           { installedPackages.map(this.getItem) }
         </div>
+        <ExtensionsConfigureDialog/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default DataProviderDecorator(ExtensionsManagePage, {
   urls: {

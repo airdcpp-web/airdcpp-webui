@@ -15,7 +15,11 @@ class RemoteSettingForm extends React.Component {
 		 */
     keys: PropTypes.array.isRequired,
 
-    formRef: PropTypes.func, // REQUIRED
+    //formRef: PropTypes.func.isRequired,
+  };
+
+  static contextTypes = {
+    addFormRef: PropTypes.func.isRequired,
   };
 
   onSave = (changedValues) => {
@@ -31,12 +35,13 @@ class RemoteSettingForm extends React.Component {
   };
 
   render() {
-    const { formRef, settings, fieldDefinitions, ...otherProps } = this.props;
+    const { settings, fieldDefinitions, ...otherProps } = this.props;
+    const { addFormRef } = this.context;
     return (
       <div className="remote setting-form">
         <Form
           { ...otherProps }
-          ref={ formRef }
+          ref={ addFormRef }
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
           value={ settings }

@@ -1,6 +1,7 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 import { RouterMenuItemLink } from 'components/semantic/MenuItem';
 import LoginStore from 'stores/LoginStore';
@@ -8,44 +9,29 @@ import LoginStore from 'stores/LoginStore';
 
 const sectionToUrl = (section, parent) => {
   if (typeof parent === 'object') {
-    return '/settings/' + parent.url + '/' + section;
+    return '/settings/' + parent.url + '/' + section.url;
   }
 
-  return '/settings/' + section;
+  return '/settings/' + section.url;
 };
 
 export default (Component) => {
-  class MenuDecorator extends React.Component {
+  class SettingsMenuDecorator extends React.Component {
     static contextTypes = {
       router: PropTypes.object.isRequired
     };
 
     static propTypes = {
       parent: PropTypes.object,
-      menuItems: PropTypes.array, // required
+      menuItems: PropTypes.array.isRequired,
       advancedMenuItems: PropTypes.array,
-      location: PropTypes.object, // required
+      location: PropTypes.object.isRequired,
+      match: PropTypes.object.isRequired,
     };
-
-    checkChildren = (props) => {
-      if (!props.children) {
-        this.context.router.replace({
-          pathname: sectionToUrl(props.menuItems[0].url, props.parent)
-        });
-      }
-    };
-
-    componentWillMount() {
-      this.checkChildren(this.props);
-    }
-
-    componentWillReceiveProps(nextProps) {
-      this.checkChildren(nextProps);
-    }
 
     isItemActive = (item) => {
       const { location, parent } = this.props;
-      return location.pathname.indexOf(sectionToUrl(item.url, parent)) === 0;
+      return location.pathname.indexOf(sectionToUrl(item, parent)) === 0;
     };
 
     findMenuItem = (menuItems) => {
@@ -65,12 +51,12 @@ export default (Component) => {
         return null;
       }
 
-      let url = sectionToUrl(menuItemInfo.url, parent);
+      let url = sectionToUrl(menuItemInfo, parent);
 
       // Browsing is smoother when the child page is loaded directly
       // Don't use the child URL for currently active parent so that the route is detected as active correctly
       if (menuItemInfo.menuItems && this.props.location.pathname.indexOf(url) !== 0) {
-        url = sectionToUrl(menuItemInfo.menuItems[0].url, menuItemInfo);
+        url = sectionToUrl(menuItemInfo.menuItems[0], menuItemInfo);
       }
 
       return (
@@ -84,8 +70,40 @@ export default (Component) => {
       );
     };
 
+    menuItemsToRoutes = (menuItems, currentMenuItem) => {
+      if (!menuItems) {
+        return null;
+      }
+
+      const { parent } = this.props;
+      return menuItems.map(item => (
+        <Route
+          key={ item.url }
+          path={ sectionToUrl(item, parent) }
+          render={ props => {
+            const ret = React.createElement(item.component, {
+              menuItems: currentMenuItem.menuItems,
+              advancedMenuItems: currentMenuItem.advancedMenuItems,
+              parent: currentMenuItem,
+              parentMenuItems: menuItems,
+              ...props,
+            });
+
+            return ret;
+          } }
+        />
+      ));
+    };
+
     render() {
-      const currentMenuItem = this.findMenuItem(this.props.menuItems) || this.findMenuItem(this.props.advancedMenuItems);
+      const { location, match, parent, menuItems, advancedMenuItems } = this.props;
+      if (location.pathname === match.url ||
+        (parent && location.pathname === sectionToUrl(parent))
+      ) {
+        return <Redirect to={ sectionToUrl(menuItems[0], parent) }/>;
+      }
+
+      const currentMenuItem = this.findMenuItem(menuItems) || this.findMenuItem(advancedMenuItems);
       if (!currentMenuItem) {
         return null;
       }
@@ -95,10 +113,13 @@ export default (Component) => {
           { ...this.props } 
           currentMenuItem={ currentMenuItem } 
           menuItemToLink={ this.getMenuItem }
-        />
+        >
+          { this.menuItemsToRoutes(menuItems, currentMenuItem) }
+          { this.menuItemsToRoutes(advancedMenuItems, currentMenuItem) }
+        </Component>
       );
     }
   }
 
-  return MenuDecorator;
+  return SettingsMenuDecorator;
 };

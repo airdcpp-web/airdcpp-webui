@@ -1,37 +1,26 @@
 module.exports = {
-  path: 'extensions',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'packages', 
-        component: require('./components/ExtensionsBrowsePage').default,
-        childRoutes: [
-          {
-            path: ':id/configure', 
-            component: require('./components/ExtensionsConfigureDialog').default, 
-          }
-        ]
-      }, {
-        path: 'manage', 
-        component: require('./components/ExtensionsManagePage').default,
-        childRoutes: [
-          {
-            path: ':id/configure', 
-            component: require('./components/ExtensionsConfigureDialog').default, 
-          }
-        ]
-      }, {
-        path: 'extension-options', 
-        component: require('./components/ExtensionsOptionsPage').default
-      } ]);
-    }, 'settings-extensions-children');
-  },
-
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('../../components/SettingSection').default);
-    }, 'settings-extensions');
-  }
+  url: 'extensions',
+  title: 'Extensions',
+  icon: 'puzzle',
+  component: require('../../components/SettingSection').default,
+  menuItems: [
+    { 
+      title: 'Manage installed', 
+      url: 'manage',
+      noSave: true,
+      component: require('./components/ExtensionsManagePage').default,
+    }, { 
+      title: 'Extension catalog', 
+      url: 'packages', 
+      noSave: true,
+      component: require('./components/ExtensionsBrowsePage').default,
+    }
+  ],
+  advancedMenuItems: [
+    { 
+      title: 'Extension options', 
+      url: 'extension-options',
+      component: require('./components/ExtensionsOptionsPage').default,
+    },
+  ],
 };
-

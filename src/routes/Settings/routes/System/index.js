@@ -5,7 +5,6 @@ module.exports = {
     require.ensure([], (require) => {
       cb(null, [ {
         path: 'users', 
-        component: require('./components/WebUsersPage').default,
         childRoutes: [
           {
             path: 'user', 
@@ -14,10 +13,8 @@ module.exports = {
         ]
       }, {
         path: 'logging', 
-        component: require('./components/LoggingPage').default,
       }, {
         path: 'server-settings', 
-        component: require('./components/ServerSettingsPage').default,
       } ]);
     }, 'settings-system-children');
   },
@@ -27,5 +24,32 @@ module.exports = {
       cb(null, require('../../components/SettingSection').default);
     }, 'settings-system');
   }
+};
+
+const AccessConstants = require('constants/AccessConstants').default;
+
+module.exports = {
+  url: 'system',
+  title: 'System',
+  icon: 'settings',
+  access: AccessConstants.ADMIN,
+  component: require('../../components/SettingSection').default,
+  menuItems: [
+    { 
+      title: 'Users', 
+      url: 'users', 
+      noSave: true, 
+      fullWidth: true,
+      component: require('./components/WebUsersPage').default,
+    }, { 
+      title: 'Logging', 
+      url: 'logging',
+      component: require('./components/LoggingPage').default,
+    }, { 
+      title: 'Web server', 
+      url: 'server-settings',
+      component: require('./components/ServerSettingsPage').default,
+    },
+  ],
 };
 

@@ -1,34 +1,38 @@
 module.exports = {
-  path: 'connectivity',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'detection', 
-        component: require('./components/DetectionPage').default, 
-      }, {
-        path: 'v4', 
-        component: require('./components/IPv4Page').default, 
-      }, {
-        path: 'v6', 
-        component: require('./components/IPv6Page').default, 
-      }, {
-        path: 'ports', 
-        component: require('./components/PortsPage').default, 
-      }, {
-        path: 'proxies', 
-        component: require('./components/ProxiesPage').default, 
-      }, {
-        path: 'encryption', 
-        component: require('./components/EncryptionPage').default, 
-      } ]);
-    }, 'settings-connectivity-children');
-  },
+  url: 'connectivity',
+  title: 'Connectivity',
+  icon: 'signal',
+  component: require('../../components/SettingSection').default,
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('../../components/SettingSection').default);
-    }, 'settings-connectivity');
-  }
+  menuItems: [
+    { 
+      title: 'Auto detection', 
+      url: 'detection', 
+      noSave: true,
+      component: require('./components/DetectionPage').default,
+    },
+  ],
+  advancedMenuItems: [
+    { 
+      title: 'IPv4 connectivity (manual)', 
+      url: 'v4',
+      component: require('./components/IPv4Page').default,
+    }, {
+      title: 'IPv6 connectivity (manual)', 
+      url: 'v6',
+      component: require('./components/IPv6Page').default,
+    }, { 
+      title: 'Ports (manual)', 
+      url: 'ports',
+      component: require('./components/PortsPage').default,
+    }, { 
+      title: 'Proxies', 
+      url: 'proxies',
+      component: require('./components/ProxiesPage').default,
+    }, { 
+      title: 'Encryption', 
+      url: 'encryption',
+      component: require('./components/EncryptionPage').default,
+    },
+  ],
 };
-

@@ -4,7 +4,6 @@ import React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 import DropdownSection from 'components/semantic/DropdownSection';
 import Icon from 'components/semantic/Icon';
-import SaveDecorator from '../decorators/SaveDecorator';
 
 
 const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
@@ -38,11 +37,11 @@ const TopMenuLayout = ({ saveButton, children, contentClassname, message, ...oth
   <div className="mobile">
     <MenuSection { ...other }/>
     <div id="setting-scroll-context" className={ contentClassname }>
-      { saveButton }
+      { React.cloneElement(saveButton, { className: 'fluid' }) }
       { message }
       { children }
     </div>
   </div>
 );
 
-export default SaveDecorator(TopMenuLayout, 'fluid');
+export default TopMenuLayout;

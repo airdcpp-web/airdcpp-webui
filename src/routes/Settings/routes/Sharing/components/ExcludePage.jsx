@@ -1,7 +1,5 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import ShareActions from 'actions/ShareActions';
 import ShareConstants from 'constants/ShareConstants';
 
@@ -9,10 +7,9 @@ import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
 import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
-
-import { LocationContext } from 'mixins/RouterMixin';
 
 
 const Row = ({ path }) => (
@@ -29,18 +26,17 @@ const Row = ({ path }) => (
   </tr>
 );
 
-const ExcludePage = createReactClass({
-  displayName: 'ExcludePage',
-  mixins: [ LocationContext ],
+class ExcludePage extends React.Component {
+  static displayName = 'ExcludePage';
 
-  getRow(path) {
+  getRow = (path) => {
     return (
       <Row 
         key={ path } 
         path={ path } 
       />
     );
-  },
+  };
 
   render() {
     const { excludes } = this.props;
@@ -78,10 +74,14 @@ const ExcludePage = createReactClass({
             </tbody>
           </table>
         ) }
+
+        <FileBrowserDialog
+          onConfirm={ ShareActions.addExclude.saved }
+        />
       </div>
     );
-  },
-});
+  }
+}
 
 export default DataProviderDecorator(ExcludePage, {
   urls: {

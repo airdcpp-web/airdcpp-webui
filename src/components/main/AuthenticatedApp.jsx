@@ -25,7 +25,7 @@ const mainRoutes = [
   require('../../routes/FavoriteHubs').default,
   require('../../routes/Queue').default,
   require('../../routes/Search').default,
-  //require('../../routes/Settings').default,
+  require('../../routes/Settings').default,
   require('../../routes/Share').default,
   require('../../routes/Transfers').default,
 ];

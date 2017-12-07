@@ -63,7 +63,7 @@ const SystemLog = createReactClass({
     return nextState.messages !== this.state.messages;
   },
 
-  render: function () {
+  render() {
     return (
       <div className="simple-layout">
         <div className="wrapper">

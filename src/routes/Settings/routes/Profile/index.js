@@ -1,28 +1,29 @@
 module.exports = {
-  path: 'profile',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'user', 
-        component: require('./components/UserPage').default, 
-      }, {
-        path: 'away', 
-        component: require('./components/AwayPage').default, 
-      }, {
-        path: 'ignored-users', 
-        component: require('./components/IgnorePage').default, 
-      }, {
-        path: 'miscellaneous', 
-        component: require('./components/MiscPage').default, 
-      } ]);
-    }, 'settings-profile-children');
-  },
-
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('../../components/SettingSection').default);
-    }, 'settings-profile');
-  },
+  url: 'profile',
+  title: 'Profile',
+  icon: 'user',
+  component: require('../../components/SettingSection').default,
+  menuItems: [
+    { 
+      title: 'User', 
+      url: 'user',
+      component: require('./components/UserPage').default,
+    }, { 
+      title: 'Away mode', 
+      url: 'away',
+      component: require('./components/AwayPage').default,
+    }, 
+  ],
+  advancedMenuItems: [
+    { 
+      title: 'Ignored users', 
+      url: 'ignored-users',
+      noSave: true,
+      component: require('./components/IgnorePage').default,
+    }, { 
+      title: 'Miscellaneous', 
+      url: 'miscellaneous',
+      component: require('./components/MiscPage').default,
+    },
+  ],
 };
-

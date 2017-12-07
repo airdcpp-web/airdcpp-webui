@@ -1,14 +1,11 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import UserConstants from 'constants/UserConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import Message from 'components/semantic/Message';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
-import { LocationContext } from 'mixins/RouterMixin';
 
 
 const Row = ({ ignoreInfo }) => (
@@ -27,18 +24,17 @@ const Row = ({ ignoreInfo }) => (
   </tr>
 );
 
-const IgnorePage = createReactClass({
-  displayName: 'IgnorePage',
-  mixins: [ LocationContext ],
+class IgnorePage extends React.Component {
+  static displayName = 'IgnorePage';
 
-  getRow(ignoreInfo) {
+  getRow = (ignoreInfo) => {
     return (
       <Row 
         key={ ignoreInfo.user.cid } 
         ignoreInfo={ ignoreInfo } 
       />
     );
-  },
+  };
 
   render() {
     const { ignores } = this.props;
@@ -65,8 +61,8 @@ const IgnorePage = createReactClass({
         </table>
       </div>
     );
-  },
-});
+  }
+}
 
 export default DataProviderDecorator(IgnorePage, {
   urls: {
