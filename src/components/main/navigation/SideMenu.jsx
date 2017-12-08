@@ -1,14 +1,13 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-
 import React from 'react';
 
 import History from 'utils/History';
 
-import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 import IconPanel from './IconPanel';
 import { matchPath } from 'react-router-dom';
+import { secondaryRoutes, parseMenuItems } from 'routes/Routes';
 
 
 class SideMenu extends React.Component {
@@ -31,13 +30,13 @@ class SideMenu extends React.Component {
   };
 
   render() {
-    const { secondaryMenuItems, menuItemGetter } = this.props;
+    const menuItems = parseMenuItems(secondaryRoutes, this.onClick);
     return (
       <div id="side-menu">
-        { secondaryMenuItems.length > 0 && (
+        { menuItems.length > 0 && (
           <div className="content navigation">
             <div className="ui labeled icon vertical small inverted menu">
-              { secondaryMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
+              { menuItems }
             </div>
           </div>
         ) }
@@ -48,4 +47,4 @@ class SideMenu extends React.Component {
   }
 }
 
-export default MainNavigationDecorator(SideMenu);
+export default SideMenu;

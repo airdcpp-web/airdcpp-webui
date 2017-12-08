@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
-import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 import SideMenu from 'components/main/navigation/SideMenu';
 import Sidebar from 'routes/Sidebar/components/Sidebar';
 import SiteHeader from './SiteHeader';
+
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 
@@ -19,15 +20,13 @@ class MainLayout extends React.Component {
   };
 
   render() {
-    const { sidebar, className, location, mainRoutes, secondaryRoutes, previousLocation } = this.props;
+    const { sidebar, className, location, previousLocation } = this.props;
 
     return (
       <div className={ className + ' pushable sidebar-context' } id="normal-layout">
         { sidebar && (
           <Sidebar location={ location }>
-            { secondaryRoutes.map((route, i) => (
-              <RouteWithSubRoutes key={ route.path } { ...route }/>
-            )) }
+            { parseRoutes(secondaryRoutes) }
           </Sidebar>
         ) }
         <div className="pusher">
@@ -35,9 +34,7 @@ class MainLayout extends React.Component {
             content={ <MainNavigation location={ location }/> }
           />
           <div className="ui site-content">
-            { mainRoutes.map((route, i) => (
-              <RouteWithSubRoutes key={ route.path } { ...route } location={ previousLocation ? previousLocation : location }/>
-            )) }
+            { parseRoutes([ ...mainRoutes, ...configRoutes ], previousLocation ? previousLocation : location) }
           </div>
         </div>
         <SideMenu location={ location }/>

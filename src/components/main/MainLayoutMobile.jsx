@@ -10,7 +10,8 @@ import UrgencyUtils from 'utils/UrgencyUtils';
 
 import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
-import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
+
+import { secondaryRoutes } from 'routes/Routes';
 
 import 'mobile.css';
 
@@ -33,12 +34,12 @@ const reduceMenuItemUrgency = (map, menuItem) => {
   return map;
 };
 
-const HeaderContent = MainNavigationDecorator(createReactClass({
+const HeaderContent = createReactClass({
   displayName: 'HeaderContent',
   mixins: [ Reflux.ListenerMixin ],
 
   componentDidMount() {
-    this.props.secondaryMenuItems.forEach(item => {
+    secondaryRoutes.forEach(item => {
       if (item.unreadInfoStore) {
         this.listenTo(item.unreadInfoStore, _ => this.forceUpdate());
       }
@@ -46,19 +47,19 @@ const HeaderContent = MainNavigationDecorator(createReactClass({
   },
 
   render() {
-    const { secondaryMenuItems, onClickMenu } = this.props;
+    const { onClickMenu } = this.props;
 		
     return (
       <div className="right">
         <MenuIcon 
-          urgencies={ UrgencyUtils.validateUrgencies(secondaryMenuItems.reduce(reduceMenuItemUrgency, {})) }
+          urgencies={ UrgencyUtils.validateUrgencies(secondaryRoutes.reduce(reduceMenuItemUrgency, {})) }
           onClick={ onClickMenu }
           className="item"
         />
       </div>
     );
   },
-}));
+});
 
 class MainLayoutMobile extends React.Component {
   state = {

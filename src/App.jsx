@@ -8,7 +8,7 @@ import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
 import AuthenticatedApp from './components/main/AuthenticatedApp';
-import Login from './routes/Login';
+import Login from './routes/Login/components/Login';
 
 import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -66,7 +66,7 @@ const App = _ => (
           }}
         >
           <Switch>
-            <Route path="/login" component={ Login.component }/>
+            <Route path="/login" component={ Login }/>
             <Route path="/" component={ AuthenticatedApp }/>
           </Switch>
         </div>

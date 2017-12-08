@@ -20,24 +20,6 @@ import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 
 
-const mainRoutes = [
-  require('../../routes/Home').default,
-  require('../../routes/FavoriteHubs').default,
-  require('../../routes/Queue').default,
-  require('../../routes/Search').default,
-  require('../../routes/Settings').default,
-  require('../../routes/Share').default,
-  require('../../routes/Transfers').default,
-];
-
-const secondaryRoutes = [
-  require('../../routes/Sidebar/routes/Hubs').default,
-  require('../../routes/Sidebar/routes/Filelists').default,
-  require('../../routes/Sidebar/routes/Messages').default,
-  require('../../routes/Sidebar/routes/Files').default,
-  require('../../routes/Sidebar/routes/Events').default,
-];
-
 class AuthenticatedApp extends React.Component {
   updateTitle() {
     let title = 'AirDC++ Web Client';
@@ -87,8 +69,6 @@ class AuthenticatedApp extends React.Component {
         <MainLayout 
           className="main-layout" 
           { ...this.props } 
-          mainRoutes={ mainRoutes } 
-          secondaryRoutes={ secondaryRoutes }
         />
       </div>
     );
