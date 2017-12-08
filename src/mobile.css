@@ -1,10 +1,16 @@
 #mobile-layout .site-content {
-	padding-top: 60px;
-	padding-bottom: 5px;
 	height: 100%;
+	padding-top: 55px;
+}
+
+#mobile-layout .site-content > .ui.message {
+	margin: 10px 5px;
 }
 
 /* Site header menu */
+#mobile-layout .site-header {
+	height: 55px;
+}
 
 #mobile-layout .site-header .header-content .label {
 	margin-left: 0px;

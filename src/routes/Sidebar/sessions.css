@@ -191,7 +191,27 @@
   margin-bottom: 0px;
 }
 
-.session-layout > .divider {
+/* New session layout */
+.session.new {
+  flex: 100 100 0%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
   margin-top: 10px;
-  margin-bottom: 5px;
+  padding: 1px;
+}
+
+.session.new .recents {
+  flex: 100 100 0%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  overflow-y: hidden;
+}
+
+.session.new .recents .list {
+  padding: 3px 5px;
+  flex: 100 100 0%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

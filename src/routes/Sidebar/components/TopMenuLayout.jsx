@@ -3,13 +3,13 @@ import React from 'react';
 import BrowserUtils from 'utils/BrowserUtils';
 
 import ActionButton from 'components/ActionButton';
-import Dropdown from 'components/semantic/Dropdown';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import MenuIcon from 'components/menu/MenuIcon';
 
 
 const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAction, listActionMenuGetter }) => (
-  <Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
+  <SectionedDropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
     <MenuSection caption="New">
       { newButton }
     </MenuSection>
@@ -19,7 +19,7 @@ const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAc
     <MenuSection>
       { listActionMenuGetter() }
     </MenuSection>
-  </Dropdown>
+  </SectionedDropdown>
 );
 
 const CloseButton = ({ closeAction, activeItem }) => {
