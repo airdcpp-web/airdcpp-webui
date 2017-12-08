@@ -3,8 +3,8 @@ import React from 'react';
 
 import { FilterMethod } from 'constants/TableConstants';
 
-import Dropdown from 'components/semantic/Dropdown';
-import DropdownSection from 'components/semantic/DropdownSection';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
 import TableFilterDecorator from 'decorators/TableFilterDecorator';
@@ -99,16 +99,16 @@ class FilterBox extends React.Component {
             placeholder={ getPlaceholder(this.state.method) } 
             type="text"
           />
-          <Dropdown 
+          <SectionedDropdown 
             className="filter-method right top pointing"
             button={ true }
             direction="upward"
           >
-            <DropdownSection caption="Match type">
+            <MenuSection caption="Match type">
               { Object.keys(FilterMethod)
                 .map(key => this.getFilterMethod(FilterMethod[key])) }
-            </DropdownSection>
-          </Dropdown>
+            </MenuSection>
+          </SectionedDropdown>
         </div>
       </div>
     );

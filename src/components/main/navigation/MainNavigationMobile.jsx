@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
 
-import Dropdown from 'components/semantic/Dropdown';
-import DropdownSection from 'components/semantic/DropdownSection';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
 import History from 'utils/History';
@@ -56,19 +56,19 @@ class MainNavigationMobile extends React.Component {
         className="ui right vertical inverted sidebar menu"
       >
         { mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-        <Dropdown 
+        <SectionedDropdown 
           caption="More..."
           captionIcon="ellipsis horizontal caption" 
           className="right fluid" 
           triggerIcon=""
         >
-          <DropdownSection>
+          <MenuSection>
             { configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-          </DropdownSection>
-          <DropdownSection>
+          </MenuSection>
+          <MenuSection>
             { menuItemGetter(logoutItem.onClick, true, logoutItem) }
-          </DropdownSection>
-        </Dropdown>
+          </MenuSection>
+        </SectionedDropdown>
 
         <div className="separator"/>
 

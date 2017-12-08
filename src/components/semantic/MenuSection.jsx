@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Icon from './Icon';
 
-const DropdownSection = ({ caption, icon, children }) => {
+const MenuSection = ({ caption, icon, children }) => {
   if (!children) {
     return null;
   }
@@ -23,4 +23,4 @@ const DropdownSection = ({ caption, icon, children }) => {
   );
 };
 
-export default DropdownSection;
+export default MenuSection;

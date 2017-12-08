@@ -4,21 +4,21 @@ import BrowserUtils from 'utils/BrowserUtils';
 
 import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/semantic/Dropdown';
-import DropdownSection from 'components/semantic/DropdownSection';
+import MenuSection from 'components/semantic/MenuSection';
 import MenuIcon from 'components/menu/MenuIcon';
 
 
 const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAction, listActionMenuGetter }) => (
   <Dropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
-    <DropdownSection caption="New">
+    <MenuSection caption="New">
       { newButton }
-    </DropdownSection>
-    <DropdownSection caption="Current sessions">
+    </MenuSection>
+    <MenuSection caption="Current sessions">
       { sessionMenuItems }
-    </DropdownSection>
-    <DropdownSection>
+    </MenuSection>
+    <MenuSection>
       { listActionMenuGetter() }
-    </DropdownSection>
+    </MenuSection>
   </Dropdown>
 );
 

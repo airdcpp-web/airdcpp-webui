@@ -116,16 +116,7 @@ class Dropdown extends React.PureComponent {
       return <div className="item"/>;
     }
 
-    const { children } = this.props;
-
-    return React.Children.map(children, (child, index) => {
-      return child.type.name !== 'DropdownSection' ? child : (
-        <Fragment key={ index }>
-          { child }
-          { (children.length && index !== children.length - 1) && <div className="ui divider"/> }
-        </Fragment>
-      );
-    });
+    return this.props.children;
   };
 
   render() {

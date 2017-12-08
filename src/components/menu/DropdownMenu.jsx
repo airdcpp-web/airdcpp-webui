@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Dropdown from 'components/semantic/Dropdown';
-import DropdownSection from 'components/semantic/DropdownSection';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 import TableDropdown from 'components/semantic/TableDropdown';
 
 import ActionMenuDecorator from 'decorators/menu/ActionMenuDecorator';
@@ -11,11 +11,11 @@ import UserMenuDecorator from 'decorators/menu/UserMenuDecorator';
 
 export const TableActionMenu = ActionMenuDecorator(TableDropdown);
 export const ActionMenu = ActionMenuDecorator(({ header, children, ...other }) => (
-  <Dropdown { ...other }>
-    <DropdownSection caption={ header }>
+  <SectionedDropdown { ...other }>
+    <MenuSection caption={ header }>
       { children() }
-    </DropdownSection>
-  </Dropdown>
+    </MenuSection>
+  </SectionedDropdown>
 ));
 
 export const UserMenu = UserMenuDecorator(ActionMenu);

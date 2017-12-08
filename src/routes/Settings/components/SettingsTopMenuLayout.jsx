@@ -2,11 +2,12 @@
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
-import DropdownSection from 'components/semantic/DropdownSection';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 import Icon from 'components/semantic/Icon';
 
 
-const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
+const SettingMenu = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
   <div className="ui top-menu">
     <Dropdown 
       className="selection fluid" 
@@ -18,24 +19,24 @@ const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
 
     <Icon icon="large caret right"/>
 
-    <Dropdown 
+    <SectionedDropdown 
       className="selection fluid" 
       caption={ currentMenuItem.title }
     >
-      <DropdownSection>
+      <MenuSection>
         { menuItems }
-      </DropdownSection>
-      <DropdownSection caption="Advanced">
+      </MenuSection>
+      <MenuSection caption="Advanced">
         { advancedMenuItems }
-      </DropdownSection>
-    </Dropdown>
+      </MenuSection>
+    </SectionedDropdown>
   </div>
 );
 
 
 const TopMenuLayout = ({ saveButton, children, contentClassname, message, ...other }) => (
   <div className="mobile">
-    <MenuSection { ...other }/>
+    <SettingMenu { ...other }/>
     <div id="setting-scroll-context" className={ contentClassname }>
       { !!saveButton && React.cloneElement(saveButton, { className: 'fluid' }) }
       { message }

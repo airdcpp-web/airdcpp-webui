@@ -3,8 +3,8 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import Dropdown from 'components/semantic/Dropdown';
-import DropdownSection from 'components/semantic/DropdownSection';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 
 import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
 
@@ -22,14 +22,14 @@ class MainNavigationNormal extends React.Component {
       <div className="item right">
         { mainMenuItems.map(item => menuItemGetter(null, false, item)) }
 
-        <Dropdown className="top right">
-          <DropdownSection>
+        <SectionedDropdown className="top right">
+          <MenuSection>
             { configMenuItems.map(item => menuItemGetter(null, true, item)) }
-          </DropdownSection>
-          <DropdownSection>
+          </MenuSection>
+          <MenuSection>
             { menuItemGetter(logoutItem.onClick, true, logoutItem) }
-          </DropdownSection>
-        </Dropdown>
+          </MenuSection>
+        </SectionedDropdown>
       </div>
     );
   }
