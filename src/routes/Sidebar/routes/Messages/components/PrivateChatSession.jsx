@@ -17,7 +17,6 @@ class PrivateChatSession extends React.Component {
     return (
       <div className="private chat session">
         <ChatLayout
-          location={ location }
           chatAccess={ AccessConstants.PRIVATE_CHAT_SEND }
           messageStore={ PrivateChatMessageStore }
           actions={ actions }

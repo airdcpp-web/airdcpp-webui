@@ -61,7 +61,7 @@ class WidgetDialog extends React.Component {
   };
 
   render() {
-    const { typeId, location, settings, ...overlayProps } = this.props;
+    const { typeId, settings, ...overlayProps } = this.props;
     const { formSettings, name, icon } = WidgetStore.getWidgetInfoById(typeId);
 
     const Entry = [
@@ -82,7 +82,6 @@ class WidgetDialog extends React.Component {
         title={ name } 
         onApprove={ this.save }
         icon={ icon }
-        location={ location }
         { ...overlayProps }
       >
         <Form

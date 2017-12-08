@@ -8,10 +8,9 @@ import MenuIcon from 'components/menu/MenuIcon';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
 
-import RouteWithSubRoutes from 'components/RouteWithSubRoutes';
 import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 
-import { secondaryRoutes } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import 'mobile.css';
 
@@ -71,7 +70,7 @@ class MainLayoutMobile extends React.Component {
   };
 
   render() {
-    const { className, mainRoutes, secondaryRoutes, location } = this.props;
+    const { className, location } = this.props;
 		
     return (
       <div className={ className } id="mobile-layout">
@@ -91,9 +90,7 @@ class MainLayoutMobile extends React.Component {
             }
           />
           <div className="site-content">
-            { [ ...mainRoutes, ...secondaryRoutes ].map((route, i) => (
-              <RouteWithSubRoutes key={ route.path } { ...route } location={ location }/>
-            )) }
+            { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
           </div>
         </div>
       </div>

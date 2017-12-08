@@ -125,7 +125,7 @@ class WebUserDialog extends React.Component {
   };
 
   render() {
-    const { user, location, ...other } = this.props;
+    const { user, ...other } = this.props;
     const title = this.isNew() ? 'Add web user' : 'Edit user ' + user.username;
 
     return (
@@ -135,7 +135,6 @@ class WebUserDialog extends React.Component {
         onApprove={ this.save } 
         closable={ false } 
         icon="user" 
-        location={ location }
         { ...other }
       >
         <Form
