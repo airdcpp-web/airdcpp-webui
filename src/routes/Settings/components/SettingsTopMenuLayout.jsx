@@ -37,7 +37,7 @@ const TopMenuLayout = ({ saveButton, children, contentClassname, message, ...oth
   <div className="mobile">
     <MenuSection { ...other }/>
     <div id="setting-scroll-context" className={ contentClassname }>
-      { React.cloneElement(saveButton, { className: 'fluid' }) }
+      { !!saveButton && React.cloneElement(saveButton, { className: 'fluid' }) }
       { message }
       { children }
     </div>

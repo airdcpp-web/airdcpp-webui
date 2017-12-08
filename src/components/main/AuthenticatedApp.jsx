@@ -39,7 +39,18 @@ const secondaryRoutes = [
 ];
 
 class AuthenticatedApp extends React.Component {
+  updateTitle() {
+    let title = 'AirDC++ Web Client';
+    if (LoginStore.systemInfo) {
+      title = LoginStore.systemInfo.hostname + ' - ' + title;
+    }
+
+    document.title = title;
+  }
+
   componentWillMount() {
+    this.updateTitle();
+
     if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
       PrivateChatActions.fetchSessions();
     }
@@ -61,6 +72,10 @@ class AuthenticatedApp extends React.Component {
     }
 
     SystemActions.fetchAway();
+  }
+
+  componentWillUnmount() {
+    this.updateTitle();
   }
 
   render() {

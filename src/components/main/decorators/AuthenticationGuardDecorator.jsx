@@ -22,15 +22,6 @@ const AuthenticationGuardDecorator = (Component) => {
       location: PropTypes.object.isRequired,
     },
 
-    updateTitle() {
-      let title = 'AirDC++ Web Client';
-      if (LoginStore.systemInfo) {
-        title = LoginStore.systemInfo.hostname + ' - ' + title;
-      }
-
-      document.title = title;
-    },
-
     componentWillMount() {
       const { login } = this.state;
       if (login.hasSession) {
@@ -63,10 +54,6 @@ const AuthenticationGuardDecorator = (Component) => {
           state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
           pathname: '/login',
         });
-
-        this.updateTitle();
-      } else if (!this.state.login.socketAuthenticated && nextState.login.socketAuthenticated) {
-        this.updateTitle();
       }
     },
 
@@ -85,7 +72,6 @@ const AuthenticationGuardDecorator = (Component) => {
       return (
         <Component 
           { ...this.props }
-          //login={ login }
         />
       );
     }
