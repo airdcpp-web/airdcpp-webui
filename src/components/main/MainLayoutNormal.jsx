@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
@@ -13,6 +14,18 @@ import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 import 'normal.css';
 
 
+const toIndexRedirect = route => (
+  <Route
+    key={ route.path }
+    path={ route.path }
+    render={ () => (
+      <Redirect
+        to="/"
+      />
+    ) }
+  />
+);
+
 class MainLayout extends React.Component {
   static propTypes = {
     sidebar: PropTypes.bool,
@@ -24,10 +37,15 @@ class MainLayout extends React.Component {
 
     return (
       <div className={ className + ' pushable sidebar-context' } id="normal-layout">
-        { sidebar && (
+        { sidebar ? (
           <Sidebar location={ location }>
             { parseRoutes(secondaryRoutes) }
           </Sidebar>
+        ) : (
+          <div>
+            {/* Sidebar locations without the correct history data won't work, redirect to index */}
+            { secondaryRoutes.map(toIndexRedirect) }
+          </div>
         ) }
         <div className="pusher">
           <SiteHeader 

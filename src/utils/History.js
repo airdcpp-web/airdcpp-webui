@@ -95,7 +95,7 @@ const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
 
   const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
   state[overlayId] = {
-    //returnTo: currentLocation.pathname,
+    returnTo: currentLocation.pathname,
     data,
     pathname,
   };
