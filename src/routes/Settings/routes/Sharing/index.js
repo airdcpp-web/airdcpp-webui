@@ -1,31 +1,34 @@
 module.exports = {
-  path: 'sharing',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'profiles', 
-        component: require('./components/ShareProfilesPage').default,
-      }, {
-        path: 'hashing', 
-        component: require('./components/HashingPage').default, 
-      }, {
-        path: 'sharing-options', 
-        component: require('./components/SharingOptionsPage').default, 
-      }, {
-        path: 'refresh-options', 
-        component: require('./components/RefreshOptionsPage').default, 
-      }, {
-        path: 'excludes', 
-        component: require('./components/ExcludePage').default, 
-      } ]);
-    }, 'settings-sharing-children');
-  },
-
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('../../components/SettingSection').default);
-    }, 'settings-sharing');
-  }
+  url: 'sharing',
+  title: 'Sharing',
+  icon: 'tasks',
+  component: require('../../components/SettingSection').default,
+  menuItems: [
+    { 
+      title: 'Refresh options', 
+      url: 'refresh-options',
+      component: require('./components/RefreshOptionsPage').default, 
+    }, { 
+      title: 'Share profiles', 
+      url: 'profiles', 
+      noSave: true,
+      component: require('./components/ShareProfilesPage').default,
+    }
+  ],
+  advancedMenuItems: [
+    { 
+      title: 'Sharing options', 
+      url: 'sharing-options',
+      component: require('./components/SharingOptionsPage').default, 
+    }, { 
+      title: 'Hashing', 
+      url: 'hashing',
+      component: require('./components/HashingPage').default, 
+    }, { 
+      title: 'Excluded paths', 
+      url: 'excludes',
+      noSave: true,
+      component: require('./components/ExcludePage').default,
+    },
+  ],
 };
-

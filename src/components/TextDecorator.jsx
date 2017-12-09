@@ -53,7 +53,7 @@ linkify.add('adc://', 'dchub://');
 linkify.add('adcs://', 'dchub://');
 
 
-const onClickLink = (evt, routerLocation) => {
+const onClickLink = (evt, router) => {
   const uri = evt.target.href;
   if (uri.indexOf('magnet:?xt=urn:tree:tiger:') === 0) {
     evt.preventDefault();
@@ -68,7 +68,7 @@ const onClickLink = (evt, routerLocation) => {
       state: {
         searchString: tth,
       }
-    }, routerLocation);
+    }, router.route.location);
   } else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
     evt.preventDefault();
 
@@ -76,7 +76,7 @@ const onClickLink = (evt, routerLocation) => {
       return;
     }
 
-    HubActions.createSession(routerLocation, uri, HubSessionStore);
+    HubActions.createSession(router.route.location, uri, HubSessionStore);
   }
 };
 
@@ -102,12 +102,12 @@ const emojiRenderer = (code, string, key) => {
 };
 
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator = ({ emojify = false, text }, { routerLocation }) => (
+const TextDecorator = ({ emojify = false, text }, { router }) => (
   <ReactLinkify 
     properties={{ 
       target: '_blank',
       rel: 'noreferrer',
-      onClick: evt => onClickLink(evt, routerLocation),
+      onClick: evt => onClickLink(evt, router),
     }}
   >
     { !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), emojiRenderer) }
@@ -120,7 +120,7 @@ TextDecorator.propTypes = {
 };
 
 TextDecorator.contextTypes = {
-  routerLocation: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 export default TextDecorator;

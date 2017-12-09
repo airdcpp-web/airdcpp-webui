@@ -1,11 +1,15 @@
-#home .application .content.widget > div {
-	flex-direction: column;
-}
-
-#home .application .content.widget {
+.application.widget .main.content {
 	display: flex;
 }
 
-#home .application .ui.list {
+.application.widget .main.content > div {
+	flex-direction: column;
+}
+
+.application.widget .ui.list {
 	flex-grow: 100;
+}
+
+.application.widget .button.create-widget {
+	max-width: 200px;
 }

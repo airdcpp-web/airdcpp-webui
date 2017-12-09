@@ -16,6 +16,7 @@ import Button from 'components/semantic/Button';
 import '../style.css';
 import ResultTable from './ResultTable';
 
+
 const SEARCH_PERIOD = 4000;
 
 class Search extends React.Component {
@@ -75,6 +76,7 @@ class Search extends React.Component {
   };
 
   render() {
+    const { searchString, running } = this.state;
     return (
       <OfflineHubMessageDecorator offlineMessage="You must to be connected to at least one hub in order to perform searches">
         <div className="search-layout">
@@ -83,23 +85,22 @@ class Search extends React.Component {
               <HistoryInput 
                 historyId={ HistoryStringEnum.SEARCH } 
                 submitHandler={ this.search } 
-                disabled={ this.state.running }
-                storedValue={ this.state.searchString }
+                disabled={ running }
+                storedValue={ searchString }
                 placeholder="Enter search string..."
                 button={ 
                   <Button
                     icon="search icon"
                     caption="Search"
-                    loading={ this.state.running }
+                    loading={ running }
                   />
                 }
               />
             </div>
           </div>
           <ResultTable 
-            searchString={ this.state.searchString } 
-            running={ this.state.running }
-            location={ this.props.location }
+            searchString={ searchString } 
+            running={ running }
           />
         </div>
       </OfflineHubMessageDecorator>

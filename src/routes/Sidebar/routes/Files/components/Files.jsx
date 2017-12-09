@@ -11,6 +11,8 @@ import AccessConstants from 'constants/AccessConstants';
 import FileIcon from 'components/icon/FileIcon';
 import Message from 'components/semantic/Message';
 
+import FileSession from './FileSession';
+
 import '../style.css';
 
 
@@ -38,7 +40,8 @@ const Files = createReactClass({
   mixins: [ Reflux.connect(ViewFileStore, 'files') ],
 
   render() {
-    if (this.state.files.length === 0) {
+    const { files } = this.state;
+    if (files.length === 0) {
       return (
         <Message
           title="No files to view"
@@ -47,22 +50,21 @@ const Files = createReactClass({
       );
     }
 
-    const { params, ...other } = this.props;
+    const { match, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ params.id }
+        activeId={ match.params.id }
         baseUrl="files"
-        items={ this.state.files }
+        items={ files }
         disableSideMenu={ true }
         editAccess={ AccessConstants.VIEW_FILE_EDIT }
         actions={ ViewFileActions }
         unreadInfoStore={ ViewFileStore }
+        sessionLayout={ FileSession }
 
         { ...ItemHandler }
         { ...other }
-      >
-        { this.props.children }
-      </SessionLayout>
+      />
     );
   },
 });

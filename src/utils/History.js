@@ -1,13 +1,12 @@
 import update from 'immutability-helper';
 import invariant from 'invariant';
 
-import { createHistory } from 'history';
-import { useRouterHistory } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
 
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-const History = useRouterHistory(createHistory)({
+const History = createHistory({
   // Remove the trailing slash from base path
   basename: getBasePath().slice(0, -1),		
 });
@@ -73,7 +72,7 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 // Push a new sidebar state or merge the data into an existing one (if the sidebar is open already) 
 const getSidebarState = (currentLocation, data = {}) => {
   console.assert(currentLocation, 'Current location not supplied for overlay creation');
-  console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
+  console.assert(currentLocation.pathname, 'Invalid location object supplied for overlay creation');
 
   const state = currentLocation.state ? createModelessState(currentLocation.state) : {};
   if (!state[OverlayConstants.SIDEBAR_ID]) {
@@ -92,11 +91,11 @@ const getSidebarState = (currentLocation, data = {}) => {
 
 const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
   console.assert(currentLocation, 'Current location not supplied for overlay creation');
-  console.assert(currentLocation.query, 'Invalid location object supplied for overlay creation');
+  console.assert(currentLocation.pathname, 'Invalid location object supplied for overlay creation');
 
   const state = currentLocation.state ? Object.assign({}, currentLocation.state) : {};
   state[overlayId] = {
-    //returnTo: currentLocation.pathname,
+    returnTo: currentLocation.pathname,
     data,
     pathname,
   };
@@ -107,10 +106,7 @@ const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
 const Helpers = {
   pushModal: function (currentLocation, pathname, overlayId, data) {
     const state = addModalState(currentLocation, overlayId, data, pathname);
-    History.push({ 
-      state, 
-      pathname
-    });
+    History.push(pathname, state);
   },
 
   // Returns modal IDs from currentLocation
@@ -132,37 +128,25 @@ const Helpers = {
 
   replaceSidebar: function (currentLocation, pathname, data) {
     const state = getSidebarState(currentLocation, data);
-    History.replace({
-      state,
-      pathname,
-    });
+    History.replace(pathname, state);
   },
 
   pushSidebar: function (currentLocation, pathname, data) {
     // replaceState is invoked automatically if the path hasn't changed
     const state = getSidebarState(currentLocation, data);
-    History.push({
-      state,
-      pathname,
-    });
+    History.push(pathname, state);
   },
 
   // Append new location data when in sidebar layout and create a new history entry
   pushSidebarData: function (currentLocation, data) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
-    History.push({
-      state, 
-      pathname: currentLocation.pathname,
-    });
+    History.push(currentLocation.pathname, state);
   },
 
   // Append new location data when in sidebar layout without creating a new history entry
   replaceSidebarData: function (currentLocation, data) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
-    History.replace({ 
-      state, 
-      pathname: currentLocation.pathname,
-    });
+    History.replace(currentLocation.pathname, state);
   },
 
   // Shorthand function for receiving the data
@@ -172,20 +156,19 @@ const Helpers = {
   },
 
   // Remove overlay from the location state
-  removeOverlay: function (location, overlayId) {
+  removeOverlay: function (location, overlayId, changeLocation = true) {
     const { state } = location;
     const { returnTo } = state[overlayId];
     invariant(overlayId, 'Return address or overlay id missing when closing an overlay');
 
     delete state[overlayId];
 		
-    if (returnTo) {
-      History.replace({
-        state, 
-        pathname: returnTo,
-      });
-    } else {
-      History.goBack();
+    if (changeLocation) {
+      if (returnTo) {
+        History.replace(returnTo, state);
+      } else {
+        History.goBack();
+      }
     }
   },
 

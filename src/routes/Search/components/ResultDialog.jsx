@@ -1,20 +1,22 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
-import { LocationContext, RouteContext } from 'mixins/RouterMixin';
-
 import FileIcon from 'components/icon/FileIcon';
+
+import DownloadDialog from 'components/download/DownloadDialog';
+import SearchActions from 'actions/SearchActions';
 
 import ResultInfoGrid from './ResultInfoGrid';
 import UserResultTable from './UserResultTable';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
-const ResultDialog = createReactClass({
-  displayName: 'ResultDialog',
-  mixins: [ LocationContext, RouteContext ],
 
-  render: function () {
+class ResultDialog extends React.Component {
+  static displayName = 'ResultDialog';
+
+  render() {
     const { parentResult } = this.props;
     return (
       <Modal 
@@ -25,11 +27,12 @@ const ResultDialog = createReactClass({
         fullHeight={ true }
         {...this.props}
       >
+        <DownloadDialog downloadHandler={ SearchActions.download }/>
         <ResultInfoGrid parentResult={ parentResult }/>
         <UserResultTable parentResult={ parentResult }/>
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default ResultDialog;
+export default ModalRouteDecorator(ResultDialog, OverlayConstants.SEARCH_RESULT_MODAL, 'result');

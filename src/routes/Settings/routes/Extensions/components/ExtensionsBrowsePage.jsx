@@ -1,20 +1,16 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import ExtensionActions from 'actions/ExtensionActions';
 
 import ActionButton from 'components/ActionButton';
 
 import EngineStatusMessage from './EngineStatusMessage';
 import NpmPackageLayout from './NpmPackageLayout';
+import ExtensionsConfigureDialog from './ExtensionsConfigureDialog';
 
-import { LocationContext } from 'mixins/RouterMixin';
 
-
-const ExtensionBrowsePage = createReactClass({
-  displayName: 'ExtensionBrowsePage',
-  mixins: [ LocationContext ],
+class ExtensionBrowsePage extends React.Component {
+  static displayName = 'ExtensionBrowsePage';
 
   render() {
     return (
@@ -29,9 +25,10 @@ const ExtensionBrowsePage = createReactClass({
         <NpmPackageLayout 
           className="package-layout" 
         />
+        <ExtensionsConfigureDialog/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default ExtensionBrowsePage;

@@ -1,13 +1,15 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
+
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
+
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import t from 'utils/tcomb-form';
 import { FieldTypes } from 'constants/SettingConstants';
@@ -30,15 +32,14 @@ const Entry = [
   },
 ];
 
-const FavoriteDirectoryDialog = createReactClass({
-  displayName: 'FavoriteDirectoryDialog',
-  mixins: [ RouteContext ],
+class FavoriteDirectoryDialog extends React.Component {
+  static displayName = 'FavoriteDirectoryDialog';
 
-  isNew() {
+  isNew = () => {
     return !this.props.directoryEntry;
-  },
+  };
 
-  onFieldChanged(id, value, hasChanges) {
+  onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('path') != -1) {
       return Promise.resolve({
         name: FileUtils.getLastDirectory(value.path, FileUtils) 
@@ -46,21 +47,21 @@ const FavoriteDirectoryDialog = createReactClass({
     }
 
     return null;
-  },
+  };
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields) {
+  onSave = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
     }
 
     return SocketService.patch(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + this.props.directoryEntry.id, changedFields);
-  },
+  };
 
-  onFieldSetting(id, fieldOptions, formValue) {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions['disabled'] = !this.isNew();
       fieldOptions['config'] = Object.assign(fieldOptions['config'] || {}, {
@@ -73,9 +74,9 @@ const FavoriteDirectoryDialog = createReactClass({
         suggestionGetter: () => this.props.virtualNames,
       };
     }
-  },
+  };
 
-  render: function () {
+  render() {
     const title = this.isNew() ? 'Add favorite directory' : 'Edit favorite directory';
     return (
       <Modal 
@@ -93,20 +94,21 @@ const FavoriteDirectoryDialog = createReactClass({
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ this.props.directoryEntry }
-          context={ {
-            location: this.props.location,
-          } }
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default DataProviderDecorator(FavoriteDirectoryDialog, {
-  urls: {
-    virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-  },
-  dataConverters: {
-    virtualNames: data => data.map(item => item.name, []),
-  },
-});
+export default ModalRouteDecorator(
+  DataProviderDecorator(FavoriteDirectoryDialog, {
+    urls: {
+      virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+    },
+    dataConverters: {
+      virtualNames: data => data.map(item => item.name, []),
+    },
+  }),
+  OverlayConstants.FAVORITE_DIRECTORY_MODAL,
+  'directory'
+);

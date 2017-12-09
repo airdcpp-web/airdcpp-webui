@@ -1,6 +1,4 @@
-import React from 'react';
-
-import createReactClass from 'create-react-class';
+import React, { Fragment } from 'react';
 
 import SearchActions from 'actions/SearchActions';
 import SearchViewStore from 'stores/SearchViewStore';
@@ -15,7 +13,8 @@ import { TableUserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 import Message from 'components/semantic/Message';
 
-import { LocationContext } from 'mixins/RouterMixin';
+import DownloadDialog from 'components/download/DownloadDialog';
+import ResultDialog from './ResultDialog';
 
 
 const getUserCaption = (cellData) => {
@@ -47,7 +46,6 @@ const resultUserGetter = rowData => rowData.users.user;
 
 const NameCell = ({ rowDataGetter, ...props }) => (
   <FileDownloadCell 
-    handler={ SearchActions.download } 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
     { ...props }
@@ -59,15 +57,14 @@ const NameCell = ({ rowDataGetter, ...props }) => (
   </FileDownloadCell>
 );
 
-const ResultTable = createReactClass({
-  displayName: 'ResultTable',
-  mixins: [ LocationContext ],
+class ResultTable extends React.Component {
+  static displayName = 'ResultTable';
 
-  _rowClassNameGetter(rowData) {
+  _rowClassNameGetter = (rowData) => {
     return TypeConvert.dupeToStringType(rowData.dupe);
-  },
+  };
 
-  emptyRowsNodeGetter() {
+  emptyRowsNodeGetter = () => {
     if (this.props.running) {
       return null;
     }
@@ -95,77 +92,81 @@ const ResultTable = createReactClass({
         ) }
       />
     );
-  },
+  };
 
   render() {
     return (
-      <VirtualTable
-        emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-        rowClassNameGetter={ this._rowClassNameGetter }
-        store={ SearchViewStore }
-      >
-        <Column
-          name="Name"
-          width={200}
-          columnKey="name"
-          flexGrow={8}
-          cell={ <NameCell/> }
-        />
-        <Column
-          name="Size"
-          width={60}
-          columnKey="size"
-          cell={ <SizeCell/> }
-          flexGrow={1}
-        />
-        <Column
-          name="Type"
-          width={80}
-          columnKey="type"
-          flexGrow={1}
-          hideWidth={600}
-        />
-        <Column
-          name="Relevance"
-          width={60}
-          columnKey="relevance"
-          cell={ <DecimalCell/> }
-          flexGrow={1}
-        />
-        <Column
-          name="Connection"
-          width={60}
-          columnKey="connection"
-          cell={ <ConnectionCell/> }
-          flexGrow={2}
-          hideWidth={600}
-        />
-        <Column
-          name="Users"
-          width={120}
-          columnKey="users"
-          flexGrow={3}
-          cell={ <UserCell/> }
-          hideWidth={600}
-        />
-        <Column
-          name="Last modified"
-          width={80}
-          columnKey="time"
-          cell={ <DurationCell/> }
-          flexGrow={1}
-          hideWidth={800}
-        />
-        <Column
-          name="Slots"
-          width={60}
-          columnKey="slots"
-          flexGrow={1}
-          hideWidth={800}
-        />
-      </VirtualTable>
+      <Fragment>
+        <VirtualTable
+          emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
+          rowClassNameGetter={ this._rowClassNameGetter }
+          store={ SearchViewStore }
+        >
+          <Column
+            name="Name"
+            width={200}
+            columnKey="name"
+            flexGrow={8}
+            cell={ <NameCell/> }
+          />
+          <Column
+            name="Size"
+            width={60}
+            columnKey="size"
+            cell={ <SizeCell/> }
+            flexGrow={1}
+          />
+          <Column
+            name="Type"
+            width={80}
+            columnKey="type"
+            flexGrow={1}
+            hideWidth={600}
+          />
+          <Column
+            name="Relevance"
+            width={60}
+            columnKey="relevance"
+            cell={ <DecimalCell/> }
+            flexGrow={1}
+          />
+          <Column
+            name="Connection"
+            width={60}
+            columnKey="connection"
+            cell={ <ConnectionCell/> }
+            flexGrow={2}
+            hideWidth={600}
+          />
+          <Column
+            name="Users"
+            width={120}
+            columnKey="users"
+            flexGrow={3}
+            cell={ <UserCell/> }
+            hideWidth={600}
+          />
+          <Column
+            name="Last modified"
+            width={80}
+            columnKey="time"
+            cell={ <DurationCell/> }
+            flexGrow={1}
+            hideWidth={800}
+          />
+          <Column
+            name="Slots"
+            width={60}
+            columnKey="slots"
+            flexGrow={1}
+            hideWidth={800}
+          />
+        </VirtualTable>
+        <DownloadDialog downloadHandler={ SearchActions.download }/>
+        <ResultDialog/>
+      </Fragment>
     );
-  },
-});
+  }
+}
 
 export default ResultTable;

@@ -51,6 +51,8 @@ console.log(chalk.bold('Building webpack...'));
 
 var compiler = webpack(config);
 app.use(require('webpack-dev-middleware')(compiler, {
+	hot: true,
+	historyApiFallback: true,
 	noInfo: true,
 	publicPath: config.output.publicPath
 }));

@@ -30,8 +30,8 @@ const StatisticsIcon = ({ icon, bytes, formatter }) => {
   );
 };
 
-const StatisticsBar = createReactClass({
-  displayName: 'StatisticsBar',
+const StatisticsIcons = createReactClass({
+  displayName: 'StatisticsIcons',
   mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
 
   getDefaultProps() {
@@ -99,4 +99,4 @@ const StatisticsBar = createReactClass({
   },
 });
 
-export default StatisticsBar;
+export default StatisticsIcons;

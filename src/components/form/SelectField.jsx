@@ -39,12 +39,12 @@ const ReactSelect = t.form.Form.templates.select.clone({
     invariant(locals.value.every(selectedOption => options.find(anyOption => anyOption.value === selectedOption)), 'All current values were not found from the option list');
     return (
       <Select
-        value={locals.value}
-        options={options}
-        onChange={onChange}
-        multi={true}
-        valueComponent={TagValue}
-        noResultsText={null}
+        value={ locals.value }
+        options={ options }
+        onChange={ onChange }
+        multi={ true }
+        valueComponent={ TagValue }
+        noResultsText={ null }
       />
     );
   }

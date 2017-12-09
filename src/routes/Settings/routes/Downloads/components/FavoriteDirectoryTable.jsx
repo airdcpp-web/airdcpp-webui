@@ -8,6 +8,7 @@ import ActionButton from 'components/ActionButton';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
+import FavoriteDirectoryDialog from './FavoriteDirectoryDialog';
 
 
 const Row = ({ directory }) => (
@@ -54,6 +55,7 @@ const FavoriteDirectoryPage = ({ directories }) => (
         </tbody>
       </table>
     ) }
+    <FavoriteDirectoryDialog/>
   </div>
 );
 

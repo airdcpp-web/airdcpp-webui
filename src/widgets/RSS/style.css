@@ -1,22 +1,22 @@
-#home .rss .content.widget {
+.rss.widget .main.content {
 	display: flex;
 	flex-direction: column;
 }
 
-#home .rss .divided.list {
+.rss.widget .main.content > div {
+	flex-direction: column;
+}
+
+.rss.widget .divided.list {
 	overflow-y: auto;
 	overflow-x: hidden;
 	flex: 1;
 }
 
-#home .rss .divided.list .item {
+.rss.widget .divided.list .item {
 	flex-shrink: 0;
 }
 
-#home .rss .divided.list .item .description {
+.rss.widget .divided.list .item .description {
 	margin-left: 20px;
-}
-
-#home .rss .content.widget > div {
-	flex-direction: column;
 }

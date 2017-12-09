@@ -5,7 +5,7 @@ import Button from 'components/semantic/Button';
 import { showAction } from 'utils/ActionUtils';
 
 
-const ActionButton = ({ action, itemData, icon = true, ...other }, { routerLocation }) => {
+const ActionButton = ({ action, itemData, icon = true, ...other }, { router }) => {
   if (!showAction(action, itemData)) {
     return null;
   }
@@ -13,7 +13,7 @@ const ActionButton = ({ action, itemData, icon = true, ...other }, { routerLocat
   return (
     <Button
       icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : null }
-      onClick={ () => itemData ? action(itemData, routerLocation) : action(routerLocation) }
+      onClick={ () => itemData ? action(itemData, router.route.location) : action(router.route.location) }
       caption={ action.displayName }
       { ...other }
     />
@@ -32,7 +32,7 @@ ActionButton.propTypes = {
 };
 
 ActionButton.contextTypes = {
-  routerLocation: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 

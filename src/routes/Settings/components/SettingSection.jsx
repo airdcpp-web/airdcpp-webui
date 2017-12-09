@@ -8,8 +8,10 @@ import BrowserUtils from 'utils/BrowserUtils';
 import SettingsSideMenuLayout from './SettingsSideMenuLayout';
 import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 
+import SaveDecorator from '../decorators/SaveDecorator';
 
-const MainSection = SettingsMenuDecorator((props) => {
+
+const SettingSection = (props) => {
   const Component = BrowserUtils.useMobileLayout() || window.innerWidth < 950 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
 
   const { parent, menuItemToLink, currentMenuItem } = props;
@@ -29,6 +31,8 @@ const MainSection = SettingsMenuDecorator((props) => {
       advancedMenuItems={ props.advancedMenuItems ? props.advancedMenuItems.map(item => menuItemToLink(item, parent)) : null }
     />
   );
-});
+};
 
-export default MainSection;
+export default SettingsMenuDecorator(
+  SaveDecorator(SettingSection)
+);

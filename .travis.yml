@@ -3,7 +3,7 @@ dist: trusty
 language: node_js
 node_js:
 - stable
-- 4
+- 6
 before_install:
 # Update to the latest version as peer dependencies may cause issues otherwise
 - npm install npm -g

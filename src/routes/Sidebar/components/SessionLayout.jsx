@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import createReactClass from 'create-react-class';
+import { Route } from 'react-router';
 
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
@@ -20,7 +19,6 @@ import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
 import BrowserUtils from 'utils/BrowserUtils';
-import { LocationContext } from 'mixins/RouterMixin';
 
 import IconConstants from 'constants/IconConstants';
 import { MenuItemLink } from 'components/semantic/MenuItem';
@@ -30,11 +28,10 @@ const findItem = (items, id) => {
   return items.find(item => item.id === id);
 };
 
-const SessionLayout = createReactClass({
-  displayName: 'SessionLayout',
-  mixins: [ LocationContext ],
+class SessionLayout extends React.Component {
+  static displayName = 'SessionLayout';
 
-  propTypes: {
+  static propTypes = {
     /**
 		 * Unique ID of the section (used for storing and loading the previously open tab)
 		 */
@@ -120,56 +117,55 @@ const SessionLayout = createReactClass({
 		 * AccessConstant defining whether the user has edit permission 
 		 */
     editAccess: PropTypes.string.isRequired,
-  },
 
-  getInitialProps() {
+    sessionLayout: PropTypes.func.isRequired,
+
+    newLayout: PropTypes.func,
+    //children: PropTypes.node.isRequired,
+  };
+
+  state = {
+    activeItem: null
+  };
+
+  getInitialProps = () => {
     return {
       sideMenu: true,
     };
-  },
-
-  getInitialState() {
-    return {
-      activeItem: null
-    };
-  },
+  };
 
   // HELPERS
-  getUrl(id) {
+  getSessionUrl = (id) => {
     return '/' + this.props.baseUrl + '/session/' + id;
-  },
+  };
 
-  getNewUrl() {
-    if (!this.props.newCaption || !this.hasEditAccess()) {
-      return '/' + this.props.baseUrl;
-    }
-
+  getNewUrl = () => {
     return '/' + this.props.baseUrl + '/new';
-  },
+  };
 
-  getStorageKey(props) {
+  getStorageKey = (props) => {
     return props.baseUrl + '_last_active';
-  },
+  };
 
-  pushSession(id) {
-    History.pushSidebar(this.props.location, this.getUrl(id));
-  },
+  pushSession = (id) => {
+    History.pushSidebar(this.props.location, this.getSessionUrl(id));
+  };
 
-  replaceSession(id) {
-    History.replaceSidebar(this.props.location, this.getUrl(id));
-  },
+  replaceSession = (id) => {
+    History.replaceSidebar(this.props.location, this.getSessionUrl(id));
+  };
 
-  pushNew() {
+  pushNew = () => {
     History.pushSidebar(this.props.location, this.getNewUrl());
-  },
+  };
 
-  hasEditAccess() {
+  hasEditAccess = () => {
     return LoginStore.hasAccess(this.props.editAccess);
-  },
+  };
 
   // LIFECYCLE/REACT
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.activeId && (nextProps.items.length === 0 || nextProps.children)) {
+    if (nextProps.location.pathname === this.getNewUrl()) {
       // Don't redirect to it if the "new session" layout is open
       if (this.state.activeItem) {
         this.setState({ activeItem: null });
@@ -197,12 +193,12 @@ const SessionLayout = createReactClass({
     }
 
     this.replaceSession(nextProps.items[newItemPos].id);
-  },
+  }
 
   // Common logic for selecting the item to display (after mounting or session updates)
   // Returns true active item selection was handled
   // Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
-  checkActiveItem(props) {
+  checkActiveItem = (props) => {
     // Did we just create this session?
     const routerLocation = props.location;
     const { pending } = History.getSidebarData(routerLocation);
@@ -233,9 +229,9 @@ const SessionLayout = createReactClass({
     }
 
     return false;
-  },
+  };
 
-  onKeyDown(event) {
+  onKeyDown = (event) => {
     const { keyCode, altKey } = event;
 
     if (altKey && (keyCode === 38 || keyCode === 40)) {
@@ -266,7 +262,7 @@ const SessionLayout = createReactClass({
         this.props.actions.removeSession(item);
       }
     }
-  },
+  };
 
   componentWillMount() {
     window.addEventListener('keydown', this.onKeyDown);
@@ -285,26 +281,26 @@ const SessionLayout = createReactClass({
       // Load the first session
       this.replaceSession(this.props.items[0].id);
     }
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onKeyDown);;
-  },
+  }
 
   // COMPONENT GETTERS
-  getItemStatus(item) {
+  getItemStatus = (sessionItem) => {
     if (this.props.itemStatusGetter) {
-      return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(item) }/>;
+      return <div className={ 'ui session-status empty circular left mini label ' + this.props.itemStatusGetter(sessionItem) }/>;
     }
 
-    return <Icon icon={ this.props.itemHeaderIconGetter(item) }/>;
-  },
+    return <Icon icon={ this.props.itemHeaderIconGetter(sessionItem) }/>;
+  };
 
-  getSessionMenuItem(sessionItem) {
+  getSessionMenuItem = (sessionItem) => {
     return (
       <SessionMenuItem 
         key={ sessionItem.id } 
-        url={ this.getUrl(sessionItem.id) }
+        url={ this.getSessionUrl(sessionItem.id) }
         name={ this.props.itemNameGetter(sessionItem) }
         unreadInfoStore={ this.props.unreadInfoStore }
         status={ this.getItemStatus(sessionItem) }
@@ -312,9 +308,9 @@ const SessionLayout = createReactClass({
         pushSession={ this.pushSession }
       />
     );
-  },
+  };
 
-  getItemHeaderTitle() {
+  getItemHeaderTitle = () => {
     const { actions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
 
     const { activeItem } = this.state;
@@ -345,9 +341,9 @@ const SessionLayout = createReactClass({
     }
 
     return actionMenu;
-  },
+  };
 
-  getItemHeaderDescription() {
+  getItemHeaderDescription = () => {
     const { activeItem } = this.state;
     const { itemHeaderDescriptionGetter, newDescription } = this.props;
     if (!activeItem) {
@@ -355,15 +351,15 @@ const SessionLayout = createReactClass({
     }
 
     return itemHeaderDescriptionGetter(activeItem);
-  },
+  };
 
-  getItemHeaderIcon() {
+  getItemHeaderIcon = () => {
     const { activeItem } = this.state;
     const { itemHeaderIconGetter, newIcon } = this.props;
     return <Icon icon={ activeItem ? itemHeaderIconGetter(activeItem) : newIcon }/>;
-  },
+  };
 
-  getNewButton() {
+  getNewButton = () => {
     if (!this.hasEditAccess() || !this.props.newCaption) {
       return null;
     }
@@ -376,38 +372,14 @@ const SessionLayout = createReactClass({
         pushNew={ this.pushNew }
       />
     );
-  },
+  };
 
-  getChildren() {
-    const { activeItem } = this.state;
-    const { children, items, actions, activeId } = this.props;
-    if (History.getSidebarData(this.props.location).pending) {
-      // The session was just created
-      return <Loader text="Waiting for server response"/>;
-    } else if (activeItem) {
-      // We have a session
-      return React.cloneElement(this.props.children, { 
-        session: activeItem,
-        actions: actions,
-      });
-    } else if (activeId || (!children && items.length !== 0)) {
-      // Redirecting to a new page
-      return <Loader text="Loading session"/>;
-    } else if (!this.hasEditAccess() && items.length === 0) {
-      // Nothing to show
-      return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
-    }
-
-    // New layout
-    return children;
-  },
-
-  handleCloseAll() {
+  handleCloseAll = () => {
     const { actions, items } = this.props;
     items.forEach(session => actions.removeSession(session));
-  },
+  };
 
-  getListActionMenu() {
+  getListActionMenu = () => {
     const { items } = this.props;
     if (!this.hasEditAccess() || items.length === 0) {
       return null;
@@ -422,12 +394,16 @@ const SessionLayout = createReactClass({
 				Close all
       </MenuItemLink>
     );
-  },
+  };
 
   render() {
-    const children = this.getChildren();
+    const { disableSideMenu, width, items, unreadInfoStore, actions, newLayout, sessionLayout, activeId } = this.props;
+    if (!this.hasEditAccess() && items.length === 0) {
+      // Nothing to show
+      return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
+    }
 
-    const { disableSideMenu, width } = this.props;
+    const { activeItem } = this.state;
     const useTopMenu = disableSideMenu || BrowserUtils.useMobileLayout() || width < 700;
 		
     const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
@@ -437,17 +413,41 @@ const SessionLayout = createReactClass({
         itemHeaderDescription={ this.getItemHeaderDescription() }
         itemHeaderIcon={ this.getItemHeaderIcon() }
 
-        activeItem={ this.state.activeItem }
-        unreadInfoStore={ this.props.unreadInfoStore }
-        closeAction={ this.props.actions.removeSession }
+        activeItem={ activeItem }
+        unreadInfoStore={ unreadInfoStore }
+        closeAction={ actions.removeSession }
         newButton={ this.getNewButton() }
-        sessionMenuItems={ this.props.items.map(this.getSessionMenuItem) }
+        sessionMenuItems={ items.map(this.getSessionMenuItem) }
         listActionMenuGetter={ this.getListActionMenu }
       >
-        { children }
+        <Route
+          path={ this.getSessionUrl(':id') }
+          render={ props => {
+            if (!activeItem) {
+              if (History.getSidebarData(this.props.location).pending) {
+                // The session was just created
+                return <Loader text="Waiting for server response"/>;
+              } else if (activeId || items.length !== 0) {
+                // Redirecting to a new page
+                return <Loader text="Loading session"/>;
+              }
+            }
+
+            // We have a session
+            return React.createElement(sessionLayout, {
+              ...props,
+              session: activeItem,
+              actions: actions,
+            });
+          } }
+        />
+        <Route
+          path={ this.getNewUrl() }
+          component={ newLayout }
+        />
       </Component>
     );
-  },
-});
+  }
+}
 
 export default SessionLayout;

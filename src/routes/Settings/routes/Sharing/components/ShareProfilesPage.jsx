@@ -1,17 +1,14 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import ShareProfileActions from 'actions/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
-import { LocationContext } from 'mixins/RouterMixin';
 import ValueFormat from 'utils/ValueFormat';
 
 import '../style.css';
@@ -36,18 +33,17 @@ const Row = ({ profile }) => (
   </tr>
 );
 
-const ShareProfilesPage = createReactClass({
-  displayName: 'ShareProfilesPage',
-  mixins: [ LocationContext ],
+class ShareProfilesPage extends React.Component {
+  static displayName = 'ShareProfilesPage';
 
-  getRow(profile) {
+  getRow = (profile) => {
     return (
       <Row 
         key={ profile.id } 
         profile={ profile } 
       />
     );
-  },
+  };
 
   render() {
     return (
@@ -84,7 +80,7 @@ const ShareProfilesPage = createReactClass({
         </table>
       </div>
     );
-  },
-});
+  }
+}
 
 export default ShareProfileDecorator(ShareProfilesPage, false, false);

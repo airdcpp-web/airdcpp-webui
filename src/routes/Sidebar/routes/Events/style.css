@@ -1,47 +1,48 @@
-#sidebar .simple-layout {
+.simple-layout {
 	height: 100%;
 	padding: 20px;
 	margin-left: auto;
 	margin-right: auto;
+	background-color: white;
 }
 
-#sidebar .simple-layout > div {
+.simple-layout > div {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 }
 
-#sidebar .simple-layout .layout-content {
+.simple-layout .layout-content {
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
 	flex: 1 1 100%;
 }
 
-#sidebar .simple-layout .layout-content > div {
+.simple-layout .layout-content > div {
 	width: 100%;
 }
 
-#sidebar .simple-layout .divider.top {
+.simple-layout .divider.top {
 	margin-bottom: 10px;
 }
 
 
 /* Message layout */
-#sidebar .system-log .message-list {
+.system-log .message-list {
 	width: 100%;
 }
 
-#sidebar .system-log .status.item i {
+.system-log .status.item i {
 	float: left;
 }
 
-#sidebar .system-log .status.item .text {
+.system-log .status.item .text {
 	margin-top: 5px;
 	margin-bottom: 10px;
 	overflow: hidden;
 }
 
-#sidebar .system-log .status.item .time {
+.system-log .status.item .time {
 	color: gray;
 }

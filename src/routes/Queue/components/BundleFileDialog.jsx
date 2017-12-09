@@ -1,17 +1,17 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
-import { LocationContext, RouteContext } from 'mixins/RouterMixin';
+
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from './BundleFileTable';
 
 
-const BundleFileDialog = createReactClass({
-  displayName: 'BundleFileDialog',
-  mixins: [ LocationContext, RouteContext ],
+class BundleFileDialog extends React.Component {
+  static displayName = 'BundleFileDialog';
 
-  render: function () {
+  render() {
     const { bundle } = this.props;
     return (
       <Modal 
@@ -27,7 +27,7 @@ const BundleFileDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default BundleFileDialog;
+export default ModalRouteDecorator(BundleFileDialog, OverlayConstants.BUNDLE_CONTENT_MODAL, 'content');

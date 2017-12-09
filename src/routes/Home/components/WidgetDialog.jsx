@@ -1,23 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import Form from 'components/form/Form';
 import { FieldTypes } from 'constants/SettingConstants';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
-const WidgetDialog = createReactClass({
-  displayName: 'WidgetDialog',
-  mixins: [ RouteContext ],
+import WidgetActions from 'actions/WidgetActions';
+import WidgetStore from 'stores/WidgetStore';
+import WidgetUtils from 'utils/WidgetUtils';
 
-  propTypes: {
+
+class WidgetDialog extends React.Component {
+  static displayName = 'WidgetDialog';
+
+  static propTypes = {
     /**
 		 * Current widget settings
 		 */
@@ -26,30 +29,40 @@ const WidgetDialog = createReactClass({
     /**
 		 * Widget info object
 		 */
-    widgetInfo: PropTypes.object, // Required
+    typeId: PropTypes.string, // Required
 
     /**
 		 * Called when the form is saved
 		 */
     onSave: PropTypes.func, // Required
-  },
+  };
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields, value) {
+  onSave = (changedFields, value) => {
     const { name, ...formSettings } = value;
-    this.props.onSave({
+    const settings = {
       name,
       widget: formSettings
-    });
-    return Promise.resolve();
-  },
+    };
 
-  render: function () {
-    const { widgetInfo, location, settings, ...overlayProps } = this.props;
-    const { formSettings, name, icon } = widgetInfo;
+    const { id, typeId } = this.props;
+    if (!id) {
+      // New widget
+      WidgetActions.create.saved(WidgetUtils.createId(typeId), settings, typeId);
+    } else {
+      // Existing widget
+      WidgetActions.edit.saved(id, settings);
+    }
+
+    return Promise.resolve();
+  };
+
+  render() {
+    const { typeId, settings, ...overlayProps } = this.props;
+    const { formSettings, name, icon } = WidgetStore.getWidgetInfoById(typeId);
 
     const Entry = [
       {
@@ -69,7 +82,6 @@ const WidgetDialog = createReactClass({
         title={ name } 
         onApprove={ this.save }
         icon={ icon }
-        location={ location }
         { ...overlayProps }
       >
         <Form
@@ -88,7 +100,11 @@ const WidgetDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default WidgetDialog;
+export default ModalRouteDecorator(
+  WidgetDialog,
+  OverlayConstants.HOME_WIDGET_MODAL,
+  '/home/widget'
+);

@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-import createReactClass from 'create-react-class';
+import HubMessageStore from 'stores/HubMessageStore';
 
 import BrowserUtils from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
@@ -9,11 +9,8 @@ import Checkbox from 'components/semantic/Checkbox';
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import HubUserTable from './HubUserTable';
 
-import HubMessageStore from 'stores/HubMessageStore';
-
 import { ConnectStateEnum } from 'constants/HubConstants';
 import AccessConstants from 'constants/AccessConstants';
-import { LocationContext } from 'mixins/RouterMixin';
 
 import HubFooter from './HubFooter';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
@@ -29,31 +26,28 @@ const checkList = (props) => {
   return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
 };
 
-const HubSession = createReactClass({
-  displayName: 'HubSession',
-  mixins: [ LocationContext ],
+class HubSession extends React.Component {
+  static displayName = 'HubSession';
+
+  state = {
+    showList: checkList(this.props),
+  };
 
   componentWillMount() {
     this.showList = checkList(this.props);
-  },
-
-  getInitialState() {
-    return {
-      showList: checkList(this.props),
-    };
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
       this.toggleListState();
     }
-  },
+  }
 
-  toggleListState() {
+  toggleListState = () => {
     this.setState({ showList: !this.state.showList });
-  },
+  };
 
-  getMessage() {
+  getMessage = () => {
     const { session } = this.props;
     const connectState = session.connect_state.id;
 
@@ -78,13 +72,13 @@ const HubSession = createReactClass({
     }
 
     return null;
-  },
+  };
 
-  onClickUsers() {
+  onClickUsers = () => {
     this.toggleListState();
 
     BrowserUtils.saveSessionProperty(getStorageKey(this.props), this.state.showList);
-  },
+  };
 
   render() {
     const { session, actions } = this.props;
@@ -120,7 +114,7 @@ const HubSession = createReactClass({
         />
       </div>
     );
-  },
-});
+  }
+}
 
 export default HubSession;

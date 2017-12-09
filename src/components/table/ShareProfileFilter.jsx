@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Dropdown from 'components/semantic/Dropdown';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 import { MenuItemLink } from 'components/semantic/MenuItem';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
@@ -42,18 +43,16 @@ class ShareProfileFilter extends React.Component {
 
   render() {
     return (
-      <Dropdown 
+      <SectionedDropdown 
         className="top right pointing" 
         caption={ this.state.selectedProfile.str } 
         triggerIcon="filter" 
         button={ true }
       >
-        <div className="header">
-          <i className="filter icon"/>
-					Filter by profile
-        </div>
-        { [ defaultItem, ...this.props.profiles ].map(this.getDropdownItem) }
-      </Dropdown>
+        <MenuSection caption="Filter by profile" icon="filter">
+          { [ defaultItem, ...this.props.profiles ].map(this.getDropdownItem) }
+        </MenuSection>
+      </SectionedDropdown>
     );
   }
 }

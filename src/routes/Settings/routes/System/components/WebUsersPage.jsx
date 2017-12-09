@@ -1,18 +1,14 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import WebUserActions from 'actions/WebUserActions';
 
 import ActionButton from 'components/ActionButton';
+import WebUserDialog from './users/WebUserDialog';
 import WebUserLayout from './users/WebUserLayout';
 
-import { LocationContext } from 'mixins/RouterMixin';
 
-
-const WebUsersPage = createReactClass({
-  displayName: 'WebUsersPage',
-  mixins: [ LocationContext ],
+class WebUsersPage extends React.Component {
+  static displayName = 'WebUsersPage';
 
   render() {
     return (
@@ -25,9 +21,10 @@ const WebUsersPage = createReactClass({
         <WebUserLayout 
           className="user-layout" 
         />
+        <WebUserDialog/>
       </div>
     );
-  },
-});
+  }
+}
 
 export default WebUsersPage;

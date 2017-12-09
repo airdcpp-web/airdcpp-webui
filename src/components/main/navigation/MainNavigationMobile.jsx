@@ -3,9 +3,11 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import { matchPath } from 'react-router-dom';
+import { configRoutes, mainRoutes, secondaryRoutes, logoutItem, parseMenuItems, parseMenuItem } from 'routes/Routes';
 
-import Dropdown from 'components/semantic/Dropdown';
-import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 
 import History from 'utils/History';
 import IconPanel from './IconPanel';
@@ -30,7 +32,12 @@ class MainNavigationMobile extends React.Component {
   onClickSecondary = (url, evt) => {
     evt.preventDefault();
 
-    if (!this.context.router.isActive(url)) {
+    const isActive = matchPath(this.props.location.pathname, {
+      path: url,
+      exact: url !== '/',
+    });
+
+    if (!isActive) {
       History.pushSidebar(this.props.location, url);
     }
 
@@ -42,38 +49,34 @@ class MainNavigationMobile extends React.Component {
   };
 
   render() {
-    const { configMenuItems, mainMenuItems, secondaryMenuItems, logoutItem, menuItemGetter } = this.props;
-    const moreCaption = (
-      <div>
-        <i className="ellipsis horizontal caption icon"/>
-				More...
-      </div>
-    );
-
     return (
       <div 
         ref={ c => this.c = c }
         id="mobile-menu" 
         className="ui right vertical inverted sidebar menu"
       >
-        { mainMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-        <Dropdown 
-          caption={ moreCaption } 
+        { parseMenuItems(mainRoutes, this.onClick) }
+        <SectionedDropdown 
+          caption="More..."
+          captionIcon="ellipsis horizontal caption" 
           className="right fluid" 
           triggerIcon=""
         >
-          { configMenuItems.map(menuItemGetter.bind(this, this.onClick, true)) }
-          <div className="divider"/>
-          { menuItemGetter(logoutItem.onClick, true, logoutItem) }
-        </Dropdown>
+          <MenuSection>
+            { parseMenuItems(configRoutes, this.onClick) }
+          </MenuSection>
+          <MenuSection>
+            { parseMenuItem(logoutItem) }
+          </MenuSection>
+        </SectionedDropdown>
 
         <div className="separator"/>
 
-        { secondaryMenuItems.map(menuItemGetter.bind(this, this.onClickSecondary, true)) }
+        { parseMenuItems(secondaryRoutes, this.onClickSecondary) }
         <IconPanel/>
       </div>
     );
   }
 }
 
-export default MainNavigationDecorator(MainNavigationMobile);
+export default MainNavigationMobile;

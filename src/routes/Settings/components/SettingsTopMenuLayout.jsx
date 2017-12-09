@@ -2,49 +2,47 @@
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
-import SaveDecorator from '../decorators/SaveDecorator';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
+import Icon from 'components/semantic/Icon';
 
 
-const MenuSection = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => {
-  // Don't add nesting for items to preserve Semantic's CSS
-  const hideStyle = { display: 'none' };
-  const advancedMenuStyle = !advancedMenuItems ? hideStyle : null;
+const SettingMenu = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
+  <div className="ui top-menu">
+    <Dropdown 
+      className="selection fluid" 
+      caption={ parent.title }
+      captionIcon={ 'green ' + parent.icon }
+    >
+      { parentMenuItems }
+    </Dropdown>
 
-  const caption = (
-    <div className="caption">
-      <i className={ 'green icon ' + parent.icon }/>
-      { parent.title }
-    </div>
-  );
+    <Icon icon="large caret right"/>
 
-  return (
-    <div className="ui top-menu">
-      <Dropdown className="selection fluid" caption={ caption }>
-        { parentMenuItems }
-      </Dropdown>
-
-      <i className="icon large caret right"/>
-
-      <Dropdown className="selection fluid" caption={ currentMenuItem.title }>
-			 	{ menuItems }
-        <div className="ui divider" style={ advancedMenuStyle }/>
-        <div className="header" style={ advancedMenuStyle }>Advanced</div>
+    <SectionedDropdown 
+      className="selection fluid" 
+      caption={ currentMenuItem.title }
+    >
+      <MenuSection>
+        { menuItems }
+      </MenuSection>
+      <MenuSection caption="Advanced">
         { advancedMenuItems }
-      </Dropdown>
-    </div>
-  );
-};
+      </MenuSection>
+    </SectionedDropdown>
+  </div>
+);
 
 
 const TopMenuLayout = ({ saveButton, children, contentClassname, message, ...other }) => (
   <div className="mobile">
-    <MenuSection { ...other }/>
+    <SettingMenu { ...other }/>
     <div id="setting-scroll-context" className={ contentClassname }>
-      { saveButton }
+      { !!saveButton && React.cloneElement(saveButton, { className: 'fluid' }) }
       { message }
       { children }
     </div>
   </div>
 );
 
-export default SaveDecorator(TopMenuLayout, 'fluid');
+export default TopMenuLayout;

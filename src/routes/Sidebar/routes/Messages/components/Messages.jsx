@@ -10,6 +10,9 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
+import MessageNew from './MessageNew';
+import PrivateChatSession from './PrivateChatSession';
+
 import '../style.css';
 
 
@@ -20,10 +23,10 @@ const Messages = createReactClass({
   mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
   render() {
-    const { params, ...other } = this.props;
+    const { match, children, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ params.id }
+        activeId={ match.params.id }
         baseUrl="messages"
         items={ this.state.chatSessions }
         newCaption="New session"
@@ -33,11 +36,13 @@ const Messages = createReactClass({
         editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
         actions={ PrivateChatActions }
         actionIds={ sessionActions }
+        sessionLayout={ PrivateChatSession }
+        newLayout={ MessageNew }
 
         { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
         { ...other }
       >
-        { this.props.children }
+        { children }
       </SessionLayout>
     );
   },

@@ -20,7 +20,7 @@ const getWidgetItem = (widgetInfo, location) => {
   );
 };
 
-const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, { routerLocation }) => (
+const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, { router }) => (
   <Dropdown 
     caption="Add widget..."
     className="create-widget"
@@ -30,12 +30,12 @@ const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, {
   >
     { WidgetStore.widgets
       .filter(widgetInfo => !widgetInfo.alwaysShow)
-      .map(widgetInfo => getWidgetItem(widgetInfo, routerLocation)) }
+      .map(widgetInfo => getWidgetItem(widgetInfo, router.route.location)) }
   </Dropdown>
 );
 
 WidgetDropdown.contextTypes = {
-  routerLocation: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 export default WidgetDropdown;

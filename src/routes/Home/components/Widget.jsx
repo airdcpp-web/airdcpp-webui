@@ -24,7 +24,7 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
   const error = getError(widgetInfo, settings);
   return (
     <div 
-      className={ classNames('card', className, componentId, widgetInfo.typeId) } 
+      className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
       { ...widgetProps }
     >
       <div className="content header-row">
@@ -45,7 +45,7 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
           { !!widgetInfo.actionMenu && <ActionMenu { ...widgetInfo.actionMenu }/> }
         </ActionMenu>
       </div>
-      <div className="content widget">
+      <div className="main content">
         { error ? error : children }
       </div>
     </div>

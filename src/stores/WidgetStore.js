@@ -116,10 +116,11 @@ const WidgetStore = Reflux.createStore({
     return this.layouts;
   },
 
-  onCreateSaved(id, settings, widgetInfo) {
+  onCreateSaved(id, settings, typeId) {
     saveSettings(id, settings);
 
-    this.layouts = createWidget(this.layouts, widgetInfo, id);
+
+    this.layouts = createWidget(this.layouts, this.getWidgetInfoById(typeId), id);
 
     this.trigger(this.layouts);
   },

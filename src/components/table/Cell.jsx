@@ -65,20 +65,20 @@ export const ActionMenuCell = ({ cellData, rowDataGetter, ...props }) => (
   />
 );
 
-export const ActionLinkCell = ({ cellData, rowDataGetter, action, ...props }, context) => {
+export const ActionLinkCell = ({ cellData, rowDataGetter, action, ...props }, { router }) => {
   if (!showAction(action, rowDataGetter())) {
     return <TextCell cellData={ cellData } rowDataGetter={ rowDataGetter } { ...props }/>;
   }
 
   return (
-    <a className="plain link cell" onClick={ () => action(rowDataGetter(), context.routerLocation) }>
+    <a className="plain link cell" onClick={ () => action(rowDataGetter(), router.route.location) }>
       { getCellContent(cellData) }
     </a>
   );
 };
 
 ActionLinkCell.contextTypes = {
-  routerLocation: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 export const SizeCell = ({ cellData }) => (

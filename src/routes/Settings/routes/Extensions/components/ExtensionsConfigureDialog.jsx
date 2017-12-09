@@ -1,11 +1,13 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
+
 import Modal from 'components/semantic/Modal';
 import Form from 'components/form/Form';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 import IconConstants from 'constants/IconConstants';
@@ -15,19 +17,18 @@ const getSettingsUrl = (extensionId) => {
   return ExtensionConstants.EXTENSIONS_URL + '/' + extensionId + '/settings';
 };
 
-const ExtensionsConfigureDialog = createReactClass({
-  displayName: 'ExtensionsConfigureDialog',
-  mixins: [ RouteContext ],
+class ExtensionsConfigureDialog extends React.Component {
+  static displayName = 'ExtensionsConfigureDialog';
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields) {
+  onSave = (changedFields) => {
     return SocketService.patch(getSettingsUrl(this.props.extension.id), changedFields);
-  },
+  };
 
-  render: function () {
+  render() {
     const { extension, settings, fieldDefinitions, ...other } = this.props;
     return (
       <Modal 
@@ -44,18 +45,19 @@ const ExtensionsConfigureDialog = createReactClass({
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
           value={ settings }
-          context={ {
-            location: this.props.location,
-          } }
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default DataProviderDecorator(ExtensionsConfigureDialog, {
-  urls: {
-    fieldDefinitions: ({ extension }) => SocketService.get(getSettingsUrl(extension.id) + '/definitions'),
-    settings: ({ extension }) => SocketService.get(getSettingsUrl(extension.id)),
-  },
-});
+export default ModalRouteDecorator(
+  DataProviderDecorator(ExtensionsConfigureDialog, {
+    urls: {
+      fieldDefinitions: ({ extension }) => SocketService.get(getSettingsUrl(extension.id) + '/definitions'),
+      settings: ({ extension }) => SocketService.get(getSettingsUrl(extension.id)),
+    },
+  }),
+  OverlayConstants.EXTENSION_CONFIGURE_MODAL,
+  ':id/configure'
+);

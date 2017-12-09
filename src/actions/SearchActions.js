@@ -27,14 +27,14 @@ export const SearchActions = Reflux.createActions([
   { 'download': { asyncResult: true } },
 ]);
 
-SearchActions.download.listen((itemData, downloadData) => {
-  return SocketService.post(SearchConstants.RESULTS_URL + '/' + itemData.itemInfo.id + '/download', downloadData)
+SearchActions.download.listen((itemInfo, user, downloadData) => {
+  return SocketService.post(SearchConstants.RESULTS_URL + '/' + itemInfo.id + '/download', downloadData)
     .then(SearchActions.download.completed)
-    .catch(error => SearchActions.download.failed(itemData, error));
+    .catch(error => SearchActions.download.failed(itemInfo, error));
 });
 
-SearchActions.download.failed.listen((itemData, error) => {
-  NotificationActions.apiError('Failed to queue the item ' + itemData.itemInfo.name, error);
+SearchActions.download.failed.listen((itemInfo, error) => {
+  NotificationActions.apiError('Failed to queue the item ' + itemInfo.name, error);
 });
 
 SearchActions.browseContent.listen(function (data, location) {

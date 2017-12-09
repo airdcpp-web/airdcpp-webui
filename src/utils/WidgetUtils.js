@@ -1,4 +1,4 @@
-const createId = (widgetInfo) => widgetInfo.typeId + '_' + Math.floor((Math.random() * 100000000) + 1);
+const createId = (typeId) => typeId + '_' + Math.floor((Math.random() * 100000000) + 1);
 
 const idToSettingKey = (id) => 'widget_' + id;
 

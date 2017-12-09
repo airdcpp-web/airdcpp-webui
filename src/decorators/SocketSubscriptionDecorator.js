@@ -64,7 +64,7 @@ const SocketSubscriptionDecorator = (store, access) => {
 
   // We have a socket already (happens when used together with the socket subscription mixin)
   if (LoginStore.socketAuthenticated) {
-    setTimeout(_onSocketConnected);
+    _onSocketConnected();
   }
 
   return Object.assign(store,	{

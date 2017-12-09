@@ -3,7 +3,8 @@
 }
 
 body {
-	background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
+	background: linear-gradient(to top, #eeeeee 0%,#cccccc 100%);
+	height: 100%;
 }
 
 #background-wrapper {

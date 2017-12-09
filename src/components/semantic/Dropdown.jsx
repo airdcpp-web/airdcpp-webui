@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import DropdownCaption from './DropdownCaption';
 import Icon from './Icon';
 
+import 'semantic-ui/components/button.min.css'; // for button style
 import 'semantic-ui/components/dropdown';
 import 'semantic-ui/components/dropdown.min.css';
 
@@ -64,6 +65,12 @@ class Dropdown extends React.PureComponent {
     setTimeout(this.init);
   }
 
+  componentWillUnmount() {
+    if (this.c) {
+      $(this.c).dropdown('destroy');
+    }
+  }
+
   onShow = () => {
     this.setState({
       visible: true,
@@ -78,7 +85,9 @@ class Dropdown extends React.PureComponent {
 
   hide = () => {
     // Don't hide before the click event is processed by React
-    setTimeout(_ => $(this.c).dropdown('hide'));
+    setTimeout(_ => 
+      $(this.c).dropdown('hide')
+    );
   };
 
   init = () => {
@@ -107,16 +116,11 @@ class Dropdown extends React.PureComponent {
       return <div className="item"/>;
     }
 
-    const { children } = this.props;
-    if (typeof children === 'function') {
-      return children();
-    }
-
-    return children;
+    return this.props.children;
   };
 
   render() {
-    const { leftIcon, caption, header, button, triggerIcon } = this.props;
+    const { leftIcon, caption, button, triggerIcon, captionIcon } = this.props;
     const className = classNames(
       'ui',
       'dropdown',
@@ -134,17 +138,12 @@ class Dropdown extends React.PureComponent {
         className={ className }
       >
         { (leftIcon && caption) && icon }
-        <DropdownCaption>
-          { caption ? caption : icon }
+        <DropdownCaption icon={ captionIcon }>
+          { !!caption ? caption : icon }
         </DropdownCaption>
         { leftIcon || !caption ? null : icon }
 
         <div className="menu">
-          { !!header && (
-            <div className="header">
-              { header }
-            </div>
-          ) }
           { this.getMenuItems() }
         </div>
       </div>

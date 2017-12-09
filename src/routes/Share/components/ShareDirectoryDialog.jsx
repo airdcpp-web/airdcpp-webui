@@ -1,15 +1,16 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
+
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
-import { RouteContext } from 'mixins/RouterMixin';
 
 import Message from 'components/semantic/Message';
 
@@ -52,19 +53,18 @@ const getFields = (profiles) => {
   ];
 };
 
-const ShareDirectoryDialog = createReactClass({
-  displayName: 'ShareDirectoryDialog',
-  mixins: [ RouteContext ],
+class ShareDirectoryDialog extends React.Component {
+  static displayName = 'ShareDirectoryDialog';
 
-  isNew() {
+  isNew = () => {
     return !this.props.rootEntry;
-  },
+  };
 
   componentWillMount() {
     this.fieldDefinitions = getFields(this.props.profiles);
-  },
+  }
 
-  onFieldChanged(id, value, hasChanges) {
+  onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('path') != -1) {
       const mergeFields = { 
         virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) 
@@ -74,21 +74,21 @@ const ShareDirectoryDialog = createReactClass({
     }
 
     return null;
-  },
+  };
 
-  save() {
+  save = () => {
     return this.form.save();
-  },
+  };
 
-  onSave(changedFields) {
+  onSave = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
     return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry.id, changedFields);
-  },
+  };
 
-  onFieldSetting(id, fieldOptions, formValue) {
+  onFieldSetting = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions['disabled'] = !this.isNew();
       fieldOptions['config'] = Object.assign({} || fieldOptions['config'], {
@@ -102,9 +102,9 @@ const ShareDirectoryDialog = createReactClass({
       };
 
     }
-  },
+  };
 
-  render: function () {
+  render() {
     const title = this.isNew() ? 'Add share directory' : 'Edit share directory';
     const { rootEntry, ...other } = this.props;
     return (
@@ -134,20 +134,21 @@ const ShareDirectoryDialog = createReactClass({
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ rootEntry }
-          context={ {
-            location: this.props.location,
-          } }
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {
-  urls: {
-    virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
-  },
-  dataConverters: {
-    virtualNames: data => data.map(item => item.name, []),
-  },
-});
+export default ModalRouteDecorator(
+  DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {
+    urls: {
+      virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
+    },
+    dataConverters: {
+      virtualNames: data => data.map(item => item.name, []),
+    },
+  }),
+  OverlayConstants.SHARE_ROOT_MODAL_ID,
+  '(add|edit)'
+);

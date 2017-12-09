@@ -1,28 +1,30 @@
 module.exports = {
-  path: 'view',
-	
-  getChildRoutes(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, [ {
-        path: 'notifications', 
-        component: require('./components/NotificationPage').default, 
-      }, {
-        path: 'histories', 
-        component: require('./components/HistoryPage').default, 
-      }, {
-        path: 'events', 
-        component: require('./components/EventPage').default, 
-      }, {
-        path: 'miscellaneous', 
-        component: require('./components/MiscellaneousPage').default, 
-      } ]);
-    }, 'settings-view-children');
-  },
-
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('../../components/SettingSection').default);
-    }, 'settings-view');
-  }
+  url: 'view',
+  title: 'View',
+  icon: 'browser',
+  component: require('../../components/SettingSection').default, 
+  menuItems: [
+    { 
+      title: 'Notifications', 
+      url: 'notifications',
+      local: true,
+      component: require('./components/NotificationPage').default, 
+    }, { 
+      title: 'Histories', 
+      url: 'histories',
+      component: require('./components/HistoryPage').default, 
+    }, { 
+      title: 'Events', 
+      url: 'events',
+      component: require('./components/EventPage').default, 
+    },
+  ],
+  advancedMenuItems: [
+    { 
+      title: 'Miscellaneous', 
+      url: 'miscellaneous',
+      local: true,
+      component: require('./components/MiscellaneousPage').default, 
+    },
+  ],
 };
-

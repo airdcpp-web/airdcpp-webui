@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
+import History from 'utils/History';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
+import Button from 'components/semantic/Button';
 import Message from 'components/semantic/Message';
-import Loader from 'components/semantic/Loader';
 
 import '../style.css';
 
@@ -19,7 +19,7 @@ const ErrorBox = ({ lastError }) => {
 
   return (
     <Message 
-      isError={true} 
+      isError={ true } 
       description={ 'Authentication failed: ' + lastError }
     />
   );
@@ -30,16 +30,12 @@ const SubmitButton = ({ onSubmit, loading, allowLogin }) => {
     return null;
   }
 
-  if (loading) {
-    return <Loader size="small" inline={ true } text=""/>;
-  }
-
-  // Don't change the submit button type so that browser prompt to save the password
   return (
-    <input
-      className="ui button fluid large submit"
-      value="Login"
+    <Button
+      className="fluid large submit"
+      caption="Login"
       type="submit"
+      loading={ loading }
       onClick={ onSubmit }
     />
   );
@@ -71,10 +67,6 @@ const Login = createReactClass({
   displayName: 'Login',
   mixins: [ Reflux.connect(LoginStore, 'login') ],
 
-  contextTypes: {
-    router: PropTypes.object
-  },
-
   getInitialState() {
     return {
       loading: false,
@@ -84,7 +76,7 @@ const Login = createReactClass({
   componentWillUpdate(nextProps, nextState) {
     if (nextState.login.socketAuthenticated) {
       const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
-      this.context.router.replace({
+      History.replace({
         pathname: nextPath,
       });
     } else if (this.state.loading && nextState.login.lastError !== null) {
@@ -115,7 +107,7 @@ const Login = createReactClass({
     return (
       <div className="ui middle aligned center aligned grid login-grid">
         <div className="column">
-          <form className="ui large form" onKeyDown={this._onKeyDown} autoComplete="on">
+          <form className="ui large form" onKeyDown={ this._onKeyDown } autoComplete="on">
             <div className="ui stacked segment">
               <div className="field">
                 <div className="ui left icon input">

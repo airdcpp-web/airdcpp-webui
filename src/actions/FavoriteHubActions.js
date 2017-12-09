@@ -40,11 +40,11 @@ export const FavoriteHubActions = Reflux.createActions([
 ]);
 
 FavoriteHubActions.create.listen(function (location) {
-  History.pushModal(location, '/favorite-hubs/new', OverlayConstants.FAVORITE_MODAL_ID);
+  History.pushModal(location, '/favorite-hubs/new', OverlayConstants.FAVORITE_HUB_MODAL_ID);
 });
 
 FavoriteHubActions.edit.listen(function (hub, location) {
-  History.pushModal(location, '/favorite-hubs/edit', OverlayConstants.FAVORITE_MODAL_ID, { hubEntry: hub });
+  History.pushModal(location, '/favorite-hubs/edit', OverlayConstants.FAVORITE_HUB_MODAL_ID, { hubEntry: hub });
 });
 
 FavoriteHubActions.update.listen(function (hub, data) {

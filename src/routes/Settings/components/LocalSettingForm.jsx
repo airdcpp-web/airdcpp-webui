@@ -14,6 +14,10 @@ class LocalSettingForm extends React.Component {
     keys: PropTypes.array.isRequired,
   };
 
+  static contextTypes = {
+    addFormRef: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.definitions = LocalSettingStore.getDefinitions(props.keys);
@@ -35,12 +39,12 @@ class LocalSettingForm extends React.Component {
 
   render() {
     const { settings } = this.state;
-    const { formRef, ...otherProps } = this.props;
+    const { addFormRef } = this.context;
     return (
       <div className="local setting-form">
         <Form
-          { ...otherProps }
-          ref={ formRef }
+          { ...this.props }
+          ref={ addFormRef }
           onSave={ this.onSave }
           fieldDefinitions={ this.definitions }
           value={ settings }

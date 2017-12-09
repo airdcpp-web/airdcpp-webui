@@ -80,7 +80,6 @@ ShareActions.refreshVirtual.failed.listen(function (error) {
 
 ShareActions.addExclude.listen(function (location) {
   History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL, {
-    onConfirm: this.saved.bind(this),
     subHeader: 'Add excluded path',
     historyId: FilesystemConstants.LOCATION_DOWNLOAD,
   });

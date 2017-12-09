@@ -1,18 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
-
-import { RouteContext } from 'mixins/RouterMixin';
 
 import FileBrowserLayout from './FileBrowserLayout';
 
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
-const FileBrowserDialog = createReactClass({
-  displayName: 'FileBrowserDialog',
-  mixins: [ RouteContext ],
 
-  propTypes: {
+class FileBrowserDialog extends React.Component {
+  static displayName = 'FileBrowserDialog';
+
+  static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
@@ -23,37 +22,36 @@ const FileBrowserDialog = createReactClass({
 		 * Information about the item to download
 		 */
     title: PropTypes.node,
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      title: 'Browse...',
-      initialPath: '',
-    };
-  },
+  static defaultProps = {
+    title: 'Browse...',
+    initialPath: '',
+  };
 
-  getInitialState() {
-    return {
-      currentPath: this.props.initialPath,
-    };
-  },
+  state = {
+    currentPath: this.props.initialPath,
+  };
 
-  onDirectoryChanged(path) {
-    this.setState({ currentPath: path });
-  },
+  onDirectoryChanged = (path) => {
+    this.setState({ 
+      currentPath: path 
+    });
+  };
 
-  onConfirm() {
+  onConfirm = () => {
     this.props.onConfirm(this.state.currentPath);
     return Promise.resolve();
-  },
+  };
 
-  render: function () {
+  render() {
     const { currentPath } = this.state;
+    const { title, initialPath, historyId } = this.props;
     return (
       <Modal
         { ...this.props }
         className="file-browser-dialog"
-        title={ this.props.title } 
+        title={ title } 
         onApprove={ this.onConfirm }  
         closable={ true }
         fullHeight={ true }
@@ -62,12 +60,13 @@ const FileBrowserDialog = createReactClass({
         icon="yellow folder open"
       >
         <FileBrowserLayout
-          initialPath={ this.props.initialPath }
+          initialPath={ initialPath }
           onDirectoryChanged={ this.onDirectoryChanged }
-          historyId={ this.props.historyId }
+          historyId={ historyId }
         />
-      </Modal>);
-  },
-});
+      </Modal>
+    );
+  }
+}
 
-export default FileBrowserDialog;
+export default ModalRouteDecorator(FileBrowserDialog, OverlayConstants.FILE_BROWSER_MODAL, 'browse');

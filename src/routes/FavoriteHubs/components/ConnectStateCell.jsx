@@ -9,7 +9,7 @@ import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 class ConnectStateCell extends React.Component {
   static contextTypes = {
-    routerLocation: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
   };
 
   getIcon = () => {
@@ -26,7 +26,7 @@ class ConnectStateCell extends React.Component {
   };
 
   handleCreateSession = () => {
-    HubActions.createSession(this.context.routerLocation, this.props.rowDataGetter().hub_url, HubSessionStore);
+    HubActions.createSession(this.context.router.route.location, this.props.rowDataGetter().hub_url, HubSessionStore);
   };
 
   handleRemoveSession = () => {

@@ -3,8 +3,8 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import createReactClass from 'create-react-class';
-import { Lifecycle } from 'mixins/RouterMixin';
+import ReactDOM from 'react-dom';
+
 import invariant from 'invariant';
 
 import History from 'utils/History';
@@ -13,40 +13,39 @@ import '../style.css';
 
 
 export default function (Component, semanticModuleName) {
-  const OverlayDecorator = createReactClass({
-    displayName: 'OverlayDecorator',
-    mixins: [ Lifecycle ],
-    changeHistoryState: true,
+  class OverlayDecorator extends React.Component {
+    static displayName = 'OverlayDecorator';
 
-    routerWillLeave(nextLocation) {
-      if (nextLocation.pathname.indexOf(this.props.location.pathname) !== 0) {
-        this.changeHistoryState = false;
+    static propTypes = {
+      overlayId: PropTypes.any.isRequired,
+    };
+
+    static contextTypes = {
+      router: PropTypes.object.isRequired,
+    };
+
+    closing = false;
+    returnOnClose = true;
+
+    componentWillMount() {
+      this.node = document.createElement('div');
+      document.body.appendChild(this.node);
+    }
+
+    componentWillUnmount() {
+      if (!this.closing) {
+        this.returnOnClose = false;
         this.hide();
       }
-    },
+    }
 
-    propTypes: {
-      /**
-			 * Removes portal from DOM
-			 */
-      onHidden: PropTypes.func,
-
-      /**
-			 * Returns to the location that was active before opening the overlay
-			 */
-      onHide: PropTypes.func,
-
-      location: PropTypes.object.isRequired,
-      overlayId: PropTypes.any, // Required
-    },
-
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.location.state[this.props.overlayId].data.close) {
+    componentWillReceiveProps(nextProps, nextLocation) {
+      if (nextLocation.router.route.location.state[this.props.overlayId].data.close) {
         this.hide();
       }
-    },
+    }
 
-    showOverlay(c, componentSettings = {}) {
+    showOverlay = (c, componentSettings = {}) => {
       invariant(c, 'Component missing from showOverlay');
 
       this.c = c;
@@ -60,40 +59,38 @@ export default function (Component, semanticModuleName) {
       setTimeout(_ => {
         $(this.c)[semanticModuleName](settings)[semanticModuleName]('show');
       });
-    },
+    };
 
-    hide() {
+    hide = () => {
       invariant(this.c, 'Component not set when hiding overlay');
       $(this.c)[semanticModuleName]('hide');
-    },
+    };
 
-    onHide() {
-      if (this.props.onHide) {
-        this.props.onHide();
-      }
-    },
+    onHide = () => {
+      this.closing = true;
+    };
 
-    onHidden() {
-      if (this.changeHistoryState) {
-        History.removeOverlay(this.props.location, this.props.overlayId);
+    onHidden = () => {
+      // Don't change the history state if we navigating back using the browser history
+      if (History.action !== 'POP') {
+        History.removeOverlay(this.context.router.route.location, this.props.overlayId, this.returnOnClose);
       }
 
-      if (this.props.onHidden) {
-        this.props.onHidden(this.changeHistoryState);
-      }
-    },
+      document.body.removeChild(this.node);
+      this.node = null;
+    };
 
     render() {
-      return (
+      return ReactDOM.createPortal((
         <Component 
           { ...this.props } 
           { ...this.state } 
           showOverlay={ this.showOverlay } 
           hide={ this.hide }
         />
-      );
-    },
-  });
+      ), this.node);
+    }
+  }
 
   return OverlayDecorator;
 }

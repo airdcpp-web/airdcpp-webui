@@ -1,26 +1,26 @@
-#home .transfers .content.widget > div {
+.transfers.widget .main.content > div {
 	flex-direction: row;
 }
 
-#home .transfers .content.widget .info.list {
+.transfers.widget .main.content .section-separator {
+	margin-top: 10px;
+}
+
+.transfers.widget .main.content .graph {
+	flex-grow: 100;
+	overflow: hidden;
+}
+
+.transfers.widget .main.content .stats {
 	margin-left: 10px;
 	margin-top: 0px;
 	flex: 0 0 auto;
 }
 
-#home .transfers .content.widget .graph {
-	flex-grow: 100;
-	overflow: hidden;
-}
-
-#home .transfers .content.widget .section-separator {
-	margin-top: 10px;
-}
-
-#home .transfers .stats .popup.trigger {
+.transfers.widget .main.content .stats .popup.trigger {
 	border-bottom: 1px dotted;
 }
 
-.limiter-config .remove.button {
+.limiter.popup .remove.button {
 	margin-top: 5px;
 }

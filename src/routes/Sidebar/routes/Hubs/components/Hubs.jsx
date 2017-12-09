@@ -12,6 +12,8 @@ import HubActions from 'actions/HubActions';
 import TypeConvert from 'utils/TypeConvert';
 import AccessConstants from 'constants/AccessConstants';
 
+import HubSession from './HubSession';
+import HubNew from './HubNew';
 import HubIcon from 'components/icon/HubIcon';
 
 
@@ -39,7 +41,7 @@ const ItemHandler = {
 };
 
 const parseNumericId = (params) => {
-  if (!params) {
+  if (!params['id']) {
     return null;
   }
 
@@ -53,10 +55,10 @@ const Hubs = createReactClass({
   mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
 
   render() {
-    const { params, ...other } = this.props;
+    const { match, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ parseNumericId(params) }
+        activeId={ parseNumericId(match.params) }
         baseUrl="hubs"
         items={ this.state.hubSessions } 
         newCaption="Connect"
@@ -65,13 +67,13 @@ const Hubs = createReactClass({
         editAccess={ AccessConstants.HUBS_EDIT }
         actions={ HubActions } 
         //actionIds={ hubActions }
+        sessionLayout={ HubSession }
+        newLayout={ HubNew }
 
         unreadInfoStore={ HubSessionStore }
         { ...ItemHandler }
         { ...other }
-      >
-        { this.props.children }
-      </SessionLayout>
+      />
     );
   },
 });

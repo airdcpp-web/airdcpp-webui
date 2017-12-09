@@ -7,11 +7,10 @@ import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import MenuIcon from 'components/menu/MenuIcon';
 
 import UrgencyUtils from 'utils/UrgencyUtils';
-import History from 'utils/History';
-import Button from 'components/semantic/Button';
 
-import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
-import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
+import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
+
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import 'mobile.css';
 
@@ -34,12 +33,12 @@ const reduceMenuItemUrgency = (map, menuItem) => {
   return map;
 };
 
-const HeaderContent = MainNavigationDecorator(createReactClass({
+const HeaderContent = createReactClass({
   displayName: 'HeaderContent',
   mixins: [ Reflux.ListenerMixin ],
 
   componentDidMount() {
-    this.props.secondaryMenuItems.forEach(item => {
+    secondaryRoutes.forEach(item => {
       if (item.unreadInfoStore) {
         this.listenTo(item.unreadInfoStore, _ => this.forceUpdate());
       }
@@ -47,27 +46,19 @@ const HeaderContent = MainNavigationDecorator(createReactClass({
   },
 
   render() {
-    const { secondaryMenuItems, onClickMenu, onClickBack, sidebar } = this.props;
+    const { onClickMenu } = this.props;
 		
     return (
       <div className="right">
-        { sidebar && (
-          <Button 
-            className="item" 
-            caption="Back" 
-            icon="blue angle left"
-            onClick={ onClickBack }
-          />
-        ) }
         <MenuIcon 
-          urgencies={ UrgencyUtils.validateUrgencies(secondaryMenuItems.reduce(reduceMenuItemUrgency, {})) }
+          urgencies={ UrgencyUtils.validateUrgencies(secondaryRoutes.reduce(reduceMenuItemUrgency, {})) }
           onClick={ onClickMenu }
           className="item"
         />
       </div>
     );
   },
-}));
+});
 
 class MainLayoutMobile extends React.Component {
   state = {
@@ -78,34 +69,28 @@ class MainLayoutMobile extends React.Component {
     this.setState({ menuVisible: !this.state.menuVisible });
   };
 
-  onClickBack = () => {
-    History.replaceSidebarData(this.props.location, { close: true });
-  };
-
   render() {
-    const { children, sidebar } = this.props;
+    const { className, location } = this.props;
 		
     return (
-      <div className={this.props.className} id="mobile-layout">
+      <div className={ className } id="mobile-layout">
         { this.state.menuVisible && (
           <MainNavigation
-            location={ this.props.location }
+            location={ location }
             onClose={ this.onClickMenu }
           />
         ) }
-        <div className="pusher sidebar-context" id="mobile-layout-inner">
+        <div className="pusher" id="mobile-layout-inner">
           <SiteHeader 
             content={
               <HeaderContent
                 onClickMenu={ this.onClickMenu }
-                onClickBack={ this.onClickBack }
-                sidebar={ sidebar }
+                location={ location }
               />
             }
           />
-          { sidebar }
-          <div className="ui site-content pusher">
-            { children }
+          <div className="site-content">
+            { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
           </div>
         </div>
       </div>
@@ -113,4 +98,4 @@ class MainLayoutMobile extends React.Component {
   }
 }
 
-export default OverlayHandlerDecorator(MainLayoutMobile);
+export default SidebarHandlerDecorator(MainLayoutMobile);

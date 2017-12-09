@@ -2,7 +2,6 @@
 import React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
-import SaveDecorator from '../decorators/SaveDecorator';
 
 
 const SideMenu = ({ menuItems, advancedMenuItems, menuItemToLink, parent }) => {
@@ -60,4 +59,4 @@ const SideMenuLayout = ({ children, ...other }) => (
   </div>
 );
 
-export default SaveDecorator(SideMenuLayout);
+export default SideMenuLayout;

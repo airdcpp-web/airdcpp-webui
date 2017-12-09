@@ -1,4 +1,5 @@
 import React from 'react';
+import { Prompt } from 'react-router-dom';
 
 import FilelistItemActions from 'actions/FilelistItemActions';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
@@ -11,9 +12,7 @@ import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import History from 'utils/History';
-
-//import { Lifecycle } from 'mixins/RouterMixin';
-//import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from 'actions/NotificationActions';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
@@ -23,38 +22,36 @@ import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
+import DownloadDialog from 'components/download/DownloadDialog';
+
 
 class ListBrowser extends React.Component {
-  /*mixins: [ Lifecycle ],
+  componentWillUnmount() {
+    clearTimeout(this.historyLeaveTimeout);
+  };
 
-	// Disabled, doesn't work (investigate later)
-	// Add RouteContext to parent before enabling
+  routerWillLeave = (nextLocation, action) => {
+    if (action === 'POP' && this.hasClickedDirectory && !this.historyLeaveTimeout && nextLocation.pathname !== this.props.location.pathname) {
+      this.historyLeaveTimeout = setTimeout(() => this.historyLeaveTimeout = null, 3000);
+      NotificationActions.info({
+        title: 'Confirm action',
+        message: 'Click the back button again to leave this filelist',
+      });
+      return false;
+    }
 
-	componentWillUnmount() {
-		clearTimeout(this.historyLeaveTimeout);
-	},
+    return true;
+  }
 
-	routerWillLeave(nextLocation) {
-		if (this.hasClickedDirectory && !this.historyLeaveTimeout && nextLocation.pathname !== this.props.location.pathname) {
-			this.historyLeaveTimeout = setTimeout(() => this.historyLeaveTimeout = null, 2000);
-			NotificationActions.info('Click back again to leave this filelist');
-			return false;
-		}
-
-		return true;
-	},
-
-	contextTypes: {
-		route: React.PropTypes.object.isRequired,
-		router: React.PropTypes.object.isRequired,
-	},*/
-
-  _rowClassNameGetter = (rowData) => {
+  rowClassNameGetter = (rowData) => {
     return TypeConvert.dupeToStringType(rowData.dupe);
   };
 
-  _handleClickDirectory = (path) => {
+  handleClickDirectory = (path) => {
     this.hasClickedDirectory = true;
+
+    clearTimeout(this.historyLeaveTimeout);
+    this.historyLeaveTimeout = null;
 
     // Handle it through location state data
     History.pushSidebarData(this.props.location, { directory: path });
@@ -123,7 +120,7 @@ class ListBrowser extends React.Component {
 
   onClickDirectory = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
-      return () => this._handleClickDirectory(this.props.session.location.path + cellData + '/');
+      return () => this.handleClickDirectory(this.props.session.location.path + cellData + '/');
     }
 
     return undefined;
@@ -160,18 +157,22 @@ class ListBrowser extends React.Component {
     const { session } = this.props;
     return (
       <div className="browser">
+        <Prompt
+          message={ this.routerWillLeave }
+        />
+
         <BrowserBar 
           path={ session.location.path }
           separator="/"
           rootPath="/"
-          itemClickHandler={ this._handleClickDirectory }
+          itemClickHandler={ this.handleClickDirectory }
           selectedNameFormatter={ this.selectedNameFormatter }
           entityId={ session.id } // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
         />
 
         <VirtualTable
           emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-          rowClassNameGetter={ this._rowClassNameGetter }
+          rowClassNameGetter={ this.rowClassNameGetter }
           store={ FilelistViewStore }
           entityId={ session.id }
           viewId={ session.location.path }
@@ -185,7 +186,6 @@ class ListBrowser extends React.Component {
               <FileDownloadCell 
                 clickHandlerGetter={ this.onClickDirectory }
                 userGetter={ this.userGetter }
-                handler={ FilelistItemActions.download } 
               /> 
             }
             flexGrow={8}
@@ -212,6 +212,7 @@ class ListBrowser extends React.Component {
             flexGrow={1}
           />
         </VirtualTable>
+        <DownloadDialog downloadHandler={ FilelistItemActions.download }/>
       </div>
     );
   }

@@ -83,7 +83,7 @@ const parseMenu = (props, hasPreviousMenuItems) => {
 };
 
 // Convert ID to menu link element
-const getMenuItem = (menu, menuIndex, actionId, itemIndex, routerLocation) => {
+const getMenuItem = (menu, menuIndex, actionId, itemIndex, location) => {
   if (actionId === 'divider') {
     return <div key={ 'divider' + menuIndex + '_' + itemIndex } className="ui divider"/>;
   }
@@ -97,7 +97,7 @@ const getMenuItem = (menu, menuIndex, actionId, itemIndex, routerLocation) => {
   return (
     <MenuItemLink 
       key={ actionId } 
-      onClick={ () => action(menu.itemDataGetter(), routerLocation) }
+      onClick={ () => action(menu.itemDataGetter(), location) }
       icon={ action.icon }
     >
       { action.displayName }
@@ -138,13 +138,13 @@ export default function (Component) {
     };
 
     static contextTypes = {
-      routerLocation: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
     };
 
     // Reduce menus to an array of DropdownItems
     reduceMenuItems = (items, menu, menuIndex) => {
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
-        return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.routerLocation);
+        return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.router.route.location);
       }));
       return items;
     };

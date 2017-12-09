@@ -1,19 +1,18 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
-import { LocationContext, RouteContext } from 'mixins/RouterMixin';
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
 
 import SourceTable from './SourceTable';
 
 
-const SourceDialog = createReactClass({
-  displayName: 'SourceDialog',
-  mixins: [ LocationContext, RouteContext ],
+class SourceDialog extends React.Component {
+  static displayName = 'SourceDialog';
 
-  render: function () {
+  render() {
     const { bundle } = this.props;
     return (
       <Modal 
@@ -29,7 +28,7 @@ const SourceDialog = createReactClass({
         />
       </Modal>
     );
-  },
-});
+  }
+}
 
-export default SourceDialog;
+export default ModalRouteDecorator(SourceDialog, OverlayConstants.BUNDLE_SOURCE_MODAL, 'sources');

@@ -1,34 +1,25 @@
 'use strict';
 
-import PropTypes from 'prop-types';
-
 import React from 'react';
-import Dropdown from 'components/semantic/Dropdown';
+import SectionedDropdown from 'components/semantic/SectionedDropdown';
+import MenuSection from 'components/semantic/MenuSection';
 
-import MainNavigationDecorator from 'decorators/menu/MainNavigationDecorator';
+import { configRoutes, mainRoutes, logoutItem, parseMenuItems, parseMenuItem } from 'routes/Routes';
 
 
-class MainNavigationNormal extends React.Component {
-  static propTypes = {
-    mainMenuItems: PropTypes.array.isRequired,
-    configMenuItems: PropTypes.array.isRequired,
-    logoutItem: PropTypes.object.isRequired,
-  };
+const MainNavigationNormal = () => (
+  <div className="item right">
+    { parseMenuItems(mainRoutes, null, false) }
 
-  render() {
-    const { configMenuItems, mainMenuItems, logoutItem, menuItemGetter } = this.props;
-    return (
-      <div className="item right">
-        { mainMenuItems.map(item => menuItemGetter(null, false, item)) }
+    <SectionedDropdown className="top right">
+      <MenuSection>
+        { parseMenuItems(configRoutes) }
+      </MenuSection>
+      <MenuSection>
+        { parseMenuItem(logoutItem, logoutItem.onClick) }
+      </MenuSection>
+    </SectionedDropdown>
+  </div>
+);
 
-        <Dropdown className="top right">
-          { configMenuItems.map(item => menuItemGetter(null, true, item)) }
-          <div className="divider"/>
-          { menuItemGetter(logoutItem.onClick, true, logoutItem) }
-        </Dropdown>
-      </div>
-    );
-  }
-}
-
-export default MainNavigationDecorator(MainNavigationNormal);
+export default MainNavigationNormal;

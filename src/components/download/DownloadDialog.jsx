@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Modal from 'components/semantic/Modal';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
@@ -11,8 +10,6 @@ import IconConstants from 'constants/IconConstants';
 
 import HistoryActions from 'actions/HistoryActions';
 
-import { RouteContext } from 'mixins/RouterMixin';
-
 import DownloadFileBrowser from './DownloadFileBrowser';
 import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';
@@ -20,6 +17,9 @@ import AccordionTargets from './AccordionTargets';
 import FileUtils from 'utils/FileUtils';
 import BrowserUtils from 'utils/BrowserUtils';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
+
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import OverlayConstants from 'constants/OverlayConstants';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -56,16 +56,15 @@ const MobileLayout = ({ menuItems, section }) => (
   </div>
 );
 
-const DownloadDialog = createReactClass({
-  displayName: 'DownloadDialog',
-  mixins: [ RouteContext ],
+class DownloadDialog extends React.Component {
+  static displayName = 'DownloadDialog';
 
-  propTypes: {
+  static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
 		 * Required
 		 */
-    downloadHandler: PropTypes.func,
+    downloadHandler: PropTypes.func.isRequired,
 
     /**
 		 * Information about the item to download
@@ -77,10 +76,11 @@ const DownloadDialog = createReactClass({
       name: PropTypes.string,
       type: PropTypes.object
     }),
-  },
+  };
 
-  getInitialState() {
-    const { historyPaths, sharePaths, favoritePaths, itemInfo } = this.props;
+  constructor(props) {
+    super(props);
+    const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
     const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils)) : [];
 
     this.sections = [
@@ -115,14 +115,15 @@ const DownloadDialog = createReactClass({
       });
     }
 
-    return {
+    this.state = {
       active: 'history',
     };
-  },
+  }
 
-  handleDownload(path) {
-    this.props.downloadHandler({
-      target_name: this.props.itemInfo.name, // possibly allow changing this later...
+  handleDownload = (path) => {
+    const { downloadHandler, itemInfo, user } = this.props;
+    downloadHandler(itemInfo, user, {
+      target_name: itemInfo.name, // possibly allow changing this later...
       target_directory: path,
       target_type: 0,
       priority: PriorityEnum.DEFAULT
@@ -130,9 +131,9 @@ const DownloadDialog = createReactClass({
 
     HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
     this.modal.hide();
-  },
+  };
 
-  getMenuItem(section) {
+  getMenuItem = (section) => {
     return (
       <MenuItemLink 
         key={ section.key }
@@ -147,7 +148,7 @@ const DownloadDialog = createReactClass({
         ) }
       </MenuItemLink>
     );
-  },
+  };
 
   render() {
     const section = this.sections.find(section => section.key === this.state.active);
@@ -170,13 +171,17 @@ const DownloadDialog = createReactClass({
           section={ section }
         />
       </Modal>);
-  },
-});
+  }
+}
 
-export default DataProviderDecorator(DownloadDialog, {
-  urls: {
-    sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
-    favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-    historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
-  },
-});
+export default ModalRouteDecorator(
+  DataProviderDecorator(DownloadDialog, {
+    urls: {
+      sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+      favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+      historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+    },
+  }),
+  OverlayConstants.DOWNLOAD_MODAL_ID,
+  'download'
+);

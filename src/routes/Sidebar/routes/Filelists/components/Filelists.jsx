@@ -10,6 +10,9 @@ import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
+import FilelistNew from './FilelistNew';
+import FilelistSession from './FilelistSession';
+
 import '../style.css';
 
 
@@ -45,10 +48,10 @@ const Filelists = createReactClass({
   mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 
   render() {
-    const { children, params, ...other } = this.props;
+    const { children, match, ...other } = this.props;
     return (
       <SessionLayout 
-        activeId={ params.id }
+        activeId={ match.params.id }
         baseUrl="filelists"
         items={ this.state.filelists }
         newCaption="Open filelist"
@@ -58,6 +61,8 @@ const Filelists = createReactClass({
         editAccess={ AccessConstants.FILELISTS_EDIT }
         actions={ FilelistSessionActions }
         unreadInfoStore={ FilelistSessionStore }
+        sessionLayout={ FilelistSession }
+        newLayout={ FilelistNew }
 
         { ...ItemHandler }
         { ...other }

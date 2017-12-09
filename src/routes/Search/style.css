@@ -1,7 +1,10 @@
 .search-container {
 	width:100%;
 	height: 50px;
-	margin-bottom: 5px;
+}
+
+#mobile-layout .search-container {
+	margin-top: 10px;
 }
 
 .search-container .search-area {

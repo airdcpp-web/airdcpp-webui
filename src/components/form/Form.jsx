@@ -60,6 +60,7 @@ class Form extends React.Component {
 
   static contextTypes = {
     onFieldChanged: PropTypes.func,
+    router: PropTypes.object.isRequired,
   };
 
   state = {
@@ -203,7 +204,7 @@ class Form extends React.Component {
   };
 
   render() {
-    const { title, context, fieldDefinitions, className } = this.props;
+    const { title, fieldDefinitions, className } = this.props;
     const { formValue } = this.state;
     return (
       <div className={ classNames('form', className) }>
@@ -218,7 +219,9 @@ class Form extends React.Component {
           options={ this.getFieldOptions() }
           value={ formValue }
           onChange={ this.onFieldChanged }
-          context={ context }
+          context={ {
+            ...this.context,
+          } }
         />
       </div>);
   }

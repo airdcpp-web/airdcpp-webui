@@ -1,40 +1,64 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
+import Sidebar from 'routes/Sidebar/components/Sidebar';
 import SiteHeader from './SiteHeader';
 
-import OverlayHandlerDecorator from './decorators/OverlayHandlerDecorator';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
+
+import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 
 import 'normal.css';
 
 
+const toIndexRedirect = route => (
+  <Route
+    key={ route.path }
+    path={ route.path }
+    render={ () => (
+      <Redirect
+        to="/"
+      />
+    ) }
+  />
+);
+
 class MainLayout extends React.Component {
   static propTypes = {
-    children: PropTypes.node.isRequired,
-    sidebar: PropTypes.node,
+    sidebar: PropTypes.bool,
     location: PropTypes.object.isRequired,
   };
 
   render() {
-    const { children, sidebar } = this.props;
+    const { sidebar, className, location, previousLocation } = this.props;
 
     return (
-      <div className={ this.props.className + ' sidebar-context' } id="normal-layout">
-        { sidebar }
+      <div className={ className + ' pushable sidebar-context' } id="normal-layout">
+        { sidebar ? (
+          <Sidebar location={ location }>
+            { parseRoutes(secondaryRoutes) }
+          </Sidebar>
+        ) : (
+          <div>
+            {/* Sidebar locations without the correct history data won't work, redirect to index */}
+            { secondaryRoutes.map(toIndexRedirect) }
+          </div>
+        ) }
         <div className="pusher">
           <SiteHeader 
-            content={ <MainNavigation/> }
+            content={ <MainNavigation location={ location }/> }
           />
           <div className="ui site-content">
-            { children }
+            { parseRoutes([ ...mainRoutes, ...configRoutes ], previousLocation ? previousLocation : location) }
           </div>
         </div>
-        <SideMenu location={ this.props.location }/>
+        <SideMenu location={ location }/>
       </div>
     );
   }
 }
 
-export default OverlayHandlerDecorator(MainLayout);
+export default SidebarHandlerDecorator(MainLayout);
