@@ -26,13 +26,9 @@ import DownloadDialog from 'components/download/DownloadDialog';
 
 
 class ListBrowser extends React.Component {
-  componentWillUnmount() {
-    clearTimeout(this.historyLeaveTimeout);
-  };
-
   routerWillLeave = (nextLocation, action) => {
-    if (action === 'POP' && this.hasClickedDirectory && !this.historyLeaveTimeout && nextLocation.pathname !== this.props.location.pathname) {
-      this.historyLeaveTimeout = setTimeout(() => this.historyLeaveTimeout = null, 3000);
+    if (action === 'POP' && this.hasClickedDirectory && nextLocation.pathname !== this.props.location.pathname) {
+      this.hasClickedDirectory = false;
       NotificationActions.info({
         title: 'Confirm action',
         message: 'Click the back button again to leave this filelist',
@@ -49,9 +45,6 @@ class ListBrowser extends React.Component {
 
   handleClickDirectory = (path) => {
     this.hasClickedDirectory = true;
-
-    clearTimeout(this.historyLeaveTimeout);
-    this.historyLeaveTimeout = null;
 
     // Handle it through location state data
     History.pushSidebarData(this.props.location, { directory: path });
