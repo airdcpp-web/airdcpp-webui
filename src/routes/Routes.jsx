@@ -131,7 +131,7 @@ export const parseMenuItem = (route, onClick, showIcon = true) => {
       url={ path }
       className={ className }
       icon={ showIcon ? (icon + ' navigation') : null }
-      onClick={ onClick ? evt => onClick(path, evt) : undefined }
+      onClick={ onClick || route.onClick ? (evt => onClick ? onClick(path, evt) : route.onClick(path, evt)) : undefined }
       unreadInfoStore={ unreadInfoStore }
     >
       { title }

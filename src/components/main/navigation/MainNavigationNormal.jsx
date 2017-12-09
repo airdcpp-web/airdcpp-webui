@@ -16,7 +16,7 @@ const MainNavigationNormal = () => (
         { parseMenuItems(configRoutes) }
       </MenuSection>
       <MenuSection>
-        { parseMenuItem(logoutItem, logoutItem.onClick) }
+        { parseMenuItem(logoutItem) }
       </MenuSection>
     </SectionedDropdown>
   </div>
