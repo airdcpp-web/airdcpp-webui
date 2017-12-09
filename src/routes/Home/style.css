@@ -1,3 +1,4 @@
+/* Layout */
 #home .ui.message .content .description {
   margin-top: 15px;
 }
@@ -6,13 +7,28 @@
   margin-top: 10px;
 }
 
-#home .content.widget {
+#mobile-layout #home {
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 15px;
+}
+
+#mobile-layout #home .ui.message {
+	margin-top: 10px;
+	margin-left: 8px;
+	margin-right: -5px;
+}
+
+
+/* Widgets */
+.react-grid-layout .widget .main.content {
   max-height: calc(100% - 45px);
   display: flex;
   overflow: hidden;
 }
 
-#home .content.widget > div {
+.react-grid-layout .widget .main.content > div {
 	max-height: 100%;
 	max-width: 100%;
 	display: flex;
@@ -20,29 +36,21 @@
 	flex: 1;
 }
 
-#home .react-grid-item .header-row {
+.react-grid-layout .widget .header-row {
 	display: flex;
-	flex: 0 0 auto;
+	flex: 0 0 auto !important;
 }
 
-#home .react-grid-item .header-row .header {
+.react-grid-layout .widget .header-row .header {
 	flex: 1;
 	height: 100%;
 }
 
-#home .create-widget {
-	max-width: 200px;
-}
-
-#home .content.widget .extra.content,
-#home .content.widget .extra.content .header {
+.react-grid-layout .widget .main.content .extra.content {
 	color: rgba(0,0,0,.4);
 }
 
-#mobile-layout #home {
-	height: 100%;
-	padding-right: 25px;
-	padding-left: 5px;
-	overflow-y: auto;
-	overflow-x: hidden;
+#mobile-layout .react-grid-layout .react-grid-item {
+	/* Allow touch scrolling */
+  touch-action: initial !important;
 }
