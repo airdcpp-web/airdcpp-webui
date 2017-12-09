@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Icon from './Icon';
 
 const MenuSection = ({ caption, icon, children }) => {
-  if (!children) {
+  if (React.Children.count(children) === 0) {
     return null;
   }
   

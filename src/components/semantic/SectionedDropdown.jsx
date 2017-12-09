@@ -2,15 +2,19 @@ import React, { Fragment } from 'react';
 import Dropdown from './Dropdown';
 
 const SectionedDropdown = ({ children, ...other }) => {
+  // Remove empty sections
+  const validChildren = React.Children.toArray(children)
+    .filter(child => React.Children.count(child.props.children) > 0);
+
   return (
     <Dropdown
       { ...other }
     >
-      { React.Children.map(children, (child, index) => {
+      { React.Children.map(validChildren, (child, index) => {
         return (
           <Fragment key={ index }>
             { child }
-            { (children.length && index !== children.length - 1) && <div className="ui divider"/> }
+            { (validChildren.length && index !== validChildren.length - 1) && <div className="ui divider"/> }
           </Fragment>
         );
       }) }
