@@ -140,10 +140,6 @@ class SessionLayout extends React.Component {
   };
 
   getNewUrl = () => {
-    if (!this.props.newCaption || !this.hasEditAccess()) {
-      return '/' + this.props.baseUrl;
-    }
-
     return '/' + this.props.baseUrl + '/new';
   };
 
