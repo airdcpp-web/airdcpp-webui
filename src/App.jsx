@@ -29,15 +29,6 @@ global.Promise = Promise;
 
 Reflux.use(RefluxPromise(Promise));
 
-/*const onEnterSidebar = (nextProps, replace) => {
-  // Don't allow sidebar to be accessed with a direct link
-  if (!History.hasSidebar(nextProps.location)) {
-    replace({
-      pathname: '/',
-    });
-  }
-};*/
-
 
 const getBackgroundImage = () => {
   const url = LocalSettingStore.getValue(LocalSettings.BACKGROUND_IMAGE_URL);
