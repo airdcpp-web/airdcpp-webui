@@ -1,7 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Reflux from 'reflux';
-import { Route } from 'react-router';
 
 import TextDecorator from 'components/TextDecorator';
 

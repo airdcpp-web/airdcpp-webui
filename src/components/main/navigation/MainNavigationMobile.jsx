@@ -32,8 +32,9 @@ class MainNavigationMobile extends React.Component {
   onClickSecondary = (url, evt) => {
     evt.preventDefault();
 
-    const isActive = matchPath(this.props.url, {
-      path: this.props.location.pathname
+    const isActive = matchPath(this.props.location.pathname, {
+      path: url,
+      exact: url !== '/',
     });
 
     if (!isActive) {

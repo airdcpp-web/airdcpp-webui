@@ -1,6 +1,5 @@
 import React from 'react';
 
-import SearchActions from 'actions/SearchActions';
 import ValueFormat from 'utils/ValueFormat';
 
 import { DownloadMenu } from 'components/menu/DropdownMenu';

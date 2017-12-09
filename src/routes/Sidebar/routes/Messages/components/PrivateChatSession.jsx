@@ -13,7 +13,7 @@ class PrivateChatSession extends React.Component {
   static displayName = 'PrivateChatSession';
 
   render() {
-    const { session, location, actions } = this.props;
+    const { session, actions } = this.props;
     return (
       <div className="private chat session">
         <ChatLayout

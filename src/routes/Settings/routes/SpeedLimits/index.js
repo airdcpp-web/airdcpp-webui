@@ -29,4 +29,4 @@ module.exports = {
       component: require('./components/UserLimitPage').default, 
     },
   ],
-}
+};

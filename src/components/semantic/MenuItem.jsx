@@ -17,6 +17,7 @@ import Icon from 'components/semantic/Icon';
 export const RouterMenuItemLink = createReactClass({
   displayName: 'RouterMenuItemLink',
   mixins: [ Reflux.ListenerMixin ],
+  isActive: false,
 
   contextTypes: {
     router: PropTypes.object.isRequired,
@@ -72,15 +73,15 @@ export const RouterMenuItemLink = createReactClass({
     };
   },
 
-  /*shouldComponentUpdate(nextProps, nextState, nextContext) {
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
     // Session (or its properties) updated/changed?
     if (nextProps.session !== this.props.session) {
       return true;
     }
 
     // Active state changed?
-    const isActive = matchPath(this.props.url, {
-      path: nextContext.router.route.location.pathname,
+    const isActive = !!matchPath(nextContext.router.route.location.pathname, {
+      path: this.props.url,
       exact: this.props.url === '/',
     });
 
@@ -95,7 +96,7 @@ export const RouterMenuItemLink = createReactClass({
     }
 
     return false;
-  },*/
+  },
 
   componentDidMount() {
     const { unreadInfoStore } = this.props;
