@@ -53,7 +53,7 @@ var compiler = webpack(config);
 app.use(require('webpack-dev-middleware')(compiler, {
 	hot: true,
 	historyApiFallback: true,
-	noInfo: true,
+	logLevel: 'warn',
 	publicPath: config.output.publicPath
 }));
 
