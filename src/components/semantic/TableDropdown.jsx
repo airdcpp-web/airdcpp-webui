@@ -81,7 +81,7 @@ class TableDropdown extends React.Component {
     };
 
     return (
-      <div className={ classNames('table dropdown', this.props.className) }>
+      <div className={ classNames('dropdown', this.props.className) }>
         <Popup 
           ref={ c => this.popupNode = c }
           className="basic dropdown-content" 

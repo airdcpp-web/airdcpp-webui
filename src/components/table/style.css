@@ -1,38 +1,51 @@
-.table-footer {
+/* Generic table styles */
+.virtual-table {
+	height: 100%;
 	width: 100%;
-	padding: 5px;
-	background-color: #f6f7f8;
-	background-image: -webkit-linear-gradient(#fff, #efefef);
-	background-image: linear-gradient(#fff, #efefef);
-	display:flex;
-	align-items: center;
-}
-
-.table-footer .filter {
-	margin-left: auto;
 	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }
 
-.table-footer .count-info {
-	margin-right: 0px;
-	color: grey;
+.virtual-table .table-container-wrapper {
+	width: 100%;
+	flex: 1 1 auto;
+
+	/* The table won't shrink properly without this */
+	height: calc(100% - 50px);
 }
 
-.table-footer .filter > div:last-child {
-	margin-left: 10px;
+.virtual-table .public_fixedDataTable_bodyRow a i:hover {
+	cursor:pointer;
 }
 
-.table-footer .filter .dropdown.button {
-	padding-left: 0px;
-	padding-right: 0px;
+.virtual-table .fixedDataTableLayout_main {
+	background-color: rgba(250, 250, 250, 0.8);
 }
 
-.table-footer .filter .dropdown .trigger.icon {
-	margin-right: 0px;
+.virtual-table .public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
+	color: black;
 }
 
-.table-footer .filter input {
-	width: 90%;
+
+
+/* Common cell content styles */
+
+.virtual-table .cell-wrapper {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-height: 50px;
+  padding: 5px;
+}
+
+.virtual-table .cell-wrapper .plain.cell,
+.virtual-table .cell-wrapper .empty.dropdown {
+  margin: 0px 3px;
+}
+
+.virtual-table .cell-wrapper .ui.progress .bar {
+	height: 5px;
 }
 
 .virtual-table .cell-wrapper.dupe.queue.full, 
@@ -71,88 +84,87 @@
 	color: #79FF79 !important;
 }
 
-.public_fixedDataTable_bodyRow a i:hover {
-	cursor:pointer;
-}
 
-.fixedDataTableLayout_main {
-	background-color: rgba(250, 250, 250, 0.8);
-}
 
-.virtual-table {
-	height: 100%;
+/* Footer */
+
+.table-footer {
 	width: 100%;
+	padding: 5px;
+	background-color: #f6f7f8;
+	background-image: -webkit-linear-gradient(#fff, #efefef);
+	background-image: linear-gradient(#fff, #efefef);
+	display:flex;
+	align-items: center;
+}
+
+.table-footer .filter {
+	margin-left: auto;
 	display: flex;
-	flex-direction: column;
-	overflow: hidden;
 }
 
-.virtual-table .table-container-wrapper {
-	width: 100%;
-	flex: 1 1 auto;
-
-	/* The table won't shrink properly without this */
-	height: calc(100% - 50px);
-
-	/* https://developers.google.com/web/updates/2017/01/scrolling-intervention */
-	touch-action: none;
+.table-footer .count-info {
+	margin-right: 0px;
+	color: grey;
 }
 
-.public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
-	color: black;
+.table-footer .filter > div:last-child {
+	margin-left: 10px;
 }
 
-.table.dropdown .trigger {
+.table-footer .filter .dropdown.button {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.table-footer .filter .dropdown .trigger.icon {
+	margin-right: 0px;
+}
+
+.table-footer .filter input {
+	width: 90%;
+}
+
+
+
+/* Table dropdowns */
+.virtual-table .dropdown .trigger {
 	line-height: 21px;
 	display: flex;
 	align-items: flex-start;
 }
 
-.table.dropdown .trigger:hover, .public_fixedDataTableCell_main a:hover {
+.virtual-table .dropdown .trigger:hover, .public_fixedDataTableCell_main a:hover {
 	cursor:pointer;
 }
 
-.table.dropdown .trigger:hover span, .public_fixedDataTableCell_main a:hover {
+.virtual-table .dropdown .trigger:hover span, .public_fixedDataTableCell_main a:hover {
 	text-decoration:underline;
 }
 
-.table.dropdown .trigger i.angle.icon {
+.virtual-table .dropdown .trigger i.angle.icon {
   margin: 0px;
 }
 
-.table.dropdown .trigger .icon-caption .icon {
+.virtual-table .dropdown .icon-caption .icon {
 	width: inherit !important;
 }
 
 .virtual-table .empty.dropdown.filtered:not(.no-access) > div {
-	padding-left: 20px;
+	padding-left: 22px;
 }
 
-.table.dropdown .trigger i {
+.virtual-table .dropdown .trigger i {
 	flex-shrink: 0;
 }
 
-.table.dropdown .trigger span {
+.virtual-table .dropdown .trigger span {
   flex: 1;
 }
 
-.virtual-table .cell-wrapper {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  max-height: 50px;
-  padding: 5px;
-}
 
-.virtual-table .plain.cell,
-.virtual-table .empty.dropdown {
-  margin: 0px 3px;
-}
 
-.virtual-table .ui.progress .bar {
-	height: 5px;
-}
-
+/* Table dropdown popup content */
 .popup.dropdown-content {
 	padding: 0px 15px;
 }

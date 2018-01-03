@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import classNames from 'classnames';
+
 import 'semantic-ui/components/popup';
 import 'semantic-ui/components/popup.min.css';
 
@@ -135,7 +137,7 @@ class Popup extends React.PureComponent {
   render() {
     const triggerProps = {
       ref: c => this.triggerNode = c,
-      className: this.props.triggerClassName + ' popup trigger',
+      className: classNames(this.props.triggerClassName, 'popup trigger'),
     };
 
     if (this.props.onHover) {
