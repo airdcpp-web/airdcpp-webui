@@ -8,6 +8,7 @@ import { defaultTheme } from 'react-autosuggest/dist/theme';
 
 const theme = {
   ...defaultTheme,
+  container: 'react-autosuggest__container ui input',
   suggestionsList: 'ui vertical fluid menu',
   suggestion: 'link item',
   suggestionHighlighted: 'link item active',

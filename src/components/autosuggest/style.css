@@ -9,6 +9,7 @@
 .ui.input.fluid .react-autosuggest__container,
 .ui.input.fluid .react-autosuggest__container input {
 	width: 100% !important;
+	flex-direction: column;
 }
 
 .react-autosuggest__container ul {

@@ -12,7 +12,7 @@ const Icon = ({ icon, size, className, cornerIcon, ...other }) => {
   if (cornerIcon) {
     return (
       <i 
-        className={ classNames(size, className, 'icon icons') }
+        className={ classNames(size, className, 'icons') }
         { ...other }
       >
         <i className={ classNames(icon, 'icon') }/>

@@ -87,10 +87,10 @@ class VirtualTable extends React.Component {
   start = (entityId) => {
     const { store, sourceFilter } = this.props;
 
-    setTimeout(() => {
-      TableActions.init(store.viewUrl, entityId, sourceFilter);
-      TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
-    });
+    //setTimeout(() => {
+    TableActions.init(store.viewUrl, entityId, sourceFilter);
+    TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
+    //});
   };
 
   close = () => {

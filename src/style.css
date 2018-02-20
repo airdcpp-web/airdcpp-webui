@@ -168,3 +168,7 @@ section#container-main,
 }
 
 /* Count label transitions end */
+
+.sidebar .icon-panel .icon.large {
+	font-size: 1.3em;
+}

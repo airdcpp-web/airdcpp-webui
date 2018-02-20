@@ -73,24 +73,6 @@ class Popup extends React.PureComponent {
     this.node = null;
   };
 
-  appendPosition = (settings) => {
-    let { position } = this.props;
-
-    const parentRect = this.triggerNode.parentElement.getBoundingClientRect();
-    const pixelsFromBottom = window.innerHeight - parentRect.bottom;
-    if (position.indexOf('bottom') >= 0 && pixelsFromBottom < 350 && pixelsFromBottom < parentRect.top) {
-      // Random value and hope that there are no popups larger than this
-      // The popup could be rendered before determining but don"t go there yet (and hope that the table is being improved before it's needed)
-      position = 'top left';
-    }  
-
-    if (position.indexOf('top') >= 0) {
-      settings['distanceAway'] = parentRect.top + pixelsFromBottom;
-    }
-
-    settings['position'] = position;
-  };
-
   getContent = () => {
     const { children } = this.props;
     if (typeof children === 'function') {
@@ -122,10 +104,9 @@ class Popup extends React.PureComponent {
       movePopup: false,
       popup: this.node,
       onHidden: _ => this.onHidden(),
+      position: this.props.position,
       ...this.props.settings,
     };
-
-    this.appendPosition(settings);
 
     $(this.triggerNode).popup(settings).popup('show');
   };

@@ -62,7 +62,7 @@ class EncryptionState extends React.PureComponent {
        triggerClassName="encryption" 
        className="basic encryption content" 
        trigger={ 
-         <i className="link icon icons">
+         <i className="link icons">
            <i className={ info.iconColor + ' lock icon' }/>
            <i className={ info.icon + ' corner icon' }/>
          </i>

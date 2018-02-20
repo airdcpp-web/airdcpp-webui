@@ -71,6 +71,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
         return;
       }
 
+      //console.log(`Closing view ${this.viewUrl}`);
       this._removeMessageListener();
       clear();
 
@@ -105,6 +106,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       entityId = entity;
 
       this.addMessageListener();
+      //console.log(`Starting view ${this.viewUrl}`);
       active = true;
     },
 

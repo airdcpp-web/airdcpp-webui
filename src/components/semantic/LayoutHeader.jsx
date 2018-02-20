@@ -21,7 +21,7 @@ const LayoutHeader = ({ className, icon, component, size, title, subHeader }) =>
   return (
     <div className={ mainClassName }>
       <div className={ headerClassName }>
-        <Icon icon={ icon }/>
+        <Icon size="small" icon={ icon }/>
         <div className="content">
           { title }
           <div className="sub header">

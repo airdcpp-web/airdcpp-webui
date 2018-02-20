@@ -36,6 +36,10 @@
 	flex: 1;
 }
 
+.react-grid-layout .widget .header i.large.icon {
+	font-size: 1.3em !important;
+}
+
 .react-grid-layout .widget .header-row {
 	display: flex;
 	flex: 0 0 auto !important;

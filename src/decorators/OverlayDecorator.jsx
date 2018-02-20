@@ -29,6 +29,13 @@ export default function (Component, semanticModuleName) {
 
     componentWillMount() {
       this.node = document.createElement('div');
+
+      // The modal must be inside a dimmer element
+      // Add the necessary classes so that the dimmer module doesn't have to create a new node
+      this.node.classList.add('ui');
+      this.node.classList.add('dimmer');
+      this.node.classList.add('modals');
+
       document.body.appendChild(this.node);
     }
 
@@ -84,7 +91,7 @@ export default function (Component, semanticModuleName) {
       return ReactDOM.createPortal((
         <Component 
           { ...this.props } 
-          { ...this.state } 
+          { ...this.state }
           showOverlay={ this.showOverlay } 
           hide={ this.hide }
         />

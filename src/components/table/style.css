@@ -23,6 +23,10 @@
 	background-color: rgba(250, 250, 250, 0.8);
 }
 
+.virtual-table .fixedDataTableLayout_main:focus {
+	outline: inherit;
+}
+
 .virtual-table .public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
 	color: black;
 }
@@ -128,37 +132,37 @@
 
 
 /* Table dropdowns */
-.virtual-table .dropdown .trigger {
+.table-container-wrapper .dropdown .trigger {
 	line-height: 21px;
 	display: flex;
 	align-items: flex-start;
 }
 
-.virtual-table .dropdown .trigger:hover, .public_fixedDataTableCell_main a:hover {
+.table-container-wrapper .dropdown .trigger:hover, .public_fixedDataTableCell_main a:hover {
 	cursor:pointer;
 }
 
-.virtual-table .dropdown .trigger:hover span, .public_fixedDataTableCell_main a:hover {
+.table-container-wrapper .dropdown .trigger:hover span, .public_fixedDataTableCell_main a:hover {
 	text-decoration:underline;
 }
 
-.virtual-table .dropdown .trigger i.angle.icon {
+.table-container-wrapper .dropdown .trigger i.angle.icon {
   margin: 0px;
 }
 
-.virtual-table .dropdown .icon-caption .icon {
+.table-container-wrapper .dropdown .icon-caption .icon {
 	width: inherit !important;
 }
 
-.virtual-table .empty.dropdown.filtered:not(.no-access) > div {
+.table-container-wrapper .empty.dropdown.filtered:not(.no-access) > div {
 	padding-left: 22px;
 }
 
-.virtual-table .dropdown .trigger i {
+.table-container-wrapper .dropdown .trigger i {
 	flex-shrink: 0;
 }
 
-.virtual-table .dropdown .trigger span {
+.table-container-wrapper .dropdown .trigger span {
   flex: 1;
 }
 

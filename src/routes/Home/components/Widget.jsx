@@ -29,7 +29,7 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
     >
       <div className="content header-row">
 			  <div className="header">
-			  	<i className={ 'left floated large icon ' + widgetInfo.icon }/>
+			  	<i className={ classNames('left floated large icon', widgetInfo.icon) }/>
 			    { settings.name }
 			  </div>
 
