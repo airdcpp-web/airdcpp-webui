@@ -92,8 +92,11 @@ export const DownloadableItemActions = Reflux.createActions([
   } }
 ]);
 
-DownloadableItemActions.download.listen(function (data) {
-  return data.handler(data, { target_name: data.itemInfo.name });
+DownloadableItemActions.download.listen(function (handlerData) {
+  const { handler, itemInfo, user } = handlerData;
+  return handler(itemInfo, user, { 
+    target_name: handlerData.itemInfo.name 
+  });
 });
 
 DownloadableItemActions.downloadTo.listen(function (handlerData, location) {

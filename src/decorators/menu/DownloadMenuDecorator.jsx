@@ -10,7 +10,9 @@ export default function (Component) {
     constructor(props) {
       super(props);
 
-      this.itemData = { };
+      this.itemData = { 
+        handler: props.downloadHandler,
+      };
 
       // Since table cells are recycled, the same menu can be re-used for different items
       // as it's not necessarily re-rendered due to performance reasons
@@ -57,6 +59,11 @@ export default function (Component) {
      * Context-specific item data getter
      */
     itemInfoGetter: PropTypes.func.isRequired,
+
+    /**
+     * Context-specific item data getter
+     */
+    downloadHandler: PropTypes.func.isRequired,
   };
 
 

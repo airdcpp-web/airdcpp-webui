@@ -127,7 +127,7 @@ export const DecimalCell = ({ cellData }) => (
   </span>
 );
 
-export const FileDownloadCell = ({ cellData, rowDataGetter, clickHandlerGetter, userGetter, ...props }) => (
+export const FileDownloadCell = ({ cellData, rowDataGetter, clickHandlerGetter, userGetter, downloadHandler, ...props }) => (
   <TableDownloadMenu 
     caption={ 
       <FormattedFile 
@@ -139,9 +139,18 @@ export const FileDownloadCell = ({ cellData, rowDataGetter, clickHandlerGetter, 
     user={ userGetter(rowDataGetter()) }
     linkCaption={ clickHandlerGetter ? false : true }
     itemInfoGetter={ rowDataGetter }
+    downloadHandler={ downloadHandler }
     { ...props }
   />
 );
+
+FileDownloadCell.propTypes = {
+  rowDataGetter: PropTypes.func, // REQUIRED
+  cellData: PropTypes.any, // REQUIRED
+  userGetter: PropTypes.func.isRequired,
+  clickHandlerGetter: PropTypes.func,
+  downloadHandler: PropTypes.func.isRequired,
+};
 
 export const CheckboxCell = ({ cellData, rowDataGetter, onChange, ...props }) => (
   <Checkbox 

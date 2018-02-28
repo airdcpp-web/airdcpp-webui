@@ -48,6 +48,7 @@ const NameCell = ({ rowDataGetter, ...props }) => (
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
+    downloadHandler={ SearchActions.download }
     { ...props }
   >
     <TableActionMenu 

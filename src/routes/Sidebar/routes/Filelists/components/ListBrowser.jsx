@@ -129,7 +129,7 @@ class ListBrowser extends React.Component {
         caption={ caption }
         user={ this.props.session.user }
         itemInfoGetter={ this.getCurrentDirectory }
-        handler={ FilelistItemActions.download } 
+        downloadHandler={ FilelistItemActions.download } 
       >
         <ActionMenu
           itemData={ {
@@ -179,6 +179,7 @@ class ListBrowser extends React.Component {
               <FileDownloadCell 
                 clickHandlerGetter={ this.onClickDirectory }
                 userGetter={ this.userGetter }
+                downloadHandler={ FilelistItemActions.download } 
               /> 
             }
             flexGrow={8}

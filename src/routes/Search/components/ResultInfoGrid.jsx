@@ -2,6 +2,7 @@ import React from 'react';
 
 import ValueFormat from 'utils/ValueFormat';
 
+import SearchActions from 'actions/SearchActions';
 import { DownloadMenu } from 'components/menu/DropdownMenu';
 import { DupeEnum } from 'constants/DupeConstants';
 
@@ -58,6 +59,7 @@ const ResultInfoGrid = ({ parentResult }) => (
       button={ true }
       user={ parentResult.users.user }
       itemInfoGetter={ _ => parentResult }
+      downloadHandler={ SearchActions.download }
     />
   </div>
 );
