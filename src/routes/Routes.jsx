@@ -47,7 +47,7 @@ export const mainRoutes = [
 
 export const configRoutes = [
   {
-    title: 'Favorites',
+    title: 'Favorite hubs',
     path: '/favorite-hubs',
     icon: IconConstants.FAVORITE,
     access: AccessConstants.FAVORITE_HUBS_VIEW,
