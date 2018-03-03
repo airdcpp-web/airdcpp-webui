@@ -54,7 +54,7 @@ class ConfirmDialog extends React.Component {
     // (the new dimmer would never be set active because the dimmable object is set to dimmed already)
     // Track https://github.com/Semantic-Org/Semantic-UI/issues/4055
     const settings = {
-      context: '#container-main',
+      //context: '#container-main',
       movePopup: false,
       onHidden: this.onHidden,
       onApprove: this.onApprove,
@@ -65,9 +65,9 @@ class ConfirmDialog extends React.Component {
       //debug: true,
       //verbose: true,
       //name: 'Confirm',
-      dimmerSettings: {
-        dimmerName: 'confirm',
-      },
+      //dimmerSettings: {
+      //  dimmerName: 'confirm',
+      //},
     };
 
     $(this.c).modal(settings).modal('show');
@@ -137,6 +137,10 @@ class ConfirmDialog extends React.Component {
 
 export default function (options, onApproved, onRejected) {
   const node = document.createElement('div');
+  node.classList.add('ui');
+  node.classList.add('dimmer');
+  node.classList.add('modals');
+
   const dialog = (
     <ConfirmDialog 
       node={ node } 
