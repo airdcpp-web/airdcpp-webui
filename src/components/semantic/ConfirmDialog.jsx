@@ -56,7 +56,6 @@ class ConfirmDialog extends React.Component {
     const settings = {
       //context: '#container-main',
       movePopup: false,
-      onHidden: this.onHidden,
       onApprove: this.onApprove,
       onDeny: this.onDeny,
       closable: false,
@@ -81,13 +80,6 @@ class ConfirmDialog extends React.Component {
 
   onApprove = (el) => {
     this.props.onApproved(this.state.checked);
-  };
-
-  onHidden = () => {
-    if (this.props.node) {
-      ReactDOM.unmountComponentAtNode(this.props.node);
-      document.body.removeChild(this.props.node);
-    }
   };
 
   onCheckboxValueChanged = (value) => {
@@ -136,21 +128,13 @@ class ConfirmDialog extends React.Component {
 }
 
 export default function (options, onApproved, onRejected) {
-  const node = document.createElement('div');
-  node.classList.add('ui');
-  node.classList.add('dimmer');
-  node.classList.add('modals');
-
   const dialog = (
     <ConfirmDialog 
-      node={ node } 
       onApproved={ onApproved }
       onRejected={ onRejected }
       { ...options }
     />
   );
 
-  document.body.appendChild(node);
-
-  ReactDOM.render(dialog, node);
+  ReactDOM.render(dialog, document.getElementById('modals-node'));
 }

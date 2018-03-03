@@ -27,18 +27,6 @@ export default function (Component, semanticModuleName) {
     closing = false;
     returnOnClose = true;
 
-    componentWillMount() {
-      this.node = document.createElement('div');
-
-      // The modal must be inside a dimmer element
-      // Add the necessary classes so that the dimmer module doesn't have to create a new node
-      this.node.classList.add('ui');
-      this.node.classList.add('dimmer');
-      this.node.classList.add('modals');
-
-      document.body.appendChild(this.node);
-    }
-
     componentWillUnmount() {
       if (!this.closing) {
         this.returnOnClose = false;
@@ -82,9 +70,6 @@ export default function (Component, semanticModuleName) {
       if (History.action !== 'POP') {
         History.removeOverlay(this.context.router.route.location, this.props.overlayId, this.returnOnClose);
       }
-
-      document.body.removeChild(this.node);
-      this.node = null;
     };
 
     render() {
@@ -95,7 +80,7 @@ export default function (Component, semanticModuleName) {
           showOverlay={ this.showOverlay } 
           hide={ this.hide }
         />
-      ), this.node);
+      ), document.getElementById('modals-node'));
     }
   }
 

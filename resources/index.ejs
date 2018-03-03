@@ -8,8 +8,12 @@
 </head>
 
 <body>
-  <!-- content section -->
-  <section class="ui dimmable blurring minimal" id="container-main"></section>
+	<!-- content section -->
+	<section class="ui dimmable blurring minimal" id="container-main"></section>
+	
+	<!-- common dimmer node for Semantic UI modals -->
+	<div id="modals-node" class="ui dimmer modals"></div>
+	
 	<script type="text/javascript">
 		function getBasePath(data) {
 			const pathTokens = window.location.pathname.split('/');		

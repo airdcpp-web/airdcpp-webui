@@ -121,6 +121,11 @@ section#container-main,
 	max-height: 65vh;
 }
 
+.ui.modal {
+	/* Workaround for https://github.com/Semantic-Org/Semantic-UI/issues/6185 */
+	position: fixed !important;
+}
+
 /* Ensure that open modals are dimmed when a confirm dialog is displayed */
 .ui.dimmer.confirm {
 	z-index: 1002;

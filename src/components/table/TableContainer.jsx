@@ -79,7 +79,7 @@ class TableContainer extends React.Component {
 
     //console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
 
-    console.assert(this.props.store.active, 'Posting data for an inactive view');
+    //console.assert(this.props.store.active, 'Posting data for an inactive view');
     TableActions.setRange(this.props.store.viewUrl, startRows, maxRows);
   };
 

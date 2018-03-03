@@ -26,7 +26,7 @@
     "lint": "eslint --ext .jsx,.js src",
     "lint-fix": "eslint --ext .jsx,.js --fix src",
     "start": "node server.js",
-    "build-webpack": "webpack --mode production --progress",
+    "build-webpack": "webpack -p --mode production --progress",
     "build": "npm run clean && npm run build-webpack",
     "build-debug": "npm run clean && webpack --progress",
     "test": "jest",
