@@ -145,7 +145,7 @@ module.exports = {
 
 	plugins: plugins,
 	optimization: {
-		splitChunks: {
+		splitChunks: !release ? false : {
 			minChunks: 3,
 			cacheGroups: {
 				vendors: false
