@@ -49,7 +49,7 @@ var config = require('./webpack.config.js');
 
 console.log(chalk.bold('Building webpack...'));
 
-var compiler = webpack(config);
+var compiler = webpack(Object.assign(config, { mode: 'development' }));
 app.use(require('webpack-dev-middleware')(compiler, {
 	hot: true,
 	historyApiFallback: true,

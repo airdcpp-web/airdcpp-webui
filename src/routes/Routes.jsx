@@ -23,25 +23,25 @@ export const mainRoutes = [
     matchPath: '/(home/widget)?',
     icon: IconConstants.HOME,
     exact: true,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "home" */ 'routes/Home/components/Home')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "home" */ 'routes/Home/components/Home')),
   }, {
     title: 'Queue',
     path: '/queue',
     icon: IconConstants.QUEUE,
     access: AccessConstants.QUEUE_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "queue" */ 'routes/Queue/components/Queue')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "queue" */ 'routes/Queue/components/Queue')),
   }, {
     title: 'Search',
     path: '/search',
     icon: IconConstants.SEARCH,
     access: AccessConstants.SEARCH,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "search" */ 'routes/Search/components/Search')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "search" */ 'routes/Search/components/Search')),
   }, {
     title: 'Transfers',
     path: '/transfers',
     icon: IconConstants.TRANSFERS,
     access: AccessConstants.TRANSFERS,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "transfers" */ 'routes/Transfers/components/Transfers')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "transfers" */ 'routes/Transfers/components/Transfers')),
   }
 ];
 
@@ -51,19 +51,19 @@ export const configRoutes = [
     path: '/favorite-hubs',
     icon: IconConstants.FAVORITE,
     access: AccessConstants.FAVORITE_HUBS_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs/components/FavoriteHubs')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs/components/FavoriteHubs')),
   }, {
     title: 'Share',
     path: '/share',
     icon: IconConstants.FOLDER,
     access: AccessConstants.SETTINGS_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "share" */ 'routes/Share/components/Share')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "share" */ 'routes/Share/components/Share')),
   }, {
     title: 'Settings',
     path: '/settings',
     icon: IconConstants.SETTINGS,
     access: AccessConstants.SETTINGS_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "settings" */ 'routes/Settings/components/Settings')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "settings" */ 'routes/Settings/components/Settings')),
   }
 ];
 
@@ -75,7 +75,7 @@ export const secondaryRoutes = [
     icon: 'blue sitemap',
     unreadInfoStore: HubSessionStore,
     access: AccessConstants.HUBS_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs/components/Hubs')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs/components/Hubs')),
   }, {
     title: 'Messages',
     path: '/messages',
@@ -83,7 +83,7 @@ export const secondaryRoutes = [
     icon: 'blue comments',
     unreadInfoStore: PrivateChatSessionStore,
     access: AccessConstants.PRIVATE_CHAT_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages/components/Messages')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages/components/Messages')),
   }, {
     title: 'Filelists',
     path: '/filelists',
@@ -91,7 +91,7 @@ export const secondaryRoutes = [
     icon: 'blue browser',
     unreadInfoStore: FilelistSessionStore,
     access: AccessConstants.FILELISTS_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists/components/Filelists')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists/components/Filelists')),
   }, {
     title: 'Files',
     path: '/files',
@@ -99,14 +99,14 @@ export const secondaryRoutes = [
     icon: 'blue file',
     unreadInfoStore: ViewFileStore,
     access: AccessConstants.VIEW_FILE_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files/components/Files')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files/components/Files')),
   }, {
     title: 'Events',
     path: '/events',
     icon: 'blue history',
     unreadInfoStore: EventStore,
     access: AccessConstants.EVENTS_VIEW,
-    component: AsyncComponentDecorator(() => System.import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/SystemLog')),
+    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/SystemLog')),
   }
 ];
 

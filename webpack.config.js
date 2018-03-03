@@ -20,12 +20,6 @@ const chalk = require('chalk');
 // PLUGINS
 var plugins = [
 	new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Those are about 40 kilobytes
-	new webpack.optimize.CommonsChunkPlugin({
-		name: 'main', // must match the main entry
-		//async: 'vendors',
-		minChunks: 3,
-		children: true,
-	}),
 	new webpack.ProvidePlugin({
 		$: 'jquery',
 		jQuery: 'jquery',
@@ -49,9 +43,6 @@ var plugins = [
 
 var releasePlugins = [
 	new webpack.optimize.ModuleConcatenationPlugin(),
-	new webpack.optimize.UglifyJsPlugin({
-		sourceMap: true
-	}),
 	new webpack.LoaderOptionsPlugin({
 		minimize: true,
 		debug: false
@@ -152,5 +143,14 @@ module.exports = {
 		enforceExtension: false
 	},
 
-	plugins: plugins
+	plugins: plugins,
+	optimization: {
+		splitChunks: {
+			minChunks: 3,
+			cacheGroups: {
+				vendors: false
+			}
+		},
+		minimize: release,
+	}
 };

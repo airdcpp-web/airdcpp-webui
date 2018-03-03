@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import classNames from 'classnames';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
@@ -31,11 +32,11 @@ const TopMenu = ({ parentMenuItems }) => (
 );
 
 const Content = ({ contentClassname, currentMenuItem, parent, saveButton, children, message }) => (
-  <div className={ 'thirteen wide column ' + contentClassname }>
+  <div className={ classNames('thirteen wide column', contentClassname) }>
     <div className="ui segment">
       <LayoutHeader
         title={ currentMenuItem.title }
-        icon={ parent.icon + ' green' }
+        icon={ classNames(parent.icon, 'green') }
         component={ saveButton }
       />
       <div className="options">
@@ -49,10 +50,13 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
 
 const SideMenuLayout = ({ children, ...other }) => (
   <div className="full">
-    <TopMenu {...other}/>
-    <div id="setting-scroll-context" className="ui segment grid main">
-      <SideMenu {...other}/>
-      <Content {...other}>
+    <TopMenu { ...other }/>
+    <div 
+      id="setting-scroll-context" 
+      className="ui segment grid main"
+    >
+      <SideMenu { ...other }/>
+      <Content { ...other }>
         { children }
       </Content>
     </div>
