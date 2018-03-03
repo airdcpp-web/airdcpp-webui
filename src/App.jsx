@@ -13,8 +13,8 @@ import Login from './routes/Login/components/Login';
 import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingStore from 'stores/LocalSettingStore';
 
-import Background1500px from '../resources/images/background_1500px.jpg';
-import Background3460px from '../resources/images/background_3460px.jpg';
+import Background1500px from '../resources/images/background_winter_1500px.jpg';
+import Background3840px from '../resources/images/background_winter_3840px.jpg';
 import BrowserUtils from 'utils/BrowserUtils';
 
 import Measure from 'react-measure';
@@ -40,7 +40,7 @@ const getBackgroundImage = () => {
     return null;
   }
 
-  return window.innerWidth < 1440 ? Background1500px : Background3460px;
+  return window.innerWidth < 1440 ? Background1500px : Background3840px;
 };
 
 
