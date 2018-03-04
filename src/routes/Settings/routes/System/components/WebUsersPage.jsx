@@ -20,6 +20,7 @@ const WebUserRow = ({ user }) => (
         caption={ <strong>{ user.username }</strong> }
         actions={ WebUserActions } 
         itemData={ user }
+        contextElement="#setting-scroll-context"
       />
     </td>
     <td>
