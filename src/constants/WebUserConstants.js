@@ -4,7 +4,7 @@ export default {
   MODULE_URL: MODULE_URL,
   USERS_URL: MODULE_URL,
 
-  CREATED: 'web_user_created',
+  ADDED: 'web_user_added',
   UPDATED: 'web_user_updated',
   REMOVED: 'web_user_removed',
 }
