@@ -30,6 +30,13 @@
 		var script = document.createElement('script');
 		script.src = getBasePath() + "<%= htmlWebpackPlugin.files.chunks.main.entry%>";
 		document.body.appendChild(script);
+		
+		// Favicon
+		var link = document.createElement('link');
+		link.type = 'image/x-icon';
+		link.rel = 'shortcut icon';
+		link.href = getBasePath() + '/favicon.ico';
+		document.getElementsByTagName('head')[0].appendChild(link);
 	</script>
 	
 	<% if (htmlWebpackPlugin.options.googleAnalytics) { %>
