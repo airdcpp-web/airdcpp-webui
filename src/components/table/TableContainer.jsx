@@ -45,6 +45,7 @@ class TableContainer extends React.Component {
   state = {
     width: 0,
     height: 0,
+    columnWidths: {},
   };
 
   getInitialProps = () => {
@@ -55,8 +56,6 @@ class TableContainer extends React.Component {
   };
 
   componentWillMount() {
-    this._columnWidths = { };
-    this._isColumnResizing = false;
     this._scrollPosition = 0;
   }
 
@@ -99,7 +98,7 @@ class TableContainer extends React.Component {
     //console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
   };
 
-  _sortRowsBy = (sortProperty) => {
+  _onColumnClicked = (sortProperty) => {
     const { store } = this.props;
 
     let sortAscending = true;
@@ -110,13 +109,16 @@ class TableContainer extends React.Component {
     TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
   };
 
-  _onColumnResizeEndCallback = (newColumnWidth, dataKey) => {
-    this._columnWidths[dataKey] = newColumnWidth;
-    this._isColumnResizing = false;
-    this.forceUpdate(); // don't do this, use a store and put into this.state!
+  _onColumnResizeEndCallback = (newColumnWidth, columnKey) => {
+    this.setState(({ columnWidths }) => ({
+      columnWidths: {
+        ...columnWidths,
+        [columnKey]: newColumnWidth,
+      }
+    }));
   };
 
-  convertColumn = (column) => {
+  childToColumn = (column) => {
     if (column.props.hideWidth > this.state.width) {
       return null;
     }
@@ -131,8 +133,8 @@ class TableContainer extends React.Component {
     const mobileView = BrowserUtils.useMobileLayout();
     if (!mobileView) {
       // Get column width
-      if (this._columnWidths[columnKey] != undefined) {
-        width = this._columnWidths[columnKey];
+      if (!!this.state.columnWidths[columnKey]) {
+        width = this.state.columnWidths[columnKey];
         flexGrow = null;
       }
     }
@@ -140,12 +142,12 @@ class TableContainer extends React.Component {
     return React.cloneElement(column, {
       header: (
         <HeaderCell 
-          onClick={ this._sortRowsBy.bind(null, columnKey) } 
+          onClick={ this._onColumnClicked.bind(null, columnKey) } 
           label={ name }
         />
       ),
-      flexGrow: flexGrow,
-      width: width,
+      flexGrow,
+      width,
       isResizable: !mobileView,
       allowCellsRecycling: true,
       cell: (			
@@ -160,7 +162,7 @@ class TableContainer extends React.Component {
     });
   };
 
-  onResize = (contentRect) => {
+  onResizeView = (contentRect) => {
     const { width, height } = contentRect.entry;
     this.setState({
       width,
@@ -170,12 +172,12 @@ class TableContainer extends React.Component {
 
   render() {
     // Update and insert generic columns props
-    const children = React.Children.map(this.props.children, this.convertColumn);
+    const children = React.Children.map(this.props.children, this.childToColumn);
 
     return (
       <Measure 
         bounds={ true }
-        onResize={ this.onResize }
+        onResize={ this.onResizeView }
       >
         { ({ measureRef }) => (
           <div ref={ measureRef } className="table-container-wrapper">
@@ -186,7 +188,7 @@ class TableContainer extends React.Component {
               rowHeight={ 50 }
               rowsCount={ this.props.store.rowCount }
               headerHeight={ 50 }
-              isColumnResizing={ this.isColumnResizing }
+              isColumnResizing={ false }
               onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
 
               touchScrollEnabled={ true }
