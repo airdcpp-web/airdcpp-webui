@@ -61,16 +61,22 @@ class ConfirmDialog extends React.Component {
       closable: false,
       detachable: false,
       allowMultiple: true,
+      onHidden: this.onHidden,
       //debug: true,
       //verbose: true,
       //name: 'Confirm',
-      //dimmerSettings: {
-      //  dimmerName: 'confirm',
-      //},
+      dimmerSettings: {
+        dimmerName: 'confirms-node',
+      },
     };
 
     $(this.c).modal(settings).modal('show');
   }
+
+  onHidden = () => {
+    ReactDOM.unmountComponentAtNode(document.getElementById('confirms-node'));
+  };
+
 
   onDeny = (el) => {
     if (this.props.onRejected) {
@@ -136,5 +142,5 @@ export default function (options, onApproved, onRejected) {
     />
   );
 
-  ReactDOM.render(dialog, document.getElementById('modals-node'));
+  ReactDOM.render(dialog, document.getElementById('confirms-node'));
 }

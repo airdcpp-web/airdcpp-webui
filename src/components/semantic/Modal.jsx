@@ -76,6 +76,9 @@ class Modal extends React.Component {
       detachable: false,
       allowMultiple: true,
       observeChanges: this.props.dynamicHeight,
+      dimmerSettings: {
+        dimmerName: 'modals-node',
+      },
       //debug: true,
       //verbose: true,
       //name: 'Modal',
