@@ -41,11 +41,9 @@ class WebUsersPage extends React.Component {
     const { users } = this.props;
     return (
       <div>
-        <div className="table-actions">
-          <ActionButton 
-            action={ WebUserActions.create } 
-          />
-        </div>
+        <ActionButton 
+          action={ WebUserActions.create } 
+        />
         <table className="ui striped table">
           <thead>
             <tr>

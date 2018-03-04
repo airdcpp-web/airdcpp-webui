@@ -29,20 +29,6 @@
   margin-top: 15px;
 }
 
-.settings-layout .virtual-table {
-  height: calc(100vh - 400px);
-  min-height: 300px;
-}
-
-.settings-layout .mobile .virtual-table {
-  height: calc(100vh - 240px);
-}
-
-.settings-layout .table-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
 .settings-layout > div,
 .settings-layout .mobile .section-content {
   display: flex;
