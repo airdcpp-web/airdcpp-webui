@@ -30,7 +30,7 @@
     "build": "npm run clean && npm run build-webpack",
     "build-debug": "npm run clean && webpack --progress",
     "test": "jest",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "airdcpp-apisocket": "^1.0.0",

@@ -2,13 +2,12 @@
 
 # Ensure that we have the latest version
 git pull
-npm update
 
 # Build
 export NODE_ENV=production
 export DEMO_MODE=1
 
-npm run build
+npm install
 
 # Copy files
 rm -Rf demo
