@@ -68,7 +68,7 @@
     "pondjs": "^0.8.8",
     "promise": "^8.0.1",
     "prop-types": "^15.6.1",
-    "re-resizable": "^4.4.0",
+    "re-resizable": "^4.4.1",
     "react": "^16.2.0",
     "react-addons-perf": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.6.2",
