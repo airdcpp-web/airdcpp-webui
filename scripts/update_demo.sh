@@ -8,6 +8,7 @@ export NODE_ENV=production
 export DEMO_MODE=1
 
 npm install
+npm run build
 
 # Copy files
 rm -Rf demo
