@@ -15,7 +15,7 @@
 }
 
 /* Internal class from re-resizable, causes height issues */
-*[id^='__resizable'] {
+*[class^='__resizable'] {
 	display: none;
 }
 
