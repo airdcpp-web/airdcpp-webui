@@ -6,6 +6,7 @@ import SocketService from 'services/SocketService';
 import ValueFormat from 'utils/ValueFormat';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import Icon from 'components/semantic/Icon';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -15,15 +16,21 @@ import IconConstants from 'constants/IconConstants';
 import TransferConstants from 'constants/TransferConstants';
 
 
-const StatisticsIcon = ({ icon, bytes, formatter }) => {
+const StatisticsIcon = ({ icon, cornerIcon, bytes, formatter }) => {
   if (bytes === 0) {
     return null;
   }
 
   return (
     <div className="item">
-      <i className={ icon + ' icon'}/>
-      <div className="content">
+      { !!cornerIcon ? (
+        <i className="icon">
+          <Icon icon={ icon } cornerIcon={ cornerIcon }/>
+        </i>
+      ) : (
+        <Icon icon={ icon }/>
+      ) }
+      <div className="content" style={ !!cornerIcon ? { paddingLeft: '.2em' } : undefined }>
         <div className="header">{ formatter(bytes) }</div>
       </div>
     </div>
@@ -67,6 +74,7 @@ const StatisticsIcons = createReactClass({
       speed_down: 0,
       speed_up: 0,
       hash_speed: 0,
+      hash_bytes_left: 0,
       queued_bytes: 0,
     };
   },
@@ -88,6 +96,12 @@ const StatisticsIcons = createReactClass({
           icon={ IconConstants.HASH }
           bytes={ this.state.hash_speed }
           formatter={ ValueFormat.formatSpeed }
+        />
+        <StatisticsIcon 
+          icon={ IconConstants.HASH }
+          cornerIcon="wait"
+          bytes={ this.state.hash_bytes_left }
+          formatter={ ValueFormat.formatSize }
         />
         <StatisticsIcon 
           icon={ IconConstants.QUEUE }
