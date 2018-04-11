@@ -30,7 +30,7 @@ class AuthenticatedApp extends React.Component {
     document.title = title;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.updateTitle();
 
     if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {

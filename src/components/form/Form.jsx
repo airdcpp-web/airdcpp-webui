@@ -76,7 +76,7 @@ class Form extends React.Component {
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setSourceValue(this.props.value);
   }
 

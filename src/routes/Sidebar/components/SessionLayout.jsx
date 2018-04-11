@@ -264,7 +264,7 @@ class SessionLayout extends React.Component {
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     window.addEventListener('keydown', this.onKeyDown);
 
     // Opening an item directly? Or no items?

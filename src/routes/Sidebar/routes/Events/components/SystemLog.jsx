@@ -46,7 +46,7 @@ const SystemLog = createReactClass({
   displayName: 'SystemLog',
   mixins: [ Reflux.connect(EventStore, 'messages'), ],
 
-  componentWillMount() {
+  componentDidMount() {
     EventActions.setActive(true);
     EventActions.setRead();
 

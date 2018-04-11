@@ -57,10 +57,14 @@ class SuggestField extends React.Component {
     text: this.props.storedValue,
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.storedValue !== this.props.storedValue) {
-      this.setState({ text: nextProps.storedValue });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.storedValue === prevState.text) {
+      return null;
     }
+
+    return {
+      text: nextProps.storedValue 
+    };
   }
 
   handleSubmit = (event, suggestion) => {

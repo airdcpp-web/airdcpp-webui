@@ -72,7 +72,7 @@ export default function (Component, settings) {
       };
     },
 
-    componentWillMount() {
+    componentDidMount() {
       this.mounted = true;
       this.fetchData();
     },

@@ -12,7 +12,7 @@ import { AwayEnum } from 'constants/SystemConstants';
 let userActive = true;
 
 class ActivityTracker extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     document.onmousemove = this.onUserActivity;
     document.onkeypress = this.onUserActivity;
 

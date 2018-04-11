@@ -96,7 +96,7 @@ class WebUserDialog extends React.Component {
     return !this.props.user;
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.entry = getEntry(this.isNew());
   }
 

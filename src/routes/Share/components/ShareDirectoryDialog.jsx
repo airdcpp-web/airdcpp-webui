@@ -56,13 +56,15 @@ const getFields = (profiles) => {
 class ShareDirectoryDialog extends React.Component {
   static displayName = 'ShareDirectoryDialog';
 
+  constructor(props) {
+    super(props);
+
+    this.fieldDefinitions = getFields(props.profiles);
+  }
+
   isNew = () => {
     return !this.props.rootEntry;
   };
-
-  componentWillMount() {
-    this.fieldDefinitions = getFields(this.props.profiles);
-  }
 
   onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('path') != -1) {

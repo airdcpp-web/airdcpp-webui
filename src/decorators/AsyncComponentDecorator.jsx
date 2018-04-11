@@ -7,7 +7,7 @@ export default function asyncComponent(getComponent, props) {
     static Component = null;
     state = { Component: AsyncComponent.Component };
 
-    componentWillMount() {
+    componentDidMount() {
       if (!this.state.Component) {
         getComponent()
         	.then(Component => Component.default)

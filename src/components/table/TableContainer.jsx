@@ -55,9 +55,7 @@ class TableContainer extends React.Component {
     };
   };
 
-  componentWillMount() {
-    this._scrollPosition = 0;
-  }
+  scrollPosition = 0;
 
   // This will also be used for setting the initial rows
   componentDidUpdate(prevProps, prevState) {
@@ -73,7 +71,7 @@ class TableContainer extends React.Component {
   }
 
   updateRowRange = () => {
-    const startRows = convertStartToRows(this._scrollPosition);
+    const startRows = convertStartToRows(this.scrollPosition);
     const maxRows = convertEndToRows(this.state.height, true);
 
     //console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
@@ -89,7 +87,7 @@ class TableContainer extends React.Component {
   };
 
   _onScrollEnd = (horizontal, vertical) => {
-    this._scrollPosition = vertical;
+    this.scrollPosition = vertical;
     console.assert(this.props.store.active, 'Sending pause for an inactive view');
     TableActions.pause(this.props.store.viewUrl, false);
 

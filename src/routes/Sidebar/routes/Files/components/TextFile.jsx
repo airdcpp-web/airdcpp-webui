@@ -17,7 +17,7 @@ class TextFile extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.item.content_ready) {
       this.fetchText(this.props.url);
     }

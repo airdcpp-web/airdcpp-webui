@@ -25,7 +25,7 @@ class Search extends React.Component {
     running: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.checkLocationState(this.props);
   }
 

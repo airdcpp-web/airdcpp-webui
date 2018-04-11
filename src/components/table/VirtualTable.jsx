@@ -44,14 +44,12 @@ class VirtualTable extends React.Component {
     sourceFilter: PropTypes.object,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
 
-    this.start(this.props.entityId);
-  }
-
-  componentDidMount() {
     this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
+
+    this.start(this.props.entityId);
   }
 
   componentWillUnmount() {

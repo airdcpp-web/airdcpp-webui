@@ -13,7 +13,7 @@ const SocketSubscriptionMixin = (sessionStore) => {
   };
 
   return SocketSubscriptionDecorator({
-    componentWillMount() {
+    componentDidMount() {
       if (SocketService.isConnected()) {
         this.onSocketConnected(this.addSocketListener);
       }

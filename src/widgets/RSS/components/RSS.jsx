@@ -115,7 +115,7 @@ class RSS extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.state.entries) {
       this.handleUpdate();
     }

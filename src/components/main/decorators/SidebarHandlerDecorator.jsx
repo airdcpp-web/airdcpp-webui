@@ -14,7 +14,7 @@ const showSidebar = (props) => {
 
 export default function (Component) {
   class SidebarHandlerDecorator extends React.Component {
-    componentWillMount() {
+    componentDidMount() {
       if (showSidebar(this.props)) {
         // previousLocation must exist if overlays are present
         this.previousLocation = null;

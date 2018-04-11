@@ -50,7 +50,7 @@ class ListBrowser extends React.Component {
     History.pushSidebarData(this.props.location, { directory: path });
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { session, location } = this.props;
 
     const locationData = History.getSidebarData(location);

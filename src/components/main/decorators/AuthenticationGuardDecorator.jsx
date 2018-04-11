@@ -22,7 +22,7 @@ const AuthenticationGuardDecorator = (Component) => {
       location: PropTypes.object.isRequired,
     },
 
-    componentWillMount() {
+    componentDidMount() {
       const { login } = this.state;
       if (login.hasSession) {
         if (!login.socketAuthenticated) {

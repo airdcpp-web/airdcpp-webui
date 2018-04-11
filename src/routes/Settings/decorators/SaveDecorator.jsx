@@ -29,10 +29,8 @@ export default (Component) => {
       saveable: true
     };
 
-    componentWillMount() {
-      this.forms = [];
-      this.changedProperties = new Set();
-    }
+    forms = [];
+    changedProperties = new Set();
 
     getChildContext() {
       return {

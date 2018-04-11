@@ -38,12 +38,10 @@ class FilterBox extends React.Component {
     method: FilterMethod.PARTIAL,
   };
 
-  componentWillMount() {
-    this._timer = null;
-  }
+  timer = null;
 
   componentWillUnmount() {
-    clearTimeout(this._timer);
+    clearTimeout(this.timer);
   }
 
   onFilterUpdated = () => {
@@ -56,10 +54,10 @@ class FilterBox extends React.Component {
       value: event.target.value 
     });
 
-    clearTimeout(this._timer);
+    clearTimeout(this.timer);
 
-    this._timer = setTimeout(() => {
-      this._timer = null;
+    this.timer = setTimeout(() => {
+      this.timer = null;
       this.onFilterUpdated();
     }, 200);
   };

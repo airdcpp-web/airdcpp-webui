@@ -33,7 +33,7 @@ class HubSession extends React.Component {
     showList: checkList(this.props),
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.showList = checkList(this.props);
   }
 
