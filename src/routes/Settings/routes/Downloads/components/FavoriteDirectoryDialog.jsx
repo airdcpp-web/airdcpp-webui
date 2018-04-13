@@ -40,7 +40,7 @@ class FavoriteDirectoryDialog extends React.Component {
   };
 
   onFieldChanged = (id, value, hasChanges) => {
-    if (id.indexOf('path') != -1) {
+    if (id.indexOf('path') !== -1) {
       return Promise.resolve({
         name: FileUtils.getLastDirectory(value.path, FileUtils) 
       });

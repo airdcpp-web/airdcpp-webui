@@ -40,7 +40,7 @@ class SuggestField extends React.Component {
 		 * Default input value to show
 		 * The input will also be updated accordingly when a different stored value is received
 		 */
-    storedValue: PropTypes.string,
+    defaultValue: PropTypes.string,
 
     /**
 		 * Disables the field action button
@@ -50,21 +50,21 @@ class SuggestField extends React.Component {
 
   static defaultProps = {
     autoFocus: true,
-    storedValue: '',
+    defaultValue: '',
   };
 
   state = {
-    text: this.props.storedValue,
+    text: this.props.defaultValue,
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.storedValue === prevState.text) {
-      return null;
+  componentWillReceiveProps(nextProps) {
+    // The received default value has changed?
+    // Always update the field value in that case
+    if (nextProps.defaultValue !== this.props.defaultValue) {
+      this.setState({ 
+        text: nextProps.defaultValue 
+      });
     }
-
-    return {
-      text: nextProps.storedValue 
-    };
   }
 
   handleSubmit = (event, suggestion) => {
@@ -114,13 +114,14 @@ class SuggestField extends React.Component {
   };
 
   render() {
-    const { className, autoFocus, placeholder, button, ...other } = this.props;
+    const { className, autoFocus, placeholder, defaultValue, button, ...other } = this.props;
+    const { text } = this.state;
 
     const inputAttributes = {
       placeholder: placeholder,
       onChange: this.onTextChange,
       autoFocus: autoFocus,
-      value: this.state.text,
+      value: text,
       onKeyDown: this.onKeyDown,
     };
 
@@ -128,7 +129,7 @@ class SuggestField extends React.Component {
       <Autosuggest 
         { ...other }
         theme={ theme }
-        initialValue={ this.props.storedValue }
+        initialValue={ defaultValue }
         inputProps={ inputAttributes } 
         onSuggestionSelected={ this.onSuggestionSelected }
       />
@@ -136,7 +137,7 @@ class SuggestField extends React.Component {
 
     const fieldStyle = classNames(
       'ui fluid input',
-      { 'action': button },
+      { 'action': !!button },
       className,
     );
 

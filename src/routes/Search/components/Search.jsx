@@ -86,7 +86,7 @@ class Search extends React.Component {
                 historyId={ HistoryStringEnum.SEARCH } 
                 submitHandler={ this.search } 
                 disabled={ running }
-                storedValue={ searchString }
+                defaultValue={ searchString }
                 placeholder="Enter search string..."
                 button={ 
                   <Button
