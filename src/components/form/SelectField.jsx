@@ -1,53 +1,74 @@
+// @flow
+
 import PropTypes from 'prop-types';
-import React from 'react';
-import Select from 'react-select';
+import * as React from 'react';
+import Select, { SelectBase } from 'react-select';
 import invariant from 'invariant';
+
+import type { OptionsType } from 'react-select/lib/types';
 
 import t from 'utils/tcomb-form';
 
-import 'react-select/dist/react-select.css';
 
-
-class TagValue extends React.Component {
-  static propTypes = {
-    value: PropTypes.object,
-  };
-
-  onClick = () => {
-    this.props.onRemove(this.props.value);
-  };
-
-  render() {
-    return (
-      <a className="ui label" onClick={this.onClick}>
-        { this.props.children }
-        <i className="delete icon"/>
-      </a>
-    );
-  }
+const MultiValueContainer = ({ css, children, ...innerProps }) => {
+  return (
+    <a { ...innerProps } className="ui label">
+      { children }
+    </a>
+  );
 }
 
-const ReactSelect = t.form.Form.templates.select.clone({
+const MultiValueLabel = ({ children }) => {
+  return children;
+}
+
+const MultiValueRemove = ({ css, ...innerProps }) => {
+  return (
+    <i { ...innerProps } className="delete icon"/>
+  );
+}
+
+type Locals = {
+  onChange: (values: *[]) => void,
+  options: Array<{
+    value: *,
+    text: string,
+  }>,
+  value: any[],
+};
+
+
+const SelectTemplate: { renderSelect: (locals: Locals) => React.Node } = {
   renderSelect: (locals) => { // <- locals contains the "recipe" to build the UI
-    const onChange = (values) => {
+    const onChange = (values: OptionsType) => {
       locals.onChange(values.map(value => value.value, []));
     };
 
     // translate the option model from tcomb to react-select
-    const options = locals.options.map(({ value, text }) => ({ value, label: text }));
+    const options: OptionsType = locals.options.map(({ value, text }) => ({ value, label: text }));
+    const value: OptionsType = locals.value.map(value => {
+      const option = options.find(anyOption => anyOption.value === value);
+      invariant(!!option, 'All current values were not found from the option list');
+      return option;
+    });
 
-    invariant(locals.value.every(selectedOption => options.find(anyOption => anyOption.value === selectedOption)), 'All current values were not found from the option list');
     return (
       <Select
-        value={ locals.value }
+        value={ value }
         options={ options }
         onChange={ onChange }
-        multi={ true }
-        valueComponent={ TagValue }
-        noResultsText={ null }
+        isMulti={ true }
+        components={{ 
+          MultiValueContainer,
+          MultiValueLabel,
+          MultiValueRemove,
+        }}
+        menuPlacement="top"
       />
     );
   }
-});
+};
+
+const ReactSelect = t.form.Form.templates.select.clone(SelectTemplate);
 
 export default ReactSelect;
