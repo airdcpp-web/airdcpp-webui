@@ -97,7 +97,7 @@ module.exports = {
 	module: {
 		rules: [
 			{ 
-				test: /\.(js|jsx)$/, 
+				test: /\.(js|jsx|tsx|ts)$/, 
 				include: /src/, 
 				use: 'babel-loader' 
 			}, { 
@@ -139,7 +139,7 @@ module.exports = {
 			path.resolve('./resources'),
 			'node_modules'
 		],
-		extensions: [ '.js', '.jsx' ],
+		extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
 		enforceExtension: false
 	},
 

@@ -1,20 +1,21 @@
 {
   "presets": [
-    "react", 
-    [ "es2015", { "modules": false }], 
-    "stage-1"
+    "@babel/react", 
+    ["@babel/env", {
+      "targets": {
+        "browsers": [
+          "last 5 Chrome versions", 
+          "last 3 Firefox versions",
+          "safari >= 9",
+          "edge >= 15"
+        ]
+      }
+    }],
+    "@babel/stage-3",
+    "@babel/typescript"
   ],
   "plugins": [
-    "transform-es2015-function-name",
-    "transform-object-assign",
-    "transform-react-display-name",
-    "syntax-async-functions",
-    "transform-regenerator",
-    ["transform-runtime", {
-      "helpers": false,
-      "polyfill": false,
-      "regenerator": true,
-    }],
+    "@babel/transform-react-display-name",
     ["module-resolver", {
       "root": ["./src", "./node_modules/semantic-ui-css"],
       "alias": {
@@ -26,7 +27,7 @@
     "development": {
       "plugins": [
         "react-hot-loader/babel"
-      ],
+      ]
     },
     "test": {
       // https://facebook.github.io/jest/docs/tutorial-webpack.html
