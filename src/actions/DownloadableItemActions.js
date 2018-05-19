@@ -31,6 +31,8 @@ const viewVideo = data => isVideo(data) && sizeValid(data);
 const viewAudio = data => isAudio(data) && sizeValid(data);
 const viewImage = data => isPicture(data) && sizeValid(data);
 
+const copyMagnet = data => !!navigator.clipboard && !isDirectory(data);
+
 
 export const DownloadableItemActions = Reflux.createActions([
   { 'download': { 
@@ -89,6 +91,12 @@ export const DownloadableItemActions = Reflux.createActions([
     access: AccessConstants.SEARCH,
     icon: IconConstants.SEARCH,
     filter: isSearchable, // Example: root directory in filelists can't be searched for
+  } },
+  { 'copyMagnet': {
+    asyncResult: true,
+    displayName: 'Copy magnet link',
+    icon: IconConstants.MAGNET,
+    filter: copyMagnet,
   } }
 ]);
 
@@ -124,8 +132,8 @@ DownloadableItemActions.viewImage.listen(function (data, location) {
   ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
-DownloadableItemActions.findNfo.listen(async function (data, location) {
-  try {
+DownloadableItemActions.findNfo.listen(/*async*/ function (data, location) {
+  /*try {
     // Get a new instance
     let instance = await SocketService.post(SearchConstants.INSTANCES_URL, {
       expiration_minutes: 1,
@@ -169,7 +177,7 @@ DownloadableItemActions.findNfo.listen(async function (data, location) {
     }
   } catch (error) {
     this.failed(data, error.message);
-  }
+  }*/
 });
 
 DownloadableItemActions.findNfo.failed.listen(function (data, errorMessage) {
@@ -189,6 +197,31 @@ DownloadableItemActions.search.listen(function (handlerData, location) {
       searchString,
     }
   }, location);
+});
+
+DownloadableItemActions.copyMagnet.listen(function (data) {
+  const { size, tth, name } = data.itemInfo;
+  const sizeParam = size > 0 ? `&xl=${size}` : '';
+  const link = `magnet:?xt=urn:tree:tiger:${tth}${sizeParam}&dn=${encodeURI(name)}`;
+
+  let that = this;
+  navigator.clipboard.writeText(link)
+    .then(that.completed.bind(that, data))
+    .catch(that.failed.bind(that, data));
+});
+
+DownloadableItemActions.copyMagnet.completed.listen(function (data, errorMessage) {
+  NotificationActions.info({ 
+    title: data.itemInfo.name,
+    message: 'Magnet link was copied on clipboard',
+  });
+});
+
+DownloadableItemActions.copyMagnet.failed.listen(function (data, errorMessage) {
+  NotificationActions.error({ 
+    title: 'Failed to copy magnet link to clipboard',
+    message: errorMessage,
+  });
 });
 
 export default DownloadableItemActions;
