@@ -21,7 +21,7 @@ import LoginStore from 'stores/LoginStore';
 import BrowserUtils from 'utils/BrowserUtils';
 
 import IconConstants from 'constants/IconConstants';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import MenuItemLink from 'components/semantic/MenuItemLink';
 
 
 const findItem = (items, id) => {

@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import { PriorityEnum } from 'constants/PriorityConstants';
 
 import TableDropdown from 'components/semantic/TableDropdown';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
 import AccessConstants from 'constants/AccessConstants';

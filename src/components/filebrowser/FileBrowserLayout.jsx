@@ -20,7 +20,7 @@ import FileItemList from './FileItemList';
 import './style.css';
 
 
-const CreateDirectory = ({ handleAction }) => (
+const CreateDirectorySection = ({ handleAction }) => (
   <Accordion>
     <div className="title create-section">
       <i className="dropdown icon"/>
@@ -28,12 +28,17 @@ const CreateDirectory = ({ handleAction }) => (
     </div>
 
     <div className="content create-section">
-      <ActionInput caption="Create" icon="plus" handleAction={ handleAction } placeholder="Directory name"/>
+      <ActionInput 
+        caption="Create" 
+        icon="plus" 
+        handleAction={ handleAction } 
+        placeholder="Directory name"
+      />
     </div>
   </Accordion>
 );
 
-CreateDirectory.propTypes = {
+CreateDirectorySection.propTypes = {
   /**
 	 * Function to call with the value
 	 */
@@ -205,7 +210,7 @@ class FileBrowser extends React.Component {
           itemClickHandler={ this._handleSelect }
           itemIconGetter={ itemIconGetter }
         />
-        { this.state.currentDirectory && hasEditAccess ? <CreateDirectory handleAction={this._createDirectory}/> : null }
+        { this.state.currentDirectory && hasEditAccess ? <CreateDirectorySection handleAction={this._createDirectory}/> : null }
       </div>
     );
   }

@@ -33,13 +33,7 @@ const UserCell = ({ cellData, rowDataGetter, ...props }) => (
     directory={ rowDataGetter().path }
     userIcon={ 'simple' }
     ids={ UserFileActions }
-  >
-    {/*<TableActionMenu 
-			actions={ SearchActions } 
-			ids={ [ 'result' ] } 
-			itemDataGetter={ rowDataGetter }
-		/>*/}
-  </TableUserMenu>
+  />
 );
 
 const resultUserGetter = rowData => rowData.users.user;
@@ -53,7 +47,7 @@ const NameCell = ({ rowDataGetter, ...props }) => (
   >
     <TableActionMenu 
       actions={ SearchActions }
-      itemDataGetter={ rowDataGetter }
+      itemData={ rowDataGetter }
     />
   </FileDownloadCell>
 );

@@ -6,9 +6,30 @@ import Checkbox from 'components/semantic/Checkbox';
 
 import 'semantic-ui/components/modal';
 import 'semantic-ui/components/modal.min.css';
+import Icon, { IconType } from 'components/semantic/Icon';
 
 
-class ConfirmDialog extends React.Component {
+type ApproveHandler = (checked: boolean) => void;
+type RejectHandler = (error: Error) => void;
+
+export interface ConfirmDialogOptions {
+  icon?: IconType;
+
+  content: React.ReactNode;
+  title: React.ReactNode;
+
+  approveCaption?: string;
+  rejectCaption?: string;
+
+  checkboxCaption?: React.ReactNode;
+}
+
+interface ConfirmDialogProps extends ConfirmDialogOptions {
+  onApproved: ApproveHandler;
+  onRejected?: RejectHandler;
+}
+
+class ConfirmDialog extends React.Component<ConfirmDialogProps> {
   static propTypes = {
 
     /**
@@ -48,6 +69,7 @@ class ConfirmDialog extends React.Component {
     checked: false,
   };
 
+  c: any;
   componentDidMount() {
     // We can't use the same context as for modals
     // because the dimmer wouldn't work correctly then
@@ -74,57 +96,61 @@ class ConfirmDialog extends React.Component {
   }
 
   onHidden = () => {
-    ReactDOM.unmountComponentAtNode(document.getElementById('confirms-node'));
+    const element = document.getElementById('confirms-node');
+    if (!!element) {
+      ReactDOM.unmountComponentAtNode(element);
+    }
   };
 
 
-  onDeny = (el) => {
+  onDeny = () => {
     if (this.props.onRejected) {
       this.props.onRejected(new Error('Denied'));
     }
   };
 
-  onApprove = (el) => {
+  onApprove = () => {
     this.props.onApproved(this.state.checked);
   };
 
-  onCheckboxValueChanged = (value) => {
+  onCheckboxValueChanged = (value: boolean) => {
     this.setState({ checked: value });
   };
 
   render() {
+    const { title, icon, checkboxCaption, rejectCaption, approveCaption, content } = this.props;
     return (
       <div 
         ref={ c => this.c = c } 
         className="ui basic modal confirm-dialog"
       >
         <div className="header">
-          { this.props.title }
+          { title }
         </div>
         <div className="image content">
           <div className="image">
-            <i className={ this.props.icon + ' icon'}/>
+            <Icon icon={ icon }/>
           </div>
           <div className="description">
-            { this.props.content }
-            { this.props.checkboxCaption ? (	
+            { content }
+            { !!checkboxCaption && (	
               <Checkbox 
-                checked={false} 
+                checked={ false } 
                 onChange={ this.onCheckboxValueChanged }
-                caption={ this.props.checkboxCaption }
+                caption={ checkboxCaption }
               />
-            ) : null }
+            ) }
           </div>
         </div>
         <div className="actions">
           <div className="two fluid ui inverted buttons">
             <div className="ui cancel red basic inverted button">
               <i className="remove icon"/>
-              { this.props.rejectCaption }
+              { rejectCaption }
             </div>
             <div className="ui ok green basic inverted button">
               <i className="checkmark icon"/>
-              { this.props.approveCaption }
+              { approveCaption }
             </div>
           </div>
         </div>
@@ -133,7 +159,7 @@ class ConfirmDialog extends React.Component {
   }
 }
 
-export default function (options, onApproved, onRejected) {
+export default function (options: ConfirmDialogOptions, onApproved: ApproveHandler, onRejected?: RejectHandler) {
   const dialog = (
     <ConfirmDialog 
       onApproved={ onApproved }

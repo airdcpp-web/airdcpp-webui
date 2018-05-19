@@ -24,7 +24,7 @@ const PasswordCell = ({ cellData, rowDataGetter }) => (
   <TableActionMenu 
     caption={ cellData ? <strong>Set</strong> : 'Not set' } 
     actions={ FavoriteHubPasswordActions } 
-    itemDataGetter={ rowDataGetter }
+    itemData={ rowDataGetter }
   />
 );
 

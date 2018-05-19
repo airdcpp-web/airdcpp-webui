@@ -8,7 +8,21 @@ import 'semantic-ui/components/popup';
 import 'semantic-ui/components/popup.min.css';
 
 
-class Popup extends React.PureComponent {
+type ChildType = React.ReactElement<{
+  hide: () => void;
+}>;
+
+export interface PopupProps {
+  settings?: object;
+  trigger: React.ReactNode;
+  onHover?: boolean;
+  position?: string;
+  triggerClassName?: string;
+  className?: string;
+  children: ChildType | (() => ChildType);
+}
+
+class Popup extends React.PureComponent<PopupProps> {
   static propTypes = {
 
     /**
@@ -37,6 +51,8 @@ class Popup extends React.PureComponent {
     triggerClassName: '',
   };
 
+  node: any;
+  triggerNode: any;
   componentWillUnmount() {
     if (this.node) {
       this.hide();
@@ -79,7 +95,7 @@ class Popup extends React.PureComponent {
       return children();
     }
 
-    return children;
+    return children as ChildType;
   };
 
   show = () => {
@@ -89,35 +105,32 @@ class Popup extends React.PureComponent {
 
     this.createPortal();
 
-    let children = this.getContent();
-    if (typeof children.type !== 'string') {
-      children = React.cloneElement(children, {
-        hide: this.hide,
-      });
-    }
+    const children = React.cloneElement(this.getContent(), {
+      hide: this.hide,
+    });
 
     ReactDOM.render(children, this.node);
 
     // Common settings
-    let settings = {
+    let settings: SemanticUI.PopupSettings = {
       on: this.props.onHover ? 'hover' : 'click',
       movePopup: false,
       popup: this.node,
-      onHidden: _ => this.onHidden(),
+      onHidden: () => this.onHidden(),
       position: this.props.position,
       ...this.props.settings,
     };
 
-    $(this.triggerNode).popup(settings).popup('show');
+    $(this.triggerNode).popup(settings).popup('show'); // TODO: fix any
   };
 
-  handleClick = (el) => {
+  handleClick = () => {
     this.show();
   };
 
   render() {
     const triggerProps = {
-      ref: c => this.triggerNode = c,
+      ref: (c: any) => this.triggerNode = c,
       className: classNames(this.props.triggerClassName, 'popup trigger'),
     };
 

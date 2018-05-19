@@ -11,7 +11,16 @@ import DropdownCaption from './DropdownCaption';
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
-class TableDropdown extends React.Component {
+type ChildType = React.ReactElement<any>;
+
+export interface TableDropdownProps {
+  caption: React.ReactNode;
+  linkCaption?: boolean;
+  className?: string;
+  children: () => ChildType[];
+}
+
+class TableDropdown extends React.Component<TableDropdownProps> {
   static propTypes = {
     /**
 		 * Cell content to render
@@ -30,11 +39,12 @@ class TableDropdown extends React.Component {
     linkCaption: true,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  popupNode: any;
+  shouldComponentUpdate(nextProps: TableDropdownProps) {
     return nextProps.caption !== this.props.caption;
   }
 
-  addCloseHandler = (elem) => {
+  addCloseHandler = (elem: ChildType) => {
     if (elem.type === 'div') {
       // Divider
       return elem;
@@ -71,7 +81,7 @@ class TableDropdown extends React.Component {
     const trigger = (
       <div className="trigger">
         <i className="large angle down icon"/>
-        { this.props.linkCaption ? caption : null }
+        { !!this.props.linkCaption && caption }
       </div>
     );
 
@@ -91,7 +101,7 @@ class TableDropdown extends React.Component {
         >
           { this.getChildren }
         </Popup>
-        { this.props.linkCaption ? null : caption }
+        { !this.props.linkCaption && caption }
       </div>);
   }
 }

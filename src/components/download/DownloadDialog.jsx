@@ -25,7 +25,7 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import Dropdown from 'components/semantic/Dropdown';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import './style.css';
 

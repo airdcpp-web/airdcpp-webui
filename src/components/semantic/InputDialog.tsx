@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
+import ConfirmDialog, { ConfirmDialogOptions } from 'components/semantic/ConfirmDialog';
 
-class InputField extends React.Component {
+
+export interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  content: React.ReactNode;
+}
+
+class InputField extends React.Component<InputFieldProps> {
   static propTypes = {
     /**
 		 * Action description
@@ -22,8 +27,10 @@ class InputField extends React.Component {
   }
 }
 
-const InputDialog = function (dialogOptions, inputOptions, onApproved) {
-  let inputText = inputOptions.defaultValue ? inputOptions.defaultValue : '';
+type InputDialogOptions = Pick<ConfirmDialogOptions, 'icon' | 'approveCaption' | 'content' | 'title'>;
+
+const InputDialog = function (dialogOptions: InputDialogOptions, inputOptions: React.InputHTMLAttributes<HTMLInputElement>, onApproved: (value: string) => void) {
+  let inputText: string = inputOptions.defaultValue && typeof inputOptions.defaultValue === 'string' ? inputOptions.defaultValue : '';
 
   const input = (
     <InputField 
@@ -40,8 +47,8 @@ const InputDialog = function (dialogOptions, inputOptions, onApproved) {
   }, () => onApproved(inputText));
 };
 
-export const PasswordDialog = function (title, text, onApproved) {
-  const dialogOptions = {
+export const PasswordDialog = function (title: React.ReactNode, text: React.ReactNode, onApproved: (value: string) => void) {
+  const dialogOptions: InputDialogOptions = {
     icon: 'yellow lock',
     approveCaption: 'Set password',
 

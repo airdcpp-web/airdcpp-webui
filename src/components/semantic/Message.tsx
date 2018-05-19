@@ -1,16 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Icon from 'components/semantic/Icon';
+import Icon, { IconType } from 'components/semantic/Icon';
 
 import classNames from 'classnames';
 
 
-const Message = ({ className, title, description, icon, isError, children }) => {
+interface MessageProps extends React.HTMLAttributes<HTMLDivElement> {
+  description: React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | string;
+  icon?: IconType;
+  isError?: boolean;
+};
+
+const Message: React.SFC<MessageProps> = ({ className, title, description, icon, isError, children }) => {
   const style = classNames(
     'ui message',
     { 'negative': isError },
-    { 'icon': icon },
+    { 'icon': !!icon },
     className,
   );
 

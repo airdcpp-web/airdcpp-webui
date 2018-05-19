@@ -92,13 +92,15 @@ const getEntry = isNew => {
 class WebUserDialog extends React.Component {
   static displayName = 'WebUserDialog';
 
+  constructor(props) {
+    super(props);
+
+    this.entry = getEntry(this.isNew());
+  }
+
   isNew = () => {
     return !this.props.user;
   };
-
-  componentDidMount() {
-    this.entry = getEntry(this.isNew());
-  }
 
   save = () => {
     return this.form.save();

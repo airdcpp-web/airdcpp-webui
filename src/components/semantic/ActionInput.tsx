@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Button from 'components/semantic/Button';
+import Button, { ButtonProps } from 'components/semantic/Button';
 
-class ActionInput extends React.PureComponent {
+
+export interface ActionInputProps extends ButtonProps {
+  handleAction: (value: string) => void;
+  placeholder: string;
+  type: string;
+}
+
+class ActionInput extends React.PureComponent<ActionInputProps> {
   static propTypes = {
     /**
 		 * Button caption
@@ -38,22 +45,24 @@ class ActionInput extends React.PureComponent {
     this.props.handleAction(this.state.value);
   };
 
-  handleChange = (event) => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: event.target.value });
   };
 
   render() {
+    const { type, placeholder, ...other /*icon, caption*/ } = this.props;
     return (
       <div className="ui action input">
         <input 
-          type={ this.props.type }
-          placeholder={this.props.placeholder} 
-          onChange={this.handleChange}
+          type={ type }
+          placeholder={ placeholder } 
+          onChange={ this.handleChange }
         />
         <Button
+          { ...other }
           icon={ this.props.icon }
-          onClick={ this.handleClick }
           caption={ this.props.caption }
+          onClick={ this.handleClick }
           disabled={this.state.value.length === 0}
         />
       </div>

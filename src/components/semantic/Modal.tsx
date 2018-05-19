@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import OverlayDecorator from 'decorators/OverlayDecorator';
+import OverlayDecorator, { OverlayDecoratorChildProps } from 'decorators/OverlayDecorator';
 import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
@@ -9,9 +9,25 @@ import IconConstants from 'constants/IconConstants';
 
 import 'semantic-ui/components/modal';
 import 'semantic-ui/components/modal.min.css';
+import { IconType } from 'components/semantic/Icon';
 
 
-class Modal extends React.Component {
+export interface ModalProps extends OverlayDecoratorChildProps {
+  closable?: boolean;
+  onApprove?: () => Promise<void>;
+  approveCaption?: React.ReactNode;
+  approveDisabled?: boolean;
+  fullHeight?: boolean;
+  className?: string;
+  dynamicHeight?: boolean;
+
+  // Header
+  icon?: IconType;
+  title: React.ReactNode;
+  subHeader?: React.ReactNode;
+}
+
+class Modal extends React.Component<ModalProps> {
   static propTypes = {
     /**
 		 * Close the modal when clicking outside its boundaries
@@ -42,26 +58,33 @@ class Modal extends React.Component {
     fullHeight: PropTypes.bool,
 
     dynamicHeight: PropTypes.bool,
+
+    showOverlay: PropTypes.func.isRequired,
+    hide: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     closable: true,
     approveCaption: 'Save',
-    approveEnabled: true,
     fullHeight: false,
     dynamicHeight: false,
+    hide: () => '', // disable a TS error
   };
 
   state = {
     saving: false,
   };
 
-  onApprove = (el) => {
+  c: any;
+  onApprove = () => {
     let { onApprove } = this.props;
     if (onApprove) {
       this.setState({ saving: true });
-      let promise = onApprove();
-      promise.then(this.props.hide).catch(() => this.setState({ saving: false }));
+      
+      onApprove()
+        .then(this.props.hide)
+        .catch(() => this.setState({ saving: false }));
+  
       return false;
     }
 
@@ -87,16 +110,19 @@ class Modal extends React.Component {
 
   render() {
     const { saving } = this.state;
+    const { approveDisabled, fullHeight, approveCaption, onApprove, className, children } = this.props;
+    const { icon, subHeader, title } = this.props;
+
     const approveStyle = classNames(
       'ui ok green basic button',
-      { 'disabled': this.props.approveDisabled },
+      { 'disabled': approveDisabled },
       { 'loading': saving },
     );
 
     const mainClass = classNames(
       'ui modal',
-      { 'full': this.props.fullHeight },
-      this.props.className,
+      { 'full': fullHeight },
+      className,
     );
 
     return (
@@ -105,20 +131,20 @@ class Modal extends React.Component {
         className={ mainClass }
       >
         <LayoutHeader
-          title={ this.props.title }
-          icon={ this.props.icon }
-          subHeader={ this.props.subHeader }
+          title={ title }
+          icon={ icon }
+          subHeader={ subHeader }
           size="medium"
         />
         <div className="content">
-          { this.props.children }
+          { children }
         </div>
 
-        { this.props.onApprove ? (
+        { onApprove ? (
           <div className="actions">
             <div className={ approveStyle }>
               <i className={ IconConstants.SAVE + ' icon' }/>
-              { this.props.approveCaption }
+              { approveCaption }
             </div>
             <div className="ui cancel red basic button">
               <i className="remove icon"/>

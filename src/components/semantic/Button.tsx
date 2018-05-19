@@ -2,21 +2,33 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
-import Icon from 'components/semantic/Icon';
+import Icon, { IconType } from 'components/semantic/Icon';
 
 import 'semantic-ui/components/button.min.css';
 
 
-const Button = ({ className, loading, icon, caption, loadingCaption, disabled, ...other }) => {
+export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  icon?: IconType;
+  loading?: boolean;
+  disabled?: boolean;
+  caption: React.ReactNode;
+  //cornerIcon: string;
+  //size: string;
+}
+
+const Button: React.SFC<ButtonProps> = ({ className, loading, icon, caption, disabled, ...other }) => {
   const buttonStyle = classNames(
     'ui button',
-    { 'disabled': disabled || loading },
-    { 'loading': loading },
+    { 'disabled': !!disabled || !!loading },
+    { 'loading': !!loading },
     className,
   );
 
   return (
-    <button className={ buttonStyle } { ...other }>
+    <button 
+      className={ buttonStyle } 
+      { ...other }
+    >
       <Icon icon={ icon }/>
       { caption }
     </button>

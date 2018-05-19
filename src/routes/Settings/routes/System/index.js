@@ -10,8 +10,7 @@ module.exports = {
     { 
       title: 'Users', 
       url: 'users', 
-      noSave: true, 
-      fullWidth: true,
+      noSave: true,
       component: require('./components/WebUsersPage').default,
     }, { 
       title: 'Logging', 

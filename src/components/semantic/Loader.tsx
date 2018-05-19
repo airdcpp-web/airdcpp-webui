@@ -6,7 +6,15 @@ import classNames from 'classnames';
 import 'semantic-ui/components/loader.min.css';
 
 
-const Loader = ({ text, className, inline, size, inverted }) => {
+interface LoaderProps {
+  inline?: boolean;
+  className?: string;
+  text?: string;
+  size?: string;
+  inverted?: boolean;
+}
+
+const Loader: React.SFC<LoaderProps> = ({ text, className, inline, size, inverted }) => {
   const style = classNames(
     'ui active  loader',
     { 'inverted': inverted },
@@ -16,7 +24,7 @@ const Loader = ({ text, className, inline, size, inverted }) => {
     size,
   );
 
-  if (inline && text.length > 0) {
+  if (inline && !!text) {
     return (
       <div className="inline-loader">
         <div className={ style }/>

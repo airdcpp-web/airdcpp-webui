@@ -52,7 +52,7 @@ export const FileActionCell = ({ cellData, rowDataGetter, ...props }) => (
         caption={ cellData }
       />
     }
-    itemDataGetter={ rowDataGetter }
+    itemData={ rowDataGetter }
     { ...props }
   />
 );
@@ -60,7 +60,7 @@ export const FileActionCell = ({ cellData, rowDataGetter, ...props }) => (
 export const ActionMenuCell = ({ cellData, rowDataGetter, ...props }) => (
   <TableActionMenu 
     caption={ cellData }
-    itemDataGetter={ rowDataGetter }
+    itemData={ rowDataGetter }
     { ...props }
   />
 );

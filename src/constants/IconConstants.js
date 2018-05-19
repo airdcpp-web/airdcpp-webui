@@ -42,4 +42,6 @@ export default {
 
   FILE: 'file outline',
   USER: 'user',
+
+  MAGNET: 'magnet',
 };

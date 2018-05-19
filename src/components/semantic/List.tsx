@@ -1,16 +1,23 @@
 import React from 'react';
 import classNames from 'classnames';
-import Icon from 'components/semantic/Icon';
+import Icon, { IconType } from 'components/semantic/Icon';
 
 
-export const ListItem = ({ header, description, icon, className, children }) => (
+export interface ListItemProps {
+  header: React.ReactNode;
+  description: React.ReactNode;
+  icon: IconType;
+  className?: string;
+}
+
+export const ListItem: React.SFC<ListItemProps> = ({ header, description, icon, className, children }) => (
   <div className={ classNames('item', className) }>
     <Icon icon={ icon }/>
     <div className="content">
       <div className="header">
         { header }
       </div>
-      { description && (
+      { !!description && (
         <div className="description">
           { description }
         </div> 

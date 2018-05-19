@@ -4,9 +4,17 @@ import React from 'react';
 import classNames from 'classnames';
 
 
-const Icon = ({ icon, size, className, cornerIcon, ...other }) => {
+export type IconType = React.ReactElement<any> | string | null;
+
+export interface IconProps extends React.HTMLAttributes<HTMLElement> {
+  icon?: IconType;
+  cornerIcon?: string;
+  size?: string;
+}
+
+const Icon: React.SFC<IconProps> = ({ icon, size, className, cornerIcon, ...other }) => {
   if (typeof icon !== 'string') {
-    return icon ? icon : null;
+    return !!icon ? icon : null;
   }
 
   if (cornerIcon) {

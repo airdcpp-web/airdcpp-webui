@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';

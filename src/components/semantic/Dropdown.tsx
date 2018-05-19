@@ -5,14 +5,26 @@ import invariant from 'invariant';
 import classNames from 'classnames';
 
 import DropdownCaption from './DropdownCaption';
-import Icon from './Icon';
+import Icon, { IconType } from './Icon';
 
 import 'semantic-ui/components/button.min.css'; // for button style
 import 'semantic-ui/components/dropdown';
 import 'semantic-ui/components/dropdown.min.css';
 
 
-class Dropdown extends React.PureComponent {
+export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>*/ {
+  triggerIcon?: IconType;
+  direction: 'auto' | 'upward' | 'downward';
+  settings?: object;
+  contextElement: string;
+  button?: boolean;
+  leftIcon?: boolean;
+  caption?: React.ReactNode;
+  className?: string;
+  captionIcon?: IconType;
+}
+
+class Dropdown extends React.PureComponent<DropdownProps> {
   static propTypes = {
     /**
 		 * Node to render as caption
@@ -54,8 +66,10 @@ class Dropdown extends React.PureComponent {
   static defaultProps = {
     triggerIcon: 'angle down',
     direction: 'auto',
+    leftIcon: false,
   };
 
+  c: any;
   state = {
     visible: false,
   };
@@ -85,13 +99,13 @@ class Dropdown extends React.PureComponent {
 
   hide = () => {
     // Don't hide before the click event is processed by React
-    setTimeout(_ => 
+    setTimeout(() => 
       $(this.c).dropdown('hide')
     );
   };
 
   init = () => {
-    const settings = {
+    const settings: SemanticUI.DropdownSettings = {
       direction: this.props.direction,
       action: this.hide,
       showOnFocus: false, // It can become focused when opening a modal
@@ -127,17 +141,23 @@ class Dropdown extends React.PureComponent {
       'item',
       this.props.className,
       { 'icon button': button },
-      { 'labeled': button && caption },
+      { 'labeled': !!button && !!caption },
       { 'left-icon': leftIcon },
     );
 
-    let icon = <Icon icon={ triggerIcon } className="trigger"/>;
+    let icon = (
+      <Icon 
+        icon={ triggerIcon } 
+        className="trigger"
+      />
+    );
+
     return (
       <div 
         ref={ c => this.c = c } 
         className={ className }
       >
-        { (leftIcon && caption) && icon }
+        { (leftIcon && !!caption) && icon }
         <DropdownCaption icon={ captionIcon }>
           { !!caption ? caption : icon }
         </DropdownCaption>

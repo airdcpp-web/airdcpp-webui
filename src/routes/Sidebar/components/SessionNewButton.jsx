@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import IconConstants from 'constants/IconConstants';
-import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
 
 const onClick = (evt, pushNew) => {

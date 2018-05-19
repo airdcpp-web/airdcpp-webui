@@ -9,12 +9,12 @@ import isEqual from 'lodash/isEqual';
 
 import { NavLink, matchPath } from 'react-router-dom';
 import CountLabel from 'components/CountLabel';
-import Icon from 'components/semantic/Icon';
+import Icon, { IconType } from 'components/semantic/Icon';
 
 
 // A component that will re-render only when urgencies or active state are updated
 // TODO: session code doesn't work with SessionMenuItem yet
-export const RouterMenuItemLink = createReactClass({
+const RouterMenuItemLink = createReactClass({
   displayName: 'RouterMenuItemLink',
   mixins: [ Reflux.ListenerMixin ],
 
@@ -131,38 +131,10 @@ export const RouterMenuItemLink = createReactClass({
   },
 });
 
-
-export const MenuItemLink = ({ className, icon, children, onClick, active, disabled }) => {
-  const itemClass = classNames(
-    'item',
-    className,
-    { 'active': active },
-    { 'disabled': disabled },
-  );
-
-  return (
-    <a className={ itemClass } onClick={ onClick }>
-      <Icon icon={ icon }/>
-      { children }
-    </a>
-  );
-};
-
-MenuItemLink.propTypes = {
-  /**
-	 * Title of the button
-	 */
-  children: PropTypes.any.isRequired,
-
-  icon: PropTypes.string,
-
-  onClick: PropTypes.func.isRequired,
-
-  active: PropTypes.bool,
-};
-
 export const MenuHeader = ({ className, children, ...other }) => (
  	<div className={ classNames('header', className) } { ...other }>
  		{ children }
  	</div>
 );
+
+export default RouterMenuItemLink;

@@ -1,10 +1,15 @@
 import React, { Fragment } from 'react';
-import Dropdown from './Dropdown';
+import Dropdown, { DropdownProps } from './Dropdown';
 
-const SectionedDropdown = ({ children, ...other }) => {
+
+export interface SectionedDropdownProps extends DropdownProps {
+
+}
+
+const SectionedDropdown: React.SFC<SectionedDropdownProps> = ({ children, ...other }) => {
   // Remove empty sections
   const validChildren = React.Children.toArray(children)
-    .filter(child => React.Children.count(child.props.children) > 0);
+    .filter(child => React.Children.count((child as any).props.children) > 0);
 
   return (
     <Dropdown

@@ -3,7 +3,7 @@ import React from 'react';
 
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
 import TableFilterDecorator from 'decorators/TableFilterDecorator';

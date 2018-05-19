@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
-import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';

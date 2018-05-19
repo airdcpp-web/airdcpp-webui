@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
 
 const onClickItem = (evt, sessionItem, pushSession) => {

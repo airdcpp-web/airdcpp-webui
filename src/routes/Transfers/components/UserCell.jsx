@@ -29,7 +29,7 @@ class UserCell extends React.Component {
         text={ <UserCaption rowData={ rowDataGetter() } cellData={ cellData }/> }
       >
         <TableActionMenu 
-          itemDataGetter={ rowDataGetter }
+          itemData={ rowDataGetter }
           actions={ TransferActions } 
         />
       </TableUserMenu>

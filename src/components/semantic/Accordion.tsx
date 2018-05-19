@@ -7,7 +7,12 @@ import 'semantic-ui/components/accordion.min.css';
 import classNames from 'classnames';
 
 
-class Accordion extends React.Component {
+interface AccordionProps{
+  controlled?: boolean;
+  className?: string;
+}
+
+class Accordion extends React.Component<AccordionProps> {
   static propTypes = {
     controlled: PropTypes.bool,
   };
@@ -16,8 +21,10 @@ class Accordion extends React.Component {
     className: '',
   };
 
+  c: any;
   componentDidMount() {
-    let settings = {};
+    let settings = undefined;
+    
     if (this.props.controlled) {
       settings = {
         on: 'disabled',

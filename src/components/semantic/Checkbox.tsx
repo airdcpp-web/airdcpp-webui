@@ -7,7 +7,17 @@ import 'semantic-ui/components/checkbox';
 import 'semantic-ui/components/checkbox.min.css';
 
 
-class Checkbox extends React.PureComponent {
+export interface CheckboxProps {
+  onChange: (checked: boolean) => void;
+  type?: string;
+  caption?: React.ReactNode;
+  disabled?: boolean;
+  floating?: boolean;
+  checked: boolean;
+  className?: string;
+}
+
+class Checkbox extends React.PureComponent<CheckboxProps> {
   static propTypes = {
 
     /**
@@ -34,6 +44,7 @@ class Checkbox extends React.PureComponent {
     floating: PropTypes.bool,
   };
 
+  c: any;
   componentDidMount() {
     const settings = {
       fireOnInit: false,
@@ -44,9 +55,9 @@ class Checkbox extends React.PureComponent {
     $(this.c).checkbox(settings);
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.checked != this.props.checked) {
-      if (nextProps.checked) {
+  componentWillUpdate(prevProps: CheckboxProps) {
+    if (prevProps.checked != this.props.checked) {
+      if (this.props.checked) {
         $(this.c).checkbox('set checked');
       } else {
         $(this.c).checkbox('set unchecked');
@@ -71,7 +82,7 @@ class Checkbox extends React.PureComponent {
         className={ checkboxStyle }
       >
         <input type="checkbox" defaultChecked={ checked }/>
-        { caption && (
+        { !!caption && (
           <label>
             { caption }
           </label>

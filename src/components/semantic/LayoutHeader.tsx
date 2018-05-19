@@ -1,15 +1,24 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Icon from 'components/semantic/Icon';
+import Icon, { IconType } from 'components/semantic/Icon';
 
 import classNames from 'classnames';
 
 
-const LayoutHeader = ({ className, icon, component, size, title, subHeader }) => {
+interface LayoutHeaderProps {
+  className?: string;
+  size?: string;
+  icon?: IconType;
+  rightComponent?: React.ReactNode;
+  title: React.ReactNode;
+  subHeader?: React.ReactNode;
+}
+
+const LayoutHeader: React.SFC<LayoutHeaderProps> = ({ className, icon, rightComponent, size, title, subHeader }) => {
   const mainClassName = classNames(
     'header layout',
-    { 'icon': icon },
+    { 'icon': !!icon },
     className,
   );
 
@@ -24,18 +33,19 @@ const LayoutHeader = ({ className, icon, component, size, title, subHeader }) =>
         <Icon size="small" icon={ icon }/>
         <div className="content">
           { title }
-          <div className="sub header">
-            { subHeader }
-          </div>
+          { !!subHeader && (
+            <div className="sub header">
+              { subHeader }
+            </div>
+          ) }
         </div>
       </div>
-      { component }
+      { rightComponent }
     </div>
   );
 };
 
 LayoutHeader.defaultProps = {
-  buttonCaption: 'Close',
   size: 'large',
 };
 
@@ -58,7 +68,7 @@ LayoutHeader.propTypes = {
   /**
 	 * Component to display on the right side of the header
 	 */
-  component: PropTypes.node,
+  rightComponent: PropTypes.node,
 
   /**
 	 * Size of the header

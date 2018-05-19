@@ -10,22 +10,35 @@ import invariant from 'invariant';
 import History from 'utils/History';
 
 import '../style.css';
+import { RouterChildContext } from 'react-router-dom';
 
 
-export default function (Component, semanticModuleName) {
-  class OverlayDecorator extends React.Component {
+export interface OverlayDecoratorProps {
+  overlayId: any;
+}
+
+export interface OverlayDecoratorChildProps {
+  showOverlay: (component: any, semanticComponentSettings: object) => void;
+  hide: () => void;
+}
+
+export default function <PropsT>(Component: React.ComponentType<OverlayDecoratorChildProps>, semanticModuleName: string) {
+  class OverlayDecorator extends React.Component<OverlayDecoratorProps & PropsT> {
     static displayName = 'OverlayDecorator';
 
     static propTypes = {
       overlayId: PropTypes.any.isRequired,
     };
 
+    context: RouterChildContext<{}>;
     static contextTypes = {
       router: PropTypes.object.isRequired,
     };
 
     closing = false;
     returnOnClose = true;
+
+    c: any;
 
     componentWillUnmount() {
       if (!this.closing) {
@@ -34,13 +47,13 @@ export default function (Component, semanticModuleName) {
       }
     }
 
-    componentWillReceiveProps(nextProps, nextLocation) {
-      if (nextLocation.router.route.location.state[this.props.overlayId].data.close) {
+    componentDidReceiveProps() {
+      if (this.context.router.route.location.state[this.props.overlayId].data.close) {
         this.hide();
       }
     }
 
-    showOverlay = (c, componentSettings = {}) => {
+    showOverlay = (c: any, componentSettings = {}) => {
       invariant(c, 'Component missing from showOverlay');
 
       this.c = c;
@@ -51,7 +64,7 @@ export default function (Component, semanticModuleName) {
         onHide: this.onHide,
       });
 
-      setTimeout(_ => {
+      setTimeout(() => {
         $(this.c)[semanticModuleName](settings)[semanticModuleName]('show');
       });
     };
@@ -76,11 +89,10 @@ export default function (Component, semanticModuleName) {
       return ReactDOM.createPortal((
         <Component 
           { ...this.props } 
-          { ...this.state }
           showOverlay={ this.showOverlay } 
           hide={ this.hide }
         />
-      ), document.getElementById('modals-node'));
+      ), document.getElementById('modals-node') as any);
     }
   }
 

@@ -4,32 +4,58 @@ import invariant from 'invariant';
 import classNames from 'classnames';
 
 import { actionFilter, actionAccess } from 'utils/ActionUtils';
-import { MenuItemLink } from 'components/semantic/MenuItem';
+import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
+import { Location } from 'history';
 
+
+export interface ActionType {
+
+}
+
+type ItemDataType = (() => object | string | number) | object | string | number;
+
+export interface ActionMenuDecoratorProps {
+  className?: string;
+  caption?: React.ReactNode;
+  button?: boolean;
+  ids?: string[];
+  actions: ActionType[];
+  
+  itemData: ItemDataType;
+}
+
+export interface ActionMenuDecoratorChildProps {
+  children: () => React.ReactNode;
+}
+
+type FilterType = (action: ActionType, itemData: any) => boolean;
+
+
+const parseItemData = (itemData: ItemDataType) => typeof itemData === 'function' ? itemData() : itemData;
 
 // Returns true if the provided ID matches the specified filter
-const filterItem = (props, filter, actionId) => {
+const filterItem = (props: ActionMenuDecoratorProps, filter: FilterType, actionId: string) => {
   const action = props.actions[actionId];
   if (!action) {
     invariant(actionId === 'divider', 'No action for action ID: ' + actionId);
     return true;
   }
 
-  return filter(action, props.itemDataGetter ? props.itemDataGetter() : props.itemData);
+  return filter(action, parseItemData(props.itemData));
 };
 
 // Get IDs matching the provided filter
-const filterItems = (props, filter, actionIds) => {
-  let ids = actionIds.filter(filterItem.bind(this, props, filter));
-  if (ids.length === 0 || ids.every(id => id === 'divider')) {
+const filterItems = (props: ActionMenuDecoratorProps, filter: FilterType, actionIds: string[]) => {
+  let ids = actionIds.filter(id =>  filterItem(props, filter, id));
+  if (!ids.length || ids.every(id => id === 'divider')) {
     return null;
   }
 
   return ids;
 };
 
-const filterExtraDividers = (ids) => {
+const filterExtraDividers = (ids: string[]) => {
   return ids.filter((item, pos) => {
     if (item !== 'divider') {
       return true;
@@ -46,14 +72,18 @@ const filterExtraDividers = (ids) => {
   });
 };
 
+interface MenuType {
+  actionIds: string[];
+  itemDataGetter: () => any;
+  actions: ActionType[];
+}
+
 // Get IDs to display from the specified menu
-const parseMenu = (props, hasPreviousMenuItems) => {
-  let { ids } = props;
-  if (!ids) {
-    ids = Object.keys(props.actions).filter(id => {
-      return id === 'divider' || props.actions[id].displayName;
-    });
-  }
+const parseMenu = (props: ActionMenuDecoratorProps, hasPreviousMenuItems: boolean): MenuType | string => {
+  let ids: string[] | null;
+  ids = props.ids || Object.keys(props.actions).filter(id => {
+    return id === 'divider' || props.actions[id].displayName;
+  });
 
   // Only return a single error for each menu
   // Note the filtering order (no-access will be preferred over filtered)
@@ -77,15 +107,20 @@ const parseMenu = (props, hasPreviousMenuItems) => {
 
   return {
     actionIds: ids,
-    itemDataGetter: props.itemDataGetter ? props.itemDataGetter : _ => props.itemData,
+    itemDataGetter: typeof props.itemData === 'function' ? props.itemData : () => props.itemData,
     actions: props.actions,
   };
 };
 
 // Convert ID to menu link element
-const getMenuItem = (menu, menuIndex, actionId, itemIndex, location) => {
+const getMenuItem = (menu: MenuType, menuIndex: number, actionId: string, itemIndex: number, location: Location) => {
   if (actionId === 'divider') {
-    return <div key={ 'divider' + menuIndex + '_' + itemIndex } className="ui divider"/>;
+    return (
+      <div 
+        key={ `divider${menuIndex}_${itemIndex}` } 
+        className="ui divider"
+      />
+    );
   }
 
   // A custom element
@@ -106,10 +141,12 @@ const getMenuItem = (menu, menuIndex, actionId, itemIndex, location) => {
 };
 
 // This should be used only for constructed menus, not for id arrays
-const notError = id => typeof id !== 'string';
+const notError = (id: any) => typeof id !== 'string';
 
-export default function (Component) {
-  class ActionMenu extends React.PureComponent {
+export default function <DropdownComponentPropsT extends object>(
+  Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
+) {
+  class ActionMenu extends React.PureComponent<ActionMenuDecoratorProps & DropdownComponentPropsT> {
     static propTypes = {
 
       /**
@@ -142,20 +179,21 @@ export default function (Component) {
     };
 
     // Reduce menus to an array of DropdownItems
-    reduceMenuItems = (items, menu, menuIndex) => {
+    reduceMenuItems = (items: React.ReactChild[], menu: MenuType, menuIndex: number) => {
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
         return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.router.route.location);
       }));
+
       return items;
     };
 
     getMenus = () => {
-			let { ids, actions, children, ...other } = this.props; // eslint-disable-line
+			let { children } = this.props; // eslint-disable-line
 
-      const menus = [ parseMenu(this.props) ];
+      const menus = [ parseMenu(this.props, false) ];
       if (children) {
         React.Children.map(children, child => {
-          menus.push(parseMenu(child.props, notError(menus[0])));
+          menus.push(parseMenu((child as any).props, notError(menus[0])));
         });
       }
 
@@ -170,7 +208,7 @@ export default function (Component) {
     };
 
     render() {
-			let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props; // eslint-disable-line
+			let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props as any; // eslint-disable-line
 
       const menus = this.getMenus();
 
