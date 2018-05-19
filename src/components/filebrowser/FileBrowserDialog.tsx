@@ -6,9 +6,17 @@ import FileBrowserLayout from './FileBrowserLayout';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
+import { OverlayDecoratorProps } from 'decorators/OverlayDecorator';
 
 
-class FileBrowserDialog extends React.Component {
+interface FileBrowserDialogProps extends Pick<OverlayDecoratorProps, 'overlayId'> {
+  initialPath: string;
+  onConfirm: (path: string) => void;
+  title?: React.ReactNode;
+  historyId: string;
+}
+
+class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
   static displayName = 'FileBrowserDialog';
 
   static propTypes = {
@@ -22,9 +30,11 @@ class FileBrowserDialog extends React.Component {
 		 * Information about the item to download
 		 */
     title: PropTypes.node,
+
+    initialPath: PropTypes.string,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<FileBrowserDialogProps> = {
     title: 'Browse...',
     initialPath: '',
   };
@@ -33,7 +43,7 @@ class FileBrowserDialog extends React.Component {
     currentPath: this.props.initialPath,
   };
 
-  onDirectoryChanged = (path) => {
+  onDirectoryChanged = (path: string) => {
     this.setState({ 
       currentPath: path 
     });

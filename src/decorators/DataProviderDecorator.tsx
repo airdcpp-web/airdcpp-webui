@@ -10,9 +10,39 @@ import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 
 
+export interface DataProviderDecoratorProps<PropsT extends object> {
+  //urls: ((props: PropsT) => object) | object;
+  urls: {
+    [key: string]: ((props: PropsT, socket: any) => Promise<any>) | string
+  }
+  onSocketConnected?: (handler: any, data: {
+    refetchData: () => void;
+    mergeData: (data: Partial<PropsT>) => void;
+    props: PropsT;
+  }) => void;
+  dataConverters?: {
+    [key: string]: (data: any, props: PropsT) => any
+  };
+  loaderText?: React.ReactNode;
+  renderOnError?: boolean;
+}
+
+export interface DataProviderDecoratorChildProps {
+  refetchData: (keys: string[]) => void;
+  dataError: any;
+}
+
+interface State<DataT> {
+  data: DataT | null;
+  error: string | null;
+}
+
 // A decorator that will provide a set of data fetched from the API as props
-export default function (Component, settings) {
-  const DataProviderDecorator = createReactClass({
+export default function <PropsT extends object, DataT extends object>(
+  Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
+  settings: DataProviderDecoratorProps<PropsT>
+) {
+  const DataProviderDecorator = createReactClass<PropsT, State<DataT>>({
     displayName: 'DataProviderDecorator',
     mixins: [ SocketSubscriptionMixin() ],
 
@@ -55,7 +85,7 @@ export default function (Component, settings) {
       renderOnError: PropTypes.bool,
     },
 
-    getDefaultProps() {
+    /*getDefaultProps(): DataProviderDecoratorProps {
       return {
         urls: settings.urls,
         onSocketConnected: settings.onSocketConnected,
@@ -63,7 +93,7 @@ export default function (Component, settings) {
         dataConverters: settings.dataConverters,
         renderOnError: settings.renderOnError,
       };
-    },
+    },*/
 
     getInitialState() {
       return {
@@ -81,9 +111,9 @@ export default function (Component, settings) {
       this.mounted = false;
     },
 
-    onSocketConnected(addSocketListener) {
-      if (this.props.onSocketConnected) {
-        this.props.onSocketConnected(addSocketListener, {
+    onSocketConnected(addSocketListener: () => void) {
+      if (settings.onSocketConnected) {
+        settings.onSocketConnected(addSocketListener, {
           refetchData: this.refetchData,
           mergeData: this.mergeData,
           props: this.props,
@@ -92,24 +122,25 @@ export default function (Component, settings) {
     },
 
     // Merge data object into existing data
-    mergeData(data) {
+    mergeData(data: any) {
       this.setState({
         data: Object.assign({}, this.state.data, data)
       });
     },
 
-    refetchData(keys) {
-      invariant(!keys || (Array.isArray(keys) && keys.every(key => !!this.props.urls[key])), 'Invalid keys supplied to refetchData');
+    refetchData(keys?: string[]) {
+      invariant(!keys || (Array.isArray(keys) && keys.every(key => !!settings.urls[key])), 'Invalid keys supplied to refetchData');
       this.fetchData(keys);
     },
 
-    fetchData(keys) {
+    fetchData(keys?: string[]) {
+      const { urls } = settings;
       if (!keys) {
-        keys = Object.keys(this.props.urls);
+        keys = Object.keys(urls);
       }
 
       const promises = keys.map(key => {
-        let url = this.props.urls[key];
+        let url = urls[key];
         if (typeof url === 'function') {
           return url(this.props, SocketService);
         }
@@ -122,14 +153,14 @@ export default function (Component, settings) {
     },
 
     // Convert the data array to key-value props
-    reduceData(keys, reducedData, data, index) {
-      const { dataConverters } = this.props;
+    reduceData(keys: string[], reducedData: any, data: any, index: number) {
+      const { dataConverters } = settings;
       const url = keys[index];
       reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props) : data;
       return reducedData;
     },
 
-    onDataFetched(keys, values) {
+    onDataFetched(keys: string[], values: any) {
       if (!this.mounted) {
         return;
       }
@@ -139,17 +170,24 @@ export default function (Component, settings) {
       this.mergeData(data);
     },
 
-    onDataFetchFailed(error) {
-      if (error.code && error.message) {
-        // API error
-        NotificationActions.apiError('Failed to fetch data', error);
-      } else {
+    onDataFetchFailed(error: APISocket.Error | Response) {
+      if (error instanceof Response) {
         // HTTP error
         error = {
           code: error.status,
           message: error.statusText,
         };
+      } else {
+        // API error
+        NotificationActions.apiError('Failed to fetch data', error);
       }
+
+      /*if (error.code && error.message) {
+        // API error
+        NotificationActions.apiError('Failed to fetch data', error);
+      } else {
+
+      }*/
 
       this.setState({
         error,
@@ -157,11 +195,11 @@ export default function (Component, settings) {
     },
 
     render() {
-			const { loaderText, dataConverter, onSocketConnected, urls, renderOnError, ...other } = this.props; // eslint-disable-line
-      const { data, error } = this.state;
+			const { loaderText, renderOnError } = settings;
+      const { data, error } = this.state as State<DataT>;
 
       if (!data && !error) {
-        return loaderText && <Loader text={ loaderText }/>;
+        return !!loaderText && <Loader text={ loaderText }/>;
       }
 
       if (error && !renderOnError) {
@@ -172,7 +210,7 @@ export default function (Component, settings) {
         <Component
           refetchData={ this.refetchData }
           dataError={ error }
-          { ...other }
+          { ...this.props }
           { ...data }
         />
       );

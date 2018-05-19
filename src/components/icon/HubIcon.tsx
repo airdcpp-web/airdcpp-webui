@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Icon from 'components/semantic/Icon';
+import Icon, { IconProps } from 'components/semantic/Icon';
 import TypeConvert from 'utils/TypeConvert';
 
 
-const HubIcon = ({ hub, ...other }) => (
+interface HubIconProps extends IconProps {
+  hub: API.Hub;
+}
+
+const HubIcon: React.SFC<HubIconProps> = ({ hub, ...other }) => (
   <Icon
     { ...other }
     icon={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }

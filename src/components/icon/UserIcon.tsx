@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Icon from 'components/semantic/Icon';
+import Icon, { IconProps } from 'components/semantic/Icon';
 import TypeConvert from 'utils/TypeConvert';
 
 
-const getUserIcon = (flags) => {
+const getUserIcon = (flags: API.HubUserFlag[]) => {
   if (flags.indexOf('ignored') > -1) {
     return 'red ban';
   }
@@ -13,7 +13,7 @@ const getUserIcon = (flags) => {
   return TypeConvert.userOnlineStatusToColor(flags) + ' user';
 };
 
-const flagTitles = {
+const flagTitles: Partial<{ [K in API.HubUserFlag]: string; }> = {
   bot: 'Bot',
   op: 'Operator',
   self: 'Me',
@@ -24,7 +24,7 @@ const flagTitles = {
   ignored: 'Messages ignored',
 };
 
-const getCornerIcon = (flags) => {
+const getCornerIcon = (flags: API.HubUserFlag[]) => {
   if (flags.indexOf('bot') > -1) {
     return 'setting';
   }
@@ -48,20 +48,24 @@ const getCornerIcon = (flags) => {
   return null;
 };
 
-const getTitle = (flags) => {
+const getTitle = (flags: API.HubUserFlag[]) => {
   const titles = flags.reduce((reduced, flag) => {
     const title = flagTitles[flag];
-    if (title) {
+    if (!!title) {
       reduced.push(title);
     }
 
     return reduced;
-  }, []);
+  }, [] as string[]);
 
   return titles.toString();
 };
 
-const UserIcon = ({ flags, ...other }) => (
+interface UserIconProps extends IconProps {
+  flags: API.HubUserFlag[];
+}
+
+const UserIcon: React.SFC<UserIconProps> = ({ flags, ...other }) => (
   <Icon
     { ...other }
     icon={ getUserIcon(flags) }

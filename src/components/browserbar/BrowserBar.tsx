@@ -6,7 +6,15 @@ import './style.css';
 import 'semantic-ui/components/breadcrumb.min.css';
 
 
-const Section = ({ caption, onClick }) => (
+
+export type SelectedNameFormatter = (caption: React.ReactNode, token: string) => React.ReactNode;
+
+interface SectionProps {
+  caption: React.ReactNode;
+  onClick: () => void;
+}
+
+const Section: React.SFC<SectionProps> = ({ caption, onClick }) => (
   <div className="path-token">
     <a className="section" onClick={ onClick }>
       { caption }
@@ -15,13 +23,28 @@ const Section = ({ caption, onClick }) => (
   </div>
 );
 
-const SelectedSection = ({ selectedNameFormatter, caption, token }) => (
+interface SelectedSectionProps {
+  caption: React.ReactNode;
+  selectedNameFormatter?: SelectedNameFormatter;
+  token: string;
+}
+
+const SelectedSection: React.SFC<SelectedSectionProps> = ({ selectedNameFormatter, caption, token }) => (
   <div className="ui label current path-token section">
     { !!selectedNameFormatter ? selectedNameFormatter(caption, token) : caption }
   </div>
 );
 
-class BrowserBar extends React.PureComponent {
+interface BrowserBarProps {
+  itemClickHandler: (name: string) => void;
+  rootName?: string;
+  rootPath: string;
+  separator: string;
+  path: string;
+  selectedNameFormatter?: SelectedNameFormatter;
+}
+
+class BrowserBar extends React.PureComponent<BrowserBarProps> {
   static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -55,6 +78,9 @@ class BrowserBar extends React.PureComponent {
     selectedNameFormatter: PropTypes.func,
   };
 
+  breadcrumb: any;
+  wrapper: any;
+
   static defaultProps = {
     rootName: 'Root',
   };
@@ -78,7 +104,7 @@ class BrowserBar extends React.PureComponent {
     }
   };
 
-  onClick = (token, index) => {
+  onClick = (token: string, index: number) => {
     const tokens = this.tokenizePath();
     let path = this.props.rootPath;
 
@@ -89,7 +115,7 @@ class BrowserBar extends React.PureComponent {
     this.props.itemClickHandler(path);
   };
 
-  formatName = (token) => {
+  formatName = (token: string) => {
     return (
       <div className="section-caption">
         { this.props.rootPath === token ? this.props.rootName : token }
@@ -97,7 +123,7 @@ class BrowserBar extends React.PureComponent {
     );
   };
 
-  formatSection = (token, index) => {
+  formatSection = (token: string, index: number) => {
     return (
       <Section 
         key={ token + index } 

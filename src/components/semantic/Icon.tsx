@@ -8,7 +8,7 @@ export type IconType = React.ReactElement<any> | string | null;
 
 export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   icon?: IconType;
-  cornerIcon?: string;
+  cornerIcon?: string | null;
   size?: string;
 }
 

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -8,7 +8,14 @@ import ValueFormat from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 
 
-const PathItem = ({ pathInfo, downloadHandler }) => (
+export type PathDownloadHandler = (path: string) => void;
+
+interface PathItemProps {
+  pathInfo: API.DiskSpaceInfo;
+  downloadHandler: PathDownloadHandler;
+};
+
+const PathItem: React.SFC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
   <div className="item">
     <i className="yellow folder icon"/>
     <div className="content">
@@ -22,7 +29,16 @@ const PathItem = ({ pathInfo, downloadHandler }) => (
   </div>
 );
 
-const PathList = DataProviderDecorator(({ downloadHandler, pathInfos }) => (
+interface PathListProps {
+  downloadHandler: PathDownloadHandler;
+  paths: string[];
+}
+
+interface PathListDataProps {
+  pathInfos: API.DiskSpaceInfo[];
+}
+
+const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(({ downloadHandler, pathInfos }) => (
   <div className="ui relaxed list">
     { pathInfos.map(pathInfo => (
       <PathItem 
@@ -38,19 +54,19 @@ const PathList = DataProviderDecorator(({ downloadHandler, pathInfos }) => (
   },
 });
 
-PathList.PropTypes = {
+//PathList.PropTypes = {
   /**
 	 * Function handling the path selection. Receives the selected path as argument.
 	 */
-  downloadHandler: PropTypes.func.isRequired,
+  //downloadHandler: PropTypes.func.isRequired,
 
   /**
 	 * Array of paths to list
 	 */
-  paths: PropTypes.array.isRequired,
-};
+  //paths: PropTypes.array.isRequired,
+//};
 
-export default (props) => {
+export default (props: PathListProps) => {
   if (props.paths.length === 0) {
     return (
       <Message

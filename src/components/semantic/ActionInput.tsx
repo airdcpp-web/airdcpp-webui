@@ -7,7 +7,7 @@ import Button, { ButtonProps } from 'components/semantic/Button';
 export interface ActionInputProps extends ButtonProps {
   handleAction: (value: string) => void;
   placeholder: string;
-  type: string;
+  type?: string;
 }
 
 class ActionInput extends React.PureComponent<ActionInputProps> {
@@ -33,7 +33,7 @@ class ActionInput extends React.PureComponent<ActionInputProps> {
     handleAction: PropTypes.func.isRequired
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<ActionInputProps> = {
     type: 'text',
   };
 
@@ -50,7 +50,7 @@ class ActionInput extends React.PureComponent<ActionInputProps> {
   };
 
   render() {
-    const { type, placeholder, ...other /*icon, caption*/ } = this.props;
+    const { type, placeholder, handleAction, ...other /*icon, caption*/ } = this.props;
     return (
       <div className="ui action input">
         <input 

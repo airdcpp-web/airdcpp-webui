@@ -12,8 +12,6 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   disabled?: boolean;
   caption: React.ReactNode;
-  //cornerIcon: string;
-  //size: string;
 }
 
 const Button: React.SFC<ButtonProps> = ({ className, loading, icon, caption, disabled, ...other }) => {

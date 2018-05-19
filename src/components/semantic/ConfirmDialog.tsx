@@ -60,7 +60,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     checkboxCaption: PropTypes.node,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<ConfirmDialogProps> = {
     approveCaption: 'Yes',
     rejectCaption: 'No',
   };
@@ -75,9 +75,8 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     // because the dimmer wouldn't work correctly then
     // (the new dimmer would never be set active because the dimmable object is set to dimmed already)
     // Track https://github.com/Semantic-Org/Semantic-UI/issues/4055
-    const settings = {
+    const settings: SemanticUI.ModalSettings = {
       //context: '#container-main',
-      movePopup: false,
       onApprove: this.onApprove,
       onDeny: this.onDeny,
       closable: false,

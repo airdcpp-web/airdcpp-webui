@@ -17,12 +17,12 @@ export interface OverlayDecoratorProps {
   overlayId: any;
 }
 
-export interface OverlayDecoratorChildProps {
-  showOverlay: (component: any, semanticComponentSettings: object) => void;
+export interface OverlayDecoratorChildProps<SemanticSettingPropsT> {
+  showOverlay: (component: any, semanticComponentSettings: SemanticSettingPropsT) => void;
   hide: () => void;
 }
 
-export default function <PropsT>(Component: React.ComponentType<OverlayDecoratorChildProps>, semanticModuleName: string) {
+export default function <PropsT, SemanticSettingPropsT>(Component: React.ComponentType<PropsT & OverlayDecoratorChildProps<SemanticSettingPropsT>>, semanticModuleName: string) {
   class OverlayDecorator extends React.Component<OverlayDecoratorProps & PropsT> {
     static displayName = 'OverlayDecorator';
 
@@ -47,7 +47,7 @@ export default function <PropsT>(Component: React.ComponentType<OverlayDecorator
       }
     }
 
-    componentDidReceiveProps() {
+    componentWillReceiveProps() {
       if (this.context.router.route.location.state[this.props.overlayId].data.close) {
         this.hide();
       }

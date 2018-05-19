@@ -16,7 +16,7 @@ import AccordionTargets from './AccordionTargets';
 
 import FileUtils from 'utils/FileUtils';
 import BrowserUtils from 'utils/BrowserUtils';
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
@@ -28,9 +28,22 @@ import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import './style.css';
+import { OverlayDecoratorProps } from 'decorators/OverlayDecorator';
 
 
-const NormalLayout = ({ menuItems, section }) => (
+interface Section {
+  name: string;
+  key: string;
+  list?: string[] | API.GroupedPath[];
+  component: React.ReactNode;
+}
+
+interface LayoutProps {
+  menuItems: React.ReactNode[];
+  section: Section;
+}
+
+const NormalLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
   <div className="ui grid normal layout">
     <div className="four wide column">
       <div className="ui vertical fluid tabular menu">
@@ -45,7 +58,7 @@ const NormalLayout = ({ menuItems, section }) => (
   </div>
 );
 
-const MobileLayout = ({ menuItems, section }) => (
+const MobileLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
   <div className="mobile layout">
     <Dropdown className="selection fluid" caption={ section.name }>
       { menuItems }
@@ -56,7 +69,19 @@ const MobileLayout = ({ menuItems, section }) => (
   </div>
 );
 
-class DownloadDialog extends React.Component {
+interface DownloadDialogProps extends Pick<OverlayDecoratorProps, 'overlayId'>, DataProviderDecoratorChildProps {
+  downloadHandler: (itemInfo: API.FileItemInfo, user: API.HintedUserBase, downloadData: API.DownloadData) => void;
+  itemInfo: API.FileItemInfo,
+  user: API.HintedUserBase;
+}
+
+interface DownloadDialogDataProps {
+  sharePaths: API.GroupedPath[];
+  favoritePaths: API.GroupedPath[];
+  historyPaths: string[];
+}
+
+class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialogDataProps> {
   static displayName = 'DownloadDialog';
 
   static propTypes = {
@@ -78,10 +103,13 @@ class DownloadDialog extends React.Component {
     }),
   };
 
-  constructor(props) {
+  sections: Section[];
+  modal: any;
+
+  constructor(props: DownloadDialogProps & DownloadDialogDataProps) {
     super(props);
     const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path, FileUtils)) : [];
+    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path)) : [];
 
     this.sections = [
       {
@@ -114,18 +142,17 @@ class DownloadDialog extends React.Component {
         component: <DownloadFileBrowser history={ historyPaths } downloadHandler={ this.handleDownload }/>
       });
     }
-
-    this.state = {
-      active: 'history',
-    };
   }
 
-  handleDownload = (path) => {
+  state = {
+    activeSection: 'history',
+  };
+
+  handleDownload = (path: string) => {
     const { downloadHandler, itemInfo, user } = this.props;
     downloadHandler(itemInfo, user, {
       target_name: itemInfo.name, // possibly allow changing this later...
       target_directory: path,
-      target_type: 0,
       priority: PriorityEnum.DEFAULT
     });
 
@@ -133,15 +160,15 @@ class DownloadDialog extends React.Component {
     this.modal.hide();
   };
 
-  getMenuItem = (section) => {
+  getMenuItem = (section: Section) => {
     return (
       <MenuItemLink 
         key={ section.key }
-        onClick={ () => this.setState({ active: section.key }) } 
-        active={ this.state.active === section.key }
+        onClick={ () => this.setState({ activeSection: section.key }) } 
+        active={ this.state.activeSection === section.key }
       >
         { section.name }
-        { section.list && (
+        { !!section.list && (
           <div className="ui small right label"> 
             { section.list.length }
           </div>
@@ -151,7 +178,11 @@ class DownloadDialog extends React.Component {
   };
 
   render() {
-    const section = this.sections.find(section => section.key === this.state.active);
+    const section = this.sections.find(section => section.key === this.state.activeSection);
+    if (!section) {
+      return null;
+    }
+
     const menuItems = this.sections.map(this.getMenuItem);
 
     const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
@@ -175,7 +206,7 @@ class DownloadDialog extends React.Component {
 }
 
 export default ModalRouteDecorator(
-  DataProviderDecorator(DownloadDialog, {
+  DataProviderDecorator<DownloadDialogProps, DownloadDialogDataProps>(DownloadDialog, {
     urls: {
       sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
       favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,

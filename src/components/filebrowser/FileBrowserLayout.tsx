@@ -9,18 +9,22 @@ import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 import BrowserUtils from 'utils/BrowserUtils';
 
-import BrowserBar from 'components/browserbar/BrowserBar';
+import BrowserBar, { SelectedNameFormatter } from 'components/browserbar/BrowserBar';
 import Message from 'components/semantic/Message';
 import Accordion from 'components/semantic/Accordion';
-import ActionInput from 'components/semantic/ActionInput';
+import ActionInput, { ActionInputProps } from 'components/semantic/ActionInput';
 
 import Loader from 'components/semantic/Loader';
-import FileItemList from './FileItemList';
+import FileItemList, { FileItemListProps } from './FileItemList';
 
 import './style.css';
 
 
-const CreateDirectorySection = ({ handleAction }) => (
+interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
+
+}
+
+const CreateDirectorySection: React.SFC<CreateDirectorySectionProps> = ({ handleAction }) => (
   <Accordion>
     <div className="title create-section">
       <i className="dropdown icon"/>
@@ -46,7 +50,21 @@ CreateDirectorySection.propTypes = {
 };
 
 
-class FileBrowser extends React.Component {
+interface FileBrowserProps extends Pick<FileItemListProps, 'itemIconGetter'> {
+  historyId: string;
+  initialPath: string;
+  onDirectoryChanged: (path: string) => void;
+  selectedNameFormatter?: SelectedNameFormatter;
+}
+
+interface State {
+  currentDirectory: string;
+  items: API.FilesystemItem[];
+  loading: boolean;
+  error: string | null;
+}
+
+class FileBrowser extends React.Component<FileBrowserProps, State> {
   static propTypes = {
     /**
 		 * Local storage ID used for saving/loading the last path
@@ -68,16 +86,26 @@ class FileBrowser extends React.Component {
 		 * Getter for additional content displayed next to file/directory items
 		 */
     itemIconGetter: PropTypes.func,
+
+    selectedNameFormatter: PropTypes.func,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<FileBrowserProps> = {
     initialPath: '',
   };
 
-  constructor(props, context) {
-    super(props, context);
-    this._pathSeparator = LoginStore.systemInfo.path_separator;
-    this._isWindows = LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
+  get pathSeparator() {
+    return LoginStore.systemInfo.path_separator;
+  }
+
+  get isWindows() {
+    return LoginStore.systemInfo.platform === PlatformEnum.WINDOWS
+  }
+
+  initialFetchCompleted: boolean = false;
+
+  constructor(props: FileBrowserProps) {
+    super(props);
 
     let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
     if (!currentDirectory) {
@@ -100,7 +128,7 @@ class FileBrowser extends React.Component {
     return 'browse_' + this.props.historyId;
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: FileBrowserProps, prevState: State) {
     if (prevState.currentDirectory !== this.state.currentDirectory) {
       this.onDirectoryChanged();
     }
@@ -123,18 +151,21 @@ class FileBrowser extends React.Component {
     }
   };
 
-  fetchItems = (path) => {
+  fetchItems = (path: string) => {
     this.setState({ 
       error: null,
       loading: true
     });
 
-    SocketService.post(FilesystemConstants.LIST_URL, { path: path, directories_only: false })
+    SocketService.post(FilesystemConstants.LIST_URL, { 
+      path: path, 
+      directories_only: false 
+    })
       .then(this.onFetchSucceed.bind(this, path))
       .catch(this.onFetchFailed);
   };
 
-  onFetchFailed = (error) => {
+  onFetchFailed = (error: Error) => {
     if (!this.initialFetchCompleted) {
       // The path doesn't exists, go to root
       this.fetchItems(this.getRootPath());
@@ -147,7 +178,7 @@ class FileBrowser extends React.Component {
     });
   };
 
-  onFetchSucceed = (path, data) => {
+  onFetchSucceed = (path: string, data: API.FilesystemItem[]) => {
     this.setState({ 
       currentDirectory: path,
       items: data,
@@ -157,31 +188,31 @@ class FileBrowser extends React.Component {
     this.initialFetchCompleted = true;
   };
 
-  _appendDirectoryName = (directoryName) => {
-    return this.state.currentDirectory + directoryName + this._pathSeparator;
+  _appendDirectoryName = (directoryName: string) => {
+    return this.state.currentDirectory + directoryName + this.pathSeparator;
   };
 
-  _handleSelect = (directoryName) => {
+  _handleSelect = (directoryName: string) => {
     const nextPath = this._appendDirectoryName(directoryName);
 
     this.fetchItems(nextPath);
   };
 
-  _createDirectory = (directoryName) => {
+  _createDirectory = (directoryName: string) => {
     this.setState({ 
       error: null
     });
 
-    const newPath = this.state.currentDirectory + directoryName + this._pathSeparator;
+    const newPath = this.state.currentDirectory + directoryName + this.pathSeparator;
     SocketService.post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
-      .then(data => this.fetchItems(this.state.currentDirectory))
-      .catch(error => this.setState({ 
+      .then(() => this.fetchItems(this.state.currentDirectory))
+      .catch((error: Error) => this.setState({ 
         error: error.message
       }));
   };
 
   getRootPath = () => {
-    return this._isWindows ? '' : '/';
+    return this.isWindows ? '' : '/';
   };
 
   render() {
@@ -193,13 +224,19 @@ class FileBrowser extends React.Component {
     const { selectedNameFormatter, itemIconGetter } = this.props;
 
     const hasEditAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT);
-    const rootName = this._isWindows ? 'Computer' : 'Root';
+    const rootName = this.isWindows ? 'Computer' : 'Root';
     return (
       <div className="file-browser">
-        { !!error && <Message isError={true} title="Failed to load content" description={this.state.error}/> }
+        { !!error && (
+          <Message 
+            isError={ true } 
+            title="Failed to load content" 
+            description={ this.state.error }
+          /> 
+        ) }
         <BrowserBar 
           path={ currentDirectory }
-          separator={ this._pathSeparator } 
+          separator={ this.pathSeparator } 
           rootPath={ this.getRootPath() } 
           rootName={ rootName } 
           itemClickHandler={ this.fetchItems }
@@ -210,7 +247,7 @@ class FileBrowser extends React.Component {
           itemClickHandler={ this._handleSelect }
           itemIconGetter={ itemIconGetter }
         />
-        { this.state.currentDirectory && hasEditAccess ? <CreateDirectorySection handleAction={this._createDirectory}/> : null }
+        { this.state.currentDirectory && hasEditAccess ? <CreateDirectorySection handleAction={ this._createDirectory }/> : null }
       </div>
     );
   }

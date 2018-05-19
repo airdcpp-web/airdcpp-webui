@@ -7,7 +7,6 @@ import TableDropdown, { TableDropdownProps } from 'components/semantic/TableDrop
 import ActionMenuDecorator from 'decorators/menu/ActionMenuDecorator';
 import DownloadMenuDecorator from 'decorators/menu/DownloadMenuDecorator';
 import UserMenuDecorator from 'decorators/menu/UserMenuDecorator';
-//import { DropdownProps } from 'components/semantic/Dropdown';
 
 
 export interface ActionMenuProps {

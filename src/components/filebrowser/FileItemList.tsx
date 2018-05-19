@@ -5,14 +5,24 @@ import FormattedFile from 'components/format/FormattedFile';
 import ValueFormat from 'utils/ValueFormat';
 
 
-const FileItem = ({ item, itemClickHandler, itemIconGetter }) => {
+
+export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
+export type FileItemClickHandler = (name: string) => void;
+
+export interface FileItemProps {
+  item: API.FilesystemItem;
+  itemClickHandler: FileItemClickHandler;
+  itemIconGetter?: FileItemIconGetter;
+}
+
+const FileItem: React.SFC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter }) => {
   const isFile = item.type.id === 'file';
   return (
     <tr>
       <td>
         <FormattedFile 
           typeInfo={ item.type } 
-          onClick={ isFile ? null : evt => itemClickHandler(item.name) }
+          onClick={ isFile ? null : () => itemClickHandler(item.name) }
           caption={ item.name }
         />
         { !!itemIconGetter && itemIconGetter(item) }
@@ -24,7 +34,11 @@ const FileItem = ({ item, itemClickHandler, itemIconGetter }) => {
   );
 };
 
-class FileItemList extends React.Component {
+export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler' | 'itemIconGetter'> {
+  items: API.FilesystemItem[];
+}
+
+class FileItemList extends React.Component<FileItemListProps> {
   static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -42,7 +56,7 @@ class FileItemList extends React.Component {
     items: PropTypes.array.isRequired,
   };
 
-  sort = (a, b) => {
+  sort = (a: API.FilesystemItem, b: API.FilesystemItem) => {
     if (a.type.id !== b.type.id && (a.type.id === 'directory' || b.type.id === 'directory')) {
       return a.type.id === 'directory' ? -1 : 1;
     }

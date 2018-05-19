@@ -3,10 +3,15 @@ import React from 'react';
 
 import Accordion from 'components/semantic/Accordion';
 import Message from 'components/semantic/Message';
-import PathList from './PathList';
+import PathList, { PathDownloadHandler } from './PathList';
 
 
-class AccordionTargets extends React.Component {
+interface AccordionTargetsProps {
+  groupedPaths: API.GroupedPath[];
+  downloadHandler: PathDownloadHandler;
+}
+
+class AccordionTargets extends React.Component<AccordionTargetsProps> {
   static propTypes = {
     /**
 		 * Function handling the path selection. Receives the selected path as argument.
@@ -19,7 +24,7 @@ class AccordionTargets extends React.Component {
     groupedPaths: PropTypes.array.isRequired,
   };
 
-  formatParent = (parent) => {
+  formatParent = (parent: API.GroupedPath) => {
     return (
       <div key={ parent.name }>
         <div className="title">
@@ -49,7 +54,7 @@ class AccordionTargets extends React.Component {
 
     return (
       <Accordion className="styled download-targets">
-        { this.props.groupedPaths.map(this.formatParent) }
+        { groupedPaths.map(this.formatParent) }
       </Accordion>
     );
   }

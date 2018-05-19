@@ -35,7 +35,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     children: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<TableDropdownProps> = {
     linkCaption: true,
   };
 
@@ -86,8 +86,8 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     );
 
     // Settings
-    const settings = {
-      lastResort:true
+    const settings: SemanticUI.PopupSettings = {
+      lastResort: true
     };
 
     return (

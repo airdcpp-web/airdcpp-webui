@@ -9,7 +9,7 @@ import 'semantic-ui/components/loader.min.css';
 interface LoaderProps {
   inline?: boolean;
   className?: string;
-  text?: string;
+  text?: React.ReactNode;
   size?: string;
   inverted?: boolean;
 }

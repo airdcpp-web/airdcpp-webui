@@ -6,12 +6,17 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-class DownloadFileBrowser extends React.Component {
-  onDirectoryChanged = (path) => {
+interface DownloadFileBrowserProps {
+  downloadHandler: (path: string) => void;
+  history: string[];
+}
+
+class DownloadFileBrowser extends React.Component<DownloadFileBrowserProps> {
+  onDirectoryChanged = (path: string) => {
     this.setState({ currentPath: path });
   };
 
-  selectedNameFormatter = (caption, token) => {
+  selectedNameFormatter = (caption: React.ReactNode, token: string) => {
     if (token.length === 0) {
       // Drive listing on Windows isn't a good target
       return caption;
@@ -27,7 +32,7 @@ class DownloadFileBrowser extends React.Component {
     return formatedCaption;
   };
 
-  itemIconGetter = ({ name, type }) => {
+  itemIconGetter = ({ name, type }: API.FilesystemItem) => {
     if (type.id === 'file') {
       return null;
     }

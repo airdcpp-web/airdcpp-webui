@@ -13,7 +13,7 @@ type ChildType = React.ReactElement<{
 }>;
 
 export interface PopupProps {
-  settings?: object;
+  settings?: SemanticUI.PopupSettings;
   trigger: React.ReactNode;
   onHover?: boolean;
   position?: string;
@@ -45,8 +45,7 @@ class Popup extends React.PureComponent<PopupProps> {
     triggerClassName: PropTypes.string,
   };
 
-  static defaultProps = {
-    settings: {},
+  static defaultProps: Partial<PopupProps> = {
     position: 'bottom left',
     triggerClassName: '',
   };

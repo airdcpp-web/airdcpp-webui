@@ -8,7 +8,7 @@ import Icon, { IconType } from 'components/semantic/Icon';
 
 export interface MenuItemLinkProps {
   className?: string;
-  icon: IconType;
+  icon?: IconType;
   onClick: () => void;
   active?: boolean;
   disabled?: boolean;

@@ -7,7 +7,7 @@ import 'semantic-ui/components/accordion.min.css';
 import classNames from 'classnames';
 
 
-interface AccordionProps{
+interface AccordionProps {
   controlled?: boolean;
   className?: string;
 }
@@ -17,13 +17,13 @@ class Accordion extends React.Component<AccordionProps> {
     controlled: PropTypes.bool,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<AccordionProps> = {
     className: '',
   };
 
   c: any;
   componentDidMount() {
-    let settings = undefined;
+    let settings: SemanticUI.AccordionSettings | undefined;
     
     if (this.props.controlled) {
       settings = {

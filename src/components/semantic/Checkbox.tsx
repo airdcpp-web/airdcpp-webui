@@ -46,7 +46,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
 
   c: any;
   componentDidMount() {
-    const settings = {
+    const settings: SemanticUI.CheckboxSettings = {
       fireOnInit: false,
       onChecked: () => this.props.onChange(true),
       onUnchecked: () => this.props.onChange(false),

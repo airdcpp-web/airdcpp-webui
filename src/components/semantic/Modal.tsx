@@ -12,7 +12,7 @@ import 'semantic-ui/components/modal.min.css';
 import { IconType } from 'components/semantic/Icon';
 
 
-export interface ModalProps extends OverlayDecoratorChildProps {
+export interface ModalProps {
   closable?: boolean;
   onApprove?: () => Promise<void>;
   approveCaption?: React.ReactNode;
@@ -27,7 +27,7 @@ export interface ModalProps extends OverlayDecoratorChildProps {
   subHeader?: React.ReactNode;
 }
 
-class Modal extends React.Component<ModalProps> {
+class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<SemanticUI.ModalSettings>> {
   static propTypes = {
     /**
 		 * Close the modal when clicking outside its boundaries
@@ -63,12 +63,11 @@ class Modal extends React.Component<ModalProps> {
     hide: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<ModalProps> = {
     closable: true,
     approveCaption: 'Save',
     fullHeight: false,
     dynamicHeight: false,
-    hide: () => '', // disable a TS error
   };
 
   state = {
@@ -88,12 +87,11 @@ class Modal extends React.Component<ModalProps> {
       return false;
     }
 
-    return true;
+    return;
   };
 
   componentDidMount() {
     this.props.showOverlay(this.c, {
-      movePopup:false,
       onApprove: this.onApprove,
       closable: this.props.closable,
       detachable: false,
@@ -164,4 +162,4 @@ class Modal extends React.Component<ModalProps> {
   }
 }
 
-export default OverlayDecorator(Modal, 'modal');
+export default OverlayDecorator<ModalProps, SemanticUI.ModalSettings>(Modal, 'modal');
