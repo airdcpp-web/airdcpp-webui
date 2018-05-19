@@ -8,3 +8,5 @@ npm-debug.log
 npm-debug.log*
 stats.html
 /jest/cache
+* - Copy
+*.tmp
