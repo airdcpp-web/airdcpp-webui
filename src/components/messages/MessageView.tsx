@@ -11,21 +11,21 @@ import ValueFormat from 'utils/ValueFormat';
 import './messages.css';
 
 
-const getMessageDay = (message) => {
-  const time = message.chat_message ? message.chat_message.time : message.log_message.time;
-  return new Date(time * 1000).getDate();
+const getMessageDay = (listItem: API.MessageListItem) => {
+  const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
+  return message && new Date(message.time * 1000).getDate();
 };
 
-const isToday = (message) => {
+const isToday = (message: API.MessageListItem) => {
   return getMessageDay(message) === new Date().getDate();
 };
 
-const isHistoryItem = (message) => {
-  const time = message.chat_message ? message.chat_message.time : message.log_message.time;
-  return time === 0; 
+const isHistoryItem = (listItem: API.MessageListItem) => {
+  const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
+  return message && message.time === 0; 
 };
 
-const showDivider = (index, messageList) => {
+const showDivider = (index: number, messageList: API.MessageListItem[]) => {
   const currentMessage = messageList[index];
 
   // First message? History log won't count
@@ -42,11 +42,11 @@ const showDivider = (index, messageList) => {
 };
 
 
-const getMessageListItem = (reduced, message, index, messageList) => {
+const getMessageListItem = (reduced: React.ReactNode[], message: API.MessageListItem, index: number, messageList: API.MessageListItem[]) => {
   // Push a divider when the date was changed
   if (showDivider(index, messageList)) {
-    const messageObj = message.chat_message ? message.chat_message : message.log_message;
-    reduced.push(
+    const messageObj = !!message.chat_message ? message.chat_message : message.log_message;
+    !!messageObj && reduced.push(
       <div 
         key={ `divider${messageObj.id}` }
         className="ui horizontal date divider"
@@ -66,7 +66,7 @@ const getMessageListItem = (reduced, message, index, messageList) => {
         dropdownContext=".chat.session"
       />
     );
-  } else {
+  } else if (message.log_message) {
     reduced.push(
       <StatusMessage
         key={ message.log_message.id }
@@ -78,13 +78,20 @@ const getMessageListItem = (reduced, message, index, messageList) => {
   return reduced;
 };
 
-class MessageView extends React.Component {
+
+interface MessageViewProps {
+  messages: API.MessageListItem[];
+  scrollableRef: React.Ref<any>;
+  className?: string;
+}
+
+class MessageView extends React.Component<MessageViewProps> {
   static propTypes = {
     messages: PropTypes.array,
     scrollableRef: PropTypes.func,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: MessageViewProps) {
     return nextProps.messages !== this.props.messages;
   }
 

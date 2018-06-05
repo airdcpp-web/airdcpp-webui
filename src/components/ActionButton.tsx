@@ -1,11 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Button from 'components/semantic/Button';
+import Button, { ButtonProps } from 'components/semantic/Button';
 import { showAction } from 'utils/ActionUtils';
+import { IconType } from 'components/semantic/Icon';
+import { RouterChildContext } from 'react-router';
 
 
-const ActionButton = ({ action, itemData, icon = true, ...other }, { router }) => {
+interface ActionButtonProps extends ButtonProps {
+  action: any;
+  itemData: any;
+  icon: IconType;
+}
+
+const ActionButton: React.SFC<ActionButtonProps> = ({ action, itemData, icon = true, ...other }, { router }: RouterChildContext<{}>) => {
   if (!showAction(action, itemData)) {
     return null;
   }

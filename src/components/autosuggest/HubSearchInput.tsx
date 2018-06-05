@@ -1,10 +1,15 @@
 import React from 'react';
 import { default as HistoryConstants, HistoryEntryEnum } from 'constants/HistoryConstants';
 
-import RemoteSuggestField from './RemoteSuggestField';
+import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestField';
 import Button from 'components/semantic/Button';
 
-const HubSearchInput = ({ submitHandler }) => (
+
+export interface HubSearchInputProps extends Pick<RemoteSuggestFieldProps, 'submitHandler'> {
+
+};
+
+const HubSearchInput: React.SFC<HubSearchInputProps> = ({ submitHandler }) => (
   <RemoteSuggestField
     placeholder="Enter hub address..."
     submitHandler={ submitHandler }

@@ -3,7 +3,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 import DownloadableItemActions from 'actions/DownloadableItemActions';
-import { ActionMenuDecoratorChildProps, ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
+import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 
 type DownloadHandlerType = () => void;
@@ -12,7 +12,7 @@ interface DownloadMenuItemData {
   handler: DownloadHandlerType;
 }
 
-interface DownloadMenuDecoratorProps extends ActionMenuDecoratorChildProps {
+interface DownloadMenuDecoratorProps {
   user: any;
   itemInfoGetter: () => any;
   downloadHandler: DownloadHandlerType;
@@ -22,8 +22,8 @@ interface DownloadMenuDecoratorProps extends ActionMenuDecoratorChildProps {
 
 type DownloadMenuDecoratorChildProps = ActionMenuDecoratorProps;
 
-export default function (Component: React.ComponentType<DownloadMenuDecoratorChildProps>) {
-  class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps> {
+export default function <DropdownPropsT>(Component: React.ComponentType<DownloadMenuDecoratorChildProps & DropdownPropsT>) {
+  class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps & DropdownPropsT> {
     static propTypes = {
 
       /**
@@ -43,7 +43,7 @@ export default function (Component: React.ComponentType<DownloadMenuDecoratorChi
     };
 
     itemData: DownloadMenuItemData;
-    constructor(props: DownloadMenuDecoratorProps) {
+    constructor(props: DownloadMenuDecoratorProps & DropdownPropsT) {
       super(props);
 
       this.itemData = { 
@@ -71,7 +71,12 @@ export default function (Component: React.ComponentType<DownloadMenuDecoratorChi
     }
 
     render() {
-      const { caption, className, ...other } = this.props;
+      const { 
+        caption, className, 
+        //@ts-ignore
+        ...other 
+      } = this.props;
+
       return (
         <Component 
           className={ classNames('download', className) }

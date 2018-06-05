@@ -2,12 +2,18 @@ import React from 'react';
 
 import UserConstants from 'constants/UserConstants';
 
-import RemoteSuggestField from './RemoteSuggestField';
+import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestField';
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
 
-const UserSearchInput = ({ offlineMessage, submitHandler }) => (
-  <OfflineHubMessageDecorator offlineMessage={offlineMessage}>
+export interface UserSearchInputProps extends Pick<RemoteSuggestFieldProps, 'submitHandler'> {
+  offlineMessage: string;
+};
+
+const UserSearchInput: React.SFC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => (
+  <OfflineHubMessageDecorator 
+    offlineMessage={ offlineMessage }
+  >
     <RemoteSuggestField
       placeholder="Enter nick..."
       submitHandler={ submitHandler }

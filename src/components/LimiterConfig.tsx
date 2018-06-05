@@ -10,7 +10,13 @@ import SocketService from 'services/SocketService';
 import IconConstants from 'constants/IconConstants';
 
 
-class LimiterConfig extends React.PureComponent {
+interface LimiterConfigProps {
+  limit: number;
+  settingKey: string;
+  hide: () => void;
+}
+
+class LimiterConfig extends React.PureComponent<LimiterConfigProps> {
   static propTypes = {
     limit: PropTypes.number.isRequired,
 

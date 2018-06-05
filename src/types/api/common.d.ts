@@ -59,25 +59,30 @@ declare namespace API {
 
   export type Severity = 'notify' | 'info' | 'warning' | 'error';
 
-  export interface ChatMessage {
+  export interface Message {
     id: number;
     time: number;
     text: string;
-    third_person: boolean;
     is_read: boolean;
+  }
+
+  export interface ChatMessage extends Message {
+    third_person: boolean;
     from: HubUser;
     reply_to?: HubUser;
     to?: HubUser;
   }
 
-  export interface StatusMessage {
-    id: number;
-    time: number;
-    text: string;
+  export interface StatusMessage extends Message {
     severity: Severity;
     is_read: boolean;
   }
   
+  export interface MessageListItem {
+    chat_message?: ChatMessage;
+    log_message?: StatusMessage;
+  }
+
 
   // ENCRYPTION
   export interface EncryptionInfo {
@@ -91,6 +96,7 @@ declare namespace API {
     str: string;
   }
 
+  
   // USERS
   export type UserFlag = 'self' | 'bot' | 'asch' | 'ccpm' | 'ignored' | 'favorite' | 'nmdc' | 'offline' | 'op';
 

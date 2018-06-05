@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
-import Autosuggest, { Theme } from 'react-autosuggest';
+import Autosuggest, { Theme, Omit } from 'react-autosuggest';
 
 //@ts-ignore
 import { defaultTheme } from 'react-autosuggest/dist/theme';
@@ -19,8 +19,9 @@ const theme: Theme = {
 };
 
 type SuggestionType = any;
+type SubmitHandlerType = (value: string, suggestion: SuggestionType) => void;
 
-interface SuggestFieldProps extends Autosuggest.AutosuggestProps<SuggestionType> {
+export interface SuggestFieldProps extends Omit<Autosuggest.AutosuggestProps<SuggestionType>, 'inputProps'> {
   defaultValue?: string;
   disabled?: boolean;
   button?: React.ReactElement<ButtonProps>;
@@ -28,9 +29,9 @@ interface SuggestFieldProps extends Autosuggest.AutosuggestProps<SuggestionType>
   placeholder?: string;
   className?: string;
   onSuggestionsClearRequested: () => void;
-  onChange: (text: string) => void;
+  onChange?: (text: string) => void;
 
-  submitHandler: (value: string, suggestion: SuggestionType) => void;
+  submitHandler: SubmitHandlerType;
 }
 
 class SuggestField extends React.Component<SuggestFieldProps> {

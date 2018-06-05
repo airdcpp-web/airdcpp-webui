@@ -2,12 +2,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import SuggestionRenderer from './SuggestionRenderer';
-import SuggestField from './SuggestField';
+import SuggestField, { SuggestFieldProps } from './SuggestField';
 
 import escapeStringRegexp from 'escape-string-regexp';
+import { Omit, RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 
 
-interface LocalSuggestFieldProps {
+type ForwardedSuggestFieldProps = Omit<
+  SuggestFieldProps, 
+  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
+>;
+
+interface LocalSuggestFieldProps extends ForwardedSuggestFieldProps {
   data: string[];
 }
 
@@ -27,7 +33,7 @@ class LocalSuggestField extends React.Component<LocalSuggestFieldProps> {
     return this.props.data.filter(str => regex.test(str));
   };
 
-  onSuggestionsFetchRequested = ({ value }) => {
+  onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
     this.setState({ 
       suggestions: this.filterSuggestions(value),
     });
@@ -39,11 +45,11 @@ class LocalSuggestField extends React.Component<LocalSuggestFieldProps> {
     });
   };
 
-  renderSuggestion = (dataItem, { query }) => {
+  renderSuggestion: RenderSuggestion<any> = (dataItem, { query }) => {
     return SuggestionRenderer(query, dataItem);
   };
 
-  getSuggestionValue = (suggestion) => {
+  getSuggestionValue = (suggestion: any) => {
     return suggestion;
   };
 

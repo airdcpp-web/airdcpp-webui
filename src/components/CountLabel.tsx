@@ -8,7 +8,15 @@ import classNames from 'classnames';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
-const CountLabel = ({ urgencies, empty, size, className, circular }) => {
+interface CountLabelProps {
+  urgencies: any;
+  empty?: boolean;
+  size?: string;
+  circular?: boolean;
+  className?: string;
+}
+
+const CountLabel: React.SFC<CountLabelProps> = ({ urgencies, empty, size, className, circular }) => {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
   const max = UrgencyUtils.maxUrgency(urgencies);
 
@@ -50,15 +58,15 @@ CountLabel.defaultProps = {
 
 // Rendering a single child with TransitionGroup: https://facebook.github.io/react/docs/animation.html#rendering-a-single-child
 // We don't any wrapping divs to avoid issues with Semantic CSS
-const FirstChild = (props) => {
+/*const FirstChild: React.SFC<CountLabelProps> = (props) => {
   const childrenArray = React.Children.toArray(props.children);
   return childrenArray[0] || null;
-};
+};*/
 
 // Fade out the label when there are no counts
-const AnimatedCountLabel = (props) => (
+const AnimatedCountLabel: React.SFC<CountLabelProps> = (props) => (
   <TransitionGroup
-    component={ FirstChild }
+    component={ null }
   >
     { props.urgencies && (
       <CSSTransition

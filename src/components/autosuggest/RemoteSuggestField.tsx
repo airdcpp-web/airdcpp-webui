@@ -3,11 +3,23 @@ import React from 'react';
 
 import SocketService from 'services/SocketService';
 
-import SuggestField from './SuggestField';
+import SuggestField, { SuggestFieldProps } from './SuggestField';
 import SuggestionRenderer from './SuggestionRenderer';
+import { RenderSuggestion, SuggestionsFetchRequested, Omit } from 'react-autosuggest';
 
 
-class RemoteSuggestField extends React.Component {
+type ForwardedSuggestFieldProps = Omit<
+  SuggestFieldProps, 
+  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
+>;
+
+export interface RemoteSuggestFieldProps extends ForwardedSuggestFieldProps {
+  valueField: string;
+  descriptionField: string;
+  url: string;
+}
+
+class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
   static propTypes = {
     valueField: PropTypes.string.isRequired,
 
@@ -20,17 +32,17 @@ class RemoteSuggestField extends React.Component {
     suggestions: [],
   };
 
-  getSuggestionValue = (suggestionObj) => {
+  getSuggestionValue = (suggestionObj: object) => {
     return suggestionObj[this.props.valueField];
   };
 
-  onSuggestionsFetchRequested = ({ value }) => {
+  onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
     SocketService.post(this.props.url, { 
       pattern: value, 
       max_results: 7 
     })
       .then(this.onSuggestionsReceived)
-      .catch(error => 
+      .catch((error: any) => 
         console.log('Failed to fetch suggestions: ' + error)
       );
   };
@@ -41,13 +53,13 @@ class RemoteSuggestField extends React.Component {
     });
   };
 
-  onSuggestionsReceived = (data) => {
+  onSuggestionsReceived = (data: any[]) => {
     this.setState({ 
       suggestions: data 
     });
   };
 
-  renderSuggestion = (suggestionObj, { query }) => {
+  renderSuggestion: RenderSuggestion<any> = (suggestionObj, { query }) => {
     return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
   };
 

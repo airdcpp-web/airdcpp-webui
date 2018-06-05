@@ -6,7 +6,7 @@ import UserActions from 'actions/UserActions';
 import FileUtils from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
-import { ActionMenuDecoratorChildProps, ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
+import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 
 export interface UserMenuItemData {
@@ -14,18 +14,18 @@ export interface UserMenuItemData {
   directory: any;
 }
 
-export interface UserMenuDecoratorProps extends ActionMenuDecoratorChildProps {
-  user: any;
-  directory: string;
-  userIcon: string;
+export interface UserMenuDecoratorProps {
+  user: (API.User & { nick?: string; }) | (API.HubUser & { nicks?: string });
+  directory?: string;
+  userIcon?: string;
   text?: React.ReactNode;
   className?: string;
 }
 
 type UserMenuDecoratorChildProps = ActionMenuDecoratorProps;
 
-export default function (Component: React.ComponentType<UserMenuDecoratorChildProps>) {
-  class UserMenu extends React.PureComponent<UserMenuDecoratorProps> {
+export default function <DropdownPropsT extends object>(Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>) {
+  class UserMenu extends React.PureComponent<UserMenuDecoratorProps & DropdownPropsT> {
     static defaultProps = {
       directory: '/',
     };
@@ -61,7 +61,7 @@ export default function (Component: React.ComponentType<UserMenuDecoratorChildPr
 
     itemData: UserMenuItemData;
 
-    constructor(props: UserMenuDecoratorProps) {
+    constructor(props: UserMenuDecoratorProps & DropdownPropsT) {
       super(props);
 
       this.itemData = {} as UserMenuItemData;
@@ -82,7 +82,11 @@ export default function (Component: React.ComponentType<UserMenuDecoratorChildPr
     }
 
     render() {
-      const { text, userIcon, user, className, ...other } = this.props;
+      const { 
+        text, userIcon, user, className, 
+        //@ts-ignore
+        ...other 
+      } = this.props;
 
       let nicks = text;
       if (!nicks) {

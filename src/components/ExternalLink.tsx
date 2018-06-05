@@ -2,7 +2,13 @@
 
 import React from 'react';
 
-const ExternalLink = ({ url, children, className = '' }) => (
+
+interface ExternalLinkProps {
+  url: string;
+  className?: string;
+}
+
+const ExternalLink: React.SFC<ExternalLinkProps> = ({ url, children, className = '' }) => (
   <a 
     className={ className }
     href={ url } 

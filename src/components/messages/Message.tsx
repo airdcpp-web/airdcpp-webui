@@ -13,13 +13,12 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 
 
 // Message sections
-const Author = ({ message, dropdownContext }) => (
+const Author: React.SFC<{ message: API.ChatMessage; dropdownContext: string }> = ({ message, dropdownContext }) => (
   <div className="header author">
     { message.third_person && <span>*</span> }
     <UserMenu 
       contextElement={ dropdownContext } 
-      triggerIcon={ null } 
-      noIcon={ true } 
+      triggerIcon={ null }
       user={ message.from }
       direction="downward"
     />
@@ -31,13 +30,13 @@ Author.propTypes = {
   dropdownContext: PropTypes.string.isRequired,
 };
 
-const TimeStamp = ({ message }) => (
+const TimeStamp: React.SFC<{ message: API.Message }> = ({ message }) => (
   <div className="time">
     { ValueFormat.formatTimestamp(message.time) }
   </div>
 );
 
-const MessageText = ({ message, emojify }) => (
+const MessageText: React.SFC<{ message: API.Message, emojify: boolean }> = ({ message, emojify }) => (
   <div className="text">
     <TextDecorator
       emojify={ emojify }
@@ -52,10 +51,16 @@ MessageText.propTypes = {
 };
 
 
+interface ChatMessageProps {
+  message: API.ChatMessage;
+  dropdownContext: string;
+}
+
 // Main message types
-class ChatMessage extends React.Component {
+class ChatMessage extends React.Component<ChatMessageProps> {
   static propTypes = {
     message: PropTypes.object.isRequired,
+    dropdownContext: PropTypes.string.isRequired,
   };
 
   shouldComponentUpdate() {
@@ -63,7 +68,7 @@ class ChatMessage extends React.Component {
   }
 
   render() {
-    const { message, ...other } = this.props;
+    const { message, dropdownContext } = this.props;
 		
     return (
       <div className={ 'ui item chat ' + message.from.flags.join(' ')}>
@@ -73,7 +78,7 @@ class ChatMessage extends React.Component {
         <div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
           <Author 
             message={ message } 
-            { ...other }
+            dropdownContext={ dropdownContext }
           />
           <MessageText 
             message={ message }
@@ -86,16 +91,20 @@ class ChatMessage extends React.Component {
 }
 
 
-const getSeverityIcon = (severity) => {
+const getSeverityIcon = (severity: API.Severity) => {
   switch (severity) {
-  case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
-  case SeverityEnum.WARNING: return IconConstants.WARNING;
-  case SeverityEnum.ERROR: return IconConstants.ERROR;
-  default: return '';
+    case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
+    case SeverityEnum.WARNING: return IconConstants.WARNING;
+    case SeverityEnum.ERROR: return IconConstants.ERROR;
+    default: return '';
   }
 };
 
-class StatusMessage extends React.Component {
+interface StatusMessageProps {
+  message: API.StatusMessage;
+}
+
+class StatusMessage extends React.Component<StatusMessageProps> {
   static propTypes = {
     message: PropTypes.object.isRequired,
   };

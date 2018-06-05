@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
+//@ts-ignore
 import { default as ReactLinkify, linkify } from 'react-linkify';
 
 // Convert :D, :P etc. to unicode
 // Increases the compressed bundle size by ~20 kilobytes so a simplified custom
 // implementation could be considered that would only replace ascii emoticons
+//@ts-ignore
 import { emojify as emojisToUnicode } from 'react-emojione';
 
+//@ts-ignore
 import emoji from 'react-easy-emoji';
+//@ts-ignore
 import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';
 
 import History from 'utils/History';
@@ -20,17 +24,22 @@ import HubSessionStore from 'stores/HubSessionStore';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+import { RouterChildContext } from 'react-router';
+import { Location } from 'history';
 
 
 linkify.add('magnet:', {
-  validate: (text, pos, self) => {
+  validate: (text: string, pos: number, self: { re: { magnet: RegExp } }) => {
     const tail = text.slice(pos);
     if (!self.re.magnet) {
       self.re.magnet = /^(\?xt=urn:[a-zA-Z0-9:]+:[a-zA-Z0-9]{32,128}(&[\S]+)?)/g;
     }
 
     if (self.re.magnet.test(tail)) {
-      return tail.match(self.re.magnet)[0].length;
+      const match = tail.match(self.re.magnet);
+      if (match) {
+        return match[0].length;
+      }
     }
 
     return 0;
@@ -38,10 +47,13 @@ linkify.add('magnet:', {
 });
 
 linkify.add('dchub://', {
-  validate: (text, pos, self) => {
+  validate: (text: string, pos: number, self: { re: { link_fuzzy: RegExp } }) => {
     const tail = text.slice(pos);
     if (self.re.link_fuzzy.test(tail)) {
-      return tail.match(self.re.link_fuzzy)[0].length;
+      const match = tail.match(self.re.link_fuzzy);
+      if (match) {
+        return match[0].length;
+      }
     }
 
     return 0;
@@ -53,8 +65,8 @@ linkify.add('adc://', 'dchub://');
 linkify.add('adcs://', 'dchub://');
 
 
-const onClickLink = (evt, router) => {
-  const uri = evt.target.href;
+const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location) => {
+  const uri: string = (evt.target as any).href;
   if (uri.indexOf('magnet:?xt=urn:tree:tiger:') === 0) {
     evt.preventDefault();
 
@@ -68,7 +80,7 @@ const onClickLink = (evt, router) => {
       state: {
         searchString: tth,
       }
-    }, router.route.location);
+    }, location);
   } else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
     evt.preventDefault();
 
@@ -76,16 +88,16 @@ const onClickLink = (evt, router) => {
       return;
     }
 
-    HubActions.createSession(router.route.location, uri, HubSessionStore);
+    HubActions.createSession(location, uri, HubSessionStore);
   }
 };
 
-const emojiRenderer = (code, string, key) => {
+const emojiRenderer = (code: string, str: string, key: string) => {
   switch (code) {
-  case 'a9': // © copyright
-  case 'ae': // ® registered trademark
-  case '2122': // ™ trademark
-    return string;
+    case 'a9': // © copyright
+    case 'ae': // ® registered trademark
+    case '2122': // ™ trademark
+      return str;
   }
 
 
@@ -98,17 +110,22 @@ const emojiRenderer = (code, string, key) => {
     }
   });
 
-  return renderer(code, string, key);
+  return renderer(code, str, key);
 };
 
+interface TextDecoratorProps {
+  emojify?: boolean;
+  text: string;
+}
+
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator = ({ emojify = false, text }, { router }) => (
+const TextDecorator: React.SFC<TextDecoratorProps> = ({ emojify = false, text }, { router }: RouterChildContext<{}>) => (
   <ReactLinkify 
     properties={{ 
       target: '_blank',
       rel: 'noreferrer',
-      onClick: evt => onClickLink(evt, router),
-    }}
+      onClick: evt => onClickLink(evt, router.route.location),
+    } as React.HTMLProps<HTMLLinkElement> }
   >
     { !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), emojiRenderer) }
   </ReactLinkify>

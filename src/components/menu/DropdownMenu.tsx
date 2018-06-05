@@ -7,6 +7,7 @@ import TableDropdown, { TableDropdownProps } from 'components/semantic/TableDrop
 import ActionMenuDecorator from 'decorators/menu/ActionMenuDecorator';
 import DownloadMenuDecorator from 'decorators/menu/DownloadMenuDecorator';
 import UserMenuDecorator from 'decorators/menu/UserMenuDecorator';
+import { DropdownProps } from 'components/semantic/Dropdown';
 
 
 export interface ActionMenuProps {
@@ -25,8 +26,8 @@ export const ActionMenu = ActionMenuDecorator<SectionedDropdownProps & ActionMen
 export const TableActionMenu = ActionMenuDecorator<TableDropdownProps>(TableDropdown);
 
 
-export const UserMenu = UserMenuDecorator(ActionMenu);
-export const TableUserMenu = UserMenuDecorator(TableActionMenu);
+export const UserMenu = UserMenuDecorator<DropdownProps>(ActionMenu);
+export const TableUserMenu = UserMenuDecorator<TableDropdownProps>(TableActionMenu);
 
-export const DownloadMenu = DownloadMenuDecorator(ActionMenu);
-export const TableDownloadMenu = DownloadMenuDecorator(TableActionMenu);
+export const DownloadMenu = DownloadMenuDecorator<DropdownProps>(ActionMenu);
+export const TableDownloadMenu = DownloadMenuDecorator<TableDropdownProps>(TableActionMenu);

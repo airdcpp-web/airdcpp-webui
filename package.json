@@ -50,6 +50,7 @@
     "@types/react-autosuggest": "^9.3.4",
     "@types/react-dom": "^16.0.6",
     "@types/react-router-dom": "^4.2.7",
+    "@types/react-transition-group": "^2.0.11",
     "@types/semantic-ui": "^2.2.6",
     "airdcpp-apisocket": "^1.1.2",
     "array.prototype.find": "^1.0.0",
