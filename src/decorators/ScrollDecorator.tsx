@@ -1,10 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function (Component) {
+
+interface SessionBase {
+  id: any;
+}
+
+interface ScrollDecoratorProps<SessionT> {
+  session: SessionT;
+}
+
+export interface ScrollDecoratorChildProps {
+  scrollableRef: (component: any) => void;
+}
+
+export default function <PropsT, SessionT extends SessionBase>(Component: React.ComponentType<PropsT & ScrollDecoratorChildProps>) {
   let shouldScrollBottom = false;
 
-  class ScrollDecorator extends React.Component {
+  class ScrollDecorator extends React.Component<ScrollDecoratorProps<SessionT>> {
     static propTypes = {
       /**
 			 * The container will always be scrolled to bottom if the session changes
@@ -12,11 +25,13 @@ export default function (Component) {
       session: PropTypes.any,
     };
 
+    scrollable: any;
+
     componentDidMount() {
       this._scrollToBottom();
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps: ScrollDecoratorProps<SessionT>) {
       if (nextProps.session && nextProps.session.id !== this.props.session.id) {
         shouldScrollBottom = true;
         return;
@@ -31,7 +46,7 @@ export default function (Component) {
       shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
       if (shouldScrollBottom) {
         this._scrollToBottom();
       }
@@ -45,7 +60,7 @@ export default function (Component) {
       shouldScrollBottom = false;
     };
 
-    setScrollableRef = (c) => {
+    setScrollableRef = (c: any) => {
       this.scrollable = c;
     };
 

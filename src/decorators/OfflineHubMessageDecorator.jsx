@@ -44,7 +44,7 @@ const OfflineHubMessageDecorator = createReactClass({
           className="offline-message" 
           icon="plug" 
           title="No online hubs" 
-          description={this.props.offlineMessage}
+          description={ this.props.offlineMessage }
         />
       );
     }

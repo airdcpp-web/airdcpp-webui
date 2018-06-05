@@ -2,11 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
-import Autosuggest from 'react-autosuggest';
+import Autosuggest, { Theme } from 'react-autosuggest';
+
+//@ts-ignore
 import { defaultTheme } from 'react-autosuggest/dist/theme';
 
+import { ButtonProps } from 'components/semantic/Button';
 
-const theme = {
+
+const theme: Theme = {
   ...defaultTheme,
   container: 'react-autosuggest__container ui input',
   suggestionsList: 'ui vertical fluid menu',
@@ -14,7 +18,22 @@ const theme = {
   suggestionHighlighted: 'link item active',
 };
 
-class SuggestField extends React.Component {
+type SuggestionType = any;
+
+interface SuggestFieldProps extends Autosuggest.AutosuggestProps<SuggestionType> {
+  defaultValue?: string;
+  disabled?: boolean;
+  button?: React.ReactElement<ButtonProps>;
+  autoFocus?: boolean;
+  placeholder?: string;
+  className?: string;
+  onSuggestionsClearRequested: () => void;
+  onChange: (text: string) => void;
+
+  submitHandler: (value: string, suggestion: SuggestionType) => void;
+}
+
+class SuggestField extends React.Component<SuggestFieldProps> {
   static propTypes = {
 
     /**
@@ -48,16 +67,16 @@ class SuggestField extends React.Component {
     disabled: PropTypes.bool,
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<SuggestFieldProps> = {
     autoFocus: true,
     defaultValue: '',
   };
 
   state = {
-    text: this.props.defaultValue,
+    text: this.props.defaultValue || '',
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: SuggestFieldProps) {
     // The received default value has changed?
     // Always update the field value in that case
     if (nextProps.defaultValue !== this.props.defaultValue) {
@@ -67,14 +86,14 @@ class SuggestField extends React.Component {
     }
   }
 
-  handleSubmit = (event, suggestion) => {
+  handleSubmit = (event: any, suggestion?: SuggestionType) => {
     if (this.props.submitHandler) {
       const value = suggestion ? this.props.getSuggestionValue(suggestion) : this.state.text;
       this.props.submitHandler(value, suggestion);
     }
   };
 
-  onTextChange = (evt, { newValue }) => {
+  onTextChange = (evt: any, { newValue }: Autosuggest.ChangeEvent) => {
     this.setState({ 
       text: newValue 
     });
@@ -88,11 +107,11 @@ class SuggestField extends React.Component {
     return this.state.text.length === 0;
   };
 
-  getSuggestionValue = (suggestion) => {
+  getSuggestionValue = (suggestion: SuggestionType) => {
     return suggestion;
   };
 
-  onKeyDown = (event) => {
+  onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     // Accept custom inputs only when there's a submit button
     if (!this.props.button || this.isSubmitDisabled()) {
       return;
@@ -106,7 +125,7 @@ class SuggestField extends React.Component {
     }
   };
 
-  onSuggestionSelected = (event, { suggestion, suggestionValue, method }) => {
+  onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionType> = (event: any, { suggestion, suggestionValue, method }) => {
     // No second 'Enter' event if the suggestion was selected
     event.preventDefault();
 
@@ -117,7 +136,7 @@ class SuggestField extends React.Component {
     const { className, autoFocus, placeholder, defaultValue, button, ...other } = this.props;
     const { text } = this.state;
 
-    const inputAttributes = {
+    const inputAttributes: Autosuggest.InputProps<SuggestionType> = {
       placeholder: placeholder,
       onChange: this.onTextChange,
       autoFocus: autoFocus,
@@ -129,7 +148,7 @@ class SuggestField extends React.Component {
       <Autosuggest 
         { ...other }
         theme={ theme }
-        initialValue={ defaultValue }
+        //initialValue={ defaultValue }
         inputProps={ inputAttributes } 
         onSuggestionSelected={ this.onSuggestionSelected }
       />
@@ -146,7 +165,7 @@ class SuggestField extends React.Component {
         <div className={ fieldStyle }>
           { suggestField }
           { React.cloneElement(button, {
-            onClick: evt => this.handleSubmit(evt),
+            onClick: (evt: any) => this.handleSubmit(evt),
             disabled: this.isSubmitDisabled() || this.props.disabled,
           }) }
         </div>

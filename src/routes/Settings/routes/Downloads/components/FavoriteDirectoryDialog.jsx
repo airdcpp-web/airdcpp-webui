@@ -89,7 +89,7 @@ class FavoriteDirectoryDialog extends React.Component {
       >
         <Form
           ref={ c => this.form = c }
-          fieldDefinitions={Entry}
+          fieldDefinitions={ Entry }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }

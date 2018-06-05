@@ -4,7 +4,11 @@ import React from 'react';
 import 'semantic-ui/components/flag.min.css';
 
 
-const IpFormatter = ({ item }) => (
+interface IpFormatterProps {
+  item: API.IP;
+}
+
+const IpFormatter: React.SFC<IpFormatterProps> = ({ item }) => (
   <div className="ip flag">
     <i className={ 'ui flag ' + item.country.toLowerCase() }/>
     { item.str }

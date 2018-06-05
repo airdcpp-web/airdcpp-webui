@@ -7,7 +7,11 @@ import SuggestField from './SuggestField';
 import escapeStringRegexp from 'escape-string-regexp';
 
 
-export default class extends React.Component {
+interface LocalSuggestFieldProps {
+  data: string[];
+}
+
+class LocalSuggestField extends React.Component<LocalSuggestFieldProps> {
   static propTypes = {
     data: PropTypes.array.isRequired,
 
@@ -18,7 +22,7 @@ export default class extends React.Component {
     suggestions: [],
   };
 
-  filterSuggestions = (text) => {
+  filterSuggestions = (text: string) => {
     const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
     return this.props.data.filter(str => regex.test(str));
   };
@@ -57,3 +61,5 @@ export default class extends React.Component {
     );
   }
 }
+
+export default LocalSuggestField;

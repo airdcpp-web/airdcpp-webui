@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import HistoryConstants from 'constants/HistoryConstants';
 import HistoryActions from 'actions/HistoryActions';
@@ -9,7 +9,17 @@ import HistoryActions from 'actions/HistoryActions';
 import LocalSuggestField from './LocalSuggestField';
 
 
-class HistoryInput extends React.Component {
+export interface HistoryInputProps extends DataProviderDecoratorChildProps {
+  historyId: string;
+  history: string[];
+  submitHandler: (text: string) => void;
+}
+
+interface HistoryInputDataProps {
+  history: string[];
+}
+
+class HistoryInput extends React.Component<HistoryInputProps> {
   static propTypes = {
 
     /**
@@ -22,7 +32,7 @@ class HistoryInput extends React.Component {
     submitHandler: PropTypes.func.isRequired,
   };
 
-  handleSubmit = (text) => {
+  handleSubmit = (text: string) => {
     HistoryActions.add(this.props.historyId, text);
 
     this.props.refetchData();
@@ -41,7 +51,7 @@ class HistoryInput extends React.Component {
   }
 }
 
-export default DataProviderDecorator(HistoryInput, {
+export default DataProviderDecorator<HistoryInputProps, HistoryInputDataProps>(HistoryInput, {
   urls: {
     history: ({ historyId }, socket) => socket.get(HistoryConstants.STRINGS_URL + '/' + historyId),
   },

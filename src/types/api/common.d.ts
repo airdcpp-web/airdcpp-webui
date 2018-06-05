@@ -32,11 +32,16 @@ declare namespace API {
 
 
   // PROTOCOL FILES
+  type DupeId = 'share_partial' | 'share_full' | 'queue_partial' | 'queue_full' | 'finished_partial' | 'finished_full' | 'share_full';
+
+  interface Dupe {
+    id: DupeId;
+    paths: string[];
+  }
+
   interface FileItemInfo {
     path: string;
-    dupe: {
-      paths: string[];
-    };
+    dupe: Dupe;
     name: string;
     type: any;
   }
@@ -51,6 +56,27 @@ declare namespace API {
       status: number;
     }
   }
+
+  export type Severity = 'notify' | 'info' | 'warning' | 'error';
+
+  export interface ChatMessage {
+    id: number;
+    time: number;
+    text: string;
+    third_person: boolean;
+    is_read: boolean;
+    from: HubUser;
+    reply_to?: HubUser;
+    to?: HubUser;
+  }
+
+  export interface StatusMessage {
+    id: number;
+    time: number;
+    text: string;
+    severity: Severity;
+    is_read: boolean;
+  }
   
 
   // ENCRYPTION
@@ -59,15 +85,49 @@ declare namespace API {
     trusted: boolean;
   }
 
-  
+  export interface IP {
+    country: string;
+    ip: string;
+    str: string;
+  }
+
   // USERS
   export type UserFlag = 'self' | 'bot' | 'asch' | 'ccpm' | 'ignored' | 'favorite' | 'nmdc' | 'offline' | 'op';
 
   export type HubUserFlag = UserFlag | 'away' | 'op' | 'hidden' | 'noconnect' | 'passive';
 
+  export interface User {
+    cid: string;
+    nicks: string;
+    hub_names: string;
+    hub_urls: string[];
+    flags: UserFlag[];
+  }
+
   interface HintedUserBase {
     cid: string;
     hub_url: string;
+  }
+
+  interface HintedUser {
+    nicks: string;
+    hub_names: string;
+    flags: HubUserFlag[];
+  }
+
+  interface HubUser {
+    hub_name: string;
+    flags: HubUserFlag[];
+    ip4?: IP;
+    ip6?: IP;
+    nick: string;
+    description?: string;
+    email?: string;
+    tag: string;
+    share_size: number;
+    upload_speed: number;
+    download_speed: number;
+    file_count: number;
   }
 
 

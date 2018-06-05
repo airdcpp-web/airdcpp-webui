@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router';
+import { Route, RouterChildContext, match } from 'react-router';
 
 
-const parseRoutePath = (match, path) => {
+const parseRoutePath = (match: match<{}>, path: string) => {
   if (path[0] === '/') {
     return path;
   }
@@ -11,8 +11,21 @@ const parseRoutePath = (match, path) => {
   return `${match.url}/${path}`;
 };
 
-export default function modalHandler(Component, overlayId, path) {
-  const ModalRouteDecorator = (props, { router }) => {
+
+interface ModalRouteDecoratorProps {
+  overlayId: any;
+}
+
+interface ModalRouteDecoratorChildProps {
+  overlayId: any;
+}
+
+export default function <PropsT>(
+  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>, 
+  overlayId: any, 
+  path: string
+) {
+  const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps> = (props, { router }: RouterChildContext<{}>) => {
     const { location, match } = router.route;
     if (!location.state || !location.state[overlayId]) {
       return null;

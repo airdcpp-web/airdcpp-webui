@@ -14,21 +14,21 @@ import LoginStore from 'stores/LoginStore';
 
 const BrowseField = t.form.Form.templates.textbox.clone({
   // override default implementation
-  renderInput: (locals) => {
-    let _input;
+  renderInput: (locals: any) => {
+    let _input: HTMLInputElement;
     
-    const onConfirm = (path) => {
+    const onConfirm = (path: string) => {
       locals.onChange(path);
     };
 
     const showBrowseDialog = () => {
       const { location } = locals.context.router.route;
-      History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL, {
+      History.pushModal(location, `${location.pathname}/browse`, OverlayConstants.FILE_BROWSER_MODAL, {
         historyId: (locals.config && !locals.value) ? locals.config.historyId : undefined,
       });
     };
 
-    const onChange = (event) => {
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       locals.onChange(event.target.value);
       setTimeout(_input.focus());
     };
@@ -43,7 +43,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
       <div className={ fieldStyle }>
         <input
           ref={ input => { 
-            _input = input;
+            _input = input as HTMLInputElement;
           } }
           value={ locals.value }
           onChange={ onChange }

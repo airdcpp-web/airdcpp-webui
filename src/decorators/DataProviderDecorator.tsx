@@ -10,14 +10,13 @@ import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 
 
-export interface DataProviderDecoratorProps<PropsT extends object> {
-  //urls: ((props: PropsT) => object) | object;
+export interface DataProviderDecoratorProps<PropsT extends object, DataT extends object> {
   urls: {
     [key: string]: ((props: PropsT, socket: any) => Promise<any>) | string
   }
-  onSocketConnected?: (handler: any, data: {
-    refetchData: () => void;
-    mergeData: (data: Partial<PropsT>) => void;
+  onSocketConnected?: (addSocketListener: any, data: {
+    refetchData: (keys?: string[]) => void;
+    mergeData: (data: Partial<DataT>) => void;
     props: PropsT;
   }) => void;
   dataConverters?: {
@@ -28,8 +27,8 @@ export interface DataProviderDecoratorProps<PropsT extends object> {
 }
 
 export interface DataProviderDecoratorChildProps {
-  refetchData: (keys: string[]) => void;
-  dataError: any;
+  refetchData: (keys?: string[]) => void;
+  dataError?: APISocket.Error;
 }
 
 interface State<DataT> {
@@ -40,7 +39,7 @@ interface State<DataT> {
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
-  settings: DataProviderDecoratorProps<PropsT>
+  settings: DataProviderDecoratorProps<PropsT, DataT>
 ) {
   const DataProviderDecorator = createReactClass<PropsT, State<DataT>>({
     displayName: 'DataProviderDecorator',
@@ -84,16 +83,6 @@ export default function <PropsT extends object, DataT extends object>(
 			 */
       renderOnError: PropTypes.bool,
     },
-
-    /*getDefaultProps(): DataProviderDecoratorProps {
-      return {
-        urls: settings.urls,
-        onSocketConnected: settings.onSocketConnected,
-        loaderText: settings.loaderText || 'Loading data...',
-        dataConverters: settings.dataConverters,
-        renderOnError: settings.renderOnError,
-      };
-    },*/
 
     getInitialState() {
       return {
@@ -181,13 +170,6 @@ export default function <PropsT extends object, DataT extends object>(
         // API error
         NotificationActions.apiError('Failed to fetch data', error);
       }
-
-      /*if (error.code && error.message) {
-        // API error
-        NotificationActions.apiError('Failed to fetch data', error);
-      } else {
-
-      }*/
 
       this.setState({
         error,

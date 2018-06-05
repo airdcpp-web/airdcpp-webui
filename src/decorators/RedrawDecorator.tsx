@@ -1,8 +1,10 @@
 import React from 'react';
 
 
-export default function (Component, redrawIntervalSeconds = 60) {
+export default function <PropsT>(Component: React.ComponentType<PropsT>, redrawIntervalSeconds = 60) {
   class RedrawDecorator extends React.Component {
+    redrawTimeout: any;
+
     componentDidMount() {
       this.scheduleComponentRefresh();
     }

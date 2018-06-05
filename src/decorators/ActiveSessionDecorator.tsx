@@ -5,21 +5,32 @@ import React from 'react';
 import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
+
+interface ActiveSessionDecoratorProps<SessionT> {
+  actions: {
+    setRead: (id: any) => void;
+    sessionChanged: (id: any) => void;
+  };
+  session: SessionT;
+}
+
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function (Component, useReadDelay) {
-  class ActiveSessionDecorator extends React.Component {
+export default function <PropsT, SessionT extends { id: any; }>(Component: React.ComponentType<PropsT>, useReadDelay: boolean) {
+  class ActiveSessionDecorator extends React.Component<ActiveSessionDecoratorProps<SessionT>> {
     static propTypes = {
       session: PropTypes.any, // Required (cloned)
       actions: PropTypes.object, // Required (cloned)
     };
 
-    setRead = (id) => {
+    readTimeout: any;
+
+    setRead = (id: any) => {
       this.props.actions.setRead(id);
       this.readTimeout = null;
     };
 
-    setSession = (id) => {
+    setSession = (id: any) => {
       if (this.readTimeout) {
         clearTimeout(this.readTimeout);
         this.setRead(this.props.session.id);
@@ -42,14 +53,14 @@ export default function (Component, useReadDelay) {
       this.setSession(null);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT>) {
       if (this.props.session.id != nextProps.session.id) {
         this.setSession(nextProps.session.id);
       }
     }
 
     render() {
-      return <Component {...this.props}/>;
+      return <Component { ...this.props }/>;
     }
   }
 

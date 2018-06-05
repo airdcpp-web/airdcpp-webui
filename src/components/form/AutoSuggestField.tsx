@@ -8,7 +8,7 @@ import 'components/autosuggest/style.css';
 
 
 const AutoSuggestField = t.form.Form.templates.textbox.clone({
-  renderInput(locals) {
+  renderInput(locals: any) {
     return (
       <div className="ui fluid input">
         <LocalSuggestField 

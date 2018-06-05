@@ -8,7 +8,7 @@ import classNames from 'classnames';
 
 interface MessageProps {
   className?: string;
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | string | null;
   icon?: IconType;
   isError?: boolean;

@@ -19,14 +19,19 @@ export default function (Component, fetchUrl, unavailableMessage, fetchIntervalS
     }
 
     fetchStats = () => {
-      SocketService.get(fetchUrl).then(this.onStatsReceived).catch(error => console.error('Failed to fetch stats', error.message));
+      SocketService.get(fetchUrl)
+        .then(this.onStatsReceived)
+        .catch(error => console.error('Failed to fetch stats', error.message));
+
       if (fetchIntervalSeconds > 0) {
-        this.fetchTimeout = setTimeout(this.fetchStats, fetchIntervalSeconds*1000);
+        this.fetchTimeout = setTimeout(this.fetchStats, fetchIntervalSeconds * 1000);
       }
     };
 
     onStatsReceived = (data) => {
-      this.setState({ stats: data });
+      this.setState({ 
+        stats: data 
+      });
     };
 
     render() {
@@ -48,7 +53,12 @@ export default function (Component, fetchUrl, unavailableMessage, fetchIntervalS
         );
       }
 
-      return <Component {...this.props} stats={ stats }/>;
+      return (
+        <Component 
+          { ...this.props } 
+          stats={ stats }
+        />
+      );
     }
   }
 
