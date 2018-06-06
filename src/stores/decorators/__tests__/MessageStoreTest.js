@@ -1,4 +1,4 @@
-import MessageUtils from 'utils/MessageUtils';
+import { checkUnread } from 'utils/MessageUtils';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
@@ -72,7 +72,7 @@ describe('message store', () => {
       setRead: jest.fn(),
     };
 
-    const data = MessageUtils.checkUnread(sessionData, actions, 0);
+    const data = checkUnread(sessionData, actions, 0);
 
     expect(actions.setRead).toBeCalled();
     expect(data).toEqual({

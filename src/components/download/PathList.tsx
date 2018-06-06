@@ -4,7 +4,7 @@ import React from 'react';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 
 
@@ -22,7 +22,7 @@ const PathItem: React.SFC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
       <a onClick={ evt => downloadHandler(pathInfo.path) }>
         { pathInfo.path }
         <span className="disk-info">
-          { pathInfo.free_space > 0 && ' (' + ValueFormat.formatSize(pathInfo.free_space) + ' free)' }
+          { pathInfo.free_space > 0 && ' (' + formatSize(pathInfo.free_space) + ' free)' }
         </span>
       </a>
     </div>

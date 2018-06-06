@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ValueFormat from 'utils/ValueFormat';
+import { formatRelativeTime, formatSize } from 'utils/ValueFormat';
 
 import SearchActions from 'actions/SearchActions';
 import { DownloadMenu } from 'components/menu/DropdownMenu';
@@ -47,8 +47,8 @@ const ResultInfoGrid = ({ parentResult }) => (
   <div className="ui segment">
     <div className="ui grid stackable two column">
       <GridRow title="Content/Type" text={ parentResult.type.str }/>
-      <GridRow title="Size" text={ ValueFormat.formatSize(parentResult.size) }/>
-      <GridRow title="Last modified" text={ ValueFormat.formatRelativeTime(parentResult.time) }/>
+      <GridRow title="Size" text={ formatSize(parentResult.size) }/>
+      <GridRow title="Last modified" text={ formatRelativeTime(parentResult.time) }/>
       { parentResult.type.id === 'file' && <GridRow title="TTH" text={ parentResult.tth }/> }
       { !!parentResult.dupe && <GridRow title="Dupe type" text={ DupeStrings[parentResult.dupe.id] }/> }
       { !!parentResult.dupe && <GridRow title="Dupe paths" text={ <DupePaths paths={ parentResult.dupe.paths }/> }/> }

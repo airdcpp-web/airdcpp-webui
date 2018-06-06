@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TypeConvert from 'utils/TypeConvert';
+import { userOnlineStatusToColor } from 'utils/TypeConvert';
 import { UserMenu } from 'components/menu/DropdownMenu';
 import UserIcon from 'components/icon/UserIcon';
 
@@ -12,7 +12,7 @@ export default (itemMenuIds) => {
 
     itemStatusGetter(session) {
       const { flags } = session.user;
-      return TypeConvert.userOnlineStatusToColor(flags);
+      return userOnlineStatusToColor(flags);
     },
 
     itemHeaderDescriptionGetter(session) {

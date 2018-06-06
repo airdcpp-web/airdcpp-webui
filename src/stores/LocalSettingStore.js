@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import invariant from 'invariant';
 
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 import { LocalSettings, FieldTypes } from 'constants/SettingConstants';
 
 
@@ -61,8 +61,8 @@ export const SettingDefinitions = [
 // Settings are saved in local storage only after the default value has been modified
 // Default value from the respective definition is returned otherwise
 const LocalSettingStore = Reflux.createStore({
-  init: function () {
-    this.settings = BrowserUtils.loadLocalProperty('local_settings', {});
+  init() {
+    this.settings = loadLocalProperty('local_settings', {});
   },
 
   getDefinition(key) {
@@ -95,7 +95,7 @@ const LocalSettingStore = Reflux.createStore({
   // Append values for the provided key -> value object 
   setValues(items) {
     this.settings = Object.assign({}, this.settings, items);
-    BrowserUtils.saveLocalProperty('local_settings', this.settings);
+    saveLocalProperty('local_settings', this.settings);
     this.trigger(this.getValues());
   },
 });

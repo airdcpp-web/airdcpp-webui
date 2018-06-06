@@ -18,7 +18,7 @@ import Icon from 'components/semantic/Icon';
 import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
 
 import IconConstants from 'constants/IconConstants';
 import MenuItemLink from 'components/semantic/MenuItemLink';
@@ -164,7 +164,7 @@ class SessionLayout extends React.Component {
   };
 
   // LIFECYCLE/REACT
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.location.pathname === this.getNewUrl()) {
       // Don't redirect to it if the "new session" layout is open
       if (this.state.activeItem) {
@@ -216,7 +216,7 @@ class SessionLayout extends React.Component {
       }
 
       this.setState({ activeItem: activeItem });
-      BrowserUtils.saveLocalProperty(this.getStorageKey(props), props.activeId);
+      saveLocalProperty(this.getStorageKey(props), props.activeId);
       return true;
     } else if (pending) {
       // We'll just display a loading indicator in 'render', no item needed
@@ -273,7 +273,7 @@ class SessionLayout extends React.Component {
     }
 
     // See if we have something stored
-    let lastId = BrowserUtils.loadLocalProperty(this.getStorageKey(this.props));
+    let lastId = loadLocalProperty(this.getStorageKey(this.props));
     if (lastId && findItem(this.props.items, lastId)) {
       // Previous session exists
       this.replaceSession(lastId);
@@ -404,7 +404,7 @@ class SessionLayout extends React.Component {
     }
 
     const { activeItem } = this.state;
-    const useTopMenu = disableSideMenu || BrowserUtils.useMobileLayout() || width < 700;
+    const useTopMenu = disableSideMenu || useMobileLayout() || width < 700;
 		
     const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
     return (

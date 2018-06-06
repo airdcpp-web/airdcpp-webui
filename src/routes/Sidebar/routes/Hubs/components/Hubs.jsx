@@ -9,7 +9,7 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import HubSessionStore from 'stores/HubSessionStore';
 import HubActions from 'actions/HubActions';
 
-import TypeConvert from 'utils/TypeConvert';
+import { hubOnlineStatusToColor } from 'utils/TypeConvert';
 import AccessConstants from 'constants/AccessConstants';
 
 import HubSession from './HubSession';
@@ -23,7 +23,7 @@ const ItemHandler = {
   },
 
   itemStatusGetter(session) {
-    return TypeConvert.hubOnlineStatusToColor(session.connect_state.id);
+    return hubOnlineStatusToColor(session.connect_state.id);
   },
 
   itemHeaderDescriptionGetter(session) {

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import UrgencyUtils from 'utils/UrgencyUtils';
-import TypeConvert from 'utils/TypeConvert';
+import { maxUrgency } from 'utils/UrgencyUtils';
+import { urgencyToColor } from 'utils/TypeConvert';
 import classNames from 'classnames';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -18,7 +18,7 @@ interface CountLabelProps {
 
 const CountLabel: React.SFC<CountLabelProps> = ({ urgencies, empty, size, className, circular }) => {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
-  const max = UrgencyUtils.maxUrgency(urgencies);
+  const max = maxUrgency(urgencies);
 
   const labelClassName = classNames(
     'ui count label',
@@ -26,7 +26,7 @@ const CountLabel: React.SFC<CountLabelProps> = ({ urgencies, empty, size, classN
     { 'circular': circular },
     size,
     className,
-    TypeConvert.urgencyToColor(max),
+    urgencyToColor(max),
   );
 
   return (

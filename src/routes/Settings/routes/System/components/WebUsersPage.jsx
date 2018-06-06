@@ -10,7 +10,7 @@ import AccessConstants from 'constants/AccessConstants';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-import ValueFormat from 'utils/ValueFormat';
+import { formatRelativeTime } from 'utils/ValueFormat';
 
 
 const WebUserRow = ({ user }) => (
@@ -30,7 +30,7 @@ const WebUserRow = ({ user }) => (
       { user.active_sessions }
     </td>
     <td>
-      { ValueFormat.formatRelativeTime(user.last_login) }
+      { formatRelativeTime(user.last_login) }
     </td>
   </tr>
 );

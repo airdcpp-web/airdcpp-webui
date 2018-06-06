@@ -10,7 +10,7 @@ import HashConstants from 'constants/HashConstants';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 
 import '../style.css';
 
@@ -48,7 +48,7 @@ const SizeRow = ({ title, size }) => (
       </div>
     </div>
     <div className="twelve wide column">
-      { ValueFormat.formatSize(size) }
+      { formatSize(size) }
     </div>
   </div>
 );

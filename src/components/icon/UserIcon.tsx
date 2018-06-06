@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon, { IconProps } from 'components/semantic/Icon';
-import TypeConvert from 'utils/TypeConvert';
+import { userOnlineStatusToColor } from 'utils/TypeConvert';
 
 
 const getUserIcon = (flags: API.HubUserFlag[]) => {
@@ -10,7 +10,7 @@ const getUserIcon = (flags: API.HubUserFlag[]) => {
     return 'red ban';
   }
 
-  return TypeConvert.userOnlineStatusToColor(flags) + ' user';
+  return userOnlineStatusToColor(flags) + ' user';
 };
 
 const flagTitles: Partial<{ [K in API.HubUserFlag]: string; }> = {

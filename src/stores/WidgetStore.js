@@ -4,7 +4,7 @@ import WidgetActions from 'actions/WidgetActions';
 import WidgetUtils from 'utils/WidgetUtils';
 
 import reject from 'lodash/reject';
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadLocalProperty, removeLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 
 import Application from 'widgets/Application';
 import RSS from 'widgets/RSS';
@@ -13,7 +13,7 @@ import Transfers from 'widgets/Transfers';
 
 // HELPERS
 const getWidgetSettings = (id, widgetInfo) => {
-  const settings = BrowserUtils.loadLocalProperty(WidgetUtils.idToSettingKey(id), { });
+  const settings = loadLocalProperty(WidgetUtils.idToSettingKey(id), { });
 
   // Add new default settings
   if (widgetInfo && widgetInfo.formSettings) {
@@ -29,7 +29,7 @@ const getWidgetSettings = (id, widgetInfo) => {
 };
 
 const saveSettings = (id, settings) => {
-  BrowserUtils.saveLocalProperty(WidgetUtils.idToSettingKey(id), settings);
+  saveLocalProperty(WidgetUtils.idToSettingKey(id), settings);
 };
 
 const createWidget = (layouts, widgetInfo, id, x, y) => {
@@ -83,7 +83,7 @@ const WidgetStore = Reflux.createStore({
   listenables: WidgetActions,
   init: function () {
     // Try to load saved ones
-    let layoutInfo = BrowserUtils.loadLocalProperty(LAYOUT_STORAGE_KEY);
+    let layoutInfo = loadLocalProperty(LAYOUT_STORAGE_KEY);
     if (layoutInfo && layoutInfo.items) {
       if (layoutInfo.version === LAYOUT_VERSION) {
         this.layouts = layoutInfo.items;
@@ -133,7 +133,7 @@ const WidgetStore = Reflux.createStore({
   },
 
   onRemoveConfirmed(id) {
-    BrowserUtils.removeLocalProperty(WidgetUtils.idToSettingKey(id));
+    removeLocalProperty(WidgetUtils.idToSettingKey(id));
 
     this.layouts = Object.keys(cols).reduce((layouts, key) => {
       if (this.layouts[key]) {
@@ -162,7 +162,7 @@ const WidgetStore = Reflux.createStore({
   },
 
   onLayoutChange(layout, layouts) {
-    BrowserUtils.saveLocalProperty(LAYOUT_STORAGE_KEY, {
+    saveLocalProperty(LAYOUT_STORAGE_KEY, {
       version: LAYOUT_VERSION,
       items: layouts,
     });

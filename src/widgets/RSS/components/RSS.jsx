@@ -8,8 +8,8 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 import RedrawDecorator from 'decorators/RedrawDecorator';
 import RSSActions from '../actions/RSSActions';
 
-import BrowserUtils from 'utils/BrowserUtils';
-import ValueFormat from 'utils/ValueFormat';
+import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
+import { formatRelativeTime } from 'utils/ValueFormat';
 
 import '../style.css';
 
@@ -45,7 +45,7 @@ const Entry = ({ entry, feedUrl, componentId }) => {
       </div>
 
       <div className="description">
-        { date ? ValueFormat.formatRelativeTime(Date.parse(date) / 1000) : null }
+        { date ? formatRelativeTime(Date.parse(date) / 1000) : null }
       </div>
     </div>
   );
@@ -72,7 +72,7 @@ Entry.propTypes = {
 const Footer = RedrawDecorator(({ lastUpdated, handleUpdate }) => (
   <div className="extra content">
     <i className="icon refresh link" onClick={ handleUpdate }/>
-    { lastUpdated ? 'Last updated: ' + ValueFormat.formatRelativeTime(lastUpdated / 1000) : null }
+    { lastUpdated ? 'Last updated: ' + formatRelativeTime(lastUpdated / 1000) : null }
   </div>
 ), 60);
 
@@ -139,14 +139,14 @@ class RSS extends React.PureComponent {
     );
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.settings.feed_url !== this.props.settings.feed_url) {
       this.fetchFeed(nextProps.settings.feed_url);
     }
   }
 
   getCachedFeedInfo = () => {
-    const feedInfo = BrowserUtils.loadSessionProperty(idToCacheKey(this.props.componentId));
+    const feedInfo = loadSessionProperty(idToCacheKey(this.props.componentId));
     if (feedInfo) {
       const feedDate = new Date(feedInfo.date).getTime();
       const lastValidDate = feedDate + (this.props.settings.feed_cache_minutes * 60 * 1000);
@@ -211,7 +211,7 @@ class RSS extends React.PureComponent {
       entries = [ entries ];
     }
 
-    BrowserUtils.saveSessionProperty(idToCacheKey(this.props.componentId), {
+    saveSessionProperty(idToCacheKey(this.props.componentId), {
       entries,
       date: Date.now(),
     });

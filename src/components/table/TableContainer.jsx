@@ -4,7 +4,7 @@ import React from 'react';
 import { Table } from 'fixed-data-table-2';
 
 import TableActions from 'actions/TableActions';
-import BrowserUtils from 'utils/BrowserUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 import Measure from 'react-measure';
 import RowWrapperCell from './RowWrapperCell';
@@ -128,7 +128,7 @@ class TableContainer extends React.Component {
     const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';
     name += ((store.sortProperty === columnKey) ? sortDirArrow : '');
 
-    const mobileView = BrowserUtils.useMobileLayout();
+    const mobileView = useMobileLayout();
     if (!mobileView) {
       // Get column width
       if (!!this.state.columnWidths[columnKey]) {

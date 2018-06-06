@@ -4,11 +4,11 @@ import { default as EventConstants, SeverityEnum } from 'constants/EventConstant
 import { EventActions } from 'actions/EventActions';
 
 import { LogMessageUrgencies } from 'constants/UrgencyConstants';
-import UrgencyUtils from 'utils/UrgencyUtils';
+import { toUrgencyMap } from 'utils/UrgencyUtils';
 
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 import AccessConstants from 'constants/AccessConstants';
-import MessageUtils from 'utils/MessageUtils';
+import { mergeCacheMessages, pushMessage, checkUnread, checkSplice } from 'utils/MessageUtils';
 
 
 const EventStore = Reflux.createStore({
@@ -37,7 +37,7 @@ const EventStore = Reflux.createStore({
   },
 
   onFetchMessagesCompleted(cacheMessages) {
-    this._logMessages = MessageUtils.mergeCacheMessages(cacheMessages, this._logMessages);;
+    this._logMessages = mergeCacheMessages(cacheMessages, this._logMessages);;
     this.trigger(this._logMessages);
   },
 
@@ -50,16 +50,16 @@ const EventStore = Reflux.createStore({
       return;
     }
 
-    this._logMessages = MessageUtils.pushMessage(data, this._logMessages);
+    this._logMessages = pushMessage(data, this._logMessages);
     this.trigger(this._logMessages);
   },
 
   onLogInfoReceived(cacheInfoNew) {
     if (this._viewActive) {
-      cacheInfoNew = MessageUtils.checkUnread(cacheInfoNew, EventActions);
+      cacheInfoNew = checkUnread(cacheInfoNew, EventActions);
     }
 
-    this._logMessages = MessageUtils.checkSplice(this._logMessages, cacheInfoNew.total);
+    this._logMessages = checkSplice(this._logMessages, cacheInfoNew.total);
     this._messageCacheInfo = cacheInfoNew;
 
     this.trigger(this._logMessages);
@@ -70,7 +70,7 @@ const EventStore = Reflux.createStore({
       return null;
     }
 
-    return UrgencyUtils.toUrgencyMap(this._messageCacheInfo.unread, LogMessageUrgencies);
+    return toUrgencyMap(this._messageCacheInfo.unread, LogMessageUrgencies);
   },
 
   get logMessages() {

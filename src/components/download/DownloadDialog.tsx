@@ -14,8 +14,8 @@ import DownloadFileBrowser from './DownloadFileBrowser';
 import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';
 
-import FileUtils from 'utils/FileUtils';
-import BrowserUtils from 'utils/BrowserUtils';
+import { getParentPath } from 'utils/FileUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
@@ -109,7 +109,7 @@ class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialo
   constructor(props: DownloadDialogProps & DownloadDialogDataProps) {
     super(props);
     const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => FileUtils.getParentPath(path)) : [];
+    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
 
     this.sections = [
       {
@@ -185,7 +185,7 @@ class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialo
 
     const menuItems = this.sections.map(this.getMenuItem);
 
-    const Component = BrowserUtils.useMobileLayout() ? MobileLayout : NormalLayout;
+    const Component = useMobileLayout() ? MobileLayout : NormalLayout;
     return (
       <Modal 
         ref={ c => this.modal = c }

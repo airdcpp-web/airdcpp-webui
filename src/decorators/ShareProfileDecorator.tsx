@@ -1,7 +1,7 @@
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 
 
 interface ShareProfileDecoratorDataProps {
@@ -16,7 +16,7 @@ const ShareProfileDecorator = function <PropsT extends object>(
   const convertProfile = (profile: API.ShareProfile): API.ShareProfile => {
     let name = profile.str;
     if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
-      name += ' (' + ValueFormat.formatSize(profile.size) + ')';
+      name += ' (' + formatSize(profile.size) + ')';
     }
 
     return {

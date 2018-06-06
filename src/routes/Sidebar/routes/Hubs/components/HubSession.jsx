@@ -3,7 +3,7 @@ import React from 'react';
 
 import HubMessageStore from 'stores/HubMessageStore';
 
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
@@ -23,7 +23,7 @@ const getStorageKey = (props) => {
 };
 
 const checkList = (props) => {
-  return BrowserUtils.loadSessionProperty(getStorageKey(props), false);
+  return loadSessionProperty(getStorageKey(props), false);
 };
 
 class HubSession extends React.Component {
@@ -33,7 +33,7 @@ class HubSession extends React.Component {
     showList: checkList(this.props),
   };
   
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
       this.toggleListState();
     }
@@ -73,7 +73,7 @@ class HubSession extends React.Component {
   onClickUsers = () => {
     this.toggleListState();
 
-    BrowserUtils.saveSessionProperty(getStorageKey(this.props), this.state.showList);
+    saveSessionProperty(getStorageKey(this.props), this.state.showList);
   };
 
   render() {

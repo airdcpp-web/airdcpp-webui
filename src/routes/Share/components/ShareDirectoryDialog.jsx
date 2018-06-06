@@ -16,7 +16,7 @@ import Message from 'components/semantic/Message';
 
 import t from 'utils/tcomb-form';
 
-import FileUtils from 'utils/FileUtils';
+import { getLastDirectory } from 'utils/FileUtils';
 
 import Form from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -69,7 +69,7 @@ class ShareDirectoryDialog extends React.Component {
   onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('path') != -1) {
       const mergeFields = { 
-        virtual_name: FileUtils.getLastDirectory(value.path, FileUtils) 
+        virtual_name: getLastDirectory(value.path) 
       };
 			
       return Promise.resolve(mergeFields);

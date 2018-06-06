@@ -6,7 +6,7 @@ import AccessConstants from 'constants/AccessConstants';
 
 import ActivityTracker from './ActivityTracker';
 import Notifications from './Notifications';
-import BrowserUtils from 'utils/BrowserUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 import AuthenticationGuardDecorator from './decorators/AuthenticationGuardDecorator';
 import MainLayoutMobile from './MainLayoutMobile';
@@ -61,7 +61,7 @@ class AuthenticatedApp extends React.Component {
   }
 
   render() {
-    const MainLayout = BrowserUtils.useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
+    const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
     return (
       <div id="authenticated-app">
         <ActivityTracker/>

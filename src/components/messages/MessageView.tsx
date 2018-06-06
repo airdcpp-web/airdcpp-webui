@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Loader from 'components/semantic/Loader';
 import ScrollDecorator from 'decorators/ScrollDecorator';
 import { ChatMessage, StatusMessage } from './Message';
-import ValueFormat from 'utils/ValueFormat';
+import { formatCalendarTime } from 'utils/ValueFormat';
 
 import './messages.css';
 
@@ -52,7 +52,7 @@ const getMessageListItem = (reduced: React.ReactNode[], message: API.MessageList
         className="ui horizontal date divider"
       >
         <i className="calendar icon"/>
-        { ValueFormat.formatCalendarTime(messageObj.time) }
+        { formatCalendarTime(messageObj.time) }
       </div>
     );
   }

@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { TableActionMenu, TableDownloadMenu } from 'components/menu/DropdownMenu';
-import ValueFormat from 'utils/ValueFormat';
+import { 
+  formatDecimal, formatAbbreviatedDuration, formatConnection, formatDateTime, 
+  formatShortDate, formatSize, formatSpeed, formatRelativeTime 
+} from 'utils/ValueFormat';
 
 import FormattedFile from 'components/format/FormattedFile';
 import FormattedIp from 'components/format/FormattedIp';
@@ -83,31 +86,31 @@ ActionLinkCell.contextTypes = {
 
 export const SizeCell = ({ cellData }) => (
   <span className="plain size cell">
-    { ValueFormat.formatSize(cellData) }
+    { formatSize(cellData) }
   </span>
 );
 
 export const SpeedCell = ({ cellData }) => (
   <span className="plain speed cell">
-    { ValueFormat.formatSpeed(cellData) }
+    { formatSpeed(cellData) }
   </span>
 );
 
 export const DateCell = ({ cellData, width }) => (
   <span className="plain date cell">
-    { width > 150 ? ValueFormat.formatDateTime(cellData) : ValueFormat.formatShortDate(cellData) }
+    { width > 150 ? formatDateTime(cellData) : formatShortDate(cellData) }
   </span>
 );
 
 export const DurationCell = ({ cellData }) => (
   <span className="plain duration cell">
-    { ValueFormat.formatRelativeTime(cellData) }
+    { formatRelativeTime(cellData) }
   </span>
 );
 
 export const AbbreviatedDurationCell = ({ cellData }) => (
   <span className="plain abbr-duration cell">
-    { ValueFormat.formatAbbreviatedDuration(cellData) }
+    { formatAbbreviatedDuration(cellData) }
   </span>
 );
 
@@ -117,13 +120,13 @@ export const IpCell = ({ cellData }) => (
 
 export const ConnectionCell = ({ cellData }) => (
   <span className="plain connection cell">
-    { ValueFormat.formatConnection(cellData) }
+    { formatConnection(cellData) }
   </span>
 );
 
 export const DecimalCell = ({ cellData }) => (
   <span className="plain decimal cell">
-    { ValueFormat.formatDecimal(cellData) }
+    { formatDecimal(cellData) }
   </span>
 );
 

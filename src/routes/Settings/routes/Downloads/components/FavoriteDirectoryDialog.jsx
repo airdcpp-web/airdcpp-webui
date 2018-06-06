@@ -14,7 +14,7 @@ import SocketService from 'services/SocketService';
 import t from 'utils/tcomb-form';
 import { FieldTypes } from 'constants/SettingConstants';
 
-import FileUtils from 'utils/FileUtils';
+import { getLastDirectory } from 'utils/FileUtils';
 
 import Form from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -42,7 +42,7 @@ class FavoriteDirectoryDialog extends React.Component {
   onFieldChanged = (id, value, hasChanges) => {
     if (id.indexOf('path') !== -1) {
       return Promise.resolve({
-        name: FileUtils.getLastDirectory(value.path, FileUtils) 
+        name: getLastDirectory(value.path) 
       });
     }
 

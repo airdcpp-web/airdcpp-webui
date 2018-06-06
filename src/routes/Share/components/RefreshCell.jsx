@@ -3,7 +3,7 @@ import React from 'react';
 import RedrawDecorator from 'decorators/RedrawDecorator';
 import ShareActions from 'actions/ShareActions';
 import { StateEnum } from 'constants/ShareRootConstants';
-import ValueFormat from 'utils/ValueFormat';
+import { formatRelativeTime } from 'utils/ValueFormat';
 import Loader from 'components/semantic/Loader';
 
 
@@ -16,7 +16,7 @@ const RefreshCell = ({ rowDataGetter, cellData }) => {
   return (
     <div>
       <i className={ 'icon large link green refresh' } onClick={ () => ShareActions.refreshPaths([ rowDataGetter().path ]) }/>
-      { cellData === 0 ? 'Unknown' : ValueFormat.formatRelativeTime(cellData) }
+      { cellData === 0 ? 'Unknown' : formatRelativeTime(cellData) }
     </div>
   );
 };

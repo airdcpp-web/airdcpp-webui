@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import FormattedFile from 'components/format/FormattedFile';
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 
 
 
@@ -28,7 +28,7 @@ const FileItem: React.SFC<FileItemProps> = ({ item, itemClickHandler, itemIconGe
         { !!itemIconGetter && itemIconGetter(item) }
       </td>
       <td>
-        { !!isFile && ValueFormat.formatSize(item.size) }
+        { !!isFile && formatSize(item.size) }
       </td>
     </tr>
   );

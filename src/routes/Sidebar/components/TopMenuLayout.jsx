@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import BrowserUtils from 'utils/BrowserUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 import ActionButton from 'components/ActionButton';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
@@ -23,7 +23,7 @@ const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAc
 );
 
 const CloseButton = ({ closeAction, activeItem }) => {
-  if (!activeItem || BrowserUtils.useMobileLayout()) {
+  if (!activeItem || useMobileLayout()) {
     return null;
   }
 

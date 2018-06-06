@@ -1,4 +1,4 @@
-import MessageUtils from 'utils/MessageUtils';
+import { checkSplice, mergeCacheMessages, pushMessage } from 'utils/MessageUtils';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
 
@@ -11,7 +11,7 @@ const MessageStoreDecorator = function (store, actions, access) {
 
 
   const onFetchMessagesCompleted = (sessionId, cacheMessages) => {
-    messages.set(sessionId, MessageUtils.mergeCacheMessages(cacheMessages, messages.get(sessionId)));
+    messages.set(sessionId, mergeCacheMessages(cacheMessages, messages.get(sessionId)));
     store.trigger(messages.get(sessionId), sessionId);
   };
 
@@ -20,7 +20,7 @@ const MessageStoreDecorator = function (store, actions, access) {
   };
 
   const onMessageReceived = (sessionId, message, type) => {
-    messages.set(sessionId, MessageUtils.pushMessage({ [type]: message }, messages.get(sessionId)));
+    messages.set(sessionId, pushMessage({ [type]: message }, messages.get(sessionId)));
     store.trigger(messages.get(sessionId), sessionId);
   };
 
@@ -38,7 +38,7 @@ const MessageStoreDecorator = function (store, actions, access) {
     }
 
     // Message limit exceed or messages were cleared?
-    const splicedMessages = MessageUtils.checkSplice(messages.get(sessionId), session.message_counts.total);
+    const splicedMessages = checkSplice(messages.get(sessionId), session.message_counts.total);
 
     // Don't update the messages if nothing has changed
     // Session is updated when it's marked as read, which may happen simultaneously with the initial fetch. 

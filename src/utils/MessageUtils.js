@@ -12,8 +12,8 @@ const checkSplice = (messages, cacheMessageCount) => {
 };
 
 const filterListed = (messageList, message) => {
-  const id = MessageUtils.getListMessageId(message);
-  return !messageList.find(existingMessage => MessageUtils.getListMessageId(existingMessage) === id);
+  const id = getListMessageId(message);
+  return !messageList.find(existingMessage => getListMessageId(existingMessage) === id);
 };
 
 const getListMessageId = (message) => {
@@ -25,72 +25,74 @@ const getListMessageTime = (message) => {
 };
 
 
-const MessageUtils = {
-  // Update the data with unread info that is marked as read
-  // Marks the session as read also in the backend
-  checkUnread(data, actions, entityId) {
-    if (!data.message_counts && data.read === false) {
-      // Non-chat session
-      actions.setRead(entityId);
-      data = {
-        ...data,
-        read: true,
-      };
-    } else if (data.message_counts &&
-   !Object.keys(data.message_counts.unread).every(key => data.message_counts.unread[key] === 0)) {
-      // Chat session
+// Update the data with unread info that is marked as read
+// Marks the session as read also in the backend
+const checkUnread = (data, actions, entityId) => {
+  if (!data.message_counts && data.read === false) {
+    // Non-chat session
+    actions.setRead(entityId);
+    data = {
+      ...data,
+      read: true,
+    };
+  } else if (data.message_counts &&
+  !Object.keys(data.message_counts.unread).every(key => data.message_counts.unread[key] === 0)) {
+    // Chat session
 
-      // Reset unread counts
-      actions.setRead(entityId);
+    // Reset unread counts
+    actions.setRead(entityId);
 
-      // Don't flash unread counts in the UI
-      const unreadCounts = Object.keys(data.message_counts.unread).reduce(
-        (reduced, key) => {
-          reduced[key] = 0;
-          return reduced;
-        }, {}
-      );
+    // Don't flash unread counts in the UI
+    const unreadCounts = Object.keys(data.message_counts.unread).reduce(
+      (reduced, key) => {
+        reduced[key] = 0;
+        return reduced;
+      }, {}
+    );
 
-      data = {
-        ...data,
-        message_counts: {
-          ...data.message_counts,
-          unread: unreadCounts,
-        }
-      };
-    }
-
-    return data;
-  },
-
-  // Messages may have been received via listener while fetching cached ones
-  // Append the received non-dupe messages to fetched list
-  mergeCacheMessages(cacheMessages, existingMessages = []) {
-    return [
-      ...cacheMessages,
-      ...existingMessages.filter(filterListed.bind(this, cacheMessages)),
-    ];
-  },
-
-  // Push the message to the existing list of messages (if it's not there yet)
-  // Returns the updated message list
-  pushMessage(message, messages = []) {
-    if (messages.length > 0) {
-      // Messages can arrive simultaneously when the cached messages are fetched, don't add duplicates
-      const lastMessage = messages[messages.length-1];
-      const currentMessageId = getListMessageId(message);
-      if (getListMessageId(lastMessage) >= currentMessageId) {
-        return messages;
+    data = {
+      ...data,
+      message_counts: {
+        ...data.message_counts,
+        unread: unreadCounts,
       }
-    }
+    };
+  }
 
-    messages = update(messages, { $push: [ message ] });
-    return messages;
-  },
+  return data;
 };
 
-export default Object.assign(MessageUtils, { 
+// Messages may have been received via listener while fetching cached ones
+// Append the received non-dupe messages to fetched list
+const mergeCacheMessages = (cacheMessages, existingMessages = []) => {
+  return [
+    ...cacheMessages,
+    ...existingMessages.filter(filterListed.bind(this, cacheMessages)),
+  ];
+};
+
+// Push the message to the existing list of messages (if it's not there yet)
+// Returns the updated message list
+const pushMessage = (message, messages = []) => {
+  if (messages.length > 0) {
+    // Messages can arrive simultaneously when the cached messages are fetched, don't add duplicates
+    const lastMessage = messages[messages.length-1];
+    const currentMessageId = getListMessageId(message);
+    if (getListMessageId(lastMessage) >= currentMessageId) {
+      return messages;
+    }
+  }
+
+  messages = update(messages, { $push: [ message ] });
+  return messages;
+};
+
+export {
+  checkUnread,
+  mergeCacheMessages,
+  pushMessage,
+
   getListMessageId,
   getListMessageTime,
   checkSplice,
-});
+};

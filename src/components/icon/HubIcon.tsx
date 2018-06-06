@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon, { IconProps } from 'components/semantic/Icon';
-import TypeConvert from 'utils/TypeConvert';
+import { hubOnlineStatusToColor } from 'utils/TypeConvert';
 
 
 interface HubIconProps extends IconProps {
@@ -12,7 +12,7 @@ interface HubIconProps extends IconProps {
 const HubIcon: React.SFC<HubIconProps> = ({ hub, ...other }) => (
   <Icon
     { ...other }
-    icon={ TypeConvert.hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }
+    icon={ hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }
   />
 );
 

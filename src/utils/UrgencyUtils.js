@@ -35,7 +35,7 @@ const toUrgencyMap = (source, urgencies) => {
 
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (item, urgencyMappings) => {
-  return UrgencyUtils.toUrgencyMap(item.message_counts.unread, urgencyMappings);
+  return toUrgencyMap(item.message_counts.unread, urgencyMappings);
 };
 
 // Returns urgency mapping for a session with a simple "read" property
@@ -49,30 +49,29 @@ const simpleSessionMapper = (item) => {
   return null;
 };
 
-const UrgencyUtils = {
-  // Get urgencyMap [urgency: numberOfSessions] for a list of sessions
-  getSessionUrgencies(sessions, urgencyGetter) {
-    const urgencies = sessions.reduce((reduced, session) => {
-      const urgencyMap = urgencyGetter(session);
-      if (urgencyMap) {
-        const max = maxUrgency(urgencyMap);
-        if (max) {
-          appendToMap(reduced, max);
-        }
+// Get urgencyMap [urgency: numberOfSessions] for a list of sessions
+const getSessionUrgencies = (sessions, urgencyGetter) => {
+  const urgencies = sessions.reduce((reduced, session) => {
+    const urgencyMap = urgencyGetter(session);
+    if (urgencyMap) {
+      const max = maxUrgency(urgencyMap);
+      if (max) {
+        appendToMap(reduced, max);
       }
+    }
 
-      return reduced;
-    }, {});
+    return reduced;
+  }, {});
 
-    return validateUrgencies(urgencies);
-  },
+  return validateUrgencies(urgencies);
 };
 
-export default Object.assign(UrgencyUtils, {
+export {
+  getSessionUrgencies,
   maxUrgency,
   toUrgencyMap,
   messageSessionMapper,
   simpleSessionMapper,
   appendToMap,
   validateUrgencies,
-});
+};

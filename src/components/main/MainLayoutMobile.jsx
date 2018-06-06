@@ -6,7 +6,7 @@ import SiteHeader from './SiteHeader';
 import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import MenuIcon from 'components/menu/MenuIcon';
 
-import UrgencyUtils from 'utils/UrgencyUtils';
+import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
 
 import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
 
@@ -25,9 +25,9 @@ const reduceMenuItemUrgency = (map, menuItem) => {
     return map;
   }
 
-  const max = UrgencyUtils.maxUrgency(urgencies);
+  const max = maxUrgency(urgencies);
   if (max) {
-    UrgencyUtils.appendToMap(map, max);
+    appendToMap(map, max);
   }
 
   return map;
@@ -51,7 +51,7 @@ const HeaderContent = createReactClass({
     return (
       <div className="right">
         <MenuIcon 
-          urgencies={ UrgencyUtils.validateUrgencies(secondaryRoutes.reduce(reduceMenuItemUrgency, {})) }
+          urgencies={ validateUrgencies(secondaryRoutes.reduce(reduceMenuItemUrgency, {})) }
           onClick={ onClickMenu }
           className="item"
         />

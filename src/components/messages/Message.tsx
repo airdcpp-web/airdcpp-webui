@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import TextDecorator from 'components/TextDecorator';
-import ValueFormat from 'utils/ValueFormat';
+import { formatTimestamp } from 'utils/ValueFormat';
 
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
@@ -32,7 +32,7 @@ Author.propTypes = {
 
 const TimeStamp: React.SFC<{ message: API.Message }> = ({ message }) => (
   <div className="time">
-    { ValueFormat.formatTimestamp(message.time) }
+    { formatTimestamp(message.time) }
   </div>
 );
 

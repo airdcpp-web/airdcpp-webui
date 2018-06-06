@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 
-import MessageUtils from 'utils/MessageUtils';
-import UrgencyUtils from 'utils/UrgencyUtils';
+import { checkUnread } from 'utils/MessageUtils';
+import { getSessionUrgencies, messageSessionMapper, simpleSessionMapper } from 'utils/UrgencyUtils';
 
 const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) {
   let sessions = [];
@@ -18,14 +18,14 @@ const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) 
 
   store.getItemUrgencies = (item) => {
     if (messageUrgencyMappings) {
-      return UrgencyUtils.messageSessionMapper(item, messageUrgencyMappings);
+      return messageSessionMapper(item, messageUrgencyMappings);
     }
 
-    return UrgencyUtils.simpleSessionMapper(item);
+    return simpleSessionMapper(item);
   };
 
   store.getTotalUrgencies = () => {
-    return UrgencyUtils.getSessionUrgencies(sessions, store.getItemUrgencies);
+    return getSessionUrgencies(sessions, store.getItemUrgencies);
   };
 
   store.getSession = (id) => {
@@ -58,7 +58,7 @@ const SessionStoreDecorator = function (store, actions, messageUrgencyMappings) 
 
     // Active tab?
     if (id === activeSession) {
-      data = MessageUtils.checkUnread(data, actions, id);
+      data = checkUnread(data, actions, id);
     }
 
     sessions[sessions.indexOf(session)] = update(session, { $merge: data });

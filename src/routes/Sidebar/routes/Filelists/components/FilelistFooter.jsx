@@ -1,25 +1,25 @@
 'use strict';
 import React from 'react';
 
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import BrowserUtils from 'utils/BrowserUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 
 const FilelistFooter = ({ session }) => {
-  if (BrowserUtils.useMobileLayout()) {
+  if (useMobileLayout()) {
     return null;
   }
 
   let locationText = session.location.type.str;
   if (locationText.length > 0) {
-    locationText = ValueFormat.formatSize(session.location.size) + ' (' + locationText + ')';
+    locationText = formatSize(session.location.size) + ' (' + locationText + ')';
   }
 
   return (
     <SessionFooter>
       <FooterItem label="Directory size" text={ locationText }/>
-      <FooterItem label="Total list size" text={ ValueFormat.formatSize(session.total_size) }/>
+      <FooterItem label="Total list size" text={ formatSize(session.total_size) }/>
     </SessionFooter>
   );
 };

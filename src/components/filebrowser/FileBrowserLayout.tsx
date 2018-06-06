@@ -7,9 +7,9 @@ import { PlatformEnum } from 'constants/SystemConstants';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 
-import BrowserBar, { SelectedNameFormatter } from 'components/browserbar/BrowserBar';
+import BrowserBar, { SelectedNameFormatter } from 'components/browserbar';
 import Message from 'components/semantic/Message';
 import Accordion from 'components/semantic/Accordion';
 import ActionInput, { ActionInputProps } from 'components/semantic/ActionInput';
@@ -107,7 +107,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   constructor(props: FileBrowserProps) {
     super(props);
 
-    let currentDirectory = BrowserUtils.loadLocalProperty(this.getStorageKey());
+    let currentDirectory = loadLocalProperty(this.getStorageKey());
     if (!currentDirectory) {
       currentDirectory = props.initialPath.length === 0 ? this.getRootPath() : props.initialPath;
     }
@@ -143,7 +143,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
 
   onDirectoryChanged = () => {
     // Save the location
-    BrowserUtils.saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
+    saveLocalProperty(this.getStorageKey(), this.state.currentDirectory);
 
     // Props
     if (this.props.onDirectoryChanged) {

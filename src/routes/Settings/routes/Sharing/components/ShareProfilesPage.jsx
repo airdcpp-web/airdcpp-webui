@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
 
 import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 
 import '../style.css';
 
@@ -25,7 +25,7 @@ const Row = ({ profile }) => (
       />
     </td>
     <td>
-      { ValueFormat.formatSize(profile.size) }
+      { formatSize(profile.size) }
     </td>
     <td>
       { profile.files }

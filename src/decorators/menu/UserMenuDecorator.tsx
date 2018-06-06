@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import UserActions from 'actions/UserActions';
-import FileUtils from 'utils/FileUtils';
+import { getFilePath } from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
@@ -72,7 +72,7 @@ export default function <DropdownPropsT extends object>(Component: React.Compone
       });
       Object.defineProperty(this.itemData, 'directory', {
         get: () => {
-          return FileUtils.getFilePath(this.props.directory);
+          return getFilePath(this.props.directory);
         }
       });
     }

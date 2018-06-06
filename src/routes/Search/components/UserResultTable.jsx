@@ -2,7 +2,7 @@ import React from 'react';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import FormattedIp from 'components/format/FormattedIp';
-import ValueFormat from 'utils/ValueFormat';
+import { formatConnection } from 'utils/ValueFormat';
 
 import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
@@ -27,7 +27,7 @@ const UserResult = ({ result }) => (
       { result.user.hub_names }
     </td>
     <td className="connection">
-      { ValueFormat.formatConnection(result.connection) }
+      { formatConnection(result.connection) }
     </td>
     <td className="slots">
       { result.slots.str }

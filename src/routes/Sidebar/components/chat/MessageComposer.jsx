@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
 import ChatCommandHandler from './ChatCommandHandler';
 import { MentionsInput, Mention } from 'react-mentions';
 
@@ -85,12 +85,12 @@ class MessageComposer extends React.Component {
 
   saveText = () => {
     const { text } = this.state;
-    BrowserUtils.saveSessionProperty(this.getStorageKey(this.context), text);
+    saveSessionProperty(this.getStorageKey(this.context), text);
   };
 
   loadState = (context) => {
     return {
-      text: BrowserUtils.loadSessionProperty(this.getStorageKey(context), ''),
+      text: loadSessionProperty(this.getStorageKey(context), ''),
     };
   };
 
@@ -98,7 +98,7 @@ class MessageComposer extends React.Component {
     this.saveText();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
     if (nextContext.router.route.location.pathname !== this.context.router.route.location.pathname) {
       this.saveText();
       this.setState(this.loadState(nextContext));
@@ -158,7 +158,7 @@ class MessageComposer extends React.Component {
   state = this.loadState(this.context);
 
   render() {
-    const mobile = BrowserUtils.useMobileLayout();
+    const mobile = useMobileLayout();
     const className = classNames(
       'ui form composer',
       { 'small': mobile },

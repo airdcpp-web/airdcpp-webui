@@ -3,7 +3,7 @@ import React from 'react';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import ValueFormat from 'utils/ValueFormat';
+import { formatRelativeTime } from 'utils/ValueFormat';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { ListItem } from 'components/semantic/List';
@@ -27,7 +27,7 @@ const RecentLayout = DataProviderDecorator(RedrawDecorator(({ entries, entryTitl
           <ListItem 
             key={ index }
             header={ entryTitleRenderer(entry) }
-            description={ entry.last_opened ? ('Opened ' + ValueFormat.formatRelativeTime(entry.last_opened)) : null }
+            description={ entry.last_opened ? (`Opened ${formatRelativeTime(entry.last_opened)}`) : null }
             icon={ (hasSession(entry) ? 'green ' : '') + entryIcon }
           />
         )) }

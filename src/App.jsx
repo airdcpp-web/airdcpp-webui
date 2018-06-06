@@ -15,7 +15,7 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 
 import Background1500px from '../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../resources/images/background_winter_3840px.jpg';
-import BrowserUtils from 'utils/BrowserUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 import Measure from 'react-measure';
 
@@ -36,7 +36,7 @@ const getBackgroundImage = () => {
     return url;
   }
 
-  if (BrowserUtils.useMobileLayout()) {
+  if (useMobileLayout()) {
     return null;
   }
 

@@ -2,13 +2,13 @@
 import React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import ValueFormat from 'utils/ValueFormat';
+import { formatRelativeTime } from 'utils/ValueFormat';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import BrowserUtils from 'utils/BrowserUtils';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 
 const FileFooter = ({ item }) => {
-  if (BrowserUtils.useMobileLayout()) {
+  if (useMobileLayout()) {
     return null;
   }
 
@@ -17,7 +17,7 @@ const FileFooter = ({ item }) => {
     <SessionFooter>
       <FooterItem 
         label={ downloadState ? 'Downloaded' : 'Opened' } 
-        text={ ValueFormat.formatRelativeTime(downloadState ? downloadState.time_finished : item.time_opened) }
+        text={ formatRelativeTime(downloadState ? downloadState.time_finished : item.time_opened) }
       />
     </SessionFooter>
   );

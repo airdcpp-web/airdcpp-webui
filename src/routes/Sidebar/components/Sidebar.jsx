@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import BrowserUtils from 'utils/BrowserUtils';
+import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import Resizable from 're-resizable';
 import History from 'utils/History';
@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
 
   constructor(props) {
     super(props);
-    const width = BrowserUtils.loadLocalProperty('sidebar_width', 1000);
+    const width = loadLocalProperty('sidebar_width', 1000);
 
     this.state = {
       // Don't render the content while sidebar is animating
@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.location.state.sidebar.data.close) {
       $(this.c.resizable).sidebar('hide');
     }
@@ -40,7 +40,7 @@ class Sidebar extends React.Component {
       context: '.sidebar-context',
       transition: 'overlay',
       mobileTransition: 'overlay',
-      closable: !BrowserUtils.useMobileLayout(),
+      closable: !useMobileLayout(),
       onShow: this.onVisible,
       onHidden: this.onHidden,
     }).sidebar('show');
@@ -66,7 +66,7 @@ class Sidebar extends React.Component {
     }
 
     const width = element.clientWidth;
-    BrowserUtils.saveLocalProperty('sidebar_width', width);
+    saveLocalProperty('sidebar_width', width);
     this.setState({ width });
   };
 
@@ -85,7 +85,7 @@ class Sidebar extends React.Component {
         className="ui right vertical sidebar"
 
         enable={
-          { top:false, right:false, bottom:false, left: !BrowserUtils.useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
+          { top:false, right:false, bottom:false, left: !useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
         }
         onResizeStop={ this.onResizeStop }
       >

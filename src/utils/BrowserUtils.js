@@ -22,34 +22,36 @@ const saveProperty = (storage, storageKey, data) => {
   storage.setItem(storageKey, JSON.stringify(data));
 };
 
-export default {
-  loadLocalProperty(storageKey, defaultData) {
-    return loadProperty(localStorage, storageKey, defaultData);
-  },
+export const loadLocalProperty = (storageKey, defaultData) => {
+  return loadProperty(localStorage, storageKey, defaultData);
+};
 
-  saveLocalProperty(storageKey, data) {
-    saveProperty(localStorage, storageKey, data);
-  },
-  removeLocalProperty(storageKey) {
-    localStorage.removeItem(storageKey);
-  },
-  loadSessionProperty(storageKey, defaultData) {
-    return loadProperty(sessionStorage, storageKey, defaultData);
-  },
+export const saveLocalProperty = (storageKey, data) => {
+  saveProperty(localStorage, storageKey, data);
+};
 
-  saveSessionProperty(storageKey, data) {
-    saveProperty(sessionStorage, storageKey, data);
-  },
-  removeSessionProperty(storageKey) {
-    sessionStorage.removeItem(storageKey);
-  },
-  hasTouchSupport() {
-		 return 'ontouchstart' in document.documentElement // works on most browsers
-		 	 || 'onmsgesturechange' in window; // works on ie10
-		 //return false;
-  },
+export const removeLocalProperty = (storageKey) => {
+  localStorage.removeItem(storageKey);
+};
 
-  useMobileLayout() {
-    return window.innerWidth < 700;
-  },
+export const loadSessionProperty = (storageKey, defaultData) => {
+  return loadProperty(sessionStorage, storageKey, defaultData);
+};
+
+export const saveSessionProperty = (storageKey, data) => {
+  saveProperty(sessionStorage, storageKey, data);
+};
+
+export const removeSessionProperty = (storageKey) => {
+  sessionStorage.removeItem(storageKey);
+};
+
+export const hasTouchSupport = () => {
+  return 'ontouchstart' in document.documentElement // works on most browsers
+    || 'onmsgesturechange' in window; // works on ie10
+  //return false;
+};
+
+export const useMobileLayout= () => {
+  return window.innerWidth < 700;
 };

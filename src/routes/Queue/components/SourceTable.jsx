@@ -8,7 +8,7 @@ import QueueConstants from 'constants/QueueConstants';
 import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
 
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
 import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
@@ -37,13 +37,13 @@ const Source = ({ source, bundle }) => (
       { source.user.hub_names }
     </td>
     <td className="speed">
-      { source.last_speed > 0 && ValueFormat.formatSpeed(source.last_speed) }
+      { source.last_speed > 0 && formatSpeed(source.last_speed) }
     </td>
     <td className="files">
       { source.files }
     </td>
     <td className="size">
-      { ValueFormat.formatSize(source.size) }
+      { formatSize(source.size) }
     </td>
   </tr>
 );

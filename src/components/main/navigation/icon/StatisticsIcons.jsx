@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 
 import SocketService from 'services/SocketService';
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize, formatSpeed } from 'utils/ValueFormat';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Icon from 'components/semantic/Icon';
@@ -85,28 +85,28 @@ const StatisticsIcons = createReactClass({
         <StatisticsIcon 
           icon={ IconConstants.DOWNLOAD }
           bytes={ this.state.speed_down }
-          formatter={ ValueFormat.formatSpeed }
+          formatter={ formatSpeed }
         />
         <StatisticsIcon 
           icon={ IconConstants.UPLOAD }
           bytes={ this.state.speed_up }
-          formatter={ ValueFormat.formatSpeed }
+          formatter={ formatSpeed }
         />
         <StatisticsIcon 
           icon={ IconConstants.HASH }
           bytes={ this.state.hash_speed }
-          formatter={ ValueFormat.formatSpeed }
+          formatter={ formatSpeed }
         />
         <StatisticsIcon 
           icon={ IconConstants.HASH }
           cornerIcon="wait"
           bytes={ this.state.hash_bytes_left }
-          formatter={ ValueFormat.formatSize }
+          formatter={ formatSize }
         />
         <StatisticsIcon 
           icon={ IconConstants.QUEUE }
           bytes={ this.state.queued_bytes }
-          formatter={ ValueFormat.formatSize }
+          formatter={ formatSize }
         />
       </div>
     );

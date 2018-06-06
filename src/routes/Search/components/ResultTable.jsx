@@ -8,7 +8,7 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/table/Cell';
 import { TableActionMenu } from 'components/menu/DropdownMenu';
 
-import TypeConvert from 'utils/TypeConvert';
+import { dupeToStringType } from 'utils/TypeConvert';
 import { TableUserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 import Message from 'components/semantic/Message';
@@ -56,7 +56,7 @@ class ResultTable extends React.Component {
   static displayName = 'ResultTable';
 
   _rowClassNameGetter = (rowData) => {
-    return TypeConvert.dupeToStringType(rowData.dupe);
+    return dupeToStringType(rowData.dupe);
   };
 
   emptyRowsNodeGetter = () => {

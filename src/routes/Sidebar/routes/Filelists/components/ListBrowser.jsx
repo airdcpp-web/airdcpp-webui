@@ -4,7 +4,7 @@ import { Prompt } from 'react-router-dom';
 import FilelistItemActions from 'actions/FilelistItemActions';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
 
-import TypeConvert from 'utils/TypeConvert';
+import { dupeToStringType } from 'utils/TypeConvert';
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/menu/DropdownMenu';
 
@@ -40,7 +40,7 @@ class ListBrowser extends React.Component {
   }
 
   rowClassNameGetter = (rowData) => {
-    return TypeConvert.dupeToStringType(rowData.dupe);
+    return dupeToStringType(rowData.dupe);
   };
 
   handleClickDirectory = (path) => {
@@ -60,7 +60,7 @@ class ListBrowser extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const nextLocationData = History.getSidebarData(nextProps.location);
     if (!nextLocationData.directory || nextProps.session.location.path === nextLocationData.directory) {
       return;

@@ -8,7 +8,7 @@ import SocketService from 'services/SocketService';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import ValueFormat from 'utils/ValueFormat';
+import { formatSize } from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 import EncryptionState from 'components/EncryptionState';
 
@@ -67,7 +67,7 @@ const HubFooter = createReactClass({
     const { userlistToggle, session } = this.props;
     const { shared, users } = this.state;
 
-    const averageShare = ValueFormat.formatSize(users > 0 ? (shared / users) : 0);
+    const averageShare = formatSize(users > 0 ? (shared / users) : 0);
 
     let userCaption = users + ' users';
     if (session.encryption) {
@@ -84,7 +84,7 @@ const HubFooter = createReactClass({
       <SessionFooter>
         <FooterItem text={ userCaption }/>
         { window.innerWidth > 700 && (
-          <FooterItem text={ ValueFormat.formatSize(shared) + ' (' + averageShare + '/user)' }/> 
+          <FooterItem text={ formatSize(shared) + ' (' + averageShare + '/user)' }/> 
         ) }
         <div className="userlist-button">
           { userlistToggle }
