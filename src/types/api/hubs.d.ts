@@ -17,7 +17,7 @@ declare namespace API {
     }
     share_profile: any;
     favorite_hub: number | null;
-    message_counts: MessageCounts;
+    message_counts: ChatMessageCounts;
     encryption: EncryptionInfo;
   }
 }

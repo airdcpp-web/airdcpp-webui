@@ -146,7 +146,7 @@ const notError = (id: any) => typeof id !== 'string';
 export default function <DropdownComponentPropsT extends object>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
-  class ActionMenu extends React.PureComponent<ActionMenuDecoratorProps & DropdownComponentPropsT> {
+  class ActionMenuDecorator extends React.PureComponent<ActionMenuDecoratorProps & DropdownComponentPropsT> {
     static propTypes = {
 
       /**
@@ -240,5 +240,5 @@ export default function <DropdownComponentPropsT extends object>(
     }
   }
 
-  return ActionMenu;
+  return ActionMenuDecorator;
 }

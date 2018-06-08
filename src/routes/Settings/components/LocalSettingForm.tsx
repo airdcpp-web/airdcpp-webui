@@ -3,10 +3,15 @@ import React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
 
-import Form from 'components/form/Form';
+import Form, { FormProps } from 'components/form/Form';
+import { Omit } from 'types/utils';
 
 
-class LocalSettingForm extends React.Component {
+export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
+  keys: string[];
+}
+
+class LocalSettingForm extends React.Component<LocalSettingFormProps> {
   static propTypes = {
     /**
 		 * Form items to list
@@ -18,7 +23,12 @@ class LocalSettingForm extends React.Component {
     addFormRef: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
+  definitions: API.SettingDefinition[];
+  state: {
+    settings: API.SettingValueMap,
+  }
+
+  constructor(props: LocalSettingFormProps) {
     super(props);
     this.definitions = LocalSettingStore.getDefinitions(props.keys);
 
@@ -27,14 +37,14 @@ class LocalSettingForm extends React.Component {
     };
   }
 
-  onSave = (changedSettingArray) => {
+  onSave = (changedSettingArray: UI.FormValueMap) => {
     LocalSettingStore.setValues(changedSettingArray);
 
     this.setState({
       settings: LocalSettingStore.getValues(),
     });
 
-    return Promise.resolve(null);
+    return Promise.resolve();
   };
 
   render() {

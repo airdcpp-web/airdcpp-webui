@@ -6,14 +6,14 @@ import DownloadableItemActions from 'actions/DownloadableItemActions';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 
-type DownloadHandlerType = () => void;
+export type DownloadHandlerType = () => void;
 
 interface DownloadMenuItemData {
   handler: DownloadHandlerType;
 }
 
-interface DownloadMenuDecoratorProps {
-  user: any;
+export interface DownloadMenuDecoratorProps {
+  user: API.HintedUserBase;
   itemInfoGetter: () => any;
   downloadHandler: DownloadHandlerType;
   caption: React.ReactNode;

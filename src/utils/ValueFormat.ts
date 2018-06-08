@@ -5,6 +5,7 @@ const abbreviatedRelativeUnits = {
     future: '%s',
     past:   '%s',
     s:  '%d s',
+    ss: '%d s',
     m:  '%d m',
     mm: '%d m',
     h:  '%d h',
@@ -19,14 +20,14 @@ const abbreviatedRelativeUnits = {
 };
 
 const normalRelativeUnits = {
-  relativeTime:	Moment.localeData('en')._relativeTime
+  relativeTime:	(Moment.localeData('en') as any)._relativeTime
 };
 
 
 const byteUnits = [ 'kB','MB','GB','TB','PB','EB','ZB','YB' ];
 const bitUnits = [ ' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit' ];
 
-export const formatSize = (fileSizeInBytes) => {
+export const formatSize = (fileSizeInBytes: number) => {
   const thresh = 1024;
   if (Math.abs(fileSizeInBytes) < thresh) {
     return fileSizeInBytes + ' B';
@@ -41,7 +42,7 @@ export const formatSize = (fileSizeInBytes) => {
   return fileSizeInBytes.toFixed(2) + ' ' + byteUnits[u];
 };
 
-export const formatConnection = (bytes) => {
+export const formatConnection = (bytes: number) => {
   if (bytes === 0) {
     return null;
   }
@@ -58,7 +59,7 @@ export const formatConnection = (bytes) => {
 };
 
 // http://momentjs.com/docs/#/displaying/from/
-export const formatRelativeTime = (time) => {
+export const formatRelativeTime = (time: number) => {
   if (time === 0) {
     return '';
   }
@@ -67,12 +68,12 @@ export const formatRelativeTime = (time) => {
 };
 
 // http://momentjs.com/docs/#/displaying/calendar-time/
-export const formatCalendarTime = (time) => {
+export const formatCalendarTime = (time: number) => {
   if (time === 0) {
     return '';
   }
 
-  return Moment.unix(time).calendar(null, {
+  return Moment.unix(time).calendar(undefined, {
     sameDay: '[Today]',
     nextDay: '[Tomorrow]',
     nextWeek: 'dddd',
@@ -82,7 +83,7 @@ export const formatCalendarTime = (time) => {
   });
 };
 
-export const formatDateTime = (time) => {
+export const formatDateTime = (time: number) => {
   if (time === 0) {
     return '';
   }
@@ -90,7 +91,7 @@ export const formatDateTime = (time) => {
   return Moment.unix(time).format('LLL');
 };
 
-export const formatShortDate = (time) => {
+export const formatShortDate = (time: number) => {
   if (time === 0) {
     return '';
   }
@@ -99,7 +100,7 @@ export const formatShortDate = (time) => {
 };
 
 // http://momentjs.com/docs/#/displaying/to/
-export const formatAbbreviatedDuration = (time) => {
+export const formatAbbreviatedDuration = (time: number) => {
   const now = Moment();
   const finish = Moment().add(time, 'seconds');
 
@@ -111,7 +112,7 @@ export const formatAbbreviatedDuration = (time) => {
   return ret;
 };
 
-export const formatTimestamp = (time) => {
+export const formatTimestamp = (time: number) => {
   if (time === 0) {
     return '';
   }
@@ -119,22 +120,22 @@ export const formatTimestamp = (time) => {
   return Moment.unix(time).format('HH:mm:ss');
 };
 
-export const formatBool = (value) => {
+export const formatBool = (value: boolean) => {
   return value ? 'Yes' : 'No';
 };
 
-export const formatDecimal = (value) => {
-  return parseFloat(Math.round(value * 100) / 100).toFixed(2);
+export const formatDecimal = (value: number) => {
+  return parseFloat(Math.round(value * 100) / 100 as any).toFixed(2);
 };
 
-export const formatSpeed = (bytesPerSecond) => {
+export const formatSpeed = (bytesPerSecond: number) => {
   return formatSize(bytesPerSecond) + '/s';
 };
 
-export const formatAverage = (countFrom, total) => {
+export const formatAverage = (countFrom: number, total: number) => {
   return (total === 0 ? 0 : (countFrom / total)).toFixed(2);
 };
 
-export const formatPercentage = (countFrom, total) => {
-  return (formatAverage(countFrom, total) * 100).toFixed(2) + ' %';
+export const formatPercentage = (countFrom: number, total: number) => {
+  return (parseFloat(formatAverage(countFrom, total)) * 100).toFixed(2) + ' %';
 };

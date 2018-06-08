@@ -9,7 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 interface CountLabelProps {
-  urgencies: any;
+  urgencies: UI.UrgencyCountMap;
   empty?: boolean;
   size?: string;
   circular?: boolean;
@@ -19,6 +19,9 @@ interface CountLabelProps {
 const CountLabel: React.SFC<CountLabelProps> = ({ urgencies, empty, size, className, circular }) => {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
   const max = maxUrgency(urgencies);
+  if (!max) {
+    return null;
+  }
 
   const labelClassName = classNames(
     'ui count label',

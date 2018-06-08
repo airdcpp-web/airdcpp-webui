@@ -1,4 +1,4 @@
-const loadProperty = (storage, storageKey, defaultData) => {
+const loadProperty = (storage: Storage, storageKey: string | undefined, defaultData?: any) => {
   if (storageKey) {
     const savedItem = storage.getItem(storageKey);
     if (savedItem !== undefined && savedItem !== null) { // 'false' should be loaded
@@ -14,7 +14,7 @@ const loadProperty = (storage, storageKey, defaultData) => {
   return defaultData;
 };
 
-const saveProperty = (storage, storageKey, data) => {
+const saveProperty = (storage: Storage, storageKey: string | undefined, data: any) => {
   if (!storageKey) {
     return;
   }
@@ -22,27 +22,27 @@ const saveProperty = (storage, storageKey, data) => {
   storage.setItem(storageKey, JSON.stringify(data));
 };
 
-export const loadLocalProperty = (storageKey, defaultData) => {
+export const loadLocalProperty = (storageKey: string | undefined, defaultData?: any) => {
   return loadProperty(localStorage, storageKey, defaultData);
 };
 
-export const saveLocalProperty = (storageKey, data) => {
+export const saveLocalProperty = (storageKey: string | undefined, data: any) => {
   saveProperty(localStorage, storageKey, data);
 };
 
-export const removeLocalProperty = (storageKey) => {
+export const removeLocalProperty = (storageKey: string) => {
   localStorage.removeItem(storageKey);
 };
 
-export const loadSessionProperty = (storageKey, defaultData) => {
+export const loadSessionProperty = (storageKey: string | undefined, defaultData?: any) => {
   return loadProperty(sessionStorage, storageKey, defaultData);
 };
 
-export const saveSessionProperty = (storageKey, data) => {
+export const saveSessionProperty = (storageKey: string | undefined, data: any) => {
   saveProperty(sessionStorage, storageKey, data);
 };
 
-export const removeSessionProperty = (storageKey) => {
+export const removeSessionProperty = (storageKey: string) => {
   sessionStorage.removeItem(storageKey);
 };
 

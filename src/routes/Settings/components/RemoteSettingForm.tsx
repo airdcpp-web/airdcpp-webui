@@ -2,13 +2,22 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SettingConstants from 'constants/SettingConstants';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
 
-import Form from 'components/form/Form';
+import Form, { FormProps } from 'components/form/Form';
+import { Omit } from 'types/utils';
 
 
-class RemoteSettingForm extends React.Component {
+export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value'> {
+  keys: string[];
+}
+
+interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
+  settings: API.SettingValueMap;
+}
+
+class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteSettingFormDataProps> {
   static propTypes = {
     /**
 		 * Form items to list
@@ -20,7 +29,7 @@ class RemoteSettingForm extends React.Component {
     addFormRef: PropTypes.func.isRequired,
   };
 
-  onSave = (changedValues) => {
+  onSave = (changedValues: UI.FormValueMap) => {
     if (Object.keys(changedValues).length === 0) {
       return Promise.resolve();
     }
@@ -49,9 +58,9 @@ class RemoteSettingForm extends React.Component {
   }
 }
 
-export default DataProviderDecorator(RemoteSettingForm, {
+export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDataProps>(RemoteSettingForm, {
   urls: {
-    fieldDefinitions: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
-    settings: ({ extension, keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
+    fieldDefinitions: ({ keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
+    settings: ({ keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
   },
 });

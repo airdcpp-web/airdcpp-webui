@@ -1,6 +1,6 @@
 import { UrgencyEnum } from 'constants/UrgencyConstants';
 
-export const dupeToStringType = (dupeInfo) => {
+export const dupeToStringType = (dupeInfo: API.Dupe) => {
   if (!dupeInfo) {
     return '';
   }
@@ -8,7 +8,7 @@ export const dupeToStringType = (dupeInfo) => {
   return 'dupe ' + dupeInfo.id.replace('_', ' ');
 };
 
-export const userOnlineStatusToColor = (flags) => {
+export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserFlag>) => {
   if (flags.indexOf('bot') != -1) {
     return 'blue';
   }
@@ -24,7 +24,7 @@ export const userOnlineStatusToColor = (flags) => {
   return 'green';
 };
 
-export const hubOnlineStatusToColor = (connectState) => {
+export const hubOnlineStatusToColor = (connectState: API.HubConnectState) => {
   if (connectState === 'connected') {
     return 'green';
   }
@@ -36,12 +36,12 @@ export const hubOnlineStatusToColor = (connectState) => {
   return 'lightgrey';
 };
 
-export const urgencyToColor = (urgencyMap) => {
-  switch (urgencyMap) {
-  case UrgencyEnum.HIGH: return 'red';
-  case UrgencyEnum.MEDIUM: return 'yellow';
-  case UrgencyEnum.LOW: return 'blue';
-  case UrgencyEnum.INFO: return 'grey';
-  default: return '';
+export const urgencyToColor = (urgency: number) => {
+  switch (urgency) {
+    case UrgencyEnum.HIGH: return 'red';
+    case UrgencyEnum.MEDIUM: return 'yellow';
+    case UrgencyEnum.LOW: return 'blue';
+    case UrgencyEnum.INFO: return 'grey';
+    default: return '';
   }
 };

@@ -16,7 +16,7 @@ import IconConstants from 'constants/IconConstants';
 import t from 'utils/tcomb-form';
 
 import Form from 'components/form/Form';
-import FormUtils from 'utils/FormUtils';
+import { normalizeEnumValue, intTransformer } from 'utils/FormUtils';
 
 
 const Fields = [
@@ -60,7 +60,7 @@ const isAdcHub = hubUrl => hubUrl && (hubUrl.indexOf('adc://') === 0 || hubUrl.i
 const getFieldProfiles = (profiles, url) => {
   return profiles
     .filter(p => isAdcHub(url) || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
-    .map(FormUtils.normalizeEnumValue);
+    .map(normalizeEnumValue);
 };
 
 class FavoriteHubDialog extends React.Component {
@@ -102,7 +102,7 @@ class FavoriteHubDialog extends React.Component {
         nullOption: { value: 'null', text: 'Global default' },
         factory: t.form.Select,
         options: getFieldProfiles(this.props.profiles, formValue.hub_url),
-        transformer: FormUtils.intTransformer,
+        transformer: intTransformer,
       });
     }
   };

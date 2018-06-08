@@ -4,19 +4,19 @@ import React from 'react';
 import 'semantic-ui/components/flag.min.css';
 
 
-interface IpFormatterProps {
+export interface FormattedIpProps {
   item: API.IP;
 }
 
-const IpFormatter: React.SFC<IpFormatterProps> = ({ item }) => (
+const FormattedIp: React.SFC<FormattedIpProps> = ({ item }) => (
   <div className="ip flag">
     <i className={ 'ui flag ' + item.country.toLowerCase() }/>
     { item.str }
   </div>
 );
 
-IpFormatter.propTypes = {
+FormattedIp.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default IpFormatter;
+export default FormattedIp;

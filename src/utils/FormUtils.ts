@@ -7,31 +7,31 @@ import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
 
 
-const typeToComponent = (type, min, max) => {
+const typeToComponent = (type: API.SettingType, min: number | undefined, max: number | undefined) => {
   switch (type) {
-  case FieldTypes.NUMBER: {
-    if (min || max) {
-      return t.Range(min, max);
+    case FieldTypes.NUMBER: {
+      if (min || max) {
+        return t.Range(min, max);
+      }
+      return t.Positive;
     }
-    return t.Positive;
-  }
-  case FieldTypes.BOOLEAN: return t.Bool;
-  case FieldTypes.STRING:
-  case FieldTypes.TEXT:
-  case FieldTypes.FILE_PATH:
-  case FieldTypes.DIRECTORY_PATH: return t.Str;
-  default: 
+    case FieldTypes.BOOLEAN: return t.Bool;
+    case FieldTypes.STRING:
+    case FieldTypes.TEXT:
+    case FieldTypes.FILE_PATH:
+    case FieldTypes.DIRECTORY_PATH: return t.Str;
+    default: 
   }
 
   throw 'Field type ' + type + ' is not supported';
 };
 
-const parseDefinitions = (definitions) => {
+const parseDefinitions = (definitions: API.SettingDefinition[]) => {
   const ret = definitions.reduce((reduced, def) => {
     if (def.type === FieldTypes.LIST) {
-      if (def.item_type === FieldTypes.STRUCT) {
+      if (def.item_type === FieldTypes.STRUCT && def.definitions) { // def.definitions should always exist for list items
         reduced[def.key] = t.list(parseDefinitions(def.definitions));
-      } else {
+      } else if (def.item_type) { // should always exist for list items
         reduced[def.key] = t.list(typeToComponent(def.item_type, def.min, def.max));
       }
     } else {
@@ -45,18 +45,29 @@ const parseDefinitions = (definitions) => {
   return t.struct(ret);
 };
 
-const normalizeField = (value) => {
-  if (value) {
+//type FormSettingValueBase = API.SettingValueBase | { id: API.SettingValue };
+//type FormSettingValue = FormSettingValueBase | FormSettingValueBase[];
+
+/*interface FormValue {
+  [key: string]: API.SettingValue;
+}*/
+
+const normalizeField = (value: API.SettingValue): UI.FormValue => {
+  /*if (value) {
+    // Convert { id, ... } objects used in the UI to plain IDs
+    // Not used by the API
     if (typeof value === 'object' && !Array.isArray(value)) {
-      // Normalize object properies value.prop.id to value.prop 
-      invariant(value.hasOwnProperty('id'), 'Invalid object supplied for valueMapToInfo (id property is required)');
+      // Normalize object properties with value.id to plain id 
+      invariant(value.hasOwnProperty('id'), 'Invalid object supplied for normalizeField (id property is required)');
       return value.id;
     } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
       // Normalize each array item
       invariant(value[0].hasOwnProperty('id'), 'Invalid array supplied for form property (id property is required for values)');
+      const tmp = value[0];
+      console.log(tmp);
       return value.map(normalizeField);
     }
-  } else if (value === '') {
+  } else*/ if (value === '') {
     // Normalize empty strings to null, which is used by tcomb 
     return null;
   }
@@ -64,21 +75,21 @@ const normalizeField = (value) => {
   return value;
 };
 
-const normalizeEnumValue = (rawItem) => {
+const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
   return {
     value: rawItem.id,
     text: rawItem.name
   };
 };
 
-const normalizeValue = (value, valueDefinitions) => {
+const normalizeSettingValueMap = (value: API.SettingValueMap, valueDefinitions: API.SettingDefinition[]): UI.FormValueMap => {
   return valueDefinitions.reduce((reducedValue, { key, type, definitions, default_value, item_type }) => {
     if (value && value.hasOwnProperty(key)) {
       const fieldValue = value[key];
-      if (type === FieldTypes.LIST) {
-        if (item_type === FieldTypes.STRUCT) {
+      if (type === FieldTypes.LIST && Array.isArray(fieldValue)) { // value should always be an array for list type items
+        if (item_type === FieldTypes.STRUCT && !!definitions) { // definitions should always exist for list items
           // Normalize each list object
-          reducedValue[key] = fieldValue.map(arrayItem => normalizeValue(arrayItem, definitions));
+          reducedValue[key] = fieldValue.map((arrayItem) => normalizeSettingValueMap(arrayItem, definitions));
         } else {
           reducedValue[key] = fieldValue.map(normalizeField);
         }
@@ -95,11 +106,11 @@ const normalizeValue = (value, valueDefinitions) => {
 };
 
 const intTransformer = {
-  parse: v => v === 'null' ? null : parseInt(v, 10),
-  format: v => String(v),
+  parse: (v: string) => v === 'null' ? null : parseInt(v, 10),
+  format: (v: number) => String(v),
 };
 
-const parseTypeOptions = type => {
+const parseTypeOptions = (type: API.SettingType) => {
   const options = {};
   switch (type) {
   case FieldTypes.TEXT: {
@@ -122,7 +133,7 @@ const parseTypeOptions = type => {
   return options;
 };
 
-const parseFieldOptions = (definition) => {
+const parseFieldOptions = (definition: API.SettingDefinition) => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
@@ -134,7 +145,7 @@ const parseFieldOptions = (definition) => {
         reduced[itemDefinition.key] = parseFieldOptions(itemDefinition);
         return reduced;
       }, {});
-    } else {
+    } else if (!!definition.item_type) { // should always exist for list items
       // Plain items
       options['item'] = parseTypeOptions(definition.item_type);
     }
@@ -155,7 +166,7 @@ const parseFieldOptions = (definition) => {
 
     if (definition.type === FieldTypes.LIST) {
       options['template'] = SelectField;
-    } else if (definition.options[0].id === parseInt(definition.options[0].id, 10)) {
+    } else if (definition.options[0].id === parseInt(definition.options[0].id as string, 10)) {
       // Integer keys won't work with the default template, do string conversion
       options['transformer'] = intTransformer;
     }
@@ -164,10 +175,10 @@ const parseFieldOptions = (definition) => {
   return options;
 };
 
-export default {
+export {
   // Migrates simple key -> value fields to an array that is compatible with the form
   // undefined values will also be initialized with nulled property fields
-  normalizeValue,
+  normalizeSettingValueMap,
 
   intTransformer,
 

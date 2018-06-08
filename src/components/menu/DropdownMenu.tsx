@@ -4,17 +4,18 @@ import SectionedDropdown, { SectionedDropdownProps } from 'components/semantic/S
 import MenuSection from 'components/semantic/MenuSection';
 import TableDropdown, { TableDropdownProps } from 'components/semantic/TableDropdown';
 
-import ActionMenuDecorator from 'decorators/menu/ActionMenuDecorator';
-import DownloadMenuDecorator from 'decorators/menu/DownloadMenuDecorator';
-import UserMenuDecorator from 'decorators/menu/UserMenuDecorator';
+import ActionMenuDecorator, { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
+import DownloadMenuDecorator, { DownloadMenuDecoratorProps } from 'decorators/menu/DownloadMenuDecorator';
+import UserMenuDecorator, { UserMenuDecoratorProps } from 'decorators/menu/UserMenuDecorator';
 import { DropdownProps } from 'components/semantic/Dropdown';
+import { Omit } from 'types/utils';
 
 
-export interface ActionMenuProps {
+export interface ActionMenuProps extends SectionedDropdownProps {
   header: React.ReactNode;
 }
 
-export const ActionMenu = ActionMenuDecorator<SectionedDropdownProps & ActionMenuProps>(({ header, children, ...other }) => (
+export const ActionMenu = ActionMenuDecorator<ActionMenuProps>(({ header, children, ...other }) => (
   <SectionedDropdown { ...other }>
     <MenuSection caption={ header }>
       { children() }
@@ -22,12 +23,19 @@ export const ActionMenu = ActionMenuDecorator<SectionedDropdownProps & ActionMen
   </SectionedDropdown>
 ));
 
+type TableActionMenuDropdownProps = Omit<TableDropdownProps, 'children'>;
 
-export const TableActionMenu = ActionMenuDecorator<TableDropdownProps>(TableDropdown);
+export type TableActionMenuProps = TableActionMenuDropdownProps & ActionMenuDecoratorProps;
+export const TableActionMenu = ActionMenuDecorator<TableActionMenuDropdownProps>(TableDropdown);
 
-
+export type UserMenuProps = UserMenuDecoratorProps & ActionMenuProps;
 export const UserMenu = UserMenuDecorator<DropdownProps>(ActionMenu);
-export const TableUserMenu = UserMenuDecorator<TableDropdownProps>(TableActionMenu);
 
+export type TableUserMenuProps = UserMenuDecoratorProps & TableActionMenuDropdownProps;
+export const TableUserMenu = UserMenuDecorator<TableActionMenuDropdownProps>(TableActionMenu);
+
+export type DownloadMenuProps = DownloadMenuDecoratorProps & ActionMenuProps;
 export const DownloadMenu = DownloadMenuDecorator<DropdownProps>(ActionMenu);
-export const TableDownloadMenu = DownloadMenuDecorator<TableDropdownProps>(TableActionMenu);
+
+export type TableDownloadMenuProps = DownloadMenuDecoratorProps & TableActionMenuDropdownProps;
+export const TableDownloadMenu = DownloadMenuDecorator<TableActionMenuDropdownProps>(TableActionMenu);

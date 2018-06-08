@@ -48,13 +48,34 @@ declare namespace API {
 
 
   // MESSAGES
-  export interface MessageCounts {
-    total_count: number;
-    unread_counts: {
-      user: number;
-      bot: number;
-      status: number;
-    }
+  export interface ChatMessageCounts {
+    total: number;
+    unread: UnreadChatMessageCounts;
+  }
+
+  export interface StatusMessageCounts {
+    total: number;
+    unread: UnreadStatusMessageCounts;
+  }
+
+  export interface UnreadChatMessageCounts {
+    user: number;
+    bot: number;
+    status: number;
+  }
+
+  export interface UnreadStatusMessageCounts {
+    info: number;
+    warning: number;
+    error: number;
+  }
+
+  export interface ReadableSessionItem {
+    read: boolean;
+  }
+  
+  export interface MessageSessionItem {
+    message_counts: API.ChatMessageCounts | API.StatusMessageCounts;
   }
 
   export type Severity = 'notify' | 'info' | 'warning' | 'error';
