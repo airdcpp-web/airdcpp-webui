@@ -3,11 +3,10 @@ import React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
 
-import Form, { FormProps } from 'components/form/Form';
-import { Omit } from 'types/utils';
+import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
 
-export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
+export interface LocalSettingFormProps extends Utils.Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
   keys: string[];
 }
 
@@ -37,7 +36,7 @@ class LocalSettingForm extends React.Component<LocalSettingFormProps> {
     };
   }
 
-  onSave = (changedSettingArray: UI.FormValueMap) => {
+  onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray) => {
     LocalSettingStore.setValues(changedSettingArray);
 
     this.setState({

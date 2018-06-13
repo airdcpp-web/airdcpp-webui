@@ -5,11 +5,10 @@ import SettingConstants from 'constants/SettingConstants';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
 
-import Form, { FormProps } from 'components/form/Form';
-import { Omit } from 'types/utils';
+import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
 
-export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value'> {
+export interface RemoteSettingFormProps extends Utils.Omit<FormProps, 'onSave' | 'value'> {
   keys: string[];
 }
 
@@ -29,7 +28,7 @@ class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteS
     addFormRef: PropTypes.func.isRequired,
   };
 
-  onSave = (changedValues: UI.FormValueMap) => {
+  onSave: FormSaveHandler<UI.FormValueMap> = (changedValues) => {
     if (Object.keys(changedValues).length === 0) {
       return Promise.resolve();
     }

@@ -12,11 +12,11 @@ const parseRoutePath = (match: match<{}>, path: string) => {
 };
 
 
-interface ModalRouteDecoratorProps {
+export interface ModalRouteDecoratorProps {
   overlayId: any;
 }
 
-interface ModalRouteDecoratorChildProps {
+export interface ModalRouteDecoratorChildProps {
   overlayId: any;
 }
 

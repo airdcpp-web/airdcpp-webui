@@ -4,12 +4,14 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import { formatSize } from 'utils/ValueFormat';
 
 
-interface ShareProfileDecoratorDataProps {
+export interface ShareProfileDecoratorDataProps {
   profiles: API.ShareProfile[];
 }
 
+export type ShareProfileDecoratorChildProps = DataProviderDecoratorChildProps & ShareProfileDecoratorDataProps;
+
 const ShareProfileDecorator = function <PropsT extends object>(
-  Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & ShareProfileDecoratorDataProps>, 
+  Component: React.ComponentType<PropsT & ShareProfileDecoratorChildProps>, 
   listHidden: boolean, 
   addSize = true
 ) {

@@ -16,7 +16,6 @@ import { Cell, CellProps } from 'fixed-data-table-2';
 import { RouterChildContext } from 'react-router';
 import { Location } from 'history';
 import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
-import { Omit } from 'types/utils';
 
 
 const getCellContent = (cellData: any) => {
@@ -62,7 +61,7 @@ export interface ActionCellPropsBase {
   rowDataGetter: () => any;
 }
 
-export interface ActionCellProps extends ActionCellPropsBase, Omit<TableActionMenuProps, 'caption' | 'itemData'> {
+export interface ActionCellProps extends ActionCellPropsBase, Utils.Omit<TableActionMenuProps, 'caption' | 'itemData'> {
 
 }
 
@@ -197,7 +196,7 @@ FileDownloadCell.propTypes = {
   downloadHandler: PropTypes.func.isRequired,
 };
 
-export interface CheckboxCellProps extends ActionCellPropsBase, Omit<CheckboxProps, 'onChange'> {
+export interface CheckboxCellProps extends ActionCellPropsBase, Utils.Omit<CheckboxProps, 'onChange'> {
   onChange: (checked: boolean, rowData: any) => void;
 }
 

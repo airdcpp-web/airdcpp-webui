@@ -10,6 +10,7 @@ import NotificationActions from 'actions/NotificationActions';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+import Form from 'components/form/Form';
 
 
 export interface SaveDecoratorProps {
@@ -22,7 +23,7 @@ export interface SaveDecoratorChildProps {
   message: any;
 }
 
-type SaveableRef = HTMLElement & { save: () => Promise<void> }
+type SaveableRef = Form;
 
 export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChildProps>) {
   class SaveDecorator extends React.Component<SaveDecoratorProps & PropsT> {

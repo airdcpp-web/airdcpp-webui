@@ -13,28 +13,28 @@ import './style.css';
 const TcombForm = t.form.Form;
 
 
-export type FormFieldSettingHandler = (key: string, definitions: API.SettingDefinition[], formValue: UI.FormValue) => void;
-export type FormSaveHandler = (changedFields: UI.FormValueMap, allFields: UI.FormValueMap) => Promise<void>;
-export type FormFieldChangeHandler = (key: string, formValue: UI.FormValueMap, valueChanged: boolean) => void | Promise<API.SettingValueMap>;
-export type FormSourceValueUpdateHandler = (sourceValue: UI.FormValueMap) => void;
+export type FormFieldSettingHandler<ValueType> = (key: string, definitions: UI.FormFieldDefinition[], formValue: Partial<ValueType>) => void;
+export type FormSaveHandler<ValueType> = (changedFields: Partial<ValueType>, allFields: Partial<ValueType>) => Promise<void>;
+export type FormFieldChangeHandler<ValueType> = (key: string, formValue: Partial<ValueType>, valueChanged: boolean) => null | void | Promise<Partial<ValueType>>;
+export type FormSourceValueUpdateHandler<ValueType> = (sourceValue: Partial<ValueType>) => void;
 
-export interface FormProps {
-  fieldDefinitions: API.SettingDefinition[];
-  value: API.SettingValueMap;
-  onSave: FormSaveHandler;
-  onSourceValueUpdated?: FormSourceValueUpdateHandler;
-  onFieldSetting?: FormFieldSettingHandler;
-  onFieldChanged?: FormFieldChangeHandler;
+export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> {
+  fieldDefinitions: UI.FormFieldDefinition[];
+  value: ValueType;
+  onSave: FormSaveHandler<ValueType>;
+  onSourceValueUpdated?: FormSourceValueUpdateHandler<ValueType>;
+  onFieldSetting?: FormFieldSettingHandler<ValueType>;
+  onFieldChanged?: FormFieldChangeHandler<ValueType>;
   title?: string;
   className?: string;
 }
 
-interface State {
+interface State<ValueType> {
   error: APISocket.ErrorFull | null;
-  formValue: UI.FormValueMap;
+  formValue: Partial<ValueType>;
 }
 
-class Form extends React.Component<FormProps> {
+class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends React.Component<FormProps<ValueType>> {
   static propTypes = {
     /**
 		 * Form items to list
@@ -85,15 +85,15 @@ class Form extends React.Component<FormProps> {
     router: PropTypes.object.isRequired,
   };
 
-  state: State = {
+  state: State<ValueType> = {
     error: null,
     formValue: {},
   };
 
-  sourceValue: UI.FormValueMap;
+  sourceValue: Partial<ValueType>;
   form: any;
 
-  setSourceValue = (value: API.SettingValueMap) => {
+  setSourceValue = (value: Partial<ValueType>) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value);
 
     if (this.props.onSourceValueUpdated) {
@@ -105,16 +105,16 @@ class Form extends React.Component<FormProps> {
     this.setSourceValue(this.props.value);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: FormProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: FormProps<ValueType>) {
     if (nextProps.value !== this.props.value) {
       this.setSourceValue(nextProps.value);
     }
   }
 
   // Merge new fields into current current form value
-  mergeFields = (formValue: UI.FormValueMap, updatedFields: API.SettingValueMap): UI.FormValueMap => {
+  mergeFields = (formValue: Partial<ValueType>, updatedFields: Partial<ValueType>): Partial<ValueType> => {
     const mergedValue = {
-      ...formValue, 
+      ...formValue as any, 
       ...normalizeSettingValueMap(updatedFields, this.props.fieldDefinitions)
     };
 
@@ -125,7 +125,7 @@ class Form extends React.Component<FormProps> {
     return mergedValue;
   };
 
-  onFieldChanged = (value: UI.FormValueMap, valueKey: string, kind: string) => {
+  onFieldChanged = (value: Partial<ValueType>, valueKey: string, kind: string) => {
     const key = valueKey[0];
     if (kind) {
       // List action
@@ -181,7 +181,7 @@ class Form extends React.Component<FormProps> {
   };
 
   // Reduces an object of current form values that don't match the source data
-  reduceChangedValues = (formValue: UI.FormValueMap, changedValues: UI.FormValueMap, valueKey: string) => {
+  reduceChangedValues = (formValue: Partial<ValueType>, changedValues: Partial<ValueType>, valueKey: string) => {
     if (!isEqual(this.sourceValue[valueKey], formValue[valueKey])) {
       changedValues[valueKey] = formValue[valueKey];
     }
@@ -191,7 +191,7 @@ class Form extends React.Component<FormProps> {
 
   // Calls props.onSave with changed form values
   save = () => {
-    const validatedFormValue: UI.FormValueMap = this.form.getValue();
+    const validatedFormValue: Partial<ValueType> = this.form.getValue();
     if (validatedFormValue) {
       // Get the changed fields
       const settingKeys = Object.keys(validatedFormValue);
@@ -208,7 +208,7 @@ class Form extends React.Component<FormProps> {
   };
 
   // Reduces an array of field setting objects by calling props.onFieldSetting
-  fieldOptionReducer = (reducedOptions: { [key: string]: any }, fieldDefinitions: API.SettingDefinition) => {
+  fieldOptionReducer = (reducedOptions: { [key: string]: any }, fieldDefinitions: UI.FormFieldDefinition) => {
     reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions);
 
     if (this.props.onFieldSetting) {

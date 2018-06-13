@@ -5,11 +5,11 @@ import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
-import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
 
 import Message from 'components/semantic/Message';
@@ -18,7 +18,7 @@ import t from 'utils/tcomb-form';
 
 import { getLastDirectory } from 'utils/FileUtils';
 
-import Form from 'components/form/Form';
+import Form, { FormSaveHandler, FormFieldSettingHandler, FormFieldChangeHandler } from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
@@ -26,7 +26,7 @@ import '../style.css';
 
 import { FieldTypes } from 'constants/SettingConstants';
 
-const getFields = (profiles) => {
+const getFields = (profiles: API.ShareProfile[]) => {
   return [
     {
       key: 'path',
@@ -44,19 +44,30 @@ const getFields = (profiles) => {
       title: 'Share profiles',
       help: 'New share profiles can be created from application settings',
       options: profiles,
-      default_value: [ profiles.find(profile => profile.default).id ],
+      default_value: [ profiles.find(profile => profile.default)!.id ],
     }, 
     {
       key: 'incoming',
       type: FieldTypes.BOOLEAN,
     },
-  ];
+  ] as UI.FormFieldDefinition[];
 };
 
-class ShareDirectoryDialog extends React.Component {
+export interface ShareDirectoryDialogProps extends ModalRouteDecoratorChildProps, ShareProfileDecoratorChildProps {
+  rootEntry: API.ShareRootEntryBase;
+}
+
+export interface ShareDirectoryDialogDataProps {
+  virtualNames: string[];
+}
+
+class ShareDirectoryDialog extends React.Component<ShareDirectoryDialogProps & ShareDirectoryDialogDataProps & DataProviderDecoratorChildProps> {
   static displayName = 'ShareDirectoryDialog';
 
-  constructor(props) {
+  fieldDefinitions: UI.FormFieldDefinition[];
+  form: Form;
+
+  constructor(props: ShareDirectoryDialogProps & ShareDirectoryDialogDataProps & DataProviderDecoratorChildProps) {
     super(props);
 
     this.fieldDefinitions = getFields(props.profiles);
@@ -66,10 +77,10 @@ class ShareDirectoryDialog extends React.Component {
     return !this.props.rootEntry;
   };
 
-  onFieldChanged = (id, value, hasChanges) => {
+  onFieldChanged: FormFieldChangeHandler<API.ShareRootEntryBase> = (id, value, hasChanges) => {
     if (id.indexOf('path') != -1) {
       const mergeFields = { 
-        virtual_name: getLastDirectory(value.path) 
+        virtual_name: !!value.path ? getLastDirectory(value.path) : undefined, 
       };
 			
       return Promise.resolve(mergeFields);
@@ -82,7 +93,7 @@ class ShareDirectoryDialog extends React.Component {
     return this.form.save();
   };
 
-  onSave = (changedFields) => {
+  onSave: FormSaveHandler<API.ShareRootEntryBase> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
@@ -90,7 +101,7 @@ class ShareDirectoryDialog extends React.Component {
     return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry.id, changedFields);
   };
 
-  onFieldSetting = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions['disabled'] = !this.isNew();
       fieldOptions['config'] = Object.assign({} || fieldOptions['config'], {
@@ -130,7 +141,7 @@ class ShareDirectoryDialog extends React.Component {
           }
         />
         <Form
-          ref={ c => this.form = c }
+          ref={ (c: any) => this.form = c }
           fieldDefinitions={ this.fieldDefinitions }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
@@ -143,14 +154,16 @@ class ShareDirectoryDialog extends React.Component {
 }
 
 export default ModalRouteDecorator(
-  DataProviderDecorator(ShareProfileDecorator(ShareDirectoryDialog, false), {
-    urls: {
-      virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
-    },
-    dataConverters: {
-      virtualNames: data => data.map(item => item.name, []),
-    },
-  }),
+  DataProviderDecorator<ShareDirectoryDialogProps, ShareDirectoryDialogDataProps>(
+    ShareProfileDecorator(ShareDirectoryDialog, false), {
+      urls: {
+        virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
+      },
+      dataConverters: {
+        virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
+      },
+    }
+  ),
   OverlayConstants.SHARE_ROOT_MODAL_ID,
   '(add|edit)'
 );

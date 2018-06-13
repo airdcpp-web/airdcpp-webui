@@ -26,13 +26,13 @@ const typeToComponent = (type: API.SettingType, min: number | undefined, max: nu
   throw 'Field type ' + type + ' is not supported';
 };
 
-const parseDefinitions = (definitions: API.SettingDefinition[]) => {
+const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
   const ret = definitions.reduce((reduced, def) => {
     if (def.type === FieldTypes.LIST) {
-      if (def.item_type === FieldTypes.STRUCT && def.definitions) { // def.definitions should always exist for list items
-        reduced[def.key] = t.list(parseDefinitions(def.definitions));
-      } else if (def.item_type) { // should always exist for list items
-        reduced[def.key] = t.list(typeToComponent(def.item_type, def.min, def.max));
+      if (def.item_type === FieldTypes.STRUCT) {
+        reduced[def.key] = t.list(parseDefinitions(def.definitions!));
+      } else {
+        reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max));
       }
     } else {
       const fieldComponent = typeToComponent(def.type, def.min, def.max);
@@ -52,7 +52,7 @@ const parseDefinitions = (definitions: API.SettingDefinition[]) => {
   [key: string]: API.SettingValue;
 }*/
 
-const normalizeField = (value: API.SettingValue): UI.FormValue => {
+const normalizeField = (value?: API.SettingValue) => {
   /*if (value) {
     // Convert { id, ... } objects used in the UI to plain IDs
     // Not used by the API
@@ -82,14 +82,20 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
   };
 };
 
-const normalizeSettingValueMap = (value: API.SettingValueMap, valueDefinitions: API.SettingDefinition[]): UI.FormValueMap => {
+const normalizeSettingValueMap = (value: Partial<API.SettingValueMap>, valueDefinitions: UI.FormFieldDefinition[]): UI.FormValueMap => {
   return valueDefinitions.reduce((reducedValue, { key, type, definitions, default_value, item_type }) => {
     if (value && value.hasOwnProperty(key)) {
       const fieldValue = value[key];
-      if (type === FieldTypes.LIST && Array.isArray(fieldValue)) { // value should always be an array for list type items
-        if (item_type === FieldTypes.STRUCT && !!definitions) { // definitions should always exist for list items
+      if (type === FieldTypes.LIST && Array.isArray(fieldValue)) {
+        if (item_type === FieldTypes.STRUCT) {
           // Normalize each list object
-          reducedValue[key] = fieldValue.map((arrayItem) => normalizeSettingValueMap(arrayItem, definitions));
+          reducedValue[key] = fieldValue.map((arrayItem) => {
+            if (!!arrayItem && typeof arrayItem === 'object') {
+              return normalizeSettingValueMap(arrayItem, definitions!);
+            }
+
+            throw `Invalid value for a list struct ${arrayItem}`;
+          });
         } else {
           reducedValue[key] = fieldValue.map(normalizeField);
         }
@@ -124,7 +130,8 @@ const parseTypeOptions = (type: API.SettingType) => {
 
     // TODO: file selector dialog
     options['config'] = {
-      isFile: type === FieldTypes.FILE_PATH
+      //isFile: type === FieldTypes.FILE_PATH
+      isFile: false
     };
   }
   default:
@@ -133,7 +140,7 @@ const parseTypeOptions = (type: API.SettingType) => {
   return options;
 };
 
-const parseFieldOptions = (definition: API.SettingDefinition) => {
+const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
@@ -145,9 +152,9 @@ const parseFieldOptions = (definition: API.SettingDefinition) => {
         reduced[itemDefinition.key] = parseFieldOptions(itemDefinition);
         return reduced;
       }, {});
-    } else if (!!definition.item_type) { // should always exist for list items
+    } else {
       // Plain items
-      options['item'] = parseTypeOptions(definition.item_type);
+      options['item'] = parseTypeOptions(definition.item_type!);
     }
   }
 

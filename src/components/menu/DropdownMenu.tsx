@@ -8,7 +8,6 @@ import ActionMenuDecorator, { ActionMenuDecoratorProps } from 'decorators/menu/A
 import DownloadMenuDecorator, { DownloadMenuDecoratorProps } from 'decorators/menu/DownloadMenuDecorator';
 import UserMenuDecorator, { UserMenuDecoratorProps } from 'decorators/menu/UserMenuDecorator';
 import { DropdownProps } from 'components/semantic/Dropdown';
-import { Omit } from 'types/utils';
 
 
 export interface ActionMenuProps extends SectionedDropdownProps {
@@ -23,7 +22,7 @@ export const ActionMenu = ActionMenuDecorator<ActionMenuProps>(({ header, childr
   </SectionedDropdown>
 ));
 
-type TableActionMenuDropdownProps = Omit<TableDropdownProps, 'children'>;
+type TableActionMenuDropdownProps = Utils.Omit<TableDropdownProps, 'children'>;
 
 export type TableActionMenuProps = TableActionMenuDropdownProps & ActionMenuDecoratorProps;
 export const TableActionMenu = ActionMenuDecorator<TableActionMenuDropdownProps>(TableDropdown);

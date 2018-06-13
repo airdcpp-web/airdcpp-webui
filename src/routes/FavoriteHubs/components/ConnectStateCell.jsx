@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
+import Icon from 'src/components/semantic';
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 
 
@@ -45,7 +47,10 @@ class ConnectStateCell extends React.Component {
   render() {
     return (
       <div className="connect-state">
-        <i className={ 'icon large link ' + this.getIcon() } onClick={ this.getClickAction() }/>
+        <Icon 
+          icon={ classNames('icon large link', this.getIcon()) } 
+          onClick={ this.getClickAction() }
+        />
         { this.props.width > 120 && this.props.cellData.str }
       </div>
     );

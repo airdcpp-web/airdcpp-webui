@@ -1,9 +1,9 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
@@ -16,12 +16,12 @@ import { FieldTypes } from 'constants/SettingConstants';
 
 import { getLastDirectory } from 'utils/FileUtils';
 
-import Form from 'components/form/Form';
+import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 
 
-const Entry = [
+const Entry: UI.FormFieldDefinition[] = [
   {
     key: 'path',
     type: FieldTypes.DIRECTORY_PATH,
@@ -32,17 +32,26 @@ const Entry = [
   },
 ];
 
-class FavoriteDirectoryDialog extends React.Component {
+export interface FavoriteDirectoryDialogProps extends ModalRouteDecoratorChildProps {
+  directoryEntry: API.FavoriteDirectoryEntryBase;
+}
+
+export interface FavoriteDirectoryDialogDataProps {
+  virtualNames: string[];
+}
+
+class FavoriteDirectoryDialog extends React.Component<FavoriteDirectoryDialogProps & FavoriteDirectoryDialogDataProps & DataProviderDecoratorChildProps> {
   static displayName = 'FavoriteDirectoryDialog';
 
+  form: Form;
   isNew = () => {
     return !this.props.directoryEntry;
   };
 
-  onFieldChanged = (id, value, hasChanges) => {
+  onFieldChanged: FormFieldChangeHandler<API.FavoriteDirectoryEntryBase> = (id, value, hasChanges) => {
     if (id.indexOf('path') !== -1) {
       return Promise.resolve({
-        name: getLastDirectory(value.path) 
+        name: !!value.path ? getLastDirectory(value.path) : undefined 
       });
     }
 
@@ -53,7 +62,7 @@ class FavoriteDirectoryDialog extends React.Component {
     return this.form.save();
   };
 
-  onSave = (changedFields) => {
+  onSave: FormSaveHandler<API.FavoriteDirectoryEntryBase> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
     }
@@ -61,7 +70,7 @@ class FavoriteDirectoryDialog extends React.Component {
     return SocketService.patch(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + this.props.directoryEntry.id, changedFields);
   };
 
-  onFieldSetting = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<API.FavoriteDirectoryEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions['disabled'] = !this.isNew();
       fieldOptions['config'] = Object.assign(fieldOptions['config'] || {}, {
@@ -85,10 +94,10 @@ class FavoriteDirectoryDialog extends React.Component {
         onApprove={ this.save } 
         closable={ false } 
         icon={ IconConstants.FOLDER } 
-        {...this.props}
+        { ...this.props }
       >
         <Form
-          ref={ c => this.form = c }
+          ref={ (c: any) => this.form = c }
           fieldDefinitions={ Entry }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
@@ -101,12 +110,12 @@ class FavoriteDirectoryDialog extends React.Component {
 }
 
 export default ModalRouteDecorator(
-  DataProviderDecorator(FavoriteDirectoryDialog, {
+  DataProviderDecorator<FavoriteDirectoryDialogProps, FavoriteDirectoryDialogDataProps>(FavoriteDirectoryDialog, {
     urls: {
       virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
     },
     dataConverters: {
-      virtualNames: data => data.map(item => item.name, []),
+      virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
     },
   }),
   OverlayConstants.FAVORITE_DIRECTORY_MODAL,

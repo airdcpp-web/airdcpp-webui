@@ -3,14 +3,14 @@ declare namespace API {
   export type FileContentType = 'audio' | 'compressed' | 'document' | 'executable' | 'picture' | 'video' | 'other' | 'filelist';
 
   export interface DirectoryType {
-    id: 'file';
+    id: 'directory';
     str: string;
     files: number;
     directories: number;
   }
 
   export interface FileType {
-    id: 'directory';
+    id: 'file';
     str: string;
     content_type: FileContentType;
   }

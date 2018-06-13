@@ -26,7 +26,7 @@ type UserMenuDecoratorChildProps = ActionMenuDecoratorProps;
 
 export default function <DropdownPropsT extends object>(Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>) {
   class UserMenu extends React.PureComponent<UserMenuDecoratorProps & DropdownPropsT> {
-    static defaultProps = {
+    static defaultProps: Partial<UserMenuDecoratorProps> = {
       directory: '/',
     };
   
@@ -72,7 +72,7 @@ export default function <DropdownPropsT extends object>(Component: React.Compone
       });
       Object.defineProperty(this.itemData, 'directory', {
         get: () => {
-          return getFilePath(this.props.directory);
+          return getFilePath(this.props.directory!);
         }
       });
     }
