@@ -1,24 +1,24 @@
 const MODULE_URL = 'settings';
 
-export const enum SettingProfileEnum {
+export enum SettingProfileEnum {
   NORMAL = 0, 
   RAR = 1, 
   LAN = 2
 };
 
-export const enum IncomingConnectionModeEnum {
+export enum IncomingConnectionModeEnum {
   INCOMING_DISABLED = -1, 
   INCOMING_ACTIVE = 0, 
   INCOMING_ACTIVE_UPNP = 1,
   INCOMING_PASSIVE = 2,
 };
 
-export const enum OutgoingConnectionModeEnum {
+export enum OutgoingConnectionModeEnum {
   OUTGOING_DIRECT = 0, 
   OUTGOING_SOCKS = 1,
 };
 
-export const enum LocalSettings {
+export enum LocalSettings {
   NOTIFY_PM_USER = 'notify_pm_user',
   NOTIFY_PM_BOT = 'notify_pm_bot',
   NOTIFY_BUNDLE_STATUS = 'notify_bundle_status',
@@ -31,7 +31,7 @@ export const enum LocalSettings {
   BACKGROUND_IMAGE_URL = 'background_image_url',
 };
 
-export const enum FieldTypes {
+export enum FieldTypes {
   NUMBER = 'number',
   BOOLEAN = 'boolean',
   STRING = 'string',

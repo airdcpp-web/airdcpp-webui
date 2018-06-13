@@ -3,7 +3,7 @@ import React from 'react';
 
 import TableActions from 'actions/TableActions';
 
-import TableFooter from './TableFooter';
+import TableFooter, { TableFooterProps } from './TableFooter';
 import TableContainer from './TableContainer';
 import RowDataLoader from './RowDataLoader';
 
@@ -11,7 +11,24 @@ import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 
-class VirtualTable extends React.Component {
+declare module 'fixed-data-table-2' {
+  export interface ColumnProps {
+    name: string;
+    hideWidth?: number;
+  }
+}
+
+export interface VirtualTableProps extends TableFooterProps {
+  store: any;
+  entityId?: any;
+  sessionStore?: any;
+  viewId?: any;
+  sourceFilter?: any;
+  emptyRowsNodeGetter?: () => React.ReactNode;
+  rowClassNameGetter: (rowData: any) => string;
+}
+
+class VirtualTable extends React.Component<VirtualTableProps> {
   static propTypes = {
     /**
 		 * Elements to append to the table footer
@@ -44,10 +61,13 @@ class VirtualTable extends React.Component {
     sourceFilter: PropTypes.object,
   };
 
-  componentDidMount() {
-    this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
+  dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate());
+  unsubscribe = this.props.store.listen(this.dataLoader.onItemsUpdated.bind(this.dataLoader));
 
-    this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
+  componentDidMount() {
+    //this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
+
+    //this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
 
     this.start(this.props.entityId);
   }
@@ -57,7 +77,7 @@ class VirtualTable extends React.Component {
     this.unsubscribe();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: VirtualTableProps) {
     if (nextProps.entityId !== this.props.entityId) {
       this.close();
 
@@ -82,7 +102,7 @@ class VirtualTable extends React.Component {
     return this.props.sessionStore.getSession(this.props.entityId);
   };
 
-  start = (entityId) => {
+  start = (entityId: any) => {
     const { store, sourceFilter } = this.props;
 
     console.log(`Calling start action for view ${store.viewUrl} (before timeout)`);
@@ -99,14 +119,14 @@ class VirtualTable extends React.Component {
   };
 
   render() {
-    const { footerData, emptyRowsNodeGetter, ...other } = this.props;
+    const { store, footerData, emptyRowsNodeGetter, customFilter, ...other } = this.props;
 
-    if (emptyRowsNodeGetter && this.props.store.totalCount === -1) {
+    if (emptyRowsNodeGetter && store.totalCount === -1) {
       // Row count is unknown, don't flash the table
       return <div className="virtual-table"/>;
     }
 
-    if (emptyRowsNodeGetter && this.props.store.totalCount === 0) {
+    if (emptyRowsNodeGetter && store.totalCount === 0) {
       return emptyRowsNodeGetter();
     }
 
@@ -115,12 +135,13 @@ class VirtualTable extends React.Component {
       <div className="virtual-table">
         <TableContainer 
           { ...other }
-          dataLoader={this._dataLoader}
+          dataLoader={ this.dataLoader }
+          store={ store }
         />
 
         <TableFooter
-          store={ this.props.store }
-          customFilter={ this.props.customFilter }
+          store={ store }
+          customFilter={ customFilter }
           footerData={ footerData }
         />
       </div>

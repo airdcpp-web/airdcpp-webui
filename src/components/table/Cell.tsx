@@ -16,6 +16,7 @@ import { Cell, CellProps } from 'fixed-data-table-2';
 import { RouterChildContext } from 'react-router';
 import { Location } from 'history';
 import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
 const getCellContent = (cellData: any) => {
@@ -56,12 +57,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
   </Cell>
 );
 
-export interface ActionCellPropsBase {
-  cellData: any;
-  rowDataGetter: () => any;
-}
-
-export interface ActionCellProps extends ActionCellPropsBase, Utils.Omit<TableActionMenuProps, 'caption' | 'itemData'> {
+export interface ActionCellProps extends RowWrapperCellChildProps, Utils.Omit<TableActionMenuProps, 'caption' | 'itemData'> {
 
 }
 
@@ -69,11 +65,11 @@ export const FileActionCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGe
   <TableActionMenu 
     caption={ 
       <FormattedFile 
-        typeInfo={ rowDataGetter().type }
+        typeInfo={ rowDataGetter!().type }
         caption={ cellData }
       />
     }
-    itemData={ rowDataGetter }
+    itemData={ rowDataGetter! }
     { ...props }
   />
 );
@@ -81,17 +77,17 @@ export const FileActionCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGe
 export const ActionMenuCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGetter, ...props }) => (
   <TableActionMenu 
     caption={ cellData }
-    itemData={ rowDataGetter }
+    itemData={ rowDataGetter! }
     { ...props }
   />
 );
 
-export interface ActionLinkCellProps extends ActionCellPropsBase {
+export interface ActionLinkCellProps extends RowWrapperCellChildProps {
   action: (itemData: any, location: Location) => void;
 }
 
 export const ActionLinkCell: React.SFC<ActionLinkCellProps> = ({ cellData, rowDataGetter, action, ...props }, { router }: RouterChildContext<{}>) => {
-  if (!showAction(action, rowDataGetter())) {
+  if (!showAction(action, rowDataGetter!())) {
     return (
       <TextCell 
         cellData={ cellData }
@@ -101,7 +97,7 @@ export const ActionLinkCell: React.SFC<ActionLinkCellProps> = ({ cellData, rowDa
   }
 
   return (
-    <a className="plain link cell" onClick={ () => action(rowDataGetter(), router.route.location) }>
+    <a className="plain link cell" onClick={ () => action(rowDataGetter!(), router.route.location) }>
       { getCellContent(cellData) }
     </a>
   );
@@ -165,7 +161,7 @@ export const DecimalCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   </span>
 );
 
-export interface FileDownloadCellProps extends ActionCellPropsBase {
+export interface FileDownloadCellProps extends RowWrapperCellChildProps {
   userGetter: (rowData: any) => API.HintedUserBase;
   clickHandlerGetter: (cellData: any, rowDataGetter: () => any) => (() => void);
   downloadHandler: DownloadHandlerType;
@@ -175,14 +171,14 @@ export const FileDownloadCell: React.SFC<FileDownloadCellProps> = ({ cellData, r
   <TableDownloadMenu 
     caption={ 
       <FormattedFile 
-        typeInfo={ rowDataGetter().type }
-        onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter) : null }
+        typeInfo={ rowDataGetter!().type }
+        onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : null }
         caption={ cellData }
       />
     } 
-    user={ userGetter(rowDataGetter()) }
+    user={ userGetter(rowDataGetter!()) }
     linkCaption={ !!clickHandlerGetter ? false : true }
-    itemInfoGetter={ rowDataGetter }
+    itemInfoGetter={ rowDataGetter! }
     downloadHandler={ downloadHandler }
     { ...props }
   />
@@ -196,14 +192,14 @@ FileDownloadCell.propTypes = {
   downloadHandler: PropTypes.func.isRequired,
 };
 
-export interface CheckboxCellProps extends ActionCellPropsBase, Utils.Omit<CheckboxProps, 'onChange'> {
+export interface CheckboxCellProps extends Utils.Omit<RowWrapperCellChildProps, 'onChange'>, Utils.Omit<CheckboxProps, 'onChange' | 'checked'> {
   onChange: (checked: boolean, rowData: any) => void;
 }
 
 export const CheckboxCell: React.SFC<CheckboxCellProps> = ({ cellData, rowDataGetter, onChange, ...props }) => (
   <Checkbox 
     checked={ cellData } 
-    onChange={ checked => onChange(checked, rowDataGetter()) }
+    onChange={ checked => onChange(checked, rowDataGetter!()) }
     { ...props }
   />
 );

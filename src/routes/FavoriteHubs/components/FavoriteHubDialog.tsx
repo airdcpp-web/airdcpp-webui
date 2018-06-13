@@ -57,11 +57,11 @@ const getFieldProfiles = (profiles: API.SettingEnumOption[], url?: string) => {
     .map(normalizeEnumValue);
 };
 
-export interface FavoriteHubDialogProps extends ModalRouteDecoratorChildProps {
+export interface FavoriteHubDialogProps {
   hubEntry: API.FavoriteHubEntry;
 }
 
-class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & ShareProfileDecoratorChildProps> {
+class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & ShareProfileDecoratorChildProps & ModalRouteDecoratorChildProps> {
   static displayName = 'FavoriteHubDialog';
 
   isNew = () => {
@@ -118,7 +118,7 @@ class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & SharePr
         icon={ IconConstants.FAVORITE } 
         { ...this.props }
       >
-        <Form<API.FavoriteHubEntry>
+        <Form
           ref={ (c: any) => this.form = c }
           title="User information"
           onFieldChanged={ this.onFieldChanged }
@@ -132,7 +132,7 @@ class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & SharePr
   }
 }
 
-export default ModalRouteDecorator(
+export default ModalRouteDecorator<{}>(
   ShareProfileDecorator(FavoriteHubDialog, true),
   OverlayConstants.FAVORITE_HUB_MODAL_ID,
   '(new|edit)',

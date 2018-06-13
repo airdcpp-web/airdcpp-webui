@@ -7,10 +7,10 @@ import { IconType } from 'components/semantic/Icon';
 import { RouterChildContext } from 'react-router';
 
 
-interface ActionButtonProps extends ButtonProps {
+interface ActionButtonProps extends Utils.Omit<ButtonProps, 'caption'> {
   action: any;
-  itemData: any;
-  icon: IconType;
+  itemData?: any;
+  icon?: IconType;
 }
 
 const ActionButton: React.SFC<ActionButtonProps> = ({ action, itemData, icon = true, ...other }, { router }: RouterChildContext<{}>) => {

@@ -4,7 +4,7 @@ import React from 'react';
 import TextFilter from './TextFilter';
 
 
-const CountInfo = ({ store }) => {
+const CountInfo: React.SFC<{ store: any }> = ({ store }) => {
   let ret = store.totalCount;
   if (store.totalCount !== store.rowCount) {
     ret = store.rowCount + '/' + store.totalCount;
@@ -18,9 +18,15 @@ const CountInfo = ({ store }) => {
   );
 };
 
-const TableFooter = ({ store, customFilter, footerData }) => {
+export interface TableFooterProps {
+  footerData?: React.ReactNode;
+  customFilter?: React.ReactElement<any>;
+  store: any;
+}
+
+const TableFooter: React.SFC<TableFooterProps> = ({ store, customFilter, footerData }) => {
   let clonedFilter = null;
-  if (customFilter) {
+  if (!!customFilter) {
     clonedFilter = React.cloneElement(customFilter, { 
       viewUrl: store.viewUrl, 
     });

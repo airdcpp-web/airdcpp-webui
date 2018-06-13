@@ -5,11 +5,16 @@ import classNames from 'classnames';
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import Icon from 'src/components/semantic';
+import Icon from 'components/semantic/Icon';
 import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-class ConnectStateCell extends React.Component {
+export interface ConnectStateCellProps extends RowWrapperCellChildProps {
+
+}
+
+class ConnectStateCell extends React.Component<ConnectStateCellProps> {
   static contextTypes = {
     router: PropTypes.object.isRequired,
   };
@@ -28,7 +33,7 @@ class ConnectStateCell extends React.Component {
   };
 
   handleCreateSession = () => {
-    HubActions.createSession(this.context.router.route.location, this.props.rowDataGetter().hub_url, HubSessionStore);
+    HubActions.createSession(this.context.router.route.location, this.props.rowDataGetter!().hub_url, HubSessionStore);
   };
 
   handleRemoveSession = () => {
@@ -51,7 +56,7 @@ class ConnectStateCell extends React.Component {
           icon={ classNames('icon large link', this.getIcon()) } 
           onClick={ this.getClickAction() }
         />
-        { this.props.width > 120 && this.props.cellData.str }
+        { this.props.width! > 120 && this.props.cellData.str }
       </div>
     );
   }

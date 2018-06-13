@@ -1,24 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CellProps } from 'fixed-data-table-2';
 
+
+export interface RowWrapperCellChildProps extends CellProps {
+  cellData?: any;
+  rowDataGetter?: () => any;
+}
+
+export interface RowWrapperCellProps extends CellProps {
+  dataLoader: any;
+
+  renderCondition: (columnData: any, rowData: any) => boolean;
+  rowClassNameGetter: (rowData: any) => string;
+  columnKey: string;
+
+  children: React.ReactElement<any>;
+}
+
+interface State {
+  rowData: any;
+}
 
 // Generic wrapper for all cells that will handle data loading
-class RowWrapperCell extends React.Component {
+class RowWrapperCell extends React.Component<RowWrapperCellProps> {
   static propTypes = {
     rowIndex: PropTypes.number, // required
     dataLoader: PropTypes.object.isRequired,
     width: PropTypes.number, // required
   };
 
-  state = {
+  state: State = {
     rowData: null,
   };
 
   componentDidMount() {
-    this.loadData(this.props.rowIndex);
+    this.loadData(this.props.rowIndex!);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: RowWrapperCellProps) {
     if (nextProps.rowIndex !== this.props.rowIndex) {
       // Remove pending update callbacks to avoid rendering each of them when the data is received
       // (there can be lots of pending requests when scrolling for long distances)
@@ -26,7 +46,7 @@ class RowWrapperCell extends React.Component {
     }
 
     // Check if there is new data available (rowIndex may have changed as well)
-    if (!this.loadData(nextProps.rowIndex)) {
+    if (!this.loadData(nextProps.rowIndex!)) {
       // Avoid displaying old data
       this.setState({ rowData: null });
     }
@@ -36,20 +56,20 @@ class RowWrapperCell extends React.Component {
     this.props.dataLoader.removePendingRequests(this.props.rowIndex, this.onDataLoaded);
   }
 
-  loadData = (rowIndex) => {
+  loadData = (rowIndex: number) => {
     return this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: RowWrapperCellProps, nextState: State) {
     return nextState.rowData !== this.state.rowData || 
-   nextProps.width !== this.props.width;
+      nextProps.width !== this.props.width;
   }
 
   rowDataGetter = () => {
     return this.state.rowData;
   };
 
-  onDataLoaded = (data) => {
+  onDataLoaded = (data: any) => {
     this.setState({ rowData: data });
   };
 

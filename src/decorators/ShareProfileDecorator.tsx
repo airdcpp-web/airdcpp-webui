@@ -4,7 +4,7 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import { formatSize } from 'utils/ValueFormat';
 
 
-export interface ShareProfileDecoratorDataProps {
+interface ShareProfileDecoratorDataProps {
   profiles: API.ShareProfile[];
 }
 

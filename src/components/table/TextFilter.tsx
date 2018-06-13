@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { FilterMethod } from 'constants/TableConstants';
@@ -7,10 +6,10 @@ import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import TableFilterDecorator from 'decorators/TableFilterDecorator';
+import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
 
 
-const filterMethodToString = (method) => {
+const filterMethodToString = (method: FilterMethod) => {
   switch (method) {
   case FilterMethod.REGEX: return 'Regex';
   case FilterMethod.WILDCARD: return 'Wildcard';
@@ -19,7 +18,7 @@ const filterMethodToString = (method) => {
   }
 };
 
-const getPlaceholder = (method) => {
+const getPlaceholder = (method: FilterMethod) => {
   let ret = 'Filter';
   if (method !== FilterMethod.PARTIAL) {
     ret += ' (' + filterMethodToString(method).toLowerCase() + ')';
@@ -28,17 +27,18 @@ const getPlaceholder = (method) => {
   return ret + '...';
 };
 
-class FilterBox extends React.Component {
-  static propTypes = {
-    viewUrl: PropTypes.string.isRequired,
-  };
+export interface TextFilterProps {
 
+}
+
+class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorChildProps> {
   state = { 
     value: '',
     method: FilterMethod.PARTIAL,
   };
 
-  timer = null;
+  timer: any = null;
+  input: HTMLInputElement;
 
   componentWillUnmount() {
     clearTimeout(this.timer);
@@ -49,7 +49,7 @@ class FilterBox extends React.Component {
     this.props.onFilterUpdated(value, method);
   };
 
-  onTextChanged = (event) => {
+  onTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ 
       value: event.target.value 
     });
@@ -62,16 +62,16 @@ class FilterBox extends React.Component {
     }, 200);
   };
 
-  onMethodChanged = (method) => {
+  onMethodChanged = (method: FilterMethod) => {
     this.setState({ 
       method,
     });
 
-    setTimeout(_ => this.onFilterUpdated());
+    setTimeout(() => this.onFilterUpdated());
     this.input.focus();
   };
 
-  getFilterMethod = (method) => {
+  getFilterMethod = (method: FilterMethod) => {
     const isCurrent = method === this.state.method;
     return (
       <MenuItemLink 
@@ -85,16 +85,17 @@ class FilterBox extends React.Component {
   };
 
   render() {
+    const { value, method } = this.state;
     return (
       <div className="text-filter">
         <div 
           className="ui action input" 
-          onChange={ this.onTextChanged } 
-          value={ this.state.value }
         >
           <input 
-            ref={ c => this.input = c }
-            placeholder={ getPlaceholder(this.state.method) } 
+            ref={ (c: any) => this.input = c }
+            placeholder={ getPlaceholder(method) } 
+            onChange={ this.onTextChanged } 
+            value={ value }
             type="text"
           />
           <SectionedDropdown 
@@ -113,4 +114,4 @@ class FilterBox extends React.Component {
   }
 }
 
-export default TableFilterDecorator(FilterBox);
+export default TableFilterDecorator<TextFilterProps>(TextFilter);

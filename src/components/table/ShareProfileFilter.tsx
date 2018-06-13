@@ -5,12 +5,17 @@ import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
-import TableFilterDecorator from 'decorators/TableFilterDecorator';
+import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
+import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
 
 const defaultItem = { str: 'All profiles', id: null };
 
-class ShareProfileFilter extends React.Component {
+
+export interface ShareProfileFilterProps {
+
+}
+
+class ShareProfileFilter extends React.Component<ShareProfileFilterProps & TableFilterDecoratorChildProps & ShareProfileDecoratorChildProps & ShareProfileDecoratorChildProps> {
   static propTypes = {
     /**
 		 * Callback after selecting a profile
@@ -22,14 +27,14 @@ class ShareProfileFilter extends React.Component {
     selectedProfile: defaultItem,
   };
 
-  onClick = (profile) => {
+  onClick = (profile: API.ShareProfile) => {
     this.props.onFilterUpdated(profile.id);
     this.setState({ 
       selectedProfile: profile 
     });
   };
 
-  getDropdownItem = (profile) => {
+  getDropdownItem = (profile: API.ShareProfile) => {
     return (
       <MenuItemLink 
         key={ profile.id }
@@ -57,4 +62,10 @@ class ShareProfileFilter extends React.Component {
   }
 }
 
-export default ShareProfileDecorator(TableFilterDecorator(ShareProfileFilter, 'profiles'), false);
+export default ShareProfileDecorator<ShareProfileFilterProps>(
+  TableFilterDecorator<ShareProfileFilterProps & ShareProfileDecoratorChildProps>(
+    ShareProfileFilter, 
+    'profiles'
+  ), 
+  false
+);

@@ -9,7 +9,7 @@ import isEqual from 'lodash/isEqual';
 
 import { NavLink, matchPath } from 'react-router-dom';
 import CountLabel from 'components/CountLabel';
-import Icon, { IconType } from 'components/semantic/Icon';
+import Icon from 'components/semantic/Icon';
 
 
 // A component that will re-render only when urgencies or active state are updated
