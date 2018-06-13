@@ -4,9 +4,17 @@ import Button from 'components/semantic/Button';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+import classNames from 'classnames';
 
 
-class SaveButton extends React.Component {
+export interface SaveButtonProps {
+  saveHandler: () => Promise<void>;
+  hasChanges: boolean;
+  local?: boolean;
+  className?: string;
+}
+
+class SaveButton extends React.Component<SaveButtonProps> {
   static propTypes = {
     /**
 		 * Message title
@@ -50,7 +58,7 @@ class SaveButton extends React.Component {
 
     return (
       <Button 
-        className={ 'save ' + className }
+        className={ classNames('save', className) }
         caption={ title }
         icon={ (hasAccess && hasChanges ? 'green checkmark' : null) } 
         loading={ this.state.saving } 

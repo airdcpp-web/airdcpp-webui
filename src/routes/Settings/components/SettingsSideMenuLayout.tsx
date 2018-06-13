@@ -3,9 +3,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-const SideMenu = ({ menuItems, advancedMenuItems, menuItemToLink, parent }) => {
+type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems'>;
+
+const SideChildSectionMenu: React.SFC<SideMenuProps> = ({ menuItems, advancedMenuItems }) => {
   return (
     <div className="three wide column menu-column">
       <div className="ui vertical secondary menu">
@@ -25,19 +28,23 @@ const SideMenu = ({ menuItems, advancedMenuItems, menuItemToLink, parent }) => {
   );
 };
 
-const TopMenu = ({ parentMenuItems }) => (
+type TopMenuProps = Pick<SettingSectionChildProps, 'parentMenuItems'>;
+
+const TopRootSectionMenu: React.SFC<TopMenuProps> = ({ parentMenuItems }) => (
   <div className="ui secondary pointing menu settings top-menu">
     { parentMenuItems }
   </div>
 );
 
-const Content = ({ contentClassname, currentMenuItem, parent, saveButton, children, message }) => (
+type ContentProps = Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message'>;
+
+const Content: React.SFC<ContentProps> = ({ contentClassname, currentMenuItem, parent, saveButton, children, message }) => (
   <div className={ classNames('thirteen wide column', contentClassname) }>
     <div className="ui segment">
       <LayoutHeader
         title={ currentMenuItem.title }
         icon={ classNames(parent.icon, 'green') }
-        component={ saveButton }
+        rightComponent={ saveButton }
       />
       <div className="options">
         { message }
@@ -47,15 +54,14 @@ const Content = ({ contentClassname, currentMenuItem, parent, saveButton, childr
   </div>
 );
 
-
-const SideMenuLayout = ({ children, ...other }) => (
+const SideMenuLayout: React.SFC<SettingSectionChildProps> = ({ children, ...other }) => (
   <div className="full">
-    <TopMenu { ...other }/>
+    <TopRootSectionMenu { ...other }/>
     <div 
       id="setting-scroll-context" 
       className="ui segment grid main"
     >
-      <SideMenu { ...other }/>
+      <SideChildSectionMenu { ...other }/>
       <Content { ...other }>
         { children }
       </Content>

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
+import SettingsMenuDecorator, { SettingsMenuDecoratorProps } from '../decorators/SettingsMenuDecorator';
 
 import '../style.css';
 
@@ -19,7 +19,7 @@ const menu = [
   require('../routes/System'),
 ];
 
-const MainLayout = SettingsMenuDecorator(({ menuItems, currentMenuItem, children, ...other }) => {
+const MainLayout = SettingsMenuDecorator(({ children }) => {
   return (
     <div className="ui segment settings-layout">
       { children }
@@ -27,11 +27,18 @@ const MainLayout = SettingsMenuDecorator(({ menuItems, currentMenuItem, children
   );
 });
 
+export interface SettingsProps extends SettingsMenuDecoratorProps {
+
+}
+
 // Only to pass menu items to the decorated component
-class Settings extends React.Component {
+class Settings extends React.Component<SettingsProps> {
   render() {
     return (
-      <MainLayout { ...this.props } menuItems={ menu }/>
+      <MainLayout 
+        { ...this.props } 
+        menuItems={ menu }
+      />
     );
   }
 }

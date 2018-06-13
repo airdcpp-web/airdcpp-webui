@@ -5,15 +5,27 @@ import { Prompt } from 'react-router-dom';
 import invariant from 'invariant';
 
 import Message from 'components/semantic/Message';
-import SaveButton from '../components/SaveButton';
+import SaveButton, { SaveButtonProps } from '../components/SaveButton';
 import NotificationActions from 'actions/NotificationActions';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-export default (Component) => {
-  class SaveDecorator extends React.Component {
+export interface SaveDecoratorProps {
+  currentMenuItem: any;
+  saveable: boolean;
+}
+
+export interface SaveDecoratorChildProps {
+  saveButton: React.ReactElement<SaveButtonProps> | false;
+  message: any;
+}
+
+type SaveableRef = HTMLElement & { save: () => Promise<void> }
+
+export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChildProps>) {
+  class SaveDecorator extends React.Component<SaveDecoratorProps & PropsT> {
     static displayName = 'SaveDecorator';
 
     static propTypes = {
@@ -25,12 +37,12 @@ export default (Component) => {
       addFormRef: PropTypes.func.isRequired,
     };
 
-    static defaultProps = {
+    static defaultProps: Partial<SaveDecoratorProps> = {
       saveable: true
     };
 
-    forms = [];
-    changedProperties = new Set();
+    forms: SaveableRef[] = [];
+    changedProperties = new Set<string>();
 
     getChildContext() {
       return {
@@ -39,13 +51,13 @@ export default (Component) => {
       };
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: SaveDecoratorProps) {
       if (nextProps.currentMenuItem.url !== this.props.currentMenuItem.url) {
         this.changedProperties.clear();
       }
     }
 
-    onSettingsChanged = (id, value, hasChanges) => {
+    onSettingsChanged = (id: string, value: any, hasChanges: boolean) => {
       if (hasChanges) {
         this.changedProperties.add(id);
       } else {
@@ -89,10 +101,11 @@ export default (Component) => {
         return false;
       }
 
-      return this.hasChanges() && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+      const hasChanges = this.hasChanges() && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+      return hasChanges;
     };
 
-    saveFormRef = (c) => {
+    saveFormRef = (c: SaveableRef) => {
       if (c) {
         invariant(c.hasOwnProperty('save'), 'Invalid setting form component supplied for SaveDecorator (save property missing)');
         this.forms.push(c);

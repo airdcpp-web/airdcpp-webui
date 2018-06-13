@@ -5,9 +5,13 @@ import Dropdown from 'components/semantic/Dropdown';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import Icon from 'components/semantic/Icon';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-const SettingMenu = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
+
+type TopSectionSelectionMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'currentMenuItem' | 'parent' | 'advancedMenuItems' | 'parentMenuItems'>;
+
+const TopSectionSelectionMenu: React.SFC<TopSectionSelectionMenuProps> = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
   <div className="ui top-menu">
     <Dropdown 
       className="selection fluid" 
@@ -34,10 +38,13 @@ const SettingMenu = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenu
 );
 
 
-const TopMenuLayout = ({ saveButton, children, contentClassname, message, ...other }) => (
+const TopMenuLayout: React.SFC<SettingSectionChildProps> = ({ saveButton, children, contentClassname, message, ...other }) => (
   <div className="mobile">
-    <SettingMenu { ...other }/>
-    <div id="setting-scroll-context" className={ contentClassname }>
+    <TopSectionSelectionMenu { ...other }/>
+    <div 
+      id="setting-scroll-context" 
+      className={ contentClassname }
+    >
       { !!saveButton && React.cloneElement(saveButton, { className: 'fluid' }) }
       { message }
       { children }

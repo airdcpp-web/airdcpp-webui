@@ -1,22 +1,54 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 
-import { RouterMenuItemLink } from 'components/semantic/MenuItem';
+import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 import LoginStore from 'stores/LoginStore';
 
 
-const sectionToUrl = (section, parent) => {
-  if (typeof parent === 'object') {
-    return '/settings/' + parent.url + '/' + section.url;
-  }
+interface SectionType {
+  url: string;
+  access?: string;
+  title: string;
+  component: React.ComponentType<SettingsMenuDecoratorProps>;
+  debugOnly?: boolean;
+  icon?: string;
+  menuItems?: ChildSectionType[] | RootSectionType[];
+  advancedMenuItems?: ChildSectionType[];
+  parentMenuItems?: RootSectionType[];
+}
 
-  return '/settings/' + section.url;
+export interface RootSectionType extends SectionType {
+
+}
+
+export interface ChildSectionType extends SectionType {
+
 };
 
-export default (Component) => {
-  class SettingsMenuDecorator extends React.Component {
+const sectionToUrl = (section: SectionType, parent?: SectionType) => {
+  if (typeof parent === 'object') {
+    return `/settings/${parent.url}/${section.url}`;
+  }
+
+  return `/settings/${section.url}`;
+};
+
+export interface SettingsMenuDecoratorProps extends RouteComponentProps<{}> {
+  parent: RootSectionType;
+  menuItems?: ChildSectionType[] | RootSectionType[];
+  advancedMenuItems?: ChildSectionType[];
+  parentMenuItems: RootSectionType[];
+}
+
+export interface SettingsMenuDecoratorChildProps extends SettingsMenuDecoratorProps {
+  currentMenuItem: SectionType;
+  menuItemToLink: (menuItemInfo: SectionType, parent?: RootSectionType) => React.ReactNode;
+}
+
+export default function <PropsT>(Component: React.ComponentType<SettingsMenuDecoratorChildProps & PropsT>) {
+  class SettingsMenuDecorator extends React.Component<SettingsMenuDecoratorProps & PropsT> {
     static contextTypes = {
       router: PropTypes.object.isRequired
     };
@@ -29,12 +61,12 @@ export default (Component) => {
       match: PropTypes.object.isRequired,
     };
 
-    isItemActive = (item) => {
+    isItemActive = (item: SectionType) => {
       const { location, parent } = this.props;
       return location.pathname.indexOf(sectionToUrl(item, parent)) === 0;
     };
 
-    findMenuItem = (menuItems) => {
+    findMenuItem = (menuItems?: SectionType[]) => {
       if (!menuItems) {
         return null;
       }
@@ -42,7 +74,7 @@ export default (Component) => {
       return menuItems.find(this.isItemActive);
     };
 
-    getMenuItem = (menuItemInfo, parent, showIcon) => {
+    menuItemToLinkComponent = (menuItemInfo: SectionType, parent: RootSectionType) => {
       if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
         return null;
       }
@@ -63,14 +95,14 @@ export default (Component) => {
         <RouterMenuItemLink 
           key={ url } 
           url={ url } 
-          icon={ menuItemInfo.icon ? ('green ' + menuItemInfo.icon) : null }
+          icon={ !!menuItemInfo.icon && 'green ' + menuItemInfo.icon }
         >
           { menuItemInfo.title }
         </RouterMenuItemLink>
       );
     };
 
-    menuItemsToRoutes = (menuItems, currentMenuItem) => {
+    menuItemsToRouteComponentArray = (currentMenuItem: SectionType, menuItems?: SectionType[]) => {
       if (!menuItems) {
         return null;
       }
@@ -82,11 +114,11 @@ export default (Component) => {
           path={ sectionToUrl(item, parent) }
           render={ props => {
             const ret = React.createElement(item.component, {
+              ...props,
               menuItems: currentMenuItem.menuItems,
               advancedMenuItems: currentMenuItem.advancedMenuItems,
               parent: currentMenuItem,
               parentMenuItems: menuItems,
-              ...props,
             });
 
             return ret;
@@ -100,7 +132,9 @@ export default (Component) => {
       if (location.pathname === match.url ||
         (parent && location.pathname === sectionToUrl(parent))
       ) {
-        return <Redirect to={ sectionToUrl(menuItems[0], parent) }/>;
+        if (!!menuItems && menuItems.length) {
+          return <Redirect to={ sectionToUrl(menuItems[0], parent) }/>;
+        }
       }
 
       const currentMenuItem = this.findMenuItem(menuItems) || this.findMenuItem(advancedMenuItems);
@@ -112,10 +146,10 @@ export default (Component) => {
         <Component 
           { ...this.props } 
           currentMenuItem={ currentMenuItem } 
-          menuItemToLink={ this.getMenuItem }
+          menuItemToLink={ this.menuItemToLinkComponent }
         >
-          { this.menuItemsToRoutes(menuItems, currentMenuItem) }
-          { this.menuItemsToRoutes(advancedMenuItems, currentMenuItem) }
+          { this.menuItemsToRouteComponentArray(currentMenuItem, menuItems) }
+          { this.menuItemsToRouteComponentArray(currentMenuItem, advancedMenuItems) }
         </Component>
       );
     }
