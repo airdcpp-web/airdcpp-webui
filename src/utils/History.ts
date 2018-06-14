@@ -4,6 +4,7 @@ import invariant from 'invariant';
 import createHistory from 'history/createBrowserHistory';
 
 import OverlayConstants from 'constants/OverlayConstants';
+import { Location } from 'history';
 
 
 const History = createHistory({
@@ -12,18 +13,18 @@ const History = createHistory({
 });
 
 // Returns paths for currently open modals
-const getModalPaths = (state) => {
+const getModalPaths = (state: object) => {
   return Object.keys(state).reduce((modalPaths, key) => {
     if (key.indexOf(OverlayConstants.MODAL_PREFIX) === 0) {
       modalPaths.push(state[key].pathname);
     }
 
     return modalPaths;
-  }, []);
+  }, [] as string[]);
 };
 
 // Returns the current pathname with modals stripped
-const getModelessPath = (location) => {
+const getModelessPath = (location: Location) => {
   let pathname = location.pathname;
   if (!location.state) {
     return pathname;
@@ -50,7 +51,7 @@ const getModelessPath = (location) => {
 };
 
 // Returns a new location state object without any modals 
-const createModelessState = (state) => {
+const createModelessState = (state: object) => {
   return Object.keys(state).reduce((newState, key) => {
     if (key.indexOf(OverlayConstants.MODAL_PREFIX) !== 0) {
       newState[key] = state[key];
@@ -61,7 +62,7 @@ const createModelessState = (state) => {
 };
 
 
-const mergeOverlayData = (locationState, overlayId, data) => {
+const mergeOverlayData = (locationState: object, overlayId: string, data: object) => {
   return update(locationState, { 
     [overlayId]: { 
       data: { $merge: data } 
@@ -70,7 +71,7 @@ const mergeOverlayData = (locationState, overlayId, data) => {
 };
 
 // Push a new sidebar state or merge the data into an existing one (if the sidebar is open already) 
-const getSidebarState = (currentLocation, data = {}) => {
+const getSidebarState = (currentLocation: Location, data: object = {}) => {
   console.assert(currentLocation, 'Current location not supplied for overlay creation');
   console.assert(currentLocation.pathname, 'Invalid location object supplied for overlay creation');
 
@@ -89,7 +90,7 @@ const getSidebarState = (currentLocation, data = {}) => {
   return mergeOverlayData(state, OverlayConstants.SIDEBAR_ID, data || {});
 };
 
-const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
+const addModalState = (currentLocation: Location, overlayId: string, data: object = {}, pathname: string) => {
   console.assert(currentLocation, 'Current location not supplied for overlay creation');
   console.assert(currentLocation.pathname, 'Invalid location object supplied for overlay creation');
 
@@ -104,13 +105,13 @@ const addModalState = (currentLocation, overlayId, data = {}, pathname) => {
 };
 
 const Helpers = {
-  pushModal: function (currentLocation, pathname, overlayId, data) {
+  pushModal: function (currentLocation: Location, pathname: string, overlayId: string, data: object) {
     const state = addModalState(currentLocation, overlayId, data, pathname);
     History.push(pathname, state);
   },
 
   // Returns modal IDs from currentLocation
-  getModalIds(currentLocation) {
+  getModalIds(currentLocation: Location) {
     if (!currentLocation.state) {
       return null;
     }
@@ -122,41 +123,41 @@ const Helpers = {
     return ids.length > 0 ? ids : null;
   },
 
-  hasSidebar(currentLocation) {
+  hasSidebar(currentLocation: Location) {
     return currentLocation.state && currentLocation.state[OverlayConstants.SIDEBAR_ID];
   },
 
-  replaceSidebar: function (currentLocation, pathname, data) {
+  replaceSidebar: function (currentLocation: Location, pathname: string, data: object) {
     const state = getSidebarState(currentLocation, data);
     History.replace(pathname, state);
   },
 
-  pushSidebar: function (currentLocation, pathname, data) {
+  pushSidebar: function (currentLocation: Location, pathname: string, data: object) {
     // replaceState is invoked automatically if the path hasn't changed
     const state = getSidebarState(currentLocation, data);
     History.push(pathname, state);
   },
 
   // Append new location data when in sidebar layout and create a new history entry
-  pushSidebarData: function (currentLocation, data) {
+  pushSidebarData: function (currentLocation: Location, data: object) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
     History.push(currentLocation.pathname, state);
   },
 
   // Append new location data when in sidebar layout without creating a new history entry
-  replaceSidebarData: function (currentLocation, data) {
+  replaceSidebarData: function (currentLocation: Location, data: object) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
     History.replace(currentLocation.pathname, state);
   },
 
   // Shorthand function for receiving the data
   // Data for modals is converted to regular props by the parent decorator but it won't work well with a nested sidebar structure
-  getSidebarData: function (currentLocation) {
+  getSidebarData: function (currentLocation: Location) {
     return currentLocation.state[OverlayConstants.SIDEBAR_ID].data;
   },
 
   // Remove overlay from the location state
-  removeOverlay: function (location, overlayId, changeLocation = true) {
+  removeOverlay: function (location: Location, overlayId: string, changeLocation = true) {
     const { state } = location;
     const { returnTo } = state[overlayId];
     invariant(overlayId, 'Return address or overlay id missing when closing an overlay');
@@ -174,7 +175,7 @@ const Helpers = {
 
   // Uses replace instead if the next path matches the current one regardless of the state or other properties
   // Note that the regular history functions will ignore fully identical locations in any case so there's no need to check that manually
-  pushUnique: function (nextLocation, currentLocation) {
+  pushUnique: function (nextLocation: Location, currentLocation: Location) {
     invariant(currentLocation, 'pushUnique: current location was not supplied');
     if (nextLocation.pathname !== currentLocation.pathname) {
       History.push(nextLocation);

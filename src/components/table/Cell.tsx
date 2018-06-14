@@ -57,7 +57,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
   </Cell>
 );
 
-export interface ActionCellProps extends RowWrapperCellChildProps, Utils.Omit<TableActionMenuProps, 'caption' | 'itemData'> {
+export interface ActionCellProps extends RowWrapperCellChildProps, Omit<TableActionMenuProps, 'caption' | 'itemData'> {
 
 }
 
@@ -192,7 +192,7 @@ FileDownloadCell.propTypes = {
   downloadHandler: PropTypes.func.isRequired,
 };
 
-export interface CheckboxCellProps extends Utils.Omit<RowWrapperCellChildProps, 'onChange'>, Utils.Omit<CheckboxProps, 'onChange' | 'checked'> {
+export interface CheckboxCellProps extends Omit<RowWrapperCellChildProps, 'onChange'>, Omit<CheckboxProps, 'onChange' | 'checked'> {
   onChange: (checked: boolean, rowData: any) => void;
 }
 

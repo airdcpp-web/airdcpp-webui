@@ -15,7 +15,7 @@ import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'co
 import '../style.css';
 
 
-const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
+const PriorityCell = ({ cellData, rowDataGetter }) => (
   <PriorityMenu 
     itemPrio={ cellData } 
     item={ rowDataGetter() }

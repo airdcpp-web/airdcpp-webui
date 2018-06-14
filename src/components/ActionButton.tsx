@@ -7,7 +7,7 @@ import { IconType } from 'components/semantic/Icon';
 import { RouterChildContext } from 'react-router';
 
 
-interface ActionButtonProps extends Utils.Omit<ButtonProps, 'caption'> {
+interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
   action: any;
   itemData?: any;
   icon?: IconType;

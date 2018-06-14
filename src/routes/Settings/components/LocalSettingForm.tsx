@@ -6,7 +6,7 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
 
-export interface LocalSettingFormProps extends Utils.Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
+export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
   keys: string[];
 }
 

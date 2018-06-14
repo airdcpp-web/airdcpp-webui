@@ -12,7 +12,7 @@ class BundleFileDialog extends React.Component {
   static displayName = 'BundleFileDialog';
 
   render() {
-    const { bundle } = this.props;
+    const { bundle, ...other } = this.props;
     return (
       <Modal 
         className="source" 
@@ -20,7 +20,7 @@ class BundleFileDialog extends React.Component {
         closable={ true } 
         icon={ <FileIcon typeInfo={ bundle.type }/> } 
         fullHeight={ true }
-        {...this.props}
+        { ...other }
       >
         <BundleFileTable 
           bundle={ bundle }

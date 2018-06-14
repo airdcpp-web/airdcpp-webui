@@ -29,8 +29,8 @@ class Search extends React.Component {
     this.checkLocationState(this.props);
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    this.checkLocationState(nextProps);
+  componentDidUpdate(prevProps) {
+    this.checkLocationState(this.props);
   }
 
   checkLocationState = (props) => {

@@ -40,18 +40,18 @@ const AuthenticationGuardDecorator = (Component) => {
       }
     },
 
-    componentWillUpdate(nextProps, nextState) {
-      if (nextState.login.hasSession && this.state.login.socketAuthenticated && !nextState.login.socketAuthenticated) {
+    componentDidUpdate(prevProps, prevState) {
+      if (this.state.login.hasSession && prevState.login.socketAuthenticated && !this.state.login.socketAuthenticated) {
         // Connection lost, reconnect (but not too fast)
         console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
         setTimeout(() => LoginActions.connect(LoginStore.authToken), 2000);
-      } else if (this.state.login.hasSession && !nextState.login.hasSession) {
+      } else if (prevState.login.hasSession && !this.state.login.hasSession) {
         // Go to the login page as we don't have a valid session anymore
         // Return to this page if the session was lost (instead of having logged out) 
 
         console.log('UI: Redirecting to login page');
         History.replace({
-          state: LoginStore.lastError !== null ? { nextPath: this.props.location.pathname } : null, 
+          state: LoginStore.lastError !== null ? { nextPath: prevProps.location.pathname } : null, 
           pathname: '/login',
         });
       }

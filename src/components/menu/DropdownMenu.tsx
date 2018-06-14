@@ -22,7 +22,7 @@ export const ActionMenu = ActionMenuDecorator<ActionMenuProps>(({ header, childr
   </SectionedDropdown>
 ));
 
-type TableActionMenuDropdownProps = Utils.Omit<TableDropdownProps, 'children'>;
+type TableActionMenuDropdownProps = Omit<TableDropdownProps, 'children'>;
 
 export type TableActionMenuProps = TableActionMenuDropdownProps & ActionMenuDecoratorProps;
 export const TableActionMenu = ActionMenuDecorator<TableActionMenuDropdownProps>(TableDropdown);

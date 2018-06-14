@@ -8,7 +8,7 @@ import SocketService from 'services/SocketService';
 import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
 
-export interface RemoteSettingFormProps extends Utils.Omit<FormProps, 'onSave' | 'value'> {
+export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value'> {
   keys: string[];
 }
 
