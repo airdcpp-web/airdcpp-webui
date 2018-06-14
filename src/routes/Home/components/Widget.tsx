@@ -8,7 +8,7 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 import WidgetActions from 'actions/WidgetActions';
 
 
-const getError = (widgetInfo, settings) => {
+const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings) => {
   if (widgetInfo.formSettings && !settings.widget) {
     return 'Widget settings were not found';
   }
@@ -20,12 +20,20 @@ const getError = (widgetInfo, settings) => {
   return null;
 };
 
-const Widget = ({ widgetInfo, settings, componentId, children, className, ...widgetProps }) => {
+export interface WidgetProps {
+  widgetInfo: UI.Widget;
+  className?: string;
+  settings: UI.WidgetSettings;
+  componentId: string;
+}
+
+const Widget: React.SFC<WidgetProps> = ({ widgetInfo, settings, componentId, children, className, ...other }) => {
   const error = getError(widgetInfo, settings);
+  const Component = widgetInfo.component;
   return (
     <div 
       className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
-      { ...widgetProps }
+      { ...other }
     >
       <div className="content header-row">
 			  <div className="header">
@@ -46,7 +54,12 @@ const Widget = ({ widgetInfo, settings, componentId, children, className, ...wid
         </ActionMenu>
       </div>
       <div className="main content">
-        { error ? error : children }
+        { !!error ? error : (
+          <Component
+            componentId={ componentId }
+            settings={ settings }
+          />
+        ) }
       </div>
     </div>
   );

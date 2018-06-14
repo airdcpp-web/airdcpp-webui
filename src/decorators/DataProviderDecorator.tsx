@@ -28,12 +28,12 @@ export interface DataProviderDecoratorProps<PropsT extends object, DataT extends
 
 export interface DataProviderDecoratorChildProps {
   refetchData: (keys?: string[]) => void;
-  dataError?: APISocket.Error;
+  dataError?: APISocket.ErrorBase;
 }
 
 interface State<DataT> {
   data: DataT | null;
-  error: string | null;
+  error: APISocket.ErrorBase | null;
 }
 
 // A decorator that will provide a set of data fetched from the API as props
@@ -159,16 +159,18 @@ export default function <PropsT extends object, DataT extends object>(
       this.mergeData(data);
     },
 
-    onDataFetchFailed(error: APISocket.Error | Response) {
-      if (error instanceof Response) {
+    onDataFetchFailed(fetchError: APISocket.Error | Response) {
+      let error: APISocket.ErrorBase;
+      if (fetchError instanceof Response) {
         // HTTP error
         error = {
-          code: error.status,
-          message: error.statusText,
+          code: fetchError.status,
+          message: fetchError.statusText,
         };
       } else {
         // API error
-        NotificationActions.apiError('Failed to fetch data', error);
+        error = fetchError;
+        NotificationActions.apiError('Failed to fetch data', fetchError);
       }
 
       this.setState({

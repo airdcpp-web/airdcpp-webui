@@ -9,10 +9,6 @@ import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import { Location } from 'history';
 
 
-export interface ActionType {
-
-}
-
 type ItemDataType = (() => object | string | number) | object | string | number;
 
 export interface ActionMenuDecoratorProps {
@@ -20,19 +16,19 @@ export interface ActionMenuDecoratorProps {
   caption?: React.ReactNode;
   button?: boolean;
   ids?: string[];
-  actions: ActionType[];
+  actions: UI.ActionType[];
   
-  itemData: ItemDataType;
+  itemData?: ItemDataType;
 }
 
 export interface ActionMenuDecoratorChildProps {
   children: () => React.ReactNode;
 }
 
-type FilterType = (action: ActionType, itemData: any) => boolean;
+type FilterType = (action: UI.ActionType, itemData: any) => boolean;
 
 
-const parseItemData = (itemData: ItemDataType) => typeof itemData === 'function' ? itemData() : itemData;
+const parseItemData = (itemData?: ItemDataType) => typeof itemData === 'function' ? itemData() : itemData;
 
 // Returns true if the provided ID matches the specified filter
 const filterItem = (props: ActionMenuDecoratorProps, filter: FilterType, actionId: string) => {
@@ -75,7 +71,7 @@ const filterExtraDividers = (ids: string[]) => {
 interface MenuType {
   actionIds: string[];
   itemDataGetter: () => any;
-  actions: ActionType[];
+  actions: UI.ActionType[];
 }
 
 // Get IDs to display from the specified menu

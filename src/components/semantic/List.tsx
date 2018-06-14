@@ -6,7 +6,7 @@ import Icon, { IconType } from 'components/semantic/Icon';
 export interface ListItemProps {
   header: React.ReactNode;
   description: React.ReactNode;
-  icon: IconType;
+  icon?: IconType;
   className?: string;
 }
 

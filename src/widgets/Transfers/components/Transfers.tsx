@@ -2,6 +2,7 @@ import React from 'react';
 
 import createReactClass from 'create-react-class';
 
+//@ts-ignore
 import { TimeSeries } from 'pondjs';
 
 import Loader from 'components/semantic/Loader';
@@ -12,8 +13,11 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import SocketService from 'services/SocketService';
 
 import TransferConstants from 'constants/TransferConstants';
+
+//@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { withContentRect } from 'react-measure';
+
+import { withContentRect, MeasuredComponentProps } from 'react-measure';
 
 import '../style.css';
 
@@ -21,7 +25,7 @@ import '../style.css';
 const IDLE_CHECK_PERIOD = 3000;
 const MAX_EVENTS = 1800; // 30 minutes when transfers are running
 
-const addSpeed = (points, down, up) => {
+const addSpeed = (points: any[], down: number, up: number) => {
   const ret = [
     ...points,
     [
@@ -38,7 +42,18 @@ const addSpeed = (points, down, up) => {
   return ret;
 };
 
-const Transfers = withContentRect('bounds')(createReactClass({
+interface State {
+  points: Array<number[]>;
+  maxDownload: number;
+  maxUpload: number;
+  stats?: API.TransferStats;
+}
+
+interface TransferProps extends MeasuredComponentProps {
+
+}
+
+const Transfers = withContentRect('bounds')(createReactClass<TransferProps, State>({
   displayName: 'Transfers',
   mixins: [ SocketSubscriptionMixin(), PureRenderMixin ],
 
@@ -53,7 +68,7 @@ const Transfers = withContentRect('bounds')(createReactClass({
       ],
       maxDownload: 0,
       maxUpload: 0,
-    };
+    } as State;
   },
 
   componentDidMount() {
@@ -67,7 +82,7 @@ const Transfers = withContentRect('bounds')(createReactClass({
     clearInterval(this.idleInterval);
   },
 
-  onSocketConnected(addSocketListener) {
+  onSocketConnected(addSocketListener: any) {
     addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
   },
 
@@ -83,10 +98,10 @@ const Transfers = withContentRect('bounds')(createReactClass({
   fetchStats() {
     SocketService.get(TransferConstants.STATISTICS_URL)
       .then(this.onStatsReceived)
-      .catch(error => console.error('Failed to fetch transfer statistics', error.message));
+      .catch((error: APISocket.Error) => console.error('Failed to fetch transfer statistics', error.message));
   },
 
-  onStatsReceived(stats) {
+  onStatsReceived(stats: API.TransferStats) {
     stats = Object.assign({}, this.state.stats, stats);
 
     this.setState({
@@ -98,8 +113,8 @@ const Transfers = withContentRect('bounds')(createReactClass({
   },
 
   render() {
-    const { measureRef, contentRect } = this.props;
-    const { points, maxDownload, maxUpload, stats } = this.state;
+    const { measureRef, contentRect } = this.props as TransferProps;
+    const { points, maxDownload, maxUpload, stats } = this.state as State;
     if (!stats) {
       return <Loader inline={ true }/>;
     }
@@ -118,7 +133,7 @@ const Transfers = withContentRect('bounds')(createReactClass({
           maxDownload={ maxDownload }
           maxUpload={ maxUpload }
         />
-        { contentRect.bounds.width >= 300 && (
+        { !!contentRect.bounds && contentRect.bounds.width >= 300 && (
           <StatColumn
             stats={ stats }
           />

@@ -6,10 +6,10 @@ import Modal from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
 
-import Form from 'components/form/Form';
+import Form, { FormSaveHandler } from 'components/form/Form';
 import { FieldTypes } from 'constants/SettingConstants';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import WidgetActions from 'actions/WidgetActions';
@@ -17,7 +17,14 @@ import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
 
 
-class WidgetDialog extends React.Component {
+export interface WidgetDialogProps {
+  settings: UI.WidgetSettings;
+  id: string;
+  typeId: string;
+  onSave: () => void;
+}
+
+class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecoratorChildProps> {
   static displayName = 'WidgetDialog';
 
   static propTypes = {
@@ -37,14 +44,16 @@ class WidgetDialog extends React.Component {
     onSave: PropTypes.func, // Required
   };
 
+  form: Form;
+
   save = () => {
     return this.form.save();
   };
 
-  onSave = (changedFields, value) => {
+  onSave: FormSaveHandler<UI.WidgetSettings> = (changedFields, value) => {
     const { name, ...formSettings } = value;
-    const settings = {
-      name,
+    const settings: UI.WidgetSettings = {
+      name: name!,
       widget: formSettings
     };
 
@@ -85,7 +94,7 @@ class WidgetDialog extends React.Component {
         { ...overlayProps }
       >
         <Form
-          ref={ c => this.form = c }
+          ref={ (c: any) => this.form = c }
           value={ settings && {
             name: settings.name,
             ...settings.widget,

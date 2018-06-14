@@ -10,7 +10,12 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-const LimiterValue = ({ limit, settingKey }) => {
+interface LimiterValueProps {
+  limit: number;
+  settingKey: string;
+}
+
+const LimiterValue: React.SFC<LimiterValueProps> = ({ limit, settingKey }) => {
   const value = limit ? formatSpeed(limit * 1024) : 'Disabled';
   if (!LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT)) {
     return <span>{ value }</span>;
@@ -31,7 +36,11 @@ const LimiterValue = ({ limit, settingKey }) => {
 };
 
 
-const StatColumn = ({ stats }) => (
+interface StatColumnProps {
+  stats: API.TransferStats;
+}
+
+const StatColumn: React.SFC<StatColumnProps> = ({ stats }) => (
   <div className="ui list info tiny stats">
     <ListItem header="Downloads" description={ stats.downloads }/>
     <ListItem header="Uploads" description={ stats.uploads }/>

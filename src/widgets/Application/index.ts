@@ -14,5 +14,5 @@ module.exports = {
     actions: require('actions/SystemActions').default,
     ids: [ 'shutdown' ],
   },
-};
+} as UI.Widget;
 

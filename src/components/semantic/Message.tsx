@@ -6,10 +6,12 @@ import Icon, { IconType } from 'components/semantic/Icon';
 import classNames from 'classnames';
 
 
+export type MessageDescriptionType = React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | string | null;
+
 interface MessageProps {
   className?: string;
   title?: React.ReactNode;
-  description?: React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | string | null;
+  description?: MessageDescriptionType;
   icon?: IconType;
   isError?: boolean;
 };

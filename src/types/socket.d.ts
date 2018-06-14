@@ -7,9 +7,12 @@ declare namespace APISocket {
     code: ErrorType;
   }
 
-  interface Error {
+  interface ErrorBase {
     code: number;
     message: string;
+  }
+
+  interface Error extends ErrorBase {
     json: ErrorFull;
   }
 }

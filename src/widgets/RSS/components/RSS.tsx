@@ -4,98 +4,66 @@ import React from 'react';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
-import { ActionMenu } from 'components/menu/DropdownMenu';
-import RedrawDecorator from 'decorators/RedrawDecorator';
-import RSSActions from '../actions/RSSActions';
-
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
-import { formatRelativeTime } from 'utils/ValueFormat';
+
+import Entry, { FeedItem } from 'widgets/RSS/components/Entry';
+import Footer from 'widgets/RSS/components/Footer';
+import { Settings } from 'widgets/RSS';
 
 import '../style.css';
 
 
-const parseTitle = (entry) => {
-  if (!entry.title) {
-    return '(title missing)';
+const getEntryKey = (entry: FeedItem): string => {
+  if (!!entry.guid) {
+    if (typeof entry.guid === 'object') {
+      if (!!entry.guid.content) {
+        return entry.guid.content;
+      }
+    } else {
+      return entry.guid;
+    }
   }
 
-  let title = typeof entry.title !== 'object' ? entry.title : entry.title.content;
-  if (typeof title !== 'string') {
-    title = '(unsupported title format)';
+  if (!!entry.id) {
+    if (typeof entry.id === 'object') {
+      if (!!entry.id.content) {
+        return entry.id.content;
+      }
+    } else {
+      return entry.id;
+    }
   }
 
-  return title;
-};
-
-const Entry = ({ entry, feedUrl, componentId }) => {
-  const date = entry.pubDate ? entry.pubDate : entry.updated;
-  return (
-    <div className="item">
-      <div className="header">
-        <ActionMenu 
-          leftIcon={ true }
-          caption={ parseTitle(entry) }
-          actions={ RSSActions }
-          itemData={ {
-            entry,
-            feedUrl,
-          } }
-          //contextElement={ '.' + componentId + ' .list.rss' } // TODO
-        />
-      </div>
-
-      <div className="description">
-        { date ? formatRelativeTime(Date.parse(date) / 1000) : null }
-      </div>
-    </div>
-  );
-};
-
-Entry.propTypes = {
-  /**
-	 * Feed entry
-	 */
-  entry: PropTypes.shape({
-    title: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.string,
-    ]),
-    updated: PropTypes.string, // Atom feeds
-    pubDate: PropTypes.string, // RSS feeds
-  }),
-
-  feedUrl: PropTypes.string.isRequired,
-
-  componentId: PropTypes.string.isRequired,
-};
-
-const Footer = RedrawDecorator(({ lastUpdated, handleUpdate }) => (
-  <div className="extra content">
-    <i className="icon refresh link" onClick={ handleUpdate }/>
-    { lastUpdated ? 'Last updated: ' + formatRelativeTime(lastUpdated / 1000) : null }
-  </div>
-), 60);
-
-const getEntryKey = (entry) => {
-  if (entry.guid && entry.guid.content) {
-    return entry.guid.content;
-  }
-
-  if (entry.guid) {
-    return entry.guid;
-  }
-
-  if (entry.id && entry.id.content) {
-    return entry.id.content;
-  }
-
-  return entry.id;
+  return 'DUMMY';
 };
 
 
-const idToCacheKey = id => 'rss_feed_cache_' + id;
+const idToCacheKey = (id: string) => 'rss_feed_cache_' + id;
 
-class RSS extends React.PureComponent {
+
+export interface Feed {
+  results?: {
+    error?: { description: string; };
+    rss?: {
+      channel?: {
+        item?: FeedItem[];
+      }
+    };
+    feed?: {
+      entry?: FeedItem[];
+    }
+  }
+}
+
+export type RSSProps = UI.WidgetProps<Settings>;
+
+interface State {
+  entries?: FeedItem[] | null;
+  date?: number;
+  error: string | null;
+}
+
+class RSS extends React.PureComponent<RSSProps, State> {
   static propTypes = {
     /**
 		 * Current widget settings
@@ -105,7 +73,7 @@ class RSS extends React.PureComponent {
     componentId: PropTypes.string.isRequired,
   };
 
-  constructor(props, context) {
+  constructor(props: RSSProps, context: any) {
     super(props, context);
     const feedInfo = this.getCachedFeedInfo();
 
@@ -125,21 +93,22 @@ class RSS extends React.PureComponent {
     this.fetchFeed(this.props.settings.feed_url);
   };
 
-  fetchFeed = (feedUrl) => {
+  fetchFeed = (feedUrl: string) => {
     if (this.state.entries) {
       this.setState({ entries: null });
     }
 
-    $.getJSON(`https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%20%3D%20\'${encodeURIComponent(feedUrl)}\'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=`, 
+    $.getJSON(
+      `https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%20%3D%20\'${encodeURIComponent(feedUrl)}\'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=`, 
       res => {
         console.log('RSS feed received', res);
         this.onFeedFetched(res.query);
       }, 
-      'jsonp'
+      //'jsonp'
     );
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: RSSProps) {
     if (nextProps.settings.feed_url !== this.props.settings.feed_url) {
       this.fetchFeed(nextProps.settings.feed_url);
     }
@@ -164,13 +133,13 @@ class RSS extends React.PureComponent {
     return null;
   };
 
-  setError = (error) => {
+  setError = (error: string) => {
     this.setState({
       error
     });
   };
 
-  onFeedFetched = (data) => {
+  onFeedFetched = (data: Feed) => {
     if (!data.results) {
       this.setError('The URL is invalid, the feed is empty or there is a temporary issue with the feed service');
       return;
@@ -224,29 +193,30 @@ class RSS extends React.PureComponent {
   };
 
   render() {
-    if (this.state.error) {
+    const { error, entries } = this.state;
+    if (!!error) {
       return (
         <Message
-          description={ this.state.error }
+          description={ error }
         />
       );
     }
 
-    if (!this.state.entries) {
+    if (!entries) {
       return <Loader text="Loading feed" inline={true}/>;
     }
 
-    const feedUrl = this.props.settings.feed_url;
+    const { settings, componentId } = this.props;
     return (
       <div className="rss-container">
         <div className="ui divided list rss">
 				  { 
-			  		this.state.entries.map(entry => (
+			  		entries.map(entry => (
 			  			<Entry 
 			  				key={ getEntryKey(entry) } 
 			  				entry={ entry }
-			  				componentId={ this.props.componentId }
-			  				feedUrl={ feedUrl }
+			  				componentId={ componentId }
+			  				feedUrl={ settings.feed_url }
 			  			/>
 			  		))
 				  }

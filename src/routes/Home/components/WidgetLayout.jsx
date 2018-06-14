@@ -37,9 +37,7 @@ const WidgetLayout = createReactClass({
       return null;
     }
 
-    const Component = widgetInfo.component;
     const settings = WidgetStore.getWidgetSettings(layoutItem.i, widgetInfo);
-
     return (
       <Widget
         key={ layoutItem.i }
@@ -47,12 +45,7 @@ const WidgetLayout = createReactClass({
         widgetInfo={ widgetInfo }
         settings={ settings }
         data-grid={ layoutItem }
-      >
-        <Component
-          settings={ settings.widget }
-          componentId={ layoutItem.i }
-        />
-      </Widget>
+      />
     );
   },
 

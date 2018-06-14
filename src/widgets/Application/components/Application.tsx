@@ -14,7 +14,7 @@ import LoginStore from 'stores/LoginStore';
 import '../style.css';
 
 
-const Statistics = StatisticsDecorator(({ stats }) => (
+const Statistics = StatisticsDecorator<any>(({ stats }) => (
   <div className="ui list">
     <ListItem header="Logged in as" description={ LoginStore.user.username }/>
     <ListItem header="Client started" description={ formatRelativeTime(LoginStore.systemInfo.client_started) }/>
@@ -22,7 +22,12 @@ const Statistics = StatisticsDecorator(({ stats }) => (
   </div>
 ), SystemConstants.STATS_URL, 'Failed to fetch information', 10);
 
-class Application extends React.PureComponent {
+
+export interface ApplicationProps {
+  componentId: string;
+}
+
+class Application extends React.PureComponent<ApplicationProps> {
   static propTypes = {
 
   };

@@ -25,5 +25,10 @@ module.exports = {
     minW: 2,
     minH: 3,
   },
-};
+} as UI.Widget;
+
+export interface Settings {
+  feed_url: string;
+  feed_cache_minutes: number;
+}
 

@@ -14,5 +14,5 @@ module.exports = {
     actions: require('actions/QueueActions').default,
     ids: [ 'resume', 'pause' ],
   },
-};
+} as UI.Widget;
 

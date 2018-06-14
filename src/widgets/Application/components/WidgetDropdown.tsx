@@ -6,9 +6,10 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
+import { Location } from 'history';
 
 
-const getWidgetItem = (widgetInfo, location) => {
+const getWidgetItem = (widgetInfo: UI.Widget, location: Location) => {
   return (
     <MenuItemLink 
       key={ widgetInfo.typeId }
@@ -20,15 +21,18 @@ const getWidgetItem = (widgetInfo, location) => {
   );
 };
 
-const WidgetDropdown = ({ widgets, onClickItem, componentId, ...widgetProps }, { router }) => (
+export interface WidgetDropdownProps {
+  componentId: string;
+}
+
+const WidgetDropdown: React.SFC<WidgetDropdownProps> = ({ componentId }, { router }) => (
   <Dropdown 
     caption="Add widget..."
     className="create-widget"
     button={ true }
     contextElement={ '.' + componentId }
-    { ...widgetProps }
   >
-    { WidgetStore.widgets
+    { (WidgetStore.widgets as UI.Widget[])
       .filter(widgetInfo => !widgetInfo.alwaysShow)
       .map(widgetInfo => getWidgetItem(widgetInfo, router.route.location)) }
   </Dropdown>

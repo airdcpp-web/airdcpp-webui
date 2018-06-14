@@ -1,8 +1,9 @@
 import React from 'react';
 
+//@ts-ignore
 import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler } from 'react-timeseries-charts';
 
-import { withContentRect } from 'react-measure';
+import { withContentRect, MeasuredComponentProps } from 'react-measure';
 
 
 const upDownStyler = styler([
@@ -15,17 +16,23 @@ const upDownStyler = styler([
   }
 ]);
 
-const SpeedChart = withContentRect('bounds')(class extends React.PureComponent {
+export interface SpeedChartProps {
+  maxUpload: number;
+  maxDownload: number;
+  trafficSeries: any;
+}
+
+const SpeedChart = withContentRect('bounds')(class extends React.PureComponent<SpeedChartProps & MeasuredComponentProps> {
   render() {
     const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect } = this.props;
     return (
       <div ref={ measureRef } className="graph">
         <ChartContainer 
           timeRange={ trafficSeries.timerange() } 
-          width={ contentRect.bounds.width }
+          width={ contentRect.bounds!.width }
         >
           <ChartRow 
-            height={ contentRect.bounds.height - 25 }
+            height={ contentRect.bounds!.height - 25 }
           >
             <Charts>
               <AreaChart

@@ -13,7 +13,7 @@ import IconConstants from 'constants/IconConstants';
 interface LimiterConfigProps {
   limit: number;
   settingKey: string;
-  hide: () => void;
+  hide?: () => void;
 }
 
 class LimiterConfig extends React.PureComponent<LimiterConfigProps> {
@@ -31,7 +31,7 @@ class LimiterConfig extends React.PureComponent<LimiterConfigProps> {
       [this.props.settingKey]: limit,
     });
 
-    this.props.hide();
+    this.props.hide!();
   };
 
   render() {

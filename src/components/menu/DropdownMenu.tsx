@@ -11,7 +11,7 @@ import { DropdownProps } from 'components/semantic/Dropdown';
 
 
 export interface ActionMenuProps extends SectionedDropdownProps {
-  header: React.ReactNode;
+  header?: React.ReactNode;
 }
 
 export const ActionMenu = ActionMenuDecorator<ActionMenuProps>(({ header, children, ...other }) => (

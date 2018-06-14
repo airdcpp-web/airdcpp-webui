@@ -73,7 +73,7 @@ const Login = createReactClass({
     };
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (nextState.login.socketAuthenticated) {
       const nextPath = this.props.location.state ? this.props.location.state.nextPath : '/';
       History.replace({

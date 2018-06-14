@@ -2,7 +2,7 @@ import React from 'react';
 
 
 export default function <PropsT>(Component: React.ComponentType<PropsT>, redrawIntervalSeconds = 60) {
-  class RedrawDecorator extends React.Component {
+  class RedrawDecorator extends React.Component<PropsT> {
     redrawTimeout: any;
 
     componentDidMount() {
