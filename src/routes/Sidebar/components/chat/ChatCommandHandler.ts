@@ -1,18 +1,21 @@
 import { showAction } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
+import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 
-const handleMe = (params, { actions, session }) => {
+type ParamsType = string | undefined;
+
+const handleMe = (params: ParamsType, { actions, session }: ChatSessionProps) => {
   if (params) {
     actions.sendMessage(session, params, true);
   }
 };
 
-const handleClear = (params, { actions, session }) => {
+const handleClear = (params: ParamsType, { actions, session }: ChatSessionProps) => {
   actions.clear(session);
 };
 
-const CommandHandler = (sessionProps) => {
+const CommandHandler = (sessionProps: ChatSessionProps) => {
   const commands = {
     clear: {
       help: 'Clear message cache',
@@ -37,7 +40,7 @@ const CommandHandler = (sessionProps) => {
   };
 
   return {
-    handle: (command, params) => {
+    handle: (command: string, params: ParamsType) => {
       if (commands[command]) {
         commands[command].handler(params, sessionProps);
       }

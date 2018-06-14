@@ -20,9 +20,9 @@ declare module 'fixed-data-table-2' {
 
 export interface VirtualTableProps extends TableFooterProps {
   store: any;
-  entityId?: any;
+  entityId?: API.IdType;
   sessionStore?: any;
-  viewId?: any;
+  viewId?: string;
   sourceFilter?: any;
   emptyRowsNodeGetter?: () => React.ReactNode;
   rowClassNameGetter: (rowData: any) => string;
@@ -102,7 +102,7 @@ class VirtualTable extends React.Component<VirtualTableProps> {
     return this.props.sessionStore.getSession(this.props.entityId);
   };
 
-  start = (entityId: any) => {
+  start = (entityId?: API.IdType) => {
     const { store, sourceFilter } = this.props;
 
     console.log(`Calling start action for view ${store.viewUrl} (before timeout)`);

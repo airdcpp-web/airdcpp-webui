@@ -28,14 +28,14 @@ const getListMessageTime = (listItem: API.MessageListItem) => {
 };
 
 interface MessageSessionActions {
-  setRead: (entityId: any) => void;
+  setRead: (entityId: API.IdType) => void;
 }
 
 type SessionItem = (API.MessageSessionItem & { read?: undefined }) | (API.ReadableSessionItem & { message_counts?: undefined });
 
 // Update the data with unread info that is marked as read
 // Marks the session as read also in the backend
-const checkUnread = (sessionItem: SessionItem, actions: MessageSessionActions, entityId: any): API.MessageSessionItem | API.ReadableSessionItem => {
+const checkUnread = (sessionItem: SessionItem, actions: MessageSessionActions, entityId: API.IdType): API.MessageSessionItem | API.ReadableSessionItem => {
   if (!sessionItem.message_counts) {
     // Non-chat session
 

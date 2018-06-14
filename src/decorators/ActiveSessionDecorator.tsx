@@ -8,29 +8,29 @@ import { LocalSettings } from 'constants/SettingConstants';
 
 interface ActiveSessionDecoratorProps<SessionT> {
   actions: {
-    setRead: (id: any) => void;
-    sessionChanged: (id: any) => void;
+    setRead: (id: API.IdType) => void;
+    sessionChanged: (id: API.IdType | null) => void;
   };
   session: SessionT;
 }
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function <PropsT, SessionT extends { id: any; }>(Component: React.ComponentType<PropsT>, useReadDelay: boolean) {
+export default function <PropsT, SessionT extends { id: API.IdType; }>(Component: React.ComponentType<PropsT>, useReadDelay: boolean) {
   class ActiveSessionDecorator extends React.Component<ActiveSessionDecoratorProps<SessionT>> {
     static propTypes = {
       session: PropTypes.any, // Required (cloned)
       actions: PropTypes.object, // Required (cloned)
     };
 
-    readTimeout: any;
+    readTimeout: NodeJS.Timer | null;
 
-    setRead = (id: any) => {
+    setRead = (id: API.IdType) => {
       this.props.actions.setRead(id);
       this.readTimeout = null;
     };
 
-    setSession = (id: any) => {
+    setSession = (id: API.IdType | null) => {
       if (this.readTimeout) {
         clearTimeout(this.readTimeout);
         this.setRead(this.props.session.id);

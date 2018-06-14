@@ -5,15 +5,19 @@ import classNames from 'classnames';
 
 import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
 import ChatCommandHandler from './ChatCommandHandler';
+
+//@ts-ignore
 import { MentionsInput, Mention } from 'react-mentions';
 
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
+import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
+import { RouterChildContext } from 'react-router';
 
 const ENTER_KEY_CODE = 13;
 
 
-const getMentionFieldStyle = (mobileLayout) => {
+const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
     suggestions: {
       list: {
@@ -44,7 +48,11 @@ const getMentionFieldStyle = (mobileLayout) => {
   };
 };
 
-class MessageComposer extends React.Component {
+export interface MessageComposerProps extends ChatSessionProps {
+
+}
+
+class MessageComposer extends React.Component<MessageComposerProps> {
   static propTypes = {
     /**
 		 * Actions for this chat session type
@@ -57,7 +65,7 @@ class MessageComposer extends React.Component {
     router: PropTypes.object.isRequired,
   };
 
-  handleCommand = (text) => {
+  handleCommand = (text: string) => {
     let command, params;
 
     {
@@ -74,12 +82,12 @@ class MessageComposer extends React.Component {
     ChatCommandHandler(this.props).handle(command, params);
   };
 
-  handleSend = (message) => {
+  handleSend = (message: object) => {
     const { actions, session } = this.props;
     actions.sendMessage(session, message);
   };
 
-  getStorageKey = (context) => {
+  getStorageKey = (context: RouterChildContext<{}>) => {
     return 'last_message_' + context.router.route.location.pathname;
   };
 
@@ -88,7 +96,7 @@ class MessageComposer extends React.Component {
     saveSessionProperty(this.getStorageKey(this.context), text);
   };
 
-  loadState = (context) => {
+  loadState = (context: RouterChildContext<{}>) => {
     return {
       text: loadSessionProperty(this.getStorageKey(context), ''),
     };
@@ -98,20 +106,20 @@ class MessageComposer extends React.Component {
     this.saveText();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps(nextProps: MessageComposerProps, nextContext: RouterChildContext<{}>) {
     if (nextContext.router.route.location.pathname !== this.context.router.route.location.pathname) {
       this.saveText();
       this.setState(this.loadState(nextContext));
     }
   }
 
-  handleChange = (event, markupValue, plainValue) => {
+  handleChange = (event: any, markupValue: string, plainValue: string) => {
     this.setState({ 
       text: plainValue 
     });
   };
 
-  onKeyDown = (event) => {
+  onKeyDown = (event: React.KeyboardEvent) => {
     if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
       event.preventDefault();
       this.sendText();
@@ -135,22 +143,22 @@ class MessageComposer extends React.Component {
     this.setState({ text: '' });
   };
 
-  mapUser = (user) => {
+  mapUser = (user: API.HubUser) => {
     return {
       id: user.cid,
       display: user.nick,
     };
   };
 
-  findUsers = (value, callback) => {
+  findUsers = (value: string, callback: (data: any) => void) => {
     const { session } = this.props;
     SocketService.post(UserConstants.SEARCH_NICKS_URL, { 
       pattern: value, 
       max_results: 5,
       hub_urls: session.hub_url ? [ session.hub_url ] : undefined,
     })
-      .then(users => callback(users.map(this.mapUser)))
-      .catch(error => 
+      .then((users: API.HubUser[]) => callback(users.map(this.mapUser)))
+      .catch((error: APISocket.Error) => 
         console.log('Failed to fetch suggestions: ' + error)
       );
   };

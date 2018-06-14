@@ -2,7 +2,7 @@ import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
 
 
-export const actionFilter = (action: UI.ActionType, itemData: any) => {
+export const actionFilter = (action: UI.ActionType, itemData?: any) => {
   return !itemData || !action.filter || action.filter(itemData);
 };
 
@@ -11,6 +11,6 @@ export const actionAccess = (action: UI.ActionType) => {
   return !action.access || LoginStore.hasAccess(action.access);
 };
 
-export const showAction = (action: UI.ActionType, itemData: any) => {
+export const showAction = (action: UI.ActionType, itemData?: any) => {
   return actionFilter(action, itemData) && actionAccess(action);
 };

@@ -1,22 +1,30 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
-import Resizable from 're-resizable';
+import Resizable, { ResizeCallback } from 're-resizable';
 import History from 'utils/History';
 
 import '../style.css';
+import { RouteComponentProps } from 'react-router';
 
 
 const MIN_WIDTH = 500;
 
-class Sidebar extends React.Component {
-  static propTypes = {
-    context: PropTypes.string,
-  };
+export interface SidebarProps extends RouteComponentProps<{}> {
 
-  constructor(props) {
+}
+
+interface State {
+  animating: boolean;
+  width: number;
+}
+
+class Sidebar extends React.Component<SidebarProps, State> {
+  c: Resizable;
+
+  constructor(props: SidebarProps) {
     super(props);
     const width = loadLocalProperty('sidebar_width', 1000);
 
@@ -29,7 +37,7 @@ class Sidebar extends React.Component {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: SidebarProps) {
     if (nextProps.location.state.sidebar.data.close) {
       $(this.c.resizable).sidebar('hide');
     }
@@ -60,7 +68,7 @@ class Sidebar extends React.Component {
     this.setState({ animating: false });
   };
 
-  onResizeStop = (event, direction, element, delta) => {
+  onResizeStop: ResizeCallback = (event, direction, element, delta) => {
     if (!delta.width) {
       return;
     }
@@ -74,7 +82,7 @@ class Sidebar extends React.Component {
     const { width, animating } = this.state;
     return (
       <Resizable
-        ref={ c => this.c = c }
+        ref={ (c: any) => this.c = c }
         size={ {
           width: Math.min(width, window.innerWidth),
           height: window.innerHeight,
@@ -90,9 +98,7 @@ class Sidebar extends React.Component {
         onResizeStop={ this.onResizeStop }
       >
         <div id="sidebar-container">
-          { animating ? <Loader text=""/> : /*React.Children.map(this.props.children, child => React.cloneElement(child, {
-            width,
-          }))*/this.props.children }
+          { animating ? <Loader text=""/> : this.props.children }
         </div>
       </Resizable>
     );

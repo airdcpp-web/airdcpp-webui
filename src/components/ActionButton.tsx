@@ -8,7 +8,7 @@ import { RouterChildContext } from 'react-router';
 
 
 interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
-  action: any;
+  action: UI.ActionType;
   itemData?: any;
   icon?: IconType;
 }

@@ -21,7 +21,7 @@ t.Range = function (min: number, max: number) {
     return true;
   });
 
-  Range.getValidationErrorMessage = (value: any, path: string, context: any) => {
+  Range.getValidationErrorMessage = (value: number, path: string, context: any) => {
     if (min && value < min) {
       return 'Minimum allowed value is ' + min;
     }

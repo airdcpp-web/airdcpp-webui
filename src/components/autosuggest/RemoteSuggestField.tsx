@@ -42,7 +42,7 @@ class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
       max_results: 7 
     })
       .then(this.onSuggestionsReceived)
-      .catch((error: any) => 
+      .catch((error: APISocket.Error) => 
         console.log('Failed to fetch suggestions: ' + error)
       );
   };

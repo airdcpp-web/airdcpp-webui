@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Modal from 'components/semantic/Modal';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
 import ShareConstants from 'constants/ShareConstants';
@@ -26,6 +25,7 @@ import LoginStore from 'stores/LoginStore';
 
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
+import Modal from 'components/semantic/Modal';
 
 import './style.css';
 import { OverlayDecoratorProps } from 'decorators/OverlayDecorator';

@@ -20,7 +20,7 @@ export interface SaveDecoratorProps {
 
 export interface SaveDecoratorChildProps {
   saveButton: React.ReactElement<SaveButtonProps> | false;
-  message: any;
+  message: React.ReactNode;
 }
 
 type SaveableRef = Form;
@@ -58,7 +58,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       }
     }
 
-    onSettingsChanged = (id: string, value: any, hasChanges: boolean) => {
+    onSettingsChanged = (id: string, value: UI.FormValueMap, hasChanges: boolean) => {
       if (hasChanges) {
         this.changedProperties.add(id);
       } else {

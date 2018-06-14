@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Loader from 'components/semantic/Loader';
-import ScrollDecorator from 'decorators/ScrollDecorator';
+import ScrollDecorator, { ScrollDecoratorChildProps } from 'decorators/ScrollDecorator';
 import { ChatMessage, StatusMessage } from './Message';
 import { formatCalendarTime } from 'utils/ValueFormat';
 
@@ -80,12 +80,11 @@ const getMessageListItem = (reduced: React.ReactNode[], message: API.MessageList
 
 
 interface MessageViewProps {
-  messages: API.MessageListItem[];
-  scrollableRef: React.Ref<any>;
+  messages: API.MessageListItem[] | null;
   className?: string;
 }
 
-class MessageView extends React.Component<MessageViewProps> {
+class MessageView extends React.Component<MessageViewProps & ScrollDecoratorChildProps> {
   static propTypes = {
     messages: PropTypes.array,
     scrollableRef: PropTypes.func,
@@ -102,7 +101,7 @@ class MessageView extends React.Component<MessageViewProps> {
         ref={ scrollableRef }
         className={ classNames('message-section', className) }
       >
-        { messages ? (
+        { !!messages ? (
           <div className="ui list message-list">
             { messages.reduce(getMessageListItem, []) }
           </div>
@@ -114,4 +113,4 @@ class MessageView extends React.Component<MessageViewProps> {
   }
 }
 
-export default ScrollDecorator(MessageView);
+export default ScrollDecorator<MessageViewProps>(MessageView);

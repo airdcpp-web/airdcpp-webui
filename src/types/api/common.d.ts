@@ -1,4 +1,6 @@
 declare namespace API {
+  export type IdType = number | string;
+
   // FILES
   export type FileContentType = 'audio' | 'compressed' | 'document' | 'executable' | 'picture' | 'video' | 'other' | 'filelist';
 
@@ -43,7 +45,7 @@ declare namespace API {
     path: string;
     dupe: Dupe;
     name: string;
-    type: any;
+    type: FileItemType;
   }
 
 
@@ -142,7 +144,7 @@ declare namespace API {
     flags: HubUserFlag[];
   }
 
-  interface HubUser {
+  interface HubUser extends HintedUserBase {
     hub_name: string;
     flags: HubUserFlag[];
     ip4?: IP;
