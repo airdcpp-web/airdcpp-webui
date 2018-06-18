@@ -22,7 +22,7 @@ export default function (Component) {
       error: null,
     };
 
-    componentWillUpdate(nextProps, nextState) {
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
       // Reset the error when switching items
       if (nextProps.item !== this.props.item && this.state.error) {
         this.setState({ error: null });

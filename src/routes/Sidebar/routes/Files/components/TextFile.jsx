@@ -23,7 +23,7 @@ class TextFile extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!nextProps.item.content_ready) {
       return;
     }

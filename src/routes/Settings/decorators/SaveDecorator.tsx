@@ -52,8 +52,8 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       };
     }
 
-    componentWillReceiveProps(nextProps: SaveDecoratorProps) {
-      if (nextProps.currentMenuItem.url !== this.props.currentMenuItem.url) {
+    componentDidUpdate(prevProps: SaveDecoratorProps) {
+      if (prevProps.currentMenuItem.url !== this.props.currentMenuItem.url) {
         this.changedProperties.clear();
       }
     }

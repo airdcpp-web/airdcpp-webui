@@ -21,7 +21,7 @@ export default function (Component) {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       // Save the return location for sidebar
       // Also save the location before opening modals as they shouldn't be used as
       // return locations

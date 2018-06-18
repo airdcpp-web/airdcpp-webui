@@ -53,7 +53,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(Component
       this.setSession(null);
     }
 
-    componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT>) {
+    UNSAFE_componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT>) {
       if (this.props.session.id != nextProps.session.id) {
         this.setSession(nextProps.session.id);
       }

@@ -31,7 +31,7 @@ export default function <PropsT, SessionT extends SessionBase = SessionBase>(Com
       this._scrollToBottom();
     }
 
-    componentWillUpdate(nextProps: ScrollDecoratorProps<SessionT>) {
+    UNSAFE_componentWillUpdate(nextProps: ScrollDecoratorProps<SessionT>) {
       if (nextProps.session && nextProps.session.id !== this.props.session.id) {
         shouldScrollBottom = true;
         return;

@@ -47,7 +47,7 @@ export default function <PropsT, SemanticSettingPropsT>(Component: React.Compone
       }
     }
 
-    componentWillReceiveProps() {
+    UNSAFE_componentWillReceiveProps() {
       if (this.context.router.route.location.state[this.props.overlayId].data.close) {
         this.hide();
       }

@@ -33,8 +33,8 @@ class HubSession extends React.Component {
     showList: checkList(this.props),
   };
   
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.session.id !== this.props.session.id && this.state.showList !== checkList(nextProps)) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.session.id !== this.props.session.id && this.state.showList !== checkList(this.props)) {
       this.toggleListState();
     }
   }

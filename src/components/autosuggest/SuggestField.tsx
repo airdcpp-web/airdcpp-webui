@@ -77,7 +77,7 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     text: this.props.defaultValue || '',
   };
 
-  componentWillReceiveProps(nextProps: SuggestFieldProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: SuggestFieldProps) {
     // The received default value has changed?
     // Always update the field value in that case
     if (nextProps.defaultValue !== this.props.defaultValue) {

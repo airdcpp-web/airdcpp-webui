@@ -55,7 +55,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
     $(this.c).checkbox(settings);
   }
 
-  componentWillUpdate(prevProps: CheckboxProps) {
+  componentDidUpdate(prevProps: CheckboxProps) {
     if (prevProps.checked != this.props.checked) {
       if (this.props.checked) {
         $(this.c).checkbox('set checked');

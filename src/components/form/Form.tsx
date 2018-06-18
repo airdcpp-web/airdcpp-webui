@@ -105,9 +105,9 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     this.setSourceValue(this.props.value);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: FormProps<ValueType>) {
-    if (nextProps.value !== this.props.value) {
-      this.setSourceValue(nextProps.value);
+  componentDidUpdate(prevProps: FormProps<ValueType>) {
+    if (prevProps.value !== this.props.value) {
+      this.setSourceValue(this.props.value);
     }
   }
 
