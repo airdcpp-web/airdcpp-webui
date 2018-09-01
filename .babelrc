@@ -11,11 +11,12 @@
         ]
       }
     }],
-    "@babel/stage-3",
     "@babel/typescript"
   ],
   "plugins": [
     "@babel/transform-react-display-name",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties",
     ["module-resolver", {
       "root": ["./src", "./node_modules/semantic-ui-css"],
       "alias": {
