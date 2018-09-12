@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 export interface ProgressProps {
   caption: React.ReactNode;
-  className?: string;
+  className?: string | null;
   percent: number;
 }
 
@@ -18,7 +18,7 @@ const Progress: React.SFC<ProgressProps> = ({ className, percent, caption }) => 
       className="bar" 
       style={{ 
         transitionDuration: 300 + 'ms',
-        //width: percent + '%'
+        width: percent + '%',
       }}
     >
       <div className="progress"/>
@@ -32,6 +32,7 @@ const Progress: React.SFC<ProgressProps> = ({ className, percent, caption }) => 
 Progress.propTypes = {
   percent: PropTypes.number.isRequired,
   caption: PropTypes.node.isRequired,
+  className: PropTypes.string,
 };
 
 export default Progress;

@@ -11,6 +11,7 @@ import Footer from 'widgets/RSS/components/Footer';
 import { Settings } from 'widgets/RSS';
 
 import '../style.css';
+import invariant from 'invariant';
 
 
 const getEntryKey = (entry: FeedItem): string => {
@@ -94,6 +95,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
   };
 
   fetchFeed = (feedUrl: string) => {
+    invariant(!!feedUrl, 'Feed URL missing');
     if (this.state.entries) {
       this.setState({ entries: null });
     }
@@ -103,8 +105,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
       res => {
         console.log('RSS feed received', res);
         this.onFeedFetched(res.query);
-      }, 
-      //'jsonp'
+      }
     );
   };
 

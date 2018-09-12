@@ -36,10 +36,10 @@ const Widget: React.SFC<WidgetProps> = ({ widgetInfo, settings, componentId, chi
       { ...other }
     >
       <div className="content header-row">
-			  <div className="header">
-			  	<i className={ classNames('left floated large icon', widgetInfo.icon) }/>
-			    { settings.name }
-			  </div>
+        <div className="header">
+          <i className={ classNames('left floated large icon', widgetInfo.icon) }/>
+          { settings.name }
+        </div>
 
         <ActionMenu 
           className="widget-menu right top pointing"
@@ -57,7 +57,7 @@ const Widget: React.SFC<WidgetProps> = ({ widgetInfo, settings, componentId, chi
         { !!error ? error : (
           <Component
             componentId={ componentId }
-            settings={ settings }
+            settings={ settings.widget }
           />
         ) }
       </div>
