@@ -80,7 +80,12 @@ declare namespace API {
     message_counts: API.ChatMessageCounts | API.StatusMessageCounts;
   }
 
-  export type Severity = 'notify' | 'info' | 'warning' | 'error';
+  export enum Severity {
+    NOTIFY = 'notify',
+    INFO = 'info',
+    WARNING = 'warning',
+    ERROR = 'error',
+  }
 
   export interface Message {
     id: number;
@@ -165,5 +170,35 @@ declare namespace API {
     target_name: string;
     target_directory: string;
     priority: number;
+  }
+
+  // MISC
+  interface HookError {
+    hook_id: string;
+    hook_name: string;
+    error_id: string;
+    str: string;
+  }
+
+  enum Priority {
+    LOWEST = 1,
+    LOW = 2,
+    NORMAL = 3,
+    HIGH = 4,
+    HIGHEST = 5,
+  }
+
+  enum DownloadableItemStateId {
+    DOWNLOAD_FAILED = 'download_failed',
+    DOWNLOAD_PENDING = 'download_pending',
+    DOWNLOADING = 'downloading',
+    LOADING = 'loading',
+    DOWNLOADED = 'downloaded',
+  }
+
+  interface DownloadableItemState {
+    id: DownloadableItemStateId;
+    str: string;
+    time_finished: number;
   }
 }

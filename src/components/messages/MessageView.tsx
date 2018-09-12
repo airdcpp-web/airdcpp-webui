@@ -85,10 +85,10 @@ interface MessageViewProps {
 }
 
 class MessageView extends React.Component<MessageViewProps & ScrollDecoratorChildProps> {
-  static propTypes = {
+  /*static propTypes = {
     messages: PropTypes.array,
     scrollableRef: PropTypes.func,
-  };
+  };*/
 
   shouldComponentUpdate(nextProps: MessageViewProps) {
     return nextProps.messages !== this.props.messages;

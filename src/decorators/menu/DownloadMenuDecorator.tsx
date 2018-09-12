@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -24,23 +24,17 @@ type DownloadMenuDecoratorChildProps = ActionMenuDecoratorProps;
 
 export default function <DropdownPropsT>(Component: React.ComponentType<DownloadMenuDecoratorChildProps & DropdownPropsT>) {
   class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps & DropdownPropsT> {
-    static propTypes = {
+    /*static propTypes = {
 
-      /**
-       * Target user
-       */
+      // Target user
       user: PropTypes.object.isRequired,
   
-      /**
-       * Context-specific item data getter
-       */
+      // Context-specific item data getter
       itemInfoGetter: PropTypes.func.isRequired,
   
-      /**
-       * Context-specific item data getter
-       */
+      // Context-specific item data getter
       downloadHandler: PropTypes.func.isRequired,
-    };
+    };*/
 
     itemData: DownloadMenuItemData;
     constructor(props: DownloadMenuDecoratorProps & DropdownPropsT) {

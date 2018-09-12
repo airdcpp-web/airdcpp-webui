@@ -39,10 +39,8 @@ const CountLabel: React.SFC<CountLabelProps> = ({ urgencies, empty, size, classN
   );
 };
 
-CountLabel.propTypes = {
-  /**
-	 * Urgency mapping [ urgency -> count ]
-	 */
+/*CountLabel.propTypes = {
+	// Urgency mapping [ urgency -> count ]
   urgencies: PropTypes.object,
 
   size: PropTypes.string,
@@ -50,7 +48,7 @@ CountLabel.propTypes = {
   circular: PropTypes.bool,
 
   empty: PropTypes.bool,
-};
+};*/
 
 CountLabel.defaultProps = {
   empty: false,

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import FileIcon from 'components/icon/FileIcon';
@@ -27,12 +27,12 @@ const FormattedFile: React.SFC<FormattedFileProps> = ({ onClick, typeInfo, capti
   );
 };
 
-FormattedFile.propTypes = {
+/*FormattedFile.propTypes = {
   onClick: PropTypes.func,
 
   typeInfo: PropTypes.object.isRequired,
 
   caption: PropTypes.node.isRequired,
-};
+};*/
 
 export default FormattedFile;

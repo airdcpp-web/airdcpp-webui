@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
@@ -20,17 +20,14 @@ interface HistoryInputDataProps {
 }
 
 class HistoryInput extends React.Component<HistoryInputProps> {
-  static propTypes = {
-
-    /**
-		 * ID of the history section
-		 */
+  /*static propTypes = {
+		// ID of the history section
     historyId: PropTypes.string.isRequired,
 
     history: PropTypes.array.isRequired,
 
     submitHandler: PropTypes.func.isRequired,
-  };
+  };*/
 
   handleSubmit = (text: string) => {
     HistoryActions.add(this.props.historyId, text);

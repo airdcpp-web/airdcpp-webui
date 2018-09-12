@@ -1,5 +1,5 @@
 'use strict';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -18,10 +18,10 @@ interface ActiveSessionDecoratorProps<SessionT> {
 // and set them as read
 export default function <PropsT, SessionT extends { id: API.IdType; }>(Component: React.ComponentType<PropsT>, useReadDelay: boolean) {
   class ActiveSessionDecorator extends React.Component<ActiveSessionDecoratorProps<SessionT>> {
-    static propTypes = {
+    /*static propTypes = {
       session: PropTypes.any, // Required (cloned)
       actions: PropTypes.object, // Required (cloned)
-    };
+    };*/
 
     readTimeout: NodeJS.Timer | null;
 
@@ -41,7 +41,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(Component
         return;
       }
 
-      const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
+      const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
       this.readTimeout = setTimeout(_ => this.setRead(id), timeout);
     };
 

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -40,10 +40,10 @@ const Loader: React.SFC<LoaderProps> = ({ text, className, inline, size, inverte
   );
 };
 
-Loader.propTypes = {
+/*Loader.propTypes = {
   text: PropTypes.node,
   inline: PropTypes.bool,
-};
+};*/
 
 Loader.defaultProps = {
   text: 'Loading',

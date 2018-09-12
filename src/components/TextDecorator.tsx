@@ -75,12 +75,15 @@ const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location)
     }
 
     const tth = uri.slice(26, 26 + 39);
-    History.pushUnique({
-      pathname: '/search',
-      state: {
-        searchString: tth,
-      }
-    }, location);
+    History.pushUnique(
+      {
+        pathname: '/search',
+        state: {
+          searchString: tth,
+        }
+      }, 
+      location
+    );
   } else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
     evt.preventDefault();
 
@@ -131,10 +134,10 @@ const TextDecorator: React.SFC<TextDecoratorProps> = ({ emojify = false, text },
   </ReactLinkify>
 );
 
-TextDecorator.propTypes = {
+/*TextDecorator.propTypes = {
   text: PropTypes.string.isRequired,
   emojify: PropTypes.bool,
-};
+};*/
 
 TextDecorator.contextTypes = {
   router: PropTypes.object.isRequired,

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
@@ -21,19 +21,15 @@ export interface TableDropdownProps {
 }
 
 class TableDropdown extends React.Component<TableDropdownProps> {
-  static propTypes = {
-    /**
-		 * Cell content to render
-		 */
+  /*static propTypes = {
+    // Cell content to render
     caption: PropTypes.node.isRequired,
 
-    /**
-		 * Trigger the dropdown when clicking on the caption
-		 */
+    // Trigger the dropdown when clicking on the caption
     linkCaption: PropTypes.bool,
 
     children: PropTypes.func.isRequired,
-  };
+  };*/
 
   static defaultProps: Partial<TableDropdownProps> = {
     linkCaption: true,

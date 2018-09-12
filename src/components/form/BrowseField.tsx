@@ -21,10 +21,14 @@ const BrowseField = t.form.Form.templates.textbox.clone({
       locals.onChange(path);
     };
 
+    const parseHistoryId = () => {
+      return (locals.config && !locals.value) ? locals.config.historyId : undefined;
+    };
+
     const showBrowseDialog = () => {
       const { location } = locals.context.router.route;
       History.pushModal(location, `${location.pathname}/browse`, OverlayConstants.FILE_BROWSER_MODAL, {
-        historyId: (locals.config && !locals.value) ? locals.config.historyId : undefined,
+        historyId: parseHistoryId(),
       });
     };
 
@@ -58,7 +62,8 @@ const BrowseField = t.form.Form.templates.textbox.clone({
           onConfirm={ onConfirm }
           subHeader={ locals.label }
           initialPath={ locals.value ? locals.value : '' }
-          isFile={ locals.config.isFile }
+          //isFile={ locals.config.isFile }
+          historyId={ parseHistoryId() }
         />
       </div>
     );

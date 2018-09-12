@@ -143,32 +143,24 @@ export default function <DropdownComponentPropsT extends object>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
   class ActionMenuDecorator extends React.PureComponent<ActionMenuDecoratorProps & DropdownComponentPropsT> {
-    static propTypes = {
+    /*static propTypes = {
 
-      /**
-			 * Item to be passed to the actions
-			 */
+      // Item to be passed to the actions
       itemData: PropTypes.any,
 
       itemDataGetter: PropTypes.func,
 
-      /**
-			 * Menu item actions
-			 */
+      // Menu item actions
       actions: PropTypes.object.isRequired,
 
-      /**
-			 * Action ids to filter from all actions
-			 */
+      // Action ids to filter from all actions
       ids: PropTypes.array,
 
-      /**
-			 * Use button style for the trigger
-			 */
+      // Use button style for the trigger
       button: PropTypes.bool,
 
       caption: PropTypes.node,
-    };
+    };*/
 
     static contextTypes = {
       router: PropTypes.object.isRequired,

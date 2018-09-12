@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import OverlayDecorator, { OverlayDecoratorChildProps } from 'decorators/OverlayDecorator';
@@ -28,40 +28,30 @@ export interface ModalProps {
 }
 
 class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<SemanticUI.ModalSettings>> {
-  static propTypes = {
-    /**
-		 * Close the modal when clicking outside its boundaries
-		 */
+  /*static propTypes = {
+    // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
 
-    /**
-		 * Function to call when the dialog is approved
-		 * If no handler is supplied, there will only be a plain close button
-		 */
+		// Function to call when the dialog is approved
+		// If no handler is supplied, there will only be a plain close button
     onApprove: PropTypes.func,
 
-    /**
-		 * Caption for the approve button
-		 */
+		// Caption for the approve button
     approveCaption: PropTypes.node,
 
-    /**
-		 * Use disabled style for the approve button
-		 */
+		// Use disabled style for the approve button
     approveDisabled: PropTypes.bool,
 
-    /**
-		 * The modal will always use the maximum allowed width when set,
-		 * instead of adjusting the height dynamically.
-		 * Useful for modals with navigable, varying height content
-		 */
+		// The modal will always use the maximum allowed width when set,
+		// instead of adjusting the height dynamically.
+		// Useful for modals with navigable, varying height content
     fullHeight: PropTypes.bool,
 
     dynamicHeight: PropTypes.bool,
 
     showOverlay: PropTypes.func.isRequired,
     hide: PropTypes.func.isRequired,
-  };
+  };*/
 
   static defaultProps: Partial<ModalProps> = {
     closable: true,

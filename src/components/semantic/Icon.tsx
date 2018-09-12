@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -37,10 +37,8 @@ const Icon: React.SFC<IconProps> = ({ icon, size, className, cornerIcon, ...othe
   );
 };
 
-Icon.propTypes = {
-  /**
-	 * Icon class
-	 */
+/*Icon.propTypes = {
+  // Icon class
   icon: PropTypes.node,
 
   cornerIcon: PropTypes.string,
@@ -48,6 +46,6 @@ Icon.propTypes = {
   className: PropTypes.string,
 
   size: PropTypes.string,
-};
+};*/
 
 export default Icon;

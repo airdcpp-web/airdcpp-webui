@@ -25,7 +25,7 @@ export default function <PropsT>(
   overlayId: any, 
   path: string
 ) {
-  const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps> = (props, { router }: RouterChildContext<{}>) => {
+  const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps & PropsT> = (props, { router }: RouterChildContext<{}>) => {
     const { location, match } = router.route;
     if (!location.state || !location.state[overlayId]) {
       return null;

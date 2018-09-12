@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon, { IconProps } from 'components/semantic/Icon';
@@ -74,11 +74,9 @@ const UserIcon: React.SFC<UserIconProps> = ({ flags, ...other }) => (
   />
 );
 
-UserIcon.propTypes = {
-  /**
-	 * User flag array
-	 */
+/*UserIcon.propTypes = {
+  // User flag array
   flags: PropTypes.array.isRequired,
-};
+};*/
 
 export default UserIcon;

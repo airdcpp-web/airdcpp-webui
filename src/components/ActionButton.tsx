@@ -28,7 +28,7 @@ const ActionButton: React.SFC<ActionButtonProps> = ({ action, itemData, icon = t
   );
 };
 
-ActionButton.propTypes = {
+/*ActionButton.propTypes = {
   action: PropTypes.func,
 
   itemData: PropTypes.object,
@@ -37,7 +37,7 @@ ActionButton.propTypes = {
     PropTypes.bool,
     PropTypes.string,
   ]),
-};
+};*/
 
 ActionButton.contextTypes = {
   router: PropTypes.object.isRequired,

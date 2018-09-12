@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -65,12 +65,12 @@ const Widget: React.SFC<WidgetProps> = ({ widgetInfo, settings, componentId, chi
   );
 };
 
-Widget.propTypes = {
+/*Widget.propTypes = {
   widgetInfo: PropTypes.object.isRequired,
 
   settings: PropTypes.object.isRequired,
 
   componentId: PropTypes.string.isRequired,
-};
+};*/
 
 export default Widget;

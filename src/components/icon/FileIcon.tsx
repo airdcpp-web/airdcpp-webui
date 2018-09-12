@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -46,10 +46,10 @@ const FileIcon: React.SFC<FileIconProps> = ({ typeInfo, onClick }) => {
   );
 };
 
-FileIcon.propTypes = {
+/*FileIcon.propTypes = {
   onClick: PropTypes.func,
 
   typeInfo: PropTypes.object.isRequired,
-};
+};*/
 
 export default FileIcon;

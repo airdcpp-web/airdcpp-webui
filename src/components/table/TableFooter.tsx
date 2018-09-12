@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import TextFilter from './TextFilter';
@@ -46,10 +46,10 @@ const TableFooter: React.SFC<TableFooterProps> = ({ store, customFilter, footerD
   );
 };
 
-TableFooter.propTypes = {
+/*TableFooter.propTypes = {
   customFilter: PropTypes.node,
   footerData: PropTypes.node,
   store: PropTypes.object.isRequired,
-};
+};*/
 
 export default TableFooter;

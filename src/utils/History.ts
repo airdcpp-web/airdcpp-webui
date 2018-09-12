@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import createHistory from 'history/createBrowserHistory';
 
 import OverlayConstants from 'constants/OverlayConstants';
-import { Location } from 'history';
+import { Location, LocationDescriptorObject } from 'history';
 
 
 const History = createHistory({
@@ -62,7 +62,7 @@ const createModelessState = (state: object) => {
 };
 
 
-const mergeOverlayData = (locationState: object, overlayId: string, data: object) => {
+const mergeOverlayData = (locationState: object, overlayId: string, data?: object) => {
   return update(locationState, { 
     [overlayId]: { 
       data: { $merge: data } 
@@ -105,7 +105,7 @@ const addModalState = (currentLocation: Location, overlayId: string, data: objec
 };
 
 const Helpers = {
-  pushModal: function (currentLocation: Location, pathname: string, overlayId: string, data: object) {
+  pushModal: function (currentLocation: Location, pathname: string, overlayId: string, data?: object) {
     const state = addModalState(currentLocation, overlayId, data, pathname);
     History.push(pathname, state);
   },
@@ -127,37 +127,37 @@ const Helpers = {
     return currentLocation.state && currentLocation.state[OverlayConstants.SIDEBAR_ID];
   },
 
-  replaceSidebar: function (currentLocation: Location, pathname: string, data: object) {
+  replaceSidebar: function (currentLocation: Location, pathname: string, data?: object) {
     const state = getSidebarState(currentLocation, data);
     History.replace(pathname, state);
   },
 
-  pushSidebar: function (currentLocation: Location, pathname: string, data: object) {
+  pushSidebar: function (currentLocation: Location, pathname: string, data?: object) {
     // replaceState is invoked automatically if the path hasn't changed
     const state = getSidebarState(currentLocation, data);
     History.push(pathname, state);
   },
 
   // Append new location data when in sidebar layout and create a new history entry
-  pushSidebarData: function (currentLocation: Location, data: object) {
+  pushSidebarData: function (currentLocation: Location, data?: object) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
     History.push(currentLocation.pathname, state);
   },
 
   // Append new location data when in sidebar layout without creating a new history entry
-  replaceSidebarData: function (currentLocation: Location, data: object) {
+  replaceSidebarData: function (currentLocation: Location, data?: object) {
     const state = mergeOverlayData(currentLocation.state, OverlayConstants.SIDEBAR_ID, data);
     History.replace(currentLocation.pathname, state);
   },
 
   // Shorthand function for receiving the data
   // Data for modals is converted to regular props by the parent decorator but it won't work well with a nested sidebar structure
-  getSidebarData: function (currentLocation: Location) {
+  getSidebarData: function (currentLocation: LocationDescriptorObject) {
     return currentLocation.state[OverlayConstants.SIDEBAR_ID].data;
   },
 
   // Remove overlay from the location state
-  removeOverlay: function (location: Location, overlayId: string, changeLocation = true) {
+  removeOverlay: function (location: LocationDescriptorObject, overlayId: string, changeLocation = true) {
     const { state } = location;
     const { returnTo } = state[overlayId];
     invariant(overlayId, 'Return address or overlay id missing when closing an overlay');
@@ -175,7 +175,7 @@ const Helpers = {
 
   // Uses replace instead if the next path matches the current one regardless of the state or other properties
   // Note that the regular history functions will ignore fully identical locations in any case so there's no need to check that manually
-  pushUnique: function (nextLocation: Location, currentLocation: Location) {
+  pushUnique: function (nextLocation: LocationDescriptorObject, currentLocation: Location) {
     invariant(currentLocation, 'pushUnique: current location was not supplied');
     if (nextLocation.pathname !== currentLocation.pathname) {
       History.push(nextLocation);

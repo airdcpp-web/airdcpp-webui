@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import 'semantic-ui/components/flag.min.css';
@@ -15,8 +15,8 @@ const FormattedIp: React.SFC<FormattedIpProps> = ({ item }) => (
   </div>
 );
 
-FormattedIp.propTypes = {
+/*FormattedIp.propTypes = {
   item: PropTypes.object.isRequired,
-};
+};*/
 
 export default FormattedIp;

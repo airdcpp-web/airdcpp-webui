@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon, { IconProps } from 'components/semantic/Icon';
@@ -16,11 +16,9 @@ const HubIcon: React.SFC<HubIconProps> = ({ hub, ...other }) => (
   />
 );
 
-HubIcon.propTypes = {
-  /**
-	 * Hub object
-	 */
+/*HubIcon.propTypes = {
+  // Hub object
   hub: PropTypes.object.isRequired,
-};
+};*/
 
 export default HubIcon;

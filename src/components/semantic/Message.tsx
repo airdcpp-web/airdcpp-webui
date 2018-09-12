@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon, { IconType } from 'components/semantic/Icon';
@@ -44,21 +44,17 @@ const Message: React.SFC<MessageProps> = ({ className, title, description, icon,
   );
 };
 
-Message.propTypes = {
-  /**
-	 * Message title
-	 */
+/*Message.propTypes = {
+	// Message title
   title: PropTypes.node,
 
-  /**
-	 * Message content
-	 */
+	// Message content
   description: PropTypes.node,
 
   isError: PropTypes.bool,
 
   icon: PropTypes.string,
-};
+};*/
 
 export default Message
 ;

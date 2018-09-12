@@ -1,11 +1,11 @@
 const MODULE_URL = 'events';
 
-export const SeverityEnum = {
-  NOTIFY: 'notify',
-  INFO: 'info',
-  WARNING: 'warning',
-  ERROR: 'error',
-};
+export enum SeverityEnum {
+  NOTIFY = 'notify',
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error',
+}
 
 export default {
   MODULE_URL: MODULE_URL,

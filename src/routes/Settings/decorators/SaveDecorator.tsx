@@ -29,9 +29,9 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
   class SaveDecorator extends React.Component<SaveDecoratorProps & PropsT> {
     static displayName = 'SaveDecorator';
 
-    static propTypes = {
+    /*static propTypes = {
       currentMenuItem: PropTypes.object.isRequired,
-    };
+    };*/
 
     static childContextTypes = {
       onFieldChanged: PropTypes.func.isRequired,

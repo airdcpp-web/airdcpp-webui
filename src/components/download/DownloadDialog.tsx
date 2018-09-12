@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
@@ -84,24 +84,20 @@ interface DownloadDialogDataProps {
 class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialogDataProps> {
   static displayName = 'DownloadDialog';
 
-  static propTypes = {
-    /**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 * Required
-		 */
+  /*static propTypes = {
+		// Function handling the path selection. Receives the selected path as argument.
+		// Required
     downloadHandler: PropTypes.func.isRequired,
 
-    /**
-		 * Information about the item to download
-		 * Required
-		 */
+		// Information about the item to download
+		// Required
     itemInfo: PropTypes.shape({
       path: PropTypes.string,
       dupe: PropTypes.object,
       name: PropTypes.string,
       type: PropTypes.object
     }),
-  };
+  };*/
 
   sections: Section[];
   modal: any;
@@ -188,7 +184,7 @@ class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialo
     const Component = useMobileLayout() ? MobileLayout : NormalLayout;
     return (
       <Modal 
-        ref={ c => this.modal = c }
+        ref={ (c: any) => this.modal = c }
         className="download-dialog" 
         title="Download" 
         closable={ true } 

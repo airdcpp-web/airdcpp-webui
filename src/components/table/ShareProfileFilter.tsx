@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
@@ -16,12 +16,10 @@ export interface ShareProfileFilterProps {
 }
 
 class ShareProfileFilter extends React.Component<ShareProfileFilterProps & TableFilterDecoratorChildProps & ShareProfileDecoratorChildProps & ShareProfileDecoratorChildProps> {
-  static propTypes = {
-    /**
-		 * Callback after selecting a profile
-		 */
+  /*static propTypes = {
+    // Callback after selecting a profile
     onFilterUpdated: PropTypes.func,
-  };
+  };*/
 
   state = {
     selectedProfile: defaultItem,

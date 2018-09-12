@@ -17,12 +17,10 @@ interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
 }
 
 class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteSettingFormDataProps> {
-  static propTypes = {
-    /**
-		 * Form items to list
-		 */
+  /*static propTypes = {
+    // Form items to list
     keys: PropTypes.array.isRequired,
-  };
+  };*/
 
   static contextTypes = {
     addFormRef: PropTypes.func.isRequired,

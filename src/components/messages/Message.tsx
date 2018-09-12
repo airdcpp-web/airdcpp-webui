@@ -7,7 +7,7 @@ import { formatTimestamp } from 'utils/ValueFormat';
 
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
-import { SeverityEnum } from 'constants/EventConstants';
+//import { SeverityEnum } from 'constants/EventConstants';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
 
@@ -25,10 +25,10 @@ const Author: React.SFC<{ message: API.ChatMessage; dropdownContext: string }> =
   </div>
 );
 
-Author.propTypes = {
+/*Author.propTypes = {
   message: PropTypes.object.isRequired,
   dropdownContext: PropTypes.string.isRequired,
-};
+};*/
 
 const TimeStamp: React.SFC<{ message: API.Message }> = ({ message }) => (
   <div className="time">
@@ -45,10 +45,10 @@ const MessageText: React.SFC<{ message: API.Message, emojify: boolean }> = ({ me
   </div>
 );
 
-MessageText.propTypes = {
+/*MessageText.propTypes = {
   message: PropTypes.object.isRequired,
   emojify: PropTypes.bool.isRequired,
-};
+};*/
 
 
 interface ChatMessageProps {
@@ -93,9 +93,9 @@ class ChatMessage extends React.Component<ChatMessageProps> {
 
 const getSeverityIcon = (severity: API.Severity) => {
   switch (severity) {
-    case SeverityEnum.INFO: return IconConstants.INFO + ' circle';
-    case SeverityEnum.WARNING: return IconConstants.WARNING;
-    case SeverityEnum.ERROR: return IconConstants.ERROR;
+    case API.Severity.INFO: return IconConstants.INFO + ' circle';
+    case API.Severity.WARNING: return IconConstants.WARNING;
+    case API.Severity.ERROR: return IconConstants.ERROR;
     default: return '';
   }
 };

@@ -31,7 +31,7 @@ export interface SuggestFieldProps extends Omit<Autosuggest.AutosuggestProps<Sug
   onSuggestionsClearRequested: () => void;
   onChange?: (text: string) => void;
 
-  submitHandler: SubmitHandlerType;
+  submitHandler?: SubmitHandlerType;
 }
 
 class SuggestField extends React.Component<SuggestFieldProps> {

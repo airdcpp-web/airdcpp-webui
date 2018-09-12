@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icon, { IconType } from 'components/semantic/Icon';
@@ -49,32 +49,21 @@ LayoutHeader.defaultProps = {
   size: 'large',
 };
 
-LayoutHeader.propTypes = {
-  /**
-	 * Header title
-	 */
+/*LayoutHeader.propTypes = {
+	// Header title
   title: PropTypes.node.isRequired,
 
-  /**
-	 * Subheader
-	 */
+	// Subheader
   subHeader: PropTypes.node,
 
-  /**
-	 * Icon to display
-	 */
+	// Icon to display
   icon: PropTypes.node,
 
-  /**
-	 * Component to display on the right side of the header
-	 */
+	// Component to display on the right side of the header
   rightComponent: PropTypes.node,
 
-  /**
-	 * Size of the header
-	 */
+	// Size of the header
   size: PropTypes.string,
-};
+};*/
 
-export default LayoutHeader
-;
+export default LayoutHeader;

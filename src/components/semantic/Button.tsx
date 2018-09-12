@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -33,26 +33,18 @@ const Button: React.SFC<ButtonProps> = ({ className, loading, icon, caption, dis
   );
 };
 
-Button.propTypes = {
-  /**
-	 * Icon class
-	 */
+/*Button.propTypes = {
+  // Icon class
   icon: PropTypes.string,
 
-  /**
-	 * Button caption
-	 */
+  // Button caption
   caption: PropTypes.node.isRequired,
 
-  /**
-	 * Disable button (the button will be disabled automatically when 'loading' is true)
-	 */
+  // Disable button (the button will be disabled automatically when 'loading' is true)
   disabled: PropTypes.bool,
 
-  /**
-	 * Show spinner
-	 */
+  // Show spinner
   loading: PropTypes.bool,
-};
+};*/
 
 export default Button;

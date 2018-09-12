@@ -1,5 +1,5 @@
 'use strict';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import classNames from 'classnames';
@@ -30,7 +30,7 @@ const MenuItemLink: React.SFC<MenuItemLinkProps> = ({ className = undefined, ico
   );
 };
 
-MenuItemLink.propTypes = {
+/*MenuItemLink.propTypes = {
   //children: PropTypes.any.isRequired,
 
   icon: PropTypes.string,
@@ -38,6 +38,6 @@ MenuItemLink.propTypes = {
   onClick: PropTypes.func.isRequired,
 
   active: PropTypes.bool,
-};
+};*/
 
 export default MenuItemLink;

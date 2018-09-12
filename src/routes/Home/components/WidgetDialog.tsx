@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Message from 'components/semantic/Message';
@@ -27,22 +27,16 @@ export interface WidgetDialogProps {
 class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecoratorChildProps> {
   static displayName = 'WidgetDialog';
 
-  static propTypes = {
-    /**
-		 * Current widget settings
-		 */
+  /*static propTypes = {
+    // Current widget settings
     settings: PropTypes.object, // Required
 
-    /**
-		 * Widget info object
-		 */
+    // Widget info object
     typeId: PropTypes.string, // Required
 
-    /**
-		 * Called when the form is saved
-		 */
+		// Called when the form is saved
     onSave: PropTypes.func, // Required
-  };
+  };*/
 
   form: Form;
 
