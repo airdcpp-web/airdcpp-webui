@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
@@ -60,10 +60,8 @@ const Entry: React.SFC<EntryProps> = ({ entry, feedUrl, componentId }) => {
   );
 };
 
-Entry.propTypes = {
-  /**
-	 * Feed entry
-	 */
+/*Entry.propTypes = {
+	// Feed entry
   entry: PropTypes.shape({
     title: PropTypes.oneOfType([
       PropTypes.object,
@@ -76,6 +74,6 @@ Entry.propTypes = {
   feedUrl: PropTypes.string.isRequired,
 
   componentId: PropTypes.string.isRequired,
-};
+};*/
 
 export default Entry;

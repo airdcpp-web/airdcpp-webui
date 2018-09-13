@@ -3,8 +3,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import 'semantic-ui/components/checkbox';
-import 'semantic-ui/components/checkbox.min.css';
+import 'semantic-ui-css/components/checkbox';
+import 'semantic-ui-css/components/checkbox.min.css';
 
 
 export interface CheckboxProps {

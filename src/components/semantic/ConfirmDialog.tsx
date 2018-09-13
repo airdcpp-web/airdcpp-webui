@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 
 import Checkbox from 'components/semantic/Checkbox';
 
-import 'semantic-ui/components/modal';
-import 'semantic-ui/components/modal.min.css';
+import 'semantic-ui-css/components/modal';
+import 'semantic-ui-css/components/modal.min.css';
 import Icon, { IconType } from 'components/semantic/Icon';
 
 

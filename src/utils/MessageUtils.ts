@@ -98,7 +98,7 @@ const pushMessage = (message: API.MessageListItem, messages: API.MessageListItem
     }
   }
 
-  return update(messages, { $push: [ message ] });
+  return update(messages, { $push: message });
 };
 
 export {

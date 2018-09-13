@@ -1,5 +1,5 @@
 'use strict';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Message from 'components/semantic/Message';
@@ -34,10 +34,8 @@ interface State {
 }
 
 class ChatLayout extends React.Component<ChatLayoutProps, State> {
-  static propTypes = {
-    /**
-		 * Access required for sending messages
-		 */
+  /*static propTypes = {
+		// Access required for sending messages
     chatAccess: PropTypes.string.isRequired,
 
     session: PropTypes.any.isRequired,
@@ -45,7 +43,7 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
     messageStore: PropTypes.object.isRequired,
 
     actions: PropTypes.object.isRequired,
-  };
+  };*/
 
   unsubscribe: () => void;
 

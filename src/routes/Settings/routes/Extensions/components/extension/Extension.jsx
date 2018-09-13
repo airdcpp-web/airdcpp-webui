@@ -13,7 +13,7 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import versionCompare from 'compare-versions';
 
-import 'semantic-ui/components/item.min.css';
+import 'semantic-ui-css/components/item.min.css';
 
 
 const Version = ({ title, packageInfo, className }) => {

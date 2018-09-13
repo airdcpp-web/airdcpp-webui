@@ -3,7 +3,7 @@ import React from 'react';
 
 import './style.css';
 
-import 'semantic-ui/components/breadcrumb.min.css';
+import 'semantic-ui-css/components/breadcrumb.min.css';
 
 import { Section, SelectedSection, SelectedNameFormatter } from './Section';
 

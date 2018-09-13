@@ -1,7 +1,7 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 
-import 'semantic-ui/components/flag.min.css';
+import 'semantic-ui-css/components/flag.min.css';
 
 
 export interface FormattedIpProps {

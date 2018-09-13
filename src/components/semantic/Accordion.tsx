@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import 'semantic-ui/components/accordion';
-import 'semantic-ui/components/accordion.min.css';
+import 'semantic-ui-css/components/accordion';
+import 'semantic-ui-css/components/accordion.min.css';
 
 import classNames from 'classnames';
 

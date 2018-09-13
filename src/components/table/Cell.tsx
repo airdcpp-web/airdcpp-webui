@@ -14,7 +14,7 @@ import Checkbox, { CheckboxProps } from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
 import { Cell, CellProps } from 'fixed-data-table-2';
 import { RouterChildContext } from 'react-router';
-import { Location } from 'history';
+//import { Location } from 'history';
 import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
@@ -83,7 +83,8 @@ export const ActionMenuCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGe
 );
 
 export interface ActionLinkCellProps extends RowWrapperCellChildProps {
-  action: (itemData: any, location: Location) => void;
+  //action: (itemData: any, location: Location) => void;
+  action: UI.ActionType;
 }
 
 export const ActionLinkCell: React.SFC<ActionLinkCellProps> = ({ cellData, rowDataGetter, action, ...props }, { router }: RouterChildContext<{}>) => {
@@ -184,13 +185,13 @@ export const FileDownloadCell: React.SFC<FileDownloadCellProps> = ({ cellData, r
   />
 );
 
-FileDownloadCell.propTypes = {
+/*FileDownloadCell.propTypes = {
   rowDataGetter: PropTypes.func, // REQUIRED
   cellData: PropTypes.any, // REQUIRED
   userGetter: PropTypes.func.isRequired,
   clickHandlerGetter: PropTypes.func,
   downloadHandler: PropTypes.func.isRequired,
-};
+};*/
 
 export interface CheckboxCellProps extends Omit<RowWrapperCellChildProps, 'onChange'>, Omit<CheckboxProps, 'onChange' | 'checked'> {
   onChange: (checked: boolean, rowData: any) => void;
@@ -204,8 +205,8 @@ export const CheckboxCell: React.SFC<CheckboxCellProps> = ({ cellData, rowDataGe
   />
 );
 
-CheckboxCell.propTypes = {
+/*CheckboxCell.propTypes = {
   rowDataGetter: PropTypes.func, // REQUIRED
   cellData: PropTypes.bool, // REQUIRED
   onChange: PropTypes.func.isRequired,
-};
+};*/

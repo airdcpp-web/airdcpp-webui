@@ -7,8 +7,8 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 
 import IconConstants from 'constants/IconConstants';
 
-import 'semantic-ui/components/modal';
-import 'semantic-ui/components/modal.min.css';
+import 'semantic-ui-css/components/modal';
+import 'semantic-ui-css/components/modal.min.css';
 import { IconType } from 'components/semantic/Icon';
 
 

@@ -7,9 +7,9 @@ import classNames from 'classnames';
 import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
 
-import 'semantic-ui/components/button.min.css'; // for button style
-import 'semantic-ui/components/dropdown';
-import 'semantic-ui/components/dropdown.min.css';
+import 'semantic-ui-css/components/button.min.css'; // for button style
+import 'semantic-ui-css/components/dropdown';
+import 'semantic-ui-css/components/dropdown.min.css';
 
 
 export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>*/ {

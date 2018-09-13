@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
 
-import 'semantic-ui/components/popup';
-import 'semantic-ui/components/popup.min.css';
+import 'semantic-ui-css/components/popup';
+import 'semantic-ui-css/components/popup.min.css';
 
 
 type ChildType = React.ReactElement<{

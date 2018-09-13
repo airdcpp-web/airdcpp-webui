@@ -14,7 +14,7 @@ import WidgetStore from 'stores/WidgetStore';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import 'semantic-ui/components/card.min.css';
+import 'semantic-ui-css/components/card.min.css';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 

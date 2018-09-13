@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Icon, { IconType } from 'components/semantic/Icon';
 
-import 'semantic-ui/components/button.min.css';
+import 'semantic-ui-css/components/button.min.css';
 
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {

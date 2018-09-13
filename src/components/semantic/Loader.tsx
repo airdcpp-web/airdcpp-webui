@@ -3,7 +3,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import 'semantic-ui/components/loader.min.css';
+import 'semantic-ui-css/components/loader.min.css';
 
 
 interface LoaderProps {

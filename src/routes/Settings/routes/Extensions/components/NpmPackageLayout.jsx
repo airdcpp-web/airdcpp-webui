@@ -5,7 +5,7 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
-import 'semantic-ui/components/item.min.css';
+import 'semantic-ui-css/components/item.min.css';
 
 
 class NpmPackageLayout extends React.Component {
