@@ -6,14 +6,18 @@ import FileIcon from 'components/icon/FileIcon';
 import DownloadDialog from 'components/download/DownloadDialog';
 import SearchActions from 'actions/SearchActions';
 
-import ResultInfoGrid from './ResultInfoGrid';
-import UserResultTable from './UserResultTable';
+import ResultInfoGrid from 'routes/Search/components/ResultInfoGrid';
+import UserResultTable from 'routes/Search/components/UserResultTable';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 
-class ResultDialog extends React.Component {
+interface ResultDialogProps {
+  parentResult?: API.GroupedSearchResult; // REQUIRED, CLONED
+}
+
+class ResultDialog extends React.Component<ResultDialogProps> {
   static displayName = 'ResultDialog';
 
   render() {
@@ -21,15 +25,15 @@ class ResultDialog extends React.Component {
     return (
       <Modal 
         className="result" 
-        title={ parentResult.name }
+        title={ parentResult!.name }
         closable={ true } 
-        icon={ <FileIcon typeInfo={ parentResult.type }/> } 
+        icon={ <FileIcon typeInfo={ parentResult!.type }/> } 
         fullHeight={ true }
-        {...this.props}
+        { ...this.props }
       >
         <DownloadDialog downloadHandler={ SearchActions.download }/>
-        <ResultInfoGrid parentResult={ parentResult }/>
-        <UserResultTable parentResult={ parentResult }/>
+        <ResultInfoGrid parentResult={ parentResult! }/>
+        <UserResultTable parentResult={ parentResult! }/>
       </Modal>
     );
   }

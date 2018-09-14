@@ -21,6 +21,16 @@ declare namespace API {
     size: number;
   }
 
+  interface ChildSearchResult {
+    id: number;
+    path: string;
+    user: HintedUser;
+    slots: SlotCount;
+    time: number;
+    connection: number;
+    ip: IP;
+  }
+
   interface SearchResultUserInfo {
     count: number;
     user: HintedUser;

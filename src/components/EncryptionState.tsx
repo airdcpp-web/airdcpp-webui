@@ -55,7 +55,7 @@ const InfoMessage: React.SFC<InfoMessageProps> = ({ info, encryption }) => (
   </div>
 );
 
-interface EncryptionStateProps extends Pick<SemanticUI.PopupSettings, 'boundary'> {
+interface EncryptionStateProps extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
   encryption: API.EncryptionInfo;
   alwaysVisible?: boolean;
 }

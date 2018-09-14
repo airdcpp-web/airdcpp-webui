@@ -24,9 +24,11 @@ import '../style.css';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const PriorityCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
+const PriorityCell: React.SFC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
+  { cellData, rowDataGetter }
+) => (
   <PriorityMenu 
-    itemPrio={ cellData } 
+    itemPrio={ cellData! } 
     item={ rowDataGetter!() }
     prioAction={ QueueBundleActions.setBundlePriority }
   />

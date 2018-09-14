@@ -20,7 +20,9 @@ import LoginStore from 'stores/LoginStore';
 import '../style.css';
 
 
-const PasswordCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
+const PasswordCell: React.SFC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = (
+  { cellData, rowDataGetter }
+) => (
   <TableActionMenu 
     caption={ cellData ? <strong>Set</strong> : 'Not set' } 
     actions={ FavoriteHubPasswordActions } 

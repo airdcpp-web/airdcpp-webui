@@ -18,12 +18,14 @@ const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundl
   );
 };
 
-const StatusCell: React.SFC<RowWrapperCellChildProps> = ({ cellData, rowDataGetter }) => {
-  if (cellData.failed) {
+const StatusCell: React.SFC<RowWrapperCellChildProps<API.QueueBundleStatus, API.QueueBundle>> = (
+  { cellData, rowDataGetter }
+) => {
+  if (cellData!.failed) {
     // There isn't much space for other information
     return (
       <span className="error">
-        { cellData.str }
+        { cellData!.str }
       </span>
     );
   }
@@ -31,8 +33,8 @@ const StatusCell: React.SFC<RowWrapperCellChildProps> = ({ cellData, rowDataGett
   const rowData = rowDataGetter!();
   return (
     <Progress 
-      className={ getStatusClass(cellData, rowData) }
-      caption={ cellData.str }
+      className={ getStatusClass(cellData!, rowData) }
+      caption={ cellData!.str }
       percent={ (rowData.downloaded_bytes * 100) / rowData.size }
     />
   );

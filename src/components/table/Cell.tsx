@@ -146,11 +146,11 @@ export const AbbreviatedDurationCell: React.SFC<NumberCellProps> = ({ cellData }
 );
 
 export interface IpCellProps { 
-  cellData: API.IP;
+  cellData?: API.IP;
 }
 
 export const IpCell: React.SFC<IpCellProps> = ({ cellData }) => (
-  <FormattedIp item={ cellData }/>
+  <FormattedIp item={ cellData! }/>
 );
 
 export const ConnectionCell: React.SFC<NumberCellProps> = ({ cellData }) => (

@@ -4,33 +4,34 @@ import TransferStore from 'stores/TransferStore';
 
 import Message from 'components/semantic/Message';
 
-import NameCell from './NameCell';
-import StatusCell from './StatusCell';
-import UserCell from './UserCell';
+import NameCell from 'routes/Transfers/components/NameCell';
+import StatusCell from 'routes/Transfers/components/StatusCell';
+import UserCell from 'routes/Transfers/components/UserCell';
 
 import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, SpeedCell, AbbreviatedDurationCell, IpCell } from 'components/table/Cell';
 
 import '../style.css';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const FlagsCell = ({ cellData }) => (
+const FlagsCell: React.SFC<RowWrapperCellChildProps<string[], API.Transfer>> = ({ cellData }) => (
   <span className="plain flags cell">
-    { cellData.join('') }
+    { cellData!.join('') }
   </span>
 );
 
 class Transfers extends React.Component {
   static displayName = 'Transfers';
 
-  isPositive = (cellData, rowData) => {
+  isPositive = (cellData: number) => {
     return cellData > 0;
-  };
+  }
 
-  isRunning = (cellData, rowData) => {
+  isRunning = (cellData: any, rowData: API.Transfer) => {
     return rowData.speed > 0;
-  };
+  }
 
   emptyRowsNodeGetter = () => {
     return (
@@ -39,7 +40,7 @@ class Transfers extends React.Component {
         icon="exchange"
       />
     );
-  };
+  }
 
   render() {
     return (

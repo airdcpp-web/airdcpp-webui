@@ -13,8 +13,14 @@ declare namespace API {
     connection_ip_v6?: string;
   }
 
+  export enum FavoriteHubConnectStateId {
+    CONNECTED = 'connected',
+    CONNECTING = 'connecting',
+    DISCONNECTED = 'disconnected',
+  }
+
   export interface FavoriteHubConnectState {
-    id: 'connected' | 'connecting' | 'disconnected';
+    id: FavoriteHubConnectStateId;
     str: string;
     current_hub_id: number;
   }

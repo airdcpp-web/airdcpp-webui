@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { CellProps } from 'fixed-data-table-2';
 
 
-export interface RowWrapperCellChildProps extends CellProps {
-  cellData?: any;
-  rowDataGetter?: () => any;
+export interface RowWrapperCellChildProps<CellDataT = any, RowDataT = any> extends CellProps {
+  cellData?: CellDataT;
+  rowDataGetter?: () => RowDataT;
+  rowData?: RowDataT;
 }
 
 export interface RowWrapperCellProps extends CellProps {

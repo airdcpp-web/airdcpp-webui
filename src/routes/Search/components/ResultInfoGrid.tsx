@@ -7,9 +7,9 @@ import { DownloadMenu } from 'components/menu/DropdownMenu';
 import { DupeEnum } from 'constants/DupeConstants';
 
 
-const formatText = (text) => text ? text : '(unknown)';
+const formatText = (text: React.ReactNode) => text ? text : '(unknown)';
 
-const GridRow = ({ title, text }) => (
+const GridRow: React.SFC<{ title: string; text: React.ReactNode; }> = ({ title, text }) => (
   <div className="ui row">
     <div className="three wide column">
       <div className="ui tiny header">
@@ -33,7 +33,7 @@ const DupeStrings = {
   [DupeEnum.SHARE_QUEUE]: 'Share and queue',
 };
 
-const DupePaths = ({ paths }) => (
+const DupePaths: React.SFC<{ paths: string[] }> = ({ paths }) => (
   <div className="dupe-paths">
     { paths.map(path => (
       <div key={ path } className="path">
@@ -43,7 +43,11 @@ const DupePaths = ({ paths }) => (
   </div>
 );
 
-const ResultInfoGrid = ({ parentResult }) => (
+interface ResultInfoGridProps {
+  parentResult: API.GroupedSearchResult;
+}
+
+const ResultInfoGrid: React.SFC<ResultInfoGridProps> = ({ parentResult }) => (
   <div className="ui segment">
     <div className="ui grid stackable two column">
       <GridRow title="Content/Type" text={ parentResult.type.str }/>
@@ -58,7 +62,7 @@ const ResultInfoGrid = ({ parentResult }) => (
       caption="Actions..."
       button={ true }
       user={ parentResult.users.user }
-      itemInfoGetter={ _ => parentResult }
+      itemInfoGetter={ () => parentResult }
       downloadHandler={ SearchActions.download }
     />
   </div>

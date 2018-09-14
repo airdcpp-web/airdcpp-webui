@@ -6,11 +6,11 @@ import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import Icon from 'components/semantic/Icon';
-import { ConnectStateEnum } from 'constants/FavoriteHubConstants';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-export interface ConnectStateCellProps extends RowWrapperCellChildProps {
+export interface ConnectStateCellProps extends 
+  RowWrapperCellChildProps<API.FavoriteHubConnectState, API.FavoriteHubEntry> {
 
 }
 
@@ -20,12 +20,12 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
   };
 
   getIcon = () => {
-    switch (this.props.cellData.id) {
-      case ConnectStateEnum.CONNECTING:
+    switch (this.props.cellData!.id) {
+      case API.FavoriteHubConnectStateId.CONNECTING:
         return 'yellow remove';
-      case ConnectStateEnum.CONNECTED:
+      case API.FavoriteHubConnectStateId.CONNECTED:
         return 'grey remove';
-      case ConnectStateEnum.DISCONNECTED:
+      case API.FavoriteHubConnectStateId.DISCONNECTED:
         return 'green video play';
       default:
     }
@@ -38,15 +38,15 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
   }
 
   handleRemoveSession = () => {
-    HubActions.removeSession({ id: this.props.cellData.current_hub_id });
+    HubActions.removeSession({ id: this.props.cellData!.current_hub_id });
   }
 
   getClickAction = () => {
-    switch (this.props.cellData.id) {
-    case ConnectStateEnum.CONNECTING:
-    case ConnectStateEnum.CONNECTED: return this.handleRemoveSession;
-    case ConnectStateEnum.DISCONNECTED:
-    default: return this.handleCreateSession;
+    switch (this.props.cellData!.id) {
+      case API.FavoriteHubConnectStateId.CONNECTING:
+      case API.FavoriteHubConnectStateId.CONNECTED: return this.handleRemoveSession;
+      case API.FavoriteHubConnectStateId.DISCONNECTED:
+      default: return this.handleCreateSession;
     }
   }
 
@@ -57,7 +57,7 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
           icon={ classNames('icon large link', this.getIcon()) } 
           onClick={ this.getClickAction() }
         />
-        { this.props.width! > 120 && this.props.cellData.str }
+        { this.props.width! > 120 && this.props.cellData!.str }
       </div>
     );
   }

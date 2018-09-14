@@ -22,10 +22,12 @@ const getUserCaption = ({ count, user }: API.SearchResultUserInfo) => {
   return count > 1 ? `${count} users (${user.nicks})` : user.nicks;
 };
 
-const UserCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
+const UserCell: React.SFC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.GroupedSearchResult>> = (
+  { cellData, rowDataGetter }
+) => (
   <TableUserMenu 
-    text={ getUserCaption(cellData) } 
-    user={ cellData.user }
+    text={ getUserCaption(cellData!) } 
+    user={ cellData!.user }
     directory={ rowDataGetter!().path }
     userIcon="simple"
     ids={ UserFileActions }
@@ -34,7 +36,9 @@ const UserCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
 
 const resultUserGetter = (rowData: API.GroupedSearchResult) => rowData.users.user;
 
-const NameCell = ({ rowDataGetter, ...props }: RowWrapperCellChildProps) => (
+const NameCell: React.SFC<RowWrapperCellChildProps<string, API.GroupedSearchResult>> = (
+  { rowDataGetter, ...props }
+) => (
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }

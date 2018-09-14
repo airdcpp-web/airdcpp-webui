@@ -8,7 +8,9 @@ import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const RefreshCell = ({ rowDataGetter, cellData }: RowWrapperCellChildProps) => {
+const RefreshCell: React.SFC<RowWrapperCellChildProps<number, API.ShareRootEntry>> = (
+  { rowDataGetter, cellData }
+) => {
   const state = rowDataGetter!().status;
   if (state.id !== StateEnum.NORMAL) {
     return <Loader size="small" inline={ true } text={ state.str }/>;
@@ -20,7 +22,7 @@ const RefreshCell = ({ rowDataGetter, cellData }: RowWrapperCellChildProps) => {
         className={ 'icon large link green refresh' } 
         onClick={ () => ShareActions.refreshPaths([ rowDataGetter!().path ]) }
       />
-      { cellData === 0 ? 'Unknown' : formatRelativeTime(cellData) }
+      { cellData === 0 ? 'Unknown' : formatRelativeTime(cellData!) }
     </div>
   );
 };

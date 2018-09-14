@@ -2,20 +2,25 @@ import React from 'react';
 
 import FormattedFile from 'components/format/FormattedFile';
 import Popup from 'components/semantic/Popup';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const NameCaption = ({ cellData, rowData }) => (
+const NameCaption: React.SFC<RowWrapperCellChildProps<string, API.Transfer>> = ({ cellData, rowData }) => (
   <Popup 
     triggerClassName="name" 
     className="basic target" 
     trigger={ cellData }
   >
-    <div>{ rowData.target }</div>
+    <div>{ rowData!.target }</div>
   </Popup>
 );
 
-class NameCell extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+interface NameCellProps extends RowWrapperCellChildProps<string, API.Transfer> {
+
+}
+
+class NameCell extends React.Component<NameCellProps> {
+  shouldComponentUpdate(nextProps: NameCellProps) {
     return nextProps.cellData !== this.props.cellData;
   }
 
@@ -25,7 +30,7 @@ class NameCell extends React.Component {
       return null;
     }
 
-    const rowData = rowDataGetter();
+    const rowData = rowDataGetter!();
     return (
       <FormattedFile 
         typeInfo={ rowData.type }

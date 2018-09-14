@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import FormattedIp from 'components/format/FormattedIp';
 import { formatConnection } from 'utils/ValueFormat';
 
@@ -12,7 +12,7 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 
 
-const UserResult = ({ result }) => (
+const UserResult: React.SFC<{ result: API.ChildSearchResult; }> = ({ result }) => (
   <tr>
     <td className="user dropdown">
       <UserMenu 
@@ -41,9 +41,19 @@ const UserResult = ({ result }) => (
   </tr>
 );
 
-const resultSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
+const resultSort = (a: API.ChildSearchResult, b: API.ChildSearchResult) => a.user.nicks.localeCompare(b.user.nicks);
 
-const UserResultTable = ({ results, dataError }) => {
+interface UserResultTableProps {
+  parentResult: API.GroupedSearchResult;
+}
+
+interface UserResultTableDataProps extends DataProviderDecoratorChildProps {
+  results: API.ChildSearchResult[];
+}
+
+const UserResultTable: React.SFC<UserResultTableProps & UserResultTableDataProps> = (
+  { results, dataError }
+) => {
   if (dataError) {
     return (
       <Message 
@@ -81,9 +91,9 @@ const UserResultTable = ({ results, dataError }) => {
   );
 };
 
-export default DataProviderDecorator(UserResultTable, {
+export default DataProviderDecorator<UserResultTableProps, UserResultTableDataProps>(UserResultTable, {
   urls: {
-    results: ({ parentResult }, socket) => socket.get(SearchConstants.RESULTS_URL + '/' + parentResult.id + '/children'),
+    results: ({ parentResult }, socket) => socket.get(`${SearchConstants.RESULTS_URL}/${parentResult.id}/children`),
   },
   renderOnError: true,
 });

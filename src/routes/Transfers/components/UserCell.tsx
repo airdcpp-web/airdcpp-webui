@@ -5,17 +5,22 @@ import { UserFileActions } from 'actions/UserActions';
 
 import { TableActionMenu, TableUserMenu } from 'components/menu/DropdownMenu';
 import IconConstants from 'constants/IconConstants';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const UserCaption = ({ cellData, rowData }) => (
+const UserCaption: React.SFC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({ cellData, rowData }) => (
   <div className="transfer-user">
-    <i className={ (rowData.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD) + ' large icon' }/>
-    { cellData.nicks }
+    <i className={ (rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD) + ' large icon' }/>
+    { cellData!.nicks }
   </div>
 );
 
-class UserCell extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+interface UserCellProps extends RowWrapperCellChildProps<API.HintedUser, API.Transfer> {
+
+}
+
+class UserCell extends React.Component<UserCellProps> {
+  shouldComponentUpdate(nextProps: UserCellProps) {
     return nextProps.cellData !== this.props.cellData;
   }
 
@@ -26,7 +31,7 @@ class UserCell extends React.Component {
         user={ cellData }
         userIcon={ null }
         ids={ UserFileActions }
-        text={ <UserCaption rowData={ rowDataGetter() } cellData={ cellData }/> }
+        text={ <UserCaption rowData={ rowDataGetter!() } cellData={ cellData }/> }
       >
         <TableActionMenu 
           itemData={ rowDataGetter }
