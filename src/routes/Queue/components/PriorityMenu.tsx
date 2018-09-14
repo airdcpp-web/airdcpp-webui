@@ -12,34 +12,40 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 
-class PriorityMenu extends React.Component {
+interface PriorityMenuProps {
+  itemPrio: API.QueuePriority;
+  item: API.QueueItemBase;
+  prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityId) => void;
+}
+
+class PriorityMenu extends React.Component<PriorityMenuProps> {
   static propTypes = {
     /**
-		 * Priority object
-		 */
+     * Priority object
+     */
     itemPrio: PropTypes.object.isRequired,
 
     /**
-		 * Item with priority properties
-		 */
+     * Item with priority properties
+     */
     item: PropTypes.object.isRequired,
 
     prioAction: PropTypes.func.isRequired,
   };
 
-  setPriority = (priorityId) => {
+  setPriority = (priorityId: API.QueuePriorityId) => {
     this.props.prioAction(this.props.item, priorityId);
-  };
+  }
 
   setAutoPriority = () => {
     this.setPriority(PriorityEnum.DEFAULT);
-  };
+  }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: PriorityMenuProps) {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
   }
 
-  getPriorityListItem = (priority) => {
+  getPriorityListItem = (priority: API.QueuePriority) => {
     return (
       <MenuItemLink 
         key={ priority.id }
@@ -49,10 +55,12 @@ class PriorityMenu extends React.Component {
         { priority.str }
       </MenuItemLink>
     );
-  };
+  }
 
   getChildren = () => {
-    let children = Object.keys(PriorityEnum.properties).map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
+    let children = Object.keys(PriorityEnum.properties)
+      .map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
+
     children.push(<div key="divider" className="ui divider"/>);
     children.push(
       <MenuItemLink 
@@ -60,12 +68,12 @@ class PriorityMenu extends React.Component {
         active={ this.props.itemPrio.auto } 
         onClick={ this.setAutoPriority }
       >
-				Auto
+        Auto
       </MenuItemLink>
     );
 
     return children;
-  };
+  }
 
   render() {
     let caption = this.props.itemPrio.str;

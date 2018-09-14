@@ -190,7 +190,7 @@ const Notifications = createReactClass({
     } as ReactNotification);
   },
 
-  onBundleStatus(bundle: API.Bundle) {
+  onBundleStatus(bundle: API.QueueBundle) {
     if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
       return;
     }
@@ -198,33 +198,33 @@ const Notifications = createReactClass({
     let text;
     let level;
     switch (bundle.status.id) {
-      case API.BundleStatusId.QUEUED: {
+      case API.QueueBundleStatusId.QUEUED: {
         text = 'Bundle was added in queue';
         level = 'info';
         break;
       }
-      case API.BundleStatusId.DOWNLOAD_ERROR: {
+      case API.QueueBundleStatusId.DOWNLOAD_ERROR: {
         text = 'Download error: ' + bundle.status.str;
         level = 'error';
         break;
       }
-      case API.BundleStatusId.COMPLETION_VALIDATION_RUNNING: {
+      case API.QueueBundleStatusId.COMPLETION_VALIDATION_RUNNING: {
         text = 'Validating downloaded bundle';
         level = 'info';
         break;
       }
-      case API.BundleStatusId.COMPLETION_VALIDATION_ERROR: {
+      case API.QueueBundleStatusId.COMPLETION_VALIDATION_ERROR: {
         const { hook_name, str } = bundle.status.hook_error;
         text = `Bundle content validation failed: ${str} (${hook_name})`;
         level = 'error';
         break;
       }
-      case API.BundleStatusId.COMPLETED: {
+      case API.QueueBundleStatusId.COMPLETED: {
         text = 'Bundle was completed successfully';
         level = 'info';
         break;
       }
-      case API.BundleStatusId.SHARED: {
+      case API.QueueBundleStatusId.SHARED: {
         text = 'Bundle was added in share';
         level = 'info';
         break;

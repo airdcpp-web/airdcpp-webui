@@ -5,10 +5,14 @@ import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
-import BundleFileTable from './BundleFileTable';
+import BundleFileTable from 'routes/Queue/components/BundleFileTable';
 
 
-class BundleFileDialog extends React.Component {
+interface BundleFileDialogProps {
+  bundle?: API.QueueBundle; // REQUIRED, CLONED
+}
+
+class BundleFileDialog extends React.Component<BundleFileDialogProps> {
   static displayName = 'BundleFileDialog';
 
   render() {
@@ -16,14 +20,14 @@ class BundleFileDialog extends React.Component {
     return (
       <Modal 
         className="source" 
-        title={ bundle.name }
+        title={ bundle!.name }
         closable={ true } 
-        icon={ <FileIcon typeInfo={ bundle.type }/> } 
+        icon={ <FileIcon typeInfo={ bundle!.type }/> } 
         fullHeight={ true }
         { ...other }
       >
         <BundleFileTable 
-          bundle={ bundle }
+          bundle={ bundle! }
         />
       </Modal>
     );

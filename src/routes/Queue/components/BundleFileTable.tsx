@@ -4,8 +4,8 @@ import { Column } from 'fixed-data-table-2';
 import QueueFileActions from 'actions/QueueFileActions';
 import VirtualTable from 'components/table/VirtualTable';
 
-import PriorityMenu from './PriorityMenu';
-import StatusCell from './StatusCell';
+import PriorityMenu from 'routes/Queue/components/PriorityMenu';
+import StatusCell from 'routes/Queue/components/StatusCell';
 
 import QueueFileViewStore from 'stores/QueueFileViewStore';
 import { FilterMethod } from 'constants/TableConstants';
@@ -13,24 +13,29 @@ import { FilterMethod } from 'constants/TableConstants';
 import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/table/Cell';
 
 import '../style.css';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const PriorityCell = ({ cellData, rowDataGetter }) => (
+const PriorityCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
   <PriorityMenu 
     itemPrio={ cellData } 
-    item={ rowDataGetter() }
+    item={ rowDataGetter!() }
     prioAction={ QueueFileActions.setFilePriority }
   />
 );
 
-class BundleFileTable extends React.Component {
-  isActive = (cellData, rowData) => {
-    return !rowData.status.downloaded;
-  };
+interface BundleFileTableProps {
+  bundle: API.QueueBundle;
+}
 
-  isRunning = (cellData, rowData) => {
+class BundleFileTable extends React.Component<BundleFileTableProps> {
+  isActive = (cellData: any, rowData: API.QueueFile) => {
+    return !rowData.status.downloaded;
+  }
+
+  isRunning = (cellData: any, rowData: API.QueueFile) => {
     return rowData.speed > 0;
-  };
+  }
 
   render() {
     return (

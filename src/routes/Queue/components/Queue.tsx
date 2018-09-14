@@ -5,25 +5,29 @@ import QueueActions from 'actions/QueueActions';
 import QueueBundleActions from 'actions/QueueBundleActions';
 import VirtualTable from 'components/table/VirtualTable';
 
-import PriorityMenu from './PriorityMenu';
-import StatusCell from './StatusCell';
+import PriorityMenu from 'routes/Queue/components/PriorityMenu';
+import StatusCell from 'routes/Queue/components/StatusCell';
 import QueueBundleViewStore from 'stores/QueueBundleViewStore';
 
-import BundleFileDialog from './BundleFileDialog';
-import SourceDialog from './SourceDialog';
+import BundleFileDialog from 'routes/Queue/components/BundleFileDialog';
+import SourceDialog from 'routes/Queue/components/BundleSourceDialog';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import Message from 'components/semantic/Message';
 
-import { ActionLinkCell, FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell, DurationCell } from 'components/table/Cell';
+import { 
+  ActionLinkCell, FileActionCell, SizeCell, 
+  SpeedCell, AbbreviatedDurationCell, DurationCell 
+} from 'components/table/Cell';
 
 import '../style.css';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
+const PriorityCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
   <PriorityMenu 
     itemPrio={ cellData } 
-    item={ rowDataGetter() }
+    item={ rowDataGetter!() }
     prioAction={ QueueBundleActions.setBundlePriority }
   />
 );
@@ -31,17 +35,17 @@ const PriorityCell = ({ cellData, rowDataGetter, ...props }) => (
 class Queue extends React.Component {
   static displayName = 'Queue';
 
-  isActive = (cellData, rowData) => {
+  isActive = (cellData: any, rowData: API.QueueBundle) => {
     return !rowData.status.downloaded;
-  };
+  }
 
-  isDownloaded = (cellData, rowData) => {
+  isDownloaded = (cellData: any, rowData: API.QueueBundle) => {
     return rowData.status.downloaded;
-  };
+  }
 
-  isRunning = (cellData, rowData) => {
+  isRunning = (cellData: any, rowData: API.QueueBundle) => {
     return rowData.speed > 0;
-  };
+  }
 
   emptyRowsNodeGetter = () => {
     return (
@@ -51,7 +55,7 @@ class Queue extends React.Component {
         description="New items can be queued from search or filelists"
       />
     );
-  };
+  }
 
   render() {
     return (

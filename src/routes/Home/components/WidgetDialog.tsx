@@ -42,7 +42,7 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
 
   save = () => {
     return this.form.save();
-  };
+  }
 
   onSave: FormSaveHandler<UI.WidgetSettings> = (changedFields, value) => {
     const { name, ...formSettings } = value;
@@ -61,7 +61,7 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
     }
 
     return Promise.resolve();
-  };
+  }
 
   render() {
     const { typeId, settings, ...overlayProps } = this.props;

@@ -6,10 +6,14 @@ import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
 
-import SourceTable from './SourceTable';
+import SourceTable from 'routes/Queue/components/BundleSourceTable';
 
 
-class SourceDialog extends React.Component {
+interface BundleSourceDialogProps {
+  bundle?: API.QueueBundle; // REQUIRED, CLONED
+}
+
+class SourceDialog extends React.Component<BundleSourceDialogProps> {
   static displayName = 'SourceDialog';
 
   render() {
@@ -17,9 +21,9 @@ class SourceDialog extends React.Component {
     return (
       <Modal 
         className="source" 
-        title={ bundle.name }
+        title={ bundle!.name }
         closable={ true } 
-        icon={ <FileIcon typeInfo={ bundle.type }/> } 
+        icon={ <FileIcon typeInfo={ bundle!.type }/> } 
         fullHeight={ true }
         {...this.props}
       >

@@ -3,9 +3,10 @@ import classNames from 'classnames';
 
 import { StatusEnum } from 'constants/QueueConstants';
 import Progress from 'components/semantic/Progress';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const getStatusClass = (cellData, rowData) => {
+const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundle) => {
   if (cellData.completed) {
     return 'success';
   }
@@ -17,7 +18,7 @@ const getStatusClass = (cellData, rowData) => {
   );
 };
 
-const StatusCell = ({ cellData, rowDataGetter, ...props }) => {
+const StatusCell: React.SFC<RowWrapperCellChildProps> = ({ cellData, rowDataGetter }) => {
   if (cellData.failed) {
     // There isn't much space for other information
     return (
@@ -27,12 +28,12 @@ const StatusCell = ({ cellData, rowDataGetter, ...props }) => {
     );
   }
 
-  const rowData = rowDataGetter();
+  const rowData = rowDataGetter!();
   return (
     <Progress 
       className={ getStatusClass(cellData, rowData) }
       caption={ cellData.str }
-      percent={ (rowData.downloaded_bytes*100) / rowData.size }
+      percent={ (rowData.downloaded_bytes * 100) / rowData.size }
     />
   );
 };

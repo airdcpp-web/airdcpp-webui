@@ -4,7 +4,12 @@ declare namespace API {
     last_speed: number;
   }
 
-  enum QueuePriority {
+  interface QueueBundleSource extends QueueSource {
+    files: number;
+    size: number;
+  }
+
+  enum QueuePriorityId {
     PAUSED_FORCED = -1,
     PAUSED = 0,
     LOWEST = 1,
@@ -14,7 +19,13 @@ declare namespace API {
     HIGHEST = 5,
   }
 
-  export enum BundleStatusId {
+  export interface QueuePriority {
+    id: QueuePriorityId;
+    str: string;
+    auto: boolean;
+  }
+
+  export enum QueueBundleStatusId {
     NEW = 'new',
     QUEUED = 'queued',
     DOWNLOAD_ERROR = 'download_error',
@@ -26,13 +37,19 @@ declare namespace API {
     SHARED = 'shared',
   }
 
-  export interface BundleStatus {
-    id: BundleStatusId;
+  export interface QueueBundleStatus {
+    id: QueueBundleStatusId;
     failed: boolean;
     downloaded: boolean;
     completed: boolean;
     str: string;
     hook_error: HookError;
+  }
+
+  export interface QueueFileStatus {
+    str: string;
+    downloaded: boolean;
+    completed: boolean;
   }
 
   export interface QueueItemBase {
@@ -46,12 +63,22 @@ declare namespace API {
     sources: QueueSource;
   }
 
-  export interface Bundle {
+  export interface QueueFile extends QueueItemBase {
+    id: number;
+    name: string;
+    target: string;
+    type: FileItemType;
+    bundle: number;
+    status: QueueFileStatus;
+    tth: string;
+  }
+
+  export interface QueueBundle extends QueueItemBase {
     id: number;
     name: string;
     target: string;
     type: API.FileItemType;
-    status: BundleStatus;
+    status: QueueBundleStatus;
 
     //id: 'normal' | 'refresh_pending' | 'refresh_running';
     //str: string;

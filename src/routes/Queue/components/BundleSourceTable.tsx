@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import QueueBundleActions from 'actions/QueueBundleActions';
 import QueueConstants from 'constants/QueueConstants';
@@ -14,7 +14,12 @@ import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 
 
-const Source = ({ source, bundle }) => (
+interface SourceProps {
+  bundle: API.QueueBundle;
+  source: API.QueueBundleSource;
+}
+
+const Source: React.SFC<SourceProps> = ({ source, bundle }) => (
   <tr>
     <td className="user dropdown">
       <UserMenu 
@@ -48,9 +53,20 @@ const Source = ({ source, bundle }) => (
   </tr>
 );
 
-const userSort = (a, b) => a.user.nicks.localeCompare(b.user.nicks);
+const userSort = (a: API.QueueBundleSource, b: API.QueueBundleSource) => a.user.nicks.localeCompare(b.user.nicks);
 
-const SourceTable = ({ sources, bundle, dataError }) => {
+
+interface BundleSourceTableProps {
+  bundle?: API.QueueBundle; // REQUIRED, CLONED
+}
+
+interface BundleSourceTableDataProps extends DataProviderDecoratorChildProps {
+  sources: API.QueueBundleSource[];
+}
+
+const BundleSourceTable: React.SFC<BundleSourceTableProps & BundleSourceTableDataProps> = (
+  { sources, bundle, dataError }
+) => {
   if (dataError) {
     return (
       <Message 
@@ -79,7 +95,7 @@ const SourceTable = ({ sources, bundle, dataError }) => {
             <Source 
               key={ source.user.cid }
               source={ source }
-              bundle={ bundle }
+              bundle={ bundle! }
             />
           )) }
         </tbody>
@@ -88,14 +104,14 @@ const SourceTable = ({ sources, bundle, dataError }) => {
   );
 };
 
-export default DataProviderDecorator(SourceTable, {
+export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDataProps>(BundleSourceTable, {
   urls: {
-    sources: ({ bundle }, socket) => socket.get(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/sources'),
+    sources: ({ bundle }, socket) => socket.get(QueueConstants.BUNDLES_URL + '/' + bundle!.id + '/sources'),
   },
   onSocketConnected: (addSocketListener, { refetchData, props }) => {
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, (data) => {
+    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, (data: API.QueueBundle) => {
       // Avoid flickering when there are many bundles running
-      if (data.id === props.bundle.id) {
+      if (data.id === props.bundle!.id) {
         refetchData();
       }
     });
