@@ -16,7 +16,7 @@ const SideChildSectionMenu: React.SFC<SideMenuProps> = ({ menuItems, advancedMen
         { !!advancedMenuItems && (
           <div>
             <div className="item header">
-							Advanced
+              Advanced
             </div>
             <div className="menu">
               { advancedMenuItems }
@@ -36,9 +36,12 @@ const TopRootSectionMenu: React.SFC<TopMenuProps> = ({ parentMenuItems }) => (
   </div>
 );
 
+// tslint:disable-next-line:max-line-length
 type ContentProps = Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message'>;
 
-const Content: React.SFC<ContentProps> = ({ contentClassname, currentMenuItem, parent, saveButton, children, message }) => (
+const Content: React.SFC<ContentProps> = (
+  { contentClassname, currentMenuItem, parent, saveButton, children, message }
+) => (
   <div className={ classNames('thirteen wide column', contentClassname) }>
     <div className="ui segment">
       <LayoutHeader

@@ -32,19 +32,13 @@ interface ConfirmDialogProps extends ConfirmDialogOptions {
 class ConfirmDialog extends React.Component<ConfirmDialogProps> {
   static propTypes = {
 
-    /**
-		 * Title of the modal
-		 */
+    // Title of the modal
     title: PropTypes.node.isRequired,
 
-    /**
-		 * Content of the modal
-		 */
+    // Content of the modal
     content: PropTypes.node.isRequired,
 
-    /**
-		 * Icon to display
-		 */
+    // Icon to display
     icon: PropTypes.string,
 
     approveCaption: PropTypes.string,
@@ -53,10 +47,8 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     onApproved: PropTypes.func.isRequired,
     onRejected: PropTypes.func,
 
-    /**
-		 * Display a textbox if the caption is supplied
-		 * The checkbox value will be provided as an argument when the promise is resolved
-		 */
+    // Display a textbox if the caption is supplied
+    // The checkbox value will be provided as an argument when the promise is resolved
     checkboxCaption: PropTypes.node,
   };
 
@@ -99,22 +91,21 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     if (!!element) {
       ReactDOM.unmountComponentAtNode(element);
     }
-  };
-
+  }
 
   onDeny = () => {
     if (this.props.onRejected) {
       this.props.onRejected(new Error('Denied'));
     }
-  };
+  }
 
   onApprove = () => {
     this.props.onApproved(this.state.checked);
-  };
+  }
 
   onCheckboxValueChanged = (value: boolean) => {
     this.setState({ checked: value });
-  };
+  }
 
   render() {
     const { title, icon, checkboxCaption, rejectCaption, approveCaption, content } = this.props;

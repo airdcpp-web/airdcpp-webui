@@ -8,12 +8,13 @@ import SocketService from 'services/SocketService';
 import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
 
-export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value'> {
+export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions'> {
   keys: string[];
 }
 
 interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
   settings: API.SettingValueMap;
+  fieldDefinitions: UI.FormFieldDefinition[];
 }
 
 class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteSettingFormDataProps> {
@@ -30,13 +31,13 @@ class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteS
     if (Object.keys(changedValues).length === 0) {
       return Promise.resolve();
     }
-		
+
     return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.refetchValues);
-  };
+  }
 
   refetchValues = () => {
     this.props.refetchData([ 'settings' ]);
-  };
+  }
 
   render() {
     const { settings, fieldDefinitions, ...otherProps } = this.props;

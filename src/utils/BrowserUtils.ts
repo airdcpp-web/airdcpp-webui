@@ -52,6 +52,6 @@ export const hasTouchSupport = () => {
   //return false;
 };
 
-export const useMobileLayout= () => {
+export const useMobileLayout = () => {
   return window.innerWidth < 700;
 };

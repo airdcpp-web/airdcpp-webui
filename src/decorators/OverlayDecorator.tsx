@@ -14,7 +14,7 @@ import { RouterChildContext } from 'react-router-dom';
 
 
 export interface OverlayDecoratorProps {
-  overlayId: any;
+  overlayId?: any; // REQUIRED, CLONED
 }
 
 export interface OverlayDecoratorChildProps<SemanticSettingPropsT> {
@@ -22,7 +22,10 @@ export interface OverlayDecoratorChildProps<SemanticSettingPropsT> {
   hide: () => void;
 }
 
-export default function <PropsT, SemanticSettingPropsT>(Component: React.ComponentType<PropsT & OverlayDecoratorChildProps<SemanticSettingPropsT>>, semanticModuleName: string) {
+export default function <PropsT, SemanticSettingPropsT>(
+  Component: React.ComponentType<PropsT & OverlayDecoratorChildProps<SemanticSettingPropsT>>, 
+  semanticModuleName: string
+) {
   class OverlayDecorator extends React.Component<OverlayDecoratorProps & PropsT> {
     static displayName = 'OverlayDecorator';
 
@@ -58,7 +61,11 @@ export default function <PropsT, SemanticSettingPropsT>(Component: React.Compone
 
       this.c = c;
 
-      invariant(this.props.overlayId, 'OverlayDecorator: overlayId missing (remember to pass props to the overlay component)');
+      invariant(
+        this.props.overlayId, 
+        'OverlayDecorator: overlayId missing (remember to pass props to the overlay component)'
+      );
+
       const settings = Object.assign(componentSettings, {
         onHidden: this.onHidden,
         onHide: this.onHide,
@@ -67,32 +74,35 @@ export default function <PropsT, SemanticSettingPropsT>(Component: React.Compone
       setTimeout(() => {
         $(this.c)[semanticModuleName](settings)[semanticModuleName]('show');
       });
-    };
+    }
 
     hide = () => {
       invariant(this.c, 'Component not set when hiding overlay');
       $(this.c)[semanticModuleName]('hide');
-    };
+    }
 
     onHide = () => {
       this.closing = true;
-    };
+    }
 
     onHidden = () => {
       // Don't change the history state if we navigating back using the browser history
       if (History.action !== 'POP') {
         History.removeOverlay(this.context.router.route.location, this.props.overlayId, this.returnOnClose);
       }
-    };
+    }
 
     render() {
-      return ReactDOM.createPortal((
-        <Component 
-          { ...this.props } 
-          showOverlay={ this.showOverlay } 
-          hide={ this.hide }
-        />
-      ), document.getElementById('modals-node') as any);
+      return ReactDOM.createPortal(
+        (
+          <Component 
+            { ...this.props } 
+            showOverlay={ this.showOverlay } 
+            hide={ this.hide }
+          />
+        ), 
+        document.getElementById('modals-node')!
+      );
     }
   }
 

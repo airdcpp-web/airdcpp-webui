@@ -28,7 +28,7 @@ const CreateDirectorySection: React.SFC<CreateDirectorySectionProps> = ({ handle
   <Accordion>
     <div className="title create-section">
       <i className="dropdown icon"/>
-			Create directory
+      Create directory
     </div>
 
     <div className="content create-section">
@@ -43,9 +43,7 @@ const CreateDirectorySection: React.SFC<CreateDirectorySectionProps> = ({ handle
 );
 
 CreateDirectorySection.propTypes = {
-  /**
-	 * Function to call with the value
-	 */
+  // Function to call with the value
   handleAction: PropTypes.func.isRequired
 };
 
@@ -66,25 +64,17 @@ interface State {
 
 class FileBrowser extends React.Component<FileBrowserProps, State> {
   static propTypes = {
-    /**
-		 * Local storage ID used for saving/loading the last path
-		 * This will have priority over initialPath
-		 */
+    // Local storage ID used for saving/loading the last path
+    // This will have priority over initialPath
     historyId: PropTypes.string,
 
-    /**
-		 * Initial directory to show
-		 */
+    // Initial directory to show
     initialPath: PropTypes.string,
 
-    /**
-		 * Function to call when changing the directory. Receives the path as param.
-		 */
+    // Function to call when changing the directory. Receives the path as param.
     onDirectoryChanged: PropTypes.func,
 
-    /**
-		 * Getter for additional content displayed next to file/directory items
-		 */
+    // Getter for additional content displayed next to file/directory items
     itemIconGetter: PropTypes.func,
 
     selectedNameFormatter: PropTypes.func,
@@ -99,7 +89,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   }
 
   get isWindows() {
-    return LoginStore.systemInfo.platform === PlatformEnum.WINDOWS
+    return LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
   }
 
   initialFetchCompleted: boolean = false;
@@ -126,7 +116,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     }
 
     return 'browse_' + this.props.historyId;
-  };
+  }
 
   componentDidUpdate(prevProps: FileBrowserProps, prevState: State) {
     if (prevState.currentDirectory !== this.state.currentDirectory) {
@@ -137,7 +127,6 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   componentDidMount() {
     // Fire a change event in case something was loaded from localStorage
     this.onDirectoryChanged();
-		
     this.fetchItems(this.state.currentDirectory);
   }
 
@@ -149,7 +138,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     if (this.props.onDirectoryChanged) {
       this.props.onDirectoryChanged(this.state.currentDirectory);
     }
-  };
+  }
 
   fetchItems = (path: string) => {
     this.setState({ 
@@ -163,7 +152,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     })
       .then(this.onFetchSucceed.bind(this, path))
       .catch(this.onFetchFailed);
-  };
+  }
 
   onFetchFailed = (error: Error) => {
     if (!this.initialFetchCompleted) {
@@ -176,7 +165,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
       error: error.message,
       loading: false
     });
-  };
+  }
 
   onFetchSucceed = (path: string, data: API.FilesystemItem[]) => {
     this.setState({ 
@@ -186,17 +175,17 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     });
 
     this.initialFetchCompleted = true;
-  };
+  }
 
   _appendDirectoryName = (directoryName: string) => {
     return this.state.currentDirectory + directoryName + this.pathSeparator;
-  };
+  }
 
   _handleSelect = (directoryName: string) => {
     const nextPath = this._appendDirectoryName(directoryName);
 
     this.fetchItems(nextPath);
-  };
+  }
 
   _createDirectory = (directoryName: string) => {
     this.setState({ 
@@ -209,11 +198,11 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
       .catch((error: Error) => this.setState({ 
         error: error.message
       }));
-  };
+  }
 
   getRootPath = () => {
     return this.isWindows ? '' : '/';
-  };
+  }
 
   render() {
     if (this.state.loading) {
@@ -247,7 +236,9 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
           itemClickHandler={ this._handleSelect }
           itemIconGetter={ itemIconGetter }
         />
-        { this.state.currentDirectory && hasEditAccess ? <CreateDirectorySection handleAction={ this._createDirectory }/> : null }
+        { !!this.state.currentDirectory && hasEditAccess && (
+          <CreateDirectorySection handleAction={ this._createDirectory }/>
+        ) }
       </div>
     );
   }

@@ -21,34 +21,34 @@ interface BrowserBarProps {
 class BrowserBar extends React.PureComponent<BrowserBarProps> {
   static propTypes = {
     /**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
+     * Function handling the path selection. Receives the selected path as argument.
+     */
     itemClickHandler: PropTypes.func.isRequired,
 
     /**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
+     * Function handling the path selection. Receives the selected path as argument.
+     */
     rootName: PropTypes.string,
 
     /**
-		 * Root path that will be appended to the beginning of the returned path
-		 */
+     * Root path that will be appended to the beginning of the returned path
+     */
     rootPath: PropTypes.string.isRequired,
 
     /**
-		 * Root path that will be appended to the beginning of the returned path
-		 */
+     * Root path that will be appended to the beginning of the returned path
+     */
     separator: PropTypes.string.isRequired,
 
     /**
-		 * Current path to display
-		 */
+     * Current path to display
+     */
     path: PropTypes.string.isRequired,
 
     /**
-		 * Function returning the formated element for the current directory name
-		 * Receives the caption element and path token as parameters
-		 */
+     * Function returning the formated element for the current directory name
+     * Receives the caption element and path token as parameters
+     */
     selectedNameFormatter: PropTypes.func,
   };
 
@@ -76,7 +76,7 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
     if (newOverflow !== this.state.overflow) {
       this.setState({ overflow: newOverflow });
     }
-  };
+  }
 
   onClick = (token: string, index: number) => {
     const tokens = this.tokenizePath();
@@ -87,7 +87,7 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
     }
 
     this.props.itemClickHandler(path);
-  };
+  }
 
   formatName = (token: string) => {
     return (
@@ -95,7 +95,7 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
         { this.props.rootPath === token ? this.props.rootName : token }
       </div>
     );
-  };
+  }
 
   formatSection = (token: string, index: number) => {
     return (
@@ -105,21 +105,21 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
         caption={ this.formatName(token) }
       />
     );
-  };
+  }
 
   tokenizePath = () => {
     const { path, separator, rootPath } = this.props;
 
-    return [ rootPath, ...path.split(separator).filter(t => t.length != 0) ];
-  };
+    return [ rootPath, ...path.split(separator).filter(t => t.length !== 0) ];
+  }
 
   parsePath = () => {
     const tokens = this.tokenizePath();
     return {
-      current: tokens[tokens.length-1],
-      tokens: tokens.slice(0, tokens.length-1),
+      current: tokens[tokens.length - 1],
+      tokens: tokens.slice(0, tokens.length - 1),
     };
-  };
+  }
 
   render() {
     const { current, tokens } = this.parsePath();
@@ -132,7 +132,7 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
             { tokens.map(this.formatSection) }
           </div>
         </div>
-				
+
         <SelectedSection
           key={ current }
           selectedNameFormatter={ this.props.selectedNameFormatter }

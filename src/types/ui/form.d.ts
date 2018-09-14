@@ -7,4 +7,15 @@ declare namespace UI {
     title?: string;
     default_value?: FormValueBase;
   }
+
+  export interface FormOption<OptionValueT = any> {
+    value: OptionValueT,
+    text: string,
+  } 
+  
+  export type FormLocals<OptionValueT = any, ValueT = any> = {
+    onChange: (values: ValueT) => void,
+    options: Array<FormOption>,
+    value: ValueT,
+  };
 }

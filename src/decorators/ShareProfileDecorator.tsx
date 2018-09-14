@@ -13,7 +13,7 @@ export type ShareProfileDecoratorChildProps = DataProviderDecoratorChildProps & 
 const ShareProfileDecorator = function <PropsT extends object>(
   Component: React.ComponentType<PropsT & ShareProfileDecoratorChildProps>, 
   listHidden: boolean, 
-  addSize = true
+  addSize: boolean = true
 ) {
   const convertProfile = (profile: API.ShareProfile): API.ShareProfile => {
     let name = profile.str;

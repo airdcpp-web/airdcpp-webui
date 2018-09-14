@@ -64,7 +64,7 @@ const filterExtraDividers = (ids: string[]) => {
 
     // Check if the next element is also a divider 
     // (the last one would always be removed in the previous check)
-    return ids[pos+1] !== 'divider';
+    return ids[pos + 1] !== 'divider';
   });
 };
 
@@ -173,10 +173,10 @@ export default function <DropdownComponentPropsT extends object>(
       }));
 
       return items;
-    };
+    }
 
     getMenus = () => {
-			let { children } = this.props; // eslint-disable-line
+      let { children } = this.props; // eslint-disable-line
 
       const menus = [ parseMenu(this.props, false) ];
       if (children) {
@@ -186,17 +186,17 @@ export default function <DropdownComponentPropsT extends object>(
       }
 
       return menus;
-    };
+    }
 
     getChildren = () => {
       const menus = this.getMenus();
       return menus
         .filter(notError)
         .reduce(this.reduceMenuItems, []);
-    };
+    }
 
     render() {
-			let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props as any; // eslint-disable-line
+      let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props as any; // eslint-disable-line
 
       const menus = this.getMenus();
 

@@ -61,12 +61,14 @@ export interface FavoriteHubDialogProps {
   hubEntry: API.FavoriteHubEntry;
 }
 
-class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & ShareProfileDecoratorChildProps & ModalRouteDecoratorChildProps> {
+type Props = FavoriteHubDialogProps & ShareProfileDecoratorChildProps & ModalRouteDecoratorChildProps;
+
+class FavoriteHubDialog extends React.Component<Props> {
   static displayName = 'FavoriteHubDialog';
 
   isNew = () => {
     return !this.props.hubEntry;
-  };
+  }
 
   form: Form<API.FavoriteHubEntry>;
 
@@ -81,11 +83,11 @@ class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & SharePr
     }
 
     return null;
-  };
+  }
 
   save = () => {
     return this.form.save();
-  };
+  }
 
   onSave: FormSaveHandler<API.FavoriteHubEntryBase> = (changedFields) => {
     if (this.isNew()) {
@@ -93,11 +95,12 @@ class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & SharePr
     }
 
     return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + this.props.hubEntry.id, changedFields);
-  };
+  }
 
   onFieldSetting: FormFieldSettingHandler<API.FavoriteHubEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'share_profile') {
       Object.assign(fieldOptions, {
+        // tslint:disable-next-line:max-line-length
         help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
         nullOption: { value: 'null', text: 'Global default' },
         factory: t.form.Select,
@@ -105,7 +108,7 @@ class FavoriteHubDialog extends React.Component<FavoriteHubDialogProps & SharePr
         transformer: intTransformer,
       });
     }
-  };
+  }
 
   render() {
     const title = this.isNew() ? 'Add favorite hub' : 'Edit favorite hub';

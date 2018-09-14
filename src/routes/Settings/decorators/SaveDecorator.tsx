@@ -66,7 +66,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       }
 
       this.forceUpdate();
-    };
+    }
 
     onSettingsSaved = () => {
       NotificationActions.success({ 
@@ -75,7 +75,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       });
 
       this.forceUpdate();
-    };
+    }
 
     handleSave = () => {
       invariant(this.forms.length > 0, 'No forms exist in SaveDecorator');
@@ -84,11 +84,11 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
 
       return Promise.all(promises)
         .then(this.onSettingsSaved);
-    };
+    }
 
     hasChanges = () => {
       return this.changedProperties.size > 0;
-    };
+    }
 
     promptSave = () => {
       // Are we opening a dialog?
@@ -104,18 +104,21 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
 
       const hasChanges = this.hasChanges() && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
       return hasChanges;
-    };
+    }
 
     saveFormRef = (c: SaveableRef) => {
       if (c) {
-        invariant(c.hasOwnProperty('save'), 'Invalid setting form component supplied for SaveDecorator (save property missing)');
+        invariant(
+          c.hasOwnProperty('save'), 
+          'Invalid setting form component supplied for SaveDecorator (save property missing)'
+        );
         this.forms.push(c);
       } else {
         // Switching to another page 
         // Single forms shouldn't be unmounted otherwise, but using identifiers would still be safer...
         this.forms = [];
       }
-    };
+    }
 
     render() {
       const { currentMenuItem, children } = this.props;
@@ -157,4 +160,4 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
   }
 
   return SaveDecorator;
-};
+}

@@ -62,7 +62,7 @@ const Notifications = createReactClass({
     });
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     return false;
   },
 
@@ -99,12 +99,17 @@ const Notifications = createReactClass({
   },
 
   onSocketConnected(addSocketListener: any) {
+    // tslint:disable-next-line:max-line-length
     addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, null, AccessConstants.PRIVATE_CHAT_VIEW);
 
+    // tslint:disable-next-line:max-line-length
     addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, null, AccessConstants.QUEUE_VIEW);
+    // tslint:disable-next-line:max-line-length
     addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, null, AccessConstants.QUEUE_VIEW);
 
+    // tslint:disable-next-line:max-line-length
     addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, null, AccessConstants.EVENTS_VIEW);
+    // tslint:disable-next-line:max-line-length
     addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, null, AccessConstants.VIEW_FILE_VIEW);
   },
 
@@ -209,7 +214,8 @@ const Notifications = createReactClass({
         break;
       }
       case API.BundleStatusId.COMPLETION_VALIDATION_ERROR: {
-        text = `Bundle content validation failed: ${bundle.status.hook_error.str} (${bundle.status.hook_error.hook_name})`;
+        const { hook_name, str } = bundle.status.hook_error;
+        text = `Bundle content validation failed: ${str} (${hook_name})`;
         level = 'error';
         break;
       }
@@ -223,6 +229,7 @@ const Notifications = createReactClass({
         level = 'info';
         break;
       }
+      default:
     }
 
     if (level) {

@@ -53,7 +53,7 @@ export interface Feed {
     feed?: {
       entry?: FeedItem[];
     }
-  }
+  };
 }
 
 export type RSSProps = UI.WidgetProps<Settings>;
@@ -66,9 +66,7 @@ interface State {
 
 class RSS extends React.PureComponent<RSSProps, State> {
   static propTypes = {
-    /**
-		 * Current widget settings
-		 */
+    // Current widget settings
     settings: PropTypes.object.isRequired,
 
     componentId: PropTypes.string.isRequired,
@@ -92,7 +90,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
 
   handleUpdate = () => {
     this.fetchFeed(this.props.settings.feed_url);
-  };
+  }
 
   fetchFeed = (feedUrl: string) => {
     invariant(!!feedUrl, 'Feed URL missing');
@@ -101,13 +99,14 @@ class RSS extends React.PureComponent<RSSProps, State> {
     }
 
     $.getJSON(
+      // tslint:disable-next-line:max-line-length
       `https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%20%3D%20\'${encodeURIComponent(feedUrl)}\'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=`, 
       res => {
         console.log('RSS feed received', res);
         this.onFeedFetched(res.query);
       }
     );
-  };
+  }
 
   UNSAFE_componentWillReceiveProps(nextProps: RSSProps) {
     if (nextProps.settings.feed_url !== this.props.settings.feed_url) {
@@ -122,23 +121,23 @@ class RSS extends React.PureComponent<RSSProps, State> {
       const lastValidDate = feedDate + (this.props.settings.feed_cache_minutes * 60 * 1000);
 
       if (lastValidDate >= Date.now()) {
-        console.log('RSS: cached feed will be used (expires in ' + (lastValidDate - Date.now()) / 60 / 1000 + ' minutes)');
+        console.log(`RSS: cached feed will be used (expires in ${(lastValidDate - Date.now()) / 60 / 1000} minutes)`);
         return feedInfo;
       } else {
-        console.log('RSS: cached feed had expired ' + (Date.now() - lastValidDate) / 60 / 1000 + ' minutes ago');
+        console.log(`RSS: cached feed had expired ${(Date.now() - lastValidDate) / 60 / 1000} minutes ago`);
       }
     } else {
       console.log('RSS: no cached feed');
     }
 
     return null;
-  };
+  }
 
   setError = (error: string) => {
     this.setState({
       error
     });
-  };
+  }
 
   onFeedFetched = (data: Feed) => {
     if (!data.results) {
@@ -191,7 +190,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
       entries,
       date: Date.now(),
     });
-  };
+  }
 
   render() {
     const { error, entries } = this.state;
@@ -211,16 +210,16 @@ class RSS extends React.PureComponent<RSSProps, State> {
     return (
       <div className="rss-container">
         <div className="ui divided list rss">
-				  { 
-			  		entries.map(entry => (
-			  			<Entry 
-			  				key={ getEntryKey(entry) } 
-			  				entry={ entry }
-			  				componentId={ componentId }
-			  				feedUrl={ settings.feed_url }
-			  			/>
-			  		))
-				  }
+          { 
+            entries.map(entry => (
+              <Entry 
+                key={ getEntryKey(entry) } 
+                entry={ entry }
+                componentId={ componentId }
+                feedUrl={ settings.feed_url }
+              />
+            ))
+          }
         </div>
         <Footer
           lastUpdated={ this.state.date }

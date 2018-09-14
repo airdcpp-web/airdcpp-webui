@@ -65,7 +65,7 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
     encryption: PropTypes.object,
     boundary: PropTypes.string,
 
-    /* Show the lock icon even when there is no encryption */
+    // Show the lock icon even when there is no encryption
     alwaysVisible: PropTypes.bool,
   };
 
@@ -101,6 +101,6 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
       </Popup>
     );
   }
-};
+}
 
 export default EncryptionState;

@@ -23,30 +23,22 @@ const RouterMenuItemLink = createReactClass({
   },
 
   propTypes: {
-    /**
-		 * Item URL
-		 */
+    // Item URL
     url: PropTypes.string.isRequired,
 
-    /**
-		 * Title of the menu item
-		 */
+    // Title of the menu item
     children: PropTypes.any.isRequired,
 
     icon: PropTypes.node,
 
     className: PropTypes.string,
 
-    /**
-		 * For overriding the default link action (still gives the active class style)
-		 */
+    // For overriding the default link action (still gives the active class style)
     onClick: PropTypes.func,
 
     unreadInfoStore: PropTypes.object,
 
-    /**
-		 * Session object
-		 */
+    // Session object
     session: PropTypes.object,
   },
 

@@ -132,8 +132,8 @@ DownloadableItemActions.viewImage.listen(function (data, location) {
   ViewFileActions.createSession(data, false, location, ViewFileStore);
 });
 
-DownloadableItemActions.findNfo.listen(/*async*/ function (data, location) {
-  /*try {
+DownloadableItemActions.findNfo.listen(async function (data, location) {
+  try {
     // Get a new instance
     let instance = await SocketService.post(SearchConstants.INSTANCES_URL, {
       expiration_minutes: 1,
@@ -177,7 +177,7 @@ DownloadableItemActions.findNfo.listen(/*async*/ function (data, location) {
     }
   } catch (error) {
     this.failed(data, error.message);
-  }*/
+  }
 });
 
 DownloadableItemActions.findNfo.failed.listen(function (data, errorMessage) {

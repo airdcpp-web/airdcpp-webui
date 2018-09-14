@@ -8,7 +8,7 @@ import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
 export interface UserSearchInputProps extends Pick<RemoteSuggestFieldProps, 'submitHandler'> {
   offlineMessage: string;
-};
+}
 
 const UserSearchInput: React.SFC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => (
   <OfflineHubMessageDecorator 

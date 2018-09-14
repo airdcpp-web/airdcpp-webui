@@ -101,6 +101,7 @@ const emojiRenderer = (code: string, str: string, key: string) => {
     case 'ae': // ® registered trademark
     case '2122': // ™ trademark
       return str;
+    default:
   }
 
 
@@ -122,7 +123,10 @@ interface TextDecoratorProps {
 }
 
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator: React.SFC<TextDecoratorProps> = ({ emojify = false, text }, { router }: RouterChildContext<{}>) => (
+const TextDecorator: React.SFC<TextDecoratorProps> = (
+  { emojify = false, text }, 
+  { router }: RouterChildContext<{}>
+) => (
   <ReactLinkify 
     properties={{ 
       target: '_blank',

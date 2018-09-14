@@ -10,7 +10,7 @@ export enum ConnectStateEnum {
   DISCONNECTED = 0,
   CONNECTING = 1,
   CONNECTED = 2
-};
+}
 
 export default {
   MODULE_URL: MODULE_URL,

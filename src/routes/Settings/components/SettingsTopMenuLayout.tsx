@@ -9,9 +9,12 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 
 
+// tslint:disable-next-line:max-line-length
 type TopSectionSelectionMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'currentMenuItem' | 'parent' | 'advancedMenuItems' | 'parentMenuItems'>;
 
-const TopSectionSelectionMenu: React.SFC<TopSectionSelectionMenuProps> = ({ menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }) => (
+const TopSectionSelectionMenu: React.SFC<TopSectionSelectionMenuProps> = (
+  { menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }
+) => (
   <div className="ui top-menu">
     <Dropdown 
       className="selection fluid" 
@@ -38,7 +41,9 @@ const TopSectionSelectionMenu: React.SFC<TopSectionSelectionMenuProps> = ({ menu
 );
 
 
-const TopMenuLayout: React.SFC<SettingSectionChildProps> = ({ saveButton, children, contentClassname, message, ...other }) => (
+const TopMenuLayout: React.SFC<SettingSectionChildProps> = (
+  { saveButton, children, contentClassname, message, ...other }
+) => (
   <div className="mobile">
     <TopSectionSelectionMenu { ...other }/>
     <div 

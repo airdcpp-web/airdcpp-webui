@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import SearchActions from 'actions/SearchActions';
 import SearchViewStore from 'stores/SearchViewStore';
@@ -14,31 +14,27 @@ import { UserFileActions } from 'actions/UserActions';
 import Message from 'components/semantic/Message';
 
 import DownloadDialog from 'components/download/DownloadDialog';
-import ResultDialog from './ResultDialog';
+import ResultDialog from 'routes/Search/components/ResultDialog';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const getUserCaption = (cellData) => {
-  let caption = cellData.user.nicks;
-  if (cellData.count > 1) {
-    caption = cellData.count + ' users (' + caption + ')';
-  }
-
-  return caption;
+const getUserCaption = ({ count, user }: API.SearchResultUserInfo) => {
+  return count > 1 ? `${count} users (${user.nicks})` : user.nicks;
 };
 
-const UserCell = ({ cellData, rowDataGetter, ...props }) => (
+const UserCell = ({ cellData, rowDataGetter }: RowWrapperCellChildProps) => (
   <TableUserMenu 
     text={ getUserCaption(cellData) } 
     user={ cellData.user }
-    directory={ rowDataGetter().path }
-    userIcon={ 'simple' }
+    directory={ rowDataGetter!().path }
+    userIcon="simple"
     ids={ UserFileActions }
   />
 );
 
-const resultUserGetter = rowData => rowData.users.user;
+const resultUserGetter = (rowData: API.GroupedSearchResult) => rowData.users.user;
 
-const NameCell = ({ rowDataGetter, ...props }) => (
+const NameCell = ({ rowDataGetter, ...props }: RowWrapperCellChildProps) => (
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
@@ -52,19 +48,25 @@ const NameCell = ({ rowDataGetter, ...props }) => (
   </FileDownloadCell>
 );
 
-class ResultTable extends React.Component {
+export interface ResultTableProps {
+  running: boolean;
+  searchString: string;
+}
+
+class ResultTable extends React.Component<ResultTableProps> {
   static displayName = 'ResultTable';
 
-  _rowClassNameGetter = (rowData) => {
+  rowClassNameGetter = (rowData: API.GroupedSearchResult) => {
     return dupeToStringType(rowData.dupe);
-  };
+  }
 
   emptyRowsNodeGetter = () => {
-    if (this.props.running) {
+    const { running, searchString } = this.props;
+    if (running) {
       return null;
     }
 
-    if (!this.props.searchString) {
+    if (!searchString) {
       return process.env.DEMO_MODE === '1' && (
         <Message 
           title="Demo content available"
@@ -76,25 +78,28 @@ class ResultTable extends React.Component {
 
     return (
       <Message 
-        title={ 'No results found for "' + this.props.searchString + '"' }
+        title={ `No results found for "${searchString}"` }
         description={ (
           <div className="ui bulleted list">
             <div className="item">Ensure that you spelled the words correctly</div>
             <div className="item">Use different keywords</div>
             <div className="item">You are searching too frequently (hubs often have a minimum search interval)</div>
-            <div className="item">If you never receive results for common search terms, make sure that your connectivity settings are configured properly</div>
+            <div className="item">
+              If you never receive results for common search terms, 
+              make sure that your connectivity settings are configured properly
+            </div>
           </div>
         ) }
       />
     );
-  };
+  }
 
   render() {
     return (
-      <Fragment>
+      <>
         <VirtualTable
           emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-          rowClassNameGetter={ this._rowClassNameGetter }
+          rowClassNameGetter={ this.rowClassNameGetter }
           store={ SearchViewStore }
         >
           <Column
@@ -159,7 +164,7 @@ class ResultTable extends React.Component {
         </VirtualTable>
         <DownloadDialog downloadHandler={ SearchActions.download }/>
         <ResultDialog/>
-      </Fragment>
+      </>
     );
   }
 }

@@ -14,7 +14,7 @@ export interface UserMenuItemData {
   directory: any;
 }
 
-export interface UserMenuDecoratorProps {
+export interface UserMenuDecoratorProps extends Omit<ActionMenuDecoratorProps, 'actions' | 'caption' | 'itemData'> {
   user: (API.User & { nick?: string; }) | (API.HubUser & { nicks?: string });
   directory?: string;
   userIcon?: string;
@@ -24,7 +24,9 @@ export interface UserMenuDecoratorProps {
 
 type UserMenuDecoratorChildProps = ActionMenuDecoratorProps;
 
-export default function <DropdownPropsT extends object>(Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>) {
+export default function <DropdownPropsT extends object>(
+  Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>
+) {
   class UserMenu extends React.PureComponent<UserMenuDecoratorProps & DropdownPropsT> {
     static defaultProps: Partial<UserMenuDecoratorProps> = {
       directory: '/',
@@ -105,7 +107,7 @@ export default function <DropdownPropsT extends object>(Component: React.Compone
         />
       );
     }
-  };
+  }
 
   return UserMenu;
 }

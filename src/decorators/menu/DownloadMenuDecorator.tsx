@@ -22,7 +22,9 @@ export interface DownloadMenuDecoratorProps {
 
 type DownloadMenuDecoratorChildProps = ActionMenuDecoratorProps;
 
-export default function <DropdownPropsT>(Component: React.ComponentType<DownloadMenuDecoratorChildProps & DropdownPropsT>) {
+export default function <DropdownPropsT>(
+  Component: React.ComponentType<DownloadMenuDecoratorChildProps & DropdownPropsT>
+) {
   class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps & DropdownPropsT> {
     /*static propTypes = {
 
@@ -81,7 +83,7 @@ export default function <DropdownPropsT>(Component: React.ComponentType<Download
         />
       );
     }
-  };
+  }
 
   return DownloadMenu;
 }

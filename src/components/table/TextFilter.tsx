@@ -47,7 +47,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
   onFilterUpdated = () => {
     const { value, method } = this.state;
     this.props.onFilterUpdated(value, method);
-  };
+  }
 
   onTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ 
@@ -56,11 +56,14 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
     clearTimeout(this.timer);
 
-    this.timer = setTimeout(() => {
-      this.timer = null;
-      this.onFilterUpdated();
-    }, 200);
-  };
+    this.timer = setTimeout(
+      () => {
+        this.timer = null;
+        this.onFilterUpdated();
+      }, 
+      200
+    );
+  }
 
   onMethodChanged = (method: FilterMethod) => {
     this.setState({ 
@@ -69,7 +72,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
     setTimeout(() => this.onFilterUpdated());
     this.input.focus();
-  };
+  }
 
   getFilterMethod = (method: FilterMethod) => {
     const isCurrent = method === this.state.method;
@@ -82,7 +85,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
         { filterMethodToString(method) }
       </MenuItemLink>
     );
-  };
+  }
 
   render() {
     const { value, method } = this.state;

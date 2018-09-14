@@ -42,12 +42,12 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
     this.setState({ 
       currentPath: path 
     });
-  };
+  }
 
   onConfirm = () => {
     this.props.onConfirm(this.state.currentPath);
     return Promise.resolve();
-  };
+  }
 
   render() {
     const { currentPath } = this.state;

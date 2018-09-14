@@ -14,7 +14,7 @@ interface DownloadFileBrowserProps {
 class DownloadFileBrowser extends React.Component<DownloadFileBrowserProps> {
   onDirectoryChanged = (path: string) => {
     this.setState({ currentPath: path });
-  };
+  }
 
   selectedNameFormatter = (caption: React.ReactNode, token: string) => {
     if (token.length === 0) {
@@ -30,7 +30,7 @@ class DownloadFileBrowser extends React.Component<DownloadFileBrowserProps> {
     );
 
     return formatedCaption;
-  };
+  }
 
   itemIconGetter = ({ name, type }: API.FilesystemItem) => {
     if (type.id === 'file') {
@@ -44,12 +44,12 @@ class DownloadFileBrowser extends React.Component<DownloadFileBrowserProps> {
         onClick={ () => this.props.downloadHandler(this.state.currentPath + name + separator) }
       />
     );
-  };
+  }
 
   getInitialPath = () => {
     const { history } = this.props;
-    return history.length > 0 ? history[history.length-1] : '';
-  };
+    return history.length > 0 ? history[history.length - 1] : '';
+  }
 
   state = {
     currentPath: this.getInitialPath(),

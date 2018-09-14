@@ -56,14 +56,6 @@ CountLabel.defaultProps = {
   circular: false,
 };
 
-
-// Rendering a single child with TransitionGroup: https://facebook.github.io/react/docs/animation.html#rendering-a-single-child
-// We don't any wrapping divs to avoid issues with Semantic CSS
-/*const FirstChild: React.SFC<CountLabelProps> = (props) => {
-  const childrenArray = React.Children.toArray(props.children);
-  return childrenArray[0] || null;
-};*/
-
 // Fade out the label when there are no counts
 const AnimatedCountLabel: React.SFC<CountLabelProps> = (props) => (
   <TransitionGroup

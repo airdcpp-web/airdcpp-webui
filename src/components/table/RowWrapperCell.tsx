@@ -11,9 +11,9 @@ export interface RowWrapperCellChildProps extends CellProps {
 export interface RowWrapperCellProps extends CellProps {
   dataLoader: any;
 
-  renderCondition: (columnData: any, rowData: any) => boolean;
-  rowClassNameGetter: (rowData: any) => string;
-  columnKey: string;
+  renderCondition?: (columnData: any, rowData: any) => boolean;
+  rowClassNameGetter?: (rowData: any) => string;
+  columnKey?: string; // REQUIRED, CLONED
 
   children: React.ReactElement<any>;
 }
@@ -58,7 +58,7 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
 
   loadData = (rowIndex: number) => {
     return this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
-  };
+  }
 
   shouldComponentUpdate(nextProps: RowWrapperCellProps, nextState: State) {
     return nextState.rowData !== this.state.rowData || 
@@ -67,11 +67,11 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
 
   rowDataGetter = () => {
     return this.state.rowData;
-  };
+  }
 
   onDataLoaded = (data: any) => {
     this.setState({ rowData: data });
-  };
+  }
 
   render() {
     const { columnKey, children, renderCondition, rowClassNameGetter, ...other } = this.props;
@@ -81,19 +81,19 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
       return null;
     }
 
-    if (renderCondition && !renderCondition(rowData[columnKey], rowData)) {
+    if (renderCondition && !renderCondition(rowData[columnKey!], rowData)) {
       return null;
     }
 
     let className = columnKey;
-    if (rowClassNameGetter) {
+    if (!!rowClassNameGetter) {
       className += ' ' + rowClassNameGetter(rowData);
     }
 
     return (
       <div className={ 'cell-wrapper ' + className }>
         { React.cloneElement(children, {
-          cellData: rowData[columnKey],
+          cellData: rowData[columnKey!],
 
           // Don't pass the actual row data to allow cells to skip 
           // re-rendering using shallow equality checks when the row data is 

@@ -13,15 +13,18 @@ import NotificationActions from 'actions/NotificationActions';
 export interface DataProviderDecoratorProps<PropsT extends object, DataT extends object> {
   urls: {
     [key: string]: ((props: PropsT, socket: any) => Promise<any>) | string
-  }
+  };
+
   onSocketConnected?: (addSocketListener: any, data: {
     refetchData: (keys?: string[]) => void;
     mergeData: (data: Partial<DataT>) => void;
     props: PropsT;
   }) => void;
+
   dataConverters?: {
     [key: string]: (data: any, props: PropsT) => any
   };
+  
   loaderText?: React.ReactNode;
   renderOnError?: boolean;
 }
@@ -46,41 +49,30 @@ export default function <PropsT extends object, DataT extends object>(
     mixins: [ SocketSubscriptionMixin() ],
 
     propTypes: {
-
-      /**
-			 * Key-value map of prop names and API urls
-			 * Value may also be a function which receives the props and SocketService as argument and performs the data fetch
-			 */
+      // Key-value map of prop names and API urls
+      // Value may also be a function which receives the props and SocketService as argument and performs the data fetch
       urls: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.func,
       ]), // REQUIRED
 
-      /**
-			 * Called when the socket is connected
-			 * 
-			 * onSocketConnected(addSocketListener, {
-			 *   refetchData(),
-			 *   mergeData(newData),
-			 *   props,
-			 * })
-			 */
+      // Called when the socket is connected
+      // 
+      // onSocketConnected(addSocketListener, {
+      //   refetchData(),
+      //   mergeData(newData),
+      //   props,
+      // })
       onSocketConnected: PropTypes.func,
 
-      /**
-			 * Key-value map of prop names and functions 
-			 * Converter functions receives the fetched data as parameter
-			 */
+      // Key-value map of prop names and functions 
+      // Converter functions receives the fetched data as parameter
       dataConverters: PropTypes.object,
 
-      /**
-			 * Text to show while loading data (use null to disable spinner)
-			 */
+      // Text to show while loading data (use null to disable spinner)
       loaderText: PropTypes.node,
 
-      /**
-			 * Should the decorated components handle data fetching failures?
-			 */
+      // Should the decorated components handle data fetching failures?
       renderOnError: PropTypes.bool,
     },
 
@@ -118,7 +110,10 @@ export default function <PropsT extends object, DataT extends object>(
     },
 
     refetchData(keys?: string[]) {
-      invariant(!keys || (Array.isArray(keys) && keys.every(key => !!settings.urls[key])), 'Invalid keys supplied to refetchData');
+      invariant(
+        !keys || (Array.isArray(keys) && keys.every(key => !!settings.urls[key])), 
+        'Invalid keys supplied to refetchData'
+      );
       this.fetchData(keys);
     },
 
@@ -142,14 +137,14 @@ export default function <PropsT extends object, DataT extends object>(
     },
 
     // Convert the data array to key-value props
-    reduceData(keys: string[], reducedData: any, data: any, index: number) {
+    reduceData(keys: string[], reducedData: any[], data: any, index: number) {
       const { dataConverters } = settings;
       const url = keys[index];
       reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props) : data;
       return reducedData;
     },
 
-    onDataFetched(keys: string[], values: any) {
+    onDataFetched(keys: string[], values: any[]) {
       if (!this.mounted) {
         return;
       }
@@ -179,14 +174,14 @@ export default function <PropsT extends object, DataT extends object>(
     },
 
     render() {
-			const { loaderText, renderOnError } = settings;
+      const { loaderText, renderOnError } = settings;
       const { data, error } = this.state as State<DataT>;
 
       if (!data && !error) {
         return !!loaderText && <Loader text={ loaderText }/>;
       }
 
-      if (error && !renderOnError) {
+      if (!!error && !renderOnError) {
         return null;
       }
 

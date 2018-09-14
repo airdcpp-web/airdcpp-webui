@@ -13,9 +13,23 @@ import './style.css';
 const TcombForm = t.form.Form;
 
 
-export type FormFieldSettingHandler<ValueType> = (key: string, definitions: UI.FormFieldDefinition[], formValue: Partial<ValueType>) => void;
-export type FormSaveHandler<ValueType> = (changedFields: Partial<ValueType>, allFields: Partial<ValueType>) => Promise<void>;
-export type FormFieldChangeHandler<ValueType> = (key: string, formValue: Partial<ValueType>, valueChanged: boolean) => null | void | Promise<Partial<ValueType>>;
+export type FormFieldSettingHandler<ValueType> = (
+  key: string, 
+  definitions: UI.FormFieldDefinition[], 
+  formValue: Partial<ValueType>
+) => void;
+
+export type FormSaveHandler<ValueType> = (
+  changedFields: Partial<ValueType>, 
+  allFields: Partial<ValueType>
+) => Promise<void>;
+
+export type FormFieldChangeHandler<ValueType> = (
+  key: string, 
+  formValue: Partial<ValueType>, 
+  valueChanged: boolean
+) => null | void | Promise<Partial<ValueType>>;
+
 export type FormSourceValueUpdateHandler<ValueType> = (sourceValue: Partial<ValueType>) => void;
 
 export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> {
@@ -36,47 +50,34 @@ interface State<ValueType> {
 
 class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends React.Component<FormProps<ValueType>> {
   static propTypes = {
-    /**
-		 * Form items to list
-		 */
+    // Form items to list
     fieldDefinitions: PropTypes.array.isRequired,
 
-    /**
-		 * Optional callback for appending field settings
-		 * Receives the field key, field definitions and the current form value as parameters
-		 */
+    // Optional callback for appending field settings
+    // Receives the field key, field definitions and the current form value as parameters
     onFieldSetting: PropTypes.func,
 
-    /**
-		 * Called when the form is saved
-		 * Receives the changed fields as parameter
-		 * Must return promise
-		 */
+    // Called when the form is saved
+    // Receives the changed fields as parameter
+    // Must return promise
     onSave: PropTypes.func.isRequired,
 
-    /**
-		 * Optional callback that is called when a field value was changed
-		 * Receives the field key, current form value value and boolean whether the field value is different from the source value
-		 * The function may return a promise containing new setting objects to be set as user selections
-		 */
+    // Optional callback that is called when a field value was changed
+    // Receives the field key, current form value value and boolean whether 
+    // the field value is different from the source value
+    // The function may return a promise containing new setting objects to be set as user selections
     onFieldChanged: PropTypes.func,
 
-    /**
-		 * Optional callback that is called when the settings are received from the server
-		 * Receives the new source value object as parameter
-		 */
+    // Optional callback that is called when the settings are received from the server
+    // Receives the new source value object as parameter
     onSourceValueUpdated: PropTypes.func,
 
-    /**
-		 * Source value to use for initial data
-		 * If no value is provided, the initial value is initialized
-		 * with the default one from definitions
-		 */
+    // Source value to use for initial data
+    // If no value is provided, the initial value is initialized
+    // with the default one from definitions
     value: PropTypes.object,
 
-    /**
-		 * Header for the form
-		 */
+    // Header for the form
     title: PropTypes.node,
   };
 
@@ -99,7 +100,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     if (this.props.onSourceValueUpdated) {
       this.props.onSourceValueUpdated(this.sourceValue);
     }
-  };
+  }
 
   componentDidMount() {
     this.setSourceValue(this.props.value);
@@ -123,7 +124,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     });
 
     return mergedValue;
-  };
+  }
 
   onFieldChanged = (value: Partial<ValueType>, valueKey: string, kind: string) => {
     const key = valueKey[0];
@@ -165,7 +166,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     this.setState({ 
       formValue: value 
     });
-  };
+  }
 
   // Handle an API error
   onSaveFailed = (error: APISocket.Error) => {
@@ -178,7 +179,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
 
     throw error;
-  };
+  }
 
   // Reduces an object of current form values that don't match the source data
   reduceChangedValues = (formValue: Partial<ValueType>, changedValues: Partial<ValueType>, valueKey: string) => {
@@ -187,7 +188,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
 
     return changedValues;
-  };
+  }
 
   // Calls props.onSave with changed form values
   save = () => {
@@ -205,7 +206,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
 
     return Promise.reject(new Error('Validation failed'));
-  };
+  }
 
   // Reduces an array of field setting objects by calling props.onFieldSetting
   fieldOptionReducer = (reducedOptions: { [key: string]: any }, fieldDefinitions: UI.FormFieldDefinition) => {
@@ -216,7 +217,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
 
     return reducedOptions;
-  };
+  }
 
   // Returns an options object for Tcomb form
   getFieldOptions = () => {
@@ -237,7 +238,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
 
     return options;
-  };
+  }
 
   render() {
     const { title, fieldDefinitions, className } = this.props;
@@ -259,7 +260,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
             ...this.context,
           } }
         />
-      </div>);
+      </div>
+    );
   }
 }
 

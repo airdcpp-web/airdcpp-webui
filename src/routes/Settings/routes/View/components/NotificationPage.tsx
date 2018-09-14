@@ -4,6 +4,7 @@ import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingForm from 'routes/Settings/components/LocalSettingForm';
 
 import '../style.css';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const PopupEntry = [
@@ -16,7 +17,7 @@ const PopupEntry = [
   LocalSettings.NOTIFY_EVENTS_ERROR,
 ];
 
-const NotificationPage = props => (
+const NotificationPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <LocalSettingForm
       title="Popup notifications"

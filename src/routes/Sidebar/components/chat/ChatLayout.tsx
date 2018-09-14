@@ -22,7 +22,7 @@ export interface ChatSessionProps {
     id: API.IdType;
     hub_url: string;
   };
-};
+}
 
 export interface ChatLayoutProps extends ChatSessionProps {
   chatAccess: string;
@@ -62,11 +62,10 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
     }
 
     this.setState({ messages: messages });
-  };
+  }
 
   onSessionActivated = (id: API.IdType) => {
     const { messageStore, actions } = this.props;
-		
     if (!messageStore.isSessionInitialized(id)) {
       this.setState({ 
         messages: null 
@@ -78,7 +77,7 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
         messages: messageStore.getSessionMessages(id) 
       });
     }
-  };
+  }
 
   componentDidMount() {
     this.onSessionActivated(this.props.session.id);
@@ -89,7 +88,7 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: ChatLayoutProps) {
-    if (this.props.session.id != nextProps.session.id) {
+    if (this.props.session.id !== nextProps.session.id) {
       this.onSessionActivated(nextProps.session.id);
     }
   }

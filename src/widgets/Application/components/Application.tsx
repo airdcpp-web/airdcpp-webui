@@ -14,13 +14,18 @@ import LoginStore from 'stores/LoginStore';
 import '../style.css';
 
 
-const Statistics = StatisticsDecorator<any>(({ stats }) => (
-  <div className="ui list">
-    <ListItem header="Logged in as" description={ LoginStore.user.username }/>
-    <ListItem header="Client started" description={ formatRelativeTime(LoginStore.systemInfo.client_started) }/>
-    <ListItem header="Active sessions" description={ stats.active_sessions }/>
-  </div>
-), SystemConstants.STATS_URL, 'Failed to fetch information', 10);
+const Statistics = StatisticsDecorator<any>(
+  ({ stats }) => (
+    <div className="ui list">
+      <ListItem header="Logged in as" description={ LoginStore.user.username }/>
+      <ListItem header="Client started" description={ formatRelativeTime(LoginStore.systemInfo.client_started) }/>
+      <ListItem header="Active sessions" description={ stats.active_sessions }/>
+    </div>
+  ), 
+  SystemConstants.STATS_URL, 
+  'Failed to fetch information', 
+  10
+);
 
 
 export interface ApplicationProps {

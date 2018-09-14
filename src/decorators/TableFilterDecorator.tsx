@@ -16,15 +16,19 @@ export interface TableFilterDecoratorProps {
 }
 
 export interface TableFilterDecoratorDataProps {
-  filter: FilterType
+  filter: FilterType;
 }
 
 export interface TableFilterDecoratorChildProps {
   onFilterUpdated: (value: string | number, method?: FilterMethod) => void;
 }
 
-export default function <PropsT>(Component: React.ComponentType<PropsT & TableFilterDecoratorChildProps>, propertyName = 'any') {
-  class TableFilterDecorator extends React.PureComponent<PropsT & TableFilterDecoratorProps & DataProviderDecoratorChildProps & TableFilterDecoratorDataProps> {
+export default function <PropsT>(
+  Component: React.ComponentType<PropsT & TableFilterDecoratorChildProps>, 
+  propertyName: string = 'any'
+) {
+  type Props = PropsT & TableFilterDecoratorProps & DataProviderDecoratorChildProps & TableFilterDecoratorDataProps;
+  class TableFilterDecorator extends React.PureComponent<Props> {
     //static propTypes = {
     //  viewUrl: PropTypes.string.isRequired,
     //  filter: PropTypes.object.isRequired,
@@ -40,7 +44,7 @@ export default function <PropsT>(Component: React.ComponentType<PropsT & TableFi
       const { viewUrl, filter } = this.props;
       SocketService.put(viewUrl + '/filter/' + filter.id, data)
         .catch((error: APISocket.Error) => console.error('Failed to add table filter'));
-    };
+    }
 
     render() {
       return (
@@ -52,10 +56,13 @@ export default function <PropsT>(Component: React.ComponentType<PropsT & TableFi
     }
   }
 
-  return DataProviderDecorator<PropsT & TableFilterDecoratorProps, TableFilterDecoratorDataProps>(TableFilterDecorator, {
-    urls: {
-      filter: ({ viewUrl }, socket) => socket.post(viewUrl + '/filter'),
-    },
-    loaderText: null,
-  });
+  return DataProviderDecorator<PropsT & TableFilterDecoratorProps, TableFilterDecoratorDataProps>(
+    TableFilterDecorator, 
+    {
+      urls: {
+        filter: ({ viewUrl }, socket) => socket.post(viewUrl + '/filter'),
+      },
+      loaderText: null,
+    }
+  );
 }

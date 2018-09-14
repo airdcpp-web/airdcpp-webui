@@ -12,24 +12,16 @@ export interface ActionInputProps extends ButtonProps {
 
 class ActionInput extends React.PureComponent<ActionInputProps> {
   static propTypes = {
-    /**
-		 * Button caption
-		 */
+    // Button caption
     caption: PropTypes.string.isRequired,
 
-    /**
-		 * Button icon
-		 */
+    // Button icon
     icon: PropTypes.string.isRequired,
 
-    /**
-		 * Input placeholder
-		 */
+    // Input placeholder
     placeholder: PropTypes.string.isRequired,
 
-    /**
-		 * Function to call with the value
-		 */
+    // Function to call with the value
     handleAction: PropTypes.func.isRequired
   };
 
@@ -43,11 +35,11 @@ class ActionInput extends React.PureComponent<ActionInputProps> {
 
   handleClick = () => {
     this.props.handleAction(this.state.value);
-  };
+  }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: event.target.value });
-  };
+  }
 
   render() {
     const { type, placeholder, handleAction, ...other /*icon, caption*/ } = this.props;

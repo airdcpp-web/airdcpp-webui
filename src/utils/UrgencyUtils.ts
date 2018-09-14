@@ -26,18 +26,29 @@ const appendToMap = (counts: UI.UrgencyCountMap, urgency: UI.Urgency) => {
 };
 
 // Convert regular type -> count mapping to urgency -> count map
-const toUrgencyMap = (source: API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts, urgencies: UI.UrgencyCountMap) => {
-  return validateUrgencies(Object.keys(source).reduce((map, key) => {
-    map[urgencies[key]] = source[key];
-    return map;
-  }, {}));
+const toUrgencyMap = (
+  source: API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts, 
+  urgencies: UI.UrgencyCountMap
+) => {
+  return validateUrgencies(
+    Object.keys(source).reduce(
+      (map, key) => {
+        map[urgencies[key]] = source[key];
+        return map;
+      }, 
+      {}
+    )
+  );
 };
 
 type SessionList = Array<API.ReadableSessionItem | API.MessageSessionItem>;
 type UrgencyGetter = (session: API.ReadableSessionItem | API.MessageSessionItem) => UI.UrgencyCountMap | null;
 
 // Returns urgency mapping for a message session with a "message_counts" property
-const messageSessionMapper = (item: API.MessageSessionItem, urgencyMappings: UI.UrgencyCountMap): UI.UrgencyCountMap | null => {
+const messageSessionMapper = (
+  item: API.MessageSessionItem, 
+  urgencyMappings: UI.UrgencyCountMap
+): UI.UrgencyCountMap | null => {
   return toUrgencyMap(item.message_counts.unread, urgencyMappings);
 };
 
@@ -54,17 +65,20 @@ const simpleSessionMapper = (item: API.ReadableSessionItem): UI.UrgencyCountMap 
 
 // Get urgencyMap [urgency: numberOfSessions] for a list of sessions
 const getSessionUrgencies = (sessions: SessionList, urgencyGetter: UrgencyGetter) => {
-  const urgencies = sessions.reduce((reduced, session) => {
-    const urgencyMap = urgencyGetter(session);
-    if (urgencyMap) {
-      const max = maxUrgency(urgencyMap);
-      if (max) {
-        appendToMap(reduced, max);
+  const urgencies = sessions.reduce(
+    (reduced, session) => {
+      const urgencyMap = urgencyGetter(session);
+      if (urgencyMap) {
+        const max = maxUrgency(urgencyMap);
+        if (max) {
+          appendToMap(reduced, max);
+        }
       }
-    }
 
-    return reduced;
-  }, {});
+      return reduced;
+    }, 
+    {}
+  );
 
   return validateUrgencies(urgencies);
 };

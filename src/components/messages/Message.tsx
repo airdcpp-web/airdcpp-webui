@@ -69,7 +69,6 @@ class ChatMessage extends React.Component<ChatMessageProps> {
 
   render() {
     const { message, dropdownContext } = this.props;
-		
     return (
       <div className={ 'ui item chat ' + message.from.flags.join(' ')}>
         <TimeStamp 
@@ -115,7 +114,6 @@ class StatusMessage extends React.Component<StatusMessageProps> {
 
   render() {
     const { message } = this.props;
-		
     return (
       <div className={ 'ui item status ' + message.severity }>
         <Icon icon={ getSeverityIcon(message.severity) }/>

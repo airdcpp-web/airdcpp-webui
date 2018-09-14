@@ -28,7 +28,7 @@ export const SearchActions = Reflux.createActions([
 ]);
 
 SearchActions.download.listen((itemInfo, user, downloadData) => {
-  return SocketService.post(SearchConstants.RESULTS_URL + '/' + itemInfo.id + '/download', downloadData)
+  return SocketService.post(`${SearchConstants.RESULTS_URL}/${itemInfo.id}/download`, downloadData)
     .then(SearchActions.download.completed)
     .catch(error => SearchActions.download.failed(itemInfo, error));
 });
@@ -42,7 +42,7 @@ SearchActions.browseContent.listen(function (data, location) {
 });
 
 SearchActions.result.listen(function (data, location) {
-  History.pushModal(location, location.pathname + '/result', OverlayConstants.SEARCH_RESULT_MODAL, { parentResult: data });
+  History.pushModal(location, `${location.pathname}/result`, OverlayConstants.SEARCH_RESULT_MODAL, { parentResult: data });
 });
 
 export default SearchActions;

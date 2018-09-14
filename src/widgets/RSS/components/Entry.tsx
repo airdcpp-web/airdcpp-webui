@@ -54,7 +54,7 @@ const Entry: React.SFC<EntryProps> = ({ entry, feedUrl, componentId }) => {
       </div>
 
       <div className="description">
-        { date ? formatRelativeTime(Date.parse(date) / 1000) : null }
+        { !!date && formatRelativeTime(Date.parse(date) / 1000) }
       </div>
     </div>
   );

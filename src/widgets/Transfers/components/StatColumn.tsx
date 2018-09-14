@@ -48,8 +48,14 @@ const StatColumn: React.SFC<StatColumnProps> = ({ stats }) => (
     <ListItem header="Downloaded" description={ formatSize(stats.session_downloaded) }/>
     <ListItem header="Uploaded" description={ formatSize(stats.session_uploaded) }/>
     <div className="section-separator"/>
-    <ListItem header="Download limit" description={ <LimiterValue limit={ stats.limit_down } settingKey="download_limit_main"/> }/>
-    <ListItem header="Upload limit" description={ <LimiterValue limit={ stats.limit_up } settingKey="upload_limit_main"/> }/>
+    <ListItem 
+      header="Download limit" 
+      description={ <LimiterValue limit={ stats.limit_down } settingKey="download_limit_main"/> }
+    />
+    <ListItem 
+      header="Upload limit" 
+      description={ <LimiterValue limit={ stats.limit_up } settingKey="upload_limit_main"/> }
+    />
   </div>
 );
 

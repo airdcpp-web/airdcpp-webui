@@ -15,7 +15,11 @@ export interface ShareProfileFilterProps {
 
 }
 
-class ShareProfileFilter extends React.Component<ShareProfileFilterProps & TableFilterDecoratorChildProps & ShareProfileDecoratorChildProps & ShareProfileDecoratorChildProps> {
+type Props = 
+  ShareProfileFilterProps & TableFilterDecoratorChildProps & 
+  ShareProfileDecoratorChildProps & ShareProfileDecoratorChildProps;
+
+class ShareProfileFilter extends React.Component<Props> {
   /*static propTypes = {
     // Callback after selecting a profile
     onFilterUpdated: PropTypes.func,
@@ -30,7 +34,7 @@ class ShareProfileFilter extends React.Component<ShareProfileFilterProps & Table
     this.setState({ 
       selectedProfile: profile 
     });
-  };
+  }
 
   getDropdownItem = (profile: API.ShareProfile) => {
     return (
@@ -42,7 +46,7 @@ class ShareProfileFilter extends React.Component<ShareProfileFilterProps & Table
         { profile.str }
       </MenuItemLink>
     );
-  };
+  }
 
   render() {
     return (

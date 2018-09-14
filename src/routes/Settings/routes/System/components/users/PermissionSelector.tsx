@@ -8,12 +8,13 @@ import t from 'utils/tcomb-form';
 import Checkbox from 'components/semantic/Checkbox';
 import Message from 'components/semantic/Message';
 
+
 const ReactSelect = t.form.Form.templates.select.clone({
-  renderSelect: (locals) => { // <- locals contains the "recipe" to build the UI
-    const onChange = (access, checked) => {
-      let values = locals.value;
+  renderSelect: (locals: UI.FormLocals<API.AccessId, API.AccessId[]>) => {
+    const onChange = (access: API.AccessId, checked: boolean) => {
+      let values: API.AccessId[] = locals.value;
       if (checked) {
-        values = update(values, { $push: [ access ] });
+        values = [ ...values, access ];
       } else {
         const index = values.indexOf(access);
         values = update(values, { $splice: [ [ index, 1 ] ] });
@@ -22,7 +23,7 @@ const ReactSelect = t.form.Form.templates.select.clone({
       locals.onChange(values);
     };
 
-    const mapPermission = ({ value, text }) => (
+    const mapPermission = ({ value, text }: UI.FormOption<API.AccessId>) => (
       <Checkbox 
         key={ value }
         className={ value }
@@ -32,8 +33,8 @@ const ReactSelect = t.form.Form.templates.select.clone({
       />
     );
 
-    const filterPermission = ({ value }) => {
-      if (locals.value.indexOf('admin') !== -1 && value !== 'admin') {
+    const filterPermission = ({ value }: UI.FormOption<API.AccessId>) => {
+      if (locals.value.indexOf(API.AccessId.ADMIN) !== -1 && value !== API.AccessId.ADMIN) {
         return false;
       }
 

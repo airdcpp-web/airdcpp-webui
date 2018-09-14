@@ -12,7 +12,7 @@ export interface ProgressProps {
 const Progress: React.SFC<ProgressProps> = ({ className, percent, caption }) => (
   <div 
     className={ classNames('ui progress', className) } 
-    data-percent= { percent }
+    data-percent={ percent }
   >
     <div 
       className="bar" 

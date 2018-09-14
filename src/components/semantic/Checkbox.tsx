@@ -20,24 +20,16 @@ export interface CheckboxProps {
 class Checkbox extends React.PureComponent<CheckboxProps> {
   static propTypes = {
 
-    /**
-		 * Selection state
-		 */
+    // Selection state
     checked: PropTypes.bool.isRequired,
 
-    /**
-		 * Handler for state changes (receives bool as argument)
-		 */
+    // Handler for state changes (receives bool as argument)
     onChange: PropTypes.func.isRequired,
 
-    /**
-		 * Checkbox caption
-		 */
+    // Checkbox caption
     caption: PropTypes.node,
 
-    /**
-		 * Display type (slider or toggle), leave undefined for default
-		 */
+    // Display type (slider or toggle), leave undefined for default
     type: PropTypes.string,
 
     disabled: PropTypes.bool,
@@ -56,7 +48,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
   }
 
   componentDidUpdate(prevProps: CheckboxProps) {
-    if (prevProps.checked != this.props.checked) {
+    if (prevProps.checked !== this.props.checked) {
       if (this.props.checked) {
         $(this.c).checkbox('set checked');
       } else {
@@ -87,7 +79,8 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
             { caption }
           </label>
         ) }
-      </div>);
+      </div>
+    );
   }
 }
 

@@ -38,33 +38,33 @@ class SuggestField extends React.Component<SuggestFieldProps> {
   static propTypes = {
 
     /**
-		 * Function to call when selecting suggestions
-		 * Receives the suggestion value and the suggestion object (only if selecting a suggestion)
-		 */
+     * Function to call when selecting suggestions
+     * Receives the suggestion value and the suggestion object (only if selecting a suggestion)
+     */
     submitHandler: PropTypes.func,
 
     /**
-		 * Function to call when the input text was changed
-		 */
+     * Function to call when the input text was changed
+     */
     onChange: PropTypes.func,
 
     /**
-		 * Providing a button element makes the input accept custom inputs when pressing enter
-		 * The same submitHandler is called but without suggestion object
-		 */
+     * Providing a button element makes the input accept custom inputs when pressing enter
+     * The same submitHandler is called but without suggestion object
+     */
     button: PropTypes.element,
 
     placeholder: PropTypes.string,
 
     /**
-		 * Default input value to show
-		 * The input will also be updated accordingly when a different stored value is received
-		 */
+     * Default input value to show
+     * The input will also be updated accordingly when a different stored value is received
+     */
     defaultValue: PropTypes.string,
 
     /**
-		 * Disables the field action button
-		 */
+     * Disables the field action button
+     */
     disabled: PropTypes.bool,
   };
 
@@ -92,7 +92,7 @@ class SuggestField extends React.Component<SuggestFieldProps> {
       const value = suggestion ? this.props.getSuggestionValue(suggestion) : this.state.text;
       this.props.submitHandler(value, suggestion);
     }
-  };
+  }
 
   onTextChange = (evt: any, { newValue }: Autosuggest.ChangeEvent) => {
     this.setState({ 
@@ -102,15 +102,15 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     if (this.props.onChange) {
       this.props.onChange(newValue);
     }
-  };
+  }
 
   isSubmitDisabled = () => {
     return this.state.text.length === 0;
-  };
+  }
 
   getSuggestionValue = (suggestion: SuggestionType) => {
     return suggestion;
-  };
+  }
 
   onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     // Accept custom inputs only when there's a submit button
@@ -124,14 +124,17 @@ class SuggestField extends React.Component<SuggestFieldProps> {
 
       this.handleSubmit(event);
     }
-  };
+  }
 
-  onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionType> = (event: any, { suggestion, suggestionValue, method }) => {
+  onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionType> = (
+    event: any, 
+    { suggestion, suggestionValue, method }
+  ) => {
     // No second 'Enter' event if the suggestion was selected
     event.preventDefault();
 
     this.handleSubmit(event, suggestion);
-  };
+  }
 
   render() {
     const { className, autoFocus, placeholder, defaultValue, button, ...other } = this.props;

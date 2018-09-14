@@ -16,7 +16,10 @@ interface ActiveSessionDecoratorProps<SessionT> {
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function <PropsT, SessionT extends { id: API.IdType; }>(Component: React.ComponentType<PropsT>, useReadDelay: boolean) {
+export default function <PropsT, SessionT extends { id: API.IdType; }>(
+  Component: React.ComponentType<PropsT>, 
+  useReadDelay: boolean
+) {
   class ActiveSessionDecorator extends React.Component<ActiveSessionDecoratorProps<SessionT>> {
     /*static propTypes = {
       session: PropTypes.any, // Required (cloned)
@@ -28,7 +31,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(Component
     setRead = (id: API.IdType) => {
       this.props.actions.setRead(id);
       this.readTimeout = null;
-    };
+    }
 
     setSession = (id: API.IdType | null) => {
       if (this.readTimeout) {
@@ -43,7 +46,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(Component
 
       const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
       this.readTimeout = setTimeout(_ => this.setRead(id), timeout);
-    };
+    }
 
     componentDidMount() {
       this.setSession(this.props.session.id);
@@ -54,7 +57,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(Component
     }
 
     UNSAFE_componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT>) {
-      if (this.props.session.id != nextProps.session.id) {
+      if (this.props.session.id !== nextProps.session.id) {
         this.setSession(nextProps.session.id);
       }
     }

@@ -29,7 +29,7 @@ const showDivider = (index: number, messageList: API.MessageListItem[]) => {
   const currentMessage = messageList[index];
 
   // First message? History log won't count
-  if (index === 0 || (index === 1 && isHistoryItem(messageList[index-1]))) {
+  if (index === 0 || (index === 1 && isHistoryItem(messageList[index - 1]))) {
     // Don't show for message that were received today
     if (!isToday(currentMessage) && !isHistoryItem(currentMessage)) {
       return true;
@@ -38,23 +38,30 @@ const showDivider = (index: number, messageList: API.MessageListItem[]) => {
     return false;
   }
 
-  return getMessageDay(messageList[index-1]) !== getMessageDay(currentMessage);
+  return getMessageDay(messageList[index - 1]) !== getMessageDay(currentMessage);
 };
 
 
-const getMessageListItem = (reduced: React.ReactNode[], message: API.MessageListItem, index: number, messageList: API.MessageListItem[]) => {
+const getMessageListItem = (
+  reduced: React.ReactNode[], 
+  message: API.MessageListItem, 
+  index: number, 
+  messageList: API.MessageListItem[]
+) => {
   // Push a divider when the date was changed
   if (showDivider(index, messageList)) {
     const messageObj = !!message.chat_message ? message.chat_message : message.log_message;
-    !!messageObj && reduced.push(
-      <div 
-        key={ `divider${messageObj.id}` }
-        className="ui horizontal date divider"
-      >
-        <i className="calendar icon"/>
-        { formatCalendarTime(messageObj.time) }
-      </div>
-    );
+    if (!!messageObj) {
+      reduced.push(
+        <div 
+          key={ `divider${messageObj.id}` }
+          className="ui horizontal date divider"
+        >
+          <i className="calendar icon"/>
+          { formatCalendarTime(messageObj.time) }
+        </div>
+      );
+    }
   }
 
   // Push the message

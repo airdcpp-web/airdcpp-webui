@@ -14,6 +14,7 @@ const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings) => {
   }
 
   if (widgetInfo.access && !LoginStore.hasAccess(widgetInfo.access)) {
+    // tslint:disable-next-line:quotemark
     return "You aren't permitted to access this widget";
   }
 

@@ -49,14 +49,17 @@ const getCornerIcon = (flags: API.HubUserFlag[]) => {
 };
 
 const getTitle = (flags: API.HubUserFlag[]) => {
-  const titles = flags.reduce((reduced, flag) => {
-    const title = flagTitles[flag];
-    if (!!title) {
-      reduced.push(title);
-    }
+  const titles = flags.reduce(
+    (reduced, flag) => {
+      const title = flagTitles[flag];
+      if (!!title) {
+        reduced.push(title);
+      }
 
-    return reduced;
-  }, [] as string[]);
+      return reduced;
+    }, 
+    [] as string[]
+  );
 
   return titles.toString();
 };

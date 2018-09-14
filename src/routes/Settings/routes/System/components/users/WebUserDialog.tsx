@@ -1,18 +1,18 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import WebUserConstants from 'constants/WebUserConstants';
 import AccessConstants from 'constants/AccessConstants';
-import PermissionSelector from './PermissionSelector';
+import PermissionSelector from 'routes/Settings/routes/System/components/users/PermissionSelector';
 
 import SocketService from 'services/SocketService';
 
 import t from 'utils/tcomb-form';
 
-import Form from 'components/form/Form';
+import Form, { FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
 
 import LoginStore from 'stores/LoginStore';
 
@@ -59,7 +59,7 @@ const AccessCaptions = {
 };
 
 
-const reducePermissions = (options, key) => {
+const reducePermissions = (options: API.SettingEnumOption[], key: string) => {
   options.push({
     id: AccessConstants[key],
     name: AccessCaptions[key],
@@ -68,7 +68,7 @@ const reducePermissions = (options, key) => {
   return options;
 };
 
-const getEntry = isNew => {
+const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
@@ -89,10 +89,18 @@ const getEntry = isNew => {
   ];
 };
 
-class WebUserDialog extends React.Component {
+interface WebUserDialogProps extends ModalRouteDecoratorChildProps {
+  user: API.WebUserInput;
+}
+
+class WebUserDialog extends React.Component<WebUserDialogProps> {
   static displayName = 'WebUserDialog';
 
-  constructor(props) {
+
+  entry: UI.FormFieldDefinition[];
+  form: Form;
+
+  constructor(props: WebUserDialogProps) {
     super(props);
 
     this.entry = getEntry(this.isNew());
@@ -100,21 +108,21 @@ class WebUserDialog extends React.Component {
 
   isNew = () => {
     return !this.props.user;
-  };
+  }
 
   save = () => {
     return this.form.save();
-  };
+  }
 
-  onSave = (changedFields) => {
+  onSave: FormSaveHandler<API.ShareRootEntryBase> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
 
-    return SocketService.patch(WebUserConstants.USERS_URL + '/' + this.props.user.id, changedFields);
-  };
+    return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user.id}`, changedFields);
+  }
 
-  onFieldSetting = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
       fieldOptions['factory'] = t.form.Select;
       fieldOptions['template'] = PermissionSelector;
@@ -124,7 +132,7 @@ class WebUserDialog extends React.Component {
     } else if (id === 'username') {
       fieldOptions['disabled'] = !this.isNew();
     }
-  };
+  }
 
   render() {
     const { user, ...other } = this.props;
@@ -140,7 +148,7 @@ class WebUserDialog extends React.Component {
         { ...other }
       >
         <Form
-          ref={ c => this.form = c }
+          ref={ (c: any) => this.form = c! }
           fieldDefinitions={ this.entry }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }

@@ -8,11 +8,11 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileActionCell } from 'components/table/Cell';
 import { Column } from 'fixed-data-table-2';
 
-import ShareDirectoryDialog from './ShareDirectoryDialog';
+import ShareDirectoryDialog from 'routes/Share/components/ShareDirectoryDialog';
 import ShareProfileFilter from 'components/table/ShareProfileFilter';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-import RefreshCell from './RefreshCell';
+import RefreshCell from 'routes/Share/components/RefreshCell';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';

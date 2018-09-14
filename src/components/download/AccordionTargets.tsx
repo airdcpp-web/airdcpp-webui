@@ -13,14 +13,10 @@ interface AccordionTargetsProps {
 
 class AccordionTargets extends React.Component<AccordionTargetsProps> {
   static propTypes = {
-    /**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
+    // Function handling the path selection. Receives the selected path as argument.
     downloadHandler: PropTypes.func.isRequired,
 
-    /**
-		 * Grouped paths to list
-		 */
+    // Grouped paths to list
     groupedPaths: PropTypes.array.isRequired,
   };
 
@@ -40,7 +36,7 @@ class AccordionTargets extends React.Component<AccordionTargetsProps> {
         </div>
       </div>
     );
-  };
+  }
 
   render() {
     const { groupedPaths } = this.props;

@@ -27,20 +27,23 @@ const typeToComponent = (type: API.SettingType, min: number | undefined, max: nu
 };
 
 const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
-  const ret = definitions.reduce((reduced, def) => {
-    if (def.type === FieldTypes.LIST) {
-      if (def.item_type === FieldTypes.STRUCT) {
-        reduced[def.key] = t.list(parseDefinitions(def.definitions!));
+  const ret = definitions.reduce(
+    (reduced, def) => {
+      if (def.type === FieldTypes.LIST) {
+        if (def.item_type === FieldTypes.STRUCT) {
+          reduced[def.key] = t.list(parseDefinitions(def.definitions!));
+        } else {
+          reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max));
+        }
       } else {
-        reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max));
+        const fieldComponent = typeToComponent(def.type, def.min, def.max);
+        reduced[def.key] = def.optional ? t.maybe(fieldComponent) : fieldComponent;
       }
-    } else {
-      const fieldComponent = typeToComponent(def.type, def.min, def.max);
-      reduced[def.key] = def.optional ? t.maybe(fieldComponent) : fieldComponent;
-    }
-		
-    return reduced;
-  }, {});
+
+      return reduced;
+    }, 
+    {}
+  );
 
   return t.struct(ret);
 };
@@ -62,12 +65,17 @@ const normalizeField = (value?: API.SettingValue) => {
       return value.id;
     } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
       // Normalize each array item
-      invariant(value[0].hasOwnProperty('id'), 'Invalid array supplied for form property (id property is required for values)');
+      invariant(
+        value[0].hasOwnProperty('id'), 
+        'Invalid array supplied for form property (id property is required for values)'
+      );
       const tmp = value[0];
       console.log(tmp);
       return value.map(normalizeField);
     }
-  } else*/ if (value === '') {
+  } else*/ 
+  
+  if (value === '') {
     // Normalize empty strings to null, which is used by tcomb 
     return null;
   }
@@ -82,33 +90,39 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
   };
 };
 
-const normalizeSettingValueMap = (value: Partial<API.SettingValueMap>, valueDefinitions: UI.FormFieldDefinition[]): UI.FormValueMap => {
-  return valueDefinitions.reduce((reducedValue, { key, type, definitions, default_value, item_type }) => {
-    if (value && value.hasOwnProperty(key)) {
-      const fieldValue = value[key];
-      if (type === FieldTypes.LIST && Array.isArray(fieldValue)) {
-        if (item_type === FieldTypes.STRUCT) {
-          // Normalize each list object
-          reducedValue[key] = fieldValue.map((arrayItem) => {
-            if (!!arrayItem && typeof arrayItem === 'object') {
-              return normalizeSettingValueMap(arrayItem, definitions!);
-            }
+const normalizeSettingValueMap = (
+  value: Partial<API.SettingValueMap>, 
+  valueDefinitions: UI.FormFieldDefinition[]
+): UI.FormValueMap => {
+  return valueDefinitions.reduce(
+    (reducedValue, { key, type, definitions, default_value, item_type }) => {
+      if (value && value.hasOwnProperty(key)) {
+        const fieldValue = value[key];
+        if (type === FieldTypes.LIST && Array.isArray(fieldValue)) {
+          if (item_type === FieldTypes.STRUCT) {
+            // Normalize each list object
+            reducedValue[key] = fieldValue.map((arrayItem) => {
+              if (!!arrayItem && typeof arrayItem === 'object') {
+                return normalizeSettingValueMap(arrayItem, definitions!);
+              }
 
-            throw `Invalid value for a list struct ${arrayItem}`;
-          });
+              throw `Invalid value for a list struct ${arrayItem}`;
+            });
+          } else {
+            reducedValue[key] = fieldValue.map(normalizeField);
+          }
         } else {
-          reducedValue[key] = fieldValue.map(normalizeField);
+          reducedValue[key] = normalizeField(fieldValue);
         }
-      } else {
-        reducedValue[key] = normalizeField(fieldValue);
+      } else if (!value) {
+        // Initialize empty value but don't merge missing fields into an existing value (we might be merging)
+        reducedValue[key] = default_value ? default_value : null;
       }
-    } else if (!value) {
-      // Initialize empty value but don't merge missing fields into an existing value (we might be merging)
-      reducedValue[key] = default_value ? default_value : null;
-    }
 
-    return reducedValue;
-  }, {});
+      return reducedValue;
+    }, 
+    {}
+  );
 };
 
 const intTransformer = {
@@ -119,22 +133,23 @@ const intTransformer = {
 const parseTypeOptions = (type: API.SettingType) => {
   const options = {};
   switch (type) {
-  case FieldTypes.TEXT: {
-    options['type'] = 'textarea';
-    break;
-  } 
-  //case FieldTypes.FILE_PATH:
-  case FieldTypes.DIRECTORY_PATH: {
-    options['factory'] = t.form.Textbox;
-    options['template'] = BrowseField;
+    case FieldTypes.TEXT: {
+      options['type'] = 'textarea';
+      break;
+    } 
+    //case FieldTypes.FILE_PATH:
+    case FieldTypes.DIRECTORY_PATH: {
+      options['factory'] = t.form.Textbox;
+      options['template'] = BrowseField;
 
-    // TODO: file selector dialog
-    options['config'] = {
-      //isFile: type === FieldTypes.FILE_PATH
-      isFile: false
-    };
-  }
-  default:
+      // TODO: file selector dialog
+      options['config'] = {
+        //isFile: type === FieldTypes.FILE_PATH
+        isFile: false
+      };
+      break;
+    }
+    default:
   }
 
   return options;
@@ -144,14 +159,17 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
-  if (definition.type == FieldTypes.LIST) {
+  if (definition.type === FieldTypes.LIST) {
     options['item'] = {};
     if (definition.definitions) {
       // Struct item fields
-      options['item']['fields'] = definition.definitions.reduce((reduced, itemDefinition) => {
-        reduced[itemDefinition.key] = parseFieldOptions(itemDefinition);
-        return reduced;
-      }, {});
+      options['item']['fields'] = definition.definitions.reduce(
+        (reduced, itemDefinition) => {
+          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition);
+          return reduced;
+        }, 
+        {}
+      );
     } else {
       // Plain items
       options['item'] = parseTypeOptions(definition.item_type!);
@@ -164,7 +182,11 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
 
   // Enum select field?
   if (definition.options) {
-    invariant(Array.isArray(definition.options) && definition.options.length > 0, 'Incorrect enum options supplied: ' + JSON.stringify(definition.options));
+    invariant(
+      Array.isArray(definition.options) && definition.options.length > 0, 
+      'Incorrect enum options supplied: ' + JSON.stringify(definition.options)
+    );
+
     Object.assign(options, {
       factory: t.form.Select,
       options: definition.options.map(normalizeEnumValue),

@@ -14,14 +14,16 @@ export interface ScrollDecoratorChildProps {
   scrollableRef: (component: any) => void;
 }
 
-export default function <PropsT, SessionT extends SessionBase = SessionBase>(Component: React.ComponentType<PropsT & ScrollDecoratorChildProps>) {
+export default function <PropsT, SessionT extends SessionBase = SessionBase>(
+  Component: React.ComponentType<PropsT & ScrollDecoratorChildProps>
+) {
   let shouldScrollBottom = false;
 
   class ScrollDecorator extends React.Component<ScrollDecoratorProps<SessionT> & PropsT> {
     static propTypes = {
       /**
-			 * The container will always be scrolled to bottom if the session changes
-			 */
+       * The container will always be scrolled to bottom if the session changes
+       */
       session: PropTypes.any,
     };
 
@@ -42,7 +44,8 @@ export default function <PropsT, SessionT extends SessionBase = SessionBase>(Com
         return;
       }
 
-      const offSetFromBottom = this.scrollable.scrollHeight - (this.scrollable.scrollTop + this.scrollable.offsetHeight);
+      const { scrollHeight, scrollTop, offsetHeight } = this.scrollable;
+      const offSetFromBottom = scrollHeight - (scrollTop + offsetHeight);
       shouldScrollBottom = Math.abs(offSetFromBottom) < 10;
     }
 
@@ -58,11 +61,11 @@ export default function <PropsT, SessionT extends SessionBase = SessionBase>(Com
       }
 
       shouldScrollBottom = false;
-    };
+    }
 
     setScrollableRef = (c: any) => {
       this.scrollable = c;
-    };
+    }
 
     render() {
       return (

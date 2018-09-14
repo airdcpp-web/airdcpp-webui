@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, RouterChildContext, match } from 'react-router';
+import { Route, RouterChildContext, match as RouteMatch } from 'react-router';
 
 
-const parseRoutePath = (match: match<{}>, path: string) => {
+const parseRoutePath = (match: RouteMatch<{}>, path: string) => {
   if (path[0] === '/') {
     return path;
   }
@@ -13,11 +13,11 @@ const parseRoutePath = (match: match<{}>, path: string) => {
 
 
 export interface ModalRouteDecoratorProps {
- // overlayId: any;
+  
 }
 
 export interface ModalRouteDecoratorChildProps {
-  overlayId: any;
+  overlayId?: any;
 }
 
 export default function <PropsT>(
@@ -25,7 +25,10 @@ export default function <PropsT>(
   overlayId: any, 
   path: string
 ) {
-  const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps & PropsT> = (props, { router }: RouterChildContext<{}>) => {
+  const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps & PropsT> = (
+    props, 
+    { router }: RouterChildContext<{}>
+  ) => {
     const { location, match } = router.route;
     if (!location.state || !location.state[overlayId]) {
       return null;

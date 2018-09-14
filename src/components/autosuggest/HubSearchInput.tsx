@@ -7,7 +7,7 @@ import Button from 'components/semantic/Button';
 
 export interface HubSearchInputProps extends Pick<RemoteSuggestFieldProps, 'submitHandler'> {
 
-};
+}
 
 const HubSearchInput: React.SFC<HubSearchInputProps> = ({ submitHandler }) => (
   <RemoteSuggestField

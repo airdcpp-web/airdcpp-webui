@@ -25,7 +25,7 @@ export interface RootSectionType extends SectionType {
 
 export interface ChildSectionType extends SectionType {
 
-};
+}
 
 const sectionToUrl = (section: SectionType, parent?: SectionType) => {
   if (typeof parent === 'object') {
@@ -64,7 +64,7 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
     isItemActive = (item: SectionType) => {
       const { location, parent } = this.props;
       return location.pathname.indexOf(sectionToUrl(item, parent)) === 0;
-    };
+    }
 
     findMenuItem = (menuItems?: SectionType[]) => {
       if (!menuItems) {
@@ -72,7 +72,7 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
       }
 
       return menuItems.find(this.isItemActive);
-    };
+    }
 
     menuItemToLinkComponent = (menuItemInfo: SectionType, parent: RootSectionType) => {
       if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
@@ -100,7 +100,7 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
           { menuItemInfo.title }
         </RouterMenuItemLink>
       );
-    };
+    }
 
     menuItemsToRouteComponentArray = (currentMenuItem: SectionType, menuItems?: SectionType[]) => {
       if (!menuItems) {
@@ -125,7 +125,7 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
           } }
         />
       ));
-    };
+    }
 
     render() {
       const { location, match, parent, menuItems, advancedMenuItems } = this.props;
@@ -156,4 +156,4 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
   }
 
   return SettingsMenuDecorator;
-};
+}

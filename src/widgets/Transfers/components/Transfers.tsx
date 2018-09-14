@@ -88,7 +88,7 @@ const Transfers = withContentRect('bounds')(createReactClass<TransferProps, Stat
 
   checkIdle() {
     const { points } = this.state;
-    if (points[points.length-1][0] + IDLE_CHECK_PERIOD - 200 <= Date.now()) {
+    if (points[points.length - 1][0] + IDLE_CHECK_PERIOD - 200 <= Date.now()) {
       this.setState({
         points: addSpeed(points, 0, 0),
       });

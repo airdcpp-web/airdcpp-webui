@@ -15,7 +15,7 @@ export const getParentPath = (fullPath: string) => {
   if (isDirectory(fullPath)) {
     return fullPath.replace(/[^\\\/]+[\\\/]$/, '');
   }
-		
+
   return getFilePath(fullPath);
 };
 

@@ -4,19 +4,19 @@ export enum SettingProfileEnum {
   NORMAL = 0, 
   RAR = 1, 
   LAN = 2
-};
+}
 
 export enum IncomingConnectionModeEnum {
   INCOMING_DISABLED = -1, 
   INCOMING_ACTIVE = 0, 
   INCOMING_ACTIVE_UPNP = 1,
   INCOMING_PASSIVE = 2,
-};
+}
 
 export enum OutgoingConnectionModeEnum {
   OUTGOING_DIRECT = 0, 
   OUTGOING_SOCKS = 1,
-};
+}
 
 export enum LocalSettings {
   NOTIFY_PM_USER = 'notify_pm_user',
@@ -26,10 +26,10 @@ export enum LocalSettings {
   NOTIFY_EVENTS_INFO = 'notify_events_info',
   NOTIFY_EVENTS_WARNING = 'notify_events_warning',
   NOTIFY_EVENTS_ERROR = 'notify_events_error',
-	
+
   UNREAD_LABEL_DELAY = 'unread_label_delay',
   BACKGROUND_IMAGE_URL = 'background_image_url',
-};
+}
 
 export enum FieldTypes {
   NUMBER = 'number',
@@ -40,7 +40,7 @@ export enum FieldTypes {
   DIRECTORY_PATH = 'directory_path',
   STRUCT = 'struct',
   LIST = 'list',
-};
+}
 
 export default {
   MODULE_URL: MODULE_URL,

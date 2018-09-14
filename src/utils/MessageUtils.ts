@@ -31,11 +31,17 @@ interface MessageSessionActions {
   setRead: (entityId: API.IdType) => void;
 }
 
-type SessionItem = (API.MessageSessionItem & { read?: undefined }) | (API.ReadableSessionItem & { message_counts?: undefined });
+type SessionItem = 
+  (API.MessageSessionItem & { read?: undefined }) | 
+  (API.ReadableSessionItem & { message_counts?: undefined });
 
 // Update the data with unread info that is marked as read
 // Marks the session as read also in the backend
-const checkUnread = (sessionItem: SessionItem, actions: MessageSessionActions, entityId: API.IdType): API.MessageSessionItem | API.ReadableSessionItem => {
+const checkUnread = (
+  sessionItem: SessionItem, 
+  actions: MessageSessionActions, 
+  entityId: API.IdType
+): API.MessageSessionItem | API.ReadableSessionItem => {
   if (!sessionItem.message_counts) {
     // Non-chat session
 
@@ -60,7 +66,8 @@ const checkUnread = (sessionItem: SessionItem, actions: MessageSessionActions, e
         (reduced, key) => {
           reduced[key] = 0;
           return reduced;
-        }, {}
+        }, 
+        {}
       );
 
       return {
@@ -91,14 +98,14 @@ const mergeCacheMessages = (cacheMessages: API.MessageListItem[], existingMessag
 const pushMessage = (message: API.MessageListItem, messages: API.MessageListItem[] = []) => {
   if (messages.length > 0) {
     // Messages can arrive simultaneously when the cached messages are fetched, don't add duplicates
-    const lastMessage = messages[messages.length-1];
+    const lastMessage = messages[messages.length - 1];
     const currentMessageId = getListMessageId(message);
     if (getListMessageId(lastMessage) >= currentMessageId) {
       return messages;
     }
   }
 
-  return update(messages, { $push: message });
+  return [ ...messages, message ];
 };
 
 export {

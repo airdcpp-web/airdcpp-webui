@@ -13,7 +13,10 @@ interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
   icon?: IconType;
 }
 
-const ActionButton: React.SFC<ActionButtonProps> = ({ action, itemData, icon = true, ...other }, { router }: RouterChildContext<{}>) => {
+const ActionButton: React.SFC<ActionButtonProps> = (
+  { action, itemData, icon = true, ...other }, 
+  { router }: RouterChildContext<{}>
+) => {
   if (!showAction(action, itemData)) {
     return null;
   }

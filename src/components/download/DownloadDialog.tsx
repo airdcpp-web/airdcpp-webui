@@ -17,7 +17,7 @@ import { getParentPath } from 'utils/FileUtils';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import AccessConstants from 'constants/AccessConstants';
@@ -28,7 +28,6 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import Modal from 'components/semantic/Modal';
 
 import './style.css';
-import { OverlayDecoratorProps } from 'decorators/OverlayDecorator';
 
 
 interface Section {
@@ -69,19 +68,22 @@ const MobileLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
   </div>
 );
 
-interface DownloadDialogProps extends Pick<OverlayDecoratorProps, 'overlayId'>, DataProviderDecoratorChildProps {
+interface DownloadDialogProps extends ModalRouteDecoratorChildProps {
   downloadHandler: (itemInfo: API.FileItemInfo, user: API.HintedUserBase, downloadData: API.DownloadData) => void;
-  itemInfo: API.FileItemInfo,
-  user: API.HintedUserBase;
+  itemInfo?: API.FileItemInfo; // REQUIRED, CLONED
+  user?: API.HintedUserBase; // REQUIRED, CLONED
 }
 
-interface DownloadDialogDataProps {
+interface DownloadDialogDataProps extends DataProviderDecoratorChildProps {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
   historyPaths: string[];
 }
 
-class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialogDataProps> {
+
+type Props = DownloadDialogProps & DownloadDialogDataProps;
+
+class DownloadDialog extends React.Component<Props> {
   static displayName = 'DownloadDialog';
 
   /*static propTypes = {
@@ -102,10 +104,10 @@ class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialo
   sections: Section[];
   modal: any;
 
-  constructor(props: DownloadDialogProps & DownloadDialogDataProps) {
+  constructor(props: Props) {
     super(props);
     const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
+    const dupePaths = itemInfo!.dupe ? itemInfo!.dupe.paths.map(path => getParentPath(path)) : [];
 
     this.sections = [
       {
@@ -146,15 +148,15 @@ class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialo
 
   handleDownload = (path: string) => {
     const { downloadHandler, itemInfo, user } = this.props;
-    downloadHandler(itemInfo, user, {
-      target_name: itemInfo.name, // possibly allow changing this later...
+    downloadHandler(itemInfo!, user!, {
+      target_name: itemInfo!.name, // possibly allow changing this later...
       target_directory: path,
       priority: PriorityEnum.DEFAULT
     });
 
     HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
     this.modal.hide();
-  };
+  }
 
   getMenuItem = (section: Section) => {
     return (
@@ -171,10 +173,10 @@ class DownloadDialog extends React.Component<DownloadDialogProps & DownloadDialo
         ) }
       </MenuItemLink>
     );
-  };
+  }
 
   render() {
-    const section = this.sections.find(section => section.key === this.state.activeSection);
+    const section = this.sections.find(s => s.key === this.state.activeSection);
     if (!section) {
       return null;
     }

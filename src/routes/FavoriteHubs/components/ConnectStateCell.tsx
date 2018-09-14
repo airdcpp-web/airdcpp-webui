@@ -21,24 +21,25 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
 
   getIcon = () => {
     switch (this.props.cellData.id) {
-    case ConnectStateEnum.CONNECTING:
-      return 'yellow remove';
-    case ConnectStateEnum.CONNECTED:
-      return 'grey remove';
-    case ConnectStateEnum.DISCONNECTED:
-      return 'green video play';
+      case ConnectStateEnum.CONNECTING:
+        return 'yellow remove';
+      case ConnectStateEnum.CONNECTED:
+        return 'grey remove';
+      case ConnectStateEnum.DISCONNECTED:
+        return 'green video play';
+      default:
     }
 
     return '';
-  };
+  }
 
   handleCreateSession = () => {
     HubActions.createSession(this.context.router.route.location, this.props.rowDataGetter!().hub_url, HubSessionStore);
-  };
+  }
 
   handleRemoveSession = () => {
     HubActions.removeSession({ id: this.props.cellData.current_hub_id });
-  };
+  }
 
   getClickAction = () => {
     switch (this.props.cellData.id) {
@@ -47,7 +48,7 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
     case ConnectStateEnum.DISCONNECTED:
     default: return this.handleCreateSession;
     }
-  };
+  }
 
   render() {
     return (

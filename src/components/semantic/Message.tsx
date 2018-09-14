@@ -14,7 +14,7 @@ interface MessageProps {
   description?: MessageDescriptionType;
   icon?: IconType;
   isError?: boolean;
-};
+}
 
 const Message: React.SFC<MessageProps> = ({ className, title, description, icon, isError, children }) => {
   const style = classNames(

@@ -9,15 +9,15 @@ export const dupeToStringType = (dupeInfo: API.Dupe) => {
 };
 
 export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserFlag>) => {
-  if (flags.indexOf('bot') != -1) {
+  if (flags.indexOf('bot') !== -1) {
     return 'blue';
   }
 
-  if (flags.indexOf('offline') != -1) {
+  if (flags.indexOf('offline') !== -1) {
     return 'lightgrey';
   }
 
-  if (flags.indexOf('away') != -1) {
+  if (flags.indexOf('away') !== -1) {
     return 'yellow';
   }
 

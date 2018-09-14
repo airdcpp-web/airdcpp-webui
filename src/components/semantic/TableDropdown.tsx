@@ -50,11 +50,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     return React.cloneElement(elem, {
       onClick: () => {
         this.popupNode.hide();
-				
         elem.props.onClick();
       } 
     });
-  };
+  }
 
   getChildren = () => {
     return (
@@ -64,7 +63,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
         </div>
       </div>
     );
-  };
+  }
 
   render() {
     let caption = (
@@ -98,7 +97,8 @@ class TableDropdown extends React.Component<TableDropdownProps> {
           { this.getChildren }
         </Popup>
         { !this.props.linkCaption && caption }
-      </div>);
+      </div>
+    );
   }
 }
 

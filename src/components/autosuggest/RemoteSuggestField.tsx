@@ -10,7 +10,8 @@ import { RenderSuggestion, SuggestionsFetchRequested, Omit } from 'react-autosug
 
 type ForwardedSuggestFieldProps = Omit<
   SuggestFieldProps, 
-  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
+  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 
+  'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
 >;
 
 export interface RemoteSuggestFieldProps extends ForwardedSuggestFieldProps {
@@ -34,7 +35,7 @@ class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
 
   getSuggestionValue = (suggestionObj: object) => {
     return suggestionObj[this.props.valueField];
-  };
+  }
 
   onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
     SocketService.post(this.props.url, { 
@@ -43,25 +44,25 @@ class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
     })
       .then(this.onSuggestionsReceived)
       .catch((error: APISocket.Error) => 
-        console.log('Failed to fetch suggestions: ' + error)
+        console.log(`Failed to fetch suggestions: ${error}`)
       );
-  };
+  }
 
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
     });
-  };
+  }
 
   onSuggestionsReceived = (data: any[]) => {
     this.setState({ 
       suggestions: data 
     });
-  };
+  }
 
   renderSuggestion: RenderSuggestion<any> = (suggestionObj, { query }) => {
     return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
-  };
+  }
 
   render() {
     return (

@@ -15,6 +15,7 @@ export interface SettingSectionProps extends SaveDecoratorChildProps, SettingsMe
 
 }
 
+// tslint:disable-next-line:max-line-length
 export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<SettingSectionProps, 'parent' | 'currentMenuItem'> {
   contentClassname: string;
   parentMenuItems: React.ReactNode[];
@@ -39,7 +40,7 @@ const SettingSection: React.SFC<SettingSectionProps> = (props) => {
       contentClassname={ contentClassname }
       parentMenuItems={ props.parentMenuItems.map(item => menuItemToLink(item)) }
       menuItems={ !!props.menuItems ? props.menuItems.map(item => menuItemToLink(item, parent)) : [] }
-      advancedMenuItems={ props.advancedMenuItems ? props.advancedMenuItems.map(item => menuItemToLink(item, parent)) : undefined }
+      advancedMenuItems={ advancedMenuItems ? advancedMenuItems.map(item => menuItemToLink(item, parent)) : undefined }
     />
   );
 };

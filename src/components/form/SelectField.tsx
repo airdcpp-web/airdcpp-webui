@@ -16,30 +16,21 @@ const MultiValueContainer: React.SFC<any> = ({ css, children, ...innerProps }) =
       { children }
     </a>
   );
-}
+};
 
 const MultiValueLabel: React.SFC<any> = ({ children }) => {
   return children;
-}
+};
 
 const MultiValueRemove: React.SFC<any> = ({ css, ...innerProps }) => {
   return (
     <i { ...innerProps } className="delete icon"/>
   );
-}
-
-type Locals = {
-  onChange: (values: any[]) => void,
-  options: Array<{
-    value: any,
-    text: string,
-  }>,
-  value: any[],
 };
 
 
 type TCombTemplate = { 
-  renderSelect: (locals: Locals) => React.ReactNode; 
+  renderSelect: (locals: UI.FormLocals<any, any[]>) => React.ReactNode; 
 };
 
 type OptionType = {
@@ -52,13 +43,13 @@ type OptionsType = OptionType[];
 const SelectTemplate: TCombTemplate = {
   renderSelect: (locals) => { // <- locals contains the "recipe" to build the UI
     const onChange = (values: OptionsType) => {
-      locals.onChange(values.map(value => value.value, []));
+      locals.onChange(values.map(v => v.value, []));
     };
 
     // translate the option model from tcomb to react-select
-    const options: OptionsType = locals.options.map(({ value, text }) => ({ value, label: text }));
-    const value: OptionsType = locals.value.map(value => {
-      const option = options.find(anyOption => anyOption.value === value) as OptionType;
+    const options: OptionsType = locals.options.map(({ value: v, text }) => ({ value: v, label: text }));
+    const value: OptionsType = locals.value.map(v => {
+      const option = options.find(anyOption => anyOption.value === v) as OptionType;
       invariant(!!option, 'All current values were not found from the option list');
       return option;
     });

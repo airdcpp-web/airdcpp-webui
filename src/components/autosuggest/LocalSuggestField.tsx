@@ -10,10 +10,11 @@ import { Omit, RenderSuggestion, SuggestionsFetchRequested } from 'react-autosug
 
 type ForwardedSuggestFieldProps = Omit<
   SuggestFieldProps, 
-  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
+  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 
+  'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
 >;
 
-interface LocalSuggestFieldProps extends ForwardedSuggestFieldProps {
+export interface LocalSuggestFieldProps extends ForwardedSuggestFieldProps {
   data: string[];
 }
 
@@ -31,27 +32,27 @@ class LocalSuggestField extends React.Component<LocalSuggestFieldProps> {
   filterSuggestions = (text: string) => {
     const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
     return this.props.data.filter(str => regex.test(str));
-  };
+  }
 
   onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
     this.setState({ 
       suggestions: this.filterSuggestions(value),
     });
-  };
+  }
 
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
     });
-  };
+  }
 
   renderSuggestion: RenderSuggestion<any> = (dataItem, { query }) => {
     return SuggestionRenderer(query, dataItem);
-  };
+  }
 
   getSuggestionValue = (suggestion: any) => {
     return suggestion;
-  };
+  }
 
   render() {
     return (

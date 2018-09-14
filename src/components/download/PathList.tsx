@@ -13,7 +13,7 @@ export type PathDownloadHandler = (path: string) => void;
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
   downloadHandler: PathDownloadHandler;
-};
+}
 
 const PathItem: React.SFC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
   <div className="item">
@@ -38,31 +38,30 @@ interface PathListDataProps {
   pathInfos: API.DiskSpaceInfo[];
 }
 
-const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(({ downloadHandler, pathInfos }) => (
-  <div className="ui relaxed list">
-    { pathInfos.map(pathInfo => (
-      <PathItem 
-        key={ pathInfo.path } 
-        pathInfo={ pathInfo } 
-        downloadHandler={ downloadHandler }
-      />
-    )) }
-  </div>
-), {
-  urls: {
-    pathInfos: ({ paths }, socket) => socket.post(FilesystemConstants.DISK_INFO_URL, { paths }),
-  },
-});
+const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(
+  ({ downloadHandler, pathInfos }) => (
+    <div className="ui relaxed list">
+      { pathInfos.map(pathInfo => (
+        <PathItem 
+          key={ pathInfo.path } 
+          pathInfo={ pathInfo } 
+          downloadHandler={ downloadHandler }
+        />
+      )) }
+    </div>
+  ), 
+  {
+    urls: {
+      pathInfos: ({ paths }, socket) => socket.post(FilesystemConstants.DISK_INFO_URL, { paths }),
+    },
+  }
+);
 
 //PathList.PropTypes = {
-  /**
-	 * Function handling the path selection. Receives the selected path as argument.
-	 */
+  // Function handling the path selection. Receives the selected path as argument.
   //downloadHandler: PropTypes.func.isRequired,
 
-  /**
-	 * Array of paths to list
-	 */
+  // Array of paths to list
   //paths: PropTypes.array.isRequired,
 //};
 

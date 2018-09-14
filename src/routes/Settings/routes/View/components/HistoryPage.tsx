@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const Entry = [
@@ -21,7 +22,7 @@ const SessionEntry = [
   'history_filelist_sessions',
 ];
 
-const HistoryPage = props => (
+const HistoryPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       //title="Miscellaneous"

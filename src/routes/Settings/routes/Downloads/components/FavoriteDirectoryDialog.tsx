@@ -40,13 +40,16 @@ export interface FavoriteDirectoryDialogDataProps {
   virtualNames: string[];
 }
 
-class FavoriteDirectoryDialog extends React.Component<FavoriteDirectoryDialogProps & FavoriteDirectoryDialogDataProps & DataProviderDecoratorChildProps> {
+
+type Props = FavoriteDirectoryDialogProps & FavoriteDirectoryDialogDataProps & DataProviderDecoratorChildProps;
+
+class FavoriteDirectoryDialog extends React.Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
 
   form: Form;
   isNew = () => {
     return !this.props.directoryEntry;
-  };
+  }
 
   onFieldChanged: FormFieldChangeHandler<API.FavoriteDirectoryEntryBase> = (id, value, hasChanges) => {
     if (id.indexOf('path') !== -1) {
@@ -56,19 +59,22 @@ class FavoriteDirectoryDialog extends React.Component<FavoriteDirectoryDialogPro
     }
 
     return null;
-  };
+  }
 
   save = () => {
     return this.form.save();
-  };
+  }
 
   onSave: FormSaveHandler<API.FavoriteDirectoryEntryBase> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
     }
 
-    return SocketService.patch(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + this.props.directoryEntry.id, changedFields);
-  };
+    return SocketService.patch(
+      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${this.props.directoryEntry.id}`, 
+      changedFields
+    );
+  }
 
   onFieldSetting: FormFieldSettingHandler<API.FavoriteDirectoryEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'path') {
@@ -83,7 +89,7 @@ class FavoriteDirectoryDialog extends React.Component<FavoriteDirectoryDialogPro
         suggestionGetter: () => this.props.virtualNames,
       };
     }
-  };
+  }
 
   render() {
     const title = this.isNew() ? 'Add favorite directory' : 'Edit favorite directory';

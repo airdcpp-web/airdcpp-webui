@@ -4,7 +4,7 @@ import React from 'react';
 import TableActions from 'actions/TableActions';
 
 import TableFooter, { TableFooterProps } from './TableFooter';
-import TableContainer from './TableContainer';
+import TableContainer, { TableContainerProps } from './TableContainer';
 import RowDataLoader from './RowDataLoader';
 
 import './style.css';
@@ -15,49 +15,36 @@ declare module 'fixed-data-table-2' {
   export interface ColumnProps {
     name: string;
     hideWidth?: number;
+    renderCondition?: (cellData: any, rowData: any) => boolean;
   }
 }
 
-export interface VirtualTableProps extends TableFooterProps {
+export interface VirtualTableProps extends TableFooterProps, Omit<TableContainerProps, 'store' | 'dataLoader'> {
   store: any;
-  entityId?: API.IdType;
   sessionStore?: any;
   viewId?: string;
   sourceFilter?: any;
   emptyRowsNodeGetter?: () => React.ReactNode;
-  rowClassNameGetter: (rowData: any) => string;
 }
 
 class VirtualTable extends React.Component<VirtualTableProps> {
   static propTypes = {
-    /**
-		 * Elements to append to the table footer
-		 */
+    // Elements to append to the table footer
     footerData: PropTypes.node,
 
-    /**
-		 * Returns a node to render if there are no rows to display
-		 */
+    // Returns a node to render if there are no rows to display
     emptyRowsNodeGetter: PropTypes.func,
 
-    /**
-		 * Possible ID of the current view (items will be cleared when the ID changes)
-		 */
+    // Possible ID of the current view (items will be cleared when the ID changes)
     viewId: PropTypes.any,
 
-    /**
-		 * Store containing sessions (must be provided together with entityId)
-		 */
+    // Store containing sessions (must be provided together with entityId)
     sessionStore: PropTypes.object,
 
-    /**
-		 * Custom filter that will be displayed in addition to regular text filter
-		 */
+    // Custom filter that will be displayed in addition to regular text filter
     customFilter: PropTypes.node,
 
-    /**
-		 * Filter that is always applied for source items (those will never be displayed or included in the total count)
-		 */
+    // Filter that is always applied for source items (those will never be displayed or included in the total count)
     sourceFilter: PropTypes.object,
   };
 
@@ -84,7 +71,7 @@ class VirtualTable extends React.Component<VirtualTableProps> {
       this.start(nextProps.entityId);
     }
 
-    if (nextProps.viewId != this.props.viewId) {
+    if (nextProps.viewId !== this.props.viewId) {
       if (this.props.store.paused) {
         // We need to receive the new items
         TableActions.pause(this.props.store.viewUrl, false);
@@ -100,7 +87,7 @@ class VirtualTable extends React.Component<VirtualTableProps> {
     }
 
     return this.props.sessionStore.getSession(this.props.entityId);
-  };
+  }
 
   start = (entityId?: API.IdType) => {
     const { store, sourceFilter } = this.props;
@@ -111,12 +98,12 @@ class VirtualTable extends React.Component<VirtualTableProps> {
       TableActions.init(store.viewUrl, entityId, sourceFilter);
       TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
     });
-  };
+  }
 
   close = () => {
     // Don't send the close command if the session was removed
     TableActions.close(this.props.store.viewUrl, this.moduleExists());
-  };
+  }
 
   render() {
     const { store, footerData, emptyRowsNodeGetter, customFilter, ...other } = this.props;

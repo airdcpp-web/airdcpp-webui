@@ -10,7 +10,7 @@ export enum SeverityEnum {
 export default {
   MODULE_URL: MODULE_URL,
   MESSAGES_URL: MODULE_URL,
-	
+
   READ_URL: MODULE_URL + '/read',
   INFO_URL: MODULE_URL + '/counts',
 

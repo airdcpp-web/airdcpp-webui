@@ -14,26 +14,33 @@ import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 import Button from 'components/semantic/Button';
 
 import '../style.css';
-import ResultTable from './ResultTable';
+import ResultTable from 'routes/Search/components/ResultTable';
+import { RouteComponentProps } from 'react-router';
 
 
 const SEARCH_PERIOD = 4000;
 
-class Search extends React.Component {
+interface SearchProps extends RouteComponentProps<{}> {
+
+}
+
+class Search extends React.Component<SearchProps> {
   state = {
     searchString: '',
     running: false
   };
 
+  _searchTimeout: NodeJS.Timer;
+
   componentDidMount() {
     this.checkLocationState(this.props);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: SearchProps) {
     this.checkLocationState(this.props);
   }
 
-  checkLocationState = (props) => {
+  checkLocationState = (props: SearchProps) => {
     const { state } = props.location;
     if (state && state.searchString && state.searchString !== this.state.searchString) {
       this.search(state.searchString);
@@ -43,9 +50,9 @@ class Search extends React.Component {
         pathname: props.location.pathname,
       });
     }
-  };
+  }
 
-  search = (searchString) => {
+  search = (searchString: string) => {
     console.log('Searching');
 
     clearTimeout(this._searchTimeout);
@@ -57,7 +64,7 @@ class Search extends React.Component {
       priority: PriorityEnum.HIGH,
     })
       .then(this.onSearchPosted)
-      .catch(error => 
+      .catch((error: string) => 
         console.error('Failed to post search: ' + error)
       );
 
@@ -65,20 +72,25 @@ class Search extends React.Component {
       searchString,
       running: true 
     });
-  };
+  }
 
-  onSearchPosted = (data) => {
-    this._searchTimeout = setTimeout(() => {
-      this.setState({ 
-        running: false,
-      });
-    }, data.queue_time + SEARCH_PERIOD);
-  };
+  onSearchPosted = (data: API.SearchResponse) => {
+    this._searchTimeout = setTimeout(
+      () => {
+        this.setState({ 
+          running: false,
+        });
+      }, 
+      data.queue_time + SEARCH_PERIOD
+    );
+  }
 
   render() {
     const { searchString, running } = this.state;
     return (
-      <OfflineHubMessageDecorator offlineMessage="You must to be connected to at least one hub in order to perform searches">
+      <OfflineHubMessageDecorator 
+        offlineMessage="You must to be connected to at least one hub in order to perform searches"
+      >
         <div className="search-layout">
           <div className="search-container">
             <div className="search-area">

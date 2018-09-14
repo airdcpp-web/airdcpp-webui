@@ -33,11 +33,11 @@ class FavoriteHubs extends React.Component {
 
   rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
     return rowData.connect_state.id;
-  };
+  }
 
   onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
     FavoriteHubActions.update(rowData, { auto_connect: checked });
-  };
+  }
 
   render() {
     const footerData = (

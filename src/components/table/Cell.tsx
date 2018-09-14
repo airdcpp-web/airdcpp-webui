@@ -36,7 +36,7 @@ const getCellContent = (cellData: any) => {
 };
 
 // Default cell
-export const TextCell = ({ cellData }: { cellData: any }) => (
+export const TextCell = ({ cellData }: { cellData?: any }) => (
   <span className="plain text cell">
     { getCellContent(cellData) }
   </span>
@@ -46,7 +46,7 @@ export const TextCell = ({ cellData }: { cellData: any }) => (
 interface HeaderCellProps extends CellProps {
   onClick: () => void;
   label: React.ReactNode;
-  columnKey: string;
+  columnKey?: string; // REQUIRED, CLONED
 }
 
 export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellProps) => (
@@ -87,7 +87,10 @@ export interface ActionLinkCellProps extends RowWrapperCellChildProps {
   action: UI.ActionType;
 }
 
-export const ActionLinkCell: React.SFC<ActionLinkCellProps> = ({ cellData, rowDataGetter, action, ...props }, { router }: RouterChildContext<{}>) => {
+export const ActionLinkCell: React.SFC<ActionLinkCellProps> = (
+  { cellData, rowDataGetter, action, ...props }, 
+  { router }: RouterChildContext<{}>
+) => {
   if (!showAction(action, rowDataGetter!())) {
     return (
       <TextCell 
@@ -108,37 +111,37 @@ ActionLinkCell.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export interface NumberCellProps extends CellProps {
-  cellData: number;
+export interface NumberCellProps extends RowWrapperCellChildProps {
+  cellData?: number;
 }
 
 export const SizeCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   <span className="plain size cell">
-    { formatSize(cellData) }
+    { formatSize(cellData!) }
   </span>
 );
 
 export const SpeedCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   <span className="plain speed cell">
-    { formatSpeed(cellData) }
+    { formatSpeed(cellData!) }
   </span>
 );
 
 export const DateCell: React.SFC<NumberCellProps> = ({ cellData, width }) => (
   <span className="plain date cell">
-    { !!width && width > 150 ? formatDateTime(cellData) : formatShortDate(cellData) }
+    { !!width && width > 150 ? formatDateTime(cellData!) : formatShortDate(cellData!) }
   </span>
 );
 
 export const DurationCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   <span className="plain duration cell">
-    { formatRelativeTime(cellData) }
+    { formatRelativeTime(cellData!) }
   </span>
 );
 
 export const AbbreviatedDurationCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   <span className="plain abbr-duration cell">
-    { formatAbbreviatedDuration(cellData) }
+    { formatAbbreviatedDuration(cellData!) }
   </span>
 );
 
@@ -152,23 +155,25 @@ export const IpCell: React.SFC<IpCellProps> = ({ cellData }) => (
 
 export const ConnectionCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   <span className="plain connection cell">
-    { formatConnection(cellData) }
+    { formatConnection(cellData!) }
   </span>
 );
 
 export const DecimalCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   <span className="plain decimal cell">
-    { formatDecimal(cellData) }
+    { formatDecimal(cellData!) }
   </span>
 );
 
 export interface FileDownloadCellProps extends RowWrapperCellChildProps {
   userGetter: (rowData: any) => API.HintedUserBase;
-  clickHandlerGetter: (cellData: any, rowDataGetter: () => any) => (() => void);
+  clickHandlerGetter?: (cellData: any, rowDataGetter: () => any) => (() => void);
   downloadHandler: DownloadHandlerType;
 }
 
-export const FileDownloadCell: React.SFC<FileDownloadCellProps> = ({ cellData, rowDataGetter, clickHandlerGetter, userGetter, downloadHandler, ...props }) => (
+export const FileDownloadCell: React.SFC<FileDownloadCellProps> = (
+  { cellData, rowDataGetter, clickHandlerGetter, userGetter, downloadHandler, ...props }
+) => (
   <TableDownloadMenu 
     caption={ 
       <FormattedFile 
@@ -193,6 +198,7 @@ export const FileDownloadCell: React.SFC<FileDownloadCellProps> = ({ cellData, r
   downloadHandler: PropTypes.func.isRequired,
 };*/
 
+// tslint:disable-next-line:max-line-length
 export interface CheckboxCellProps extends Omit<RowWrapperCellChildProps, 'onChange'>, Omit<CheckboxProps, 'onChange' | 'checked'> {
   onChange: (checked: boolean, rowData: any) => void;
 }

@@ -20,7 +20,7 @@ class LimiterConfig extends React.PureComponent<LimiterConfigProps> {
   static propTypes = {
     limit: PropTypes.number.isRequired,
 
-    /* Limiter API setting key to use for saving */
+    // Limiter API setting key to use for saving
     settingKey: PropTypes.string.isRequired,
 
     hide: PropTypes.func,
@@ -32,7 +32,7 @@ class LimiterConfig extends React.PureComponent<LimiterConfigProps> {
     });
 
     this.props.hide!();
-  };
+  }
 
   render() {
     return (

@@ -17,13 +17,13 @@ export interface SaveButtonProps {
 class SaveButton extends React.Component<SaveButtonProps> {
   static propTypes = {
     /**
-		 * Message title
-		 */
+     * Message title
+     */
     hasChanges: PropTypes.bool.isRequired,
 
     /**
-		 * Error details
-		 */
+     * Error details
+     */
     saveHandler: PropTypes.func.isRequired,
 
     local: PropTypes.bool,
@@ -35,19 +35,19 @@ class SaveButton extends React.Component<SaveButtonProps> {
 
   toggleSaveState = () => {
     this.setState({ saving: !this.state.saving });
-  };
+  }
 
   onClick = () => {
     this.toggleSaveState();
     this.props.saveHandler()
       .then(this.toggleSaveState)
       .catch(this.toggleSaveState);
-  };
+  }
 
   render() {
     const { local, hasChanges, className } = this.props;
 
-    const hasAccess = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+    const hasAccess: boolean = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
 
     let title;
     if (!hasAccess) {

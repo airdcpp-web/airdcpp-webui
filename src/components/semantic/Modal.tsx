@@ -32,19 +32,19 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<Sema
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
 
-		// Function to call when the dialog is approved
-		// If no handler is supplied, there will only be a plain close button
+    // Function to call when the dialog is approved
+    // If no handler is supplied, there will only be a plain close button
     onApprove: PropTypes.func,
 
-		// Caption for the approve button
+    // Caption for the approve button
     approveCaption: PropTypes.node,
 
-		// Use disabled style for the approve button
+    // Use disabled style for the approve button
     approveDisabled: PropTypes.bool,
 
-		// The modal will always use the maximum allowed width when set,
-		// instead of adjusting the height dynamically.
-		// Useful for modals with navigable, varying height content
+    // The modal will always use the maximum allowed width when set,
+    // instead of adjusting the height dynamically.
+    // Useful for modals with navigable, varying height content
     fullHeight: PropTypes.bool,
 
     dynamicHeight: PropTypes.bool,
@@ -78,7 +78,7 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<Sema
     }
 
     return;
-  };
+  }
 
   componentDidMount() {
     this.props.showOverlay(this.c, {
@@ -136,14 +136,14 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<Sema
             </div>
             <div className="ui cancel red basic button">
               <i className="remove icon"/>
-							Cancel
+              Cancel
             </div>
           </div>
         ) : (
           <div className="actions">
             <div className="ui cancel button">
               <i className="remove icon"/>
-							Close
+              Close
             </div>
           </div>
         ) }

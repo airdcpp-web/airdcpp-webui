@@ -26,38 +26,25 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
 
 class Dropdown extends React.PureComponent<DropdownProps> {
   static propTypes = {
-    /**
-		 * Node to render as caption
-		 */
+    // Node to render as caption
     caption: PropTypes.node,
 
-    /**
-		 * Dropdown icon to display
-		 * If caption isn't specified, the icon will be used as main trigger
-		 */ 
+    // If caption isn't specified, the icon will be used as main trigger
     triggerIcon: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,
     ]),
 
-    /**
-		 * Show trigger icon on the left side of the caption instead of after it
-		 */
+    // Show trigger icon on the left side of the caption instead of after it
     leftIcon: PropTypes.bool,
 
-    /**
-		 * Direction to render
-		 */
+    // Direction to render
     direction: PropTypes.string,
 
-    /**
-		 * Returns DOM node used for checking whether the dropdown can fit on screen
-		 */
+    // Returns DOM node used for checking whether the dropdown can fit on screen
     contextElement: PropTypes.string,
 
-    /**
-		 * Render as button
-		 */
+    // Render as button
     button: PropTypes.bool,
 
     settings: PropTypes.object,
@@ -89,20 +76,20 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     this.setState({
       visible: true,
     });
-  };
+  }
 
   onHide = () => {
     this.setState({
       visible: false,
     });
-  };
+  }
 
   hide = () => {
     // Don't hide before the click event is processed by React
     setTimeout(() => 
       $(this.c).dropdown('hide')
     );
-  };
+  }
 
   init = () => {
     const settings: SemanticUI.DropdownSettings = {
@@ -122,7 +109,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     }
 
     $(this.c).dropdown(settings);
-  };
+  }
 
   getMenuItems = () => {
     if (!this.state.visible) {
@@ -131,7 +118,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     }
 
     return this.props.children;
-  };
+  }
 
   render() {
     const { leftIcon, caption, button, triggerIcon, captionIcon } = this.props;

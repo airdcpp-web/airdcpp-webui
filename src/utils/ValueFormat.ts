@@ -24,7 +24,7 @@ const normalRelativeUnits = {
 };
 
 
-const byteUnits = [ 'kB','MB','GB','TB','PB','EB','ZB','YB' ];
+const byteUnits = [ 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' ];
 const bitUnits = [ ' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit' ];
 
 export const formatSize = (fileSizeInBytes: number) => {
@@ -47,7 +47,7 @@ export const formatConnection = (bytes: number) => {
     return null;
   }
 
-  let bits = bytes*8;
+  let bits = bytes * 8;
   let i = 0;
 
   do {

@@ -53,15 +53,18 @@ const getFields = (profiles: API.ShareProfile[]) => {
   ] as UI.FormFieldDefinition[];
 };
 
-export interface ShareDirectoryDialogProps extends ModalRouteDecoratorChildProps, ShareProfileDecoratorChildProps {
-  rootEntry: API.ShareRootEntryBase;
+export interface ShareDirectoryDialogProps extends ModalRouteDecoratorChildProps {
+  rootEntry?: API.ShareRootEntryBase; // REQUIRED, CLONED
 }
 
-export interface ShareDirectoryDialogDataProps {
+export interface ShareDirectoryDialogDataProps extends ShareProfileDecoratorChildProps {
   virtualNames: string[];
 }
 
-class ShareDirectoryDialog extends React.Component<ShareDirectoryDialogProps & ShareDirectoryDialogDataProps & DataProviderDecoratorChildProps> {
+
+type Props = ShareDirectoryDialogProps & ShareDirectoryDialogDataProps & DataProviderDecoratorChildProps;
+
+class ShareDirectoryDialog extends React.Component<Props> {
   static displayName = 'ShareDirectoryDialog';
 
   fieldDefinitions: UI.FormFieldDefinition[];
@@ -75,31 +78,31 @@ class ShareDirectoryDialog extends React.Component<ShareDirectoryDialogProps & S
 
   isNew = () => {
     return !this.props.rootEntry;
-  };
+  }
 
   onFieldChanged: FormFieldChangeHandler<API.ShareRootEntryBase> = (id, value, hasChanges) => {
-    if (id.indexOf('path') != -1) {
+    if (id.indexOf('path') !== -1) {
       const mergeFields = { 
         virtual_name: !!value.path ? getLastDirectory(value.path) : undefined, 
       };
-			
+
       return Promise.resolve(mergeFields);
     }
 
     return null;
-  };
+  }
 
   save = () => {
     return this.form.save();
-  };
+  }
 
   onSave: FormSaveHandler<API.ShareRootEntryBase> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
-    return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry.id, changedFields);
-  };
+    return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry!.id, changedFields);
+  }
 
   onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'path') {
@@ -115,7 +118,7 @@ class ShareDirectoryDialog extends React.Component<ShareDirectoryDialogProps & S
       };
 
     }
-  };
+  }
 
   render() {
     const title = this.isNew() ? 'Add share directory' : 'Edit share directory';
@@ -135,7 +138,9 @@ class ShareDirectoryDialog extends React.Component<ShareDirectoryDialogProps & S
           description={ 
             <span>
               <p>
-								New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.
+                New files will appear in share only after they have finished hashing 
+                (the client has calculated checksums for them). 
+                Information about hashing progress will be posted to the event log.
               </p>
             </span>
           }
@@ -146,7 +151,7 @@ class ShareDirectoryDialog extends React.Component<ShareDirectoryDialogProps & S
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ rootEntry }
+          value={ rootEntry! }
         />
       </Modal>
     );

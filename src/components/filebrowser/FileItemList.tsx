@@ -40,19 +40,13 @@ export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler
 
 class FileItemList extends React.Component<FileItemListProps> {
   static propTypes = {
-    /**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
+    // Function handling the path selection. Receives the selected path as argument.
     itemClickHandler: PropTypes.func.isRequired,
 
-    /**
-		 * Function handling the path selection. Receives the selected path as argument.
-		 */
+    // Function handling the path selection. Receives the selected path as argument.
     itemIconGetter: PropTypes.func,
 
-    /**
-		 * Array of path objects to list
-		 */
+    // Array of path objects to list
     items: PropTypes.array.isRequired,
   };
 
@@ -62,7 +56,7 @@ class FileItemList extends React.Component<FileItemListProps> {
     }
 
     return a.name.localeCompare(b.name);
-  };
+  }
 
   render() {
     const { items, itemClickHandler, itemIconGetter } = this.props;

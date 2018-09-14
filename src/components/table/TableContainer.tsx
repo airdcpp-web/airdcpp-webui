@@ -1,48 +1,62 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Table } from 'fixed-data-table-2';
+import { Table, ColumnProps } from 'fixed-data-table-2';
 
 import TableActions from 'actions/TableActions';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
-import Measure from 'react-measure';
-import RowWrapperCell from './RowWrapperCell';
-import { TextCell, HeaderCell } from './Cell';
+import Measure, { ContentRect } from 'react-measure';
+import RowWrapperCell from 'components/table/RowWrapperCell';
+import { TextCell, HeaderCell } from 'components/table/Cell';
+
 
 const TABLE_ROW_HEIGHT = 50;
 
-function convertStartToRows(pixels) {
+function convertStartToRows(pixels: number) {
   return Math.max(Math.floor(pixels / TABLE_ROW_HEIGHT), 0);
 }
 
-function convertEndToRows(pixels) {
+function convertEndToRows(pixels: number) {
   return Math.ceil(pixels / TABLE_ROW_HEIGHT);
 }
 
-class TableContainer extends React.Component {
+export interface TableContainerProps {
+  entityId?: API.IdType;
+  rowClassNameGetter?: (rowData: any) => string;
+  store: any;
+  dataLoader: any;
+}
+
+interface State {
+  width: number;
+  height: number;
+  columnWidths: object;
+}
+
+class TableContainer extends React.Component<TableContainerProps, State> {
   static propTypes = {
 
     /**
-		 * Store implementing ViewStoreMixin that contains the items
-		 */
+     * Store implementing ViewStoreMixin that contains the items
+     */
     store: PropTypes.object.isRequired,
 
     /**
-		 * Append class names to row (takes row data as param)
-		 */
+     * Append class names to row (takes row data as param)
+     */
     rowClassNameGetter: PropTypes.func,
 
     /**
-		 * ID of the current entity for non-singleton sources
-		 */
+     * ID of the current entity for non-singleton sources
+     */
     entityId: PropTypes.any,
 
-		
+    
     dataLoader: PropTypes.any.isRequired,
   };
 
-  state = {
+  state: State = {
     width: 0,
     height: 0,
     columnWidths: {},
@@ -53,12 +67,13 @@ class TableContainer extends React.Component {
       rowClassNameGetter: null,
       entityId: null
     };
-  };
+  }
 
+  scrollTimer: NodeJS.Timer;
   scrollPosition = 0;
 
   // This will also be used for setting the initial rows
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: TableContainerProps, prevState: State) {
     if (prevState.height !== this.state.height) {
       this.updateRowRange();
     } else if (prevProps.entityId !== this.props.entityId) {
@@ -67,36 +82,37 @@ class TableContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this._scrollTimer);
+    clearTimeout(this.scrollTimer);
   }
 
   updateRowRange = () => {
     const startRows = convertStartToRows(this.scrollPosition);
-    const maxRows = convertEndToRows(this.state.height, true);
+    const maxRows = convertEndToRows(this.state.height);
 
+    // tslint:disable-next-line:max-line-length
     //console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
 
     //console.assert(this.props.store.active, 'Posting data for an inactive view');
     TableActions.setRange(this.props.store.viewUrl, startRows, maxRows);
-  };
+  }
 
-  _onScrollStart = (horizontal, vertical) => {
+  onScrollStart = (horizontal: number, vertical: number) => {
     //console.log('Scrolling started: ' + vertical, this.props.store.viewUrl);
     console.assert(this.props.store.active, 'Sending pause for an inactive view');
     TableActions.pause(this.props.store.viewUrl, true);
-  };
+  }
 
-  _onScrollEnd = (horizontal, vertical) => {
+  onScrollEnd = (horizontal: number, vertical: number) => {
     this.scrollPosition = vertical;
     console.assert(this.props.store.active, 'Sending pause for an inactive view');
     TableActions.pause(this.props.store.viewUrl, false);
 
-    clearTimeout(this._scrollTimer);
-    this._scrollTimer = setTimeout(this.updateRowRange, 500);
+    clearTimeout(this.scrollTimer);
+    this.scrollTimer = setTimeout(this.updateRowRange, 500);
     //console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
-  };
+  }
 
-  _onColumnClicked = (sortProperty) => {
+  onColumnClicked = (sortProperty: string) => {
     const { store } = this.props;
 
     let sortAscending = true;
@@ -105,19 +121,19 @@ class TableContainer extends React.Component {
     }
 
     TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
-  };
+  }
 
-  _onColumnResizeEndCallback = (newColumnWidth, columnKey) => {
+  onColumnResizeEndCallback = (newColumnWidth: number, columnKey: string) => {
     this.setState(({ columnWidths }) => ({
       columnWidths: {
         ...columnWidths,
         [columnKey]: newColumnWidth,
       }
     }));
-  };
+  }
 
-  childToColumn = (column) => {
-    if (column.props.hideWidth > this.state.width) {
+  childToColumn = (column: React.ReactElement<ColumnProps>) => {
+    if (!!column.props.hideWidth && column.props.hideWidth > this.state.width) {
       return null;
     }
 
@@ -131,16 +147,16 @@ class TableContainer extends React.Component {
     const mobileView = useMobileLayout();
     if (!mobileView) {
       // Get column width
-      if (!!this.state.columnWidths[columnKey]) {
+      if (!!columnKey && !!this.state.columnWidths[columnKey]) {
         width = this.state.columnWidths[columnKey];
-        flexGrow = null;
+        flexGrow = undefined;
       }
     }
 
     return React.cloneElement(column, {
       header: (
         <HeaderCell 
-          onClick={ this._onColumnClicked.bind(null, columnKey) } 
+          onClick={ this.onColumnClicked.bind(null, columnKey) } 
           label={ name }
         />
       ),
@@ -154,19 +170,19 @@ class TableContainer extends React.Component {
           renderCondition={ renderCondition } 
           rowClassNameGetter={ rowClassNameGetter }
         >
-          { cell ? cell : <TextCell/> }
+          { cell ? cell as React.ReactElement<any> : <TextCell/> }
         </RowWrapperCell>
       ),
     });
-  };
+  }
 
-  onResizeView = (contentRect) => {
+  onResizeView = (contentRect: ContentRect) => {
     const { width, height } = contentRect.entry;
     this.setState({
       width,
       height,
     });
-  };
+  }
 
   render() {
     // Update and insert generic columns props
@@ -178,7 +194,10 @@ class TableContainer extends React.Component {
         onResize={ this.onResizeView }
       >
         { ({ measureRef }) => (
-          <div ref={ measureRef } className="table-container-wrapper">
+          <div 
+            ref={ measureRef } 
+            className="table-container-wrapper"
+          >
             <Table
               width={ this.state.width }
               height={ this.state.height } 
@@ -187,12 +206,12 @@ class TableContainer extends React.Component {
               rowsCount={ this.props.store.rowCount }
               headerHeight={ 50 }
               isColumnResizing={ false }
-              onColumnResizeEndCallback={ this._onColumnResizeEndCallback }
+              onColumnResizeEndCallback={ this.onColumnResizeEndCallback }
 
               touchScrollEnabled={ true }
 
-              onScrollStart={ this._onScrollStart }
-              onScrollEnd={ this._onScrollEnd }
+              onScrollStart={ this.onScrollStart }
+              onScrollEnd={ this.onScrollEnd }
             >
               { children }
             </Table>

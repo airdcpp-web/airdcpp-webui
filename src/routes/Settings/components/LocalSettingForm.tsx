@@ -13,8 +13,8 @@ export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'field
 class LocalSettingForm extends React.Component<LocalSettingFormProps> {
   static propTypes = {
     /**
-		 * Form items to list
-		 */
+     * Form items to list
+     */
     keys: PropTypes.array.isRequired,
   };
 
@@ -25,7 +25,7 @@ class LocalSettingForm extends React.Component<LocalSettingFormProps> {
   definitions: API.SettingDefinition[];
   state: {
     settings: API.SettingValueMap,
-  }
+  };
 
   constructor(props: LocalSettingFormProps) {
     super(props);
@@ -44,7 +44,7 @@ class LocalSettingForm extends React.Component<LocalSettingFormProps> {
     });
 
     return Promise.resolve();
-  };
+  }
 
   render() {
     const { settings } = this.state;

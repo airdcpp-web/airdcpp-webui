@@ -25,19 +25,13 @@ export interface PopupProps {
 class Popup extends React.PureComponent<PopupProps> {
   static propTypes = {
 
-    /**
-		 * Additional settings for the Semantic UI popup
-		 */
+    // Additional settings for the Semantic UI popup
     settings: PropTypes.object,
 
-    /**
-		 * Element that will trigger the popup when clicking on it
-		 */
+    // Element that will trigger the popup when clicking on it
     trigger: PropTypes.node.isRequired,
 
-    /**
-		 * Show the popup on hover instead of when clicking the element
-		 */
+    // Show the popup on hover instead of when clicking the element
     onHover: PropTypes.bool,
 
     position: PropTypes.string,
@@ -69,11 +63,11 @@ class Popup extends React.PureComponent<PopupProps> {
 
     this.node.className = className;
     document.body.appendChild(this.node);
-  };
+  }
 
   hide = () => {
     $(this.triggerNode).popup('hide');
-  };
+  }
 
   onHidden = () => {
     if (!this.node) {
@@ -86,7 +80,7 @@ class Popup extends React.PureComponent<PopupProps> {
     ReactDOM.unmountComponentAtNode(this.node);
     document.body.removeChild(this.node);
     this.node = null;
-  };
+  }
 
   getContent = () => {
     const { children } = this.props;
@@ -95,7 +89,7 @@ class Popup extends React.PureComponent<PopupProps> {
     }
 
     return children as ChildType;
-  };
+  }
 
   show = () => {
     if (this.node) {
@@ -121,11 +115,11 @@ class Popup extends React.PureComponent<PopupProps> {
     };
 
     $(this.triggerNode).popup(settings).popup('show'); // TODO: fix any
-  };
+  }
 
   handleClick = () => {
     this.show();
-  };
+  }
 
   render() {
     const triggerProps = {

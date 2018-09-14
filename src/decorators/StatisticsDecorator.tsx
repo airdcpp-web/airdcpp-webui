@@ -16,7 +16,7 @@ export default function <DataT, PropsT = {}>(
   Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>, 
   fetchUrl: string, 
   unavailableMessage: MessageDescriptionType, 
-  fetchIntervalSeconds = 0
+  fetchIntervalSeconds: number = 0
 ) {
   class StatisticsDecorator extends React.Component<StatisticsDecoratorProps<DataT>> {
     state = {
@@ -41,13 +41,13 @@ export default function <DataT, PropsT = {}>(
       if (fetchIntervalSeconds > 0) {
         this.fetchTimeout = setTimeout(this.fetchStats, fetchIntervalSeconds * 1000);
       }
-    };
+    }
 
     onStatsReceived = (data: object) => {
       this.setState({ 
         stats: data 
       });
-    };
+    }
 
     render() {
       const { stats } = this.state;

@@ -8,7 +8,7 @@ interface FormattedFileProps {
   onClick?: (() => void) | null;
   typeInfo: API.FilesystemItemType;
   caption: React.ReactNode;
-};
+}
 
 const FormattedFile: React.SFC<FormattedFileProps> = ({ onClick, typeInfo, caption }) => {
   if (onClick) {

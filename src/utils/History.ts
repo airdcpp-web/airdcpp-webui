@@ -14,13 +14,16 @@ const History = createHistory({
 
 // Returns paths for currently open modals
 const getModalPaths = (state: object) => {
-  return Object.keys(state).reduce((modalPaths, key) => {
-    if (key.indexOf(OverlayConstants.MODAL_PREFIX) === 0) {
-      modalPaths.push(state[key].pathname);
-    }
+  return Object.keys(state).reduce(
+    (modalPaths, key) => {
+      if (key.indexOf(OverlayConstants.MODAL_PREFIX) === 0) {
+        modalPaths.push(state[key].pathname);
+      }
 
-    return modalPaths;
-  }, [] as string[]);
+      return modalPaths;
+    }, 
+    [] as string[]
+  );
 };
 
 // Returns the current pathname with modals stripped
@@ -52,13 +55,16 @@ const getModelessPath = (location: Location) => {
 
 // Returns a new location state object without any modals 
 const createModelessState = (state: object) => {
-  return Object.keys(state).reduce((newState, key) => {
-    if (key.indexOf(OverlayConstants.MODAL_PREFIX) !== 0) {
-      newState[key] = state[key];
-    }
+  return Object.keys(state).reduce(
+    (newState, key) => {
+      if (key.indexOf(OverlayConstants.MODAL_PREFIX) !== 0) {
+        newState[key] = state[key];
+      }
 
-    return newState;
-  }, {});
+      return newState;
+    }, 
+    {}
+  );
 };
 
 
@@ -151,19 +157,20 @@ const Helpers = {
   },
 
   // Shorthand function for receiving the data
-  // Data for modals is converted to regular props by the parent decorator but it won't work well with a nested sidebar structure
+  // Data for modals is converted to regular props by the parent decorator 
+  // but it won't work well with a nested sidebar structure
   getSidebarData: function (currentLocation: LocationDescriptorObject) {
     return currentLocation.state[OverlayConstants.SIDEBAR_ID].data;
   },
 
   // Remove overlay from the location state
-  removeOverlay: function (location: LocationDescriptorObject, overlayId: string, changeLocation = true) {
+  removeOverlay: function (location: LocationDescriptorObject, overlayId: string, changeLocation: boolean = true) {
     const { state } = location;
     const { returnTo } = state[overlayId];
     invariant(overlayId, 'Return address or overlay id missing when closing an overlay');
 
     delete state[overlayId];
-		
+
     if (changeLocation) {
       if (returnTo) {
         History.replace(returnTo, state);
@@ -174,7 +181,8 @@ const Helpers = {
   },
 
   // Uses replace instead if the next path matches the current one regardless of the state or other properties
-  // Note that the regular history functions will ignore fully identical locations in any case so there's no need to check that manually
+  // Note that the regular history functions will ignore fully identical locations in 
+  // any case so there's no need to check that manually
   pushUnique: function (nextLocation: LocationDescriptorObject, currentLocation: Location) {
     invariant(currentLocation, 'pushUnique: current location was not supplied');
     if (nextLocation.pathname !== currentLocation.pathname) {
