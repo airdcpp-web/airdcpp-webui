@@ -4,20 +4,30 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import { matchPath } from 'react-router-dom';
-import { configRoutes, mainRoutes, secondaryRoutes, logoutItem, parseMenuItems, parseMenuItem } from 'routes/Routes';
+import { 
+  configRoutes, mainRoutes, secondaryRoutes, logoutItem, 
+  parseMenuItems, parseMenuItem, RouteItemClickHandler 
+} from 'routes/Routes';
 
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 
 import History from 'utils/History';
-import IconPanel from './IconPanel';
+import IconPanel from 'components/main/navigation/IconPanel';
+import { Location } from 'history';
 
 
-class MainNavigationMobile extends React.Component {
+interface MainNavigationMobileProps {
+  onClose: () => void;
+  location: Location;
+}
+
+class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
 
+  c: any;
   componentDidMount() {
     const settings = {
       context: '#mobile-layout',
@@ -29,7 +39,7 @@ class MainNavigationMobile extends React.Component {
     $(this.c).sidebar(settings).sidebar('show');
   }
 
-  onClickSecondary = (url, evt) => {
+  onClickSecondary: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
     const isActive = matchPath(this.props.location.pathname, {
@@ -42,11 +52,11 @@ class MainNavigationMobile extends React.Component {
     }
 
     this.onClick(url, evt);
-  };
+  }
 
-  onClick = (url, evt) => {
+  onClick: RouteItemClickHandler = (url, evt) => {
     $(this.c).sidebar('hide');
-  };
+  }
 
   render() {
     return (

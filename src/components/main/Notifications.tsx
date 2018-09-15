@@ -25,6 +25,7 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 //@ts-ignore
 import Logo from 'images/AirDCPlusPlus.png';
+import { Location } from 'history';
 
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
@@ -39,7 +40,11 @@ const getSeverityStr = (severity: API.Severity) => {
   }
 };
 
-const Notifications = createReactClass({
+interface NotificationsProps {
+  location: Location;
+}
+
+const Notifications = createReactClass<NotificationsProps, {}>({
   displayName: 'Notifications',
   mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, 'addNotification') ],
   notifications: null,

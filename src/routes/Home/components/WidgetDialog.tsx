@@ -18,10 +18,10 @@ import WidgetUtils from 'utils/WidgetUtils';
 
 
 export interface WidgetDialogProps {
-  settings: UI.WidgetSettings;
-  id: string;
-  typeId: string;
-  onSave: () => void;
+  settings?: UI.WidgetSettings;
+  id?: string;
+  typeId?: string;
+  onSave?: () => void;
 }
 
 class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecoratorChildProps> {
@@ -54,7 +54,7 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
     const { id, typeId } = this.props;
     if (!id) {
       // New widget
-      WidgetActions.create.saved(WidgetUtils.createId(typeId), settings, typeId);
+      WidgetActions.create.saved(WidgetUtils.createId(typeId!), settings, typeId);
     } else {
       // Existing widget
       WidgetActions.edit.saved(id, settings);
@@ -89,10 +89,10 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
       >
         <Form
           ref={ (c: any) => this.form = c }
-          value={ settings && {
+          value={ !!settings ? {
             name: settings.name,
             ...settings.widget,
-          } }
+          } : {} }
           fieldDefinitions={ Entry }
           onSave={ this.onSave }
         />

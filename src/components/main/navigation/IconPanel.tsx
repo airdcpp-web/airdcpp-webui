@@ -1,12 +1,12 @@
 'use strict';
 import React from 'react';
 
-import StatisticsIcons from './icon/StatisticsIcons';
+import StatisticsIcons from 'components/main/navigation/icon/StatisticsIcons';
 //import PerformanceTools from './icon/PerformanceTools';
-import AwayIcon from './icon/AwayIcon';
+import AwayIcon from 'components/main/navigation/icon/AwayIcon';
 
 
-const IconPanel = ({ leftContent, rightContent }) => (
+const IconPanel: React.SFC = () => (
   <div className="icon-panel">
     <StatisticsIcons/>
     <div className="touch-icons">

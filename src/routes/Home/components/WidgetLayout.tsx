@@ -1,13 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 import invariant from 'invariant';
+//@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-import Widget from './Widget';
-import WidgetDialog from './WidgetDialog';
+import Widget from 'routes/Home/components/Widget';
+import WidgetDialog from 'routes/Home/components/WidgetDialog';
 
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import WidgetStore from 'stores/WidgetStore';
 
 
@@ -30,8 +32,8 @@ const WidgetLayout = createReactClass({
   },
 
   // Convert a layout entry to a component
-  mapWidget(layoutItem) {
-    const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i);
+  mapWidget(layoutItem: Layout): React.ReactNode {
+    const widgetInfo: UI.Widget = WidgetStore.getWidgetInfoById(layoutItem.i);
     invariant(widgetInfo, 'Widget info missing');
     if (!widgetInfo) {
       return null;
@@ -41,7 +43,7 @@ const WidgetLayout = createReactClass({
     return (
       <Widget
         key={ layoutItem.i }
-        componentId={ layoutItem.i }
+        componentId={ layoutItem.i! }
         widgetInfo={ widgetInfo }
         settings={ settings }
         data-grid={ layoutItem }
@@ -49,7 +51,7 @@ const WidgetLayout = createReactClass({
     );
   },
 
-  onBreakpointChange(breakpoint, cols) {
+  onBreakpointChange(breakpoint: string, cols: number) {
     this.setState({
       breakpoint,
     });
@@ -57,7 +59,7 @@ const WidgetLayout = createReactClass({
 
   render() {
     return (
-      <Fragment>
+      <>
         <ResponsiveReactGridLayout 
           className="ui cards layout"
           rowHeight={50} 
@@ -73,10 +75,10 @@ const WidgetLayout = createReactClass({
         >
           { this.state.layouts[this.state.breakpoint]
             .map(this.mapWidget)
-            .filter(widget => widget) }
+            .filter((widget: any) => widget) }
         </ResponsiveReactGridLayout>
         <WidgetDialog/>
-      </Fragment>
+      </>
     );
   },
 });

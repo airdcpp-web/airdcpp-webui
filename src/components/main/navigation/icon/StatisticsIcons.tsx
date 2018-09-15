@@ -5,8 +5,9 @@ import createReactClass from 'create-react-class';
 import SocketService from 'services/SocketService';
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
+//@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Icon from 'components/semantic/Icon';
+import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
@@ -16,7 +17,16 @@ import IconConstants from 'constants/IconConstants';
 import TransferConstants from 'constants/TransferConstants';
 
 
-const StatisticsIcon = ({ icon, cornerIcon, bytes, formatter }) => {
+interface StatisticsIconProps {
+  icon: IconType;
+  cornerIcon?: CornerIconType; 
+  bytes: number;
+  formatter: (bytes: number) => React.ReactNode;
+}
+
+const StatisticsIcon: React.SFC<StatisticsIconProps> = (
+  { icon, cornerIcon, bytes, formatter }
+  ) => {
   if (bytes === 0) {
     return null;
   }
@@ -37,7 +47,7 @@ const StatisticsIcon = ({ icon, cornerIcon, bytes, formatter }) => {
   );
 };
 
-const StatisticsIcons = createReactClass({
+const StatisticsIcons = createReactClass<{}, Partial<API.TransferStats>>({
   displayName: 'StatisticsIcons',
   mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
 
@@ -47,8 +57,10 @@ const StatisticsIcons = createReactClass({
     };
   },
 
-  onSocketConnected(addSocketListener) {
+  onSocketConnected(addSocketListener: any) {
+    // tslint:disable-next-line:max-line-length
     addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, null, AccessConstants.TRANSFERS);
+    // tslint:disable-next-line:max-line-length
     addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, null, AccessConstants.SETTINGS_VIEW);
   },
 
@@ -56,7 +68,7 @@ const StatisticsIcons = createReactClass({
     if (LoginStore.hasAccess(AccessConstants.TRANSFERS)) {
       SocketService.get(TransferConstants.STATISTICS_URL)
         .then(this.onStatsReceived)
-        .catch(error => console.error('Failed to fetch transfer statistics', error.message));
+        .catch((error: APISocket.Error) => console.error('Failed to fetch transfer statistics', error.message));
     }
   },
 
@@ -64,7 +76,7 @@ const StatisticsIcons = createReactClass({
     this.fetchStats();
   },
 
-  onStatsReceived(data) {
+  onStatsReceived(data: API.TransferStats) {
     const newState = Object.assign({}, this.state, data);
     this.setState(newState);
   },

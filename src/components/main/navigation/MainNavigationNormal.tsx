@@ -9,7 +9,7 @@ import { configRoutes, mainRoutes, logoutItem, parseMenuItems, parseMenuItem } f
 
 const MainNavigationNormal = () => (
   <div className="item right">
-    { parseMenuItems(mainRoutes, null, false) }
+    { parseMenuItems(mainRoutes, undefined, false) }
 
     <SectionedDropdown className="top right">
       <MenuSection>

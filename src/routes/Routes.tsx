@@ -14,9 +14,26 @@ import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
+import { Location } from 'history';
 
 
-export const mainRoutes = [
+export type RouteItemClickHandler = (path: string, event: React.SyntheticEvent<any>) => void;
+
+export interface RouteItem {
+  title: string;
+  path: string;
+  matchPath?: string;
+  icon: string;
+  unreadInfoStore?: any;
+  //access?: API.AccessId;
+  access?: string;
+  component?: React.ComponentClass;
+  exact?: boolean;
+  className?: string;
+  onClick?: RouteItemClickHandler;
+}
+
+export const mainRoutes: RouteItem[] = [
   {
     title: 'Home',
     path: '/',
@@ -35,13 +52,17 @@ export const mainRoutes = [
     path: '/search',
     icon: IconConstants.SEARCH,
     access: AccessConstants.SEARCH,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "search" */ 'routes/Search/components/Search')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "search" */ 'routes/Search/components/Search')
+    ),
   }, {
     title: 'Transfers',
     path: '/transfers',
     icon: IconConstants.TRANSFERS,
     access: AccessConstants.TRANSFERS,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "transfers" */ 'routes/Transfers/components/Transfers')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "transfers" */ 'routes/Transfers/components/Transfers')
+    ),
   }
 ];
 
@@ -51,7 +72,9 @@ export const configRoutes = [
     path: '/favorite-hubs',
     icon: IconConstants.FAVORITE,
     access: AccessConstants.FAVORITE_HUBS_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs/components/FavoriteHubs')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs/components/FavoriteHubs')
+    ),
   }, {
     title: 'Share',
     path: '/share',
@@ -63,7 +86,9 @@ export const configRoutes = [
     path: '/settings',
     icon: IconConstants.SETTINGS,
     access: AccessConstants.SETTINGS_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "settings" */ 'routes/Settings/components/Settings')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "settings" */ 'routes/Settings/components/Settings')
+    ),
   }
 ];
 
@@ -75,7 +100,9 @@ export const secondaryRoutes = [
     icon: 'blue sitemap',
     unreadInfoStore: HubSessionStore,
     access: AccessConstants.HUBS_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs/components/Hubs')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs/components/Hubs')
+    ),
   }, {
     title: 'Messages',
     path: '/messages',
@@ -83,7 +110,9 @@ export const secondaryRoutes = [
     icon: 'blue comments',
     unreadInfoStore: PrivateChatSessionStore,
     access: AccessConstants.PRIVATE_CHAT_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages/components/Messages')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages/components/Messages')
+    ),
   }, {
     title: 'Filelists',
     path: '/filelists',
@@ -91,7 +120,9 @@ export const secondaryRoutes = [
     icon: 'blue browser',
     unreadInfoStore: FilelistSessionStore,
     access: AccessConstants.FILELISTS_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists/components/Filelists')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists/components/Filelists')
+    ),
   }, {
     title: 'Files',
     path: '/files',
@@ -99,23 +130,27 @@ export const secondaryRoutes = [
     icon: 'blue file',
     unreadInfoStore: ViewFileStore,
     access: AccessConstants.VIEW_FILE_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files/components/Files')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files/components/Files')
+    ),
   }, {
     title: 'Events',
     path: '/events',
     icon: 'blue history',
     unreadInfoStore: EventStore,
     access: AccessConstants.EVENTS_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/SystemLog')),
+    component: AsyncComponentDecorator(
+      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/SystemLog')
+    ),
   }
 ];
 
-const onClickLogout = (item, e) => {
+const onClickLogout: RouteItemClickHandler = (path, e) => {
   e.preventDefault();
   LoginActions.logout();
 };
 
-export const logoutItem = { 
+export const logoutItem: RouteItem = { 
   icon: 'sign out', 
   path: 'logout', 
   title: 'Logout',
@@ -123,7 +158,19 @@ export const logoutItem = {
   onClick: onClickLogout,
 };
 
-export const parseMenuItem = (route, onClick, showIcon = true) => {
+const menuItemClickHandler = (onClick: RouteItemClickHandler | undefined, route: RouteItem) => {
+  if (!!onClick || !!route.onClick) {
+    return (evt: any) => onClick ? onClick(route.path, evt) : route.onClick!(route.path, evt);
+  }
+
+  return undefined;
+};
+
+export const parseMenuItem = (
+  route: RouteItem, 
+  onClick: RouteItemClickHandler | undefined = undefined, 
+  showIcon: boolean | undefined = true
+) => {
   const { title, icon, unreadInfoStore, path, className } = route;
   return (
     <RouterMenuItemLink 
@@ -131,7 +178,7 @@ export const parseMenuItem = (route, onClick, showIcon = true) => {
       url={ path }
       className={ className }
       icon={ showIcon ? (icon + ' navigation') : null }
-      onClick={ onClick || route.onClick ? (evt => onClick ? onClick(path, evt) : route.onClick(path, evt)) : undefined }
+      onClick={ menuItemClickHandler(onClick, route) }
       unreadInfoStore={ unreadInfoStore }
     >
       { title }
@@ -139,9 +186,9 @@ export const parseMenuItem = (route, onClick, showIcon = true) => {
   );
 };
 
-const filterItem = item => !item.access || LoginStore.hasAccess(item.access);
+const filterItem = (item: RouteItem) => !item.access || LoginStore.hasAccess(item.access);
 
-export const parseRoutes = (routes, location) => {
+export const parseRoutes = (routes: RouteItem[], location?: Location) => {
   return routes.map((route, i) => (
     <Route 
       key={ route.path } 
@@ -152,7 +199,11 @@ export const parseRoutes = (routes, location) => {
   ));
 };
 
-export const parseMenuItems = (routes, onClick, showIcon) => {
+export const parseMenuItems = (
+  routes: RouteItem[], 
+  onClick?: RouteItemClickHandler | undefined, 
+  showIcon?: boolean | undefined
+) => {
   return routes
     .filter(filterItem)
     .map(route => parseMenuItem(route, onClick, showIcon));

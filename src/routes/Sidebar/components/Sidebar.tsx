@@ -7,13 +7,13 @@ import Resizable, { ResizeCallback } from 're-resizable';
 import History from 'utils/History';
 
 import '../style.css';
-import { RouteComponentProps } from 'react-router';
+import { Location } from 'history';
 
 
 const MIN_WIDTH = 500;
 
-export interface SidebarProps extends RouteComponentProps<{}> {
-
+export interface SidebarProps {
+  location: Location;
 }
 
 interface State {
@@ -62,11 +62,11 @@ class Sidebar extends React.Component<SidebarProps, State> {
 
   onHidden = () => {
     History.removeOverlay(this.props.location, 'sidebar');
-  };
+  }
 
   onVisible = () => {
     this.setState({ animating: false });
-  };
+  }
 
   onResizeStop: ResizeCallback = (event, direction, element, delta) => {
     if (!delta.width) {
@@ -76,7 +76,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
     const width = element.clientWidth;
     saveLocalProperty('sidebar_width', width);
     this.setState({ width });
-  };
+  }
 
   render() {
     const { width, animating } = this.state;
@@ -92,9 +92,10 @@ class Sidebar extends React.Component<SidebarProps, State> {
         id="sidebar"
         className="ui right vertical sidebar"
 
-        enable={
-          { top:false, right:false, bottom:false, left: !useMobileLayout(), topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }
-        }
+        enable={{ 
+          top: false, right: false, bottom: false, left: !useMobileLayout(), 
+          topRight: false, bottomRight: false, bottomLeft: false, topLeft: false 
+        }}
         onResizeStop={ this.onResizeStop }
       >
         <div id="sidebar-container">

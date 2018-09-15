@@ -1,8 +1,8 @@
 import React from 'react';
 
-import DemoIntro from './DemoIntro';
-import NewUserIntro from './NewUserIntro';
-import WidgetLayout from './WidgetLayout';
+import DemoIntro from 'routes/Home/components/DemoIntro';
+import NewUserIntro from 'routes/Home/components/NewUserIntro';
+import WidgetLayout from 'routes/Home/components/WidgetLayout';
 
 import '../style.css';
 

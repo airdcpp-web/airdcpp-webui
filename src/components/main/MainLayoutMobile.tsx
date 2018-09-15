@@ -1,53 +1,57 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+
+//@ts-ignore
 import Reflux from 'reflux';
 
-import SiteHeader from './SiteHeader';
+import SiteHeader from 'components/main/SiteHeader';
 import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import MenuIcon from 'components/menu/MenuIcon';
 
 import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
 
-import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
-
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes, RouteItem } from 'routes/Routes';
 
 import 'mobile.css';
+import { Location } from 'history';
 
 
-const reduceMenuItemUrgency = (map, menuItem) => {
+const reduceMenuItemUrgency = (urgencyCountMap: UI.UrgencyCountMap, menuItem: RouteItem) => {
   if (!menuItem.unreadInfoStore) {
-    return map;
+    return urgencyCountMap;
   }
 
   const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
   if (!urgencies) {
-    return map;
+    return urgencyCountMap;
   }
 
   const max = maxUrgency(urgencies);
   if (max) {
-    appendToMap(map, max);
+    appendToMap(urgencyCountMap, max);
   }
 
-  return map;
+  return urgencyCountMap;
 };
 
-const HeaderContent = createReactClass({
+interface HeaderContentProps {
+  onClickMenu: () => void;
+}
+
+const HeaderContent = createReactClass<HeaderContentProps, {}>({
   displayName: 'HeaderContent',
   mixins: [ Reflux.ListenerMixin ],
 
   componentDidMount() {
     secondaryRoutes.forEach(item => {
       if (item.unreadInfoStore) {
-        this.listenTo(item.unreadInfoStore, _ => this.forceUpdate());
+        this.listenTo(item.unreadInfoStore, () => this.forceUpdate());
       }
     });
   },
 
   render() {
     const { onClickMenu } = this.props;
-		
     return (
       <div className="right">
         <MenuIcon 
@@ -60,18 +64,22 @@ const HeaderContent = createReactClass({
   },
 });
 
-class MainLayoutMobile extends React.Component {
+interface MainLayoutMobileProps {
+  className?: string;
+  location: Location;
+}
+
+class MainLayoutMobile extends React.Component<MainLayoutMobileProps> {
   state = {
     menuVisible: false,
   };
 
   onClickMenu = () => {
     this.setState({ menuVisible: !this.state.menuVisible });
-  };
+  }
 
   render() {
     const { className, location } = this.props;
-		
     return (
       <div className={ className } id="mobile-layout">
         { this.state.menuVisible && (
@@ -81,14 +89,11 @@ class MainLayoutMobile extends React.Component {
           />
         ) }
         <div className="pusher" id="mobile-layout-inner">
-          <SiteHeader 
-            content={
-              <HeaderContent
-                onClickMenu={ this.onClickMenu }
-                location={ location }
-              />
-            }
-          />
+          <SiteHeader>
+            <HeaderContent
+              onClickMenu={ this.onClickMenu }
+            />
+          </SiteHeader>
           <div className="site-content">
             { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
           </div>
@@ -98,4 +103,4 @@ class MainLayoutMobile extends React.Component {
   }
 }
 
-export default SidebarHandlerDecorator(MainLayoutMobile);
+export default MainLayoutMobile;

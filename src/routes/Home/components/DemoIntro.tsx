@@ -16,14 +16,15 @@ const DemoIntro = () => {
       description={ (
         <div className="demo-message">
           <p>
-							Edit permissions are limited in order to keep the content somewhat persistent.
+              Edit permissions are limited in order to keep the content somewhat persistent.
           </p>
           <p>
-							Note that this is a locally installed application that is usually run by a single user. 
-							Most changes, such as browsing of filelists, are propagated to all active sessions.
+              Note that this is a locally installed application that is usually run by a single user. 
+              Most changes, such as browsing of filelists, are propagated to all active sessions.
           </p>
           <p>
-							Please visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information about the client and its features.
+              Please visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> 
+              for more information about the client and its features.
           </p>
         </div>
       ) }

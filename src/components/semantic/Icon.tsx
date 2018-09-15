@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 
 export type IconType = React.ReactElement<any> | string | null;
+export type CornerIconType = string | null;
 
 export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   icon?: IconType;

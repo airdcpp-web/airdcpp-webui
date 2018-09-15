@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import { AwayEnum } from 'constants/SystemConstants';
@@ -15,13 +16,18 @@ const AwayIcon = createReactClass({
     return ActivityStore.away !== AwayEnum.OFF;
   },
 
-  onClick: function (evt) {
+  onClick: function (evt: React.SyntheticEvent<any>) {
     SystemActions.setAway(!this.isAway());
   },
 
-  render: function () {
+  render() {
     const iconColor = this.isAway() ? 'yellow' : 'grey';
-    return <i className={ iconColor + ' away-state link large wait icon' } onClick={ this.onClick }/>;
+    return (
+      <i 
+        className={ iconColor + ' away-state link large wait icon' } 
+        onClick={ this.onClick }
+      />
+    );
   },
 });
 

@@ -1,20 +1,22 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
 import Sidebar from 'routes/Sidebar/components/Sidebar';
-import SiteHeader from './SiteHeader';
+import SiteHeader from 'components/main/SiteHeader';
 
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes, RouteItem } from 'routes/Routes';
 
-import SidebarHandlerDecorator from './decorators/SidebarHandlerDecorator';
+import SidebarHandlerDecorator, { 
+  SidebarHandlerDecoratorChildProps 
+} from 'components/main/decorators/SidebarHandlerDecorator';
 
 import 'normal.css';
 
 
-const toIndexRedirect = route => (
+const toIndexRedirect = (route: RouteItem) => (
   <Route
     key={ route.path }
     path={ route.path }
@@ -26,11 +28,16 @@ const toIndexRedirect = route => (
   />
 );
 
-class MainLayout extends React.Component {
-  static propTypes = {
+
+interface MainLayoutProps {
+  className?: string;
+}
+
+class MainLayout extends React.Component<MainLayoutProps & SidebarHandlerDecoratorChildProps> {
+  /*static propTypes = {
     sidebar: PropTypes.bool,
     location: PropTypes.object.isRequired,
-  };
+  };*/
 
   render() {
     const { sidebar, className, location, previousLocation } = this.props;
@@ -48,11 +55,11 @@ class MainLayout extends React.Component {
           </div>
         ) }
         <div className="pusher">
-          <SiteHeader 
-            content={ <MainNavigation location={ location }/> }
-          />
+          <SiteHeader>
+            <MainNavigation/>
+          </SiteHeader>
           <div className="ui site-content">
-            { parseRoutes([ ...mainRoutes, ...configRoutes ], previousLocation ? previousLocation : location) }
+            { parseRoutes([ ...mainRoutes, ...configRoutes ], !!previousLocation ? previousLocation : location) }
           </div>
         </div>
         <SideMenu location={ location }/>
@@ -61,4 +68,4 @@ class MainLayout extends React.Component {
   }
 }
 
-export default SidebarHandlerDecorator(MainLayout);
+export default SidebarHandlerDecorator<MainLayoutProps>(MainLayout);

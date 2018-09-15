@@ -119,7 +119,7 @@ const emojiRenderer = (code: string, str: string, key: string) => {
 
 interface TextDecoratorProps {
   emojify?: boolean;
-  text: string;
+  text: React.ReactNode;
 }
 
 // Parses links from plain text and optionally emoticons as well

@@ -2,17 +2,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 import History from 'utils/History';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
-import SocketConnectStatus from './../SocketConnectStatus';
+import SocketConnectStatus from 'components/main/SocketConnectStatus';
+import { Location } from 'history';
 
 
-const AuthenticationGuardDecorator = (Component) => {
-  return createReactClass({
+interface AuthenticationGuardDecoratorProps {
+  location: Location;
+}
+
+function AuthenticationGuardDecorator<PropsT>(
+  Component: React.ComponentType<PropsT>
+) {
+  return createReactClass<PropsT & AuthenticationGuardDecoratorProps, {}>({
     displayName: 'AuthenticationGuardDecorator',
     mixins: [ 
       Reflux.connect(LoginStore, 'login')
@@ -40,7 +48,7 @@ const AuthenticationGuardDecorator = (Component) => {
       }
     },
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps: AuthenticationGuardDecoratorProps, prevState: any) {
       if (this.state.login.hasSession && prevState.login.socketAuthenticated && !this.state.login.socketAuthenticated) {
         // Connection lost, reconnect (but not too fast)
         console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
@@ -76,6 +84,6 @@ const AuthenticationGuardDecorator = (Component) => {
       );
     }
   });
-};
+}
 
 export default AuthenticationGuardDecorator;

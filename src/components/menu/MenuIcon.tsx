@@ -1,13 +1,12 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
-import CountLabel from 'components/CountLabel';
+import CountLabel, { CountLabelProps } from 'components/CountLabel';
 import classNames from 'classnames';
 
 
-interface MenuIconProps {
+interface MenuIconProps extends Pick<CountLabelProps, 'urgencies'> {
   className?: string;
   onClick: () => void;
-  urgencies: UI.UrgencyCountMap;
 }
 
 // A plain menu icon trigger for dropdowns (with urgency label support)

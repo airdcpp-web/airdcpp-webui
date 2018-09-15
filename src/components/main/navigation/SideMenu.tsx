@@ -5,17 +5,22 @@ import React from 'react';
 
 import History from 'utils/History';
 
-import IconPanel from './IconPanel';
+import IconPanel from 'components/main/navigation/IconPanel';
 import { matchPath } from 'react-router-dom';
-import { secondaryRoutes, parseMenuItems } from 'routes/Routes';
+import { secondaryRoutes, parseMenuItems, RouteItemClickHandler } from 'routes/Routes';
+import { Location } from 'history';
 
 
-class SideMenu extends React.Component {
+interface SideMenuProps {
+  location: Location;
+}
+
+class SideMenu extends React.Component<SideMenuProps> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
 
-  onClick = (url, evt) => {
+  onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
     const isActive = matchPath(this.props.location.pathname, {
@@ -27,7 +32,7 @@ class SideMenu extends React.Component {
     } else {
       History.pushSidebar(this.props.location, url);
     }
-  };
+  }
 
   render() {
     const menuItems = parseMenuItems(secondaryRoutes, this.onClick);

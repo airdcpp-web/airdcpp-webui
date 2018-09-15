@@ -4,13 +4,13 @@ import React from 'react';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 
-import ActivityTracker from './ActivityTracker';
-import Notifications from './Notifications';
+import ActivityTracker from 'components/main/ActivityTracker';
+import Notifications from 'components/main/Notifications';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
-import AuthenticationGuardDecorator from './decorators/AuthenticationGuardDecorator';
-import MainLayoutMobile from './MainLayoutMobile';
-import MainLayoutNormal from './MainLayoutNormal';
+import AuthenticationGuardDecorator from 'components/main/decorators/AuthenticationGuardDecorator';
+import MainLayoutMobile from 'components/main/MainLayoutMobile';
+import MainLayoutNormal from 'components/main/MainLayoutNormal';
 
 import HubActions from 'actions/HubActions';
 import PrivateChatActions from 'actions/PrivateChatActions';
@@ -18,9 +18,14 @@ import FilelistSessionActions from 'actions/FilelistSessionActions';
 import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
+import { RouteComponentProps } from 'react-router';
 
 
-class AuthenticatedApp extends React.Component {
+interface AuthenticatedAppProps extends RouteComponentProps<{}> {
+
+}
+
+class AuthenticatedApp extends React.Component<AuthenticatedAppProps> {
   updateTitle() {
     let title = 'AirDC++ Web Client';
     if (LoginStore.systemInfo) {
@@ -73,6 +78,6 @@ class AuthenticatedApp extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default AuthenticationGuardDecorator(AuthenticatedApp);
