@@ -91,12 +91,12 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
 };
 
 const normalizeSettingValueMap = (
-  value: Partial<API.SettingValueMap>, 
+  value: Partial<API.SettingValueMap> | undefined, 
   valueDefinitions: UI.FormFieldDefinition[]
 ): UI.FormValueMap => {
   return valueDefinitions.reduce(
     (reducedValue, { key, type, definitions, default_value, item_type }) => {
-      if (value && value.hasOwnProperty(key)) {
+      if (!!value && value.hasOwnProperty(key)) {
         const fieldValue = value[key];
         if (type === FieldTypes.LIST && Array.isArray(fieldValue)) {
           if (item_type === FieldTypes.STRUCT) {

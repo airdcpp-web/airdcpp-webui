@@ -5,13 +5,13 @@ import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 
 import ActionButton from 'components/ActionButton';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
-import FavoriteDirectoryDialog from './FavoriteDirectoryDialog';
+import FavoriteDirectoryDialog from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryDialog';
 
 
-const Row = ({ directory }) => (
+const Row: React.SFC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -27,7 +27,7 @@ const Row = ({ directory }) => (
   </tr>
 );
 
-const getRow = (directory) => {
+const getRow = (directory: API.FavoriteDirectoryEntry) => {
   return (
     <Row 
       key={ directory.path } 
@@ -36,7 +36,17 @@ const getRow = (directory) => {
   );
 };
 
-const FavoriteDirectoryPage = ({ directories }) => (
+interface FavoriteDirectoryPageProps {
+
+}
+
+interface FavoriteDirectoryPageDataProps extends DataProviderDecoratorChildProps {
+  directories: API.FavoriteDirectoryEntry[];
+}
+
+const FavoriteDirectoryPage: React.SFC<FavoriteDirectoryPageProps & FavoriteDirectoryPageDataProps> = (
+  { directories }
+) => (
   <div id="directory-table">
     <ActionButton
       action={ FavoriteDirectoryActions.create }
@@ -64,6 +74,10 @@ export default DataProviderDecorator(FavoriteDirectoryPage, {
     directories: FavoriteDirectoryConstants.DIRECTORIES_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(FavoriteDirectoryConstants.MODULE_URL, FavoriteDirectoryConstants.DIRECTORIES_UPDATED, _ => refetchData());
+    addSocketListener(
+      FavoriteDirectoryConstants.MODULE_URL, 
+      FavoriteDirectoryConstants.DIRECTORIES_UPDATED, 
+      () => refetchData()
+    );
   },
 });

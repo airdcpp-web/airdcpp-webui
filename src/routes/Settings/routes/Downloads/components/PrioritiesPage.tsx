@@ -1,5 +1,6 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'prio_highest_size',
@@ -14,7 +15,7 @@ const HighPrioEntry = [
   'prio_high_files_regex',
 ];
 
-const PrioritiesPage = props => (
+const PrioritiesPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       title="File priorities"

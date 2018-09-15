@@ -1,5 +1,6 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'auto_add_sources',
@@ -9,7 +10,7 @@ const Entry = [
   'allow_match_full_list',
 ];
 
-const SearchMatchingPage = props => (
+const SearchMatchingPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

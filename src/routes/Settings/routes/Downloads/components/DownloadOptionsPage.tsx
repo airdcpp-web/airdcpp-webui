@@ -1,5 +1,6 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'segmented_downloads',
@@ -9,7 +10,7 @@ const Entry = [
   'use_partial_sharing',
 ];
 
-const DownloadOptionsPage = props => (
+const DownloadOptionsPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

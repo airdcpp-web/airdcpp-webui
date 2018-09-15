@@ -3,12 +3,14 @@ import { Router, Route, Switch } from 'react-router';
 
 import History from 'utils/History';
 
+//@ts-ignore
 import Reflux from 'reflux';
+//@ts-ignore
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
 
-import AuthenticatedApp from './components/main/AuthenticatedApp';
-import Login from './routes/Login/components/Login';
+import AuthenticatedApp from 'components/main/AuthenticatedApp';
+import Login from 'routes/Login/components/Login';
 
 import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -20,7 +22,7 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 import Measure from 'react-measure';
 
 import 'array.prototype.find';
-import './utils/semantic';
+import 'utils/semantic';
 
 import 'style.css';
 
@@ -44,13 +46,15 @@ const getBackgroundImage = () => {
 };
 
 
-const App = _ => (
+const App = () => (
   <Router history={ History }>
     <Measure
       bounds={ true }
     >
       { ({ measureRef }) => (
-        <div ref={ measureRef } id="background-wrapper" 
+        <div 
+          ref={ measureRef } 
+          id="background-wrapper" 
           style={{
             backgroundImage: 'url(' + getBackgroundImage() + ')',
             height: '100%',

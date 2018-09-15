@@ -8,13 +8,13 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
 
-import ShareProfileDecorator from 'decorators/ShareProfileDecorator';
+import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 import { formatSize } from 'utils/ValueFormat';
 
 import '../style.css';
 
 
-const Row = ({ profile }) => (
+const Row: React.SFC<{ profile: API.ShareProfile; }> = ({ profile }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -33,17 +33,17 @@ const Row = ({ profile }) => (
   </tr>
 );
 
-class ShareProfilesPage extends React.Component {
+class ShareProfilesPage extends React.Component<ShareProfileDecoratorChildProps> {
   static displayName = 'ShareProfilesPage';
 
-  getRow = (profile) => {
+  getRow = (profile: API.ShareProfile) => {
     return (
       <Row 
         key={ profile.id } 
         profile={ profile } 
       />
     );
-  };
+  }
 
   render() {
     return (
@@ -52,11 +52,11 @@ class ShareProfilesPage extends React.Component {
           description={
             <div>
               <p>
-								Queued files are shared via the partial file sharing feature in all hubs where the share 
-								has not been hidden, regardless of the configured share profiles.
+                Queued files are shared via the partial file sharing feature in all hubs where the share 
+                has not been hidden, regardless of the configured share profiles.
               </p>
               <p>
-								Share profiles are assigned for individual directories from the <Link to="/share">Share</Link> page.
+                Share profiles are assigned for individual directories from the <Link to="/share">Share</Link> page.
               </p>
             </div>
           }

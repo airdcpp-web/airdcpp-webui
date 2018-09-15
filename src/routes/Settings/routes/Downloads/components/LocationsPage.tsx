@@ -6,15 +6,16 @@ import Message from 'components/semantic/Message';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
-import FavoriteDirectoryTable from './FavoriteDirectoryTable';
+import FavoriteDirectoryTable from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryTable';
 import LayoutHeader from 'components/semantic/LayoutHeader';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const Entry = [
   'download_directory',
 ];
 
-const LocationsPage = props => (
+const LocationsPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

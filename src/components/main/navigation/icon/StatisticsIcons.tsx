@@ -47,7 +47,12 @@ const StatisticsIcon: React.SFC<StatisticsIconProps> = (
   );
 };
 
-const StatisticsIcons = createReactClass<{}, Partial<API.TransferStats>>({
+
+interface StatisticsIconsProps extends API.TransferStats, API.HashStats {
+
+}
+
+const StatisticsIcons = createReactClass<{}, Partial<StatisticsIconsProps>>({
   displayName: 'StatisticsIcons',
   mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
 

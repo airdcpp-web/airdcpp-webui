@@ -152,7 +152,7 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
           fieldDefinitions={ this.entry }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ this.props.user! }
+          value={ this.props.user }
         />
       </Modal>
     );

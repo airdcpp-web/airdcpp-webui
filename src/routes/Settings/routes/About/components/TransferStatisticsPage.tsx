@@ -6,9 +6,9 @@ import { formatSize } from 'utils/ValueFormat';
 import { Row, Header } from 'components/semantic/Grid';
 
 import TransferConstants from 'constants/TransferConstants';
-import StatisticsDecorator from 'decorators/StatisticsDecorator';
+import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 
-class TransferStatisticsPage extends React.Component {
+class TransferStatisticsPage extends React.Component<StatisticsDecoratorChildProps<any>> {
   render() {
     const { stats } = this.props;
 

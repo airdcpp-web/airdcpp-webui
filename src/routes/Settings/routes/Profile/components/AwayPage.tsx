@@ -1,5 +1,6 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'away_message',
@@ -7,7 +8,7 @@ const Entry = [
   'away_idle_time',
 ];
 
-const AwayPage = props => (
+const AwayPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

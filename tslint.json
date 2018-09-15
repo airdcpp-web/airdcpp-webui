@@ -29,9 +29,13 @@
       true,
       {
         "order": [
-          "public-before-private",
-          "static-before-instance",
-          "variables-before-functions"
+          "public-static-field",
+          "protected-static-field",
+          "public-static-method",
+          "protected-static-method",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
         ]
       }
     ],
@@ -59,7 +63,7 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
+    //"no-use-before-declare": true,
     "one-line": [
       true,
       "check-catch",

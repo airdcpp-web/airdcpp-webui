@@ -1,5 +1,6 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const Entry = [
@@ -9,7 +10,7 @@ const Entry = [
   'refresh_threading',
 ];
 
-const RefreshOptionsPage = props => (
+const RefreshOptionsPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

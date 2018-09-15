@@ -6,13 +6,14 @@ import ShareConstants from 'constants/ShareConstants';
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
 import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
+import FilesystemConstants from 'constants/FilesystemConstants';
 
 
-const Row = ({ path }) => (
+const Row: React.SFC<{ path: string; }> = ({ path }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -26,17 +27,22 @@ const Row = ({ path }) => (
   </tr>
 );
 
-class ExcludePage extends React.Component {
+
+interface ExcludePageDataProps extends DataProviderDecoratorChildProps {
+  excludes: string[];
+}
+
+class ExcludePage extends React.Component<ExcludePageDataProps> {
   static displayName = 'ExcludePage';
 
-  getRow = (path) => {
+  getRow = (path: string) => {
     return (
       <Row 
         key={ path } 
         path={ path } 
       />
     );
-  };
+  }
 
   render() {
     const { excludes } = this.props;
@@ -46,7 +52,7 @@ class ExcludePage extends React.Component {
           title={
             <div>
               <div>
-								Share must be refreshed for the changes to take effect
+                Share must be refreshed for the changes to take effect
               </div>
               <br/>
               <ActionButton
@@ -77,6 +83,8 @@ class ExcludePage extends React.Component {
 
         <FileBrowserDialog
           onConfirm={ ShareActions.addExclude.saved }
+          initialPath=""
+          historyId={ FilesystemConstants.LOCATION_GENERIC }
         />
       </div>
     );
@@ -88,7 +96,7 @@ export default DataProviderDecorator(ExcludePage, {
     excludes: ShareConstants.EXCLUDES_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, _ => refetchData());
-    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, _ => refetchData());
+    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, () => refetchData());
+    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, () => refetchData());
   },
 });

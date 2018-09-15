@@ -7,12 +7,12 @@ import Moment from 'moment';
 import { Row } from 'components/semantic/Grid';
 
 import LoginStore from 'stores/LoginStore';
-import StatisticsDecorator from 'decorators/StatisticsDecorator';
+import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 import SystemConstants from 'constants/SystemConstants';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 
-class AboutPage extends React.Component {
+class AboutPage extends React.Component<StatisticsDecoratorChildProps<any>> {
   render() {
     const { stats } = this.props;
     const systemInfo = LoginStore.systemInfo;

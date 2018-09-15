@@ -15,7 +15,7 @@ export interface UserMenuItemData {
 }
 
 export interface UserMenuDecoratorProps extends Omit<ActionMenuDecoratorProps, 'actions' | 'caption' | 'itemData'> {
-  user: (API.HintedUser & { nick?: string; }) | (API.HubUser & { nicks?: string });
+  user: (API.User & { nick?: string; }) | (API.HintedUser & { nick?: string; }) | (API.HubUser & { nicks?: string });
   directory?: string;
   userIcon?: string | boolean | null;
   text?: React.ReactNode;

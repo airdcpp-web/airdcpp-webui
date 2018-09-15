@@ -2,13 +2,13 @@ import React from 'react';
 
 import UserConstants from 'constants/UserConstants';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import Message from 'components/semantic/Message';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
 
 
-const Row = ({ ignoreInfo }) => (
+const Row: React.SFC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
   <tr>
     <td>
       <UserMenu 
@@ -24,17 +24,22 @@ const Row = ({ ignoreInfo }) => (
   </tr>
 );
 
-class IgnorePage extends React.Component {
+
+interface IgnorePageDataProps extends DataProviderDecoratorChildProps {
+  ignores: API.IgnoredUser[];
+}
+
+class IgnorePage extends React.Component<IgnorePageDataProps> {
   static displayName = 'IgnorePage';
 
-  getRow = (ignoreInfo) => {
+  getRow = (ignoreInfo: API.IgnoredUser) => {
     return (
       <Row 
         key={ ignoreInfo.user.cid } 
         ignoreInfo={ ignoreInfo } 
       />
     );
-  };
+  }
 
   render() {
     const { ignores } = this.props;
@@ -69,7 +74,7 @@ export default DataProviderDecorator(IgnorePage, {
     ignores: UserConstants.IGNORES_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_ADDED, _ => refetchData());
-    addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_REMOVED, _ => refetchData());
+    addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_ADDED, () => refetchData());
+    addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_REMOVED, () => refetchData());
   },
 });

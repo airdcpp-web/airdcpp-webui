@@ -21,8 +21,8 @@ const fileToIcon = (name: API.FileContentType) => {
 const fileItemTypeToIcon = (typeInfo: API.FilesystemItemType) => {
   switch (typeInfo.id) {
     case 'directory': return 'file outline yellow folder';
-    case 'file': return fileToIcon((typeInfo as any as API.FileType).content_type);
-    case 'drive_fixed': return 'grey disk outline';
+    case 'file': return fileToIcon(typeInfo.content_type);
+    case 'drive_fixed': return 'grey hdd outline';
     case 'drive_remote': return 'grey server';
     case 'removable': return 'grey external share';
     default: return 'file outline';

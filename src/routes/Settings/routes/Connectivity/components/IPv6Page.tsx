@@ -1,5 +1,6 @@
 import React from 'react';
-import ProtocolPage from './ProtocolPage';
+import ProtocolPage from 'routes/Settings/routes/Connectivity/components/ProtocolPage';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'connection_auto_v6',
@@ -10,7 +11,7 @@ const Entry = [
   'connection_ip_override_v6',
 ];
 
-const IPv6 = props => (
+const IPv6: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <ProtocolPage
       { ...props }

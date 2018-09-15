@@ -164,6 +164,10 @@ declare namespace API {
     file_count: number;
   }
 
+  interface IgnoredUser {
+    user: User;
+    ignored_messages: number;
+  }
 
   // POST data
   interface DownloadData {

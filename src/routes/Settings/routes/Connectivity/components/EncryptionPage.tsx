@@ -1,23 +1,20 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-import HashDatabaseLayout from './HashDatabaseLayout';
 
 const Entry = [
-  'max_hash_speed',
-  'max_total_hashers',
-  'max_volume_hashers',
+  'always_ccpm',
+  'tls_mode',
 ];
 
-const HashingPage = props => (
+const Encryption: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }
       keys={ Entry }
     />
-
-    <HashDatabaseLayout/>
   </div>
 );
 
-export default HashingPage;
+export default Encryption;

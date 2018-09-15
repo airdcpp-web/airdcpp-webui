@@ -33,7 +33,7 @@ const Entry: UI.FormFieldDefinition[] = [
 ];
 
 export interface FavoriteDirectoryDialogProps extends ModalRouteDecoratorChildProps {
-  directoryEntry: API.FavoriteDirectoryEntryBase;
+  directoryEntry?: API.FavoriteDirectoryEntryBase;
 }
 
 export interface FavoriteDirectoryDialogDataProps {
@@ -71,7 +71,7 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
     }
 
     return SocketService.patch(
-      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${this.props.directoryEntry.id}`, 
+      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${this.props.directoryEntry!.id}`, 
       changedFields
     );
   }

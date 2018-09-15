@@ -1,6 +1,7 @@
 import React from 'react';
 
-import AutoValuePanel from './AutoValuePanel';
+import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const Auto = [
@@ -9,7 +10,7 @@ const Auto = [
   'mcn_up',
 ];
 
-const UserLimitPage = props => (
+const UserLimitPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <AutoValuePanel
       { ...props }

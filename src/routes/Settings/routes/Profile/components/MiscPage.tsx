@@ -5,18 +5,20 @@ import LoginStore from 'stores/LoginStore';
 import { PlatformEnum } from 'constants/SystemConstants';
 
 import '../style.css';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { FormFieldSettingHandler } from 'components/form/Form';
 
 
-class MiscPage extends React.Component {
-  onFieldSetting = (id, fieldOptions, formValue) => {
+class MiscPage extends React.Component<SettingSectionChildProps> {
+  onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
     if (id === 'nmdc_encoding') {
       fieldOptions['help'] = (
         <div>
-					Encoding setting is only used in NMDC hub. ADC hubs will always use UTF-8 encoding.
+          Encoding setting is only used in NMDC hub. ADC hubs will always use UTF-8 encoding.
           <br/>
           <br/>
           <div>
-						Commonly used values:
+            Commonly used values:
             <ul>
               <li>Central Europe: cp1250</li>
               <li>Cyrillic: cp1251</li>
@@ -29,7 +31,7 @@ class MiscPage extends React.Component {
         </div>
       );
     }
-  };
+  }
 
   render() {
     const Entry = [

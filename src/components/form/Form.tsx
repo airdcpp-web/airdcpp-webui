@@ -34,7 +34,7 @@ export type FormSourceValueUpdateHandler<ValueType> = (sourceValue: Partial<Valu
 
 export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> {
   fieldDefinitions: UI.FormFieldDefinition[];
-  value: ValueType;
+  value?: ValueType;
   onSave: FormSaveHandler<ValueType>;
   onSourceValueUpdated?: FormSourceValueUpdateHandler<ValueType>;
   onFieldSetting?: FormFieldSettingHandler<ValueType>;
@@ -94,7 +94,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   sourceValue: Partial<ValueType>;
   form: any;
 
-  setSourceValue = (value: Partial<ValueType>) => {
+  setSourceValue = (value?: Partial<ValueType>) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value);
 
     if (this.props.onSourceValueUpdated) {
@@ -113,8 +113,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   }
 
   // Merge new fields into current current form value
-  mergeFields = (formValue: Partial<ValueType>, updatedFields: Partial<ValueType>): Partial<ValueType> => {
-    const mergedValue = {
+  mergeFields = (formValue: Partial<ValueType>, updatedFields?: Partial<ValueType>): Partial<ValueType> => {
+    const mergedValue: ValueType = {
       ...formValue as any, 
       ...normalizeSettingValueMap(updatedFields, this.props.fieldDefinitions)
     };

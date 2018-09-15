@@ -2,6 +2,8 @@ import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import { OutgoingConnectionModeEnum } from 'constants/SettingConstants';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { FormFieldSettingHandler } from 'components/form/Form';
 
 
 const Entry = [
@@ -14,7 +16,7 @@ const Entry = [
   'http_proxy',
 ];
 
-const onFieldSetting = (id, fieldOptions, formValue) => {
+const onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
   const socksEnabled = formValue.outgoing_mode === OutgoingConnectionModeEnum.OUTGOING_SOCKS;
 
   if (!socksEnabled && id.indexOf('socks_') === 0) {
@@ -22,7 +24,7 @@ const onFieldSetting = (id, fieldOptions, formValue) => {
   }
 };
 
-const Encryption = props => (
+const Encryption: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

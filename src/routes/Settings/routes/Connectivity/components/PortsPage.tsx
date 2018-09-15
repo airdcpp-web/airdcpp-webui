@@ -1,5 +1,7 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { FormFieldSettingHandler } from 'components/form/Form';
 
 const Entry = [
   'tcp_port',
@@ -8,7 +10,7 @@ const Entry = [
   'preferred_port_mapper',
 ];
 
-const onFieldSetting = (id, fieldOptions, formValue) => {
+const onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
   if (id === 'tcp_port') {
     fieldOptions['help'] = 'TCP port is used for unencrypted transfers';
   } else if (id === 'tls_port') {
@@ -18,7 +20,7 @@ const onFieldSetting = (id, fieldOptions, formValue) => {
   }
 };
 
-const PortsPage = props => (
+const PortsPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

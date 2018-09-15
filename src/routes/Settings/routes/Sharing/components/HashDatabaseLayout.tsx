@@ -1,6 +1,6 @@
 import React from 'react';
 import SocketService from 'services/SocketService';
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import Checkbox from 'components/semantic/Checkbox';
 import Button from 'components/semantic/Button';
@@ -15,10 +15,20 @@ import { formatSize } from 'utils/ValueFormat';
 import '../style.css';
 
 
-const OptimizeLayout = ({ startHandler, checkboxState, checkboxHandler, running }) => (
+interface OptimizeLayoutProps {
+  checkboxHandler: (checked: boolean) => void;
+  running: boolean;
+  checkboxState: boolean;
+  startHandler: () => void;
+}
+
+const OptimizeLayout: React.SFC<OptimizeLayoutProps> = (
+  { startHandler, checkboxState, checkboxHandler, running }
+) => (
   <div className="optimize-layout">
     <h4 className="header">Maintenance</h4>
     <Message 
+      // tslint:disable-next-line:max-line-length
       description="This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
       icon="blue warning"
     />
@@ -40,7 +50,13 @@ const OptimizeLayout = ({ startHandler, checkboxState, checkboxHandler, running 
   </div>
 );
 
-const SizeRow = ({ title, size }) => (
+
+interface SizeRowProps {
+  title: string;
+  size: number;
+}
+
+const SizeRow: React.SFC<SizeRowProps> = ({ title, size }) => (
   <div className="ui row compact">
     <div className="three wide column">
       <div className="ui tiny header">
@@ -53,17 +69,21 @@ const SizeRow = ({ title, size }) => (
   </div>
 );
 
-class HashDatabaseLayout extends React.Component {
+interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
+  status: API.HashDatabaseStatus;
+}
+
+class HashDatabaseLayout extends React.Component<HashDatabaseLayoutDataProps> {
   state = {
     verify: false,
   };
 
   handleOptimize = () => {
     SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify: this.state.verify })
-      .catch(error => 
+      .catch((error: APISocket.ErrorBase) => 
         console.error('Failed to optimize database: ' + error)
       );
-  };
+  }
 
   render() {
     const { status } = this.props;
@@ -92,6 +112,6 @@ export default DataProviderDecorator(HashDatabaseLayout, {
     status: HashConstants.DATABASE_STATUS_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, _ => refetchData());
+    addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, () => refetchData());
   },
 });
