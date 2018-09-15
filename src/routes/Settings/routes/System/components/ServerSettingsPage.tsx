@@ -4,6 +4,7 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
 import SystemActions from 'actions/SystemActions';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const PlainEntry = [
@@ -26,7 +27,7 @@ const Generic = [
   'ping_timeout',
 ];
 
-const ServerSettingsPage = props => (
+const ServerSettingsPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     {/*<Message 
 			description={ (

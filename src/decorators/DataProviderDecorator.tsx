@@ -10,16 +10,21 @@ import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 
 
+export type SocketConnectHandler<DataT, PropsT> = (
+  addSocketListener: any, 
+  data: {
+    refetchData: (keys?: string[]) => void;
+    mergeData: (data: Partial<DataT>) => void;
+    props: PropsT;
+  }
+) => void;
+
 export interface DataProviderDecoratorProps<PropsT extends object, DataT extends object> {
   urls: {
     [key: string]: ((props: PropsT, socket: any) => Promise<any>) | string
   };
 
-  onSocketConnected?: (addSocketListener: any, data: {
-    refetchData: (keys?: string[]) => void;
-    mergeData: (data: Partial<DataT>) => void;
-    props: PropsT;
-  }) => void;
+  onSocketConnected?: SocketConnectHandler<DataT, PropsT>;
 
   dataConverters?: {
     [key: string]: (data: any, props: PropsT) => any

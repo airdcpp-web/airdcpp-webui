@@ -1,5 +1,6 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'upload_limit_main',
@@ -7,7 +8,7 @@ const Entry = [
   //limit_use_with_auto_values: t.Bool,
 ];
 
-const LimiterPage = props => (
+const LimiterPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

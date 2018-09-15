@@ -4,27 +4,30 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import SocketService from 'services/SocketService';
 import SettingConstants from 'constants/SettingConstants';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
 
 
-class AutoValuePanel extends React.Component {
+interface AutoValuePanelProps extends SettingSectionChildProps {
+  type: string;
+  keys: string[];
+}
+
+class AutoValuePanel extends React.Component<AutoValuePanelProps> {
   static propTypes = {
-    /**
-		 * Form items to list
-		 */
+    // Form items to list
     keys: PropTypes.array.isRequired,
 
-    /**
-		 * Type of the value section (from the setting key)
-		 */
+    // Type of the value section (from the setting key)
     type: PropTypes.string.isRequired,
   };
 
   getAutoKey = () => {
     return this.props.type + '_auto_limits';
-  };
+  }
 
   // Fetch auto settings when enabling auto detection
-  onFieldChanged = (changedKey, formValue, hasChanges) => {
+  onFieldChanged: FormFieldChangeHandler<any> = (changedKey, formValue, hasChanges) => {
     const autoSettingKey = this.getAutoKey();
     if (changedKey !== autoSettingKey || !formValue[autoSettingKey]) {
       return null;
@@ -34,14 +37,14 @@ class AutoValuePanel extends React.Component {
       keys: this.props.keys.filter(key => key !== autoSettingKey), 
       force_auto_values: true 
     });
-  };
+  }
 
   // Disable other fields when auto detection is enabled
-  onFieldSetting = (settingKey, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<any> = (settingKey, fieldOptions, formValue) => {
     if (formValue[this.getAutoKey()] && settingKey !== this.getAutoKey()) {
       fieldOptions['disabled'] = true;
     }
-  };
+  }
 
   render() {
     return (

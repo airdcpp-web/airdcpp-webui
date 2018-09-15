@@ -1,7 +1,8 @@
 import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
-import AutoValuePanel from './AutoValuePanel';
+import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Auto = [
   'upload_auto_limits',
@@ -15,7 +16,7 @@ const Manual = [
   'upload_minislot_ext',
 ];
 
-const UploadLimitPage = props => (
+const UploadLimitPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <AutoValuePanel
       { ...props }

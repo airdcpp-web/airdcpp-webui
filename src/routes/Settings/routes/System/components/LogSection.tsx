@@ -2,38 +2,45 @@ import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import '../style.css';
+import { FormSourceValueUpdateHandler, FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
 
 
-class LogSection extends React.Component {
+export interface LogSectionProps {
+  section: string;
+}
+
+class LogSection extends React.Component<LogSectionProps> {
   state = {
     enabled: false,
   };
 
-  convertKey = (suffix) => {
-    return 'log_' + this.props.section + (suffix ? ('_' + suffix) : '');
-  };
+  convertKey = (suffix?: string) => {
+    return `log_${this.props.section}${suffix ? `_${suffix}` : ''})`;
+  }
 
-  onSettingsReceived = (data) => {
+  onSettingsReceived: FormSourceValueUpdateHandler<any> = (data) => {
     this.setState({
       enabled: data[this.convertKey()],
     });
-  };
+  }
 
-  onEnableStateChanged = (id, formValue, hasChanges) => {
-    this.setState({ enabled: formValue[id] });
-  };
+  onEnableStateChanged: FormFieldChangeHandler<any> = (id, formValue, hasChanges) => {
+    this.setState({ 
+      enabled: formValue[id]
+    });
+  }
 
-  onContentSetting = (id, fieldOptions, formValue) => {
+  onContentSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
     fieldOptions['disabled'] = !this.state.enabled;
-  };
+  }
 
-  getChildClass = (className) => {
+  getChildClass = (className: string) => {
     if (this.state.enabled) {
       return className + ' active';
     }
 
     return className;
-  };
+  }
 
   render() {
     const Title = [

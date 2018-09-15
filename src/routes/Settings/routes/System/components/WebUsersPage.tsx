@@ -4,16 +4,16 @@ import WebUserConstants from 'constants/WebUserConstants';
 import WebUserActions from 'actions/WebUserActions';
 
 import ActionButton from 'components/ActionButton';
-import WebUserDialog from './users/WebUserDialog';
+import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUserDialog';
 
 import AccessConstants from 'constants/AccessConstants';
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 
-const WebUserRow = ({ user }) => (
+const WebUserRow: React.SFC<{ user: API.WebUser }> = ({ user }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -35,7 +35,15 @@ const WebUserRow = ({ user }) => (
   </tr>
 );
 
-class WebUsersPage extends React.Component {
+interface WebUsersPageProps {
+
+}
+
+interface WebUsersPageDataProps extends DataProviderDecoratorChildProps {
+  users: API.WebUser[];
+}
+
+class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataProps> {
   static displayName = 'WebUsersPage';
 
   render() {
@@ -74,8 +82,8 @@ export default DataProviderDecorator(WebUsersPage, {
     users: WebUserConstants.USERS_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, _ => refetchData());
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, _ => refetchData());
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, _ => refetchData());
+    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () => refetchData());
+    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () => refetchData());
+    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () => refetchData());
   },
 });

@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from 'components/semantic/Icon';
 
 
-const getCornerIcon = (installedPackage, hasUpdate) => {
+const getCornerIcon = (installedPackage: API.Extension | undefined, hasUpdate: boolean) => {
   if (!installedPackage) {
     return null;
   }
@@ -19,7 +19,12 @@ const getCornerIcon = (installedPackage, hasUpdate) => {
   return 'green check circle';
 };
 
-const ExtensionIcon = ({ installedPackage, hasUpdate }) => (
+interface ExtensionIconProps {
+  installedPackage?: API.Extension;
+  hasUpdate: boolean;
+}
+
+const ExtensionIcon: React.SFC<ExtensionIconProps> = ({ installedPackage, hasUpdate }) => (
   <div className="ui image">
     <Icon 
       icon="puzzle" 

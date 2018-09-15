@@ -90,7 +90,7 @@ const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
 };
 
 interface WebUserDialogProps extends ModalRouteDecoratorChildProps {
-  user: API.WebUserInput;
+  user?: API.WebUserInput;
 }
 
 class WebUserDialog extends React.Component<WebUserDialogProps> {
@@ -119,14 +119,14 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
 
-    return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user.id}`, changedFields);
+    return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user!.id}`, changedFields);
   }
 
   onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
       fieldOptions['factory'] = t.form.Select;
       fieldOptions['template'] = PermissionSelector;
-      fieldOptions['disabled'] = !this.isNew() && this.props.user.username === LoginStore.user.username;
+      fieldOptions['disabled'] = !this.isNew() && this.props.user!.username === LoginStore.user.username;
     } else if (id === 'password') {
       fieldOptions['type'] = 'password';
     } else if (id === 'username') {
@@ -136,7 +136,7 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
 
   render() {
     const { user, ...other } = this.props;
-    const title = this.isNew() ? 'Add web user' : 'Edit user ' + user.username;
+    const title = this.isNew() ? 'Add web user' : `Edit user ${user!.username}`;
 
     return (
       <Modal 
@@ -152,7 +152,7 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
           fieldDefinitions={ this.entry }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ this.props.user }
+          value={ this.props.user! }
         />
       </Modal>
     );

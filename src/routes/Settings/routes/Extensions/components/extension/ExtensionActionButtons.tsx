@@ -5,9 +5,19 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 
 import ActionButton from 'components/ActionButton';
 import ExternalLink from 'components/ExternalLink';
+import { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
 
-const InstallButton = ({ npmPackage, installedPackage, hasUpdate, ...other }) => {
+export interface ExtensionActionButtonsProps {
+  npmPackage?: NpmPackage;
+  installedPackage?: API.Extension;
+  hasUpdate: boolean;
+  installing: boolean;
+}
+
+const InstallButton: React.SFC<ExtensionActionButtonsProps> = (
+  { npmPackage, installedPackage, hasUpdate, installing }
+) => {
   if (installedPackage && !hasUpdate) {
     return null;
   }
@@ -17,12 +27,14 @@ const InstallButton = ({ npmPackage, installedPackage, hasUpdate, ...other }) =>
       action={ hasUpdate ? ExtensionActions.updateNpm : ExtensionActions.installNpm }
       className="right floated primary"
       itemData={ npmPackage }
-      { ...other }
+      loading={ installing }
     />
   );
 };
 
-const ExtensionActionButtons = ({ npmPackage, installedPackage, hasUpdate, installing }) => (
+const ExtensionActionButtons: React.SFC<ExtensionActionButtonsProps> = (
+  { npmPackage, installedPackage, hasUpdate, installing }
+) => (
   <div className="extra buttons">
     { installedPackage && (
       <ActionButton
@@ -36,12 +48,12 @@ const ExtensionActionButtons = ({ npmPackage, installedPackage, hasUpdate, insta
         npmPackage={ npmPackage }
         installedPackage={ installedPackage }
         hasUpdate={ hasUpdate }
-        loading={ installing }
+        installing={ installing }
       />
     ) }
     { npmPackage && (
       <ExternalLink className="ui right floated button" url={ ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name }>
-				Read more
+        Read more
       </ExternalLink> 
     ) }
     { installedPackage && (

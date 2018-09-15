@@ -4,9 +4,9 @@ import ExtensionActions from 'actions/ExtensionActions';
 
 import ActionButton from 'components/ActionButton';
 
-import EngineStatusMessage from './EngineStatusMessage';
-import NpmPackageLayout from './NpmPackageLayout';
-import ExtensionsConfigureDialog from './ExtensionsConfigureDialog';
+import EngineStatusMessage from 'routes/Settings/routes/Extensions/components/EngineStatusMessage';
+import NpmPackageLayout from 'routes/Settings/routes/Extensions/components/NpmPackageLayout';
+import ExtensionsConfigureDialog from 'routes/Settings/routes/Extensions/components/ExtensionsConfigureDialog';
 
 
 class ExtensionBrowsePage extends React.Component {
@@ -22,9 +22,7 @@ class ExtensionBrowsePage extends React.Component {
             className="add"
           />
         </div>
-        <NpmPackageLayout 
-          className="package-layout" 
-        />
+        <NpmPackageLayout/>
         <ExtensionsConfigureDialog/>
       </div>
     );

@@ -7,8 +7,9 @@ import Accordion from 'components/semantic/Accordion';
 import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 
-import LogSection from './LogSection';
+import LogSection from 'routes/Settings/routes/System/components/LogSection';
 import Message from 'components/semantic/Message';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Entry = [
   'log_directory',
@@ -23,7 +24,7 @@ const sections = [
   'status',
 ];
 
-const LoggingPage = props => (
+const LoggingPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }
@@ -33,7 +34,11 @@ const LoggingPage = props => (
       <div className="ui header">Sections</div>
       <Message
         icon="blue info"
-        description={ <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>Variable information for Filename and Format fields</ExternalLink> }
+        description={
+          <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>
+            Variable information for Filename and Format fields
+          </ExternalLink>
+        }
       />
       <Accordion className="styled" controlled={ true }>
         { sections.map(section => (

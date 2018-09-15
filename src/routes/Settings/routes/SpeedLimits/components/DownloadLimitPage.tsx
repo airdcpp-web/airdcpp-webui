@@ -1,7 +1,8 @@
 import React from 'react';
-import AutoValuePanel from './AutoValuePanel';
+import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 const Auto = [
   'download_auto_limits',
@@ -13,7 +14,7 @@ const Manual = [
   'download_highest_prio_slots',
 ];
 
-const DownloadLimitPage = props => (
+const DownloadLimitPage: React.SFC<SettingSectionChildProps> = props => (
   <div>
     <AutoValuePanel
       { ...props }
