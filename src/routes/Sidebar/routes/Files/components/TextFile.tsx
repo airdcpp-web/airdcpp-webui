@@ -5,9 +5,10 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import TextDecorator from 'components/TextDecorator';
+import { FileSessionContentProps } from 'routes/Sidebar/routes/Files/components/FileSession';
 
 
-class TextFile extends React.Component {
+class TextFile extends React.Component<FileSessionContentProps> {
   state = TextFile.getInitialState();
 
   static getInitialState() {
@@ -23,7 +24,7 @@ class TextFile extends React.Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: FileSessionContentProps) {
     if (!nextProps.item.content_ready) {
       return;
     }
@@ -38,22 +39,22 @@ class TextFile extends React.Component {
     }
   }
 
-  fetchText = (url) => {
+  fetchText = (url: string) => {
     $.get(url, this.onTextReceived, 'text')
       .fail(this.onTextFailed);
-  };
+  }
 
-  onTextFailed = (error) => {
+  onTextFailed = (error: any) => {
     this.setState({ 
       error: error.responseText,
     });
-  };
+  }
 
-  onTextReceived = (text) => {
+  onTextReceived = (text: string) => {
     this.setState({ 
       text,
     });
-  };
+  }
 
   render() {
     const { item } = this.props;

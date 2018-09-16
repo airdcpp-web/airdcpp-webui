@@ -81,7 +81,7 @@
     "triple-equals": [ true, "allow-null-check" ],
     "typedef": [
       true,
-      "parameter",
+      //"parameter",
       "property-declaration"
     ],
     "typedef-whitespace": [

@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import EventActions from 'actions/EventActions';
@@ -7,42 +8,20 @@ import EventStore from 'stores/EventStore';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import ActionButton from 'components/ActionButton';
-import Loader from 'components/semantic/Loader';
-
-import Message from 'components/semantic/Message';
-import MessageView from 'components/messages/MessageView';
 
 import '../style.css';
+import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
 
 
-const mapViewMessage = message => {
-  return {
-    log_message: message,
-  };
-};
+interface SystemLogProps {
 
-const EventMessages = ({ messages }) => {
-  if (!messages) {
-    return <Loader text="Loading messages"/>;
-  }
+}
 
-  if (messages.length === 0) {
-    return (
-      <Message 
-        description="No messages to show"
-      />
-    );
-  }
+interface State {
+  messages: API.StatusMessage[];
+}
 
-  return (
-    <MessageView 
-      className="events"
-      messages={ messages.map(mapViewMessage) }
-    />
-  );
-};
-
-const SystemLog = createReactClass({
+const SystemLog = createReactClass<SystemLogProps, State>({
   displayName: 'SystemLog',
   mixins: [ Reflux.connect(EventStore, 'messages'), ],
 
@@ -70,7 +49,7 @@ const SystemLog = createReactClass({
           <LayoutHeader
             icon="blue history"
             title="Events"
-            component={
+            rightComponent={
               <ActionButton 
                 action={ EventActions.clear }
               />
@@ -78,7 +57,7 @@ const SystemLog = createReactClass({
           />
           <div className="ui divider top"/>
           <div className="layout-content system-log">
-            <EventMessages messages={ this.state.messages }/>
+            <EventMessageView messages={ this.state.messages }/>
           </div>
         </div>
       </div>

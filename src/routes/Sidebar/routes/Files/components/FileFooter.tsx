@@ -7,7 +7,11 @@ import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFoot
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 
-const FileFooter = ({ item }) => {
+interface FileFooterProps {
+  item: API.ViewFile;
+}
+
+const FileFooter: React.SFC<FileFooterProps> = ({ item }) => {
   if (useMobileLayout()) {
     return null;
   }

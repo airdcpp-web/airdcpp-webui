@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import cx from 'classnames';
 
 import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';
@@ -7,34 +8,46 @@ import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
 
-import AudioFile from './AudioFile';
-import ImageFile from './ImageFile';
-import TextFile from './TextFile';
-import VideoFile from './VideoFile';
+import AudioFile from 'routes/Sidebar/routes/Files/components/AudioFile';
+import ImageFile from 'routes/Sidebar/routes/Files/components/ImageFile';
+import TextFile from 'routes/Sidebar/routes/Files/components/TextFile';
+import VideoFile from 'routes/Sidebar/routes/Files/components/VideoFile';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
-import FileFooter from './FileFooter';
+import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
 
 
-const getViewerElement = (item) => {
+export interface FileSessionProps {
+  session: API.ViewFile;
+}
+
+export interface FileSessionContentProps {
+  item: API.ViewFile;
+  url: string;
+  type: string;
+  extension: string;
+}
+
+const getViewerElement = (item: API.ViewFile): React.ComponentType<FileSessionContentProps> | null => {
   if (item.text) {
     return TextFile;
   }
 
   switch (item.type.content_type) {
-  case 'audio': return AudioFile;
-  case 'picture': return ImageFile;
-  case 'video': return VideoFile;
+    case 'audio': return AudioFile;
+    case 'picture': return ImageFile;
+    case 'video': return VideoFile;
+    default:
   }
 
   return null;
 };
 
-const getUrl = (tth) => {
-  return getBasePath() + 'view/' + tth + '?auth_token=' + LoginStore.authToken; 
+const getUrl = (tth: string) => {
+  return `${getBasePath()}view/${tth}?auth_token=${LoginStore.authToken}`; 
 };
 
-class FileSession extends React.Component {
+class FileSession extends React.Component<FileSessionProps> {
   render() {
     const { session } = this.props;
     if (!session.content_ready) {
@@ -68,7 +81,7 @@ class FileSession extends React.Component {
     }
 
     return (
-      <div className={ 'file session ' + session.type.str + ' ' + session.type.content_type }>
+      <div className={ cx('file session', session.type.str, session.type.content_type) }>
         <div className="content">
           { child }
         </div>

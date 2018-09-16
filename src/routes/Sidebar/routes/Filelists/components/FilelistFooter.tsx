@@ -6,14 +6,18 @@ import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFoot
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 
-const FilelistFooter = ({ session }) => {
+interface FilelistFooterProps {
+  session: API.FilelistSession;
+}
+
+const FilelistFooter: React.SFC<FilelistFooterProps> = ({ session }) => {
   if (useMobileLayout()) {
     return null;
   }
 
   let locationText = session.location.type.str;
   if (locationText.length > 0) {
-    locationText = formatSize(session.location.size) + ' (' + locationText + ')';
+    locationText = `${formatSize(session.location.size)} (${locationText})`;
   }
 
   return (

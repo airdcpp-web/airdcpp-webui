@@ -197,6 +197,7 @@ declare namespace API {
     DOWNLOAD_PENDING = 'download_pending',
     DOWNLOADING = 'downloading',
     LOADING = 'loading',
+    LOADED = 'loaded',
     DOWNLOADED = 'downloaded',
   }
 

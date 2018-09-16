@@ -7,7 +7,7 @@ export interface SessionBase {
 }
 
 export interface ScrollDecoratorProps<SessionT> {
-  session: SessionT;
+  session?: SessionT;
 }
 
 export interface ScrollDecoratorChildProps {
@@ -34,7 +34,7 @@ export default function <PropsT, SessionT extends SessionBase = SessionBase>(
     }
 
     UNSAFE_componentWillUpdate(nextProps: ScrollDecoratorProps<SessionT>) {
-      if (nextProps.session && nextProps.session.id !== this.props.session.id) {
+      if (nextProps.session && this.props.session && nextProps.session.id !== this.props.session.id) {
         shouldScrollBottom = true;
         return;
       }

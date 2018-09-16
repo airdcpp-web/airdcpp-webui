@@ -6,30 +6,35 @@ import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
-import ShareProfileSelector from './ShareProfileSelector';
+import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
+import { Location } from 'history';
 
 
-class FilelistNew extends React.Component {
-  handleSubmit = (nick, user) => {
+interface FilelistNewProps {
+  location: Location;
+}
+
+class FilelistNew extends React.Component<FilelistNewProps> {
+  handleSubmit = (nick: string | null, user: API.HintedUser) => {
     FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
-  };
+  }
 
-  onProfileChanged = (profileId) => {
+  onProfileChanged = (profileId: number) => {
     FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
-  };
+  }
 
-  recentUserRender = (entry) => {
+  recentUserRender = (entry: API.HistoryItem) => {
     return (
-      <a onClick={ _ => this.handleSubmit(null, entry.user) }>
-        { entry.user.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
+      <a onClick={ _ => this.handleSubmit(null, entry.user!) }>
+        { entry.user!.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
       </a> 
     );
-  };
+  }
 
-  hasSession = (entry) => {
-    return FilelistSessionStore.getSession(entry.user.cid);
-  };
+  hasSession = (entry: API.HistoryItem) => {
+    return FilelistSessionStore.getSession(entry.user!.cid);
+  }
 
   render() {
     return (
@@ -38,9 +43,9 @@ class FilelistNew extends React.Component {
           submitHandler={ this.handleSubmit } 
           offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"
         />
- 				<ShareProfileSelector 
- 					onProfileChanged={ this.onProfileChanged }
- 				/>
+         <ShareProfileSelector 
+           onProfileChanged={ this.onProfileChanged }
+         />
         <RecentLayout
           entryType={ HistoryEntryEnum.FILELIST }
           hasSession={ this.hasSession }

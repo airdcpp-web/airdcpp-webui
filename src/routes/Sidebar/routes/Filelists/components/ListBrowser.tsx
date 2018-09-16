@@ -15,7 +15,7 @@ import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
 import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DurationCell, FileDownloadCell } from 'components/table/Cell';
+import { SizeCell, DurationCell, FileDownloadCell, FileDownloadCellClickHandler } from 'components/table/Cell';
 import { Column } from 'fixed-data-table-2';
 
 import IconConstants from 'constants/IconConstants';
@@ -23,10 +23,18 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import DownloadDialog from 'components/download/DownloadDialog';
+import { Location } from 'history';
 
 
-class ListBrowser extends React.Component {
-  routerWillLeave = (nextLocation, action) => {
+interface ListBrowserProps {
+  session: API.FilelistSession;
+  location: Location;
+}
+
+class ListBrowser extends React.Component<ListBrowserProps> {
+  hasClickedDirectory: boolean = false;
+
+  routerWillLeave = (nextLocation: Location, action: string) => {
     if (action === 'POP' && this.hasClickedDirectory && nextLocation.pathname !== this.props.location.pathname) {
       this.hasClickedDirectory = false;
       NotificationActions.info({
@@ -39,16 +47,16 @@ class ListBrowser extends React.Component {
     return true;
   }
 
-  rowClassNameGetter = (rowData) => {
+  rowClassNameGetter = (rowData: API.FilelistItem) => {
     return dupeToStringType(rowData.dupe);
-  };
+  }
 
-  handleClickDirectory = (path) => {
+  handleClickDirectory = (path: string) => {
     this.hasClickedDirectory = true;
 
     // Handle it through location state data
     History.pushSidebarData(this.props.location, { directory: path });
-  };
+  }
 
   componentDidMount() {
     const { session, location } = this.props;
@@ -60,7 +68,7 @@ class ListBrowser extends React.Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: ListBrowserProps) {
     const nextLocationData = History.getSidebarData(nextProps.location);
     if (!nextLocationData.directory || nextProps.session.location.path === nextLocationData.directory) {
       return;
@@ -76,9 +84,9 @@ class ListBrowser extends React.Component {
     }
   }
 
-  sendChangeDirectory = (directory) => {
+  sendChangeDirectory = (directory: API.FileItemType) => {
     FilelistSessionActions.changeDirectory(this.props.session.user.cid, directory);
-  };
+  }
 
   emptyRowsNodeGetter = () => {
     const { location, state } = this.props.session;
@@ -94,7 +102,8 @@ class ListBrowser extends React.Component {
     }
 
     // The list finished downloading but the view hasn't updated yet
-    if (location.type.files !== 0 || location.type.directories !== 0) {
+    const { files, directories } = location.type as API.DirectoryType;
+    if (files !== 0 || directories !== 0) {
       return <Loader text="Updating view"/>;
     }
 
@@ -109,21 +118,21 @@ class ListBrowser extends React.Component {
         description={ 'The directory is empty' }
       />
     );
-  };
+  }
 
-  onClickDirectory = (cellData, rowDataGetter) => {
+  onClickDirectory: FileDownloadCellClickHandler = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
       return () => this.handleClickDirectory(this.props.session.location.path + cellData + '/');
     }
 
     return undefined;
-  };
+  }
 
   getCurrentDirectory = () => {
     return this.props.session.location;
-  };
+  }
 
-  selectedNameFormatter = (caption) => {
+  selectedNameFormatter = (caption: React.ReactNode) => {
     return (
       <DownloadMenu 
         caption={ caption }
@@ -140,18 +149,18 @@ class ListBrowser extends React.Component {
         />
       </DownloadMenu>
     );
-  };
+  }
 
   userGetter = () => {
     return this.props.session.user;
-  };
+  }
 
   render() {
     const { session } = this.props;
     return (
       <div className="browser">
         <Prompt
-          message={ this.routerWillLeave }
+          message={ this.routerWillLeave as any }
         />
 
         <BrowserBar 
@@ -160,7 +169,9 @@ class ListBrowser extends React.Component {
           rootPath="/"
           itemClickHandler={ this.handleClickDirectory }
           selectedNameFormatter={ this.selectedNameFormatter }
-          entityId={ session.id } // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
+
+          // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
+          entityId={ session.id }
         />
 
         <VirtualTable
@@ -206,7 +217,9 @@ class ListBrowser extends React.Component {
             flexGrow={1}
           />
         </VirtualTable>
-        <DownloadDialog downloadHandler={ FilelistItemActions.download }/>
+        <DownloadDialog 
+          downloadHandler={ FilelistItemActions.download }
+        />
       </div>
     );
   }

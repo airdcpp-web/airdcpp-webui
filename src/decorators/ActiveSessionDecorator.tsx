@@ -18,7 +18,7 @@ interface ActiveSessionDecoratorProps<SessionT> {
 // and set them as read
 export default function <PropsT, SessionT extends { id: API.IdType; }>(
   Component: React.ComponentType<PropsT>, 
-  useReadDelay: boolean
+  useReadDelay: boolean = false
 ) {
   class ActiveSessionDecorator extends React.Component<ActiveSessionDecoratorProps<SessionT>> {
     /*static propTypes = {

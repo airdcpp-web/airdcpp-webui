@@ -1,16 +1,22 @@
 'use strict';
 import React from 'react';
 
-import ListBrowser from './ListBrowser';
-import FilelistFooter from './FilelistFooter';
+import ListBrowser from 'routes/Sidebar/routes/Filelists/components/ListBrowser';
+import FilelistFooter from 'routes/Sidebar/routes/Filelists/components/FilelistFooter';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
+import { Location } from 'history';
 
 
-class FilelistSession extends React.Component {
+interface FilelistSessionProps {
+  session: API.FilelistSession;
+  location: Location;
+}
+
+class FilelistSession extends React.Component<FilelistSessionProps> {
   static displayName = 'FilelistSession';
 
   render() {

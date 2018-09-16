@@ -3,12 +3,13 @@ declare namespace API {
     id: string;
     name: string;
     size: number;
-    type: API.FilesystemItemType;
+    type: API.FileType;
     tth: string;
     text: boolean;
     time_opened: number;
     read: boolean;
     download_state: DownloadableItemState;
     content_ready: boolean;
+    mime_type: string;
   }
 }
