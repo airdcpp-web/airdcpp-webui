@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import ActionInput from 'components/semantic/ActionInput';
@@ -8,10 +8,19 @@ import HubActions from 'actions/HubActions';
 
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+import Icon, { IconType } from 'components/semantic/Icon';
 
+
+interface HubActionPromptProps {
+  icon: IconType;
+  title: React.ReactNode;
+  content: React.ReactNode;
+}
 
 // Main prompt (HUBS_EDIT permission is required for the content to be rendered)
-const HubActionPrompt = ({ icon, title, content }) => {
+const HubActionPrompt: React.SFC<HubActionPromptProps> = (
+  { icon, title, content }
+) => {
   if (!LoginStore.hasAccess(AccessConstants.HUBS_EDIT)) {
     return null;
   }
@@ -19,7 +28,7 @@ const HubActionPrompt = ({ icon, title, content }) => {
   return (
     <div className="ui icon message hub-action-prompt">
       <h3 className="ui header">
-        <i className={ icon + ' icon'}/>
+        <Icon icon={ icon }/>
         <div className="content">
           { title }
         </div>
@@ -29,21 +38,21 @@ const HubActionPrompt = ({ icon, title, content }) => {
   );
 };
 
-HubActionPrompt.propTypes = {
-  /**
-	 * Message title
-	 */
+/*HubActionPrompt.propTypes = {
+  // Message title
   title: PropTypes.node.isRequired,
 
-  /**
-	 * Children
-	 */
+  // Children
   content: PropTypes.node.isRequired,
-};
+};*/
 
+
+interface PasswordPromptProps {
+  hub: API.Hub;
+}
 
 // Sub prompts
-const PasswordPrompt = ({ hub }) => (
+const PasswordPrompt: React.SFC<PasswordPromptProps> = ({ hub }) => (
   <div>
     <ActionInput 
       placeholder="Password" 
@@ -52,18 +61,22 @@ const PasswordPrompt = ({ hub }) => (
       handleAction={ text => HubActions.password(hub, text) }
     />
     <div className="help">
-			This usually means that there's a registered account associated with your nick. 
-			If you don't remember having a registered account in this hub, 
-			there may be someone else using the same nick.
+      This usually means that there's a registered account associated with your nick. 
+      If you don't remember having a registered account in this hub, 
+      there may be someone else using the same nick.
     </div>
   </div>
 );
 
-const RedirectPrompt = ({ hub }) => (
+interface RedirectPromptProps {
+  hub: API.Hub;
+}
+
+const RedirectPrompt: React.SFC<RedirectPromptProps> = ({ hub }) => (
   <Button
     icon="green play"
     onClick={ _ => HubActions.redirect(hub) }
-    caption={ 'Accept redirect to ' + hub.connect_state.data.hub_url }
+    caption={ `Accept redirect to ${hub.connect_state.data!.hub_url}` }
   />
 );
 

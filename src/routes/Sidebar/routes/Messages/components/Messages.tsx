@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
@@ -10,8 +11,8 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 
 import AccessConstants from 'constants/AccessConstants';
 
-import MessageNew from './MessageNew';
-import PrivateChatSession from './PrivateChatSession';
+import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';
+import PrivateChatSession from 'routes/Sidebar/routes/Messages/components/PrivateChatSession';
 
 import '../style.css';
 

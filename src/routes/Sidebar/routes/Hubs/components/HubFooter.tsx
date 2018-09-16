@@ -12,23 +12,32 @@ import { formatSize } from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 import EncryptionState from 'components/EncryptionState';
 
+//@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 
-const HubFooter = createReactClass({
+interface HubFooterProps {
+  session: API.Hub;
+  userlistToggle: React.ReactNode;
+}
+
+interface State {
+  shared: number;
+  users: number;
+}
+
+const HubFooter = createReactClass<HubFooterProps, State>({
   displayName: 'HubFooter',
   mixins: [ SocketSubscriptionMixin(HubSessionStore), PureRenderMixin ],
 
   propTypes: {
-    /**
-		 * Currently active session (required)
-		 */
+    // Currently active session (required)
     session: PropTypes.any,
 
     userlistToggle: PropTypes.node.isRequired,
   },
 
-  onSocketConnected(addSocketListener) {
+  onSocketConnected(addSocketListener: any) {
     const url = HubConstants.SESSIONS_URL;
     addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, this.props.session.id);
   },
@@ -40,7 +49,7 @@ const HubFooter = createReactClass({
     };
   },
 
-  onCountsReceived(data) {
+  onCountsReceived(data: API.HubCounts) {
     this.setState({ 
       users: data.user_count,
       shared: data.share_size,
@@ -48,9 +57,9 @@ const HubFooter = createReactClass({
   },
 
   fetchCounts() {
-    SocketService.get(HubConstants.SESSIONS_URL + '/' + this.props.session.id + '/counts')
+    SocketService.get(`${HubConstants.SESSIONS_URL}/${this.props.session.id}/counts`)
       .then(this.onCountsReceived)
-      .catch(error => console.error('Failed to fetch hub counts', error.message));
+      .catch((error: APISocket.ErrorBase) => console.error('Failed to fetch hub counts', error.message));
   },
 
   componentDidMount() {
@@ -64,12 +73,12 @@ const HubFooter = createReactClass({
   },
 
   render: function () {
-    const { userlistToggle, session } = this.props;
+    const { userlistToggle, session }: HubFooterProps = this.props;
     const { shared, users } = this.state;
 
     const averageShare = formatSize(users > 0 ? (shared / users) : 0);
 
-    let userCaption = users + ' users';
+    let userCaption: string | React.ReactElement<any> = `${users} users`;
     if (session.encryption) {
       userCaption = (
         <span>

@@ -7,24 +7,29 @@ import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
+import { Location } from 'history';
 
 
-class MessageNew extends React.Component {
-  handleSubmit = (nick, user) => {
+interface MessageNewProps {
+  location: Location;
+}
+
+class MessageNew extends React.Component<MessageNewProps> {
+  handleSubmit = (nick: string | null, user: API.HintedUser) => {
     PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
-  };
+  }
 
-  recentUserRender = (entry) => {
+  recentUserRender = (entry: API.HistoryItem) => {
     return (
-      <a onClick={ _ => this.handleSubmit(null, entry.user) }>
-        { entry.user.nicks }
+      <a onClick={ _ => this.handleSubmit(null, entry.user!) }>
+        { entry.user!.nicks }
       </a> 
     );
-  };
+  }
 
-  hasSession = (entry) => {
-    return PrivateChatSessionStore.getSession(entry.user.cid);
-  };
+  hasSession = (entry: API.HistoryItem) => {
+    return PrivateChatSessionStore.getSession(entry.user!.cid);
+  }
 
   render() {
     return (

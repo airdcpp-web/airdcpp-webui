@@ -6,34 +6,41 @@ import HubMessageStore from 'stores/HubMessageStore';
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
-import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
-import HubUserTable from './HubUserTable';
+import ChatLayout, { ChatActions } from 'routes/Sidebar/components/chat/ChatLayout';
+import HubUserTable from 'routes/Sidebar/routes/Hubs/components/HubUserTable';
 
 import { ConnectStateEnum } from 'constants/HubConstants';
 import AccessConstants from 'constants/AccessConstants';
 
-import HubFooter from './HubFooter';
-import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from './HubPrompt';
+import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
+import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from 'routes/Sidebar/routes/Hubs/components/HubPrompt';
 
 import '../style.css';
+import { SessionActions } from 'decorators/ActiveSessionDecorator';
 
 
-const getStorageKey = (props) => {
+const getStorageKey = (props: HubSessionProps) => {
   return 'view_userlist_' + props.session.id;
 };
 
-const checkList = (props) => {
+const checkList = (props: HubSessionProps) => {
   return loadSessionProperty(getStorageKey(props), false);
 };
 
-class HubSession extends React.Component {
+
+interface HubSessionProps {
+  session: API.Hub;
+  actions: ChatActions & SessionActions;
+}
+
+class HubSession extends React.Component<HubSessionProps> {
   static displayName = 'HubSession';
 
   state = {
     showList: checkList(this.props),
   };
   
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: HubSessionProps) {
     if (prevProps.session.id !== this.props.session.id && this.state.showList !== checkList(this.props)) {
       this.toggleListState();
     }
@@ -41,13 +48,13 @@ class HubSession extends React.Component {
 
   toggleListState = () => {
     this.setState({ showList: !this.state.showList });
-  };
+  }
 
   getMessage = () => {
     const { session } = this.props;
     const connectState = session.connect_state.id;
 
-    if (connectState === ConnectStateEnum.PASSWORD && !session.connect_state.has_password) {
+    if (connectState === ConnectStateEnum.PASSWORD) {
       return (
         <HubActionPrompt 
           title="Password required"
@@ -68,13 +75,13 @@ class HubSession extends React.Component {
     }
 
     return null;
-  };
+  }
 
   onClickUsers = () => {
     this.toggleListState();
 
     saveSessionProperty(getStorageKey(this.props), this.state.showList);
-  };
+  }
 
   render() {
     const { session, actions } = this.props;

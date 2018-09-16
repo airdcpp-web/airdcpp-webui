@@ -12,16 +12,20 @@ import LoginStore from 'stores/LoginStore';
 import './chat.css';
 
 
+export interface ChatSession {
+  id: API.IdType;
+  //hub_url?: string;
+}
+
+export interface ChatActions {
+  clear: UI.ActionType;
+  sendMessage: UI.ActionType;
+  fetchMessages: UI.ActionType;
+}
+
 export interface ChatSessionProps {
-  actions: {
-    clear: UI.ActionType;
-    sendMessage: UI.ActionType;
-    fetchMessages: UI.ActionType;
-  };
-  session: {
-    id: API.IdType;
-    hub_url: string;
-  };
+  actions: ChatActions;
+  session: ChatSession;
 }
 
 export interface ChatLayoutProps extends ChatSessionProps {
@@ -114,4 +118,4 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
   }
 }
 
-export default ActiveSessionDecorator(ChatLayout, true);
+export default ActiveSessionDecorator<ChatLayoutProps, ChatSession>(ChatLayout, true);

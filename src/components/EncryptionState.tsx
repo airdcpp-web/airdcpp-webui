@@ -56,7 +56,7 @@ const InfoMessage: React.SFC<InfoMessageProps> = ({ info, encryption }) => (
 );
 
 interface EncryptionStateProps extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
-  encryption: API.EncryptionInfo;
+  encryption?: API.EncryptionInfo;
   alwaysVisible?: boolean;
 }
 
@@ -72,8 +72,8 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
   getChildren = () => {
     const { encryption } = this.props;
 
-    const info = encryptionToInfo(encryption);
-    return <InfoMessage info={ info } encryption={ encryption }/>;
+    const info = encryptionToInfo(encryption!);
+    return <InfoMessage info={ info } encryption={ encryption! }/>;
   }
 
   render() {

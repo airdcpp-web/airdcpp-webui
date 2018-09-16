@@ -1,15 +1,21 @@
 'use strict';
 import React from 'react';
 
-import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
-import MessageFooter from './MessageFooter';
+import ChatLayout, { ChatActions } from 'routes/Sidebar/components/chat/ChatLayout';
+import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFooter';
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
 import AccessConstants from 'constants/AccessConstants';
+import { SessionActions } from 'decorators/ActiveSessionDecorator';
 
 
-class PrivateChatSession extends React.Component {
+interface PrivateChatSessionProps {
+  session: API.PrivateChat;
+  actions: ChatActions & SessionActions;
+}
+
+class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';
 
   render() {

@@ -10,7 +10,7 @@ import { ActionMenu } from 'components/menu/DropdownMenu';
 import EncryptionState from 'components/EncryptionState';
 
 
-const getCaption = (state) => {
+const getCaption = (state: API.CCPMStateId) => {
   switch (state) {
   case CCPMEnum.CONNECTED: return 'Direct encrypted channel established';
   case CCPMEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
@@ -19,11 +19,16 @@ const getCaption = (state) => {
   }
 };
 
-const CCPMState = ({ session }) => {
+
+interface CCPMStateProps {
+  session: API.PrivateChat;
+}
+
+const CCPMState: React.SFC<CCPMStateProps> = ({ session }) => {
   if (session.user.flags.indexOf('ccpm') === -1) {
     return null;
   }
-	
+
   const state = session.ccpm_state.id;
   const actionIds = [ state === CCPMEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
 

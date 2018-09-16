@@ -6,11 +6,13 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 
+export interface SessionActions {
+  setRead: (id: API.IdType) => void;
+  sessionChanged: (id: API.IdType | null) => void;
+}
+
 interface ActiveSessionDecoratorProps<SessionT> {
-  actions: {
-    setRead: (id: API.IdType) => void;
-    sessionChanged: (id: API.IdType | null) => void;
-  };
+  actions: SessionActions;
   session: SessionT;
 }
 
@@ -20,7 +22,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(
   Component: React.ComponentType<PropsT>, 
   useReadDelay: boolean = false
 ) {
-  class ActiveSessionDecorator extends React.Component<ActiveSessionDecoratorProps<SessionT>> {
+  class ActiveSessionDecorator extends React.Component<PropsT & ActiveSessionDecoratorProps<SessionT>> {
     /*static propTypes = {
       session: PropTypes.any, // Required (cloned)
       actions: PropTypes.object, // Required (cloned)

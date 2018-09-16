@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import RedrawDecorator from 'decorators/RedrawDecorator';
+//import RedrawDecorator from 'decorators/RedrawDecorator';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
@@ -64,9 +64,8 @@ const RecentLayout: React.SFC<Props> = ({ entries, entryTitleRenderer, hasSessio
 };*/
 
 export default DataProviderDecorator<RecentLayoutProps, DataProps>(
-  RedrawDecorator<Props>(
-    RecentLayout
-  ),
+  //RedrawDecorator<Props>(RecentLayout),
+  RecentLayout,
   {
     urls: {
       entries: ({ entryType }, socket) => socket.get(`${HistoryConstants.SESSIONS_URL}/${entryType}/0`),

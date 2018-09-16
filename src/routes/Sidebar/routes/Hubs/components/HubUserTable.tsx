@@ -13,24 +13,32 @@ import { ConnectStateEnum } from 'constants/HubConstants';
 
 import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
-const NickCell = ({ cellData, rowDataGetter, ...props }) => (
+const NickCell: React.SFC<RowWrapperCellChildProps<string, API.HubUser>> = (
+  { cellData, rowDataGetter }
+) => (
   <TableUserMenu 
     text={ cellData } 
-    user={ rowDataGetter() }
+    user={ rowDataGetter!() }
     userIcon={ true }
   />
 );
 
-class HubUserTable extends React.Component {
+
+interface HubUserTableProps {
+  session: API.Hub;
+}
+
+class HubUserTable extends React.Component<HubUserTableProps> {
   static propTypes = {
     session: PropTypes.object, // required
   };
 
-  rowClassNameGetter = (user) => {
+  rowClassNameGetter = (user: API.HubUser) => {
     return user.flags.join(' ');
-  };
+  }
 
   emptyRowsNodeGetter = () => {
     const connectState = this.props.session.connect_state.id;
@@ -53,7 +61,7 @@ class HubUserTable extends React.Component {
         <Loader text={ text }/>
       </div>
     );
-  };
+  }
 
   render() {
     const { session } = this.props;

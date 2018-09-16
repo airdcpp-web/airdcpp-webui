@@ -10,24 +10,29 @@ import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
+import { Location } from 'history';
 
 
-class HubNew extends React.Component {
-  handleConnect = (hubUrl) => {
+interface HubNewProps {
+  location: Location;
+}
+
+class HubNew extends React.Component<HubNewProps> {
+  handleConnect = (hubUrl: string) => {
     HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
-  };
+  }
 
-  hasSession = (entry) => {
+  hasSession = (entry: API.HistoryItem) => {
     return HubSessionStore.getSessionByUrl(entry.hub_url);
-  };
+  }
 
-  recentHubRender = (entry) => {
+  recentHubRender = (entry: API.HistoryItem) => {
     return (
       <a onClick={ _ => this.handleConnect(entry.hub_url) }>
         { entry.name }
       </a> 
     );
-  };
+  }
 
   render() {
     return (
@@ -36,7 +41,11 @@ class HubNew extends React.Component {
           submitHandler={ this.handleConnect }
         />
         <Message
-          description={ <span>Tip: visit the <Link to="/favorite-hubs">Favorite hubs</Link> page to connect using custom settings</span> }
+          description={(
+            <span>
+              Tip: visit the <Link to="/favorite-hubs">Favorite hubs</Link> page to connect using custom settings
+            </span>
+          )}
         />
         <RecentLayout
           entryType={ HistoryEntryEnum.HUB }
