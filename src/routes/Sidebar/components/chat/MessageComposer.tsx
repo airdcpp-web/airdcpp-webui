@@ -54,9 +54,7 @@ export interface MessageComposerProps extends ChatSessionProps {
 
 class MessageComposer extends React.Component<MessageComposerProps> {
   static propTypes = {
-    /**
-		 * Actions for this chat session type
-		 */
+    // Actions for this chat session type
     actions: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
   };
@@ -80,27 +78,27 @@ class MessageComposer extends React.Component<MessageComposerProps> {
     }
 
     ChatCommandHandler(this.props).handle(command, params);
-  };
+  }
 
   handleSend = (message: object) => {
     const { actions, session } = this.props;
     actions.sendMessage(session, message);
-  };
+  }
 
   getStorageKey = (context: RouterChildContext<{}>) => {
     return 'last_message_' + context.router.route.location.pathname;
-  };
+  }
 
   saveText = () => {
     const { text } = this.state;
     saveSessionProperty(this.getStorageKey(this.context), text);
-  };
+  }
 
   loadState = (context: RouterChildContext<{}>) => {
     return {
       text: loadSessionProperty(this.getStorageKey(context), ''),
     };
-  };
+  }
 
   componentWillUnmount() {
     this.saveText();
@@ -117,14 +115,14 @@ class MessageComposer extends React.Component<MessageComposerProps> {
     this.setState({ 
       text: plainValue 
     });
-  };
+  }
 
   onKeyDown = (event: React.KeyboardEvent) => {
     if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
       event.preventDefault();
       this.sendText();
     }
-  };
+  }
 
   sendText = () => {
     // Trim only from end to allow chat messages such as " +help" to be
@@ -141,14 +139,14 @@ class MessageComposer extends React.Component<MessageComposerProps> {
     }
 
     this.setState({ text: '' });
-  };
+  }
 
   mapUser = (user: API.HubUser) => {
     return {
       id: user.cid,
       display: user.nick,
     };
-  };
+  }
 
   findUsers = (value: string, callback: (data: any) => void) => {
     const { session } = this.props;
@@ -161,7 +159,7 @@ class MessageComposer extends React.Component<MessageComposerProps> {
       .catch((error: APISocket.Error) => 
         console.log('Failed to fetch suggestions: ' + error)
       );
-  };
+  }
 
   state = this.loadState(this.context);
 
@@ -174,7 +172,7 @@ class MessageComposer extends React.Component<MessageComposerProps> {
     );
 
     return (
-      <div className= { className }>
+      <div className={ className }>
         <MentionsInput 
           className="input"
           value={ this.state.text } 
@@ -182,7 +180,8 @@ class MessageComposer extends React.Component<MessageComposerProps> {
           onKeyDown={ this.onKeyDown }
           style={ getMentionFieldStyle(mobile) }
         >
-          <Mention trigger="@"
+          <Mention 
+            trigger="@"
             data={ this.findUsers }
             appendSpaceOnAdd={ false }
           />

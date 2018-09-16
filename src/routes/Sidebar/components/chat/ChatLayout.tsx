@@ -14,7 +14,7 @@ import './chat.css';
 
 export interface ChatSession {
   id: API.IdType;
-  //hub_url?: string;
+  hub_url?: string;
 }
 
 export interface ChatActions {

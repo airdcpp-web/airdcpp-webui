@@ -24,7 +24,7 @@ export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserF
   return 'green';
 };
 
-export const hubOnlineStatusToColor = (connectState: API.HubConnectState) => {
+export const hubOnlineStatusToColor = (connectState: API.HubConnectStateId) => {
   if (connectState === 'connected') {
     return 'green';
   }

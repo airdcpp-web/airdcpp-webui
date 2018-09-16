@@ -138,7 +138,7 @@ export const secondaryRoutes = [
     unreadInfoStore: EventStore,
     access: AccessConstants.EVENTS_VIEW,
     component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/SystemLog')
+      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/EventsLayout')
     ),
   }
 ];
