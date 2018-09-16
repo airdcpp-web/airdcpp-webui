@@ -25,6 +25,7 @@ import AutoSuggestField from 'components/form/AutoSuggestField';
 import '../style.css';
 
 import { FieldTypes } from 'constants/SettingConstants';
+import { RouteComponentProps } from 'react-router';
 
 const getFields = (profiles: API.ShareProfile[]) => {
   return [
@@ -53,16 +54,17 @@ const getFields = (profiles: API.ShareProfile[]) => {
   ] as UI.FormFieldDefinition[];
 };
 
-export interface ShareDirectoryDialogProps extends ModalRouteDecoratorChildProps {
-  rootEntry?: API.ShareRootEntryBase; // REQUIRED, CLONED
+export interface ShareDirectoryDialogProps {
+
 }
 
-export interface ShareDirectoryDialogDataProps extends ShareProfileDecoratorChildProps {
+export interface DataProps extends ShareProfileDecoratorChildProps, DataProviderDecoratorChildProps {
   virtualNames: string[];
+  rootEntry?: API.ShareRootEntryBase;
 }
 
-
-type Props = ShareDirectoryDialogProps & ShareDirectoryDialogDataProps & DataProviderDecoratorChildProps;
+type Props = ShareDirectoryDialogProps & DataProps & 
+  ModalRouteDecoratorChildProps & RouteComponentProps<{ directoryId: string; }>;
 
 class ShareDirectoryDialog extends React.Component<Props> {
   static displayName = 'ShareDirectoryDialog';
@@ -70,7 +72,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
   fieldDefinitions: UI.FormFieldDefinition[];
   form: Form;
 
-  constructor(props: ShareDirectoryDialogProps & ShareDirectoryDialogDataProps & DataProviderDecoratorChildProps) {
+  constructor(props: Props) {
     super(props);
 
     this.fieldDefinitions = getFields(props.profiles);
@@ -158,11 +160,18 @@ class ShareDirectoryDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator(
-  DataProviderDecorator<ShareDirectoryDialogProps, ShareDirectoryDialogDataProps>(
+export default ModalRouteDecorator<ShareDirectoryDialogProps>(
+  DataProviderDecorator<Props, DataProps>(
     ShareProfileDecorator(ShareDirectoryDialog, false), {
       urls: {
         virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
+        rootEntry: ({ match }, socket) => {
+          if (!match.params.directoryId) {
+            return undefined;
+          }
+
+          return socket.get(`${ShareRootConstants.ROOTS_URL}/${match.params.directoryId}`);
+        },
       },
       dataConverters: {
         virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
@@ -170,5 +179,5 @@ export default ModalRouteDecorator(
     }
   ),
   OverlayConstants.SHARE_ROOT_MODAL_ID,
-  '(add|edit)'
+  'directories/:directoryId?'
 );

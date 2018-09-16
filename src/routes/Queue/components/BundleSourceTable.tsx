@@ -106,7 +106,7 @@ const BundleSourceTable: React.SFC<BundleSourceTableProps & BundleSourceTableDat
 
 export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDataProps>(BundleSourceTable, {
   urls: {
-    sources: ({ bundle }, socket) => socket.get(QueueConstants.BUNDLES_URL + '/' + bundle!.id + '/sources'),
+    sources: ({ bundle }, socket) => socket.get(`${QueueConstants.BUNDLES_URL}/${bundle!.id}/sources`),
   },
   onSocketConnected: (addSocketListener, { refetchData, props }) => {
     addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, (data: API.QueueBundle) => {

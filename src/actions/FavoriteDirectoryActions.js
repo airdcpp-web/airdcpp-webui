@@ -35,11 +35,11 @@ const FavoriteDirectoryActions = Reflux.createActions([
 ]);
 
 FavoriteDirectoryActions.create.listen(function (location) {
-  History.pushModal(location, location.pathname + '/directory', OverlayConstants.FAVORITE_DIRECTORY_MODAL);
+  History.pushModal(location, `${location.pathname}/directories`, OverlayConstants.FAVORITE_DIRECTORY_MODAL);
 });
 
 FavoriteDirectoryActions.edit.listen(function (directory, location) {
-  History.pushModal(location, location.pathname + '/directory', OverlayConstants.FAVORITE_DIRECTORY_MODAL, { directoryEntry: directory });
+  History.pushModal(location, `${location.pathname}/directories/${directory.id}`, OverlayConstants.FAVORITE_DIRECTORY_MODAL);
 });
 
 FavoriteDirectoryActions.remove.listen(function (directory) {

@@ -165,9 +165,11 @@ export const DecimalCell: React.SFC<NumberCellProps> = ({ cellData }) => (
   </span>
 );
 
+export type FileDownloadCellClickHandler = (cellData: any, rowDataGetter: () => any) => (() => void) | undefined;
+
 export interface FileDownloadCellProps extends RowWrapperCellChildProps {
   userGetter: (rowData: any) => API.HintedUserBase;
-  clickHandlerGetter?: (cellData: any, rowDataGetter: () => any) => (() => void);
+  clickHandlerGetter?: FileDownloadCellClickHandler;
   downloadHandler: DownloadHandlerType;
 }
 

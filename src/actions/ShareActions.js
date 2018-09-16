@@ -10,7 +10,6 @@ import AccessConstants from 'constants/AccessConstants';
 
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
-import FilesystemConstants from 'constants/FilesystemConstants';
 import History from 'utils/History';
 import OverlayConstants from 'constants/OverlayConstants';
 
@@ -79,10 +78,7 @@ ShareActions.refreshVirtual.failed.listen(function (error) {
 });
 
 ShareActions.addExclude.listen(function (location) {
-  History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL, {
-    subHeader: 'Add excluded path',
-    historyId: FilesystemConstants.LOCATION_DOWNLOAD,
-  });
+  History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL);
 });
 
 ShareActions.addExclude.saved.listen(function (path) {
@@ -98,7 +94,7 @@ ShareActions.addExclude.failed.listen(function (error) {
 ShareActions.removeExclude.listen(function (path) {
   const options = {
     title: this.displayName,
-    content: 'Are you sure that you want to remove the excluded path ' + path + '?',
+    content: `Are you sure that you want to remove the excluded path ${path}?`,
     icon: this.icon,
     approveCaption: 'Remove path',
     rejectCaption: "Don't remove",

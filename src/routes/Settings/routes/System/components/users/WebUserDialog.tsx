@@ -19,6 +19,8 @@ import LoginStore from 'stores/LoginStore';
 import { FieldTypes } from 'constants/SettingConstants';
 
 import '../../style.css';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import { RouteComponentProps } from 'react-router';
 
 
 const AccessCaptions = {
@@ -89,18 +91,25 @@ const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
   ];
 };
 
-interface WebUserDialogProps extends ModalRouteDecoratorChildProps {
-  user?: API.WebUserInput;
+interface WebUserDialogProps {
+
 }
 
-class WebUserDialog extends React.Component<WebUserDialogProps> {
+interface DataProps extends DataProviderDecoratorChildProps {
+  user: API.WebUserInput;
+}
+
+type Props = WebUserDialogProps & DataProps & 
+  ModalRouteDecoratorChildProps & RouteComponentProps<{ userId: string; }>;
+
+class WebUserDialog extends React.Component<Props> {
   static displayName = 'WebUserDialog';
 
 
   entry: UI.FormFieldDefinition[];
   form: Form;
 
-  constructor(props: WebUserDialogProps) {
+  constructor(props: Props) {
     super(props);
 
     this.entry = getEntry(this.isNew());
@@ -114,19 +123,19 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
     return this.form.save();
   }
 
-  onSave: FormSaveHandler<API.ShareRootEntryBase> = (changedFields) => {
+  onSave: FormSaveHandler<API.WebUserBase> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
 
-    return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user!.id}`, changedFields);
+    return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user.id}`, changedFields);
   }
 
-  onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<API.WebUserBase> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
       fieldOptions['factory'] = t.form.Select;
       fieldOptions['template'] = PermissionSelector;
-      fieldOptions['disabled'] = !this.isNew() && this.props.user!.username === LoginStore.user.username;
+      fieldOptions['disabled'] = !this.isNew() && this.props.user.username === LoginStore.user.username;
     } else if (id === 'password') {
       fieldOptions['type'] = 'password';
     } else if (id === 'username') {
@@ -136,7 +145,7 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
 
   render() {
     const { user, ...other } = this.props;
-    const title = this.isNew() ? 'Add web user' : `Edit user ${user!.username}`;
+    const title = this.isNew() ? 'Add web user' : `Edit user ${user.username}`;
 
     return (
       <Modal 
@@ -159,4 +168,18 @@ class WebUserDialog extends React.Component<WebUserDialogProps> {
   }
 }
 
-export default ModalRouteDecorator(WebUserDialog, OverlayConstants.WEB_USER_MODAL_ID, 'user');
+export default ModalRouteDecorator<WebUserDialogProps>(
+  DataProviderDecorator<Props, DataProps>(WebUserDialog, {
+    urls: {
+      user: ({ match }, socket) => {
+        if (!match.params.userId) {
+          return undefined;
+        }
+
+        return socket.get(`${WebUserConstants.USERS_URL}/${match.params.userId}`);
+      },
+    },
+  }),
+  OverlayConstants.WEB_USER_MODAL_ID, 
+  'users/:userId?'
+);

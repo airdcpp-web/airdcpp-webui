@@ -66,6 +66,12 @@ class AuthenticatedApp extends React.Component<AuthenticatedAppProps> {
   }
 
   render() {
+    const { location, history } = this.props;
+    if (location.pathname === '/') {
+      history.replace('/home');
+      return null;
+    }
+
     const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
     return (
       <div id="authenticated-app">

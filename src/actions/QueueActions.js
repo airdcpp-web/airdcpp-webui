@@ -62,14 +62,14 @@ QueueActions.removeCompleted.listen(function () {
 QueueActions.removeCompleted.completed.listen(function (data) {
   NotificationActions.success({ 
     title: 'Action completed',
-    message: data.count > 0 ? data.count + ' completed bundles were removed' : 'No bundles were removed',
+    message: data.count > 0 ? `${data.count} completed bundles were removed` : 'No bundles were removed',
   });
 });
 
 QueueActions.removeSource.listen(function (item) {
   let that = this;
   const { user } = item;
-  return SocketService.delete(QueueConstants.SOURCES_URL + '/' + user.cid)
+  return SocketService.delete(`${QueueConstants.SOURCES_URL}/${user.cid}`)
     .then(that.completed.bind(that, user))
     .catch(that.failed.bind(that, user));
 });
@@ -77,7 +77,7 @@ QueueActions.removeSource.listen(function (item) {
 QueueActions.removeSource.completed.listen(function (user, data) {
   NotificationActions.info({ 
     title: 'Source removed',
-    message: 'The user ' + user.nicks + ' was removed from ' + data.count + ' files',
+    message: `The user ${user.nicks} was removed from ${data.count} files`,
   });
 });
 

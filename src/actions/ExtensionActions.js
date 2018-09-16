@@ -67,19 +67,19 @@ const ExtensionActions = Reflux.createActions([
 ]);
 
 ExtensionActions.configure.listen(function (extension, location) {
-  History.pushModal(location, location.pathname + '/' + extension.id + '/configure', OverlayConstants.EXTENSION_CONFIGURE_MODAL, { extension });
+  History.pushModal(location, `${location.pathname}/extensions/${extension.id}`, OverlayConstants.EXTENSION_CONFIGURE_MODAL);
 });
 
 ExtensionActions.start.listen(function (extension) {
   const that = this;
-  return SocketService.post(ExtensionConstants.EXTENSIONS_URL + '/' + extension.name + '/start')
+  return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`)
     .then(ExtensionActions.start.completed.bind(that, extension))
     .catch(ExtensionActions.start.failed.bind(that, extension));
 });
 
 ExtensionActions.stop.listen(function (extension) {
   const that = this;
-  return SocketService.post(ExtensionConstants.EXTENSIONS_URL + '/' + extension.name + '/stop')
+  return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`)
     .then(ExtensionActions.stop.completed.bind(that, extension))
     .catch(ExtensionActions.stop.failed.bind(that, extension));
 });

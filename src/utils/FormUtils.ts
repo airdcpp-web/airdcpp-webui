@@ -48,15 +48,11 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
   return t.struct(ret);
 };
 
-//type FormSettingValueBase = API.SettingValueBase | { id: API.SettingValue };
-//type FormSettingValue = FormSettingValueBase | FormSettingValueBase[];
+type IdItemValue = { id: API.SettingValueBase };
+type FormSettingValue = API.SettingValue<API.SettingValueBase> | IdItemValue[];
 
-/*interface FormValue {
-  [key: string]: API.SettingValue;
-}*/
-
-const normalizeField = (value?: API.SettingValue) => {
-  /*if (value) {
+const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
+  if (value) {
     // Convert { id, ... } objects used in the UI to plain IDs
     // Not used by the API
     if (typeof value === 'object' && !Array.isArray(value)) {
@@ -66,21 +62,19 @@ const normalizeField = (value?: API.SettingValue) => {
     } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
       // Normalize each array item
       invariant(
-        value[0].hasOwnProperty('id'), 
+        value[0]!.hasOwnProperty('id'), 
         'Invalid array supplied for form property (id property is required for values)'
       );
-      const tmp = value[0];
-      console.log(tmp);
-      return value.map(normalizeField);
+
+      const ret = (value as IdItemValue[]).map(normalizeField);
+      return ret as API.SettingValueBase[];
     }
-  } else*/ 
-  
-  if (value === '') {
+  } else if (value === '') {
     // Normalize empty strings to null, which is used by tcomb 
     return null;
   }
 
-  return value;
+  return value as API.SettingValue;
 };
 
 const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
@@ -91,7 +85,7 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
 };
 
 const normalizeSettingValueMap = (
-  value: Partial<API.SettingValueMap> | undefined, 
+  value: Partial<API.SettingValueMap<API.SettingValueBase>> | undefined, 
   valueDefinitions: UI.FormFieldDefinition[]
 ): UI.FormValueMap => {
   return valueDefinitions.reduce(

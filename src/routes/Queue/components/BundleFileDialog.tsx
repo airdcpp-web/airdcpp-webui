@@ -1,18 +1,28 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from 'routes/Queue/components/BundleFileTable';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import { RouteComponentProps } from 'react-router';
+import QueueConstants from 'constants/QueueConstants';
 
 
 interface BundleFileDialogProps {
-  bundle?: API.QueueBundle; // REQUIRED, CLONED
+
 }
 
-class BundleFileDialog extends React.Component<BundleFileDialogProps> {
+interface DataProps extends DataProviderDecoratorChildProps {
+  bundle: API.QueueBundle;
+}
+
+type Props = BundleFileDialogProps & DataProps & 
+  RouteComponentProps<{ bundleId: string; }> & ModalRouteDecoratorChildProps;
+
+class BundleFileDialog extends React.Component<Props> {
   static displayName = 'BundleFileDialog';
 
   render() {
@@ -20,18 +30,28 @@ class BundleFileDialog extends React.Component<BundleFileDialogProps> {
     return (
       <Modal 
         className="source" 
-        title={ bundle!.name }
+        title={ bundle.name }
         closable={ true } 
-        icon={ <FileIcon typeInfo={ bundle!.type }/> } 
+        icon={ <FileIcon typeInfo={ bundle.type }/> } 
         fullHeight={ true }
         { ...other }
       >
         <BundleFileTable 
-          bundle={ bundle! }
+          bundle={ bundle }
         />
       </Modal>
     );
   }
 }
 
-export default ModalRouteDecorator(BundleFileDialog, OverlayConstants.BUNDLE_CONTENT_MODAL, 'content');
+export default ModalRouteDecorator<BundleFileDialogProps>(
+  DataProviderDecorator<Props, DataProps>(
+    BundleFileDialog, {
+      urls: {
+        bundle: ({ match }, socket) => socket.get(`${QueueConstants.BUNDLES_URL}/${match.params.bundleId}`),
+      }
+    }
+  ), 
+  OverlayConstants.BUNDLE_CONTENT_MODAL, 
+  'content/:bundleId'
+);

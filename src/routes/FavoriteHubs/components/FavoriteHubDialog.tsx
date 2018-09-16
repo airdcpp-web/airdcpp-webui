@@ -17,6 +17,8 @@ import t from 'utils/tcomb-form';
 
 import Form, { FormFieldChangeHandler, FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
 import { normalizeEnumValue, intTransformer } from 'utils/FormUtils';
+import { RouteComponentProps } from 'react-router';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 
 const Fields: UI.FormFieldDefinition[] = [
@@ -57,11 +59,16 @@ const getFieldProfiles = (profiles: API.SettingEnumOption[], url?: string) => {
     .map(normalizeEnumValue);
 };
 
-export interface FavoriteHubDialogProps {
+interface FavoriteHubDialogProps {
+
+}
+
+interface DataProps extends DataProviderDecoratorChildProps {
   hubEntry: API.FavoriteHubEntry;
 }
 
-type Props = FavoriteHubDialogProps & ShareProfileDecoratorChildProps & ModalRouteDecoratorChildProps;
+type Props = DataProps & ShareProfileDecoratorChildProps & 
+  ModalRouteDecoratorChildProps & RouteComponentProps<{ entryId: string; }>;
 
 class FavoriteHubDialog extends React.Component<Props> {
   static displayName = 'FavoriteHubDialog';
@@ -135,8 +142,23 @@ class FavoriteHubDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<{}>(
-  ShareProfileDecorator(FavoriteHubDialog, true),
+export default ModalRouteDecorator<FavoriteHubDialogProps>(
+  ShareProfileDecorator(
+    DataProviderDecorator<Props, DataProps>(
+      FavoriteHubDialog, {
+        urls: {
+          hubEntry: ({ match }, socket) => {
+            if (!match.params.entryId) {
+              return undefined;
+            }
+
+            return socket.get(`${FavoriteHubConstants.HUBS_URL}/${match.params.entryId}`);
+          }
+        }
+      }
+    ),
+    true
+  ),
   OverlayConstants.FAVORITE_HUB_MODAL_ID,
-  '(new|edit)',
+  'entries/:entryId',
 );

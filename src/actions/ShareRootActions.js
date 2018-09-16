@@ -35,11 +35,11 @@ const ShareRootActions = Reflux.createActions([
 ]);
 
 ShareRootActions.create.listen(function (data, location) {
-  History.pushModal(location, location.pathname + '/add', OverlayConstants.SHARE_ROOT_MODAL_ID);
+  History.pushModal(location, `${location.pathname}/directories`, OverlayConstants.SHARE_ROOT_MODAL_ID);
 });
 
 ShareRootActions.edit.listen(function (root, location) {
-  History.pushModal(location, location.pathname + '/edit', OverlayConstants.SHARE_ROOT_MODAL_ID, { rootEntry: root });
+  History.pushModal(location, `${location.pathname}/directories/${root.id}`, OverlayConstants.SHARE_ROOT_MODAL_ID /*, { rootEntry: root }*/);
 });
 
 ShareRootActions.remove.listen(function (root) {

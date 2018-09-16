@@ -9,15 +9,20 @@ import SearchActions from 'actions/SearchActions';
 import ResultInfoGrid from 'routes/Search/components/ResultInfoGrid';
 import UserResultTable from 'routes/Search/components/UserResultTable';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import { RouteComponentProps } from 'react-router';
+import SearchConstants from 'constants/SearchConstants';
 
 
-interface ResultDialogProps {
-  parentResult?: API.GroupedSearchResult; // REQUIRED, CLONED
+interface DataProps extends DataProviderDecoratorChildProps {
+  parentResult: API.GroupedSearchResult;
 }
 
-class ResultDialog extends React.Component<ResultDialogProps> {
+type Props = RouteComponentProps<{ resultId: string; }> & ModalRouteDecoratorChildProps;
+
+class ResultDialog extends React.Component<Props & DataProps> {
   static displayName = 'ResultDialog';
 
   render() {
@@ -39,4 +44,14 @@ class ResultDialog extends React.Component<ResultDialogProps> {
   }
 }
 
-export default ModalRouteDecorator(ResultDialog, OverlayConstants.SEARCH_RESULT_MODAL, 'result');
+export default ModalRouteDecorator<{}>(
+  DataProviderDecorator<Props, DataProps>(
+    ResultDialog, {
+      urls: {
+        parentResult: ({ match }, socket) => socket.get(`${SearchConstants.RESULTS_URL}/${match.params.resultId}`),
+      }
+    }
+  ), 
+  OverlayConstants.SEARCH_RESULT_MODAL, 
+  'result/:resultId'
+);

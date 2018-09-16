@@ -37,11 +37,11 @@ const WebUserActions = Reflux.createActions([
 ]);
 
 WebUserActions.create.listen(function (location) {
-  History.pushModal(location, location.pathname + '/user', OverlayConstants.WEB_USER_MODAL_ID);
+  History.pushModal(location, `${location.pathname}/users`, OverlayConstants.WEB_USER_MODAL_ID);
 });
 
 WebUserActions.edit.listen(function (user, location) {
-  History.pushModal(location, location.pathname + '/user', OverlayConstants.WEB_USER_MODAL_ID, { user: user });
+  History.pushModal(location, `${location.pathname}/users/${user.id}`, OverlayConstants.WEB_USER_MODAL_ID);
 });
 
 WebUserActions.remove.listen(function (user) {
@@ -58,7 +58,7 @@ WebUserActions.remove.listen(function (user) {
 
 WebUserActions.remove.confirmed.listen(function (user) {
   const that = this;
-  return SocketService.delete(WebUserConstants.USERS_URL + '/' + user.id)
+  return SocketService.delete(`${WebUserConstants.USERS_URL}/${user.id}`)
     .then(WebUserActions.remove.completed.bind(that, user))
     .catch(WebUserActions.remove.failed.bind(that, user));
 });

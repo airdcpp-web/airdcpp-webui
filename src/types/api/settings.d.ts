@@ -9,11 +9,13 @@ declare namespace API {
     [key: string]: ValueType | ValueType[];
   }
 
+  //export type SettingValueBase = number | string | boolean;
+  //export type SettingValueBaseNullable = SettingValueBase | null;
   export type SettingValueBase = number | string | boolean | null;
 
   export type SettingValue<ValueType = API.SettingValueBase> = ValueType[] | ValueType | SettingValueMap<ValueType>;
 
-  export interface SettingDefinition<ValueType = SettingValueBase> {
+  export interface SettingDefinition {
     key: string;
     title: string;
     help?: string;

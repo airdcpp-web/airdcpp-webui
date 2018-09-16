@@ -34,7 +34,7 @@ SearchActions.download.listen((itemInfo, user, downloadData) => {
 });
 
 SearchActions.download.failed.listen((itemInfo, error) => {
-  NotificationActions.apiError('Failed to queue the item ' + itemInfo.name, error);
+  NotificationActions.apiError(`Failed to queue the item ${itemInfo.name}`, error);
 });
 
 SearchActions.browseContent.listen(function (data, location) {
@@ -42,7 +42,7 @@ SearchActions.browseContent.listen(function (data, location) {
 });
 
 SearchActions.result.listen(function (data, location) {
-  History.pushModal(location, `${location.pathname}/result`, OverlayConstants.SEARCH_RESULT_MODAL, { parentResult: data });
+  History.pushModal(location, `${location.pathname}/result/${data.id}`, OverlayConstants.SEARCH_RESULT_MODAL);
 });
 
 export default SearchActions;

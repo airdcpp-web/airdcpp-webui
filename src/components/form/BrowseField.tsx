@@ -47,7 +47,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
       <div className={ fieldStyle }>
         <input
           ref={ input => { 
-            _input = input as HTMLInputElement;
+            _input = input!;
           } }
           value={ locals.value }
           onChange={ onChange }

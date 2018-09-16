@@ -22,13 +22,13 @@ export type RouteItemClickHandler = (path: string, event: React.SyntheticEvent<a
 export interface RouteItem {
   title: string;
   path: string;
-  matchPath?: string;
+  //matchPath?: string;
   icon: string;
   unreadInfoStore?: any;
   //access?: API.AccessId;
   access?: string;
   component?: React.ComponentClass;
-  exact?: boolean;
+  //exact?: boolean;
   className?: string;
   onClick?: RouteItemClickHandler;
 }
@@ -36,10 +36,8 @@ export interface RouteItem {
 export const mainRoutes: RouteItem[] = [
   {
     title: 'Home',
-    path: '/',
-    matchPath: '/(home/widget)?',
+    path: '/home',
     icon: IconConstants.HOME,
-    exact: true,
     component: AsyncComponentDecorator(() => import(/* webpackChunkName: "home" */ 'routes/Home/components/Home')),
   }, {
     title: 'Queue',
@@ -193,7 +191,7 @@ export const parseRoutes = (routes: RouteItem[], location?: Location) => {
     <Route 
       key={ route.path } 
       { ...route } 
-      path={ route.matchPath ? route.matchPath : route.path }
+      //path={ route.matchPath ? route.matchPath : route.path }
       location={ location }
     />
   ));

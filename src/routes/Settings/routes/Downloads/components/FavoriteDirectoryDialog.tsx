@@ -19,6 +19,7 @@ import { getLastDirectory } from 'utils/FileUtils';
 import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
+import { RouteComponentProps } from 'react-router';
 
 
 const Entry: UI.FormFieldDefinition[] = [
@@ -32,16 +33,18 @@ const Entry: UI.FormFieldDefinition[] = [
   },
 ];
 
-export interface FavoriteDirectoryDialogProps extends ModalRouteDecoratorChildProps {
+export interface FavoriteDirectoryDialogProps {
+
+}
+
+export interface DataProps extends DataProviderDecoratorChildProps {
+  virtualNames: string[];
   directoryEntry?: API.FavoriteDirectoryEntryBase;
 }
 
-export interface FavoriteDirectoryDialogDataProps {
-  virtualNames: string[];
-}
 
-
-type Props = FavoriteDirectoryDialogProps & FavoriteDirectoryDialogDataProps & DataProviderDecoratorChildProps;
+type Props = FavoriteDirectoryDialogProps & DataProps & 
+ModalRouteDecoratorChildProps & RouteComponentProps<{ directoryId: string; }>;
 
 class FavoriteDirectoryDialog extends React.Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
@@ -115,15 +118,22 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator(
-  DataProviderDecorator<FavoriteDirectoryDialogProps, FavoriteDirectoryDialogDataProps>(FavoriteDirectoryDialog, {
+export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
+  DataProviderDecorator<Props, DataProps>(FavoriteDirectoryDialog, {
     urls: {
       virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+      directoryEntry: ({ match }, socket) => {
+        if (!match.params.directoryId) {
+          return undefined;
+        }
+
+        return socket.get(`${FavoriteDirectoryConstants.DIRECTORIES_URL}/${match.params.directoryId}`);
+      },
     },
     dataConverters: {
       virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
     },
   }),
   OverlayConstants.FAVORITE_DIRECTORY_MODAL,
-  'directory'
+  'directories/:directoryId?'
 );

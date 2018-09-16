@@ -51,7 +51,8 @@ export default function <PropsT, SemanticSettingPropsT>(
     }
 
     UNSAFE_componentWillReceiveProps() {
-      if (this.context.router.route.location.state[this.props.overlayId].data.close) {
+      const { state } = this.context.router.route.location;
+      if (!!state && state[this.props.overlayId].data.close) {
         this.hide();
       }
     }

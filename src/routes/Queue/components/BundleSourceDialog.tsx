@@ -1,19 +1,28 @@
 import React from 'react';
 import Modal from 'components/semantic/Modal';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
 
 import SourceTable from 'routes/Queue/components/BundleSourceTable';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import { RouteComponentProps } from 'react-router';
+import QueueConstants from 'constants/QueueConstants';
 
 
 interface BundleSourceDialogProps {
-  bundle?: API.QueueBundle; // REQUIRED, CLONED
+
 }
 
-class SourceDialog extends React.Component<BundleSourceDialogProps> {
+interface DataProps extends DataProviderDecoratorChildProps {
+  bundle: API.QueueBundle;
+}
+
+type Props = RouteComponentProps<{ bundleId: string; }> & ModalRouteDecoratorChildProps;
+
+class SourceDialog extends React.Component<Props & DataProps> {
   static displayName = 'SourceDialog';
 
   render() {
@@ -21,11 +30,11 @@ class SourceDialog extends React.Component<BundleSourceDialogProps> {
     return (
       <Modal 
         className="source" 
-        title={ bundle!.name }
+        title={ bundle.name }
         closable={ true } 
-        icon={ <FileIcon typeInfo={ bundle!.type }/> } 
+        icon={ <FileIcon typeInfo={ bundle.type }/> } 
         fullHeight={ true }
-        {...this.props}
+        { ...this.props }
       >
         <SourceTable 
           bundle={ bundle }
@@ -35,4 +44,14 @@ class SourceDialog extends React.Component<BundleSourceDialogProps> {
   }
 }
 
-export default ModalRouteDecorator(SourceDialog, OverlayConstants.BUNDLE_SOURCE_MODAL, 'sources');
+export default ModalRouteDecorator<BundleSourceDialogProps>(
+  DataProviderDecorator<Props, DataProps>(
+    SourceDialog, {
+      urls: {
+        bundle: ({ match }, socket) => socket.get(`${QueueConstants.BUNDLES_URL}/${match.params.bundleId}`),
+      }
+    }
+  ), 
+  OverlayConstants.BUNDLE_SOURCE_MODAL, 
+  'sources/:bundleId'
+);

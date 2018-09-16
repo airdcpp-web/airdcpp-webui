@@ -15,16 +15,17 @@ import OverlayConstants from 'constants/OverlayConstants';
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
+import { RouteComponentProps } from 'react-router';
 
 
-export interface WidgetDialogProps {
-  settings?: UI.WidgetSettings;
-  id?: string;
-  typeId?: string;
-  onSave?: () => void;
+interface WidgetDialogProps {
+
 }
 
-class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecoratorChildProps> {
+type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & 
+  RouteComponentProps<{ widgetId?: string; typeId: string; }>;
+
+class WidgetDialog extends React.Component<Props> {
   static displayName = 'WidgetDialog';
 
   /*static propTypes = {
@@ -33,9 +34,6 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
 
     // Widget info object
     typeId: PropTypes.string, // Required
-
-		// Called when the form is saved
-    onSave: PropTypes.func, // Required
   };*/
 
   form: Form;
@@ -45,26 +43,41 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
   }
 
   onSave: FormSaveHandler<UI.WidgetSettings> = (changedFields, value) => {
-    const { name, ...formSettings } = value;
-    const settings: UI.WidgetSettings = {
+    const { name, ...other } = value;
+    const settings = {
       name: name!,
-      widget: formSettings
+      widget: other
     };
 
-    const { id, typeId } = this.props;
-    if (!id) {
+    const { typeId, widgetId } = this.props.match.params;
+    if (!widgetId) {
       // New widget
       WidgetActions.create.saved(WidgetUtils.createId(typeId!), settings, typeId);
     } else {
       // Existing widget
-      WidgetActions.edit.saved(id, settings);
+      WidgetActions.edit.saved(widgetId, settings);
     }
 
     return Promise.resolve();
   }
 
+  parseSettings = () => {
+    const { widgetId } = this.props.match.params;
+    if (!!widgetId) {
+      const widgetInfo: UI.Widget = WidgetStore.getWidgetInfoById(widgetId);
+      const settings = WidgetStore.getWidgetSettings(widgetId, widgetInfo);
+      return {
+        name: settings.name,
+        ...settings.widget,
+      } as UI.FormValueMap;
+    }
+
+    return undefined;
+  }
+
   render() {
-    const { typeId, settings, ...overlayProps } = this.props;
+    const { typeId } = this.props.match.params;
+    const settings = this.parseSettings();
     const { formSettings, name, icon } = WidgetStore.getWidgetInfoById(typeId);
 
     const Entry = [
@@ -85,14 +98,11 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
         title={ name } 
         onApprove={ this.save }
         icon={ icon }
-        { ...overlayProps }
+        { ...this.props }
       >
         <Form
           ref={ (c: any) => this.form = c }
-          value={ !!settings ? {
-            name: settings.name,
-            ...settings.widget,
-          } : {} }
+          value={ settings }
           fieldDefinitions={ Entry }
           onSave={ this.onSave }
         />
@@ -106,8 +116,8 @@ class WidgetDialog extends React.Component<WidgetDialogProps & ModalRouteDecorat
   }
 }
 
-export default ModalRouteDecorator(
+export default ModalRouteDecorator<WidgetDialogProps>(
   WidgetDialog,
   OverlayConstants.HOME_WIDGET_MODAL,
-  '/home/widget'
+  '/home/widget/:typeId/:widgetId?'
 );

@@ -83,7 +83,7 @@ const QueueBundleActions = Reflux.createActions([
 ]);
 
 const shareBundle = (bundle, skipValidation, action) => {
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/share', { 
+  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/share`, { 
     skip_validation: skipValidation, 
   })
     .then(() => 
@@ -96,7 +96,7 @@ const shareBundle = (bundle, skipValidation, action) => {
 
 QueueBundleActions.setBundlePriority.listen(function (bundle, priority) {
   let that = this;
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/priority', {
+  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/priority`, {
     priority
   })
     .then(that.completed)
@@ -113,7 +113,7 @@ QueueBundleActions.forceShare.listen(function (bundle) {
 
 QueueBundleActions.removeBundleSource.listen(function ({ source, bundle }) {
   let that = this;
-  return SocketService.delete(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/sources/' + source.user.cid)
+  return SocketService.delete(`${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`)
     .then(that.completed.bind(that, source, bundle))
     .catch(that.failed.bind(that, source, bundle));
 });
@@ -139,7 +139,7 @@ QueueBundleActions.removeBundle.shouldEmit = function (bundle) {
 
 QueueBundleActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
   let that = this;
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/remove', { 
+  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, { 
     remove_finished: removeFinished,
   })
     .then(QueueBundleActions.removeBundle.completed.bind(that, bundle))
@@ -154,7 +154,7 @@ QueueBundleActions.search.listen(function (itemInfo, location) {
 
 QueueBundleActions.searchBundleAlternates.listen(function (bundle) {
   let that = this;
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/' + bundle.id + '/search')
+  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`)
     .then(that.completed.bind(that, bundle))
     .catch(that.failed.bind(that, bundle));
 });
@@ -162,23 +162,23 @@ QueueBundleActions.searchBundleAlternates.listen(function (bundle) {
 QueueBundleActions.searchBundleAlternates.completed.listen(function (bundle, data) {
   NotificationActions.success({ 
     title: 'Action completed',
-    message: 'The bundle ' + bundle.name + ' was searched for alternates',
+    message: `The bundle ${bundle.name} was searched for alternates`,
   });
 });
 
 QueueBundleActions.searchBundleAlternates.failed.listen(function (bundle, error) {
   NotificationActions.error({ 
     title: 'Action failed',
-    message: 'Failed to search the bundle ' + bundle.name + ' for alternates: ' + error.message,
+    message: `Failed to search the bundle ${bundle.name} for alternates: ${error.message}`,
   });
 });
 
 QueueBundleActions.sources.listen(function (data, location) {
-  History.pushModal(location, location.pathname + '/sources', OverlayConstants.BUNDLE_SOURCE_MODAL, { bundle: data });
+  History.pushModal(location, `${location.pathname}/sources/${data.id}`, OverlayConstants.BUNDLE_SOURCE_MODAL);
 });
 
 QueueBundleActions.content.listen(function (data, location) {
-  History.pushModal(location, location.pathname + '/content', OverlayConstants.BUNDLE_CONTENT_MODAL, { bundle: data });
+  History.pushModal(location, `${location.pathname}/content/${data.id}`, OverlayConstants.BUNDLE_CONTENT_MODAL);
 });
 
 export default QueueBundleActions;

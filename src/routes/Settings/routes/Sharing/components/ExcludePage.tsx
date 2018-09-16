@@ -85,6 +85,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
           onConfirm={ ShareActions.addExclude.saved }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
+          subHeader="Add excluded path"
         />
       </div>
     );

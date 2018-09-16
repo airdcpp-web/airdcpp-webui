@@ -16,6 +16,7 @@ interface BrowserBarProps {
   separator: string;
   path: string;
   selectedNameFormatter?: SelectedNameFormatter;
+  entityId: string; // Used just for re-rendering
 }
 
 class BrowserBar extends React.PureComponent<BrowserBarProps> {

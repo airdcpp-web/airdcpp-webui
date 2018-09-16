@@ -74,4 +74,8 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
   }
 }
 
-export default ModalRouteDecorator(FileBrowserDialog, OverlayConstants.FILE_BROWSER_MODAL, 'browse');
+export default ModalRouteDecorator(
+  FileBrowserDialog, 
+  OverlayConstants.FILE_BROWSER_MODAL, 
+  'browse'
+);

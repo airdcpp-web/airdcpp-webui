@@ -35,17 +35,17 @@ const WidgetActions = Reflux.createActions([
 ]);
 
 WidgetActions.create.listen(function (widgetInfo, location) {
-  History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, {
+  History.pushModal(location, `/home/widget/${widgetInfo.typeId}`, OverlayConstants.HOME_WIDGET_MODAL /*, {
     typeId: widgetInfo.typeId,
-  });
+  }*/);
 });
 
 WidgetActions.edit.listen(function ({ id, widgetInfo, settings }, location) {
-  History.pushModal(location, '/home/widget', OverlayConstants.HOME_WIDGET_MODAL, { 
+  History.pushModal(location, `/home/widget/${widgetInfo.typeId}/${id}`, OverlayConstants.HOME_WIDGET_MODAL/*, { 
     typeId: widgetInfo.typeId,
     id,
     settings,
-  });
+  }*/);
 });
 
 WidgetActions.remove.listen(function ({ id, settings }) {
