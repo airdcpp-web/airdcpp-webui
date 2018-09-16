@@ -9,6 +9,8 @@ import MessageView from 'components/messages/MessageView';
 
 import '../style.css';
 
+import * as API from 'types/api';
+
 
 const mapViewMessage = (message: API.StatusMessage) => {
   return {

@@ -12,6 +12,8 @@ import WidgetDialog from 'routes/Home/components/WidgetDialog';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import WidgetStore from 'stores/WidgetStore';
 
+import * as UI from 'types/ui';
+
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';

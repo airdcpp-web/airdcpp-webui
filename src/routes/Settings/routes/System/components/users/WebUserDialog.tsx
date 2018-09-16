@@ -22,6 +22,9 @@ import '../../style.css';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import { RouteComponentProps } from 'react-router';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 const AccessCaptions = {
   ADMIN: 'Administrator',
@@ -95,6 +98,10 @@ interface WebUserDialogProps {
 
 }
 
+interface Entry extends API.WebUserInput, UI.FormValueMap {
+
+}
+
 interface DataProps extends DataProviderDecoratorChildProps {
   user: API.WebUserInput;
 }
@@ -107,7 +114,7 @@ class WebUserDialog extends React.Component<Props> {
 
 
   entry: UI.FormFieldDefinition[];
-  form: Form;
+  form: Form<Entry>;
 
   constructor(props: Props) {
     super(props);
@@ -161,7 +168,7 @@ class WebUserDialog extends React.Component<Props> {
           fieldDefinitions={ this.entry }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ this.props.user }
+          value={ this.props.user as Entry }
         />
       </Modal>
     );

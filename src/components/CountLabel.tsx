@@ -7,6 +7,8 @@ import classNames from 'classnames';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import * as UI from 'types/ui';
+
 
 export interface CountLabelProps {
   urgencies: UI.UrgencyCountMap | null;

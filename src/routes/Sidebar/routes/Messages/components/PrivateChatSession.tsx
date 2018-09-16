@@ -9,6 +9,8 @@ import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import AccessConstants from 'constants/AccessConstants';
 import { SessionActions } from 'decorators/ActiveSessionDecorator';
 
+import * as API from 'types/api';
+
 
 interface PrivateChatSessionProps {
   session: API.PrivateChat;

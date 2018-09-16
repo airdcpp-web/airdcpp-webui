@@ -12,6 +12,8 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import Form from 'components/form/Form';
 
+import * as UI from 'types/ui';
+
 
 export interface SaveDecoratorProps {
   currentMenuItem: any;

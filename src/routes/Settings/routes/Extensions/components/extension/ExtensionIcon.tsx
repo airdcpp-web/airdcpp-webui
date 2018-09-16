@@ -2,6 +2,8 @@ import React from 'react';
 
 import Icon from 'components/semantic/Icon';
 
+import * as API from 'types/api';
+
 
 const getCornerIcon = (installedPackage: API.Extension | undefined, hasUpdate: boolean) => {
   if (!installedPackage) {

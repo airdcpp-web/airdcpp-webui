@@ -27,15 +27,19 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import Logo from 'images/AirDCPlusPlus.png';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
+import Severity = API.SeverityEnum;
+
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
 
-const getSeverityStr = (severity: API.Severity) => {
+const getSeverityStr = (severity: Severity) => {
   switch (severity) {
-    case API.Severity.NOTIFY: return 'Information';
-    case API.Severity.INFO: return 'INFO';
-    case API.Severity.ERROR: return 'ERROR';
-    case API.Severity.WARNING: return 'WARNING';
+    case Severity.NOTIFY: return 'Information';
+    case Severity.INFO: return 'INFO';
+    case Severity.ERROR: return 'ERROR';
+    case Severity.WARNING: return 'WARNING';
     default: return '';
   }
 };
@@ -127,7 +131,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
       uid: id,
     };
 
-    if (severity !== API.Severity.NOTIFY) {
+    if (severity !== Severity.NOTIFY) {
       Object.assign(notification, {
         action: {
           label: 'View events',
@@ -139,13 +143,13 @@ const Notifications = createReactClass<NotificationsProps, {}>({
     }
 
 
-    if (severity === API.Severity.NOTIFY) {
+    if (severity === Severity.NOTIFY) {
       NotificationActions.info(notification);
-    } else if (severity === API.Severity.INFO && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)) {
+    } else if (severity === Severity.INFO && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)) {
       NotificationActions.info(notification);
-    } else if (severity === API.Severity.WARNING && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)) {
+    } else if (severity === Severity.WARNING && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)) {
       NotificationActions.warning(notification);
-    } else if (severity === API.Severity.ERROR && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)) {
+    } else if (severity === Severity.ERROR && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)) {
       NotificationActions.error(notification);
     }
   },
@@ -203,33 +207,33 @@ const Notifications = createReactClass<NotificationsProps, {}>({
     let text;
     let level;
     switch (bundle.status.id) {
-      case API.QueueBundleStatusId.QUEUED: {
+      case API.QueueBundleStatusEnum.QUEUED: {
         text = 'Bundle was added in queue';
         level = 'info';
         break;
       }
-      case API.QueueBundleStatusId.DOWNLOAD_ERROR: {
+      case API.QueueBundleStatusEnum.DOWNLOAD_ERROR: {
         text = 'Download error: ' + bundle.status.str;
         level = 'error';
         break;
       }
-      case API.QueueBundleStatusId.COMPLETION_VALIDATION_RUNNING: {
+      case API.QueueBundleStatusEnum.COMPLETION_VALIDATION_RUNNING: {
         text = 'Validating downloaded bundle';
         level = 'info';
         break;
       }
-      case API.QueueBundleStatusId.COMPLETION_VALIDATION_ERROR: {
+      case API.QueueBundleStatusEnum.COMPLETION_VALIDATION_ERROR: {
         const { hook_name, str } = bundle.status.hook_error;
         text = `Bundle content validation failed: ${str} (${hook_name})`;
         level = 'error';
         break;
       }
-      case API.QueueBundleStatusId.COMPLETED: {
+      case API.QueueBundleStatusEnum.COMPLETED: {
         text = 'Bundle was completed successfully';
         level = 'info';
         break;
       }
-      case API.QueueBundleStatusId.SHARED: {
+      case API.QueueBundleStatusEnum.SHARED: {
         text = 'Bundle was added in share';
         level = 'info';
         break;

@@ -7,6 +7,8 @@ import { TableActionMenu, TableUserMenu } from 'components/menu/DropdownMenu';
 import IconConstants from 'constants/IconConstants';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const UserCaption: React.SFC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({ cellData, rowData }) => (
   <div className="transfer-user">

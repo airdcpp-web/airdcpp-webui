@@ -4,6 +4,8 @@ import React from 'react';
 import Icon, { IconProps } from 'components/semantic/Icon';
 import { userOnlineStatusToColor } from 'utils/TypeConvert';
 
+import * as API from 'types/api';
+
 
 const getUserIcon = (flags: API.HubUserFlag[]) => {
   if (flags.indexOf('ignored') > -1) {

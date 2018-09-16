@@ -9,6 +9,8 @@ import invariant from 'invariant';
 
 import t from 'utils/tcomb-form';
 
+import * as UI from 'types/ui';
+
 
 const MultiValueContainer: React.SFC<any> = ({ css, children, ...innerProps }) => {
   return (

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import * as API from 'types/api';
+
 
 export interface SessionBase {
   id: API.IdType;

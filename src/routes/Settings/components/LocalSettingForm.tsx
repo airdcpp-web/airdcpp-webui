@@ -5,6 +5,9 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 
 import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
   keys: string[];

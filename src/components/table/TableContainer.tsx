@@ -10,6 +10,8 @@ import Measure, { ContentRect } from 'react-measure';
 import RowWrapperCell from 'components/table/RowWrapperCell';
 import { TextCell, HeaderCell } from 'components/table/Cell';
 
+import * as API from 'types/api';
+
 
 const TABLE_ROW_HEIGHT = 50;
 

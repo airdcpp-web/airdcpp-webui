@@ -9,6 +9,8 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
 
 interface MessageNewProps {
   location: Location;

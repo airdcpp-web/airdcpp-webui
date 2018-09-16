@@ -21,6 +21,9 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
 import { RouteComponentProps } from 'react-router';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 const Entry: UI.FormFieldDefinition[] = [
   {
@@ -37,6 +40,10 @@ export interface FavoriteDirectoryDialogProps {
 
 }
 
+interface Entry extends API.FavoriteDirectoryEntryBase, UI.FormValueMap {
+
+}
+
 export interface DataProps extends DataProviderDecoratorChildProps {
   virtualNames: string[];
   directoryEntry?: API.FavoriteDirectoryEntryBase;
@@ -49,7 +56,7 @@ ModalRouteDecoratorChildProps & RouteComponentProps<{ directoryId: string; }>;
 class FavoriteDirectoryDialog extends React.Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
 
-  form: Form;
+  form: Form<Entry>;
   isNew = () => {
     return !this.props.directoryEntry;
   }
@@ -111,7 +118,7 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ this.props.directoryEntry }
+          value={ this.props.directoryEntry as Entry }
         />
       </Modal>
     );

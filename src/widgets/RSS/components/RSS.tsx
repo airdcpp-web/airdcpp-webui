@@ -13,6 +13,8 @@ import { Settings } from 'widgets/RSS';
 import '../style.css';
 import invariant from 'invariant';
 
+import * as UI from 'types/ui';
+
 
 const getEntryKey = (entry: FeedItem): string => {
   if (!!entry.guid) {

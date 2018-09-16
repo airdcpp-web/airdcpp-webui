@@ -6,6 +6,8 @@ import SearchActions from 'actions/SearchActions';
 import { DownloadMenu } from 'components/menu/DropdownMenu';
 import { DupeEnum } from 'constants/DupeConstants';
 
+import * as API from 'types/api';
+
 
 const formatText = (text: React.ReactNode) => text ? text : '(unknown)';
 

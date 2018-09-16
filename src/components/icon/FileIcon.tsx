@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import IconConstants from 'constants/IconConstants';
 
+import * as API from 'types/api';
+
 
 const fileToIcon = (name: API.FileContentType) => {
   switch (name) {

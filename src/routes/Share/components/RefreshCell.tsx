@@ -7,6 +7,8 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const RefreshCell: React.SFC<RowWrapperCellChildProps<number, API.ShareRootEntry>> = (
   { rowDataGetter, cellData }

@@ -18,6 +18,9 @@ import { RouterChildContext } from 'react-router';
 import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as UI from 'types/ui';
+import * as API from 'types/api';
+
 
 const getCellContent = (cellData: any) => {
   if (typeof cellData === 'object') {

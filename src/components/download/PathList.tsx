@@ -7,6 +7,8 @@ import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import { formatSize } from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 
+import * as API from 'types/api';
+
 
 export type PathDownloadHandler = (path: string) => void;
 

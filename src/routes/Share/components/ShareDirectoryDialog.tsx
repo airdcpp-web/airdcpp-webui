@@ -27,6 +27,11 @@ import '../style.css';
 import { FieldTypes } from 'constants/SettingConstants';
 import { RouteComponentProps } from 'react-router';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { ShareRootEntryBase } from 'types/api';
+
+
 const getFields = (profiles: API.ShareProfile[]) => {
   return [
     {
@@ -63,6 +68,10 @@ export interface DataProps extends ShareProfileDecoratorChildProps, DataProvider
   rootEntry?: API.ShareRootEntryBase;
 }
 
+interface Entry extends ShareRootEntryBase, UI.FormValueMap {
+
+}
+
 type Props = ShareDirectoryDialogProps & DataProps & 
   ModalRouteDecoratorChildProps & RouteComponentProps<{ directoryId: string; }>;
 
@@ -70,7 +79,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
   static displayName = 'ShareDirectoryDialog';
 
   fieldDefinitions: UI.FormFieldDefinition[];
-  form: Form;
+  form: Form<Entry>;
 
   constructor(props: Props) {
     super(props);
@@ -103,7 +112,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
       return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
-    return SocketService.patch(ShareRootConstants.ROOTS_URL + '/' + this.props.rootEntry!.id, changedFields);
+    return SocketService.patch(`${ShareRootConstants.ROOTS_URL}/${this.props.rootEntry!.id}`, changedFields);
   }
 
   onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
@@ -147,13 +156,13 @@ class ShareDirectoryDialog extends React.Component<Props> {
             </span>
           }
         />
-        <Form
+        <Form<Entry>
           ref={ (c: any) => this.form = c }
           fieldDefinitions={ this.fieldDefinitions }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ rootEntry }
+          value={ rootEntry as Entry }
         />
       </Modal>
     );

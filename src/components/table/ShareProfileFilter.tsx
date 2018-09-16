@@ -8,8 +8,10 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
 
-const defaultItem = { str: 'All profiles', id: null };
+import * as API from 'types/api';
 
+
+const defaultItem = { str: 'All profiles', id: null };
 
 export interface ShareProfileFilterProps {
 

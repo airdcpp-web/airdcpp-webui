@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import DownloadableItemActions from 'actions/DownloadableItemActions';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
+import * as API from 'types/api';
+
 
 export type DownloadHandlerType = () => void;
 

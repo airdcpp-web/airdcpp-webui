@@ -6,6 +6,8 @@ import { showAction } from 'utils/ActionUtils';
 import { IconType } from 'components/semantic/Icon';
 import { RouterChildContext } from 'react-router';
 
+import * as UI from 'types/ui';
+
 
 interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
   action: UI.ActionType;

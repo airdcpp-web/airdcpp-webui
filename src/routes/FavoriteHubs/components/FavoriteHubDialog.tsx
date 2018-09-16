@@ -20,6 +20,9 @@ import { normalizeEnumValue, intTransformer } from 'utils/FormUtils';
 import { RouteComponentProps } from 'react-router';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 const Fields: UI.FormFieldDefinition[] = [
   {
@@ -64,7 +67,16 @@ interface FavoriteHubDialogProps {
 }
 
 interface DataProps extends DataProviderDecoratorChildProps {
-  hubEntry: API.FavoriteHubEntry;
+  hubEntry?: API.FavoriteHubEntry;
+}
+
+//interface Entry extends API.FavoriteHubEntryBase, UI.FormValueMap {
+  //share_profile: number | null;
+//}
+
+
+interface Entry extends API.FavoriteHubEntryBase, UI.FormValueMap {
+
 }
 
 type Props = DataProps & ShareProfileDecoratorChildProps & 
@@ -77,9 +89,9 @@ class FavoriteHubDialog extends React.Component<Props> {
     return !this.props.hubEntry;
   }
 
-  form: Form<API.FavoriteHubEntry>;
+  form: Form<Entry>;
 
-  onFieldChanged: FormFieldChangeHandler<API.FavoriteHubEntryBase> = (id, value, hasChanges) => {
+  onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
     if (id.indexOf('hub_url') !== -1) {
       if (!isAdcHub(value.hub_url) && value.share_profile !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
         // Reset share profile
@@ -96,15 +108,15 @@ class FavoriteHubDialog extends React.Component<Props> {
     return this.form.save();
   }
 
-  onSave: FormSaveHandler<API.FavoriteHubEntryBase> = (changedFields) => {
+  onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(FavoriteHubConstants.HUBS_URL, changedFields);
     }
 
-    return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + this.props.hubEntry.id, changedFields);
+    return SocketService.patch(`${FavoriteHubConstants.HUBS_URL}/${this.props.hubEntry!.id}`, changedFields);
   }
 
-  onFieldSetting: FormFieldSettingHandler<API.FavoriteHubEntryBase> = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'share_profile') {
       Object.assign(fieldOptions, {
         // tslint:disable-next-line:max-line-length
@@ -135,7 +147,7 @@ class FavoriteHubDialog extends React.Component<Props> {
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           fieldDefinitions={ Fields }
-          value={ this.props.hubEntry }
+          value={ this.props.hubEntry as Entry | undefined }
         />
       </Modal>
     );

@@ -10,6 +10,8 @@ import RowDataLoader from './RowDataLoader';
 import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
+import * as API from 'types/api';
+
 
 declare module 'fixed-data-table-2' {
   export interface ColumnProps {

@@ -12,6 +12,8 @@ import ActionButton from 'components/ActionButton';
 import '../style.css';
 import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
 
+import * as API from 'types/api';
+
 
 interface SystemLogProps {
 

@@ -4,6 +4,7 @@ import React from 'react';
 import FormattedFile from 'components/format/FormattedFile';
 import { formatSize } from 'utils/ValueFormat';
 
+import * as API from 'types/api';
 
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;

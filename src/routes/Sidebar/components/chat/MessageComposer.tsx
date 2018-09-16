@@ -14,6 +14,8 @@ import SocketService from 'services/SocketService';
 import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
 import { RouterChildContext } from 'react-router';
 
+import * as API from 'types/api';
+
 const ENTER_KEY_CODE = 13;
 
 

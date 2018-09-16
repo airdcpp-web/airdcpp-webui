@@ -7,6 +7,9 @@ import SocketService from 'services/SocketService';
 
 import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions'> {
   keys: string[];

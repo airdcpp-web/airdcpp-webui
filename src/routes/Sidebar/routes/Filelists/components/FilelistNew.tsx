@@ -10,6 +10,8 @@ import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/Sha
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
 
 interface FilelistNewProps {
   location: Location;

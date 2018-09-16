@@ -8,11 +8,14 @@ import t from 'utils/tcomb-form';
 import Checkbox from 'components/semantic/Checkbox';
 import Message from 'components/semantic/Message';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 const ReactSelect = t.form.Form.templates.select.clone({
-  renderSelect: (locals: UI.FormLocals<API.AccessId, API.AccessId[]>) => {
-    const onChange = (access: API.AccessId, checked: boolean) => {
-      let values: API.AccessId[] = locals.value;
+  renderSelect: (locals: UI.FormLocals<API.AccessEnum, API.AccessEnum[]>) => {
+    const onChange = (access: API.AccessEnum, checked: boolean) => {
+      let values: API.AccessEnum[] = locals.value;
       if (checked) {
         values = [ ...values, access ];
       } else {
@@ -23,7 +26,7 @@ const ReactSelect = t.form.Form.templates.select.clone({
       locals.onChange(values);
     };
 
-    const mapPermission = ({ value, text }: UI.FormOption<API.AccessId>) => (
+    const mapPermission = ({ value, text }: UI.FormOption<API.AccessEnum>) => (
       <Checkbox 
         key={ value }
         className={ value }
@@ -33,8 +36,8 @@ const ReactSelect = t.form.Form.templates.select.clone({
       />
     );
 
-    const filterPermission = ({ value }: UI.FormOption<API.AccessId>) => {
-      if (locals.value.indexOf(API.AccessId.ADMIN) !== -1 && value !== API.AccessId.ADMIN) {
+    const filterPermission = ({ value }: UI.FormOption<API.AccessEnum>) => {
+      if (locals.value.indexOf(API.AccessEnum.ADMIN) !== -1 && value !== API.AccessEnum.ADMIN) {
         return false;
       }
 

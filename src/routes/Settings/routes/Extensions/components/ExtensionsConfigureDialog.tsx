@@ -13,6 +13,9 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import IconConstants from 'constants/IconConstants';
 import { RouteComponentProps } from 'react-router';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 const getSettingsUrl = (extensionId: string) => {
   return `${ExtensionConstants.EXTENSIONS_URL}/${extensionId}/settings`;

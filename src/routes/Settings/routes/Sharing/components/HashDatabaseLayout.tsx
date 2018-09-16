@@ -14,6 +14,8 @@ import { formatSize } from 'utils/ValueFormat';
 
 import '../style.css';
 
+import * as API from 'types/api';
+
 
 interface OptimizeLayoutProps {
   checkboxHandler: (checked: boolean) => void;

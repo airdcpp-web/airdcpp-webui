@@ -15,6 +15,8 @@ import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'co
 import '../style.css';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const PriorityCell: React.SFC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
   { cellData, rowDataGetter }

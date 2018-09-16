@@ -16,6 +16,8 @@ import versionCompare from 'compare-versions';
 
 import 'semantic-ui-css/components/item.min.css';
 
+import * as API from 'types/api';
+
 
 interface VersionProps {
   title: string;

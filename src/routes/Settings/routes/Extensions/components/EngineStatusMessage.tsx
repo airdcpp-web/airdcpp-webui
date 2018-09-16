@@ -7,6 +7,8 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import ExternalLink from 'components/ExternalLink';
 import Message from 'components/semantic/Message';
 
+import * as API from 'types/api';
+
 
 interface EngineStatusMessageProps {
 

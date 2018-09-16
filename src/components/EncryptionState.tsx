@@ -3,6 +3,8 @@ import React from 'react';
 
 import Popup from 'components/semantic/Popup';
 
+import { EncryptionInfo } from 'types/api';
+
 
 interface Info {
   iconColor: string;
@@ -11,7 +13,7 @@ interface Info {
   icon: string;
 }
 
-const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
+const encryptionToInfo = (encryption: EncryptionInfo): Info => {
   if (encryption.str.indexOf('TLSv1.2') === -1 && encryption.str.indexOf('TLSv1.1') === -1) {
     return {
       iconColor: 'orange',
@@ -41,7 +43,7 @@ const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
 
 interface InfoMessageProps {
   info: Info;
-  encryption: API.EncryptionInfo;
+  encryption: EncryptionInfo;
 }
 
 const InfoMessage: React.SFC<InfoMessageProps> = ({ info, encryption }) => (
@@ -56,7 +58,7 @@ const InfoMessage: React.SFC<InfoMessageProps> = ({ info, encryption }) => (
 );
 
 interface EncryptionStateProps extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
-  encryption?: API.EncryptionInfo;
+  encryption?: EncryptionInfo;
   alwaysVisible?: boolean;
 }
 

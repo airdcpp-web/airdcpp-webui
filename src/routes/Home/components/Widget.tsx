@@ -7,6 +7,8 @@ import LoginStore from 'stores/LoginStore';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import WidgetActions from 'actions/WidgetActions';
 
+import * as UI from 'types/ui';
+
 
 const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings) => {
   if (widgetInfo.formSettings && !settings.widget) {

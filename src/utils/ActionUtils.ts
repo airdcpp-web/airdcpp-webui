@@ -1,6 +1,8 @@
 import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
 
+import * as UI from 'types/ui';
+
 
 export const actionFilter = (action: UI.ActionType, itemData?: any) => {
   return !itemData || !action.filter || action.filter(itemData);

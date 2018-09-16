@@ -11,6 +11,8 @@ import SearchConstants from 'constants/SearchConstants';
 import { UserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 
+import * as API from 'types/api';
+
 
 const UserResult: React.SFC<{ result: API.ChildSearchResult; }> = ({ result }) => (
   <tr>

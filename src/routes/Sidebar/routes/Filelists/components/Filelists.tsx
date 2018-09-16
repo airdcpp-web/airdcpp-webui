@@ -20,6 +20,9 @@ import '../style.css';
 import { IconType } from 'components/semantic/Icon';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
+
 interface SessionInfoGetter<SessionT> {
   itemLabelGetter: (session: SessionT) => React.ReactNode;
   itemNameGetter: (session: SessionT) => React.ReactNode;

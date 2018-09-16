@@ -9,6 +9,8 @@ import Loader from 'components/semantic/Loader';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import EncryptionState from 'components/EncryptionState';
 
+import * as API from 'types/api';
+
 
 const getCaption = (state: API.CCPMStateId) => {
   switch (state) {

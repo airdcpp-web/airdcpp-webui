@@ -1,5 +1,8 @@
 const FieldTypes = require('constants/SettingConstants').FieldTypes;
 
+import * as UI from 'types/ui';
+
+
 module.exports = {
   typeId: 'rss',
   component: require('./components/RSS').default,

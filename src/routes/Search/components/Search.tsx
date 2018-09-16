@@ -17,6 +17,8 @@ import '../style.css';
 import ResultTable from 'routes/Search/components/ResultTable';
 import { RouteComponentProps } from 'react-router';
 
+import * as API from 'types/api';
+
 
 const SEARCH_PERIOD = 4000;
 

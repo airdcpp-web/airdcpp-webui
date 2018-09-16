@@ -1,5 +1,8 @@
 import update from 'immutability-helper';
 
+import * as API from 'types/api';
+
+
 // Remove the oldest messages to match the maximum cache count
 const checkSplice = (messages: API.MessageListItem[], maxCacheMessageCount: number) => {
   if (messages) {

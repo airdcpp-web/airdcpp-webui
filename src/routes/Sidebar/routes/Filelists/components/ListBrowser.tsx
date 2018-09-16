@@ -25,6 +25,8 @@ import Message from 'components/semantic/Message';
 import DownloadDialog from 'components/download/DownloadDialog';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
 
 interface ListBrowserProps {
   session: API.FilelistSession;

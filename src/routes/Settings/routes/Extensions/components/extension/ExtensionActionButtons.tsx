@@ -7,6 +7,8 @@ import ActionButton from 'components/ActionButton';
 import ExternalLink from 'components/ExternalLink';
 import { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
+import * as API from 'types/api';
+
 
 export interface ExtensionActionButtonsProps {
   npmPackage?: NpmPackage;

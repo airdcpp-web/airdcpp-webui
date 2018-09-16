@@ -13,6 +13,8 @@ import { formatSize } from 'utils/ValueFormat';
 
 import '../style.css';
 
+import * as API from 'types/api';
+
 
 const Row: React.SFC<{ profile: API.ShareProfile; }> = ({ profile }) => (
   <tr>

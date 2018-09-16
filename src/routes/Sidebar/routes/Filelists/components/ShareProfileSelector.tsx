@@ -6,6 +6,8 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 
+import * as API from 'types/api';
+
 
 interface ShareProfileSelectorProps {
   onProfileChanged: (profileId: number) => void;

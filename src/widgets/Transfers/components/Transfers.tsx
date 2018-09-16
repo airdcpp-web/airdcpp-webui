@@ -21,6 +21,8 @@ import { withContentRect, MeasuredComponentProps } from 'react-measure';
 
 import '../style.css';
 
+import * as API from 'types/api';
+
 
 const IDLE_CHECK_PERIOD = 3000;
 const MAX_EVENTS = 1800; // 30 minutes when transfers are running

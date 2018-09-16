@@ -5,6 +5,8 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 
 import LoginStore from 'stores/LoginStore';
 
+import * as API from 'types/api';
+
 
 interface DownloadFileBrowserProps {
   downloadHandler: (path: string) => void;

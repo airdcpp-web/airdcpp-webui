@@ -27,6 +27,8 @@ import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import Modal from 'components/semantic/Modal';
 
+import * as API from 'types/api';
+
 import './style.css';
 
 

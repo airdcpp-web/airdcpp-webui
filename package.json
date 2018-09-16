@@ -88,7 +88,7 @@
     "minimist": "^1.2.0",
     "moment": "^2.22.2",
     "pondjs": "^0.8.9",
-    "promise": "^8.0.1",
+    "promise": "^8.0.2",
     "prop-types": "^15.6.2",
     "re-resizable": "^4.9.0",
     "react": "^16.5.1",

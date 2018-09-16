@@ -10,6 +10,8 @@ import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import Icon, { IconType } from 'components/semantic/Icon';
 
+import * as API from 'types/api';
+
 
 interface HubActionPromptProps {
   icon: IconType;

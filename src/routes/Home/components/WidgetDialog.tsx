@@ -17,6 +17,8 @@ import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
 import { RouteComponentProps } from 'react-router';
 
+import * as UI from 'types/ui';
+
 
 interface WidgetDialogProps {
 

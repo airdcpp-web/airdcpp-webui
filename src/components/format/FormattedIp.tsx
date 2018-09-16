@@ -3,6 +3,8 @@ import React from 'react';
 
 import 'semantic-ui-css/components/flag.min.css';
 
+import * as API from 'types/api';
+
 
 export interface FormattedIpProps {
   item: API.IP;

@@ -17,6 +17,8 @@ import DownloadDialog from 'components/download/DownloadDialog';
 import ResultDialog from 'routes/Search/components/ResultDialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo) => {
   return count > 1 ? `${count} users (${user.nicks})` : user.nicks;

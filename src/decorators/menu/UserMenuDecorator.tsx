@@ -8,6 +8,8 @@ import { getFilePath } from 'utils/FileUtils';
 import UserIcon from 'components/icon/UserIcon';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
+import * as API from 'types/api';
+
 
 export interface UserMenuItemData {
   user: any;

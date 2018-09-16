@@ -8,6 +8,8 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import { Location } from 'history';
 
+import * as UI from 'types/ui';
+
 
 type ItemDataType = (() => object | string | number) | object | string | number;
 

@@ -10,6 +10,8 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import FavoriteDirectoryDialog from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryDialog';
 
+import * as API from 'types/api';
+
 
 const Row: React.SFC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }) => (
   <tr>

@@ -6,6 +6,8 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
+import * as API from 'types/api';
+
 
 interface FileFooterProps {
   item: API.ViewFile;

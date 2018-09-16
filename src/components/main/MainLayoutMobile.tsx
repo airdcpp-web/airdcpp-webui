@@ -15,6 +15,8 @@ import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes, RouteItem } fro
 import 'mobile.css';
 import { Location } from 'history';
 
+import * as UI from 'types/ui';
+
 
 const reduceMenuItemUrgency = (urgencyCountMap: UI.UrgencyCountMap, menuItem: RouteItem) => {
   if (!menuItem.unreadInfoStore) {

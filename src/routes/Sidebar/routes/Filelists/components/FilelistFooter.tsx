@@ -5,6 +5,8 @@ import { formatSize } from 'utils/ValueFormat';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
+import * as API from 'types/api';
+
 
 interface FilelistFooterProps {
   session: API.FilelistSession;

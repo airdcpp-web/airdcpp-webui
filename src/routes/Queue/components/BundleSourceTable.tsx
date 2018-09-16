@@ -13,6 +13,8 @@ import { formatSize, formatSpeed } from 'utils/ValueFormat';
 import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 
+import * as API from 'types/api';
+
 
 interface SourceProps {
   bundle: API.QueueBundle;

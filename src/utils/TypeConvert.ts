@@ -1,5 +1,8 @@
 import { UrgencyEnum } from 'constants/UrgencyConstants';
 
+import * as API from 'types/api';
+
+
 export const dupeToStringType = (dupeInfo: API.Dupe) => {
   if (!dupeInfo) {
     return '';
@@ -24,7 +27,7 @@ export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserF
   return 'green';
 };
 
-export const hubOnlineStatusToColor = (connectState: API.HubConnectStateId) => {
+export const hubOnlineStatusToColor = (connectState: API.HubConnectStateEnum) => {
   if (connectState === 'connected') {
     return 'green';
   }

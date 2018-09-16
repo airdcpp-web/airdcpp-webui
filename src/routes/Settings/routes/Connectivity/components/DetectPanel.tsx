@@ -10,6 +10,8 @@ import { Row } from 'components/semantic/Grid';
 
 import '../style.css';
 
+import * as API from 'types/api';
+
 
 const formatStatus = (protocolStatus: API.ConnectivityProtocolStatus, running: boolean) => {
   if (running) {

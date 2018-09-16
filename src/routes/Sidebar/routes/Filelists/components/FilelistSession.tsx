@@ -10,6 +10,8 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
 
 interface FilelistSessionProps {
   session: API.FilelistSession;

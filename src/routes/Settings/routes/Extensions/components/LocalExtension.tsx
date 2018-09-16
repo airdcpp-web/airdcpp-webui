@@ -6,6 +6,8 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 
 import Extension, { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
+import * as API from 'types/api';
+
 
 export interface NpmPackageData {
   name: string;

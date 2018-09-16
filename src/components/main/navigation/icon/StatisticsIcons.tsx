@@ -16,6 +16,8 @@ import HashConstants from 'constants/HashConstants';
 import IconConstants from 'constants/IconConstants';
 import TransferConstants from 'constants/TransferConstants';
 
+import * as API from 'types/api';
+
 
 interface StatisticsIconProps {
   icon: IconType;

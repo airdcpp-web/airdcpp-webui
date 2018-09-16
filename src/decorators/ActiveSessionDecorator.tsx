@@ -5,6 +5,8 @@ import React from 'react';
 import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
+import * as API from 'types/api';
+
 
 export interface SessionActions {
   setRead: (id: API.IdType) => void;

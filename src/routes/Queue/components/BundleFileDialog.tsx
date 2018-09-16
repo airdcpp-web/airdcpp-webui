@@ -10,6 +10,8 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import { RouteComponentProps } from 'react-router';
 import QueueConstants from 'constants/QueueConstants';
 
+import * as API from 'types/api';
+
 
 interface BundleFileDialogProps {
 

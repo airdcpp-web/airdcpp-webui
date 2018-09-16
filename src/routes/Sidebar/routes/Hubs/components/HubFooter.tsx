@@ -15,6 +15,8 @@ import EncryptionState from 'components/EncryptionState';
 //@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import * as API from 'types/api';
+
 
 interface HubFooterProps {
   session: API.Hub;

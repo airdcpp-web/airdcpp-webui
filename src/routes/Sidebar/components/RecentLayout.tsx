@@ -10,6 +10,8 @@ import { ListItem } from 'components/semantic/List';
 
 import HistoryConstants from 'constants/HistoryConstants';
 
+import * as API from 'types/api';
+
 
 interface RecentLayoutProps {
   entryIcon: string;

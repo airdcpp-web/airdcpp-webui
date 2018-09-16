@@ -17,6 +17,8 @@ import ActionInput, { ActionInputProps } from 'components/semantic/ActionInput';
 import Loader from 'components/semantic/Loader';
 import FileItemList, { FileItemListProps } from './FileItemList';
 
+import * as API from 'types/api';
+
 import './style.css';
 
 

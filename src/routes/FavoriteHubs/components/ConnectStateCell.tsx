@@ -8,6 +8,8 @@ import HubSessionStore from 'stores/HubSessionStore';
 import Icon from 'components/semantic/Icon';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 export interface ConnectStateCellProps extends 
   RowWrapperCellChildProps<API.FavoriteHubConnectState, API.FavoriteHubEntry> {

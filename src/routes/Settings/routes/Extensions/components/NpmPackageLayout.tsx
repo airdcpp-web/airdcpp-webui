@@ -7,6 +7,8 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 
 import 'semantic-ui-css/components/item.min.css';
 
+import * as API from 'types/api';
+
 
 interface NpmPackageLayoutProps {
   

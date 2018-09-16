@@ -10,6 +10,8 @@ import { formatCalendarTime } from 'utils/ValueFormat';
 
 import './messages.css';
 
+import * as API from 'types/api';
+
 
 const getMessageDay = (listItem: API.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;

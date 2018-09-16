@@ -6,7 +6,7 @@ const MODULE_URL = 'favorite_hubs';
   CONNECTED = 'connected'
 };*/
 
-export enum ConnectStateEnum {
+export const enum ConnectStateEnum {
   DISCONNECTED = 0,
   CONNECTING = 1,
   CONNECTED = 2

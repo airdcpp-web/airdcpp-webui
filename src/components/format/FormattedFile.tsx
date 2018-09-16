@@ -3,6 +3,8 @@ import React from 'react';
 
 import FileIcon from 'components/icon/FileIcon';
 
+import * as API from 'types/api';
+
 
 interface FormattedFileProps {
   onClick?: (() => void) | null;

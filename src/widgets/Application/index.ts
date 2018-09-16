@@ -1,3 +1,5 @@
+import * as UI from 'types/ui';
+
 module.exports = {
   typeId: 'application',
   component: require('./components/Application').default,

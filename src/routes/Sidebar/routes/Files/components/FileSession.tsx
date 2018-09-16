@@ -16,6 +16,8 @@ import VideoFile from 'routes/Sidebar/routes/Files/components/VideoFile';
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
 
+import * as API from 'types/api';
+
 
 export interface FileSessionProps {
   session: API.ViewFile;

@@ -1,5 +1,9 @@
 import { UrgencyEnum } from 'constants/UrgencyConstants';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+
 // Get an array of urgencies that are larger than 0
 const getValidUrgencyArray = (urgencies: UI.UrgencyCountMap): string[] => {
   return Object.keys(urgencies).filter(urgency => urgencies[urgency] > 0);
@@ -20,7 +24,7 @@ const maxUrgency = (urgencies: UI.UrgencyCountMap): number | undefined => {
   return Math.max.apply(null, validUrgencies);
 };
 
-const appendToMap = (counts: UI.UrgencyCountMap, urgency: UI.Urgency) => {
+const appendToMap = (counts: UI.UrgencyCountMap, urgency: UI.UrgencyEnum) => {
   counts[urgency] = counts[urgency] || 0;
   counts[urgency] += 1;
 };

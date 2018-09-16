@@ -6,6 +6,9 @@ import { FieldTypes } from 'constants/SettingConstants';
 import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 const typeToComponent = (type: API.SettingType, min: number | undefined, max: number | undefined) => {
   switch (type) {

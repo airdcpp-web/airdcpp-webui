@@ -15,6 +15,8 @@ import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const NickCell: React.SFC<RowWrapperCellChildProps<string, API.HubUser>> = (
   { cellData, rowDataGetter }

@@ -8,6 +8,8 @@ import NotificationActions from 'actions/NotificationActions';
 import { normalizeSettingValueMap, parseDefinitions, parseFieldOptions } from 'utils/FormUtils';
 import t from 'utils/tcomb-form';
 
+import * as UI from 'types/ui';
+
 import './style.css';
 
 const TcombForm = t.form.Form;

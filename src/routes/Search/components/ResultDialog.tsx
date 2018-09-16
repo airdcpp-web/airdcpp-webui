@@ -15,6 +15,8 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import { RouteComponentProps } from 'react-router';
 import SearchConstants from 'constants/SearchConstants';
 
+import * as API from 'types/api';
+
 
 interface DataProps extends DataProviderDecoratorChildProps {
   parentResult: API.GroupedSearchResult;

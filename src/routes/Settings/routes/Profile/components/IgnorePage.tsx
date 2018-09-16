@@ -7,6 +7,8 @@ import Message from 'components/semantic/Message';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
 
+import * as API from 'types/api';
+
 
 const Row: React.SFC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
   <tr>

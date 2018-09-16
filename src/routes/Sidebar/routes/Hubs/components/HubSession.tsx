@@ -18,6 +18,8 @@ import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from 'routes/Sidebar/
 import '../style.css';
 import { SessionActions } from 'decorators/ActiveSessionDecorator';
 
+import * as API from 'types/api';
+
 
 const getStorageKey = (props: HubSessionProps) => {
   return 'view_userlist_' + props.session.id;

@@ -11,6 +11,9 @@ import LoginStore from 'stores/LoginStore';
 
 import './chat.css';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 
 export interface ChatSession {
   id: API.IdType;

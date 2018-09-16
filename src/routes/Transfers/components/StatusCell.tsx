@@ -8,6 +8,8 @@ import EncryptionState from 'components/EncryptionState';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const getStatusClass = (cellData: API.TransferStatus, rowData: API.Transfer) => {
   const statusId = cellData.id;

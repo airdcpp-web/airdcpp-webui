@@ -19,6 +19,8 @@ import LoginStore from 'stores/LoginStore';
 
 import '../style.css';
 
+import * as API from 'types/api';
+
 
 const PasswordCell: React.SFC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = (
   { cellData, rowDataGetter }

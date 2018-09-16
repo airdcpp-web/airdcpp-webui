@@ -12,6 +12,8 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
+import * as API from 'types/api';
+
 
 const WebUserRow: React.SFC<{ user: API.WebUser }> = ({ user }) => (
   <tr>

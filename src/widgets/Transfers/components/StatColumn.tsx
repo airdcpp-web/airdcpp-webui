@@ -9,6 +9,8 @@ import { formatSize, formatSpeed } from 'utils/ValueFormat';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
+import * as API from 'types/api';
+
 
 interface LimiterValueProps {
   limit: number;

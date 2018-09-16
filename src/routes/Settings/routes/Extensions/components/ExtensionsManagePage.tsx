@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';
 import LocalExtension from 'routes/Settings/routes/Extensions/components/LocalExtension';
 
+import * as API from 'types/api';
+
 
 interface ExtensionsManagePageProps {
 

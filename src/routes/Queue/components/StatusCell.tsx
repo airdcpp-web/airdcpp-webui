@@ -5,6 +5,8 @@ import { StatusEnum } from 'constants/QueueConstants';
 import Progress from 'components/semantic/Progress';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
+import * as API from 'types/api';
+
 
 const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundle) => {
   if (cellData.completed) {

@@ -12,6 +12,8 @@ import HubSessionStore from 'stores/HubSessionStore';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+
 
 interface HubNewProps {
   location: Location;

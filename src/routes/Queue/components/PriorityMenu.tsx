@@ -11,6 +11,8 @@ import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
+import * as API from 'types/api';
+
 
 interface PriorityMenuProps {
   itemPrio: API.QueuePriority;

@@ -3,6 +3,8 @@ import ShareProfileConstants from 'constants/ShareProfileConstants';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import { formatSize } from 'utils/ValueFormat';
 
+import * as API from 'types/api';
+
 
 interface ShareProfileDecoratorDataProps {
   profiles: API.ShareProfile[];

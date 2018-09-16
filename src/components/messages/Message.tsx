@@ -11,6 +11,8 @@ import IconConstants from 'constants/IconConstants';
 
 import { UserMenu } from 'components/menu/DropdownMenu';
 
+import * as API from 'types/api';
+
 
 // Message sections
 const Author: React.SFC<{ message: API.ChatMessage; dropdownContext: string }> = ({ message, dropdownContext }) => (
@@ -89,12 +91,11 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 }
 
-
-const getSeverityIcon = (severity: API.Severity) => {
+const getSeverityIcon = (severity: API.SeverityEnum) => {
   switch (severity) {
-    case API.Severity.INFO: return IconConstants.INFO + ' circle';
-    case API.Severity.WARNING: return IconConstants.WARNING;
-    case API.Severity.ERROR: return IconConstants.ERROR;
+    case API.SeverityEnum.INFO: return IconConstants.INFO + ' circle';
+    case API.SeverityEnum.WARNING: return IconConstants.WARNING;
+    case API.SeverityEnum.ERROR: return IconConstants.ERROR;
     default: return '';
   }
 };

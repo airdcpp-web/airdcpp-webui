@@ -22,7 +22,7 @@ export type RouteItemClickHandler = (path: string, event: React.SyntheticEvent<a
 export interface RouteItem {
   title: string;
   path: string;
-  //matchPath?: string;
+  matchPath?: string;
   icon: string;
   unreadInfoStore?: any;
   //access?: API.AccessId;
@@ -191,7 +191,7 @@ export const parseRoutes = (routes: RouteItem[], location?: Location) => {
     <Route 
       key={ route.path } 
       { ...route } 
-      //path={ route.matchPath ? route.matchPath : route.path }
+      path={ route.matchPath ? route.matchPath : route.path }
       location={ location }
     />
   ));

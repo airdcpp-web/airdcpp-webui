@@ -5,6 +5,8 @@ import Accordion from 'components/semantic/Accordion';
 import Message from 'components/semantic/Message';
 import PathList, { PathDownloadHandler } from './PathList';
 
+import * as API from 'types/api';
+
 
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];

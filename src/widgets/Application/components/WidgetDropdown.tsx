@@ -8,6 +8,8 @@ import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import { Location } from 'history';
 
+import * as UI from 'types/ui';
+
 
 const getWidgetItem = (widgetInfo: UI.Widget, location: Location) => {
   return (
