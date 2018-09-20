@@ -3,7 +3,6 @@ import React from 'react';
 import SocketService from 'services/SocketService';
 
 import { HistoryStringEnum } from 'constants/HistoryConstants';
-import { PriorityEnum } from 'constants/PriorityConstants';
 import SearchConstants from 'constants/SearchConstants';
 
 import History from 'utils/History';
@@ -63,7 +62,7 @@ class Search extends React.Component<SearchProps> {
       query: {
         pattern: searchString,
       },
-      priority: PriorityEnum.HIGH,
+      priority: API.PriorityEnum.HIGH,
     })
       .then(this.onSearchPosted)
       .catch((error: string) => 

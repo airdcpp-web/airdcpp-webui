@@ -2,7 +2,6 @@ import React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
 import ShareActions from 'actions/ShareActions';
-import { StateEnum } from 'constants/ShareRootConstants';
 import { formatRelativeTime } from 'utils/ValueFormat';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
@@ -14,7 +13,7 @@ const RefreshCell: React.SFC<RowWrapperCellChildProps<number, API.ShareRootEntry
   { rowDataGetter, cellData }
 ) => {
   const state = rowDataGetter!().status;
-  if (state.id !== StateEnum.NORMAL) {
+  if (state.id !== API.ShareRootStatusEnum.NORMAL) {
     return <Loader size="small" inline={ true } text={ state.str }/>;
   }
 

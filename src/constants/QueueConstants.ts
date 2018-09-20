@@ -1,15 +1,6 @@
 const MODULE_URL = 'queue';
 
-export const StatusEnum = {
-  QUEUED: 'queued',
-  DOWNLOAD_FAILED: 'download_error',
-  RECHECK: 'recheck',
-  DOWNLOADED: 'downloaded', // no queued files remaining
-  COMPLETION_VALIDATION_RUNNING: 'completion_validation_running', // running validation hooks (such as share scanner)
-  COMPLETION_VALIDATION_ERROR: 'completion_validation_error',
-  COMPLETED: 'completed', // ready for sharing
-  SHARED: 'shared'
-};
+export { QueueBundleStatusEnum as StatusEnum } from 'types/api';
 
 export default {
   MODULE_URL: MODULE_URL,

@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
@@ -7,7 +8,6 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import ViewFileStore from 'stores/ViewFileStore';
 import ViewFileActions from 'actions/ViewFileActions';
 
-import AccessConstants from 'constants/AccessConstants';
 import FileIcon from 'components/icon/FileIcon';
 import Message from 'components/semantic/Message';
 
@@ -15,8 +15,11 @@ import FileSession from './FileSession';
 
 import '../style.css';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-const ItemHandler = {
+
+const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
   itemNameGetter(session) {
     return session.name;
   },
@@ -57,7 +60,7 @@ const Files = createReactClass({
         baseUrl="files"
         items={ files }
         disableSideMenu={ true }
-        editAccess={ AccessConstants.VIEW_FILE_EDIT }
+        editAccess={ API.AccessEnum.VIEW_FILE_EDIT }
         actions={ ViewFileActions }
         unreadInfoStore={ ViewFileStore }
         sessionLayout={ FileSession }

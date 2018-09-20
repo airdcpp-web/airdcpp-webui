@@ -8,10 +8,10 @@ import Message from 'components/semantic/Message';
 import SaveButton, { SaveButtonProps } from '../components/SaveButton';
 import NotificationActions from 'actions/NotificationActions';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import Form from 'components/form/Form';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
@@ -104,7 +104,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
         return false;
       }
 
-      const hasChanges = this.hasChanges() && LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+      const hasChanges = this.hasChanges() && LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
       return hasChanges;
     }
 

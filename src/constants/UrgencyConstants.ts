@@ -1,12 +1,5 @@
-import { SeverityEnum } from 'constants/EventConstants';
-
-export const UrgencyEnum = {
-  HIGH: 5,
-  MEDIUM: 3,
-  LOW: 2,
-  INFO: 1,
-  STATUS: 0,
-};
+import { SeverityEnum } from 'types/api';
+import { UrgencyEnum } from 'types/ui';
 
 export const HubMessageUrgencies = {
   status: UrgencyEnum.STATUS,

@@ -6,7 +6,6 @@ import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFoot
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
-import AccessConstants from 'constants/AccessConstants';
 import { SessionActions } from 'decorators/ActiveSessionDecorator';
 
 import * as API from 'types/api';
@@ -25,7 +24,7 @@ class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
     return (
       <div className="private chat session">
         <ChatLayout
-          chatAccess={ AccessConstants.PRIVATE_CHAT_SEND }
+          chatAccess={ API.AccessEnum.PRIVATE_CHAT_SEND }
           messageStore={ PrivateChatMessageStore }
           actions={ actions }
           session={ session }

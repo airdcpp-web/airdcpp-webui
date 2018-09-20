@@ -6,7 +6,6 @@ import Button from 'components/semantic/Button';
 
 import HubActions from 'actions/HubActions';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import Icon, { IconType } from 'components/semantic/Icon';
 
@@ -23,7 +22,7 @@ interface HubActionPromptProps {
 const HubActionPrompt: React.SFC<HubActionPromptProps> = (
   { icon, title, content }
 ) => {
-  if (!LoginStore.hasAccess(AccessConstants.HUBS_EDIT)) {
+  if (!LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT)) {
     return null;
   }
 

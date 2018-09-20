@@ -24,7 +24,6 @@ import AutoSuggestField from 'components/form/AutoSuggestField';
 
 import '../style.css';
 
-import { FieldTypes } from 'constants/SettingConstants';
 import { RouteComponentProps } from 'react-router';
 
 import * as API from 'types/api';
@@ -36,17 +35,17 @@ const getFields = (profiles: API.ShareProfile[]) => {
   return [
     {
       key: 'path',
-      type: FieldTypes.DIRECTORY_PATH,
+      type: API.SettingTypeEnum.DIRECTORY_PATH,
     },
     {
       key: 'virtual_name',
-      type: FieldTypes.STRING,
+      type: API.SettingTypeEnum.STRING,
       help: 'Directories with identical virtual names will be merged in filelist',
     },
     {
       key: 'profiles',
-      type: FieldTypes.LIST,
-      item_type: FieldTypes.NUMBER,
+      type: API.SettingTypeEnum.LIST,
+      item_type: API.SettingTypeEnum.NUMBER,
       title: 'Share profiles',
       help: 'New share profiles can be created from application settings',
       options: profiles,
@@ -54,7 +53,7 @@ const getFields = (profiles: API.ShareProfile[]) => {
     }, 
     {
       key: 'incoming',
-      type: FieldTypes.BOOLEAN,
+      type: API.SettingTypeEnum.BOOLEAN,
     },
   ] as UI.FormFieldDefinition[];
 };

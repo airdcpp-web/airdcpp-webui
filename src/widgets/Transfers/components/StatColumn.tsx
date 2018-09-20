@@ -6,7 +6,6 @@ import Popup from 'components/semantic/Popup';
 
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
@@ -19,7 +18,7 @@ interface LimiterValueProps {
 
 const LimiterValue: React.SFC<LimiterValueProps> = ({ limit, settingKey }) => {
   const value = limit ? formatSpeed(limit * 1024) : 'Disabled';
-  if (!LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT)) {
+  if (!LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT)) {
     return <span>{ value }</span>;
   }
 

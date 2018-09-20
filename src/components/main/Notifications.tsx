@@ -5,7 +5,6 @@ import createReactClass from 'create-react-class';
 //@ts-ignore
 import Reflux from 'reflux';
 
-import AccessConstants from 'constants/AccessConstants';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import { default as QueueConstants } from 'constants/QueueConstants';
@@ -109,17 +108,17 @@ const Notifications = createReactClass<NotificationsProps, {}>({
 
   onSocketConnected(addSocketListener: any) {
     // tslint:disable-next-line:max-line-length
-    addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, null, AccessConstants.PRIVATE_CHAT_VIEW);
+    addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, null, API.AccessEnum.PRIVATE_CHAT_VIEW);
 
     // tslint:disable-next-line:max-line-length
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, null, AccessConstants.QUEUE_VIEW);
+    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, null, API.AccessEnum.QUEUE_VIEW);
     // tslint:disable-next-line:max-line-length
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, null, AccessConstants.QUEUE_VIEW);
+    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, null, API.AccessEnum.QUEUE_VIEW);
 
     // tslint:disable-next-line:max-line-length
-    addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, null, AccessConstants.EVENTS_VIEW);
+    addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, null, API.AccessEnum.EVENTS_VIEW);
     // tslint:disable-next-line:max-line-length
-    addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, null, AccessConstants.VIEW_FILE_VIEW);
+    addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, null, API.AccessEnum.VIEW_FILE_VIEW);
   },
 
   onLogMessage(message: API.StatusMessage) {

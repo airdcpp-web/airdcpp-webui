@@ -1,4 +1,13 @@
-export type SettingType = 'number' | 'string' | 'file_path' | 'directory_path' | 'text' | 'struct' | 'boolean' | 'list';
+export const enum SettingTypeEnum {
+  NUMBER = 'number',
+  BOOLEAN = 'boolean',
+  STRING = 'string',
+  TEXT = 'text',
+  FILE_PATH = 'file_path',
+  DIRECTORY_PATH = 'directory_path',
+  STRUCT = 'struct',
+  LIST = 'list',
+}
 
 export interface SettingEnumOption {
   id: number | string;
@@ -20,8 +29,8 @@ export interface SettingDefinition {
   title: string;
   help?: string;
   optional?: boolean;
-  type: SettingType;
-  item_type?: SettingType;
+  type: SettingTypeEnum;
+  item_type?: SettingTypeEnum;
   options?: SettingEnumOption[];
   min?: number;
   max?: number;

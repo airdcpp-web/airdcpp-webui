@@ -6,7 +6,6 @@ import OverlayConstants from 'constants/OverlayConstants';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
-import { FieldTypes } from 'constants/SettingConstants';
 
 import SocketService from 'services/SocketService';
 
@@ -27,28 +26,28 @@ import * as UI from 'types/ui';
 const Fields: UI.FormFieldDefinition[] = [
   {
     key: 'name',
-    type: FieldTypes.STRING,
+    type: API.SettingTypeEnum.STRING,
   }, {
     key: 'hub_url',
-    type: FieldTypes.STRING,
+    type: API.SettingTypeEnum.STRING,
   }, {
     key: 'hub_description',
-    type: FieldTypes.STRING,
+    type: API.SettingTypeEnum.STRING,
     optional: true,
   }, {
     key: 'share_profile',
-    type: FieldTypes.NUMBER,
+    type: API.SettingTypeEnum.NUMBER,
     optional: true,
   }, {
     key: 'auto_connect',
-    type: FieldTypes.BOOLEAN,
+    type: API.SettingTypeEnum.BOOLEAN,
   }, {
     key: 'nick',
-    type: FieldTypes.STRING,
+    type: API.SettingTypeEnum.STRING,
     optional: true,
   }, {
     key: 'user_description',
-    type: FieldTypes.STRING,
+    type: API.SettingTypeEnum.STRING,
     optional: true,
   }
 ];

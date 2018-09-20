@@ -2,7 +2,6 @@
 import React from 'react';
 
 import PrivateChatActions from 'actions/PrivateChatActions';
-import { CCPMEnum } from 'constants/PrivateChatConstants';
 
 import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import Loader from 'components/semantic/Loader';
@@ -12,11 +11,11 @@ import EncryptionState from 'components/EncryptionState';
 import * as API from 'types/api';
 
 
-const getCaption = (state: API.CCPMStateId) => {
+const getCaption = (state: API.CCPMStateEnum) => {
   switch (state) {
-  case CCPMEnum.CONNECTED: return 'Direct encrypted channel established';
-  case CCPMEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
-  case CCPMEnum.DISCONNECTED: return 'Direct encrypted channel available';
+  case API.CCPMStateEnum.CONNECTED: return 'Direct encrypted channel established';
+  case API.CCPMStateEnum.CONNECTING: return <Loader size="mini" inline={ true } text="Establishing connection..."/>;
+  case API.CCPMStateEnum.DISCONNECTED: return 'Direct encrypted channel available';
   default: return null;
   }
 };
@@ -32,7 +31,7 @@ const CCPMState: React.SFC<CCPMStateProps> = ({ session }) => {
   }
 
   const state = session.ccpm_state.id;
-  const actionIds = [ state === CCPMEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
+  const actionIds = [ state === API.CCPMStateEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
 
   return (
     <SessionFooter>

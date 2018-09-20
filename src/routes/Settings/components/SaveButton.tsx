@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from 'components/semantic/Button';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import classNames from 'classnames';
+
+import { AccessEnum } from 'types/api';
 
 
 export interface SaveButtonProps {
@@ -47,7 +48,7 @@ class SaveButton extends React.Component<SaveButtonProps> {
   render() {
     const { local, hasChanges, className } = this.props;
 
-    const hasAccess: boolean = local || LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+    const hasAccess: boolean = local || LoginStore.hasAccess(AccessEnum.SETTINGS_EDIT);
 
     let title;
     if (!hasAccess) {

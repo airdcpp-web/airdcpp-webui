@@ -6,7 +6,6 @@ import WebUserActions from 'actions/WebUserActions';
 import ActionButton from 'components/ActionButton';
 import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUserDialog';
 
-import AccessConstants from 'constants/AccessConstants';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu/DropdownMenu';
@@ -26,7 +25,7 @@ const WebUserRow: React.SFC<{ user: API.WebUser }> = ({ user }) => (
       />
     </td>
     <td>
-      { user.permissions.indexOf(AccessConstants.ADMIN) !== -1 ? 'Administrator' : user.permissions.length }
+      { user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1 ? 'Administrator' : user.permissions.length }
     </td>
     <td>
       { user.active_sessions }

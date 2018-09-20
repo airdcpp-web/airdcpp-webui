@@ -7,7 +7,6 @@ import Button from 'components/semantic/Button';
 import Message from 'components/semantic/Message';
 
 import HashConstants from 'constants/HashConstants';
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import { formatSize } from 'utils/ValueFormat';
@@ -96,7 +95,7 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutDataProps> {
           <SizeRow title="File index size" size={ status.file_index_size }/>
           <SizeRow title="Hash store size" size={ status.hash_store_size }/>
         </div>
-        { LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT) && (
+        { LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
           <OptimizeLayout
             running={ status.maintenance_running }
             startHandler={ this.handleOptimize }

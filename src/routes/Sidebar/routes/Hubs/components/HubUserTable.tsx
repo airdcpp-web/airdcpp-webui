@@ -9,7 +9,6 @@ import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, ConnectionCell, IpCell } from 'components/table/Cell';
 
 import { TableUserMenu } from 'components/menu/DropdownMenu';
-import { ConnectStateEnum } from 'constants/HubConstants';
 
 import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
@@ -45,7 +44,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
   emptyRowsNodeGetter = () => {
     const connectState = this.props.session.connect_state.id;
 
-    if (connectState === ConnectStateEnum.DISCONNECTED) {
+    if (connectState === API.HubConnectStateEnum.DISCONNECTED) {
       return (
         <div className="offline-message">
           <Message 
@@ -57,7 +56,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
       );
     } 
 
-    const text = connectState !== ConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist';
+    const text = connectState !== API.HubConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist';
     return (
       <div className="loader-wrapper">
         <Loader text={ text }/>

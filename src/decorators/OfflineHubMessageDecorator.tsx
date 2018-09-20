@@ -1,29 +1,32 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import HubSessionStore from 'stores/HubSessionStore';
-import Message from 'components/semantic/Message';
+import Message, { MessageDescriptionType } from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
-import AccessConstants from 'constants/AccessConstants';
 
+import * as API from 'types/api';
+
+
+interface OfflineHubMessageDecoratorProps {
+  offlineMessage: MessageDescriptionType;
+}
 
 // Disables the component if there are no online hubs
-const OfflineHubMessageDecorator = createReactClass({
+const OfflineHubMessageDecorator = createReactClass<OfflineHubMessageDecoratorProps, {}>({
   displayName: 'OfflineHubMessageDecorator',
   mixins: [ Reflux.ListenerMixin ],
 
   propTypes: {
-
-    /**
-		 * Function to call when pressing enter
-		 */
+    // Function to call when pressing enter
     offlineMessage: PropTypes.any.isRequired
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     this.listenTo(HubSessionStore, this.updateState);
   },
 
@@ -38,7 +41,7 @@ const OfflineHubMessageDecorator = createReactClass({
   },
 
   render() {
-    if (!this.state.hasConnectedHubs && LoginStore.hasAccess(AccessConstants.HUBS_VIEW)) {
+    if (!this.state.hasConnectedHubs && LoginStore.hasAccess(API.AccessEnum.HUBS_VIEW)) {
       return (
         <Message 
           className="offline-message" 

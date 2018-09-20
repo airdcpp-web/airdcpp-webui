@@ -1,7 +1,13 @@
 import { ChatMessageCounts, EncryptionInfo } from './common';
 
-export type HubConnectStateEnum = 'connecting' | 'connected' | 'password' | 
-  'keyprint_mismatch' | 'disconnected' | 'redirect';
+export const enum HubConnectStateEnum {
+  REDIRECT = 'redirect',
+  CONNECTING = 'connecting',
+  PASSWORD = 'password',
+  CONNECTED = 'connected',
+  DISCONNECTED = 'disconnected',
+  KEYPRINT_ERROR = 'keyprint_mismatch',
+}
 
 export interface HubConnectState {
   id: HubConnectStateEnum;

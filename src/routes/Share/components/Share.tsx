@@ -14,15 +14,16 @@ import ShareProfileFilter from 'components/table/ShareProfileFilter';
 import { ActionMenu } from 'components/menu/DropdownMenu';
 import RefreshCell from 'routes/Share/components/RefreshCell';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+
+import * as API from 'types/api';
 
 
 class Share extends React.Component {
   static displayName = 'Share';
 
   render() {
-    const editAccess = LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+    const editAccess = LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
     return (
       <Fragment>
         <VirtualTable

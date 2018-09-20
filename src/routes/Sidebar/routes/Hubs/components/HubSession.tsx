@@ -9,9 +9,6 @@ import Checkbox from 'components/semantic/Checkbox';
 import ChatLayout, { ChatActions } from 'routes/Sidebar/components/chat/ChatLayout';
 import HubUserTable from 'routes/Sidebar/routes/Hubs/components/HubUserTable';
 
-import { ConnectStateEnum } from 'constants/HubConstants';
-import AccessConstants from 'constants/AccessConstants';
-
 import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from 'routes/Sidebar/routes/Hubs/components/HubPrompt';
 
@@ -56,7 +53,7 @@ class HubSession extends React.Component<HubSessionProps> {
     const { session } = this.props;
     const connectState = session.connect_state.id;
 
-    if (connectState === ConnectStateEnum.PASSWORD) {
+    if (connectState === API.HubConnectStateEnum.PASSWORD) {
       return (
         <HubActionPrompt 
           title="Password required"
@@ -66,7 +63,7 @@ class HubSession extends React.Component<HubSessionProps> {
       );
     }
 
-    if (connectState === ConnectStateEnum.REDIRECT) {
+    if (connectState === API.HubConnectStateEnum.REDIRECT) {
       return (
         <HubActionPrompt 
           title="Redirect requested"
@@ -109,7 +106,7 @@ class HubSession extends React.Component<HubSessionProps> {
           <ChatLayout
             messageStore={ HubMessageStore }
             actions={ actions }
-            chatAccess={ AccessConstants.HUBS_SEND }
+            chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
           />
         ) }

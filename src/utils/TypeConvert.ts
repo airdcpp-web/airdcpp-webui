@@ -1,6 +1,5 @@
-import { UrgencyEnum } from 'constants/UrgencyConstants';
-
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 export const dupeToStringType = (dupeInfo: API.Dupe) => {
@@ -28,11 +27,11 @@ export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserF
 };
 
 export const hubOnlineStatusToColor = (connectState: API.HubConnectStateEnum) => {
-  if (connectState === 'connected') {
+  if (connectState === API.HubConnectStateEnum.CONNECTED) {
     return 'green';
   }
 
-  if (connectState === 'connecting') {
+  if (connectState === API.HubConnectStateEnum.CONNECTING) {
     return 'yellow';
   }
   
@@ -41,10 +40,10 @@ export const hubOnlineStatusToColor = (connectState: API.HubConnectStateEnum) =>
 
 export const urgencyToColor = (urgency: number) => {
   switch (urgency) {
-    case UrgencyEnum.HIGH: return 'red';
-    case UrgencyEnum.MEDIUM: return 'yellow';
-    case UrgencyEnum.LOW: return 'blue';
-    case UrgencyEnum.INFO: return 'grey';
+    case UI.UrgencyEnum.HIGH: return 'red';
+    case UI.UrgencyEnum.MEDIUM: return 'yellow';
+    case UI.UrgencyEnum.LOW: return 'blue';
+    case UI.UrgencyEnum.INFO: return 'grey';
     default: return '';
   }
 };

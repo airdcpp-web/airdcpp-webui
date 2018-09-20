@@ -22,10 +22,11 @@ import History from 'utils/History';
 import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import { RouterChildContext } from 'react-router';
 import { Location } from 'history';
+
+import * as API from 'types/api';
 
 
 linkify.add('magnet:', {
@@ -70,7 +71,7 @@ const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location)
   if (uri.indexOf('magnet:?xt=urn:tree:tiger:') === 0) {
     evt.preventDefault();
 
-    if (!LoginStore.hasAccess(AccessConstants.SEARCH)) {
+    if (!LoginStore.hasAccess(API.AccessEnum.SEARCH)) {
       return;
     }
 
@@ -87,7 +88,7 @@ const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location)
   } else if (uri.indexOf('adc://') === 0 || uri.indexOf('adcs://') === 0 || uri.indexOf('dchub://') === 0) {
     evt.preventDefault();
 
-    if (!LoginStore.hasAccess(AccessConstants.HUBS_EDIT)) {
+    if (!LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT)) {
       return;
     }
 

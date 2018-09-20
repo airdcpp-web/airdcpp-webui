@@ -12,7 +12,6 @@ import IconConstants from 'constants/IconConstants';
 import SocketService from 'services/SocketService';
 
 import t from 'utils/tcomb-form';
-import { FieldTypes } from 'constants/SettingConstants';
 
 import { getLastDirectory } from 'utils/FileUtils';
 
@@ -28,11 +27,11 @@ import * as UI from 'types/ui';
 const Entry: UI.FormFieldDefinition[] = [
   {
     key: 'path',
-    type: FieldTypes.DIRECTORY_PATH,
+    type: API.SettingTypeEnum.DIRECTORY_PATH,
   },
   {
     key: 'name',
-    type: FieldTypes.STRING,
+    type: API.SettingTypeEnum.STRING,
   },
 ];
 

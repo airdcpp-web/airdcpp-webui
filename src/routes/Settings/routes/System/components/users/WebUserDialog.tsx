@@ -16,8 +16,6 @@ import Form, { FormSaveHandler, FormFieldSettingHandler } from 'components/form/
 
 import LoginStore from 'stores/LoginStore';
 
-import { FieldTypes } from 'constants/SettingConstants';
-
 import '../../style.css';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import { RouteComponentProps } from 'react-router';
@@ -77,18 +75,18 @@ const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
-      type: FieldTypes.STRING,
+      type: API.SettingTypeEnum.STRING,
     },
     {
       key: 'password',
-      type: FieldTypes.STRING,
+      type: API.SettingTypeEnum.STRING,
       title: isNew ? 'Password' : 'New password',
       optional: !isNew,
     },
     {
       key: 'permissions',
-      type: FieldTypes.LIST,
-      item_type: FieldTypes.STRING,
+      type: API.SettingTypeEnum.LIST,
+      item_type: API.SettingTypeEnum.STRING,
       options: Object.keys(AccessConstants).reduce(reducePermissions, []),
     },
   ];

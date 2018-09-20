@@ -23,11 +23,11 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
 
   getIcon = () => {
     switch (this.props.cellData!.id) {
-      case API.FavoriteHubConnectStateId.CONNECTING:
+      case API.FavoriteHubConnectStateEnum.CONNECTING:
         return 'yellow remove';
-      case API.FavoriteHubConnectStateId.CONNECTED:
+      case API.FavoriteHubConnectStateEnum.CONNECTED:
         return 'grey remove';
-      case API.FavoriteHubConnectStateId.DISCONNECTED:
+      case API.FavoriteHubConnectStateEnum.DISCONNECTED:
         return 'green video play';
       default:
     }
@@ -45,9 +45,9 @@ class ConnectStateCell extends React.Component<ConnectStateCellProps> {
 
   getClickAction = () => {
     switch (this.props.cellData!.id) {
-      case API.FavoriteHubConnectStateId.CONNECTING:
-      case API.FavoriteHubConnectStateId.CONNECTED: return this.handleRemoveSession;
-      case API.FavoriteHubConnectStateId.DISCONNECTED:
+      case API.FavoriteHubConnectStateEnum.CONNECTING:
+      case API.FavoriteHubConnectStateEnum.CONNECTED: return this.handleRemoveSession;
+      case API.FavoriteHubConnectStateEnum.DISCONNECTED:
       default: return this.handleCreateSession;
     }
   }

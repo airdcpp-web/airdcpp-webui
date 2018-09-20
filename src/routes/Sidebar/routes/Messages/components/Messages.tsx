@@ -9,10 +9,10 @@ import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerD
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
-import AccessConstants from 'constants/AccessConstants';
-
 import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';
 import PrivateChatSession from 'routes/Sidebar/routes/Messages/components/PrivateChatSession';
+
+import * as API from 'types/api';
 
 import '../style.css';
 
@@ -24,7 +24,7 @@ const Messages = createReactClass({
   mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
   render() {
-    const { match, children, ...other } = this.props;
+    const { match, children, ...other } = this.props as any;
     return (
       <SessionLayout 
         activeId={ match.params.id }
@@ -34,7 +34,7 @@ const Messages = createReactClass({
         newDescription="Open a new private chat session"
         newIcon="comments"
         unreadInfoStore={ PrivateChatSessionStore }
-        editAccess={ AccessConstants.PRIVATE_CHAT_EDIT }
+        editAccess={ API.AccessEnum.PRIVATE_CHAT_EDIT }
         actions={ PrivateChatActions }
         actionIds={ sessionActions }
         sessionLayout={ PrivateChatSession }

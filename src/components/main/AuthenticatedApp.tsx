@@ -2,7 +2,6 @@
 import React from 'react';
 
 import LoginStore from 'stores/LoginStore';
-import AccessConstants from 'constants/AccessConstants';
 
 import ActivityTracker from 'components/main/ActivityTracker';
 import Notifications from 'components/main/Notifications';
@@ -19,6 +18,8 @@ import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
 import { RouteComponentProps } from 'react-router';
+
+import { AccessEnum } from 'types/api';
 
 
 interface AuthenticatedAppProps extends RouteComponentProps<{}> {
@@ -38,23 +39,23 @@ class AuthenticatedApp extends React.Component<AuthenticatedAppProps> {
   componentDidMount() {
     this.updateTitle();
 
-    if (LoginStore.hasAccess(AccessConstants.PRIVATE_CHAT_VIEW)) {
+    if (LoginStore.hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
       PrivateChatActions.fetchSessions();
     }
 
-    if (LoginStore.hasAccess(AccessConstants.HUBS_VIEW)) {
+    if (LoginStore.hasAccess(AccessEnum.HUBS_VIEW)) {
       HubActions.fetchSessions();
     }
 
-    if (LoginStore.hasAccess(AccessConstants.FILELISTS_VIEW)) {
+    if (LoginStore.hasAccess(AccessEnum.FILELISTS_VIEW)) {
       FilelistSessionActions.fetchSessions();
     }
 
-    if (LoginStore.hasAccess(AccessConstants.VIEW_FILE_VIEW)) {
+    if (LoginStore.hasAccess(AccessEnum.VIEW_FILE_VIEW)) {
       ViewFileActions.fetchSessions();
     }
 
-    if (LoginStore.hasAccess(AccessConstants.EVENTS_VIEW)) {
+    if (LoginStore.hasAccess(AccessEnum.EVENTS_VIEW)) {
       EventActions.fetchInfo();
     }
 

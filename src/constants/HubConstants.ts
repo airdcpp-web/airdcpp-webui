@@ -1,14 +1,5 @@
 const MODULE_URL = 'hubs';
 
-export const ConnectStateEnum = {
-  REDIRECT: 'redirect',
-  CONNECTING: 'connecting',
-  PASSWORD: 'password',
-  CONNECTED: 'connected',
-  DISCONNECTED: 'disconnected',
-  KEYPRINT_ERROR: 'keyprint_mismatch',
-};
-
 export default {
   MODULE_URL: MODULE_URL,
   SESSIONS_URL: MODULE_URL,

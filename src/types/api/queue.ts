@@ -11,18 +11,19 @@ export interface QueueBundleSource extends QueueSource {
   size: number;
 }
 
-export const enum QueuePriorityId {
-  PAUSED_FORCED = -1,
-  PAUSED = 0,
-  LOWEST = 1,
-  LOW = 2,
-  NORMAL = 3,
-  HIGH = 4,
-  HIGHEST = 5,
+export const enum QueuePriorityEnum {
+  DEFAULT = -1,
+  PAUSED_FORCED = 0,
+  PAUSED = 1,
+  LOWEST = 2,
+  LOW = 3,
+  NORMAL = 4,
+  HIGH = 5,
+  HIGHEST = 6,
 }
 
 export interface QueuePriority {
-  id: QueuePriorityId;
+  id: QueuePriorityEnum;
   str: string;
   auto: boolean;
 }

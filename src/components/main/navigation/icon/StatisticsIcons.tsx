@@ -9,7 +9,6 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import HashConstants from 'constants/HashConstants';
@@ -66,13 +65,13 @@ const StatisticsIcons = createReactClass<{}, Partial<StatisticsIconsProps>>({
 
   onSocketConnected(addSocketListener: any) {
     // tslint:disable-next-line:max-line-length
-    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, null, AccessConstants.TRANSFERS);
+    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, null, API.AccessEnum.TRANSFERS);
     // tslint:disable-next-line:max-line-length
-    addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, null, AccessConstants.SETTINGS_VIEW);
+    addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, null, API.AccessEnum.SETTINGS_VIEW);
   },
 
   fetchStats() {
-    if (LoginStore.hasAccess(AccessConstants.TRANSFERS)) {
+    if (LoginStore.hasAccess(API.AccessEnum.TRANSFERS)) {
       SocketService.get(TransferConstants.STATISTICS_URL)
         .then(this.onStatsReceived)
         .catch((error: APISocket.Error) => console.error('Failed to fetch transfer statistics', error.message));

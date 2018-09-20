@@ -9,32 +9,17 @@ import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerD
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
 
-import AccessConstants from 'constants/AccessConstants';
-
 import FilelistNew from 'routes/Sidebar/routes/Filelists/components/FilelistNew';
 import FilelistSession from 'routes/Sidebar/routes/Filelists/components/FilelistSession';
 
 import '../style.css';
 
-
-import { IconType } from 'components/semantic/Icon';
-import { Location } from 'history';
-
 import * as API from 'types/api';
-
-
-interface SessionInfoGetter<SessionT> {
-  itemLabelGetter: (session: SessionT) => React.ReactNode;
-  itemNameGetter: (session: SessionT) => React.ReactNode;
-  itemStatusGetter: (session: SessionT) => string;
-  itemHeaderTitleGetter: (session: SessionT, location: Location, actionMenu: any) => React.ReactNode;
-  itemHeaderDescriptionGetter: (session: SessionT) => React.ReactNode;
-  itemHeaderIconGetter: (session: SessionT) => IconType;
-}
+import * as UI from 'types/ui';
 
 
 const UserItemHandler = UserItemHandlerDecorator([ 'message' ]);
-const ItemHandler: SessionInfoGetter<API.FilelistSession> = {
+const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
   itemLabelGetter() {
     return null;
   },
@@ -44,11 +29,11 @@ const ItemHandler: SessionInfoGetter<API.FilelistSession> = {
   },
 
   itemStatusGetter(session) {
-    return session.share_profile ? 'blue' : UserItemHandler.itemStatusGetter(session);
+    return session.share_profile ? 'blue' : UserItemHandler.itemStatusGetter!(session);
   },
 
   itemHeaderTitleGetter(session, location, actionMenu) {
-    return session.share_profile ? actionMenu : UserItemHandler.itemHeaderTitleGetter(session, location, actionMenu);
+    return session.share_profile ? actionMenu : UserItemHandler.itemHeaderTitleGetter!(session, location, actionMenu);
   },
 
   itemHeaderDescriptionGetter(session) {
@@ -75,7 +60,7 @@ const Filelists = createReactClass({
         newDescription="Start browsing a new filelist" 
         newIcon="browser" 
         disableSideMenu={ true }
-        editAccess={ AccessConstants.FILELISTS_EDIT }
+        editAccess={ API.AccessEnum.FILELISTS_EDIT }
         actions={ FilelistSessionActions }
         unreadInfoStore={ FilelistSessionStore }
         sessionLayout={ FilelistSession }

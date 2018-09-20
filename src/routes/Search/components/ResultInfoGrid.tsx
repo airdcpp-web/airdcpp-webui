@@ -4,7 +4,7 @@ import { formatRelativeTime, formatSize } from 'utils/ValueFormat';
 
 import SearchActions from 'actions/SearchActions';
 import { DownloadMenu } from 'components/menu/DropdownMenu';
-import { DupeEnum } from 'constants/DupeConstants';
+//import { DupeEnum } from 'constants/DupeConstants';
 
 import * as API from 'types/api';
 
@@ -25,14 +25,14 @@ const GridRow: React.SFC<{ title: string; text: React.ReactNode; }> = ({ title, 
 );
 
 const DupeStrings = {
-  [DupeEnum.NONE]: 'None',
-  [DupeEnum.SHARE_PARTIAL]: 'Share (partial)',
-  [DupeEnum.SHARE_FULL]: 'Share (full)',
-  [DupeEnum.QUEUE_PARTIAL]: 'Queue (partial)',
-  [DupeEnum.QUEUE_FULL]: 'Queue (full)',
-  [DupeEnum.FINISHED_PARTIAL]: 'Finished (partial)',
-  [DupeEnum.FINISHED_FULL]: 'Finished (full)',
-  [DupeEnum.SHARE_QUEUE]: 'Share and queue',
+  //[API.DupeEnum.NONE]: 'None',
+  [API.DupeEnum.SHARE_PARTIAL]: 'Share (partial)',
+  [API.DupeEnum.SHARE_FULL]: 'Share (full)',
+  [API.DupeEnum.QUEUE_PARTIAL]: 'Queue (partial)',
+  [API.DupeEnum.QUEUE_FULL]: 'Queue (full)',
+  [API.DupeEnum.FINISHED_PARTIAL]: 'Finished (partial)',
+  [API.DupeEnum.FINISHED_FULL]: 'Finished (full)',
+  [API.DupeEnum.SHARE_QUEUE]: 'Share and queue',
 };
 
 const DupePaths: React.SFC<{ paths: string[] }> = ({ paths }) => (

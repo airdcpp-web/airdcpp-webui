@@ -7,7 +7,6 @@ import Modal from 'components/semantic/Modal';
 import IconConstants from 'constants/IconConstants';
 
 import Form, { FormSaveHandler } from 'components/form/Form';
-import { FieldTypes } from 'constants/SettingConstants';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
@@ -17,6 +16,7 @@ import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
 import { RouteComponentProps } from 'react-router';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
@@ -85,7 +85,7 @@ class WidgetDialog extends React.Component<Props> {
     const Entry = [
       {
         key: 'name',
-        type: FieldTypes.STRING,
+        type: API.SettingTypeEnum.STRING,
         default_value: name,
       },
     ];

@@ -6,6 +6,6 @@ export default {
   SESSION_CREATED: 'view_file_added',
   SESSION_REMOVED: 'view_file_removed',
   SESSION_UPDATED: 'view_file_updated',
-	
+
   FILE_DOWNLOADED: 'view_file_finished',
 };

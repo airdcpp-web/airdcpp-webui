@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import TextDecorator from 'components/TextDecorator';
@@ -10,14 +11,17 @@ import HubSessionStore from 'stores/HubSessionStore';
 import HubActions from 'actions/HubActions';
 
 import { hubOnlineStatusToColor } from 'utils/TypeConvert';
-import AccessConstants from 'constants/AccessConstants';
 
-import HubSession from './HubSession';
-import HubNew from './HubNew';
+import HubSession from 'routes/Sidebar/routes/Hubs/components/HubSession';
+import HubNew from 'routes/Sidebar/routes/Hubs/components/HubNew';
 import HubIcon from 'components/icon/HubIcon';
 
 
-const ItemHandler = {
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+
+const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {
     return session.identity.name;
   },
@@ -40,8 +44,12 @@ const ItemHandler = {
   },
 };
 
-const parseNumericId = (params) => {
-  if (!params['id']) {
+interface SessionRouteParams {
+  id: string;
+}
+
+const parseNumericId = (params: SessionRouteParams) => {
+  if (!params.id) {
     return null;
   }
 
@@ -64,7 +72,7 @@ const Hubs = createReactClass({
         newCaption="Connect"
         newDescription="Connect to a new hub"
         newIcon="sitemap"
-        editAccess={ AccessConstants.HUBS_EDIT }
+        editAccess={ API.AccessEnum.HUBS_EDIT }
         actions={ HubActions } 
         //actionIds={ hubActions }
         sessionLayout={ HubSession }

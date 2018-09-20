@@ -1,9 +1,13 @@
 import { ChatMessageCounts, EncryptionInfo, HintedUser } from './common';
 
-export type CCPMStateId = 'connected' | 'connecting' | 'disconnected';
+export const enum CCPMStateEnum {
+  CONNECTED = 'connected',
+  CONNECTING = 'connecting',
+  DISCONNECTED = 'disconnected',
+}
 
 export interface CCPMState {
-  id: CCPMStateId;
+  id: CCPMStateEnum;
   str: string;
   encryption?: EncryptionInfo;
 }

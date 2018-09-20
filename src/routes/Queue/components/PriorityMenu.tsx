@@ -8,7 +8,6 @@ import TableDropdown from 'components/semantic/TableDropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
@@ -17,7 +16,7 @@ import * as API from 'types/api';
 interface PriorityMenuProps {
   itemPrio: API.QueuePriority;
   item: API.QueueItemBase;
-  prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityId) => void;
+  prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => void;
 }
 
 class PriorityMenu extends React.Component<PriorityMenuProps> {
@@ -35,12 +34,12 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
     prioAction: PropTypes.func.isRequired,
   };
 
-  setPriority = (priorityId: API.QueuePriorityId) => {
+  setPriority = (priorityId: API.QueuePriorityEnum) => {
     this.props.prioAction(this.props.item, priorityId);
   }
 
   setAutoPriority = () => {
-    this.setPriority(PriorityEnum.DEFAULT);
+    this.setPriority(API.QueuePriorityEnum.DEFAULT);
   }
 
   shouldComponentUpdate(nextProps: PriorityMenuProps) {
@@ -60,8 +59,8 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
   }
 
   getChildren = () => {
-    let children = Object.keys(PriorityEnum.properties)
-      .map(prioKey => this.getPriorityListItem(PriorityEnum.properties[prioKey]));
+    let children = Object.keys(PriorityEnum)
+      .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey]));
 
     children.push(<div key="divider" className="ui divider"/>);
     children.push(
@@ -83,7 +82,7 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
       caption += ' (auto)';
     }
 
-    if (!LoginStore.hasAccess(AccessConstants.QUEUE_EDIT)) {
+    if (!LoginStore.hasAccess(API.AccessEnum.QUEUE_EDIT)) {
       return (
         <EmptyDropdown
           caption={ caption }

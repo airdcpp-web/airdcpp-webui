@@ -1,7 +1,6 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 
-import { PriorityEnum } from 'constants/PriorityConstants';
 import ShareConstants from 'constants/ShareConstants';
 import { default as HistoryConstants, HistoryStringEnum } from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
@@ -20,7 +19,6 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import OverlayConstants from 'constants/OverlayConstants';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import Dropdown from 'components/semantic/Dropdown';
@@ -135,7 +133,7 @@ class DownloadDialog extends React.Component<Props> {
       }
     ];
 
-    if (LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW)) {
+    if (LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW)) {
       this.sections.push({
         name: 'Browse',
         key: 'browse',
@@ -153,7 +151,7 @@ class DownloadDialog extends React.Component<Props> {
     downloadHandler(itemInfo!, user!, {
       target_name: itemInfo!.name, // possibly allow changing this later...
       target_directory: path,
-      priority: PriorityEnum.DEFAULT
+      priority: API.QueuePriorityEnum.DEFAULT,
     });
 
     HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);

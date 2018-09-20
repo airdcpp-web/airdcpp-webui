@@ -1,8 +1,6 @@
 import invariant from 'invariant';
 import t from 'utils/tcomb-form';
 
-import { FieldTypes } from 'constants/SettingConstants';
-
 import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
 
@@ -10,19 +8,19 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const typeToComponent = (type: API.SettingType, min: number | undefined, max: number | undefined) => {
+const typeToComponent = (type: API.SettingTypeEnum, min: number | undefined, max: number | undefined) => {
   switch (type) {
-    case FieldTypes.NUMBER: {
+    case API.SettingTypeEnum.NUMBER: {
       if (min || max) {
         return t.Range(min, max);
       }
       return t.Positive;
     }
-    case FieldTypes.BOOLEAN: return t.Bool;
-    case FieldTypes.STRING:
-    case FieldTypes.TEXT:
-    case FieldTypes.FILE_PATH:
-    case FieldTypes.DIRECTORY_PATH: return t.Str;
+    case API.SettingTypeEnum.BOOLEAN: return t.Bool;
+    case API.SettingTypeEnum.STRING:
+    case API.SettingTypeEnum.TEXT:
+    case API.SettingTypeEnum.FILE_PATH:
+    case API.SettingTypeEnum.DIRECTORY_PATH: return t.Str;
     default: 
   }
 
@@ -32,8 +30,8 @@ const typeToComponent = (type: API.SettingType, min: number | undefined, max: nu
 const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
   const ret = definitions.reduce(
     (reduced, def) => {
-      if (def.type === FieldTypes.LIST) {
-        if (def.item_type === FieldTypes.STRUCT) {
+      if (def.type === API.SettingTypeEnum.LIST) {
+        if (def.item_type === API.SettingTypeEnum.STRUCT) {
           reduced[def.key] = t.list(parseDefinitions(def.definitions!));
         } else {
           reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max));
@@ -95,8 +93,8 @@ const normalizeSettingValueMap = (
     (reducedValue, { key, type, definitions, default_value, item_type }) => {
       if (!!value && value.hasOwnProperty(key)) {
         const fieldValue = value[key];
-        if (type === FieldTypes.LIST && Array.isArray(fieldValue)) {
-          if (item_type === FieldTypes.STRUCT) {
+        if (type === API.SettingTypeEnum.LIST && Array.isArray(fieldValue)) {
+          if (item_type === API.SettingTypeEnum.STRUCT) {
             // Normalize each list object
             reducedValue[key] = fieldValue.map((arrayItem) => {
               if (!!arrayItem && typeof arrayItem === 'object') {
@@ -127,15 +125,15 @@ const intTransformer = {
   format: (v: number) => String(v),
 };
 
-const parseTypeOptions = (type: API.SettingType) => {
+const parseTypeOptions = (type: API.SettingTypeEnum) => {
   const options = {};
   switch (type) {
-    case FieldTypes.TEXT: {
+    case API.SettingTypeEnum.TEXT: {
       options['type'] = 'textarea';
       break;
     } 
     //case FieldTypes.FILE_PATH:
-    case FieldTypes.DIRECTORY_PATH: {
+    case API.SettingTypeEnum.DIRECTORY_PATH: {
       options['factory'] = t.form.Textbox;
       options['template'] = BrowseField;
 
@@ -156,7 +154,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
-  if (definition.type === FieldTypes.LIST) {
+  if (definition.type === API.SettingTypeEnum.LIST) {
     options['item'] = {};
     if (definition.definitions) {
       // Struct item fields
@@ -190,7 +188,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
       nullOption: false,
     });
 
-    if (definition.type === FieldTypes.LIST) {
+    if (definition.type === API.SettingTypeEnum.LIST) {
       options['template'] = SelectField;
     } else if (definition.options[0].id === parseInt(definition.options[0].id as string, 10)) {
       // Integer keys won't work with the default template, do string conversion

@@ -8,8 +8,9 @@ import Button from 'components/semantic/Button';
 import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
 import OverlayConstants from 'constants/OverlayConstants';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
+
+import * as API from 'types/api';
 
 
 const BrowseField = t.form.Form.templates.textbox.clone({
@@ -37,7 +38,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
       setTimeout(_input.focus());
     };
 
-    const hasAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_VIEW);
+    const hasAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
     const fieldStyle = classNames(
       'ui fluid input field',
       { 'action': hasAccess },

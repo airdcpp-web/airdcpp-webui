@@ -10,7 +10,7 @@ export const StatusEnum = {
 export default {
   MODULE_URL: MODULE_URL,
   TRANSFERS_URL: MODULE_URL,
-	
+
   TRANSFERRED_BYTES_URL: MODULE_URL + '/tranferred_bytes',
   STATISTICS_URL: MODULE_URL + '/stats',
 

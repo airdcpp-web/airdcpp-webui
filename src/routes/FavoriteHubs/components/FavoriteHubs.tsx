@@ -14,7 +14,6 @@ import { TableActionMenu } from 'components/menu/DropdownMenu';
 import ActionButton from 'components/ActionButton';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 
 import '../style.css';
@@ -50,7 +49,7 @@ class FavoriteHubs extends React.Component {
       />
     );
 
-    const editAccess = LoginStore.hasAccess(AccessConstants.ACCESS_HUBS_EDIT);
+    const editAccess = LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT);
     return (
       <>
         <VirtualTable

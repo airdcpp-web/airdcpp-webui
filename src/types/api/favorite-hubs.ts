@@ -15,14 +15,14 @@ export interface FavoriteHubEntryBase {
   connection_ip_v6: string | null;
 }
 
-export const enum FavoriteHubConnectStateId {
+export const enum FavoriteHubConnectStateEnum {
   CONNECTED = 'connected',
   CONNECTING = 'connecting',
   DISCONNECTED = 'disconnected',
 }
 
 export interface FavoriteHubConnectState {
-  id: FavoriteHubConnectStateId;
+  id: FavoriteHubConnectStateEnum;
   str: string;
   current_hub_id: number;
 }

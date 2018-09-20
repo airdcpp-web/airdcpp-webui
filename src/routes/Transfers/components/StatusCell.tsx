@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Progress from 'components/semantic/Progress';
-import { StatusEnum } from 'constants/TransferConstants';
 
 import EncryptionState from 'components/EncryptionState';
 import Loader from 'components/semantic/Loader';
@@ -14,12 +13,12 @@ import * as API from 'types/api';
 const getStatusClass = (cellData: API.TransferStatus, rowData: API.Transfer) => {
   const statusId = cellData.id;
   return classNames(
-    { 'grey': statusId === StatusEnum.WAITING },
-    { 'blue': statusId === StatusEnum.RUNNING && rowData.download },
-    { 'red': statusId === StatusEnum.RUNNING && !rowData.download },
-    { 'green': statusId === StatusEnum.FINISHED && rowData.download },
-    { 'brown': statusId === StatusEnum.FINISHED && !rowData.download },
-    { 'red':  statusId === StatusEnum.FAILED },
+    { 'grey': statusId === API.TransferStatusEnum.WAITING },
+    { 'blue': statusId === API.TransferStatusEnum.RUNNING && rowData.download },
+    { 'red': statusId === API.TransferStatusEnum.RUNNING && !rowData.download },
+    { 'green': statusId === API.TransferStatusEnum.FINISHED && rowData.download },
+    { 'brown': statusId === API.TransferStatusEnum.FINISHED && !rowData.download },
+    { 'red':  statusId === API.TransferStatusEnum.FAILED },
   );
 };
 
@@ -28,11 +27,11 @@ interface StatusCellProps extends RowWrapperCellChildProps<API.TransferStatus, A
 }
 
 const StatusCell: React.SFC<StatusCellProps> = ({ cellData, rowDataGetter }) => {
-  if (cellData!.id === StatusEnum.WAITING) {
+  if (cellData!.id === API.TransferStatusEnum.WAITING) {
     return <Loader size="small" inline={ true } text={ cellData!.str }/>;
   }
 
-  if (cellData!.id === StatusEnum.FAILED) {
+  if (cellData!.id === API.TransferStatusEnum.FAILED) {
     return <span className="error">{ cellData!.str }</span>;
   }
 

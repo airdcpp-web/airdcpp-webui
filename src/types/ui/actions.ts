@@ -4,5 +4,6 @@ export type ActionType<ItemDataT = any> = ((...params: any[]) => void) & {
   access?: string;
   displayName: string;
   icon?: string;
+  confirmed?: any;
 };
   

@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { StatusEnum } from 'constants/QueueConstants';
 import Progress from 'components/semantic/Progress';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
@@ -15,8 +14,8 @@ const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundl
 
   const statusId = cellData.id;
   return classNames(
-    { 'grey': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed === 0 },
-    { 'blue': (!statusId || statusId === StatusEnum.QUEUED) && rowData.speed > 0 },
+    { 'grey': (!statusId || statusId === API.QueueBundleStatusEnum.QUEUED) && rowData.speed === 0 },
+    { 'blue': (!statusId || statusId === API.QueueBundleStatusEnum.QUEUED) && rowData.speed > 0 },
   );
 };
 

@@ -35,11 +35,18 @@ export interface GroupedPath {
 
 
 // PROTOCOL FILES
-type DupeId = 'share_partial' | 'share_full' | 'queue_partial' | 
-  'queue_full' | 'finished_partial' | 'finished_full' | 'share_full';
+export const enum DupeEnum {
+  SHARE_PARTIAL = 'share_partial',
+  SHARE_FULL = 'share_full',
+  QUEUE_PARTIAL = 'queue_partial',
+  QUEUE_FULL = 'queue_full',
+  FINISHED_PARTIAL = 'finished_partial',
+  FINISHED_FULL = 'finished_full',
+  SHARE_QUEUE = 'share_queue',
+}
 
 export interface Dupe {
-  id: DupeId;
+  id: DupeEnum;
   paths: string[];
 }
 
@@ -187,12 +194,12 @@ export interface HookError {
   str: string;
 }
 
-export const enum Priority {
-  LOWEST = 1,
-  LOW = 2,
-  NORMAL = 3,
-  HIGH = 4,
-  HIGHEST = 5,
+export const enum PriorityEnum {
+  LOWEST = 2,
+  LOW = 3,
+  NORMAL = 4,
+  HIGH = 5,
+  HIGHEST = 6,
 }
 
 export const enum DownloadableItemStateEnum {

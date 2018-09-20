@@ -4,7 +4,6 @@ import React from 'react';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import { PlatformEnum } from 'constants/SystemConstants';
 
-import AccessConstants from 'constants/AccessConstants';
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
@@ -214,7 +213,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     const { currentDirectory, error, items } = this.state;
     const { selectedNameFormatter, itemIconGetter } = this.props;
 
-    const hasEditAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT);
+    const hasEditAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_EDIT);
     const rootName = this.isWindows ? 'Computer' : 'Root';
     return (
       <div className="file-browser">

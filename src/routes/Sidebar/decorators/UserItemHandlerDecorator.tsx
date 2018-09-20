@@ -4,8 +4,16 @@ import { userOnlineStatusToColor } from 'utils/TypeConvert';
 import { UserMenu } from 'components/menu/DropdownMenu';
 import UserIcon from 'components/icon/UserIcon';
 
-export default (itemMenuIds) => {
-  const UserItemHandlerDecorator = {
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+
+interface UserSessionBase {
+  user: API.HintedUser;
+}
+
+export default function <SessionT extends UserSessionBase>(itemMenuIds: string[]) {
+  const UserItemHandlerDecorator: UI.SessionInfoGetter<SessionT> = {
     itemNameGetter(session) {
       return session.user.nicks;
     },
@@ -37,4 +45,4 @@ export default (itemMenuIds) => {
   };
 
   return UserItemHandlerDecorator;
-};
+}
