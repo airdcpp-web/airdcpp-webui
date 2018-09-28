@@ -59,7 +59,7 @@ class ExtensionsConfigureDialog extends React.Component<Props> {
         dynamicHeight={ true }
       >
         <Form
-          ref={ c => this.form = c! }
+          ref={ (c: any) => this.form = c! }
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
           value={ settings }

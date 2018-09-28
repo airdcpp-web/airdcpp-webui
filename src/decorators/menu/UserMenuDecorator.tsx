@@ -11,14 +11,18 @@ import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 import * as API from 'types/api';
 
 
+type UserType = (API.User & { nick?: string; }) | 
+  (API.HintedUser & { nick?: string; }) | 
+  (API.HubUser & { nicks?: string });
+
 export interface UserMenuItemData {
-  user: any;
-  directory: any;
+  user: UserType;
+  directory: string;
 }
 
 export interface UserMenuDecoratorProps extends Omit<ActionMenuDecoratorProps, 'actions' | 'caption' | 'itemData'> {
-  user: (API.User & { nick?: string; }) | (API.HintedUser & { nick?: string; }) | (API.HubUser & { nicks?: string });
-  directory?: string;
+  user: UserType;
+  directory: string;
   userIcon?: string | boolean | null;
   text?: React.ReactNode;
   className?: string;
@@ -84,7 +88,7 @@ export default function <DropdownPropsT extends object>(
         ...other 
       } = this.props;
 
-      let nicks = text;
+      let nicks: React.ReactNode = text;
       if (!nicks) {
         nicks = user.nicks ? user.nicks : user.nick;
       }

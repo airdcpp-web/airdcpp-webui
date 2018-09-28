@@ -10,8 +10,8 @@ import { Location } from 'history';
 
 import * as UI from 'types/ui';
 
-
-type ItemDataType = (() => object | string | number) | object | string | number;
+type ItemDataTypeValue = object | string | number;
+type ItemDataType = (() => ItemDataTypeValue) | ItemDataTypeValue;
 
 export interface ActionMenuDecoratorProps {
   className?: string;
@@ -30,7 +30,7 @@ export interface ActionMenuDecoratorChildProps {
 type FilterType = (action: UI.ActionType, itemData: any) => boolean;
 
 
-const parseItemData = (itemData?: ItemDataType) => typeof itemData === 'function' ? itemData() : itemData;
+const parseItemData = (itemData?: ItemDataType) => itemData instanceof Function ? itemData() : itemData;
 
 // Returns true if the provided ID matches the specified filter
 const filterItem = (props: ActionMenuDecoratorProps, filter: FilterType, actionId: string) => {
@@ -72,7 +72,7 @@ const filterExtraDividers = (ids: string[]) => {
 
 interface MenuType {
   actionIds: string[];
-  itemDataGetter: () => any;
+  itemDataGetter: () => ItemDataTypeValue | undefined;
   actions: UI.ActionType[];
 }
 
@@ -105,7 +105,7 @@ const parseMenu = (props: ActionMenuDecoratorProps, hasPreviousMenuItems: boolea
 
   return {
     actionIds: ids,
-    itemDataGetter: typeof props.itemData === 'function' ? props.itemData : () => props.itemData,
+    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData,
     actions: props.actions,
   };
 };

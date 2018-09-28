@@ -35,7 +35,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       locals.onChange(event.target.value);
-      setTimeout(_input.focus());
+      setTimeout(() => _input.focus());
     };
 
     const hasAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);

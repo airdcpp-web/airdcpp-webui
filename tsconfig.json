@@ -26,8 +26,8 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": [
+    "dist",
     "node_modules",
-    "build",
     "scripts",
     "acceptance-tests",
     "webpack",
