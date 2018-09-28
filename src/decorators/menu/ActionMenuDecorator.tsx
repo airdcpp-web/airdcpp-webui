@@ -10,9 +10,6 @@ import { Location } from 'history';
 
 import * as UI from 'types/ui';
 
-type ItemDataTypeValue = object | string | number;
-type ItemDataType = (() => ItemDataTypeValue) | ItemDataTypeValue;
-
 export interface ActionMenuDecoratorProps {
   className?: string;
   caption?: React.ReactNode;
@@ -20,17 +17,19 @@ export interface ActionMenuDecoratorProps {
   ids?: string[];
   actions: UI.ActionType[];
   
-  itemData?: ItemDataType;
+  itemData?: UI.ActionItemDataType;
 }
 
 export interface ActionMenuDecoratorChildProps {
   children: () => React.ReactNode;
 }
 
-type FilterType = (action: UI.ActionType, itemData: any) => boolean;
+type FilterType = (action: UI.ActionType, itemData: UI.ActionItemDataValueType | undefined) => boolean;
 
 
-const parseItemData = (itemData?: ItemDataType) => itemData instanceof Function ? itemData() : itemData;
+const parseItemData = (itemData?: UI.ActionItemDataType): UI.ActionItemDataValueType | undefined => {
+  return itemData instanceof Function ? itemData() : itemData;
+};
 
 // Returns true if the provided ID matches the specified filter
 const filterItem = (props: ActionMenuDecoratorProps, filter: FilterType, actionId: string) => {
@@ -72,7 +71,7 @@ const filterExtraDividers = (ids: string[]) => {
 
 interface MenuType {
   actionIds: string[];
-  itemDataGetter: () => ItemDataTypeValue | undefined;
+  itemDataGetter: () => UI.ActionItemDataValueType | undefined;
   actions: UI.ActionType[];
 }
 
@@ -139,7 +138,7 @@ const getMenuItem = (menu: MenuType, menuIndex: number, actionId: string, itemIn
 };
 
 // This should be used only for constructed menus, not for id arrays
-const notError = (id: any) => typeof id !== 'string';
+const notError = (id: string | MenuType) => typeof id !== 'string';
 
 export default function <DropdownComponentPropsT extends object>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
@@ -183,7 +182,7 @@ export default function <DropdownComponentPropsT extends object>(
       const menus = [ parseMenu(this.props, false) ];
       if (children) {
         React.Children.map(children, child => {
-          menus.push(parseMenu((child as any).props, notError(menus[0])));
+          menus.push(parseMenu((child as React.ReactElement<ActionMenuDecoratorProps>).props, notError(menus[0])));
         });
       }
 
@@ -198,7 +197,7 @@ export default function <DropdownComponentPropsT extends object>(
     }
 
     render() {
-      let { ids, actions, children, itemData, itemDataGetter, ...other } = this.props as any; // eslint-disable-line
+      let { ids, actions, children, itemData, ...other } = this.props as any; // eslint-disable-line
 
       const menus = this.getMenus();
 

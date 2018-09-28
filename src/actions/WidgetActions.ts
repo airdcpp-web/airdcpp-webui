@@ -19,7 +19,7 @@ interface WidgetItemInfo {
 }
 
 const notAlwaysShow = ({ widgetInfo }: WidgetItemInfo) => !widgetInfo.alwaysShow;
-const noData = (item: any) => !item;
+const noData = (item: UI.ActionItemDataValueType) => !item;
 
 
 const WidgetActions = Reflux.createActions([

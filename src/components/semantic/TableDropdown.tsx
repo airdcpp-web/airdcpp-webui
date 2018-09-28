@@ -31,7 +31,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     children: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Partial<TableDropdownProps> = {
+  static defaultProps: Pick<TableDropdownProps, 'linkCaption'> = {
     linkCaption: true,
   };
 

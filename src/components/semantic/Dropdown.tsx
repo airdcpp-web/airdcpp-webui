@@ -50,7 +50,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     settings: PropTypes.object,
   };
 
-  static defaultProps: Partial<DropdownProps> = {
+  static defaultProps: Pick<DropdownProps, 'triggerIcon' | 'direction' | 'leftIcon'> = {
     triggerIcon: 'angle down',
     direction: 'auto',
     leftIcon: false,

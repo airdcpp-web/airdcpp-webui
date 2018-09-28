@@ -74,8 +74,8 @@ class RSS extends React.PureComponent<RSSProps, State> {
     componentId: PropTypes.string.isRequired,
   };
 
-  constructor(props: RSSProps, context: any) {
-    super(props, context);
+  constructor(props: RSSProps) {
+    super(props);
     const feedInfo = this.getCachedFeedInfo();
 
     this.state = {

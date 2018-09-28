@@ -11,7 +11,7 @@ import * as UI from 'types/ui';
 
 interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
   action: UI.ActionType;
-  itemData?: any;
+  itemData?: UI.ActionItemDataValueType;
   icon?: IconType;
 }
 

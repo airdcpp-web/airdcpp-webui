@@ -40,7 +40,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       addFormRef: PropTypes.func.isRequired,
     };
 
-    static defaultProps: Partial<SaveDecoratorProps> = {
+    static defaultProps: Pick<SaveDecoratorProps, 'saveable'> = {
       saveable: true
     };
 

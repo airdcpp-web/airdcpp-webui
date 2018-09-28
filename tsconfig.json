@@ -26,6 +26,7 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": [
+    "devtools",
     "dist",
     "node_modules",
     "scripts",

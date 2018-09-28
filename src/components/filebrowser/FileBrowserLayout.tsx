@@ -81,7 +81,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     selectedNameFormatter: PropTypes.func,
   };
 
-  static defaultProps: Partial<FileBrowserProps> = {
+  static defaultProps: Pick<FileBrowserProps, 'initialPath'> = {
     initialPath: '',
   };
 

@@ -25,7 +25,7 @@ export interface VirtualTableProps extends TableFooterProps, Omit<TableContainer
   store: any;
   sessionStore?: any;
   viewId?: string;
-  sourceFilter?: any;
+  sourceFilter?: API.TableFilter;
   emptyRowsNodeGetter?: () => React.ReactNode;
 }
 

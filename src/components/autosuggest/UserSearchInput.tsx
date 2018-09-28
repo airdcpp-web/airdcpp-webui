@@ -5,8 +5,10 @@ import UserConstants from 'constants/UserConstants';
 import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestField';
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
+import * as API from 'types/api';
 
-export interface UserSearchInputProps extends Pick<RemoteSuggestFieldProps, 'submitHandler'> {
+
+export interface UserSearchInputProps extends Pick<RemoteSuggestFieldProps<API.HintedUser>, 'submitHandler'> {
   offlineMessage: string;
 }
 

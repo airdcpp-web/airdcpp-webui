@@ -39,7 +39,7 @@ class Popup extends React.PureComponent<PopupProps> {
     triggerClassName: PropTypes.string,
   };
 
-  static defaultProps: Partial<PopupProps> = {
+  static defaultProps: Pick<PopupProps, 'position' | 'triggerClassName'> = {
     position: 'bottom left',
     triggerClassName: '',
   };
@@ -114,7 +114,7 @@ class Popup extends React.PureComponent<PopupProps> {
       ...this.props.settings,
     };
 
-    $(this.triggerNode).popup(settings).popup('show'); // TODO: fix any
+    $(this.triggerNode).popup(settings).popup('show');
   }
 
   handleClick = () => {

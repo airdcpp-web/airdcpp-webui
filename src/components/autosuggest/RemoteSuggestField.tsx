@@ -8,19 +8,19 @@ import SuggestionRenderer from './SuggestionRenderer';
 import { RenderSuggestion, SuggestionsFetchRequested, Omit } from 'react-autosuggest';
 
 
-type ForwardedSuggestFieldProps = Omit<
-  SuggestFieldProps, 
+type ForwardedSuggestFieldProps<SuggestionT> = Omit<
+  SuggestFieldProps<SuggestionT>, 
   'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 
   'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
 >;
 
-export interface RemoteSuggestFieldProps extends ForwardedSuggestFieldProps {
+export interface RemoteSuggestFieldProps<SuggestionT> extends ForwardedSuggestFieldProps<SuggestionT> {
   valueField: string;
   descriptionField: string;
   url: string;
 }
 
-class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
+class RemoteSuggestField<SuggestionT> extends React.Component<RemoteSuggestFieldProps<SuggestionT>> {
   static propTypes = {
     valueField: PropTypes.string.isRequired,
 
@@ -30,10 +30,10 @@ class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
   };
 
   state = {
-    suggestions: [],
+    suggestions: [] as SuggestionT[],
   };
 
-  getSuggestionValue = (suggestionObj: object) => {
+  getSuggestionValue = (suggestionObj: SuggestionT) => {
     return suggestionObj[this.props.valueField];
   }
 
@@ -54,13 +54,13 @@ class RemoteSuggestField extends React.Component<RemoteSuggestFieldProps> {
     });
   }
 
-  onSuggestionsReceived = (data: any[]) => {
+  onSuggestionsReceived = (data: SuggestionT[]) => {
     this.setState({ 
       suggestions: data 
     });
   }
 
-  renderSuggestion: RenderSuggestion<any> = (suggestionObj, { query }) => {
+  renderSuggestion: RenderSuggestion<SuggestionT> = (suggestionObj, { query }) => {
     return SuggestionRenderer(query, suggestionObj[this.props.valueField], suggestionObj[this.props.descriptionField]);
   }
 

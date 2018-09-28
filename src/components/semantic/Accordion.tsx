@@ -17,7 +17,7 @@ class Accordion extends React.Component<AccordionProps> {
     controlled: PropTypes.bool,
   };
 
-  static defaultProps: Partial<AccordionProps> = {
+  static defaultProps: Pick<AccordionProps, 'className'> = {
     className: '',
   };
 

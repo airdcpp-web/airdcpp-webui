@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import * as UI from 'types/ui';
 
 
-export const actionFilter = (action: UI.ActionType, itemData?: any) => {
+export const actionFilter = (action: UI.ActionType, itemData?: UI.ActionItemDataValueType) => {
   return !itemData || !action.filter || action.filter(itemData);
 };
 
@@ -17,6 +17,6 @@ export const actionAccess = (action: UI.ActionType) => {
   return !action.access || LoginStore.hasAccess(action.access);
 };
 
-export const showAction = (action: UI.ActionType, itemData?: any) => {
+export const showAction = (action: UI.ActionType, itemData?: UI.ActionItemDataValueType) => {
   return actionFilter(action, itemData) && actionAccess(action);
 };

@@ -5,7 +5,9 @@ import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestFiel
 import Button from 'components/semantic/Button';
 
 
-export interface HubSearchInputProps extends Pick<RemoteSuggestFieldProps, 'submitHandler'> {
+import * as API from 'types/api';
+
+export interface HubSearchInputProps extends Pick<RemoteSuggestFieldProps<API.Hub>, 'submitHandler'> {
 
 }
 

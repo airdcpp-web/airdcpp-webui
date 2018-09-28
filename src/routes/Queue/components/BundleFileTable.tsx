@@ -8,7 +8,6 @@ import PriorityMenu from 'routes/Queue/components/PriorityMenu';
 import StatusCell from 'routes/Queue/components/StatusCell';
 
 import QueueFileViewStore from 'stores/QueueFileViewStore';
-import { FilterMethod } from 'constants/TableConstants';
 
 import { FileActionCell, SizeCell, SpeedCell, AbbreviatedDurationCell } from 'components/table/Cell';
 
@@ -47,7 +46,7 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
         store={ QueueFileViewStore }
         sourceFilter={ {
           pattern: this.props.bundle.id,
-          method: FilterMethod.EXACT,
+          method: API.FilterMethod.EXACT,
           property: 'bundle',
         } }
       >

@@ -24,7 +24,7 @@ const Messages = createReactClass({
   mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
   render() {
-    const { match, children, ...other } = this.props as any;
+    const { match, children, ...other } = this.props;
     return (
       <SessionLayout 
         activeId={ match.params.id }

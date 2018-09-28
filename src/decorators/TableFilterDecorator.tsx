@@ -4,7 +4,7 @@ import React from 'react';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
 
-import { FilterMethod } from 'constants/TableConstants';
+import * as API from 'types/api';
 
 
 interface FilterType {
@@ -20,7 +20,7 @@ export interface TableFilterDecoratorDataProps {
 }
 
 export interface TableFilterDecoratorChildProps {
-  onFilterUpdated: (value: string | number, method?: FilterMethod) => void;
+  onFilterUpdated: (value: string | number, method?: API.FilterMethod) => void;
 }
 
 export default function <PropsT>(
@@ -34,12 +34,12 @@ export default function <PropsT>(
     //  filter: PropTypes.object.isRequired,
     //};
 
-    onFilterUpdated = (pattern: string, method: FilterMethod = FilterMethod.PARTIAL) => {
+    onFilterUpdated = (pattern: string, method: API.FilterMethod = API.FilterMethod.PARTIAL) => {
       const data = {
         pattern,
         method,
         property: propertyName,
-      };
+      } as API.TableFilter;
 
       const { viewUrl, filter } = this.props;
       SocketService.put(viewUrl + '/filter/' + filter.id, data)

@@ -18,10 +18,10 @@ const theme: Theme = {
   suggestionHighlighted: 'link item active',
 };
 
-type SuggestionType = any;
-type SubmitHandlerType = (value: string, suggestion: SuggestionType) => void;
+type SubmitHandlerType<SuggestionT> = (value: string, suggestion?: SuggestionT) => void;
 
-export interface SuggestFieldProps extends Omit<Autosuggest.AutosuggestProps<SuggestionType>, 'inputProps'> {
+export interface SuggestFieldProps<SuggestionT> 
+  extends Omit<Autosuggest.AutosuggestProps<SuggestionT>, 'inputProps'> {
   defaultValue?: string;
   disabled?: boolean;
   button?: React.ReactElement<ButtonProps>;
@@ -31,10 +31,10 @@ export interface SuggestFieldProps extends Omit<Autosuggest.AutosuggestProps<Sug
   onSuggestionsClearRequested: () => void;
   onChange?: (text: string) => void;
 
-  submitHandler?: SubmitHandlerType;
+  submitHandler?: SubmitHandlerType<SuggestionT>;
 }
 
-class SuggestField extends React.Component<SuggestFieldProps> {
+class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<SuggestionT>> {
   static propTypes = {
 
     /**
@@ -68,7 +68,7 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     disabled: PropTypes.bool,
   };
 
-  static defaultProps: Partial<SuggestFieldProps> = {
+  static defaultProps = {
     autoFocus: true,
     defaultValue: '',
   };
@@ -77,7 +77,7 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     text: this.props.defaultValue || '',
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps: SuggestFieldProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: SuggestFieldProps<SuggestionT>) {
     // The received default value has changed?
     // Always update the field value in that case
     if (nextProps.defaultValue !== this.props.defaultValue) {
@@ -87,14 +87,14 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     }
   }
 
-  handleSubmit = (event: any, suggestion?: SuggestionType) => {
+  handleSubmit = (event: React.FormEvent, suggestion?: SuggestionT) => {
     if (this.props.submitHandler) {
       const value = suggestion ? this.props.getSuggestionValue(suggestion) : this.state.text;
       this.props.submitHandler(value, suggestion);
     }
   }
 
-  onTextChange = (evt: any, { newValue }: Autosuggest.ChangeEvent) => {
+  onTextChange = (evt: React.FormEvent, { newValue }: Autosuggest.ChangeEvent) => {
     this.setState({ 
       text: newValue 
     });
@@ -108,7 +108,7 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     return this.state.text.length === 0;
   }
 
-  getSuggestionValue = (suggestion: SuggestionType) => {
+  getSuggestionValue = (suggestion: SuggestionT) => {
     return suggestion;
   }
 
@@ -126,8 +126,8 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     }
   }
 
-  onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionType> = (
-    event: any, 
+  onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionT> = (
+    event, 
     { suggestion, suggestionValue, method }
   ) => {
     // No second 'Enter' event if the suggestion was selected
@@ -140,7 +140,7 @@ class SuggestField extends React.Component<SuggestFieldProps> {
     const { className, autoFocus, placeholder, defaultValue, button, ...other } = this.props;
     const { text } = this.state;
 
-    const inputAttributes: Autosuggest.InputProps<SuggestionType> = {
+    const inputAttributes: Autosuggest.InputProps<SuggestionT> = {
       placeholder: placeholder,
       onChange: this.onTextChange,
       autoFocus: autoFocus,

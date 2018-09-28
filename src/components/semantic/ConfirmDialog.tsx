@@ -52,7 +52,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     checkboxCaption: PropTypes.node,
   };
 
-  static defaultProps: Partial<ConfirmDialogProps> = {
+  static defaultProps: Pick<ConfirmDialogProps, 'approveCaption' | 'rejectCaption'> = {
     approveCaption: 'Yes',
     rejectCaption: 'No',
   };

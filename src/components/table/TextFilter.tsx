@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { FilterMethod } from 'constants/TableConstants';
-
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
+
+import { FilterMethod } from 'types/api';
 
 
 const filterMethodToString = (method: FilterMethod) => {
@@ -21,7 +21,7 @@ const filterMethodToString = (method: FilterMethod) => {
 const getPlaceholder = (method: FilterMethod) => {
   let ret = 'Filter';
   if (method !== FilterMethod.PARTIAL) {
-    ret += ' (' + filterMethodToString(method).toLowerCase() + ')';
+    ret += ` (${filterMethodToString(method).toLowerCase()})`;
   }
 
   return ret + '...';
@@ -37,7 +37,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
     method: FilterMethod.PARTIAL,
   };
 
-  timer: any = null;
+  timer: NodeJS.Timer;
   input: HTMLInputElement;
 
   componentWillUnmount() {
@@ -58,7 +58,6 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
     this.timer = setTimeout(
       () => {
-        this.timer = null;
         this.onFilterUpdated();
       }, 
       200

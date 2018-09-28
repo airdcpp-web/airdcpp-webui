@@ -29,7 +29,7 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
     initialPath: PropTypes.string,
   };*/
 
-  static defaultProps = {
+  static defaultProps: Pick<FileBrowserDialogProps, 'title' | 'initialPath'> = {
     title: 'Browse...',
     initialPath: '',
   };

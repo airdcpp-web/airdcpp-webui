@@ -51,7 +51,7 @@ const SelectTemplate: TCombTemplate = {
     // translate the option model from tcomb to react-select
     const options: OptionsType = locals.options.map(({ value: v, text }) => ({ value: v, label: text }));
     const value: OptionsType = locals.value.map(v => {
-      const option = options.find(anyOption => anyOption.value === v) as OptionType;
+      const option = options.find(anyOption => anyOption.value === v)!;
       invariant(!!option, 'All current values were not found from the option list');
       return option;
     });

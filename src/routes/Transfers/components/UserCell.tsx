@@ -30,7 +30,7 @@ class UserCell extends React.Component<UserCellProps> {
     const { cellData, rowDataGetter } = this.props;
     return (
       <TableUserMenu 
-        user={ cellData }
+        user={ cellData! }
         userIcon={ null }
         ids={ UserFileActions }
         text={ <UserCaption rowData={ rowDataGetter!() } cellData={ cellData }/> }

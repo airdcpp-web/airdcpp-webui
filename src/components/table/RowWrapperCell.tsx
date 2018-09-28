@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CellProps } from 'fixed-data-table-2';
 
+import * as UI from 'types/ui';
 
-export interface RowWrapperCellChildProps<CellDataT = any, RowDataT = any> extends CellProps {
+
+export interface RowWrapperCellChildProps<
+  CellDataT = any, 
+  RowDataT extends UI.ActionItemDataValueType = any
+> extends CellProps {
   cellData?: CellDataT;
   rowDataGetter?: () => RowDataT;
   rowData?: RowDataT;

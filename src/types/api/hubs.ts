@@ -1,4 +1,5 @@
 import { ChatMessageCounts, EncryptionInfo } from './common';
+import { ShareProfileBasic } from './shareprofiles';
 
 export const enum HubConnectStateEnum {
   REDIRECT = 'redirect',
@@ -25,7 +26,7 @@ export interface Hub {
     name: string;
     description: string;
   };
-  share_profile: any;
+  share_profile: ShareProfileBasic;
   favorite_hub: number | null;
   message_counts: ChatMessageCounts;
   encryption: EncryptionInfo;

@@ -25,7 +25,7 @@ class ActionInput extends React.PureComponent<ActionInputProps> {
     handleAction: PropTypes.func.isRequired
   };
 
-  static defaultProps: Partial<ActionInputProps> = {
+  static defaultProps: Pick<ActionInputProps, 'type'> = {
     type: 'text',
   };
 

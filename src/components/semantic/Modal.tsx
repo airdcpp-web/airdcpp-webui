@@ -53,7 +53,7 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<Sema
     hide: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Partial<ModalProps> = {
+  static defaultProps: Pick<ModalProps, 'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'> = {
     closable: true,
     approveCaption: 'Save',
     fullHeight: false,

@@ -4,3 +4,9 @@ export enum FilterMethod {
   WILDCARD = 2,
   EXACT = 3, /// case-sensitive, character-for-character equality
 }
+
+export interface TableFilter {
+  method: FilterMethod;
+  property: string;
+  pattern: string | number;
+}

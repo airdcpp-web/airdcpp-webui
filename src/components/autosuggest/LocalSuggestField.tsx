@@ -9,7 +9,7 @@ import { Omit, RenderSuggestion, SuggestionsFetchRequested } from 'react-autosug
 
 
 type ForwardedSuggestFieldProps = Omit<
-  SuggestFieldProps, 
+  SuggestFieldProps<string>, 
   'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 
   'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
 >;
@@ -46,11 +46,11 @@ class LocalSuggestField extends React.Component<LocalSuggestFieldProps> {
     });
   }
 
-  renderSuggestion: RenderSuggestion<any> = (dataItem, { query }) => {
+  renderSuggestion: RenderSuggestion<string> = (dataItem, { query }) => {
     return SuggestionRenderer(query, dataItem);
   }
 
-  getSuggestionValue = (suggestion: any) => {
+  getSuggestionValue = (suggestion: string) => {
     return suggestion;
   }
 
