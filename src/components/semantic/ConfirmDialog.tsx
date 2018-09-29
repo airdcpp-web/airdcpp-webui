@@ -61,7 +61,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     checked: false,
   };
 
-  c: any;
+  c: HTMLDivElement;
   componentDidMount() {
     // We can't use the same context as for modals
     // because the dimmer wouldn't work correctly then
@@ -111,7 +111,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     const { title, icon, checkboxCaption, rejectCaption, approveCaption, content } = this.props;
     return (
       <div 
-        ref={ c => this.c = c } 
+        ref={ c => this.c = c! } 
         className="ui basic modal confirm-dialog"
       >
         <div className="header">

@@ -53,8 +53,8 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
     selectedNameFormatter: PropTypes.func,
   };
 
-  breadcrumb: any;
-  wrapper: any;
+  breadcrumb: HTMLDivElement;
+  wrapper: HTMLDivElement;
 
   static defaultProps = {
     rootName: 'Root',
@@ -128,8 +128,8 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
     const className = this.state.overflow ? 'overflow' : '';
     return (
       <div className={ 'ui segment browserbar ' + className }>
-        <div className="path-navigation" ref={ c => this.wrapper = c }>
-          <div className="ui breadcrumb" ref={ c => this.breadcrumb = c }>
+        <div className="path-navigation" ref={ c => this.wrapper = c! }>
+          <div className="ui breadcrumb" ref={ c => this.breadcrumb = c! }>
             { tokens.map(this.formatSection) }
           </div>
         </div>

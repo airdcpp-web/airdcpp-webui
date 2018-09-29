@@ -186,7 +186,7 @@ class DownloadDialog extends React.Component<Props> {
     const Component = useMobileLayout() ? MobileLayout : NormalLayout;
     return (
       <Modal 
-        ref={ (c: any) => this.modal = c }
+        ref={ c => this.modal = c }
         className="download-dialog" 
         title="Download" 
         closable={ true } 

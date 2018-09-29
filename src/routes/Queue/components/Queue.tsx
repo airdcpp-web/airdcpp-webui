@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
 import QueueActions from 'actions/QueueActions';
@@ -63,7 +63,7 @@ class Queue extends React.Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <VirtualTable
           emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
           store={ QueueBundleViewStore }
@@ -168,7 +168,7 @@ class Queue extends React.Component {
         </VirtualTable>
         <SourceDialog/>
         <BundleFileDialog/>
-      </Fragment>
+      </>
     );
   }
 }

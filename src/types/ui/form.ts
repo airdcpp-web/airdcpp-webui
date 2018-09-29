@@ -18,6 +18,6 @@ export interface FormOption<OptionValueT = any> {
 
 export type FormLocals<OptionValueT = any, ValueT = any> = {
   onChange: (values: ValueT) => void,
-  options: Array<FormOption>,
+  options: Array<FormOption<OptionValueT>>,
   value: ValueT,
 };

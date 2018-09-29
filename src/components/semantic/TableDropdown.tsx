@@ -35,7 +35,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     linkCaption: true,
   };
 
-  popupNode: any;
+  popupNode: Popup;
   shouldComponentUpdate(nextProps: TableDropdownProps) {
     return nextProps.caption !== this.props.caption;
   }
@@ -88,7 +88,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     return (
       <div className={ classNames('dropdown', this.props.className) }>
         <Popup 
-          ref={ c => this.popupNode = c }
+          ref={ c => this.popupNode = c! }
           className="basic dropdown-content" 
           trigger={ trigger } 
           settings={ settings } 

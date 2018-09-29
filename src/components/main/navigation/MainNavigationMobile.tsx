@@ -27,7 +27,7 @@ class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
     router: PropTypes.object.isRequired
   };
 
-  c: any;
+  c: HTMLDivElement;
   componentDidMount() {
     const settings = {
       context: '#mobile-layout',
@@ -61,7 +61,7 @@ class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
   render() {
     return (
       <div 
-        ref={ c => this.c = c }
+        ref={ c => this.c = c! }
         id="mobile-menu" 
         className="ui right vertical inverted sidebar menu"
       >

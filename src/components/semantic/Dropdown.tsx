@@ -56,7 +56,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     leftIcon: false,
   };
 
-  c: any;
+  c: HTMLDivElement;
   state = {
     visible: false,
   };
@@ -141,7 +141,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
 
     return (
       <div 
-        ref={ c => this.c = c } 
+        ref={ c => this.c = c! } 
         className={ className }
       >
         { (leftIcon && !!caption) && icon }

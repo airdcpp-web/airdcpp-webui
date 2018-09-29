@@ -187,5 +187,5 @@ export default ModalRouteDecorator<ShareDirectoryDialogProps>(
     }
   ),
   OverlayConstants.SHARE_ROOT_MODAL_ID,
-  'directories/:directoryId?'
+  'directories/:directoryId([0-9A-Z]{39})?'
 );

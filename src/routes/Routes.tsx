@@ -26,10 +26,8 @@ export interface RouteItem {
   matchPath?: string;
   icon: string;
   unreadInfoStore?: any;
-  //access?: API.AccessId;
   access?: string;
   component?: React.ComponentClass;
-  //exact?: boolean;
   className?: string;
   onClick?: RouteItemClickHandler;
 }

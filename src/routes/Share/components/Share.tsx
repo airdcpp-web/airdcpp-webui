@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import ShareActions from 'actions/ShareActions';
 import ShareRootActions from 'actions/ShareRootActions';
@@ -25,7 +25,7 @@ class Share extends React.Component {
   render() {
     const editAccess = LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
     return (
-      <Fragment>
+      <>
         <VirtualTable
           store={ ShareRootStore }
           customFilter={ <ShareProfileFilter/> }
@@ -91,7 +91,7 @@ class Share extends React.Component {
           />
         </VirtualTable>
         <ShareDirectoryDialog/>
-      </Fragment>
+      </>
     );
   }
 }

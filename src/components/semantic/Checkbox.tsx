@@ -36,7 +36,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
     floating: PropTypes.bool,
   };
 
-  c: any;
+  c: HTMLDivElement;
   componentDidMount() {
     const settings: SemanticUI.CheckboxSettings = {
       fireOnInit: false,
@@ -70,7 +70,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
 
     return (
       <div 
-        ref={ c => this.c = c }
+        ref={ c => this.c = c! }
         className={ checkboxStyle }
       >
         <input type="checkbox" defaultChecked={ checked }/>

@@ -35,7 +35,7 @@ class FavoriteHubs extends React.Component {
   static displayName = 'FavoriteHubs';
 
   rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
-    return rowData.connect_state.id;
+    return rowData.connect_state.id.toString();
   }
 
   onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {

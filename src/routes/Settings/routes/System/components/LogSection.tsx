@@ -15,7 +15,7 @@ class LogSection extends React.Component<LogSectionProps> {
   };
 
   convertKey = (suffix?: string) => {
-    return `log_${this.props.section}${suffix ? `_${suffix}` : ''})`;
+    return `log_${this.props.section}${suffix ? `_${suffix}` : ''}`;
   }
 
   onSettingsReceived: FormSourceValueUpdateHandler<any> = (data) => {

@@ -141,5 +141,5 @@ export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
     },
   }),
   OverlayConstants.FAVORITE_DIRECTORY_MODAL,
-  'directories/:directoryId?'
+  'directories/:directoryId([0-9A-Z]{39})?'
 );

@@ -101,11 +101,11 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
 
       const { currentMenuItem } = this.props;
       if (currentMenuItem.noSave) {
-        return false;
+        return true;
       }
 
       const hasChanges = this.hasChanges() && LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
-      return hasChanges;
+      return hasChanges ? 'You have unsaved changes. Are you sure you want to leave?' : true;
     }
 
     saveFormRef = (c: SaveableRef) => {
@@ -152,8 +152,9 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
           message={ message }
         >
           <Prompt
-            message="You have unsaved changes. Are you sure you want to leave?"
-            when={ this.promptSave() }
+            //message="You have unsaved changes. Are you sure you want to leave?"
+            //when={ this.promptSave as any }
+            message={ this.promptSave }
           />
           { children }
         </Component>

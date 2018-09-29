@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router';
+import { Router, Route, Switch, Redirect } from 'react-router';
 
 import History from 'utils/History';
 
@@ -62,6 +62,7 @@ const App = () => (
         >
           <Switch>
             <Route path="/login" component={ Login }/>
+            <Route exact path="/" component={() => <Redirect to="/home" />}/>
             <Route path="/" component={ AuthenticatedApp }/>
           </Switch>
         </div>

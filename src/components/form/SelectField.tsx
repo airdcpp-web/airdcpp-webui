@@ -1,8 +1,6 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 
-// TODO: remove when types are available
-//@ts-ignore
 import Select from 'react-select';
 
 import invariant from 'invariant';
@@ -12,7 +10,7 @@ import t from 'utils/tcomb-form';
 import * as UI from 'types/ui';
 
 
-const MultiValueContainer: React.SFC<any> = ({ css, children, ...innerProps }) => {
+const MultiValueContainer: React.SFC<any> = ({ css, children, innerProps }) => {
   return (
     <a { ...innerProps } className="ui label">
       { children }
@@ -24,7 +22,7 @@ const MultiValueLabel: React.SFC<any> = ({ children }) => {
   return children;
 };
 
-const MultiValueRemove: React.SFC<any> = ({ css, ...innerProps }) => {
+const MultiValueRemove: React.SFC<any> = ({ css, innerProps }) => {
   return (
     <i { ...innerProps } className="delete icon"/>
   );

@@ -15,10 +15,17 @@ export interface FavoriteHubEntryBase {
   connection_ip_v6: string | null;
 }
 
-export const enum FavoriteHubConnectStateEnum {
-  CONNECTED = 'connected',
-  CONNECTING = 'connecting',
+/*export const enum FavoriteHubConnectStateEnum {
   DISCONNECTED = 'disconnected',
+  CONNECTING = 'connecting',
+  CONNECTED = 'connected',
+}*/
+
+// TODO: fix in the next API version
+export const enum FavoriteHubConnectStateEnum {
+  DISCONNECTED = 0,
+  CONNECTING = 1,
+  CONNECTED = 2,
 }
 
 export interface FavoriteHubConnectState {

@@ -107,6 +107,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
           >
             <MenuSection caption="Match type">
               { Object.keys(FilterMethod)
+                .filter(key => isNaN(Number(key)))
                 .map(key => this.getFilterMethod(FilterMethod[key])) }
             </MenuSection>
           </SectionedDropdown>

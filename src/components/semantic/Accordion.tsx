@@ -21,7 +21,7 @@ class Accordion extends React.Component<AccordionProps> {
     className: '',
   };
 
-  c: any;
+  c: HTMLDivElement;
   componentDidMount() {
     let settings: SemanticUI.AccordionSettings | undefined;
     
@@ -43,7 +43,7 @@ class Accordion extends React.Component<AccordionProps> {
     let { children } = this.props;
     return (
       <div 
-        ref={ c => this.c = c } 
+        ref={ c => this.c = c! } 
         className={ accordionStyle }
       >
         { children }

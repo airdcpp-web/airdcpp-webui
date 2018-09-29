@@ -171,5 +171,5 @@ export default ModalRouteDecorator<FavoriteHubDialogProps>(
     true
   ),
   OverlayConstants.FAVORITE_HUB_MODAL_ID,
-  'entries/:entryId',
+  'entries/:entryId(\d+)?',
 );
