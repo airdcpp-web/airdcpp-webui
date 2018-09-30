@@ -22,16 +22,19 @@ const messages = [
 ];
 
 const clearMessages = () => {
-  PrivateChatMessageStore._onSessionUpdated({
-    message_counts: {
-      total: 0,
-      unread: {
-        bot: 0,
-        user: 0,
-        status: 0,
+  PrivateChatMessageStore._onSessionUpdated(
+    {
+      message_counts: {
+        total: 0,
+        unread: {
+          bot: 0,
+          user: 0,
+          status: 0,
+        }
       }
-    }
-  }, sessionId);
+    }, 
+    sessionId
+  );
 };
 
 

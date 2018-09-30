@@ -3,7 +3,7 @@ import { LocalSettings } from 'constants/SettingConstants';
 
 
 describe('local setting store', () => {
-  const findDefinition = key => SettingDefinitions.find(def => def.key === key);
+  const findDefinition = (key: LocalSettings) => SettingDefinitions.find(def => def.key === key)!;
 
   test('should update values', () => {
     const key = LocalSettings.NOTIFY_PM_USER;

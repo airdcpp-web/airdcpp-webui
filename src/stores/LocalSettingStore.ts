@@ -1,11 +1,14 @@
+//@ts-ignore
 import Reflux from 'reflux';
 import invariant from 'invariant';
 
 import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 import { LocalSettings, FieldTypes } from 'constants/SettingConstants';
 
+import * as UI from 'types/ui';
 
-export const SettingDefinitions = [
+
+export const SettingDefinitions: UI.FormFieldDefinition[] = [
   {
     key: LocalSettings.NOTIFY_PM_USER,
     type: FieldTypes.BOOLEAN,
@@ -61,39 +64,44 @@ export const SettingDefinitions = [
 // Settings are saved in local storage only after the default value has been modified
 // Default value from the respective definition is returned otherwise
 const LocalSettingStore = Reflux.createStore({
+  //settings: UI.FormValueMap,
+
   init() {
     this.settings = loadLocalProperty('local_settings', {});
   },
 
-  getDefinition(key) {
-    const def = SettingDefinitions.find(def => def.key === key);
-    invariant(def, 'Invalid local setting key ' + key + ' supplied');
-    return def;
+  getDefinition(key: string) {
+    const definition = SettingDefinitions.find(def => def.key === key);
+    invariant(definition, `Invalid local setting key ${key} supplied`);
+    return definition;
   },
 
   // Return setting item infos (see API help for settings/items/info for details) 
-  getDefinitions(keys) {
+  getDefinitions(keys: string[]) {
     return keys.map(this.getDefinition);
   },
 
   // Get the current value by key (or default value if no value has been set)
-  getValue(key) {
+  getValue(key: string) {
     if (this.settings.hasOwnProperty(key)) {
       return this.settings[key];
     }
-		
+
     return this.getDefinition(key).default_value;
   },
 
   getValues() {
-    return SettingDefinitions.reduce((reduced, { key }) => {
-      reduced[key] = this.getValue(key);
-      return reduced;
-    }, {});
+    return SettingDefinitions.reduce(
+      (reduced, { key }) => {
+        reduced[key] = this.getValue(key);
+        return reduced;
+      }, 
+      {}
+    );
   },
 
   // Append values for the provided key -> value object 
-  setValues(items) {
+  setValues(items: UI.FormValueMap) {
     this.settings = Object.assign({}, this.settings, items);
     saveLocalProperty('local_settings', this.settings);
     this.trigger(this.getValues());

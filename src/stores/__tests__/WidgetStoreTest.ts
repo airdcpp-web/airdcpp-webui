@@ -1,21 +1,25 @@
 import { default as WidgetStore } from 'stores/WidgetStore';
 
-import RSS from 'widgets/RSS';
+import { RSS } from 'widgets/RSS';
+
 import WidgetUtils from 'utils/WidgetUtils';
+import { Layouts, Layout } from 'react-grid-layout';
 
 
-const countWidgetIds = (id, layouts) => {
-  return Object.keys(layouts).reduce((sum, key) => {
+const countWidgetIds = (id: string, layouts: Layouts) => {
+  return Object.keys(layouts).reduce(
+    (sum, key) => {
+      if (layouts[key].find((layoutItem: Layout) => layoutItem.i === id)) {
+        return sum + 1;
+      }
 
-    if (layouts[key].find(layoutItem => layoutItem.i === id)) {
-      return sum + 1;
-    }
-
-    return sum;
-  }, 0);
+      return sum;
+    }, 
+    0
+  );
 };
 
-const hasLayoutItems = (id) => {
+const hasLayoutItems = (id: string) => {
   return countWidgetIds(id, WidgetStore.layouts) === Object.keys(WidgetStore.cols).length;
 };
 
@@ -30,8 +34,8 @@ describe('widget store', () => {
 
     expect(hasLayoutItems('dummy')).toEqual(false);
 
-    const settings = WidgetStore.getWidgetSettings('rss_releases', RSS);
-    expect(settings).toEqual({
+    const rssSettings = WidgetStore.getWidgetSettings('rss_releases', RSS);
+    expect(rssSettings).toEqual({
       name: 'News',
       widget: {
         feed_url: 'https://airdcpp-web.github.io/feed.xml',

@@ -1,8 +1,23 @@
 import { checkSplice, mergeCacheMessages, pushMessage } from 'utils/MessageUtils';
 import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
 
+import * as API from 'types/api';
+import { AccessEnum } from 'types/api';
+//import * as UI from 'types/ui';
 
-const MessageStoreDecorator = function (store, actions, access) {
+
+type MessageType = 'chat_message' | 'log_message';
+
+interface ChatSession {
+  id: API.IdType;
+  message_counts: API.ChatMessageCounts;
+}
+
+type MessageCache = Array<{ 
+  [key in MessageType]: any 
+}>;
+
+const MessageStoreDecorator = function (store: any, actions: any, access: AccessEnum) {
   // Message arrays mapped by session IDs 
   let messages = new Map();
 
@@ -10,29 +25,29 @@ const MessageStoreDecorator = function (store, actions, access) {
   let initializedSession = new Set();
 
 
-  const onFetchMessagesCompleted = (sessionId, cacheMessages) => {
+  const onFetchMessagesCompleted = (sessionId: API.IdType, cacheMessages: MessageCache) => {
     messages.set(sessionId, mergeCacheMessages(cacheMessages, messages.get(sessionId)));
     store.trigger(messages.get(sessionId), sessionId);
   };
 
-  const onFetchMessages = (sessionId) => {
+  const onFetchMessages = (sessionId: API.IdType) => {
     initializedSession.add(sessionId);
   };
 
-  const onMessageReceived = (sessionId, message, type) => {
+  const onMessageReceived = (sessionId: API.IdType, message: API.Message, type: MessageType) => {
     messages.set(sessionId, pushMessage({ [type]: message }, messages.get(sessionId)));
     store.trigger(messages.get(sessionId), sessionId);
   };
 
-  store._onChatMessage = (data, sessionId) => {
+  store._onChatMessage = (data: API.Message, sessionId: API.IdType) => {
     onMessageReceived(sessionId, data, 'chat_message');
   };
 
-  store._onStatusMessage = (data, sessionId) => {
+  store._onStatusMessage = (data: API.Message, sessionId: API.IdType) => {
     onMessageReceived(sessionId, data, 'log_message');
   };
 
-  store._onSessionUpdated = (session, sessionId) => {
+  store._onSessionUpdated = (session: ChatSession, sessionId: API.IdType) => {
     if (!session.message_counts || !messages.get(sessionId)) {
       return;
     }
@@ -49,7 +64,7 @@ const MessageStoreDecorator = function (store, actions, access) {
     }
   };
 
-  store._onSessionRemoved = (session) => {
+  store._onSessionRemoved = (session: ChatSession) => {
     messages.delete(session.id);
     initializedSession.delete(session.id);
   };
@@ -59,12 +74,12 @@ const MessageStoreDecorator = function (store, actions, access) {
     initializedSession.clear();
   };
 
-  store.hasMessages = _ => messages.size > 0;
-  store.hasInitializedSessions = _ => initializedSession.size > 0;
+  store.hasMessages = () => messages.size > 0;
+  store.hasInitializedSessions = () => initializedSession.size > 0;
 
 
-  store.getSessionMessages = sessionId => messages.get(sessionId);
-  store.isSessionInitialized = sessionId => initializedSession.has(sessionId);
+  store.getSessionMessages = (sessionId: API.IdType) => messages.get(sessionId);
+  store.isSessionInitialized = (sessionId: API.IdType) => initializedSession.has(sessionId);
 
   store.listenTo(actions.fetchMessages, onFetchMessages);
   store.listenTo(actions.fetchMessages.completed, onFetchMessagesCompleted);

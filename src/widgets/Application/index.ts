@@ -1,6 +1,6 @@
 import * as UI from 'types/ui';
 
-module.exports = {
+export const Application = {
   typeId: 'application',
   component: require('./components/Application').default,
   name: 'Application',

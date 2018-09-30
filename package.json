@@ -46,6 +46,7 @@
     "@types/escape-string-regexp": "^1.0.0",
     "@types/fixed-data-table-2": "^0.8.2",
     "@types/invariant": "^2.2.29",
+    "@types/jest": "^23.3.2",
     "@types/jquery": "^3.3.10",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.11.3",
@@ -132,30 +133,6 @@
     "webpack-hot-middleware": "^2.24.2",
     "webpack-visualizer-plugin": "^0.1.11",
     "zopfli-webpack-plugin": "^0.1.0"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest",
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "ts",
-      "tsx"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/stubs/FileStub.js",
-      "\\.(css|less)$": "<rootDir>/jest/stubs/CSSStub.js"
-    },
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "setupFiles": [
-      "./jest/setup.js"
-    ],
-    "cacheDirectory": "./jest/cache/"
   },
   "false": {}
 }

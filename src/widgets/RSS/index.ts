@@ -3,7 +3,7 @@ const FieldTypes = require('constants/SettingConstants').FieldTypes;
 import * as UI from 'types/ui';
 
 
-module.exports = {
+export const RSS = {
   typeId: 'rss',
   component: require('./components/RSS').default,
   name: 'RSS feed',

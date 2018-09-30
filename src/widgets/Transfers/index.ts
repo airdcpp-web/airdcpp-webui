@@ -1,6 +1,6 @@
 import * as UI from 'types/ui';
 
-module.exports = {
+export const Transfers = {
   typeId: 'transfers',
   component: require('./components/Transfers').default,
   access: require('constants/AccessConstants').default.TRANSFERS,
