@@ -108,7 +108,7 @@ class VirtualTable extends React.Component<VirtualTableProps> {
   }
 
   render() {
-    const { store, footerData, emptyRowsNodeGetter, customFilter, ...other } = this.props;
+    const { store, footerData, emptyRowsNodeGetter, customFilter, textFilterProps, ...other } = this.props;
 
     if (emptyRowsNodeGetter && store.totalCount === -1) {
       // Row count is unknown, don't flash the table
@@ -132,6 +132,7 @@ class VirtualTable extends React.Component<VirtualTableProps> {
           store={ store }
           customFilter={ customFilter }
           footerData={ footerData }
+          textFilterProps={ textFilterProps }
         />
       </div>
     );

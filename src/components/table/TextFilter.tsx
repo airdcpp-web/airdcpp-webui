@@ -28,7 +28,7 @@ const getPlaceholder = (method: FilterMethod) => {
 };
 
 export interface TextFilterProps {
-
+  autoFocus?: boolean;
 }
 
 class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorChildProps> {
@@ -39,6 +39,10 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
   timer: NodeJS.Timer;
   input: HTMLInputElement;
+
+  static defaultProps: Pick<TextFilterProps, 'autoFocus'> = {
+    autoFocus: true,
+  };
 
   componentWillUnmount() {
     clearTimeout(this.timer);
@@ -88,6 +92,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
   render() {
     const { value, method } = this.state;
+    const { autoFocus } = this.props;
     return (
       <div className="text-filter">
         <div 
@@ -99,6 +104,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
             onChange={ this.onTextChanged } 
             value={ value }
             type="text"
+            autoFocus={ autoFocus }
           />
           <SectionedDropdown 
             className="filter-method right top pointing"

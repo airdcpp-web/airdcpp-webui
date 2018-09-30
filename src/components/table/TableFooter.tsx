@@ -1,7 +1,7 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 
-import TextFilter from './TextFilter';
+import TextFilter, { TextFilterProps } from './TextFilter';
 
 
 const CountInfo: React.SFC<{ store: any }> = ({ store }) => {
@@ -22,9 +22,10 @@ export interface TableFooterProps {
   footerData?: React.ReactNode;
   customFilter?: React.ReactElement<any>;
   store: any;
+  textFilterProps?: TextFilterProps;
 }
 
-const TableFooter: React.SFC<TableFooterProps> = ({ store, customFilter, footerData }) => {
+const TableFooter: React.SFC<TableFooterProps> = ({ store, customFilter, footerData, textFilterProps }) => {
   let clonedFilter = null;
   if (!!customFilter) {
     clonedFilter = React.cloneElement(customFilter, { 
@@ -39,6 +40,7 @@ const TableFooter: React.SFC<TableFooterProps> = ({ store, customFilter, footerD
         { clonedFilter }
         <TextFilter 
           viewUrl={ store.viewUrl }
+          { ...textFilterProps }
         />
         <CountInfo store={ store }/>
       </div>
