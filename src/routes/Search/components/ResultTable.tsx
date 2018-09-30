@@ -14,7 +14,7 @@ import { UserFileActions } from 'actions/UserActions';
 import Message from 'components/semantic/Message';
 
 import DownloadDialog from 'components/download/DownloadDialog';
-import ResultDialog from 'routes/Search/components/ResultDialog';
+import ResultDialog, { SearchResultGetter } from 'routes/Search/components/ResultDialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
@@ -107,6 +107,9 @@ class ResultTable extends React.Component<ResultTableProps> {
           emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
           rowClassNameGetter={ this.rowClassNameGetter }
           store={ SearchViewStore }
+          textFilterProps={{
+            autoFocus: false,
+          }}
         >
           <Column
             name="Name"
@@ -168,7 +171,10 @@ class ResultTable extends React.Component<ResultTableProps> {
             hideWidth={800}
           />
         </VirtualTable>
-        <DownloadDialog downloadHandler={ SearchActions.download }/>
+        <DownloadDialog 
+          downloadHandler={ SearchActions.download }
+          itemDataGetter={ SearchResultGetter }
+        />
         <ResultDialog/>
       </>
     );

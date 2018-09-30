@@ -28,6 +28,7 @@ import Modal from 'components/semantic/Modal';
 import * as API from 'types/api';
 
 import './style.css';
+import { RouteComponentProps } from 'react-router';
 
 
 interface Section {
@@ -68,20 +69,46 @@ const MobileLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
   </div>
 );
 
-interface DownloadDialogProps extends ModalRouteDecoratorChildProps {
-  downloadHandler: (itemInfo: API.FileItemInfo, user: API.HintedUserBase, downloadData: API.DownloadData) => void;
-  itemInfo?: API.FileItemInfo; // REQUIRED, CLONED
-  user?: API.HintedUserBase; // REQUIRED, CLONED
+type DownloadItemIdType = string;
+
+export type DownloadDialogUserGetter<ItemT extends API.FileItemInfo> = (
+  itemId: DownloadItemIdType, 
+  props: Props<ItemT>
+) => API.HintedUserBase;
+
+export type DownloadDialogItemDataGetter<ItemT extends API.FileItemInfo> = (
+  itemId: DownloadItemIdType, 
+  socket: any
+) => Promise<ItemT>;
+
+export type DownloadHandler<ItemT extends API.FileItemInfo> = (
+  itemInfo: ItemT, 
+  user: API.HintedUserBase | undefined, 
+  downloadData: API.DownloadData
+) => void;
+
+interface DownloadDialogProps<ItemT extends API.FileItemInfo = API.FileItemInfo> {
+  downloadHandler: DownloadHandler<ItemT>;
+  itemDataGetter: DownloadDialogItemDataGetter<ItemT>;
+  userGetter?: DownloadDialogUserGetter<ItemT>;
 }
 
-interface DownloadDialogDataProps extends DataProviderDecoratorChildProps {
+type DownloadDialogRouteProps = ModalRouteDecoratorChildProps & RouteComponentProps<{ 
+  downloadItemId: DownloadItemIdType; 
+}>;
+
+interface DownloadDialogDataProps<ItemT extends API.FileItemInfo = API.FileItemInfo> 
+extends DataProviderDecoratorChildProps {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
   historyPaths: string[];
+  itemInfo: ItemT;
 }
 
 
-type Props = DownloadDialogProps & DownloadDialogDataProps;
+type Props<ItemT extends API.FileItemInfo = API.FileItemInfo> = DownloadDialogProps<ItemT> & 
+  DownloadDialogDataProps<ItemT> & 
+  DownloadDialogRouteProps;
 
 class DownloadDialog extends React.Component<Props> {
   static displayName = 'DownloadDialog';
@@ -107,7 +134,7 @@ class DownloadDialog extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-    const dupePaths = itemInfo!.dupe ? itemInfo!.dupe.paths.map(path => getParentPath(path)) : [];
+    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
 
     this.sections = [
       {
@@ -147,12 +174,16 @@ class DownloadDialog extends React.Component<Props> {
   };
 
   handleDownload = (path: string) => {
-    const { downloadHandler, itemInfo, user } = this.props;
-    downloadHandler(itemInfo!, user!, {
-      target_name: itemInfo!.name, // possibly allow changing this later...
-      target_directory: path,
-      priority: API.QueuePriorityEnum.DEFAULT,
-    });
+    const { downloadHandler, itemInfo, userGetter, match } = this.props;
+    downloadHandler(
+      itemInfo, 
+      !!userGetter ? userGetter(match.params.downloadItemId, this.props) : undefined, 
+      {
+        target_name: itemInfo.name, // possibly allow changing this later...
+        target_directory: path,
+        priority: API.QueuePriorityEnum.DEFAULT,
+      }
+    );
 
     HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
     this.modal.hide();
@@ -203,14 +234,17 @@ class DownloadDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator(
-  DataProviderDecorator<DownloadDialogProps, DownloadDialogDataProps>(DownloadDialog, {
+export default ModalRouteDecorator<DownloadDialogProps>(
+  DataProviderDecorator<DownloadDialogProps & DownloadDialogRouteProps, DownloadDialogDataProps>(DownloadDialog, {
     urls: {
       sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
       favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
       historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+      itemInfo: ({ match, itemDataGetter }, socket) => {
+        return itemDataGetter(match.params.downloadItemId, socket);
+      }
     },
   }),
   OverlayConstants.DOWNLOAD_MODAL_ID,
-  'download'
+  'download/:downloadItemId'
 );

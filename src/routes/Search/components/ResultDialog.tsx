@@ -3,7 +3,7 @@ import Modal from 'components/semantic/Modal';
 
 import FileIcon from 'components/icon/FileIcon';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
 import SearchActions from 'actions/SearchActions';
 
 import ResultInfoGrid from 'routes/Search/components/ResultInfoGrid';
@@ -18,11 +18,23 @@ import SearchConstants from 'constants/SearchConstants';
 import * as API from 'types/api';
 
 
+interface ResultDialogProps {
+
+}
+
 interface DataProps extends DataProviderDecoratorChildProps {
   parentResult: API.GroupedSearchResult;
 }
 
-type Props = RouteComponentProps<{ resultId: string; }> & ModalRouteDecoratorChildProps;
+type Props = ResultDialogProps & RouteComponentProps<{ resultId: string; }> & ModalRouteDecoratorChildProps;
+
+export const SearchResultGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
+  return socket.get(`${SearchConstants.RESULTS_URL}/${itemId}`);
+};
+
+/*export const SearchResultUserGetter: DownloadDialogUserGetter<API.GroupedSearchResult> = (id, props) => {
+  return props.itemInfo.users.user;
+};*/
 
 class ResultDialog extends React.Component<Props & DataProps> {
   static displayName = 'ResultDialog';
@@ -38,7 +50,10 @@ class ResultDialog extends React.Component<Props & DataProps> {
         fullHeight={ true }
         { ...this.props }
       >
-        <DownloadDialog downloadHandler={ SearchActions.download }/>
+        <DownloadDialog 
+          downloadHandler={ SearchActions.download }
+          itemDataGetter={ SearchResultGetter }
+        />
         <ResultInfoGrid parentResult={ parentResult! }/>
         <UserResultTable parentResult={ parentResult! }/>
       </Modal>
@@ -46,7 +61,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
   }
 }
 
-export default ModalRouteDecorator<{}>(
+export default ModalRouteDecorator<ResultDialogProps>(
   DataProviderDecorator<Props, DataProps>(
     ResultDialog, {
       urls: {

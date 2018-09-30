@@ -109,11 +109,7 @@ DownloadableItemActions.download.listen(function (handlerData) {
 
 DownloadableItemActions.downloadTo.listen(function (handlerData, location) {
   const { pathname } = location;
-	
-  History.pushModal(location, pathname + '/download', OverlayConstants.DOWNLOAD_MODAL_ID, {
-    itemInfo: handlerData.itemInfo,
-    user: handlerData.user,
-  });
+  History.pushModal(location, `${pathname}/download/${handlerData.itemInfo.id}`, OverlayConstants.DOWNLOAD_MODAL_ID);
 });
 
 DownloadableItemActions.viewText.listen(function (data, location) {

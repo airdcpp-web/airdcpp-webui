@@ -12,18 +12,35 @@ import { UserMenu } from 'components/menu/DropdownMenu';
 import { UserFileActions } from 'actions/UserActions';
 
 import * as API from 'types/api';
+import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
+
+//import { OnClickActionHandler } from 'decorators/menu/ActionMenuDecorator';
+
+
+/*const OnClickUserAction: OnClickActionHandler = (actionId) => {
+  if (actionId === 'browse' || actionId === 'message') {
+    close();
+  }
+};*/
+
+const isSidebarAction = (actionId: string) => actionId === 'browse' || actionId === 'message';
 
 const UserResult: React.SFC<{ result: API.ChildSearchResult; }> = ({ result }) => (
   <tr>
     <td className="user dropdown">
-      <UserMenu 
-        userIcon={ true }
-        user={ result.user }
-        directory={ result.path }
-        ids={ UserFileActions }
-        contextElement=".result.modal"
-      />
+      <ModalRouteCloseContext.Consumer>
+        { close => (
+          <UserMenu 
+            userIcon={ true }
+            user={ result.user }
+            directory={ result.path }
+            ids={ UserFileActions }
+            contextElement=".result.modal"
+            onClickAction={ (actionId) => isSidebarAction(actionId) ? close() : undefined  }
+          />
+        ) }
+      </ModalRouteCloseContext.Consumer>
     </td>
     <td className="hubs">
       { result.user.hub_names }

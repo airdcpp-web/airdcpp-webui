@@ -23,14 +23,15 @@ class SideMenu extends React.Component<SideMenuProps> {
   onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
-    const isActive = matchPath(this.props.location.pathname, {
+    const { location } = this.props;
+    const isActive = matchPath(location.pathname, {
       path: url,
     });
 
     if (isActive) {
-      History.replaceSidebarData(this.props.location, { close: true });
+      History.replaceSidebarData(location, { close: true });
     } else {
-      History.pushSidebar(this.props.location, url);
+      History.pushSidebar(location, url);
     }
   }
 

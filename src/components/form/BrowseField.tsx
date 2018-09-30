@@ -28,9 +28,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 
     const showBrowseDialog = () => {
       const { location } = locals.context.router.route;
-      History.pushModal(location, `${location.pathname}/browse`, OverlayConstants.FILE_BROWSER_MODAL, {
-        historyId: parseHistoryId(),
-      });
+      History.pushModal(location, `${location.pathname}/browse`, OverlayConstants.FILE_BROWSER_MODAL);
     };
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -26,6 +26,7 @@ import DownloadDialog from 'components/download/DownloadDialog';
 import { Location } from 'history';
 
 import * as API from 'types/api';
+import FilelistConstants from 'constants/FilelistConstants';
 
 
 interface ListBrowserProps {
@@ -157,6 +158,11 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     return this.props.session.user;
   }
 
+  filelistItemGetter = (itemId: string, socket: any) => {
+    const { session } = this.props;
+    return socket.get(`${FilelistConstants.MODULE_URL}/${session.id}/items/${itemId}`);
+  }
+
   render() {
     const { session } = this.props;
     return (
@@ -221,6 +227,8 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         </VirtualTable>
         <DownloadDialog 
           downloadHandler={ FilelistItemActions.download }
+          itemDataGetter={ this.filelistItemGetter }
+          userGetter={ this.userGetter }
         />
       </div>
     );
