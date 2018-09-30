@@ -5,9 +5,13 @@ import isEqual from 'lodash/isEqual';
 
 import NotificationActions from 'actions/NotificationActions';
 
-import { normalizeSettingValueMap, parseDefinitions, parseFieldOptions } from 'utils/FormUtils';
+import { 
+  normalizeSettingValueMap, parseDefinitions, parseFieldOptions, 
+  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues 
+} from 'utils/FormUtils';
 import t from 'utils/tcomb-form';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import './style.css';
@@ -15,7 +19,7 @@ import './style.css';
 const TcombForm = t.form.Form;
 
 
-export type FormFieldSettingHandler<ValueType> = (
+export type FormFieldSettingHandler<ValueType = UI.FormValueMap> = (
   key: string, 
   definitions: UI.FormFieldDefinition[], 
   formValue: Partial<ValueType>
@@ -26,13 +30,13 @@ export type FormSaveHandler<ValueType> = (
   allFields: Partial<ValueType>
 ) => Promise<void>;
 
-export type FormFieldChangeHandler<ValueType> = (
+export type FormFieldChangeHandler<ValueType = UI.FormValueMap> = (
   key: string, 
   formValue: Partial<ValueType>, 
   valueChanged: boolean
 ) => null | void | Promise<Partial<ValueType>>;
 
-export type FormSourceValueUpdateHandler<ValueType> = (sourceValue: Partial<ValueType>) => void;
+export type FormSourceValueUpdateHandler<ValueType = UI.FormValueMap> = (sourceValue: Partial<ValueType>) => void;
 
 export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> {
   fieldDefinitions: UI.FormFieldDefinition[];
@@ -128,17 +132,18 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     return mergedValue;
   }
 
-  onFieldChanged = (value: Partial<ValueType>, valueKey: string, kind: string) => {
-    const key = valueKey[0];
+  onFieldChanged = (value: Partial<ValueType>, valueKeyPath: string[], kind: string) => {
+    const rootKey = valueKeyPath[0];
+    const fieldKey = valueKeyPath[valueKeyPath.length - 1];
     if (kind) {
       // List action
       if (kind === 'add') {
         // Set default fields for the newly added value
-        const fieldDef = this.props.fieldDefinitions.find(def => def.key === key);
+        const fieldDef = this.props.fieldDefinitions.find(def => def.key === rootKey);
         if (!!fieldDef && !!fieldDef.definitions) {
-          const list = value[key];
+          const list = value[rootKey];
           if (!!list) {
-            const listItemPos = valueKey[1];
+            const listItemPos = valueKeyPath[1];
             list[listItemPos] = normalizeSettingValueMap(list[listItemPos], fieldDef.definitions);
           }
         }
@@ -146,11 +151,17 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     } else {
       // Make sure that we have the converted value for the custom 
       // change handler (in case there are transforms for this field) 
-      const result = this.form.getComponent(valueKey[0]).validate();
-      value[key] = result.value;
+      const result = this.form.getComponent(valueKeyPath).validate();
+      setFieldValueByPath(value, result.value, valueKeyPath);
+
+      const equal = isEqual(
+        findFieldValueByPath(this.sourceValue, valueKeyPath), 
+        findFieldValueByPath(value, valueKeyPath)
+      );
 
       if (this.props.onFieldChanged) {
-        const promise = this.props.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
+        const promise = this.props.onFieldChanged(fieldKey, value, !equal);
+
         if (!!promise) {
           promise
             .then(
@@ -161,7 +172,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       }
 
       if (this.context.onFieldChanged) {
-        this.context.onFieldChanged(key, value, !isEqual(this.sourceValue[key], value[key]));
+        this.context.onFieldChanged(fieldKey, value, !equal);
       }
     }
 
@@ -183,14 +194,6 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     throw error;
   }
 
-  // Reduces an object of current form values that don't match the source data
-  reduceChangedValues = (formValue: Partial<ValueType>, changedValues: Partial<ValueType>, valueKey: string) => {
-    if (!isEqual(this.sourceValue[valueKey], formValue[valueKey])) {
-      changedValues[valueKey] = formValue[valueKey];
-    }
-
-    return changedValues;
-  }
 
   // Calls props.onSave with changed form values
   save = () => {
@@ -199,7 +202,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       // Get the changed fields
       const settingKeys = Object.keys(validatedFormValue);
       const changedFields = settingKeys.reduce(
-        this.reduceChangedValues.bind(this, validatedFormValue), 
+        reduceChangedFieldValues.bind(this, this.sourceValue, validatedFormValue), 
         {}
       );
 
@@ -216,6 +219,11 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
 
     if (this.props.onFieldSetting) {
       this.props.onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], this.state.formValue);
+    }
+
+    if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
+      reducedOptions[fieldDefinitions.key].fields = {};
+      fieldDefinitions.definitions!.reduce(this.fieldOptionReducer, reducedOptions[fieldDefinitions.key].fields);
     }
 
     return reducedOptions;
@@ -245,6 +253,9 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   render() {
     const { title, fieldDefinitions, className } = this.props;
     const { formValue } = this.state;
+
+    const type = parseDefinitions(fieldDefinitions);
+    const options = this.getFieldOptions();
     return (
       <div className={ classNames('form', className) }>
         { !!title && (
@@ -254,8 +265,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
         ) }
         <TcombForm
           ref={ (c: any) => this.form = c }
-          type={ parseDefinitions(fieldDefinitions) }
-          options={ this.getFieldOptions() }
+          type={ type }
+          options={ options }
           value={ formValue }
           onChange={ this.onFieldChanged }
           context={ {

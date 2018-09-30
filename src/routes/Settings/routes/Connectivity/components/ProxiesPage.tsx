@@ -16,7 +16,7 @@ const Entry = [
   'http_proxy',
 ];
 
-const onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
+const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
   const socksEnabled = formValue.outgoing_mode === OutgoingConnectionModeEnum.OUTGOING_SOCKS;
 
   if (!socksEnabled && id.indexOf('socks_') === 0) {

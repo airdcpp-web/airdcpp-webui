@@ -6,15 +6,22 @@ import SelectField from 'components/form/SelectField';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { isArray } from 'util';
+import isEqual from 'lodash/isEqual';
 
 
-const typeToComponent = (type: API.SettingTypeEnum, min: number | undefined, max: number | undefined) => {
+const typeToComponent = (
+  type: API.SettingTypeEnum, 
+  min: number | undefined, 
+  max: number | undefined, 
+  isEnum: boolean
+) => {
   switch (type) {
     case API.SettingTypeEnum.NUMBER: {
       if (min || max) {
         return t.Range(min, max);
       }
-      return t.Positive;
+      return isEnum ? t.Number : t.Positive;
     }
     case API.SettingTypeEnum.BOOLEAN: return t.Bool;
     case API.SettingTypeEnum.STRING:
@@ -24,7 +31,7 @@ const typeToComponent = (type: API.SettingTypeEnum, min: number | undefined, max
     default: 
   }
 
-  throw 'Field type ' + type + ' is not supported';
+  throw `Field type ${type} is not supported`;
 };
 
 const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
@@ -34,11 +41,15 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
         if (def.item_type === API.SettingTypeEnum.STRUCT) {
           reduced[def.key] = t.list(parseDefinitions(def.definitions!));
         } else {
-          reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max));
+          reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max, !!def.options));
         }
       } else {
-        const fieldComponent = typeToComponent(def.type, def.min, def.max);
-        reduced[def.key] = def.optional ? t.maybe(fieldComponent) : fieldComponent;
+        if (def.type === API.SettingTypeEnum.STRUCT) {
+          reduced[def.key] = parseDefinitions(def.definitions!);
+        } else {
+          const fieldComponent = typeToComponent(def.type, def.min, def.max, !!def.options);
+          reduced[def.key] = def.optional ? t.maybe(fieldComponent) : fieldComponent;
+        }
       }
 
       return reduced;
@@ -50,7 +61,7 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
 };
 
 type IdItemValue = { id: API.SettingValueBase };
-type FormSettingValue = API.SettingValue<API.SettingValueBase> | IdItemValue[];
+type FormSettingValue = API.SettingValue<UI.FormValueBase> | IdItemValue[];
 
 const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
   if (value) {
@@ -59,7 +70,7 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
     if (typeof value === 'object' && !Array.isArray(value)) {
       // Normalize object properties with value.id to plain id 
       invariant(value.hasOwnProperty('id'), 'Invalid object supplied for normalizeField (id property is required)');
-      return value.id;
+      return (value as IdItemValue).id;
     } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
       // Normalize each array item
       invariant(
@@ -86,7 +97,7 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
 };
 
 const normalizeSettingValueMap = (
-  value: Partial<API.SettingValueMap<API.SettingValueBase>> | undefined, 
+  value: Partial<API.SettingValueMap<UI.FormValueBase>> | undefined, 
   valueDefinitions: UI.FormFieldDefinition[]
 ): UI.FormValueMap => {
   return valueDefinitions.reduce(
@@ -106,6 +117,12 @@ const normalizeSettingValueMap = (
           } else {
             reducedValue[key] = fieldValue.map(normalizeField);
           }
+        } else if (type === API.SettingTypeEnum.STRUCT) {
+          if (!!fieldValue && typeof fieldValue === 'object' && !isArray(fieldValue)) {
+            reducedValue[key] = normalizeSettingValueMap(fieldValue, definitions!);
+          } else {
+            throw `Invalid value for a struct ${key}`;
+          }
         } else {
           reducedValue[key] = normalizeField(fieldValue);
         }
@@ -121,8 +138,12 @@ const normalizeSettingValueMap = (
 };
 
 const intTransformer = {
-  parse: (v: string) => v === 'null' ? null : parseInt(v, 10),
-  format: (v: number) => String(v),
+  parse: (v: string) => {
+    return v === 'null' || v === undefined || v === null ? null : parseInt(v, 10);
+  },
+  format: (v: number) => {
+    return String(v);
+  },
 };
 
 const parseTypeOptions = (type: API.SettingTypeEnum) => {
@@ -150,6 +171,14 @@ const parseTypeOptions = (type: API.SettingTypeEnum) => {
   return options;
 };
 
+const parseTitle = (definition: UI.FormFieldDefinition) => {
+  if (definition.title && definition.optional) {
+    return `${definition.title} (optional)`;
+  }
+
+  return definition.title;
+};
+
 const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   const options = parseTypeOptions(definition.type);
 
@@ -172,7 +201,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   }
 
   // Captions
-  options['legend'] = definition.title;
+  options['legend'] = parseTitle(definition);
   options['help'] = definition.help;
 
   // Enum select field?
@@ -199,6 +228,52 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   return options;
 };
 
+const findFieldValueByPath = (obj: object, path: string[]): any => {
+  const value = obj[path[0]];
+  if (value && typeof value === 'object' && path.length > 1) {
+    path.shift();
+    return findFieldValueByPath(value, path);
+  }
+
+  return value;
+};
+
+const setFieldValueByPath = (obj: object, newValue: any, path: string[]): any => {
+  const curKey = path[0];
+  if (path.length > 1) {
+    obj[curKey] = obj[curKey] || {};
+    path.shift();
+    setFieldValueByPath(obj[curKey], newValue, path);
+  } else {
+    obj[curKey] = newValue;
+  }
+};
+
+const reduceChangedFieldValues = (
+  sourceValue: UI.FormValueMap | null,
+  currentFormValue: Partial<UI.FormValueMap>, 
+  changedValues: Partial<UI.FormValueMap>,
+  valueKey: string
+) => {
+  if (!!sourceValue && currentFormValue[valueKey] instanceof Object) {
+    const settingKeys = Object.keys(currentFormValue[valueKey]!);
+    changedValues[valueKey] = settingKeys.reduce(
+      reduceChangedFieldValues.bind(
+        null,
+        sourceValue[valueKey], 
+        currentFormValue[valueKey]
+      ), 
+      {}
+    );
+  } else {
+    if (!sourceValue || !isEqual(sourceValue[valueKey], currentFormValue[valueKey])) {
+      changedValues[valueKey] = currentFormValue[valueKey];
+    }
+  }
+
+  return changedValues;
+};
+
 export {
   // Migrates simple key -> value fields to an array that is compatible with the form
   // undefined values will also be initialized with nulled property fields
@@ -213,5 +288,11 @@ export {
   parseDefinitions,
 
   parseFieldOptions,
+
+  // Reduces an object of current form values that don't match the source data
+  reduceChangedFieldValues,
+
+  findFieldValueByPath,
+  setFieldValueByPath,
 }
 ;

@@ -10,7 +10,7 @@ const Entry = [
   'preferred_port_mapper',
 ];
 
-const onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
+const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
   if (id === 'tcp_port') {
     fieldOptions['help'] = 'TCP port is used for unencrypted transfers';
   } else if (id === 'tls_port') {

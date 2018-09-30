@@ -11,7 +11,7 @@ const Entry = [
   'setting_profile',
 ];
 
-const onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
+const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
   if (id === 'setting_profile') {
     switch (formValue[id]) {
       case SettingProfileEnum.NORMAL: {

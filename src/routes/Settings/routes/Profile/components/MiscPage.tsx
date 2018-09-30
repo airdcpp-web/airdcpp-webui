@@ -10,7 +10,7 @@ import { FormFieldSettingHandler } from 'components/form/Form';
 
 
 class MiscPage extends React.Component<SettingSectionChildProps> {
-  onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     if (id === 'nmdc_encoding') {
       fieldOptions['help'] = (
         <div>

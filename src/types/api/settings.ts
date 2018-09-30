@@ -38,4 +38,4 @@ export interface SettingDefinition {
   definitions?: SettingDefinition[];
 }
 
-export type ConnectivityModeEnum = -1 | 0 | 1 | 2;
+//export type ConnectivityModeEnum = -1 | 0 | 1 | 2;

@@ -27,7 +27,7 @@ class AutoValuePanel extends React.Component<AutoValuePanelProps> {
   }
 
   // Fetch auto settings when enabling auto detection
-  onFieldChanged: FormFieldChangeHandler<any> = (changedKey, formValue, hasChanges) => {
+  onFieldChanged: FormFieldChangeHandler = (changedKey, formValue, hasChanges) => {
     const autoSettingKey = this.getAutoKey();
     if (changedKey !== autoSettingKey || !formValue[autoSettingKey]) {
       return null;

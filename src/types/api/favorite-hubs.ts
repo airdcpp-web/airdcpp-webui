@@ -1,4 +1,4 @@
-import { ConnectivityModeEnum } from './settings';
+import { ConnectivityModeEnum } from './connectivity';
 import { ShareProfileBasic } from './shareprofiles';
 
 export interface FavoriteHubEntryBase {

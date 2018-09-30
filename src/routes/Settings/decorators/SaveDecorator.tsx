@@ -9,10 +9,9 @@ import SaveButton, { SaveButtonProps } from '../components/SaveButton';
 import NotificationActions from 'actions/NotificationActions';
 
 import LoginStore from 'stores/LoginStore';
-import Form from 'components/form/Form';
+import Form, { FormFieldChangeHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 
 export interface SaveDecoratorProps {
@@ -60,7 +59,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       }
     }
 
-    onSettingsChanged = (id: string, value: UI.FormValueMap, hasChanges: boolean) => {
+    onSettingsChanged: FormFieldChangeHandler = (id, value, hasChanges) => {
       if (hasChanges) {
         this.changedProperties.add(id);
       } else {

@@ -18,19 +18,19 @@ class LogSection extends React.Component<LogSectionProps> {
     return `log_${this.props.section}${suffix ? `_${suffix}` : ''}`;
   }
 
-  onSettingsReceived: FormSourceValueUpdateHandler<any> = (data) => {
+  onSettingsReceived: FormSourceValueUpdateHandler = (data) => {
     this.setState({
       enabled: data[this.convertKey()],
     });
   }
 
-  onEnableStateChanged: FormFieldChangeHandler<any> = (id, formValue, hasChanges) => {
+  onEnableStateChanged: FormFieldChangeHandler = (id, formValue, hasChanges) => {
     this.setState({ 
       enabled: formValue[id]
     });
   }
 
-  onContentSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
+  onContentSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     fieldOptions['disabled'] = !this.state.enabled;
   }
 

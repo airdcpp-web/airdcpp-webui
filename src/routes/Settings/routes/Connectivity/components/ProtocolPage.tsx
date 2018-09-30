@@ -16,7 +16,7 @@ class ProtocolPage extends React.Component<ProtocolPageProps> {
     return key + '_' + this.props.protocol;
   }
 
-  onFieldSetting: FormFieldSettingHandler<any> = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     const protocolEnabled = formValue[this.convertValue('connection_mode')] !== 
       IncomingConnectionModeEnum.INCOMING_DISABLED;
     const autoDetect = formValue[this.convertValue('connection_auto')];

@@ -1,14 +1,15 @@
 import * as API from 'types/api';
 
-export type FormValueBase = API.SettingValueBase;
+export type FormValueBase = API.SettingValueBase | object;
 export type FormValue = API.SettingValue<FormValueBase>;
-export type FormValueMap = API.SettingValueMap<FormValueBase>;
+export type FormValueMap = API.SettingValueMap<FormValueBase | {}>;
 
 export interface FormFieldDefinition<ValueType = FormValueBase> extends 
-  Omit<API.SettingDefinition, 'title' | 'default_value'> {
+  Omit<API.SettingDefinition, 'title' | 'default_value' | 'definitions'> {
     
   title?: string;
   default_value?: FormValueBase;
+  definitions?: FormFieldDefinition[];
 }
 
 export interface FormOption<OptionValueT = any> {
