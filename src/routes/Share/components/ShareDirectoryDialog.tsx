@@ -175,7 +175,7 @@ export default ModalRouteDecorator<ShareDirectoryDialogProps>(
         virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
         rootEntry: ({ match }, socket) => {
           if (!match.params.directoryId) {
-            return undefined;
+            return Promise.resolve(undefined);
           }
 
           return socket.get(`${ShareRootConstants.ROOTS_URL}/${match.params.directoryId}`);

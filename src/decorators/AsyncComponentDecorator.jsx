@@ -4,18 +4,30 @@ import React from 'react';
 // It will not be called until the first mount
 export default function asyncComponent(getComponent, props) {
   return class AsyncComponent extends React.Component {
+    mounted = false;
+
     static Component = null;
     state = { Component: AsyncComponent.Component };
 
     componentDidMount() {
+      this.mounted = true;
+
       if (!this.state.Component) {
         getComponent()
-        	.then(Component => Component.default)
-	        .then(Component => {
-	          AsyncComponent.Component = Component;
-	          this.setState({ Component });
-	        });
+          .then(Component => Component.default)
+          .then(Component => {
+            if (!this.mounted) {
+              return;
+            }
+
+            AsyncComponent.Component = Component;
+            this.setState({ Component });
+          });
       }
+    }
+
+    componentWillUnmount() {
+      this.mounted = false;
     }
     
     render() {

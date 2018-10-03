@@ -255,7 +255,7 @@ const reduceChangedFieldValues = (
   changedValues: Partial<UI.FormValueMap>,
   valueKey: string
 ) => {
-  if (!!sourceValue && currentFormValue[valueKey] instanceof Object) {
+  if (!!sourceValue && currentFormValue[valueKey] instanceof Object && !Array.isArray(currentFormValue[valueKey])) {
     const settingKeys = Object.keys(currentFormValue[valueKey]!);
     changedValues[valueKey] = settingKeys.reduce(
       reduceChangedFieldValues.bind(

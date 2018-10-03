@@ -45,7 +45,7 @@ const LocalExtension = DataProviderDecorator<LocalExtensionProps, LocalExtension
     <Extension 
       key={ installedPackage.name } 
       installedPackage={ installedPackage } 
-      npmPackage={ !!npmPackage && convertNpmPackage(npmPackage) }
+      npmPackage={ !!npmPackage ? convertNpmPackage(npmPackage) : undefined }
       npmError={ dataError }
     />
   ), 

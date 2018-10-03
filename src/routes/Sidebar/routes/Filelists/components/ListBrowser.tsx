@@ -22,11 +22,12 @@ import IconConstants from 'constants/IconConstants';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
 import { Location } from 'history';
 
 import * as API from 'types/api';
 import FilelistConstants from 'constants/FilelistConstants';
+import { FilelistItem } from 'types/api';
 
 
 interface ListBrowserProps {
@@ -158,7 +159,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     return this.props.session.user;
   }
 
-  filelistItemGetter = (itemId: string, socket: any) => {
+  filelistItemGetter: DownloadDialogItemDataGetter<FilelistItem> = (itemId, socket) => {
     const { session } = this.props;
     return socket.get(`${FilelistConstants.MODULE_URL}/${session.id}/items/${itemId}`);
   }

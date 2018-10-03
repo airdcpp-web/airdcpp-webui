@@ -261,7 +261,7 @@ export default ModalRouteDecorator<FavoriteHubDialogProps>(
         urls: {
           hubEntry: ({ match }, socket) => {
             if (!match.params.entryId) {
-              return undefined;
+              return Promise.resolve(undefined);
             }
 
             return socket.get(`${FavoriteHubConstants.HUBS_URL}/${match.params.entryId}`);

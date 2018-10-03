@@ -178,7 +178,7 @@ export default ModalRouteDecorator<WebUserDialogProps>(
     urls: {
       user: ({ match }, socket) => {
         if (!match.params.userId) {
-          return undefined;
+          return Promise.resolve(undefined);
         }
 
         return socket.get(`${WebUserConstants.USERS_URL}/${match.params.userId}`);

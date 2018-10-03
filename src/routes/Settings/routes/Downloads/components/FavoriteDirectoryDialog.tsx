@@ -130,7 +130,7 @@ export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
       virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
       directoryEntry: ({ match }, socket) => {
         if (!match.params.directoryId) {
-          return undefined;
+          return Promise.resolve(undefined);
         }
 
         return socket.get(`${FavoriteDirectoryConstants.DIRECTORIES_URL}/${match.params.directoryId}`);
