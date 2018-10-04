@@ -16,6 +16,7 @@ import EncryptionState from 'components/EncryptionState';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 interface HubFooterProps {
@@ -61,7 +62,7 @@ const HubFooter = createReactClass<HubFooterProps, State>({
   fetchCounts() {
     SocketService.get(`${HubConstants.SESSIONS_URL}/${this.props.session.id}/counts`)
       .then(this.onCountsReceived)
-      .catch((error: APISocket.ErrorBase) => console.error('Failed to fetch hub counts', error.message));
+      .catch((error: ErrorResponse) => console.error('Failed to fetch hub counts', error.message));
   },
 
   componentDidMount() {

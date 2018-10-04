@@ -2,6 +2,7 @@ import React from 'react';
 
 import SocketService from 'services/SocketService';
 import Message, { MessageDescriptionType } from 'components/semantic/Message';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 export interface StatisticsDecoratorProps<DataT> {
   stats?: DataT;
@@ -36,7 +37,7 @@ export default function <DataT, PropsT = {}>(
     fetchStats = () => {
       SocketService.get(fetchUrl)
         .then(this.onStatsReceived)
-        .catch((error: APISocket.Error) => console.error('Failed to fetch stats', error.message));
+        .catch((error: ErrorResponse) => console.error('Failed to fetch stats', error.message));
 
       if (fetchIntervalSeconds > 0) {
         this.fetchTimeout = setTimeout(this.fetchStats, fetchIntervalSeconds * 1000);

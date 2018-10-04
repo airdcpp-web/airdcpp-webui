@@ -22,6 +22,7 @@ import { withContentRect, MeasuredComponentProps } from 'react-measure';
 import '../style.css';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 const IDLE_CHECK_PERIOD = 3000;
@@ -100,7 +101,7 @@ const Transfers = withContentRect('bounds')(createReactClass<TransferProps, Stat
   fetchStats() {
     SocketService.get(TransferConstants.STATISTICS_URL)
       .then(this.onStatsReceived)
-      .catch((error: APISocket.Error) => console.error('Failed to fetch transfer statistics', error.message));
+      .catch((error: ErrorResponse) => console.error('Failed to fetch transfer statistics', error.message));
   },
 
   onStatsReceived(stats: API.TransferStats) {

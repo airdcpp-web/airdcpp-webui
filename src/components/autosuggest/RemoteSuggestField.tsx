@@ -6,6 +6,7 @@ import SocketService from 'services/SocketService';
 import SuggestField, { SuggestFieldProps } from './SuggestField';
 import SuggestionRenderer from './SuggestionRenderer';
 import { RenderSuggestion, SuggestionsFetchRequested, Omit } from 'react-autosuggest';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 type ForwardedSuggestFieldProps<SuggestionT> = Omit<
@@ -43,7 +44,7 @@ class RemoteSuggestField<SuggestionT> extends React.Component<RemoteSuggestField
       max_results: 7 
     })
       .then(this.onSuggestionsReceived)
-      .catch((error: APISocket.Error) => 
+      .catch((error: ErrorResponse) => 
         console.log(`Failed to fetch suggestions: ${error}`)
       );
   }

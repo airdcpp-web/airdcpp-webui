@@ -29,6 +29,7 @@ import * as API from 'types/api';
 
 import './style.css';
 import { RouteComponentProps } from 'react-router';
+import { APISocket } from 'airdcpp-apisocket';
 
 
 interface Section {
@@ -78,7 +79,7 @@ export type DownloadDialogUserGetter<ItemT extends API.FileItemInfo> = (
 
 export type DownloadDialogItemDataGetter<ItemT extends API.FileItemInfo> = (
   itemId: DownloadItemIdType, 
-  socket: any
+  socket: APISocket
 ) => Promise<ItemT>;
 
 export type DownloadHandler<ItemT extends API.FileItemInfo> = (

@@ -15,6 +15,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import './style.css';
+import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
 
 const TcombForm = t.form.Form;
 
@@ -50,7 +51,7 @@ export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormV
 }
 
 interface State<ValueType> {
-  error: APISocket.ErrorFull | null;
+  error: FieldError | null;
   formValue: Partial<ValueType>;
 }
 
@@ -182,7 +183,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   }
 
   // Handle an API error
-  onSaveFailed = (error: APISocket.Error) => {
+  onSaveFailed = (error: ErrorResponse) => {
     if (error.code === 422) {
       this.setState({ 
         error: error.json,

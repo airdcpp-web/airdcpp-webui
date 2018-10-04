@@ -8,10 +8,11 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
+import { APISocket, ErrorResponse, AddListener } from 'airdcpp-apisocket';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
-  addSocketListener: any, 
+  addSocketListener: AddListener, 
   data: {
     refetchData: (keys?: string[]) => void;
     mergeData: (data: Partial<DataT>) => void;
@@ -21,7 +22,7 @@ export type SocketConnectHandler<DataT, PropsT> = (
 
 export interface DataProviderDecoratorProps<PropsT extends object, DataT extends object> {
   urls: {
-    [key: string]: ((props: PropsT, socket: any) => Promise<any>) | string
+    [key: string]: ((props: PropsT, socket: APISocket) => Promise<object | undefined>) | string
   };
 
   onSocketConnected?: SocketConnectHandler<DataT, PropsT>;
@@ -36,12 +37,12 @@ export interface DataProviderDecoratorProps<PropsT extends object, DataT extends
 
 export interface DataProviderDecoratorChildProps {
   refetchData: (keys?: string[]) => void;
-  dataError?: APISocket.ErrorBase;
+  dataError?: ErrorResponse;
 }
 
 interface State<DataT> {
   data: DataT | null;
-  error: APISocket.ErrorBase | null;
+  error: ErrorResponse | null;
 }
 
 // A decorator that will provide a set of data fetched from the API as props
@@ -97,7 +98,7 @@ export default function <PropsT extends object, DataT extends object>(
       this.mounted = false;
     },
 
-    onSocketConnected(addSocketListener: () => void) {
+    onSocketConnected(addSocketListener: AddListener) {
       if (settings.onSocketConnected) {
         settings.onSocketConnected(addSocketListener, {
           refetchData: this.refetchData,
@@ -159,13 +160,20 @@ export default function <PropsT extends object, DataT extends object>(
       this.mergeData(data);
     },
 
-    onDataFetchFailed(fetchError: APISocket.Error | Response) {
-      let error: APISocket.ErrorBase;
+    onDataFetchFailed(fetchError: ErrorResponse | Response) {
+      if (!this.mounted) {
+        return;
+      }
+
+      let error: ErrorResponse;
       if (fetchError instanceof Response) {
         // HTTP error
         error = {
           code: fetchError.status,
           message: fetchError.statusText,
+          json: {
+            message: fetchError.statusText,
+          }
         };
       } else {
         // API error

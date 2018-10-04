@@ -5,7 +5,7 @@ const options = {
   url: (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + getBasePath() + 'api/v1/',
   autoReconnect: false,
   reconnectInterval: 5,
-  logLevel: 4,
+  logLevel: 'info',
   ignoredListenerEvents: [
     'transfer_statistics',
     'hash_statistics',
@@ -13,6 +13,10 @@ const options = {
   ],
 };
 
-let Socket = ApiSocket(options, window.WebSocket);
+const Socket = ApiSocket(options, WebSocket as any);
+
+type SocketType = typeof ApiSocket;
+
+export { SocketType as APISocket };
 
 export default Socket;

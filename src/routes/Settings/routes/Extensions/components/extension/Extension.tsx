@@ -17,6 +17,7 @@ import versionCompare from 'compare-versions';
 import 'semantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 interface VersionProps {
@@ -56,7 +57,7 @@ const formatAuthor = (npmPackage?: NpmPackage, installedPackage?: API.Extension)
   return null;
 };
 
-const formatNote = (installedPackage?: API.Extension, npmError?: APISocket.ErrorBase) => {
+const formatNote = (installedPackage?: API.Extension, npmError?: ErrorResponse) => {
   if (installedPackage && !installedPackage.managed) {
     return 'Unmanaged extension';
   }
@@ -81,7 +82,7 @@ export interface NpmPackage {
 export interface ExtensionProps {
   installedPackage?: API.Extension;
   npmPackage?: NpmPackage;
-  npmError?: APISocket.ErrorBase;
+  npmError?: ErrorResponse;
 }
 
 const Extension = createReactClass<ExtensionProps, {}>({

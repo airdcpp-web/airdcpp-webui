@@ -5,6 +5,7 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 interface FilterType {
@@ -43,7 +44,7 @@ export default function <PropsT>(
 
       const { viewUrl, filter } = this.props;
       SocketService.put(viewUrl + '/filter/' + filter.id, data)
-        .catch((error: APISocket.Error) => console.error('Failed to add table filter'));
+        .catch((error: ErrorResponse) => console.error('Failed to add table filter'));
     }
 
     render() {

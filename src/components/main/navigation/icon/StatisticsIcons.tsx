@@ -16,6 +16,7 @@ import IconConstants from 'constants/IconConstants';
 import TransferConstants from 'constants/TransferConstants';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 interface StatisticsIconProps {
@@ -74,7 +75,7 @@ const StatisticsIcons = createReactClass<{}, Partial<StatisticsIconsProps>>({
     if (LoginStore.hasAccess(API.AccessEnum.TRANSFERS)) {
       SocketService.get(TransferConstants.STATISTICS_URL)
         .then(this.onStatsReceived)
-        .catch((error: APISocket.Error) => console.error('Failed to fetch transfer statistics', error.message));
+        .catch((error: ErrorResponse) => console.error('Failed to fetch transfer statistics', error.message));
     }
   },
 

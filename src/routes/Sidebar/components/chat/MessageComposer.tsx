@@ -15,6 +15,7 @@ import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
 import { RouterChildContext } from 'react-router';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 const ENTER_KEY_CODE = 13;
 
@@ -158,8 +159,8 @@ class MessageComposer extends React.Component<MessageComposerProps> {
       hub_urls: session.hub_url ? [ session.hub_url ] : undefined,
     })
       .then((users: API.HubUser[]) => callback(users.map(this.mapUser)))
-      .catch((error: APISocket.Error) => 
-        console.log('Failed to fetch suggestions: ' + error)
+      .catch((error: ErrorResponse) => 
+        console.log(`Failed to fetch suggestions: ${error}`)
       );
   }
 

@@ -14,6 +14,7 @@ import { formatSize } from 'utils/ValueFormat';
 import '../style.css';
 
 import * as API from 'types/api';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 interface OptimizeLayoutProps {
@@ -81,8 +82,8 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutDataProps> {
 
   handleOptimize = () => {
     SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify: this.state.verify })
-      .catch((error: APISocket.ErrorBase) => 
-        console.error('Failed to optimize database: ' + error)
+      .catch((error: ErrorResponse) => 
+        console.error(`Failed to optimize database: ${error}`)
       );
   }
 
