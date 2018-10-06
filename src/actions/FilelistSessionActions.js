@@ -11,6 +11,7 @@ import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
 import AccessConstants from 'constants/AccessConstants';
+import { getFilePath } from 'utils/FileUtils';
 
 
 const FilelistSessionActions = Reflux.createActions([
@@ -32,7 +33,8 @@ const openSession = (location, cid) => {
   });
 };
 
-FilelistSessionActions.createSession.listen(function (location, user, sessionStore, directory = '/') {
+FilelistSessionActions.createSession.listen(function (location, user, sessionStore, path = '/') {
+  const directory = getFilePath(path);
   const session = sessionStore.getSession(user.cid);
   if (session) {
     if (session.user.hub_url !== user.hub_url) {
