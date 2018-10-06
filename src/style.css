@@ -38,7 +38,7 @@ section#container-main,
 	margin-right: 5px !important;
 }
 
-.dropdown:not(.table-items):not(.fluid) {
+.dropdown:not(.table-items):not(.fluid):not(td) {
   display: inline-flex !important;
 }
 
