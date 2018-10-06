@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.4.0-beta.1",
+  "version": "2.4.0-beta.2",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -79,7 +79,7 @@
     "express": "^4.16.3",
     "file-loader": "^2.0.0",
     "fixed-data-table-2": "^0.8.15",
-    "fork-ts-checker-webpack-plugin": "^0.4.9",
+    "fork-ts-checker-webpack-plugin": "^0.4.10",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy": "^1.17.0",
     "immutability-helper": "^2.8.1",
