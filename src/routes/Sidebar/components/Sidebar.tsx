@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import React from 'react';
 
 import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
@@ -8,18 +7,15 @@ import History from 'utils/History';
 
 import '../style.css';
 import { Location } from 'history';
-import { RouteItem, isRouteActive, parseRoutes } from 'routes/Routes';
+import { RouteItem, parseRoutes } from 'routes/Routes';
 
 
 const MIN_WIDTH = 500;
 
-const showSidebar = (  
-  routes: RouteItem[],
-  location: Location
-) => {
-  return routes.find(route => isRouteActive(route, location));
-};
 
+const showSidebar = (props: SidebarProps) => {
+  return !!props.previousLocation;
+};
 
 export interface SidebarProps {
   location: Location;
@@ -28,7 +24,7 @@ export interface SidebarProps {
 }
 
 interface State {
-  animating: boolean;
+  contentActive: boolean;
   width: number;
 }
 
@@ -43,20 +39,14 @@ class Sidebar extends React.Component<SidebarProps, State> {
       // Don't render the content while sidebar is animating
       // Avoids issues if there are router transitions while the sidebar is 
       // animating (e.g. the content is placed in the middle of the window)
-      animating: true,
+      contentActive: false,
       width: Math.max(MIN_WIDTH, width),
     };
   }
 
-  /*UNSAFE_componentWillReceiveProps(nextProps: SidebarProps) {
-    if (nextProps.location.state.sidebar.data.close) {
-      $(this.c.resizable).sidebar('hide');
-    }
-  }*/
-
   componentDidUpdate(prevProps: SidebarProps) {
-    const newActive = showSidebar(this.props.routes, this.props.location);
-    const prevActive = showSidebar(prevProps.routes, prevProps.location);
+    const newActive = showSidebar(this.props);
+    const prevActive = showSidebar(prevProps);
     if (newActive !== prevActive) {
       if (newActive) {
         $(this.c.resizable).sidebar('show');
@@ -77,20 +67,13 @@ class Sidebar extends React.Component<SidebarProps, State> {
       onHide: this.onHide,
     } as SemanticUI.SidebarSettings);
     
-    const active = showSidebar(this.props.routes, this.props.location);
+    const active = showSidebar(this.props);
     if (active) {
       $(this.c.resizable).sidebar('show');
     }
   }
 
-  /*componentWillUnmount() {
-    if (this.c) {
-      $(this.c.resizable).sidebar('hide');
-    }
-  }*/
-
   onHide = () => {
-    //
     const { previousLocation } = this.props;
     if (!previousLocation) {
       return;
@@ -100,29 +83,17 @@ class Sidebar extends React.Component<SidebarProps, State> {
       pathname: previousLocation.pathname,
       state: previousLocation.state,
     });
-
-    /*if (!!previousLocation) {
-      History.replace({
-        pathname: previousLocation.pathname,
-        state: previousLocation.state,
-      });
-    } else {
-      History.replace('/');
-    }*/
   }
 
   onHidden = () => {
-    //History.removeOverlay(this.props.location, 'sidebar');
-    //History.replace();
-
     this.setState({ 
-      animating: true
+      contentActive: false
     });
   }
 
   onVisible = () => {
     this.setState({ 
-      animating: false
+      contentActive: true
     });
   }
 
@@ -137,7 +108,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
   }
 
   render() {
-    const { width, animating } = this.state;
+    const { width, contentActive } = this.state;
     return (
       <Resizable
         ref={ (c: any) => this.c = c }
@@ -157,7 +128,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
         onResizeStop={ this.onResizeStop }
       >
         <div id="sidebar-container">
-          { animating ? <Loader text=""/> : parseRoutes(this.props.routes, this.props.location)  }
+          { !contentActive ? <Loader text=""/> : parseRoutes(this.props.routes, this.props.location)  }
         </div>
       </Resizable>
     );

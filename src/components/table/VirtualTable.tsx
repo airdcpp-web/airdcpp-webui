@@ -94,9 +94,9 @@ class VirtualTable extends React.Component<VirtualTableProps> {
   start = (entityId?: API.IdType) => {
     const { store, sourceFilter } = this.props;
 
-    console.log(`Calling start action for view ${store.viewUrl} (before timeout)`);
+    //console.log(`Calling start action for view ${store.viewUrl} (before timeout)`);
     setTimeout(() => {
-      console.log(`Calling start action for view ${store.viewUrl} (inside timeout)`);
+      //console.log(`Calling start action for view ${store.viewUrl} (inside timeout)`);
       TableActions.init(store.viewUrl, entityId, sourceFilter);
       TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
     });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'react-router';
-import History from 'utils/History';
 
 
 const parseRoutePath = (match: RouteMatch<{}>, path: string) => {
@@ -28,13 +27,18 @@ export default function <PropsT>(
   path: string
 ) {
   class ModalRouteDecorator extends React.Component<PropsT & ModalRouteDecoratorProps & RouteComponentProps> {
+    handleClose = () => {
+      const { history, match } = this.props;
+      history.replace(match.url);
+    }
+
     render() {
       const { match } = this.props;
       return (
         <Route 
           path={ parseRoutePath(match, path) }
           render={ routeProps => (
-            <ModalRouteCloseContext.Provider value={ () => History.replace(match.url) }>
+            <ModalRouteCloseContext.Provider value={ this.handleClose }>
               <Component
                 returnTo={ match.url }
                 { ...this.props }
@@ -42,37 +46,10 @@ export default function <PropsT>(
               />
             </ModalRouteCloseContext.Provider>
           ) }
-          //{ ...props }
         />
       );
     }
   }
-
-  /*const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps & PropsT> = (
-    props, 
-    { router }: RouterChildContext<{}>
-  ) => {
-    const { match } = router.route;
-    return (
-      <Route 
-        path={ parseRoutePath(match, path) }
-        render={ routeProps => (
-          <ModalRouteCloseContext.Provider value={ () => History.replace(match.url) }>
-            <Component
-              returnTo={ match.url }
-              { ...props }
-              { ...routeProps }
-            />
-          </ModalRouteCloseContext.Provider>
-        ) }
-        { ...props }
-      />
-    );
-  };*/
-
-  /*ModalRouteDecorator.contextTypes = {
-    router: PropTypes.object.isRequired,
-  };*/
 
   return withRouter(ModalRouteDecorator);
 }

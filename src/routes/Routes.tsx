@@ -32,10 +32,12 @@ export interface RouteItem {
   onClick?: RouteItemClickHandler;
 }
 
+export const HOME_URL = '/home';
+
 export const mainRoutes: RouteItem[] = [
   {
     title: 'Home',
-    path: '/home',
+    path: HOME_URL,
     icon: IconConstants.HOME,
     component: AsyncComponentDecorator(() => import(/* webpackChunkName: "home" */ 'routes/Home/components/Home')),
   }, {

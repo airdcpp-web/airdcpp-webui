@@ -248,9 +248,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
         action: {
           label: 'View queue',
           callback: () => { 
-            History.push({
-              pathname: '/queue',
-            }); 
+            History.push('/queue'); 
           }
         }
       } as ReactNotification);

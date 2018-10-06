@@ -32,7 +32,7 @@ export default function <PropsT, SessionT extends SessionBase = SessionBase>(
     scrollable: any;
 
     componentDidMount() {
-      this._scrollToBottom();
+      this.scrollToBottom();
     }
 
     UNSAFE_componentWillUpdate(nextProps: ScrollDecoratorProps<SessionT>) {
@@ -53,11 +53,11 @@ export default function <PropsT, SessionT extends SessionBase = SessionBase>(
 
     componentDidUpdate() {
       if (shouldScrollBottom) {
-        this._scrollToBottom();
+        this.scrollToBottom();
       }
     }
 
-    _scrollToBottom = () => {
+    scrollToBottom = () => {
       if (this.scrollable) {
         this.scrollable.scrollTop = this.scrollable.scrollHeight;
       }

@@ -5,7 +5,7 @@ const options = {
   url: (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + getBasePath() + 'api/v1/',
   autoReconnect: false,
   reconnectInterval: 5,
-  logLevel: 'info',
+  logLevel: process.env.NODE_ENV === 'production' ? 'info' : 'verbose',
   ignoredListenerEvents: [
     'transfer_statistics',
     'hash_statistics',

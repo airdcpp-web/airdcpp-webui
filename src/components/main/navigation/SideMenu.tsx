@@ -7,7 +7,7 @@ import History from 'utils/History';
 
 import IconPanel from 'components/main/navigation/IconPanel';
 import { matchPath } from 'react-router-dom';
-import { secondaryRoutes, parseMenuItems, RouteItemClickHandler } from 'routes/Routes';
+import { secondaryRoutes, parseMenuItems, RouteItemClickHandler, HOME_URL } from 'routes/Routes';
 import { Location } from 'history';
 
 
@@ -36,7 +36,7 @@ class SideMenu extends React.Component<SideMenuProps> {
           state: previousLocation.state,
         });
       } else {
-        History.replace('/');
+        History.replace(HOME_URL);
       }
     } else {
       History.push(url);

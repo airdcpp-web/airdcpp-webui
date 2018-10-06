@@ -1,12 +1,10 @@
-//import PropTypes from 'prop-types';
 import React from 'react';
-//import { Route, Redirect } from 'react-router-dom';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
 import SiteHeader from 'components/main/SiteHeader';
 
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes /*, RouteItem, isRouteActive*/ } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import SidebarHandlerDecorator, { 
   SidebarHandlerDecoratorChildProps 
@@ -40,13 +38,6 @@ class MainLayout extends React.Component<MainLayoutProps & SidebarHandlerDecorat
           routes={ secondaryRoutes }
           previousLocation={ previousLocation }
         />
-        {/* sidebar */}
-        {/*<SidebarContainer
-          routes={ secondaryRoutes }
-          location={ location }
-        />*/} 
-
-
         <div className="pusher">
           <SiteHeader>
             <MainNavigation/>
