@@ -2,27 +2,17 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import UserActions from 'actions/UserActions';
+import UserActions, { ActionUserType, ActionUserData } from 'actions/UserActions';
 import { getFilePath } from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
-import * as API from 'types/api';
 import Icon from 'components/semantic/Icon';
 
 
-type UserType = (API.User & { nick?: string; }) | 
-  (API.HintedUser & { nick?: string; }) | 
-  (API.HubUser & { nicks?: string });
-
-export interface UserMenuItemData {
-  user: UserType;
-  directory: string;
-}
-
 export interface UserMenuDecoratorProps extends Omit<ActionMenuDecoratorProps, 'actions' | 'caption' | 'itemData'> {
-  user: UserType;
+  user: ActionUserType;
   directory: string;
   userIcon?: string | boolean | null;
   text?: React.ReactNode;
@@ -60,12 +50,12 @@ export default function <DropdownPropsT extends object>(
       text : PropTypes.node,
     };*/
 
-    itemData: UserMenuItemData;
+    itemData: ActionUserData;
 
     constructor(props: UserMenuDecoratorProps & DropdownPropsT) {
       super(props);
 
-      this.itemData = {} as UserMenuItemData;
+      this.itemData = {} as ActionUserData;
       Object.defineProperty(this.itemData, 'user', {
         get: () => {
           return this.props.user;

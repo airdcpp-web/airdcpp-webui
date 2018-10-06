@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
@@ -9,14 +10,20 @@ import IconConstants from 'constants/IconConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
-import DownloadableItemActions from 'actions/DownloadableItemActions';
+import DownloadableItemActions, { DownloadableItemInfo } from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-const bundleValidationFailed = bundle => bundle.status.id === StatusEnum.COMPLETION_VALIDATION_ERROR;
-const itemNotFinished = item => item.time_finished === 0;
-const isDirectoryBundle = bundle => bundle.type.id === 'directory';
-const hasSources = bundle => bundle.sources.total > 0 && itemNotFinished(bundle);
+import { ErrorResponse } from 'airdcpp-apisocket';
+import { Location } from 'history';
+
+
+const bundleValidationFailed = (bundle: API.QueueBundle) => bundle.status.id === StatusEnum.COMPLETION_VALIDATION_ERROR;
+const itemNotFinished = (bundle: API.QueueBundle) => bundle.time_finished === 0;
+const isDirectoryBundle = (bundle: API.QueueBundle) => bundle.type.id === 'directory';
+const hasSources = (bundle: API.QueueBundle) => bundle.sources.total > 0 && itemNotFinished(bundle);
 
 
 const QueueBundleActions = Reflux.createActions([
@@ -81,19 +88,23 @@ const QueueBundleActions = Reflux.createActions([
   } },
 ]);
 
-const shareBundle = (bundle, skipValidation, action) => {
+const shareBundle = (bundle: API.QueueBundle, skipValidation: boolean, action: UI.AsyncActionType<API.QueueBundle>) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/share`, { 
     skip_validation: skipValidation, 
   })
     .then(() => 
       action.completed(bundle))
     .catch((error) => 
-      action.failed(error, bundle)
+      action.failed(error)
     );
 };
 
 
-QueueBundleActions.setBundlePriority.listen(function (bundle, priority) {
+QueueBundleActions.setBundlePriority.listen(function (
+  this: UI.AsyncActionType<API.QueueFile>, 
+  bundle: API.QueueBundle, 
+  priority: API.QueuePriorityEnum
+) {
   let that = this;
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/priority`, {
     priority
@@ -102,22 +113,30 @@ QueueBundleActions.setBundlePriority.listen(function (bundle, priority) {
     .catch(that.failed);
 });
 
-QueueBundleActions.rescan.listen(function (bundle) {
+QueueBundleActions.rescan.listen(function (bundle: API.QueueBundle) {
   shareBundle(bundle, false, QueueBundleActions.rescan);
 });
 
-QueueBundleActions.forceShare.listen(function (bundle) {
+QueueBundleActions.forceShare.listen(function (bundle: API.QueueBundle) {
   shareBundle(bundle, true, QueueBundleActions.forceShare);
 });
 
-QueueBundleActions.removeBundleSource.listen(function ({ source, bundle }) {
+interface ActionBundleSourceData {
+  source: API.QueueBundleSource;
+  bundle: API.QueueBundle;
+}
+
+QueueBundleActions.removeBundleSource.listen(function (
+  this: UI.AsyncActionType<ActionBundleSourceData>, 
+  { source, bundle }: ActionBundleSourceData
+) {
   let that = this;
   return SocketService.delete(`${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`)
     .then(that.completed.bind(that, source, bundle))
     .catch(that.failed.bind(that, source, bundle));
 });
 
-QueueBundleActions.removeBundle.shouldEmit = function (bundle) {
+QueueBundleActions.removeBundle.shouldEmit = function (bundle: API.QueueBundle) {
   if (bundle.status.completed) {
     // No need to confirm completed bundles
     this.confirmed(bundle, false);
@@ -127,7 +146,7 @@ QueueBundleActions.removeBundle.shouldEmit = function (bundle) {
       content: `Are you sure that you want to remove the bundle ${bundle.name}?`,
       icon: this.icon,
       approveCaption: 'Remove bundle',
-      rejectCaption: "Don't remove",
+      rejectCaption: `Don't remove`,
       checkboxCaption: 'Remove finished files',
     };
 
@@ -136,7 +155,11 @@ QueueBundleActions.removeBundle.shouldEmit = function (bundle) {
   return false;
 };
 
-QueueBundleActions.removeBundle.confirmed.listen(function (bundle, removeFinished) {
+QueueBundleActions.removeBundle.confirmed.listen(function (
+  this: UI.AsyncActionType<API.QueueBundle>,
+  bundle: API.QueueBundle, 
+  removeFinished: boolean
+) {
   let that = this;
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, { 
     remove_finished: removeFinished,
@@ -145,38 +168,39 @@ QueueBundleActions.removeBundle.confirmed.listen(function (bundle, removeFinishe
     .catch(QueueBundleActions.removeBundle.failed.bind(that, bundle));
 });
 
-QueueBundleActions.search.listen(function (itemInfo, location) {
-  return DownloadableItemActions.search({ 
-    itemInfo,
-  }, location);
+QueueBundleActions.search.listen(function (itemInfo: DownloadableItemInfo, location: Location) {
+  return DownloadableItemActions.search({ itemInfo }, location);
 });
 
-QueueBundleActions.searchBundleAlternates.listen(function (bundle) {
+QueueBundleActions.searchBundleAlternates.listen(function (
+  this: UI.AsyncActionType<API.QueueBundle>, 
+  bundle: API.QueueBundle
+) {
   let that = this;
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`)
     .then(that.completed.bind(that, bundle))
     .catch(that.failed.bind(that, bundle));
 });
 
-QueueBundleActions.searchBundleAlternates.completed.listen(function (bundle, data) {
+QueueBundleActions.searchBundleAlternates.completed.listen(function (bundle: API.QueueBundle) {
   NotificationActions.success({ 
     title: 'Action completed',
     message: `The bundle ${bundle.name} was searched for alternates`,
   });
 });
 
-QueueBundleActions.searchBundleAlternates.failed.listen(function (bundle, error) {
+QueueBundleActions.searchBundleAlternates.failed.listen(function (bundle: API.QueueBundle, error: ErrorResponse) {
   NotificationActions.error({ 
     title: 'Action failed',
     message: `Failed to search the bundle ${bundle.name} for alternates: ${error.message}`,
   });
 });
 
-QueueBundleActions.sources.listen(function (data, location) {
+QueueBundleActions.sources.listen(function (data: API.QueueBundle, location: Location) {
   History.push(`${location.pathname}/sources/${data.id}`);
 });
 
-QueueBundleActions.content.listen(function (data, location) {
+QueueBundleActions.content.listen(function (data: API.QueueBundle, location: Location) {
   History.push(`${location.pathname}/content/${data.id}`);
 });
 

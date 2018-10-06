@@ -42,3 +42,13 @@ export interface SlotCount {
   total: number;
   str: string;
 }
+
+export interface SearchInstance {
+  id: number;
+  expires_in: number;
+  current_search_id: number;
+  queue_time: number;
+  queued_count: number;
+  result_count: number;
+  searches_sent_ago: number;
+}

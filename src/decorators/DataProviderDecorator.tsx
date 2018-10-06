@@ -9,6 +9,7 @@ import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 import { APISocket, ErrorResponse, AddListener } from 'airdcpp-apisocket';
+import { toErrorResponse } from 'utils/TypeConvert';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
@@ -168,13 +169,7 @@ export default function <PropsT extends object, DataT extends object>(
       let error: ErrorResponse;
       if (fetchError instanceof Response) {
         // HTTP error
-        error = {
-          code: fetchError.status,
-          message: fetchError.statusText,
-          json: {
-            message: fetchError.statusText,
-          }
-        };
+        error = toErrorResponse(fetchError.status, fetchError.statusText);
       } else {
         // API error
         error = fetchError;

@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import FilelistConstants from 'constants/FilelistConstants';
@@ -12,9 +13,20 @@ import NotificationActions from 'actions/NotificationActions';
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { DownloadHandler, DownloadableItemData, DownloadableItemInfo } from './DownloadableItemActions';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
-const isMe = ({ session }) => session.user.flags.indexOf('self') !== -1;
-const isPartialList = ({ session }) => session.partial_list;
+
+interface ActionFilelistItemData {
+  item: API.FilelistItem;
+  session: API.FilelistSession;
+}
+
+
+const isMe = ({ session }: ActionFilelistItemData) => session.user.flags.indexOf('self') !== -1;
+const isPartialList = ({ session }: ActionFilelistItemData) => session.partial_list;
 
 const FilelistItemActions = Reflux.createActions([
   { 'reloadDirectory': { 
@@ -33,15 +45,16 @@ const FilelistItemActions = Reflux.createActions([
   } },
   { 'download': { asyncResult: true } },
   { 'findNfo': { asyncResult: true } },
-]);
+] as UI.ActionConfigList<ActionFilelistItemData>);
 
-FilelistItemActions.download.listen((itemInfo, user, downloadData) => {
+const DownloadHandler: DownloadHandler<API.FilelistItem> = (itemInfo, user, downloadData) => {
   const data = {
     user,
     ...downloadData,
   };
 
   if (itemInfo.type.id === 'file') {
+    // File
     const { tth, size, time } = itemInfo;
     Object.assign(data, {
       tth,
@@ -51,7 +64,7 @@ FilelistItemActions.download.listen((itemInfo, user, downloadData) => {
 
     SocketService.post(`${QueueConstants.BUNDLES_URL}/file`, data)
       .then(FilelistItemActions.download.completed)
-      .catch(error => FilelistItemActions.download.failed(itemInfo, error));
+      .catch(error => FilelistItemActions.download.failed(error, itemInfo));
 
     return;
   }
@@ -60,24 +73,34 @@ FilelistItemActions.download.listen((itemInfo, user, downloadData) => {
   data['list_path'] = itemInfo.path;
   SocketService.post(FilelistConstants.DIRECTORY_DOWNLOADS_URL, data)
     .then(FilelistItemActions.download.completed)
-    .catch(error => FilelistItemActions.download.failed(itemInfo, error));
-});
+    .catch(error => FilelistItemActions.download.failed(error, itemInfo));
+};
 
-FilelistItemActions.download.failed.listen((itemInfo, error) => {
+FilelistItemActions.download.listen(DownloadHandler);
+
+FilelistItemActions.download.failed.listen((error: ErrorResponse, itemInfo: DownloadableItemInfo) => {
   NotificationActions.apiError('Failed to queue the item ' + itemInfo.name, error);
 });
 
-FilelistItemActions.reloadDirectory.listen(function ({ directory, session }) {
+FilelistItemActions.reloadDirectory.listen(function (
+  this: UI.AsyncActionType<ActionFilelistItemData>, 
+  itemData: ActionFilelistItemData
+) {
+  const { session, item } = itemData;
+
   let that = this;
   SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, { 
-    list_path: directory.path,
+    list_path: item.path,
     reload: true,
   })
     .then(data => that.completed(session, data))
-    .catch(error => that.failed(session, error));
+    .catch(error => that.failed(error, itemData));
 });
 
-FilelistItemActions.findNfo.listen(function ({ user, itemInfo }) {
+FilelistItemActions.findNfo.listen(function (
+  this: UI.AsyncActionType<ActionFilelistItemData>, 
+  { user, itemInfo }: DownloadableItemData
+) {
   let that = this;
   SocketService.post(FilelistConstants.FIND_NFO_URL, {
     user: {
@@ -90,8 +113,8 @@ FilelistItemActions.findNfo.listen(function ({ user, itemInfo }) {
     .catch(that.failed);
 });
 
-FilelistItemActions.refreshShare.listen(function ({ session, directory }) {
-  ShareActions.refreshVirtual(directory.path, session.share_profile.id);
+FilelistItemActions.refreshShare.listen(function ({ session, item }: ActionFilelistItemData) {
+  ShareActions.refreshVirtual(item.path, session.share_profile!.id);
 });
 
 export default FilelistItemActions;

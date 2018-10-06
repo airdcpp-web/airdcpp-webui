@@ -15,7 +15,7 @@ type RejectHandler = (error: Error) => void;
 export interface ConfirmDialogOptions {
   icon?: IconType;
 
-  content: React.ReactNode;
+  content?: React.ReactNode;
   title: React.ReactNode;
 
   approveCaption?: string;

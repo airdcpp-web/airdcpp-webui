@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
@@ -14,9 +15,13 @@ import ShareProfileConstants from 'constants/ShareProfileConstants';
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
-const notDefault = item => !item.default;
-const noData = item => !item;
+
+const notDefault = (item: API.ShareProfile) => !item.default;
+const noData = (item: API.ShareProfile) => !item;
 
 const ShareProfileActions = Reflux.createActions([
   { 'create': { 
@@ -56,9 +61,9 @@ const ShareProfileActions = Reflux.createActions([
     icon: IconConstants.REMOVE,
     filter: notDefault,
   } },
-]);
+] as UI.ActionConfigList<API.ShareProfile>);
 
-ShareProfileActions.create.listen(function () {
+ShareProfileActions.create.listen(function (this: UI.EditorActionType<API.ShareProfile>) {
   const options = {
     icon: this.icon,
     approveCaption: 'Create',
@@ -73,13 +78,13 @@ ShareProfileActions.create.listen(function () {
   InputDialog(options, inputOptions, this.saved.bind(this));
 });
 
-ShareProfileActions.create.saved.listen(function (name) {
+ShareProfileActions.create.saved.listen(function (name: string) {
   return SocketService.post(ShareProfileConstants.PROFILES_URL, { name: name })
     .then(ShareProfileActions.create.completed)
     .catch(ShareProfileActions.create.failed);
 });
 
-ShareProfileActions.edit.listen(function (profile) {
+ShareProfileActions.edit.listen(function (this: UI.EditorActionType<API.ShareProfile>, profile: API.ShareProfile) {
   const dialogOptions = {
     icon: this.icon,
     approveCaption: 'Rename',
@@ -95,48 +100,59 @@ ShareProfileActions.edit.listen(function (profile) {
   InputDialog(dialogOptions, inputOptions, this.saved.bind(this, profile));
 });
 
-ShareProfileActions.default.listen(function (profile) {
+ShareProfileActions.default.listen(function (this: UI.AsyncActionType<API.ShareProfile>, profile: API.ShareProfile) {
   const that = this;
   return SocketService.post(`${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`)
     .then(ShareProfileActions.default.completed.bind(that, profile))
     .catch(ShareProfileActions.default.failed.bind(that, profile));
 });
 
-ShareProfileActions.edit.saved.listen(function (profile, name) {
+ShareProfileActions.edit.saved.listen(function (
+  this: UI.AsyncActionType<API.ShareProfile>, 
+  profile: API.ShareProfile, 
+  name: string
+) {
   const that = this;
   return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, { name: name })
     .then(ShareProfileActions.edit.completed.bind(that, profile))
     .catch(ShareProfileActions.edit.failed.bind(that, profile));
 });
 
-ShareProfileActions.edit.failed.listen(function (profile, error) {
+ShareProfileActions.edit.failed.listen(function (profile: API.ShareProfile, error: ErrorResponse) {
   NotificationActions.apiError('Failed to rename profile', error, profile.id);
 });
 
-ShareProfileActions.create.failed.listen(function (error) {
+ShareProfileActions.create.failed.listen(function (error: ErrorResponse) {
   NotificationActions.apiError('Failed to create profile', error);
 });
 
-ShareProfileActions.remove.listen(function (profile) {
+ShareProfileActions.remove.listen(function (this: UI.ConfirmActionType<API.ShareProfile>, profile: API.ShareProfile) {
   const options = {
     title: this.displayName,
     content: 'Are you sure that you want to remove the profile ' + profile.name + '?',
     icon: this.icon,
     approveCaption: 'Remove profile',
-    rejectCaption: "Don't remove",
+    rejectCaption: `Don't remove`,
   };
 
   ConfirmDialog(options, this.confirmed.bind(this, profile));
 });
 
-ShareProfileActions.remove.confirmed.listen(function (profile) {
+ShareProfileActions.remove.confirmed.listen(function (
+  this: UI.AsyncActionType<API.ShareProfile>, 
+  profile: API.ShareProfile
+) {
   const that = this;
   return SocketService.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id)
     .then(ShareProfileActions.remove.completed.bind(that, profile))
     .catch(ShareProfileActions.remove.failed.bind(that, profile));
 });
 
-ShareProfileActions.browse.listen(function (profile, location) {
+ShareProfileActions.browse.listen(function (
+  this: UI.AsyncActionType<API.ShareProfile>, 
+  profile: API.ShareProfile, 
+  location: Location
+) {
   return FilelistSessionActions.ownList(location, profile.id, FilelistSessionStore);
 });
 

@@ -47,3 +47,11 @@ export const urgencyToColor = (urgency: number) => {
     default: return '';
   }
 };
+
+export const toErrorResponse = (errorCode: number, message: string) => ({
+  code: errorCode,
+  message,
+  json: {
+    message,
+  }
+});

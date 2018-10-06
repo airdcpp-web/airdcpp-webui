@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
@@ -9,8 +10,12 @@ import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { Location } from 'history';
 
-const noData = item => !item;
+
+const noData = (item: any) => !item;
 
 const FavoriteDirectoryActions = Reflux.createActions([
   { 'create': { 
@@ -31,29 +36,35 @@ const FavoriteDirectoryActions = Reflux.createActions([
     access: AccessConstants.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
   } },
-]);
+] as UI.ActionConfigList<API.FavoriteDirectoryEntry>);
 
-FavoriteDirectoryActions.create.listen(function (location) {
+FavoriteDirectoryActions.create.listen(function (location: Location) {
   History.push(`${location.pathname}/directories`);
 });
 
-FavoriteDirectoryActions.edit.listen(function (directory, location) {
+FavoriteDirectoryActions.edit.listen(function (directory: API.FavoriteDirectoryEntry, location: Location) {
   History.push(`${location.pathname}/directories/${directory.id}`);
 });
 
-FavoriteDirectoryActions.remove.listen(function (directory) {
+FavoriteDirectoryActions.remove.listen(function (
+  this: UI.ConfirmActionType<API.FavoriteDirectoryEntry>, 
+  directory: API.FavoriteDirectoryEntry
+) {
   const options = {
     title: this.displayName,
     content: `Are you sure that you want to remove the favorite directory ${directory.name}?`,
     icon: this.icon,
     approveCaption: 'Remove directory',
-    rejectCaption: "Don't remove",
+    rejectCaption: `Don't remove`,
   };
 
   ConfirmDialog(options, this.confirmed.bind(this, directory));
 });
 
-FavoriteDirectoryActions.remove.confirmed.listen(function (directory) {
+FavoriteDirectoryActions.remove.confirmed.listen(function (
+  this: UI.ConfirmActionType<API.FavoriteDirectoryEntry>, 
+  directory: API.FavoriteDirectoryEntry
+) {
   const that = this;
   return SocketService.delete(`${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`)
     .then(FavoriteDirectoryActions.remove.completed.bind(that, directory))

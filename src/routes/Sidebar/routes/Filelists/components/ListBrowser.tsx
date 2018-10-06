@@ -101,7 +101,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   }
 
   sendChangeDirectory = (directory: API.FileItemType) => {
-    FilelistSessionActions.changeDirectory(this.props.session.user.cid, directory);
+    FilelistSessionActions.changeDirectory(this.props.session, directory);
   }
 
   emptyRowsNodeGetter = () => {
@@ -158,7 +158,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
       >
         <ActionMenu
           itemData={ {
-            directory: this.props.session.location,
+            item: this.props.session.location,
             session: this.props.session,
           } }
           actions={ FilelistItemActions }

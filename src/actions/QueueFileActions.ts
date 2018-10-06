@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 import QueueConstants from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
@@ -11,8 +12,14 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import DownloadableItemActions from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-const itemNotFinished = item => item.time_finished === 0;
+import { ErrorResponse } from 'airdcpp-apisocket';
+import { Location } from 'history';
+
+
+const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
 
 
 const QueueFileActions = Reflux.createActions([
@@ -39,21 +46,19 @@ const QueueFileActions = Reflux.createActions([
     access: AccessConstants.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
   } },
-]);
+] as UI.ActionConfigList<API.QueueFile>);
 
-QueueFileActions.search.listen(function (itemInfo, location) {
-  return DownloadableItemActions.search({ 
-    itemInfo,
-  }, location);
+QueueFileActions.search.listen(function (itemInfo: API.QueueFile, location: Location) {
+  return DownloadableItemActions.search({ itemInfo }, location);
 });
 
-QueueFileActions.removeFile.shouldEmit = function (file) {
+QueueFileActions.removeFile.shouldEmit = function (file: API.QueueFile) {
   const options = {
     title: this.displayName,
     content: 'Are you sure that you want to remove the file ' + file.name + '?',
     icon: this.icon,
     approveCaption: 'Remove file',
-    rejectCaption: "Don't remove",
+    rejectCaption: `Don't remove`,
     checkboxCaption: 'Remove on disk',
   };
 
@@ -61,7 +66,11 @@ QueueFileActions.removeFile.shouldEmit = function (file) {
   return false;
 };
 
-QueueFileActions.removeFile.confirmed.listen(function (item, removeFinished) {
+QueueFileActions.removeFile.confirmed.listen(function (
+  this: UI.AsyncActionType<API.QueueFile>, 
+  item: API.QueueFile, 
+  removeFinished: boolean
+) {
   const that = this;
   return SocketService.post(`${QueueConstants.FILES_URL}/${item.id}/remove`, {
     remove_finished: removeFinished,
@@ -70,39 +79,43 @@ QueueFileActions.removeFile.confirmed.listen(function (item, removeFinished) {
     .catch(QueueFileActions.removeFile.failed.bind(that, item));
 });
 
-QueueFileActions.removeFile.completed.listen(function ({ name }, data) {
+QueueFileActions.removeFile.completed.listen(function ({ name }: API.QueueFile) {
   NotificationActions.success({ 
     title: name,
     message: 'File was removed from queue',
   });
 });
 
-QueueFileActions.removeFile.failed.listen(function ({ name }, error) {
+QueueFileActions.removeFile.failed.listen(function ({ name }: API.QueueFile, error: ErrorResponse) {
   NotificationActions.apiError(name, error);
 });
 
-QueueFileActions.searchFileAlternates.listen(function (file) {
+QueueFileActions.searchFileAlternates.listen(function (this: UI.AsyncActionType<API.QueueFile>, file: API.QueueFile) {
   let that = this;
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/search`)
     .then(that.completed.bind(that, file))
     .catch(this.failed.bind(that, file));
 });
 
-QueueFileActions.searchFileAlternates.completed.listen(function (file, data) {
+QueueFileActions.searchFileAlternates.completed.listen(function (file: API.QueueFile) {
   NotificationActions.success({ 
     title: file.name,
     message: 'File was searched for alternates',
   });
 });
 
-QueueFileActions.searchFileAlternates.failed.listen(function (file, error) {
+QueueFileActions.searchFileAlternates.failed.listen(function (file: API.QueueFile, error: ErrorResponse) {
   NotificationActions.error({ 
     title: file.name,
     message: 'Failed to search the file for alternates: ' + error.message,
   });
 });
 
-QueueFileActions.setFilePriority.listen(function (file, priority) {
+QueueFileActions.setFilePriority.listen(function (
+  this: UI.AsyncActionType<API.QueueFile>, 
+  file: API.QueueFile, 
+  priority: API.QueuePriorityEnum
+) {
   let that = this;
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/priority`, {
     priority

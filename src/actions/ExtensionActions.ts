@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
@@ -13,9 +14,18 @@ import NotificationActions from 'actions/NotificationActions';
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { ErrorResponse } from 'airdcpp-apisocket';
+import { Location } from 'history';
 
-const isManaged = extension => extension.managed;
-const hasSettings = extension => extension.has_settings;
+
+interface NpmPackage {
+  name: string;
+}
+
+const isManaged = (extension: API.Extension) => extension.managed;
+const hasSettings = (extension: API.Extension) => extension.has_settings;
 
 const ExtensionActions = Reflux.createActions([
   { 'installNpm': { 
@@ -63,41 +73,47 @@ const ExtensionActions = Reflux.createActions([
     filter: hasSettings,
     access: AccessConstants.SETTINGS_EDIT,
   } },
-]);
+] as UI.ActionConfigList<API.Extension>);
 
-ExtensionActions.configure.listen(function (extension, location) {
+ExtensionActions.configure.listen(function (extension: API.Extension, location: Location) {
   History.push(`${location.pathname}/extensions/${extension.id}`);
 });
 
-ExtensionActions.start.listen(function (extension) {
+ExtensionActions.start.listen(function (
+  this: UI.AsyncActionType<API.Extension>, 
+  extension: API.Extension
+  ) {
   const that = this;
   return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`)
     .then(ExtensionActions.start.completed.bind(that, extension))
     .catch(ExtensionActions.start.failed.bind(that, extension));
 });
 
-ExtensionActions.stop.listen(function (extension) {
+ExtensionActions.stop.listen(function (
+  this: UI.AsyncActionType<API.Extension>, 
+  extension: API.Extension
+) {
   const that = this;
   return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`)
     .then(ExtensionActions.stop.completed.bind(that, extension))
     .catch(ExtensionActions.stop.failed.bind(that, extension));
 });
 
-ExtensionActions.start.failed.listen(function (extension, error) {
+ExtensionActions.start.failed.listen(function (extension: API.Extension, error: ErrorResponse) {
   NotificationActions.info({ 
     title: 'Failed to start the extension ' + extension.name,
     message: error.message,
   });
 });
 
-ExtensionActions.stop.failed.listen(function (extension, error) {
+ExtensionActions.stop.failed.listen(function (extension: API.Extension, error: ErrorResponse) {
   NotificationActions.info({ 
     title: 'Failed to stop the extension ' + extension.name,
     message: error.message,
   });
 });
 
-ExtensionActions.installNpm.listen(function (npmPackage, location) {
+ExtensionActions.installNpm.listen(function (npmPackage: NpmPackage, location: Location) {
   $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
     const { tarball, shasum } = data.dist;
     ExtensionActions.installUrl.saved(tarball, npmPackage.name, shasum);
@@ -105,7 +121,7 @@ ExtensionActions.installNpm.listen(function (npmPackage, location) {
     .fail(ExtensionActions.installNpm.failed);
 });
 
-ExtensionActions.updateNpm.listen(function (npmPackage, location) {
+ExtensionActions.updateNpm.listen(function (npmPackage: NpmPackage, location: Location) {
   $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
     const { tarball, shasum } = data.dist;
     ExtensionActions.installUrl.saved(tarball, shasum);
@@ -113,7 +129,7 @@ ExtensionActions.updateNpm.listen(function (npmPackage, location) {
     .fail(ExtensionActions.installNpm.failed);
 });
 
-ExtensionActions.installUrl.listen(function () {
+ExtensionActions.installUrl.listen(function (this: UI.EditorActionType<API.Extension>) {
   const options = {
     icon: this.icon,
     approveCaption: 'Install',
@@ -128,7 +144,7 @@ ExtensionActions.installUrl.listen(function () {
   InputDialog(options, inputOptions, this.saved.bind(this));
 });
 
-ExtensionActions.installUrl.saved.listen(function (url, installId, shasum) {
+ExtensionActions.installUrl.saved.listen(function (url: string, installId: string, shasum: string) {
   return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
     install_id: installId ? installId : url,
     url,
@@ -138,26 +154,33 @@ ExtensionActions.installUrl.saved.listen(function (url, installId, shasum) {
     .catch(ExtensionActions.installUrl.failed);
 });
 
-ExtensionActions.remove.listen(function (extension) {
+ExtensionActions.remove.listen(function (
+  this: UI.ConfirmActionType<API.Extension>,
+  extension: API.Extension
+) {
   const options = {
     title: this.displayName,
-    content: 'Are you sure that you want to remove the extension ' + extension.name + '? This will also remove possible extension-specific settings.',
+    // tslint:disable-next-line:max-line-length
+    content: `Are you sure that you want to remove the extension ${extension.name}? This will also remove possible extension-specific settings.`,
     icon: this.icon,
     approveCaption: 'Remove extension',
-    rejectCaption: "Don't remove",
+    rejectCaption: `Don't remove`,
   };
 
   ConfirmDialog(options, this.confirmed.bind(this, extension));
 });
 
-ExtensionActions.remove.confirmed.listen(function (extension) {
+ExtensionActions.remove.confirmed.listen(function (
+  this: UI.AsyncActionType<API.Extension>, 
+  extension: API.Extension
+) {
   const that = this;
   return SocketService.delete(ExtensionConstants.EXTENSIONS_URL + '/' + extension.name)
     .then(ExtensionActions.remove.completed.bind(that, extension))
     .catch(ExtensionActions.remove.failed.bind(that, extension));
 });
 
-ExtensionActions.remove.failed.listen(function (extension, error) {
+ExtensionActions.remove.failed.listen(function (extension: API.Extension, error: ErrorResponse) {
   NotificationActions.info({ 
     title: 'Failed to remove the extension ' + extension.name,
     message: error.message,

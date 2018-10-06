@@ -1,6 +1,6 @@
 import { HintedUser, HookError, FileItemType } from './common';
 
-//export namespace API {
+
 export interface QueueSource {
   user: HintedUser;
   last_speed: number;
@@ -26,6 +26,12 @@ export interface QueuePriority {
   id: QueuePriorityEnum;
   str: string;
   auto: boolean;
+}
+
+export interface QueueSourceCounts {
+  online: number;
+  total: number;
+  str: string;
 }
 
 export const enum QueueBundleStatusEnum {
@@ -63,7 +69,7 @@ export interface QueueItemBase {
   time_finished: number;
   speed: number;
   seconds_left: number;
-  sources: QueueSource;
+  sources: QueueSourceCounts;
 }
 
 export interface QueueFile extends QueueItemBase {
@@ -83,4 +89,3 @@ export interface QueueBundle extends QueueItemBase {
   type: FileItemType;
   status: QueueBundleStatus;
 }
-//}

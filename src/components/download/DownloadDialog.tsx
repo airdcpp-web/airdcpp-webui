@@ -29,6 +29,7 @@ import * as API from 'types/api';
 import './style.css';
 import { RouteComponentProps } from 'react-router';
 import { APISocket } from 'airdcpp-apisocket';
+import { DownloadHandler, DownloadableItemInfo } from 'actions/DownloadableItemActions';
 
 
 interface Section {
@@ -71,23 +72,17 @@ const MobileLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
 
 type DownloadItemIdType = string;
 
-export type DownloadDialogUserGetter<ItemT extends API.FileItemInfo> = (
+export type DownloadDialogUserGetter<ItemT extends DownloadableItemInfo> = (
   itemId: DownloadItemIdType, 
   props: Props<ItemT>
 ) => API.HintedUserBase;
 
-export type DownloadDialogItemDataGetter<ItemT extends API.FileItemInfo> = (
+export type DownloadDialogItemDataGetter<ItemT extends DownloadableItemInfo> = (
   itemId: DownloadItemIdType, 
   socket: APISocket
 ) => Promise<ItemT>;
 
-export type DownloadHandler<ItemT extends API.FileItemInfo> = (
-  itemInfo: ItemT, 
-  user: API.HintedUserBase | undefined, 
-  downloadData: API.DownloadData
-) => void;
-
-interface DownloadDialogProps<ItemT extends API.FileItemInfo = API.FileItemInfo> {
+interface DownloadDialogProps<ItemT extends DownloadableItemInfo = DownloadableItemInfo> {
   downloadHandler: DownloadHandler<ItemT>;
   itemDataGetter: DownloadDialogItemDataGetter<ItemT>;
   userGetter?: DownloadDialogUserGetter<ItemT>;
@@ -97,7 +92,7 @@ type DownloadDialogRouteProps = ModalRouteDecoratorChildProps & RouteComponentPr
   downloadItemId: DownloadItemIdType; 
 }>;
 
-interface DownloadDialogDataProps<ItemT extends API.FileItemInfo = API.FileItemInfo> 
+interface DownloadDialogDataProps<ItemT extends DownloadableItemInfo = DownloadableItemInfo> 
 extends DataProviderDecoratorChildProps {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
@@ -106,7 +101,7 @@ extends DataProviderDecoratorChildProps {
 }
 
 
-type Props<ItemT extends API.FileItemInfo = API.FileItemInfo> = DownloadDialogProps<ItemT> & 
+type Props<ItemT extends DownloadableItemInfo = DownloadableItemInfo> = DownloadDialogProps<ItemT> & 
   DownloadDialogDataProps<ItemT> & 
   DownloadDialogRouteProps;
 

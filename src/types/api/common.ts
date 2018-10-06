@@ -50,12 +50,15 @@ export interface Dupe {
   paths: string[];
 }
 
-export interface FileItemInfo {
+/*export interface FileItemInfo {
+  id: IdType;
+  name: string;
+  tth: string;
+  size: number;
+  type: FileItemType;
   path: string;
   dupe: Dupe;
-  name: string;
-  type: FileItemType;
-}
+}*/
 
 
 // MESSAGES
@@ -182,8 +185,8 @@ export interface IgnoredUser {
 // POST data
 export interface DownloadData {
   target_name: string;
-  target_directory: string;
-  priority: number;
+  target_directory?: string;
+  priority?: number;
 }
 
 // MISC

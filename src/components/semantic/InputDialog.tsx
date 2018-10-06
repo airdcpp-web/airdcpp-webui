@@ -25,7 +25,7 @@ class InputField extends React.Component<InputFieldProps> {
   }
 }
 
-type InputDialogOptions = Pick<ConfirmDialogOptions, 'icon' | 'approveCaption' | 'content' | 'title'>;
+export type InputDialogOptions = Pick<ConfirmDialogOptions, 'icon' | 'approveCaption' | 'content' | 'title'>;
 
 const InputDialog = function (
   dialogOptions: InputDialogOptions, 

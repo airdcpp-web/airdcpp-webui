@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
@@ -9,12 +10,16 @@ import { default as TransferConstants, StatusEnum } from 'constants/TransferCons
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-const isFilelist = transfer => transfer.type && transfer.type.content_type === 'filelist';
-const isDownload = transfer => transfer.download;
-const isFinished = transfer => transfer.status.id === StatusEnum.FINISHED;
-const removeFile = transfer => isDownload(transfer) && isFilelist(transfer) && !isFinished(transfer);
-const removeSource = transfer => isDownload(transfer) && !isFinished(transfer);
+
+const isFilelist = (transfer: API.Transfer) => transfer.type && 
+  (transfer.type as API.FileType).content_type === 'filelist';
+const isDownload = (transfer: API.Transfer) => transfer.download;
+const isFinished = (transfer: API.Transfer) => transfer.status.id === StatusEnum.FINISHED;
+const removeFile = (transfer: API.Transfer) => isDownload(transfer) && isFilelist(transfer) && !isFinished(transfer);
+const removeSource = (transfer: API.Transfer) => isDownload(transfer) && !isFinished(transfer);
 
 const TransferActions = Reflux.createActions([
   { 'force': { 
@@ -45,23 +50,23 @@ const TransferActions = Reflux.createActions([
     icon: IconConstants.REMOVE,
     filter: removeSource,
   } },
-]);
+] as UI.ActionConfigList<API.Transfer>);
 
-TransferActions.force.listen(function (transfer) {
+TransferActions.force.listen(function (this: UI.AsyncActionType<API.Transfer>, transfer: API.Transfer) {
   const that = this;
   return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/force`)
     .then(that.completed)
     .catch(that.failed);
 });
 
-TransferActions.disconnect.listen(function (transfer) {
+TransferActions.disconnect.listen(function (this: UI.AsyncActionType<API.Transfer>, transfer: API.Transfer) {
   const that = this;
   return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`)
     .then(that.completed)
     .catch(that.failed);
 });
 
-TransferActions.removeFile.listen(function (transfer) {
+TransferActions.removeFile.listen(function (transfer: API.Transfer) {
   return QueueFileActions.removeFile.confirmed({
     id: transfer.queue_file_id,
     target: transfer.target,
@@ -69,7 +74,7 @@ TransferActions.removeFile.listen(function (transfer) {
   });
 });
 
-TransferActions.removeSource.listen(function (transfer) {
+TransferActions.removeSource.listen(function (transfer: API.Transfer) {
   return QueueActions.removeSource(transfer);
 });
 

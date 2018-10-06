@@ -1,13 +1,16 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 import QueueConstants from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
-import { PriorityEnum } from 'constants/PriorityConstants';
 
 import NotificationActions from 'actions/NotificationActions';
+
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 export const QueueActions = Reflux.createActions([
@@ -33,9 +36,9 @@ export const QueueActions = Reflux.createActions([
   { 'removeSource': { 
     asyncResult: true,
   } },
-]);
+] as UI.ActionConfigList<API.QueueSource>);
 
-const setBundlePriorities = (prio, action) => {
+const setBundlePriorities = (prio: API.QueuePriorityEnum, action: UI.AsyncActionType<API.QueueBundle>) => {
   return SocketService.post(QueueConstants.BUNDLES_URL + '/priority', { priority: prio })
     .then(() => 
       action.completed())
@@ -45,28 +48,31 @@ const setBundlePriorities = (prio, action) => {
 };
 
 QueueActions.pause.listen(function () {
-  setBundlePriorities(PriorityEnum.PAUSED_FORCED, QueueActions.pause);
+  setBundlePriorities(API.QueuePriorityEnum.PAUSED_FORCED, QueueActions.pause);
 });
 
 QueueActions.resume.listen(function () {
-  setBundlePriorities(PriorityEnum.DEFAULT, QueueActions.pause);
+  setBundlePriorities(API.QueuePriorityEnum.DEFAULT, QueueActions.pause);
 });
 
-QueueActions.removeCompleted.listen(function () {
+QueueActions.removeCompleted.listen(function (this: UI.AsyncActionType<void>) {
   let that = this;
   return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_completed')
     .then(that.completed)
     .catch(that.failed);
 });
 
-QueueActions.removeCompleted.completed.listen(function (data) {
+QueueActions.removeCompleted.completed.listen(function (data: { count: number }) {
   NotificationActions.success({ 
     title: 'Action completed',
     message: data.count > 0 ? `${data.count} completed bundles were removed` : 'No bundles were removed',
   });
 });
 
-QueueActions.removeSource.listen(function (item) {
+QueueActions.removeSource.listen(function (
+  this: UI.AsyncActionType<API.QueueSource>, 
+  item: API.QueueSource
+) {
   let that = this;
   const { user } = item;
   return SocketService.delete(`${QueueConstants.SOURCES_URL}/${user.cid}`)
@@ -74,7 +80,7 @@ QueueActions.removeSource.listen(function (item) {
     .catch(that.failed.bind(that, user));
 });
 
-QueueActions.removeSource.completed.listen(function (user, data) {
+QueueActions.removeSource.completed.listen(function (user: API.HintedUser, data: { count: number }) {
   NotificationActions.info({ 
     title: 'Source removed',
     message: `The user ${user.nicks} was removed from ${data.count} files`,

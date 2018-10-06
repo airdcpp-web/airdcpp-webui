@@ -39,7 +39,7 @@ const WidgetActions = Reflux.createActions([
     filter: notAlwaysShow,
     icon: IconConstants.REMOVE,
   } },
-]);
+] as UI.ActionConfigList<WidgetItemInfo>);
 
 WidgetActions.create.listen(function (widgetInfo: UI.Widget, location: Location) {
   History.push(`/home/widget/${widgetInfo.typeId}`);
@@ -49,7 +49,7 @@ WidgetActions.edit.listen(function ({ id, widgetInfo }: WidgetItemInfo, location
   History.push(`/home/widget/${widgetInfo.typeId}/${id}`);
 });
 
-WidgetActions.remove.listen(function (this: UI.ActionType, { id, settings }: WidgetItemInfo) {
+WidgetActions.remove.listen(function (this: UI.ConfirmActionType<WidgetItemInfo>, { id, settings }: WidgetItemInfo) {
   const options = {
     title: this.displayName,
     content: 'Are you sure that you want to remove the widget ' + settings.name + '?',
