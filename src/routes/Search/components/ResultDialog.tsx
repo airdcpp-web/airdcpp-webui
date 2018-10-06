@@ -10,7 +10,6 @@ import ResultInfoGrid from 'routes/Search/components/ResultInfoGrid';
 import UserResultTable from 'routes/Search/components/UserResultTable';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import { RouteComponentProps } from 'react-router';
 import SearchConstants from 'constants/SearchConstants';
@@ -69,6 +68,5 @@ export default ModalRouteDecorator<ResultDialogProps>(
       }
     }
   ), 
-  OverlayConstants.SEARCH_RESULT_MODAL, 
   'result/:resultId'
 );

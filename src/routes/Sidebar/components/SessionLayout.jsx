@@ -148,15 +148,15 @@ class SessionLayout extends React.Component {
   };
 
   pushSession = (id) => {
-    History.pushSidebar(this.props.location, this.getSessionUrl(id));
+    History.push(this.getSessionUrl(id));
   };
 
   replaceSession = (id) => {
-    History.replaceSidebar(this.props.location, this.getSessionUrl(id));
+    History.replace(this.getSessionUrl(id));
   };
 
   pushNew = () => {
-    History.pushSidebar(this.props.location, this.getNewUrl());
+    History.push(this.getNewUrl());
   };
 
   hasEditAccess = () => {
@@ -201,15 +201,18 @@ class SessionLayout extends React.Component {
   checkActiveItem = (props) => {
     // Did we just create this session?
     const routerLocation = props.location;
-    const { pending } = History.getSidebarData(routerLocation);
+    const pending = routerLocation.state && routerLocation.state.pending;
 
     // Update the active item
     const activeItem = findItem(props.items, props.activeId);
     if (activeItem) {
       if (pending) {
         // Disable pending state
-        History.replaceSidebarData(routerLocation, {
-          pending: false
+        History.replace({
+          //path: routerLocation.pathname,
+          state: {
+            pending: false,
+          }
         });
 
         return true;
@@ -223,7 +226,7 @@ class SessionLayout extends React.Component {
       return true;
     } else if (routerLocation.action === 'POP' || props.items.length === 0) {
       // Browsing from history and item removed (or all items removed)... go to "new session" page
-      History.replaceSidebar(routerLocation, this.getNewUrl());
+      History.replace(this.getNewUrl());
       this.setState({ activeItem: null });
       return true;
     }
@@ -252,7 +255,7 @@ class SessionLayout extends React.Component {
       // Insert
       event.preventDefault();
 
-      History.replaceSidebar(this.props.location, this.getNewUrl());
+      History.replace(this.getNewUrl());
     } else if (altKey && keyCode === 46) {
       // Delete
       event.preventDefault();
@@ -424,7 +427,8 @@ class SessionLayout extends React.Component {
           path={ this.getSessionUrl(':id') }
           render={ props => {
             if (!activeItem) {
-              if (History.getSidebarData(this.props.location).pending) {
+              const { state } = this.props.location;
+              if (!!state && state.pending) {
                 // The session was just created
                 return <Loader text="Waiting for server response"/>;
               } else if (activeId || items.length !== 0) {

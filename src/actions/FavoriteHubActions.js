@@ -6,7 +6,6 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
-import OverlayConstants from 'constants/OverlayConstants';
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
@@ -40,11 +39,11 @@ export const FavoriteHubActions = Reflux.createActions([
 ]);
 
 FavoriteHubActions.create.listen(function (location) {
-  History.pushModal(location, '/favorite-hubs/entries', OverlayConstants.FAVORITE_HUB_MODAL_ID);
+  History.push('/favorite-hubs/entries');
 });
 
 FavoriteHubActions.edit.listen(function (hub, location) {
-  History.pushModal(location, `/favorite-hubs/entries/${hub.id}`, OverlayConstants.FAVORITE_HUB_MODAL_ID);
+  History.push(`/favorite-hubs/entries/${hub.id}`);
 });
 
 FavoriteHubActions.update.listen(function (hub, data) {

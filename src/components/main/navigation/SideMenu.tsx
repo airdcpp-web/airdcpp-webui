@@ -13,6 +13,7 @@ import { Location } from 'history';
 
 interface SideMenuProps {
   location: Location;
+  previousLocation?: Location;
 }
 
 class SideMenu extends React.Component<SideMenuProps> {
@@ -23,15 +24,22 @@ class SideMenu extends React.Component<SideMenuProps> {
   onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
-    const { location } = this.props;
+    const { location, previousLocation } = this.props;
     const isActive = matchPath(location.pathname, {
       path: url,
     });
 
     if (isActive) {
-      History.replaceSidebarData(location, { close: true });
+      if (!!previousLocation) {
+        History.replace({
+          pathname: previousLocation.pathname,
+          state: previousLocation.state,
+        });
+      } else {
+        History.replace('/');
+      }
     } else {
-      History.pushSidebar(location, url);
+      History.push(url);
     }
   }
 

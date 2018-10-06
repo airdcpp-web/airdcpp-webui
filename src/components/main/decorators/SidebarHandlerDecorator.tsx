@@ -1,6 +1,6 @@
 import React from 'react';
 
-import History from 'utils/History';
+//import History from 'utils/History';
 import { Location } from 'history';
 
 
@@ -14,52 +14,101 @@ export interface SidebarHandlerDecoratorProps {
 
 export interface SidebarHandlerDecoratorChildProps {
   location: Location;
-  sidebar: boolean;
-  previousLocation: Location | null;
+  //sidebar: React.ReactNode;
+  //sidebar: boolean;
+  previousLocation?: Location;
 }
 
-// Return true if the sidebar should be shown
-const showSidebar = (props: SidebarHandlerDecoratorProps) => {
-  return History.hasSidebar(props.location);
+
+
+import { /*parseRoutes,*/ RouteItem, isRouteActive } from 'routes/Routes';
+//import Sidebar from 'routes/Sidebar/components/Sidebar';
+//import { Location } from 'history';
+
+
+
+
+const showSidebar = (  
+  routes: RouteItem[],
+  location: Location
+) => {
+  return !!routes.find(route => isRouteActive(route, location));
 };
 
+/*interface SidebarContainerProps {
+  routes: RouteItem[]; 
+  location: Location;
+}
+
+const SidebarContainer: React.SFC<SidebarContainerProps> = ({ routes, location }) => {
+  const active = routes.find(route => isRouteActive(route, location));
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <Sidebar location={ location }>
+      { parseRoutes(routes) }
+    </Sidebar>
+  );
+};*/
+
+
+
 export default function <PropsT>(
-  Component: React.ComponentType<PropsT & SidebarHandlerDecoratorChildProps>
+  Component: React.ComponentType<PropsT & SidebarHandlerDecoratorChildProps>,
+  routes: RouteItem[]
 ) {
   class SidebarHandlerDecorator extends React.Component<PropsT & SidebarHandlerDecoratorProps> {
-    previousLocation: Location | null = null;
+    previousLocation: Location | undefined;
 
-    componentDidMount() {
-      if (showSidebar(this.props)) {
+    constructor(props: PropsT & SidebarHandlerDecoratorProps) {
+      super(props);
+
+      if (showSidebar(routes, this.props.location)) {
         // previousLocation must exist if overlays are present
-        this.previousLocation = null;
+        this.previousLocation = {
+          ...this.props.location as Location,
+          pathname: '/',
+        };
       }
-    }
+    } 
+
+    /*componentDidMount() {
+      if (showSidebar(routes, this.props.location)) {
+        // previousLocation must exist if overlays are present
+        this.previousLocation = this.props.location;
+      }
+    }*/
 
     UNSAFE_componentWillReceiveProps(nextProps: SidebarHandlerDecoratorProps) {
       // Save the return location for sidebar
       // Also save the location before opening modals as they shouldn't be used as
       // return locations
-      if (showSidebar(nextProps) || History.getModalIds(nextProps.location)) {
+      if (showSidebar(routes, nextProps.location) /*|| History.getModalIds(nextProps.location)*/) {
         if (!this.previousLocation) {
           this.previousLocation = this.props.location;
         }
       } else {
-        this.previousLocation = null;
+        this.previousLocation = undefined;
       }
     }
 
     render() {
-      let sidebar = false;
-      if (showSidebar(this.props)) {
+      /*let sidebar = false;
+      if (showSidebar(routes, this.props.location)) {
         sidebar = true;
-      }
+      }*/
 
       return (
         <Component 
           { ...this.props } 
-          sidebar={ sidebar } 
-          previousLocation={ sidebar ? this.previousLocation : null }
+          /*sidebar={ !this.previousLocation ? null : (
+            <Sidebar location={ this.props.location }>
+              { parseRoutes(routes) }
+            </Sidebar>
+          )} */ 
+          previousLocation={ this.previousLocation }
         />
       );
     }

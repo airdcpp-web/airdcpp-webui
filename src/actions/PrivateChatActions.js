@@ -54,7 +54,12 @@ PrivateChatActions.createSession.listen(function (location, user, sessionStore) 
 });
 
 PrivateChatActions.createSession.completed.listen(function (location, user, session) {
-  History.pushSidebar(location, '/messages/session/' + user.cid, { pending: true });
+  History.push({
+    pathname: `/messages/session/${user.cid}`, 
+    state: {
+      pending: true
+    },
+  });
 });
 
 PrivateChatActions.createSession.failed.listen(function (error) {

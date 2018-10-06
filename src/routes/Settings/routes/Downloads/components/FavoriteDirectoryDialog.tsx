@@ -4,7 +4,6 @@ import Modal from 'components/semantic/Modal';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
@@ -140,6 +139,5 @@ export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
       virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
     },
   }),
-  OverlayConstants.FAVORITE_DIRECTORY_MODAL,
   'directories/:directoryId([0-9A-Z]{39})?'
 );

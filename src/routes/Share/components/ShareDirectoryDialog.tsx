@@ -6,7 +6,6 @@ import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
@@ -186,6 +185,5 @@ export default ModalRouteDecorator<ShareDirectoryDialogProps>(
       },
     }
   ),
-  OverlayConstants.SHARE_ROOT_MODAL_ID,
   'directories/:directoryId([0-9A-Z]{39})?'
 );

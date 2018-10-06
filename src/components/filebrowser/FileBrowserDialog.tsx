@@ -5,7 +5,6 @@ import Modal, { ModalProps } from 'components/semantic/Modal';
 import FileBrowserLayout from './FileBrowserLayout';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 
 interface FileBrowserDialogProps extends Omit<ModalProps, 'title'> {
@@ -75,7 +74,6 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
 }
 
 export default ModalRouteDecorator(
-  FileBrowserDialog, 
-  OverlayConstants.FILE_BROWSER_MODAL, 
+  FileBrowserDialog,
   'browse'
 );

@@ -101,7 +101,12 @@ HubActions.createSession.listen(function (location, hubUrl, sessionStore) {
 });
 
 HubActions.createSession.completed.listen(function (location, session) {
-  History.pushSidebar(location, '/hubs/session/' + session.id, { pending: true });
+  History.push({
+    pathname: `/hubs/session/${session.id}`, 
+    state: {
+      pending: true
+    },
+  });
 });
 
 HubActions.createSession.failed.listen(function (error) {

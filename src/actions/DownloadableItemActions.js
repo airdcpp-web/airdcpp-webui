@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 
 import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
-import OverlayConstants from 'constants/OverlayConstants';
 import SocketService from 'services/SocketService';
 import { sleep } from 'utils/Promise';
 
@@ -109,7 +108,7 @@ DownloadableItemActions.download.listen(function (handlerData) {
 
 DownloadableItemActions.downloadTo.listen(function (handlerData, location) {
   const { pathname } = location;
-  History.pushModal(location, `${pathname}/download/${handlerData.itemInfo.id}`, OverlayConstants.DOWNLOAD_MODAL_ID);
+  History.push(`${pathname}/download/${handlerData.itemInfo.id}`);
 });
 
 DownloadableItemActions.viewText.listen(function (data, location) {

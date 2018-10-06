@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, matchPath } from 'react-router-dom';
 
 import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
@@ -204,4 +204,10 @@ export const parseMenuItems = (
   return routes
     .filter(filterItem)
     .map(route => parseMenuItem(route, onClick, showIcon));
+};
+
+export const isRouteActive = (route: RouteItem, location: Location): boolean => {
+  return !!matchPath(location.pathname, {
+    path: route.path,
+  });
 };

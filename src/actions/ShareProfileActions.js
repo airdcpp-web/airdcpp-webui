@@ -97,14 +97,14 @@ ShareProfileActions.edit.listen(function (profile) {
 
 ShareProfileActions.default.listen(function (profile) {
   const that = this;
-  return SocketService.post(ShareProfileConstants.PROFILES_URL + '/' + profile.id + '/default')
+  return SocketService.post(`${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`)
     .then(ShareProfileActions.default.completed.bind(that, profile))
     .catch(ShareProfileActions.default.failed.bind(that, profile));
 });
 
 ShareProfileActions.edit.saved.listen(function (profile, name) {
   const that = this;
-  return SocketService.patch(ShareProfileConstants.PROFILES_URL + '/' + profile.id, { name: name })
+  return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, { name: name })
     .then(ShareProfileActions.edit.completed.bind(that, profile))
     .catch(ShareProfileActions.edit.failed.bind(that, profile));
 });

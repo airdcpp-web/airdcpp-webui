@@ -1,7 +1,4 @@
 'use strict';
-
-import PropTypes from 'prop-types';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -10,33 +7,22 @@ import invariant from 'invariant';
 import History from 'utils/History';
 
 import '../style.css';
-import { RouterChildContext } from 'react-router-dom';
 
 
 export interface OverlayDecoratorProps {
-  overlayId?: any; // REQUIRED, CLONED
+  returnTo: string;
 }
 
-export interface OverlayDecoratorChildProps<SemanticSettingPropsT> {
-  showOverlay: (component: any, semanticComponentSettings: SemanticSettingPropsT) => void;
+export interface OverlayDecoratorChildProps {
+  showOverlay: (component: any, semanticComponentSettings: SemanticUI.ModalSettings) => void;
   hide: () => void;
 }
 
-export default function <PropsT, SemanticSettingPropsT>(
-  Component: React.ComponentType<PropsT & OverlayDecoratorChildProps<SemanticSettingPropsT>>, 
-  semanticModuleName: string
+export default function <PropsT>(
+  Component: React.ComponentType<PropsT & OverlayDecoratorChildProps>
 ) {
   class OverlayDecorator extends React.Component<OverlayDecoratorProps & PropsT> {
     static displayName = 'OverlayDecorator';
-
-    static propTypes = {
-      overlayId: PropTypes.any.isRequired,
-    };
-
-    context: RouterChildContext<{}>;
-    static contextTypes = {
-      router: PropTypes.object.isRequired,
-    };
 
     closing = false;
     returnOnClose = true;
@@ -50,11 +36,8 @@ export default function <PropsT, SemanticSettingPropsT>(
       }
     }
 
-    UNSAFE_componentWillReceiveProps() {
-      const { state } = this.context.router.route.location;
-      if (!!state && state[this.props.overlayId].data.close) {
-        this.hide();
-      }
+    componentDidMount() {
+      this.returnOnClose = true;
     }
 
     showOverlay = (c: any, componentSettings = {}) => {
@@ -62,24 +45,24 @@ export default function <PropsT, SemanticSettingPropsT>(
 
       this.c = c;
 
-      invariant(
-        this.props.overlayId, 
-        'OverlayDecorator: overlayId missing (remember to pass props to the overlay component)'
-      );
-
-      const settings = Object.assign(componentSettings, {
+      const settings = {
         onHidden: this.onHidden,
         onHide: this.onHide,
-      });
+      } as SemanticUI.ModalSettings;
 
       setTimeout(() => {
-        $(this.c)[semanticModuleName](settings)[semanticModuleName]('show');
+        $(this.c)
+          .modal({
+            ...componentSettings,
+            ...settings,
+          })
+          .modal('show');
       });
     }
 
     hide = () => {
       invariant(this.c, 'Component not set when hiding overlay');
-      $(this.c)[semanticModuleName]('hide');
+      $(this.c).modal('hide');
     }
 
     onHide = () => {
@@ -87,9 +70,8 @@ export default function <PropsT, SemanticSettingPropsT>(
     }
 
     onHidden = () => {
-      // Don't change the history state if we navigating back using the browser history
-      if (History.action !== 'POP') {
-        History.removeOverlay(this.context.router.route.location, this.props.overlayId, this.returnOnClose);
+      if (this.returnOnClose) {
+        History.replace(this.props.returnTo /*, this.context.router.route.location.state*/);
       }
     }
 

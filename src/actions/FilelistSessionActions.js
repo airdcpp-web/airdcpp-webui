@@ -24,8 +24,11 @@ const FilelistSessionActions = Reflux.createActions([
 
 // SESSION CREATION
 const openSession = (location, cid) => {
-  History.pushSidebar(location, '/filelists/session/' + cid, {
-    pending: true
+  History.push({
+    pathname: `/filelists/session/${cid}`, 
+    state: {
+      pending: true
+    },
   });
 };
 
@@ -76,7 +79,7 @@ FilelistSessionActions.ownList.listen(function (location, profile, sessionStore)
   }
 
   let that = this;
-  SocketService.post(FilelistConstants.SESSIONS_URL + '/self', {
+  SocketService.post(`${FilelistConstants.SESSIONS_URL}/self`, {
     share_profile: profile,
   })
     .then((data) => that.completed(location, profile, data))
@@ -91,28 +94,34 @@ FilelistSessionActions.ownList.completed.listen(function (location, profile, ses
 // SESSION UPDATES
 FilelistSessionActions.changeHubUrl.listen(function (cid, hubUrl) {
   let that = this;
-  SocketService.patch(FilelistConstants.SESSIONS_URL + '/' + cid, { hub_url: hubUrl })
+  SocketService.patch(`${FilelistConstants.SESSIONS_URL}/${cid}`, { 
+    hub_url: hubUrl 
+  })
     .then(data => that.completed(cid, data))
     .catch(error => that.failed(cid, error));
 });
 
 FilelistSessionActions.changeShareProfile.listen(function (cid, profile) {
   let that = this;
-  SocketService.patch(FilelistConstants.SESSIONS_URL + '/' + cid, { share_profile: profile })
+  SocketService.patch(`${FilelistConstants.SESSIONS_URL}/${cid}`, { 
+    share_profile: profile 
+  })
     .then(data => that.completed(cid, data))
     .catch(error => that.failed(cid, error));
 });
 
 FilelistSessionActions.changeDirectory.listen(function (cid, path) {
   let that = this;
-  SocketService.post(FilelistConstants.SESSIONS_URL + '/' + cid + '/directory', { list_path: path })
+  SocketService.post(`${FilelistConstants.SESSIONS_URL}/${cid}/directory`, { 
+    list_path: path 
+  })
     .then(data => that.completed(cid, data))
     .catch(error => that.failed(cid, error));
 });
 
 FilelistSessionActions.setRead.listen(function (cid) {
   let that = this;
-  SocketService.post(FilelistConstants.SESSIONS_URL + '/' + cid + '/read')
+  SocketService.post(`${FilelistConstants.SESSIONS_URL}/${cid}/read`)
     .then(that.completed)
     .catch(that.failed);
 });

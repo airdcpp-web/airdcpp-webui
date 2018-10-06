@@ -63,7 +63,7 @@ QueueFileActions.removeFile.shouldEmit = function (file) {
 
 QueueFileActions.removeFile.confirmed.listen(function (item, removeFinished) {
   const that = this;
-  return SocketService.post(QueueConstants.FILES_URL + '/' + item.id + '/remove', {
+  return SocketService.post(`${QueueConstants.FILES_URL}/${item.id}/remove`, {
     remove_finished: removeFinished,
   })
     .then(QueueFileActions.removeFile.completed.bind(that, item))
@@ -83,7 +83,7 @@ QueueFileActions.removeFile.failed.listen(function ({ name }, error) {
 
 QueueFileActions.searchFileAlternates.listen(function (file) {
   let that = this;
-  return SocketService.post(QueueConstants.FILES_URL + '/' + file.id + '/search')
+  return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/search`)
     .then(that.completed.bind(that, file))
     .catch(this.failed.bind(that, file));
 });
@@ -104,7 +104,7 @@ QueueFileActions.searchFileAlternates.failed.listen(function (file, error) {
 
 QueueFileActions.setFilePriority.listen(function (file, priority) {
   let that = this;
-  return SocketService.post(QueueConstants.FILES_URL + '/' + file.id + '/priority', {
+  return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/priority`, {
     priority
   })
     .then(that.completed.bind(that, file))

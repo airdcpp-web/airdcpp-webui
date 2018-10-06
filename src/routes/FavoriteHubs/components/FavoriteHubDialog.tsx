@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
@@ -271,6 +270,5 @@ export default ModalRouteDecorator<FavoriteHubDialogProps>(
     ),
     true
   ),
-  OverlayConstants.FAVORITE_HUB_MODAL_ID,
   'entries/:entryId?',
 );

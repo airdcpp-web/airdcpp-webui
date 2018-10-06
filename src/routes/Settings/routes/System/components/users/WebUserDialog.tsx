@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import WebUserConstants from 'constants/WebUserConstants';
 import AccessConstants from 'constants/AccessConstants';
@@ -185,6 +184,5 @@ export default ModalRouteDecorator<WebUserDialogProps>(
       },
     },
   }),
-  OverlayConstants.WEB_USER_MODAL_ID, 
   'users/:userId?'
 );

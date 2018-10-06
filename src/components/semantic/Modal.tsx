@@ -27,7 +27,9 @@ export interface ModalProps {
   subHeader?: React.ReactNode;
 }
 
-class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<SemanticUI.ModalSettings>> {
+export const ModalContext = React.createContext<() => void>(() => { return undefined; });
+
+class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
@@ -125,7 +127,9 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<Sema
           size="medium"
         />
         <div className="content">
-          { children }
+          <ModalContext.Provider value={ this.props.hide }>
+            { children }
+          </ModalContext.Provider>
         </div>
 
         { onApprove ? (
@@ -152,4 +156,4 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps<Sema
   }
 }
 
-export default OverlayDecorator<ModalProps, SemanticUI.ModalSettings>(Modal, 'modal');
+export default OverlayDecorator<ModalProps>(Modal);

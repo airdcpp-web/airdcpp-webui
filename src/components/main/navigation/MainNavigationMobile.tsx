@@ -44,11 +44,11 @@ class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
 
     const isActive = matchPath(this.props.location.pathname, {
       path: url,
-      exact: url !== '/',
+      //exact: url !== '/',
     });
 
     if (!isActive) {
-      History.pushSidebar(this.props.location, url);
+      History.push(url);
     }
 
     this.onClick(url, evt);

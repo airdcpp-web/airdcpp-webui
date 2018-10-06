@@ -17,7 +17,6 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import LoginStore from 'stores/LoginStore';
 
@@ -246,6 +245,5 @@ export default ModalRouteDecorator<DownloadDialogProps>(
       }
     },
   }),
-  OverlayConstants.DOWNLOAD_MODAL_ID,
   'download/:downloadItemId'
 );

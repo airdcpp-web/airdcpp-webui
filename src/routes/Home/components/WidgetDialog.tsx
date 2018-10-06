@@ -9,7 +9,6 @@ import IconConstants from 'constants/IconConstants';
 import Form, { FormSaveHandler } from 'components/form/Form';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
@@ -120,6 +119,5 @@ class WidgetDialog extends React.Component<Props> {
 
 export default ModalRouteDecorator<WidgetDialogProps>(
   WidgetDialog,
-  OverlayConstants.HOME_WIDGET_MODAL,
   '/home/widget/:typeId/:widgetId?'
 );

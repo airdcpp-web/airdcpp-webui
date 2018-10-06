@@ -4,8 +4,6 @@ import Reflux from 'reflux';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
-import OverlayConstants from 'constants/OverlayConstants';
-
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
@@ -44,17 +42,11 @@ const WidgetActions = Reflux.createActions([
 ]);
 
 WidgetActions.create.listen(function (widgetInfo: UI.Widget, location: Location) {
-  History.pushModal(location, `/home/widget/${widgetInfo.typeId}`, OverlayConstants.HOME_WIDGET_MODAL /*, {
-    typeId: widgetInfo.typeId,
-  }*/);
+  History.push(`/home/widget/${widgetInfo.typeId}`);
 });
 
 WidgetActions.edit.listen(function ({ id, widgetInfo }: WidgetItemInfo, location: Location) {
-  History.pushModal(location, `/home/widget/${widgetInfo.typeId}/${id}`, OverlayConstants.HOME_WIDGET_MODAL/*, { 
-    typeId: widgetInfo.typeId,
-    id,
-    settings,
-  }*/);
+  History.push(`/home/widget/${widgetInfo.typeId}/${id}`);
 });
 
 WidgetActions.remove.listen(function (this: UI.ActionType, { id, settings }: WidgetItemInfo) {

@@ -17,7 +17,7 @@ const ViewFileActions = Reflux.createActions([
 ]);
 
 ViewFileActions.createSession.listen(function ({ itemInfo, user }, isText, location, sessionStore) {
-  let session = sessionStore.getSession(itemInfo.tth);
+  let session = sessionStore.getSession(itemInfo.id);
   if (session) {
     this.completed(location, itemInfo, session);
     return;
@@ -39,8 +39,11 @@ ViewFileActions.createSession.listen(function ({ itemInfo, user }, isText, locat
 });
 
 ViewFileActions.createSession.completed.listen(function (location, file, session) {
-  History.pushSidebar(location, '/files/session/' + file.tth, {
-    pending: true
+  History.push({
+    pathname: `/files/session/${file.id}`, 
+    state: {
+      pending: true
+    },
   });
 });
 
@@ -50,7 +53,7 @@ ViewFileActions.createSession.failed.listen(function (error) {
 
 ViewFileActions.setRead.listen(function (id) {
   let that = this;
-  SocketService.post(ViewFileConstants.SESSIONS_URL + '/' + id + '/read')
+  SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${id}/read`)
     .then(that.completed)
     .catch(that.failed);
 });

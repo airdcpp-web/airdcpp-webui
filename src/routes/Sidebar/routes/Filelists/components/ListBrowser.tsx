@@ -59,32 +59,44 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     this.hasClickedDirectory = true;
 
     // Handle it through location state data
-    History.pushSidebarData(this.props.location, { directory: path });
+    History.push({
+      state: { 
+        directory: path
+      }
+    });
   }
 
   componentDidMount() {
     const { session, location } = this.props;
 
-    const locationData = History.getSidebarData(location);
+    const locationData = location.state;
     if (!locationData || !locationData.directory) {
       // We need an initial path for our history
-      History.replaceSidebarData(location, { directory: session.location.path });
+      History.replace({
+        state: { 
+          directory: session.location.path 
+        }
+      });
     }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: ListBrowserProps) {
-    const nextLocationData = History.getSidebarData(nextProps.location);
+    const nextLocationData = nextProps.location.state;
     if (!nextLocationData.directory || nextProps.session.location.path === nextLocationData.directory) {
       return;
     }
 
-    const currentLocationData = History.getSidebarData(this.props.location);
+    const currentLocationData = this.props.location.state;
     if (currentLocationData && currentLocationData.directory !== nextLocationData.directory) {
       // It's our change
       this.sendChangeDirectory(nextLocationData.directory);
     } else {
       // Change initiated by another session/GUI, update our location
-      History.replaceSidebarData(nextProps.location, { directory: nextProps.session.location.path });
+      History.replace({ 
+        state: {
+          directory: nextProps.session.location.path 
+        }
+      });
     }
   }
 

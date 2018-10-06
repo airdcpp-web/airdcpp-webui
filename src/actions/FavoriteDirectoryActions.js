@@ -5,7 +5,6 @@ import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import History from 'utils/History';
 
-import OverlayConstants from 'constants/OverlayConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
@@ -35,17 +34,17 @@ const FavoriteDirectoryActions = Reflux.createActions([
 ]);
 
 FavoriteDirectoryActions.create.listen(function (location) {
-  History.pushModal(location, `${location.pathname}/directories`, OverlayConstants.FAVORITE_DIRECTORY_MODAL);
+  History.push(`${location.pathname}/directories`);
 });
 
 FavoriteDirectoryActions.edit.listen(function (directory, location) {
-  History.pushModal(location, `${location.pathname}/directories/${directory.id}`, OverlayConstants.FAVORITE_DIRECTORY_MODAL);
+  History.push(`${location.pathname}/directories/${directory.id}`);
 });
 
 FavoriteDirectoryActions.remove.listen(function (directory) {
   const options = {
     title: this.displayName,
-    content: 'Are you sure that you want to remove the favorite directory ' + directory.name + '?',
+    content: `Are you sure that you want to remove the favorite directory ${directory.name}?`,
     icon: this.icon,
     approveCaption: 'Remove directory',
     rejectCaption: "Don't remove",
@@ -56,7 +55,7 @@ FavoriteDirectoryActions.remove.listen(function (directory) {
 
 FavoriteDirectoryActions.remove.confirmed.listen(function (directory) {
   const that = this;
-  return SocketService.delete(FavoriteDirectoryConstants.DIRECTORIES_URL + '/' + directory.id)
+  return SocketService.delete(`${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`)
     .then(FavoriteDirectoryActions.remove.completed.bind(that, directory))
     .catch(FavoriteDirectoryActions.remove.failed.bind(that, directory));
 });

@@ -5,7 +5,6 @@ import SocketService from 'services/SocketService';
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import History from 'utils/History';
 
-import OverlayConstants from 'constants/OverlayConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
@@ -35,17 +34,17 @@ const ShareRootActions = Reflux.createActions([
 ]);
 
 ShareRootActions.create.listen(function (data, location) {
-  History.pushModal(location, `${location.pathname}/directories`, OverlayConstants.SHARE_ROOT_MODAL_ID);
+  History.push(`${location.pathname}/directories`);
 });
 
 ShareRootActions.edit.listen(function (root, location) {
-  History.pushModal(location, `${location.pathname}/directories/${root.id}`, OverlayConstants.SHARE_ROOT_MODAL_ID /*, { rootEntry: root }*/);
+  History.push(`${location.pathname}/directories/${root.id}`);
 });
 
 ShareRootActions.remove.listen(function (root) {
   const options = {
     title: this.displayName,
-    content: 'Are you sure that you want to remove the directory ' + root.virtual_name + ' from share? It will be removed from all share profiles.',
+    content: `Are you sure that you want to remove the directory ${root.virtual_name} from share? It will be removed from all share profiles.`,
     icon: this.icon,
     approveCaption: 'Remove directory',
     rejectCaption: "Don't remove",

@@ -49,7 +49,7 @@ FilelistItemActions.download.listen((itemInfo, user, downloadData) => {
       time,
     });
 
-    SocketService.post(QueueConstants.BUNDLES_URL + '/file', data)
+    SocketService.post(`${QueueConstants.BUNDLES_URL}/file`, data)
       .then(FilelistItemActions.download.completed)
       .catch(error => FilelistItemActions.download.failed(itemInfo, error));
 
@@ -69,7 +69,7 @@ FilelistItemActions.download.failed.listen((itemInfo, error) => {
 
 FilelistItemActions.reloadDirectory.listen(function ({ directory, session }) {
   let that = this;
-  SocketService.post(FilelistConstants.SESSIONS_URL + '/' + session.id + '/directory', { 
+  SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, { 
     list_path: directory.path,
     reload: true,
   })

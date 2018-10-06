@@ -4,7 +4,6 @@ import Modal from 'components/semantic/Modal';
 import Form, { FormSaveHandler } from 'components/form/Form';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
@@ -83,6 +82,5 @@ export default ModalRouteDecorator<ExtensionsConfigureDialogProps>(
       },
     }
   ),
-  OverlayConstants.EXTENSION_CONFIGURE_MODAL,
   'extensions/:extensionId'
 );

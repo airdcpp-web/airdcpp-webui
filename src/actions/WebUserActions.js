@@ -5,7 +5,6 @@ import SocketService from 'services/SocketService';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
-import OverlayConstants from 'constants/OverlayConstants';
 import WebUserConstants from 'constants/WebUserConstants';
 
 import History from 'utils/History';
@@ -37,17 +36,17 @@ const WebUserActions = Reflux.createActions([
 ]);
 
 WebUserActions.create.listen(function (location) {
-  History.pushModal(location, `${location.pathname}/users`, OverlayConstants.WEB_USER_MODAL_ID);
+  History.push(`${location.pathname}/users`);
 });
 
 WebUserActions.edit.listen(function (user, location) {
-  History.pushModal(location, `${location.pathname}/users/${user.id}`, OverlayConstants.WEB_USER_MODAL_ID);
+  History.push(`${location.pathname}/users/${user.id}`);
 });
 
 WebUserActions.remove.listen(function (user) {
   const options = {
     title: this.displayName,
-    content: 'Are you sure that you want to remove the user ' + user.username + '?',
+    content: `Are you sure that you want to remove the user ${user.username}?`,
     icon: this.icon,
     approveCaption: 'Remove user',
     rejectCaption: "Don't remove",

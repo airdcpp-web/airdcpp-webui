@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from 'routes/Queue/components/BundleFileTable';
@@ -54,6 +53,5 @@ export default ModalRouteDecorator<BundleFileDialogProps>(
       }
     }
   ), 
-  OverlayConstants.BUNDLE_CONTENT_MODAL, 
   'content/:bundleId'
 );

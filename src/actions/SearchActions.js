@@ -5,7 +5,6 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import AccessConstants from 'constants/AccessConstants';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
@@ -42,7 +41,7 @@ SearchActions.browseContent.listen(function (data, location) {
 });
 
 SearchActions.result.listen(function (data, location) {
-  History.pushModal(location, `${location.pathname}/result/${data.id}`, OverlayConstants.SEARCH_RESULT_MODAL);
+  History.push(`${location.pathname}/result/${data.id}`);
 });
 
 export default SearchActions;

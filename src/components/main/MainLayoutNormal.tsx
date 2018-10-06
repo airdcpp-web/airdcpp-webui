@@ -1,32 +1,20 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+//import { Route, Redirect } from 'react-router-dom';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
-import Sidebar from 'routes/Sidebar/components/Sidebar';
 import SiteHeader from 'components/main/SiteHeader';
 
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes, RouteItem } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes /*, RouteItem, isRouteActive*/ } from 'routes/Routes';
 
 import SidebarHandlerDecorator, { 
   SidebarHandlerDecoratorChildProps 
 } from 'components/main/decorators/SidebarHandlerDecorator';
 
 import 'normal.css';
+import Sidebar from 'routes/Sidebar/components/Sidebar';
 
-
-const toIndexRedirect = (route: RouteItem) => (
-  <Route
-    key={ route.path }
-    path={ route.path }
-    render={ () => (
-      <Redirect
-        to="/"
-      />
-    ) }
-  />
-);
 
 
 interface MainLayoutProps {
@@ -40,20 +28,25 @@ class MainLayout extends React.Component<MainLayoutProps & SidebarHandlerDecorat
   };*/
 
   render() {
-    const { sidebar, className, location, previousLocation } = this.props;
+    const { className, location, previousLocation } = this.props;
 
     return (
-      <div className={ className + ' pushable sidebar-context' } id="normal-layout">
-        { sidebar ? (
-          <Sidebar location={ location }>
-            { parseRoutes(secondaryRoutes) }
-          </Sidebar>
-        ) : (
-          <div>
-            {/* Sidebar locations without the correct history data won't work, redirect to index */}
-            { secondaryRoutes.map(toIndexRedirect) }
-          </div>
-        ) }
+      <div 
+        className={ className + ' pushable sidebar-context' } 
+        id="normal-layout"
+      >
+        <Sidebar 
+          location={ location }
+          routes={ secondaryRoutes }
+          previousLocation={ previousLocation }
+        />
+        {/* sidebar */}
+        {/*<SidebarContainer
+          routes={ secondaryRoutes }
+          location={ location }
+        />*/} 
+
+
         <div className="pusher">
           <SiteHeader>
             <MainNavigation/>
@@ -62,10 +55,13 @@ class MainLayout extends React.Component<MainLayoutProps & SidebarHandlerDecorat
             { parseRoutes([ ...mainRoutes, ...configRoutes ], !!previousLocation ? previousLocation : location) }
           </div>
         </div>
-        <SideMenu location={ location }/>
+        <SideMenu 
+          location={ location }
+          previousLocation={ previousLocation }
+        />
       </div>
     );
   }
 }
 
-export default SidebarHandlerDecorator<MainLayoutProps>(MainLayout);
+export default SidebarHandlerDecorator<MainLayoutProps>(MainLayout, secondaryRoutes);

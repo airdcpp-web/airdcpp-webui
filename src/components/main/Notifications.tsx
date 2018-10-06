@@ -135,7 +135,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
         action: {
           label: 'View events',
           callback: () => { 
-            History.pushSidebar(this.props.location, 'events'); 
+            History.push('/events'); 
           }
         }
       } as Partial<ReactNotification>);
@@ -164,8 +164,8 @@ const Notifications = createReactClass<NotificationsProps, {}>({
       uid: file.id,
       action: {
         label: 'View file',
-        callback: () => { 
-          History.pushSidebar(this.props.location, `/files/session/${file.id}`); 
+        callback: () => {
+          History.push(`/files/session/${file.id}`);
         }
       }
     } as ReactNotification);
@@ -192,7 +192,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
       action: {
         label: 'View message',
         callback: () => { 
-          History.pushSidebar(this.props.location, '/messages/session/' + cid); 
+          History.push(`/messages/session/${cid}`); 
         }
       }
     } as ReactNotification);

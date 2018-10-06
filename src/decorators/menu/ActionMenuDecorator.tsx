@@ -10,6 +10,8 @@ import { Location } from 'history';
 
 import * as UI from 'types/ui';
 
+export type OnClickActionHandler = (actionId: string) => void;
+
 export interface ActionMenuDecoratorProps {
   className?: string;
   caption?: React.ReactNode;
@@ -18,6 +20,7 @@ export interface ActionMenuDecoratorProps {
   actions: UI.ActionType[];
   
   itemData?: UI.ActionItemDataType;
+  onClickAction?: OnClickActionHandler;
 }
 
 export interface ActionMenuDecoratorChildProps {
@@ -110,7 +113,14 @@ const parseMenu = (props: ActionMenuDecoratorProps, hasPreviousMenuItems: boolea
 };
 
 // Convert ID to menu link element
-const getMenuItem = (menu: MenuType, menuIndex: number, actionId: string, itemIndex: number, location: Location) => {
+const getMenuItem = (
+  menu: MenuType, 
+  menuIndex: number, 
+  actionId: string, 
+  itemIndex: number, 
+  location: Location, 
+  onClickAction?: OnClickActionHandler
+) => {
   if (actionId === 'divider') {
     return (
       <div 
@@ -129,7 +139,14 @@ const getMenuItem = (menu: MenuType, menuIndex: number, actionId: string, itemIn
   return (
     <MenuItemLink 
       key={ actionId } 
-      onClick={ () => action(menu.itemDataGetter(), location) }
+      onClick={ () => {
+        if (onClickAction) {
+          onClickAction(actionId);
+        }
+
+        setTimeout(() => action(menu.itemDataGetter(), location));
+        //action(menu.itemDataGetter(), location);
+      } }
       icon={ action.icon }
     >
       { action.displayName }
@@ -169,8 +186,11 @@ export default function <DropdownComponentPropsT extends object>(
 
     // Reduce menus to an array of DropdownItems
     reduceMenuItems = (items: React.ReactChild[], menu: MenuType, menuIndex: number) => {
+      const { location } = this.context.router.route;
+      const { onClickAction } = this.props;
+
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
-        return getMenuItem(menu, menuIndex, actionId, actionIndex, this.context.router.route.location);
+        return getMenuItem(menu, menuIndex, actionId, actionIndex, location, onClickAction);
       }));
 
       return items;

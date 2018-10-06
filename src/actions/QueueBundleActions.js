@@ -6,7 +6,6 @@ import History from 'utils/History';
 
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
@@ -125,7 +124,7 @@ QueueBundleActions.removeBundle.shouldEmit = function (bundle) {
   } else {
     const options = {
       title: this.displayName,
-      content: 'Are you sure that you want to remove the bundle ' + bundle.name + '?',
+      content: `Are you sure that you want to remove the bundle ${bundle.name}?`,
       icon: this.icon,
       approveCaption: 'Remove bundle',
       rejectCaption: "Don't remove",
@@ -174,11 +173,11 @@ QueueBundleActions.searchBundleAlternates.failed.listen(function (bundle, error)
 });
 
 QueueBundleActions.sources.listen(function (data, location) {
-  History.pushModal(location, `${location.pathname}/sources/${data.id}`, OverlayConstants.BUNDLE_SOURCE_MODAL);
+  History.push(`${location.pathname}/sources/${data.id}`);
 });
 
 QueueBundleActions.content.listen(function (data, location) {
-  History.pushModal(location, `${location.pathname}/content/${data.id}`, OverlayConstants.BUNDLE_CONTENT_MODAL);
+  History.push(`${location.pathname}/content/${data.id}`);
 });
 
 export default QueueBundleActions;

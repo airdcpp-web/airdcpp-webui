@@ -11,7 +11,6 @@ import AccessConstants from 'constants/AccessConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import History from 'utils/History';
-import OverlayConstants from 'constants/OverlayConstants';
 
 
 const ShareActions = Reflux.createActions([
@@ -78,7 +77,7 @@ ShareActions.refreshVirtual.failed.listen(function (error) {
 });
 
 ShareActions.addExclude.listen(function (location) {
-  History.pushModal(location, location.pathname + '/browse', OverlayConstants.FILE_BROWSER_MODAL);
+  History.push(`${location.pathname}/browse`);
 });
 
 ShareActions.addExclude.saved.listen(function (path) {

@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Route, RouterChildContext, match as RouteMatch, /*RouteComponentProps*/ } from 'react-router';
-import { Location } from 'history';
+import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'react-router';
+import History from 'utils/History';
 
 
 const parseRoutePath = (match: RouteMatch<{}>, path: string) => {
@@ -17,59 +16,63 @@ export interface ModalRouteDecoratorProps {
   
 }
 
+
+export const ModalRouteCloseContext = React.createContext<() => void>(() => { return undefined; });
+
 export interface ModalRouteDecoratorChildProps {
-  overlayId?: any;
+  returnTo: string;
 }
 
-const getLocationState = (location: Location, overlayId: any) => {
-  if (location.state && location.state[overlayId]) {
-    return location.state[overlayId];
-  }
-
-  return undefined;
-};
-
 export default function <PropsT>(
-  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps /*& RouteComponentProps<{}>*/>, 
-  overlayId: any, 
+  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>, 
   path: string
 ) {
-  const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps & PropsT> = (
+  class ModalRouteDecorator extends React.Component<PropsT & ModalRouteDecoratorProps & RouteComponentProps> {
+    render() {
+      const { match } = this.props;
+      return (
+        <Route 
+          path={ parseRoutePath(match, path) }
+          render={ routeProps => (
+            <ModalRouteCloseContext.Provider value={ () => History.replace(match.url) }>
+              <Component
+                returnTo={ match.url }
+                { ...this.props }
+                { ...routeProps }
+              />
+            </ModalRouteCloseContext.Provider>
+          ) }
+          //{ ...props }
+        />
+      );
+    }
+  }
+
+  /*const ModalRouteDecorator: React.SFC<ModalRouteDecoratorProps & PropsT> = (
     props, 
     { router }: RouterChildContext<{}>
   ) => {
     const { match } = router.route;
-    /*const state = getLocationState(location, overlayId);
-    if (!state && Object.keys(match.params).length === 0) {
-      return null;
-    }*/
-    
     return (
       <Route 
         path={ parseRoutePath(match, path) }
-        render={ routeProps => {
-          const state = getLocationState(routeProps.location, overlayId);
-          if (!state && Object.keys(routeProps.match.params).length === 0) {
-            return null;
-          }
-
-          return (
+        render={ routeProps => (
+          <ModalRouteCloseContext.Provider value={ () => History.replace(match.url) }>
             <Component
-              overlayId={ overlayId }
+              returnTo={ match.url }
               { ...props }
-              { ...routeProps.location.state[overlayId].data }
               { ...routeProps }
             />
-          );
-        } }
+          </ModalRouteCloseContext.Provider>
+        ) }
         { ...props }
       />
     );
-  };
+  };*/
 
-  ModalRouteDecorator.contextTypes = {
+  /*ModalRouteDecorator.contextTypes = {
     router: PropTypes.object.isRequired,
-  };
+  };*/
 
-  return ModalRouteDecorator;
+  return withRouter(ModalRouteDecorator);
 }

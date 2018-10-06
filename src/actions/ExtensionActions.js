@@ -7,7 +7,6 @@ import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import InputDialog from 'components/semantic/InputDialog';
 
 import AccessConstants from 'constants/AccessConstants';
-import OverlayConstants from 'constants/OverlayConstants';
 import ExtensionConstants from 'constants/ExtensionConstants';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -67,7 +66,7 @@ const ExtensionActions = Reflux.createActions([
 ]);
 
 ExtensionActions.configure.listen(function (extension, location) {
-  History.pushModal(location, `${location.pathname}/extensions/${extension.id}`, OverlayConstants.EXTENSION_CONFIGURE_MODAL);
+  History.push(`${location.pathname}/extensions/${extension.id}`);
 });
 
 ExtensionActions.start.listen(function (extension) {

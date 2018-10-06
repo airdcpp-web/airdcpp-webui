@@ -6,7 +6,6 @@ import t from 'utils/tcomb-form';
 
 import Button from 'components/semantic/Button';
 import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
-import OverlayConstants from 'constants/OverlayConstants';
 
 import LoginStore from 'stores/LoginStore';
 
@@ -28,7 +27,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
 
     const showBrowseDialog = () => {
       const { location } = locals.context.router.route;
-      History.pushModal(location, `${location.pathname}/browse`, OverlayConstants.FILE_BROWSER_MODAL);
+      History.push(`${location.pathname}/browse`);
     };
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
