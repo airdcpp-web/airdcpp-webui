@@ -23,8 +23,8 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
-    "lint": "eslint --ext .jsx,.js,.tsx,.ts src",
-    "lint-fix": "eslint --ext .jsx,.js --fix src",
+    "lint": "tslint --project tsconfig.json",
+    "lint-fix": "tslint --project tsconfig.json --fix",
     "start": "node devtools/server.js",
     "build-webpack": "webpack -p --mode production --progress",
     "build": "npm run clean && npm run build-webpack",
