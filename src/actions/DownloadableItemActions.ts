@@ -223,7 +223,7 @@ DownloadableItemActions.findNfo.listen(async function (
 DownloadableItemActions.findNfo.failed.listen(function (errorMessage: ErrorResponse, data: DownloadableItemData) {
   NotificationActions.info({ 
     title: data.itemInfo.name,
-    message: errorMessage,
+    message: errorMessage.message,
   });
 });
 

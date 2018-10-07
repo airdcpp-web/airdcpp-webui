@@ -40,7 +40,7 @@ ViewFileActions.createSession.listen(function (
   }
 
   const { tth, size, name } = itemInfo;
-  const file = {
+  const fileData = {
     user,
     tth,
     size,
@@ -49,8 +49,8 @@ ViewFileActions.createSession.listen(function (
   };
 
   let that = this;
-  SocketService.post(ViewFileConstants.SESSIONS_URL, file)
-    .then((data) => that.completed(location, file))
+  SocketService.post(ViewFileConstants.SESSIONS_URL, fileData)
+    .then((data: API.ViewFile) => that.completed(location, data))
     .catch(that.failed);
 });
 
@@ -70,9 +70,9 @@ ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
   NotificationActions.apiError('Failed to create viewed file', error);
 });
 
-ViewFileActions.setRead.listen(function (this: UI.AsyncActionType<API.ViewFile>, id: string) {
+ViewFileActions.setRead.listen(function (this: UI.AsyncActionType<API.ViewFile>, session: API.ViewFile) {
   let that = this;
-  SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${id}/read`)
+  SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${session.id}/read`)
     .then(that.completed)
     .catch(that.failed);
 });

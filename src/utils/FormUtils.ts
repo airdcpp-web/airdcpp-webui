@@ -138,10 +138,10 @@ const normalizeSettingValueMap = (
 };
 
 const intTransformer = {
-  parse: (v: string) => {
-    return v === 'null' || v === undefined || v === null ? null : parseInt(v, 10);
+  parse: (v: string | null | undefined) => {
+    return v === 'null' || v === 'undefined' || v === undefined || v === null ? null : parseInt(v, 10);
   },
-  format: (v: number) => {
+  format: (v: number| null | undefined) => {
     return String(v);
   },
 };

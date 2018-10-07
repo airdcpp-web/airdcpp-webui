@@ -12,7 +12,7 @@ const Entry = [
 ];
 
 if (process.env.NODE_ENV !== 'production') {
-  Entry.push('language');
+  Entry.push('language_file');
 }
 
 const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
