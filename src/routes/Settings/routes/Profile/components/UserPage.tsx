@@ -9,8 +9,11 @@ const Entry = [
   'description',
   'email',
   'setting_profile',
-  'language',
 ];
+
+if (process.env.NODE_ENV !== 'production') {
+  Entry.push('language');
+}
 
 const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
   if (id === 'setting_profile') {
