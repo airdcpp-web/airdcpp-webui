@@ -9,6 +9,7 @@ const Entry = [
   'description',
   'email',
   'setting_profile',
+  'language',
 ];
 
 const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {

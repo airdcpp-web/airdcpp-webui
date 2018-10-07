@@ -3,7 +3,7 @@ import React from 'react';
 import { formatRelativeTime, formatSize } from 'utils/ValueFormat';
 
 import SearchActions from 'actions/SearchActions';
-import { DownloadMenu } from 'components/menu/DropdownMenu';
+import { DownloadMenu } from 'components/menu';
 //import { DupeEnum } from 'constants/DupeConstants';
 
 import * as API from 'types/api';

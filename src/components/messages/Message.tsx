@@ -9,7 +9,7 @@ import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 //import { SeverityEnum } from 'constants/EventConstants';
 
-import { UserMenu } from 'components/menu/DropdownMenu';
+import { UserMenu } from 'components/menu';
 
 import * as API from 'types/api';
 

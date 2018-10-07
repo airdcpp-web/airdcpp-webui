@@ -11,15 +11,17 @@ import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 import Icon from 'components/semantic/Icon';
 
 
-export interface UserMenuDecoratorProps extends Omit<ActionMenuDecoratorProps, 'actions' | 'caption' | 'itemData'> {
+export interface UserMenuDecoratorProps extends 
+  Omit<ActionMenuDecoratorProps<ActionUserData>, 'actions' | 'caption' | 'itemData'> {
+
   user: ActionUserType;
-  directory: string;
+  directory?: string;
   userIcon?: string | boolean | null;
   text?: React.ReactNode;
   className?: string;
 }
 
-type UserMenuDecoratorChildProps = ActionMenuDecoratorProps;
+type UserMenuDecoratorChildProps = ActionMenuDecoratorProps<ActionUserData>;
 
 export default function <DropdownPropsT extends object>(
   Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>
@@ -63,7 +65,8 @@ export default function <DropdownPropsT extends object>(
       });
       Object.defineProperty(this.itemData, 'directory', {
         get: () => {
-          return getFilePath(this.props.directory!);
+          const { directory } = this.props;
+          return getFilePath(directory as any as string);
         }
       });
     }

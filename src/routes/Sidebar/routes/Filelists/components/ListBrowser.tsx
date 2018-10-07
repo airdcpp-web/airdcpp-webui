@@ -6,7 +6,7 @@ import FilelistSessionActions from 'actions/FilelistSessionActions';
 
 import { dupeToStringType } from 'utils/TypeConvert';
 import BrowserBar from 'components/browserbar/BrowserBar';
-import { ActionMenu, DownloadMenu } from 'components/menu/DropdownMenu';
+import { ActionMenu, DownloadMenu } from 'components/menu';
 
 import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
@@ -82,7 +82,11 @@ class ListBrowser extends React.Component<ListBrowserProps> {
 
   UNSAFE_componentWillReceiveProps(nextProps: ListBrowserProps) {
     const nextLocationData = nextProps.location.state;
-    if (!nextLocationData.directory || nextProps.session.location.path === nextLocationData.directory) {
+    if (!nextLocationData || !nextLocationData.directory) {
+      return;
+    }
+
+    if (nextProps.session.location.path === nextLocationData.directory) {
       return;
     }
 

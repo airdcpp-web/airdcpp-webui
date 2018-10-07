@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { userOnlineStatusToColor } from 'utils/TypeConvert';
-import { UserMenu } from 'components/menu/DropdownMenu';
+import { UserMenu } from 'components/menu';
 import UserIcon from 'components/icon/UserIcon';
 
 import * as API from 'types/api';
@@ -12,7 +12,7 @@ interface UserSessionBase {
   user: API.HintedUser;
 }
 
-export default function <SessionT extends UserSessionBase>(itemMenuIds: string[]) {
+export default function <SessionT extends UI.SessionItemBase & UserSessionBase>(itemMenuIds: string[]) {
   const UserItemHandlerDecorator: UI.SessionInfoGetter<SessionT> = {
     itemNameGetter(session) {
       return session.user.nicks;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { TableActionMenu, TableDownloadMenu, TableActionMenuProps } from 'components/menu/DropdownMenu';
+import { TableActionMenu, TableDownloadMenu, TableActionMenuProps } from 'components/menu';
 import { 
   formatDecimal, formatAbbreviatedDuration, formatConnection, formatDateTime, 
   formatShortDate, formatSize, formatSpeed, formatRelativeTime 
@@ -14,7 +14,6 @@ import Checkbox, { CheckboxProps } from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
 import { Cell, CellProps } from 'fixed-data-table-2';
 import { RouterChildContext } from 'react-router';
-//import { Location } from 'history';
 import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
@@ -60,11 +59,19 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
   </Cell>
 );
 
-export interface ActionCellProps extends RowWrapperCellChildProps, Omit<TableActionMenuProps, 'caption' | 'itemData'> {
+export interface ActionCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> extends 
+  RowWrapperCellChildProps<CellDataT, ItemDataT>, 
+  Omit<TableActionMenuProps<ItemDataT>, 'caption' | 'itemData'> {
 
 }
 
-export const FileActionCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGetter, ...props }) => (
+interface FileItemBase {
+  type: API.FileItemType;
+}
+
+export const FileActionCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType & FileItemBase>(
+  { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
+) => (
   <TableActionMenu 
     caption={ 
       <FormattedFile 
@@ -77,7 +84,9 @@ export const FileActionCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGe
   />
 );
 
-export const ActionMenuCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGetter, ...props }) => (
+export const ActionMenuCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
+  { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
+) => (
   <TableActionMenu 
     caption={ cellData }
     itemData={ rowDataGetter! }
@@ -85,13 +94,15 @@ export const ActionMenuCell: React.SFC<ActionCellProps> = ({ cellData, rowDataGe
   />
 );
 
-export interface ActionLinkCellProps extends RowWrapperCellChildProps {
+export interface ActionLinkCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> 
+  extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
+
   //action: (itemData: any, location: Location) => void;
   action: UI.ActionType;
 }
 
-export const ActionLinkCell: React.SFC<ActionLinkCellProps> = (
-  { cellData, rowDataGetter, action, ...props }, 
+export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
+  { cellData, rowDataGetter, action, ...props }: ActionLinkCellProps<CellDataT, ItemDataT>, 
   { router }: RouterChildContext<{}>
 ) => {
   if (!showAction(action, rowDataGetter!())) {
@@ -114,7 +125,7 @@ ActionLinkCell.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export interface NumberCellProps extends RowWrapperCellChildProps {
+export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;
 }
 
@@ -170,14 +181,18 @@ export const DecimalCell: React.SFC<NumberCellProps> = ({ cellData }) => (
 
 export type FileDownloadCellClickHandler = (cellData: any, rowDataGetter: () => any) => (() => void) | undefined;
 
-export interface FileDownloadCellProps extends RowWrapperCellChildProps {
-  userGetter: (rowData: any) => API.HintedUserBase;
+export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> 
+  extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
+
+  userGetter: (rowData: ItemDataT) => API.HintedUserBase;
   clickHandlerGetter?: FileDownloadCellClickHandler;
   downloadHandler: DownloadHandlerType;
 }
 
-export const FileDownloadCell: React.SFC<FileDownloadCellProps> = (
-  { cellData, rowDataGetter, clickHandlerGetter, userGetter, downloadHandler, ...props }
+export const FileDownloadCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType & FileItemBase>(
+  { cellData, rowDataGetter, clickHandlerGetter, 
+    userGetter, downloadHandler, ...props 
+  }: FileDownloadCellProps<CellDataT, ItemDataT>
 ) => (
   <TableDownloadMenu 
     caption={ 
@@ -204,13 +219,16 @@ export const FileDownloadCell: React.SFC<FileDownloadCellProps> = (
 };*/
 
 // tslint:disable-next-line:max-line-length
-export interface CheckboxCellProps extends Omit<RowWrapperCellChildProps, 'onChange'>, Omit<CheckboxProps, 'onChange' | 'checked'> {
+export interface CheckboxCellProps extends 
+  Omit<RowWrapperCellChildProps<boolean, any>, 'onChange'>, 
+  Omit<CheckboxProps, 'onChange' | 'checked'> {
+    
   onChange: (checked: boolean, rowData: any) => void;
 }
 
 export const CheckboxCell: React.SFC<CheckboxCellProps> = ({ cellData, rowDataGetter, onChange, ...props }) => (
   <Checkbox 
-    checked={ cellData } 
+    checked={ cellData! } 
     onChange={ checked => onChange(checked, rowDataGetter!()) }
     { ...props }
   />

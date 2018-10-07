@@ -8,7 +8,7 @@ import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUse
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/menu/DropdownMenu';
+import { ActionMenu } from 'components/menu';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import * as API from 'types/api';

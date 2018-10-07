@@ -19,7 +19,7 @@ export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
 }
 
-export interface ChatActions {
+export interface ChatActions extends UI.ActionListType<UI.SessionItemBase> {
   clear: UI.ActionType<UI.SessionItemBase>;
   sendMessage: UI.ActionType<UI.SessionItemBase>;
   fetchMessages: UI.ActionType<UI.SessionItemBase>;

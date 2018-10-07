@@ -4,7 +4,7 @@ import ShareActions from 'actions/ShareActions';
 import ShareConstants from 'constants/ShareConstants';
 
 import ActionButton from 'components/ActionButton';
-import { ActionMenu } from 'components/menu/DropdownMenu';
+import { ActionMenu } from 'components/menu';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';

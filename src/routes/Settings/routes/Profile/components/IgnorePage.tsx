@@ -5,7 +5,7 @@ import UserConstants from 'constants/UserConstants';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import Message from 'components/semantic/Message';
 
-import { UserMenu } from 'components/menu/DropdownMenu';
+import { UserMenu } from 'components/menu';
 
 import * as API from 'types/api';
 

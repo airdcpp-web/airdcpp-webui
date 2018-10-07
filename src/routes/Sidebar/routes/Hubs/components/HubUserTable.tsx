@@ -8,7 +8,7 @@ import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, ConnectionCell, IpCell } from 'components/table/Cell';
 
-import { TableUserMenu } from 'components/menu/DropdownMenu';
+import { TableUserMenu } from 'components/menu';
 
 import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';

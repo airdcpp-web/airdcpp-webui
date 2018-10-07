@@ -10,7 +10,7 @@ import Message from 'components/semantic/Message';
 
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
-import { ActionMenu, UserMenu } from 'components/menu/DropdownMenu';
+import { ActionMenu, UserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/UserActions';
 
 import * as API from 'types/api';

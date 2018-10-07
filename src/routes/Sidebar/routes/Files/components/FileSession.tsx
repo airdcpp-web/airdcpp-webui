@@ -17,9 +17,10 @@ import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
 
 import * as API from 'types/api';
+import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
-export interface FileSessionProps {
+export interface FileSessionProps extends SessionChildProps<API.ViewFile> {
   session: API.ViewFile;
 }
 

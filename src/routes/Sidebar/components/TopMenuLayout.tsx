@@ -1,15 +1,23 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import ActionButton from 'components/ActionButton';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
-import MenuIcon from 'components/menu/MenuIcon';
+import { MenuIcon } from 'components/menu/MenuIcon';
+import { SessionMainLayoutProps, SessionBaseType } from './SessionLayout';
 
 
-const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAction, listActionMenuGetter }) => (
-  <SectionedDropdown triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}>
+type SessionDropdownProps<SessionT extends SessionBaseType> = 
+  Pick<SessionMainLayoutProps<SessionT>, 'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter'>;
+
+const SessionDropdown: React.SFC<SessionDropdownProps</*SessionT*/ any>> = ({ 
+  sessionMenuItems, newButton, unreadInfoStore, listActionMenuGetter 
+}) => (
+  <SectionedDropdown 
+    triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}
+  >
     <MenuSection caption="New">
       { newButton }
     </MenuSection>
@@ -22,7 +30,13 @@ const SessionDropdown = ({ sessionMenuItems, newButton, unreadInfoStore, closeAc
   </SectionedDropdown>
 );
 
-const CloseButton = ({ closeAction, activeItem }) => {
+
+type CloseButtonProps<SessionT extends SessionBaseType> = 
+  Pick<SessionMainLayoutProps<SessionT>, 'closeAction' | 'activeItem'>;
+
+const CloseButton: React.SFC<CloseButtonProps<any>> = (
+  { closeAction, activeItem }
+) => {
   if (!activeItem || useMobileLayout()) {
     return null;
   }
@@ -37,15 +51,19 @@ const CloseButton = ({ closeAction, activeItem }) => {
   );
 };
 
-const SessionItemHeader = ({ itemHeaderIcon, itemHeaderTitle, activeItem, actionMenu }) => (
+type SessionItemHeaderProps = Pick<SessionMainLayoutProps<any>, 'itemHeaderIcon' | 'itemHeaderTitle'>;
+
+const SessionItemHeader: React.SFC<SessionItemHeaderProps> = ({ itemHeaderIcon, itemHeaderTitle }) => (
   <div className="session-header">
     { itemHeaderIcon }
     { itemHeaderTitle }
   </div>
 );
 
-const TopMenuLayout = ({ children, ...props }) => (
-  <div className="session-container vertical">
+const TopMenuLayout: React.SFC<SessionMainLayoutProps</*SessionT*/ any>> = (
+  { children, onKeyDown, ...props }
+) => (
+  <div className="session-container vertical" onKeyDown={ onKeyDown }>
     <div className="ui main menu menu-bar">
       <div className="content-left">
         <SessionDropdown { ...props }/>
@@ -60,7 +78,7 @@ const TopMenuLayout = ({ children, ...props }) => (
   </div>
 );
 
-TopMenuLayout.propTypes = {
+/*TopMenuLayout.propTypes = {
   itemHeaderTitle: PropTypes.node.isRequired,
   itemHeaderIcon: PropTypes.node.isRequired,
   activeItem: PropTypes.object,
@@ -68,6 +86,6 @@ TopMenuLayout.propTypes = {
   sessionMenuItems: PropTypes.array.isRequired,
   closeAction: PropTypes.func.isRequired,
   listActionMenuGetter: PropTypes.func.isRequired,
-};
+};*/
 
 export default TopMenuLayout;

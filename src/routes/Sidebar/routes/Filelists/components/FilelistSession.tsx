@@ -8,14 +8,13 @@ import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
-import { Location } from 'history';
 
 import * as API from 'types/api';
+import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
-interface FilelistSessionProps {
-  session: API.FilelistSession;
-  location: Location;
+interface FilelistSessionProps extends SessionChildProps<API.FilelistSession> {
+
 }
 
 class FilelistSession extends React.Component<FilelistSessionProps> {

@@ -6,7 +6,7 @@ import Reflux from 'reflux';
 
 import SiteHeader from 'components/main/SiteHeader';
 import MainNavigation from 'components/main/navigation/MainNavigationMobile';
-import MenuIcon from 'components/menu/MenuIcon';
+import { MenuIcon } from 'components/menu';
 
 import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
 

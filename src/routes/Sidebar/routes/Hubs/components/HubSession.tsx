@@ -13,9 +13,9 @@ import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
 import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from 'routes/Sidebar/routes/Hubs/components/HubPrompt';
 
 import '../style.css';
-import { SessionActions } from 'decorators/ActiveSessionDecorator';
 
 import * as API from 'types/api';
+import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
 const getStorageKey = (props: HubSessionProps) => {
@@ -27,9 +27,9 @@ const checkList = (props: HubSessionProps) => {
 };
 
 
-interface HubSessionProps {
-  session: API.Hub;
-  actions: ChatActions & SessionActions;
+interface HubSessionProps extends SessionChildProps<API.Hub, ChatActions> {
+  //session: API.Hub;
+  //actions: UI.SessionActions<API.Hub, ChatActions>;
 }
 
 class HubSession extends React.Component<HubSessionProps> {
@@ -108,6 +108,7 @@ class HubSession extends React.Component<HubSessionProps> {
             actions={ actions }
             chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
+            //location={ location }
           />
         ) }
         <HubFooter

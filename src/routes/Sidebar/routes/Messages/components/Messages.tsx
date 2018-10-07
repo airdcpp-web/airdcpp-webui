@@ -13,18 +13,19 @@ import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';
 import PrivateChatSession from 'routes/Sidebar/routes/Messages/components/PrivateChatSession';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import '../style.css';
 
 
 const sessionActions = [ 'clear' ];
 
-const Messages = createReactClass({
+const Messages = createReactClass<UI.SessionRouteProps, {}>({
   displayName: 'Messages',
   mixins: [ Reflux.connect(PrivateChatSessionStore, 'chatSessions') ],
 
   render() {
-    const { match, children, ...other } = this.props;
+    const { match, ...other }: UI.SessionRouteProps = this.props;
     return (
       <SessionLayout 
         activeId={ match.params.id }
@@ -37,14 +38,12 @@ const Messages = createReactClass({
         editAccess={ API.AccessEnum.PRIVATE_CHAT_EDIT }
         actions={ PrivateChatActions }
         actionIds={ sessionActions }
-        sessionLayout={ PrivateChatSession }
+        sessionItemLayout={ PrivateChatSession }
         newLayout={ MessageNew }
 
         { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
         { ...other }
-      >
-        { children }
-      </SessionLayout>
+      />
     );
   },
 });

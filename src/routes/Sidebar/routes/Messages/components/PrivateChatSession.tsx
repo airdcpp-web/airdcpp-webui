@@ -6,14 +6,14 @@ import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFoot
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
-import { SessionActions } from 'decorators/ActiveSessionDecorator';
-
 import * as API from 'types/api';
+//import * as UI from 'types/ui';
+import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
-interface PrivateChatSessionProps {
-  session: API.PrivateChat;
-  actions: ChatActions & SessionActions;
+interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, ChatActions> {
+  //session: API.PrivateChat;
+  //actions: UI.SessionActions<API.PrivateChat, ChatActions>;
 }
 
 class PrivateChatSession extends React.Component<PrivateChatSessionProps> {

@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
+import { SessionMainLayoutProps } from './SessionLayout';
 
 
-const SideMenuLayout = ({ 
+const SideMenuLayout: React.SFC<SessionMainLayoutProps<any /*SessionT*/>> = ({ 
   sessionMenuItems, newButton,
   itemHeaderIcon, itemHeaderTitle, children,
-  itemHeaderDescription,
+  itemHeaderDescription, onKeyDown,
 }) => {
 
   if (newButton) {
@@ -17,7 +18,7 @@ const SideMenuLayout = ({
   }
 
   return (
-    <div className="ui grid session-container horizontal">
+    <div className="ui grid session-container horizontal" onKeyDown={ onKeyDown }>
       <div className="four wide column menu-column">
         { newButton }
         { !!sessionMenuItems.length && (
@@ -43,13 +44,13 @@ const SideMenuLayout = ({
   );
 };
 
-SideMenuLayout.propTypes = {
+/*SideMenuLayout.propTypes = {
   newButton: PropTypes.node,
   sessionMenuItems: PropTypes.array.isRequired,
 
   itemHeaderTitle: PropTypes.node,
   itemHeaderIcon: PropTypes.node,
   itemHeaderDescription: PropTypes.node.isRequired,
-};
+};*/
 
 export default SideMenuLayout;

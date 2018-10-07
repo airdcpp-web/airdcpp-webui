@@ -1,5 +1,5 @@
 import { FormFieldDefinition } from './form';
-import { ActionType } from './actions';
+import { ActionListType } from './actions';
 
 
 export interface WidgetSettings<SettingsT = object> {
@@ -26,7 +26,7 @@ export interface Widget {
     minW: number;
   };
   actionMenu?: {
-    actions: ActionType[];
+    actions: ActionListType<void>;
     ids: string[];
   };
   formSettings?: FormFieldDefinition[];

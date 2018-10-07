@@ -38,7 +38,7 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
 };
 
 
-const Files = createReactClass({
+const Files = createReactClass<UI.SessionRouteProps, {}>({
   displayName: 'Files',
   mixins: [ Reflux.connect(ViewFileStore, 'files') ],
 
@@ -53,9 +53,9 @@ const Files = createReactClass({
       );
     }
 
-    const { match, ...other } = this.props;
+    const { match, location }: UI.SessionRouteProps = this.props;
     return (
-      <SessionLayout 
+      <SessionLayout
         activeId={ match.params.id }
         baseUrl="files"
         items={ files }
@@ -63,10 +63,10 @@ const Files = createReactClass({
         editAccess={ API.AccessEnum.VIEW_FILE_EDIT }
         actions={ ViewFileActions }
         unreadInfoStore={ ViewFileStore }
-        sessionLayout={ FileSession }
-
+        sessionItemLayout={ FileSession }
+        location={ location }
         { ...ItemHandler }
-        { ...other }
+        //{ ...other }
       />
     );
   },

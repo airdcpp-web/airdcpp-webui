@@ -53,7 +53,7 @@ FilelistSessionActions.createSession.listen(function (
     }
 
     if (directory !== '/' && session.location.path !== directory) {
-      FilelistSessionActions.changeDirectory(user, directory);
+      FilelistSessionActions.changeDirectory(session, directory);
     }
 
     this.completed(location, user, session);

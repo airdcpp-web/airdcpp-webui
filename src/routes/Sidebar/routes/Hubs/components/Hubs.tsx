@@ -19,6 +19,7 @@ import HubIcon from 'components/icon/HubIcon';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { SessionRouteProps } from 'types/ui';
 
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
@@ -44,11 +45,11 @@ const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   },
 };
 
-interface SessionRouteParams {
+/*interface SessionRouteParams {
   id: string;
-}
+}*/
 
-const parseNumericId = (params: SessionRouteParams) => {
+const parseNumericId = (params: UI.SessionRouteParams) => {
   if (!params.id) {
     return null;
   }
@@ -58,12 +59,12 @@ const parseNumericId = (params: SessionRouteParams) => {
 
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
-const Hubs = createReactClass({
+const Hubs = createReactClass<SessionRouteProps, {}>({
   displayName: 'Hubs',
   mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
 
   render() {
-    const { match, ...other } = this.props;
+    const { match, ...other }: SessionRouteProps = this.props;
     return (
       <SessionLayout 
         activeId={ parseNumericId(match.params) }
@@ -75,7 +76,7 @@ const Hubs = createReactClass({
         editAccess={ API.AccessEnum.HUBS_EDIT }
         actions={ HubActions } 
         //actionIds={ hubActions }
-        sessionLayout={ HubSession }
+        sessionItemLayout={ HubSession }
         newLayout={ HubNew }
 
         unreadInfoStore={ HubSessionStore }

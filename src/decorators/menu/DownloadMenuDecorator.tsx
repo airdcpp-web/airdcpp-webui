@@ -6,12 +6,15 @@ import DownloadableItemActions from 'actions/DownloadableItemActions';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 export type DownloadHandlerType = () => void;
 
-interface DownloadMenuItemData {
+interface DownloadMenuItemData<ItemDataT extends UI.ActionItemDataValueType> {
   handler: DownloadHandlerType;
+  user: API.HintedUser;
+  itemInfo: ItemDataT;
 }
 
 export interface DownloadMenuDecoratorProps {
@@ -22,10 +25,11 @@ export interface DownloadMenuDecoratorProps {
   className?: string;
 }
 
-type DownloadMenuDecoratorChildProps = ActionMenuDecoratorProps;
+type DownloadMenuDecoratorChildProps<ItemDataT extends UI.ActionItemDataValueType> = 
+  ActionMenuDecoratorProps<DownloadMenuItemData<ItemDataT>>;
 
-export default function <DropdownPropsT>(
-  Component: React.ComponentType<DownloadMenuDecoratorChildProps & DropdownPropsT>
+export default function <DropdownPropsT, ItemDataT extends UI.ActionItemDataValueType>(
+  Component: React.ComponentType<DownloadMenuDecoratorChildProps<ItemDataT> & DropdownPropsT>
 ) {
   class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps & DropdownPropsT> {
     /*static propTypes = {
@@ -40,13 +44,13 @@ export default function <DropdownPropsT>(
       downloadHandler: PropTypes.func.isRequired,
     };*/
 
-    itemData: DownloadMenuItemData;
+    itemData: DownloadMenuItemData<ItemDataT>;
     constructor(props: DownloadMenuDecoratorProps & DropdownPropsT) {
       super(props);
 
       this.itemData = { 
         handler: props.downloadHandler,
-      };
+      } as DownloadMenuItemData<ItemDataT>;
 
       // Since table cells are recycled, the same menu can be re-used for different items
       // as it's not necessarily re-rendered due to performance reasons

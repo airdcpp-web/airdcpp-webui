@@ -6,27 +6,24 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 import * as UI from 'types/ui';
+import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
 type SessionType = UI.SessionItemBase;
 
-export interface SessionActions {
-  setRead: (session: SessionType) => void;
-  sessionChanged: (session: SessionType | null) => void;
-}
+interface ActiveSessionDecoratorProps<SessionT extends SessionType, ActionT extends object> 
+  extends Pick<SessionChildProps<SessionT, ActionT>, 'actions' | 'session'> {
 
-interface ActiveSessionDecoratorProps<SessionT> {
-  actions: SessionActions;
-  session: SessionT;
+  //session: SessionT;
 }
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function <PropsT, SessionT extends SessionType>(
+export default function <PropsT, SessionT extends SessionType, ActionT extends object = {}>(
   Component: React.ComponentType<PropsT>, 
   useReadDelay: boolean = false
 ) {
-  class ActiveSessionDecorator extends React.Component<PropsT & ActiveSessionDecoratorProps<SessionT>> {
+  class ActiveSessionDecorator extends React.Component<PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>> {
     /*static propTypes = {
       session: PropTypes.any, // Required (cloned)
       actions: PropTypes.object, // Required (cloned)
@@ -63,7 +60,7 @@ export default function <PropsT, SessionT extends SessionType>(
       this.setSession(null);
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT>) {
+    UNSAFE_componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT, ActionT>) {
       if (this.props.session.id !== nextProps.session.id) {
         this.setSession(nextProps.session);
       }

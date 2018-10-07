@@ -45,12 +45,12 @@ const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
   },
 };
 
-const Filelists = createReactClass({
+const Filelists = createReactClass<UI.SessionRouteProps, {}>({
   displayName: 'Filelists',
   mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
 
   render() {
-    const { children, match, ...other } = this.props;
+    const { match, ...other }: UI.SessionRouteProps = this.props;
     return (
       <SessionLayout 
         activeId={ match.params.id }
@@ -63,14 +63,12 @@ const Filelists = createReactClass({
         editAccess={ API.AccessEnum.FILELISTS_EDIT }
         actions={ FilelistSessionActions }
         unreadInfoStore={ FilelistSessionStore }
-        sessionLayout={ FilelistSession }
+        sessionItemLayout={ FilelistSession }
         newLayout={ FilelistNew }
 
         { ...ItemHandler }
         { ...other }
-      >
-        { children }
-      </SessionLayout>
+      />
     );
   },
 });

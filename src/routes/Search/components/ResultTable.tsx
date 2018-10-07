@@ -6,10 +6,10 @@ import SearchViewStore from 'stores/SearchViewStore';
 import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, ConnectionCell, FileDownloadCell, DecimalCell } from 'components/table/Cell';
-import { TableActionMenu } from 'components/menu/DropdownMenu';
+import { TableActionMenu } from 'components/menu';
 
 import { dupeToStringType } from 'utils/TypeConvert';
-import { TableUserMenu } from 'components/menu/DropdownMenu';
+import { TableUserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/UserActions';
 import Message from 'components/semantic/Message';
 

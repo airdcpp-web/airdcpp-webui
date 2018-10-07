@@ -8,7 +8,7 @@ import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
 import SearchConstants from 'constants/SearchConstants';
 
-import { UserMenu } from 'components/menu/DropdownMenu';
+import { UserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/UserActions';
 
 import * as API from 'types/api';
