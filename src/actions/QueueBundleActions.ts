@@ -5,7 +5,6 @@ import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants'
 import SocketService from 'services/SocketService';
 import History from 'utils/History';
 
-import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
@@ -42,13 +41,13 @@ const QueueBundleActions = Reflux.createActions([
   'divider',
   { 'search': { 
     asyncResult: true,
-    access: AccessConstants.SEARCH, 
+    access: API.AccessEnum.SEARCH, 
     displayName: 'Search (foreground)', 
     icon: IconConstants.SEARCH,
   } },
   { 'searchBundleAlternates': { 
     asyncResult: true,
-    access: AccessConstants.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT, 
     displayName: 'Search for alternates', 
     icon: IconConstants.SEARCH_ALTERNATES,
     filter: itemNotFinished,
@@ -58,21 +57,21 @@ const QueueBundleActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'confirmed' ], 
     displayName: 'Remove',
-    access: AccessConstants.QUEUE_EDIT,
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
   } },
   'divider',
   { 'rescan': { 
     asyncResult: true, 
     displayName: 'Rescan for errors',
-    access: AccessConstants.QUEUE_EDIT,
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REFRESH,
     filter: bundleValidationFailed,
   } },
   { 'forceShare': { 
     asyncResult: true, 
     displayName: 'Force in share',
-    access: AccessConstants.QUEUE_EDIT,
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.ERROR,
     filter: bundleValidationFailed,
   } },
@@ -82,7 +81,7 @@ const QueueBundleActions = Reflux.createActions([
   } },
   { 'removeBundleSource': { 
     asyncResult: true,
-    access: AccessConstants.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT, 
     displayName: 'Remove source', 
     icon: IconConstants.REMOVE,
   } },

@@ -7,7 +7,6 @@ import SocketService from 'services/SocketService';
 import History from 'utils/History';
 
 import NotificationActions from 'actions/NotificationActions';
-import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 import ChatActionDecorator from './decorators/ChatActionDecorator';
@@ -15,6 +14,7 @@ import SessionActionDecorator from './decorators/SessionActionDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
@@ -25,12 +25,12 @@ const PrivateChatActions = Reflux.createActions([
   { 'connectCCPM': { 
     asyncResult: true,
     displayName: 'Connect',
-    access: AccessConstants.PRIVATE_CHAT_EDIT, 
+    access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     icon: IconConstants.PLAY,
   } },
   { 'disconnectCCPM': { 
     asyncResult: true,
-    access: AccessConstants.PRIVATE_CHAT_EDIT, 
+    access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     displayName: 'Disconnect', 
     icon: IconConstants.REMOVE,
   } },
@@ -117,8 +117,8 @@ PrivateChatActions.disconnectCCPM.listen(function (
 
 export default SessionActionDecorator(
   ChatActionDecorator(
-    PrivateChatActions, PrivateChatConstants.SESSIONS_URL, AccessConstants.PRIVATE_CHAT_EDIT
+    PrivateChatActions, PrivateChatConstants.SESSIONS_URL, API.AccessEnum.PRIVATE_CHAT_EDIT
   ), 
   PrivateChatConstants.SESSIONS_URL, 
-  AccessConstants.PRIVATE_CHAT_EDIT
+  API.AccessEnum.PRIVATE_CHAT_EDIT
 );

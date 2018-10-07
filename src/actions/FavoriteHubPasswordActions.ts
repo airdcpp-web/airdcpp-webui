@@ -9,7 +9,6 @@ import { PasswordDialog } from 'components/semantic/InputDialog';
 
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -36,7 +35,7 @@ const FavoriteHubPasswordActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'saved' ], 
     displayName: 'Set password',
-    access: AccessConstants.FAVORITE_HUBS_EDIT, 
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.LOCK,
     filter: noPassword,
   } },
@@ -44,7 +43,7 @@ const FavoriteHubPasswordActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'saved' ], 
     displayName: 'Change password',
-    access: AccessConstants.FAVORITE_HUBS_EDIT, 
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.EDIT,
     filter: hasPassword,
   } },
@@ -52,7 +51,7 @@ const FavoriteHubPasswordActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'confirmed' ], 
     displayName: 'Remove password',
-    access: AccessConstants.FAVORITE_HUBS_EDIT, 
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.REMOVE,
     filter: hasPassword,
   } },

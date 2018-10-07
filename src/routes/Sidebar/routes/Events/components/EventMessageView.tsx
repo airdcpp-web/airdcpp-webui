@@ -10,9 +10,10 @@ import MessageView from 'components/messages/MessageView';
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
-const mapViewMessage = (message: API.StatusMessage) => {
+const mapViewMessage = (message: API.StatusMessage): UI.MessageListItem => {
   return {
     log_message: message,
   };

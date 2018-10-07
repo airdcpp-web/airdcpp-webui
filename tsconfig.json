@@ -23,7 +23,8 @@
       ],
     },
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "exclude": [
     "devtools",

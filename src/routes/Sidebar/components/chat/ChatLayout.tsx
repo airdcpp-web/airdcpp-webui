@@ -15,15 +15,14 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-export interface ChatSession {
-  id: API.IdType;
+export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
 }
 
 export interface ChatActions {
-  clear: UI.ActionType;
-  sendMessage: UI.ActionType;
-  fetchMessages: UI.ActionType;
+  clear: UI.ActionType<UI.SessionItemBase>;
+  sendMessage: UI.ActionType<UI.SessionItemBase>;
+  fetchMessages: UI.ActionType<UI.SessionItemBase>;
 }
 
 export interface ChatSessionProps {
@@ -37,7 +36,7 @@ export interface ChatLayoutProps extends ChatSessionProps {
 }
 
 interface State {
-  messages: API.MessageListItem[] | null;
+  messages: UI.MessageListItem[] | null;
 }
 
 class ChatLayout extends React.Component<ChatLayoutProps, State> {
@@ -63,7 +62,7 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
     this.unsubscribe = props.messageStore.listen(this.onMessagesChanged);
   }
 
-  onMessagesChanged = (messages: API.MessageListItem[], id: API.IdType) => {
+  onMessagesChanged = (messages: UI.MessageListItem[], id: API.IdType) => {
     if (id !== this.props.session.id) {
       return;
     }
@@ -71,23 +70,23 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
     this.setState({ messages: messages });
   }
 
-  onSessionActivated = (id: API.IdType) => {
+  onSessionActivated = (session: ChatSession) => {
     const { messageStore, actions } = this.props;
-    if (!messageStore.isSessionInitialized(id)) {
+    if (!messageStore.isSessionInitialized(session.id)) {
       this.setState({ 
         messages: null 
       });
 
-      actions.fetchMessages(id);
+      actions.fetchMessages(session);
     } else {
       this.setState({ 
-        messages: messageStore.getSessionMessages(id) 
+        messages: messageStore.getSessionMessages(session.id) 
       });
     }
   }
 
   componentDidMount() {
-    this.onSessionActivated(this.props.session.id);
+    this.onSessionActivated(this.props.session);
   }
 
   componentWillUnmount() {
@@ -96,7 +95,7 @@ class ChatLayout extends React.Component<ChatLayoutProps, State> {
 
   UNSAFE_componentWillReceiveProps(nextProps: ChatLayoutProps) {
     if (this.props.session.id !== nextProps.session.id) {
-      this.onSessionActivated(nextProps.session.id);
+      this.onSessionActivated(nextProps.session);
     }
   }
 

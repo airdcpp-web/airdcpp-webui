@@ -43,19 +43,19 @@ const toUrgencyMap = (
   );
 };
 
-type SessionList = Array<API.ReadableSessionItem | API.MessageSessionItem>;
-type UrgencyGetter = (session: API.ReadableSessionItem | API.MessageSessionItem) => UI.UrgencyCountMap | null;
+type SessionList = Array<UI.SessionItem>;
+type UrgencyGetter = (session: UI.SessionItem) => UI.UrgencyCountMap | null;
 
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (
-  item: API.MessageSessionItem, 
+  item: UI.MessageSessionItem, 
   urgencyMappings: UI.UrgencyCountMap
 ): UI.UrgencyCountMap | null => {
   return toUrgencyMap(item.message_counts.unread, urgencyMappings);
 };
 
 // Returns urgency mapping for a session with a simple "read" property
-const simpleSessionMapper = (item: API.ReadableSessionItem): UI.UrgencyCountMap | null => {
+const simpleSessionMapper = (item: UI.ReadableSessionItem): UI.UrgencyCountMap | null => {
   if (!item.read) {
     return {
       [UI.UrgencyEnum.HIGH]: 1,

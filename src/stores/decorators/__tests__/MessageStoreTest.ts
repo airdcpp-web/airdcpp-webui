@@ -2,22 +2,25 @@ import { checkUnread } from 'utils/MessageUtils';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-const sessionId = 0;
-const chatMessage0 = {
+
+const SESSION_ID = 0;
+const ChatMessage0 = {
   id: 0,
 };
 
-const statusMessage1 = {
+const StatusMessage1 = {
   id: 1,
 };
 
 const messages = [
   {
-    chat_message: chatMessage0,
+    chat_message: ChatMessage0,
   }, 
   {
-    log_message: statusMessage1,
+    log_message: StatusMessage1,
   }
 ];
 
@@ -32,8 +35,8 @@ const clearMessages = () => {
           status: 0,
         }
       }
-    }, 
-    sessionId
+    } as UI.SessionUpdateProperties,
+    SESSION_ID,
   );
 };
 
@@ -45,18 +48,18 @@ describe('message store', () => {
   });
 
   test('should add individual messages', () => {
-    PrivateChatMessageStore._onChatMessage(chatMessage0, sessionId);
-    PrivateChatMessageStore._onStatusMessage(statusMessage1, sessionId);
+    PrivateChatMessageStore._onChatMessage(ChatMessage0, SESSION_ID);
+    PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
 
-    expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(messages);
+    expect(PrivateChatMessageStore.getSessionMessages(SESSION_ID)).toEqual(messages);
   });
 
   test('should clear messages', () => {
-    PrivateChatMessageStore._onStatusMessage(statusMessage1, sessionId);
+    PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
 
     clearMessages();
 
-    expect(PrivateChatMessageStore.getSessionMessages(sessionId).length).toEqual(0);
+    expect(PrivateChatMessageStore.getSessionMessages(SESSION_ID).length).toEqual(0);
   });
 
   test('should reset unread counts for active sessions', () => {
@@ -75,7 +78,7 @@ describe('message store', () => {
       setRead: jest.fn(),
     };
 
-    const data = checkUnread(sessionData, actions, 0);
+    const data = checkUnread(sessionData, actions, SESSION_ID);
 
     expect(actions.setRead).toBeCalled();
     expect(data).toEqual({
@@ -91,46 +94,46 @@ describe('message store', () => {
   });
 
   test('should handle messages received during fetching', () => {
-    const chatMessage2 = {
+    const ChatMessage2 = {
       id: 2,
-    };
+    } as API.ChatMessage;
 
-    PrivateChatMessageStore._onStatusMessage(statusMessage1, sessionId);
-    PrivateChatMessageStore._onChatMessage(chatMessage2, sessionId);
+    PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
+    PrivateChatMessageStore._onChatMessage(ChatMessage2, SESSION_ID);
 
-    PrivateChatActions.fetchMessages.completed(sessionId, messages);
+    PrivateChatActions.fetchMessages.completed(SESSION_ID, messages);
     jest.runAllTimers();
 
     // All three messages should have been stored
-    expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual([
+    expect(PrivateChatMessageStore.getSessionMessages(SESSION_ID)).toEqual([
       ...messages,
       {
-        chat_message: chatMessage2,
+        chat_message: ChatMessage2,
       }
     ]);
   });
 
   test('should remove duplicates arriving after fetching', () => {
-    PrivateChatActions.fetchMessages.completed(sessionId, messages);
+    PrivateChatActions.fetchMessages.completed(SESSION_ID, messages);
     jest.runAllTimers();
 
-    PrivateChatMessageStore._onStatusMessage(statusMessage1, sessionId);
+    PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
 
-    expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(messages);
+    expect(PrivateChatMessageStore.getSessionMessages(SESSION_ID)).toEqual(messages);
   });
 
   test('should remove session data', () => {
-    PrivateChatActions.fetchMessages.completed(sessionId, messages);
+    PrivateChatActions.fetchMessages.completed(SESSION_ID, messages);
     jest.runAllTimers();
 
-    expect(PrivateChatMessageStore.isSessionInitialized(sessionId));
-    expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(messages);
+    expect(PrivateChatMessageStore.isSessionInitialized(SESSION_ID));
+    expect(PrivateChatMessageStore.getSessionMessages(SESSION_ID)).toEqual(messages);
 
     PrivateChatMessageStore._onSessionRemoved({
-      id: sessionId,
+      id: SESSION_ID,
     });
 
-    expect(!PrivateChatMessageStore.isSessionInitialized(sessionId));
-    expect(PrivateChatMessageStore.getSessionMessages(sessionId)).toEqual(undefined);
+    expect(!PrivateChatMessageStore.isSessionInitialized(SESSION_ID));
+    expect(PrivateChatMessageStore.getSessionMessages(SESSION_ID)).toEqual(undefined);
   });
 });

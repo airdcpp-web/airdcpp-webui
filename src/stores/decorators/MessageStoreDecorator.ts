@@ -3,19 +3,12 @@ import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator'
 
 import * as API from 'types/api';
 import { AccessEnum } from 'types/api';
-//import * as UI from 'types/ui';
+import * as UI from 'types/ui';
 
 
-type MessageType = 'chat_message' | 'log_message';
+type ChatSession = UI.MessageSessionItem;
 
-interface ChatSession {
-  id: API.IdType;
-  message_counts: API.ChatMessageCounts;
-}
-
-type MessageCache = Array<{ 
-  [key in MessageType]: any 
-}>;
+type MessageCache = UI.MessageListItem[];
 
 const MessageStoreDecorator = function (store: any, actions: any, access: AccessEnum) {
   // Message arrays mapped by session IDs 
@@ -34,8 +27,8 @@ const MessageStoreDecorator = function (store: any, actions: any, access: Access
     initializedSession.add(sessionId);
   };
 
-  const onMessageReceived = (sessionId: API.IdType, message: API.Message, type: MessageType) => {
-    messages.set(sessionId, pushMessage({ [type]: message }, messages.get(sessionId)));
+  const onMessageReceived = (sessionId: API.IdType, message: API.Message, type: UI.MessageType) => {
+    messages.set(sessionId, pushMessage({ [type]: message } as UI.MessageListItem, messages.get(sessionId)));
     store.trigger(messages.get(sessionId), sessionId);
   };
 
@@ -47,7 +40,7 @@ const MessageStoreDecorator = function (store: any, actions: any, access: Access
     onMessageReceived(sessionId, data, 'log_message');
   };
 
-  store._onSessionUpdated = (session: ChatSession, sessionId: API.IdType) => {
+  store._onSessionUpdated = (session: UI.SessionUpdateProperties, sessionId: API.IdType) => {
     if (!session.message_counts || !messages.get(sessionId)) {
       return;
     }

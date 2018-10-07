@@ -5,12 +5,14 @@ import React from 'react';
 import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
-import * as API from 'types/api';
+import * as UI from 'types/ui';
 
+
+type SessionType = UI.SessionItemBase;
 
 export interface SessionActions {
-  setRead: (id: API.IdType) => void;
-  sessionChanged: (id: API.IdType | null) => void;
+  setRead: (session: SessionType) => void;
+  sessionChanged: (session: SessionType | null) => void;
 }
 
 interface ActiveSessionDecoratorProps<SessionT> {
@@ -20,7 +22,7 @@ interface ActiveSessionDecoratorProps<SessionT> {
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function <PropsT, SessionT extends { id: API.IdType; }>(
+export default function <PropsT, SessionT extends SessionType>(
   Component: React.ComponentType<PropsT>, 
   useReadDelay: boolean = false
 ) {
@@ -32,28 +34,29 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(
 
     readTimeout: NodeJS.Timer | null;
 
-    setRead = (id: API.IdType) => {
-      this.props.actions.setRead(id);
+    setRead = (session: SessionT) => {
+      this.props.actions.setRead(session);
       this.readTimeout = null;
     }
 
-    setSession = (id: API.IdType | null) => {
+    setSession = (session: SessionT | null) => {
       if (this.readTimeout) {
+        // Set the previously active session as read
         clearTimeout(this.readTimeout);
-        this.setRead(this.props.session.id);
+        this.setRead(this.props.session);
       }
 
-      this.props.actions.sessionChanged(id);
-      if (!id) {
+      this.props.actions.sessionChanged(session);
+      if (!session) {
         return;
       }
 
       const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
-      this.readTimeout = setTimeout(_ => this.setRead(id), timeout);
+      this.readTimeout = setTimeout(_ => this.setRead(session), timeout);
     }
 
     componentDidMount() {
-      this.setSession(this.props.session.id);
+      this.setSession(this.props.session);
     }
 
     componentWillUnmount() {
@@ -62,7 +65,7 @@ export default function <PropsT, SessionT extends { id: API.IdType; }>(
 
     UNSAFE_componentWillReceiveProps(nextProps: ActiveSessionDecoratorProps<SessionT>) {
       if (this.props.session.id !== nextProps.session.id) {
-        this.setSession(nextProps.session.id);
+        this.setSession(nextProps.session);
       }
     }
 

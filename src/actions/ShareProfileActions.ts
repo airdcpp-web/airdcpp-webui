@@ -13,7 +13,6 @@ import NotificationActions from 'actions/NotificationActions';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -28,14 +27,14 @@ const ShareProfileActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'saved' ], 
     displayName: 'Add profile',
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.CREATE,
     filter: noData,
   } },
   { 'browse': { 
     asyncResult: true, 
     displayName: 'Browse files', 
-    access: AccessConstants.FILELISTS_VIEW, 
+    access: API.AccessEnum.FILELISTS_VIEW, 
     icon: IconConstants.FILELIST,
   } },
   'divider',
@@ -43,13 +42,13 @@ const ShareProfileActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'saved' ], 
     displayName: 'Rename profile',
-    access: AccessConstants.SETTINGS_EDIT,  
+    access: API.AccessEnum.SETTINGS_EDIT,  
     icon: IconConstants.EDIT,
   } },
   { 'default': { 
     asyncResult: true, 
     displayName: 'Set as default', 
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.DEFAULT,
     filter: notDefault,
   } },
@@ -57,7 +56,7 @@ const ShareProfileActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'confirmed' ], 
     displayName: 'Remove profile', 
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.REMOVE,
     filter: notDefault,
   } },

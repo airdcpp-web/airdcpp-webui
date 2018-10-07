@@ -8,7 +8,6 @@ import SocketService from 'services/SocketService';
 import { sleep } from 'utils/Promise';
 
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 import SearchConstants from 'constants/SearchConstants';
 
 import ViewFileActions from 'actions/ViewFileActions';
@@ -18,6 +17,7 @@ import { HintedUser } from 'types/api';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { toErrorResponse } from 'utils/TypeConvert';
@@ -71,14 +71,14 @@ export const DownloadableItemActions = Reflux.createActions([
   { 'download': { 
     asyncResult: true,	
     displayName: 'Download', 
-    access: AccessConstants.DOWNLOAD, 
+    access: API.AccessEnum.DOWNLOAD, 
     icon: IconConstants.DOWNLOAD,
     filter: notSelf,
   } },
   { 'downloadTo': { 
     asyncResult: true,	
     displayName: 'Download to...',
-    access: AccessConstants.DOWNLOAD, 
+    access: API.AccessEnum.DOWNLOAD, 
     icon: IconConstants.DOWNLOAD_TO,
     filter: notSelf,
   } }, 
@@ -86,42 +86,42 @@ export const DownloadableItemActions = Reflux.createActions([
   { 'viewText': {
     asyncResult: true,	
     displayName: 'View as text',
-    access: AccessConstants.VIEW_FILE_EDIT, 
+    access: API.AccessEnum.VIEW_FILE_EDIT, 
     icon: IconConstants.OPEN, 
     filter: viewText,
   } },
   { 'viewImage': {
     asyncResult: true,	
     displayName: 'View image',
-    access: AccessConstants.VIEW_FILE_EDIT, 
+    access: API.AccessEnum.VIEW_FILE_EDIT, 
     icon: IconConstants.OPEN, 
     filter: viewImage,
   } },
   { 'findNfo': {
     asyncResult: true,	
     displayName: 'Find NFO',
-    access: AccessConstants.VIEW_FILE_EDIT,
+    access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.FIND,
     filter: findNfo,
   } },
   { 'viewVideo': {
     asyncResult: true,	
     displayName: 'Play video',
-    access: AccessConstants.VIEW_FILE_EDIT,
+    access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.OPEN,
     filter: viewVideo,
   } },
   { 'viewAudio': {
     asyncResult: true,	
     displayName: 'Play audio',
-    access: AccessConstants.VIEW_FILE_EDIT,
+    access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.OPEN,
     filter: viewAudio,
   } },
   { 'search': {
     asyncResult: true,	
     displayName: 'Search',
-    access: AccessConstants.SEARCH,
+    access: API.AccessEnum.SEARCH,
     icon: IconConstants.SEARCH,
     filter: isSearchable, // Example: root directory in filelists can't be searched for
   } },

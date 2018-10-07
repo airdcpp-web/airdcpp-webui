@@ -1,5 +1,4 @@
-const FieldTypes = require('constants/SettingConstants').FieldTypes;
-
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
@@ -12,13 +11,13 @@ export const RSS = {
     {
       key: 'feed_url',
       title: 'Feed URL',
-      type: FieldTypes.STRING,
+      type: API.SettingTypeEnum.STRING,
       help: 'RSS and Atom feeds are supported',
     },
     {
       key: 'feed_cache_minutes',
       title: 'Minimum refetch interval (minutes)',
-      type: FieldTypes.NUMBER,
+      type: API.SettingTypeEnum.NUMBER,
       default_value: 60,
     },
   ],

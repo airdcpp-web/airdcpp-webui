@@ -9,7 +9,6 @@ import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -78,4 +77,4 @@ ViewFileActions.setRead.listen(function (this: UI.AsyncActionType<API.ViewFile>,
     .catch(that.failed);
 });
 
-export default SessionActionDecorator(ViewFileActions, ViewFileConstants.SESSIONS_URL, AccessConstants.VIEW_FILE_EDIT);
+export default SessionActionDecorator(ViewFileActions, ViewFileConstants.SESSIONS_URL, API.AccessEnum.VIEW_FILE_EDIT);

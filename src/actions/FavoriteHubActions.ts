@@ -8,7 +8,6 @@ import NotificationActions from 'actions/NotificationActions';
 
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import History from 'utils/History';
 
@@ -23,20 +22,20 @@ const noData = (item: any) => !item;
 export const FavoriteHubActions = Reflux.createActions([
   { 'create': {
     displayName: 'Add new',
-    access: AccessConstants.FAVORITE_HUBS_EDIT,
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.CREATE,
     filter: noData,
   } },
   { 'edit': { 
     displayName: 'Edit',
-    access: AccessConstants.FAVORITE_HUBS_EDIT,
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.EDIT,
   } },
   { 'remove': {
     asyncResult: true,
     children: [ 'confirmed' ],
     displayName: 'Remove',
-    access: AccessConstants.FAVORITE_HUBS_EDIT,
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.REMOVE,
   } },
   { 'update': { 

@@ -7,7 +7,6 @@ import NotificationActions from 'actions/NotificationActions';
 
 import ShareConstants from 'constants/ShareConstants';
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
@@ -23,13 +22,13 @@ const ShareActions = Reflux.createActions([
   { 'refresh': { 
     asyncResult: true,
     displayName: 'Refresh all',
-    access: AccessConstants.SETTINGS_EDIT,
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REFRESH,
   } },
   { 'refreshPaths': { 
     asyncResult: true,
     displayName: 'Refresh directory',
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.REFRESH,
   } }, 
   { 'refreshVirtual': { 
@@ -39,14 +38,14 @@ const ShareActions = Reflux.createActions([
     asyncResult: true,
     children: [ 'saved' ], 
     displayName: 'Add path',
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.CREATE,
   } }, 
   { 'removeExclude': { 
     asyncResult: true,
     children: [ 'confirmed' ], 
     displayName: 'Remove path',
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.REMOVE,
   } }, 
 ]);

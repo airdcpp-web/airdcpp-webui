@@ -8,7 +8,6 @@ import QueueFileActions from 'actions/QueueFileActions';
 
 import { default as TransferConstants, StatusEnum } from 'constants/TransferConstants';
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -25,28 +24,28 @@ const TransferActions = Reflux.createActions([
   { 'force': { 
     asyncResult: true,
     displayName: 'Force connect',
-    access: AccessConstants.TRANSFERS,
+    access: API.AccessEnum.TRANSFERS,
     icon: IconConstants.REFRESH,
     filter: isDownload,
   } },
   { 'disconnect': { 
     asyncResult: true,
     displayName: 'Disconnect',
-    access: AccessConstants.TRANSFERS, 
+    access: API.AccessEnum.TRANSFERS, 
     icon: IconConstants.DISCONNECT,
   } },
   'divider',
   { 'removeFile': { 
     asyncResult: true,
     displayName: 'Remove file from queue',
-    access: AccessConstants.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT, 
     icon: IconConstants.REMOVE,
     filter: removeFile,
   } },
   { 'removeSource': { 
     asyncResult: true,
     displayName: 'Remove user from queue',
-    access: AccessConstants.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT, 
     icon: IconConstants.REMOVE,
     filter: removeSource,
   } },

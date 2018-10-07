@@ -9,7 +9,6 @@ import FilelistSessionStore from 'stores/FilelistSessionStore';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 import NotificationActions from 'actions/NotificationActions';
 
 import UserConstants from 'constants/UserConstants';
@@ -48,14 +47,14 @@ const UserActions = Reflux.createActions([
   { 'message': { 
     asyncResult: true, 
     displayName: 'Send message', 
-    access: AccessConstants.PRIVATE_CHAT_EDIT, 
+    access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     filter: checkFlags,
     icon: IconConstants.MESSAGE,
   } },
   { 'browse': { 
     asyncResult: true,	
     displayName: 'Browse share', 
-    access: AccessConstants.FILELISTS_EDIT, 
+    access: API.AccessEnum.FILELISTS_EDIT, 
     filter: checkFlags,
     icon: IconConstants.FILELIST,
   } },
@@ -63,14 +62,14 @@ const UserActions = Reflux.createActions([
   { 'ignore': { 
     asyncResult: true,	
     displayName: 'Ignore messages', 
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     filter: checkIgnore,
     icon: 'red ban',
   } },
   { 'unignore': { 
     asyncResult: true,	
     displayName: 'Unignore messages', 
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     filter: checkUnignore,
     icon: 'ban',
   } },

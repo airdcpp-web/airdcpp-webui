@@ -10,7 +10,6 @@ import SocketService from 'services/SocketService';
 
 import NotificationActions from 'actions/NotificationActions';
 
-import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -32,14 +31,14 @@ const FilelistItemActions = Reflux.createActions([
   { 'reloadDirectory': { 
     asyncResult: true,
     displayName: 'Reload',
-    access: AccessConstants.FILELISTS_VIEW,
+    access: API.AccessEnum.FILELISTS_VIEW,
     icon: IconConstants.RELOAD,
     filter: isPartialList,
   } },
   { 'refreshShare': { 
     asyncResult: true,
     displayName: 'Refresh in share',
-    access: AccessConstants.SETTINGS_EDIT,
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REFRESH,
     filter: isMe,
   } },

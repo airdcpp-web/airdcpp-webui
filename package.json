@@ -32,6 +32,9 @@
     "test": "jest",
     "prepublishOnly": "npm run build"
   },
+  "pre-commit": [
+    "test"
+  ],
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
@@ -47,7 +50,7 @@
     "@types/fixed-data-table-2": "^0.8.2",
     "@types/invariant": "^2.2.29",
     "@types/jest": "^23.3.3",
-    "@types/jquery": "^3.3.11",
+    "@types/jquery": "^3.3.12",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.11.4",
     "@types/prop-types": "^15.5.6",
@@ -62,7 +65,7 @@
     "@types/react-transition-group": "^2.0.14",
     "@types/semantic-ui": "^2.2.6",
     "@types/webpack": "^4.4.14",
-    "airdcpp-apisocket": "^1.2.0-beta",
+    "airdcpp-apisocket": "^1.2.0-beta.3",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
@@ -90,6 +93,7 @@
     "minimist": "^1.2.0",
     "moment": "^2.22.2",
     "pondjs": "^0.8.9",
+    "pre-commit": "^1.2.2",
     "promise": "^8.0.2",
     "prop-types": "^15.6.2",
     "re-resizable": "^4.9.0",
@@ -120,7 +124,7 @@
     "style-loader": "^0.23.0",
     "tcomb-form": "^0.9.21",
     "tcomb-form-templates-semantic": "^0.1.1",
-    "ts-jest": "^23.10.3",
+    "ts-jest": "^23.10.4",
     "ts-loader": "^5.2.1",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",

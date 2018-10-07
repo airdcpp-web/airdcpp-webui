@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import QueueConstants from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
-import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 import ConfirmDialog from 'components/semantic/ConfirmDialog';
@@ -25,13 +24,13 @@ const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
 const QueueFileActions = Reflux.createActions([
   { 'search': { 
     asyncResult: true,
-    access: AccessConstants.SEARCH, 
+    access: API.AccessEnum.SEARCH, 
     displayName: 'Search (foreground)', 
     icon: IconConstants.SEARCH,
   } },
   { 'searchFileAlternates': { 
     asyncResult: true,
-    access: AccessConstants.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT, 
     displayName: 'Search for alternates', 
     icon: IconConstants.SEARCH_ALTERNATES,
     filter: itemNotFinished,
@@ -43,7 +42,7 @@ const QueueFileActions = Reflux.createActions([
     asyncResult: true, 
     children: [ 'confirmed' ], 
     displayName: 'Remove',
-    access: AccessConstants.QUEUE_EDIT,
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
   } },
 ] as UI.ActionConfigList<API.QueueFile>);

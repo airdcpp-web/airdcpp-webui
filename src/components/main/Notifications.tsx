@@ -173,7 +173,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
 
   onPrivateMessage(message: API.ChatMessage) {
     const cid = message.reply_to!.cid;
-    if (message.is_read || (PrivateChatSessionStore.getActiveSession() === cid && document.hasFocus())) {
+    if (message.is_read || (PrivateChatSessionStore.getActiveSessionId() === cid && document.hasFocus())) {
       return;
     }
 

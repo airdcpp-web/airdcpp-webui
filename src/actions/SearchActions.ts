@@ -7,13 +7,13 @@ import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
-import AccessConstants from 'constants/AccessConstants';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 import NotificationActions from 'actions/NotificationActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { Location } from 'history';
 
@@ -26,7 +26,7 @@ export const SearchActions = Reflux.createActions([
   { 'browseContent': { 
     asyncResult: true,	
     displayName: 'Browse content', 
-    access: AccessConstants.FILELISTS_EDIT,
+    access: API.AccessEnum.FILELISTS_EDIT,
     icon: IconConstants.FILELIST
   } },
   { 'download': { asyncResult: true } },

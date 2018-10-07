@@ -1,4 +1,3 @@
-
 export type IdType = number | string;
 
 // FILES
@@ -84,14 +83,6 @@ export interface UnreadStatusMessageCounts {
   error: number;
 }
 
-export interface ReadableSessionItem {
-  read: boolean;
-}
-
-export interface MessageSessionItem {
-  message_counts: ChatMessageCounts | StatusMessageCounts;
-}
-
 export const enum SeverityEnum {
   NOTIFY = 'notify',
   INFO = 'info',
@@ -99,28 +90,25 @@ export const enum SeverityEnum {
   ERROR = 'error',
 }
 
-export interface Message {
+export interface MessageBase {
   id: number;
   time: number;
   text: string;
   is_read: boolean;
 }
 
-export interface ChatMessage extends Message {
+export type Message = ChatMessage | StatusMessage;
+
+export interface ChatMessage extends MessageBase {
   third_person: boolean;
   from: HubUser;
   reply_to?: HubUser;
   to?: HubUser;
 }
 
-export interface StatusMessage extends Message {
+export interface StatusMessage extends MessageBase {
   severity: SeverityEnum;
   is_read: boolean;
-}
-
-export interface MessageListItem {
-  chat_message?: ChatMessage;
-  log_message?: StatusMessage;
 }
 
 

@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import QueueConstants from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
-import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 
 import NotificationActions from 'actions/NotificationActions';
@@ -16,7 +15,7 @@ import * as UI from 'types/ui';
 export const QueueActions = Reflux.createActions([
   { 'removeCompleted': { 
     asyncResult: true,
-    access: AccessConstants.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT, 
     displayName: 'Remove completed bundles', 
     icon: IconConstants.REMOVE,
   } },
@@ -24,13 +23,13 @@ export const QueueActions = Reflux.createActions([
   { 'pause': { 
     asyncResult: true, 
     displayName: 'Pause all bundles',
-    access: AccessConstants.QUEUE_EDIT,
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.PAUSE,
   } },
   { 'resume': { 
     asyncResult: true, 
     displayName: 'Resume all bundles',
-    access: AccessConstants.QUEUE_EDIT,
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.PLAY,
   } },
   { 'removeSource': { 

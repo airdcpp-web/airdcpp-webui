@@ -11,23 +11,24 @@ import { formatCalendarTime } from 'utils/ValueFormat';
 import './messages.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
-const getMessageDay = (listItem: API.MessageListItem) => {
+const getMessageDay = (listItem: UI.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
   return message && new Date(message.time * 1000).getDate();
 };
 
-const isToday = (message: API.MessageListItem) => {
+const isToday = (message: UI.MessageListItem) => {
   return getMessageDay(message) === new Date().getDate();
 };
 
-const isHistoryItem = (listItem: API.MessageListItem) => {
+const isHistoryItem = (listItem: UI.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
   return message && message.time === 0; 
 };
 
-const showDivider = (index: number, messageList: API.MessageListItem[]) => {
+const showDivider = (index: number, messageList: UI.MessageListItem[]) => {
   const currentMessage = messageList[index];
 
   // First message? History log won't count
@@ -46,9 +47,9 @@ const showDivider = (index: number, messageList: API.MessageListItem[]) => {
 
 const getMessageListItem = (
   reduced: React.ReactNode[], 
-  message: API.MessageListItem, 
+  message: UI.MessageListItem, 
   index: number, 
-  messageList: API.MessageListItem[]
+  messageList: UI.MessageListItem[]
 ) => {
   // Push a divider when the date was changed
   if (showDivider(index, messageList)) {
@@ -71,7 +72,7 @@ const getMessageListItem = (
     reduced.push(
       <ChatMessage
         key={ message.chat_message.id }
-        message={ message.chat_message }
+        message={ message.chat_message as API.ChatMessage }
         dropdownContext=".chat.session"
       />
     );
@@ -79,7 +80,7 @@ const getMessageListItem = (
     reduced.push(
       <StatusMessage
         key={ message.log_message.id }
-        message={ message.log_message }
+        message={ message.log_message as API.StatusMessage }
       />
     );
   }
@@ -89,7 +90,7 @@ const getMessageListItem = (
 
 
 interface MessageViewProps {
-  messages: API.MessageListItem[] | null;
+  messages: UI.MessageListItem[] | null;
   className?: string;
 }
 

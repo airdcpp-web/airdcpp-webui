@@ -31,8 +31,6 @@ export const enum LocalSettings {
   BACKGROUND_IMAGE_URL = 'background_image_url',
 }
 
-export { SettingTypeEnum as FieldTypes } from 'types/api';
-
 export default {
   MODULE_URL: MODULE_URL,
 

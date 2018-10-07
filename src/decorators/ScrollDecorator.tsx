@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import * as API from 'types/api';
+//import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
-export interface SessionBase {
-  id: API.IdType;
-}
+type SessionType = UI.SessionItemBase;
 
-export interface ScrollDecoratorProps<SessionT> {
+export interface ScrollDecoratorProps<SessionT extends SessionType> {
   session?: SessionT;
 }
 
@@ -16,7 +15,7 @@ export interface ScrollDecoratorChildProps {
   scrollableRef: (component: any) => void;
 }
 
-export default function <PropsT, SessionT extends SessionBase = SessionBase>(
+export default function <PropsT, SessionT extends SessionType = SessionType>(
   Component: React.ComponentType<PropsT & ScrollDecoratorChildProps>
 ) {
   let shouldScrollBottom = false;

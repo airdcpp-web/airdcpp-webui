@@ -11,7 +11,6 @@ import ChatActionDecorator from './decorators/ChatActionDecorator';
 import SessionActionDecorator from './decorators/SessionActionDecorator';
 
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -24,25 +23,25 @@ const showFav = (hub: API.Hub) => !hub.favorite_hub;
 const HubActions = Reflux.createActions([
   { 'createSession': { 
     asyncResult: true,
-    access: AccessConstants.HUBS_EDIT, 
+    access: API.AccessEnum.HUBS_EDIT, 
   } },
   { 'redirect': { 
     asyncResult: true,
-    access: AccessConstants.HUBS_EDIT,
+    access: API.AccessEnum.HUBS_EDIT,
   } },
   { 'password': { 
     asyncResult: true,
-    access: AccessConstants.HUBS_EDIT,
+    access: API.AccessEnum.HUBS_EDIT,
   } },
   { 'reconnect': { 
     asyncResult: true,
     displayName: 'Reconnect',
-    access: AccessConstants.HUBS_EDIT, 
+    access: API.AccessEnum.HUBS_EDIT, 
     icon: IconConstants.REFRESH,
   } },
   { 'favorite': { 
     asyncResult: true,
-    access: AccessConstants.HUBS_EDIT, 
+    access: API.AccessEnum.HUBS_EDIT, 
     displayName: 'Add to favorites', 
     icon: IconConstants.FAVORITE,
     filter: showFav,
@@ -132,8 +131,8 @@ export default SessionActionDecorator(
   ChatActionDecorator(
     HubActions, 
     HubConstants.SESSIONS_URL, 
-    AccessConstants.HUBS_EDIT
+    API.AccessEnum.HUBS_EDIT
   ), 
   HubConstants.SESSIONS_URL, 
-  AccessConstants.HUBS_EDIT
+  API.AccessEnum.HUBS_EDIT
 );

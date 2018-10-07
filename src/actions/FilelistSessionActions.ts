@@ -11,7 +11,6 @@ import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
-import AccessConstants from 'constants/AccessConstants';
 import { getFilePath } from 'utils/FileUtils';
 
 import * as API from 'types/api';
@@ -167,5 +166,5 @@ FilelistSessionActions.setRead.listen(function (
 export default SessionActionDecorator(
   FilelistSessionActions, 
   FilelistConstants.SESSIONS_URL, 
-  AccessConstants.FILELISTS_EDIT
+  API.AccessEnum.FILELISTS_EDIT
 );

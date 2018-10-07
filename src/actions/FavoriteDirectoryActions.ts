@@ -8,7 +8,6 @@ import History from 'utils/History';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -20,20 +19,20 @@ const noData = (item: any) => !item;
 const FavoriteDirectoryActions = Reflux.createActions([
   { 'create': { 
     displayName: 'Add directory',
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.CREATE,
     filter: noData,
   } },
   { 'edit': { 
     displayName: 'Edit directory',
-    access: AccessConstants.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.EDIT,
   } },
   { 'remove': { 
     asyncResult: true, 
     children: [ 'confirmed' ], 
     displayName: 'Remove directory',
-    access: AccessConstants.SETTINGS_EDIT,
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
   } },
 ] as UI.ActionConfigList<API.FavoriteDirectoryEntry>);
