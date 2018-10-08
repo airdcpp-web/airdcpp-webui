@@ -19,6 +19,14 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
+const parseSettings = (widgetId: string, widgetInfo: UI.Widget) => {
+  const settings = WidgetStore.getWidgetSettings(widgetId, widgetInfo);
+  return {
+    name: settings.name,
+    ...settings.widget,
+  } as UI.FormValueMap;
+};
+
 interface WidgetDialogProps {
 
 }
@@ -62,26 +70,17 @@ class WidgetDialog extends React.Component<Props> {
     return Promise.resolve();
   }
 
-  parseSettings = () => {
-    const { widgetId } = this.props.match.params;
-    if (!!widgetId) {
-      const widgetInfo: UI.Widget = WidgetStore.getWidgetInfoById(widgetId);
-      const settings = WidgetStore.getWidgetSettings(widgetId, widgetInfo);
-      return {
-        name: settings.name,
-        ...settings.widget,
-      } as UI.FormValueMap;
-    }
-
-    return undefined;
-  }
-
   render() {
     const { typeId } = this.props.match.params;
-    const settings = this.parseSettings();
-    const { formSettings, name, icon } = WidgetStore.getWidgetInfoById(typeId);
+    const widgetInfo = WidgetStore.getWidgetInfoById(typeId);
+    if (!widgetInfo) {
+      return null;
+    }
 
-    const Entry = [
+    const { formSettings, name, icon } = widgetInfo;
+    const settings = parseSettings(typeId, widgetInfo);
+
+    const Entry: UI.FormFieldDefinition[] = [
       {
         key: 'name',
         type: API.SettingTypeEnum.STRING,

@@ -64,8 +64,8 @@ export const SettingDefinitions: UI.FormFieldDefinition[] = [
 
 // Settings are saved in local storage only after the default value has been modified
 // Default value from the respective definition is returned otherwise
-const LocalSettingStore = Reflux.createStore({
-  //settings: UI.FormValueMap,
+const Store = {
+  settings: {} as UI.FormValueMap,
 
   init() {
     this.settings = loadLocalProperty('local_settings', {});
@@ -88,7 +88,7 @@ const LocalSettingStore = Reflux.createStore({
       return this.settings[key];
     }
 
-    return this.getDefinition(key).default_value;
+    return this.getDefinition(key)!.default_value;
   },
 
   getValues() {
@@ -105,8 +105,10 @@ const LocalSettingStore = Reflux.createStore({
   setValues(items: UI.FormValueMap) {
     this.settings = Object.assign({}, this.settings, items);
     saveLocalProperty('local_settings', this.settings);
-    this.trigger(this.getValues());
+    (this as any).trigger(this.getValues());
   },
-});
+};
+
+const LocalSettingStore = Reflux.createStore(Store);
 
 export default LocalSettingStore;

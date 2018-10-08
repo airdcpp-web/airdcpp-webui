@@ -9,18 +9,11 @@ import MessageView from 'components/messages/MessageView';
 
 import '../style.css';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const mapViewMessage = (message: API.StatusMessage): UI.MessageListItem => {
-  return {
-    log_message: message,
-  };
-};
-
 interface EventMessagesProps {
-  messages: API.StatusMessage[];
+  messages: UI.MessageListItem[];
 }
 
 const EventMessageView: React.SFC<EventMessagesProps> = ({ messages }) => {
@@ -39,7 +32,7 @@ const EventMessageView: React.SFC<EventMessagesProps> = ({ messages }) => {
   return (
     <MessageView 
       className="events"
-      messages={ messages.map(mapViewMessage) }
+      messages={ messages }
     />
   );
 };

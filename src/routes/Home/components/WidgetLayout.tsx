@@ -12,7 +12,7 @@ import WidgetDialog from 'routes/Home/components/WidgetDialog';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import WidgetStore from 'stores/WidgetStore';
 
-import * as UI from 'types/ui';
+//import * as UI from 'types/ui';
 
 
 import 'react-grid-layout/css/styles.css';
@@ -35,13 +35,13 @@ const WidgetLayout = createReactClass({
 
   // Convert a layout entry to a component
   mapWidget(layoutItem: Layout): React.ReactNode {
-    const widgetInfo: UI.Widget = WidgetStore.getWidgetInfoById(layoutItem.i);
+    const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i!);
     invariant(widgetInfo, 'Widget info missing');
     if (!widgetInfo) {
       return null;
     }
 
-    const settings = WidgetStore.getWidgetSettings(layoutItem.i, widgetInfo);
+    const settings = WidgetStore.getWidgetSettings(layoutItem.i!, widgetInfo);
     return (
       <Widget
         key={ layoutItem.i }

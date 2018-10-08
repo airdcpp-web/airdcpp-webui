@@ -6,11 +6,11 @@ import { AccessEnum } from 'types/api';
 import * as UI from 'types/ui';
 
 
-type ChatSession = UI.MessageSessionItem;
+type ChatSession = UI.SessionItemBase;
 
 type MessageCache = UI.MessageListItem[];
 
-const MessageStoreDecorator = function (store: any, actions: any, access: AccessEnum) {
+const MessageStoreDecorator = function (store: any, actions: UI.SessionActions<ChatSession>, access: AccessEnum) {
   // Message arrays mapped by session IDs 
   let messages = new Map();
 
@@ -32,51 +32,53 @@ const MessageStoreDecorator = function (store: any, actions: any, access: Access
     store.trigger(messages.get(sessionId), sessionId);
   };
 
-  store._onChatMessage = (data: API.Message, sessionId: API.IdType) => {
-    onMessageReceived(sessionId, data, 'chat_message');
+  const Decorator = {
+    _onChatMessage: (data: API.Message, sessionId: API.IdType) => {
+      onMessageReceived(sessionId, data, 'chat_message');
+    },
+
+    _onStatusMessage: (data: API.Message, sessionId: API.IdType) => {
+      onMessageReceived(sessionId, data, 'log_message');
+    },
+
+    _onSessionUpdated: (session: Partial<UI.MessageCounts>, sessionId: API.IdType) => {
+      if (!session.message_counts || !messages.get(sessionId)) {
+        return;
+      }
+
+      // Message limit exceed or messages were cleared?
+      const splicedMessages = checkSplice(messages.get(sessionId), session.message_counts.total);
+
+      // Don't update the messages if nothing has changed
+      // Session is updated when it's marked as read, which may happen simultaneously with the initial fetch. 
+      // Triggering an update would cause an incomplete message log being flashed to the user
+      if (splicedMessages !== messages.get(sessionId)) {
+        messages.set(sessionId, splicedMessages);
+        store.trigger(splicedMessages, sessionId);
+      }
+    },
+
+    _onSessionRemoved: (session: ChatSession) => {
+      messages.delete(session.id);
+      initializedSession.delete(session.id);
+    },
+
+    onSocketDisconnected: () => {
+      messages.clear();
+      initializedSession.clear();
+    },
+
+    hasMessages: () => messages.size > 0,
+    hasInitializedSessions: () => initializedSession.size > 0,
+  
+    getSessionMessages: (sessionId: API.IdType) => messages.get(sessionId),
+    isSessionInitialized: (sessionId: API.IdType) => initializedSession.has(sessionId),
   };
-
-  store._onStatusMessage = (data: API.Message, sessionId: API.IdType) => {
-    onMessageReceived(sessionId, data, 'log_message');
-  };
-
-  store._onSessionUpdated = (session: UI.SessionUpdateProperties, sessionId: API.IdType) => {
-    if (!session.message_counts || !messages.get(sessionId)) {
-      return;
-    }
-
-    // Message limit exceed or messages were cleared?
-    const splicedMessages = checkSplice(messages.get(sessionId), session.message_counts.total);
-
-    // Don't update the messages if nothing has changed
-    // Session is updated when it's marked as read, which may happen simultaneously with the initial fetch. 
-    // Triggering an update would cause an incomplete message log being flashed to the user
-    if (splicedMessages !== messages.get(sessionId)) {
-      messages.set(sessionId, splicedMessages);
-      store.trigger(splicedMessages, sessionId);
-    }
-  };
-
-  store._onSessionRemoved = (session: ChatSession) => {
-    messages.delete(session.id);
-    initializedSession.delete(session.id);
-  };
-
-  store.onSocketDisconnected = () => {
-    messages.clear();
-    initializedSession.clear();
-  };
-
-  store.hasMessages = () => messages.size > 0;
-  store.hasInitializedSessions = () => initializedSession.size > 0;
-
-
-  store.getSessionMessages = (sessionId: API.IdType) => messages.get(sessionId);
-  store.isSessionInitialized = (sessionId: API.IdType) => initializedSession.has(sessionId);
 
   store.listenTo(actions.fetchMessages, onFetchMessages);
-  store.listenTo(actions.fetchMessages.completed, onFetchMessagesCompleted);
-  return SocketSubscriptionDecorator(store, access);
+  store.listenTo((actions.fetchMessages as any).completed, onFetchMessagesCompleted);
+
+  return SocketSubscriptionDecorator(Object.assign(store, Decorator), access);
 };
 
 export default MessageStoreDecorator;

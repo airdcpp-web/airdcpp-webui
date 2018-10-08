@@ -29,8 +29,8 @@ const EngineStatusMessage: React.SFC<EngineStatusMessageProps & EngineStatusMess
       description={
         <span>
           The default extension engine <b>{ ExtensionConstants.DEFAULT_ENGINE }</b> is not installed on your system. 
-          Please visit <ExternalLink url={ LinkConstants.DEFAULT_ENGINE_URL }>engine's home page</ExternalLink> 
-          for installation instructions.
+          Please visit <ExternalLink url={ LinkConstants.DEFAULT_ENGINE_URL }>engine's home page</ExternalLink> for 
+          installation instructions.
         </span>
       }
       icon="yellow warning"

@@ -1,4 +1,4 @@
-import { checkUnread } from 'utils/MessageUtils';
+import { checkUnreadSessionInfo } from 'utils/MessageUtils';
 import PrivateChatActions from 'actions/PrivateChatActions';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
@@ -35,7 +35,7 @@ const clearMessages = () => {
           status: 0,
         }
       }
-    } as UI.SessionUpdateProperties,
+    } as UI.UnreadInfo,
     SESSION_ID,
   );
 };
@@ -74,13 +74,11 @@ describe('message store', () => {
       },
     };
 
-    const actions = {
-      setRead: jest.fn(),
-    };
+    const setRead = jest.fn();
 
-    const data = checkUnread(sessionData, actions, SESSION_ID);
+    const data = checkUnreadSessionInfo(sessionData, setRead);
 
-    expect(actions.setRead).toBeCalled();
+    expect(setRead).toBeCalled();
     expect(data).toEqual({
       message_counts: {
         total: 5,

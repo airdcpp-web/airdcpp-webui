@@ -26,12 +26,12 @@ const NewUserIntro = () => {
               Add a few directories that are shared to other users from the <Link to="/share">Share</Link> page.
             </li>
             <li>
-              You might want to go through at least each main page of 
-              <Link to="/settings">the client settings</Link> 
-              before you start.&nbsp;
+              You might want to go through at least each main page 
+              of <Link to="/settings">the client settings</Link> before you start.
+              &nbsp;
               <strong>
-                It's important that you 
-                <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
+                It's important that 
+                you <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
                 because the client won't be able to utilize your bandwidth efficiently otherwise.
               </strong>
             </li>
@@ -40,14 +40,14 @@ const NewUserIntro = () => {
             </li>
           </ul>
           <p>
-            Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> 
-            for more information about the client and its features.
+            Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information 
+            about the client and its features.
           </p>
           <TextDecorator
             text={ 
               <p>
-                If you have questions, you may post them on the 
-                <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>GitHub tracker</ExternalLink> or 
+                If you have questions, you may post them on 
+                the <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>GitHub tracker</ExternalLink> or 
                 join the dev/support hub: <span>{ LinkConstants.DEV_HUB_URL }</span>
               </p>
             }

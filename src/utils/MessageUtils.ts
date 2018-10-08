@@ -5,7 +5,7 @@ import * as UI from 'types/ui';
 
 
 // Remove the oldest messages to match the maximum cache count
-const checkSplice = (messages: UI.MessageListItem[], maxCacheMessageCount: number) => {
+const checkSplice = (messages: UI.MessageListItem[] | undefined, maxCacheMessageCount: number) => {
   if (messages) {
     const toRemove = messages.length - maxCacheMessageCount;
     if (toRemove > 0) {
@@ -31,62 +31,72 @@ const getListMessageTime = (listItem: UI.MessageListItem) => {
   return !!message && message.time;
 };
 
-interface MessageSessionActions {
-  setRead: (session: UI.SessionItemBase) => void;
-}
+const checkUnreadCacheInfo = (
+  counts: API.ChatMessageCounts | API.StatusMessageCounts, 
+  setRead: () => void
+): API.ChatMessageCounts | API.StatusMessageCounts => {
+  // Any unread messages?
+  if (!Object.keys(counts.unread).every(key => counts.unread[key] === 0)) {
+    // Reset unread counts
+    setRead();
+
+    // Don't flash unread counts in the UI
+    const unreadCounts = Object.keys(counts.unread).reduce(
+      (reduced, messageType) => {
+        reduced[messageType] = 0;
+        return reduced;
+      }, 
+      {} as API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts
+    );
+    
+    return {
+      ...counts,
+      unread: {
+        ...unreadCounts
+      },
+    } as API.ChatMessageCounts | API.StatusMessageCounts;
+  }
+
+  return counts;
+};
 
 // Update the data with unread info that is marked as read
 // Marks the session as read also in the backend
-const checkUnread = (
-  session: UI.SessionUpdateProperties, 
-  actions: MessageSessionActions,
-  sessionId: API.IdType
-): UI.SessionUpdateProperties => {
-  if (!session.message_counts) {
-    // Non-chat session
+const checkUnreadSessionInfo = (
+  unreadInfoItem: UI.UnreadInfo, 
+  setRead: () => void
+): UI.UnreadInfo => {
+  if (!unreadInfoItem.message_counts && unreadInfoItem.hasOwnProperty('read')) {
+    // Non-message item
 
-    if (session.read === false) {
-      actions.setRead({ id: sessionId });
+    if (unreadInfoItem.read === false) {
+      setRead();
       return {
-        ...session,
+        ...unreadInfoItem,
         read: true,
       };
     }
-  } else if (!!session.message_counts) {
-    // Chat session
-    const counts = session.message_counts;
-
-    // Any unread messages?
-    if (!Object.keys(counts.unread).every(key => counts.unread[key] === 0)) {
-      // Reset unread counts
-      actions.setRead({ id: sessionId });
-
-      // Don't flash unread counts in the UI
-      const unreadCounts = Object.keys(counts.unread).reduce(
-        (reduced, messageType) => {
-          reduced[messageType] = 0;
-          return reduced;
-        }, 
-        {} as API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts
-      );
-
-      return {
-        ...session,
-        message_counts: {
-          ...counts,
-          unread: unreadCounts,
-        }
-      } as UI.SessionUpdateProperties;
-    }
+  } else if (!!unreadInfoItem.message_counts) {
+    // Message cache
+    const newCacheInfo = checkUnreadCacheInfo(unreadInfoItem.message_counts, setRead);
+    return {
+      ...unreadInfoItem,
+      message_counts: newCacheInfo,
+    } as UI.UnreadInfo;
+  } else {
+    console.error('Invalid object supplied to checkUnread', unreadInfoItem);
   }
 
   // Nothing to update, return as it is
-  return session;
+  return unreadInfoItem;
 };
 
 // Messages may have been received via listener while fetching cached ones
 // Append the received non-dupe messages to fetched list
-const mergeCacheMessages = (cacheMessages: UI.MessageListItem[], existingMessages = []) => {
+const mergeCacheMessages = (
+  cacheMessages: UI.MessageListItem[], 
+  existingMessages: UI.MessageListItem[] | undefined = []
+) => {
   return [
     ...cacheMessages,
     ...existingMessages.filter(message => filterListed(cacheMessages, message)),
@@ -109,7 +119,8 @@ const pushMessage = (message: UI.MessageListItem, messages: UI.MessageListItem[]
 };
 
 export {
-  checkUnread,
+  checkUnreadCacheInfo,
+  checkUnreadSessionInfo,
   mergeCacheMessages,
   pushMessage,
 

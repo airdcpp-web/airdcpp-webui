@@ -15,7 +15,10 @@ export interface SessionInfoGetter<SessionT> {
   itemHeaderIconGetter: (session: SessionT) => IconType;
 }
 
-export type SessionActions<SessionT extends SessionItemBase, ActionT> = ActionListType<SessionItemBase> & ActionT & {
+export type SessionActions<
+  SessionT extends SessionItemBase, 
+  ActionT = {}
+> = ActionListType<SessionItemBase> & ActionT & {
   removeSession: (session: SessionT) => void;  
   setRead: (session: SessionT) => void;
   sessionChanged: (session: SessionT | null) => void;
@@ -33,22 +36,25 @@ export interface SessionItemBase {
   id: API.IdType;
 }
 
-export type SessionItem = 
+
+export type SessionItem = SessionItemBase & UnreadInfo;
+
+export type UnreadInfo = 
   (
-    (MessageSessionItem & { read?: undefined }) | 
-    (ReadableSessionItem & { message_counts?: undefined })
+    (MessageCounts & { read?: undefined }) | 
+    (ReadStatus & { message_counts?: undefined })
   );
 
 /*export type SessionUpdateEventType = object & {
   id?: API.IdType;
 };*/
 
-export type SessionUpdateProperties = Partial<SessionItem>;
+//export type SessionUpdateProperties = Partial<SessionItem>;
 
-export interface ReadableSessionItem extends SessionItemBase {
+export interface ReadStatus extends SessionItemBase {
   read: boolean;
 }
 
-export interface MessageSessionItem extends SessionItemBase {
+export interface MessageCounts {
   message_counts: API.ChatMessageCounts | API.StatusMessageCounts;
 }

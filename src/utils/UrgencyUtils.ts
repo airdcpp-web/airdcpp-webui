@@ -48,14 +48,14 @@ type UrgencyGetter = (session: UI.SessionItem) => UI.UrgencyCountMap | null;
 
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (
-  item: UI.MessageSessionItem, 
+  item: UI.MessageCounts, 
   urgencyMappings: UI.UrgencyCountMap
 ): UI.UrgencyCountMap | null => {
   return toUrgencyMap(item.message_counts.unread, urgencyMappings);
 };
 
 // Returns urgency mapping for a session with a simple "read" property
-const simpleSessionMapper = (item: UI.ReadableSessionItem): UI.UrgencyCountMap | null => {
+const simpleSessionMapper = (item: UI.ReadStatus): UI.UrgencyCountMap | null => {
   if (!item.read) {
     return {
       [UI.UrgencyEnum.HIGH]: 1,

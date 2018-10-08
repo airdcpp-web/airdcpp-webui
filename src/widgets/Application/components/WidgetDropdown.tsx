@@ -34,7 +34,7 @@ const WidgetDropdown: React.SFC<WidgetDropdownProps> = ({ componentId }, { route
     button={ true }
     contextElement={ '.' + componentId }
   >
-    { (WidgetStore.widgets as UI.Widget[])
+    { WidgetStore.widgets
       .filter(widgetInfo => !widgetInfo.alwaysShow)
       .map(widgetInfo => getWidgetItem(widgetInfo, router.route.location)) }
   </Dropdown>

@@ -12,12 +12,12 @@ import { RSS } from 'widgets/RSS';
 import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
-import { Layouts, Layout } from 'react-grid-layout';
+import { Layouts, Layout, Breakpoints } from 'react-grid-layout';
 
 
 // CONSTANTS
-const cols = { xlg: 14, lg: 10, sm: 6, xs: 4, xxs: 2 };
-const breakpoints = { xlg: 1600, lg: 1100, sm: 768, xs: 480, xxs: 0 };
+const cols: {[P in Breakpoints]: number } = { lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 };
+const breakpoints: {[P in Breakpoints]: number } = { lg: 1600, md: 1100, sm: 768, xs: 480, xxs: 0 };
 
 const widgets = [
   Application,
@@ -95,7 +95,8 @@ const getWidgetInfoById = (id: string) => {
 };
 
 
-const WidgetStore = Reflux.createStore({
+const Store = {
+  layouts: {} as Layouts,
   listenables: WidgetActions,
   init: function () {
     // Try to load saved ones
@@ -106,9 +107,8 @@ const WidgetStore = Reflux.createStore({
       }
     }
 
-    if (!this.layouts) {
+    if (Object.keys(this.layouts).length === 0) {
       // Initialize the default layout
-      this.layouts = {};
       this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
       this.layouts = createDefaultWidget(
         this.layouts, 
@@ -134,9 +134,9 @@ const WidgetStore = Reflux.createStore({
     saveSettings(id, settings);
 
 
-    this.layouts = createWidget(this.layouts, this.getWidgetInfoById(typeId), id);
+    this.layouts = createWidget(this.layouts, this.getWidgetInfoById(typeId)!, id);
 
-    this.trigger(this.layouts);
+    (this as any).trigger(this.layouts);
   },
 
   onEditSaved(id: string, settings: UI.WidgetSettings) {
@@ -146,7 +146,7 @@ const WidgetStore = Reflux.createStore({
       ...this.layouts
     };
 
-    this.trigger(this.layouts);
+    (this as any).trigger(this.layouts);
   },
 
   onRemoveConfirmed(id: string) {
@@ -164,7 +164,7 @@ const WidgetStore = Reflux.createStore({
         {}
       );
 
-    this.trigger(this.layouts);
+    (this as any).trigger(this.layouts);
   },
 
   getWidgetInfoById: getWidgetInfoById,
@@ -192,8 +192,10 @@ const WidgetStore = Reflux.createStore({
       ...layouts
     };
 
-    this.trigger(this.layouts);
+    (this as any).trigger(this.layouts);
   },
-});
+};
+
+const WidgetStore: typeof Store = Reflux.createStore(Store);
 
 export default WidgetStore;

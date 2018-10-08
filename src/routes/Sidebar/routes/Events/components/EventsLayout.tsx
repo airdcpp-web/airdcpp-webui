@@ -12,7 +12,8 @@ import ActionButton from 'components/ActionButton';
 import '../style.css';
 import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
 
-import * as API from 'types/api';
+//import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 interface SystemLogProps {
@@ -20,7 +21,7 @@ interface SystemLogProps {
 }
 
 interface State {
-  messages: API.StatusMessage[];
+  messages: UI.MessageListItem[];
 }
 
 const SystemLog = createReactClass<SystemLogProps, State>({
@@ -45,6 +46,7 @@ const SystemLog = createReactClass<SystemLogProps, State>({
   },
 
   render() {
+    const { messages } = this.state as State;
     return (
       <div className="simple-layout">
         <div className="wrapper">
@@ -59,7 +61,7 @@ const SystemLog = createReactClass<SystemLogProps, State>({
           />
           <div className="ui divider top"/>
           <div className="layout-content system-log">
-            <EventMessageView messages={ this.state.messages }/>
+            <EventMessageView messages={ messages }/>
           </div>
         </div>
       </div>
