@@ -4,13 +4,14 @@ import createReactClass from 'create-react-class';
 
 //@ts-ignore
 import Reflux from 'reflux';
+import { default as NotificationSystem, Notification as ReactNotification } from 'react-notification-system';
+import { RateLimiter } from 'limiter';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import { default as QueueConstants } from 'constants/QueueConstants';
 import { default as EventConstants } from 'constants/EventConstants';
 
-import { default as  NotificationSystem, Notification as ReactNotification } from 'react-notification-system';
 import NotificationStore from 'stores/NotificationStore';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -51,22 +52,33 @@ const Notifications = createReactClass<NotificationsProps, {}>({
   displayName: 'Notifications',
   mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, 'addNotification') ],
   notifications: null,
+  limiter: new RateLimiter(3, 3000, true),
 
   propTypes: {
     location: PropTypes.object.isRequired,
   },
 
   addNotification: function (level: NotificationLevel, notification: Notification) {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      this.showNativeNotification(level, notification);
-      return;
-    }
+    (this.limiter as RateLimiter).removeTokens(1, (err, remainingTokens) => {
+      // Don't spam too many notifications as that would freeze the UI
+      // Always let the errors through as there shouldn't be too many of them
+      if (remainingTokens < 0 && level !== 'error') {
+        console.log('Notification ignored (rate limit reached)', notification);
+        return;
+      }
 
-    this.notifications.addNotification({
-      ...notification,
-      level,
-      position: 'tl',
-      autoDismiss: 5,
+      if ('Notification' in window && Notification.permission === 'granted') {
+        this.showNativeNotification(level, notification);
+        return;
+      }
+      
+      // Embedded notification
+      this.notifications.addNotification({
+        ...notification,
+        level,
+        position: 'tl',
+        autoDismiss: 5,
+      });
     });
   },
 
