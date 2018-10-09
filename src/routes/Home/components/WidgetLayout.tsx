@@ -9,7 +9,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Widget from 'routes/Home/components/Widget';
 import WidgetDialog from 'routes/Home/components/WidgetDialog';
 
-import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
+import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
 import WidgetStore from 'stores/WidgetStore';
 
 //import * as UI from 'types/ui';
@@ -22,6 +22,11 @@ import 'semantic-ui-css/components/card.min.css';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+
+interface State {
+  breakpoint: string;
+  layouts: Layouts;
+}
 
 const WidgetLayout = createReactClass({
   displayName: 'WidgetLayout',
@@ -60,12 +65,13 @@ const WidgetLayout = createReactClass({
   },
 
   render() {
+    const { breakpoint, layouts } = this.state as State;
     return (
       <>
         <ResponsiveReactGridLayout 
           className="ui cards layout"
-          rowHeight={50} 
-          width={1200}
+          rowHeight={ 50 } 
+          width={ 1200 }
           onLayoutChange={ WidgetStore.onLayoutChange }
           onBreakpointChange={ this.onBreakpointChange }
 
@@ -73,9 +79,9 @@ const WidgetLayout = createReactClass({
           cols={ WidgetStore.cols }
 
           draggableHandle=".react-grid-item .header-row .header"
-          layouts={ this.state.layouts }
+          layouts={ layouts }
         >
-          { this.state.layouts[this.state.breakpoint]
+          { layouts[breakpoint]
             .map(this.mapWidget)
             .filter((widget: any) => widget) }
         </ResponsiveReactGridLayout>

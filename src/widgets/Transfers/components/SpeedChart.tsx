@@ -26,14 +26,15 @@ const SpeedChart = withContentRect('bounds')(
   class extends React.PureComponent<SpeedChartProps & MeasuredComponentProps> {
     render() {
       const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect } = this.props;
+      const { bounds } = contentRect;
       return (
         <div ref={ measureRef } className="graph">
           <ChartContainer 
             timeRange={ trafficSeries.timerange() } 
-            width={ contentRect.bounds!.width }
+            width={ bounds && bounds.width ? bounds.width : undefined }
           >
             <ChartRow 
-              height={ contentRect.bounds!.height - 25 }
+              height={ bounds && bounds.height ? bounds.height : undefined }
             >
               <Charts>
                 <AreaChart

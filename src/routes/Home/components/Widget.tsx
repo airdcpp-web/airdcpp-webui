@@ -64,6 +64,8 @@ const Widget: React.SFC<WidgetProps> = ({ widgetInfo, settings, componentId, chi
           />
         ) }
       </div>
+      {/* "children" contains the resize handle */}
+      { children }
     </div>
   );
 };
