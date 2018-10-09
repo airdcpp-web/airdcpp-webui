@@ -89,7 +89,6 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   };
 
   static contextTypes = {
-    onFieldChanged: PropTypes.func,
     router: PropTypes.object.isRequired,
   };
 
@@ -170,10 +169,6 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
               error => NotificationActions.apiError('Failed to update values', error)
             );
         }
-      }
-
-      if (this.context.onFieldChanged) {
-        this.context.onFieldChanged(fieldKey, value, !equal);
       }
     }
 

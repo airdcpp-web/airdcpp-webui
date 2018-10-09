@@ -27,8 +27,6 @@ export interface ModalProps {
   subHeader?: React.ReactNode;
 }
 
-export const ModalContext = React.createContext<() => void>(() => { return undefined; });
-
 class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
@@ -127,9 +125,7 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
           size="medium"
         />
         <div className="content">
-          <ModalContext.Provider value={ this.props.hide }>
-            { children }
-          </ModalContext.Provider>
+          { children }
         </div>
 
         { onApprove ? (

@@ -13,5 +13,5 @@
 .virtual-table .cell-wrapper.disconnected, 
 .virtual-table .cell-wrapper.disconnected span,
 .virtual-table .cell-wrapper.disconnected strong {
-	color: black;
+	color: dimslategray;
 }

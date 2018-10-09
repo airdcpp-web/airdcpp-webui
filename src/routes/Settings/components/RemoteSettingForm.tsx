@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import SettingConstants from 'constants/SettingConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import SocketService from 'services/SocketService';
 
-import Form, { FormProps, FormSaveHandler } from 'components/form/Form';
+import Form, { FormProps, FormSaveHandler, FormFieldChangeHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
 
 
 export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions'> {
@@ -20,16 +20,10 @@ interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
   fieldDefinitions: UI.FormFieldDefinition[];
 }
 
-class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteSettingFormDataProps> {
-  /*static propTypes = {
-    // Form items to list
-    keys: PropTypes.array.isRequired,
-  };*/
 
-  static contextTypes = {
-    addFormRef: PropTypes.func.isRequired,
-  };
+type Props = RemoteSettingFormProps & RemoteSettingFormDataProps & SaveContextProps;
 
+class RemoteSettingForm extends React.Component<Props> {
   onSave: FormSaveHandler<UI.FormValueMap> = (changedValues) => {
     if (Object.keys(changedValues).length === 0) {
       return Promise.resolve();
@@ -42,26 +36,37 @@ class RemoteSettingForm extends React.Component<RemoteSettingFormProps & RemoteS
     this.props.refetchData([ 'settings' ]);
   }
 
+  onFieldChanged: FormFieldChangeHandler = (id, value, hasChanges) => {
+    const { saveContext, onFieldChanged } = this.props;
+    saveContext.onFieldChanged(id, value, hasChanges);
+    if (onFieldChanged) {
+      return onFieldChanged(id, value, hasChanges);
+    }
+  }
+
   render() {
-    const { settings, fieldDefinitions, ...otherProps } = this.props;
-    const { addFormRef } = this.context;
+    const { settings, fieldDefinitions, saveContext, ...otherProps } = this.props;
     return (
       <div className="remote setting-form">
         <Form
           { ...otherProps }
-          ref={ addFormRef }
+          ref={ saveContext.addFormRef }
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
           value={ settings }
+          onFieldChanged={ this.onFieldChanged }
         />
       </div>
     );
   }
 }
 
-export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDataProps>(RemoteSettingForm, {
-  urls: {
-    fieldDefinitions: ({ keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
-    settings: ({ keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
-  },
-});
+export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDataProps>(
+  withSaveContext(RemoteSettingForm), 
+  {
+    urls: {
+      fieldDefinitions: ({ keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
+      settings: ({ keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
+    },
+  }
+);

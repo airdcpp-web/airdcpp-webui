@@ -1,5 +1,4 @@
 'use strict';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import invariant from 'invariant';
@@ -26,18 +25,32 @@ export interface SaveDecoratorChildProps {
 
 type SaveableRef = Form;
 
+
+export interface SaveDecoratorContext {
+  onFieldChanged: FormFieldChangeHandler;
+  addFormRef: (c: SaveableRef) => void;
+}
+
+export const SaveDecoratorContext = React.createContext<SaveDecoratorContext | undefined>(undefined);
+
+
+export interface SaveContextProps {
+  saveContext: SaveDecoratorContext;
+}
+
+export function withSaveContext<PropsT>(Component: React.ComponentType<PropsT & SaveContextProps>) {
+  return (props: PropsT) => {
+    return (
+      <SaveDecoratorContext.Consumer>
+        { context => <Component {...props} saveContext={ context! } /> }
+      </SaveDecoratorContext.Consumer>
+    );
+  };
+}
+
 export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChildProps>) {
   class SaveDecorator extends React.Component<SaveDecoratorProps & PropsT> {
     static displayName = 'SaveDecorator';
-
-    /*static propTypes = {
-      currentMenuItem: PropTypes.object.isRequired,
-    };*/
-
-    static childContextTypes = {
-      onFieldChanged: PropTypes.func.isRequired,
-      addFormRef: PropTypes.func.isRequired,
-    };
 
     static defaultProps: Pick<SaveDecoratorProps, 'saveable'> = {
       saveable: true
@@ -45,13 +58,6 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
 
     forms: SaveableRef[] = [];
     changedProperties = new Set<string>();
-
-    getChildContext() {
-      return {
-        onFieldChanged: this.onSettingsChanged,
-        addFormRef: this.saveFormRef,
-      };
-    }
 
     componentDidUpdate(prevProps: SaveDecoratorProps) {
       if (prevProps.currentMenuItem.url !== this.props.currentMenuItem.url) {
@@ -121,6 +127,11 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       }
     }
 
+    saveContext: SaveDecoratorContext = {
+      onFieldChanged: this.onSettingsChanged,
+      addFormRef: this.saveFormRef,
+    };
+
     render() {
       const { currentMenuItem, children } = this.props;
       /*const children = React.Children.map(this.props.children, child => {
@@ -150,12 +161,12 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
           saveButton={ saveButton }
           message={ message }
         >
-          <Prompt
-            //message="You have unsaved changes. Are you sure you want to leave?"
-            //when={ this.promptSave as any }
-            message={ this.promptSave }
-          />
-          { children }
+          <SaveDecoratorContext.Provider value={ this.saveContext }>
+            <Prompt
+              message={ this.promptSave }
+            />
+            { children }
+          </SaveDecoratorContext.Provider>
         </Component>
       );
     }
