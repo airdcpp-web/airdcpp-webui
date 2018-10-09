@@ -16,8 +16,8 @@ class DetectionPage extends React.Component {
         <Message 
           description={
             <span>
-              In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using 
-              <ExternalLink url={ LinkConstants.PORTCHECK_URL }>an online port checker</ExternalLink>. Note that 
+              In case of file transfer connectivity issues, please confirm that your TCP ports are really open by  
+              using <ExternalLink url={ LinkConstants.PORTCHECK_URL }>an online port checker</ExternalLink>. Note that 
               validity of the UDP port (search) can't be checked online.
 
               For more information about different connectivity modes, please visit 

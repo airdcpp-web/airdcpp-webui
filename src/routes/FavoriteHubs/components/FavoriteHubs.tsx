@@ -35,7 +35,17 @@ class FavoriteHubs extends React.Component {
   static displayName = 'FavoriteHubs';
 
   rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
-    return rowData.connect_state.id.toString();
+    switch (rowData.connect_state.id) {
+      case API.FavoriteHubConnectStateEnum.CONNECTING:
+        return 'connecting';
+      case API.FavoriteHubConnectStateEnum.CONNECTED:
+        return 'connected';
+      case API.FavoriteHubConnectStateEnum.DISCONNECTED:
+        return 'disconnected';
+      default:
+    }
+
+    return '';
   }
 
   onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {

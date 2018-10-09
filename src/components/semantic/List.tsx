@@ -17,7 +17,7 @@ export const ListItem: React.SFC<ListItemProps> = ({ header, description, icon, 
       <div className="header">
         { header }
       </div>
-      { !!description && (
+      { (description !== null && description !== undefined) && (
         <div className="description">
           { description }
         </div> 
