@@ -98,12 +98,6 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
     }
 
     promptSave = () => {
-      // Are we opening a dialog?
-      // Check later if this is fixed by https://github.com/reactjs/react-router/pull/3107
-      //if (nextLocation.pathname.indexOf(this.props.location.pathname) !== -1) {
-      //  return null;
-      //}
-
       const { currentMenuItem } = this.props;
       if (currentMenuItem.noSave) {
         return true;
@@ -134,11 +128,6 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
 
     render() {
       const { currentMenuItem, children } = this.props;
-      /*const children = React.Children.map(this.props.children, child => {
-        return React.cloneElement(child, {
-          formRef: this.saveFormRef,
-        });
-      });*/
 
       const message = currentMenuItem.local && (
         <Message 

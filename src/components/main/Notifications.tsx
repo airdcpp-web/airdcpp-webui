@@ -44,6 +44,11 @@ const getSeverityStr = (severity: Severity) => {
   }
 };
 
+interface AirNotification extends Omit<ReactNotification, 'body' | 'title'> {
+  title: string;
+  message?: string;
+}
+
 interface NotificationsProps {
   location: Location;
 }
@@ -58,7 +63,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
     location: PropTypes.object.isRequired,
   },
 
-  addNotification: function (level: NotificationLevel, notification: Notification) {
+  addNotification: function (level: NotificationLevel, notification: AirNotification) {
     (this.limiter as RateLimiter).removeTokens(1, (err, remainingTokens) => {
       // Don't spam too many notifications as that would freeze the UI
       // Always let the errors through as there shouldn't be too many of them
@@ -86,14 +91,14 @@ const Notifications = createReactClass<NotificationsProps, {}>({
     return false;
   },
 
-  showNativeNotification(level: NotificationLevel, notificationInfo: ReactNotification) {
+  showNativeNotification(level: NotificationLevel, notificationInfo: AirNotification) {
     const options = {
       body: notificationInfo.message,
       icon: Logo,
       tag: notificationInfo.uid ? String(notificationInfo.uid) : undefined,
     };
 
-    const n = new Notification(notificationInfo.title!, options);
+    const n = new Notification(notificationInfo.title, options);
     n.onclick = () => {
       window.focus();
       if (!!notificationInfo.action && !!notificationInfo.action.callback) {
@@ -136,7 +141,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
   onLogMessage(message: API.StatusMessage) {
     const { text, id, severity } = message;
 
-    const notification: ReactNotification = {
+    const notification: AirNotification = {
       title: getSeverityStr(severity),
       message: text,
       uid: id,
@@ -150,7 +155,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
             History.push('/events'); 
           }
         }
-      } as Partial<ReactNotification>);
+      } as Partial<AirNotification>);
     }
 
 
@@ -180,7 +185,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
           History.push(`/files/session/${file.id}`);
         }
       }
-    } as ReactNotification);
+    } as AirNotification);
   },
 
   onPrivateMessage(message: API.ChatMessage) {
@@ -207,7 +212,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
           History.push(`/messages/session/${cid}`); 
         }
       }
-    } as ReactNotification);
+    } as AirNotification);
   },
 
   onBundleStatus(bundle: API.QueueBundle) {
@@ -263,7 +268,7 @@ const Notifications = createReactClass<NotificationsProps, {}>({
             History.push('/queue'); 
           }
         }
-      } as ReactNotification);
+      } as AirNotification);
     }
   },
 });
