@@ -12,7 +12,6 @@ import IconConstants from 'constants/IconConstants';
 import 'semantic-ui-css/components/modal';
 import 'semantic-ui-css/components/modal.min.css';
 import { IconType } from 'components/semantic/Icon';
-import { SidebarStateContext, SidebarStateProps } from 'components/main/decorators/SidebarHandlerDecorator';
 import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
 
@@ -31,7 +30,7 @@ export interface ModalProps {
   subHeader?: React.ReactNode;
 }
 
-class Modal extends React.Component<ModalProps & SidebarStateProps & ModalRouteDecoratorChildProps> {
+class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
@@ -106,15 +105,6 @@ class Modal extends React.Component<ModalProps & SidebarStateProps & ModalRouteD
     }
   }
 
-  componentDidUpdate(prevProps: ModalProps & SidebarStateProps) {
-    if (!prevProps.sidebarActive && this.props.sidebarActive) {
-      this.returnOnClose = false;
-      this.hide();
-    } else if (!this.props.sidebarActive && prevProps.sidebarActive) {
-      this.show();
-    }
-  }
-
   show = () => {
     setTimeout(() => $(this.c).modal('show'));
   }
@@ -129,8 +119,7 @@ class Modal extends React.Component<ModalProps & SidebarStateProps & ModalRouteD
 
   onHidden = () => {
     if (this.returnOnClose) {
-      History.replace(this.props.returnTo /*, this.context.router.route.location.state*/);
-      //this.props.closeModal();
+      History.replace(this.props.returnTo);
     }
     
     this.returnOnClose = true;
@@ -211,16 +200,4 @@ class Modal extends React.Component<ModalProps & SidebarStateProps & ModalRouteD
 }
 
 
-export default React.forwardRef<Modal, ModalProps & ModalRouteDecoratorChildProps>(
-  (props: ModalProps & ModalRouteDecoratorChildProps, ref) => (
-    <SidebarStateContext.Consumer>
-      { sidebarActive => (
-        <Modal 
-          ref={ ref }
-          { ...props } 
-          sidebarActive={ sidebarActive }
-        />
-      )}
-    </SidebarStateContext.Consumer>
-  )
-);
+export default Modal;
