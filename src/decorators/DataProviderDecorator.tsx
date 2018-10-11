@@ -10,6 +10,7 @@ import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 import { APISocket, ErrorResponse, AddListener } from 'airdcpp-apisocket';
 import { toErrorResponse } from 'utils/TypeConvert';
+import { ModalRouteCloseContext } from './ModalRouteDecorator';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
@@ -190,7 +191,14 @@ export default function <PropsT extends object, DataT extends object>(
       }
 
       if (!!error && !renderOnError) {
-        return null;
+        return (
+          <ModalRouteCloseContext.Consumer>
+            { close => {
+              close();
+              return null;
+            }}
+          </ModalRouteCloseContext.Consumer>
+        );
       }
 
       return (

@@ -11,11 +11,12 @@ import LoginStore from 'stores/LoginStore';
 import Form, { FormFieldChangeHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
+import { ChildSectionType } from './SettingsMenuDecorator';
+import { Location } from 'history';
 
 
 export interface SaveDecoratorProps {
-  currentMenuItem: any;
-  saveable: boolean;
+  currentMenuItem: ChildSectionType;
 }
 
 export interface SaveDecoratorChildProps {
@@ -48,13 +49,11 @@ export function withSaveContext<PropsT>(Component: React.ComponentType<PropsT & 
   };
 }
 
-export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChildProps>) {
+export default function <PropsT extends object>(
+  Component: React.ComponentType<SaveDecoratorChildProps>
+) {
   class SaveDecorator extends React.Component<SaveDecoratorProps & PropsT> {
     static displayName = 'SaveDecorator';
-
-    static defaultProps: Pick<SaveDecoratorProps, 'saveable'> = {
-      saveable: true
-    };
 
     forms: SaveableRef[] = [];
     changedProperties = new Set<string>();
@@ -97,7 +96,7 @@ export default function <PropsT>(Component: React.ComponentType<SaveDecoratorChi
       return this.changedProperties.size > 0;
     }
 
-    promptSave = () => {
+    promptSave = (location: Location) => {
       const { currentMenuItem } = this.props;
       if (currentMenuItem.noSave) {
         return true;

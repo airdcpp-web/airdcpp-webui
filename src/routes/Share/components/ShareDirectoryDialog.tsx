@@ -155,7 +155,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
           }
         />
         <Form<Entry>
-          ref={ (c: any) => this.form = c }
+          ref={ c => this.form = c! }
           fieldDefinitions={ this.fieldDefinitions }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }

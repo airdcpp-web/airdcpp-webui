@@ -17,6 +17,8 @@ interface SectionType {
   menuItems?: ChildSectionType[] | RootSectionType[];
   advancedMenuItems?: ChildSectionType[];
   parentMenuItems?: RootSectionType[];
+  noSave?: boolean;
+  local?: boolean;
 }
 
 export interface RootSectionType extends SectionType {

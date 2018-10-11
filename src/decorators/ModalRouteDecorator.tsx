@@ -18,7 +18,7 @@ export interface ModalRouteDecoratorProps {
 
 export const ModalRouteCloseContext = React.createContext<() => void>(() => { return undefined; });
 
-export interface ModalRouteDecoratorChildProps {
+export interface ModalRouteDecoratorChildProps extends RouteComponentProps {
   returnTo: string;
 }
 

@@ -7,7 +7,7 @@ import FileBrowserLayout from './FileBrowserLayout';
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
 
-interface FileBrowserDialogProps extends Omit<ModalProps, 'title'> {
+interface FileBrowserDialogProps extends Omit<ModalProps, 'title' | keyof ModalRouteDecoratorChildProps> {
   initialPath: string;
   onConfirm: (path: string) => void;
   title?: React.ReactNode;
@@ -73,7 +73,7 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
   }
 }
 
-export default ModalRouteDecorator(
+export default ModalRouteDecorator<FileBrowserDialogProps>(
   FileBrowserDialog,
   'browse'
 );

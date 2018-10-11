@@ -225,20 +225,24 @@ class DownloadDialog extends React.Component<Props> {
           menuItems={ menuItems }
           section={ section }
         />
-      </Modal>);
+      </Modal>
+    );
   }
 }
 
 export default ModalRouteDecorator<DownloadDialogProps>(
-  DataProviderDecorator<DownloadDialogProps & DownloadDialogRouteProps, DownloadDialogDataProps>(DownloadDialog, {
-    urls: {
-      sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
-      favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-      historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
-      itemInfo: ({ match, itemDataGetter }, socket) => {
-        return itemDataGetter(match.params.downloadItemId, socket);
-      }
-    },
-  }),
+  DataProviderDecorator<DownloadDialogProps & DownloadDialogRouteProps, DownloadDialogDataProps>(
+    DownloadDialog, 
+    {
+      urls: {
+        sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+        favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+        historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+        itemInfo: ({ match, itemDataGetter }, socket) => {
+          return itemDataGetter(match.params.downloadItemId, socket);
+        }
+      },
+    }
+  ),
   'download/:downloadItemId'
 );

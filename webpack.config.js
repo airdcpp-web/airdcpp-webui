@@ -38,7 +38,8 @@ let plugins = [
     template: 'resources/index.ejs',
     favicon: 'resources/favicon.ico',
     inject: false,
-    googleAnalytics: demo
+    googleAnalytics: demo,
+    chunksSortMode: 'none',
   }),
   new ForkTsCheckerWebpackPlugin({
     async: false,

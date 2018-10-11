@@ -1,15 +1,19 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-import OverlayDecorator, { OverlayDecoratorChildProps } from 'decorators/OverlayDecorator';
 import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
+
+import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
 import 'semantic-ui-css/components/modal';
 import 'semantic-ui-css/components/modal.min.css';
 import { IconType } from 'components/semantic/Icon';
+import { SidebarStateContext, SidebarStateProps } from 'components/main/decorators/SidebarHandlerDecorator';
+import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
 
 export interface ModalProps {
@@ -27,7 +31,7 @@ export interface ModalProps {
   subHeader?: React.ReactNode;
 }
 
-class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
+class Modal extends React.Component<ModalProps & SidebarStateProps & ModalRouteDecoratorChildProps> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
@@ -65,23 +69,17 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
   };
 
   c: any;
-  onApprove = () => {
-    let { onApprove } = this.props;
-    if (onApprove) {
-      this.setState({ saving: true });
-      
-      onApprove()
-        .then(this.props.hide)
-        .catch(() => this.setState({ saving: false }));
-  
-      return false;
-    }
 
-    return;
-  }
+  closing = false;
+  returnOnClose = true;
 
   componentDidMount() {
-    this.props.showOverlay(this.c, {
+    this.returnOnClose = true;
+
+    const settings = {
+      onHidden: this.onHidden,
+      onHide: this.onHide,
+
       onApprove: this.onApprove,
       closable: this.props.closable,
       detachable: false,
@@ -93,7 +91,64 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
       //debug: true,
       //verbose: true,
       //name: 'Modal',
-    });
+    } as SemanticUI.ModalSettings;
+
+    $(this.c)
+      .modal(settings);
+
+    this.show();
+  }
+
+  componentWillUnmount() {
+    if (!this.closing) {
+      this.returnOnClose = false;
+      this.hide();
+    }
+  }
+
+  componentDidUpdate(prevProps: ModalProps & SidebarStateProps) {
+    if (!prevProps.sidebarActive && this.props.sidebarActive) {
+      this.returnOnClose = false;
+      this.hide();
+    } else if (!this.props.sidebarActive && prevProps.sidebarActive) {
+      this.show();
+    }
+  }
+
+  show = () => {
+    setTimeout(() => $(this.c).modal('show'));
+  }
+
+  hide = () => {
+    $(this.c).modal('hide');
+  }
+
+  onHide = () => {
+    this.closing = true;
+  }
+
+  onHidden = () => {
+    if (this.returnOnClose) {
+      History.replace(this.props.returnTo /*, this.context.router.route.location.state*/);
+      //this.props.closeModal();
+    }
+    
+    this.returnOnClose = true;
+  }
+
+  onApprove = () => {
+    let { onApprove } = this.props;
+    if (onApprove) {
+      this.setState({ saving: true });
+      
+      onApprove()
+        .then(this.hide)
+        .catch(() => this.setState({ saving: false }));
+  
+      return false;
+    }
+
+    return;
   }
 
   render() {
@@ -113,43 +168,59 @@ class Modal extends React.Component<ModalProps & OverlayDecoratorChildProps> {
       className,
     );
 
-    return (
-      <div 
-        ref={ c => this.c = c }
-        className={ mainClass }
-      >
-        <LayoutHeader
-          title={ title }
-          icon={ icon }
-          subHeader={ subHeader }
-          size="medium"
-        />
-        <div className="content">
-          { children }
-        </div>
+    return ReactDOM.createPortal(
+      (
+        <div 
+          ref={ c => this.c = c }
+          className={ mainClass }
+        >
+          <LayoutHeader
+            title={ title }
+            icon={ icon }
+            subHeader={ subHeader }
+            size="medium"
+          />
+          <div className="content">
+            { children }
+          </div>
 
-        { onApprove ? (
-          <div className="actions">
-            <div className={ approveStyle }>
-              <i className={ IconConstants.SAVE + ' icon' }/>
-              { approveCaption }
+          { onApprove ? (
+            <div className="actions">
+              <div className={ approveStyle }>
+                <i className={ IconConstants.SAVE + ' icon' }/>
+                { approveCaption }
+              </div>
+              <div className="ui cancel red basic button">
+                <i className="remove icon"/>
+                Cancel
+              </div>
             </div>
-            <div className="ui cancel red basic button">
-              <i className="remove icon"/>
-              Cancel
+          ) : (
+            <div className="actions">
+              <div className="ui cancel button">
+                <i className="remove icon"/>
+                Close
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="actions">
-            <div className="ui cancel button">
-              <i className="remove icon"/>
-              Close
-            </div>
-          </div>
-        ) }
-      </div>
+          ) }
+        </div>
+      ), 
+      document.getElementById('modals-node')!
     );
   }
 }
 
-export default OverlayDecorator<ModalProps>(Modal);
+
+export default React.forwardRef<Modal, ModalProps & ModalRouteDecoratorChildProps>(
+  (props: ModalProps & ModalRouteDecoratorChildProps, ref) => (
+    <SidebarStateContext.Consumer>
+      { sidebarActive => (
+        <Modal 
+          ref={ ref }
+          { ...props } 
+          sidebarActive={ sidebarActive }
+        />
+      )}
+    </SidebarStateContext.Consumer>
+  )
+);

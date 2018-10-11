@@ -9,6 +9,7 @@ import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import { Location } from 'history';
 
 import * as UI from 'types/ui';
+import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 export type OnClickActionHandler = (actionId: string) => void;
 
@@ -125,6 +126,9 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
   } as MenuType<ItemDataT>;
 };
 
+
+const isSidebarAction = (actionId: string) => actionId === 'browse' || actionId === 'message';
+
 // Convert ID to menu link element
 const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
   menu: MenuType<ItemDataT>, 
@@ -132,7 +136,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
   actionId: string, 
   itemIndex: number, 
   location: Location, 
-  onClickAction?: OnClickActionHandler
+  closeModal?: () => void
 ) => {
   if (actionId === 'divider') {
     return (
@@ -153,8 +157,8 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
     <MenuItemLink 
       key={ actionId } 
       onClick={ () => {
-        if (onClickAction) {
-          onClickAction(actionId);
+        if (!!closeModal && isSidebarAction(actionId)) {
+          closeModal();
         }
 
         setTimeout(() => action(menu.itemDataGetter(), location));
@@ -175,7 +179,8 @@ const notError = <ItemDataT extends UI.ActionItemDataValueType>(
 export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionItemDataValueType>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
-  class ActionMenuDecorator extends React.PureComponent<ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT> {
+  type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT & { closeModal: () => void; };
+  class ActionMenuDecorator extends React.PureComponent<Props> {
     /*static propTypes = {
 
       // Item to be passed to the actions
@@ -202,10 +207,10 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     // Reduce menus to an array of DropdownItems
     reduceMenuItems = (items: React.ReactChild[], menu: MenuType<ItemDataT>, menuIndex: number) => {
       const { location } = this.context.router.route;
-      const { onClickAction } = this.props;
+      const { closeModal } = this.props;
 
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
-        return getMenuItem(menu, menuIndex, actionId, actionIndex, location, onClickAction);
+        return getMenuItem(menu, menuIndex, actionId, actionIndex, location, closeModal);
       }));
 
       return items;
@@ -269,5 +274,16 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     }
   }
 
-  return ActionMenuDecorator;
+  return (
+    (props: ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT) => (
+      <ModalRouteCloseContext.Consumer>
+        { closeModal => (
+          <ActionMenuDecorator
+            { ...props }
+            closeModal={ closeModal }
+          />
+        ) }
+      </ModalRouteCloseContext.Consumer>
+    )
+  );
 }
