@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
 
 //@ts-ignore
@@ -116,10 +117,13 @@ const Notifications = createReactClass<NotificationsProps, {}>({
   },
 
   render() {
-    return (
-      <NotificationSystem 
-        ref={ (c: any) => this.notifications = c }
-      />
+    return ReactDOM.createPortal(
+      (
+        <NotificationSystem 
+          ref={ (c: any) => this.notifications = c }
+        />
+      ),
+      document.getElementById('notifications-node')!
     );
   },
 
@@ -145,19 +149,13 @@ const Notifications = createReactClass<NotificationsProps, {}>({
       title: getSeverityStr(severity),
       message: text,
       uid: id,
-    };
-
-    if (severity !== Severity.NOTIFY) {
-      Object.assign(notification, {
-        action: {
-          label: 'View events',
-          callback: () => { 
-            History.push('/events'); 
-          }
+      action: severity === Severity.NOTIFY ? undefined : {
+        label: 'View events',
+        callback: () => { 
+          History.push('/events'); 
         }
-      } as Partial<AirNotification>);
-    }
-
+      }
+    };
 
     if (severity === Severity.NOTIFY) {
       NotificationActions.info(notification);
