@@ -1,4 +1,4 @@
-import ApiSocket from 'airdcpp-apisocket';
+import { Socket } from 'airdcpp-apisocket';
 
 
 const options = {
@@ -13,10 +13,10 @@ const options = {
   ],
 };
 
-const Socket = ApiSocket(options, WebSocket as any);
+const APISocket = Socket(options, WebSocket as any);
 
-type SocketType = typeof ApiSocket;
+type SocketType = typeof APISocket;
 
 export { SocketType as APISocket };
 
-export default Socket;
+export default APISocket;
