@@ -20,7 +20,8 @@ import { Location } from 'history';
 
 const showFav = (hub: API.Hub) => !hub.favorite_hub;
 
-const HubActions = Reflux.createActions([
+
+const HubActionConfig: UI.ActionConfigList<API.Hub> = [
   { 'createSession': { 
     asyncResult: true,
     access: API.AccessEnum.HUBS_EDIT, 
@@ -46,7 +47,9 @@ const HubActions = Reflux.createActions([
     icon: IconConstants.FAVORITE,
     filter: showFav,
   } },
-] as UI.ActionConfigList<API.Hub>);
+];
+
+const HubActions = Reflux.createActions(HubActionConfig);
 
 HubActions.password.listen(function (
   this: UI.AsyncActionType<API.Hub>, 

@@ -43,7 +43,8 @@ const checkUnignore = ({ user }: ActionUserData) => {
 
 export const UserFileActions = [ 'message', 'browse' ];
 
-const UserActions = Reflux.createActions([
+
+const UserActionConfig: UI.ActionConfigList<ActionUserData> = [
   { 'message': { 
     asyncResult: true, 
     displayName: 'Send message', 
@@ -73,7 +74,10 @@ const UserActions = Reflux.createActions([
     filter: checkUnignore,
     icon: 'ban',
   } },
-] as UI.ActionConfigList<ActionUserData>);
+];
+
+const UserActions = Reflux.createActions(UserActionConfig);
+
 
 UserActions.message.listen(function (userData: ActionUserData, location: Location) {
   PrivateChatActions.createSession(location, userData.user, PrivateChatSessionStore);

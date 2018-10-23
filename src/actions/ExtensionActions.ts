@@ -4,9 +4,6 @@ import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
-import InputDialog from 'components/semantic/InputDialog';
-
 import ExtensionConstants from 'constants/ExtensionConstants';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -26,7 +23,8 @@ interface NpmPackage {
 const isManaged = (extension: API.Extension) => extension.managed;
 const hasSettings = (extension: API.Extension) => extension.has_settings;
 
-const ExtensionActions = Reflux.createActions([
+
+const ExtensionActionConfig: UI.ActionConfigList<API.Extension> = [
   { 'installNpm': { 
     displayName: 'Install',
     icon: IconConstants.CREATE,
@@ -37,29 +35,44 @@ const ExtensionActions = Reflux.createActions([
     icon: IconConstants.REFRESH,
     access: API.AccessEnum.ADMIN,
   } },
-  { 'installUrl': { 
+  { 'installUrl': {
+    asyncResult: true,
     displayName: 'Install from URL',
-    children: [ 'saved' ], 
     icon: IconConstants.CREATE,
     access: API.AccessEnum.ADMIN,
+    input: {
+      approveCaption: 'Install',
+      title: 'Install extension from URL',
+      content: 'Enter download URL',
+      inputProps: {
+        placeholder: 'Enter URL',
+        type: 'url',
+        required: true,
+      }
+    }
   } },
   { 'remove': { 
-    asyncResult: true, 
-    children: [ 'confirmed' ], 
+    asyncResult: true,
     displayName: 'Uninstall',
     icon: IconConstants.REMOVE,
     filter: isManaged,
     access: API.AccessEnum.ADMIN,
+    confirmation: extension => ({
+      // tslint:disable-next-line:max-line-length
+      content: `Are you sure that you want to remove the extension ${extension.name}? This will also remove possible extension-specific settings.`,
+      approveCaption: 'Remove extension',
+      rejectCaption: `Don't remove`,
+    })
   } },
   { 'start': { 
-    asyncResult: true, 
+    asyncResult: true,
     displayName: 'Start',
     icon: IconConstants.PLAY,
     filter: isManaged,
     access: API.AccessEnum.ADMIN,
   } },
   { 'stop': { 
-    asyncResult: true, 
+    asyncResult: true,
     displayName: 'Stop',
     icon: IconConstants.STOP,
     filter: isManaged,
@@ -72,7 +85,9 @@ const ExtensionActions = Reflux.createActions([
     filter: hasSettings,
     access: API.AccessEnum.SETTINGS_EDIT,
   } },
-] as UI.ActionConfigList<API.Extension>);
+];
+
+const ExtensionActions = Reflux.createActions(ExtensionActionConfig);
 
 ExtensionActions.configure.listen(function (extension: API.Extension, location: Location) {
   History.push(`${location.pathname}/extensions/${extension.id}`);
@@ -115,7 +130,7 @@ ExtensionActions.stop.failed.listen(function (extension: API.Extension, error: E
 ExtensionActions.installNpm.listen(function (npmPackage: NpmPackage, location: Location) {
   $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
     const { tarball, shasum } = data.dist;
-    ExtensionActions.installUrl.saved(tarball, npmPackage.name, shasum);
+    ExtensionActions.installUrl(undefined, location, tarball, npmPackage.name, shasum);
   })
     .fail(ExtensionActions.installNpm.failed);
 });
@@ -123,27 +138,14 @@ ExtensionActions.installNpm.listen(function (npmPackage: NpmPackage, location: L
 ExtensionActions.updateNpm.listen(function (npmPackage: NpmPackage, location: Location) {
   $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
     const { tarball, shasum } = data.dist;
-    ExtensionActions.installUrl.saved(tarball, shasum);
+    ExtensionActions.installUrl(undefined, location, tarball, shasum);
   })
     .fail(ExtensionActions.installNpm.failed);
 });
 
-ExtensionActions.installUrl.listen(function (this: UI.EditorActionType<API.Extension>) {
-  const options = {
-    icon: this.icon,
-    approveCaption: 'Install',
-    title: 'Install extension from URL',
-    text: 'Enter download URL',
-  };
-
-  const inputOptions = {
-    placeholder: 'Enter URL',
-  };
-
-  InputDialog(options, inputOptions, this.saved.bind(this));
-});
-
-ExtensionActions.installUrl.saved.listen(function (url: string, installId: string, shasum: string) {
+ExtensionActions.installUrl.listen(function (
+  data: any, location: Location, url: string, installId: string, shasum: string
+) {
   return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
     install_id: installId ? installId : url,
     url,
@@ -153,23 +155,12 @@ ExtensionActions.installUrl.saved.listen(function (url: string, installId: strin
     .catch(ExtensionActions.installUrl.failed);
 });
 
-ExtensionActions.remove.listen(function (
-  this: UI.ConfirmActionType<API.Extension>,
-  extension: API.Extension
-) {
-  const options = {
-    title: this.displayName,
-    // tslint:disable-next-line:max-line-length
-    content: `Are you sure that you want to remove the extension ${extension.name}? This will also remove possible extension-specific settings.`,
-    icon: this.icon,
-    approveCaption: 'Remove extension',
-    rejectCaption: `Don't remove`,
-  };
 
-  ConfirmDialog(options, this.confirmed.bind(this, extension));
+ExtensionActions.installUrl.failed.listen(function (error: ErrorResponse) {
+  NotificationActions.apiError('Extension installation failed', error);
 });
 
-ExtensionActions.remove.confirmed.listen(function (
+ExtensionActions.remove.listen(function (
   this: UI.AsyncActionType<API.Extension>, 
   extension: API.Extension
 ) {

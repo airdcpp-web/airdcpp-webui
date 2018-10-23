@@ -27,7 +27,8 @@ interface ActionFilelistItemData {
 const isMe = ({ session }: ActionFilelistItemData) => session.user.flags.indexOf('self') !== -1;
 const isPartialList = ({ session }: ActionFilelistItemData) => session.partial_list;
 
-const FilelistItemActions = Reflux.createActions([
+
+const FilelistItemActionConfig: UI.ActionConfigList<ActionFilelistItemData> = [
   { 'reloadDirectory': { 
     asyncResult: true,
     displayName: 'Reload',
@@ -44,7 +45,9 @@ const FilelistItemActions = Reflux.createActions([
   } },
   { 'download': { asyncResult: true } },
   { 'findNfo': { asyncResult: true } },
-] as UI.ActionConfigList<ActionFilelistItemData>);
+];
+
+const FilelistItemActions = Reflux.createActions(FilelistItemActionConfig);
 
 const DownloadHandler: DownloadHandler<API.FilelistItem> = (itemInfo, user, downloadData) => {
   const data = {

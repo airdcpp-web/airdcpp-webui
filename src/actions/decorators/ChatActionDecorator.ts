@@ -14,7 +14,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 type SessionType = UI.SessionItemBase;
 
 export default function (actions: UI.ActionType[], sessionUrl: string, editAccess: API.AccessEnum) {
-  const ChatActions = Reflux.createActions([
+  const ChatActionConfig: UI.ActionConfigList<SessionType> = [
     { 'fetchMessages': { asyncResult: true } },
     { 'sendMessage': { asyncResult: true } },
     { 'setRead': { asyncResult: true } },
@@ -26,7 +26,9 @@ export default function (actions: UI.ActionType[], sessionUrl: string, editAcces
     },
     'activeChatChanged',
     'divider'
-  ]);
+  ];
+
+  const ChatActions = Reflux.createActions(ChatActionConfig);
 
   ChatActions.fetchMessages.listen(function (
     this: UI.AsyncActionType<SessionType>, 

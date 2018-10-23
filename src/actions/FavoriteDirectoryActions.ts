@@ -3,7 +3,6 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import History from 'utils/History';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
@@ -16,7 +15,8 @@ import { Location } from 'history';
 
 const noData = (item: any) => !item;
 
-const FavoriteDirectoryActions = Reflux.createActions([
+
+const FavoriteDirectoryActionConfig: UI.ActionConfigList<API.FavoriteDirectoryEntry> = [
   { 'create': { 
     displayName: 'Add directory',
     access: API.AccessEnum.SETTINGS_EDIT, 
@@ -29,13 +29,19 @@ const FavoriteDirectoryActions = Reflux.createActions([
     icon: IconConstants.EDIT,
   } },
   { 'remove': { 
-    asyncResult: true, 
-    children: [ 'confirmed' ], 
+    asyncResult: true,
     displayName: 'Remove directory',
     access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
+    confirmation: directory => ({
+      content: `Are you sure that you want to remove the favorite directory ${directory.name}?`,
+      approveCaption: 'Remove directory',
+      rejectCaption: `Don't remove`,
+    })
   } },
-] as UI.ActionConfigList<API.FavoriteDirectoryEntry>);
+];
+
+const FavoriteDirectoryActions = Reflux.createActions(FavoriteDirectoryActionConfig);
 
 FavoriteDirectoryActions.create.listen(function (location: Location) {
   History.push(`${location.pathname}/directories`);
@@ -46,21 +52,6 @@ FavoriteDirectoryActions.edit.listen(function (directory: API.FavoriteDirectoryE
 });
 
 FavoriteDirectoryActions.remove.listen(function (
-  this: UI.ConfirmActionType<API.FavoriteDirectoryEntry>, 
-  directory: API.FavoriteDirectoryEntry
-) {
-  const options = {
-    title: this.displayName,
-    content: `Are you sure that you want to remove the favorite directory ${directory.name}?`,
-    icon: this.icon,
-    approveCaption: 'Remove directory',
-    rejectCaption: `Don't remove`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, directory));
-});
-
-FavoriteDirectoryActions.remove.confirmed.listen(function (
   this: UI.ConfirmActionType<API.FavoriteDirectoryEntry>, 
   directory: API.FavoriteDirectoryEntry
 ) {

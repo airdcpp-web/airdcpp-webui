@@ -19,7 +19,7 @@ import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 
-const PrivateChatActions = Reflux.createActions([
+const PrivateChatActionConfig: UI.ActionConfigList<API.PrivateChat> = [
   { 'createSession': { asyncResult: true } },
   { 'changeHubUrl': { asyncResult: true } },
   { 'connectCCPM': { 
@@ -34,7 +34,9 @@ const PrivateChatActions = Reflux.createActions([
     displayName: 'Disconnect', 
     icon: IconConstants.REMOVE,
   } },
-] as UI.ActionConfigList<API.PrivateChat>);
+];
+
+const PrivateChatActions = Reflux.createActions(PrivateChatActionConfig);
 
 // SESSION CREATION
 PrivateChatActions.createSession.listen(function (

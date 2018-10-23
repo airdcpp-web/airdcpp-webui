@@ -3,7 +3,6 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import NotificationActions from 'actions/NotificationActions';
 
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
@@ -19,7 +18,8 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 
 const noData = (item: any) => !item;
 
-export const FavoriteHubActions = Reflux.createActions([
+
+const FavoriteHubActionConfig: UI.ActionConfigList<API.FavoriteHubEntry> = [
   { 'create': {
     displayName: 'Add new',
     access: API.AccessEnum.FAVORITE_HUBS_EDIT,
@@ -33,15 +33,21 @@ export const FavoriteHubActions = Reflux.createActions([
   } },
   { 'remove': {
     asyncResult: true,
-    children: [ 'confirmed' ],
     displayName: 'Remove',
     access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.REMOVE,
+    confirmation: hub => ({
+      content: `Are you sure that you want to remove the favorite hub ${hub.name}?`,
+      approveCaption: 'Remove favorite hub',
+      rejectCaption: `Don't remove`,
+    })
   } },
   { 'update': { 
     asyncResult: true
   } },
-] as UI.ActionConfigList<API.FavoriteHubEntry>);
+];
+
+export const FavoriteHubActions = Reflux.createActions(FavoriteHubActionConfig);
 
 FavoriteHubActions.create.listen(function (location: Location) {
   History.push('/favorite-hubs/entries');
@@ -54,7 +60,7 @@ FavoriteHubActions.edit.listen(function (hub: API.FavoriteHubEntry, location: Lo
 FavoriteHubActions.update.listen(function (
   this: UI.AsyncActionType<API.FavoriteHubEntry>, 
   hub: API.FavoriteHubEntry, 
-  data: API.FavoriteHubEntryBase
+  data: Partial<API.FavoriteHubEntryBase>
 ) {
   let that = this;
   return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, data)
@@ -62,23 +68,7 @@ FavoriteHubActions.update.listen(function (
     .catch(this.failed);
 });
 
-FavoriteHubActions.remove.shouldEmit = function (
-  this: UI.ConfirmActionType<API.FavoriteHubEntry>, 
-  hub: API.FavoriteHubEntry
-) {
-  const options = {
-    title: this.displayName,
-    content: 'Are you sure that you want to remove the favorite hub ' + hub.name + '?',
-    icon: this.icon,
-    approveCaption: 'Remove favorite hub',
-    rejectCaption: `Don't remove`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, hub));
-  return false;
-};
-
-FavoriteHubActions.remove.confirmed.listen(function (hub: API.FavoriteHubEntry) {
+FavoriteHubActions.remove.listen(function (hub: API.FavoriteHubEntry) {
   return SocketService.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id)
     .then(() => 
       FavoriteHubActions.remove.completed(hub))

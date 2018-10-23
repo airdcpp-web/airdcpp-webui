@@ -51,10 +51,6 @@ export interface SettingsMenuDecoratorChildProps extends SettingsMenuDecoratorPr
 
 export default function <PropsT>(Component: React.ComponentType<SettingsMenuDecoratorChildProps & PropsT>) {
   class SettingsMenuDecorator extends React.Component<SettingsMenuDecoratorProps & PropsT> {
-    static contextTypes = {
-      router: PropTypes.object.isRequired
-    };
-
     static propTypes = {
       parent: PropTypes.object,
       menuItems: PropTypes.array.isRequired,

@@ -1,6 +1,4 @@
 'use strict';
-
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import History from 'utils/History';
@@ -17,10 +15,6 @@ interface SideMenuProps {
 }
 
 class SideMenu extends React.Component<SideMenuProps> {
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
-
   onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 

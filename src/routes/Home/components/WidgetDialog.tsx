@@ -19,7 +19,11 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const parseSettings = (widgetId: string, widgetInfo: UI.Widget) => {
+const parseSettings = (widgetId: string | undefined, widgetInfo: UI.Widget) => {
+  if (!widgetId) {
+    return undefined;
+  }
+
   const settings = WidgetStore.getWidgetSettings(widgetId, widgetInfo);
   return {
     name: settings.name,
@@ -71,14 +75,14 @@ class WidgetDialog extends React.Component<Props> {
   }
 
   render() {
-    const { typeId } = this.props.match.params;
+    const { typeId, widgetId } = this.props.match.params;
     const widgetInfo = WidgetStore.getWidgetInfoById(typeId);
     if (!widgetInfo) {
       return null;
     }
 
     const { formSettings, name, icon } = widgetInfo;
-    const settings = parseSettings(typeId, widgetInfo);
+    const settings = parseSettings(widgetId, widgetInfo);
 
     const Entry: UI.FormFieldDefinition[] = [
       {

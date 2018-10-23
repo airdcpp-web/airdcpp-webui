@@ -8,17 +8,12 @@ import NotificationActions from 'actions/NotificationActions';
 import ShareConstants from 'constants/ShareConstants';
 import IconConstants from 'constants/IconConstants';
 
-
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
-import History from 'utils/History';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { Location } from 'history';
 
 
-const ShareActions = Reflux.createActions([
+const ShareActionConfig: UI.ActionConfigList<void> = [
   { 'refresh': { 
     asyncResult: true,
     displayName: 'Refresh all',
@@ -33,22 +28,10 @@ const ShareActions = Reflux.createActions([
   } }, 
   { 'refreshVirtual': { 
     asyncResult: true,
-  } },
-  { 'addExclude': { 
-    asyncResult: true,
-    children: [ 'saved' ], 
-    displayName: 'Add path',
-    access: API.AccessEnum.SETTINGS_EDIT, 
-    icon: IconConstants.CREATE,
   } }, 
-  { 'removeExclude': { 
-    asyncResult: true,
-    children: [ 'confirmed' ], 
-    displayName: 'Remove path',
-    access: API.AccessEnum.SETTINGS_EDIT, 
-    icon: IconConstants.REMOVE,
-  } }, 
-]);
+];
+
+const ShareActions = Reflux.createActions(ShareActionConfig);
 
 ShareActions.refresh.listen(function (this: UI.AsyncActionType<void>, incoming: boolean) {
   const that = this;
@@ -64,7 +47,7 @@ ShareActions.refreshPaths.listen(function (this: UI.AsyncActionType<void>, paths
     .catch(that.failed);
 });
 
-ShareActions.refreshVirtual.listen(function (this: UI.AsyncActionType<API.ShareProfile>, path: string) {
+ShareActions.refreshVirtual.listen(function (this: UI.AsyncActionType<void>, path: string) {
   const that = this;
   return SocketService.post(ShareConstants.REFRESH_VIRTUAL_URL, { 
     path,
@@ -78,39 +61,6 @@ ShareActions.refreshVirtual.failed.listen(function (error: ErrorResponse) {
     title: 'Refresh failed',
     message: error.message,
   });
-});
-
-ShareActions.addExclude.listen(function (location: Location) {
-  History.push(`${location.pathname}/browse`);
-});
-
-ShareActions.addExclude.saved.listen(function (path: string) {
-  return SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path })
-    .then(ShareActions.addExclude.completed)
-    .catch(ShareActions.addExclude.failed);
-});
-
-ShareActions.addExclude.failed.listen(function (error: ErrorResponse) {
-  NotificationActions.apiError('Failed to add directory', error);
-});
-
-ShareActions.removeExclude.listen(function (this: UI.ConfirmActionType<API.ShareProfile>, path: string) {
-  const options = {
-    title: this.displayName,
-    content: `Are you sure that you want to remove the excluded path ${path}?`,
-    icon: this.icon,
-    approveCaption: 'Remove path',
-    rejectCaption: `Don't remove`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, path));
-});
-
-ShareActions.removeExclude.confirmed.listen(function (this: UI.AsyncActionType<API.ShareProfile>, path: string) {
-  const that = this;
-  return SocketService.post(ShareConstants.EXCLUDES_REMOVE_URL, { path })
-    .then(ShareActions.removeExclude.completed.bind(that, path))
-    .catch(ShareActions.removeExclude.failed.bind(that, path));
 });
 
 export default ShareActions;

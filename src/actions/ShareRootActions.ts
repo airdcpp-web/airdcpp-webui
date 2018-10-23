@@ -3,7 +3,6 @@
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import History from 'utils/History';
 
 import ShareRootConstants from 'constants/ShareRootConstants';
@@ -17,7 +16,8 @@ import { Location } from 'history';
 
 const noData = (item: any) => !item;
 
-const ShareRootActions = Reflux.createActions([
+
+const ShareRootActionConfig: UI.ActionConfigList<API.ShareRootEntry> = [
   { 'create': { 
     displayName: 'Add directory',
     access: API.AccessEnum.SETTINGS_EDIT, 
@@ -30,13 +30,21 @@ const ShareRootActions = Reflux.createActions([
     icon: IconConstants.EDIT,
   } },
   { 'remove': { 
-    asyncResult: true, 
-    children: [ 'confirmed' ], 
+    asyncResult: true,
     displayName: 'Remove directory',
     access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
+    confirmation: root => ({
+      // tslint:disable-next-line:max-line-length
+      content: `Are you sure that you want to remove the directory ${root.virtual_name} from share? It will be removed from all share profiles.`,
+      approveCaption: 'Remove directory',
+      rejectCaption: `Don't remove`,
+    })
   } },
-]);
+];
+
+const ShareRootActions = Reflux.createActions(ShareRootActionConfig);
+
 
 ShareRootActions.create.listen(function (data: API.ShareRootEntry, location: Location) {
   History.push(`${location.pathname}/directories`);
@@ -46,20 +54,7 @@ ShareRootActions.edit.listen(function (root: API.ShareRootEntry, location: Locat
   History.push(`${location.pathname}/directories/${root.id}`);
 });
 
-ShareRootActions.remove.listen(function (this: UI.ConfirmActionType<API.ShareRootEntry>, root: API.ShareRootEntry) {
-  const options = {
-    title: this.displayName,
-    // tslint:disable-next-line:max-line-length
-    content: `Are you sure that you want to remove the directory ${root.virtual_name} from share? It will be removed from all share profiles.`,
-    icon: this.icon,
-    approveCaption: 'Remove directory',
-    rejectCaption: `Don't remove`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, root));
-});
-
-ShareRootActions.remove.confirmed.listen(function (
+ShareRootActions.remove.listen(function (
   this: UI.AsyncActionType<API.ShareRootEntry>, 
   root: API.ShareRootEntry
 ) {

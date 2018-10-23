@@ -30,6 +30,8 @@ export interface ModalProps {
   subHeader?: React.ReactNode;
 }
 
+const NODE_ID = 'modals-node';
+
 class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
@@ -85,8 +87,16 @@ class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> 
       allowMultiple: true,
       observeChanges: this.props.dynamicHeight,
       dimmerSettings: {
-        dimmerName: 'modals-node',
+        dimmerName: NODE_ID,
+        //namespace: NODE_ID,
+        /*selector: {
+          dimmer: `> .ui.dimmer.${NODE_ID}`
+        }*/
       },
+      //namespace: `${NODE_ID}`,
+      /*className: {
+        active: NODE_ID,
+      },*/
       //debug: true,
       //verbose: true,
       //name: 'Modal',
@@ -194,7 +204,7 @@ class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> 
           ) }
         </div>
       ), 
-      document.getElementById('modals-node')!
+      document.getElementById(NODE_ID)!
     );
   }
 }

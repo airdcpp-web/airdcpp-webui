@@ -46,7 +46,7 @@ export interface DownloadableItemData<ItemT extends DownloadableItemInfo = Downl
 }
 
 const isAsch = ({ user }: DownloadableItemData) => user.flags.indexOf('asch') !== -1;
-const isSearchable = ({ itemInfo }: DownloadableItemData) => itemInfo.name || itemInfo.tth;
+const isSearchable = ({ itemInfo }: DownloadableItemData) => !!itemInfo.name || !!itemInfo.tth;
 const notSelf = ({ user }: DownloadableItemData) => user.flags.indexOf('self') === -1;
 const isDirectory = ({ itemInfo }: DownloadableItemData) => itemInfo.type.id === 'directory';
 const isPicture = ({ itemInfo }: DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'picture';
@@ -67,7 +67,7 @@ const viewImage = (data: DownloadableItemData) => isPicture(data) && sizeValid(d
 const copyMagnet = (data: DownloadableItemData) => !!(navigator as any).clipboard && !isDirectory(data);
 
 
-export const DownloadableItemActions = Reflux.createActions([
+const DownloadableItemActionConfig: UI.ActionConfigList<DownloadableItemData> = [
   { 'download': { 
     asyncResult: true,	
     displayName: 'Download', 
@@ -131,7 +131,9 @@ export const DownloadableItemActions = Reflux.createActions([
     icon: IconConstants.MAGNET,
     filter: copyMagnet,
   } }
-] as UI.ActionConfigList<DownloadableItemData>);
+];
+
+export const DownloadableItemActions = Reflux.createActions(DownloadableItemActionConfig);
 
 DownloadableItemActions.download.listen(function (handlerData: DownloadableItemData) {
   const { handler, itemInfo, user } = handlerData;

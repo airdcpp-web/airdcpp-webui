@@ -2,6 +2,27 @@ import React from 'react';
 import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'react-router';
 
 
+export type ModalCloseContext = () => void;
+
+export interface ModalCloseContextProps {
+  closeModal: ModalCloseContext;
+}
+
+export const ModalRouteCloseContext = React.createContext<ModalCloseContext>(() => { return undefined; });
+
+export function withModalCloseContext<PropsT>(Component: React.ComponentType<PropsT & ModalCloseContextProps>) {
+  return (props: PropsT) => {
+    return (
+      <ModalRouteCloseContext.Consumer>
+        { context => <Component {...props} closeModal={ context! } /> }
+      </ModalRouteCloseContext.Consumer>
+    );
+  };
+}
+
+
+
+
 const parseRoutePath = (match: RouteMatch<{}>, path: string) => {
   if (path[0] === '/') {
     return path;
@@ -10,13 +31,9 @@ const parseRoutePath = (match: RouteMatch<{}>, path: string) => {
   return `${match.url}/${path}`;
 };
 
-
 export interface ModalRouteDecoratorProps {
   
 }
-
-
-export const ModalRouteCloseContext = React.createContext<() => void>(() => { return undefined; });
 
 export interface ModalRouteDecoratorChildProps extends RouteComponentProps {
   returnTo: string;

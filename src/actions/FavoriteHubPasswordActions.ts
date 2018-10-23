@@ -4,9 +4,6 @@ import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
-import { PasswordDialog } from 'components/semantic/InputDialog';
-
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -30,7 +27,8 @@ const sendPassword = (
 const hasPassword = (entry: API.FavoriteHubEntry) => entry.has_password;
 const noPassword = (entry: API.FavoriteHubEntry) => !hasPassword(entry);
 
-const FavoriteHubPasswordActions = Reflux.createActions([
+
+const FavoriteHubPasswordActionConfig: UI.ActionConfigList<API.FavoriteHubEntry> = [
   { 'create': { 
     asyncResult: true, 
     children: [ 'saved' ], 
@@ -38,6 +36,14 @@ const FavoriteHubPasswordActions = Reflux.createActions([
     access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.LOCK,
     filter: noPassword,
+    input: hub => ({
+      content: `Set password for the hub ${hub.name}`,
+      approveCaption: 'Set password',
+      inputProps: {
+        placeholder: 'Enter password',
+        type: 'password',
+      }
+    })
   } },
   { 'change': { 
     asyncResult: true, 
@@ -46,57 +52,40 @@ const FavoriteHubPasswordActions = Reflux.createActions([
     access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.EDIT,
     filter: hasPassword,
+    input: hub => ({
+      content: `Enter new password for the hub ${hub.name}`,
+      approveCaption: 'Update password',
+      inputProps: {
+        placeholder: 'Enter password',
+        type: 'password',
+      }
+    }),
   } },
   { 'remove': { 
-    asyncResult: true, 
-    children: [ 'confirmed' ], 
+    asyncResult: true,
     displayName: 'Remove password',
-    access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.REMOVE,
     filter: hasPassword,
+    confirmation: hub => ({
+      content: `Are you sure that you want to reset the password of the hub ${hub.name}?`,
+      approveCaption: 'Remove password',
+      rejectCaption: `Don't remove`,
+    })
   } },
-]);
+];
 
-FavoriteHubPasswordActions.create.listen(function (
-  this: UI.EditorActionType<API.FavoriteHubEntry>, 
-  hub: API.FavoriteHubEntry
-) {
-  const text = 'Set password for the hub ' + hub.name;
-  PasswordDialog('Set password', text, this.saved.bind(this, hub));
-});
+const FavoriteHubPasswordActions = Reflux.createActions(FavoriteHubPasswordActionConfig);
 
-FavoriteHubPasswordActions.create.saved.listen(function (hub: API.FavoriteHubEntry, password: string) {
+FavoriteHubPasswordActions.create.listen(function (hub: API.FavoriteHubEntry, location: any, password: string) {
   sendPassword(hub, password, FavoriteHubPasswordActions.create);
 });
 
-FavoriteHubPasswordActions.change.listen(function (
-  this: UI.EditorActionType<API.FavoriteHubEntry>, 
-  hub: API.FavoriteHubEntry
-) {
-  const text = 'Enter new password for the hub ' + hub.name;
-  PasswordDialog('Change password', text, this.saved.bind(this, hub));
-});
-
-FavoriteHubPasswordActions.change.saved.listen(function (hub: API.FavoriteHubEntry, password: string) {
+FavoriteHubPasswordActions.change.listen(function (hub: API.FavoriteHubEntry, location: any, password: string) {
   sendPassword(hub, password, FavoriteHubPasswordActions.change);
 });
 
-FavoriteHubPasswordActions.remove.listen(function (
-  this: UI.ConfirmActionType<API.FavoriteHubEntry>, 
-  hub: API.FavoriteHubEntry
-) {
-  const options = {
-    title: this.displayName,
-    content: 'Are you sure that you want to reset the password of the hub ' + hub.name + '?',
-    icon: this.icon,
-    approveCaption: 'Remove password',
-    rejectCaption: `Don't remove`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, hub));
-});
-
-FavoriteHubPasswordActions.remove.confirmed.listen(function (hub: API.FavoriteHubEntry) {
+FavoriteHubPasswordActions.remove.listen(function (hub: API.FavoriteHubEntry) {
   sendPassword(hub, null, FavoriteHubPasswordActions.remove);
 });
 

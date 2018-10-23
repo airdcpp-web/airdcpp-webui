@@ -1,7 +1,7 @@
 //@ts-ignore
 import Reflux from 'reflux';
 
-import WidgetActions from 'actions/WidgetActions';
+import WidgetActions, { WidgetItemInfo } from 'actions/WidgetActions';
 import WidgetUtils from 'utils/WidgetUtils';
 
 import reject from 'lodash/reject';
@@ -149,7 +149,7 @@ const Store = {
     (this as any).trigger(this.layouts);
   },
 
-  onRemoveConfirmed(id: string) {
+  onRemove({ id }: Pick<WidgetItemInfo, 'id'>) {
     removeLocalProperty(WidgetUtils.idToSettingKey(id));
 
     this.layouts = Object.keys(cols)

@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
 import { showAction } from 'utils/ActionUtils';
 import { IconType } from 'components/semantic/Icon';
-import { RouterChildContext } from 'react-router';
 
 import * as UI from 'types/ui';
+import { ActionHandlerDecorator, ActionHandlerDecoratorChildProps } from 'decorators/ActionHandlerDecorator';
 
 
 interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
@@ -15,9 +14,8 @@ interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
   icon?: IconType;
 }
 
-const ActionButton: React.SFC<ActionButtonProps> = (
-  { action, itemData, icon = true, ...other }, 
-  { router }: RouterChildContext<{}>
+const ActionButton: React.SFC<ActionButtonProps & ActionHandlerDecoratorChildProps> = (
+  { action, itemData, onClickAction, icon = true, location, history, match, staticContext, ...other }
 ) => {
   if (!showAction(action, itemData)) {
     return null;
@@ -26,7 +24,11 @@ const ActionButton: React.SFC<ActionButtonProps> = (
   return (
     <Button
       icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : null }
-      onClick={ () => itemData ? action(itemData, router.route.location) : action(router.route.location) }
+      onClick={ () => onClickAction({ 
+        itemData, 
+        action, 
+        actionId: '' // TODO: figure this out when refactoring actions
+      }) }
       caption={ action.displayName }
       { ...other }
     />
@@ -44,9 +46,5 @@ const ActionButton: React.SFC<ActionButtonProps> = (
   ]),
 };*/
 
-ActionButton.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
 
-
-export default ActionButton;
+export default ActionHandlerDecorator(ActionButton);

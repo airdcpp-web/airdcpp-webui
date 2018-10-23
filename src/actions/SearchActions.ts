@@ -18,7 +18,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import { Location } from 'history';
 
 
-export const SearchActions = Reflux.createActions([
+const SearchActionConfig: UI.ActionConfigList<API.GroupedSearchResult> = [
   { 'result': { 
     displayName: 'Result details',
     icon: IconConstants.OPEN 
@@ -30,7 +30,9 @@ export const SearchActions = Reflux.createActions([
     icon: IconConstants.FILELIST
   } },
   { 'download': { asyncResult: true } },
-] as UI.ActionConfigList<API.GroupedSearchResult>);
+];
+
+export const SearchActions = Reflux.createActions(SearchActionConfig);
 
 SearchActions.download.listen((
   itemInfo: API.GroupedSearchResult, 

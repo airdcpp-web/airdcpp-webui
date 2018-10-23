@@ -1,86 +1,82 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 
-import ConfirmDialog, { ConfirmDialogOptions } from 'components/semantic/ConfirmDialog';
+import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
 
 
-export interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  content: React.ReactNode;
+export interface InputFieldProps extends Omit<ConfirmDialogProps, 'onApproved'> {
+  onApproved: (inputValue: string) => void | false;
+  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
-class InputField extends React.Component<InputFieldProps> {
-  static propTypes = {
+
+interface State {
+  value: string;
+}
+
+export class InputDialog extends React.Component<InputFieldProps, State> {
+  /*static propTypes = {
     // Action description
     content: PropTypes.node.isRequired,
+  };*/
+
+  constructor(props: InputFieldProps) {
+    super(props);
+
+    const { inputProps } = props;
+    this.state = {
+      value: !!inputProps.defaultValue ? inputProps.defaultValue as string : '',
+    };
+  }
+
+  c: HTMLInputElement;
+  state: State = {
+    value: '',
   };
+  
+  onChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      value: event.target.value,
+    });
+  }
+
+  onApproved = () => {
+    if (!this.c.reportValidity()) {
+      return false;
+    }
+
+    const success = this.props.onApproved(this.state.value);
+    return success;
+  }
 
   render() {
-    const { content, ...other } = this.props;
+    const { onApproved, rejectCaption, inputProps, ...other } = this.props;
     return (
-      <div className="ui input dialog">
-        { content }
-        <input { ...other}/>
-      </div>
+      <ConfirmDialog
+        onApproved={ this.onApproved }
+        rejectCaption={ !!rejectCaption ? rejectCaption : 'Cancel' }
+        { ...other }
+      >
+        <form className="ui input dialog">
+          <input 
+            ref={ c => this.c = c! }
+            onChange={ this.onChanged } 
+            { ...inputProps}
+          />
+
+          {/* 
+          // A hack to cheat browser not to use autofill for the real password field
+          // (some browsers can be really desperate with finding login forms...)
+          // https://github.com/airdcpp-web/airdcpp-webclient/issues/100
+          */}
+          { inputProps.type === 'password' && (
+            <div>
+              <input style={{ display: 'none' }}/>
+              <input type="password" style={{ display: 'none' }}/>
+            </div>
+          ) }
+        </form>
+      </ConfirmDialog>
     );
   }
 }
-
-export type InputDialogOptions = Pick<ConfirmDialogOptions, 'icon' | 'approveCaption' | 'content' | 'title'>;
-
-const InputDialog = function (
-  dialogOptions: InputDialogOptions, 
-  inputOptions: React.InputHTMLAttributes<HTMLInputElement>, 
-  onApproved: (value: string) => void
-) {
-  const { defaultValue } = inputOptions;
-  let inputText: string = defaultValue && typeof defaultValue === 'string' ? defaultValue : '';
-
-  const input = (
-    <InputField 
-      { ...inputOptions } 
-      content={ dialogOptions.content } 
-      onChange={(event) => inputText = event.target.value }
-    />
-  );
-
-  ConfirmDialog(
-    {
-      ...dialogOptions,
-      rejectCaption: 'Cancel',
-      content: input,
-    }, 
-    () => onApproved(inputText)
-  );
-};
-
-export const PasswordDialog = function (
-  title: React.ReactNode, 
-  text: React.ReactNode, 
-  onApproved: (value: string) => void
-) {
-  const dialogOptions: InputDialogOptions = {
-    icon: 'yellow lock',
-    approveCaption: 'Set password',
-
-    // A hack to cheat browser not to use autofill for the real password field
-    // (some browsers can be really desperate with finding login forms...)
-    // https://github.com/airdcpp-web/airdcpp-webclient/issues/100
-    content: (
-      <div>
-        <input style={{ display: 'none' }}/>
-        <input type="password" style={{ display: 'none' }}/>
-        { text }
-      </div>
-    ),
-    title: title,
-  };
-
-  const inputOptions = {
-    placeholder: 'Enter password',
-    type: 'password',
-  };
-
-  InputDialog(dialogOptions, inputOptions, onApproved);
-};
-
-export default InputDialog;

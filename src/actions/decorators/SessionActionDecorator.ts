@@ -14,7 +14,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 type SessionType = UI.SessionItemBase;
 
 export default function (actions: UI.ActionType[], sessionsUrl: string, editAccess: API.AccessEnum) {
-  const SessionActions = Reflux.createActions([
+  const SessionActionConfig: UI.ActionConfigList<SessionType> = [
     { 'fetchSessions': { asyncResult: true } },
     { 'removeSession': { 
       asyncResult: true ,
@@ -23,7 +23,9 @@ export default function (actions: UI.ActionType[], sessionsUrl: string, editAcce
       icon: IconConstants.REMOVE },
     },
     'sessionChanged',
-  ] as UI.ActionConfigList<SessionType>);
+  ];
+
+  const SessionActions = Reflux.createActions(SessionActionConfig);
 
   SessionActions.fetchSessions.listen(function (this: UI.AsyncActionType<SessionType>) {
     let that = this;

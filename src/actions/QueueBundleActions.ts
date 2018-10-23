@@ -7,8 +7,6 @@ import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
-
 import DownloadableItemActions, { DownloadableItemInfo } from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -25,7 +23,7 @@ const isDirectoryBundle = (bundle: API.QueueBundle) => bundle.type.id === 'direc
 const hasSources = (bundle: API.QueueBundle) => bundle.sources.total > 0 && itemNotFinished(bundle);
 
 
-const QueueBundleActions = Reflux.createActions([
+const QueueBundleActionConfig: UI.ActionConfigList<API.QueueBundle> = [
   { 'sources': { 
     asyncResult: false,
     displayName: 'Manage sources...', 
@@ -55,10 +53,15 @@ const QueueBundleActions = Reflux.createActions([
   'divider',
   { 'removeBundle': { 
     asyncResult: true, 
-    children: [ 'confirmed' ], 
     displayName: 'Remove',
     access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
+    confirmation: bundle => ({
+      content: `Are you sure that you want to remove the bundle ${bundle.name}?`,
+      approveCaption: 'Remove bundle',
+      rejectCaption: `Don't remove`,
+      checkboxCaption: 'Remove finished files',
+    })
   } },
   'divider',
   { 'rescan': { 
@@ -85,7 +88,9 @@ const QueueBundleActions = Reflux.createActions([
     displayName: 'Remove source', 
     icon: IconConstants.REMOVE,
   } },
-]);
+];
+
+const QueueBundleActions = Reflux.createActions(QueueBundleActionConfig);
 
 const shareBundle = (bundle: API.QueueBundle, skipValidation: boolean, action: UI.AsyncActionType<API.QueueBundle>) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/share`, { 
@@ -135,28 +140,10 @@ QueueBundleActions.removeBundleSource.listen(function (
     .catch(that.failed.bind(that, source, bundle));
 });
 
-QueueBundleActions.removeBundle.shouldEmit = function (bundle: API.QueueBundle) {
-  if (bundle.status.completed) {
-    // No need to confirm completed bundles
-    this.confirmed(bundle, false);
-  } else {
-    const options = {
-      title: this.displayName,
-      content: `Are you sure that you want to remove the bundle ${bundle.name}?`,
-      icon: this.icon,
-      approveCaption: 'Remove bundle',
-      rejectCaption: `Don't remove`,
-      checkboxCaption: 'Remove finished files',
-    };
-
-    ConfirmDialog(options, this.confirmed.bind(this, bundle));
-  }
-  return false;
-};
-
-QueueBundleActions.removeBundle.confirmed.listen(function (
+QueueBundleActions.removeBundle.listen(function (
   this: UI.AsyncActionType<API.QueueBundle>,
   bundle: API.QueueBundle, 
+  location: any,
   removeFinished: boolean
 ) {
   let that = this;

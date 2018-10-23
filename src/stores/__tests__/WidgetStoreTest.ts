@@ -59,7 +59,7 @@ describe('widget store', () => {
     expect(hasLayoutItems(widgetId)).toEqual(true);
     expect(WidgetStore.getWidgetSettings(widgetId)).toEqual(settings);
 
-    WidgetStore.onRemoveConfirmed(widgetId);
+    WidgetStore.onRemove({ id: widgetId });
     expect(countWidgetIds(widgetId, WidgetStore.layouts)).toEqual(0);
     expect(WidgetStore.getWidgetSettings(widgetId)).toEqual({});
   });

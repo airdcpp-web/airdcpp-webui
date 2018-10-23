@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
@@ -9,7 +8,9 @@ import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import { Location } from 'history';
 
 import * as UI from 'types/ui';
-import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
+import { 
+  ActionHandlerDecorator, ActionHandlerDecoratorChildProps, ActionClickHandler
+} from 'decorators/ActionHandlerDecorator';
 
 export type OnClickActionHandler = (actionId: string) => void;
 
@@ -126,9 +127,6 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
   } as MenuType<ItemDataT>;
 };
 
-
-const isSidebarAction = (actionId: string) => actionId === 'browse' || actionId === 'message';
-
 // Convert ID to menu link element
 const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
   menu: MenuType<ItemDataT>, 
@@ -136,7 +134,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
   actionId: string, 
   itemIndex: number, 
   location: Location, 
-  closeModal?: () => void
+  onClickAction: ActionClickHandler<ItemDataT>
 ) => {
   if (actionId === 'divider') {
     return (
@@ -157,11 +155,17 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
     <MenuItemLink 
       key={ actionId } 
       onClick={ () => {
-        if (!!closeModal && isSidebarAction(actionId)) {
-          closeModal();
-        }
+        onClickAction({
+          actionId,
+          action, 
+          itemData: menu.itemDataGetter()
+        });
 
-        setTimeout(() => action(menu.itemDataGetter(), location));
+        //if (!!closeModal && isSidebarAction(actionId)) {
+        //  closeModal();
+        //}
+
+        //setTimeout(() => action(menu.itemDataGetter(), location));
         //action(menu.itemDataGetter(), location);
       } }
       icon={ action.icon }
@@ -179,7 +183,7 @@ const notError = <ItemDataT extends UI.ActionItemDataValueType>(
 export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionItemDataValueType>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
-  type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT & { closeModal: () => void; };
+  type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT & ActionHandlerDecoratorChildProps;
   class ActionMenuDecorator extends React.PureComponent<Props> {
     /*static propTypes = {
 
@@ -200,17 +204,13 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       caption: PropTypes.node,
     };*/
 
-    static contextTypes = {
-      router: PropTypes.object.isRequired,
-    };
-
     // Reduce menus to an array of DropdownItems
     reduceMenuItems = (items: React.ReactChild[], menu: MenuType<ItemDataT>, menuIndex: number) => {
-      const { location } = this.context.router.route;
-      const { closeModal } = this.props;
+      const { location } = this.props;
+      const { onClickAction } = this.props;
 
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
-        return getMenuItem(menu, menuIndex, actionId, actionIndex, location, closeModal);
+        return getMenuItem(menu, menuIndex, actionId, actionIndex, location, onClickAction);
       }));
 
       return items;
@@ -274,16 +274,5 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     }
   }
 
-  return (
-    (props: ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT) => (
-      <ModalRouteCloseContext.Consumer>
-        { closeModal => (
-          <ActionMenuDecorator
-            { ...props }
-            closeModal={ closeModal }
-          />
-        ) }
-      </ModalRouteCloseContext.Consumer>
-    )
-  );
+  return ActionHandlerDecorator(ActionMenuDecorator);
 }

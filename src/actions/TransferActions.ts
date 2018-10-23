@@ -20,7 +20,8 @@ const isFinished = (transfer: API.Transfer) => transfer.status.id === StatusEnum
 const removeFile = (transfer: API.Transfer) => isDownload(transfer) && isFilelist(transfer) && !isFinished(transfer);
 const removeSource = (transfer: API.Transfer) => isDownload(transfer) && !isFinished(transfer);
 
-const TransferActions = Reflux.createActions([
+
+const TransferActionConfig: UI.ActionConfigList<API.Transfer> = [
   { 'force': { 
     asyncResult: true,
     displayName: 'Force connect',
@@ -49,7 +50,10 @@ const TransferActions = Reflux.createActions([
     icon: IconConstants.REMOVE,
     filter: removeSource,
   } },
-] as UI.ActionConfigList<API.Transfer>);
+];
+
+const TransferActions = Reflux.createActions(TransferActionConfig);
+
 
 TransferActions.force.listen(function (this: UI.AsyncActionType<API.Transfer>, transfer: API.Transfer) {
   const that = this;
@@ -66,7 +70,7 @@ TransferActions.disconnect.listen(function (this: UI.AsyncActionType<API.Transfe
 });
 
 TransferActions.removeFile.listen(function (transfer: API.Transfer) {
-  return QueueFileActions.removeFile.confirmed({
+  return QueueFileActions.removeFile({
     id: transfer.queue_file_id,
     target: transfer.target,
     name: transfer.name,

@@ -2,15 +2,13 @@
 //@ts-ignore
 import Reflux from 'reflux';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
-
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
 import * as UI from 'types/ui';
 import { Location } from 'history';
 
-interface WidgetItemInfo { 
+export interface WidgetItemInfo { 
   widgetInfo: UI.Widget;
   id: string;
   settings: UI.WidgetSettings;
@@ -20,7 +18,7 @@ const notAlwaysShow = ({ widgetInfo }: WidgetItemInfo) => !widgetInfo.alwaysShow
 const noData = (item: UI.ActionItemDataValueType) => !item;
 
 
-const WidgetActions = Reflux.createActions([
+const WidgetActionConfig: UI.ActionConfigList<WidgetItemInfo> = [
   { 'create': { 
     displayName: 'Add widget',
     children: [ 'saved' ], 
@@ -34,12 +32,19 @@ const WidgetActions = Reflux.createActions([
   } },
   { 'remove': { 
     asyncResult: true, 
-    children: [ 'confirmed' ], 
     displayName: 'Remove widget',
     filter: notAlwaysShow,
     icon: IconConstants.REMOVE,
+    confirmation: widget => ({
+      content: `Are you sure that you want to remove the widget ${widget.settings.name}?`,
+      approveCaption: 'Remove widget',
+      rejectCaption: `Don't remove`,
+    })
   } },
-] as UI.ActionConfigList<WidgetItemInfo>);
+];
+
+const WidgetActions = Reflux.createActions(WidgetActionConfig);
+
 
 WidgetActions.create.listen(function (widgetInfo: UI.Widget, location: Location) {
   History.push(`/home/widget/${widgetInfo.typeId}`);
@@ -47,18 +52,6 @@ WidgetActions.create.listen(function (widgetInfo: UI.Widget, location: Location)
 
 WidgetActions.edit.listen(function ({ id, widgetInfo }: WidgetItemInfo, location: Location) {
   History.push(`/home/widget/${widgetInfo.typeId}/${id}`);
-});
-
-WidgetActions.remove.listen(function (this: UI.ConfirmActionType<WidgetItemInfo>, { id, settings }: WidgetItemInfo) {
-  const options = {
-    title: this.displayName,
-    content: 'Are you sure that you want to remove the widget ' + settings.name + '?',
-    icon: this.icon,
-    approveCaption: 'Remove widget',
-    rejectCaption: `Don't remove`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, id));
 });
 
 export default WidgetActions;

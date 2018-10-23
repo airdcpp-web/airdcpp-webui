@@ -6,7 +6,7 @@ import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
+//import ConfirmDialog from 'components/semantic/ConfirmDialog';
 
 import DownloadableItemActions from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
@@ -21,7 +21,7 @@ import { Location } from 'history';
 const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
 
 
-const QueueFileActions = Reflux.createActions([
+const QueueFileActionConfig: UI.ActionConfigList<API.QueueFile> = [
   { 'search': { 
     asyncResult: true,
     access: API.AccessEnum.SEARCH, 
@@ -39,35 +39,29 @@ const QueueFileActions = Reflux.createActions([
     asyncResult: true,
   } },
   { 'removeFile': { 
-    asyncResult: true, 
-    children: [ 'confirmed' ], 
+    asyncResult: true,
     displayName: 'Remove',
     access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
+    confirmation: file => ({
+      content: `Are you sure that you want to remove the file ${file.name}?`,
+      approveCaption: 'Remove file',
+      rejectCaption: `Don't remove`,
+      checkboxCaption: 'Remove on disk',
+    })
   } },
-] as UI.ActionConfigList<API.QueueFile>);
+];
+
+const QueueFileActions = Reflux.createActions(QueueFileActionConfig);
 
 QueueFileActions.search.listen(function (itemInfo: API.QueueFile, location: Location) {
   return DownloadableItemActions.search({ itemInfo }, location);
 });
 
-QueueFileActions.removeFile.shouldEmit = function (file: API.QueueFile) {
-  const options = {
-    title: this.displayName,
-    content: 'Are you sure that you want to remove the file ' + file.name + '?',
-    icon: this.icon,
-    approveCaption: 'Remove file',
-    rejectCaption: `Don't remove`,
-    checkboxCaption: 'Remove on disk',
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this, file));
-  return false;
-};
-
-QueueFileActions.removeFile.confirmed.listen(function (
+QueueFileActions.removeFile.listen(function (
   this: UI.AsyncActionType<API.QueueFile>, 
   item: API.QueueFile, 
+  location: any,
   removeFinished: boolean
 ) {
   const that = this;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ShareActions from 'actions/ShareActions';
+import ShareExcludeActions from 'actions/ShareExcludeActions';
 import ShareConstants from 'constants/ShareConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -18,7 +19,7 @@ const Row: React.SFC<{ path: string; }> = ({ path }) => (
     <td>
       <ActionMenu 
         caption={ <strong>{ path }</strong> } 
-        actions={ ShareActions } 
+        actions={ ShareExcludeActions } 
         ids={ [ 'removeExclude' ] } 
         itemData={ path }
         contextElement="#setting-scroll-context"
@@ -64,7 +65,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
         />
 
         <ActionButton
-          action={ ShareActions.addExclude }
+          action={ ShareExcludeActions.addExclude }
           className="add"
         />
 
@@ -82,7 +83,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
         ) }
 
         <FileBrowserDialog
-          onConfirm={ ShareActions.addExclude.saved }
+          onConfirm={ ShareExcludeActions.addExclude.saved }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
           subHeader="Add excluded path"

@@ -12,7 +12,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-export const QueueActions = Reflux.createActions([
+const QueueActionConfig: UI.ActionConfigList<API.QueueSource> = [
   { 'removeCompleted': { 
     asyncResult: true,
     access: API.AccessEnum.QUEUE_EDIT, 
@@ -35,7 +35,10 @@ export const QueueActions = Reflux.createActions([
   { 'removeSource': { 
     asyncResult: true,
   } },
-] as UI.ActionConfigList<API.QueueSource>);
+];
+
+export const QueueActions = Reflux.createActions(QueueActionConfig);
+
 
 const setBundlePriorities = (prio: API.QueuePriorityEnum, action: UI.AsyncActionType<API.QueueBundle>) => {
   return SocketService.post(QueueConstants.BUNDLES_URL + '/priority', { priority: prio })

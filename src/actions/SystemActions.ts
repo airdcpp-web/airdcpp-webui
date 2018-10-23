@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import SystemConstants from 'constants/SystemConstants';
 import SocketService from 'services/SocketService';
 
-import ConfirmDialog from 'components/semantic/ConfirmDialog';
 import IconConstants from 'constants/IconConstants';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -12,24 +11,38 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-export const SystemActions = Reflux.createActions([
+const SystemActionConfig: UI.ActionConfigList<void> = [
   { 'fetchAway': { asyncResult: true } },
   { 'setAway': { asyncResult: true } },
   { 'restartWeb': { 
     asyncResult: true,
-    children: [ 'confirmed' ], 
     displayName: 'Restart web server',
     access: API.AccessEnum.ADMIN,
     icon: IconConstants.REFRESH,
+    confirmation: {
+      content: `When changing the binding options, it's recommended to restart the web server only 
+                when you are able to access the server for troubleshooting. If  \
+                the web server won't come back online, you should start the application 
+                manually to see if there are any error messages. The configuration file is location in your \
+                user directory by default (inside .airdc++ directory) in case you need to edit it manually.`,
+      approveCaption: 'Continue and restart',
+      rejectCaption: `Don't restart`,
+    }
   } },
   { 'shutdown': { 
     asyncResult: true,
-    children: [ 'confirmed' ], 
     displayName: 'Shut down application',
     access: API.AccessEnum.ADMIN,
     icon: IconConstants.POWER,
+    confirmation: {
+      content: 'Are you sure that you wish to shut down the application?',
+      approveCaption: 'Continue and shut down',
+      rejectCaption: 'Cancel',
+    }
   } },
-] as UI.ActionConfigList<void>);
+];
+
+export const SystemActions = Reflux.createActions(SystemActionConfig);
 
 SystemActions.fetchAway.listen(function (this: UI.AsyncActionType<void>) {
   SocketService.get(SystemConstants.MODULE_URL + '/away')
@@ -45,42 +58,14 @@ SystemActions.setAway.listen(function (this: UI.AsyncActionType<void>, away: boo
     .catch(this.failed);
 });
 
-SystemActions.restartWeb.shouldEmit = function (this: UI.ConfirmActionType<void>) {
-  const options = {
-    title: this.displayName,
-    content: `When changing the binding options, it's recommended to restart the web server only 
-              when you are able to access the server for troubleshooting. If  \
-              the web server won't come back online, you should start the application 
-              manually to see if there are any error messages. The configuration file is location in your \
-							user directory by default (inside .airdc++ directory) in case you need to edit it manually.`,
-    icon: this.icon,
-    approveCaption: 'Continue and restart',
-    rejectCaption: `Don't restart`,
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this));
-};
-
-SystemActions.restartWeb.confirmed.listen(function (this: UI.AsyncActionType<void>) {
+SystemActions.restartWeb.listen(function (this: UI.AsyncActionType<void>) {
   let that = this;
   SocketService.post(SystemConstants.MODULE_URL + '/restart_web')
     .then(that.completed)
     .catch(that.failed);
 });
 
-SystemActions.shutdown.shouldEmit = function () {
-  const options = {
-    title: this.displayName,
-    content: 'Are you sure that you wish to shut down the application?',
-    icon: this.icon,
-    approveCaption: 'Continue and shut down',
-    rejectCaption: 'Cancel',
-  };
-
-  ConfirmDialog(options, this.confirmed.bind(this));
-};
-
-SystemActions.shutdown.confirmed.listen(function (this: UI.AsyncActionType<void>) {
+SystemActions.shutdown.listen(function (this: UI.AsyncActionType<void>) {
   let that = this;
   SocketService.post(SystemConstants.MODULE_URL + '/shutdown')
     .then(that.completed)
