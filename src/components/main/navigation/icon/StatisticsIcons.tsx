@@ -2,8 +2,6 @@ import React from 'react';
 
 import SocketService from 'services/SocketService';
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
-//@ts-ignore
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
 
 import LoginStore from 'stores/LoginStore';

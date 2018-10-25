@@ -8,7 +8,7 @@ export interface ModalCloseContextProps {
   closeModal: ModalCloseContext;
 }
 
-export const ModalRouteCloseContext = React.createContext<ModalCloseContext>(() => { return undefined; });
+export const ModalRouteCloseContext = React.createContext<ModalCloseContext | undefined>(undefined);
 
 export function withModalCloseContext<PropsT>(Component: React.ComponentType<PropsT & ModalCloseContextProps>) {
   return (props: PropsT) => {

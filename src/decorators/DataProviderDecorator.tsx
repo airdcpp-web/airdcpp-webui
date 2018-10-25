@@ -198,7 +198,10 @@ export default function <PropsT extends object, DataT extends object>(
         return (
           <ModalRouteCloseContext.Consumer>
             { close => {
-              close();
+              if (!!close) {
+                close();
+              }
+              
               return null;
             }}
           </ModalRouteCloseContext.Consumer>

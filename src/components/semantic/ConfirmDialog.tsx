@@ -9,6 +9,7 @@ import Checkbox from 'components/semantic/Checkbox';
 import 'semantic-ui-css/components/modal';
 import 'semantic-ui-css/components/modal.min.css';
 import Icon, { IconType } from 'components/semantic/Icon';
+import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 
 type ApproveHandler = (checked: boolean) => void | false;
@@ -31,10 +32,12 @@ export interface ConfirmDialogProps extends ConfirmDialogOptions {
   onRejected?: RejectHandler;
 }
 
-//const NODE_ID = 'modals-node';
-const NODE_ID = 'confirms-node';
+const NODE_ID = 'modals-node';
+//const NODE_ID = 'confirms-node';
 
 class ConfirmDialog extends React.Component<ConfirmDialogProps> {
+  static contextType = ModalRouteCloseContext;
+
   static propTypes = {
 
     // Title of the modal
@@ -119,7 +122,9 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
 
   render() {
     const { title, icon, checkboxCaption, rejectCaption, approveCaption, content, children } = this.props;
-    const basic = true;
+
+    // We can't use the basic (fully dimmed) style inside other modals
+    const basic = !this.context;
     return ReactDOM.createPortal(
       (
         <div 

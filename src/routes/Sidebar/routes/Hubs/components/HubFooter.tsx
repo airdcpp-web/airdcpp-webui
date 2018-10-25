@@ -9,9 +9,6 @@ import { formatSize } from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 import EncryptionState from 'components/EncryptionState';
 
-//@ts-ignore
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-
 import * as API from 'types/api';
 
 import { ErrorResponse } from 'airdcpp-apisocket';

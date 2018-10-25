@@ -118,8 +118,10 @@ function ActionHandlerDecorator<PropsT, ItemDataT = any>(
     }
 
     closeConfirmation = () => {
-      this.setState({
-        confirmActionData: null,
+      setTimeout(() => {
+        this.setState({
+          confirmActionData: null,
+        });
       });
     }
 

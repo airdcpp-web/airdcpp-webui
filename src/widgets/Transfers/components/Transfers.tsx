@@ -11,9 +11,6 @@ import SocketService from 'services/SocketService';
 
 import TransferConstants from 'constants/TransferConstants';
 
-//@ts-ignore
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-
 import { withContentRect, MeasuredComponentProps } from 'react-measure';
 
 import '../style.css';

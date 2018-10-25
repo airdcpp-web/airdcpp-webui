@@ -7,9 +7,6 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import ExtensionIcon from 'routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 import ExtensionActionButtons from 'routes/Settings/routes/Extensions/components/extension/ExtensionActionButtons';
 
-//@ts-ignore
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-
 import versionCompare from 'compare-versions';
 
 import 'semantic-ui-css/components/item.min.css';
