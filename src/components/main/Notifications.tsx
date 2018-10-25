@@ -16,7 +16,6 @@ import { default as EventConstants } from 'constants/EventConstants';
 import NotificationStore from 'stores/NotificationStore';
 import NotificationActions from 'actions/NotificationActions';
 
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import History from 'utils/History';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -31,6 +30,9 @@ import { Location } from 'history';
 import * as API from 'types/api';
 
 import Severity = API.SeverityEnum;
+import { 
+  SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
+} from 'decorators/SocketSubscriptionDecorator';
 
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
@@ -54,9 +56,9 @@ interface NotificationsProps {
   location: Location;
 }
 
-const Notifications = createReactClass<NotificationsProps, {}>({
+const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDecoratorChildProps, {}>({
   displayName: 'Notifications',
-  mixins: [ SocketSubscriptionMixin(), Reflux.listenTo(NotificationStore, 'addNotification') ],
+  mixins: [ Reflux.listenTo(NotificationStore, 'addNotification') ],
   notifications: null,
   limiter: new RateLimiter(3, 3000, true),
 
@@ -114,6 +116,8 @@ const Notifications = createReactClass<NotificationsProps, {}>({
     if ('Notification' in window) {
       Notification.requestPermission();
     }
+
+    this.onSocketConnected();
   },
 
   render() {
@@ -127,19 +131,21 @@ const Notifications = createReactClass<NotificationsProps, {}>({
     );
   },
 
-  onSocketConnected(addSocketListener: any) {
-    // tslint:disable-next-line:max-line-length
-    addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, null, API.AccessEnum.PRIVATE_CHAT_VIEW);
+  onSocketConnected() {
+    const { addSocketListener } = this.props as SocketSubscriptionDecoratorChildProps;
 
     // tslint:disable-next-line:max-line-length
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, null, API.AccessEnum.QUEUE_VIEW);
-    // tslint:disable-next-line:max-line-length
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, null, API.AccessEnum.QUEUE_VIEW);
+    addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, undefined, API.AccessEnum.PRIVATE_CHAT_VIEW);
 
     // tslint:disable-next-line:max-line-length
-    addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, null, API.AccessEnum.EVENTS_VIEW);
+    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
     // tslint:disable-next-line:max-line-length
-    addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, null, API.AccessEnum.VIEW_FILE_VIEW);
+    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
+
+    // tslint:disable-next-line:max-line-length
+    addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, undefined, API.AccessEnum.EVENTS_VIEW);
+    // tslint:disable-next-line:max-line-length
+    addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, undefined, API.AccessEnum.VIEW_FILE_VIEW);
   },
 
   onLogMessage(message: API.StatusMessage) {
@@ -271,4 +277,4 @@ const Notifications = createReactClass<NotificationsProps, {}>({
   },
 });
 
-export default Notifications;
+export default SocketSubscriptionDecorator(Notifications);

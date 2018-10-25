@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import FilelistConstants from 'constants/FilelistConstants';
 import FilelistSessionActions from 'actions/FilelistSessionActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';

@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Moment from 'moment';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
@@ -10,7 +9,6 @@ import ExtensionActionButtons from 'routes/Settings/routes/Extensions/components
 
 //@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import versionCompare from 'compare-versions';
 
@@ -18,6 +16,9 @@ import 'semantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { 
+  SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
+} from 'decorators/SocketSubscriptionDecorator';
 
 
 interface VersionProps {
@@ -57,7 +58,7 @@ const formatAuthor = (npmPackage?: NpmPackage, installedPackage?: API.Extension)
   return null;
 };
 
-const formatNote = (installedPackage?: API.Extension, npmError?: ErrorResponse) => {
+const formatNote = (installedPackage?: API.Extension, npmError?: ErrorResponse | null) => {
   if (installedPackage && !installedPackage.managed) {
     return 'Unmanaged extension';
   }
@@ -82,14 +83,17 @@ export interface NpmPackage {
 export interface ExtensionProps {
   installedPackage?: API.Extension;
   npmPackage?: NpmPackage;
-  npmError?: ErrorResponse;
+  npmError?: ErrorResponse | null;
 }
 
-const Extension = createReactClass<ExtensionProps, {}>({
-  displayName: 'Extension',
-  mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
 
-  propTypes: {
+interface State {
+  installing: boolean;
+}
+class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionDecoratorChildProps, State> {
+  //displayName: 'Extension',
+
+  /*propTypes: {
     npmPackage: PropTypes.shape({
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
@@ -105,36 +109,36 @@ const Extension = createReactClass<ExtensionProps, {}>({
       version: PropTypes.string.isRequired,
       author: PropTypes.string,
     }),
-  },
+  },*/
 
-  getInitialState() {
-    return {
-      installing: false,
-    };
-  },
+  state: State = {
+    installing: false,
+  };
 
-  onInstallationStarted(data: API.ExtensionInstallEvent) {
-    if (data.install_id !== this.props.npmPackage.name) {
+  onInstallationStarted = (data: API.ExtensionInstallEvent) => {
+    if (data.install_id !== this.props.npmPackage!.name) {
       return;
     }
 
     this.setState({
       installing: true,
     });
-  },
+  }
 
-  onInstallationCompleted(data: API.ExtensionInstallEvent) {
-    if (data.install_id !== this.props.npmPackage.name) {
+  onInstallationCompleted = (data: API.ExtensionInstallEvent) => {
+    if (data.install_id !== this.props.npmPackage!.name) {
       return;
     }
 
     this.setState({
       installing: false,
     });
-  },
+  }
 
-  onSocketConnected(addSocketListener: any) {
-    if (this.props.npmPackage) {
+  componentDidMount() {
+    const { addSocketListener, npmPackage } = this.props;
+
+    if (!!npmPackage) {
       // tslint:disable-next-line:max-line-length
       addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.INSTALLATION_STARTED, this.onInstallationStarted);
       // tslint:disable-next-line:max-line-length
@@ -142,10 +146,10 @@ const Extension = createReactClass<ExtensionProps, {}>({
       // tslint:disable-next-line:max-line-length
       addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.INSTALLATION_FAILED, this.onInstallationCompleted);
     }
-  },
+  }
 
   render() {
-    const { npmPackage, installedPackage, npmError }: ExtensionProps = this.props;
+    const { npmPackage, installedPackage, npmError } = this.props;
     const { installing } = this.state;
 
     const hasUpdate = !!installedPackage && !!npmPackage && 
@@ -191,7 +195,7 @@ const Extension = createReactClass<ExtensionProps, {}>({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
-export default Extension;
+export default SocketSubscriptionDecorator(Extension);

@@ -1,20 +1,21 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import invariant from 'invariant';
 
 import SocketService from 'services/SocketService';
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
-import { APISocket, ErrorResponse, AddListener } from 'airdcpp-apisocket';
+import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
 import { toErrorResponse } from 'utils/TypeConvert';
 import { ModalRouteCloseContext } from './ModalRouteDecorator';
+import { 
+  SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps, AddSocketListener 
+} from './SocketSubscriptionDecorator';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
-  addSocketListener: AddListener, 
+  addSocketListener: AddSocketListener, 
   data: {
     refetchData: (keys?: string[]) => void;
     mergeData: (data: Partial<DataT>) => void;
@@ -39,10 +40,10 @@ export interface DataProviderDecoratorProps<PropsT extends object, DataT extends
 
 export interface DataProviderDecoratorChildProps {
   refetchData: (keys?: string[]) => void;
-  dataError?: ErrorResponse;
+  dataError: ErrorResponse | null;
 }
 
-interface State<DataT> {
+interface State<DataT extends object> {
   data: DataT | null;
   error: ErrorResponse | null;
 }
@@ -52,11 +53,10 @@ export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
   settings: DataProviderDecoratorProps<PropsT, DataT>
 ) {
-  const DataProviderDecorator = createReactClass<PropsT, State<DataT>>({
-    displayName: 'DataProviderDecorator',
-    mixins: [ SocketSubscriptionMixin() ],
+  class DataProviderDecorator extends React.Component<SocketSubscriptionDecoratorChildProps & PropsT, State<DataT>> {
+    //displayName: 'DataProviderDecorator',
 
-    propTypes: {
+    /*propTypes: {
       // Key-value map of prop names and API urls
       // Value may also be a function which receives the props and SocketService as argument and performs the data fetch
       urls: PropTypes.oneOfType([
@@ -82,50 +82,54 @@ export default function <PropsT extends object, DataT extends object>(
 
       // Should the decorated components handle data fetching failures?
       renderOnError: PropTypes.bool,
-    },
+    },*/
 
-    getInitialState() {
-      return {
-        data: null,
-        error: null,
-      };
-    },
+    mounted: boolean = false;
+
+    state: State<DataT> = {
+      data: null,
+      error: null,
+    };
 
     componentDidMount() {
       this.mounted = true;
       this.fetchData();
-    },
+
+      if (settings.onSocketConnected) {
+        settings.onSocketConnected(
+          this.props.addSocketListener, 
+          {
+            refetchData: this.refetchData,
+            mergeData: this.mergeData,
+            props: this.props as PropsT,
+          }
+        );
+      }
+    }
 
     componentWillUnmount() {
       this.mounted = false;
-    },
-
-    onSocketConnected(addSocketListener: AddListener) {
-      if (settings.onSocketConnected) {
-        settings.onSocketConnected(addSocketListener, {
-          refetchData: this.refetchData,
-          mergeData: this.mergeData,
-          props: this.props,
-        });
-      }
-    },
+    }
 
     // Merge data object into existing data
-    mergeData(data: any) {
+    mergeData = (data: any) => {
       this.setState({
-        data: Object.assign({}, this.state.data, data)
+        data: {
+          ...this.state.data as object, 
+          ...data,
+        }
       });
-    },
+    }
 
-    refetchData(keys?: string[]) {
+    refetchData = (keys?: string[]) => {
       invariant(
         !keys || (Array.isArray(keys) && keys.every(key => !!settings.urls[key])), 
         'Invalid keys supplied to refetchData'
       );
       this.fetchData(keys);
-    },
+    }
 
-    fetchData(keys?: string[]) {
+    fetchData = (keys?: string[]) => {
       const { urls } = settings;
       if (!keys) {
         keys = Object.keys(urls);
@@ -134,7 +138,7 @@ export default function <PropsT extends object, DataT extends object>(
       const promises = keys.map(key => {
         let url = urls[key];
         if (typeof url === 'function') {
-          return url(this.props, SocketService);
+          return url(this.props as PropsT, SocketService);
         }
 
         return SocketService.get(url);
@@ -142,17 +146,17 @@ export default function <PropsT extends object, DataT extends object>(
 
       Promise.all(promises)
         .then(this.onDataFetched.bind(this, keys), this.onDataFetchFailed);
-    },
+    }
 
     // Convert the data array to key-value props
-    reduceData(keys: string[], reducedData: any[], data: any, index: number) {
+    reduceData = (keys: string[], reducedData: any[], data: any, index: number) => {
       const { dataConverters } = settings;
       const url = keys[index];
-      reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props) : data;
+      reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props as PropsT) : data;
       return reducedData;
-    },
+    }
 
-    onDataFetched(keys: string[], values: any[]) {
+    onDataFetched = (keys: string[], values: any[]) => {
       if (!this.mounted) {
         return;
       }
@@ -160,9 +164,9 @@ export default function <PropsT extends object, DataT extends object>(
       const data = values.reduce(this.reduceData.bind(this, keys), {});
 
       this.mergeData(data);
-    },
+    }
 
-    onDataFetchFailed(fetchError: ErrorResponse | Response) {
+    onDataFetchFailed = (fetchError: ErrorResponse | Response) => {
       if (!this.mounted) {
         return;
       }
@@ -180,7 +184,7 @@ export default function <PropsT extends object, DataT extends object>(
       this.setState({
         error,
       });
-    },
+    }
 
     render() {
       const { loaderText, renderOnError } = settings;
@@ -209,8 +213,8 @@ export default function <PropsT extends object, DataT extends object>(
           { ...data }
         />
       );
-    },
-  });
+    }
+  }
 
-  return DataProviderDecorator;
+  return SocketSubscriptionDecorator(DataProviderDecorator);
 }

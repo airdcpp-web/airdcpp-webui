@@ -1,7 +1,5 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 //@ts-ignore
 import { TimeSeries } from 'pondjs';
 
@@ -9,7 +7,6 @@ import Loader from 'components/semantic/Loader';
 import StatColumn from './StatColumn';
 import SpeedChart from './SpeedChart';
 
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import SocketService from 'services/SocketService';
 
 import TransferConstants from 'constants/TransferConstants';
@@ -23,6 +20,9 @@ import '../style.css';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { 
+  SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
+} from 'decorators/SocketSubscriptionDecorator';
 
 
 const IDLE_CHECK_PERIOD = 3000;
@@ -56,64 +56,63 @@ interface TransferProps extends MeasuredComponentProps {
 
 }
 
-const Transfers = withContentRect('bounds')(createReactClass<TransferProps, State>({
-  displayName: 'Transfers',
-  mixins: [ SocketSubscriptionMixin(), PureRenderMixin ],
+class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDecoratorChildProps, State> {
+  //displayName: 'Transfers',
 
-  getInitialState() {
-    return {
-      points: [
-        [
-          Date.now(),
-          0,
-          0,
-        ]
-      ],
-      maxDownload: 0,
-      maxUpload: 0,
-    } as State;
-  },
+  idleInterval: NodeJS.Timer;
+
+  state: State = {
+    points: [
+      [
+        Date.now(),
+        0,
+        0,
+      ]
+    ],
+    maxDownload: 0,
+    maxUpload: 0,
+  };
 
   componentDidMount() {
     this.fetchStats();
 
     // Add zero values when there is no traffic
     this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
-  },
+
+    const { addSocketListener } = this.props;
+    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
+  }
 
   componentWillUnmount() {
     clearInterval(this.idleInterval);
-  },
+  }
 
-  onSocketConnected(addSocketListener: any) {
-    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
-  },
-
-  checkIdle() {
+  checkIdle = () => {
     const { points } = this.state;
     if (points[points.length - 1][0] + IDLE_CHECK_PERIOD - 200 <= Date.now()) {
       this.setState({
         points: addSpeed(points, 0, 0),
       });
     }
-  },
+  }
 
-  fetchStats() {
+  fetchStats = () => {
     SocketService.get(TransferConstants.STATISTICS_URL)
       .then(this.onStatsReceived)
       .catch((error: ErrorResponse) => console.error('Failed to fetch transfer statistics', error.message));
-  },
+  }
 
-  onStatsReceived(stats: API.TransferStats) {
-    stats = Object.assign({}, this.state.stats, stats);
-
+  onStatsReceived = (stats: API.TransferStats) => {
     this.setState({
       points: addSpeed(this.state.points, stats.speed_down, stats.speed_up),
       maxDownload: Math.max(stats.speed_down, this.state.maxDownload),
       maxUpload: Math.max(stats.speed_up, this.state.maxUpload),
-      stats,
+      stats: {
+        ...this.state.stats,
+        ...stats,
+      },
     });
-  },
+  }
 
   render() {
     const { measureRef, contentRect } = this.props as TransferProps;
@@ -143,7 +142,7 @@ const Transfers = withContentRect('bounds')(createReactClass<TransferProps, Stat
         ) }
       </div>
     );
-  },
-}));
+  }
+}
 
-export default Transfers;
+export default withContentRect('bounds')(SocketSubscriptionDecorator(Transfers));

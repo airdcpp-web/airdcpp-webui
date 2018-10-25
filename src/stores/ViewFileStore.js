@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import ViewFileActions from 'actions/ViewFileActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';

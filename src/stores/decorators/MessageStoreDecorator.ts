@@ -1,5 +1,5 @@
 import { checkSplice, mergeCacheMessages, pushMessage } from 'utils/MessageUtils';
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
 
 import * as API from 'types/api';
 import { AccessEnum } from 'types/api';

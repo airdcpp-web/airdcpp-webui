@@ -9,6 +9,7 @@ export interface TransferStats {
   session_uploaded: number;
   limit_up: number;
   limit_down: number;
+  queued_bytes: number;
 }
 
 export const enum TransferStatusEnum {

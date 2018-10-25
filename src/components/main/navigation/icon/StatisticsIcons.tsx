@@ -1,10 +1,7 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
-
 import SocketService from 'services/SocketService';
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 //@ts-ignore
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
@@ -17,6 +14,9 @@ import TransferConstants from 'constants/TransferConstants';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { 
+  SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
+} from 'decorators/SocketSubscriptionDecorator';
 
 
 interface StatisticsIconProps {
@@ -49,56 +49,61 @@ const StatisticsIcon: React.SFC<StatisticsIconProps> = (
   );
 };
 
+interface StatisticsIconsProps {
+  className?: string;
+}
 
-interface StatisticsIconsProps extends API.TransferStats, API.HashStats {
+interface State extends 
+  Pick<API.TransferStats, 'speed_down' | 'speed_up' | 'queued_bytes'>, 
+  Pick<API.HashStats, 'hash_speed' | 'hash_bytes_left'
+> {
 
 }
 
-const StatisticsIcons = createReactClass<{}, Partial<StatisticsIconsProps>>({
-  displayName: 'StatisticsIcons',
-  mixins: [ PureRenderMixin, SocketSubscriptionMixin() ],
+class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketSubscriptionDecoratorChildProps, State> {
+  //displayName: 'StatisticsIcons',
 
-  getDefaultProps() {
-    return {
-      className: '',
-    };
-  },
+  static defaultProps = {
+    className: '',
+  };
 
-  onSocketConnected(addSocketListener: any) {
-    // tslint:disable-next-line:max-line-length
-    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, null, API.AccessEnum.TRANSFERS);
-    // tslint:disable-next-line:max-line-length
-    addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, null, API.AccessEnum.SETTINGS_VIEW);
-  },
+  state: State = {
+    speed_down: 0,
+    speed_up: 0,
+    hash_speed: 0,
+    hash_bytes_left: 0,
+    queued_bytes: 0,
+  };
 
-  fetchStats() {
+  fetchStats = () => {
     if (LoginStore.hasAccess(API.AccessEnum.TRANSFERS)) {
       SocketService.get(TransferConstants.STATISTICS_URL)
         .then(this.onStatsReceived)
         .catch((error: ErrorResponse) => console.error('Failed to fetch transfer statistics', error.message));
     }
-  },
+  }
 
   componentDidMount() {
     this.fetchStats();
-  },
 
-  onStatsReceived(data: API.TransferStats) {
-    const newState = Object.assign({}, this.state, data);
-    this.setState(newState);
-  },
+    const { addSocketListener } = this.props;
 
-  getInitialState() {
-    return {
-      speed_down: 0,
-      speed_up: 0,
-      hash_speed: 0,
-      hash_bytes_left: 0,
-      queued_bytes: 0,
-    };
-  },
+    // tslint:disable-next-line:max-line-length
+    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, undefined, API.AccessEnum.TRANSFERS);
+    // tslint:disable-next-line:max-line-length
+    addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, undefined, API.AccessEnum.SETTINGS_VIEW);
+  }
 
-  render: function () {
+  onStatsReceived = (data: API.TransferStats) => {
+    const { speed_down, speed_up, queued_bytes } = data;
+    this.setState({
+      speed_down,
+      speed_up,
+      queued_bytes,
+    });
+  }
+
+  render() {
     return (
       <div className={ 'ui centered inverted mini list statistics-icons ' + this.props.className }>
         <StatisticsIcon 
@@ -129,7 +134,7 @@ const StatisticsIcons = createReactClass<{}, Partial<StatisticsIconsProps>>({
         />
       </div>
     );
-  },
-});
+  }
+}
 
-export default StatisticsIcons;
+export default SocketSubscriptionDecorator(StatisticsIcons);

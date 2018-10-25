@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import { default as SystemConstants, AwayEnum } from 'constants/SystemConstants';
 import SystemActions from 'actions/SystemActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 
 
 const ActivityStore = Reflux.createStore({

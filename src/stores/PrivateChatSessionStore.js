@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/PrivateChatActions';
 
-import SocketSubscriptionDecorator from 'decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
 import { PrivateMessageUrgencies } from 'constants/UrgencyConstants';

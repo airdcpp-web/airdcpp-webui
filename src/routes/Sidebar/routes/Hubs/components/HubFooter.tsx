@@ -1,11 +1,8 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
-
-import createReactClass from 'create-react-class';
 
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
-import SocketSubscriptionMixin from 'mixins/SocketSubscriptionMixin';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import { formatSize } from 'utils/ValueFormat';
@@ -16,7 +13,11 @@ import EncryptionState from 'components/EncryptionState';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import * as API from 'types/api';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { 
+  SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
+} from 'decorators/SocketSubscriptionDecorator';
 
 
 interface HubFooterProps {
@@ -29,81 +30,86 @@ interface State {
   users: number;
 }
 
-const HubFooter = createReactClass<HubFooterProps, State>({
-  displayName: 'HubFooter',
-  mixins: [ SocketSubscriptionMixin(HubSessionStore), PureRenderMixin ],
 
-  propTypes: {
+type DataProps = SocketSubscriptionDecoratorChildProps<HubFooterProps>;
+class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
+  //displayName: 'HubFooter',
+
+  /*static propTypes = {
     // Currently active session (required)
     session: PropTypes.any,
 
     userlistToggle: PropTypes.node.isRequired,
-  },
+  };*/
 
-  onSocketConnected(addSocketListener: any) {
+  addSocketListeners = () => {
     const url = HubConstants.SESSIONS_URL;
-    addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, this.props.session.id);
-  },
 
-  getInitialState() {
-    return {
-      users: 0,
-      shared: 0,
-    };
-  },
+    const { session, addSocketListener } = this.props;
+    addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, session.id);
+  }
 
-  onCountsReceived(data: API.HubCounts) {
+  state: State = {
+    users: 0,
+    shared: 0,
+  };
+
+  onCountsReceived = (data: API.HubCounts) => {
     this.setState({ 
       users: data.user_count,
       shared: data.share_size,
     });
-  },
+  }
 
-  fetchCounts() {
+  fetchCounts = () => {
     SocketService.get(`${HubConstants.SESSIONS_URL}/${this.props.session.id}/counts`)
       .then(this.onCountsReceived)
       .catch((error: ErrorResponse) => console.error('Failed to fetch hub counts', error.message));
-  },
+  }
 
   componentDidMount() {
     this.fetchCounts();
-  },
 
-  componentDidUpdate(prevProps) {
+    this.addSocketListeners();
+  }
+
+  componentDidUpdate(prevProps: HubFooterProps) {
     if (prevProps.session.id !== this.props.session.id) {
       this.fetchCounts();
-    }
-  },
 
-  render: function () {
+      this.props.removeSocketListeners(prevProps);
+      this.addSocketListeners();
+    }
+  }
+
+  render() {
     const { userlistToggle, session }: HubFooterProps = this.props;
     const { shared, users } = this.state;
 
     const averageShare = formatSize(users > 0 ? (shared / users) : 0);
 
-    let userCaption: string | React.ReactElement<any> = `${users} users`;
-    if (session.encryption) {
-      userCaption = (
-        <span>
-          <EncryptionState encryption={ session.encryption }/>
-          { userCaption }
-        </span>
-      );
-    }
-
-
     return (
       <SessionFooter>
-        <FooterItem text={ userCaption }/>
+        <FooterItem 
+          text={(
+            <>
+              <EncryptionState encryption={ session.encryption }/>
+              { `${users} users` }
+            </>
+          )}
+        />
         { window.innerWidth > 700 && (
-          <FooterItem text={ formatSize(shared) + ' (' + averageShare + '/user)' }/> 
+          <FooterItem text={ `${formatSize(shared)} (${averageShare}/user)` }/> 
         ) }
         <div className="userlist-button">
           { userlistToggle }
         </div>
       </SessionFooter>
     );
-  },
-});
+  }
+}
 
-export default HubFooter;
+export default SocketSubscriptionDecorator(
+  HubFooter,
+  ({ session }) => !!HubSessionStore.getSession(session.id)
+);
