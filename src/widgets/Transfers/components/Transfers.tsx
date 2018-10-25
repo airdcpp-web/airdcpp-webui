@@ -77,7 +77,7 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
     this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
 
     const { addSocketListener } = this.props;
-    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived);
+    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsUpdated);
   }
 
   componentWillUnmount() {
@@ -104,10 +104,14 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
       points: addSpeed(this.state.points, stats.speed_down, stats.speed_up),
       maxDownload: Math.max(stats.speed_down, this.state.maxDownload),
       maxUpload: Math.max(stats.speed_up, this.state.maxUpload),
-      stats: {
-        ...this.state.stats,
-        ...stats,
-      },
+      stats,
+    });
+  }
+
+  onStatsUpdated = (stats: Partial<API.TransferStats>) => {
+    this.onStatsReceived({
+      ...this.state.stats!,
+      ...stats,
     });
   }
 

@@ -92,12 +92,9 @@ class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketS
     addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, undefined, API.AccessEnum.SETTINGS_VIEW);
   }
 
-  onStatsReceived = (data: API.TransferStats) => {
-    const { speed_down, speed_up, queued_bytes } = data;
+  onStatsReceived = (data: State) => {
     this.setState({
-      speed_down,
-      speed_up,
-      queued_bytes,
+      ...data
     });
   }
 
