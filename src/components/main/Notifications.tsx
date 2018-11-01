@@ -75,7 +75,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
         return;
       }
 
-      if ('Notification' in window && Notification.permission === 'granted') {
+      if ('Notification' in window && Notification.permission === 'granted' && !document.hasFocus()) {
         this.showNativeNotification(level, notification);
         return;
       }
