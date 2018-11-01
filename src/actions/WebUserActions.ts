@@ -45,7 +45,7 @@ const WebUserActionConfig: UI.ActionConfigList<API.WebUser> = [
 
 const WebUserActions = Reflux.createActions(WebUserActionConfig);
 
-WebUserActions.create.listen(function (location: Location) {
+WebUserActions.create.listen(function (itemData: any, location: Location) {
   History.push(`${location.pathname}/users`);
 });
 

@@ -49,7 +49,7 @@ const FavoriteHubActionConfig: UI.ActionConfigList<API.FavoriteHubEntry> = [
 
 export const FavoriteHubActions = Reflux.createActions(FavoriteHubActionConfig);
 
-FavoriteHubActions.create.listen(function (location: Location) {
+FavoriteHubActions.create.listen(function (itemData: any, location: Location) {
   History.push('/favorite-hubs/entries');
 });
 

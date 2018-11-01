@@ -43,7 +43,7 @@ const FavoriteDirectoryActionConfig: UI.ActionConfigList<API.FavoriteDirectoryEn
 
 const FavoriteDirectoryActions = Reflux.createActions(FavoriteDirectoryActionConfig);
 
-FavoriteDirectoryActions.create.listen(function (location: Location) {
+FavoriteDirectoryActions.create.listen(function (itemData: any, location: Location) {
   History.push(`${location.pathname}/directories`);
 });
 

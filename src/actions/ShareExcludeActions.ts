@@ -40,7 +40,7 @@ const ShareExcludeActionConfig: UI.ActionConfigList<string> = [
 const ShareExcludeActions = Reflux.createActions(ShareExcludeActionConfig);
 
 
-ShareExcludeActions.addExclude.listen(function (location: Location) {
+ShareExcludeActions.addExclude.listen(function (itemData: any, location: Location) {
   History.push(`${location.pathname}/browse`);
 });
 
