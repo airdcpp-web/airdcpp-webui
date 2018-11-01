@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { Prompt } from 'react-router-dom';
+import { Prompt, RouteComponentProps } from 'react-router-dom';
 import invariant from 'invariant';
 
 import Message from 'components/semantic/Message';
@@ -50,9 +50,11 @@ export function withSaveContext<PropsT>(Component: React.ComponentType<PropsT & 
 }
 
 export default function <PropsT extends object>(
-  Component: React.ComponentType<SaveDecoratorChildProps>
+  Component: React.ComponentType<SaveDecoratorChildProps & PropsT>
 ) {
-  class SaveDecorator extends React.Component<SaveDecoratorProps & PropsT> {
+  type Props = SaveDecoratorProps & RouteComponentProps & PropsT;
+  
+  class SaveDecorator extends React.Component<Props> {
     static displayName = 'SaveDecorator';
 
     forms: SaveableRef[] = [];
@@ -96,9 +98,16 @@ export default function <PropsT extends object>(
       return this.changedProperties.size > 0;
     }
 
-    promptSave = (location: Location) => {
+    promptSave = (nextLocation: Location) => {
       const { currentMenuItem } = this.props;
       if (currentMenuItem.noSave) {
+        return true;
+      }
+
+      // Closing/opening a modal?
+      if (this.props.location.pathname.indexOf(nextLocation.pathname) !== -1 || 
+          nextLocation.pathname.indexOf(this.props.location.pathname) !== -1
+      ) {
         return true;
       }
 

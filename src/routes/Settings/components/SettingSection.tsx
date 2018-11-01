@@ -8,22 +8,25 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 import SettingsSideMenuLayout from './SettingsSideMenuLayout';
 import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 
-import SaveDecorator, { SaveDecoratorChildProps } from '../decorators/SaveDecorator';
+import SaveDecorator, { SaveDecoratorChildProps, SaveDecoratorProps } from '../decorators/SaveDecorator';
 
 
-export interface SettingSectionProps extends SaveDecoratorChildProps, SettingsMenuDecoratorChildProps {
+export interface SettingSectionProps {
 
 }
 
+type Props = SaveDecoratorChildProps & SettingsMenuDecoratorChildProps;
 // tslint:disable-next-line:max-line-length
-export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<SettingSectionProps, 'parent' | 'currentMenuItem'> {
+export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<Props, 'parent' | 'currentMenuItem'> {
   contentClassname: string;
   parentMenuItems: React.ReactNode[];
   menuItems: React.ReactNode[];
   advancedMenuItems?: React.ReactNode[];
 }
 
-const SettingSection: React.SFC<SettingSectionProps> = (props) => {
+
+
+const SettingSection: React.SFC<Props> = (props) => {
   const Component = useMobileLayout() || window.innerWidth < 950 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
 
   const { menuItemToLink, parentMenuItems, menuItems, advancedMenuItems, ...childProps } = props;
@@ -45,6 +48,8 @@ const SettingSection: React.SFC<SettingSectionProps> = (props) => {
   );
 };
 
-export default SettingsMenuDecorator(
+const SettingSectionDecorated = SettingsMenuDecorator<SaveDecoratorProps>(
   SaveDecorator<SettingsMenuDecoratorChildProps>(SettingSection)
 );
+
+export default SettingSectionDecorated;
