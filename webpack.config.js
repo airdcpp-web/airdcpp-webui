@@ -1,10 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const ZopfliPlugin = require('zopfli-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const zopfli = require('@gfx/zopfli');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
 if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
@@ -53,12 +56,17 @@ const releasePlugins = [
     minimize: true,
     debug: false
   }),
-  new ZopfliPlugin({
-    asset: '[file].gz',
-    algorithm: 'zopfli',
+  new CompressionPlugin({
+    filename: '[file].gz',
     test: /\.js$/,
     threshold: 0,
-    minRatio: 0
+    minRatio: 1,
+    compressionOptions: {
+      numiterations: 15
+    },
+    algorithm(input, compressionOptions, callback) {
+      return zopfli.gzip(input, compressionOptions, callback);
+    }
   }),
   new Visualizer({
     filename: '../stats.html'
