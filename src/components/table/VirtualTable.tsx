@@ -62,49 +62,45 @@ class VirtualTable extends React.Component<VirtualTableProps> {
   }
 
   componentWillUnmount() {
-    this.close();
+    this.close(this.props.entityId);
     this.unsubscribe();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: VirtualTableProps) {
-    if (nextProps.entityId !== this.props.entityId) {
-      this.close();
-
-      this.start(nextProps.entityId);
+  componentDidUpdate(prevProps: VirtualTableProps) {
+    if (prevProps.entityId !== this.props.entityId) {
+      this.close(prevProps.entityId);
+      this.start(this.props.entityId);
     }
 
-    if (nextProps.viewId !== this.props.viewId) {
-      if (this.props.store.paused) {
+    if (prevProps.viewId !== this.props.viewId) {
+      const { store } = this.props;
+      if (store.paused) {
         // We need to receive the new items
-        TableActions.pause(this.props.store.viewUrl, false);
+        TableActions.pause(store.viewUrl, false);
       }
 
-      TableActions.clear(this.props.store.viewUrl);
+      TableActions.clear(store.viewUrl);
     }
   }
 
-  moduleExists = () => {
-    if (!this.props.entityId) {
+  moduleExists = (entityId: API.IdType | undefined) => {
+    if (!entityId) {
       return true;
     }
 
-    return this.props.sessionStore.getSession(this.props.entityId);
+    return this.props.sessionStore.getSession(entityId);
   }
 
-  start = (entityId?: API.IdType) => {
+  start = (entityId: API.IdType | undefined) => {
     const { store, sourceFilter } = this.props;
 
-    //console.log(`Calling start action for view ${store.viewUrl} (before timeout)`);
-    setTimeout(() => {
-      //console.log(`Calling start action for view ${store.viewUrl} (inside timeout)`);
-      TableActions.init(store.viewUrl, entityId, sourceFilter);
-      TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
-    });
+    TableActions.init(store.viewUrl, entityId, sourceFilter);
+    TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
   }
 
-  close = () => {
+  close = (entityId: API.IdType | undefined) => {
     // Don't send the close command if the session was removed
-    TableActions.close(this.props.store.viewUrl, this.moduleExists());
+    TableActions.close(this.props.store.viewUrl, this.moduleExists(entityId));
   }
 
   render() {
