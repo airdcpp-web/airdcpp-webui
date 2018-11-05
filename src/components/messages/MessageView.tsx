@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Loader from 'components/semantic/Loader';
-import ScrollDecorator, { ScrollDecoratorChildProps } from 'decorators/ScrollDecorator';
+import { useScrollEffect } from 'effects';
 import { ChatMessage, StatusMessage } from './Message';
 import { formatCalendarTime } from 'utils/ValueFormat';
 
@@ -91,36 +91,26 @@ const getMessageListItem = (
 
 interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
+  session?: UI.SessionItemBase;
   className?: string;
 }
 
-class MessageView extends React.Component<MessageViewProps & ScrollDecoratorChildProps> {
-  /*static propTypes = {
-    messages: PropTypes.array,
-    scrollableRef: PropTypes.func,
-  };*/
+const MessageView: React.SFC<MessageViewProps> = React.memo(({ messages, session, className }) => {
+  const scrollableRef = useScrollEffect(messages, session);
+  return (
+    <div 
+      ref={ scrollableRef }
+      className={ classNames('message-section', className) }
+    >
+      { !!messages ? (
+        <div className="ui list message-list">
+          { messages.reduce(getMessageListItem, []) }
+        </div>
+      ) : (
+        <Loader text="Loading messages"/>
+      ) }
+    </div>
+  );
+});
 
-  shouldComponentUpdate(nextProps: MessageViewProps) {
-    return nextProps.messages !== this.props.messages;
-  }
-
-  render() {
-    const { messages, className, scrollableRef } = this.props;
-    return (
-      <div 
-        ref={ scrollableRef }
-        className={ classNames('message-section', className) }
-      >
-        { !!messages ? (
-          <div className="ui list message-list">
-            { messages.reduce(getMessageListItem, []) }
-          </div>
-        ) : (
-          <Loader text="Loading messages"/>
-        ) }
-      </div>
-    );
-  }
-}
-
-export default ScrollDecorator<MessageViewProps>(MessageView);
+export default MessageView;
