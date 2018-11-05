@@ -15,16 +15,16 @@ const MessageStoreDecorator = function (store: any, actions: UI.SessionActions<C
   let messages = new Map();
 
   // Keep track of session IDs for which message fetching has been initialized
-  let initializedSession = new Set();
+  let initializedSession = new Set<API.IdType>();
 
 
-  const onFetchMessagesCompleted = (sessionId: API.IdType, cacheMessages: MessageCache) => {
-    messages.set(sessionId, mergeCacheMessages(cacheMessages, messages.get(sessionId)));
-    store.trigger(messages.get(sessionId), sessionId);
+  const onFetchMessagesCompleted = (session: UI.SessionItemBase, cacheMessages: MessageCache) => {
+    messages.set(session.id, mergeCacheMessages(cacheMessages, messages.get(session.id)));
+    store.trigger(messages.get(session.id), session.id);
   };
 
-  const onFetchMessages = (sessionId: API.IdType) => {
-    initializedSession.add(sessionId);
+  const onFetchMessages = (session: UI.SessionItemBase) => {
+    initializedSession.add(session.id);
   };
 
   const onMessageReceived = (sessionId: API.IdType, message: API.Message, type: UI.MessageType) => {

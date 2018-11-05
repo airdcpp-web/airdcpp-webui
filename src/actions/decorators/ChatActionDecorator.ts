@@ -36,8 +36,8 @@ export default function (actions: UI.ActionType[], sessionUrl: string, editAcces
   ) {
     let that = this;
     SocketService.get(`${sessionUrl}/${session.id}/messages/0`)
-      .then(that.completed.bind(that, session.id))
-      .catch(that.failed.bind(that, session.id));
+      .then(that.completed.bind(that, session))
+      .catch(that.failed.bind(that, session));
   });
 
   ChatActions.fetchMessages.failed.listen(function (session: SessionType, error: ErrorResponse) {
