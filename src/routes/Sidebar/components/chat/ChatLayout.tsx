@@ -1,18 +1,19 @@
 'use strict';
 //import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Message from 'components/semantic/Message';
 import MessageComposer from './MessageComposer';
 import MessageView from 'components/messages/MessageView';
 
-import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import LoginStore from 'stores/LoginStore';
 
 import './chat.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { useActiveSessionEffect } from 'effects';
+import { SessionActions } from 'types/ui';
 
 
 export interface ChatSession extends UI.SessionItemBase {
@@ -26,7 +27,7 @@ export interface ChatActions extends UI.ActionListType<UI.SessionItemBase> {
 }
 
 export interface ChatSessionProps {
-  actions: ChatActions;
+  actions: ChatActions & SessionActions<UI.SessionItemBase>;
   session: ChatSession;
 }
 
@@ -35,89 +36,65 @@ export interface ChatLayoutProps extends ChatSessionProps {
   messageStore: any;
 }
 
-interface State {
-  messages: UI.MessageListItem[] | null;
-}
 
-class ChatLayout extends React.Component<ChatLayoutProps, State> {
-  /*static propTypes = {
-		// Access required for sending messages
-    chatAccess: PropTypes.string.isRequired,
+const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions: ChatActions) => {
+  const [ messages, setMessages ] = useState<UI.MessageListItem[] | null>([]);
 
-    session: PropTypes.any.isRequired,
+  useEffect(
+    () => {
+      // Session changes, update the messages
+      if (!messageStore.isSessionInitialized(session.id)) {
+        setMessages(null);
+        actions.fetchMessages(session);
+      } else {
+        setMessages(messageStore.getSessionMessages(session.id));
+      }
+    },
+    [ session.id ]
+  );
 
-    messageStore: PropTypes.object.isRequired,
 
-    actions: PropTypes.object.isRequired,
-  };*/
-
-  unsubscribe: () => void;
-
-  state = {
-    messages: null,
-  };
-
-  constructor(props: ChatLayoutProps) {
-    super(props);
-    this.unsubscribe = props.messageStore.listen(this.onMessagesChanged);
-  }
-
-  onMessagesChanged = (messages: UI.MessageListItem[], id: API.IdType) => {
-    if (id !== this.props.session.id) {
-      return;
-    }
-
-    this.setState({ messages: messages });
-  }
-
-  onSessionActivated = (session: ChatSession) => {
-    const { messageStore, actions } = this.props;
-    if (!messageStore.isSessionInitialized(session.id)) {
-      this.setState({ 
-        messages: null 
+  useEffect(
+    () => {
+      // Subscribe for new messages
+      const unsubscribe = messageStore.listen((newMessages: UI.MessageListItem[], id: API.IdType) => {
+        if (id !== session.id) {
+          return;
+        }
+    
+        setMessages(newMessages);
       });
 
-      actions.fetchMessages(session);
-    } else {
-      this.setState({ 
-        messages: messageStore.getSessionMessages(session.id) 
-      });
-    }
-  }
+      return unsubscribe;
+    },
+    [ session.id ]
+  );
 
-  componentDidMount() {
-    this.onSessionActivated(this.props.session);
-  }
+  return messages;
+};
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
 
-  UNSAFE_componentWillReceiveProps(nextProps: ChatLayoutProps) {
-    if (this.props.session.id !== nextProps.session.id) {
-      this.onSessionActivated(nextProps.session);
-    }
-  }
+const ChatLayout: React.SFC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
+  useActiveSessionEffect(session, actions, true);
 
-  render() {
-    const hasChatAccess = LoginStore.hasAccess(this.props.chatAccess);
-    return (
-      <div className="message-view">
-        { !hasChatAccess && <Message description="You aren't allowed to send new messages"/> }
-        <MessageView 
-          className="chat"
-          messages={ this.state.messages }
-          session={ this.props.session }
+  const messages = useChatMessagesEffect(session, messageStore, actions);
+  const hasChatAccess = LoginStore.hasAccess(chatAccess);
+  return (
+    <div className="message-view">
+      { !hasChatAccess && <Message description="You aren't allowed to send new messages"/> }
+      <MessageView 
+        className="chat"
+        messages={ messages }
+        session={ session }
+      />
+      { hasChatAccess && (
+        <MessageComposer 
+          session={ session }
+          actions={ actions }
         />
-        { hasChatAccess && (
-          <MessageComposer 
-            session={ this.props.session }
-            actions={ this.props.actions }
-          />
-        ) }
-      </div>
-    );
-  }
-}
+      ) }
+    </div>
+  );
+};
 
-export default ActiveSessionDecorator<ChatLayoutProps, ChatSession>(ChatLayout, true);
+export default ChatLayout;

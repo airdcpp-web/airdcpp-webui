@@ -5,7 +5,8 @@ import {
 import * as UI from 'types/ui';
 
 
-export const useScrollEffect = (messages: UI.MessageListItem[] | null, session?: UI.SessionItemBase) => {
+// 
+export const useMessageViewScrollEffect = (messages: UI.MessageListItem[] | null, session?: UI.SessionItemBase) => {
   const [ shouldScrollToBottom, setShouldScrollToBottom ] = useState(true);
   const scrollable = useRef<HTMLDivElement | null>(null);
 
@@ -26,6 +27,7 @@ export const useScrollEffect = (messages: UI.MessageListItem[] | null, session?:
 
   useLayoutEffect(
     () => {
+      // Scroll listener for the element
       if (scrollable.current) {
         scrollable.current.addEventListener('scroll', onScroll);
 
@@ -42,7 +44,7 @@ export const useScrollEffect = (messages: UI.MessageListItem[] | null, session?:
 
   useLayoutEffect(
     () => {
-      // Messages changes
+      // Messages changed
       if (shouldScrollToBottom) {
         scrollToBottom();
       }

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Loader from 'components/semantic/Loader';
-import { useScrollEffect } from 'effects';
+import { useMessageViewScrollEffect } from 'effects';
 import { ChatMessage, StatusMessage } from './Message';
 import { formatCalendarTime } from 'utils/ValueFormat';
 
@@ -96,7 +96,7 @@ interface MessageViewProps {
 }
 
 const MessageView: React.SFC<MessageViewProps> = React.memo(({ messages, session, className }) => {
-  const scrollableRef = useScrollEffect(messages, session);
+  const scrollableRef = useMessageViewScrollEffect(messages, session);
   return (
     <div 
       ref={ scrollableRef }
