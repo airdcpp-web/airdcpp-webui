@@ -74,7 +74,7 @@ const releasePlugins = [
 ];
 
 const debugPlugins = [
-  new webpack.HotModuleReplacementPlugin()
+  //new webpack.HotModuleReplacementPlugin()
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
@@ -82,10 +82,10 @@ plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 // ENTRY
 const mainEntries = [];
 if (!release) {
-  mainEntries.push('webpack-hot-middleware/client?reload=true');
-  mainEntries.push('react-hot-loader/patch');
+  //mainEntries.push('webpack-hot-middleware/client?reload=true');
+  //mainEntries.push('react-hot-loader/patch');
 }
-mainEntries.push('./src/index.jsx'); 
+mainEntries.push('./src/index.tsx'); 
 
 console.log(chalk.bold('[webpack] Release: ' + release));
 console.log(chalk.bold('[webpack] Demo mode: ' + demo));
