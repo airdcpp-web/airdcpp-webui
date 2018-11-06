@@ -7,7 +7,7 @@ import Icon, { IconType } from 'components/semantic/Icon';
 import 'semantic-ui-css/components/button.min.css';
 
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconType;
   loading?: boolean;
   disabled?: boolean;
