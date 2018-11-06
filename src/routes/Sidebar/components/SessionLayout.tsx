@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';

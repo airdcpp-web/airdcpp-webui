@@ -27,7 +27,7 @@ import Modal from 'components/semantic/Modal';
 import * as API from 'types/api';
 
 import './style.css';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import { APISocket } from 'airdcpp-apisocket';
 import { DownloadHandler, DownloadableItemInfo } from 'actions/DownloadableItemActions';
 

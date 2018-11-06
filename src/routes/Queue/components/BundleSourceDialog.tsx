@@ -7,7 +7,7 @@ import FileIcon from 'components/icon/FileIcon';
 
 import SourceTable from 'routes/Queue/components/BundleSourceTable';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import QueueConstants from 'constants/QueueConstants';
 
 import * as API from 'types/api';

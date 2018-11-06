@@ -24,18 +24,18 @@ class TextFile extends React.Component<FileSessionContentProps> {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: FileSessionContentProps) {
-    if (!nextProps.item.content_ready) {
+  componentDidUpdate(prevProps: FileSessionContentProps) {
+    if (!this.props.item.content_ready) {
       return;
     }
 
-    const idChanged = nextProps.item.id !== this.props.item.id;
+    const idChanged = prevProps.item.id !== this.props.item.id;
     if (idChanged) {
       this.setState(TextFile.getInitialState());
     }
 
-    if (idChanged || !this.props.item.content_ready) {
-      this.fetchText(nextProps.url);
+    if (idChanged || !prevProps.item.content_ready) {
+      this.fetchText(this.props.url);
     }
   }
 

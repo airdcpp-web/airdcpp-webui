@@ -35,6 +35,8 @@ interface ListBrowserProps {
   location: Location;
 }
 
+type LocationState = { directory: string; } | undefined;
+
 class ListBrowser extends React.Component<ListBrowserProps> {
   hasClickedDirectory: boolean = false;
 
@@ -69,42 +71,43 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   componentDidMount() {
     const { session, location } = this.props;
 
-    const locationData = location.state;
+    const locationData: LocationState = location.state;
     if (!locationData || !locationData.directory) {
       // We need an initial path for our history
       History.replace({
         state: { 
           directory: session.location.path 
-        }
+        } as LocationState
       });
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: ListBrowserProps) {
-    const nextLocationData = nextProps.location.state;
-    if (!nextLocationData || !nextLocationData.directory) {
+  componentDidUpdate(prevProps: ListBrowserProps) {
+    const newLocationData: LocationState = this.props.location.state;
+    if (!newLocationData || !newLocationData.directory) {
       return;
     }
 
-    if (nextProps.session.location.path === nextLocationData.directory) {
+    if (this.props.session.location.path === newLocationData.directory) {
+      // Nothing has changed
       return;
     }
 
-    const currentLocationData = this.props.location.state;
-    if (currentLocationData && currentLocationData.directory !== nextLocationData.directory) {
+    const oldLocationData: LocationState = prevProps.location.state;
+    if (!!oldLocationData && oldLocationData.directory !== newLocationData.directory) {
       // It's our change
-      this.sendChangeDirectory(nextLocationData.directory);
+      this.sendChangeDirectory(newLocationData.directory);
     } else {
       // Change initiated by another session/GUI, update our location
       History.replace({ 
         state: {
-          directory: nextProps.session.location.path 
+          directory: this.props.session.location.path 
         }
       });
     }
   }
 
-  sendChangeDirectory = (directory: API.FileItemType) => {
+  sendChangeDirectory = (directory: string) => {
     FilelistSessionActions.changeDirectory(this.props.session, directory);
   }
 

@@ -2,7 +2,7 @@ import { Location } from 'history';
 
 import * as API from 'types/api';
 import { IconType } from 'components/semantic/Icon';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import { ActionListType } from './actions';
 
 

@@ -13,7 +13,7 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import WidgetUtils from 'utils/WidgetUtils';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

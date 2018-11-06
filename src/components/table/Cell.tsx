@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { TableActionMenu, TableDownloadMenu, TableActionMenuProps } from 'components/menu';
@@ -13,7 +12,7 @@ import FormattedIp from 'components/format/FormattedIp';
 import Checkbox, { CheckboxProps } from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
 import { Cell, CellProps } from 'fixed-data-table-2';
-import { RouterChildContext } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
@@ -101,9 +100,10 @@ export interface ActionLinkCellProps<CellDataT, ItemDataT extends UI.ActionItemD
   action: UI.ActionType;
 }
 
-export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
-  { cellData, rowDataGetter, action, ...props }: ActionLinkCellProps<CellDataT, ItemDataT>, 
-  { router }: RouterChildContext<{}>
+const ActionLinkCellPlain = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
+  { 
+    cellData, rowDataGetter, action, location, ...props
+  }: ActionLinkCellProps<CellDataT, ItemDataT> & RouteComponentProps
 ) => {
   if (!showAction(action, rowDataGetter!())) {
     return (
@@ -115,15 +115,13 @@ export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionItemDataVal
   }
 
   return (
-    <a className="plain link cell" onClick={ () => action(rowDataGetter!(), router.route.location) }>
+    <a className="plain link cell" onClick={ () => action(rowDataGetter!(), location) }>
       { getCellContent(cellData) }
     </a>
   );
 };
 
-ActionLinkCell.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
+export const ActionLinkCell = withRouter(ActionLinkCellPlain);
 
 export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;

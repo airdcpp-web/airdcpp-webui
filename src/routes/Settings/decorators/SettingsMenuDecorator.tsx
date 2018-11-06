@@ -93,7 +93,7 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
         <RouterMenuItemLink 
           key={ url } 
           url={ url } 
-          icon={ !!menuItemInfo.icon && 'green ' + menuItemInfo.icon }
+          icon={ !!menuItemInfo.icon ? `green ${menuItemInfo.icon}` : null }
         >
           { menuItemInfo.title }
         </RouterMenuItemLink>

@@ -1,7 +1,5 @@
 'use strict';
 
-import PropTypes from 'prop-types';
-
 import React from 'react';
 import { matchPath } from 'react-router-dom';
 import { 
@@ -23,10 +21,6 @@ interface MainNavigationMobileProps {
 }
 
 class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
-
   c: HTMLDivElement;
   componentDidMount() {
     const settings = {

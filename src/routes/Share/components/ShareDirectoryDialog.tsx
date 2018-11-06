@@ -23,7 +23,7 @@ import AutoSuggestField from 'components/form/AutoSuggestField';
 
 import '../style.css';
 
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

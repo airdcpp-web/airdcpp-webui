@@ -15,7 +15,7 @@ import t from 'utils/tcomb-form';
 
 import Form, { FormFieldChangeHandler, FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
 import { normalizeEnumValue, intTransformer } from 'utils/FormUtils';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import * as API from 'types/api';

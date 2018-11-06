@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
@@ -9,6 +8,7 @@ import WidgetStore from 'stores/WidgetStore';
 import { Location } from 'history';
 
 import * as UI from 'types/ui';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 
 const getWidgetItem = (widgetInfo: UI.Widget, location: Location) => {
@@ -27,7 +27,7 @@ export interface WidgetDropdownProps {
   componentId: string;
 }
 
-const WidgetDropdown: React.SFC<WidgetDropdownProps> = ({ componentId }, { router }) => (
+const WidgetDropdown: React.SFC<WidgetDropdownProps & RouteComponentProps> = ({ componentId, location }) => (
   <Dropdown 
     caption="Add widget..."
     className="create-widget"
@@ -36,12 +36,10 @@ const WidgetDropdown: React.SFC<WidgetDropdownProps> = ({ componentId }, { route
   >
     { WidgetStore.widgets
       .filter(widgetInfo => !widgetInfo.alwaysShow)
-      .map(widgetInfo => getWidgetItem(widgetInfo, router.route.location)) }
+      .map(widgetInfo => getWidgetItem(widgetInfo, location)) }
   </Dropdown>
 );
 
-WidgetDropdown.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
+const Decorated = withRouter(WidgetDropdown);
 
-export default WidgetDropdown;
+export default Decorated;

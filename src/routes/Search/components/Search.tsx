@@ -14,7 +14,7 @@ import Button from 'components/semantic/Button';
 
 import '../style.css';
 import ResultTable from 'routes/Search/components/ResultTable';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 

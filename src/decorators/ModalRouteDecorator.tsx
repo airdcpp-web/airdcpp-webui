@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'react-router';
+import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'react-router-dom';
 
 
 export type ModalCloseContext = () => void;

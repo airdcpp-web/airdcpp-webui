@@ -10,7 +10,7 @@ import SocketService from 'services/SocketService';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 import IconConstants from 'constants/IconConstants';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

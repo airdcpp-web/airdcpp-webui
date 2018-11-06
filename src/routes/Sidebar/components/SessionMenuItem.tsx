@@ -23,7 +23,7 @@ interface SessionMenuItemProps {
   url: string;
   name: React.ReactNode;
   unreadInfoStore: any;
-  status: React.ReactNode;
+  status: React.ReactElement<any>;
   sessionItem: UI.SessionItemBase;
 
   pushSession: PushSessionHandler;

@@ -17,7 +17,7 @@ import FilelistSessionActions from 'actions/FilelistSessionActions';
 import ViewFileActions from 'actions/ViewFileActions';
 import EventActions from 'actions/EventActions';
 import SystemActions from 'actions/SystemActions';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { AccessEnum } from 'types/api';
 

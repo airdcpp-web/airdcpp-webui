@@ -1,8 +1,6 @@
 'use strict';
 
-import PropTypes from 'prop-types';
-
-import React from 'react';
+import React, { memo } from 'react';
 
 //@ts-ignore
 import { default as ReactLinkify, linkify } from 'react-linkify';
@@ -23,7 +21,7 @@ import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import LoginStore from 'stores/LoginStore';
-import { RouterChildContext } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Location } from 'history';
 
 import * as API from 'types/api';
@@ -124,28 +122,20 @@ interface TextDecoratorProps {
 }
 
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator: React.SFC<TextDecoratorProps> = (
-  { emojify = false, text }, 
-  { router }: RouterChildContext<{}>
+const TextDecorator: React.SFC<TextDecoratorProps & RouteComponentProps> = (
+  { emojify = false, text, location }
 ) => (
   <ReactLinkify 
     properties={{ 
       target: '_blank',
       rel: 'noreferrer',
-      onClick: evt => onClickLink(evt, router.route.location),
+      onClick: evt => onClickLink(evt, location),
     } as React.HTMLProps<HTMLLinkElement> }
   >
     { !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), emojiRenderer) }
   </ReactLinkify>
 );
 
-/*TextDecorator.propTypes = {
-  text: PropTypes.string.isRequired,
-  emojify: PropTypes.bool,
-};*/
+const Decorated = withRouter(memo(TextDecorator));
 
-TextDecorator.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
-
-export default TextDecorator;
+export default Decorated;

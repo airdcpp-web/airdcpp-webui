@@ -88,10 +88,6 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     title: PropTypes.node,
   };
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired,
-  };
-
   state: State<ValueType> = {
     error: null,
     formValue: {},

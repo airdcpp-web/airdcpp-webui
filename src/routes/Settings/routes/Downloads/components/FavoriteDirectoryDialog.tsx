@@ -17,7 +17,7 @@ import { getLastDirectory } from 'utils/FileUtils';
 import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import AutoSuggestField from 'components/form/AutoSuggestField';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

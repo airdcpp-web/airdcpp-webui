@@ -6,7 +6,7 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from 'routes/Queue/components/BundleFileTable';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import QueueConstants from 'constants/QueueConstants';
 
 import * as API from 'types/api';

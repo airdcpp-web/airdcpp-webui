@@ -1,5 +1,5 @@
 'use strict';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -12,10 +12,10 @@ import { MentionsInput, Mention } from 'react-mentions';
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
 import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
-import { RouterChildContext } from 'react-router';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const ENTER_KEY_CODE = 13;
 
@@ -55,16 +55,40 @@ export interface MessageComposerProps extends ChatSessionProps {
 
 }
 
-class MessageComposer extends React.Component<MessageComposerProps> {
-  static propTypes = {
+
+
+const getStorageKey = (props: RouteComponentProps) => {
+  return 'last_message_' + props.location.pathname;
+};
+
+const loadState = (props: RouteComponentProps) => {
+  return {
+    text: loadSessionProperty(getStorageKey(props), ''),
+  };
+};
+
+
+const saveState = (state: State, props: RouteComponentProps) => {
+  saveSessionProperty(getStorageKey(props), state.text);
+};
+
+const userToMention = (user: API.HubUser) => {
+  return {
+    id: user.cid,
+    display: user.nick,
+  };
+};
+
+interface State {
+  text: string;
+}
+
+class MessageComposer extends React.Component<MessageComposerProps & RouteComponentProps> {
+  /*static propTypes = {
     // Actions for this chat session type
     actions: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
-  };
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired,
-  };
+  };*/
 
   handleCommand = (text: string) => {
     let command, params;
@@ -83,34 +107,19 @@ class MessageComposer extends React.Component<MessageComposerProps> {
     ChatCommandHandler(this.props).handle(command, params);
   }
 
-  handleSend = (message: object) => {
+  handleSend = (text: string) => {
     const { actions, session } = this.props;
-    actions.sendMessage(session, message);
-  }
-
-  getStorageKey = (context: RouterChildContext<{}>) => {
-    return 'last_message_' + context.router.route.location.pathname;
-  }
-
-  saveText = () => {
-    const { text } = this.state;
-    saveSessionProperty(this.getStorageKey(this.context), text);
-  }
-
-  loadState = (context: RouterChildContext<{}>) => {
-    return {
-      text: loadSessionProperty(this.getStorageKey(context), ''),
-    };
+    actions.sendMessage(session, text);
   }
 
   componentWillUnmount() {
-    this.saveText();
+    saveState(this.state, this.props);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: MessageComposerProps, nextContext: RouterChildContext<{}>) {
-    if (nextContext.router.route.location.pathname !== this.context.router.route.location.pathname) {
-      this.saveText();
-      this.setState(this.loadState(nextContext));
+  componentDidUpdate(prevProps: RouteComponentProps, prevState: State) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      saveState(prevState, prevProps);
+      this.setState(loadState(this.props));
     }
   }
 
@@ -144,13 +153,6 @@ class MessageComposer extends React.Component<MessageComposerProps> {
     this.setState({ text: '' });
   }
 
-  mapUser = (user: API.HubUser) => {
-    return {
-      id: user.cid,
-      display: user.nick,
-    };
-  }
-
   findUsers = (value: string, callback: (data: any) => void) => {
     const { session } = this.props;
     SocketService.post(UserConstants.SEARCH_NICKS_URL, { 
@@ -158,13 +160,13 @@ class MessageComposer extends React.Component<MessageComposerProps> {
       max_results: 5,
       hub_urls: session.hub_url ? [ session.hub_url ] : undefined,
     })
-      .then((users: API.HubUser[]) => callback(users.map(this.mapUser)))
+      .then((users: API.HubUser[]) => callback(users.map(userToMention)))
       .catch((error: ErrorResponse) => 
         console.log(`Failed to fetch suggestions: ${error}`)
       );
   }
 
-  state = this.loadState(this.context);
+  state: State = loadState(this.props);
 
   render() {
     const mobile = useMobileLayout();
@@ -201,4 +203,6 @@ class MessageComposer extends React.Component<MessageComposerProps> {
   }
 }
 
-export default MessageComposer;
+const Decorated = withRouter(MessageComposer);
+
+export default Decorated;

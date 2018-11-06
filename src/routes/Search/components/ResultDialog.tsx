@@ -11,7 +11,7 @@ import UserResultTable from 'routes/Search/components/UserResultTable';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import SearchConstants from 'constants/SearchConstants';
 
 import * as API from 'types/api';

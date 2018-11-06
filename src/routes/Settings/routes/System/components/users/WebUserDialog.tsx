@@ -17,7 +17,7 @@ import LoginStore from 'stores/LoginStore';
 
 import '../../style.css';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
