@@ -110,9 +110,9 @@ class RSS extends React.PureComponent<RSSProps, State> {
     );
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: RSSProps) {
-    if (nextProps.settings.feed_url !== this.props.settings.feed_url) {
-      this.fetchFeed(nextProps.settings.feed_url);
+  componentDidUpdate(prevProps: RSSProps) {
+    if (prevProps.settings.feed_url !== this.props.settings.feed_url) {
+      this.fetchFeed(this.props.settings.feed_url);
     }
   }
 

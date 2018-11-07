@@ -36,12 +36,12 @@
     "test"
   ],
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.1.5",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-object-assign": "^7.0.0",
     "@babel/plugin-transform-react-display-name": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@gfx/zopfli": "^1.0.9",
@@ -98,7 +98,7 @@
     "pre-commit": "^1.2.2",
     "promise": "^8.0.2",
     "prop-types": "^15.6.2",
-    "re-resizable": "^4.9.2",
+    "re-resizable": "^4.9.3",
     "react": "^16.7.0-alpha.0",
     "react-addons-perf": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.6.2",

@@ -41,16 +41,14 @@ export default function (
 
     media: HTMLMediaElement;
 
-    UNSAFE_componentWillUpdate(nextProps: FileSessionContentProps) {
-      // Reset the error when switching items
-      if (nextProps.item !== this.props.item && this.state.error) {
-        this.setState({ error: null });
-      }
-    }
-
     componentDidUpdate(prevProps: FileSessionContentProps) {
-      if (prevProps.item !== this.props.item && this.media) {
-        this.media.load();
+      if (prevProps.item !== this.props.item) {
+        if (this.media) {
+          this.media.load();
+        }
+
+        // Reset the error when switching between items
+        this.setState({ error: null });
       }
     }
 
