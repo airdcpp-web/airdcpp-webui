@@ -80,8 +80,8 @@ interface LoginProps {
 
 const Login: React.SFC<LoginProps> = ({ location }) => {
   const [ loading, setLoading ] = useState(false);
-  const usernameRef = useRef<HTMLInputElement>();
-  const passwordRef = useRef<HTMLInputElement>();
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   useEffect(
     () => {

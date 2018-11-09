@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, RouteComponentProps } from 'react-router-dom';
 
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
@@ -22,7 +22,6 @@ import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/Bro
 
 import IconConstants from 'constants/IconConstants';
 import MenuItemLink from 'components/semantic/MenuItemLink';
-import { Location } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -38,12 +37,9 @@ const findItem = <SessionT extends SessionBaseType>(items: SessionT[], id: API.I
 export interface SessionLayoutProps<
   SessionT extends SessionBaseType = SessionBaseType,
   ActionT extends object = {}
-> extends UI.SessionInfoGetter<SessionT> {
+> extends UI.SessionInfoGetter<SessionT>, Omit<RouteComponentProps, 'match'> {
     // Unique ID of the section (used for storing and loading the previously open tab)
     baseUrl: string;
-
-    // Location object
-    location: Location;
 
     // Array of the items to list
     items: SessionT[];
@@ -444,7 +440,12 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     
     if (!this.hasEditAccess() && items.length === 0) {
       // Nothing to show
-      return <Message title="No items to show" description="You aren't allowed to open new sessions"/>;
+      return (
+        <Message 
+          title="No items to show" 
+          description="You aren't allowed to open new sessions"
+        />
+      );
     }
 
     const { activeItem } = this.state;

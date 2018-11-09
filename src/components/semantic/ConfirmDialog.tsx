@@ -9,7 +9,7 @@ import Checkbox from 'components/semantic/Checkbox';
 import 'semantic-ui-css/components/modal';
 import 'semantic-ui-css/components/modal.min.css';
 import Icon, { IconType } from 'components/semantic/Icon';
-import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
+import { ModalRouteCloseContext, ModalCloseContextProps } from 'decorators/ModalRouteDecorator';
 
 
 type ApproveHandler = (checked: boolean) => void | false;
@@ -37,6 +37,7 @@ const NODE_ID = 'modals-node';
 
 class ConfirmDialog extends React.Component<ConfirmDialogProps> {
   static contextType = ModalRouteCloseContext;
+  context: ModalCloseContextProps;
 
   static propTypes = {
 

@@ -53,7 +53,7 @@ const Files = createReactClass<UI.SessionRouteProps, {}>({
       );
     }
 
-    const { match, location }: UI.SessionRouteProps = this.props;
+    const { match, ...other }: UI.SessionRouteProps = this.props;
     return (
       <SessionLayout
         activeId={ match.params.id }
@@ -64,9 +64,8 @@ const Files = createReactClass<UI.SessionRouteProps, {}>({
         actions={ ViewFileActions }
         unreadInfoStore={ ViewFileStore }
         sessionItemLayout={ FileSession }
-        location={ location }
         { ...ItemHandler }
-        //{ ...other }
+        { ...other }
       />
     );
   },

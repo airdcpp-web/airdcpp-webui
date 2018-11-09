@@ -261,9 +261,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
           options={ options }
           value={ formValue }
           onChange={ this.onFieldChanged }
-          context={ {
-            ...this.context,
-          } }
+          context={ this.props }
         />
       </div>
     );
