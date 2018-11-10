@@ -184,7 +184,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           onChange={ this.handleChange }
           onKeyDown={ this.onKeyDown }
           style={ getMentionFieldStyle(mobile) }
-          autoFocus={ true }
+          autoFocus={ !useMobileLayout() }
         >
           <Mention 
             trigger="@"

@@ -7,6 +7,7 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
 
 import { FilterMethod } from 'types/api';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 
 const filterMethodToString = (method: FilterMethod) => {
@@ -104,7 +105,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
             onChange={ this.onTextChanged } 
             value={ value }
             type="text"
-            autoFocus={ autoFocus }
+            autoFocus={ !useMobileLayout() && autoFocus }
           />
           <SectionedDropdown 
             className="filter-method right top pointing"
