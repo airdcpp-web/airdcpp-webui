@@ -73,8 +73,6 @@ export interface SessionLayoutProps<
     newLayout?: React.ComponentType;
 
     unreadInfoStore: any;
-    // If no function is supplied, the item name will be used
-    //itemHeaderTitleGetter: any;
 }
 
 export interface SessionMainLayoutProps<SessionT extends SessionBaseType, ActionT extends object = {}> extends 

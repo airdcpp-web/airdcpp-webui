@@ -161,7 +161,8 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         caption={ caption }
         user={ this.props.session.user }
         itemInfoGetter={ this.getCurrentDirectory }
-        downloadHandler={ FilelistItemActions.download } 
+        downloadHandler={ FilelistItemActions.download }
+        contextElement="#sidebar-container"
       >
         <ActionMenu
           itemData={ {

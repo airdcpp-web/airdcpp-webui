@@ -141,9 +141,9 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
     const { text } = this.state;
 
     const inputAttributes: Autosuggest.InputProps<SuggestionT> = {
-      placeholder: placeholder,
+      placeholder,
       onChange: this.onTextChange,
-      autoFocus: autoFocus,
+      autoFocus,
       value: text,
       onKeyDown: this.onKeyDown,
     };
