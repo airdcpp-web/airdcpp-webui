@@ -1,7 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
-//@ts-ignore
-import Reflux from 'reflux';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
@@ -16,6 +13,9 @@ import '../style.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { 
+  SessionProviderDecorator, SessionProviderDecoratorChildProps 
+} from 'routes/Sidebar/decorators/SessionProviderDecorator';
 
 
 const UserItemHandler = UserItemHandlerDecorator([ 'message' ]);
@@ -45,32 +45,26 @@ const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
   },
 };
 
-const Filelists = createReactClass<UI.SessionRouteProps, {}>({
-  displayName: 'Filelists',
-  mixins: [ Reflux.connect(FilelistSessionStore, 'filelists') ],
+const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession>> = props => {
+  const { match, ...other } = props;
+  return (
+    <SessionLayout 
+      activeId={ match.params.id }
+      baseUrl="filelists"
+      newCaption="Open filelist"
+      newDescription="Start browsing a new filelist" 
+      newIcon="browser" 
+      disableSideMenu={ true }
+      editAccess={ API.AccessEnum.FILELISTS_EDIT }
+      actions={ FilelistSessionActions }
+      unreadInfoStore={ FilelistSessionStore }
+      sessionItemLayout={ FilelistSession }
+      newLayout={ FilelistNew }
 
-  render() {
-    const { match, ...other }: UI.SessionRouteProps = this.props;
-    return (
-      <SessionLayout 
-        activeId={ match.params.id }
-        baseUrl="filelists"
-        items={ this.state.filelists }
-        newCaption="Open filelist"
-        newDescription="Start browsing a new filelist" 
-        newIcon="browser" 
-        disableSideMenu={ true }
-        editAccess={ API.AccessEnum.FILELISTS_EDIT }
-        actions={ FilelistSessionActions }
-        unreadInfoStore={ FilelistSessionStore }
-        sessionItemLayout={ FilelistSession }
-        newLayout={ FilelistNew }
+      { ...ItemHandler }
+      { ...other }
+    />
+  );
+};
 
-        { ...ItemHandler }
-        { ...other }
-      />
-    );
-  },
-});
-
-export default Filelists;
+export default SessionProviderDecorator(Filelists, FilelistSessionStore);

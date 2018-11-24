@@ -1,7 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
-//@ts-ignore
-import Reflux from 'reflux';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
@@ -17,6 +14,9 @@ import '../style.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { 
+  SessionProviderDecoratorChildProps, SessionProviderDecorator 
+} from 'routes/Sidebar/decorators/SessionProviderDecorator';
 
 
 const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
@@ -38,37 +38,30 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
 };
 
 
-const Files = createReactClass<UI.SessionRouteProps, {}>({
-  displayName: 'Files',
-  mixins: [ Reflux.connect(ViewFileStore, 'files') ],
-
-  render() {
-    const { files } = this.state;
-    if (files.length === 0) {
-      return (
-        <Message
-          title="No files to view"
-          description="You may open text or image files to be viewed here (from search or filelists)"
-        />
-      );
-    }
-
-    const { match, ...other }: UI.SessionRouteProps = this.props;
+const Files: React.FC<SessionProviderDecoratorChildProps<API.FileType>> = props => {
+  if (props.items.length === 0) {
     return (
-      <SessionLayout
-        activeId={ match.params.id }
-        baseUrl="files"
-        items={ files }
-        disableSideMenu={ true }
-        editAccess={ API.AccessEnum.VIEW_FILE_EDIT }
-        actions={ ViewFileActions }
-        unreadInfoStore={ ViewFileStore }
-        sessionItemLayout={ FileSession }
-        { ...ItemHandler }
-        { ...other }
+      <Message
+        title="No files to view"
+        description="You may open text or image files to be viewed here (from search or filelists)"
       />
     );
-  },
-});
+  }
 
-export default Files;
+  const { match, ...other } = props;
+  return (
+    <SessionLayout
+      activeId={ match.params.id }
+      baseUrl="files"
+      disableSideMenu={ true }
+      editAccess={ API.AccessEnum.VIEW_FILE_EDIT }
+      actions={ ViewFileActions }
+      unreadInfoStore={ ViewFileStore }
+      sessionItemLayout={ FileSession }
+      { ...ItemHandler }
+      { ...other }
+    />
+  );
+};
+
+export default SessionProviderDecorator(Files, ViewFileStore);

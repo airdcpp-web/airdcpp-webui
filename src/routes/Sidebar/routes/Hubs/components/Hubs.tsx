@@ -1,7 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
-//@ts-ignore
-import Reflux from 'reflux';
 
 import TextDecorator from 'components/TextDecorator';
 
@@ -19,7 +16,9 @@ import HubIcon from 'components/icon/HubIcon';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { SessionRouteProps } from 'types/ui';
+import { 
+  SessionProviderDecorator, SessionProviderDecoratorChildProps 
+} from 'routes/Sidebar/decorators/SessionProviderDecorator';
 
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
@@ -45,10 +44,6 @@ const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   },
 };
 
-/*interface SessionRouteParams {
-  id: string;
-}*/
-
 const parseNumericId = (params: UI.SessionRouteParams) => {
   if (!params.id) {
     return null;
@@ -59,32 +54,25 @@ const parseNumericId = (params: UI.SessionRouteParams) => {
 
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
-const Hubs = createReactClass<SessionRouteProps, {}>({
-  displayName: 'Hubs',
-  mixins: [ Reflux.connect(HubSessionStore, 'hubSessions') ],
+const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
+  const { match, ...other } = props;
+  return (
+    <SessionLayout 
+      activeId={ parseNumericId(match.params) }
+      baseUrl="hubs"
+      newCaption="Connect"
+      newDescription="Connect to a new hub"
+      newIcon="sitemap"
+      editAccess={ API.AccessEnum.HUBS_EDIT }
+      actions={ HubActions } 
+      sessionItemLayout={ HubSession }
+      newLayout={ HubNew }
 
-  render() {
-    const { match, ...other }: SessionRouteProps = this.props;
-    return (
-      <SessionLayout 
-        activeId={ parseNumericId(match.params) }
-        baseUrl="hubs"
-        items={ this.state.hubSessions } 
-        newCaption="Connect"
-        newDescription="Connect to a new hub"
-        newIcon="sitemap"
-        editAccess={ API.AccessEnum.HUBS_EDIT }
-        actions={ HubActions } 
-        //actionIds={ hubActions }
-        sessionItemLayout={ HubSession }
-        newLayout={ HubNew }
+      unreadInfoStore={ HubSessionStore }
+      { ...ItemHandler }
+      { ...other }
+    />
+  );
+};
 
-        unreadInfoStore={ HubSessionStore }
-        { ...ItemHandler }
-        { ...other }
-      />
-    );
-  },
-});
-
-export default Hubs;
+export default SessionProviderDecorator(Hubs, HubSessionStore);

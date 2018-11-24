@@ -221,7 +221,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
           <Message 
             isError={ true } 
             title="Failed to load content" 
-            description={ this.state.error }
+            description={ error }
           /> 
         ) }
         <BrowserBar 

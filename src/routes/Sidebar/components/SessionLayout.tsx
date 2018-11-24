@@ -155,7 +155,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     // AccessConstant defining whether the user has edit permission 
     editAccess: PropTypes.string.isRequired,
 
-    sessionItemLayout: PropTypes.func.isRequired,
+    sessionItemLayout: PropTypes.any.isRequired,
 
     newLayout: PropTypes.func,
   };
