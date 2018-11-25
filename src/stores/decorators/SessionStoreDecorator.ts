@@ -88,6 +88,7 @@ const SessionStoreDecorator = function (
     onSocketDisconnected: () => {
       sessions = [];
       activeSessionId = null;
+      isInitialized = false;
     },
   };
 

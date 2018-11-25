@@ -55,7 +55,7 @@ interface NotificationsProps {
   location: Location;
 }
 
-class Notifications extends React.PureComponent<NotificationsProps & SocketSubscriptionDecoratorChildProps> {
+class Notifications extends React.Component<NotificationsProps & SocketSubscriptionDecoratorChildProps> {
   notifications: System;
   limiter = new RateLimiter(3, 3000, true);
   unsubscribe: () => void;

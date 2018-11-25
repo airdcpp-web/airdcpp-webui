@@ -1,11 +1,11 @@
 import invariant from 'invariant';
 
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 import { Location, LocationDescriptorObject } from 'history';
 
 
-const History = createHistory({
+const History = createBrowserHistory({
   // Remove the trailing slash from base path
   basename: getBasePath().slice(0, -1),		
 });
