@@ -45,7 +45,6 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
     input: {
       minHeight: !mobileLayout ? 63 : 0,
       maxHeight: 200,
-      padding: 0,
       margin: 0,
     },
   };
