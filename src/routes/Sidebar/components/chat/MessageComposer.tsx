@@ -1,13 +1,12 @@
 'use strict';
-//import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
+import { MentionsInput, Mention } from 'react-mentions';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
 import ChatCommandHandler from './ChatCommandHandler';
-
-//@ts-ignore
-import { MentionsInput, Mention } from 'react-mentions';
 
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
@@ -15,7 +14,6 @@ import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const ENTER_KEY_CODE = 13;
 
@@ -47,6 +45,8 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
     input: {
       minHeight: !mobileLayout ? 63 : 0,
       maxHeight: 200,
+      padding: 0,
+      margin: 0,
     },
   };
 };
@@ -176,6 +176,10 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       { 'large': !mobile },
     );
 
+    const inputProps: React.InputHTMLAttributes<HTMLInputElement> = {
+      autoFocus: !useMobileLayout(),
+    };
+
     return (
       <div className={ className }>
         <MentionsInput 
@@ -184,7 +188,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           onChange={ this.handleChange }
           onKeyDown={ this.onKeyDown }
           style={ getMentionFieldStyle(mobile) }
-          autoFocus={ !useMobileLayout() }
+          { ...inputProps as any }
         >
           <Mention 
             trigger="@"
