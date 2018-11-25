@@ -3,7 +3,7 @@ import React, { useState, useEffect, memo } from 'react';
 
 import classNames from 'classnames';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import CountLabel from 'components/CountLabel';
 import Icon, { IconType } from 'components/semantic/Icon';
 
@@ -53,25 +53,29 @@ const useUrgencies = (props: RouterMenuItemLinkProps) => {
   return urgencies;
 };
 
-// A component that will re-render only when urgencies or active state are updated
-// TODO: session code doesn't work with SessionMenuItem yet
-const RouterMenuItemLink: React.FC<RouterMenuItemLinkProps> = memo((props) => {
-  const urgencies = useUrgencies(props);
+// Route link with support for urgencies
+const RouterMenuItemLink = withRouter(memo<RouterMenuItemLinkProps & RouteComponentProps>(
+  (props) => {
+    const urgencies = useUrgencies(props);
 
-  const { onClick, className, icon, url, children, unreadInfoStore } = props;
-  return (
-    <NavLink 
-      exact={ url === '/' }
-      to={ url } 
-      className={ classNames('item', className) } 
-      activeClassName="active" 
-      onClick={ onClick }
-    >
-      <Icon icon={ icon }/>
-      { children }
-      { !!unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
-    </NavLink>
-  );
-});
+    const { onClick, className, icon, url, children, unreadInfoStore } = props;
+    return (
+      <NavLink 
+        exact={ url === '/' }
+        to={ url } 
+        className={ classNames('item', className) } 
+        activeClassName="active" 
+        onClick={ onClick }
+      >
+        <Icon icon={ icon }/>
+        { children }
+        { !!unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
+      </NavLink>
+    );
+  },
+  (prevProps, nextProps) => {
+    return nextProps.location.key === prevProps.location.key && nextProps.session === prevProps.session;
+  }
+));
 
 export default RouterMenuItemLink;

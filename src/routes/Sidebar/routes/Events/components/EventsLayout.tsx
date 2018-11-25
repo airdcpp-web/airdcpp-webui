@@ -54,7 +54,7 @@ const SystemLog: React.FC<SystemLogProps> = memo(
       </div>
     );
   }, 
-  () => false
+  () => true
 );
 
 export default SystemLog;
