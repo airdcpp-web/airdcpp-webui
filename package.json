@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.4.0",
+  "version": "2.4.1-beta.1",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -60,6 +60,7 @@
     "@types/react-dom": "^16.0.10",
     "@types/react-grid-layout": "^0.16.5",
     "@types/react-measure": "^2.0.4",
+    "@types/react-mentions": "^2.3.0",
     "@types/react-notification-system": "^0.2.39",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-select": "^2.0.8",
