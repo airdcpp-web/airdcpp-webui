@@ -2,7 +2,11 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="format-detection" content="telephone=no">
+
+	<meta name="mobile-web-app-capable" content="yes">
 
   <title>AirDC++ Web Client</title>
 </head>
@@ -32,13 +36,6 @@
 		var script = document.createElement('script');
 		script.src = getBasePath() + "<%= htmlWebpackPlugin.files.chunks.main.entry%>";
 		document.body.appendChild(script);
-		
-		// Favicon
-		var link = document.createElement('link');
-		link.type = 'image/x-icon';
-		link.rel = 'shortcut icon';
-		link.href = getBasePath() + 'favicon.ico';
-		document.getElementsByTagName('head')[0].appendChild(link);
 	</script>
 	
 	<% if (htmlWebpackPlugin.options.googleAnalytics) { %>

@@ -39,7 +39,6 @@ let plugins = [
   
   new HtmlWebpackPlugin({
     template: 'resources/index.ejs',
-    favicon: 'resources/favicon.ico',
     inject: false,
     googleAnalytics: demo,
     chunksSortMode: 'none',
@@ -132,7 +131,7 @@ module.exports = {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
       }, { 
-        test: /\.(jpg|png)$/,
+        test: /\.(jpg|png|ico)$/,
         use: [
           {
             loader: 'file-loader',

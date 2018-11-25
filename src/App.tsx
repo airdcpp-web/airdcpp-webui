@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import History from 'utils/History';
@@ -17,6 +17,11 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 
 import Background1500px from '../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../resources/images/background_winter_3840px.jpg';
+
+import iOSLogo from '../resources/images/ios-logo.png';
+import Favico from '../resources/favicon.ico';
+
+
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import Measure from 'react-measure';
@@ -46,29 +51,51 @@ const getBackgroundImage = () => {
 };
 
 
-const App = () => (
-  <Router history={ History }>
-    <Measure
-      bounds={ true }
-    >
-      { ({ measureRef }) => (
-        <div 
-          ref={ measureRef } 
-          id="background-wrapper" 
-          style={{
-            backgroundImage: 'url(' + getBackgroundImage() + ')',
-            height: '100%',
-          }}
-        >
-          <Switch>
-            <Route path="/login" component={ Login }/>
-            <Route exact path="/" component={() => <Redirect to="/home" />}/>
-            <Route path="/" component={ AuthenticatedApp }/>
-          </Switch>
-        </div>
-      ) }
-    </Measure>
-  </Router>
-);
+const addPageIcons = () => {
+  {
+    // Favicon
+    const link = document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = Favico;
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+
+  {
+    // Apple touch icon
+    const link = document.createElement('link');
+    link.rel = 'apple-touch-icon';
+    link.href = iOSLogo;
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+};
+
+const App = () => {
+  useEffect(addPageIcons, []);
+  return (
+    <Router history={ History }>
+      <Measure
+        bounds={ true }
+      >
+        { ({ measureRef }) => (
+          <div 
+            ref={ measureRef } 
+            id="background-wrapper" 
+            style={{
+              backgroundImage: 'url(' + getBackgroundImage() + ')',
+              height: '100%',
+            }}
+          >
+            <Switch>
+              <Route path="/login" component={ Login }/>
+              <Route exact path="/" component={() => <Redirect to="/home" />}/>
+              <Route path="/" component={ AuthenticatedApp }/>
+            </Switch>
+          </div>
+        ) }
+      </Measure>
+    </Router>
+  );
+};
 
 export default App;
