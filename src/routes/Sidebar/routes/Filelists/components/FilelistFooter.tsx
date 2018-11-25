@@ -12,7 +12,7 @@ interface FilelistFooterProps {
   session: API.FilelistSession;
 }
 
-const FilelistFooter: React.SFC<FilelistFooterProps> = ({ session }) => {
+const FilelistFooter: React.FC<FilelistFooterProps> = ({ session }) => {
   if (useMobileLayout()) {
     return null;
   }

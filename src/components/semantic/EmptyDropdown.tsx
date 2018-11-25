@@ -10,7 +10,7 @@ interface EmptyDropdownProps {
 }
 
 // A component used to emulate a dropdown when there are no items to display
-const EmptyDropdown: React.SFC<EmptyDropdownProps> = ({ caption, className }) => {
+const EmptyDropdown: React.FC<EmptyDropdownProps> = ({ caption, className }) => {
   const titleClassName = classNames(
     //'caption',
     'empty dropdown',

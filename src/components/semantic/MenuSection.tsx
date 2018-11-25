@@ -7,7 +7,7 @@ export interface MenuSectionProps {
   icon?: IconType;
 }
 
-const MenuSection: React.SFC<MenuSectionProps> = ({ caption, icon, children }) => {
+const MenuSection: React.FC<MenuSectionProps> = ({ caption, icon, children }) => {
   if (React.Children.count(children) === 0) {
     return null;
   }

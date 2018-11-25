@@ -29,7 +29,7 @@ interface SessionMenuItemProps {
   pushSession: PushSessionHandler;
 }
 
-const SessionMenuItem: React.SFC<SessionMenuItemProps> = (
+const SessionMenuItem: React.FC<SessionMenuItemProps> = (
   { sessionItem, status, name, unreadInfoStore, url, pushSession }
 ) => (
   <RouterMenuItemLink 

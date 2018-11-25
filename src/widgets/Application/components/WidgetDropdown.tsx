@@ -27,7 +27,7 @@ export interface WidgetDropdownProps {
   componentId: string;
 }
 
-const WidgetDropdown: React.SFC<WidgetDropdownProps & RouteComponentProps> = ({ componentId, location }) => (
+const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = ({ componentId, location }) => (
   <Dropdown 
     caption="Add widget..."
     className="create-widget"

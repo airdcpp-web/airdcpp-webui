@@ -22,7 +22,7 @@ const SessionEntry = [
   'history_filelist_sessions',
 ];
 
-const HistoryPage: React.SFC<SettingSectionChildProps> = props => (
+const HistoryPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       //title="Miscellaneous"

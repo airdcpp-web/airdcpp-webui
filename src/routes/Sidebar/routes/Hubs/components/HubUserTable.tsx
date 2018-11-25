@@ -17,7 +17,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 
 
-const NickCell: React.SFC<RowWrapperCellChildProps<string, API.HubUser>> = (
+const NickCell: React.FC<RowWrapperCellChildProps<string, API.HubUser>> = (
   { cellData, rowDataGetter }
 ) => (
   <TableUserMenu 

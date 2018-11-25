@@ -55,7 +55,7 @@ const useUrgencies = (props: RouterMenuItemLinkProps) => {
 
 // A component that will re-render only when urgencies or active state are updated
 // TODO: session code doesn't work with SessionMenuItem yet
-const RouterMenuItemLink: React.SFC<RouterMenuItemLinkProps> = memo((props) => {
+const RouterMenuItemLink: React.FC<RouterMenuItemLinkProps> = memo((props) => {
   const urgencies = useUrgencies(props);
 
   const { onClick, className, icon, url, children, unreadInfoStore } = props;

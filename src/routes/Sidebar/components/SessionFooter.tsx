@@ -7,7 +7,7 @@ interface FooterItemProps {
   text: string | React.ReactElement<any>;
 }
 
-export const FooterItem: React.SFC<FooterItemProps> = ({ label, text }) => (
+export const FooterItem: React.FC<FooterItemProps> = ({ label, text }) => (
   <div className="grid-item">
     <div className="item-inner">
       { !!label && typeof text === 'string' ? `${label}: ${text}` : text }
@@ -15,7 +15,7 @@ export const FooterItem: React.SFC<FooterItemProps> = ({ label, text }) => (
   </div>
 );
 
-export const SessionFooter: React.SFC = ({ children }) => (
+export const SessionFooter: React.FC = ({ children }) => (
   <div className="session-footer">
     <div className="ui footer divider"/>
     <div className="info-grid ui">

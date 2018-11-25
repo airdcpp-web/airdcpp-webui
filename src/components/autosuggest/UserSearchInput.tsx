@@ -12,7 +12,7 @@ export interface UserSearchInputProps extends Pick<RemoteSuggestFieldProps<API.H
   offlineMessage: string;
 }
 
-const UserSearchInput: React.SFC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => (
+const UserSearchInput: React.FC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => (
   <OfflineHubMessageDecorator 
     offlineMessage={ offlineMessage }
   >

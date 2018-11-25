@@ -11,7 +11,7 @@ import '../style.css';
 import { Location } from 'history';
 
 
-const ErrorBox: React.SFC<{ lastError: string | null }> = ({ lastError }) => {
+const ErrorBox: React.FC<{ lastError: string | null }> = ({ lastError }) => {
   if (lastError === null) {
     return null;
   }
@@ -30,7 +30,7 @@ interface SubmitButtonProps {
   allowLogin: boolean;
 }
 
-const SubmitButton: React.SFC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin }) => {
   if (!allowLogin) {
     return null;
   }
@@ -78,7 +78,7 @@ interface LoginProps {
   location: Location;
 }
 
-const Login: React.SFC<LoginProps> = ({ location }) => {
+const Login: React.FC<LoginProps> = ({ location }) => {
   const [ loading, setLoading ] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);

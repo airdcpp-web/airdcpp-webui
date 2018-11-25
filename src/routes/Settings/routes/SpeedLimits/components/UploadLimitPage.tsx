@@ -16,7 +16,7 @@ const Manual = [
   'upload_minislot_ext',
 ];
 
-const UploadLimitPage: React.SFC<SettingSectionChildProps> = props => (
+const UploadLimitPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <AutoValuePanel
       { ...props }

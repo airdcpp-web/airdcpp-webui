@@ -19,7 +19,7 @@ interface HubActionPromptProps {
 }
 
 // Main prompt (HUBS_EDIT permission is required for the content to be rendered)
-const HubActionPrompt: React.SFC<HubActionPromptProps> = (
+const HubActionPrompt: React.FC<HubActionPromptProps> = (
   { icon, title, content }
 ) => {
   if (!LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT)) {
@@ -53,7 +53,7 @@ interface PasswordPromptProps {
 }
 
 // Sub prompts
-const PasswordPrompt: React.SFC<PasswordPromptProps> = ({ hub }) => (
+const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub }) => (
   <div>
     <ActionInput 
       placeholder="Password" 
@@ -73,7 +73,7 @@ interface RedirectPromptProps {
   hub: API.Hub;
 }
 
-const RedirectPrompt: React.SFC<RedirectPromptProps> = ({ hub }) => (
+const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub }) => (
   <Button
     icon="green play"
     onClick={ _ => HubActions.redirect(hub) }

@@ -15,7 +15,7 @@ import * as API from 'types/api';
 
 
 // Message sections
-const Author: React.SFC<{ message: API.ChatMessage; dropdownContext: string }> = ({ message, dropdownContext }) => (
+const Author: React.FC<{ message: API.ChatMessage; dropdownContext: string }> = ({ message, dropdownContext }) => (
   <div className="header author">
     { message.third_person && <span>*</span> }
     <UserMenu 
@@ -32,13 +32,13 @@ const Author: React.SFC<{ message: API.ChatMessage; dropdownContext: string }> =
   dropdownContext: PropTypes.string.isRequired,
 };*/
 
-const TimeStamp: React.SFC<{ message: API.Message }> = ({ message }) => (
+const TimeStamp: React.FC<{ message: API.Message }> = ({ message }) => (
   <div className="time">
     { formatTimestamp(message.time) }
   </div>
 );
 
-const MessageText: React.SFC<{ message: API.Message, emojify: boolean }> = ({ message, emojify }) => (
+const MessageText: React.FC<{ message: API.Message, emojify: boolean }> = ({ message, emojify }) => (
   <div className="text">
     <TextDecorator
       emojify={ emojify }

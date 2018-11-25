@@ -25,7 +25,7 @@ interface CCPMStateProps {
   session: API.PrivateChat;
 }
 
-const CCPMState: React.SFC<CCPMStateProps> = ({ session }) => {
+const CCPMState: React.FC<CCPMStateProps> = ({ session }) => {
   if (session.user.flags.indexOf('ccpm') === -1) {
     return null;
   }

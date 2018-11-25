@@ -14,7 +14,7 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 import * as API from 'types/api';
 
 
-const WebUserRow: React.SFC<{ user: API.WebUser }> = ({ user }) => (
+const WebUserRow: React.FC<{ user: API.WebUser }> = ({ user }) => (
   <tr>
     <td>
       <ActionMenu 

@@ -12,7 +12,7 @@ const Entry = [
   'upload_speed',
 ];
 
-const SpeedPage: React.SFC<SettingSectionChildProps> = props => (
+const SpeedPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <div className="ui message">
       Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, 

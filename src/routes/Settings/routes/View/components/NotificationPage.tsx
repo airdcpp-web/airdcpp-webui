@@ -17,7 +17,7 @@ const PopupEntry = [
   LocalSettings.NOTIFY_EVENTS_ERROR,
 ];
 
-const NotificationPage: React.SFC<SettingSectionChildProps> = props => (
+const NotificationPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <LocalSettingForm
       title="Popup notifications"

@@ -16,7 +16,7 @@ interface LimiterValueProps {
   settingKey: string;
 }
 
-const LimiterValue: React.SFC<LimiterValueProps> = ({ limit, settingKey }) => {
+const LimiterValue: React.FC<LimiterValueProps> = ({ limit, settingKey }) => {
   const value = limit ? formatSpeed(limit * 1024) : 'Disabled';
   if (!LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT)) {
     return <span>{ value }</span>;
@@ -41,7 +41,7 @@ interface StatColumnProps {
   stats: API.TransferStats;
 }
 
-const StatColumn: React.SFC<StatColumnProps> = ({ stats }) => (
+const StatColumn: React.FC<StatColumnProps> = ({ stats }) => (
   <div className="ui list info tiny stats">
     <ListItem header="Downloads" description={ stats.downloads }/>
     <ListItem header="Uploads" description={ stats.uploads }/>

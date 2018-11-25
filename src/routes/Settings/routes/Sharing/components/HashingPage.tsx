@@ -10,7 +10,7 @@ const Entry = [
   'max_volume_hashers',
 ];
 
-const HashingPage: React.SFC<SettingSectionChildProps> = props => (
+const HashingPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

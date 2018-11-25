@@ -13,7 +13,7 @@ import FavoriteDirectoryDialog from 'routes/Settings/routes/Downloads/components
 import * as API from 'types/api';
 
 
-const Row: React.SFC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }) => (
+const Row: React.FC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -46,7 +46,7 @@ interface FavoriteDirectoryPageDataProps extends DataProviderDecoratorChildProps
   directories: API.FavoriteDirectoryEntry[];
 }
 
-const FavoriteDirectoryPage: React.SFC<FavoriteDirectoryPageProps & FavoriteDirectoryPageDataProps> = (
+const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirectoryPageDataProps> = (
   { directories }
 ) => (
   <div id="directory-table">

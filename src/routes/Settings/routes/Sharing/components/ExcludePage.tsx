@@ -14,7 +14,7 @@ import Message from 'components/semantic/Message';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
 
-const Row: React.SFC<{ path: string; }> = ({ path }) => (
+const Row: React.FC<{ path: string; }> = ({ path }) => (
   <tr>
     <td>
       <ActionMenu 

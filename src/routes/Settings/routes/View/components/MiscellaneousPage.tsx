@@ -10,7 +10,7 @@ const Entry = [
   LocalSettings.BACKGROUND_IMAGE_URL,
 ];
 
-const MiscellaneousPage: React.SFC<SettingSectionChildProps> = props => (
+const MiscellaneousPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <LocalSettingForm
       { ...props }

@@ -7,7 +7,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 
 
-const NameCaption: React.SFC<RowWrapperCellChildProps<string, API.Transfer>> = ({ cellData, rowData }) => (
+const NameCaption: React.FC<RowWrapperCellChildProps<string, API.Transfer>> = ({ cellData, rowData }) => (
   <Popup 
     triggerClassName="name" 
     className="basic target" 

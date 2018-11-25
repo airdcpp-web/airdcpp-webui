@@ -10,7 +10,7 @@ const Auto = [
   'mcn_up',
 ];
 
-const UserLimitPage: React.SFC<SettingSectionChildProps> = props => (
+const UserLimitPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <AutoValuePanel
       { ...props }

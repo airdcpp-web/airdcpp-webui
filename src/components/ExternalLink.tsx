@@ -8,7 +8,7 @@ interface ExternalLinkProps {
   className?: string;
 }
 
-const ExternalLink: React.SFC<ExternalLinkProps> = ({ url, children, className = '' }) => (
+const ExternalLink: React.FC<ExternalLinkProps> = ({ url, children, className = '' }) => (
   <a 
     className={ className }
     href={ url } 

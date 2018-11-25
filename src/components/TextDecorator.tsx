@@ -122,7 +122,7 @@ interface TextDecoratorProps {
 }
 
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator: React.SFC<TextDecoratorProps & RouteComponentProps> = (
+const TextDecorator: React.FC<TextDecoratorProps & RouteComponentProps> = (
   { emojify = false, text, location }
 ) => (
   <ReactLinkify 

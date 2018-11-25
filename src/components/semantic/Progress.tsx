@@ -9,7 +9,7 @@ export interface ProgressProps {
   percent: number;
 }
 
-const Progress: React.SFC<ProgressProps> = ({ className, percent, caption }) => (
+const Progress: React.FC<ProgressProps> = ({ className, percent, caption }) => (
   <div 
     className={ classNames('ui progress', className) } 
     data-percent={ percent }

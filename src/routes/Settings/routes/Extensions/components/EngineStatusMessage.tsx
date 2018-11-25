@@ -19,7 +19,7 @@ interface EngineStatusMessageDataProps extends DataProviderDecoratorChildProps {
 }
 
 // Show an info message if the default extension engine is not installed
-const EngineStatusMessage: React.SFC<EngineStatusMessageProps & EngineStatusMessageDataProps> = ({ enginesStatus }) => {
+const EngineStatusMessage: React.FC<EngineStatusMessageProps & EngineStatusMessageDataProps> = ({ enginesStatus }) => {
   if (enginesStatus[ExtensionConstants.DEFAULT_ENGINE]) {
     return null;
   }

@@ -19,7 +19,7 @@ const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundl
   );
 };
 
-const StatusCell: React.SFC<RowWrapperCellChildProps<API.QueueBundleStatus, API.QueueBundle>> = (
+const StatusCell: React.FC<RowWrapperCellChildProps<API.QueueBundleStatus, API.QueueBundle>> = (
   { cellData, rowDataGetter }
 ) => {
   if (cellData!.failed) {

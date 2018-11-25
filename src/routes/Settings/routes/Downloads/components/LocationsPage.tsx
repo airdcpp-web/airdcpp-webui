@@ -15,7 +15,7 @@ const Entry = [
   'download_directory',
 ];
 
-const LocationsPage: React.SFC<SettingSectionChildProps> = props => (
+const LocationsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

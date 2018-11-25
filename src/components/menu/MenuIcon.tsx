@@ -10,7 +10,7 @@ interface MenuIconProps extends Pick<CountLabelProps, 'urgencies'> {
 }
 
 // A plain menu icon trigger for dropdowns (with urgency label support)
-const MenuIcon: React.SFC<MenuIconProps> = ({ urgencies, className, onClick }) => (
+const MenuIcon: React.FC<MenuIconProps> = ({ urgencies, className, onClick }) => (
   <div className={ classNames('icon-menu', className) }> 
     <i className="content link icon" onClick={ onClick }/>
     <CountLabel 

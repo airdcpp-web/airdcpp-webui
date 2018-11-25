@@ -127,31 +127,31 @@ export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;
 }
 
-export const SizeCell: React.SFC<NumberCellProps> = ({ cellData }) => (
+export const SizeCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain size cell">
     { formatSize(cellData!) }
   </span>
 );
 
-export const SpeedCell: React.SFC<NumberCellProps> = ({ cellData }) => (
+export const SpeedCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain speed cell">
     { formatSpeed(cellData!) }
   </span>
 );
 
-export const DateCell: React.SFC<NumberCellProps> = ({ cellData, width }) => (
+export const DateCell: React.FC<NumberCellProps> = ({ cellData, width }) => (
   <span className="plain date cell">
     { !!width && width > 150 ? formatDateTime(cellData!) : formatShortDate(cellData!) }
   </span>
 );
 
-export const DurationCell: React.SFC<NumberCellProps> = ({ cellData }) => (
+export const DurationCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain duration cell">
     { formatRelativeTime(cellData!) }
   </span>
 );
 
-export const AbbreviatedDurationCell: React.SFC<NumberCellProps> = ({ cellData }) => (
+export const AbbreviatedDurationCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain abbr-duration cell">
     { formatAbbreviatedDuration(cellData!) }
   </span>
@@ -161,17 +161,17 @@ export interface IpCellProps {
   cellData?: API.IP;
 }
 
-export const IpCell: React.SFC<IpCellProps> = ({ cellData }) => (
+export const IpCell: React.FC<IpCellProps> = ({ cellData }) => (
   <FormattedIp item={ cellData! }/>
 );
 
-export const ConnectionCell: React.SFC<NumberCellProps> = ({ cellData }) => (
+export const ConnectionCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain connection cell">
     { formatConnection(cellData!) }
   </span>
 );
 
-export const DecimalCell: React.SFC<NumberCellProps> = ({ cellData }) => (
+export const DecimalCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain decimal cell">
     { formatDecimal(cellData!) }
   </span>
@@ -224,7 +224,7 @@ export interface CheckboxCellProps extends
   onChange: (checked: boolean, rowData: any) => void;
 }
 
-export const CheckboxCell: React.SFC<CheckboxCellProps> = ({ cellData, rowDataGetter, onChange, ...props }) => (
+export const CheckboxCell: React.FC<CheckboxCellProps> = ({ cellData, rowDataGetter, onChange, ...props }) => (
   <Checkbox 
     checked={ cellData! } 
     onChange={ checked => onChange(checked, rowDataGetter!()) }

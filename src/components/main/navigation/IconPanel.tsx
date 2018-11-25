@@ -6,7 +6,7 @@ import StatisticsIcons from 'components/main/navigation/icon/StatisticsIcons';
 import AwayIcon from 'components/main/navigation/icon/AwayIcon';
 
 
-const IconPanel: React.SFC = () => (
+const IconPanel: React.FC = () => (
   <div className="icon-panel">
     <StatisticsIcons/>
     <div className="touch-icons">

@@ -12,7 +12,7 @@ interface FormattedFileProps {
   caption: React.ReactNode;
 }
 
-const FormattedFile: React.SFC<FormattedFileProps> = ({ onClick, typeInfo, caption }) => {
+const FormattedFile: React.FC<FormattedFileProps> = ({ onClick, typeInfo, caption }) => {
   if (onClick) {
     caption = (
       <a onClick={ onClick }>

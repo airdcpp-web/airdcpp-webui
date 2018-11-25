@@ -15,7 +15,7 @@ interface LayoutHeaderProps {
   subHeader?: React.ReactNode;
 }
 
-const LayoutHeader: React.SFC<LayoutHeaderProps> = ({ className, icon, rightComponent, size, title, subHeader }) => {
+const LayoutHeader: React.FC<LayoutHeaderProps> = ({ className, icon, rightComponent, size, title, subHeader }) => {
   const mainClassName = classNames(
     'header layout',
     { 'icon': !!icon },

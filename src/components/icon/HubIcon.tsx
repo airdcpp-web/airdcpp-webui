@@ -11,7 +11,7 @@ interface HubIconProps extends IconProps {
   hub: API.Hub;
 }
 
-const HubIcon: React.SFC<HubIconProps> = ({ hub, ...other }) => (
+const HubIcon: React.FC<HubIconProps> = ({ hub, ...other }) => (
   <Icon
     { ...other }
     icon={ hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }

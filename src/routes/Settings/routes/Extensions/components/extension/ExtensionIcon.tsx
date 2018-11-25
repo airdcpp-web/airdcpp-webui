@@ -26,7 +26,7 @@ interface ExtensionIconProps {
   hasUpdate: boolean;
 }
 
-const ExtensionIcon: React.SFC<ExtensionIconProps> = ({ installedPackage, hasUpdate }) => (
+const ExtensionIcon: React.FC<ExtensionIconProps> = ({ installedPackage, hasUpdate }) => (
   <div className="ui image">
     <Icon 
       icon="puzzle" 

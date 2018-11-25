@@ -27,7 +27,7 @@ interface VersionProps {
   };
 }
 
-const Version: React.SFC<VersionProps> = ({ title, packageInfo, className }) => {
+const Version: React.FC<VersionProps> = ({ title, packageInfo, className }) => {
   if (!packageInfo) {
     return null;
   }

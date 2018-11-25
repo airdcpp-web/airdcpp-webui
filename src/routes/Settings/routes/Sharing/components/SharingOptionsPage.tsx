@@ -15,7 +15,7 @@ const Skiplist = [
   'share_skiplist_regex',
 ];
 
-const SharingOptionsPage: React.SFC<SettingSectionChildProps> = props => (
+const SharingOptionsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

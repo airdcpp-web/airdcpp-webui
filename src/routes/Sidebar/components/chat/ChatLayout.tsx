@@ -74,7 +74,7 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions:
 };
 
 
-const ChatLayout: React.SFC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
+const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
   useActiveSessionEffect(session, actions, true);
 
   const messages = useChatMessagesEffect(session, messageStore, actions);

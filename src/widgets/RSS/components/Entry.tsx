@@ -36,7 +36,7 @@ export interface EntryProps {
   componentId: string;
 }
 
-const Entry: React.SFC<EntryProps> = ({ entry, feedUrl, componentId }) => {
+const Entry: React.FC<EntryProps> = ({ entry, feedUrl, componentId }) => {
   const date = entry.pubDate ? entry.pubDate : entry.updated;
   return (
     <div className="item">

@@ -26,7 +26,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 
 
-const PriorityCell: React.SFC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
+const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
   { cellData, rowDataGetter }
 ) => (
   <PriorityMenu 

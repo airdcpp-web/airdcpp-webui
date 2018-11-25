@@ -10,7 +10,7 @@ const Entry = [
   'allow_match_full_list',
 ];
 
-const SearchMatchingPage: React.SFC<SettingSectionChildProps> = props => (
+const SearchMatchingPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

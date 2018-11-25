@@ -15,7 +15,7 @@ const Entry = [
   'report_filelist_dupes',
 ];
 
-const EventPage: React.SFC<SettingSectionChildProps> = props => (
+const EventPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

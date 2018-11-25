@@ -10,7 +10,7 @@ const Entry = [
   'refresh_threading',
 ];
 
-const RefreshOptionsPage: React.SFC<SettingSectionChildProps> = props => (
+const RefreshOptionsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

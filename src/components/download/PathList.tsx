@@ -17,7 +17,7 @@ interface PathItemProps {
   downloadHandler: PathDownloadHandler;
 }
 
-const PathItem: React.SFC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
+const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
   <div className="item">
     <i className="yellow folder icon"/>
     <div className="content">

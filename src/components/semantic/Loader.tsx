@@ -14,7 +14,7 @@ interface LoaderProps {
   inverted?: boolean;
 }
 
-const Loader: React.SFC<LoaderProps> = ({ text, className, inline, size, inverted }) => {
+const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted }) => {
   const style = classNames(
     'ui active  loader',
     { 'inverted': inverted },

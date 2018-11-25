@@ -10,7 +10,7 @@ const Entry = [
   'use_partial_sharing',
 ];
 
-const DownloadOptionsPage: React.SFC<SettingSectionChildProps> = props => (
+const DownloadOptionsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

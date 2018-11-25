@@ -37,6 +37,10 @@ class SideMenu extends React.Component<SideMenuProps> {
     }
   }
 
+  shouldComponentUpdate(prevProps: SideMenuProps) {
+    return prevProps.location !== this.props.location || prevProps.previousLocation !== this.props.previousLocation;
+  }
+
   render() {
     const menuItems = parseMenuItems(secondaryRoutes, this.onClick);
     return (

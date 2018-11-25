@@ -18,7 +18,7 @@ export interface CountLabelProps {
   className?: string;
 }
 
-const CountLabel: React.SFC<CountLabelProps> = ({ urgencies, empty, size, className, circular }) => {
+const CountLabel: React.FC<CountLabelProps> = ({ urgencies, empty, size, className, circular }) => {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
   if (!urgencies) {
     return null;
@@ -63,7 +63,7 @@ CountLabel.defaultProps = {
 };
 
 // Fade out the label when there are no counts
-const AnimatedCountLabel: React.SFC<CountLabelProps> = (props) => (
+const AnimatedCountLabel: React.FC<CountLabelProps> = (props) => (
   <TransitionGroup
     component={ null }
   >

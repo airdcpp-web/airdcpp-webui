@@ -30,7 +30,7 @@ export interface WidgetProps {
   componentId: string;
 }
 
-const Widget: React.SFC<WidgetProps> = ({ widgetInfo, settings, componentId, children, className, ...other }) => {
+const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, children, className, ...other }) => {
   const error = getError(widgetInfo, settings);
   const Component = widgetInfo.component;
   return (

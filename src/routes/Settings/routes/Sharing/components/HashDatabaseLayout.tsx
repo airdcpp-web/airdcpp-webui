@@ -24,7 +24,7 @@ interface OptimizeLayoutProps {
   startHandler: () => void;
 }
 
-const OptimizeLayout: React.SFC<OptimizeLayoutProps> = (
+const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
   { startHandler, checkboxState, checkboxHandler, running }
 ) => (
   <div className="optimize-layout">
@@ -58,7 +58,7 @@ interface SizeRowProps {
   size: number;
 }
 
-const SizeRow: React.SFC<SizeRowProps> = ({ title, size }) => (
+const SizeRow: React.FC<SizeRowProps> = ({ title, size }) => (
   <div className="ui row compact">
     <div className="three wide column">
       <div className="ui tiny header">

@@ -24,7 +24,7 @@ import * as API from 'types/api';
   }
 };*/
 
-const UserResult: React.SFC<{ result: API.ChildSearchResult; }> = ({ result }) => (
+const UserResult: React.FC<{ result: API.ChildSearchResult; }> = ({ result }) => (
   <tr>
     <td className="user dropdown">
       <UserMenu 
@@ -64,7 +64,7 @@ interface UserResultTableDataProps extends DataProviderDecoratorChildProps {
   results: API.ChildSearchResult[];
 }
 
-const UserResultTable: React.SFC<UserResultTableProps & UserResultTableDataProps> = (
+const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps> = (
   { results, dataError }
 ) => {
   if (dataError) {

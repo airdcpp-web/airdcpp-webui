@@ -11,7 +11,7 @@ import * as API from 'types/api';
 
 const formatText = (text: React.ReactNode) => text ? text : '(unknown)';
 
-const GridRow: React.SFC<{ title: string; text: React.ReactNode; }> = ({ title, text }) => (
+const GridRow: React.FC<{ title: string; text: React.ReactNode; }> = ({ title, text }) => (
   <div className="ui row">
     <div className="three wide column">
       <div className="ui tiny header">
@@ -35,7 +35,7 @@ const DupeStrings = {
   [API.DupeEnum.SHARE_QUEUE]: 'Share and queue',
 };
 
-const DupePaths: React.SFC<{ paths: string[] }> = ({ paths }) => (
+const DupePaths: React.FC<{ paths: string[] }> = ({ paths }) => (
   <div className="dupe-paths">
     { paths.map(path => (
       <div key={ path } className="path">
@@ -49,7 +49,7 @@ interface ResultInfoGridProps {
   parentResult: API.GroupedSearchResult;
 }
 
-const ResultInfoGrid: React.SFC<ResultInfoGridProps> = ({ parentResult }) => (
+const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult }) => (
   <div className="ui segment">
     <div className="ui grid stackable two column">
       <GridRow title="Content/Type" text={ parentResult.type.str }/>

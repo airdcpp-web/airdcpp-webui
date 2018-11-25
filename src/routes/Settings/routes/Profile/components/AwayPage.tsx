@@ -8,7 +8,7 @@ const Entry = [
   'away_idle_time',
 ];
 
-const AwayPage: React.SFC<SettingSectionChildProps> = props => (
+const AwayPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

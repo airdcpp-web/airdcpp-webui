@@ -6,7 +6,7 @@ const Entry = [
   'extensions_debug_mode',
 ];
 
-const ExtensionOptionsPage: React.SFC<SettingSectionChildProps> = props => (
+const ExtensionOptionsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Logo from 'images/AirDCPlusPlus.png';
 
 
-const SiteHeader: React.SFC = ({ children }) => (
+const SiteHeader: React.FC = ({ children }) => (
   <div className="ui fixed inverted menu site-header">
     <div className="ui header-content">
       <Link to="/" className="item">

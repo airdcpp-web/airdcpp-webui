@@ -10,7 +10,7 @@ export interface FormattedIpProps {
   item: API.IP;
 }
 
-const FormattedIp: React.SFC<FormattedIpProps> = ({ item }) => (
+const FormattedIp: React.FC<FormattedIpProps> = ({ item }) => (
   <div className="ip flag">
     <i className={ 'ui flag ' + item.country.toLowerCase() }/>
     { item.str }

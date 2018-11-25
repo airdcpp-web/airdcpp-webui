@@ -36,7 +36,7 @@ export interface FileIconProps {
   onClick?: () => void;
 }
 
-const FileIcon: React.SFC<FileIconProps> = ({ typeInfo, onClick }) => {
+const FileIcon: React.FC<FileIconProps> = ({ typeInfo, onClick }) => {
   const iconClass = classNames(
     'icon large',
     { 'link': !!onClick },

@@ -70,7 +70,7 @@ interface UserIconProps extends IconProps {
   flags: API.HubUserFlag[];
 }
 
-const UserIcon: React.SFC<UserIconProps> = ({ flags, ...other }) => (
+const UserIcon: React.FC<UserIconProps> = ({ flags, ...other }) => (
   <Icon
     { ...other }
     icon={ getUserIcon(flags) }

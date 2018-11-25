@@ -10,7 +10,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 
 
-const UserCaption: React.SFC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({ cellData, rowData }) => (
+const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({ cellData, rowData }) => (
   <div className="transfer-user">
     <i className={ (rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD) + ' large icon' }/>
     { cellData!.nicks }

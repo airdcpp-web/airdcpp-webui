@@ -10,7 +10,7 @@ import { UserMenu } from 'components/menu';
 import * as API from 'types/api';
 
 
-const Row: React.SFC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
+const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
   <tr>
     <td>
       <UserMenu 

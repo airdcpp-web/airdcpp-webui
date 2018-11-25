@@ -16,7 +16,7 @@ import '../style.css';
 import * as API from 'types/api';
 
 
-const Row: React.SFC<{ profile: API.ShareProfile; }> = ({ profile }) => (
+const Row: React.FC<{ profile: API.ShareProfile; }> = ({ profile }) => (
   <tr>
     <td>
       <ActionMenu 

@@ -13,7 +13,7 @@ const Skiplist = [
   'download_skiplist_regex',
 ];
 
-const SkippingOptionsPage: React.SFC<SettingSectionChildProps> = props => (
+const SkippingOptionsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

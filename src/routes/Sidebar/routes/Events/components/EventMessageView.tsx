@@ -16,7 +16,7 @@ interface EventMessagesProps {
   messages: UI.MessageListItem[];
 }
 
-const EventMessageView: React.SFC<EventMessagesProps> = ({ messages }) => {
+const EventMessageView: React.FC<EventMessagesProps> = ({ messages }) => {
   if (!messages) {
     return <Loader text="Loading messages"/>;
   }

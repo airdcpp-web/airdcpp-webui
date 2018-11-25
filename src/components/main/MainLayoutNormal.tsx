@@ -17,7 +17,7 @@ interface MainLayoutProps extends RouteComponentProps {
   className?: string;
 }
 
-const MainLayout: React.SFC<MainLayoutProps> = (props) => {
+const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className, location } = props;
   const previousLocation = useSidebarEffect(secondaryRoutes, props);
   return (

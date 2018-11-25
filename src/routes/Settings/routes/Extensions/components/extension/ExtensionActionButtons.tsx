@@ -17,7 +17,7 @@ export interface ExtensionActionButtonsProps {
   installing: boolean;
 }
 
-const InstallButton: React.SFC<ExtensionActionButtonsProps> = (
+const InstallButton: React.FC<ExtensionActionButtonsProps> = (
   { npmPackage, installedPackage, hasUpdate, installing }
 ) => {
   if (installedPackage && !hasUpdate) {
@@ -34,7 +34,7 @@ const InstallButton: React.SFC<ExtensionActionButtonsProps> = (
   );
 };
 
-const ExtensionActionButtons: React.SFC<ExtensionActionButtonsProps> = (
+const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
   { npmPackage, installedPackage, hasUpdate, installing }
 ) => (
   <div className="extra buttons">

@@ -21,7 +21,7 @@ interface SourceProps {
   source: API.QueueBundleSource;
 }
 
-const Source: React.SFC<SourceProps> = ({ source, bundle }) => (
+const Source: React.FC<SourceProps> = ({ source, bundle }) => (
   <tr>
     <td className="user dropdown">
       <UserMenu 
@@ -66,7 +66,7 @@ interface BundleSourceTableDataProps extends DataProviderDecoratorChildProps {
   sources: API.QueueBundleSource[];
 }
 
-const BundleSourceTable: React.SFC<BundleSourceTableProps & BundleSourceTableDataProps> = (
+const BundleSourceTable: React.FC<BundleSourceTableProps & BundleSourceTableDataProps> = (
   { sources, bundle, dataError }
 ) => {
   if (dataError) {

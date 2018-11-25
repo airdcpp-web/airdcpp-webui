@@ -13,7 +13,7 @@ export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   size?: string;
 }
 
-const Icon: React.SFC<IconProps> = ({ icon, size, className, cornerIcon, ...other }) => {
+const Icon: React.FC<IconProps> = ({ icon, size, className, cornerIcon, ...other }) => {
   if (typeof icon !== 'string') {
     return !!icon ? icon : null;
   }

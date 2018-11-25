@@ -10,7 +10,7 @@ export interface ListItemProps {
   className?: string;
 }
 
-export const ListItem: React.SFC<ListItemProps> = ({ header, description, icon, className, children }) => (
+export const ListItem: React.FC<ListItemProps> = ({ header, description, icon, className, children }) => (
   <div className={ classNames('item', className) }>
     <Icon icon={ icon }/>
     <div className="content">

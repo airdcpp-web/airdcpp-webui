@@ -10,7 +10,7 @@ export interface RowProps {
   titleWidth?: string;
 }
 
-export const Row: React.SFC<RowProps> = ({ title, text, titleWidth = 'four' }) => (
+export const Row: React.FC<RowProps> = ({ title, text, titleWidth = 'four' }) => (
   <div className="ui row">
     <div className={ classNames(titleWidth, 'wide column') }>
       <div className="ui tiny header">
@@ -27,7 +27,7 @@ export interface HeaderProps {
   title: React.ReactNode;
 }
 
-export const Header: React.SFC<HeaderProps> = ({ title }) => (
+export const Header: React.FC<HeaderProps> = ({ title }) => (
   <div className="ui blue section header">
     { title }
   </div>

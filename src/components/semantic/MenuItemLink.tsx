@@ -14,7 +14,7 @@ export interface MenuItemLinkProps {
   disabled?: boolean;
 }
 
-const MenuItemLink: React.SFC<MenuItemLinkProps> = (
+const MenuItemLink: React.FC<MenuItemLinkProps> = (
   { className = undefined, icon, children, onClick, active = false, disabled = false }
 ) => {
   const itemClass = classNames(

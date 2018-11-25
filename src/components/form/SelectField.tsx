@@ -10,7 +10,7 @@ import t from 'utils/tcomb-form';
 import * as UI from 'types/ui';
 
 
-const MultiValueContainer: React.SFC<any> = ({ css, children, innerProps }) => {
+const MultiValueContainer: React.FC<any> = ({ css, children, innerProps }) => {
   return (
     <a { ...innerProps } className="ui label">
       { children }
@@ -18,11 +18,11 @@ const MultiValueContainer: React.SFC<any> = ({ css, children, innerProps }) => {
   );
 };
 
-const MultiValueLabel: React.SFC<any> = ({ children }) => {
+const MultiValueLabel: React.FC<any> = ({ children }) => {
   return children;
 };
 
-const MultiValueRemove: React.SFC<any> = ({ css, innerProps }) => {
+const MultiValueRemove: React.FC<any> = ({ css, innerProps }) => {
   return (
     <i { ...innerProps } className="delete icon"/>
   );

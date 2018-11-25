@@ -13,7 +13,7 @@ interface FileFooterProps {
   item: API.ViewFile;
 }
 
-const FileFooter: React.SFC<FileFooterProps> = ({ item }) => {
+const FileFooter: React.FC<FileFooterProps> = ({ item }) => {
   if (useMobileLayout()) {
     return null;
   }

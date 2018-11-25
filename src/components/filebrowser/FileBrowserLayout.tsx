@@ -25,7 +25,7 @@ interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleActi
 
 }
 
-const CreateDirectorySection: React.SFC<CreateDirectorySectionProps> = ({ handleAction }) => (
+const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction }) => (
   <Accordion>
     <div className="title create-section">
       <i className="dropdown icon"/>

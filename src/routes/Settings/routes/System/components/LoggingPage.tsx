@@ -24,7 +24,7 @@ const sections = [
   'status',
 ];
 
-const LoggingPage: React.SFC<SettingSectionChildProps> = props => (
+const LoggingPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

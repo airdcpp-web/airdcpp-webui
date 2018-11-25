@@ -44,7 +44,7 @@ interface LayoutProps {
   section: Section;
 }
 
-const NormalLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
+const NormalLayout: React.FC<LayoutProps> = ({ menuItems, section }) => (
   <div className="ui grid normal layout">
     <div className="four wide column">
       <div className="ui vertical fluid tabular menu">
@@ -59,7 +59,7 @@ const NormalLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
   </div>
 );
 
-const MobileLayout: React.SFC<LayoutProps> = ({ menuItems, section }) => (
+const MobileLayout: React.FC<LayoutProps> = ({ menuItems, section }) => (
   <div className="mobile layout">
     <Dropdown className="selection fluid" caption={ section.name }>
       { menuItems }

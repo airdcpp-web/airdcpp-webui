@@ -18,7 +18,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 
 
-const FlagsCell: React.SFC<RowWrapperCellChildProps<string[], API.Transfer>> = ({ cellData }) => (
+const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({ cellData }) => (
   <span className="plain flags cell">
     { cellData!.join('') }
   </span>

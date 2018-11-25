@@ -24,7 +24,7 @@ interface StatisticsIconProps {
   formatter: (bytes: number) => React.ReactNode;
 }
 
-const StatisticsIcon: React.SFC<StatisticsIconProps> = (
+const StatisticsIcon: React.FC<StatisticsIconProps> = (
   { icon, cornerIcon, bytes, formatter }
   ) => {
   if (bytes === 0) {

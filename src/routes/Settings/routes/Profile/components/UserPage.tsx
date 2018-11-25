@@ -38,7 +38,7 @@ const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) =>
   }
 };
 
-const UserPage: React.SFC<SettingSectionChildProps> = props => (
+const UserPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

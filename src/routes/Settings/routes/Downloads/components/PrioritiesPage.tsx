@@ -15,7 +15,7 @@ const HighPrioEntry = [
   'prio_high_files_regex',
 ];
 
-const PrioritiesPage: React.SFC<SettingSectionChildProps> = props => (
+const PrioritiesPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       title="File priorities"

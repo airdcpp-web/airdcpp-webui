@@ -46,7 +46,7 @@ interface InfoMessageProps {
   encryption: EncryptionInfo;
 }
 
-const InfoMessage: React.SFC<InfoMessageProps> = ({ info, encryption }) => (
+const InfoMessage: React.FC<InfoMessageProps> = ({ info, encryption }) => (
   <div>
     <p>
       { encryption.str }

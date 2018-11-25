@@ -12,7 +12,7 @@ import { SessionMainLayoutProps, SessionBaseType } from './SessionLayout';
 type SessionDropdownProps<SessionT extends SessionBaseType> = 
   Pick<SessionMainLayoutProps<SessionT>, 'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter'>;
 
-const SessionDropdown: React.SFC<SessionDropdownProps</*SessionT*/ any>> = ({ 
+const SessionDropdown: React.FC<SessionDropdownProps</*SessionT*/ any>> = ({ 
   sessionMenuItems, newButton, unreadInfoStore, listActionMenuGetter 
 }) => (
   <SectionedDropdown 
@@ -34,7 +34,7 @@ const SessionDropdown: React.SFC<SessionDropdownProps</*SessionT*/ any>> = ({
 type CloseButtonProps<SessionT extends SessionBaseType> = 
   Pick<SessionMainLayoutProps<SessionT>, 'closeAction' | 'activeItem'>;
 
-const CloseButton: React.SFC<CloseButtonProps<any>> = (
+const CloseButton: React.FC<CloseButtonProps<any>> = (
   { closeAction, activeItem }
 ) => {
   if (!activeItem || useMobileLayout()) {
@@ -53,14 +53,14 @@ const CloseButton: React.SFC<CloseButtonProps<any>> = (
 
 type SessionItemHeaderProps = Pick<SessionMainLayoutProps<any>, 'itemHeaderIcon' | 'itemHeaderTitle'>;
 
-const SessionItemHeader: React.SFC<SessionItemHeaderProps> = ({ itemHeaderIcon, itemHeaderTitle }) => (
+const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({ itemHeaderIcon, itemHeaderTitle }) => (
   <div className="session-header">
     { itemHeaderIcon }
     { itemHeaderTitle }
   </div>
 );
 
-const TopMenuLayout: React.SFC<SessionMainLayoutProps</*SessionT*/ any>> = (
+const TopMenuLayout: React.FC<SessionMainLayoutProps</*SessionT*/ any>> = (
   { children, onKeyDown, ...props }
 ) => (
   <div className="session-container vertical" onKeyDown={ onKeyDown }>

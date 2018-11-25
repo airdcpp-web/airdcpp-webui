@@ -22,7 +22,7 @@ interface SessionNewButtonProps {
   pushNew: PushHandler;
 }
 
-const SessionNewButton: React.SFC<SessionNewButtonProps> = ({ url, title, pushNew, className }) => (
+const SessionNewButton: React.FC<SessionNewButtonProps> = ({ url, title, pushNew, className }) => (
   <RouterMenuItemLink 
     key="button-new" 
     className={ classNames('new', className) }

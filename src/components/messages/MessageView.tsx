@@ -95,7 +95,7 @@ interface MessageViewProps {
   className?: string;
 }
 
-const MessageView: React.SFC<MessageViewProps> = React.memo(
+const MessageView: React.FC<MessageViewProps> = React.memo(
   ({ messages, session, className }) => {
     const scrollableRef = useMessageViewScrollEffect(messages, session);
     return (

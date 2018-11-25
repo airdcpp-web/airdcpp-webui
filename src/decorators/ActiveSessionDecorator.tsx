@@ -21,7 +21,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
   Component: React.ComponentType<PropsT>, 
   useReadDelay: boolean = false
 ) {
-  const Decorator: React.SFC<PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>> = (props) => {
+  const Decorator: React.FC<PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>> = (props) => {
     useActiveSessionEffect(props.session, props.actions, useReadDelay);
     return <Component { ...props }/>;
   };

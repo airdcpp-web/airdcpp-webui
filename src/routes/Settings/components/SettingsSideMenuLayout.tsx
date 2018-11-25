@@ -8,7 +8,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems'>;
 
-const SideChildSectionMenu: React.SFC<SideMenuProps> = ({ menuItems, advancedMenuItems }) => {
+const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menuItems, advancedMenuItems }) => {
   return (
     <div className="three wide column menu-column">
       <div className="ui vertical secondary menu">
@@ -30,7 +30,7 @@ const SideChildSectionMenu: React.SFC<SideMenuProps> = ({ menuItems, advancedMen
 
 type TopMenuProps = Pick<SettingSectionChildProps, 'parentMenuItems'>;
 
-const TopRootSectionMenu: React.SFC<TopMenuProps> = ({ parentMenuItems }) => (
+const TopRootSectionMenu: React.FC<TopMenuProps> = ({ parentMenuItems }) => (
   <div className="ui secondary pointing menu settings top-menu">
     { parentMenuItems }
   </div>
@@ -39,7 +39,7 @@ const TopRootSectionMenu: React.SFC<TopMenuProps> = ({ parentMenuItems }) => (
 // tslint:disable-next-line:max-line-length
 type ContentProps = Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message'>;
 
-const Content: React.SFC<ContentProps> = (
+const Content: React.FC<ContentProps> = (
   { contentClassname, currentMenuItem, parent, saveButton, children, message }
 ) => (
   <div className={ classNames('thirteen wide column', contentClassname) }>
@@ -57,7 +57,7 @@ const Content: React.SFC<ContentProps> = (
   </div>
 );
 
-const SideMenuLayout: React.SFC<SettingSectionChildProps> = ({ children, ...other }) => (
+const SideMenuLayout: React.FC<SettingSectionChildProps> = ({ children, ...other }) => (
   <div className="full">
     <TopRootSectionMenu { ...other }/>
     <div 

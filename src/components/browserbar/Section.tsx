@@ -12,7 +12,7 @@ interface SectionProps {
   onClick: () => void;
 }
 
-export const Section: React.SFC<SectionProps> = ({ caption, onClick }) => (
+export const Section: React.FC<SectionProps> = ({ caption, onClick }) => (
   <div className="path-token">
     <a className="section" onClick={ onClick }>
       { caption }
@@ -27,7 +27,7 @@ interface SelectedSectionProps {
   token: string;
 }
 
-export const SelectedSection: React.SFC<SelectedSectionProps> = ({ selectedNameFormatter, caption, token }) => (
+export const SelectedSection: React.FC<SelectedSectionProps> = ({ selectedNameFormatter, caption, token }) => (
   <div className="ui label current path-token section">
     { !!selectedNameFormatter ? selectedNameFormatter(caption, token) : caption }
   </div>

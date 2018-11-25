@@ -14,7 +14,7 @@ interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
   icon?: IconType;
 }
 
-const ActionButton: React.SFC<ActionButtonProps & ActionHandlerDecoratorChildProps> = (
+const ActionButton: React.FC<ActionButtonProps & ActionHandlerDecoratorChildProps> = (
   { action, itemData, onClickAction, icon = true, location, history, match, staticContext, ...other }
 ) => {
   if (!showAction(action, itemData)) {

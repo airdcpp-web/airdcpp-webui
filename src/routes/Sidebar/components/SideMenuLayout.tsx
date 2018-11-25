@@ -5,7 +5,7 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SessionMainLayoutProps } from './SessionLayout';
 
 
-const SideMenuLayout: React.SFC<SessionMainLayoutProps<any /*SessionT*/>> = ({ 
+const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({ 
   sessionMenuItems, newButton,
   itemHeaderIcon, itemHeaderTitle, children,
   itemHeaderDescription, onKeyDown,

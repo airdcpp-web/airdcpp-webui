@@ -11,7 +11,7 @@ export interface HubSearchInputProps extends Pick<RemoteSuggestFieldProps<API.Hu
 
 }
 
-const HubSearchInput: React.SFC<HubSearchInputProps> = ({ submitHandler }) => (
+const HubSearchInput: React.FC<HubSearchInputProps> = ({ submitHandler }) => (
   <RemoteSuggestField
     placeholder="Enter hub address..."
     submitHandler={ submitHandler }

@@ -16,7 +16,7 @@ interface SocketConnectStatusProps {
   active: boolean;
 }
 
-const SocketConnectStatus: React.SFC<SocketConnectStatusProps> = (
+const SocketConnectStatus: React.FC<SocketConnectStatusProps> = (
   { lastError, active }
 ) => (
   <div className={ 'ui dimmer page visible ' + (active ? 'active' : '')}>

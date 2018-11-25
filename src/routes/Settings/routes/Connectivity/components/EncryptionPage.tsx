@@ -8,7 +8,7 @@ const Entry = [
   'tls_mode',
 ];
 
-const Encryption: React.SFC<SettingSectionChildProps> = props => (
+const Encryption: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

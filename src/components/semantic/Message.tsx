@@ -16,7 +16,7 @@ interface MessageProps {
   isError?: boolean;
 }
 
-const Message: React.SFC<MessageProps> = ({ className, title, description, icon, isError, children }) => {
+const Message: React.FC<MessageProps> = ({ className, title, description, icon, isError, children }) => {
   const style = classNames(
     'ui message',
     { 'negative': isError },

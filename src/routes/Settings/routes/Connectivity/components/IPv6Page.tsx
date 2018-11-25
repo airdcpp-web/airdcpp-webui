@@ -11,7 +11,7 @@ const Entry = [
   'connection_ip_override_v6',
 ];
 
-const IPv6: React.SFC<SettingSectionChildProps> = props => (
+const IPv6: React.FC<SettingSectionChildProps> = props => (
   <div>
     <ProtocolPage
       { ...props }

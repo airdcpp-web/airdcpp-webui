@@ -26,7 +26,7 @@ interface StatusCellProps extends RowWrapperCellChildProps<API.TransferStatus, A
 
 }
 
-const StatusCell: React.SFC<StatusCellProps> = ({ cellData, rowDataGetter }) => {
+const StatusCell: React.FC<StatusCellProps> = ({ cellData, rowDataGetter }) => {
   if (cellData!.id === API.TransferStatusEnum.WAITING) {
     return <Loader size="small" inline={ true } text={ cellData!.str }/>;
   }

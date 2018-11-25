@@ -7,7 +7,7 @@ interface DropdownCaptionProps extends React.HTMLAttributes<HTMLButtonElement> {
   icon?: IconType;
 }
 
-const DropdownCaption: React.SFC<DropdownCaptionProps> = ({ icon, children }) => {
+const DropdownCaption: React.FC<DropdownCaptionProps> = ({ icon, children }) => {
   return (
     <div className="caption">
       <Icon icon={ icon }/>

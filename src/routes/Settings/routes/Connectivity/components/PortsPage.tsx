@@ -20,7 +20,7 @@ const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) =>
   }
 };
 
-const PortsPage: React.SFC<SettingSectionChildProps> = props => (
+const PortsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <RemoteSettingForm
       { ...props }

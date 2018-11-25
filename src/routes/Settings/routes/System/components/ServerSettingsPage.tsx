@@ -27,7 +27,7 @@ const Generic = [
   'ping_timeout',
 ];
 
-const ServerSettingsPage: React.SFC<SettingSectionChildProps> = props => (
+const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     {/*<Message 
 			description={ (

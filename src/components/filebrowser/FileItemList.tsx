@@ -16,7 +16,7 @@ export interface FileItemProps {
   itemIconGetter?: FileItemIconGetter;
 }
 
-const FileItem: React.SFC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter }) => {
+const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter }) => {
   const isFile = item.type.id === 'file';
   return (
     <tr>

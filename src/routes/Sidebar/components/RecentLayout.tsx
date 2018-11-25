@@ -26,7 +26,7 @@ interface DataProps {
 
 type Props = RecentLayoutProps & DataProps & DataProviderDecoratorChildProps;
 
-const RecentLayout: React.SFC<Props> = ({ entries, entryTitleRenderer, hasSession, entryIcon }) => {
+const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession, entryIcon }) => {
   if (entries.length === 0) {
     return null;
   }

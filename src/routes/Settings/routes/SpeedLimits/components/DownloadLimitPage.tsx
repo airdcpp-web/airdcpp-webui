@@ -14,7 +14,7 @@ const Manual = [
   'download_highest_prio_slots',
 ];
 
-const DownloadLimitPage: React.SFC<SettingSectionChildProps> = props => (
+const DownloadLimitPage: React.FC<SettingSectionChildProps> = props => (
   <div>
     <AutoValuePanel
       { ...props }

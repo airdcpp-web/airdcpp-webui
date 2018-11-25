@@ -39,7 +39,7 @@ interface DetectPanelDataProps extends DataProviderDecoratorChildProps {
   runningV6: boolean;
 }
 
-const DetectPanel: React.SFC<DetectPanelProps & DetectPanelDataProps> = (
+const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
   { status, runningV4, runningV6 }
 ) => (
   <div className="ui segment detect-panel">

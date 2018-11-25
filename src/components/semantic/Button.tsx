@@ -14,7 +14,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   caption: React.ReactNode;
 }
 
-const Button: React.SFC<ButtonProps> = ({ className, loading, icon, caption, disabled, ...other }) => {
+const Button: React.FC<ButtonProps> = ({ className, loading, icon, caption, disabled, ...other }) => {
   const buttonStyle = classNames(
     'ui button',
     { 'disabled': !!disabled || !!loading },
