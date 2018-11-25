@@ -6,13 +6,16 @@ import ActivityStore from 'stores/ActivityStore';
 import { useStore } from 'effects/StoreListenerEffect';
 
 
+interface State {
+  away: AwayEnum;
+}
 
-const isAway = (awayState: AwayEnum) => {
-  return awayState !== AwayEnum.OFF;
+const isAway = (awayState: State) => {
+  return awayState.away !== AwayEnum.OFF;
 };
 
 const AwayIcon = memo(() => {
-  const awayState = useStore<AwayEnum>(ActivityStore);
+  const awayState = useStore<State>(ActivityStore);
 
   const iconColor = isAway(awayState) ? 'yellow' : 'grey';
   return (
