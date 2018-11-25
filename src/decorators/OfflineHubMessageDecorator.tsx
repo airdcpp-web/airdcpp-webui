@@ -1,8 +1,4 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import createReactClass from 'create-react-class';
-//@ts-ignore
-import Reflux from 'reflux';
+import React, { useEffect, useState, memo } from 'react';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import Message, { MessageDescriptionType } from 'components/semantic/Message';
@@ -16,45 +12,40 @@ interface OfflineHubMessageDecoratorProps {
   offlineMessage: MessageDescriptionType;
 }
 
+const useHasConnectedHubs = () => {
+  const [ hasConnectedHubs, setHasConnectedHubs ] = useState(HubSessionStore.hasConnectedHubs());
+
+  useEffect(
+    () => {
+      return HubSessionStore.listen(() => {
+        setHasConnectedHubs(HubSessionStore.hasConnectedHubs());
+      });
+    },
+    []
+  );
+
+  return hasConnectedHubs;
+};
+
 // Disables the component if there are no online hubs
-const OfflineHubMessageDecorator = createReactClass<OfflineHubMessageDecoratorProps, {}>({
-  displayName: 'OfflineHubMessageDecorator',
-  mixins: [ Reflux.ListenerMixin ],
+const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = memo(props => {
+  const hasConnectedHubs = useHasConnectedHubs();
+  if (!hasConnectedHubs && LoginStore.hasAccess(API.AccessEnum.HUBS_VIEW)) {
+    return (
+      <Message 
+        className="offline-message" 
+        icon="plug" 
+        title="No online hubs" 
+        description={ props.offlineMessage }
+      />
+    );
+  }
 
-  propTypes: {
-    // Function to call when pressing enter
-    offlineMessage: PropTypes.any.isRequired
-  },
-
-  componentDidMount() {
-    this.listenTo(HubSessionStore, this.updateState);
-  },
-
-  getInitialState() {
-    return {
-      hasConnectedHubs: HubSessionStore.hasConnectedHubs()
-    };
-  },
-
-  updateState() {
-    this.setState({ hasConnectedHubs: HubSessionStore.hasConnectedHubs() });
-  },
-
-  render() {
-    if (!this.state.hasConnectedHubs && LoginStore.hasAccess(API.AccessEnum.HUBS_VIEW)) {
-      return (
-        <Message 
-          className="offline-message" 
-          icon="plug" 
-          title="No online hubs" 
-          description={ this.props.offlineMessage }
-        />
-      );
-    }
-
-    return this.props.children;
-  },
+  return (
+    <>
+      { props.children }
+    </>
+  );
 });
 
-export default OfflineHubMessageDecorator
-;
+export default OfflineHubMessageDecorator;

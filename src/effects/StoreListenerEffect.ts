@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 
-export const useStore = <SessionListType>(
+export const useStore = <StateT>(
   store: any
 ) => {
-  const [ state, setState ] = useState<SessionListType | null>(null);
+  const [ state, setState ] = useState<StateT>(store.getInitialState());
   useEffect(
     () => store.listen(setState),
     [ store ]

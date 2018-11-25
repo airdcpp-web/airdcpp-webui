@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createReactClass from 'create-react-class';
 
 //@ts-ignore
 import Reflux from 'reflux';
-import { default as NotificationSystem, Notification as ReactNotification } from 'react-notification-system';
+import { default as NotificationSystem, Notification as ReactNotification, System } from 'react-notification-system';
 import { RateLimiter } from 'limiter';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
@@ -56,17 +55,16 @@ interface NotificationsProps {
   location: Location;
 }
 
-const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDecoratorChildProps, {}>({
-  displayName: 'Notifications',
-  mixins: [ Reflux.listenTo(NotificationStore, 'addNotification') ],
-  notifications: null,
-  limiter: new RateLimiter(3, 3000, true),
+class Notifications extends React.PureComponent<NotificationsProps & SocketSubscriptionDecoratorChildProps> {
+  notifications: System;
+  limiter = new RateLimiter(3, 3000, true);
+  unsubscribe: () => void;
 
-  propTypes: {
+  static propTypes = {
     location: PropTypes.object.isRequired,
-  },
+  };
 
-  addNotification: function (level: NotificationLevel, notification: AirNotification) {
+  addNotification = (level: NotificationLevel, notification: AirNotification) => {
     (this.limiter as RateLimiter).removeTokens(1, (err, remainingTokens) => {
       // Don't spam too many notifications as that would freeze the UI
       // Always let the errors through as there shouldn't be too many of them
@@ -88,11 +86,11 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
         autoDismiss: 5,
       });
     });
-  },
+  }
 
   shouldComponentUpdate() {
     return false;
-  },
+  }
 
   showNativeNotification(level: NotificationLevel, notificationInfo: AirNotification) {
     const options = {
@@ -110,7 +108,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
     };
 
     setTimeout(n.close.bind(n), 5000);
-  },
+  }
 
   componentDidMount() {
     if ('Notification' in window) {
@@ -118,7 +116,12 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
     }
 
     this.onSocketConnected();
-  },
+    this.unsubscribe = NotificationStore.listen(this.addNotification);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
     return ReactDOM.createPortal(
@@ -129,7 +132,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
       ),
       document.getElementById('notifications-node')!
     );
-  },
+  }
 
   onSocketConnected() {
     const { addSocketListener } = this.props as SocketSubscriptionDecoratorChildProps;
@@ -146,7 +149,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
     addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, undefined, API.AccessEnum.EVENTS_VIEW);
     // tslint:disable-next-line:max-line-length
     addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, undefined, API.AccessEnum.VIEW_FILE_VIEW);
-  },
+  }
 
   onLogMessage(message: API.StatusMessage) {
     const { text, id, severity } = message;
@@ -172,7 +175,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
     } else if (severity === Severity.ERROR && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)) {
       NotificationActions.error(notification);
     }
-  },
+  }
 
   onViewFileDownloaded(file: API.ViewFile) {
     if (!file.content_ready) {
@@ -190,7 +193,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
         }
       }
     } as AirNotification);
-  },
+  }
 
   onPrivateMessage(message: API.ChatMessage) {
     const cid = message.reply_to!.cid;
@@ -217,7 +220,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
         }
       }
     } as AirNotification);
-  },
+  }
 
   onBundleStatus(bundle: API.QueueBundle) {
     if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
@@ -274,7 +277,7 @@ const Notifications = createReactClass<NotificationsProps & SocketSubscriptionDe
         }
       } as AirNotification);
     }
-  },
-});
+  }
+}
 
 export default SocketSubscriptionDecorator(Notifications);

@@ -1,108 +1,47 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
-
-//@ts-ignore
-import Reflux from 'reflux';
+import React, { useState, memo } from 'react';
 
 import SiteHeader from 'components/main/SiteHeader';
 import MainNavigation from 'components/main/navigation/MainNavigationMobile';
-import { MenuIcon } from 'components/menu';
 
-import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
-
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes, RouteItem } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import 'mobile.css';
 import { Location } from 'history';
+import { MainMenuIcon } from './navigation/MainMenuIcon';
 
-import * as UI from 'types/ui';
-
-
-const reduceMenuItemUrgency = (urgencyCountMap: UI.UrgencyCountMap, menuItem: RouteItem) => {
-  if (!menuItem.unreadInfoStore) {
-    return urgencyCountMap;
-  }
-
-  const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
-  if (!urgencies) {
-    return urgencyCountMap;
-  }
-
-  const max = maxUrgency(urgencies);
-  if (max) {
-    appendToMap(urgencyCountMap, max);
-  }
-
-  return urgencyCountMap;
-};
-
-interface HeaderContentProps {
-  onClickMenu: () => void;
-}
-
-const HeaderContent = createReactClass<HeaderContentProps, {}>({
-  displayName: 'HeaderContent',
-  mixins: [ Reflux.ListenerMixin ],
-
-  componentDidMount() {
-    secondaryRoutes.forEach(item => {
-      if (item.unreadInfoStore) {
-        this.listenTo(item.unreadInfoStore, () => this.forceUpdate());
-      }
-    });
-  },
-
-  render() {
-    const { onClickMenu } = this.props;
-    return (
-      <div className="right">
-        <MenuIcon 
-          urgencies={ validateUrgencies(secondaryRoutes.reduce(reduceMenuItemUrgency, {})) }
-          onClick={ onClickMenu }
-          className="item"
-        />
-      </div>
-    );
-  },
-});
 
 interface MainLayoutMobileProps {
   className?: string;
   location: Location;
 }
 
-class MainLayoutMobile extends React.Component<MainLayoutMobileProps> {
-  state = {
-    menuVisible: false,
-  };
+const MainLayoutMobile: React.FC<MainLayoutMobileProps> = memo(props => {
+  const [ menuVisible, setMenuVisible ] = useState(false);
 
-  onClickMenu = () => {
-    this.setState({ menuVisible: !this.state.menuVisible });
-  }
+  const onClickMenu = () => setMenuVisible(!menuVisible);
 
-  render() {
-    const { className, location } = this.props;
-    return (
-      <div className={ className } id="mobile-layout">
-        { this.state.menuVisible && (
-          <MainNavigation
-            location={ location }
-            onClose={ this.onClickMenu }
+  const { className, location } = props;
+  return (
+    <div className={ className } id="mobile-layout">
+      { menuVisible && (
+        <MainNavigation
+          location={ location }
+          onClose={ onClickMenu }
+        />
+      ) }
+      <div className="pusher" id="mobile-layout-inner">
+        <SiteHeader>
+          <MainMenuIcon
+            onClickMenu={ onClickMenu }
+            routes={ secondaryRoutes }
           />
-        ) }
-        <div className="pusher" id="mobile-layout-inner">
-          <SiteHeader>
-            <HeaderContent
-              onClickMenu={ this.onClickMenu }
-            />
-          </SiteHeader>
-          <div className="site-content">
-            { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
-          </div>
+        </SiteHeader>
+        <div className="site-content">
+          { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
 
 export default MainLayoutMobile;

@@ -1,34 +1,26 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
-//@ts-ignore
-import Reflux from 'reflux';
+import React, { memo } from 'react';
 
 import { AwayEnum } from 'constants/SystemConstants';
 import SystemActions from 'actions/SystemActions';
 import ActivityStore from 'stores/ActivityStore';
+import { useStore } from 'effects/StoreListenerEffect';
 
 
-const AwayIcon = createReactClass({
-  displayName: 'AwayIcon',
-  mixins: [ Reflux.connect(ActivityStore, 'activityState') ],
 
-  isAway() {
-    return ActivityStore.away !== AwayEnum.OFF;
-  },
+const isAway = (awayState: AwayEnum) => {
+  return awayState !== AwayEnum.OFF;
+};
 
-  onClick: function (evt: React.SyntheticEvent<any>) {
-    SystemActions.setAway(!this.isAway());
-  },
+const AwayIcon = memo(() => {
+  const awayState = useStore<AwayEnum>(ActivityStore);
 
-  render() {
-    const iconColor = this.isAway() ? 'yellow' : 'grey';
-    return (
-      <i 
-        className={ iconColor + ' away-state link large wait icon' } 
-        onClick={ this.onClick }
-      />
-    );
-  },
+  const iconColor = isAway(awayState) ? 'yellow' : 'grey';
+  return (
+    <i 
+      className={ iconColor + ' away-state link large wait icon' } 
+      onClick={ () => SystemActions.setAway(!isAway(awayState)) }
+    />
+  );
 });
 
 export default AwayIcon;

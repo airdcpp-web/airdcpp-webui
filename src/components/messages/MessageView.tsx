@@ -95,22 +95,24 @@ interface MessageViewProps {
   className?: string;
 }
 
-const MessageView: React.SFC<MessageViewProps> = React.memo(({ messages, session, className }) => {
-  const scrollableRef = useMessageViewScrollEffect(messages, session);
-  return (
-    <div 
-      ref={ scrollableRef }
-      className={ classNames('message-section', className) }
-    >
-      { !!messages ? (
-        <div className="ui list message-list">
-          { messages.reduce(getMessageListItem, []) }
-        </div>
-      ) : (
-        <Loader text="Loading messages"/>
-      ) }
-    </div>
-  );
-});
+const MessageView: React.SFC<MessageViewProps> = React.memo(
+  ({ messages, session, className }) => {
+    const scrollableRef = useMessageViewScrollEffect(messages, session);
+    return (
+      <div 
+        ref={ scrollableRef }
+        className={ classNames('message-section', className) }
+      >
+        { !!messages ? (
+          <div className="ui list message-list">
+            { messages.reduce(getMessageListItem, []) }
+          </div>
+        ) : (
+          <Loader text="Loading messages"/>
+        ) }
+      </div>
+    );
+  }
+);
 
 export default MessageView;

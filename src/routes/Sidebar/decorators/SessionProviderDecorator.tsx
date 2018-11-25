@@ -24,7 +24,7 @@ const SessionProviderDecorator = <SessionT extends object, PropsT extends object
 
     return (
       <Component 
-        items={ sessions! }
+        items={ sessions }
         { ...props }
       />
     );

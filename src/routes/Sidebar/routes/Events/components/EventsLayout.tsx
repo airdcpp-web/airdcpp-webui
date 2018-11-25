@@ -1,7 +1,4 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
-//@ts-ignore
-import Reflux from 'reflux';
+import React, { useEffect, memo } from 'react';
 
 import EventActions from 'actions/EventActions';
 import EventStore from 'stores/EventStore';
@@ -12,41 +9,31 @@ import ActionButton from 'components/ActionButton';
 import '../style.css';
 import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
 
-//import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { useStore } from 'effects/StoreListenerEffect';
 
 
 interface SystemLogProps {
 
 }
 
-interface State {
-  messages: UI.MessageListItem[];
-}
+const SystemLog: React.FC<SystemLogProps> = memo(
+  () => {
+    useEffect(
+      () => {
+        EventActions.setActive(true);
+        EventActions.setRead();
+    
+        if (!EventStore.isInitialized()) {
+          EventActions.fetchMessages();
+        }
 
-const SystemLog = createReactClass<SystemLogProps, State>({
-  displayName: 'SystemLog',
-  mixins: [ Reflux.connect(EventStore, 'messages'), ],
+        return () => EventActions.setActive(false);
+      },
+      []
+    );
 
-  componentDidMount() {
-    EventActions.setActive(true);
-    EventActions.setRead();
-
-    if (!EventStore.isInitialized()) {
-      EventActions.fetchMessages();
-    }
-  },
-
-  componentWillUnmount() {
-    EventActions.setActive(false);
-  },
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.messages !== this.state.messages;
-  },
-
-  render() {
-    const { messages } = this.state as State;
+    const messages = useStore<UI.MessageListItem[]>(EventStore);
     return (
       <div className="simple-layout">
         <div className="wrapper">
@@ -66,7 +53,8 @@ const SystemLog = createReactClass<SystemLogProps, State>({
         </div>
       </div>
     );
-  },
-});
+  }, 
+  () => false
+);
 
 export default SystemLog;
