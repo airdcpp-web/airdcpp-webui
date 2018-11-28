@@ -16,7 +16,6 @@ import { withContentRect, MeasuredComponentProps } from 'react-measure';
 import '../style.css';
 
 import * as API from 'types/api';
-import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
@@ -71,13 +70,7 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
   };
 
   componentDidMount() {
-    this.fetchStats();
-
-    // Add zero values when there is no traffic
-    this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
-
-    const { addSocketListener } = this.props;
-    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsUpdated);
+    this.initStats();
   }
 
   componentWillUnmount() {
@@ -93,10 +86,20 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
     }
   }
 
-  fetchStats = () => {
-    SocketService.get(TransferConstants.STATISTICS_URL)
-      .then(this.onStatsReceived)
-      .catch((error: ErrorResponse) => console.error('Failed to fetch transfer statistics', error.message));
+  initStats = async () => {
+    try {
+      const stats = await SocketService.get<API.TransferStats>(TransferConstants.STATISTICS_URL);
+      this.onStatsReceived(stats);
+    } catch (error) {
+      console.error('Failed to fetch transfer statistics', error.message);
+    }
+
+    // Add lister
+    const { addSocketListener } = this.props;
+    addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsUpdated);
+
+    // Add zero values when there is no traffic
+    this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
   }
 
   onStatsReceived = (stats: API.TransferStats) => {
@@ -113,6 +116,10 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
       ...this.state.stats!,
       ...stats,
     });
+  }
+
+  componentDidCatch(e: Error) {
+    console.error(`Error in Transfer widget: ${e}`);
   }
 
   render() {
