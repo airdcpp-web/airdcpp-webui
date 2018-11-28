@@ -27,9 +27,6 @@ import 'style.css';
 import Background1500px from '../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../resources/images/background_winter_3840px.jpg';
 
-import iOSLogo from '../resources/images/pwa/ios-logo.png';
-import Favico from '../resources/favicon.ico';
-
 
 global.Promise = Promise;
 
@@ -48,36 +45,6 @@ const getBackgroundImage = () => {
   }
 
   return window.innerWidth < 1440 ? Background1500px : Background3840px;
-};
-
-
-const addPageIcons = () => {
-  {
-    // Favicon
-    const link = document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = Favico;
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-
-  {
-    // Apple touch icon
-    const link = document.createElement('link');
-    link.rel = 'apple-touch-icon';
-    link.href = iOSLogo;
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-
-  {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register(`${getBasePath()}${process.env.SERVICEWORKER}`)
-        .then(sw => { 
-          console.log('Service Worker Registered', sw); 
-        });
-    }    
-  }
 };
 
 export type InstallPromptContextType = (() => void) | null;
@@ -111,7 +78,6 @@ const useInstallPrompt = () => {
 };
 
 const App = () => {
-  useEffect(addPageIcons, []);
   const prompt = useInstallPrompt();
   return (
     <InstallPromptContext.Provider value={ prompt }>

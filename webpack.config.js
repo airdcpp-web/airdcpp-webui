@@ -47,7 +47,6 @@ let plugins = [
     inject: false,
     googleAnalytics: demo,
     chunksSortMode: 'none',
-    favicon: 'resources/favicon.ico',
   }),
   new ForkTsCheckerWebpackPlugin({
     async: false,
@@ -56,6 +55,7 @@ let plugins = [
   new ServiceWorkerWebpackPlugin({
     entry: path.join(__dirname, 'src/sw.js'),
     filename: process.env.SERVICEWORKER,
+    includes: [ '**/*.js' ],
   }),
 ];
 
