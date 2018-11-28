@@ -29,6 +29,8 @@ export const enum LocalSettings {
 
   UNREAD_LABEL_DELAY = 'unread_label_delay',
   BACKGROUND_IMAGE_URL = 'background_image_url',
+
+  NO_INSTALL_PROMPT = 'no_install_prompt',
 }
 
 export default {

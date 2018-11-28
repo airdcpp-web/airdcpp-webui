@@ -10,6 +10,7 @@ import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 import SystemConstants from 'constants/SystemConstants';
 import { formatRelativeTime } from 'utils/ValueFormat';
+import InstallPrompt from 'components/InstallPrompt';
 
 
 class AboutPage extends React.Component<StatisticsDecoratorChildProps<any>> {
@@ -20,16 +21,19 @@ class AboutPage extends React.Component<StatisticsDecoratorChildProps<any>> {
     const buildDate = Moment(new Date(JSON.parse(UI_BUILD_DATE))).format('LLL');
 
     return (
-      <div className="ui grid two column">
-        <Row title="Application version" text={ systemInfo.client_version }/>
-        <Row title="Web UI version" text={ UI_VERSION }/>
-        <Row title="Web UI build date" text={ buildDate }/>
-        <Row title="API version" text={ systemInfo.api_version }/>
-        <Row title="API feature level" text={ systemInfo.api_feature_level }/>
-        <Row title="Started" text={ formatRelativeTime(systemInfo.client_started) }/>
-        <Row title="Active sessions" text={ stats.active_sessions }/>
-        <Row title="Server threads" text={ stats.server_threads }/>
-      </div>
+      <>
+        <div className="ui grid two column">
+          <Row title="Application version" text={ systemInfo.client_version }/>
+          <Row title="Web UI version" text={ UI_VERSION }/>
+          <Row title="Web UI build date" text={ buildDate }/>
+          <Row title="API version" text={ systemInfo.api_version }/>
+          <Row title="API feature level" text={ systemInfo.api_feature_level }/>
+          <Row title="Started" text={ formatRelativeTime(systemInfo.client_started) }/>
+          <Row title="Active sessions" text={ stats.active_sessions }/>
+          <Row title="Server threads" text={ stats.server_threads }/>
+        </div>
+        <InstallPrompt alwaysShow={ true }/>
+      </>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import History from 'utils/History';
@@ -15,13 +15,6 @@ import Login from 'routes/Login/components/Login';
 import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingStore from 'stores/LocalSettingStore';
 
-import Background1500px from '../resources/images/background_winter_1500px.jpg';
-import Background3840px from '../resources/images/background_winter_3840px.jpg';
-
-import iOSLogo from '../resources/images/ios-logo.png';
-import Favico from '../resources/favicon.ico';
-
-
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import Measure from 'react-measure';
@@ -30,6 +23,13 @@ import 'array.prototype.find';
 import 'utils/semantic';
 
 import 'style.css';
+
+import Background1500px from '../resources/images/background_winter_1500px.jpg';
+import Background3840px from '../resources/images/background_winter_3840px.jpg';
+
+import iOSLogo from '../resources/images/pwa/ios-logo.png';
+import Favico from '../resources/favicon.ico';
+
 
 global.Promise = Promise;
 
@@ -68,33 +68,76 @@ const addPageIcons = () => {
     link.href = iOSLogo;
     document.getElementsByTagName('head')[0].appendChild(link);
   }
+
+  {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register(`${getBasePath()}${process.env.SERVICEWORKER}`)
+        .then(sw => { 
+          console.log('Service Worker Registered', sw); 
+        });
+    }    
+  }
+};
+
+export type InstallPromptContextType = (() => void) | null;
+export const InstallPromptContext = createContext<InstallPromptContextType>(null);
+
+const useInstallPrompt = () => {
+  const [ prompt, setPrompt ] = useState<null | Event>(null);
+
+  useEffect(
+    () => {
+      function handleBeforeInstallPrompt(e: Event) {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        setPrompt(e);
+
+        //console.log(`beforeinstallprompt`, e);
+      }
+
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+      return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    },
+    []
+  );
+
+  return !prompt ? null : () => {
+    (prompt as any).prompt();
+    setPrompt(null);
+  };
 };
 
 const App = () => {
   useEffect(addPageIcons, []);
+  const prompt = useInstallPrompt();
   return (
-    <Router history={ History }>
-      <Measure
-        bounds={ true }
-      >
-        { ({ measureRef }) => (
-          <div 
-            ref={ measureRef } 
-            id="background-wrapper" 
-            style={{
-              backgroundImage: 'url(' + getBackgroundImage() + ')',
-              height: '100%',
-            }}
-          >
-            <Switch>
-              <Route path="/login" component={ Login }/>
-              <Route exact path="/" component={() => <Redirect to="/home" />}/>
-              <Route path="/" component={ AuthenticatedApp }/>
-            </Switch>
-          </div>
-        ) }
-      </Measure>
-    </Router>
+    <InstallPromptContext.Provider value={ prompt }>
+      <Router history={ History }>
+        <Measure
+          bounds={ true }
+        >
+          { ({ measureRef }) => (
+            <div 
+              ref={ measureRef } 
+              id="background-wrapper" 
+              style={{
+                backgroundImage: 'url(' + getBackgroundImage() + ')',
+                height: '100%',
+              }}
+            >
+              <Switch>
+                <Route path="/login" component={ Login }/>
+                <Route exact path="/" component={() => <Redirect to="/home" />}/>
+                <Route path="/" component={ AuthenticatedApp }/>
+              </Switch>
+            </div>
+          ) }
+        </Measure>
+      </Router>
+    </InstallPromptContext.Provider>
   );
 };
 

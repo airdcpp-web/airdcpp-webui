@@ -8,6 +8,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 const Entry = [
   LocalSettings.UNREAD_LABEL_DELAY,
   LocalSettings.BACKGROUND_IMAGE_URL,
+  LocalSettings.NO_INSTALL_PROMPT,
 ];
 
 const MiscellaneousPage: React.FC<SettingSectionChildProps> = props => (

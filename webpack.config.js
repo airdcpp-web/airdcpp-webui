@@ -7,6 +7,7 @@ const zopfli = require('@gfx/zopfli');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
@@ -15,6 +16,9 @@ if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
 } else if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development';
 }
+
+// Service worker must be in the root because of scopes
+process.env.SERVICEWORKER = 'sw.js';
 
 const release = (process.env.NODE_ENV === 'production');
 const demo = (process.env.DEMO_MODE === '1');
@@ -33,6 +37,7 @@ let plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     'process.env.DEMO_MODE': JSON.stringify(process.env.DEMO_MODE),
+    'process.env.SERVICEWORKER': JSON.stringify(process.env.SERVICEWORKER),
     'UI_VERSION': JSON.stringify(require('./package.json').version),
     'UI_BUILD_DATE': JSON.stringify((new Date).getTime()),
   }),
@@ -42,10 +47,15 @@ let plugins = [
     inject: false,
     googleAnalytics: demo,
     chunksSortMode: 'none',
+    favicon: 'resources/favicon.ico',
   }),
   new ForkTsCheckerWebpackPlugin({
     async: false,
     memoryLimit: 4096,
+  }),
+  new ServiceWorkerWebpackPlugin({
+    entry: path.join(__dirname, 'src/sw.js'),
+    filename: process.env.SERVICEWORKER,
   }),
 ];
 

@@ -7,8 +7,9 @@
 	<meta name="format-detection" content="telephone=no">
 
 	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="manifest" id="manifest-placeholder">
 
-  <title>AirDC++ Web Client</title>
+	<title>AirDC++ Web Client</title>
 </head>
 
 <body>
@@ -36,6 +37,35 @@
 		var script = document.createElement('script');
 		script.src = getBasePath() + "<%= htmlWebpackPlugin.files.chunks.main.entry%>";
 		document.body.appendChild(script);
+
+		// App manifest (must be added here)
+		// https://developer.mozilla.org/en-US/docs/Web/Manifest
+		const baseUrl = window.location.origin + getBasePath();
+		const manifest = {
+			'name': 'AirDC++',
+			'short_name': 'AirDC++',
+			'description': 'AirDC++ Web Client',
+			'start_url': baseUrl,
+			'display': 'standalone',
+			'background_color': '#000000',
+			'theme_color': '#000000',
+			'icons': [
+			{
+					'src': baseUrl + "<%=require('./images/pwa/AirDCPlusPlus_192.png')%>",
+					'sizes': '192x192',
+					'type': 'image/png'
+				}, {
+					'src': baseUrl + "<%=require('./images/pwa/AirDCPlusPlus_512.png')%>",
+					'sizes': '512x512',
+					'type': 'image/png'
+				}
+			]
+		};
+
+		const stringManifest = JSON.stringify(manifest);
+		const blob = new Blob([stringManifest], { type: 'application/json' });
+		const manifestURL = URL.createObjectURL(blob);
+		document.querySelector('#manifest-placeholder').setAttribute('href', manifestURL);
 	</script>
 	
 	<% if (htmlWebpackPlugin.options.googleAnalytics) { %>
@@ -49,7 +79,7 @@
 			ga('send', 'pageview');
 
 		</script>
-  <% } %>
+	<% } %>
 
 </body>
 </html>
