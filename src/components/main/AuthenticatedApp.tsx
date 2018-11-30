@@ -26,6 +26,10 @@ interface AuthenticatedAppProps extends RouteComponentProps<{}> {
 
 }
 
+export interface MainLayoutProps extends RouteComponentProps {
+  className?: string;
+}
+
 class AuthenticatedApp extends React.Component<AuthenticatedAppProps> {
   updateTitle() {
     let title = 'AirDC++ Web Client';

@@ -77,9 +77,7 @@ export default function <DropdownPropsT extends object>(
 
     render() {
       const { 
-        text, userIcon, user, className, 
-        //@ts-ignore
-        ...other 
+        text, userIcon, user, className
       } = this.props;
 
       let nicks: React.ReactNode = text;
@@ -99,7 +97,7 @@ export default function <DropdownPropsT extends object>(
 
       return (
         <Component 
-          { ...other }
+          { ...this.props }
           className={ classNames('user-menu', className) }
           caption={ caption }
           actions={ UserActions } 

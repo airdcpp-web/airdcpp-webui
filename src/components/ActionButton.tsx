@@ -47,4 +47,4 @@ const ActionButton: React.FC<ActionButtonProps & ActionHandlerDecoratorChildProp
 };*/
 
 
-export default ActionHandlerDecorator(ActionButton);
+export default ActionHandlerDecorator<ActionButtonProps>(ActionButton);

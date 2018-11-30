@@ -19,7 +19,7 @@ export default function <DataT, PropsT = {}>(
   unavailableMessage: MessageDescriptionType, 
   fetchIntervalSeconds: number = 0
 ) {
-  class StatisticsDecorator extends React.Component<StatisticsDecoratorProps<DataT>> {
+  class StatisticsDecorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
     state = {
       stats: null
     };

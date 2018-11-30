@@ -57,7 +57,7 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
   </div>
 );
 
-export default DataProviderDecorator(DetectPanel, {
+export default DataProviderDecorator<DetectPanelProps, DetectPanelDataProps>(DetectPanel, {
   urls: {
     status: ConnectivityConstants.STATUS_URL,
   },

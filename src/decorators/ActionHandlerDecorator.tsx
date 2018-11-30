@@ -88,7 +88,7 @@ const ConfirmHandler = <ItemDataT extends any>(
 type ActionHandlerDataProps = ActionHandlerDecoratorProps & RouteComponentProps & ModalCloseContextProps;
 
 function ActionHandlerDecorator<PropsT, ItemDataT = any>(
-  Component: React.ComponentType<PropsT & ActionHandlerDecoratorChildProps>
+  Component: React.ComponentType<PropsT & ActionHandlerDecoratorChildProps<ItemDataT>>
 ) {
   interface State {
     confirmActionData: ActionData<ItemDataT> | null;
@@ -135,7 +135,7 @@ function ActionHandlerDecorator<PropsT, ItemDataT = any>(
       this.closeConfirmation();
     }
   
-    handleClickAction: ActionClickHandler<ItemDataT> = (actionData: ActionData<ItemDataT>) => {
+    handleClickAction: ActionClickHandler<ItemDataT> = (actionData) => {
       if (actionData.action.confirmation) {
         this.setState({
           confirmActionData: actionData,
@@ -151,11 +151,11 @@ function ActionHandlerDecorator<PropsT, ItemDataT = any>(
 
     render() {
       const { confirmActionData } = this.state;
-      const { closeModal, ...other } = this.props as ActionHandlerDataProps;
+      //const { closeModal, ...other } = this.props;
       return (
         <>
           <Component
-            { ...other }
+            { ...this.props }
             onClickAction={ this.handleClickAction }
           />
           <ConfirmHandler

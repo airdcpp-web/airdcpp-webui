@@ -6,16 +6,11 @@ import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import 'mobile.css';
-import { Location } from 'history';
 import { MainMenuIcon } from './navigation/MainMenuIcon';
+import { MainLayoutProps } from './AuthenticatedApp';
 
 
-interface MainLayoutMobileProps {
-  className?: string;
-  location: Location;
-}
-
-const MainLayoutMobile: React.FC<MainLayoutMobileProps> = memo(props => {
+const MainLayoutMobile: React.FC<MainLayoutProps> = memo(props => {
   const [ menuVisible, setMenuVisible ] = useState(false);
 
   const onClickMenu = () => setMenuVisible(!menuVisible);

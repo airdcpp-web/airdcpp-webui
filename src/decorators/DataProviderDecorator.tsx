@@ -23,7 +23,10 @@ export type SocketConnectHandler<DataT, PropsT> = (
   }
 ) => void;
 
-export interface DataProviderDecoratorProps<PropsT extends object, DataT extends object> {
+export interface DataProviderDecoratorProps {
+
+}
+export interface DataProviderDecoratorSettings<PropsT extends object, DataT extends object> {
   urls: {
     [key: string]: ((props: PropsT, socket: APISocket) => Promise<object | undefined>) | string
   };
@@ -51,7 +54,7 @@ interface State<DataT extends object> {
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
-  settings: DataProviderDecoratorProps<PropsT, DataT>
+  settings: DataProviderDecoratorSettings<PropsT, DataT>
 ) {
   class DataProviderDecorator extends React.Component<SocketSubscriptionDecoratorChildProps & PropsT, State<DataT>> {
     //displayName: 'DataProviderDecorator',
@@ -219,5 +222,5 @@ export default function <PropsT extends object, DataT extends object>(
     }
   }
 
-  return SocketSubscriptionDecorator(DataProviderDecorator);
+  return SocketSubscriptionDecorator<DataProviderDecoratorProps & PropsT>(DataProviderDecorator);
 }

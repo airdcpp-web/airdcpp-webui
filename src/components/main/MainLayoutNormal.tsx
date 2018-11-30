@@ -9,13 +9,8 @@ import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/R
 import 'normal.css';
 import Sidebar from 'routes/Sidebar/components/Sidebar';
 import { useSidebarEffect } from 'effects';
-import { RouteComponentProps } from 'react-router';
+import { MainLayoutProps } from './AuthenticatedApp';
 
-
-
-interface MainLayoutProps extends RouteComponentProps {
-  className?: string;
-}
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className, location } = props;

@@ -74,18 +74,16 @@ export default function <DropdownPropsT, ItemDataT extends UI.ActionItemDataValu
 
     render() {
       const { 
-        caption, className, 
-        //@ts-ignore
-        ...other 
+        caption, className
       } = this.props;
 
       return (
         <Component 
+          { ...this.props }
           className={ classNames('download', className) }
           caption={ caption } 
           actions={ DownloadableItemActions }
-          itemData={ this.itemDataGetter } 
-          { ...other }
+          itemData={ this.itemDataGetter }
         />
       );
     }

@@ -71,15 +71,17 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
   </div>
 );
 
-export default DataProviderDecorator(FavoriteDirectoryPage, {
-  urls: {
-    directories: FavoriteDirectoryConstants.DIRECTORIES_URL,
-  },
-  onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(
-      FavoriteDirectoryConstants.MODULE_URL, 
-      FavoriteDirectoryConstants.DIRECTORIES_UPDATED, 
-      () => refetchData()
-    );
-  },
-});
+export default DataProviderDecorator<FavoriteDirectoryPageProps, FavoriteDirectoryPageDataProps>(
+  FavoriteDirectoryPage, {
+    urls: {
+      directories: FavoriteDirectoryConstants.DIRECTORIES_URL,
+    },
+    onSocketConnected: (addSocketListener, { refetchData }) => {
+      addSocketListener(
+        FavoriteDirectoryConstants.MODULE_URL, 
+        FavoriteDirectoryConstants.DIRECTORIES_UPDATED, 
+        () => refetchData()
+      );
+    },
+  }
+);

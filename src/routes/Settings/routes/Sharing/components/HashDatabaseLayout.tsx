@@ -71,6 +71,9 @@ const SizeRow: React.FC<SizeRowProps> = ({ title, size }) => (
   </div>
 );
 
+interface HashDatabaseLayoutProps {
+
+}
 interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
   status: API.HashDatabaseStatus;
 }
@@ -109,7 +112,7 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutDataProps> {
   }
 }
 
-export default DataProviderDecorator(HashDatabaseLayout, {
+export default DataProviderDecorator<HashDatabaseLayoutProps, HashDatabaseLayoutDataProps>(HashDatabaseLayout, {
   urls: {
     status: HashConstants.DATABASE_STATUS_URL,
   },

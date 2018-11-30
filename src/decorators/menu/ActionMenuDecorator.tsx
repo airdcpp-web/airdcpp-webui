@@ -274,5 +274,5 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     }
   }
 
-  return ActionHandlerDecorator(ActionMenuDecorator);
+  return ActionHandlerDecorator<ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT>(ActionMenuDecorator);
 }

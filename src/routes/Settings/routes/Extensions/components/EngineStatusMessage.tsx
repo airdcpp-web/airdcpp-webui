@@ -38,7 +38,7 @@ const EngineStatusMessage: React.FC<EngineStatusMessageProps & EngineStatusMessa
   );
 };
 
-export default DataProviderDecorator(EngineStatusMessage, {
+export default DataProviderDecorator<EngineStatusMessageProps, EngineStatusMessageDataProps>(EngineStatusMessage, {
   urls: {
     enginesStatus: ExtensionConstants.ENGINES_STATUS_URL,
   },
