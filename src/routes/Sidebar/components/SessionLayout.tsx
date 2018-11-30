@@ -310,7 +310,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     }
 
     // See if we have something stored
-    let lastId = loadLocalProperty(this.getStorageKey(this.props));
+    let lastId = loadLocalProperty<API.IdType>(this.getStorageKey(this.props));
     if (lastId && findItem(this.props.items, lastId)) {
       // Previous session exists
       this.replaceSession(lastId);

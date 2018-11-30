@@ -33,7 +33,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
 
   constructor(props: SidebarProps) {
     super(props);
-    const width = loadLocalProperty('sidebar_width', 1000);
+    const width = loadLocalProperty<number>('sidebar_width', 1000);
 
     this.state = {
       // Don't render the content while sidebar is animating

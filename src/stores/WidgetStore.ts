@@ -28,13 +28,20 @@ const widgets = [
 const LAYOUT_STORAGE_KEY = 'home_layout';
 const LAYOUT_VERSION = 3;
 
+export const EmptyWidgetSettings = {
+  name: '',
+  widget: {} 
+};
+
 // HELPERS
-const getWidgetSettings = (id: string, widgetInfo?: UI.Widget) => {
-  const settings = loadLocalProperty(WidgetUtils.idToSettingKey(id), { });
+const getWidgetSettings = (id: string, widgetInfo?: UI.Widget): UI.WidgetSettings => {
+  const settings = loadLocalProperty<UI.WidgetSettings>(
+    WidgetUtils.idToSettingKey(id), 
+    EmptyWidgetSettings
+  );
 
   // Add new default settings
   if (widgetInfo && widgetInfo.formSettings) {
-    settings.widget = settings.widget || {};
     widgetInfo.formSettings
       .forEach(definition => {
         if (!settings.widget.hasOwnProperty(definition.key)) {
@@ -95,12 +102,17 @@ const getWidgetInfoById = (id: string) => {
 };
 
 
+interface StorageLayouts {
+  version: number;
+  items: Layouts;
+}
+
 const Store = {
   layouts: {} as Layouts,
   listenables: WidgetActions,
   init: function () {
     // Try to load saved ones
-    let layoutInfo = loadLocalProperty(LAYOUT_STORAGE_KEY);
+    let layoutInfo = loadLocalProperty<StorageLayouts>(LAYOUT_STORAGE_KEY);
     if (layoutInfo && layoutInfo.items) {
       if (layoutInfo.version === LAYOUT_VERSION) {
         this.layouts = layoutInfo.items;

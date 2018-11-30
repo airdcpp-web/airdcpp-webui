@@ -60,9 +60,12 @@ export interface Feed {
 
 export type RSSProps = UI.WidgetProps<Settings>;
 
-interface State {
-  entries?: FeedItem[] | null;
-  date?: number;
+
+interface StorageFeed {
+  entries: FeedItem[] | null;
+  date: number;
+}
+interface State extends Partial<StorageFeed> {
   error: string | null;
 }
 
@@ -116,8 +119,8 @@ class RSS extends React.PureComponent<RSSProps, State> {
     }
   }
 
-  getCachedFeedInfo = () => {
-    const feedInfo = loadSessionProperty(idToCacheKey(this.props.componentId));
+  getCachedFeedInfo = (): StorageFeed | null => {
+    const feedInfo = loadSessionProperty<StorageFeed>(idToCacheKey(this.props.componentId));
     if (feedInfo) {
       const feedDate = new Date(feedInfo.date).getTime();
       const lastValidDate = feedDate + (this.props.settings.feed_cache_minutes * 60 * 1000);

@@ -1,4 +1,4 @@
-import { default as WidgetStore } from 'stores/WidgetStore';
+import { default as WidgetStore, EmptyWidgetSettings } from 'stores/WidgetStore';
 
 import { RSS } from 'widgets/RSS';
 
@@ -61,6 +61,6 @@ describe('widget store', () => {
 
     WidgetStore.onRemove({ id: widgetId });
     expect(countWidgetIds(widgetId, WidgetStore.layouts)).toEqual(0);
-    expect(WidgetStore.getWidgetSettings(widgetId)).toEqual({});
+    expect(WidgetStore.getWidgetSettings(widgetId)).toEqual(EmptyWidgetSettings);
   });
 });

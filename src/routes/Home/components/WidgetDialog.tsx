@@ -19,7 +19,9 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const parseSettings = (widgetId: string | undefined, widgetInfo: UI.Widget) => {
+type FormData = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
+
+const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget): FormData | undefined => {
   if (!widgetId) {
     return undefined;
   }
@@ -28,7 +30,7 @@ const parseSettings = (widgetId: string | undefined, widgetInfo: UI.Widget) => {
   return {
     name: settings.name,
     ...settings.widget,
-  } as UI.FormValueMap;
+  };
 };
 
 interface WidgetDialogProps {
@@ -49,15 +51,15 @@ class WidgetDialog extends React.Component<Props> {
     typeId: PropTypes.string, // Required
   };*/
 
-  form: Form;
+  form: Form<FormData>;
 
   save = () => {
     return this.form.save();
   }
 
-  onSave: FormSaveHandler<UI.WidgetSettings> = (changedFields, value) => {
+  onSave: FormSaveHandler<FormData> = (changedFields, value) => {
     const { name, ...other } = value;
-    const settings = {
+    const settings: UI.WidgetSettings = {
       name: name!,
       widget: other
     };
@@ -82,7 +84,7 @@ class WidgetDialog extends React.Component<Props> {
     }
 
     const { formSettings, name, icon } = widgetInfo;
-    const settings = parseSettings(widgetId, widgetInfo);
+    const formValue = settingsToFormValue(widgetId, widgetInfo);
 
     const Entry: UI.FormFieldDefinition[] = [
       {
@@ -104,9 +106,9 @@ class WidgetDialog extends React.Component<Props> {
         icon={ icon }
         { ...this.props }
       >
-        <Form
-          ref={ (c: any) => this.form = c }
-          value={ settings }
+        <Form<FormData>
+          ref={ c => this.form = c! }
+          value={ formValue }
           fieldDefinitions={ Entry }
           onSave={ this.onSave }
         />

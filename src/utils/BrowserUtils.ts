@@ -22,7 +22,10 @@ const saveProperty = (storage: Storage, storageKey: string | undefined, data: an
   storage.setItem(storageKey, JSON.stringify(data));
 };
 
-export const loadLocalProperty = (storageKey: string | undefined, defaultData?: any) => {
+export const loadLocalProperty = <ValueType>(
+  storageKey: string | undefined, 
+  defaultData?: ValueType
+): ValueType => {
   return loadProperty(localStorage, storageKey, defaultData);
 };
 
@@ -34,7 +37,10 @@ export const removeLocalProperty = (storageKey: string) => {
   localStorage.removeItem(storageKey);
 };
 
-export const loadSessionProperty = (storageKey: string | undefined, defaultData?: any) => {
+export const loadSessionProperty = <ValueType>(
+  storageKey: string | undefined, 
+  defaultData?: ValueType
+): ValueType => {
   return loadProperty(sessionStorage, storageKey, defaultData);
 };
 
