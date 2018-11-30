@@ -1,102 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
-import History from 'utils/History';
+import React, { useState, useRef } from 'react';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
-import Button from 'components/semantic/Button';
-import Message from 'components/semantic/Message';
+import Checkbox from 'components/semantic/Checkbox';
+import { RouteComponentProps } from 'react-router';
+import SocketConnectStatus from 'components/main/SocketConnectStatus';
+import { useLoginState } from '../effects/UseLoginStateEffect';
+import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
-import { Location } from 'history';
 
-
-const ErrorBox: React.FC<{ lastError: string | null }> = ({ lastError }) => {
-  if (lastError === null) {
-    return null;
-  }
-
-  return (
-    <Message 
-      isError={ true } 
-      description={ 'Authentication failed: ' + lastError }
-    />
-  );
-};
-
-interface SubmitButtonProps {
-  onSubmit: (evt: React.SyntheticEvent) => void;
-  loading: boolean;
-  allowLogin: boolean;
-}
-
-const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin }) => {
-  if (!allowLogin) {
-    return null;
-  }
-
-  return (
-    <Button
-      className="fluid large submit"
-      caption="Login"
-      type="submit"
-      loading={ loading }
-      onClick={ onSubmit }
-    />
-  );
-};
-
-const BottomMessage = () => {
-  if (process.env.DEMO_MODE !== '1') {
-    return null;
-  }
-
-  return (
-    <div className="ui stacked segment">
-      <Message 
-        description={ (
-          <div>
-            Username: <strong>demo</strong>
-            <br/>
-            Password: <strong>demo</strong>
-          </div> 
-        )}
-      />
-    </div>
-  );
-};
 
 const ENTER_KEY_CODE = 13;
 
+interface LoginProps extends RouteComponentProps {
 
-interface LoginState {
-  socketAuthenticated: boolean;
-  lastError: string | null;
 }
 
-interface LoginProps {
-  location: Location;
-}
 
-const Login: React.FC<LoginProps> = ({ location }) => {
-  const [ loading, setLoading ] = useState(false);
+const Login: React.FC<LoginProps> = props => {
+  const [ rememberMe, setRememberMe ] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  useEffect(
-    () => {
-      return LoginStore.listen((loginInfo: LoginState) => {
-        if (loginInfo.socketAuthenticated) {
-          const nextPath = location.state ? location.state.nextPath : '/';
-          History.replace({
-            pathname: nextPath,
-          });
-        } else if (loading && !!loginInfo.lastError) {
-          setLoading(false);
-        }
-      });
+  const [ loading, setLoading ] = useLoginState(props);
+  if (!loading) {
+    const refreshToken: string | null = LoginStore.refreshToken;
+    if (!!refreshToken) {
+      LoginActions.loginRefreshToken(refreshToken);
+      setLoading(true);
     }
-  );
+  } else if (!!LoginStore.refreshToken) {
+    return (
+      <SocketConnectStatus
+        lastError={ null }
+        active={ true }
+      />
+    );
+  }
 
   const onSubmit = (evt: React.SyntheticEvent) => {
     const username = usernameRef.current!.value;
@@ -107,7 +49,7 @@ const Login: React.FC<LoginProps> = ({ location }) => {
       return;
     }
 
-    LoginActions.login(username, password);
+    LoginActions.login(username, password, rememberMe);
     setLoading(true);
   };
 
@@ -131,6 +73,7 @@ const Login: React.FC<LoginProps> = ({ location }) => {
                   type="text" 
                   name="username" 
                   placeholder="Username" 
+                  required={ true }
                   autoFocus={ true }
                 />
               </div>
@@ -143,16 +86,28 @@ const Login: React.FC<LoginProps> = ({ location }) => {
                   className="password" 
                   name="password" 
                   placeholder="Password"  
+                  required={ true }
                   type="password"
                 />
               </div>
             </div>
-
             <SubmitButton
               onSubmit={ onSubmit }
               loading={ loading }
               allowLogin={ LoginStore.allowLogin }
             />
+            <div 
+              className="field" 
+              style={{
+                marginTop: '10px',
+              }}
+            >
+              <Checkbox
+                caption="Keep me logged in" 
+                onChange={ setRememberMe }
+                checked={ rememberMe }
+              />
+            </div>
           </div>
 
           <BottomMessage/>

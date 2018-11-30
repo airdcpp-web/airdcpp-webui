@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
-import { PlatformEnum } from 'constants/SystemConstants';
 
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
@@ -90,7 +89,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   }
 
   get isWindows() {
-    return LoginStore.systemInfo.platform === PlatformEnum.WINDOWS;
+    return LoginStore.systemInfo.platform === API.PlatformEnum.WINDOWS;
   }
 
   initialFetchCompleted: boolean = false;
@@ -98,7 +97,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   constructor(props: FileBrowserProps) {
     super(props);
 
-    let currentDirectory = loadLocalProperty(this.getStorageKey());
+    let currentDirectory = loadLocalProperty<string | undefined>(this.getStorageKey());
     if (!currentDirectory) {
       currentDirectory = props.initialPath.length === 0 ? this.getRootPath() : props.initialPath;
     }

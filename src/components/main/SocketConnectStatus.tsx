@@ -3,7 +3,7 @@ import React from 'react';
 import Loader from 'components/semantic/Loader';
 
 
-const getMessage = (lastError: string) => {
+const getMessage = (lastError: string | null) => {
   if (!!lastError) {
     return lastError + '. Attempting to re-establish connection...';
   }
@@ -12,7 +12,7 @@ const getMessage = (lastError: string) => {
 };
 
 interface SocketConnectStatusProps {
-  lastError: string;
+  lastError: string | null;
   active: boolean;
 }
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import History from 'utils/History';
 
 import LoginActions from 'actions/LoginActions';
-import LoginStore from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/LoginStore';
 
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
 import { Location } from 'history';
@@ -12,13 +12,6 @@ import { useStore } from 'effects/StoreListenerEffect';
 
 interface AuthenticationGuardDecoratorProps {
   location: Location;
-}
-
-
-interface LoginState {
-  socketAuthenticated: boolean;
-  lastError: string;
-  hasSession: boolean;
 }
 
 
