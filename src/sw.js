@@ -12,9 +12,6 @@ const DEBUG = true;
 self.addEventListener('install', e => {
   console.log('[SW] Worker installed');
 
-  //const cachedAssets = allAssets
-  //  .filter(asset => asset.match(/\.(js|html)$/));
-
   e.waitUntil(
     caches.open('resource-store')
       .then(cache => cache.addAll([ ...assets ]))
@@ -76,8 +73,6 @@ self.addEventListener('fetch', e => {
   let cacheUrl = e.request.url;
   if (e.request.url.startsWith(basePath) &&
     !e.request.url.replace(basePath, '').match(/^(view|assets|js|images)\//)
-    //allAssets.indexOf(e.request.url) === -1 &&
-    //!e.request.url.startsWith(basePath) + 'view/'
   ) {
     // Routing URL
     cacheUrl = basePath + 'index.html';
