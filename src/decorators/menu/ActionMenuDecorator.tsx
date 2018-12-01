@@ -242,7 +242,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     }
 
     render() {
-      let { ids, actions, children, itemData, ...other } = this.props as any; // eslint-disable-line
+      let { ids, actions, children, itemData, ...other } = this.props;
 
       const menus = this.getMenus();
 
@@ -267,7 +267,9 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       }
 
       return (
-        <Component { ...other }>
+        <Component 
+          { ...other as ActionMenuDecoratorChildProps & DropdownComponentPropsT }
+        >
           { this.getChildren }
         </Component>
       );

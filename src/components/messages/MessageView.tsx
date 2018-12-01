@@ -10,7 +10,6 @@ import { formatCalendarTime } from 'utils/ValueFormat';
 
 import './messages.css';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
@@ -72,7 +71,7 @@ const getMessageListItem = (
     reduced.push(
       <ChatMessage
         key={ message.chat_message.id }
-        message={ message.chat_message as API.ChatMessage }
+        message={ message.chat_message }
         dropdownContext=".chat.session"
       />
     );
@@ -80,7 +79,7 @@ const getMessageListItem = (
     reduced.push(
       <StatusMessage
         key={ message.log_message.id }
-        message={ message.log_message as API.StatusMessage }
+        message={ message.log_message }
       />
     );
   }

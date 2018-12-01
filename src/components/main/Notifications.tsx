@@ -135,7 +135,7 @@ class Notifications extends React.Component<NotificationsProps & SocketSubscript
   }
 
   onSocketConnected() {
-    const { addSocketListener } = this.props as SocketSubscriptionDecoratorChildProps;
+    const { addSocketListener } = this.props;
 
     // tslint:disable-next-line:max-line-length
     addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, undefined, API.AccessEnum.PRIVATE_CHAT_VIEW);

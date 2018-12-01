@@ -104,7 +104,7 @@ export default function <PropsT extends object, DataT extends object>(
           {
             refetchData: this.refetchData,
             mergeData: this.mergeData,
-            props: this.props as PropsT,
+            props: this.props,
           }
         );
       }
@@ -118,7 +118,7 @@ export default function <PropsT extends object, DataT extends object>(
     mergeData = (data: any) => {
       this.setState({
         data: {
-          ...this.state.data as object, 
+          ...this.state.data, 
           ...data,
         }
       });
@@ -141,7 +141,7 @@ export default function <PropsT extends object, DataT extends object>(
       const promises = keys.map(key => {
         let url = urls[key];
         if (typeof url === 'function') {
-          return url(this.props as PropsT, SocketService);
+          return url(this.props, SocketService);
         }
 
         return SocketService.get(url);
@@ -155,7 +155,7 @@ export default function <PropsT extends object, DataT extends object>(
     reduceData = (keys: string[], reducedData: any[], data: any, index: number) => {
       const { dataConverters } = settings;
       const url = keys[index];
-      reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props as PropsT) : data;
+      reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props) : data;
       return reducedData;
     }
 
@@ -191,7 +191,7 @@ export default function <PropsT extends object, DataT extends object>(
 
     render() {
       const { loaderText, renderOnError } = settings;
-      const { data, error } = this.state as State<DataT>;
+      const { data, error } = this.state;
 
       if (!data && !error) {
         return !!loaderText && <Loader text={ loaderText }/>;

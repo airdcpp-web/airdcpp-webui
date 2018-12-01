@@ -85,7 +85,7 @@ const ConfirmHandler = <ItemDataT extends any>(
   return null;
 };
 
-type ActionHandlerDataProps = ActionHandlerDecoratorProps & RouteComponentProps & ModalCloseContextProps;
+type ActionHandlerDataProps = RouteComponentProps & ModalCloseContextProps;
 
 function ActionHandlerDecorator<PropsT, ItemDataT = any>(
   Component: React.ComponentType<PropsT & ActionHandlerDecoratorChildProps<ItemDataT>>
@@ -94,7 +94,7 @@ function ActionHandlerDecorator<PropsT, ItemDataT = any>(
     confirmActionData: ActionData<ItemDataT> | null;
   }
 
-  type Props = PropsT & ActionHandlerDataProps;
+  type Props = PropsT & ActionHandlerDecoratorProps & ActionHandlerDataProps;
   class ActionHandler extends React.PureComponent<Props, State> {
     state: State = {
       confirmActionData: null,
@@ -151,11 +151,11 @@ function ActionHandlerDecorator<PropsT, ItemDataT = any>(
 
     render() {
       const { confirmActionData } = this.state;
-      //const { closeModal, ...other } = this.props;
+      const { closeModal, ...other } = this.props;
       return (
         <>
           <Component
-            { ...this.props }
+            { ...other as PropsT & ActionHandlerDataProps }
             onClickAction={ this.handleClickAction }
           />
           <ConfirmHandler

@@ -44,8 +44,8 @@ const SocketSubscriptionDecorator = function <PropsT>(
         .then(removeHandler => this.socketSubscriptions.push(removeHandler));
     }
 
-    removeSocketListeners = (props: PropsT = this.props as Readonly<PropsT>) => {
-      const entityExists = !entityExistsValidator || entityExistsValidator(props as Readonly<PropsT>);
+    removeSocketListeners = (props: PropsT = this.props) => {
+      const entityExists = !entityExistsValidator || entityExistsValidator(props);
 
       this.socketSubscriptions.forEach(f => f(entityExists));
       this.socketSubscriptions = [];

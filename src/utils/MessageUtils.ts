@@ -82,7 +82,7 @@ const checkUnreadSessionInfo = (
     return {
       ...unreadInfoItem,
       message_counts: newCacheInfo,
-    } as UI.UnreadInfo;
+    };
   } else {
     console.error('Invalid object supplied to checkUnread', unreadInfoItem);
   }
