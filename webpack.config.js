@@ -55,7 +55,10 @@ let plugins = [
   new ServiceWorkerWebpackPlugin({
     entry: path.join(__dirname, 'src/sw.js'),
     filename: process.env.SERVICEWORKER,
-    includes: [ '**/*.js' ],
+    includes: [ 
+      '**/*.js', 
+      '**/*.html' 
+    ],
   }),
 ];
 

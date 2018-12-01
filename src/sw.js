@@ -1,8 +1,7 @@
 const basePath = self.location.origin + self.location.pathname.replace(process.env.SERVICEWORKER, '');
 
 function mapAsset(path) {
-  const ret = basePath + path.substr(1);
-  return ret;
+  return basePath + path.substr(1);
 }
 
 const assets = global.serviceWorkerOption.assets
@@ -10,19 +9,18 @@ const assets = global.serviceWorkerOption.assets
 
 const DEBUG = true;
 
-/*if (DEBUG) {
-  console.log('[SW] Basepath', basePath);
-  console.log('[SW] Assets', assets);
-}*/
-
 self.addEventListener('install', e => {
   console.log('[SW] Worker installed');
+
+  //const cachedAssets = allAssets
+  //  .filter(asset => asset.match(/\.(js|html)$/));
+
   e.waitUntil(
     caches.open('resource-store')
       .then(cache => cache.addAll([ ...assets ]))
       .then(() => {
         if (DEBUG) {
-          console.log('[SW] Assets cached: main', assets)
+          console.log('[SW] Assets: ', assets);
         }
       })
       .catch(error => {
@@ -75,13 +73,31 @@ self.addEventListener('activate', event => {
 
  
 self.addEventListener('fetch', e => {
-  if (DEBUG) {
-    console.log('[SW] Fetch', e.request.url);
-  }
+  let cacheUrl = e.request.url;
+  if (e.request.url.startsWith(basePath) &&
+    !e.request.url.replace(basePath, '').match(/^(view|assets|js|images)\//)
+    //allAssets.indexOf(e.request.url) === -1 &&
+    //!e.request.url.startsWith(basePath) + 'view/'
+  ) {
+    // Routing URL
+    cacheUrl = basePath + 'index.html';
+  } 
 
   e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request);
+    caches.match(new URL(cacheUrl)).then(function(response) {
+      if (!!response) {
+        if (DEBUG) {
+          console.log('[SW] Return cached', e.request.url);
+        }
+
+        return response;
+      }
+
+      if (DEBUG) {
+        console.log('[SW] Fetch', e.request.url);
+      }
+
+      return fetch(e.request);
     })
   );
 });
