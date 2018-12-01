@@ -21,7 +21,7 @@ import {
 } from 'decorators/SocketSubscriptionDecorator';
 
 
-const IDLE_CHECK_PERIOD = 3000;
+const IDLE_APPEND_INTERVAL_MS = 3000;
 const MAX_EVENTS = 1800; // 30 minutes when transfers are running
 
 const addSpeed = (points: any[], down: number, up: number) => {
@@ -52,6 +52,10 @@ interface TransferProps extends MeasuredComponentProps {
 
 }
 
+const hasEllapsedSinceLastUpdate = (points: State['points'], ms: number) => {
+  return points[points.length - 1][0] + ms <= Date.now();
+};
+
 class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDecoratorChildProps, State> {
   //displayName: 'Transfers',
 
@@ -79,7 +83,7 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
 
   checkIdle = () => {
     const { points } = this.state;
-    if (points[points.length - 1][0] + IDLE_CHECK_PERIOD - 200 <= Date.now()) {
+    if (hasEllapsedSinceLastUpdate(points, IDLE_APPEND_INTERVAL_MS - 200)) {
       this.setState({
         points: addSpeed(points, 0, 0),
       });
@@ -99,7 +103,7 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
     addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsUpdated);
 
     // Add zero values when there is no traffic
-    this.idleInterval = setInterval(this.checkIdle, IDLE_CHECK_PERIOD);
+    this.idleInterval = setInterval(this.checkIdle, IDLE_APPEND_INTERVAL_MS);
   }
 
   onStatsReceived = (stats: API.TransferStats) => {
@@ -111,10 +115,23 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
     });
   }
 
-  onStatsUpdated = (stats: Partial<API.TransferStats>) => {
+  onStatsUpdated = (newStats: Partial<API.TransferStats>) => {
+    const { stats: oldStats, points } = this.state;
+
+    // Ignore updates that are received in bursts
+    // The precision of Date.now() has been slightly reduced/randomized, 
+    // which is possibly causing crashes in the TimeSeries creation at the render method 
+    // due to unchronological events in the series
+    //
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+    if (!hasEllapsedSinceLastUpdate(points, 100)) {
+      //console.log(`Transfer widget: burst update ignored`);
+      return;
+    }
+
     this.onStatsReceived({
-      ...this.state.stats!,
-      ...stats,
+      ...oldStats!,
+      ...newStats,
     });
   }
 
@@ -123,8 +140,8 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
   }
 
   render() {
-    const { measureRef, contentRect } = this.props as TransferProps;
-    const { points, maxDownload, maxUpload, stats } = this.state as State;
+    const { measureRef, contentRect } = this.props;
+    const { points, maxDownload, maxUpload, stats } = this.state;
     if (!stats) {
       return <Loader inline={ true }/>;
     }
