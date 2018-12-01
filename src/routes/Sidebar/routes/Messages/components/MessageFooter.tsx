@@ -39,7 +39,7 @@ const CCPMState: React.FC<CCPMStateProps> = ({ session }) => {
         <EncryptionState 
           encryption={ session.ccpm_state.encryption } 
           alwaysVisible={ true }
-          boundary="#sidebar"
+          boundary=".session-container"
         />
         <ActionMenu
           caption={ getCaption(state) }
