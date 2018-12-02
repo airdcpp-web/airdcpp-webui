@@ -14,8 +14,8 @@ interface Info {
 }
 
 const encryptionToInfo = (encryption: EncryptionInfo): Info => {
-  const tlsVersion = encryption.str.match(/(?<=TLSv)[\d\.]+/);
-  if (tlsVersion && parseFloat(tlsVersion[0]) < 1.2) {
+  const tlsVersion = encryption.str.match(/TLSv([\d\.]+)/);
+  if (tlsVersion && tlsVersion.length === 2 && parseFloat(tlsVersion[1]) < 1.2) {
     return {
       iconColor: 'orange',
       messageColor: 'red',

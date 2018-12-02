@@ -21,7 +21,8 @@ const useLoginState = (props: RouteComponentProps) => {
           setLoading(false);
         }
       });
-    }
+    },
+    []
   );
 
   /*if (!loading) {

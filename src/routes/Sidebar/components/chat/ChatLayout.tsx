@@ -12,8 +12,9 @@ import './chat.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { useActiveSessionEffect } from 'effects';
+//import { useActiveSessionEffect } from 'effects';
 import { SessionActions } from 'types/ui';
+import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 
 
 export interface ChatSession extends UI.SessionItemBase {
@@ -75,7 +76,7 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions:
 
 
 const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
-  useActiveSessionEffect(session, actions, true);
+  //useActiveSessionEffect(session, actions, true);
 
   const messages = useChatMessagesEffect(session, messageStore, actions);
   const hasChatAccess = LoginStore.hasAccess(chatAccess);
@@ -97,4 +98,4 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, m
   );
 };
 
-export default ChatLayout;
+export default ActiveSessionDecorator(ChatLayout, true);

@@ -1,4 +1,6 @@
-'use strict';
+// TODO: can't read the state from inside an effect
+
+/*'use strict';
 import { useEffect, useState } from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -42,4 +44,4 @@ export const useActiveSessionEffect = (
     },
     [ session.id ]
   );
-};
+};*/
