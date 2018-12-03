@@ -91,7 +91,8 @@ function respondCache(e, cacheUrl) {
 self.addEventListener('fetch', e => {
   if (e.request.mode === 'navigate' || (
       e.request.url.startsWith(basePath) &&
-      e.request.url.indexOf('.', basePath.length) === -1 // no file extension?
+      e.request.url.indexOf('.', basePath.length) === -1 && // no file extension?
+      !e.request.url.replace(basePath, '').match(/^(view)\//)
     )
   ) {
     console.log('[SW] Navigate action, fetch index', e.request.url);
