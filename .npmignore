@@ -1,4 +1,6 @@
-background_original.jpg
 stats.html
 jest
 src
+resources
+.vscode
+*.tmp
