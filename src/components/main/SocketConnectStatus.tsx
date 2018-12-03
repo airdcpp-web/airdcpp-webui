@@ -3,26 +3,17 @@ import React from 'react';
 import Loader from 'components/semantic/Loader';
 
 
-const getMessage = (lastError: string | null) => {
-  if (!!lastError) {
-    return lastError + '. Attempting to re-establish connection...';
-  }
-
-  return 'Connecting to the server...';
-};
-
 interface SocketConnectStatusProps {
-  lastError: string | null;
-  active: boolean;
+  message: string;
 }
 
 const SocketConnectStatus: React.FC<SocketConnectStatusProps> = (
-  { lastError, active }
+  { message }
 ) => (
-  <div className={ 'ui dimmer page visible ' + (active ? 'active' : '')}>
+  <div className="ui dimmer page visible active">
     <div className="content">
       <div className="center">
-        <Loader text={ getMessage(lastError) }/>
+        <Loader text={ message }/>
       </div>
     </div>
   </div>

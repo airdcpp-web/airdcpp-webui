@@ -13,7 +13,7 @@ const useLoginState = (props: RouteComponentProps) => {
       return LoginStore.listen((loginInfo: LoginState) => {
         if (loginInfo.socketAuthenticated) {
           const { state } = props.location;
-          const nextPath = state ? state.nextPath : '/';
+          const nextPath = state && state.nextPath ? state.nextPath : '/';
           props.history.replace({
             pathname: nextPath,
           });

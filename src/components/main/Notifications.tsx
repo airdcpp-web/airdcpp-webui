@@ -22,8 +22,6 @@ import { LocalSettings } from 'constants/SettingConstants';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
-//@ts-ignore
-import Logo from 'images/AirDCPlusPlus.png';
 import { Location } from 'history';
 
 import * as API from 'types/api';
@@ -32,6 +30,8 @@ import Severity = API.SeverityEnum;
 import { 
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
 } from 'decorators/SocketSubscriptionDecorator';
+
+import Logo from 'images/AirDCPlusPlus.png';
 
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';

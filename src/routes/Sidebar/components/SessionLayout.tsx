@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
+import invariant from 'invariant';
 
 import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
@@ -166,6 +167,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
 
   // HELPERS
   getSessionUrl = (id: API.IdType) => {
+    invariant(!!id, 'Trying to get session URL without a session');
     return `/${this.props.baseUrl}/session/${id}`;
   }
 

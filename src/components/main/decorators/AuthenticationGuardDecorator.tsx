@@ -1,13 +1,14 @@
 'use strict';
-import React, { useEffect, useState } from 'react';
-import History from 'utils/History';
+import React from 'react';
+import { Location } from 'history';
 
-import LoginActions from 'actions/LoginActions';
 import LoginStore, { LoginState } from 'stores/LoginStore';
 
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
-import { Location } from 'history';
 import { useStore } from 'effects/StoreListenerEffect';
+import { useLoginGuard } from '../effects/LoginGuardEffect';
+import { usePageTitle } from '../effects/PageTitleEffect';
+import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
 
 
 interface AuthenticationGuardDecoratorProps {
@@ -15,35 +16,13 @@ interface AuthenticationGuardDecoratorProps {
 }
 
 
-const useLoginGuard = (login: LoginState, location: Location) => {
-  const [ prevSocketAuthenticated, setPrevSocketAuthenticated ] = useState(LoginStore.getState().socketAuthenticated);
 
-  useEffect(
-    () => {
-      if (login.hasSession && !login.socketAuthenticated) {
-        if (prevSocketAuthenticated) {
-          // Connection lost, reconnect (but not too fast)
-          console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
-          setTimeout(() => LoginActions.connect(LoginStore.authToken), 2000);
-        } else {
-          // The page was loaded with a cached session token, attempt to reconnect
-          LoginActions.connect(LoginStore.authToken);
-        }
-      } else if (!login.hasSession) {
-        // Go to the login page as we don't have a valid session
-        // Return to this page if the session was lost (instead of having been logged out) 
+const getConnectStatusMessage = (lastError: string | null) => {
+  if (!!lastError) {
+    return lastError + '. Attempting to re-establish connection...';
+  }
 
-        console.log('UI: Redirecting to login page');
-        History.replace({
-          state: LoginStore.lastError !== null ? { nextPath: location.pathname } : null, 
-          pathname: '/login',
-        });
-      }
-
-      setPrevSocketAuthenticated(login.socketAuthenticated);
-    },
-    [ login.socketAuthenticated, login.hasSession ]
-  );
+  return 'Connecting to the server...';
 };
 
 function AuthenticationGuardDecorator<PropsT>(
@@ -52,13 +31,14 @@ function AuthenticationGuardDecorator<PropsT>(
   const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = props => {
     const login = useStore<LoginState>(LoginStore);
     useLoginGuard(login, props.location);
+    usePageTitle(login);
+    useStoreDataFetch(login);
 
     if (!login.socketAuthenticated) {
       // Dim the screen until the server can be reached (we can't do anything without the socket)
       return (
         <SocketConnectStatus 
-          active={ true } 
-          lastError={ login.lastError }
+          message={ getConnectStatusMessage(login.lastError) }
         />
       );
     }
