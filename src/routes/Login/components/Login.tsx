@@ -25,13 +25,7 @@ const Login: React.FC<LoginProps> = props => {
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const [ loading, setLoading ] = useLoginState(props);
-  if (!loading) {
-    const refreshToken: string | null = LoginStore.refreshToken;
-    if (!!refreshToken) {
-      LoginActions.loginRefreshToken(refreshToken);
-      setLoading(true);
-    }
-  } else if (!!LoginStore.refreshToken) {
+  if (!!LoginStore.refreshToken) {
     return (
       <SocketConnectStatus
         message="Authenticating..."

@@ -1,7 +1,7 @@
 import LoginStore, { LoginState } from 'stores/LoginStore';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-//import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/LoginActions';
 
 
 const useLoginState = (props: RouteComponentProps) => {
@@ -25,13 +25,16 @@ const useLoginState = (props: RouteComponentProps) => {
     []
   );
 
-  /*if (!loading) {
-    const refreshToken: string | null = LoginStore.refreshToken;
-    if (!!refreshToken) {
-      LoginActions.loginRefreshToken(refreshToken);
-      setLoading(true);
-    }
-  }*/
+  useEffect(
+    () => {
+      const refreshToken: string | null = LoginStore.refreshToken;
+      if (!!refreshToken) {
+        LoginActions.loginRefreshToken(refreshToken);
+        setLoading(true);
+      }
+    },
+    []
+  );
 
   return loadingState;
 };
