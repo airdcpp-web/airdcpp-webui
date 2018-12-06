@@ -15,7 +15,7 @@ import 'semantic-ui-css/components/dropdown.min.css';
 export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>*/ {
   triggerIcon?: IconType;
   direction?: 'auto' | 'upward' | 'downward';
-  settings?: object;
+  settings?: SemanticUI.DropdownSettings;
   contextElement?: string;
   button?: boolean;
   leftIcon?: boolean;

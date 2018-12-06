@@ -18,6 +18,7 @@ import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 export interface ModalProps {
   closable?: boolean;
   onApprove?: () => Promise<void>;
+  onReject?: () => void;
   approveCaption?: React.ReactNode;
   approveDisabled?: boolean;
   fullHeight?: boolean;
@@ -32,7 +33,7 @@ export interface ModalProps {
 
 const NODE_ID = 'modals-node';
 
-class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> {
+class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChildProps>> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
@@ -77,11 +78,12 @@ class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> 
   componentDidMount() {
     this.returnOnClose = true;
 
-    const settings = {
+    const settings: SemanticUI.ModalSettings = {
       onHidden: this.onHidden,
       onHide: this.onHide,
 
       onApprove: this.onApprove,
+      onDeny: this.props.onReject,
       closable: this.props.closable,
       detachable: false,
       allowMultiple: true,
@@ -100,7 +102,7 @@ class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> 
       //debug: true,
       //verbose: true,
       //name: 'Modal',
-    } as SemanticUI.ModalSettings;
+    };
 
     $(this.c)
       .modal(settings);
@@ -128,7 +130,7 @@ class Modal extends React.Component<ModalProps & ModalRouteDecoratorChildProps> 
   }
 
   onHidden = () => {
-    if (this.returnOnClose) {
+    if (this.returnOnClose && this.props.returnTo) {
       History.replace(this.props.returnTo);
     }
     

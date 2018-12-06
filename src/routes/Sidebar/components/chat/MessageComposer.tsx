@@ -3,10 +3,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { MentionsInput, Mention } from 'react-mentions';
+import Dropzone, { DropFilesEventHandler } from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
 import ChatCommandHandler from './ChatCommandHandler';
+import NotificationActions from 'actions/NotificationActions';
 
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
@@ -14,6 +16,7 @@ import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import FilePreviewDialog from './FilePreviewDialog';
 
 const ENTER_KEY_CODE = 13;
 
@@ -80,6 +83,7 @@ const userToMention = (user: API.HubUser) => {
 
 interface State {
   text: string;
+  file: File | null;
 }
 
 class MessageComposer extends React.Component<MessageComposerProps & RouteComponentProps> {
@@ -165,43 +169,94 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       );
   }
 
-  state: State = loadState(this.props);
+  onDrop: DropFilesEventHandler = (acceptedFiles, rejectedFiles) => {
+    if (!acceptedFiles.length) {
+      return;
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+      NotificationActions.info({ 
+        title: 'File uploads are not yet supported'
+      });
+
+      return;
+    }
+
+    this.setState({
+      file: acceptedFiles[0]
+    });
+  }
+
+  onUploadFile = (file: File) => {
+    this.resetFile();
+    return Promise.resolve();
+  }
+
+  resetFile = () => {
+    this.setState({
+      file: null,
+    });
+  }
+
+  state: State = {
+    ...loadState(this.props),
+    file: null,
+  };
 
   render() {
     const mobile = useMobileLayout();
     const className = classNames(
       'ui form composer',
-      { 'small': mobile },
-      { 'large': !mobile },
+      { small: mobile },
+      { large: !mobile },
     );
 
     const inputProps: React.InputHTMLAttributes<HTMLInputElement> = {
       autoFocus: !useMobileLayout(),
     };
 
+    const { file } = this.state;
     return (
-      <div className={ className }>
-        <MentionsInput 
-          className="input"
-          value={ this.state.text } 
-          onChange={ this.handleChange }
-          onKeyDown={ this.onKeyDown }
-          style={ getMentionFieldStyle(mobile) }
-          { ...inputProps as any }
-        >
-          <Mention 
-            trigger="@"
-            data={ this.findUsers }
-            appendSpaceOnAdd={ false }
+      <>
+        { !!file && (
+          <FilePreviewDialog
+            file={ file }
+            onConfirm={ this.onUploadFile }
+            onReject={ this.resetFile }
+            title="Upload file"
           />
-        </MentionsInput>
-        <div 
-          className="blue large ui icon send button" 
-          onClick={ this.sendText }
+        ) }
+        <Dropzone
+          className={ className }
+          onDrop={ this.onDrop }
+          activeStyle={{
+            
+          }}
+          activeClassName="active"
+          disableClick={ true }
         >
-          <i className="send icon"/>
-        </div>
-      </div>
+          <MentionsInput 
+            className="input"
+            value={ this.state.text } 
+            onChange={ this.handleChange }
+            onKeyDown={ this.onKeyDown }
+            style={ getMentionFieldStyle(mobile) }
+            { ...inputProps as any }
+          >
+            <Mention 
+              trigger="@"
+              data={ this.findUsers }
+              appendSpaceOnAdd={ false }
+            />
+          </MentionsInput>
+          <div 
+            className="blue large ui icon send button" 
+            onClick={ this.sendText }
+          >
+            <i className="send icon"/>
+          </div>
+        </Dropzone>
+      </>
     );
   }
 }
