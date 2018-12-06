@@ -28,7 +28,7 @@ const Login: React.FC<LoginProps> = props => {
   if (!!LoginStore.refreshToken) {
     return (
       <SocketConnectStatus
-        message="Authenticating..."
+        message="Connecting to the server..."
       />
     );
   }
