@@ -6,7 +6,7 @@ import LoginActions from 'actions/LoginActions';
 
 const useLoginState = (props: RouteComponentProps) => {
   const loadingState = useState(false);
-  const [ loading, setLoading ] = loadingState;
+  const setLoading = loadingState[1];
 
   useEffect(
     () => {
@@ -17,7 +17,7 @@ const useLoginState = (props: RouteComponentProps) => {
           props.history.replace({
             pathname: nextPath,
           });
-        } else if (loading && !!loginInfo.lastError) {
+        } else if (!!loginInfo.lastError) {
           setLoading(false);
         }
       });
