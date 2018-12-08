@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.5.0-beta.4",
+  "version": "2.5.0",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -54,7 +54,7 @@
     "@types/jquery": "3.3.22",
     "@types/lodash": "^4.14.119",
     "@types/node": "^10.12.12",
-    "@types/prop-types": "^15.5.6",
+    "@types/prop-types": "^15.5.7",
     "@types/react": "^16.7.13",
     "@types/react-autosuggest": "^9.3.6",
     "@types/react-dom": "^16.0.11",
@@ -130,7 +130,7 @@
     "ts-loader": "^5.3.1",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.2.1",
+    "typescript": "^3.2.2",
     "url-loader": "^1.1.2",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
