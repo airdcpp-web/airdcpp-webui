@@ -121,7 +121,6 @@ class Search extends React.Component<SearchProps> {
     var queryString;
     [params,queryString] = getParameters(searchString)
     console.log('Search: ' + queryString);
-    console.log(params);
     if (params["-t"] != null){
       fileType = params["-t"];
       fileType = sanitizeFileType(fileType);
