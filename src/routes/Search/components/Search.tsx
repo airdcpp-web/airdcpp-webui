@@ -88,6 +88,13 @@ class Search extends React.Component<SearchProps> {
 
   render() {
     const { searchString, running } = this.state;
+    var searchDefault = searchString;
+    var url = new URL(window.location.href);
+    var urlSearch = url.searchParams.get("query");
+    if (urlSearch!=null) {
+      searchDefault = urlSearch;
+      console.log('Search term from url: ' + searchDefault);
+    }
     return (
       <OfflineHubMessageDecorator 
         offlineMessage="You must to be connected to at least one hub in order to perform searches"
@@ -99,7 +106,7 @@ class Search extends React.Component<SearchProps> {
                 historyId={ HistoryStringEnum.SEARCH } 
                 submitHandler={ this.search } 
                 disabled={ running }
-                defaultValue={ searchString }
+                defaultValue={ searchDefault }
                 placeholder="Enter search string..."
                 button={ 
                   <Button
