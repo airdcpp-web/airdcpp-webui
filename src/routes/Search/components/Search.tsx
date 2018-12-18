@@ -25,19 +25,19 @@ interface SearchProps extends RouteComponentProps<{}> {
 
 }
 
-function getParameters(inputString: string){
+function getParameters(inputString: string) {
   var params = {};
 
   var tempString = inputString.trim();
-  while (tempString.startsWith("-")) {
-    var spaceIndex = tempString.search(" ");
-    var argString = "";
-    if (spaceIndex>0){
-      argString = tempString.substring(0,spaceIndex);
+  while (tempString.startsWith('-')) {
+    var spaceIndex = tempString.search(' ');
+    var argString = '';
+    if (spaceIndex > 0) {
+      argString = tempString.substring(0, spaceIndex);
       tempString = tempString.substring(spaceIndex).trim();
-      spaceIndex = tempString.search(" ");
-      if (spaceIndex>0){
-        var valueString = tempString.substring(0,spaceIndex);
+      spaceIndex = tempString.search(' ');
+      if (spaceIndex > 0) {
+        var valueString = tempString.substring(0, spaceIndex);
         tempString = tempString.substring(spaceIndex).trim();
         params[argString] = valueString;
       }
@@ -46,43 +46,43 @@ function getParameters(inputString: string){
 
   // If there are only arguments and no actual search term,
   // just return complete input instead.
-  if (tempString.length == 0){
-    alert("Parameter parsing failed. Only parameters in search string: " + inputString);
-    return [{},inputString]
+  if (tempString.length === 0) {
+    alert('Parameter parsing failed. Only parameters in search string: ' + inputString);
+    return [{}, inputString];
   }
 
   return [params, tempString];
 }
 
 function sanitizeFileType(inputString: string) {
-  if (inputString==="audio") return "audio";
+  if (inputString === 'audio') { return 'audio'; }
 
-  if (inputString==="archive") return "compressed";
-  if (inputString==="compressed") return "compressed";
+  if (inputString === 'archive') { return 'compressed'; }
+  if (inputString === 'compressed') { return 'compressed'; }
 
-  if (inputString==="doc") return "document";
-  if (inputString==="document") return "document";
+  if (inputString === 'doc') { return 'document'; }
+  if (inputString === 'document') { return 'document'; }
 
-  if (inputString==="exe") return "executable";
-  if (inputString==="executable") return "executable";
+  if (inputString === 'exe') { return 'executable'; }
+  if (inputString === 'executable') { return 'executable'; }
 
-  if (inputString==="img") return "picture";
-  if (inputString==="picture") return "picture";
+  if (inputString === 'img') { return 'picture'; }
+  if (inputString === 'picture') { return 'picture'; }
 
-  if (inputString==="video") return "video";
-  if (inputString==="filelist") return "filelist";
-  if (inputString==="other") return "other";
-  if (inputString==="any") return "any";
-  if (inputString==="tth") return "tth";
+  if (inputString === 'video') { return 'video'; }
+  if (inputString === 'filelist') { return 'filelist'; }
+  if (inputString === 'other') { return 'other'; }
+  if (inputString === 'any') { return 'any'; }
+  if (inputString === 'tth') { return 'tth'; }
 
-  if (inputString==="dir") return "directory";
-  if (inputString==="directory") return "directory";
+  if (inputString === 'dir') { return 'directory'; }
+  if (inputString === 'directory') { return 'directory'; }
 
-  if (inputString==="file") return "file";
+  if (inputString === 'file') { return 'file'; }
 
-  alert("Bad file type \"" + inputString + "\". Using \"any\" instead.");
+  alert('Bad file type \"' + inputString + '\". Using \"any\" instead.');
 
-  return "any";
+  return 'any';
 }
 
 class Search extends React.Component<SearchProps> {
@@ -115,14 +115,14 @@ class Search extends React.Component<SearchProps> {
 
   search = (searchString: string) => {
     console.log('Searching');
-    var fileType = "any";
+    var fileType = 'any';
     //inputString = searchString.trim();
     var params;
     var queryString;
-    [params,queryString] = getParameters(searchString)
+    [params, queryString] = getParameters(searchString);
     console.log('Search: ' + queryString);
-    if (params["-t"] != null){
-      fileType = params["-t"];
+    if (params['-t'] != null) {
+      fileType = params['-t'];
       fileType = sanitizeFileType(fileType);
       console.log('Search file_type: ' + fileType);
     }
@@ -162,8 +162,8 @@ class Search extends React.Component<SearchProps> {
     const { searchString, running } = this.state;
     var searchDefault = searchString;
     var url = new URL(window.location.href);
-    var urlSearch = url.searchParams.get("query");
-    if (urlSearch!=null) {
+    var urlSearch = url.searchParams.get('query');
+    if (urlSearch != null) {
       searchDefault = urlSearch;
       console.log('Search term from url: ' + searchDefault);
     }
