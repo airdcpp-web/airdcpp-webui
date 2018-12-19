@@ -116,6 +116,11 @@ class Search extends React.Component<SearchProps> {
   search = (searchString: string) => {
     console.log('Searching');
     var fileType = 'any';
+    var fileTypeSelector = document.getElementById('file-type-selector');
+    if (fileTypeSelector != null) {
+      fileType = (fileTypeSelector as HTMLInputElement).value;
+    }
+
     //inputString = searchString.trim();
     var params;
     var queryString;
@@ -174,6 +179,16 @@ class Search extends React.Component<SearchProps> {
         <div className="search-layout">
           <div className="search-container">
             <div className="search-area">
+              <select id="file-type-selector" className="file-type-selector" >
+                <option value="any">Any</option>
+                <option value="audio">Audio</option>
+                <option value="compressed">Archive</option>
+                <option value="document">Document</option>
+                <option value="executable">Executable</option>
+                <option value="picture">Picture</option>
+                <option value="video">Video</option>
+                <option value="directory">Directory</option>
+              </select>
               <HistoryInput 
                 historyId={ HistoryStringEnum.SEARCH } 
                 submitHandler={ this.search } 
