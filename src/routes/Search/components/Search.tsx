@@ -20,6 +20,7 @@ import * as API from 'types/api';
 
 
 const SEARCH_PERIOD = 4000;
+var urlSearchExecuted = 0;
 
 interface SearchProps extends RouteComponentProps<{}> {
 
@@ -170,7 +171,17 @@ class Search extends React.Component<SearchProps> {
     var urlSearch = url.searchParams.get('query');
     if (urlSearch != null) {
       searchDefault = urlSearch;
-      console.log('Search term from url: ' + searchDefault);
+      if (urlSearchExecuted === 0) { // render() is called again when searching
+        urlSearchExecuted = 1;      // This ensures search is only executed once.
+        console.log('Search term from url: ' + searchDefault);
+        // Execute search with timeout, when page is loaded.
+        setTimeout(
+          () => {
+            this.search(searchDefault);
+          },
+          100
+        );
+      }
     }
     return (
       <OfflineHubMessageDecorator 
