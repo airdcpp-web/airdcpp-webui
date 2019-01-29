@@ -2,7 +2,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { MentionsInput, Mention } from 'react-mentions';
+import { MentionsInput, Mention, OnChangeHandlerFunc } from 'react-mentions';
 import Dropzone, { DropFilesEventHandler } from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
@@ -126,7 +126,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
   }
 
-  handleChange = (event: any, markupValue: string, plainValue: string) => {
+  handleChange: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
     this.setState({ 
       text: plainValue 
     });
@@ -211,9 +211,8 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       { large: !mobile },
     );
 
-    const inputProps: React.InputHTMLAttributes<HTMLInputElement> = {
+    const inputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'onSelect'> = {
       autoFocus: !useMobileLayout(),
-      className,
     };
 
     const { file } = this.state;
@@ -229,37 +228,36 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
         ) }
         <Dropzone
           onDrop={ this.onDrop }
-          //activeStyle={{
-            
-          //}}
-          //activeClassName="active"
           disableClick={ true }
         >
           {({getRootProps}) => (
-            <MentionsInput 
-              className="input"
-              value={ this.state.text } 
-              onChange={ this.handleChange }
-              onKeyDown={ this.onKeyDown }
-              style={ getMentionFieldStyle(mobile) }
-              { ...inputProps as any }
+            <div 
+              className={ className }
               { ...getRootProps() }
-              //className={ className }
             >
-              <Mention 
-                trigger="@"
-                data={ this.findUsers }
-                appendSpaceOnAdd={ false }
-              />
-            </MentionsInput>
+              <MentionsInput 
+                className="input"
+                value={ this.state.text } 
+                onChange={ this.handleChange }
+                onKeyDown={ this.onKeyDown }
+                style={ getMentionFieldStyle(mobile) }
+                { ...inputProps }
+              >
+                <Mention 
+                  trigger="@"
+                  data={ this.findUsers }
+                  appendSpaceOnAdd={ false }
+                />
+              </MentionsInput>
+              <div 
+                className="blue large ui icon send button" 
+                onClick={ this.sendText }
+              >
+                <i className="send icon"/>
+              </div>
+            </div>
           ) }
         </Dropzone>
-        <div 
-          className="blue large ui icon send button" 
-          onClick={ this.sendText }
-        >
-          <i className="send icon"/>
-        </div>
       </>
     );
   }
