@@ -50,7 +50,7 @@
     "@types/fixed-data-table-2": "^0.8.2",
     "@types/invariant": "^2.2.29",
     "@types/jest": "^23.3.13",
-    "@types/jquery": "3.3.22",
+    "@types/jquery": "3.3.29",
     "@types/lodash": "^4.14.120",
     "@types/node": "^10.12.19",
     "@types/prop-types": "^15.5.8",
