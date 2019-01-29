@@ -247,6 +247,7 @@ class FavoriteHubDialog extends React.Component<Props> {
           onSave={ this.onSave }
           fieldDefinitions={ Fields }
           value={ this.formValue }
+          location={ this.props.location }
         />
       </Modal>
     );

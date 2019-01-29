@@ -161,6 +161,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ rootEntry as Entry }
+          location={ this.props.location }
         />
       </Modal>
     );

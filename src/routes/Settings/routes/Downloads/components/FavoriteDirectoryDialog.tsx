@@ -110,13 +110,14 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
         icon={ IconConstants.FOLDER } 
         { ...this.props }
       >
-        <Form
+        <Form<Entry>
           ref={ (c: any) => this.form = c }
           fieldDefinitions={ Entry }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ this.props.directoryEntry as Entry }
+          location={ this.props.location }
         />
       </Modal>
     );

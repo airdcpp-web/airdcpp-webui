@@ -10,7 +10,7 @@ import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
-import { RouteComponentProps } from 'react-router';
+import { FormContext } from './Form';
 
 
 const BrowseField = t.form.Form.templates.textbox.clone({
@@ -27,7 +27,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
     };
 
     const showBrowseDialog = () => {
-      const { location } = locals.context as RouteComponentProps;
+      const { location } = locals.context as FormContext;
       History.push(`${location.pathname}/browse`);
     };
 

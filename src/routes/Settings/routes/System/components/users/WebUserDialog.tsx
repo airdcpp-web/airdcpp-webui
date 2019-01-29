@@ -160,12 +160,13 @@ class WebUserDialog extends React.Component<Props> {
         icon="user" 
         { ...other }
       >
-        <Form
+        <Form<Entry>
           ref={ (c: any) => this.form = c! }
           fieldDefinitions={ this.entry }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ this.props.user as Entry }
+          location={ this.props.location }
         />
       </Modal>
     );

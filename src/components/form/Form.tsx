@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
@@ -16,6 +16,7 @@ import * as UI from 'types/ui';
 
 import './style.css';
 import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
+import { RouteComponentProps /*, withRouter*/ } from 'react-router';
 
 const TcombForm = t.form.Form;
 
@@ -55,8 +56,12 @@ interface State<ValueType> {
   formValue: Partial<ValueType>;
 }
 
-class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends React.Component<FormProps<ValueType>> {
-  static propTypes = {
+export type FormContext = Pick<RouteComponentProps, 'location'>;
+
+class Form<ValueType 
+  extends Partial<UI.FormValueMap> = UI.FormValueMap> 
+  extends React.Component<FormProps<ValueType> & FormContext> {
+  /*static propTypes = {
     // Form items to list
     fieldDefinitions: PropTypes.array.isRequired,
 
@@ -86,7 +91,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
 
     // Header for the form
     title: PropTypes.node,
-  };
+  };*/
 
   state: State<ValueType> = {
     error: null,
@@ -243,11 +248,16 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   }
 
   render() {
-    const { title, fieldDefinitions, className } = this.props;
+    const { title, fieldDefinitions, className, location } = this.props;
     const { formValue } = this.state;
 
     const type = parseDefinitions(fieldDefinitions);
     const options = this.getFieldOptions();
+
+    const context: FormContext = {
+      location
+    };
+
     return (
       <div className={ classNames('form', className) }>
         { !!title && (
@@ -261,7 +271,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
           options={ options }
           value={ formValue }
           onChange={ this.onFieldChanged }
-          context={ this.props }
+          context={ context }
         />
       </div>
     );

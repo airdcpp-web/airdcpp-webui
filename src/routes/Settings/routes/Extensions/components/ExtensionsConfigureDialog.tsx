@@ -62,6 +62,7 @@ class ExtensionsConfigureDialog extends React.Component<Props> {
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
           value={ settings }
+          location={ this.props.location }
         />
       </Modal>
     );

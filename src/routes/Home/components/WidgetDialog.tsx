@@ -111,6 +111,7 @@ class WidgetDialog extends React.Component<Props> {
           value={ formValue }
           fieldDefinitions={ Entry }
           onSave={ this.onSave }
+          location={ this.props.location }
         />
 
         <Message
