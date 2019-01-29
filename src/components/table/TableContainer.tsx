@@ -179,7 +179,11 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   }
 
   onResizeView = (contentRect: ContentRect) => {
-    const { width, height } = contentRect.entry;
+    if (!contentRect.bounds) {
+      return;
+    }
+
+    const { width, height } = contentRect.bounds;
     this.setState({
       width,
       height,

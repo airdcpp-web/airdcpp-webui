@@ -12,12 +12,12 @@ import { RSS } from 'widgets/RSS';
 import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
-import { Layouts, Layout, Breakpoints } from 'react-grid-layout';
+import { Layouts, Layout } from 'react-grid-layout';
 
 
 // CONSTANTS
-const cols: {[P in Breakpoints]: number } = { lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 };
-const breakpoints: {[P in Breakpoints]: number } = { lg: 1600, md: 1100, sm: 768, xs: 480, xxs: 0 };
+const cols: {[P in string]: number } = { lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 };
+const breakpoints: {[P in string]: number } = { lg: 1600, md: 1100, sm: 768, xs: 480, xxs: 0 };
 
 const widgets = [
   Application,

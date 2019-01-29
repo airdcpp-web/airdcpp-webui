@@ -213,6 +213,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
 
     const inputProps: React.InputHTMLAttributes<HTMLInputElement> = {
       autoFocus: !useMobileLayout(),
+      className,
     };
 
     const { file } = this.state;
@@ -227,35 +228,38 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           />
         ) }
         <Dropzone
-          className={ className }
           onDrop={ this.onDrop }
-          activeStyle={{
+          //activeStyle={{
             
-          }}
-          activeClassName="active"
+          //}}
+          //activeClassName="active"
           disableClick={ true }
         >
-          <MentionsInput 
-            className="input"
-            value={ this.state.text } 
-            onChange={ this.handleChange }
-            onKeyDown={ this.onKeyDown }
-            style={ getMentionFieldStyle(mobile) }
-            { ...inputProps as any }
-          >
-            <Mention 
-              trigger="@"
-              data={ this.findUsers }
-              appendSpaceOnAdd={ false }
-            />
-          </MentionsInput>
-          <div 
-            className="blue large ui icon send button" 
-            onClick={ this.sendText }
-          >
-            <i className="send icon"/>
-          </div>
+          {({getRootProps}) => (
+            <MentionsInput 
+              className="input"
+              value={ this.state.text } 
+              onChange={ this.handleChange }
+              onKeyDown={ this.onKeyDown }
+              style={ getMentionFieldStyle(mobile) }
+              { ...inputProps as any }
+              { ...getRootProps() }
+              //className={ className }
+            >
+              <Mention 
+                trigger="@"
+                data={ this.findUsers }
+                appendSpaceOnAdd={ false }
+              />
+            </MentionsInput>
+          ) }
         </Dropzone>
+        <div 
+          className="blue large ui icon send button" 
+          onClick={ this.sendText }
+        >
+          <i className="send icon"/>
+        </div>
       </>
     );
   }

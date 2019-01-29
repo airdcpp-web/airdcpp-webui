@@ -1,7 +1,7 @@
-import React from 'react';
+import React /*, { lazy }*/ from 'react';
 import { Route, matchPath } from 'react-router-dom';
 
-import AsyncComponentDecorator from 'decorators/AsyncComponentDecorator';
+import { default as lazy } from 'decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
 import HubSessionStore from 'stores/HubSessionStore';
@@ -27,7 +27,7 @@ export interface RouteItem {
   icon: string;
   unreadInfoStore?: any;
   access?: string;
-  component?: React.ComponentClass;
+  component?: React.ComponentType;
   className?: string;
   onClick?: RouteItemClickHandler;
 }
@@ -39,28 +39,28 @@ export const mainRoutes: RouteItem[] = [
     title: 'Home',
     path: HOME_URL,
     icon: IconConstants.HOME,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "home" */ 'routes/Home/components/Home')),
+    component: lazy(() => import(/* webpackChunkName: "home" */ 'routes/Home')),
   }, {
     title: 'Queue',
     path: '/queue',
     icon: IconConstants.QUEUE,
     access: API.AccessEnum.QUEUE_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "queue" */ 'routes/Queue/components/Queue')),
+    component: lazy(() => import(/* webpackChunkName: "queue" */ 'routes/Queue')),
   }, {
     title: 'Search',
     path: '/search',
     icon: IconConstants.SEARCH,
     access: API.AccessEnum.SEARCH,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "search" */ 'routes/Search/components/Search')
+    component: lazy(
+      () => import(/* webpackChunkName: "search" */ 'routes/Search')
     ),
   }, {
     title: 'Transfers',
     path: '/transfers',
     icon: IconConstants.TRANSFERS,
     access: API.AccessEnum.TRANSFERS,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "transfers" */ 'routes/Transfers/components/Transfers')
+    component: lazy(
+      () => import(/* webpackChunkName: "transfers" */ 'routes/Transfers')
     ),
   }
 ];
@@ -71,22 +71,22 @@ export const configRoutes = [
     path: '/favorite-hubs',
     icon: IconConstants.FAVORITE,
     access: API.AccessEnum.FAVORITE_HUBS_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs/components/FavoriteHubs')
+    component: lazy(
+      () => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs')
     ),
   }, {
     title: 'Share',
     path: '/share',
     icon: IconConstants.FOLDER,
     access: API.AccessEnum.SETTINGS_VIEW,
-    component: AsyncComponentDecorator(() => import(/* webpackChunkName: "share" */ 'routes/Share/components/Share')),
+    component: lazy(() => import(/* webpackChunkName: "share" */ 'routes/Share')),
   }, {
     title: 'Settings',
     path: '/settings',
     icon: IconConstants.SETTINGS,
     access: API.AccessEnum.SETTINGS_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "settings" */ 'routes/Settings/components/Settings')
+    component: lazy(
+      () => import(/* webpackChunkName: "settings" */ 'routes/Settings')
     ),
   }
 ];
@@ -99,8 +99,8 @@ export const secondaryRoutes = [
     icon: 'blue sitemap',
     unreadInfoStore: HubSessionStore,
     access: API.AccessEnum.HUBS_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs/components/Hubs')
+    component: lazy(
+      () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs')
     ),
   }, {
     title: 'Messages',
@@ -109,8 +109,8 @@ export const secondaryRoutes = [
     icon: 'blue comments',
     unreadInfoStore: PrivateChatSessionStore,
     access: API.AccessEnum.PRIVATE_CHAT_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages/components/Messages')
+    component: lazy(
+      () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages')
     ),
   }, {
     title: 'Filelists',
@@ -119,8 +119,8 @@ export const secondaryRoutes = [
     icon: 'blue browser',
     unreadInfoStore: FilelistSessionStore,
     access: API.AccessEnum.FILELISTS_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists/components/Filelists')
+    component: lazy(
+      () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists')
     ),
   }, {
     title: 'Files',
@@ -129,8 +129,8 @@ export const secondaryRoutes = [
     icon: 'blue file',
     unreadInfoStore: ViewFileStore,
     access: API.AccessEnum.VIEW_FILE_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files/components/Files')
+    component: lazy(
+      () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files')
     ),
   }, {
     title: 'Events',
@@ -138,8 +138,8 @@ export const secondaryRoutes = [
     icon: 'blue history',
     unreadInfoStore: EventStore,
     access: API.AccessEnum.EVENTS_VIEW,
-    component: AsyncComponentDecorator(
-      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events/components/EventsLayout')
+    component: lazy(
+      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events')
     ),
   }
 ];
