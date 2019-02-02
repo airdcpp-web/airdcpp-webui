@@ -61,7 +61,7 @@ const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
 
 
 interface MainMenuIconProps {
-  onClickMenu: () => void;
+  onClickMenu: (evt: React.SyntheticEvent<any>) => void;
   routes: RouteItem[];
 }
 

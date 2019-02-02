@@ -16,9 +16,10 @@ export interface CountLabelProps {
   size?: string;
   circular?: boolean;
   className?: string;
+  onClick?: (evt: React.SyntheticEvent<any>) => void;
 }
 
-const CountLabel: React.FC<CountLabelProps> = ({ urgencies, empty, size, className, circular }) => {
+const CountLabel: React.FC<CountLabelProps> = ({ urgencies, empty, size, className, circular, onClick }) => {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
   if (!urgencies) {
     return null;
@@ -39,7 +40,7 @@ const CountLabel: React.FC<CountLabelProps> = ({ urgencies, empty, size, classNa
   );
 
   return (
-    <div className={ labelClassName }> 
+    <div className={ labelClassName } onClick={ onClick }> 
       { empty ? null : urgencies[max] } 
     </div>
   );

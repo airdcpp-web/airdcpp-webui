@@ -18,6 +18,7 @@ import { Location } from 'history';
 interface MainNavigationMobileProps {
   onClose: () => void;
   location: Location;
+  visible: boolean;
 }
 
 class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
@@ -30,7 +31,17 @@ class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
       onHidden: this.props.onClose,
     };
 
-    $(this.c).sidebar(settings).sidebar('show');
+    $(this.c).sidebar(settings);
+  }
+
+  componentDidUpdate(prevProps: MainNavigationMobileProps) {
+    if (this.props.visible !== prevProps.visible) {
+      if (this.props.visible) {
+        $(this.c).sidebar('show');
+      } else {
+        $(this.c).sidebar('hide');
+      }
+    }
   }
 
   onClickSecondary: RouteItemClickHandler = (url, evt) => {

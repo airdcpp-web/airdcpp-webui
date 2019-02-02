@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 interface MenuIconProps extends Pick<CountLabelProps, 'urgencies'> {
   className?: string;
-  onClick?: () => void;
+  onClick?: (evt: React.SyntheticEvent<any>) => void;
 }
 
 // A plain menu icon trigger for dropdowns (with urgency label support)

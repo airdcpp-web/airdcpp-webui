@@ -13,21 +13,22 @@ import { MainLayoutProps } from './AuthenticatedApp';
 const MainLayoutMobile: React.FC<MainLayoutProps> = memo(props => {
   const [ menuVisible, setMenuVisible ] = useState(false);
 
-  const onClickMenu = () => setMenuVisible(!menuVisible);
-
   const { className, location } = props;
   return (
     <div className={ className } id="mobile-layout">
-      { menuVisible && (
-        <MainNavigation
-          location={ location }
-          onClose={ onClickMenu }
-        />
-      ) }
+      <MainNavigation
+        location={ location }
+        onClose={ () => {
+          setMenuVisible(false);
+        } }
+        visible={ menuVisible }
+      />
       <div className="pusher" id="mobile-layout-inner">
         <SiteHeader>
           <MainMenuIcon
-            onClickMenu={ onClickMenu }
+            onClickMenu={ () => {
+              setMenuVisible(true);
+            } }
             routes={ secondaryRoutes }
           />
         </SiteHeader>
