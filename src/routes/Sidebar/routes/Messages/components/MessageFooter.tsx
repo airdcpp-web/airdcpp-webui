@@ -26,11 +26,16 @@ interface CCPMStateProps {
 }
 
 const CCPMState: React.FC<CCPMStateProps> = ({ session }) => {
-  if (session.user.flags.indexOf('ccpm') === -1) {
+  const { flags } = session.user;
+  if (flags.indexOf('ccpm') === -1) {
     return null;
   }
 
   const state = session.ccpm_state.id;
+  if (state === API.CCPMStateEnum.DISCONNECTED && flags.indexOf('offline') !== -1) {
+    return null;
+  }
+
   const actionIds = [ state === API.CCPMStateEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
 
   return (
