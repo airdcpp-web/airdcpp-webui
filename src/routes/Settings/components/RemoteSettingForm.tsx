@@ -9,7 +9,7 @@ import Form, { FormProps, FormSaveHandler, FormFieldChangeHandler } from 'compon
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 
 
 export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions'> {
@@ -46,7 +46,7 @@ class RemoteSettingForm extends React.Component<Props> {
   }
 
   render() {
-    const { settings, fieldDefinitions, saveContext, location, ...otherProps } = this.props;
+    const { settings, fieldDefinitions, saveContext, ...otherProps } = this.props;
     return (
       <div className="remote setting-form">
         <Form
@@ -56,7 +56,6 @@ class RemoteSettingForm extends React.Component<Props> {
           fieldDefinitions={ fieldDefinitions }
           value={ settings }
           onFieldChanged={ this.onFieldChanged }
-          location={ location }
         />
       </div>
     );
@@ -64,7 +63,7 @@ class RemoteSettingForm extends React.Component<Props> {
 }
 
 export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDataProps>(
-  withSaveContext(withRouter(RemoteSettingForm)), 
+  withSaveContext(RemoteSettingForm), 
   {
     urls: {
       fieldDefinitions: ({ keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),

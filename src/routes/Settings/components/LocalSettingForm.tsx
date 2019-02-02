@@ -8,7 +8,7 @@ import Form, { FormProps, FormSaveHandler, FormFieldChangeHandler } from 'compon
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 
 
 export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
@@ -59,7 +59,7 @@ class LocalSettingForm extends React.Component<Props> {
 
   render() {
     const { settings } = this.state;
-    const { saveContext, location } = this.props;
+    const { saveContext } = this.props;
     return (
       <div className="local setting-form">
         <Form
@@ -69,11 +69,10 @@ class LocalSettingForm extends React.Component<Props> {
           fieldDefinitions={ this.definitions }
           value={ settings }
           onFieldChanged={ this.onFieldChanged }
-          location={ location }
         />
       </div>
     );
   }
 }
 
-export default withRouter(withSaveContext(LocalSettingForm));
+export default withSaveContext(LocalSettingForm);

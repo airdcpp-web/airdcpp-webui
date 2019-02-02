@@ -9,6 +9,7 @@ import SettingsSideMenuLayout from './SettingsSideMenuLayout';
 import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 
 import SaveDecorator, { SaveDecoratorChildProps, SaveDecoratorProps } from '../decorators/SaveDecorator';
+import { RouteComponentProps } from 'react-router';
 
 
 export interface SettingSectionProps {
@@ -17,7 +18,7 @@ export interface SettingSectionProps {
 
 type Props = SaveDecoratorChildProps & SettingsMenuDecoratorChildProps;
 // tslint:disable-next-line:max-line-length
-export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<Props, 'parent' | 'currentMenuItem'> {
+export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<Props, 'parent' | 'currentMenuItem'>, RouteComponentProps {
   contentClassname: string;
   parentMenuItems: React.ReactNode[];
   menuItems: React.ReactNode[];
