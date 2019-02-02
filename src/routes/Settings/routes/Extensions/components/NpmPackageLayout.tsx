@@ -8,6 +8,7 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import 'semantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
+import { toCorsSafeUrl } from 'utils/HttpUtils';
 
 
 interface NpmPackageLayoutProps {
@@ -55,7 +56,7 @@ class NpmPackageLayout extends React.Component<NpmPackageLayoutProps & NpmPackag
 export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutDataProps>(NpmPackageLayout, {
   urls: {
     installedPackages: ExtensionConstants.EXTENSIONS_URL,
-    packageCatalog: () => $.getJSON(ExtensionConstants.NPM_PACKAGES_URL) as any as Promise<any>,
+    packageCatalog: () => $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGES_URL)) as any as Promise<any>,
   },
   dataConverters: {
     packageCatalog: ({ objects }) => objects,

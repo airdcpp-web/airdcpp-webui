@@ -14,6 +14,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { Location } from 'history';
+import { toCorsSafeUrl, toApiError } from 'utils/HttpUtils';
 
 
 interface NpmPackage {
@@ -27,17 +28,19 @@ const hasSettings = (extension: API.Extension) => extension.has_settings;
 const ExtensionActionConfig: UI.ActionConfigList<API.Extension> = [
   { 'installNpm': { 
     displayName: 'Install',
+    asyncResult: true,
     icon: IconConstants.CREATE,
     access: API.AccessEnum.ADMIN,
   } },
   { 'updateNpm': { 
     displayName: 'Update',
+    asyncResult: true,
     icon: IconConstants.REFRESH,
     access: API.AccessEnum.ADMIN,
   } },
   { 'installUrl': {
-    asyncResult: true,
     displayName: 'Install from URL',
+    asyncResult: true,
     icon: IconConstants.CREATE,
     access: API.AccessEnum.ADMIN,
     input: {
@@ -128,19 +131,27 @@ ExtensionActions.stop.failed.listen(function (extension: API.Extension, error: E
 });
 
 ExtensionActions.installNpm.listen(function (npmPackage: NpmPackage, location: Location) {
-  $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
+  $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest'), data => {
     const { tarball, shasum } = data.dist;
     ExtensionActions.installUrl(undefined, location, tarball, npmPackage.name, shasum);
   })
-    .fail(ExtensionActions.installNpm.failed);
+    .catch(ExtensionActions.installNpm.failed);
+});
+
+ExtensionActions.installNpm.failed.listen(function (error: JQuery.jqXHR) {
+  NotificationActions.apiError('Installation failed', toApiError(error));
 });
 
 ExtensionActions.updateNpm.listen(function (npmPackage: NpmPackage, location: Location) {
-  $.getJSON(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', data => {
+  $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest'), data => {
     const { tarball, shasum } = data.dist;
     ExtensionActions.installUrl(undefined, location, tarball, shasum);
   })
-    .fail(ExtensionActions.installNpm.failed);
+    .catch(ExtensionActions.updateNpm.failed);
+});
+
+ExtensionActions.updateNpm.failed.listen(function (error: JQuery.jqXHR) {
+  NotificationActions.apiError('Updating failed', toApiError(error));
 });
 
 ExtensionActions.installUrl.listen(function (

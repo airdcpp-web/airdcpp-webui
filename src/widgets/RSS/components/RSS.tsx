@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { parse as parseXML } from 'fast-xml-parser';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
@@ -11,9 +12,9 @@ import Footer from 'widgets/RSS/components/Footer';
 import { Settings } from 'widgets/RSS';
 
 import '../style.css';
-import invariant from 'invariant';
 
 import * as UI from 'types/ui';
+import { toCorsSafeUrl, formatHttpError } from 'utils/HttpUtils';
 
 
 const getEntryKey = (entry: FeedItem): string => {
@@ -45,16 +46,13 @@ const idToCacheKey = (id: string) => 'rss_feed_cache_' + id;
 
 
 export interface Feed {
-  results?: {
-    error?: { description: string; };
-    rss?: {
-      channel?: {
-        item?: FeedItem[];
-      }
-    };
-    feed?: {
-      entry?: FeedItem[];
+  rss?: {
+    channel?: {
+      item?: FeedItem[];
     }
+  };
+  feed?: {
+    entry?: FeedItem[];
   };
 }
 
@@ -98,19 +96,30 @@ class RSS extends React.PureComponent<RSSProps, State> {
   }
 
   fetchFeed = (feedUrl: string) => {
-    invariant(!!feedUrl, 'Feed URL missing');
+    if (!feedUrl.startsWith('http://') && !feedUrl.startsWith('https://')) {
+      this.setError('Invalid URL');
+      return;
+    }
+
+
     if (this.state.entries) {
       this.setState({ entries: null });
     }
 
-    $.getJSON(
-      // tslint:disable-next-line:max-line-length
-      `https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%20%3D%20\'${encodeURIComponent(feedUrl)}\'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=`, 
-      res => {
-        console.log('RSS feed received', res);
-        this.onFeedFetched(res.query);
-      }
-    );
+    $.get(
+      toCorsSafeUrl(feedUrl), 
+      (data, res, xhr) => {
+        console.log('RSS feed received', feedUrl, res);
+
+        const jsonFeed = parseXML(xhr.responseText, {});
+        this.onFeedFetched(jsonFeed);
+      },
+      'xml'
+    )
+      .catch(err => {
+        console.log('RSS feed download failed', feedUrl, err);
+        this.setError(formatHttpError(err));
+      });
   }
 
   componentDidUpdate(prevProps: RSSProps) {
@@ -121,18 +130,23 @@ class RSS extends React.PureComponent<RSSProps, State> {
 
   getCachedFeedInfo = (): StorageFeed | null => {
     const feedInfo = loadSessionProperty<StorageFeed>(idToCacheKey(this.props.componentId));
+    const { feed_url, feed_cache_minutes } = this.props.settings;
     if (feedInfo) {
       const feedDate = new Date(feedInfo.date).getTime();
-      const lastValidDate = feedDate + (this.props.settings.feed_cache_minutes * 60 * 1000);
+      const lastValidDate = feedDate + (feed_cache_minutes * 60 * 1000);
 
       if (lastValidDate >= Date.now()) {
-        console.log(`RSS: cached feed will be used (expires in ${(lastValidDate - Date.now()) / 60 / 1000} minutes)`);
+        console.log(
+          `RSS: cached feed will be used (expires in ${(lastValidDate - Date.now()) / 60 / 1000} minutes)`, 
+          feed_url
+        );
+
         return feedInfo;
       } else {
-        console.log(`RSS: cached feed had expired ${(Date.now() - lastValidDate) / 60 / 1000} minutes ago`);
+        console.log(`RSS: cached feed had expired ${(Date.now() - lastValidDate) / 60 / 1000} minutes ago`, feed_url);
       }
     } else {
-      console.log('RSS: no cached feed');
+      console.log('RSS: no cached feed', feed_url);
     }
 
     return null;
@@ -145,31 +159,23 @@ class RSS extends React.PureComponent<RSSProps, State> {
   }
 
   onFeedFetched = (data: Feed) => {
-    if (!data.results) {
-      this.setError('The URL is invalid, the feed is empty or there is a temporary issue with the feed service');
-      return;
-    }
-
-    if (data.results.error) {
-      this.setError(data.results.error.description);
-      return;
-    }
-
     let entries = [];
-    if (data.results.rss) {
-      if (!data.results.rss.channel || !data.results.rss.channel.item) {
+
+    const { rss, feed } = data;
+    if (rss) {
+      if (!rss.channel || !rss.channel.item) {
         this.setError('Invalid/unsupported feed (no channel/item)');
         return;
       }
 
-      entries = data.results.rss.channel.item;
-    } else if (data.results.feed) {
-      if (!data.results.feed.entry) {
+      entries = rss.channel.item;
+    } else if (feed) {
+      if (!feed.entry) {
         this.setError('Invalid/unsupported feed (no feed entry)');
         return;
       }
 
-      entries = data.results.feed.entry;
+      entries = feed.entry;
     } else {
       this.setError('No "rss" or "feed" tag was found');
       return;

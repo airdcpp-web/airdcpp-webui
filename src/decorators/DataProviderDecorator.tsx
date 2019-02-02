@@ -7,11 +7,11 @@ import SocketService from 'services/SocketService';
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
-import { toErrorResponse } from 'utils/TypeConvert';
 import { ModalRouteCloseContext } from './ModalRouteDecorator';
 import { 
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps, AddSocketListener 
 } from './SocketSubscriptionDecorator';
+import { toApiError } from 'utils/HttpUtils';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
@@ -148,7 +148,8 @@ export default function <PropsT extends object, DataT extends object>(
       });
 
       Promise.all(promises)
-        .then(this.onDataFetched.bind(this, keys), this.onDataFetchFailed);
+        .then(this.onDataFetched.bind(this, keys))
+        .catch(this.onDataFetchFailed);
     }
 
     // Convert the data array to key-value props
@@ -169,21 +170,21 @@ export default function <PropsT extends object, DataT extends object>(
       this.mergeData(data);
     }
 
-    onDataFetchFailed = (fetchError: ErrorResponse | Response) => {
+    onDataFetchFailed = (fetchError: ErrorResponse | JQuery.jqXHR) => {
       if (!this.mounted) {
         return;
       }
 
       let error: ErrorResponse;
-      if (fetchError instanceof Response) {
+      if ((fetchError as JQuery.jqXHR).statusCode) {
         // HTTP error
-        error = toErrorResponse(fetchError.status, fetchError.statusText);
+        error = toApiError(fetchError as JQuery.jqXHR);
       } else {
         // API error
-        error = fetchError;
-        NotificationActions.apiError('Failed to fetch data', fetchError);
+        error = fetchError as ErrorResponse;
       }
-
+      
+      NotificationActions.apiError('Failed to fetch data', error);
       this.setState({
         error,
       });

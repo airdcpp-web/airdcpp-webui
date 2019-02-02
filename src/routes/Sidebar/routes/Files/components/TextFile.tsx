@@ -6,6 +6,7 @@ import Message from 'components/semantic/Message';
 
 import TextDecorator from 'components/TextDecorator';
 import { FileSessionContentProps } from 'routes/Sidebar/routes/Files/components/FileSession';
+import { formatHttpError } from 'utils/HttpUtils';
 
 
 class TextFile extends React.Component<FileSessionContentProps> {
@@ -41,12 +42,12 @@ class TextFile extends React.Component<FileSessionContentProps> {
 
   fetchText = (url: string) => {
     $.get(url, this.onTextReceived, 'text')
-      .fail(this.onTextFailed);
+      .catch(this.onTextFailed);
   }
 
-  onTextFailed = (error: any) => {
+  onTextFailed = (error: JQuery.jqXHR) => {
     this.setState({ 
-      error: error.responseText,
+      error: formatHttpError(error),
     });
   }
 

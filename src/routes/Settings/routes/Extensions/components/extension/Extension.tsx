@@ -16,6 +16,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
+import { errorResponseToString } from 'utils/TypeConvert';
 
 
 interface VersionProps {
@@ -61,7 +62,7 @@ const formatNote = (installedPackage?: API.Extension, npmError?: ErrorResponse |
   }
 
   if (npmError) {
-    return `Failed to fetch information from the extension directory: ${npmError.message} (code ${npmError.code})`;
+    return `Failed to fetch information from the extension directory: ${errorResponseToString(npmError)}`;
   }
 
   return 'Non-listed extension';

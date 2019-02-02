@@ -7,6 +7,7 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import Extension, { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
 import * as API from 'types/api';
+import { toCorsSafeUrl } from 'utils/HttpUtils';
 
 
 export interface NpmPackageData {
@@ -53,10 +54,12 @@ const LocalExtension = DataProviderDecorator<LocalExtensionProps, LocalExtension
     urls: {
       npmPackage: ({ installedPackage }) => {
         if (installedPackage.private || !installedPackage.managed) {
-          return Promise.resolve(null);
+          return Promise.resolve(undefined);
         }
 
-        return $.getJSON(`${ExtensionConstants.NPM_PACKAGE_URL}${installedPackage.name}/latest`) as any as Promise<any>;
+        return $.getJSON(
+          toCorsSafeUrl(`${ExtensionConstants.NPM_PACKAGE_URL}${installedPackage.name}/latest`)
+        ) as any as Promise<any>;
       },
     },
     renderOnError: true,

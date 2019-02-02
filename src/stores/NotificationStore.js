@@ -1,6 +1,7 @@
 import Reflux from 'reflux';
 
 import NotificationActions from 'actions/NotificationActions';
+import { errorResponseToString } from 'utils/TypeConvert';
 
 const NotificationStore = Reflux.createStore({
   listenables: NotificationActions,
@@ -26,7 +27,7 @@ const NotificationStore = Reflux.createStore({
   onApiError(title, error, uid) {
     this.trigger('error', { 
       title: title,
-      message: error.message + ' (code ' + error.code + ')',
+      message: errorResponseToString(error),
       uid: uid
     });
   },

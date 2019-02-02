@@ -1,5 +1,6 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 
 export const dupeToStringType = (dupeInfo: API.Dupe) => {
@@ -48,10 +49,19 @@ export const urgencyToColor = (urgency: number) => {
   }
 };
 
-export const toErrorResponse = (errorCode: number, message: string) => ({
+export const toErrorResponse = (errorCode: number, message: string): ErrorResponse => ({
   code: errorCode,
   message,
   json: {
     message,
   }
 });
+
+export const errorResponseToString = (error: ErrorResponse): string => {
+  let message = error.message;
+  if (error.code) {
+    message += `(code ${error.code})`;
+  }
+
+  return message;
+};

@@ -56,6 +56,14 @@ export const SettingDefinitions: UI.FormFieldDefinition[] = [
     type: API.SettingTypeEnum.BOOLEAN,
     default_value: false,
     title: `Never show the application install prompt in Home view`,
+  }, {
+    key: LocalSettings.CORS_PROXY,
+    type: API.SettingTypeEnum.STRING,
+    default_value: 'https://cors.io/?',
+    title: `CORS proxy URL`,
+    optional: true,
+    // tslint:disable-next-line:max-line-length
+    help: `CORS proxy to use for fetching data from extenal sites (e.g. RSS feeds and extensions). The target URL will be put directly after the configured proxy URL. No proxy will be used if the field is left empty, but it may prevent accessing various external URLs as they aren't often configured to be accessible from other sites.`
   }
 ];
 
