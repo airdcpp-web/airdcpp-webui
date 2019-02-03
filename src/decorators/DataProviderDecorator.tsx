@@ -195,7 +195,7 @@ export default function <PropsT extends object, DataT extends object>(
       const { data, error } = this.state;
 
       if (!data && !error) {
-        return !!loaderText && <Loader text={ loaderText }/>;
+        return loaderText !== null && <Loader text={ loaderText || 'Loading data...' }/>;
       }
 
       if (!!error && !renderOnError) {
