@@ -218,14 +218,14 @@ DownloadableItemActions.findNfo.listen(async function (
       this.failed(toErrorResponse(404, 'No NFO results were received'), data);
     }
   } catch (error) {
-    this.failed(error.message, data);
+    this.failed(error, data);
   }
 });
 
-DownloadableItemActions.findNfo.failed.listen(function (errorMessage: ErrorResponse, data: DownloadableItemData) {
+DownloadableItemActions.findNfo.failed.listen(function (error: ErrorResponse, data: DownloadableItemData) {
   NotificationActions.info({ 
     title: data.itemInfo.name,
-    message: errorMessage.message,
+    message: error.message,
   });
 });
 
