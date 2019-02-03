@@ -66,7 +66,7 @@
     "@types/react-transition-group": "^2.0.15",
     "@types/semantic-ui": "^2.2.6",
     "@types/webpack": "^4.4.24",
-    "airdcpp-apisocket": "^2.1.0-beta",
+    "airdcpp-apisocket": "^2.2.0",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.0.0",

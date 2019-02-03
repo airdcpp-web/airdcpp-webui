@@ -59,15 +59,18 @@ LoginActions.login.listen(function (
 });
 
 
-LoginActions.loginRefreshToken.listen(function (
+LoginActions.loginRefreshToken.listen(async function (
   this: UI.AsyncActionType<any>,
   refreshToken: string
 ) {
-  let that = this;
+  try {
+    await SocketService.waitDisconnected();
 
-  SocketService.connectRefreshToken(refreshToken, true)
-    .then(that.completed)
-    .catch(that.failed);
+    const res = await SocketService.connectRefreshToken(refreshToken, true);
+    this.completed(res);
+  } catch (e) {
+    this.failed(e);
+  }
 });
 
 LoginActions.login.failed.listen(function (error: ErrorResponse) {
@@ -75,12 +78,15 @@ LoginActions.login.failed.listen(function (error: ErrorResponse) {
 });
 
 
-LoginActions.connect.listen(function (this: UI.AsyncActionType<any>, token: string) {
-  let that = this;
+LoginActions.connect.listen(async function (this: UI.AsyncActionType<any>, token: string) {
+  try {
+    await SocketService.waitDisconnected();
 
-  SocketService.reconnect(token)
-    .then(that.completed)
-    .catch(that.failed);
+    const res = await SocketService.reconnect(token);
+    this.completed(res);
+  } catch (e) {
+    this.failed(e);
+  }
 });
 
 /*LoginActions.connect.failed.listen(function (token) {
