@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { parse as parseXML } from 'fast-xml-parser';
+import { decode } from 'he';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
@@ -111,7 +112,11 @@ class RSS extends React.PureComponent<RSSProps, State> {
       (data, res, xhr) => {
         console.log('RSS feed received', feedUrl, res);
 
-        const jsonFeed = parseXML(xhr.responseText, {});
+        const jsonFeed = parseXML(xhr.responseText, {
+          attrValueProcessor: a => decode(a, { isAttributeValue: true }),
+          tagValueProcessor : a => decode(a),
+        });
+
         this.onFeedFetched(jsonFeed);
       },
       'xml'
