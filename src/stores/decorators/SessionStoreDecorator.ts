@@ -63,7 +63,7 @@ const SessionStoreDecorator = function (
     _onSessionUpdated: (updatedProperties: Partial<SessionType>, sessionId: API.IdType | undefined) => {
       const id = updatedProperties.id ? updatedProperties.id : sessionId!;
 
-      const session = store.getSession(id);
+      const session: SessionType = store.getSession(id);
       if (!session) {
         // May happen before the sessions have been fetched
         console.warn('Update received for a non-existing session', updatedProperties);
@@ -75,7 +75,13 @@ const SessionStoreDecorator = function (
         updatedProperties = checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () => actions.setRead({ id }));
       }
 
-      sessions[sessions.indexOf(session)] = update(session, { $merge: updatedProperties });
+      const index = sessions.indexOf(session);
+      sessions = update(sessions, {
+        [index]: {
+          $merge: updatedProperties as SessionType
+        }
+      });
+
       store.trigger(sessions);
     },
 
