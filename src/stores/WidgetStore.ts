@@ -194,7 +194,7 @@ const Store = {
     return breakpoints;
   },
 
-  onLayoutChange(layout: Layout, layouts: Layouts) {
+  onLayoutChange(layout: Layout[], layouts: Layouts) {
     saveLocalProperty(LAYOUT_STORAGE_KEY, {
       version: LAYOUT_VERSION,
       items: layouts,

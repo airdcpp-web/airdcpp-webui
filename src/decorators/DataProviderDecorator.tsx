@@ -98,7 +98,7 @@ export default function <PropsT extends object, DataT extends object>(
       this.mounted = true;
       this.fetchData();
 
-      if (settings.onSocketConnected) {
+      if (settings.onSocketConnected && SocketService.isConnected()) {
         settings.onSocketConnected(
           this.props.addSocketListener, 
           {

@@ -56,7 +56,7 @@ interface NotificationsProps {
 }
 
 class Notifications extends React.Component<NotificationsProps & SocketSubscriptionDecoratorChildProps> {
-  notifications: System;
+  notifications: System | null;
   limiter = new RateLimiter(3, 3000, true);
   unsubscribe: () => void;
 
@@ -79,6 +79,12 @@ class Notifications extends React.Component<NotificationsProps & SocketSubscript
       }
       
       // Embedded notification
+
+      // Rate limiter uses timeouts internally so the ref may not exist anymore...
+      if (!this.notifications) {
+        return;
+      }
+
       this.notifications.addNotification({
         ...notification,
         level,
