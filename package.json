@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.5.2-beta.5",
+  "version": "2.5.2",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -67,7 +67,7 @@
     "@types/react-transition-group": "^2.0.15",
     "@types/semantic-ui": "^2.2.6",
     "@types/webpack": "^4.4.24",
-    "acorn": "^6.0.7",
+    "acorn": "^6.1.0",
     "airdcpp-apisocket": "^2.2.0",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^7.0.0-bridge.0",
@@ -109,7 +109,7 @@
     "react-emojione": "^5.0.1",
     "react-grid-layout": "^0.16.6",
     "react-hot-loader": "^4.6.5",
-    "react-i18next": "^10.0.1",
+    "react-i18next": "^10.0.2",
     "react-linkify": "^0.2.2",
     "react-measure": "^2.2.4",
     "react-mentions": "^2.4.1",
