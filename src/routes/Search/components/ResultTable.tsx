@@ -33,7 +33,13 @@ const UserCell: React.FC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.
     directory={ rowDataGetter!().path }
     userIcon="simple"
     ids={ UserFileActions }
-  />
+  >
+    <TableActionMenu 
+      actions={ SearchActions }
+      itemData={ rowDataGetter }
+      ids={ [ 'result' ] }
+    />
+  </TableUserMenu>
 );
 
 const resultUserGetter = (rowData: API.GroupedSearchResult) => rowData.users.user;
