@@ -1,0 +1,283 @@
+{
+  "main": {
+    "widgets": {
+      "application": {
+        "addWidget": "Add widget...",
+        "loggedInAs": "Logged in as",
+        "clientStarted": "Client started",
+        "activeSessions": "Active sessions"
+      },
+      "rss": {
+        "lastUpdated": "Last updated: {{time}}",
+        "actions": {
+          "openLink": "Open link",
+          "search": "Search"
+        },
+        "loadingFeed": "Loading feed"
+      },
+      "transfers": {
+        "trafficBps": "Traffic (bps)",
+        "downloads": "Downloads",
+        "uploads": "Uploads",
+        "downloaded": "Downloaded",
+        "uploaded": "Uploaded",
+        "downloadLimit": "Download limit",
+        "uploadLimit": "Upload limit",
+        "disabled": "Disabled"
+      },
+      "actions": {
+        "editWidget": "Edit widget",
+        "removeWidget": "Remove widget"
+      },
+      "widgetPositionHint": "Widgets and their positions are browser-specific"
+    },
+    "events": {
+      "actions": {
+        "clear": "Clear"
+      }
+    },
+    "table": {
+      "filter": {
+        "filter": "Filter",
+        "matchType": "Match type",
+        "partial": "Partial",
+        "regex": "Regex",
+        "wildcard": "Wildcard",
+        "exact": "Exact",
+        "filterByProfile": "Filter by profile",
+        "allProfiles": "All profiles"
+      }
+    },
+    "search": {
+      "table": {
+        "name": "Name",
+        "size": "Size",
+        "relevance": "Relevance",
+        "type": "Type",
+        "connection": "Connection",
+        "users": "Users",
+        "time": "Last modified",
+        "slots": "Slots"
+      },
+      "actions": {
+        "resultDetails": "Result details",
+        "browseContent": "Browse content"
+      },
+      "searchOffline": "You must to be connected to at least one hub in order to perform searches",
+      "enterSearchString": "Enter search string...",
+      "search": "Search",
+      "typeContent": "Type/content",
+      "size": "Size",
+      "lastModified": "Last modified",
+      "dupeType": "Dupe type",
+      "shareFull": "Share (full)",
+      "dupePaths": "Dupe paths",
+      "actionsCaption": "Actions...",
+      "usersCount": "User ({{count}})",
+      "usersCount_plural": "Users ({{count}})",
+      "tth": "TTH",
+      "xUsersNicks": "{{count}} user ({{user.nicks}})",
+      "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
+      "noResults": "No results found for \"{{searchString}}\"",
+      "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
+    },
+    "share": {
+      "table": {
+        "path": "Path",
+        "size": "Size",
+        "virtual_name": "Virtual name",
+        "profiles": "Profiles",
+        "last_refresh_time": "Last refreshed",
+        "type": "Content",
+        "virtualName": "Virtual name",
+        "lastRefreshTime": "Last refreshed"
+      },
+      "actions": {
+        "editDirectory": "Edit directory",
+        "removeDirectory": "Remove directory",
+        "addDirectory": "Add directory",
+        "refreshAll": "Refresh all"
+      },
+      "actionsCaption": "Actions...",
+      "shareActions": "Share actions"
+    },
+    "favoriteHubs": {
+      "actions": {
+        "addNew": "Add new",
+        "setPassword": "Set password",
+        "edit": "Edit",
+        "remove": "Remove",
+        "reload": "Reload",
+        "changePassword": "Change password",
+        "removePassword": "Remove password"
+      },
+      "table": {
+        "connectState": "State",
+        "name": "Name",
+        "autoConnect": "Auto connect",
+        "shareProfile": "Share profile",
+        "nick": "Nick",
+        "hasPassword": "Password",
+        "hubUrl": "Address",
+        "size": "Size",
+        "time": "Last modified",
+        "type": "Type"
+      }
+    },
+    "filelists": {
+      "actions": {
+        "close": "Close"
+      }
+    },
+    "common": {    
+      "actions": {
+        "download": "Download",
+        "downloadTo": "Download to...",
+        "findNfo": "Find NFO",
+        "search": "Search",
+        "sendMessage": "Send message",
+        "browseShare": "Browse share",
+        "ignoreMessages": "Ignore messages",
+        "viewAsText": "View as text",
+        "copyMagnetLink": "Copy magnet link",
+        "shutDownApplication": "Shut down application",
+        "restartWebServer": "Restart web server",
+        "unignoreMessages": "Unignore messages"
+      },
+      "loading": "Loading",
+      "loadingData": "Loading data...",
+      "noOnlineHubs": "No online hubs"
+    },
+    "hubs": {
+      "table": {
+        "nick": "Nick",
+        "shareSize": "Share size",
+        "description": "Description",
+        "tag": "Tag",
+        "uploadSpeed": "Upload speed",
+        "downloadSpeed": "Download speed",
+        "ip4": "IP (v4)",
+        "ip6": "IP (v6)",
+        "fileCount": "Files"
+      },
+      "actions": {
+        "reconnect": "Reconnect",
+        "clearChat": "Clear chat",
+        "close": "Close"
+      },
+      "enterHubAddress": "Enter hub address...",
+      "connect": "Connect",
+      "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings"
+    },
+    "queue": {
+      "table": {
+        "name": "Name",
+        "size": "Size",
+        "status": "Status",
+        "sources": "Sources",
+        "secondsLeft": "Time left",
+        "speed": "Speed",
+        "priority": "Priority",
+        "type": "Type/content",
+        "timeAdded": "Added",
+        "timeFinished": "Finished"
+      },
+      "actionsCaption": "Actions...",
+      "queueActions": "Queue actions",
+      "pausedForced": "Paused (forced)",
+      "actions": {
+        "removeCompletedBundles": "Remove completed bundles",
+        "pauseAllBundles": "Pause all bundles",
+        "resumeAllBundles": "Resume all bundles",
+        "manageFiles": "Manage files...",
+        "manageSources": "Manage sources...",
+        "searchForeground": "Search (foreground)",
+        "searchForAlternates": "Search for alternates",
+        "remove": "Remove",
+        "removeSource": "Remove source"
+      },
+      "paused": "Paused",
+      "lowest": "Lowest",
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "highest": "Highest",
+      "auto": "Auto",
+      "sources": "Sources",
+      "user": "User",
+      "hubs": "Hubs",
+      "lastKnownSpeed": "Last known speed",
+      "files": "Files",
+      "size": "Size"
+    },
+    "transfers": {
+      "table": {
+        "user": "User",
+        "name": "Name",
+        "size": "Segment",
+        "status": "Status",
+        "secondsLeft": "Time left",
+        "speed": "Speed",
+        "flags": "Flags",
+        "ip": "IP"
+      },
+      "actions": {
+        "forceConnect": "Force connect",
+        "disconnect": "Disconnect",
+        "removeFileFromQueue": "Remove file from queue",
+        "removeUserFromQueue": "Remove user from queue"
+      }
+    },
+    "settings": {
+      "actions": {
+        "detectNow": "Detect now",
+        "addDirectory": "Add directory",
+        "addUser": "Add user",
+        "editUser": "Edit user",
+        "editDirectory": "Edit directory",
+        "removeDirectory": "Remove directory",
+        "addProfile": "Add profile",
+        "browseFiles": "Browse files",
+        "renameProfile": "Rename profile",
+        "addPath": "Add path",
+        "removePath": "Remove path"
+      }
+    },
+    "extensions": {
+      "actions": {
+        "uninstall": "Uninstall",
+        "start": "Start",
+        "installFromUrl": "Install from URL",
+        "install": "Install"
+      }
+    },
+    "navigation": {
+      "home": "Home",
+      "queue": "Queue",
+      "search": "Search",
+      "transfers": "Transfers",
+      "hubs": "Hubs",
+      "messages": "Messages",
+      "filelists": "Filelists",
+      "files": "Files",
+      "events": "Events",
+      "favoriteHubs": "Favorite hubs",
+      "share": "Share",
+      "settings": "Settings",
+      "logout": "Logout",
+      "more": "More..."
+    },
+    "login": {
+      "username": "Username",
+      "password": "Password",
+      "keepMeLoggedIn": "Keep me logged in",
+      "login": "Login",
+      "authenticationFailed": "Authentication failed: {{lastError}}"
+    },
+    "viewedFiles": {
+      "actions": {
+        "close": "Close"
+      }
+    }
+  }
+}

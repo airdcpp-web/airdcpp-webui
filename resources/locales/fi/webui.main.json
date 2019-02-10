@@ -1,0 +1,283 @@
+{
+  "main": {
+    "widgets": {
+      "application": {
+        "addWidget": "Lisää widgetti...",
+        "loggedInAs": "Kirjautunut käyttäjä",
+        "clientStarted": "Ohjelma käynnistetty",
+        "activeSessions": "Aktiiviset istunnot"
+      },
+      "rss": {
+        "lastUpdated": "Viimeksi päivitetty: {{time}}",
+        "actions": {
+          "openLink": "Avaa linkki",
+          "search": "Etsi"
+        },
+        "loadingFeed": "Ladataan syötettä"
+      },
+      "transfers": {
+        "trafficBps": "Liikenne (bps)",
+        "downloads": "Lataukset",
+        "uploads": "Lähetykset",
+        "downloaded": "Ladattu",
+        "uploaded": "Lähetetty",
+        "downloadLimit": "Latausraja",
+        "uploadLimit": "Lähetysraja",
+        "disabled": "Ei käytössä"
+      },
+      "actions": {
+        "editWidget": "Muokkaa widgettiä",
+        "removeWidget": "Poista widgetti"
+      },
+      "widgetPositionHint": "Widgetit ja niiden sijainnit ovat selainkohtaisia"
+    },
+    "events": {
+      "actions": {
+        "clear": "Tyhjennä"
+      }
+    },
+    "table": {
+      "filter": {
+        "filter": "Suodata",
+        "matchType": "Täsmäystyyppi",
+        "partial": "Osittainen",
+        "regex": "Regex",
+        "wildcard": "Jokerimerkki",
+        "exact": "Eksakti",
+        "filterByProfile": "Suodata profiilin perusteella",
+        "allProfiles": "Kaikki profiilit"
+      }
+    },
+    "search": {
+      "table": {
+        "name": "Name",
+        "size": "Koko",
+        "relevance": "Relevanssi",
+        "type": "Tyyppi",
+        "connection": "Yhteys",
+        "users": "Käyttäjät",
+        "time": "Viimeksi muokattu",
+        "slots": "Latauspaikat"
+      },
+      "actions": {
+        "resultDetails": "Osuman tiedot",
+        "browseContent": "Selaa sisältöä"
+      },
+      "searchOffline": "Sinun on oltava vähintään yhdessä hubissa, jotta voit tehdä hakua",
+      "enterSearchString": "Syötä hakusana...",
+      "search": "Etsi",
+      "typeContent": "Tyyppi/sisältö",
+      "size": "Koko",
+      "lastModified": "Viimeksi muokattu",
+      "dupeType": "Kaksoiskappaleen tyyppi",
+      "shareFull": "Jako (täysi)",
+      "dupePaths": "Kaksoiskappaleiden polut",
+      "actionsCaption": "Toiminnot...",
+      "usersCount": "Käyttäjä ({{count}})",
+      "usersCount_plural": "Käyttäjät ({{count}})",
+      "tth": "TTH",
+      "xUsersNicks": "{{count}} käyttäjä ({{user.nicks}})",
+      "xUsersNicks_plural": "{{count}} käyttäjää ({{user.nicks}})",
+      "noResults": "Hakusanalla \"{{searchString}}\" ei löytynyt tuloksia",
+      "noResultsHint": "<0><0>Varmista, että sanat on kirjoitettu oikein</0><1>Käytä toisia hakusanoja</1><2>Haet liian usein (hubeissa on usein vähimmäisaika hakujen välillä)</2><3>Jos et saa ikinä hakutuloksia, tarkista että ohjelman yhteysasetukset on määritetty oikein</3></0>"
+    },
+    "share": {
+      "table": {
+        "path": "Polku",
+        "size": "Koko",
+        "virtual_name": "Virtuaalinen nimi",
+        "profiles": "Profiilit",
+        "last_refresh_time": "Viimeksi päivitetty",
+        "type": "Sisältö",
+        "virtualName": "Virtuaalinen nimi",
+        "lastRefreshTime": "Viimeksi päivitetty"
+      },
+      "actions": {
+        "editDirectory": "Muokkaa kansiota",
+        "removeDirectory": "Poista kansio",
+        "addDirectory": "Lisää kansio",
+        "refreshAll": "Päivitä kaikki"
+      },
+      "actionsCaption": "Toiminnot...",
+      "shareActions": "Jakotoiminnot"
+    },
+    "favoriteHubs": {
+      "actions": {
+        "addNew": "Lisää uusi",
+        "setPassword": "Aseta salasana",
+        "edit": "Muokkaa",
+        "remove": "Poista",
+        "reload": "Lataa uudestaan",
+        "changePassword": "Muuta salasanaa",
+        "removePassword": "Poista salasana"
+      },
+      "table": {
+        "connectState": "Tila",
+        "name": "Name",
+        "autoConnect": "Autom. yhdistäminen",
+        "shareProfile": "Jakoprofiili",
+        "nick": "Nimimerkki",
+        "hasPassword": "Salasana",
+        "hubUrl": "Osoite",
+        "size": "Koko",
+        "time": "Viimeksi muokattu",
+        "type": "Tyyppi"
+      }
+    },
+    "filelists": {
+      "actions": {
+        "close": "Sulje"
+      }
+    },
+    "common": {    
+      "actions": {
+        "download": "Lataus",
+        "downloadTo": "Lataa kohteeseen...",
+        "findNfo": "Hae NFO",
+        "search": "Etsi",
+        "sendMessage": "Lähetä viesti",
+        "browseShare": "Selaa jakoja",
+        "ignoreMessages": "Estä viestit",
+        "viewAsText": "Näytä tekstinä",
+        "copyMagnetLink": "Kopioi magnet-linkki",
+        "shutDownApplication": "Sammuta ohjelma",
+        "restartWebServer": "Käynnistä web-palvelin uudestaan",
+        "unignoreMessages": "Poista viestien esto"
+      },
+      "loading": "Ladataan",
+      "loadingData": "Ladataan dataa...",
+      "noOnlineHubs": "Ei yhdistettyjä hubeja"
+    },
+    "hubs": {
+      "table": {
+        "nick": "Nimimerkki",
+        "shareSize": "Jakojen koko",
+        "description": "Kuvaus",
+        "tag": "Tiedot",
+        "uploadSpeed": "Lähetysnopeus",
+        "downloadSpeed": "Latausnopeus",
+        "ip4": "IP (v4)",
+        "ip6": "IP (v6)",
+        "fileCount": "Tiedostoa"
+      },
+      "actions": {
+        "reconnect": "Uudelleenyhdistä",
+        "clearChat": "Tyhjennä keskusteluikkuna",
+        "close": "Sulje"
+      },
+      "enterHubAddress": "Syötä hubin osoite...",
+      "connect": "Yhdistä",
+      "favoriteHubsHint": "Vinkki: mene <1>Suosikkihubit</1> -sivulle, jos haluat yhdistää käyttämällä mukautettuja asetuksia"
+    },
+    "queue": {
+      "table": {
+        "name": "Name",
+        "size": "Koko",
+        "status": "Tila",
+        "sources": "Lähteet",
+        "secondsLeft": "Aikaa jäljellä",
+        "speed": "Nopeus",
+        "priority": "Prioriteetti",
+        "type": "Tyyppi/sisältö",
+        "timeAdded": "Lisätty",
+        "timeFinished": "Valmistunut"
+      },
+      "actionsCaption": "Toiminnot...",
+      "queueActions": "Latausjonon toiminnot",
+      "pausedForced": "Keskeytetty (pakotettu)",
+      "actions": {
+        "removeCompletedBundles": "Poista valmiit bundlet",
+        "pauseAllBundles": "Pysäytä kaikki bundlet",
+        "resumeAllBundles": "Jatka kaikkia latauksia",
+        "manageFiles": "Hallinnoi tiedostoja...",
+        "manageSources": "Hallinnoi lähteitä...",
+        "searchForeground": "Hae (välilehdessä)",
+        "searchForAlternates": "Etsi vaihtoehtoisia lähteitä",
+        "remove": "Poista",
+        "removeSource": "Poista lähde"
+      },
+      "paused": "Keskeytetty",
+      "lowest": "Matalin",
+      "low": "Matala",
+      "normal": "Normaali",
+      "high": "Korkea",
+      "highest": "Korkein",
+      "auto": "Auto",
+      "sources": "Lähteet",
+      "user": "Käyttäjä",
+      "hubs": "Hubit",
+      "lastKnownSpeed": "Viimeinen nopeus",
+      "files": "Tiedostoa",
+      "size": "Koko"
+    },
+    "transfers": {
+      "table": {
+        "user": "Käyttäjä",
+        "name": "Name",
+        "size": "Segmentti",
+        "status": "Tila",
+        "secondsLeft": "Aikaa jäljellä",
+        "speed": "Nopeus",
+        "flags": "Arvot",
+        "ip": "Ip"
+      },
+      "actions": {
+        "forceConnect": "Pakota yhteys",
+        "disconnect": "Katkaise yhteys",
+        "removeFileFromQueue": "Poista tiedosto jonosta",
+        "removeUserFromQueue": "Hylkää lähde latausjonosta"
+      }
+    },
+    "settings": {
+      "actions": {
+        "detectNow": "Tunnista nyt",
+        "addDirectory": "Lisää kansio",
+        "addUser": "Lisää käyttäjä",
+        "editUser": "Muokkaa käyttäjää",
+        "editDirectory": "Muokkaa kansiota",
+        "removeDirectory": "Poista kansio",
+        "addProfile": "Lisää profiili",
+        "browseFiles": "Selaa tiedostoja",
+        "renameProfile": "Uudelleennimeä profiili",
+        "addPath": "Lisää polku",
+        "removePath": "Poista polku"
+      }
+    },
+    "extensions": {
+      "actions": {
+        "uninstall": "Poista asennus",
+        "start": "Käynnistä",
+        "installFromUrl": "Asenna osoitteesta",
+        "install": "Asenna"
+      }
+    },
+    "navigation": {
+      "home": "Koti",
+      "queue": "Jono",
+      "search": "Etsi",
+      "transfers": "Siirrot",
+      "hubs": "Hubit",
+      "messages": "Viestit",
+      "filelists": "Tiedostolistat",
+      "files": "Tiedostot",
+      "events": "Tapahtumat",
+      "favoriteHubs": "Suosikit",
+      "share": "Jaot",
+      "settings": "Asetukset",
+      "logout": "Kirjaudu ulos",
+      "more": "Lisää..."
+    },
+    "login": {
+      "username": "Käyttäjänimi",
+      "password": "Salasana",
+      "keepMeLoggedIn": "Pidä minut sisäänkirjautuneena",
+      "login": "Käyttäjätunnus",
+      "authenticationFailed": "Tunnistautuminen epäonnistui: {{lastError}}"
+    },
+    "viewedFiles": {
+      "actions": {
+        "close": "Sulje"
+      }
+    }
+  }
+}

@@ -6,7 +6,10 @@ import Message, { MessageDescriptionType } from 'components/semantic/Message';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 export interface OfflineHubMessageDecoratorProps {
@@ -37,7 +40,9 @@ const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = me
         className="offline-message" 
         icon="plug" 
         title={ (
-          <Trans>
+          <Trans
+            i18nKey={ toI18nKey('noOnlineHubs', UI.Modules.COMMON) }
+          >
             No online hubs
           </Trans>
         ) }

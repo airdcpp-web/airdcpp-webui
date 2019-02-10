@@ -5,11 +5,16 @@ import { useStore } from 'effects/StoreListenerEffect';
 
 import * as UI from 'types/ui';
 
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
+import i18next from 'i18next';
+
 
 export type SessionProviderDecoratorProps = UI.SessionRouteProps;
 
 export interface SessionProviderDecoratorChildProps<SessionT extends object> extends UI.SessionRouteProps {
   items: SessionT[];
+  t: i18next.TFunction;
 }
 
 const SessionProviderDecorator = <SessionT extends object, PropsT extends object>(
@@ -17,14 +22,16 @@ const SessionProviderDecorator = <SessionT extends object, PropsT extends object
   store: any
 ) => {
   const Decorator = (props: SessionProviderDecoratorProps & PropsT) => {
+    const { t } = useTranslation();
     const sessions = useStore<SessionT[]>(store);
     if (!store.isInitialized()) {
-      return <Loader text="Loading sessions"/>;
+      return <Loader text={ translate('Loading sessions', t, UI.Modules.COMMON) }/>;
     }
 
     return (
       <Component 
         items={ sessions }
+        t={ t }
         { ...props }
       />
     );

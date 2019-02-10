@@ -8,6 +8,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { translate } from 'utils/TranslationUtils';
 
 

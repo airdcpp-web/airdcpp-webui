@@ -86,7 +86,8 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
     <div className="users">
       <h2>
         { t(toI18nKey('usersCount', UI.Modules.SEARCH), { 
-          defaultValue: 'Users ({{count}})',
+          defaultValue: 'User ({{count}})',
+          defaultValue_plural: 'Users ({{count}})',
           count: results.length
         }) }
        </h2>

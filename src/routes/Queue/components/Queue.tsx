@@ -60,7 +60,7 @@ class Queue extends React.Component<WithTranslation> {
     const { t } = this.props;
     return (
       <Message 
-        title={ t('queueEmpty', 'The queue is empty') }
+        title={ t(toI18nKey('queueEmpty', UI.Modules.QUEUE), 'The queue is empty') }
         icon="file outline"
         description={ t(
           toI18nKey('queueEmptyDesc', UI.Modules.QUEUE), 

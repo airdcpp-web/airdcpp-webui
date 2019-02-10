@@ -9,10 +9,22 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { useTranslation, Trans } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
-const formatText = (text: React.ReactNode) => text ? text : <Trans>(unknown)</Trans>;
+const formatText = (text: React.ReactNode) => {
+  if (!!text) {
+    return text;
+  }
+  
+  return (
+    <Trans 
+      i18nKey={ toI18nKey('unknown', UI.Modules.SEARCH) }
+    >
+      (unknown)
+    </Trans>
+  );
+};
 
 
 interface GridRowProps {
@@ -64,7 +76,7 @@ const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult }) => {
     <div className="ui segment">
       <div className="ui grid stackable two column">
         <GridRow 
-          title={ translate('Content/Type', t, UI.Modules.SEARCH) } 
+          title={ translate('Type/content', t, UI.Modules.SEARCH) } 
           text={ parentResult.type.str }
         />
         <GridRow 

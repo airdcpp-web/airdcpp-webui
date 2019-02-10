@@ -17,6 +17,7 @@ import * as UI from 'types/ui';
 import { 
   SessionProviderDecoratorChildProps, SessionProviderDecorator 
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
@@ -39,16 +40,19 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
 
 
 const Files: React.FC<SessionProviderDecoratorChildProps<API.FileType>> = props => {
+  const { match, t, ...other } = props;
   if (props.items.length === 0) {
     return (
       <Message
-        title="No files to view"
-        description="You may open text or image files to be viewed here (from search or filelists)"
+        title={ t(toI18nKey('noFiles', UI.Modules.VIEWED_FILES), 'No files to view') }
+        description={ t<string>(
+          toI18nKey('noFilesDesc', UI.Modules.VIEWED_FILES), 
+          'You may open text or image files to be viewed here (from search or filelists)'
+        ) }
       />
     );
   }
 
-  const { match, ...other } = props;
   return (
     <SessionLayout
       activeId={ match.params.id }

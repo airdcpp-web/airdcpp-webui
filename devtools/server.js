@@ -16,14 +16,14 @@ i18next
   .init({
     lng: 'en',
     fallbackLng: 'en',
-    preload: [ 'fi', 'en' ],
+    preload: [ 'en' ],
     //defaultNS: 'main',
     ns: [ 'main' ],
     saveMissing: true,
     //debug: true,
     backend: {
-      loadPath: 'resources/locales/{{lng}}/{{ns}}.json',
-      addPath: 'resources/locales/{{lng}}/{{ns}}.missing.json'
+      loadPath: 'resources/locales/{{lng}}/webui.{{ns}}.json',
+      addPath: 'resources/locales/{{lng}}/webui.{{ns}}.missing.json'
     },
     //nsSeparator: '#||#',
     //keySeparator: '#|#'
@@ -81,7 +81,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   logLevel: 'warn',
   publicPath: config.output.publicPath,
   watchOptions: {
-    ignored: /resources\/locales/,
+    ignored: /resources\/locales\/[a-z]{2}\/.*\.missing\.json/,
   }
 }));
 

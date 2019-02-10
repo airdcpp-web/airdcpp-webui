@@ -16,6 +16,7 @@ import * as UI from 'types/ui';
 import { 
   SessionProviderDecorator, SessionProviderDecoratorChildProps 
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 const UserItemHandler = UserItemHandlerDecorator([ 'message' ]);
@@ -46,13 +47,13 @@ const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
 };
 
 const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession>> = props => {
-  const { match, ...other } = props;
+  const { match, t, ...other } = props;
   return (
     <SessionLayout 
       activeId={ match.params.id }
       baseUrl="filelists"
-      newCaption="Open filelist"
-      newDescription="Start browsing a new filelist" 
+      newCaption={ t(toI18nKey('new', UI.Modules.FILELISTS), 'Open filelist') }
+      newDescription={ t(toI18nKey('newDesc', UI.Modules.FILELISTS), 'Start browsing a new filelist') } 
       newIcon="browser" 
       disableSideMenu={ true }
       editAccess={ API.AccessEnum.FILELISTS_EDIT }

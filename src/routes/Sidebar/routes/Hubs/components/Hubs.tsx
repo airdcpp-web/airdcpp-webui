@@ -19,6 +19,7 @@ import * as UI from 'types/ui';
 import { 
   SessionProviderDecorator, SessionProviderDecoratorChildProps 
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
@@ -55,13 +56,13 @@ const parseNumericId = (params: UI.SessionRouteParams) => {
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
 const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
-  const { match, ...other } = props;
+  const { match, t, ...other } = props;
   return (
     <SessionLayout 
       activeId={ parseNumericId(match.params) }
       baseUrl="hubs"
-      newCaption="Connect"
-      newDescription="Connect to a new hub"
+      newCaption={ t(toI18nKey('new', UI.Modules.HUBS), 'Connect') }
+      newDescription={ t(toI18nKey('newDesc', UI.Modules.HUBS), 'Connect to a new hub') } 
       newIcon="sitemap"
       editAccess={ API.AccessEnum.HUBS_EDIT }
       actions={ HubActions } 

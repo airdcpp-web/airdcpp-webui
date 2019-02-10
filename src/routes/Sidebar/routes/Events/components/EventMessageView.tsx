@@ -10,21 +10,24 @@ import MessageView from 'components/messages/MessageView';
 import '../style.css';
 
 import * as UI from 'types/ui';
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 interface EventMessagesProps {
   messages: UI.MessageListItem[];
+  t: i18next.TFunction;
 }
 
-const EventMessageView: React.FC<EventMessagesProps> = ({ messages }) => {
+const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
   if (!messages) {
-    return <Loader text="Loading messages"/>;
+    return <Loader text={ translate('Loading messages', t, UI.Modules.EVENTS) }/>;
   }
 
   if (messages.length === 0) {
     return (
       <Message 
-        description="No messages to show"
+        description={ translate('No messages to show', t, UI.Modules.EVENTS) }
       />
     );
   }

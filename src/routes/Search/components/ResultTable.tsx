@@ -27,10 +27,12 @@ import { toI18nKey } from 'utils/TranslationUtils';
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: i18next.TFunction) => {
   if (count > 1) {
-    return t('xUsersNicks', {
-      defaultValue: `{{count}} users ({{user.nicks}})`,
+    return t(toI18nKey('xUsersNicks', UI.Modules.SEARCH), {
+      defaultValue: `{{count}} user ({{user.nicks}})`,
+      defaultValue_plural: `{{count}} users ({{user.nicks}})`,
       count,
       replace: {
+        count,
         user
       }
     });

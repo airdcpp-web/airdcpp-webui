@@ -6,6 +6,9 @@ import classNames from 'classnames';
 import 'semantic-ui-css/components/loader.min.css';
 import { Trans } from 'react-i18next';
 
+import * as UI from 'types/ui';
+import { toI18nKey } from 'utils/TranslationUtils';
+
 
 interface LoaderProps {
   inline?: boolean;
@@ -36,7 +39,7 @@ const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted
 
   return (
     <div className={ style }>
-      { text || <Trans>Loading</Trans> }
+      { text || <Trans i18nKey={ toI18nKey('loading', UI.Modules.COMMON) }>Loading</Trans> }
     </div>
   );
 };

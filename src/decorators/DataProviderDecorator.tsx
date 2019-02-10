@@ -15,6 +15,8 @@ import { toApiError } from 'utils/HttpUtils';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
+import * as UI from 'types/ui';
+
 
 export type SocketConnectHandler<DataT, PropsT> = (
   addSocketListener: AddSocketListener, 
@@ -189,7 +191,7 @@ export default function <PropsT extends object, DataT extends object>(
       }
       
       const { t } = this.props;
-      NotificationActions.apiError(translate('Failed to fetch data', t), error);
+      NotificationActions.apiError(translate('Failed to fetch data', t, UI.Modules.COMMON), error);
       this.setState({
         error,
       });
@@ -201,7 +203,11 @@ export default function <PropsT extends object, DataT extends object>(
       const { t } = this.props;
 
       if (!data && !error) {
-        return loaderText !== null && <Loader text={ loaderText || translate('Loading data...', t) }/>;
+        return loaderText !== null && (
+          <Loader 
+            text={ loaderText || translate('Loading data...', t, UI.Modules.COMMON) }
+          />
+        );
       }
 
       if (!!error && !renderOnError) {
