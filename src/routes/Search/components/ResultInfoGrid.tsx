@@ -65,7 +65,7 @@ const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult }) => (
       button={ true }
       user={ parentResult.users.user }
       itemInfoGetter={ () => parentResult }
-      downloadHandler={ SearchActions.download }
+      downloadHandler={ SearchActions.actions.download }
     />
   </div>
 );

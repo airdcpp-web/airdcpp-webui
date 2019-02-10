@@ -16,6 +16,8 @@ import IconConstants from 'constants/IconConstants';
 import { Location } from 'history';
 
 import * as API from 'types/api';
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 export type RouteItemClickHandler = (path: string, event: React.SyntheticEvent<any>) => void;
@@ -146,7 +148,7 @@ export const secondaryRoutes = [
 
 const onClickLogout: RouteItemClickHandler = (path, e) => {
   e.preventDefault();
-  LoginActions.logout();
+  LoginActions.actions.logout();
 };
 
 export const logoutItem: RouteItem = { 
@@ -180,7 +182,9 @@ export const parseMenuItem = (
       onClick={ menuItemClickHandler(onClick, route) }
       unreadInfoStore={ unreadInfoStore }
     >
-      { title }
+      <Trans i18nKey={ toI18nKey(title, 'navigation') }>
+        { title }
+      </Trans>
     </RouterMenuItemLink>
   );
 };

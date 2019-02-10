@@ -2,6 +2,7 @@
 import React from 'react';
 
 import TextFilter, { TextFilterProps } from './TextFilter';
+import i18next from 'i18next';
 
 
 const CountInfo: React.FC<{ store: any }> = ({ store }) => {
@@ -22,14 +23,16 @@ export interface TableFooterProps {
   footerData?: React.ReactNode;
   customFilter?: React.ReactElement<any>;
   store: any;
-  textFilterProps?: TextFilterProps;
+  textFilterProps?: Omit<TextFilterProps, 't'>;
+  t: i18next.TFunction;
 }
 
-const TableFooter: React.FC<TableFooterProps> = ({ store, customFilter, footerData, textFilterProps }) => {
+const TableFooter: React.FC<TableFooterProps> = ({ store, customFilter, footerData, textFilterProps, t }) => {
   let clonedFilter = null;
   if (!!customFilter) {
     clonedFilter = React.cloneElement(customFilter, { 
       viewUrl: store.viewUrl, 
+      t,
     });
   }
 
@@ -40,6 +43,7 @@ const TableFooter: React.FC<TableFooterProps> = ({ store, customFilter, footerDa
         { clonedFilter }
         <TextFilter 
           viewUrl={ store.viewUrl }
+          t={ t }
           { ...textFilterProps }
         />
         <CountInfo store={ store }/>

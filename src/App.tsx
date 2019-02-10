@@ -26,6 +26,8 @@ import 'style.css';
 
 import Background1500px from '../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../resources/images/background_winter_3840px.jpg';
+import { I18nextProvider } from 'react-i18next';
+import { i18n } from 'services/LocalizationService';
 
 
 global.Promise = Promise;
@@ -80,30 +82,32 @@ const useInstallPrompt = () => {
 const App = () => {
   const prompt = useInstallPrompt();
   return (
-    <InstallPromptContext.Provider value={ prompt }>
-      <Router history={ History }>
-        <Measure
-          bounds={ true }
-        >
-          { ({ measureRef }) => (
-            <div 
-              ref={ measureRef } 
-              id="background-wrapper" 
-              style={{
-                backgroundImage: 'url(' + getBackgroundImage() + ')',
-                height: '100%',
-              }}
-            >
-              <Switch>
-                <Route path="/login" component={ Login }/>
-                <Route exact path="/" component={() => <Redirect to="/home" />}/>
-                <Route path="/" component={ AuthenticatedApp }/>
-              </Switch>
-            </div>
-          ) }
-        </Measure>
-      </Router>
-    </InstallPromptContext.Provider>
+    <I18nextProvider i18n={ i18n }>
+      <InstallPromptContext.Provider value={ prompt }>
+        <Router history={ History }>
+          <Measure
+            bounds={ true }
+          >
+            { ({ measureRef }) => (
+              <div 
+                ref={ measureRef } 
+                id="background-wrapper" 
+                style={{
+                  backgroundImage: 'url(' + getBackgroundImage() + ')',
+                  height: '100%',
+                }}
+              >
+                <Switch>
+                  <Route path="/login" component={ Login }/>
+                  <Route exact path="/" component={() => <Redirect to="/home" />}/>
+                  <Route path="/" component={ AuthenticatedApp }/>
+                </Switch>
+              </div>
+            ) }
+          </Measure>
+        </Router>
+      </InstallPromptContext.Provider>
+    </I18nextProvider>
   );
 };
 

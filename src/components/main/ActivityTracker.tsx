@@ -27,7 +27,7 @@ class ActivityTracker extends React.Component {
     this.aliveInterval = setInterval(this.checkAlive, 2000);
     this.lastAlive = (new Date()).getTime();
 
-    LoginActions.activity();
+    LoginActions.actions.activity();
   }
 
   componentWillUnmount() {
@@ -59,7 +59,7 @@ class ActivityTracker extends React.Component {
       return;
     }
 
-    LoginActions.activity();
+    LoginActions.actions.activity();
     userActive = false;
   }
 
@@ -71,7 +71,7 @@ class ActivityTracker extends React.Component {
     // Change the state instantly when the user came back
     userActive = true;
     if (ActivityStore.away === AwayEnum.IDLE) {
-      LoginActions.activity();
+      LoginActions.actions.activity();
     }
   }
 

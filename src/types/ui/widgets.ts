@@ -1,5 +1,6 @@
 import { FormFieldDefinition } from './form';
-import { ActionListType } from './actions';
+import { ModuleActions } from './actions';
+import i18next from 'i18next';
 
 
 export interface WidgetSettings<SettingsT = object> {
@@ -10,6 +11,8 @@ export interface WidgetSettings<SettingsT = object> {
 export interface WidgetProps<SettingsT = object> {
   componentId: string;
   settings: SettingsT;
+  widgetT: i18next.TFunction;
+  toWidgetI18nKey: (key?: string) => string;
 }
 
 export interface Widget {
@@ -26,7 +29,7 @@ export interface Widget {
     minW: number;
   };
   actionMenu?: {
-    actions: ActionListType<void>;
+    actions: ModuleActions<void>;
     ids: string[];
   };
   formSettings?: FormFieldDefinition[];

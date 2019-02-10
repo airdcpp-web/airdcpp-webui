@@ -21,14 +21,14 @@ const SystemLog: React.FC<SystemLogProps> = memo(
   () => {
     useEffect(
       () => {
-        EventActions.setActive(true);
-        EventActions.setRead();
+        EventActions.actions.setActive(true);
+        EventActions.actions.setRead();
     
         if (!EventStore.isInitialized()) {
-          EventActions.fetchMessages();
+          EventActions.actions.fetchMessages();
         }
 
-        return () => EventActions.setActive(false);
+        return () => EventActions.actions.setActive(false);
       },
       []
     );
@@ -42,7 +42,8 @@ const SystemLog: React.FC<SystemLogProps> = memo(
             title="Events"
             rightComponent={
               <ActionButton 
-                action={ EventActions.clear }
+                action={ EventActions.actions.clear }
+                moduleId={ EventActions.id }
               />
             }
           />

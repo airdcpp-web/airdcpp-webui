@@ -60,4 +60,7 @@ WebUserActions.remove.listen(function (this: UI.AsyncActionType<API.WebUser>, us
     .catch(WebUserActions.remove.failed.bind(that, user));
 });
 
-export default WebUserActions;
+export default {
+  id: UI.Modules.SETTINGS,
+  actions: WebUserActions,
+};

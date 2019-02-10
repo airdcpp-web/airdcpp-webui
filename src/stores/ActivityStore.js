@@ -7,7 +7,7 @@ import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorato
 
 
 const ActivityStore = Reflux.createStore({
-  listenables: SystemActions,
+  listenables: SystemActions.actions,
   init: function () {
     this._away = AwayEnum.OFF;
     this.getInitialState = this.getState;

@@ -77,4 +77,13 @@ ViewFileActions.setRead.listen(function (this: UI.AsyncActionType<API.ViewFile>,
     .catch(that.failed);
 });
 
-export default SessionActionDecorator(ViewFileActions, ViewFileConstants.SESSIONS_URL, API.AccessEnum.VIEW_FILE_EDIT);
+const ViewFileActionsDecorated = SessionActionDecorator(
+  ViewFileActions, 
+  ViewFileConstants.SESSIONS_URL, 
+  API.AccessEnum.VIEW_FILE_EDIT
+);
+
+export default {
+  id: UI.Modules.VIEWED_FILES,
+  actions: ViewFileActionsDecorated,
+};

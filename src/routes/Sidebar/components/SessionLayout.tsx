@@ -46,7 +46,10 @@ export interface SessionLayoutProps<
     items: SessionT[];
 
     // Session actions (should contain 'removeSession')
-    actions: UI.ActionListType<SessionT> & UI.SessionActions<SessionT, ActionT>;
+    actions: {
+      id: string;
+      actions: UI.SessionActions<SessionT, ActionT>;
+    };
 
     // Session actions to show in the action menu
     actionIds?: string[];
@@ -89,6 +92,8 @@ export interface SessionMainLayoutProps<SessionT extends SessionBaseType, Action
   itemHeaderDescription: React.ReactNode;
   itemHeaderIcon: IconType;
   onKeyDown: (event: React.KeyboardEvent) => void;
+  children: React.ReactNode;
+  moduleId: string;
 }
 
 interface State<SessionT extends SessionBaseType> {
@@ -300,7 +305,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
       const { items, activeId, actions } = this.props;
       const item = findItem(items, activeId);
       if (!!item) {
-        actions.removeSession(item);
+        actions.actions.removeSession(item);
       }
     }
   }
@@ -412,7 +417,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
 
   handleCloseAll = () => {
     const { actions, items } = this.props;
-    items.forEach(session => actions.removeSession(session));
+    items.forEach(session => actions.actions.removeSession(session));
   }
 
   getListActionMenu = () => {
@@ -460,11 +465,12 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
 
         activeItem={ activeItem }
         unreadInfoStore={ unreadInfoStore }
-        closeAction={ actions.removeSession }
+        closeAction={ actions.actions.removeSession }
         newButton={ this.getNewButton() }
         sessionMenuItems={ items.map(this.getSessionMenuItem) }
         listActionMenuGetter={ this.getListActionMenu }
         onKeyDown={ this.onKeyDown }
+        moduleId={ actions.id }
       >
         <Route
           path={ this.getSessionUrl(':id') }

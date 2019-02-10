@@ -12,6 +12,7 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { Location } from 'history';
 import { toCorsSafeUrl, toApiError } from 'utils/HttpUtils';
@@ -188,4 +189,8 @@ ExtensionActions.remove.failed.listen(function (extension: API.Extension, error:
   });
 });
 
-export default ExtensionActions;
+
+export default {
+  id: UI.Modules.EXTENSIONS,
+  actions: ExtensionActions,
+};

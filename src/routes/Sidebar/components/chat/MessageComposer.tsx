@@ -112,7 +112,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
 
   handleSend = (text: string) => {
     const { actions, session } = this.props;
-    actions.sendMessage(session, text);
+    actions.actions.sendMessage(session, text);
   }
 
   componentWillUnmount() {

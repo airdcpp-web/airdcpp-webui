@@ -33,7 +33,7 @@ const LOGIN_PROPS_KEY = 'login_properties';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
 const LoginStore = {
-  listenables: LoginActions,
+  listenables: LoginActions.actions,
   loginProperties: loadSessionProperty(LOGIN_PROPS_KEY, null) as API.LoginInfo | null,
 
   _allowLogin: true,

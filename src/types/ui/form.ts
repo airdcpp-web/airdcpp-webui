@@ -9,6 +9,7 @@ export interface FormFieldDefinition<ValueType = FormValueBase> extends
   Omit<API.SettingDefinition, 'title' | 'default_value' | 'definitions'> {
     
   title?: string;
+  titleKey?: string;
   default_value?: FormValueBase;
   definitions?: FormFieldDefinition[];
 }

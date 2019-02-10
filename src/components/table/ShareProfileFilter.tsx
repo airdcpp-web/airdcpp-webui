@@ -9,12 +9,14 @@ import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorato
 import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
 
 import * as API from 'types/api';
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 const defaultItem = { str: 'All profiles', id: null };
 
 export interface ShareProfileFilterProps {
-
+  t: i18next.TFunction;
 }
 
 type Props = 
@@ -51,6 +53,7 @@ class ShareProfileFilter extends React.Component<Props> {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <SectionedDropdown 
         className="top right pointing" 
@@ -58,7 +61,7 @@ class ShareProfileFilter extends React.Component<Props> {
         triggerIcon="filter" 
         button={ true }
       >
-        <MenuSection caption="Filter by profile" icon="filter">
+        <MenuSection caption={ translate('Filter by profile', t, 'table.filter') } icon="filter">
           { [ defaultItem, ...this.props.profiles ].map(this.getDropdownItem) }
         </MenuSection>
       </SectionedDropdown>

@@ -7,6 +7,7 @@ import RSSActions from '../actions/RSSActions';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import '../style.css';
+import * as UI from 'types/ui';
 
 
 export interface FeedItem {
@@ -30,13 +31,12 @@ const parseTitle = (entry: FeedItem) => {
   return title;
 };
 
-export interface EntryProps {
+export interface EntryProps extends Pick<UI.WidgetProps, 'toWidgetI18nKey' | 'componentId'> {
   entry: FeedItem;
   feedUrl: string;
-  componentId: string;
 }
 
-const Entry: React.FC<EntryProps> = ({ entry, feedUrl, componentId }) => {
+const Entry: React.FC<EntryProps> = ({ entry, feedUrl, toWidgetI18nKey }) => {
   const date = entry.pubDate ? entry.pubDate : entry.updated;
   return (
     <div className="item">
@@ -44,7 +44,10 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, componentId }) => {
         <ActionMenu 
           leftIcon={ true }
           caption={ parseTitle(entry) }
-          actions={ RSSActions }
+          actions={{ 
+            actions: RSSActions,
+            id: toWidgetI18nKey()
+          }}
           itemData={ {
             entry,
             feedUrl,

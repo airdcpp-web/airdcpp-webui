@@ -67,10 +67,10 @@ class WidgetDialog extends React.Component<Props> {
     const { typeId, widgetId } = this.props.match.params;
     if (!widgetId) {
       // New widget
-      WidgetActions.create.saved(WidgetUtils.createId(typeId!), settings, typeId);
+      WidgetActions.actions.create.saved(WidgetUtils.createId(typeId!), settings, typeId);
     } else {
       // Existing widget
-      WidgetActions.edit.saved(widgetId, settings);
+      WidgetActions.actions.edit.saved(widgetId, settings);
     }
 
     return Promise.resolve();

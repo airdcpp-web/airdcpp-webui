@@ -61,4 +61,7 @@ FavoriteDirectoryActions.remove.listen(function (
     .catch(FavoriteDirectoryActions.remove.failed.bind(that, directory));
 });
 
-export default FavoriteDirectoryActions;
+export default {
+  id: UI.Modules.SETTINGS,
+  actions: FavoriteDirectoryActions,
+};

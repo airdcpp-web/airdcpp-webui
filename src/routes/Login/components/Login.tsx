@@ -42,7 +42,7 @@ const Login: React.FC<LoginProps> = props => {
       return;
     }
 
-    LoginActions.login(username, password, rememberMe);
+    LoginActions.actions.login(username, password, rememberMe);
     setLoading(true);
   };
 

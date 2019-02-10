@@ -16,26 +16,26 @@ import { AccessEnum } from 'types/api';
 
 const fetchStoreData = () => {
   if (LoginStore.hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
-    PrivateChatActions.fetchSessions();
+    PrivateChatActions.actions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.HUBS_VIEW)) {
-    HubActions.fetchSessions();
+    HubActions.actions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.FILELISTS_VIEW)) {
-    FilelistSessionActions.fetchSessions();
+    FilelistSessionActions.actions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.VIEW_FILE_VIEW)) {
-    ViewFileActions.fetchSessions();
+    ViewFileActions.actions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.EVENTS_VIEW)) {
-    EventActions.fetchInfo();
+    EventActions.actions.fetchInfo();
   }
 
-  SystemActions.fetchAway();
+  SystemActions.actions.fetchAway();
 };
 
 export const useStoreDataFetch = (login: LoginState) => {

@@ -45,6 +45,7 @@ class Share extends React.Component {
               />
             </ActionMenu>
           }
+          moduleId={ ShareActions.id }
         >
           <Column
             name="Path"

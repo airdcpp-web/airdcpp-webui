@@ -1,11 +1,35 @@
-var path = require('path');
-var express = require('express');
-var httpProxy = require('http-proxy');
+const path = require('path');
+const express = require('express');
+const httpProxy = require('http-proxy');
 
-var chalk = require('chalk');
-var minimist = require('minimist');
+const chalk = require('chalk');
+const minimist  = require('minimist');
 
-var argv = minimist(process.argv.slice(2), {
+const i18next = require('i18next');
+const FsBackend = require('i18next-node-fs-backend');
+const i18nextMiddleware = require('i18next-express-middleware');
+const bodyParser = require('body-parser');
+
+
+i18next
+  .use(FsBackend)
+  .init({
+    lng: 'en',
+    fallbackLng: 'en',
+    preload: [ 'fi', 'en' ],
+    //defaultNS: 'main',
+    ns: [ 'main' ],
+    saveMissing: true,
+    //debug: true,
+    backend: {
+      loadPath: 'resources/locales/{{lng}}/{{ns}}.json',
+      addPath: 'resources/locales/{{lng}}/{{ns}}.missing.json'
+    },
+    //nsSeparator: '#||#',
+    //keySeparator: '#|#'
+  });
+
+const argv = minimist(process.argv.slice(2), {
   default: {
     apiSecure: false,
     apiHost: 'localhost:5600',
@@ -22,18 +46,20 @@ if (process.env.NODE_ENV === 'production') {
 
 
 // Create server
-var app = express();
+const app = express();
 
 
 // Set proxy
-var proxy = new httpProxy.createProxyServer({
+const proxy = new httpProxy.createProxyServer({
   target: (argv.apiSecure ? 'https://' : 'http://') + argv.apiHost
 });
 
-proxy.on('error', function (err, req, res) {
+proxy.on('error', (err, req, res) => {
   try {
     res.end(err);
-  } catch (e) { }
+  } catch (e) { 
+    //
+  }
 });
 
 console.log('');
@@ -44,24 +70,42 @@ app.get('/view/*', (req, res) => {
 });
 
 // Set up Webpack
-var webpack = require('webpack');
-var config = require('../webpack.config.js');
+const webpack = require('webpack');
+const config = require('../webpack.config.js');
 
 console.log(chalk.bold('Building webpack...'));
 
-var compiler = webpack(Object.assign(config, { mode: 'development' }));
+const compiler = webpack(Object.assign(config, { mode: 'development' }));
 app.use(require('webpack-dev-middleware')(compiler, {
   historyApiFallback: true,
   logLevel: 'warn',
-  publicPath: config.output.publicPath
+  publicPath: config.output.publicPath,
+  watchOptions: {
+    ignored: /resources\/locales/,
+  }
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
 
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(i18nextMiddleware.handle(i18next, {
+  // ignoreRoutes: ["/foo"],
+  // removeLngFromUrl: false
+}));
+
+//app.use('/locales', express.static('locales'));
+
+app.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18next));
+//app.post('/locales/add/:lng/:ns', (req, res) => {
+//  console.warn(req.query, req.body)
+//});
+
 // Setup static file handling
 // https://github.com/ampedandwired/html-webpack-plugin/issues/145#issuecomment-170554832
-app.use('*', function (req, res, next) {
-  var filename = path.join(compiler.outputPath, 'index.html');
+app.use('*', (req, res, next) => {
+  const filename = path.join(compiler.outputPath, 'index.html');
   compiler.outputFileSystem.readFile(filename, (err, result) => {
     if (err) {
       return next(err);
@@ -75,20 +119,21 @@ app.use('*', function (req, res, next) {
 });
 
 // Listen
-var listener = app.listen(argv.port, argv.bindAddress, function (err) {
-  var fullAddress = listener.address().address + ':' + listener.address().port;
+const listener = app.listen(argv.port, argv.bindAddress, err => {
+  const { address, port } = listener.address();
+  const fullAddress = `${address}:${port}`;
   if (err) {
-    console.error('Failed to listen on ' + fullAddress + ': ' + err);
+    console.error(`Failed to listen on ${fullAddress}: ${err}`);
     return;
   }
   
-  console.log('Listening ' + fullAddress);
+  console.log(`Listening ${fullAddress}`);
 });
 
-listener.on('upgrade', function (req, socket, head) {
+listener.on('upgrade', (req, socket, head) => {
   console.log('Upgrade to websocket', req.headers['x-forwarded-for'] || req.connection.remoteAddress);
   proxy.ws(req, socket, head);
 });
 
-console.log('API address: ' + proxy.options.target);
+console.log(`API address: ${proxy.options.target}`);
 console.log('');

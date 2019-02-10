@@ -70,7 +70,7 @@ TransferActions.disconnect.listen(function (this: UI.AsyncActionType<API.Transfe
 });
 
 TransferActions.removeFile.listen(function (transfer: API.Transfer) {
-  return QueueFileActions.removeFile({
+  return QueueFileActions.actions.removeFile({
     id: transfer.queue_file_id,
     target: transfer.target,
     name: transfer.name,
@@ -78,7 +78,10 @@ TransferActions.removeFile.listen(function (transfer: API.Transfer) {
 });
 
 TransferActions.removeSource.listen(function (transfer: API.Transfer) {
-  return QueueActions.removeSource(transfer);
+  return QueueActions.actions.removeSource(transfer);
 });
 
-export default TransferActions;
+export default {
+  id: UI.Modules.TRANSFERS,
+  actions: TransferActions,
+};

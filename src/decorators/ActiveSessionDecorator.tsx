@@ -32,7 +32,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
     readTimeout: NodeJS.Timer | null;
 
     setRead = (session: SessionT) => {
-      this.props.actions.setRead(session);
+      this.props.actions.actions.setRead(session);
       this.readTimeout = null;
     }
 
@@ -43,7 +43,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
         this.setRead(this.props.session);
       }
 
-      this.props.actions.sessionChanged(session);
+      this.props.actions.actions.sessionChanged(session);
       if (!session) {
         return;
       }

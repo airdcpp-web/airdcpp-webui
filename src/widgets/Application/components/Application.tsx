@@ -12,14 +12,26 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 import LoginStore from 'stores/LoginStore';
 
 import '../style.css';
+import * as UI from 'types/ui';
 
 
-const Statistics = StatisticsDecorator<any>(
-  ({ stats }) => (
+type StatisticsProps = Pick<UI.WidgetProps, 'widgetT'>;
+
+const Statistics = StatisticsDecorator<any, StatisticsProps>(
+  ({ stats, widgetT }) => (
     <div className="ui list">
-      <ListItem header="Logged in as" description={ LoginStore.user.username }/>
-      <ListItem header="Client started" description={ formatRelativeTime(LoginStore.systemInfo.client_started) }/>
-      <ListItem header="Active sessions" description={ stats.active_sessions }/>
+      <ListItem 
+        header={ widgetT('loggedInAs', 'Logged in as') } 
+        description={ LoginStore.user.username }
+      />
+      <ListItem 
+        header={ widgetT('clientStarted', 'Client started') } 
+        description={ formatRelativeTime(LoginStore.systemInfo.client_started) }
+      />
+      <ListItem 
+        header={ widgetT('activeSessions', 'Active sessions') } 
+        description={ stats.active_sessions }
+      />
     </div>
   ), 
   SystemConstants.STATS_URL, 
@@ -28,9 +40,7 @@ const Statistics = StatisticsDecorator<any>(
 );
 
 
-export interface ApplicationProps {
-  componentId: string;
-}
+export type ApplicationProps = UI.WidgetProps;
 
 class Application extends React.PureComponent<ApplicationProps> {
   static propTypes = {
@@ -38,11 +48,13 @@ class Application extends React.PureComponent<ApplicationProps> {
   };
 
   render() {
+    const { widgetT } = this.props;
     return (
       <div className="application-container">
-        <Statistics/>
+        <Statistics widgetT={ widgetT }/>
         <WidgetDropdown
           componentId={ this.props.componentId }
+          widgetT={ widgetT }
         />
       </div>
     );

@@ -54,4 +54,7 @@ WidgetActions.edit.listen(function ({ id, widgetInfo }: WidgetItemInfo, location
   History.push(`/home/widget/${widgetInfo.typeId}/${id}`);
 });
 
-export default WidgetActions;
+export default {
+  id: UI.Modules.WIDGETS,
+  actions: WidgetActions,
+};

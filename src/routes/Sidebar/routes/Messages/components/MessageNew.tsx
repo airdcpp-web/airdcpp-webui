@@ -18,7 +18,7 @@ interface MessageNewProps {
 
 class MessageNew extends React.Component<MessageNewProps> {
   handleSubmit = (nick: string | null, user: API.HintedUser) => {
-    PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
+    PrivateChatActions.actions.createSession(this.props.location, user, PrivateChatSessionStore);
   }
 
   recentUserRender = (entry: API.HistoryItem) => {

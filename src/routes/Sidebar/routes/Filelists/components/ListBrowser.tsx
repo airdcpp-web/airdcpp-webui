@@ -108,7 +108,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   }
 
   sendChangeDirectory = (directory: string) => {
-    FilelistSessionActions.changeDirectory(this.props.session, directory);
+    FilelistSessionActions.actions.changeDirectory(this.props.session, directory);
   }
 
   emptyRowsNodeGetter = () => {
@@ -161,7 +161,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         caption={ caption }
         user={ this.props.session.user }
         itemInfoGetter={ this.getCurrentDirectory }
-        downloadHandler={ FilelistItemActions.download }
+        downloadHandler={ FilelistItemActions.actions.download }
         contextElement=".session-container"
       >
         <ActionMenu
@@ -210,6 +210,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           entityId={ session.id }
           viewId={ session.location.path }
           sessionStore={ FilelistSessionStore }
+          moduleId={ FilelistItemActions.id }
         >
           <Column
             name="Name"
@@ -219,7 +220,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
               <FileDownloadCell 
                 clickHandlerGetter={ this.onClickDirectory }
                 userGetter={ this.userGetter }
-                downloadHandler={ FilelistItemActions.download } 
+                downloadHandler={ FilelistItemActions.actions.download } 
               /> 
             }
             flexGrow={8}
@@ -247,7 +248,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           />
         </VirtualTable>
         <DownloadDialog 
-          downloadHandler={ FilelistItemActions.download }
+          downloadHandler={ FilelistItemActions.actions.download }
           itemDataGetter={ this.filelistItemGetter }
           userGetter={ this.userGetter }
         />

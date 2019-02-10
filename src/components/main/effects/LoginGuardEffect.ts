@@ -17,10 +17,10 @@ export const useLoginGuard = (login: LoginState, location: Location) => {
         if (prevSocketAuthenticated) {
           // Connection lost, reconnect (but not too fast)
           console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
-          setTimeout(() => LoginActions.connect(LoginStore.authToken), 2000);
+          setTimeout(() => LoginActions.actions.connect(LoginStore.authToken), 2000);
         } else {
           // The page was loaded with a cached session token, attempt to reconnect
-          LoginActions.connect(LoginStore.authToken);
+          LoginActions.actions.connect(LoginStore.authToken);
         }
       } else if (!login.hasSession) {
         // Go to the login page as we don't have a valid session

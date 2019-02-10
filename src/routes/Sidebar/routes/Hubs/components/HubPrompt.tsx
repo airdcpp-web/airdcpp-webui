@@ -59,7 +59,7 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub }) => (
       placeholder="Password" 
       caption="Submit" 
       icon="green play" 
-      handleAction={ text => HubActions.password(hub, text) }
+      handleAction={ text => HubActions.actions.password(hub, text) }
     />
     <div className="help">
       This usually means that there's a registered account associated with your nick. 
@@ -76,7 +76,7 @@ interface RedirectPromptProps {
 const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub }) => (
   <Button
     icon="green play"
-    onClick={ _ => HubActions.redirect(hub) }
+    onClick={ _ => HubActions.actions.redirect(hub) }
     caption={ `Accept redirect to ${hub.connect_state.data!.hub_url}` }
   />
 );

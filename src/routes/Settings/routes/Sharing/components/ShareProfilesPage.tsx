@@ -65,7 +65,8 @@ class ShareProfilesPage extends React.Component<ShareProfileDecoratorChildProps>
           icon="blue info"
         />
         <ActionButton
-          action={ ShareProfileActions.create }
+          action={ ShareProfileActions.actions.create }
+          moduleId={ ShareProfileActions.id }
         />
 
         <table className="ui striped table">

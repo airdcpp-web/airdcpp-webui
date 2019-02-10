@@ -6,17 +6,20 @@ export const RSS = {
   typeId: 'rss',
   component: require('./components/RSS').default,
   name: 'RSS feed',
+  nameKey: 'rssFeed',
   icon: 'orange rss',
   formSettings: [
     {
       key: 'feed_url',
       title: 'Feed URL',
+      titleKey: 'feedUrl',
       type: API.SettingTypeEnum.STRING,
       help: 'RSS and Atom feeds are supported',
     },
     {
       key: 'feed_cache_minutes',
       title: 'Minimum refetch interval (minutes)',
+      titleKey: 'refrechInterval',
       type: API.SettingTypeEnum.NUMBER,
       default_value: 60,
     },

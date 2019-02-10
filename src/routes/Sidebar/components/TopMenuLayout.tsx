@@ -8,6 +8,8 @@ import MenuSection from 'components/semantic/MenuSection';
 import { MenuIcon } from 'components/menu/MenuIcon';
 import { SessionMainLayoutProps, SessionBaseType } from './SessionLayout';
 
+import * as UI from 'types/ui';
+
 
 type SessionDropdownProps<SessionT extends SessionBaseType> = 
   Pick<SessionMainLayoutProps<SessionT>, 'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter'>;
@@ -32,10 +34,10 @@ const SessionDropdown: React.FC<SessionDropdownProps</*SessionT*/ any>> = ({
 
 
 type CloseButtonProps<SessionT extends SessionBaseType> = 
-  Pick<SessionMainLayoutProps<SessionT>, 'closeAction' | 'activeItem'>;
+  Pick<SessionMainLayoutProps<SessionT>, 'closeAction' | 'activeItem' | 'moduleId'>;
 
 const CloseButton: React.FC<CloseButtonProps<any>> = (
-  { closeAction, activeItem }
+  { closeAction, activeItem, moduleId }
 ) => {
   if (!activeItem || useMobileLayout()) {
     return null;
@@ -47,6 +49,7 @@ const CloseButton: React.FC<CloseButtonProps<any>> = (
       action={ closeAction } 
       itemData={ activeItem }
       icon="grey remove"
+      moduleId={ moduleId }
     />
   );
 };
@@ -60,8 +63,8 @@ const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({ itemHeaderIcon, i
   </div>
 );
 
-const TopMenuLayout: React.FC<SessionMainLayoutProps</*SessionT*/ any>> = (
-  { children, onKeyDown, ...props }
+const TopMenuLayout = <SessionT extends UI.SessionItemBase>(
+  { children, onKeyDown, ...props }: SessionMainLayoutProps<SessionT>
 ) => (
   <div className="session-container vertical" onKeyDown={ onKeyDown }>
     <div className="ui main menu menu-bar">

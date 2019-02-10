@@ -59,7 +59,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
 );
 
 export interface ActionCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> extends 
-  RowWrapperCellChildProps<CellDataT, ItemDataT>, 
+  Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 't'>, 
   Omit<TableActionMenuProps<ItemDataT>, 'caption' | 'itemData'> {
 
 }

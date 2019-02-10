@@ -49,13 +49,14 @@ class FavoriteHubs extends React.Component {
   }
 
   onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
-    FavoriteHubActions.update(rowData, { auto_connect: checked });
+    FavoriteHubActions.actions.update(rowData, { auto_connect: checked });
   }
 
   render() {
     const footerData = (
       <ActionButton 
-        action={ FavoriteHubActions.create }
+        action={ FavoriteHubActions.actions.create }
+        moduleId={ FavoriteHubActions.id }
       />
     );
 
@@ -66,6 +67,7 @@ class FavoriteHubs extends React.Component {
           rowClassNameGetter={ this.rowClassNameGetter }
           footerData={ footerData }
           store={ FavoriteHubStore }
+          moduleId={ FavoriteHubActions.id }
         >
           <Column
             name="State"

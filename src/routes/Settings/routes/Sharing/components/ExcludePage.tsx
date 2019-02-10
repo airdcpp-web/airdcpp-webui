@@ -57,7 +57,8 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
               </div>
               <br/>
               <ActionButton
-                action={ ShareActions.refresh }
+                action={ ShareActions.actions.refresh }
+                moduleId={ ShareActions.id }
               />
             </div>
           }
@@ -65,7 +66,8 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
         />
 
         <ActionButton
-          action={ ShareExcludeActions.addExclude }
+          action={ ShareExcludeActions.actions.addExclude }
+          moduleId={ ShareExcludeActions.id }
           className="add"
         />
 
@@ -83,7 +85,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
         ) }
 
         <FileBrowserDialog
-          onConfirm={ ShareExcludeActions.addExclude.saved }
+          onConfirm={ ShareExcludeActions.actions.addExclude.saved }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
           subHeader="Add excluded path"

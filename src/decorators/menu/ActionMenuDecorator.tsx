@@ -2,7 +2,7 @@ import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
 
-import { actionFilter, actionAccess } from 'utils/ActionUtils';
+import { actionFilter, actionAccess, getActionCaptionKey } from 'utils/ActionUtils';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import { Location } from 'history';
@@ -11,15 +11,17 @@ import * as UI from 'types/ui';
 import { 
   ActionHandlerDecorator, ActionHandlerDecoratorChildProps, ActionClickHandler
 } from 'decorators/ActionHandlerDecorator';
+import { Trans } from 'react-i18next';
 
 export type OnClickActionHandler = (actionId: string) => void;
+
 
 export interface ActionMenuDecoratorProps<ItemDataT extends UI.ActionItemDataValueType> {
   className?: string;
   caption?: React.ReactNode;
   button?: boolean;
   ids?: string[];
-  actions: UI.ActionListType<ItemDataT>;
+  actions: UI.ModuleActions<ItemDataT>;
   
   itemData?: UI.ActionItemDataType<ItemDataT>;
   onClickAction?: OnClickActionHandler;
@@ -44,7 +46,7 @@ const filterItem = <ItemDataT extends UI.ActionItemDataValueType>(
   filter: FilterType, 
   actionId: string
 ) => {
-  const action = props.actions[actionId];
+  const action = props.actions.actions[actionId];
   if (!action) {
     invariant(actionId === 'divider', 'No action for action ID: ' + actionId);
     return true;
@@ -85,6 +87,7 @@ const filterExtraDividers = (ids: string[]) => {
 };
 
 interface MenuType<ItemDataT> {
+  moduleId: string;
   actionIds: string[];
   itemDataGetter: (() => ItemDataT | undefined);
   actions: UI.ActionListType<ItemDataT>;
@@ -96,8 +99,8 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
   hasPreviousMenuItems: boolean
 ): MenuType<ItemDataT> | string => {
   let ids: string[] | null;
-  ids = props.ids || Object.keys(props.actions).filter(id => {
-    return id === 'divider' || props.actions[id].displayName;
+  ids = props.ids || Object.keys(props.actions.actions).filter(id => {
+    return id === 'divider' || props.actions.actions[id].displayName;
   });
 
   // Only return a single error for each menu
@@ -120,11 +123,14 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
     ids = [ 'divider', ...ids ];
   }
 
-  return {
+  const ret: MenuType<ItemDataT> = {
     actionIds: ids,
-    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData,
-    actions: props.actions,
-  } as MenuType<ItemDataT>;
+    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT | undefined,
+    actions: props.actions.actions,
+    moduleId: props.actions.id,
+  };
+
+  return ret;
 };
 
 // Convert ID to menu link element
@@ -170,7 +176,12 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
       } }
       icon={ action.icon }
     >
-      { action.displayName }
+      <Trans
+        i18nKey={ getActionCaptionKey(action, menu.moduleId) }
+        defaults={ action.displayName }
+      >
+        { action.displayName }
+      </Trans>
     </MenuItemLink>
   );
 };

@@ -53,7 +53,8 @@ const NewUserIntro = () => {
             }
           />
           <ActionButton 
-            action={ LoginActions.newUserIntroSeen }
+            action={ LoginActions.actions.newUserIntroSeen }
+            moduleId={ LoginActions.id }
           />
         </div>
       ) }

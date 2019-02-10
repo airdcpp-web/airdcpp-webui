@@ -8,9 +8,11 @@ import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators
 
 import { FilterMethod } from 'types/api';
 import { useMobileLayout } from 'utils/BrowserUtils';
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
-const filterMethodToString = (method: FilterMethod) => {
+const getFilterMethodCaption = (method: FilterMethod) => {
   switch (method) {
   case FilterMethod.REGEX: return 'Regex';
   case FilterMethod.WILDCARD: return 'Wildcard';
@@ -19,10 +21,15 @@ const filterMethodToString = (method: FilterMethod) => {
   }
 };
 
-const getPlaceholder = (method: FilterMethod) => {
-  let ret = 'Filter';
+const filterMethodToString = (method: FilterMethod, t: i18next.TFunction) => {
+  const methodTitle = getFilterMethodCaption(method);
+  return translate(methodTitle, t, 'table.filter');
+};
+
+const getPlaceholder = (method: FilterMethod, t: i18next.TFunction) => {
+  let ret = t('table.filter.filter', 'Filter');
   if (method !== FilterMethod.PARTIAL) {
-    ret += ` (${filterMethodToString(method).toLowerCase()})`;
+    ret += ` (${filterMethodToString(method, t).toLowerCase()})`;
   }
 
   return ret + '...';
@@ -30,6 +37,7 @@ const getPlaceholder = (method: FilterMethod) => {
 
 export interface TextFilterProps {
   autoFocus?: boolean;
+  t: i18next.TFunction;
 }
 
 class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorChildProps> {
@@ -80,20 +88,21 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
   getFilterMethod = (method: FilterMethod) => {
     const isCurrent = method === this.state.method;
+    const { t } = this.props;
     return (
       <MenuItemLink 
         key={ method }
         onClick={ () => this.onMethodChanged(method) }
         active={ isCurrent }
       >
-        { filterMethodToString(method) }
+        { filterMethodToString(method, t) }
       </MenuItemLink>
     );
   }
 
   render() {
     const { value, method } = this.state;
-    const { autoFocus } = this.props;
+    const { autoFocus, t } = this.props;
     return (
       <div className="text-filter">
         <div 
@@ -101,7 +110,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
         >
           <input 
             ref={ (c: any) => this.input = c }
-            placeholder={ getPlaceholder(method) } 
+            placeholder={ getPlaceholder(method, t) } 
             onChange={ this.onTextChanged } 
             value={ value }
             type="text"
@@ -112,7 +121,7 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
             button={ true }
             direction="upward"
           >
-            <MenuSection caption="Match type">
+            <MenuSection caption={ translate('Match type', t, 'table.filter') }>
               { Object.keys(FilterMethod)
                 .filter(key => isNaN(Number(key)))
                 .map(key => this.getFilterMethod(FilterMethod[key])) }

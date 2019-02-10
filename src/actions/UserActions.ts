@@ -80,11 +80,11 @@ const UserActions = Reflux.createActions(UserActionConfig);
 
 
 UserActions.message.listen(function (userData: ActionUserData, location: Location) {
-  PrivateChatActions.createSession(location, userData.user, PrivateChatSessionStore);
+  PrivateChatActions.actions.createSession(location, userData.user, PrivateChatSessionStore);
 });
 
 UserActions.browse.listen(function (userData: ActionUserData, location: Location) {
-  FilelistSessionActions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
+  FilelistSessionActions.actions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
 });
 
 UserActions.ignore.listen(function (this: UI.AsyncActionType<API.User>, userData: ActionUserData, location: Location) {
@@ -121,4 +121,7 @@ UserActions.unignore.completed.listen(function ({ user }: ActionUserData) {
   });
 });
 
-export default UserActions;
+export default {
+  id: UI.Modules.COMMON,
+  actions: UserActions,
+};

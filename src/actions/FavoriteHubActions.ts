@@ -88,4 +88,7 @@ FavoriteHubActions.remove.failed.listen(function (error: ErrorResponse, hub: API
   NotificationActions.apiError(`Failed to remove the hub ${hub.name}`, error);
 });
 
-export default FavoriteHubActions;
+export default {
+  id: UI.Modules.FAVORITE_HUBS,
+  actions: FavoriteHubActions,
+};

@@ -90,7 +90,7 @@ const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location)
       return;
     }
 
-    HubActions.createSession(location, uri, HubSessionStore);
+    HubActions.actions.createSession(location, uri, HubSessionStore);
   }
 };
 

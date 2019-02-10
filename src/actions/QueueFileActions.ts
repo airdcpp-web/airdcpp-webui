@@ -55,7 +55,7 @@ const QueueFileActionConfig: UI.ActionConfigList<API.QueueFile> = [
 const QueueFileActions = Reflux.createActions(QueueFileActionConfig);
 
 QueueFileActions.search.listen(function (itemInfo: API.QueueFile, location: Location) {
-  return DownloadableItemActions.search({ itemInfo }, location);
+  return DownloadableItemActions.actions.search({ itemInfo }, location);
 });
 
 QueueFileActions.removeFile.listen(function (
@@ -117,4 +117,7 @@ QueueFileActions.setFilePriority.listen(function (
     .catch(that.failed.bind(that, file));
 });
 
-export default QueueFileActions;
+export default {
+  id: UI.Modules.QUEUE,
+  actions: QueueFileActions,
+};

@@ -64,4 +64,7 @@ ShareRootActions.remove.listen(function (
     .catch(ShareRootActions.remove.failed.bind(that, root));
 });
 
-export default ShareRootActions;
+export default {
+  id: UI.Modules.SHARE,
+  actions: ShareRootActions,
+};

@@ -97,8 +97,9 @@ class RSS extends React.PureComponent<RSSProps, State> {
   }
 
   fetchFeed = (feedUrl: string) => {
+    const { widgetT } = this.props;
     if (!feedUrl.startsWith('http://') && !feedUrl.startsWith('https://')) {
-      this.setError('Invalid URL');
+      this.setError(widgetT('invalidUrl', 'Invalid URL'));
       return;
     }
 
@@ -166,29 +167,35 @@ class RSS extends React.PureComponent<RSSProps, State> {
   onFeedFetched = (data: Feed) => {
     let entries = [];
 
+    const invalidFeed = (error: string) => {
+      const { widgetT } = this.props;
+      console.log(`Invalid feed: ${error}`);
+      this.setError(widgetT('invalidFeed', { error }/*'Invalid/unsupported feed'*/));
+    };
+
     const { rss, feed } = data;
     if (rss) {
       if (!rss.channel || !rss.channel.item) {
-        this.setError('Invalid/unsupported feed (no channel/item)');
+        invalidFeed('No channel/item');
         return;
       }
 
       entries = rss.channel.item;
     } else if (feed) {
       if (!feed.entry) {
-        this.setError('Invalid/unsupported feed (no feed entry)');
+        invalidFeed('No feed entry');
         return;
       }
 
       entries = feed.entry;
     } else {
-      this.setError('No "rss" or "feed" tag was found');
+      invalidFeed('No "rss" or "feed" tag was found');
       return;
     }
 
     if (!Array.isArray(entries)) {
       if (typeof entries !== 'object') {
-        this.setError('Invalid/unsupported feed (entries is not an array or an object)');
+        invalidFeed('Entries is not an array or an object');
         return;
       }
 
@@ -218,11 +225,11 @@ class RSS extends React.PureComponent<RSSProps, State> {
       );
     }
 
+    const { settings, componentId, toWidgetI18nKey, widgetT } = this.props;
     if (!entries) {
-      return <Loader text="Loading feed" inline={true}/>;
+      return <Loader text={ widgetT('loadingFeed', 'Loading feed') } inline={true}/>;
     }
 
-    const { settings, componentId } = this.props;
     return (
       <div className="rss-container">
         <div className="ui divided list rss">
@@ -233,6 +240,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
                 entry={ entry }
                 componentId={ componentId }
                 feedUrl={ settings.feed_url }
+                toWidgetI18nKey={ toWidgetI18nKey }
               />
             ))
           }
@@ -240,6 +248,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
         <Footer
           lastUpdated={ this.state.date }
           handleUpdate={ this.handleUpdate }
+          toWidgetI18nKey={ toWidgetI18nKey }
         />
       </div>
     );

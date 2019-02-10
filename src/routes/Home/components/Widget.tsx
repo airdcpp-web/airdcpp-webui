@@ -9,15 +9,18 @@ import WidgetActions from 'actions/WidgetActions';
 
 import * as UI from 'types/ui';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
-const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings) => {
+
+const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, t: i18next.TFunction) => {
   if (widgetInfo.formSettings && !settings.widget) {
-    return 'Widget settings were not found';
+    return t('widget.settingsMissing');
   }
 
   if (widgetInfo.access && !LoginStore.hasAccess(widgetInfo.access)) {
     // tslint:disable-next-line:quotemark
-    return "You aren't permitted to access this widget";
+    return t('widget.accessDenied');
   }
 
   return null;
@@ -31,8 +34,23 @@ export interface WidgetProps {
 }
 
 const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, children, className, ...other }) => {
-  const error = getError(widgetInfo, settings);
+  const { t } = useTranslation();
+  const error = getError(widgetInfo, settings, t);
   const Component = widgetInfo.component;
+
+  const toWidgetI18nKey = (key?: string | string[]) => {
+    let ret = `${UI.Modules.WIDGETS}.${widgetInfo.typeId}`;
+    if (!!key) {
+      ret += `.${key}`;
+    }
+
+    return ret;
+  };
+
+  const widgetT: i18next.TFunction = (key, options) => {
+    return t(toWidgetI18nKey(key), options);
+  };
+
   return (
     <div 
       className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
@@ -53,7 +71,16 @@ const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, chil
             settings,
           }}
         >
-          { !!widgetInfo.actionMenu && <ActionMenu { ...widgetInfo.actionMenu }/> }
+          { !!widgetInfo.actionMenu && (
+            <ActionMenu 
+              //actions={{ 
+                //id: toWidgetI18nKey(),
+              //  actions: widgetInfo.actionMenu.actions.actions
+              //}}
+              actions={ widgetInfo.actionMenu.actions }
+              ids={ widgetInfo.actionMenu.ids } 
+            /> 
+          ) }
         </ActionMenu>
       </div>
       <div className="main content">
@@ -61,6 +88,8 @@ const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, chil
           <Component
             componentId={ componentId }
             settings={ settings.widget }
+            widgetT={ widgetT }
+            toWidgetI18nKey={ toWidgetI18nKey }
           />
         ) }
       </div>

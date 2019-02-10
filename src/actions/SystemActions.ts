@@ -79,4 +79,7 @@ SystemActions.setAway.completed.listen(function (away: boolean) {
   });
 });
 
-export default SystemActions;
+export default {
+  id: UI.Modules.COMMON,
+  actions: SystemActions,
+};

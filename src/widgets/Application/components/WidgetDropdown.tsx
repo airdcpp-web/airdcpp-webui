@@ -15,7 +15,7 @@ const getWidgetItem = (widgetInfo: UI.Widget, location: Location) => {
   return (
     <MenuItemLink 
       key={ widgetInfo.typeId }
-      onClick={ () => WidgetActions.create(widgetInfo, location) }
+      onClick={ () => WidgetActions.actions.create(widgetInfo, location) }
       icon={ widgetInfo.icon }
     >
       { widgetInfo.name }
@@ -23,16 +23,16 @@ const getWidgetItem = (widgetInfo: UI.Widget, location: Location) => {
   );
 };
 
-export interface WidgetDropdownProps {
-  componentId: string;
-}
+export type WidgetDropdownProps = Pick<UI.WidgetProps, 'componentId' | 'widgetT'>;
 
-const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = ({ componentId, location }) => (
+const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = (
+  { componentId, location, widgetT }
+) => (
   <Dropdown 
-    caption="Add widget..."
+    caption={ widgetT('addWidget', 'Add widget...') }
     className="create-widget"
     button={ true }
-    contextElement={ '.' + componentId }
+    contextElement={ `.${componentId}` }
   >
     { WidgetStore.widgets
       .filter(widgetInfo => !widgetInfo.alwaysShow)

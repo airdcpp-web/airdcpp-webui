@@ -16,6 +16,7 @@ import '../style.css';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({ cellData }) => (
@@ -49,6 +50,7 @@ class Transfers extends React.Component {
       <VirtualTable
         emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
         store={ TransferStore }
+        moduleId={ UI.Modules.TRANSFERS }
       >
         <Column
           name="User"

@@ -49,11 +49,14 @@ SearchActions.download.failed.listen((itemInfo: API.GroupedSearchResult, error: 
 });
 
 SearchActions.browseContent.listen(function (data: API.GroupedSearchResult, location: Location) {
-  FilelistSessionActions.createSession(location, data.users.user, FilelistSessionStore, data.path);
+  FilelistSessionActions.actions.createSession(location, data.users.user, FilelistSessionStore, data.path);
 });
 
 SearchActions.result.listen(function (data: API.GroupedSearchResult, location: Location) {
   History.push(`${location.pathname}/result/${data.id}`);
 });
 
-export default SearchActions;
+export default {
+  id: UI.Modules.SEARCH,
+  actions: SearchActions,
+};

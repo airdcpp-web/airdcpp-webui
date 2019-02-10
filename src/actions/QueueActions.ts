@@ -89,4 +89,9 @@ QueueActions.removeSource.completed.listen(function (user: API.HintedUser, data:
   });
 });
 
-export default QueueActions;
+
+export default {
+  id: UI.Modules.QUEUE,
+  actions: QueueActions,
+};
+

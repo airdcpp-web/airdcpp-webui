@@ -89,4 +89,7 @@ FavoriteHubPasswordActions.remove.listen(function (hub: API.FavoriteHubEntry) {
   sendPassword(hub, null, FavoriteHubPasswordActions.remove);
 });
 
-export default FavoriteHubPasswordActions;
+export default {
+  id: UI.Modules.FAVORITE_HUBS,
+  actions: FavoriteHubPasswordActions,
+};

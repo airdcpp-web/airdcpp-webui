@@ -117,10 +117,15 @@ PrivateChatActions.disconnectCCPM.listen(function (
 });
 
 
-export default SessionActionDecorator(
+const PrivateChatActionsDecorated = SessionActionDecorator(
   ChatActionDecorator(
     PrivateChatActions, PrivateChatConstants.SESSIONS_URL, API.AccessEnum.PRIVATE_CHAT_EDIT
   ), 
   PrivateChatConstants.SESSIONS_URL, 
   API.AccessEnum.PRIVATE_CHAT_EDIT
 );
+
+export default {
+  id: UI.Modules.MESSAGES,
+  actions: PrivateChatActionsDecorated,
+};

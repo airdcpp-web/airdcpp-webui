@@ -1,5 +1,6 @@
 import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
+import { camelCase } from 'lodash';
 
 import * as UI from 'types/ui';
 
@@ -19,4 +20,8 @@ export const actionAccess = (action: UI.ActionType) => {
 
 export const showAction = (action: UI.ActionType, itemData?: UI.ActionItemDataValueType) => {
   return actionFilter(action, itemData) && actionAccess(action);
+};
+
+export const getActionCaptionKey = (action: UI.ActionType, moduleId: string) => {
+  return `${moduleId}.actions.${camelCase(action.displayName)}`;
 };

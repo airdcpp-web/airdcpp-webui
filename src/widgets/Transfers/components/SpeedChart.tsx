@@ -5,6 +5,8 @@ import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler } from 'reac
 
 import { withContentRect, MeasuredComponentProps } from 'react-measure';
 
+import * as UI from 'types/ui';
+
 
 const upDownStyler = styler([
   { 
@@ -16,7 +18,7 @@ const upDownStyler = styler([
   }
 ]);
 
-export interface SpeedChartProps {
+export interface SpeedChartProps extends Pick<UI.WidgetProps, 'widgetT'> {
   maxUpload: number;
   maxDownload: number;
   trafficSeries: any;
@@ -25,7 +27,7 @@ export interface SpeedChartProps {
 const SpeedChart = withContentRect('bounds')(
   class extends React.PureComponent<SpeedChartProps & MeasuredComponentProps> {
     render() {
-      const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect } = this.props;
+      const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect, widgetT } = this.props;
       const { bounds } = contentRect;
       return (
         <div ref={ measureRef } className="graph">
@@ -46,7 +48,7 @@ const SpeedChart = withContentRect('bounds')(
               </Charts>
               <YAxis
                 id="traffic"
-                label="Traffic (bps)"
+                label={ widgetT('trafficBps', 'Traffic (bps)') }
                 min={ -maxUpload } 
                 max={ maxDownload }
                 absolute={true}

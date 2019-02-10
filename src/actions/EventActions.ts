@@ -1,10 +1,14 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 import EventConstants from 'constants/EventConstants';
 import SocketService from 'services/SocketService';
 import AccessConstants from 'constants/AccessConstants';
 
-export const EventActions = Reflux.createActions([
+import * as UI from 'types/ui';
+
+
+export const EventActionConfig: UI.ActionConfigList<{}> = [
   { 'fetchMessages': { asyncResult: true } },
   { 'fetchInfo': { asyncResult: true } },
   { 'clear': {
@@ -16,18 +20,24 @@ export const EventActions = Reflux.createActions([
   'setRead',
   'setActive',
   'resetLogCounters'
-]);
+];
 
-EventActions.fetchInfo.listen(function () {
+const EventActions = Reflux.createActions(EventActionConfig);
+
+EventActions.fetchInfo.listen(function (
+  this: UI.AsyncActionType<{}>
+) {
   let that = this;
   return SocketService.get(EventConstants.INFO_URL)
     .then(that.completed)
     .catch(that.failed);
 });
 
-EventActions.fetchMessages.listen(function () {
+EventActions.fetchMessages.listen(function (
+  this: UI.AsyncActionType<{}>
+) {
   let that = this;
-  return SocketService.get(EventConstants.MESSAGES_URL + '/0')
+  return SocketService.get(`${EventConstants.MESSAGES_URL}/0`)
     .then(that.completed)
     .catch(that.failed);
 });
@@ -40,4 +50,8 @@ EventActions.setRead.listen(function () {
   return SocketService.post(EventConstants.READ_URL);
 });
 
-export default EventActions;
+
+export default {
+  id: UI.Modules.EVENTS,
+  actions: EventActions,
+};

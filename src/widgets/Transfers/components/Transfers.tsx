@@ -16,6 +16,8 @@ import { withContentRect, MeasuredComponentProps } from 'react-measure';
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
@@ -48,7 +50,7 @@ interface State {
   stats?: API.TransferStats;
 }
 
-interface TransferProps extends MeasuredComponentProps {
+interface TransferProps extends MeasuredComponentProps, UI.WidgetProps {
 
 }
 
@@ -140,7 +142,7 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
   }
 
   render() {
-    const { measureRef, contentRect } = this.props;
+    const { measureRef, contentRect, widgetT } = this.props;
     const { points, maxDownload, maxUpload, stats } = this.state;
     if (!stats) {
       return <Loader inline={ true }/>;
@@ -159,10 +161,12 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
           trafficSeries={ trafficSeries }
           maxDownload={ maxDownload }
           maxUpload={ maxUpload }
+          widgetT={ widgetT }
         />
         { !!contentRect.bounds && contentRect.bounds.width >= 300 && (
           <StatColumn
             stats={ stats }
+            widgetT={ widgetT }
           />
         ) }
       </div>

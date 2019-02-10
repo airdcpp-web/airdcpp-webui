@@ -128,7 +128,10 @@ ShareProfileActions.browse.listen(function (
   profile: API.ShareProfile, 
   location: Location
 ) {
-  return FilelistSessionActions.ownList(location, profile.id, FilelistSessionStore);
+  return FilelistSessionActions.actions.ownList(location, profile.id, FilelistSessionStore);
 });
 
-export default ShareProfileActions;
+export default {
+  id: UI.Modules.SETTINGS,
+  actions: ShareProfileActions,
+};

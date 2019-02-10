@@ -50,7 +50,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
         { ...this.props }
       >
         <DownloadDialog 
-          downloadHandler={ SearchActions.download }
+          downloadHandler={ SearchActions.actions.download }
           itemDataGetter={ SearchResultGetter }
         />
         <ResultInfoGrid parentResult={ parentResult! }/>

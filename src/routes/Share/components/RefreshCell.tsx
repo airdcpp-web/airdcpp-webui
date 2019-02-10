@@ -21,7 +21,7 @@ const RefreshCell: React.FC<RowWrapperCellChildProps<number, API.ShareRootEntry>
     <div>
       <i 
         className={ 'icon large link green refresh' } 
-        onClick={ () => ShareActions.refreshPaths([ rowDataGetter!().path ]) }
+        onClick={ () => ShareActions.actions.refreshPaths([ rowDataGetter!().path ]) }
       />
       { cellData === 0 ? 'Unknown' : formatRelativeTime(cellData!) }
     </div>

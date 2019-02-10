@@ -13,6 +13,7 @@ import 'react-resizable/css/styles.css';
 
 import 'semantic-ui-css/components/card.min.css';
 import { useStore } from 'effects/StoreListenerEffect';
+//import { useTranslation } from 'react-i18next';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -39,7 +40,12 @@ const mapWidget = (layoutItem: Layout): React.ReactNode => {
 
 const WidgetLayout: React.FC = React.memo(() => {
   const [ breakpoint, setBreakpoint ] = useState('lg');
-  const layouts = useStore<Layouts>(WidgetStore);
+
+  //const { t } = useTranslation();
+  const layouts = useStore<Layouts>(WidgetStore /*, () => {
+    WidgetStore.ensureDefaultWidgets(t);
+  }*/);
+
   return (
     <>
       <ResponsiveReactGridLayout 
@@ -47,7 +53,7 @@ const WidgetLayout: React.FC = React.memo(() => {
         rowHeight={ 50 } 
         width={ 1200 }
         onLayoutChange={ WidgetStore.onLayoutChange }
-        onBreakpointChange={ setBreakpoint }
+        onBreakpointChange={ bp => setBreakpoint(bp) }
 
         breakpoints={ WidgetStore.breakpoints }
         cols={ WidgetStore.cols }

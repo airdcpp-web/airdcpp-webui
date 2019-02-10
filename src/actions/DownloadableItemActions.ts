@@ -152,19 +152,19 @@ DownloadableItemActions.downloadTo.listen(function (handlerData: DownloadableIte
 });
 
 DownloadableItemActions.viewText.listen(function (data: DownloadableItemData, location: Location) {
-  ViewFileActions.createSession(data, true, location, ViewFileStore);
+  ViewFileActions.actions.createSession(data, true, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewVideo.listen(function (data: DownloadableItemData, location: Location) {
-  ViewFileActions.createSession(data, false, location, ViewFileStore);
+  ViewFileActions.actions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewAudio.listen(function (data: DownloadableItemData, location: Location) {
-  ViewFileActions.createSession(data, false, location, ViewFileStore);
+  ViewFileActions.actions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.viewImage.listen(function (data: DownloadableItemData, location: Location) {
-  ViewFileActions.createSession(data, false, location, ViewFileStore);
+  ViewFileActions.actions.createSession(data, false, location, ViewFileStore);
 });
 
 DownloadableItemActions.findNfo.listen(async function (
@@ -272,4 +272,8 @@ DownloadableItemActions.copyMagnet.failed.listen(function (errorMessage: string)
   });
 });
 
-export default DownloadableItemActions;
+
+export default {
+  id: UI.Modules.COMMON,
+  actions: DownloadableItemActions,
+};

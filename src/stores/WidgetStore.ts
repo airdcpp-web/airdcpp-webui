@@ -13,6 +13,7 @@ import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
+//import i18next from 'i18next';
 
 
 // CONSTANTS
@@ -119,23 +120,29 @@ const Store = {
       }
     }
 
-    if (Object.keys(this.layouts).length === 0) {
-      // Initialize the default layout
-      this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
-      this.layouts = createDefaultWidget(
-        this.layouts, 
-        RSS, 
-        2, 
-        0, 
-        'News', 
-        {
-          feed_url: 'https://airdcpp-web.github.io/feed.xml',
-        }, 
-        '_releases'
-      );
+    this.ensureDefaultWidgets();
+  },
 
-      this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
+  ensureDefaultWidgets: function (/*t: i18next.TFunction*/) {
+    if (Object.keys(this.layouts).length !== 0) {
+      return;
     }
+
+    // Initialize the default layout
+    this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
+    this.layouts = createDefaultWidget(
+      this.layouts, 
+      RSS, 
+      2, 
+      0, 
+      'News', 
+      {
+        feed_url: 'https://airdcpp-web.github.io/feed.xml',
+      }, 
+      '_releases'
+    );
+
+    this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
   },
 
   getInitialState: function () {

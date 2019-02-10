@@ -116,7 +116,10 @@ FilelistItemActions.findNfo.listen(function (
 });
 
 FilelistItemActions.refreshShare.listen(function ({ session, item }: ActionFilelistItemData) {
-  ShareActions.refreshVirtual(item.path, session.share_profile!.id);
+  ShareActions.actions.refreshVirtual(item.path, session.share_profile!.id);
 });
 
-export default FilelistItemActions;
+export default {
+  id: UI.Modules.FAVORITE_HUBS,
+  actions: FilelistItemActions,
+};

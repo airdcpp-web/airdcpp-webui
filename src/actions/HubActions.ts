@@ -130,7 +130,7 @@ HubActions.createSession.failed.listen(function (error: ErrorResponse) {
   NotificationActions.apiError('Failed to create hub session', error);
 });
 
-export default SessionActionDecorator(
+const HubActionsDecorated = SessionActionDecorator(
   ChatActionDecorator(
     HubActions, 
     HubConstants.SESSIONS_URL, 
@@ -139,3 +139,8 @@ export default SessionActionDecorator(
   HubConstants.SESSIONS_URL, 
   API.AccessEnum.HUBS_EDIT
 );
+
+export default {
+  id: UI.Modules.HUBS,
+  actions: HubActionsDecorated,
+};

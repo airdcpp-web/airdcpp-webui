@@ -11,12 +11,17 @@ import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 interface PriorityMenuProps {
   itemPrio: API.QueuePriority;
   item: API.QueueItemBase;
   prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => void;
+  t: i18next.TFunction;
 }
 
 class PriorityMenu extends React.Component<PriorityMenuProps> {
@@ -46,21 +51,24 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
   }
 
-  getPriorityListItem = (priority: API.QueuePriority) => {
+  getPriorityListItem = (priority: API.QueuePriority, t: i18next.TFunction) => {
+    const currentPrio = this.props.item.priority.id;
     return (
       <MenuItemLink 
         key={ priority.id }
-        active={ this.props.item.priority.id === priority.id } 
+        active={ currentPrio === priority.id } 
         onClick={ () => this.setPriority(priority.id) }
       >
-        { priority.str }
+        { translate(priority.str, t, UI.Modules.QUEUE) }
       </MenuItemLink>
     );
   }
 
   getChildren = () => {
+    const { t } = this.props;
+
     let children = Object.keys(PriorityEnum)
-      .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey]));
+      .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey], t));
 
     children.push(<div key="divider" className="ui divider"/>);
     children.push(
@@ -69,7 +77,7 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
         active={ this.props.itemPrio.auto } 
         onClick={ this.setAutoPriority }
       >
-        Auto
+        { translate('Auto', t, UI.Modules.QUEUE) }
       </MenuItemLink>
     );
 
@@ -77,9 +85,10 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
   }
 
   render() {
-    let caption = this.props.itemPrio.str;
-    if (this.props.itemPrio.auto) {
-      caption += ' (auto)';
+    const { itemPrio, t } = this.props;
+    let caption = translate(itemPrio.str, t, UI.Modules.QUEUE);
+    if (itemPrio.auto) {
+      caption += ` (${translate('Auto', t, UI.Modules.QUEUE).toLocaleLowerCase()})`;
     }
 
     if (!LoginStore.hasAccess(API.AccessEnum.QUEUE_EDIT)) {

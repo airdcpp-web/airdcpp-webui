@@ -29,7 +29,7 @@ const useLoginState = (props: RouteComponentProps) => {
     () => {
       const refreshToken: string | null = LoginStore.refreshToken;
       if (!!refreshToken) {
-        LoginActions.loginRefreshToken(refreshToken);
+        LoginActions.actions.loginRefreshToken(refreshToken);
         setLoading(true);
       }
     },

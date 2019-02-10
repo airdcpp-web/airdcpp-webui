@@ -11,6 +11,7 @@ import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 import * as API from 'types/api';
+import { Translation } from 'react-i18next';
 
 
 declare module 'fixed-data-table-2' {
@@ -21,7 +22,10 @@ declare module 'fixed-data-table-2' {
   }
 }
 
-export interface VirtualTableProps extends TableFooterProps, Omit<TableContainerProps, 'store' | 'dataLoader'> {
+export interface VirtualTableProps extends 
+  Omit<TableFooterProps, 't'>, 
+  Omit<TableContainerProps, 'store' | 'dataLoader' | 't'> {
+    
   store: any;
   sessionStore?: any;
   viewId?: string;
@@ -118,18 +122,26 @@ class VirtualTable extends React.Component<VirtualTableProps> {
     //console.log('Render virtual table');
     return (
       <div className="virtual-table">
-        <TableContainer 
-          { ...other }
-          dataLoader={ this.dataLoader }
-          store={ store }
-        />
+        <Translation>
+          { t => (
+            <>
+              <TableContainer 
+                { ...other }
+                dataLoader={ this.dataLoader }
+                store={ store }
+                t={ t }
+              />
 
-        <TableFooter
-          store={ store }
-          customFilter={ customFilter }
-          footerData={ footerData }
-          textFilterProps={ textFilterProps }
-        />
+              <TableFooter
+                store={ store }
+                customFilter={ customFilter }
+                footerData={ footerData }
+                textFilterProps={ textFilterProps }
+                t={ t }
+              />
+            </>
+          ) }
+        </Translation>
       </div>
     );
   }

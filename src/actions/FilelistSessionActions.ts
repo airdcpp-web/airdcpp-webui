@@ -163,8 +163,15 @@ FilelistSessionActions.setRead.listen(function (
     .catch(that.failed);
 });
 
-export default SessionActionDecorator(
+const FilelistSessionActionsDecorated = SessionActionDecorator(
   FilelistSessionActions, 
   FilelistConstants.SESSIONS_URL, 
   API.AccessEnum.FILELISTS_EDIT
 );
+
+//export default FilelistSessionActionsDecorated;
+
+export default {
+  id: UI.Modules.FILELISTS,
+  actions: FilelistSessionActionsDecorated,
+};

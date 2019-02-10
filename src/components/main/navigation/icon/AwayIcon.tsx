@@ -21,7 +21,7 @@ const AwayIcon = memo(() => {
   return (
     <i 
       className={ iconColor + ' away-state link large wait icon' } 
-      onClick={ () => SystemActions.setAway(!isAway(awayState)) }
+      onClick={ () => SystemActions.actions.setAway(!isAway(awayState)) }
     />
   );
 });

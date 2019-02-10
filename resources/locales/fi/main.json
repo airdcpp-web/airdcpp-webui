@@ -1,0 +1,31 @@
+{
+  "main": {
+    "login": "Kirjaudu sisään",
+    "processing": "Käsitellään...",
+    "widget": {
+      "accessDenied": "Sinulla ei ole oikeuksia käyttää tätä widgettiä",
+      "settingsMissing": "Widgetin asetuksia ei löytynyt",
+      "application": {
+        "loggedInAs": "Kirjautunut käyttäjä",
+        "clientStarted": "Ohjelma käynnistetty",
+        "activeSessions": "Aktiiviset istunnot",
+        "addWidget": "Lisää widgetti..."
+      },
+      "rss": {
+        "lastUpdated": "Viimeksi päivitetty: {{time}}",
+        "invalidFeed": "Virhellinen/ei-tuettu syöte",
+        "loadingFeed": "Ladataan syötettä"
+      },
+      "transfers": {
+        "trafficBps": "Liikenne (bps)",
+        "downloads": "Lataukset",
+        "uploads": "Lähetykset",
+        "downloaded": "Ladattu",
+        "uploaded": "Lähetetty",
+        "downloadLimit": "Latausraja",
+        "uploadLimit": "Lähetysraja",
+        "disabled": "Ei käytössä"
+      }
+    }
+  }
+}

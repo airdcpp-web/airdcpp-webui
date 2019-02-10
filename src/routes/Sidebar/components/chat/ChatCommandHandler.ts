@@ -7,12 +7,12 @@ type ParamsType = string | undefined;
 
 const handleMe = (params: ParamsType, { actions, session }: ChatSessionProps) => {
   if (params) {
-    actions.sendMessage(session, params, true);
+    actions.actions.sendMessage(session, params, true);
   }
 };
 
 const handleClear = (params: ParamsType, { actions, session }: ChatSessionProps) => {
-  actions.clear(session);
+  actions.actions.clear(session);
 };
 
 const CommandHandler = (sessionProps: ChatSessionProps) => {
@@ -20,7 +20,7 @@ const CommandHandler = (sessionProps: ChatSessionProps) => {
     clear: {
       help: 'Clear message cache',
       handler: handleClear,
-      access: sessionProps.actions.clear.access,
+      access: sessionProps.actions.actions.clear.access,
     },
     help: {
       handler: () => {

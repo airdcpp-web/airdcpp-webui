@@ -155,7 +155,7 @@ QueueBundleActions.removeBundle.listen(function (
 });
 
 QueueBundleActions.search.listen(function (itemInfo: DownloadableItemInfo, location: Location) {
-  return DownloadableItemActions.search({ itemInfo }, location);
+  return DownloadableItemActions.actions.search({ itemInfo }, location);
 });
 
 QueueBundleActions.searchBundleAlternates.listen(function (
@@ -190,4 +190,8 @@ QueueBundleActions.content.listen(function (data: API.QueueBundle, location: Loc
   History.push(`${location.pathname}/content/${data.id}`);
 });
 
-export default QueueBundleActions;
+
+export default {
+  id: UI.Modules.QUEUE,
+  actions: QueueBundleActions,
+};

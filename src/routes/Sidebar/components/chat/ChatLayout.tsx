@@ -28,7 +28,10 @@ export interface ChatActions extends UI.ActionListType<UI.SessionItemBase> {
 }
 
 export interface ChatSessionProps {
-  actions: ChatActions & SessionActions<UI.SessionItemBase>;
+  actions: {
+    id: string;
+    actions: ChatActions & SessionActions<UI.SessionItemBase>;
+  };
   session: ChatSession;
 }
 
@@ -78,7 +81,7 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions:
 const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
   //useActiveSessionEffect(session, actions, true);
 
-  const messages = useChatMessagesEffect(session, messageStore, actions);
+  const messages = useChatMessagesEffect(session, messageStore, actions.actions);
   const hasChatAccess = LoginStore.hasAccess(chatAccess);
   return (
     <div className="message-view">

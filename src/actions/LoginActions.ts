@@ -101,4 +101,7 @@ LoginActions.logout.listen(function (this: UI.AsyncActionType<any>) {
 });
 
 
-export default LoginActions;
+export default {
+  id: UI.Modules.COMMON,
+  actions: LoginActions,
+};

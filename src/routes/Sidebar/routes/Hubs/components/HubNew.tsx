@@ -21,7 +21,7 @@ interface HubNewProps {
 
 class HubNew extends React.Component<HubNewProps> {
   handleConnect = (hubUrl: string) => {
-    HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
+    HubActions.actions.createSession(this.props.location, hubUrl, HubSessionStore);
   }
 
   hasSession = (entry: API.HistoryItem) => {

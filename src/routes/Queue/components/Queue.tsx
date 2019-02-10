@@ -24,19 +24,24 @@ import '../style.css';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
-  { cellData, rowDataGetter }
+  { cellData, rowDataGetter, t }
 ) => (
   <PriorityMenu 
     itemPrio={ cellData! } 
     item={ rowDataGetter!() }
-    prioAction={ QueueBundleActions.setBundlePriority }
+    prioAction={ QueueBundleActions.actions.setBundlePriority }
+    t={ t! }
   />
 );
 
-class Queue extends React.Component {
+class Queue extends React.Component<WithTranslation> {
   static displayName = 'Queue';
 
   isActive = (cellData: any, rowData: API.QueueBundle) => {
@@ -52,16 +57,21 @@ class Queue extends React.Component {
   }
 
   emptyRowsNodeGetter = () => {
+    const { t } = this.props;
     return (
       <Message 
-        title="The queue is empty"
+        title={ t('queueEmpty', 'The queue is empty') }
         icon="file outline"
-        description="New items can be queued from search or filelists"
+        description={ t(
+          toI18nKey('queueEmptyDesc', UI.Modules.QUEUE), 
+          'New items can be queued from search or filelists'
+        ) as string }
       />
     );
   }
 
   render() {
+    const { t } = this.props;
     return (
       <>
         <VirtualTable
@@ -70,13 +80,14 @@ class Queue extends React.Component {
           footerData={ 
             <ActionMenu 
               className="top left pointing"
-              caption="Actions..." 
+              caption={ translate('Actions...', t, UI.Modules.QUEUE) } 
               actions={ QueueActions }
-              header="Queue actions"
+              header={ translate('Queue actions', t, UI.Modules.QUEUE) } 
               triggerIcon="chevron up"
               button={ true }
             />
           }
+          moduleId={ QueueActions.id }
         >
           <Column
             name="Name"
@@ -110,7 +121,7 @@ class Queue extends React.Component {
             width={150}
             columnKey="type"
             hideWidth={1000}
-            cell={ <ActionLinkCell action={ QueueBundleActions.content }/> }
+            cell={ <ActionLinkCell action={ QueueBundleActions.actions.content }/> }
           />
           <Column
             name="Status"
@@ -125,7 +136,7 @@ class Queue extends React.Component {
             columnKey="sources"
             renderCondition={ this.isActive }
             flexGrow={1}
-            cell={ <ActionLinkCell action={ QueueBundleActions.sources }/> }
+            cell={ <ActionLinkCell action={ QueueBundleActions.actions.sources }/> }
           />
           <Column
             name="Time left"
@@ -173,4 +184,4 @@ class Queue extends React.Component {
   }
 }
 
-export default Queue;
+export default withTranslation()(Queue);

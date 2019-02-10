@@ -4,7 +4,6 @@ export type ActionItemDataValueType = object | string | number | undefined;
 export type ActionItemDataType<ItemDataT extends ActionItemDataValueType> = (() => ItemDataT) | ItemDataT;
 
 
-
 export interface ActionConfirmation {
   content: string;
   approveCaption?: string;
@@ -45,3 +44,8 @@ export type ConfirmActionType<ItemDataT> = ActionType<ItemDataT> & {
 export type ActionConfigList<ItemDataT> = Array<string | { [actionKey: string]: ActionConfig<ItemDataT> }>;
 
 export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> };
+
+export interface ModuleActions<ItemDataT> {
+  id: string;
+  actions: ActionListType<ItemDataT>;
+}

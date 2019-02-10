@@ -2,7 +2,7 @@
 import Reflux from 'reflux';
 
 import { default as EventConstants, SeverityEnum } from 'constants/EventConstants';
-import { EventActions } from 'actions/EventActions';
+import EventActions from 'actions/EventActions';
 
 import { LogMessageUrgencies } from 'constants/UrgencyConstants';
 import { toUrgencyMap } from 'utils/UrgencyUtils';
@@ -32,7 +32,7 @@ const Store = {
   _viewActive: false,
   _initialized: false,
 
-  listenables: EventActions,
+  listenables: EventActions.actions,
   init: function () {
     //this._logMessages = undefined;
     //this._messageCacheInfo = undefined;
@@ -76,7 +76,10 @@ const Store = {
 
   onLogInfoReceived(cacheInfoNew: API.StatusMessageCounts) {
     if (this._viewActive) {
-      cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () => EventActions.setRead()) as API.StatusMessageCounts;
+      cacheInfoNew = checkUnreadCacheInfo(
+        cacheInfoNew, 
+        () => EventActions.actions.setRead()
+      ) as API.StatusMessageCounts;
     }
 
     this._logMessages = checkSplice(this._logMessages, cacheInfoNew.total);

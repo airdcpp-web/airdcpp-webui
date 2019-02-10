@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
@@ -8,9 +8,11 @@ import 'semantic-ui-css/components/popup';
 import 'semantic-ui-css/components/popup.min.css';
 
 
-type ChildType = React.ReactElement<{
+/*type ChildType = React.ReactElement<{
   hide: () => void;
-}>;
+}>;*/
+
+type ChildType = React.ReactElement<any>;
 
 export interface PopupProps {
   settings?: SemanticUI.PopupSettings;
@@ -21,6 +23,36 @@ export interface PopupProps {
   className?: string;
   children: ChildType | (() => ChildType);
 }
+
+
+interface PopupContentProps /*extends Pick<PopupProps, 'children'>*/ {
+  node: Element;
+  hide: () => void;
+  onShow: () => void;
+}
+
+const PopupContent: React.FC<PopupContentProps> = props => {
+  const content = useMemo<ChildType>(
+    () => {
+      const { children } = props;
+      return typeof children === 'function' ? children() : children as ChildType;
+      //return React.cloneElement(ret, {
+      //  hide: props.hide,
+      //});
+    }, 
+    []
+  );
+
+  useLayoutEffect(
+    props.onShow,
+    []
+  );
+
+  return ReactDOM.createPortal(
+    content,
+    props.node
+  );
+};
 
 class Popup extends React.PureComponent<PopupProps> {
   static propTypes = {
@@ -44,15 +76,15 @@ class Popup extends React.PureComponent<PopupProps> {
     triggerClassName: '',
   };
 
-  node: any;
-  triggerNode: any;
+  node: Element | null;
+  triggerNode: Element;
   componentWillUnmount() {
     if (this.node) {
       this.hide();
     }
   }
 
-  createPortal = () => {
+  createPortalNode = () => {
     // Create portal
     this.node = document.createElement('div');
 
@@ -77,38 +109,15 @@ class Popup extends React.PureComponent<PopupProps> {
 
     $(this.triggerNode).popup('destroy');
 
-    ReactDOM.unmountComponentAtNode(this.node);
     document.body.removeChild(this.node);
     this.node = null;
   }
 
-  getContent = () => {
-    const { children } = this.props;
-    if (typeof children === 'function') {
-      return children();
-    }
-
-    return children as ChildType;
-  }
-
   show = () => {
-    if (this.node) {
-      return;
-    }
-
-    this.createPortal();
-
-    const children = React.cloneElement(this.getContent(), {
-      hide: this.hide,
-    });
-
-    ReactDOM.render(children, this.node);
-
-    // Common settings
     let settings: SemanticUI.PopupSettings = {
       on: this.props.onHover ? 'hover' : 'click',
       movePopup: false,
-      popup: this.node,
+      popup: this.node as any as JQuery<HTMLElement>,
       onHidden: () => this.onHidden(),
       position: this.props.position,
       ...this.props.settings,
@@ -118,7 +127,12 @@ class Popup extends React.PureComponent<PopupProps> {
   }
 
   handleClick = () => {
-    this.show();
+    if (this.node) {
+      return;
+    }
+
+    this.createPortalNode();
+    this.forceUpdate();
   }
 
   render() {
@@ -134,9 +148,19 @@ class Popup extends React.PureComponent<PopupProps> {
     }
 
     return (
-      <span { ...triggerProps }>
-        { this.props.trigger }
-      </span>
+      <>
+        <span { ...triggerProps }>
+          { this.props.trigger }
+        </span>
+        { !!this.node && (
+          <PopupContent
+            children={ this.props.children }
+            node={ this.node }
+            hide={ this.hide }
+            onShow={ this.show }
+          />
+        ) }
+      </>
     );
   }
 }

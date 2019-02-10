@@ -33,12 +33,12 @@ const getIcon = (state: API.FavoriteHubConnectState) => {
 class ConnectStateCell extends React.Component<ConnectStateCellProps & RouteComponentProps> {
   handleCreateSession = () => {
     const { location, rowDataGetter } = this.props;
-    HubActions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
+    HubActions.actions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
   }
 
   handleRemoveSession = () => {
     const { cellData } = this.props;
-    HubActions.removeSession({ id: cellData!.current_hub_id });
+    HubActions.actions.removeSession({ id: cellData!.current_hub_id });
   }
 
   getClickAction = () => {

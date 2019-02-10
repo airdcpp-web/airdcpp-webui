@@ -18,12 +18,13 @@ import * as API from 'types/api';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
-  { cellData, rowDataGetter }
+  { cellData, rowDataGetter, t }
 ) => (
   <PriorityMenu 
     itemPrio={ cellData! } 
     item={ rowDataGetter!() }
-    prioAction={ QueueFileActions.setFilePriority }
+    prioAction={ QueueFileActions.actions.setFilePriority }
+    t={ t! }
   />
 );
 
@@ -49,6 +50,7 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
           method: API.FilterMethod.EXACT,
           property: 'bundle',
         } }
+        moduleId={ QueueFileActions.id }
       >
         <Column
           name="Name"

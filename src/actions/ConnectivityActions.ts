@@ -1,4 +1,5 @@
 'use strict';
+//@ts-ignore
 import Reflux from 'reflux';
 
 import SocketService from 'services/SocketService';
@@ -6,21 +7,32 @@ import SocketService from 'services/SocketService';
 import AccessConstants from 'constants/AccessConstants';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
+import * as UI from 'types/ui';
 
-const ConnectivityActions = Reflux.createActions([
+
+const ConnectivityActionConfig: UI.ActionConfigList<{}> = [
   { 'detect': { 
     asyncResult: true,
     displayName: 'Detect now',
     access: AccessConstants.SETTINGS_EDIT,
     icon: 'gray configure',
   } },
-]);
+];
 
-ConnectivityActions.detect.listen(function () {
+
+const ConnectivityActions = Reflux.createActions(ConnectivityActionConfig);
+
+ConnectivityActions.detect.listen(function (
+  this: UI.AsyncActionType<{}>
+) {
   const that = this;
   return SocketService.post(ConnectivityConstants.DETECT_URL)
     .then(that.completed.bind(that))
     .catch(that.failed.bind(that));
 });
 
-export default ConnectivityActions;
+
+export default {
+  id: UI.Modules.SETTINGS,
+  actions: ConnectivityActions,
+};

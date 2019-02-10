@@ -20,7 +20,7 @@ const ShareProfileDecorator = function <PropsT extends object>(
   const convertProfile = (profile: API.ShareProfile): API.ShareProfile => {
     let name = profile.str;
     if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
-      name += ' (' + formatSize(profile.size) + ')';
+      name += ` (${formatSize(profile.size)})`;
     }
 
     return {

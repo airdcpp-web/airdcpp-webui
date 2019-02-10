@@ -103,7 +103,7 @@ describe('message store', () => {
     PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
     PrivateChatMessageStore._onChatMessage(ChatMessage2, SESSION_ID);
 
-    PrivateChatActions.fetchMessages.completed(SESSION_BASE, messages);
+    PrivateChatActions.actions.fetchMessages.completed(SESSION_BASE, messages);
     jest.runAllTimers();
 
     // All three messages should have been stored
@@ -116,7 +116,7 @@ describe('message store', () => {
   });
 
   test('should remove duplicates arriving after fetching', () => {
-    PrivateChatActions.fetchMessages.completed(SESSION_BASE, messages);
+    PrivateChatActions.actions.fetchMessages.completed(SESSION_BASE, messages);
     jest.runAllTimers();
 
     PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
@@ -125,7 +125,7 @@ describe('message store', () => {
   });
 
   test('should remove session data', () => {
-    PrivateChatActions.fetchMessages.completed(SESSION_BASE, messages);
+    PrivateChatActions.actions.fetchMessages.completed(SESSION_BASE, messages);
     jest.runAllTimers();
 
     expect(PrivateChatMessageStore.isSessionInitialized(SESSION_ID));

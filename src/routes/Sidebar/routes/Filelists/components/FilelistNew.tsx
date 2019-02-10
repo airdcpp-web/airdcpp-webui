@@ -19,11 +19,11 @@ interface FilelistNewProps {
 
 class FilelistNew extends React.Component<FilelistNewProps> {
   handleSubmit = (nick: string | null, user: API.HintedUser) => {
-    FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
+    FilelistSessionActions.actions.createSession(this.props.location, user, FilelistSessionStore);
   }
 
   onProfileChanged = (profileId: number) => {
-    FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
+    FilelistSessionActions.actions.ownList(this.props.location, profileId, FilelistSessionStore);
   }
 
   recentUserRender = (entry: API.HistoryItem) => {

@@ -61,4 +61,7 @@ ShareExcludeActions.removeExclude.listen(function (this: UI.AsyncActionType<API.
     .catch(ShareExcludeActions.removeExclude.failed.bind(that, path));
 });
 
-export default ShareExcludeActions;
+export default {
+  id: UI.Modules.SETTINGS,
+  actions: ShareExcludeActions,
+};

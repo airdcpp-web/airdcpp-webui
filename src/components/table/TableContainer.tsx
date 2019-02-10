@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { camelCase } from 'lodash';
+import i18next from 'i18next';
+
 import { Table, ColumnProps } from 'fixed-data-table-2';
 
 import TableActions from 'actions/TableActions';
@@ -11,6 +14,7 @@ import RowWrapperCell from 'components/table/RowWrapperCell';
 import { TextCell, HeaderCell } from 'components/table/Cell';
 
 import * as API from 'types/api';
+
 
 
 const TABLE_ROW_HEIGHT = 50;
@@ -28,6 +32,8 @@ export interface TableContainerProps {
   rowClassNameGetter?: (rowData: any) => string;
   store: any;
   dataLoader: any;
+  t: i18next.TFunction;
+  moduleId: string;
 }
 
 interface State {
@@ -35,6 +41,24 @@ interface State {
   height: number;
   columnWidths: object;
 }
+
+
+const formatColumnName = (
+  column: React.ReactElement<ColumnProps>, 
+  store: any, 
+  moduleId: string, 
+  t: i18next.TFunction
+) => {
+  const { name, columnKey } = column.props;
+  let displayName = t(`${moduleId}.table.${camelCase(columnKey as string)}`, name);
+
+  {
+    const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';
+    displayName += ((store.sortProperty === columnKey) ? sortDirArrow : '');
+  }
+
+  return displayName;
+};
 
 class TableContainer extends React.Component<TableContainerProps, State> {
   static propTypes = {
@@ -139,12 +163,8 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       return null;
     }
 
-    let { name, flexGrow, width, cell, columnKey, renderCondition } = column.props;
-    const { store, rowClassNameGetter } = this.props;
-
-    // Convert name
-    const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';
-    name += ((store.sortProperty === columnKey) ? sortDirArrow : '');
+    let { flexGrow, width, cell, columnKey, renderCondition } = column.props;
+    const { store, rowClassNameGetter, moduleId, t } = this.props;
 
     const mobileView = useMobileLayout();
     if (!mobileView) {
@@ -159,7 +179,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       header: (
         <HeaderCell 
           onClick={ this.onColumnClicked.bind(null, columnKey) } 
-          label={ name }
+          label={ formatColumnName(column, store, moduleId, t) }
         />
       ),
       flexGrow,
@@ -171,6 +191,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
           dataLoader={ this.props.dataLoader } 
           renderCondition={ renderCondition } 
           rowClassNameGetter={ rowClassNameGetter }
+          t={ t }
         >
           { cell ? cell as React.ReactElement<any> : <TextCell/> }
         </RowWrapperCell>

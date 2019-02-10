@@ -10,7 +10,7 @@ type ChatSession = UI.SessionItemBase;
 
 type MessageCache = UI.MessageListItem[];
 
-const MessageStoreDecorator = function (store: any, actions: UI.SessionActions<ChatSession>, access: AccessEnum) {
+const MessageStoreDecorator = function (store: any, actions: UI.ModuleActions<ChatSession>, access: AccessEnum) {
   // Message arrays mapped by session IDs 
   let messages = new Map();
 
@@ -75,8 +75,8 @@ const MessageStoreDecorator = function (store: any, actions: UI.SessionActions<C
     isSessionInitialized: (sessionId: API.IdType) => initializedSession.has(sessionId),
   };
 
-  store.listenTo(actions.fetchMessages, onFetchMessages);
-  store.listenTo((actions.fetchMessages as any).completed, onFetchMessagesCompleted);
+  store.listenTo(actions.actions.fetchMessages, onFetchMessages);
+  store.listenTo((actions.actions.fetchMessages as any).completed, onFetchMessagesCompleted);
 
   return SocketSubscriptionDecorator(Object.assign(store, Decorator), access);
 };

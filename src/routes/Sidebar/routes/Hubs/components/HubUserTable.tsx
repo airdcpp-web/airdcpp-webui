@@ -15,6 +15,7 @@ import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 const NickCell: React.FC<RowWrapperCellChildProps<string, API.HubUser>> = (
@@ -73,6 +74,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
         sessionStore={ HubSessionStore }
         rowClassNameGetter={ this.rowClassNameGetter }
         emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
+        moduleId={ UI.Modules.HUBS }
       >
         <Column
           name="Nick"

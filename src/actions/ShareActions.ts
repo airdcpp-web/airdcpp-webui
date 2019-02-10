@@ -63,4 +63,9 @@ ShareActions.refreshVirtual.failed.listen(function (error: ErrorResponse) {
   });
 });
 
-export default ShareActions;
+
+export default {
+  id: UI.Modules.SHARE,
+  actions: ShareActions,
+};
+

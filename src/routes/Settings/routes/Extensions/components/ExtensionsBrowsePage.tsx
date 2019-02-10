@@ -18,7 +18,8 @@ class ExtensionBrowsePage extends React.Component {
         <EngineStatusMessage/>
         <div className="table-actions">
           <ActionButton
-            action={ ExtensionActions.installUrl }
+            action={ ExtensionActions.actions.installUrl }
+            moduleId={ ExtensionActions.id }
             className="add"
           />
         </div>

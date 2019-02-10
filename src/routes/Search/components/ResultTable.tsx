@@ -50,7 +50,7 @@ const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResul
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
-    downloadHandler={ SearchActions.download }
+    downloadHandler={ SearchActions.actions.download }
     { ...props }
   >
     <TableActionMenu 
@@ -116,6 +116,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           textFilterProps={{
             autoFocus: false,
           }}
+          moduleId={ SearchActions.id }
         >
           <Column
             name="Name"
@@ -178,7 +179,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           />
         </VirtualTable>
         <DownloadDialog 
-          downloadHandler={ SearchActions.download }
+          downloadHandler={ SearchActions.actions.download }
           itemDataGetter={ SearchResultGetter }
         />
         <ResultDialog/>

@@ -12,6 +12,8 @@ import {
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps, AddSocketListener 
 } from './SocketSubscriptionDecorator';
 import { toApiError } from 'utils/HttpUtils';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
@@ -41,7 +43,7 @@ export interface DataProviderDecoratorSettings<PropsT extends object, DataT exte
   renderOnError?: boolean;
 }
 
-export interface DataProviderDecoratorChildProps {
+export interface DataProviderDecoratorChildProps extends WithTranslation {
   refetchData: (keys?: string[]) => void;
   dataError: ErrorResponse | null;
 }
@@ -51,12 +53,14 @@ interface State<DataT extends object> {
   error: ErrorResponse | null;
 }
 
+type DataProps = WithTranslation & SocketSubscriptionDecoratorChildProps;
+
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
-  Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
+  Component: React.ComponentType<Omit<PropsT, keyof DataProps> & DataProviderDecoratorChildProps & DataT>, 
   settings: DataProviderDecoratorSettings<PropsT, DataT>
 ) {
-  class DataProviderDecorator extends React.Component<SocketSubscriptionDecoratorChildProps & PropsT, State<DataT>> {
+  class DataProviderDecorator extends React.Component<DataProviderDecoratorProps & DataProps & PropsT, State<DataT>> {
     //displayName: 'DataProviderDecorator',
 
     /*propTypes: {
@@ -184,7 +188,8 @@ export default function <PropsT extends object, DataT extends object>(
         error = fetchError as ErrorResponse;
       }
       
-      NotificationActions.apiError('Failed to fetch data', error);
+      const { t } = this.props;
+      NotificationActions.apiError(translate('Failed to fetch data', t), error);
       this.setState({
         error,
       });
@@ -193,9 +198,10 @@ export default function <PropsT extends object, DataT extends object>(
     render() {
       const { loaderText, renderOnError } = settings;
       const { data, error } = this.state;
+      const { t } = this.props;
 
       if (!data && !error) {
-        return loaderText !== null && <Loader text={ loaderText || 'Loading data...' }/>;
+        return loaderText !== null && <Loader text={ loaderText || translate('Loading data...', t) }/>;
       }
 
       if (!!error && !renderOnError) {
@@ -223,5 +229,5 @@ export default function <PropsT extends object, DataT extends object>(
     }
   }
 
-  return SocketSubscriptionDecorator<DataProviderDecoratorProps & PropsT>(DataProviderDecorator);
+  return SocketSubscriptionDecorator(withTranslation()(DataProviderDecorator));
 }

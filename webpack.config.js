@@ -140,7 +140,15 @@ module.exports = {
         include: /src/, 
         use: 'babel-loader' 
       },*/ 
-      { 
+      {
+        test: /locales/,
+        loader: '@alienfast/i18next-loader',
+        // options here
+        //query: { overrides: [ '../node_modules/lib/locales' ] }
+      }, /*{ 
+        test: /locales/,
+        use: [ 'json-loader' ]
+      },*/ { 
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
       }, { 
@@ -192,5 +200,8 @@ module.exports = {
       }
     },
     minimize: release,
+  },
+  watchOptions: {
+    ignored: /locales/
   }
 };

@@ -18,11 +18,11 @@ const SessionStoreDecorator = function (
   let activeSessionId: API.IdType | null = null;
   let isInitialized = false;
 
-  actions.sessionChanged.listen((session: SessionType | null) => {
+  actions.actions.sessionChanged.listen((session: SessionType | null) => {
     activeSessionId = session ? session.id : null;
   });
 
-  actions.fetchSessions.completed.listen((data: SessionType[]) => {
+  actions.actions.fetchSessions.completed.listen((data: SessionType[]) => {
     isInitialized = true;
     sessions = data;
     store.trigger(sessions);
@@ -72,7 +72,10 @@ const SessionStoreDecorator = function (
 
       // Active tab?
       if (id === activeSessionId && (updatedProperties.message_counts || updatedProperties.hasOwnProperty('read'))) {
-        updatedProperties = checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () => actions.setRead({ id }));
+        updatedProperties = checkUnreadSessionInfo(
+          updatedProperties as UI.UnreadInfo, 
+          () => actions.actions.setRead({ id })
+        );
       }
 
       const index = sessions.indexOf(session);
