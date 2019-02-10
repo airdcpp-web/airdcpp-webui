@@ -10,6 +10,10 @@ import { useLoginState } from '../effects/UseLoginStateEffect';
 import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 const ENTER_KEY_CODE = 13;
@@ -20,6 +24,7 @@ interface LoginProps extends RouteComponentProps {
 
 
 const Login: React.FC<LoginProps> = props => {
+  const { t } = useTranslation();
   const [ rememberMe, setRememberMe ] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -28,7 +33,7 @@ const Login: React.FC<LoginProps> = props => {
   if (!!LoginStore.refreshToken) {
     return (
       <SocketConnectStatus
-        message="Connecting to the server..."
+        message={ translate('Connecting to the server...', t, UI.Modules.LOGIN) }
       />
     );
   }
@@ -65,7 +70,7 @@ const Login: React.FC<LoginProps> = props => {
                   ref={ usernameRef } 
                   type="text" 
                   name="username" 
-                  placeholder="Username" 
+                  placeholder={ translate('Username', t, UI.Modules.LOGIN) }
                   required={ true }
                   autoFocus={ true }
                 />
@@ -78,7 +83,7 @@ const Login: React.FC<LoginProps> = props => {
                   ref={ passwordRef }
                   className="password" 
                   name="password" 
-                  placeholder="Password"  
+                  placeholder={ translate('Password', t, UI.Modules.LOGIN) } 
                   required={ true }
                   type="password"
                 />
@@ -88,6 +93,7 @@ const Login: React.FC<LoginProps> = props => {
               onSubmit={ onSubmit }
               loading={ loading }
               allowLogin={ LoginStore.allowLogin }
+              t={ t }
             />
             <div 
               className="field" 
@@ -96,7 +102,7 @@ const Login: React.FC<LoginProps> = props => {
               }}
             >
               <Checkbox
-                caption="Keep me logged in" 
+                caption={ translate('Keep me logged in', t, UI.Modules.LOGIN) }
                 onChange={ setRememberMe }
                 checked={ rememberMe }
               />
@@ -108,6 +114,7 @@ const Login: React.FC<LoginProps> = props => {
 
         <ErrorBox 
           lastError={ LoginStore.lastError }
+          t={ t }
         />
       </div>
     </div>

@@ -7,7 +7,6 @@ import IconConstants from 'constants/IconConstants';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
 
@@ -61,7 +60,7 @@ export interface ShareDirectoryDialogProps {
 
 }
 
-export interface DataProps extends ShareProfileDecoratorChildProps, DataProviderDecoratorChildProps {
+export interface DataProps extends ShareProfileDecoratorChildProps {
   virtualNames: string[];
   rootEntry?: API.ShareRootEntryBase;
 }
@@ -169,22 +168,20 @@ class ShareDirectoryDialog extends React.Component<Props> {
 }
 
 export default ModalRouteDecorator<ShareDirectoryDialogProps>(
-  DataProviderDecorator<Props, DataProps>(
-    ShareProfileDecorator(ShareDirectoryDialog, false), {
-      urls: {
-        virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
-        rootEntry: ({ match }, socket) => {
-          if (!match.params.directoryId) {
-            return Promise.resolve(undefined);
-          }
+  ShareProfileDecorator(ShareDirectoryDialog, false, {
+    urls: {
+      virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
+      rootEntry: ({ match }, socket) => {
+        if (!match.params.directoryId) {
+          return Promise.resolve(undefined);
+        }
 
-          return socket.get(`${ShareRootConstants.ROOTS_URL}/${match.params.directoryId}`);
-        },
+        return socket.get(`${ShareRootConstants.ROOTS_URL}/${match.params.directoryId}`);
       },
-      dataConverters: {
-        virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
-      },
+    },
+    dataConverters: {
+      virtualNames: (data: API.GroupedPath[]) => data.map(item => item.name, []),
     }
-  ),
+  }),
   'directories/:directoryId([0-9A-Z]{39})?'
 );

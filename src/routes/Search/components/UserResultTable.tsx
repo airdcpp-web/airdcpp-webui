@@ -12,6 +12,10 @@ import { UserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/UserActions';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { useTranslation } from 'react-i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 //import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 
@@ -67,10 +71,11 @@ interface UserResultTableDataProps extends DataProviderDecoratorChildProps {
 const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps> = (
   { results, dataError }
 ) => {
+  const { t } = useTranslation();
   if (dataError) {
     return (
       <Message 
-        title="Failed to load user listing"
+        title={ translate('Failed to load user listing', t, UI.Modules.SEARCH) }
         icon={ IconConstants.ERROR }
         description={ dataError.message }
       />
@@ -79,16 +84,21 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
 
   return (
     <div className="users">
-      <h2>{ 'Users (' + results.length + ')' }</h2>
+      <h2>
+        { t(toI18nKey('usersCount', UI.Modules.SEARCH), { 
+          defaultValue: 'Users ({{count}})',
+          count: results.length
+        }) }
+       </h2>
       <table className="ui striped table">
         <thead>
           <tr>
-            <th>User</th>
-            <th>Hubs</th>
-            <th>Connection</th>
-            <th>Slots</th>
-            <th>IP</th>
-            <th>Path</th>
+            <th>{ toI18nKey('User', UI.Modules.SEARCH) }</th>
+            <th>{ toI18nKey('Hubs', UI.Modules.SEARCH) }</th>
+            <th>{ toI18nKey('Connection', UI.Modules.SEARCH) }</th>
+            <th>{ toI18nKey('Slots', UI.Modules.SEARCH) }</th>
+            <th>{ toI18nKey('IP', UI.Modules.SEARCH) }</th>
+            <th>{ toI18nKey('Path', UI.Modules.SEARCH) }</th>
           </tr>
         </thead>
         <tbody>

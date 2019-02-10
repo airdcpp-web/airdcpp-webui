@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 
 import './style.css';
 
@@ -125,9 +126,13 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
   render() {
     const { current, tokens } = this.parsePath();
 
-    const className = this.state.overflow ? 'overflow' : '';
+    const className = classNames(
+      'ui segment browserbar',
+      { overflow: this.state.overflow }
+    );
+    
     return (
-      <div className={ 'ui segment browserbar ' + className }>
+      <div className={ className }>
         <div className="path-navigation" ref={ c => this.wrapper = c! }>
           <div className="ui breadcrumb" ref={ c => this.breadcrumb = c! }>
             { tokens.map(this.formatSection) }

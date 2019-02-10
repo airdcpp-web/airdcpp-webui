@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import SocketService from 'services/SocketService';
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
@@ -61,10 +62,6 @@ interface State extends
 class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketSubscriptionDecoratorChildProps, State> {
   //displayName: 'StatisticsIcons',
 
-  static defaultProps = {
-    className: '',
-  };
-
   state: State = {
     speed_down: 0,
     speed_up: 0,
@@ -100,7 +97,7 @@ class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketS
 
   render() {
     return (
-      <div className={ 'ui centered inverted mini list statistics-icons ' + this.props.className }>
+      <div className={ classNames('ui centered inverted mini list statistics-icons', this.props.className) }>
         <StatisticsIcon 
           icon={ IconConstants.DOWNLOAD }
           bytes={ this.state.speed_down }
@@ -132,4 +129,4 @@ class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketS
   }
 }
 
-export default SocketSubscriptionDecorator(StatisticsIcons);
+export default SocketSubscriptionDecorator<StatisticsIconsProps>(StatisticsIcons);

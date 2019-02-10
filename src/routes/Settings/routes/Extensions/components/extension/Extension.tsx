@@ -196,4 +196,4 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
   }
 }
 
-export default SocketSubscriptionDecorator(Extension);
+export default SocketSubscriptionDecorator<ExtensionProps>(Extension);

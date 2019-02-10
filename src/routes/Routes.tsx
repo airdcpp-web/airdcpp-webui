@@ -16,6 +16,8 @@ import IconConstants from 'constants/IconConstants';
 import { Location } from 'history';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 
@@ -182,7 +184,7 @@ export const parseMenuItem = (
       onClick={ menuItemClickHandler(onClick, route) }
       unreadInfoStore={ unreadInfoStore }
     >
-      <Trans i18nKey={ toI18nKey(title, 'navigation') }>
+      <Trans i18nKey={ toI18nKey(title, UI.SubNamespaces.NAVIGATION) }>
         { title }
       </Trans>
     </RouterMenuItemLink>

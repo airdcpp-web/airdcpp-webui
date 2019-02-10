@@ -18,17 +18,32 @@ import ResultDialog, { SearchResultGetter } from 'routes/Search/components/Resul
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import i18next from 'i18next';
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
-const getUserCaption = ({ count, user }: API.SearchResultUserInfo) => {
-  return count > 1 ? `${count} users (${user.nicks})` : user.nicks;
+const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: i18next.TFunction) => {
+  if (count > 1) {
+    return t('xUsersNicks', {
+      defaultValue: `{{count}} users ({{user.nicks}})`,
+      count,
+      replace: {
+        user
+      }
+    });
+  }
+
+  return user.nicks;
 };
 
 const UserCell: React.FC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.GroupedSearchResult>> = (
-  { cellData, rowDataGetter }
+  { cellData, rowDataGetter, t }
 ) => (
   <TableUserMenu 
-    text={ getUserCaption(cellData!) } 
+    text={ getUserCaption(cellData!, t!) } 
     user={ cellData!.user }
     directory={ rowDataGetter!().path }
     userIcon="simple"
@@ -63,6 +78,7 @@ const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResul
 export interface ResultTableProps {
   running: boolean;
   searchString: string;
+  t: i18next.TFunction;
 }
 
 class ResultTable extends React.Component<ResultTableProps> {
@@ -73,7 +89,7 @@ class ResultTable extends React.Component<ResultTableProps> {
   }
 
   emptyRowsNodeGetter = () => {
-    const { running, searchString } = this.props;
+    const { running, searchString, t } = this.props;
     if (running) {
       return null;
     }
@@ -90,17 +106,24 @@ class ResultTable extends React.Component<ResultTableProps> {
 
     return (
       <Message 
-        title={ `No results found for "${searchString}"` }
+        title={ t(toI18nKey('noResults', UI.Modules.SEARCH), {
+          defaultValue: `No results found for "{{searchString}}"`,
+          replace: {
+            searchString
+          }
+        }) }
         description={ (
-          <div className="ui bulleted list">
-            <div className="item">Ensure that you spelled the words correctly</div>
-            <div className="item">Use different keywords</div>
-            <div className="item">You are searching too frequently (hubs often have a minimum search interval)</div>
-            <div className="item">
-              If you never receive results for common search terms, 
-              make sure that your connectivity settings are configured properly
+          <Trans i18nKey={ toI18nKey('noResultsHint', UI.Modules.SEARCH) }>
+            <div className="ui bulleted list">
+              <div className="item">Ensure that you spelled the words correctly</div>
+              <div className="item">Use different keywords</div>
+              <div className="item">You are searching too frequently (hubs often have a minimum search interval)</div>
+              <div className="item">
+                If you never receive results for common search terms, 
+                make sure that your connectivity settings are configured properly
+              </div>
             </div>
-          </div>
+          </Trans>
         ) }
       />
     );

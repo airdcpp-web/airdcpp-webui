@@ -122,7 +122,11 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
   }
 
   render() {
-    const { title, icon, checkboxCaption, rejectCaption, approveCaption, content, children } = this.props;
+    const { 
+      title, icon, checkboxCaption, 
+      rejectCaption, approveCaption, 
+      content, children 
+    } = this.props;
 
     // We can't use the basic (fully dimmed) style inside other modals
     const basic = !this.context;

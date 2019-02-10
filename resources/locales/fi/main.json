@@ -1,7 +1,5 @@
 {
   "main": {
-    "login": "Kirjaudu sisään",
-    "processing": "Käsitellään...",
     "widget": {
       "accessDenied": "Sinulla ei ole oikeuksia käyttää tätä widgettiä",
       "settingsMissing": "Widgetin asetuksia ei löytynyt",

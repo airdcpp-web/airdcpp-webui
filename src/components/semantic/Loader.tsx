@@ -4,6 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import 'semantic-ui-css/components/loader.min.css';
+import { Trans } from 'react-i18next';
 
 
 interface LoaderProps {
@@ -35,7 +36,7 @@ const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted
 
   return (
     <div className={ style }>
-      { text }
+      { text || <Trans>Loading</Trans> }
     </div>
   );
 };
@@ -45,9 +46,8 @@ const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted
   inline: PropTypes.bool,
 };*/
 
-Loader.defaultProps = {
-  text: 'Loading',
-};
+//Loader.defaultProps = {
+//  text: 'Loading',
+//};
 
-export default Loader
-;
+export default Loader;

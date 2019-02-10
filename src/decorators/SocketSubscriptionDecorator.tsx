@@ -20,7 +20,7 @@ export type AddSocketListener = (
   access?: AccessEnum
 ) => void;
 
-export interface SocketSubscriptionDecoratorChildProps<PropsT = any> {
+export interface SocketSubscriptionDecoratorChildProps<PropsT = {}> {
   addSocketListener: AddSocketListener;
   removeSocketListeners: (props?: PropsT) => void;
 }

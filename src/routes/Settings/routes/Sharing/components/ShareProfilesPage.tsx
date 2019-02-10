@@ -86,4 +86,4 @@ class ShareProfilesPage extends React.Component<ShareProfileDecoratorChildProps>
   }
 }
 
-export default ShareProfileDecorator(ShareProfilesPage, false, false);
+export default ShareProfileDecorator(ShareProfilesPage, false, undefined, false);

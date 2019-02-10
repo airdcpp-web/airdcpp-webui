@@ -115,7 +115,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
       return undefined;
     }
 
-    return 'browse_' + this.props.historyId;
+    return `browse_${this.props.historyId}`;
   }
 
   componentDidUpdate(prevProps: FileBrowserProps, prevState: State) {

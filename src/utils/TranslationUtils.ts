@@ -1,11 +1,15 @@
 import { camelCase } from 'lodash';
 import i18next from 'i18next';
 
-//import * as UI from 'types/ui';
+import * as UI from 'types/ui';
 
 
 export const toI18nKey = (text: string, moduleId?: string) => {
-  const i18nKey = camelCase(text);
+  let i18nKey = camelCase(text);
+  if (UI.SubNamespaces[i18nKey.toUpperCase()]) {
+    i18nKey += 'Caption';
+  }
+
   return !!moduleId ? `${moduleId}.${i18nKey}` : i18nKey;
 };
 

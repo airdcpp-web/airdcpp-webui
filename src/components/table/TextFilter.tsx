@@ -10,6 +10,7 @@ import { FilterMethod } from 'types/api';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import i18next from 'i18next';
 import { translate } from 'utils/TranslationUtils';
+import { Translation } from 'react-i18next';
 
 
 const getFilterMethodCaption = (method: FilterMethod) => {
@@ -37,10 +38,9 @@ const getPlaceholder = (method: FilterMethod, t: i18next.TFunction) => {
 
 export interface TextFilterProps {
   autoFocus?: boolean;
-  t: i18next.TFunction;
 }
 
-class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorChildProps> {
+class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecoratorChildProps> {
   state = { 
     value: '',
     method: FilterMethod.PARTIAL,
@@ -86,9 +86,8 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
     this.input.focus();
   }
 
-  getFilterMethod = (method: FilterMethod) => {
+  getFilterMethod = (method: FilterMethod, t: i18next.TFunction) => {
     const isCurrent = method === this.state.method;
-    const { t } = this.props;
     return (
       <MenuItemLink 
         key={ method }
@@ -102,33 +101,37 @@ class TextFilter extends React.Component<TextFilterProps & TableFilterDecoratorC
 
   render() {
     const { value, method } = this.state;
-    const { autoFocus, t } = this.props;
+    const { autoFocus } = this.props;
     return (
-      <div className="text-filter">
-        <div 
-          className="ui action input" 
-        >
-          <input 
-            ref={ (c: any) => this.input = c }
-            placeholder={ getPlaceholder(method, t) } 
-            onChange={ this.onTextChanged } 
-            value={ value }
-            type="text"
-            autoFocus={ !useMobileLayout() && autoFocus }
-          />
-          <SectionedDropdown 
-            className="filter-method right top pointing"
-            button={ true }
-            direction="upward"
-          >
-            <MenuSection caption={ translate('Match type', t, 'table.filter') }>
-              { Object.keys(FilterMethod)
-                .filter(key => isNaN(Number(key)))
-                .map(key => this.getFilterMethod(FilterMethod[key])) }
-            </MenuSection>
-          </SectionedDropdown>
-        </div>
-      </div>
+      <Translation>
+        { t => (
+          <div className="text-filter">
+            <div 
+              className="ui action input" 
+            >
+              <input 
+                ref={ (c: any) => this.input = c }
+                placeholder={ getPlaceholder(method, t) } 
+                onChange={ this.onTextChanged } 
+                value={ value }
+                type="text"
+                autoFocus={ !useMobileLayout() && autoFocus }
+              />
+              <SectionedDropdown 
+                className="filter-method right top pointing"
+                button={ true }
+                direction="upward"
+              >
+                <MenuSection caption={ translate('Match type', t, 'table.filter') }>
+                  { Object.keys(FilterMethod)
+                    .filter(key => isNaN(Number(key)))
+                    .map(key => this.getFilterMethod(FilterMethod[key], t)) }
+                </MenuSection>
+              </SectionedDropdown>
+            </div>
+          </div>
+        ) }
+      </Translation>
     );
   }
 }

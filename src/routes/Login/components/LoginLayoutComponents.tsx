@@ -2,10 +2,18 @@ import React from 'react';
 
 import Button from 'components/semantic/Button';
 import Message from 'components/semantic/Message';
+import i18next from 'i18next';
+import { toI18nKey, translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
+interface ErrorBoxProps {
+  lastError: string | null;
+  t: i18next.TFunction;
+}
 
-export const ErrorBox: React.FC<{ lastError: string | null }> = ({ lastError }) => {
+export const ErrorBox: React.FC<ErrorBoxProps> = ({ lastError, t }) => {
   if (lastError === null) {
     return null;
   }
@@ -13,7 +21,12 @@ export const ErrorBox: React.FC<{ lastError: string | null }> = ({ lastError }) 
   return (
     <Message 
       isError={ true } 
-      description={ 'Authentication failed: ' + lastError }
+      description={ t<string>(toI18nKey('authenticationFailed', UI.Modules.LOGIN), {
+        defaultValue: 'Authentication failed: {{lastError}}',
+        replace: {
+          lastError
+        } 
+      }) }
     />
   );
 };
@@ -22,9 +35,10 @@ interface SubmitButtonProps {
   onSubmit: (evt: React.SyntheticEvent) => void;
   loading: boolean;
   allowLogin: boolean;
+  t: i18next.TFunction;
 }
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin }) => {
+export const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin, t }) => {
   if (!allowLogin) {
     return null;
   }
@@ -32,7 +46,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, a
   return (
     <Button
       className="fluid large submit"
-      caption="Login"
+      caption={ translate('Login', t, UI.Modules.LOGIN) }
       type="submit"
       loading={ loading }
       onClick={ onSubmit }

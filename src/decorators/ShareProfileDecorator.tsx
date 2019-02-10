@@ -1,6 +1,12 @@
+import React from 'react';
+import { merge } from 'lodash';
+
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, { 
+  DataProviderDecoratorChildProps, DataProviderDecoratorSettings 
+} from 'decorators/DataProviderDecorator';
+
 import { formatSize } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
@@ -15,6 +21,7 @@ export type ShareProfileDecoratorChildProps = DataProviderDecoratorChildProps & 
 const ShareProfileDecorator = function <PropsT extends object>(
   Component: React.ComponentType<PropsT & ShareProfileDecoratorChildProps>, 
   listHidden: boolean, 
+  dataProviderDecoratorSettings?: DataProviderDecoratorSettings<PropsT, ShareProfileDecoratorDataProps>,
   addSize: boolean = true
 ) {
   const convertProfile = (profile: API.ShareProfile): API.ShareProfile => {
@@ -40,19 +47,22 @@ const ShareProfileDecorator = function <PropsT extends object>(
     return profiles;
   };
 
-  return DataProviderDecorator<PropsT, ShareProfileDecoratorDataProps>(Component, {
-    urls: {
-      profiles: ShareProfileConstants.PROFILES_URL,
-    },
-    dataConverters: {
-      profiles: onProfilesReceived,
-    },
-    onSocketConnected: (addSocketListener, { refetchData }) => {
-      addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_ADDED, () => refetchData());
-      addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_UPDATED, () => refetchData());
-      addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_REMOVED, () => refetchData());
-    },
-  });
+  return DataProviderDecorator<PropsT, ShareProfileDecoratorDataProps>(
+    Component, 
+    merge(dataProviderDecoratorSettings, {
+      urls: {
+        profiles: ShareProfileConstants.PROFILES_URL,
+      },
+      dataConverters: {
+        profiles: onProfilesReceived,
+      },
+      onSocketConnected: (addSocketListener, { refetchData }) => {
+        addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_ADDED, () => refetchData());
+        addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_UPDATED, () => refetchData());
+        addSocketListener(ShareProfileConstants.MODULE_URL, ShareProfileConstants.PROFILE_REMOVED, () => refetchData());
+      },
+    } as DataProviderDecoratorSettings<PropsT, ShareProfileDecoratorDataProps>)
+  );
 };
 
 export default ShareProfileDecorator;

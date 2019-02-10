@@ -7,10 +7,14 @@ import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { translate } from 'utils/TranslationUtils';
 
 
-const RefreshCell: React.FC<RowWrapperCellChildProps<number, API.ShareRootEntry>> = (
-  { rowDataGetter, cellData }
+interface RefreshCellProps extends RowWrapperCellChildProps<number, API.ShareRootEntry> {}
+
+const RefreshCell: React.FC<RefreshCellProps> = (
+  { rowDataGetter, cellData, t }
 ) => {
   const state = rowDataGetter!().status;
   if (state.id !== API.ShareRootStatusEnum.NORMAL) {
@@ -23,7 +27,7 @@ const RefreshCell: React.FC<RowWrapperCellChildProps<number, API.ShareRootEntry>
         className={ 'icon large link green refresh' } 
         onClick={ () => ShareActions.actions.refreshPaths([ rowDataGetter!().path ]) }
       />
-      { cellData === 0 ? 'Unknown' : formatRelativeTime(cellData!) }
+      { cellData === 0 ? translate('Unknown', t!, UI.Modules.SHARE) : formatRelativeTime(cellData!) }
     </div>
   );
 };

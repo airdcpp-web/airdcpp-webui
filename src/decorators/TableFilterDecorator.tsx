@@ -61,7 +61,7 @@ export default function <PropsT>(
     TableFilterDecorator, 
     {
       urls: {
-        filter: ({ viewUrl }, socket) => socket.post(viewUrl + '/filter'),
+        filter: ({ viewUrl }, socket) => socket.post(`${viewUrl}/filter`),
       },
       loaderText: null,
     }

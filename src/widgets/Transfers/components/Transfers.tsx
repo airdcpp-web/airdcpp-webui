@@ -174,4 +174,6 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
   }
 }
 
-export default withContentRect('bounds')(SocketSubscriptionDecorator(Transfers));
+export default withContentRect('bounds')(
+  SocketSubscriptionDecorator<TransferProps>(Transfers)
+);

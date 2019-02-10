@@ -16,7 +16,7 @@ import t from 'utils/tcomb-form';
 import Form, { FormFieldChangeHandler, FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
 import { normalizeEnumValue, intTransformer } from 'utils/FormUtils';
 import { RouteComponentProps } from 'react-router-dom';
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+//import { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -161,7 +161,7 @@ interface FavoriteHubDialogProps {
 
 }
 
-interface DataProps extends DataProviderDecoratorChildProps {
+interface DataProps {
   hubEntry?: API.FavoriteHubEntry;
 }
 
@@ -256,20 +256,19 @@ class FavoriteHubDialog extends React.Component<Props> {
 
 export default ModalRouteDecorator<FavoriteHubDialogProps>(
   ShareProfileDecorator(
-    DataProviderDecorator<Props, DataProps>(
-      FavoriteHubDialog, {
-        urls: {
-          hubEntry: ({ match }, socket) => {
-            if (!match.params.entryId) {
-              return Promise.resolve(undefined);
-            }
-
-            return socket.get(`${FavoriteHubConstants.HUBS_URL}/${match.params.entryId}`);
+    FavoriteHubDialog, 
+    true,
+    {
+      urls: {
+        hubEntry: ({ match }, socket) => {
+          if (!match.params.entryId) {
+            return Promise.resolve(undefined);
           }
+
+          return socket.get(`${FavoriteHubConstants.HUBS_URL}/${match.params.entryId}`);
         }
       }
-    ),
-    true
+    }
   ),
   'entries/:entryId?',
 );

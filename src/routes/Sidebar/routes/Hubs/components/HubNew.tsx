@@ -13,6 +13,10 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import { Location } from 'history';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 interface HubNewProps {
@@ -44,9 +48,9 @@ class HubNew extends React.Component<HubNewProps> {
         />
         <Message
           description={(
-            <span>
+            <Trans i18nKey={ toI18nKey('favoriteHubsHint', UI.Modules.HUBS) }>
               Tip: visit the <Link to="/favorite-hubs">Favorite hubs</Link> page to connect using custom settings
-            </span>
+            </Trans>
           )}
         />
         <RecentLayout

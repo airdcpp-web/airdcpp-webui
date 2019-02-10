@@ -3,13 +3,15 @@ import React from 'react';
 import UserConstants from 'constants/UserConstants';
 
 import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestField';
-import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
+import OfflineHubMessageDecorator, { OfflineHubMessageDecoratorProps } from 'decorators/OfflineHubMessageDecorator';
 
 import * as API from 'types/api';
 
 
-export interface UserSearchInputProps extends Pick<RemoteSuggestFieldProps<API.HintedUser>, 'submitHandler'> {
-  offlineMessage: string;
+export interface UserSearchInputProps extends 
+  Pick<RemoteSuggestFieldProps<API.HintedUser>, 'submitHandler'>, 
+  Pick<OfflineHubMessageDecoratorProps, 'offlineMessage'> {
+    
 }
 
 const UserSearchInput: React.FC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => (

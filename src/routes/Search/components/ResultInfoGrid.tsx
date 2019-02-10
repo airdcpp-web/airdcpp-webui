@@ -4,14 +4,23 @@ import { formatRelativeTime, formatSize } from 'utils/ValueFormat';
 
 import SearchActions from 'actions/SearchActions';
 import { DownloadMenu } from 'components/menu';
-//import { DupeEnum } from 'constants/DupeConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { useTranslation, Trans } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
-const formatText = (text: React.ReactNode) => text ? text : '(unknown)';
+const formatText = (text: React.ReactNode) => text ? text : <Trans>(unknown)</Trans>;
 
-const GridRow: React.FC<{ title: string; text: React.ReactNode; }> = ({ title, text }) => (
+
+interface GridRowProps {
+  title: string; 
+  text: React.ReactNode;
+}
+
+const GridRow: React.FC<GridRowProps> = ({ title, text }) => (
   <div className="ui row">
     <div className="three wide column">
       <div className="ui tiny header">
@@ -49,25 +58,52 @@ interface ResultInfoGridProps {
   parentResult: API.GroupedSearchResult;
 }
 
-const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult }) => (
-  <div className="ui segment">
-    <div className="ui grid stackable two column">
-      <GridRow title="Content/Type" text={ parentResult.type.str }/>
-      <GridRow title="Size" text={ formatSize(parentResult.size) }/>
-      <GridRow title="Last modified" text={ formatRelativeTime(parentResult.time) }/>
-      { parentResult.type.id === 'file' && <GridRow title="TTH" text={ parentResult.tth }/> }
-      { !!parentResult.dupe && <GridRow title="Dupe type" text={ DupeStrings[parentResult.dupe.id] }/> }
-      { !!parentResult.dupe && <GridRow title="Dupe paths" text={ <DupePaths paths={ parentResult.dupe.paths }/> }/> }
-    </div>
+const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="ui segment">
+      <div className="ui grid stackable two column">
+        <GridRow 
+          title={ translate('Content/Type', t, UI.Modules.SEARCH) } 
+          text={ parentResult.type.str }
+        />
+        <GridRow 
+          title={ translate('Size', t, UI.Modules.SEARCH) } 
+          text={ formatSize(parentResult.size) }
+        />
+        <GridRow 
+          title={ translate('Last modified', t, UI.Modules.SEARCH) }
+          text={ formatRelativeTime(parentResult.time) }
+        />
+        { parentResult.type.id === 'file' && (
+          <GridRow 
+            title={ translate('TTH', t, UI.Modules.SEARCH) } 
+            text={ parentResult.tth }
+          /> 
+        )}
+        { !!parentResult.dupe && (
+          <GridRow 
+            title={ translate('Dupe type', t, UI.Modules.SEARCH) }
+            text={ translate(DupeStrings[parentResult.dupe.id], t, UI.Modules.SEARCH) }
+          /> 
+        )}
+        { !!parentResult.dupe && (
+          <GridRow 
+            title={ translate('Dupe paths', t, UI.Modules.SEARCH) }
+            text={ <DupePaths paths={ parentResult.dupe.paths }/> }
+          /> 
+        )}
+      </div>
 
-    <DownloadMenu 
-      caption="Actions..."
-      button={ true }
-      user={ parentResult.users.user }
-      itemInfoGetter={ () => parentResult }
-      downloadHandler={ SearchActions.actions.download }
-    />
-  </div>
-);
+      <DownloadMenu 
+        caption={ translate('Actions...', t, UI.Modules.SEARCH) }
+        button={ true }
+        user={ parentResult.users.user }
+        itemInfoGetter={ () => parentResult }
+        downloadHandler={ SearchActions.actions.download }
+      />
+    </div>
+  );
+};
 
 export default ResultInfoGrid;

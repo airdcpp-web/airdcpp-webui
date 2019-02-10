@@ -14,6 +14,10 @@ import { ActionMenu, UserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/UserActions';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 interface SourceProps {
@@ -69,10 +73,11 @@ interface BundleSourceTableDataProps extends DataProviderDecoratorChildProps {
 const BundleSourceTable: React.FC<BundleSourceTableProps & BundleSourceTableDataProps> = (
   { sources, bundle, dataError }
 ) => {
+  const { t } = useTranslation();
   if (dataError) {
     return (
       <Message 
-        title="Failed to load source listing"
+        title={ translate('Failed to load source listing', t, UI.Modules.QUEUE) }
         icon={ IconConstants.ERROR }
         description={ dataError.message }
       />
@@ -81,15 +86,15 @@ const BundleSourceTable: React.FC<BundleSourceTableProps & BundleSourceTableData
 
   return (
     <div className="sources">
-      <h2>Sources</h2>
+      <h2>{ translate('Sources', t, UI.Modules.QUEUE) }</h2>
       <table className="ui striped table">
         <thead>
           <tr>
-            <th>User</th>
-            <th>Hubs</th>
-            <th>Last known speed</th>
-            <th>Files</th>
-            <th>Size</th>
+            <th>{ translate('User', t, UI.Modules.QUEUE) }</th>
+            <th>{ translate('Hubs', t, UI.Modules.QUEUE) }</th>
+            <th>{ translate('Last known speed', t, UI.Modules.QUEUE) }</th>
+            <th>{ translate('Files', t, UI.Modules.QUEUE) }</th>
+            <th>{ translate('Size', t, UI.Modules.QUEUE) }</th>
           </tr>
         </thead>
         <tbody>

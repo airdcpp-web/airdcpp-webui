@@ -3,6 +3,7 @@ export const enum Modules {
   SEARCH = 'search',
   SHARE = 'share',
   HOME = 'home',
+  LOGIN = 'login',
   FAVORITE_HUBS = 'favoriteHubs',
   SETTINGS = 'settings',
   EXTENSIONS = 'extensions',
@@ -16,4 +17,10 @@ export const enum Modules {
   EVENTS = 'events',
 
   COMMON = 'common',
+}
+
+export enum SubNamespaces {
+  ACTIONS = 'actions',
+  TABLE = 'table',
+  NAVIGATION = 'navigation',
 }

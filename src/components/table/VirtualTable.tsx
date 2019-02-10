@@ -33,7 +33,7 @@ export interface VirtualTableProps extends
   emptyRowsNodeGetter?: () => React.ReactNode;
 }
 
-class VirtualTable extends React.Component<VirtualTableProps> {
+class VirtualTable extends React.PureComponent<VirtualTableProps> {
   static propTypes = {
     // Elements to append to the table footer
     footerData: PropTypes.node,
@@ -137,7 +137,6 @@ class VirtualTable extends React.Component<VirtualTableProps> {
                 customFilter={ customFilter }
                 footerData={ footerData }
                 textFilterProps={ textFilterProps }
-                t={ t }
               />
             </>
           ) }

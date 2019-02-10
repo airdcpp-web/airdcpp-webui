@@ -73,10 +73,6 @@ const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, chil
         >
           { !!widgetInfo.actionMenu && (
             <ActionMenu 
-              //actions={{ 
-                //id: toWidgetI18nKey(),
-              //  actions: widgetInfo.actionMenu.actions.actions
-              //}}
               actions={ widgetInfo.actionMenu.actions }
               ids={ widgetInfo.actionMenu.ids } 
             /> 

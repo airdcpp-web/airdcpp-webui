@@ -17,12 +17,17 @@ import RefreshCell from 'routes/Share/components/RefreshCell';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
-class Share extends React.Component {
+class Share extends React.Component<WithTranslation> {
   static displayName = 'Share';
 
   render() {
+    const { t } = this.props;
     const editAccess = LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
     return (
       <>
@@ -32,9 +37,9 @@ class Share extends React.Component {
           footerData={ 
             <ActionMenu 
               className="top left pointing"
-              caption="Actions..." 
+              caption={ translate('Actions...', t, UI.Modules.SHARE) }
               actions={ ShareRootActions }
-              header="Share actions"
+              header={ translate('Share actions', t, UI.Modules.SHARE) }
               triggerIcon="chevron up"
               ids={ [ 'create' ]}
               button={ true }
@@ -97,4 +102,4 @@ class Share extends React.Component {
   }
 }
 
-export default Share;
+export default withTranslation()(Share);

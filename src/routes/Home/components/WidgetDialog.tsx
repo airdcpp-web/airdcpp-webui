@@ -18,6 +18,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
+
 
 type FormData = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
 
@@ -40,7 +43,7 @@ interface WidgetDialogProps {
 type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & 
   RouteComponentProps<{ widgetId?: string; typeId: string; }>;
 
-class WidgetDialog extends React.Component<Props> {
+class WidgetDialog extends React.Component<Props & WithTranslation> {
   static displayName = 'WidgetDialog';
 
   /*static propTypes = {
@@ -98,6 +101,7 @@ class WidgetDialog extends React.Component<Props> {
       Entry.push(...formSettings);
     }
 
+    const { t } = this.props;
     return (
       <Modal 
         className="home-widget" 
@@ -115,7 +119,10 @@ class WidgetDialog extends React.Component<Props> {
         />
 
         <Message
-          description="Widgets and their positions are browser-specific"
+          description={ t<string>(
+            toI18nKey('widgetPositionHint', UI.Modules.WIDGETS), 
+            'Widgets and their positions are browser-specific'
+          ) }
           icon={ IconConstants.INFO }
         />
       </Modal>
@@ -124,6 +131,6 @@ class WidgetDialog extends React.Component<Props> {
 }
 
 export default ModalRouteDecorator<WidgetDialogProps>(
-  WidgetDialog,
+  withTranslation()(WidgetDialog),
   '/home/widget/:typeId/:widgetId?'
 );

@@ -13,6 +13,10 @@ import MenuSection from 'components/semantic/MenuSection';
 import History from 'utils/History';
 import IconPanel from 'components/main/navigation/IconPanel';
 import { Location } from 'history';
+import { Translation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 interface MainNavigationMobileProps {
@@ -65,31 +69,35 @@ class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
 
   render() {
     return (
-      <div 
-        ref={ c => this.c = c! }
-        id="mobile-menu" 
-        className="ui right vertical inverted sidebar menu"
-      >
-        { parseMenuItems(mainRoutes, this.onClick) }
-        <SectionedDropdown 
-          caption="More..."
-          captionIcon="ellipsis horizontal caption" 
-          className="right fluid" 
-          triggerIcon=""
-        >
-          <MenuSection>
-            { parseMenuItems(configRoutes, this.onClick) }
-          </MenuSection>
-          <MenuSection>
-            { parseMenuItem(logoutItem) }
-          </MenuSection>
-        </SectionedDropdown>
+      <Translation>
+        { t => (
+          <div 
+            ref={ c => this.c = c! }
+            id="mobile-menu" 
+            className="ui right vertical inverted sidebar menu"
+          >
+            { parseMenuItems(mainRoutes, this.onClick) }
+            <SectionedDropdown 
+              caption={ translate('More...', t, UI.SubNamespaces.NAVIGATION) }
+              captionIcon="ellipsis horizontal caption" 
+              className="right fluid" 
+              triggerIcon=""
+            >
+              <MenuSection>
+                { parseMenuItems(configRoutes, this.onClick) }
+              </MenuSection>
+              <MenuSection>
+                { parseMenuItem(logoutItem) }
+              </MenuSection>
+            </SectionedDropdown>
 
-        <div className="separator"/>
+            <div className="separator"/>
 
-        { parseMenuItems(secondaryRoutes, this.onClickSecondary) }
-        <IconPanel/>
-      </div>
+            { parseMenuItems(secondaryRoutes, this.onClickSecondary) }
+            <IconPanel/>
+          </div>
+        ) }
+      </Translation>
     );
   }
 }

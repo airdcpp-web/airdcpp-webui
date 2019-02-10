@@ -43,7 +43,7 @@ export interface DataProviderDecoratorSettings<PropsT extends object, DataT exte
   renderOnError?: boolean;
 }
 
-export interface DataProviderDecoratorChildProps extends WithTranslation {
+export interface DataProviderDecoratorChildProps {
   refetchData: (keys?: string[]) => void;
   dataError: ErrorResponse | null;
 }
@@ -53,11 +53,11 @@ interface State<DataT extends object> {
   error: ErrorResponse | null;
 }
 
-type DataProps = WithTranslation & SocketSubscriptionDecoratorChildProps;
+type DataProps<PropsT = {}> = WithTranslation & SocketSubscriptionDecoratorChildProps<PropsT>;
 
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
-  Component: React.ComponentType<Omit<PropsT, keyof DataProps> & DataProviderDecoratorChildProps & DataT>, 
+  Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
   settings: DataProviderDecoratorSettings<PropsT, DataT>
 ) {
   class DataProviderDecorator extends React.Component<DataProviderDecoratorProps & DataProps & PropsT, State<DataT>> {
@@ -229,5 +229,7 @@ export default function <PropsT extends object, DataT extends object>(
     }
   }
 
-  return SocketSubscriptionDecorator(withTranslation()(DataProviderDecorator));
+  return withTranslation()(SocketSubscriptionDecorator<WithTranslation & PropsT & DataProviderDecoratorProps>(
+    DataProviderDecorator
+  ));
 }

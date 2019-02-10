@@ -6,8 +6,6 @@ import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
-//import ConfirmDialog from 'components/semantic/ConfirmDialog';
-
 import DownloadableItemActions from 'actions/DownloadableItemActions';
 import NotificationActions from 'actions/NotificationActions';
 
