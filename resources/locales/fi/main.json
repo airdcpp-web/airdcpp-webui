@@ -1,6 +1,6 @@
 {
   "main": {
-    "widget": {
+    "widgets": {
       "accessDenied": "Sinulla ei ole oikeuksia käyttää tätä widgettiä",
       "settingsMissing": "Widgetin asetuksia ei löytynyt",
       "application": {

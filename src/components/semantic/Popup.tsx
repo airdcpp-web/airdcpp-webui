@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useMemo, useLayoutEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
@@ -7,10 +7,6 @@ import classNames from 'classnames';
 import 'semantic-ui-css/components/popup';
 import 'semantic-ui-css/components/popup.min.css';
 
-
-/*type ChildType = React.ReactElement<{
-  hide: () => void;
-}>;*/
 
 type ChildType = React.ReactElement<any>;
 
@@ -25,9 +21,9 @@ export interface PopupProps {
 }
 
 
-interface PopupContentProps /*extends Pick<PopupProps, 'children'>*/ {
+interface PopupContentProps {
   node: Element;
-  hide: () => void;
+  onHide: () => void;
   onShow: () => void;
 }
 
@@ -36,15 +32,17 @@ const PopupContent: React.FC<PopupContentProps> = props => {
     () => {
       const { children } = props;
       return typeof children === 'function' ? children() : children as ChildType;
-      //return React.cloneElement(ret, {
-      //  hide: props.hide,
-      //});
     }, 
     []
   );
 
-  useLayoutEffect(
-    props.onShow,
+  useEffect(
+    () => {
+      props.onShow();
+      return () => {
+        props.onHide();
+      };
+    },
     []
   );
 
@@ -54,7 +52,11 @@ const PopupContent: React.FC<PopupContentProps> = props => {
   );
 };
 
-class Popup extends React.PureComponent<PopupProps> {
+
+interface State {
+  visible: boolean;
+}
+class Popup extends React.PureComponent<PopupProps, State> {
   static propTypes = {
 
     // Additional settings for the Semantic UI popup
@@ -76,6 +78,10 @@ class Popup extends React.PureComponent<PopupProps> {
     triggerClassName: '',
   };
 
+  state: State = {
+    visible: false,
+  };
+
   node: Element | null;
   triggerNode: Element;
   componentWillUnmount() {
@@ -95,13 +101,13 @@ class Popup extends React.PureComponent<PopupProps> {
 
     this.node.className = className;
     document.body.appendChild(this.node);
+    
+    this.setState({
+      visible: true
+    });
   }
 
-  hide = () => {
-    $(this.triggerNode).popup('hide');
-  }
-
-  onHidden = () => {
+  destroyPortal = () => {
     if (!this.node) {
       // onHidden called when the popup was removed manually
       return;
@@ -111,6 +117,16 @@ class Popup extends React.PureComponent<PopupProps> {
 
     document.body.removeChild(this.node);
     this.node = null;
+  }
+
+  hide = () => {
+    $(this.triggerNode).popup('hide');
+  }
+
+  onHidden = () => {
+    this.setState({
+      visible: false
+    });
   }
 
   show = () => {
@@ -132,32 +148,33 @@ class Popup extends React.PureComponent<PopupProps> {
     }
 
     this.createPortalNode();
-    this.forceUpdate();
   }
 
   render() {
+    const { triggerClassName, onHover, trigger, children } = this.props;
     const triggerProps = {
       ref: (c: any) => this.triggerNode = c,
-      className: classNames(this.props.triggerClassName, 'popup trigger'),
+      className: classNames(triggerClassName, 'popup trigger'),
     };
 
-    if (this.props.onHover) {
+    if (onHover) {
       triggerProps['onMouseEnter'] = this.handleClick;
     } else {
       triggerProps['onClick'] = this.handleClick;
     }
 
+    const { visible } = this.state;
     return (
       <>
         <span { ...triggerProps }>
-          { this.props.trigger }
+          { trigger }
         </span>
-        { !!this.node && (
+        { visible && !!this.node && (
           <PopupContent
-            children={ this.props.children }
+            children={ children }
             node={ this.node }
-            hide={ this.hide }
             onShow={ this.show }
+            onHide={ this.destroyPortal }
           />
         ) }
       </>
