@@ -82,6 +82,6 @@ TransferActions.removeSource.listen(function (transfer: API.Transfer) {
 });
 
 export default {
-  id: UI.Modules.TRANSFERS,
+  moduleId: UI.Modules.TRANSFERS,
   actions: TransferActions,
 };

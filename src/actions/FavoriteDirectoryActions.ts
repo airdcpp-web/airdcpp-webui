@@ -33,11 +33,11 @@ const FavoriteDirectoryActionConfig: UI.ActionConfigList<API.FavoriteDirectoryEn
     displayName: 'Remove directory',
     access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
-    confirmation: directory => ({
-      content: `Are you sure that you want to remove the favorite directory ${directory.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the favorite directory {{item.name}}?',
       approveCaption: 'Remove directory',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
 ];
 
@@ -62,6 +62,6 @@ FavoriteDirectoryActions.remove.listen(function (
 });
 
 export default {
-  id: UI.Modules.SETTINGS,
+  moduleId: UI.Modules.SETTINGS,
   actions: FavoriteDirectoryActions,
 };

@@ -32,7 +32,11 @@
 	width: inherit;
 }
 
-#side-menu .navigation .item>.label {
+#side-menu .navigation .item {
+	padding: .92857143em 0.34285714em !important;
+}
+
+#side-menu .navigation .item > .label {
 	position: absolute;
 	top: 7px;
 	right: 7px;

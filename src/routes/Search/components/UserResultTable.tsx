@@ -94,12 +94,12 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
       <table className="ui striped table">
         <thead>
           <tr>
-            <th>{ toI18nKey('User', UI.Modules.SEARCH) }</th>
-            <th>{ toI18nKey('Hubs', UI.Modules.SEARCH) }</th>
-            <th>{ toI18nKey('Connection', UI.Modules.SEARCH) }</th>
-            <th>{ toI18nKey('Slots', UI.Modules.SEARCH) }</th>
-            <th>{ toI18nKey('IP', UI.Modules.SEARCH) }</th>
-            <th>{ toI18nKey('Path', UI.Modules.SEARCH) }</th>
+            <th>{ translate('User', t, UI.Modules.SEARCH) }</th>
+            <th>{ translate('Hubs', t, UI.Modules.SEARCH) }</th>
+            <th>{ translate('Connection', t, UI.Modules.SEARCH) }</th>
+            <th>{ translate('Slots', t, UI.Modules.SEARCH) }</th>
+            <th>{ translate('IP', t, UI.Modules.SEARCH) }</th>
+            <th>{ translate('Path', t, UI.Modules.SEARCH) }</th>
           </tr>
         </thead>
         <tbody>

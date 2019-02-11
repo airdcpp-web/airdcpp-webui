@@ -36,14 +36,14 @@ const FavoriteHubPasswordActionConfig: UI.ActionConfigList<API.FavoriteHubEntry>
     access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.LOCK,
     filter: noPassword,
-    input: hub => ({
-      content: `Set password for the hub ${hub.name}`,
+    input: {
+      content: 'Set password for the hub {{item.name}}',
       approveCaption: 'Set password',
       inputProps: {
         placeholder: 'Enter password',
         type: 'password',
       }
-    })
+    }
   } },
   { 'change': { 
     asyncResult: true, 
@@ -52,14 +52,14 @@ const FavoriteHubPasswordActionConfig: UI.ActionConfigList<API.FavoriteHubEntry>
     access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
     icon: IconConstants.EDIT,
     filter: hasPassword,
-    input: hub => ({
-      content: `Enter new password for the hub ${hub.name}`,
+    input: {
+      content: 'Enter new password for the hub {{item.name}}',
       approveCaption: 'Update password',
       inputProps: {
         placeholder: 'Enter password',
         type: 'password',
       }
-    }),
+    },
   } },
   { 'remove': { 
     asyncResult: true,
@@ -67,11 +67,11 @@ const FavoriteHubPasswordActionConfig: UI.ActionConfigList<API.FavoriteHubEntry>
     access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.REMOVE,
     filter: hasPassword,
-    confirmation: hub => ({
-      content: `Are you sure that you want to reset the password of the hub ${hub.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to reset the password of the hub {{item.name}}?',
       approveCaption: 'Remove password',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
 ];
 
@@ -90,6 +90,6 @@ FavoriteHubPasswordActions.remove.listen(function (hub: API.FavoriteHubEntry) {
 });
 
 export default {
-  id: UI.Modules.FAVORITE_HUBS,
+  moduleId: UI.Modules.FAVORITE_HUBS,
   actions: FavoriteHubPasswordActions,
 };

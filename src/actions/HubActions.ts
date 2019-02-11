@@ -141,6 +141,6 @@ const HubActionsDecorated = SessionActionDecorator(
 );
 
 export default {
-  id: UI.Modules.HUBS,
+  moduleId: UI.Modules.HUBS,
   actions: HubActionsDecorated,
 };

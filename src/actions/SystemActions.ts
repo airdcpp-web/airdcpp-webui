@@ -80,6 +80,6 @@ SystemActions.setAway.completed.listen(function (away: boolean) {
 });
 
 export default {
-  id: UI.Modules.COMMON,
+  moduleId: UI.Modules.COMMON,
   actions: SystemActions,
 };

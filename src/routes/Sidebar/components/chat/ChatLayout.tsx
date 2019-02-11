@@ -15,6 +15,7 @@ import * as UI from 'types/ui';
 //import { useActiveSessionEffect } from 'effects';
 import { SessionActions } from 'types/ui';
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
+import { useTranslation } from 'react-i18next';
 
 
 export interface ChatSession extends UI.SessionItemBase {
@@ -28,8 +29,7 @@ export interface ChatActions extends UI.ActionListType<UI.SessionItemBase> {
 }
 
 export interface ChatSessionProps {
-  actions: {
-    id: string;
+  actions: UI.ModuleActions<UI.SessionItemBase> & {
     actions: ChatActions & SessionActions<UI.SessionItemBase>;
   };
   session: ChatSession;
@@ -80,16 +80,21 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions:
 
 const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
   //useActiveSessionEffect(session, actions, true);
-
+  const { t } = useTranslation();
   const messages = useChatMessagesEffect(session, messageStore, actions.actions);
   const hasChatAccess = LoginStore.hasAccess(chatAccess);
   return (
     <div className="message-view">
-      { !hasChatAccess && <Message description="You aren't allowed to send new messages"/> }
+      { !hasChatAccess && (
+        <Message 
+          description={ t<string>('noChatAccess', `You aren't allowed to send new messages`) }
+        />
+      ) }
       <MessageView 
         className="chat"
         messages={ messages }
         session={ session }
+        t={ t }
       />
       { hasChatAccess && (
         <MessageComposer 

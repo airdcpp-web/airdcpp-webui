@@ -53,7 +53,7 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
       action={ ConnectivityActions.actions.detect }
       disabled={ !status.status_v4.auto_detect && !status.status_v6.auto_detect }
       loading={ runningV6 || runningV4 } 
-      moduleId={ ConnectivityActions.id }
+      moduleId={ ConnectivityActions.moduleId }
     />
   </div>
 );

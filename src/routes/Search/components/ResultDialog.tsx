@@ -15,10 +15,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import SearchConstants from 'constants/SearchConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 interface ResultDialogProps {
-
+  searchT: UI.ModuleTranslator;
 }
 
 interface DataProps extends DataProviderDecoratorChildProps {
@@ -39,7 +40,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
   static displayName = 'ResultDialog';
 
   render() {
-    const { parentResult } = this.props;
+    const { parentResult, searchT } = this.props;
     return (
       <Modal 
         className="result" 
@@ -53,7 +54,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
           downloadHandler={ SearchActions.actions.download }
           itemDataGetter={ SearchResultGetter }
         />
-        <ResultInfoGrid parentResult={ parentResult! }/>
+        <ResultInfoGrid parentResult={ parentResult! } searchT={ searchT }/>
         <UserResultTable parentResult={ parentResult! }/>
       </Modal>
     );

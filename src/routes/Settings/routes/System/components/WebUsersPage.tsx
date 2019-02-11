@@ -53,7 +53,7 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
       <div>
         <ActionButton 
           action={ WebUserActions.actions.create } 
-          moduleId={ WebUserActions.id }
+          moduleId={ WebUserActions.moduleId }
         />
         <table className="ui striped table">
           <thead>

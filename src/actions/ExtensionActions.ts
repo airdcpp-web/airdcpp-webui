@@ -61,12 +61,12 @@ const ExtensionActionConfig: UI.ActionConfigList<API.Extension> = [
     icon: IconConstants.REMOVE,
     filter: isManaged,
     access: API.AccessEnum.ADMIN,
-    confirmation: extension => ({
+    confirmation: {
       // tslint:disable-next-line:max-line-length
-      content: `Are you sure that you want to remove the extension ${extension.name}? This will also remove possible extension-specific settings.`,
+      content: 'Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings.',
       approveCaption: 'Remove extension',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
   { 'start': { 
     asyncResult: true,
@@ -191,6 +191,6 @@ ExtensionActions.remove.failed.listen(function (extension: API.Extension, error:
 
 
 export default {
-  id: UI.Modules.EXTENSIONS,
+  moduleId: UI.Modules.EXTENSIONS,
   actions: ExtensionActions,
 };

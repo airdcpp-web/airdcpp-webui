@@ -99,7 +99,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
   fetchFeed = (feedUrl: string) => {
     const { widgetT } = this.props;
     if (!feedUrl.startsWith('http://') && !feedUrl.startsWith('https://')) {
-      this.setError(widgetT('invalidUrl', 'Invalid URL'));
+      this.setError(widgetT.translate('Invalid URL'));
       return;
     }
 
@@ -170,7 +170,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
     const invalidFeed = (error: string) => {
       const { widgetT } = this.props;
       console.log(`Invalid feed: ${error}`);
-      this.setError(widgetT('invalidFeed', { error }/*'Invalid/unsupported feed'*/));
+      this.setError(widgetT.t('invalidFeed', { error }/*'Invalid/unsupported feed'*/));
     };
 
     const { rss, feed } = data;
@@ -227,7 +227,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
 
     const { settings, componentId, toWidgetI18nKey, widgetT } = this.props;
     if (!entries) {
-      return <Loader text={ widgetT('loadingFeed', 'Loading feed') } inline={true}/>;
+      return <Loader text={ widgetT.translate('Loading feed') } inline={true}/>;
     }
 
     return (

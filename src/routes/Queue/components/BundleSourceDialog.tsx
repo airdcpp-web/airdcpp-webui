@@ -11,17 +11,18 @@ import { RouteComponentProps } from 'react-router-dom';
 import QueueConstants from 'constants/QueueConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 interface BundleSourceDialogProps {
-
+  queueT: UI.ModuleTranslator;
 }
 
 interface DataProps extends DataProviderDecoratorChildProps {
   bundle: API.QueueBundle;
 }
 
-type Props = RouteComponentProps<{ bundleId: string; }> & ModalRouteDecoratorChildProps;
+type Props = BundleSourceDialogProps & RouteComponentProps<{ bundleId: string; }> & ModalRouteDecoratorChildProps;
 
 class SourceDialog extends React.Component<Props & DataProps> {
   static displayName = 'SourceDialog';

@@ -50,7 +50,7 @@ class Share extends React.Component<WithTranslation> {
               />
             </ActionMenu>
           }
-          moduleId={ ShareActions.id }
+          moduleId={ ShareActions.moduleId }
         >
           <Column
             name="Path"

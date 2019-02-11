@@ -8,8 +8,8 @@ import { DownloadMenu } from 'components/menu';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { useTranslation, Trans } from 'react-i18next';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 const formatText = (text: React.ReactNode) => {
@@ -68,47 +68,48 @@ const DupePaths: React.FC<{ paths: string[] }> = ({ paths }) => (
 
 interface ResultInfoGridProps {
   parentResult: API.GroupedSearchResult;
+  searchT: UI.ModuleTranslator;
 }
 
-const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult }) => {
-  const { t } = useTranslation();
+const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult, searchT }) => {
+  const { translate } = searchT;
   return (
     <div className="ui segment">
       <div className="ui grid stackable two column">
         <GridRow 
-          title={ translate('Type/content', t, UI.Modules.SEARCH) } 
+          title={ translate('Type/content') } 
           text={ parentResult.type.str }
         />
         <GridRow 
-          title={ translate('Size', t, UI.Modules.SEARCH) } 
+          title={ translate('Size') } 
           text={ formatSize(parentResult.size) }
         />
         <GridRow 
-          title={ translate('Last modified', t, UI.Modules.SEARCH) }
+          title={ translate('Last modified') }
           text={ formatRelativeTime(parentResult.time) }
         />
         { parentResult.type.id === 'file' && (
           <GridRow 
-            title={ translate('TTH', t, UI.Modules.SEARCH) } 
+            title={ translate('TTH') } 
             text={ parentResult.tth }
           /> 
         )}
         { !!parentResult.dupe && (
           <GridRow 
-            title={ translate('Dupe type', t, UI.Modules.SEARCH) }
-            text={ translate(DupeStrings[parentResult.dupe.id], t, UI.Modules.SEARCH) }
+            title={ translate('Dupe type') }
+            text={ translate(DupeStrings[parentResult.dupe.id]) }
           /> 
         )}
         { !!parentResult.dupe && (
           <GridRow 
-            title={ translate('Dupe paths', t, UI.Modules.SEARCH) }
+            title={ translate('Dupe paths') }
             text={ <DupePaths paths={ parentResult.dupe.paths }/> }
           /> 
         )}
       </div>
 
       <DownloadMenu 
-        caption={ translate('Actions...', t, UI.Modules.SEARCH) }
+        caption={ translate('Actions...') }
         button={ true }
         user={ parentResult.users.user }
         itemInfoGetter={ () => parentResult }

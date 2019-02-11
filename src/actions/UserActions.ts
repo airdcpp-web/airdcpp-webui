@@ -122,6 +122,6 @@ UserActions.unignore.completed.listen(function ({ user }: ActionUserData) {
 });
 
 export default {
-  id: UI.Modules.COMMON,
+  moduleId: UI.Modules.COMMON,
   actions: UserActions,
 };

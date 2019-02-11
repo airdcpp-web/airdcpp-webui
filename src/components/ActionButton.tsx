@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
-import { showAction, getActionCaptionKey } from 'utils/ActionUtils';
+import { showAction, toActionI18nKey } from 'utils/ActionUtils';
 import { IconType } from 'components/semantic/Icon';
 
 import * as UI from 'types/ui';
@@ -30,9 +30,10 @@ const ActionButton: React.FC<ActionButtonProps & ActionHandlerDecoratorChildProp
       onClick={ () => onClickAction({ 
         itemData, 
         action, 
-        actionId: '' // TODO: figure this out when refactoring actions
+        actionId: '', // TODO: figure this out when refactoring actions
+        moduleId,
       }) }
-      caption={ t(getActionCaptionKey(action, moduleId), action.displayName) }
+      caption={ t(toActionI18nKey(action, moduleId), action.displayName) }
       { ...other }
     />
   );

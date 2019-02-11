@@ -274,6 +274,6 @@ DownloadableItemActions.copyMagnet.failed.listen(function (errorMessage: string)
 
 
 export default {
-  id: UI.Modules.COMMON,
+  moduleId: UI.Modules.COMMON,
   actions: DownloadableItemActions,
 };

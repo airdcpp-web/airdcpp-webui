@@ -91,7 +91,7 @@ QueueActions.removeSource.completed.listen(function (user: API.HintedUser, data:
 
 
 export default {
-  id: UI.Modules.QUEUE,
+  moduleId: UI.Modules.QUEUE,
   actions: QueueActions,
 };
 

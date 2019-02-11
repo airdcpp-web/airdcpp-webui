@@ -22,6 +22,6 @@ export const showAction = (action: UI.ActionType, itemData?: UI.ActionItemDataVa
   return actionFilter(action, itemData) && actionAccess(action);
 };
 
-export const getActionCaptionKey = (action: UI.ActionType, moduleId: string) => {
-  return `${moduleId}.actions.${camelCase(action.displayName)}`;
+export const toActionI18nKey = (action: UI.ActionType, moduleId: string) => {
+  return `${moduleId}.${UI.SubNamespaces.ACTIONS}.${camelCase(action.displayName)}`;
 };

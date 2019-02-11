@@ -11,6 +11,8 @@ import { formatCalendarTime } from 'utils/ValueFormat';
 import './messages.css';
 
 import * as UI from 'types/ui';
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 const getMessageDay = (listItem: UI.MessageListItem) => {
@@ -92,10 +94,11 @@ interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
   session?: UI.SessionItemBase;
   className?: string;
+  t: i18next.TFunction;
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
-  ({ messages, session, className }) => {
+  ({ messages, session, className, t }) => {
     const scrollableRef = useMessageViewScrollEffect(messages, session);
     return (
       <div 
@@ -107,7 +110,7 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
             { messages.reduce(getMessageListItem, []) }
           </div>
         ) : (
-          <Loader text="Loading messages"/>
+          <Loader text={ translate('Loading messages', t, UI.Modules.COMMON) }/>
         ) }
       </div>
     );

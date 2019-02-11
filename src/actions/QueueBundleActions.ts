@@ -56,12 +56,12 @@ const QueueBundleActionConfig: UI.ActionConfigList<API.QueueBundle> = [
     displayName: 'Remove',
     access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
-    confirmation: bundle => ({
-      content: `Are you sure that you want to remove the bundle ${bundle.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the bundle {{item.name}}?',
       approveCaption: 'Remove bundle',
       rejectCaption: `Don't remove`,
       checkboxCaption: 'Remove finished files',
-    })
+    }
   } },
   'divider',
   { 'rescan': { 
@@ -192,6 +192,6 @@ QueueBundleActions.content.listen(function (data: API.QueueBundle, location: Loc
 
 
 export default {
-  id: UI.Modules.QUEUE,
+  moduleId: UI.Modules.QUEUE,
   actions: QueueBundleActions,
 };

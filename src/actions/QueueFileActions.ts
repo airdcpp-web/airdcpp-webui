@@ -41,12 +41,12 @@ const QueueFileActionConfig: UI.ActionConfigList<API.QueueFile> = [
     displayName: 'Remove',
     access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
-    confirmation: file => ({
-      content: `Are you sure that you want to remove the file ${file.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the file {{item.name}}?',
       approveCaption: 'Remove file',
       rejectCaption: `Don't remove`,
       checkboxCaption: 'Remove on disk',
-    })
+    }
   } },
 ];
 
@@ -116,6 +116,6 @@ QueueFileActions.setFilePriority.listen(function (
 });
 
 export default {
-  id: UI.Modules.QUEUE,
+  moduleId: UI.Modules.QUEUE,
   actions: QueueFileActions,
-};
+} as UI.ModuleActions<API.QueueFile>;

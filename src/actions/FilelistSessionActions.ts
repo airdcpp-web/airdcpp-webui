@@ -172,6 +172,6 @@ const FilelistSessionActionsDecorated = SessionActionDecorator(
 //export default FilelistSessionActionsDecorated;
 
 export default {
-  id: UI.Modules.FILELISTS,
+  moduleId: UI.Modules.FILELISTS,
   actions: FilelistSessionActionsDecorated,
 };

@@ -107,7 +107,6 @@
         "setPassword": "Set password",
         "edit": "Edit",
         "remove": "Remove",
-        "reload": "Reload",
         "changePassword": "Change password",
         "removePassword": "Remove password"
       },
@@ -115,13 +114,9 @@
         "connectState": "State",
         "name": "Name",
         "autoConnect": "Auto connect",
-        "shareProfile": "Share profile",
         "nick": "Nick",
         "hasPassword": "Password",
-        "hubUrl": "Address",
-        "size": "Size",
-        "time": "Last modified",
-        "type": "Type"
+        "hubUrl": "Address"
       }
     },
     "filelists": {

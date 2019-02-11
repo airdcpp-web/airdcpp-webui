@@ -1,6 +1,6 @@
 import { FormFieldDefinition } from './form';
 import { ModuleActions } from './actions';
-import i18next from 'i18next';
+import { ModuleTranslator } from './modules';
 
 
 export interface WidgetSettings<SettingsT = object> {
@@ -11,7 +11,7 @@ export interface WidgetSettings<SettingsT = object> {
 export interface WidgetProps<SettingsT = object> {
   componentId: string;
   settings: SettingsT;
-  widgetT: i18next.TFunction;
+  widgetT: ModuleTranslator;
   toWidgetI18nKey: (key?: string) => string;
 }
 

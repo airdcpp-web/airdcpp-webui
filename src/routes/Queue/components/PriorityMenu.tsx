@@ -86,7 +86,7 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
 
   render() {
     const { itemPrio, t } = this.props;
-    let caption = translate(itemPrio.str, t, UI.Modules.QUEUE);
+    let caption = translate(PriorityEnum[itemPrio.id].str, t, UI.Modules.QUEUE);
     if (itemPrio.auto) {
       caption += ` (${translate('Auto', t, UI.Modules.QUEUE).toLocaleLowerCase()})`;
     }

@@ -49,7 +49,7 @@ const ShareProfileActionConfig: UI.ActionConfigList<API.ShareProfile> = [
     icon: IconConstants.EDIT,
     input: profile => ({
       approveCaption: 'Rename',
-      content: `Enter new name for the profile ${profile.name}`,
+      content: 'Enter new name for the profile {{item.name}}',
       inputProps: {
         placeholder: 'Enter name',
         defaultValue: profile.name,
@@ -70,11 +70,11 @@ const ShareProfileActionConfig: UI.ActionConfigList<API.ShareProfile> = [
     access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
     filter: notDefault,
-    confirmation: profile => ({
-      content: `Are you sure that you want to remove the profile ${profile.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the profile {{item.name}}?',
       approveCaption: 'Remove profile',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
 ];
 
@@ -132,6 +132,6 @@ ShareProfileActions.browse.listen(function (
 });
 
 export default {
-  id: UI.Modules.SETTINGS,
+  moduleId: UI.Modules.SETTINGS,
   actions: ShareProfileActions,
 };

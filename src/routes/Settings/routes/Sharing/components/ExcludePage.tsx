@@ -58,7 +58,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
               <br/>
               <ActionButton
                 action={ ShareActions.actions.refresh }
-                moduleId={ ShareActions.id }
+                moduleId={ ShareActions.moduleId }
               />
             </div>
           }
@@ -67,7 +67,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
 
         <ActionButton
           action={ ShareExcludeActions.actions.addExclude }
-          moduleId={ ShareExcludeActions.id }
+          moduleId={ ShareExcludeActions.moduleId }
           className="add"
         />
 

@@ -31,6 +31,7 @@ const NickCell: React.FC<RowWrapperCellChildProps<string, API.HubUser>> = (
 
 interface HubUserTableProps {
   session: API.Hub;
+  sessionT: UI.ModuleTranslator;
 }
 
 class HubUserTable extends React.Component<HubUserTableProps> {
@@ -43,21 +44,25 @@ class HubUserTable extends React.Component<HubUserTableProps> {
   }
 
   emptyRowsNodeGetter = () => {
-    const connectState = this.props.session.connect_state.id;
+    const { session, sessionT } = this.props;
+    const connectState = session.connect_state.id;
 
     if (connectState === API.HubConnectStateEnum.DISCONNECTED) {
       return (
         <div className="offline-message">
           <Message 
             className="offline"
-            title="Not connected to the hub"
+            title={ sessionT.translate('Not connected to the hub') }
             icon="plug"
           />
         </div>
       );
     } 
 
-    const text = connectState !== API.HubConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist';
+    const text = sessionT.translate(
+      connectState !== API.HubConnectStateEnum.CONNECTED ? 'Connecting' : 'Loading userlist'
+    );
+    
     return (
       <div className="loader-wrapper">
         <Loader text={ text }/>

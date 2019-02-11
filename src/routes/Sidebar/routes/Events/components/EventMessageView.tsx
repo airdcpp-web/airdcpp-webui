@@ -36,6 +36,7 @@ const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
     <MessageView 
       className="events"
       messages={ messages }
+      t={ t }
     />
   );
 };

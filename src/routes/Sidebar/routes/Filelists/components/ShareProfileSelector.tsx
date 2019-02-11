@@ -7,10 +7,12 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 interface ShareProfileSelectorProps {
   onProfileChanged: (profileId: number) => void;
+  sessionT: UI.ModuleTranslator;
 }
 
 class ShareProfileSelector extends React.Component<ShareProfileSelectorProps & ShareProfileDecoratorChildProps> {
@@ -35,10 +37,11 @@ class ShareProfileSelector extends React.Component<ShareProfileSelectorProps & S
   }
 
   render() {
+    const { sessionT } = this.props;
     return (
       <Dropdown 
         className="profile top right pointing" 
-        caption="Browse own share..." 
+        caption={ sessionT.translate('Browse own share...') }
         triggerIcon=""
       >
         { this.props.profiles.map(this.getDropdownItem) }

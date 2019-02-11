@@ -21,15 +21,15 @@ const Statistics = StatisticsDecorator<any, StatisticsProps>(
   ({ stats, widgetT }) => (
     <div className="ui list">
       <ListItem 
-        header={ widgetT('loggedInAs', 'Logged in as') } 
+        header={ widgetT.translate('Logged in as') } 
         description={ LoginStore.user.username }
       />
       <ListItem 
-        header={ widgetT('clientStarted', 'Client started') } 
+        header={ widgetT.translate('Client started') } 
         description={ formatRelativeTime(LoginStore.systemInfo.client_started) }
       />
       <ListItem 
-        header={ widgetT('activeSessions', 'Active sessions') } 
+        header={ widgetT.translate('Active sessions') } 
         description={ stats.active_sessions }
       />
     </div>

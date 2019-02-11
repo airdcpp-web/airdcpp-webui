@@ -7,13 +7,15 @@ import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFoot
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 interface FileFooterProps {
   item: API.ViewFile;
+  sessionT: UI.ModuleTranslator;
 }
 
-const FileFooter: React.FC<FileFooterProps> = ({ item }) => {
+const FileFooter: React.FC<FileFooterProps> = ({ item, sessionT }) => {
   if (useMobileLayout()) {
     return null;
   }
@@ -22,7 +24,7 @@ const FileFooter: React.FC<FileFooterProps> = ({ item }) => {
   return (
     <SessionFooter>
       <FooterItem 
-        label={ downloadState ? 'Downloaded' : 'Opened' } 
+        label={ sessionT.translate(downloadState ? 'Downloaded' : 'Opened') } 
         text={ formatRelativeTime(downloadState ? downloadState.time_finished : item.time_opened) }
       />
     </SessionFooter>

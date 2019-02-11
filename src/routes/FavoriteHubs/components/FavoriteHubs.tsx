@@ -56,7 +56,7 @@ class FavoriteHubs extends React.Component {
     const footerData = (
       <ActionButton 
         action={ FavoriteHubActions.actions.create }
-        moduleId={ FavoriteHubActions.id }
+        moduleId={ FavoriteHubActions.moduleId }
       />
     );
 
@@ -67,7 +67,7 @@ class FavoriteHubs extends React.Component {
           rowClassNameGetter={ this.rowClassNameGetter }
           footerData={ footerData }
           store={ FavoriteHubStore }
-          moduleId={ FavoriteHubActions.id }
+          moduleId={ FavoriteHubActions.moduleId }
         >
           <Column
             name="State"

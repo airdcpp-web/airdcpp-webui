@@ -52,7 +52,7 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
   <div id="directory-table">
     <ActionButton
       action={ FavoriteDirectoryActions.actions.create }
-      moduleId={ FavoriteDirectoryActions.id }
+      moduleId={ FavoriteDirectoryActions.moduleId }
     />
 
     { directories.length === 0 ? null : (

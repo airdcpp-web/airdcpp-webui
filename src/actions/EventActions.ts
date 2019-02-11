@@ -52,6 +52,6 @@ EventActions.setRead.listen(function () {
 
 
 export default {
-  id: UI.Modules.EVENTS,
+  moduleId: UI.Modules.EVENTS,
   actions: EventActions,
 };

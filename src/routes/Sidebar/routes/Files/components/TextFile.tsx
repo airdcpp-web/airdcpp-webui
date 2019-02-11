@@ -58,20 +58,20 @@ class TextFile extends React.Component<FileSessionContentProps> {
   }
 
   render() {
-    const { item } = this.props;
+    const { item, sessionT } = this.props;
     const { text, error } = this.state;
 
     if (item.content_ready && !text) {
       if (error) {
         return (
           <Message
-            title="Failed to fetch content"
+            title={ sessionT.translate('Failed to fetch content') }
             description={ error }
           />
         );
       }
 
-      return <Loader text="Preparing view"/>;
+      return <Loader text={ sessionT.translate('Preparing view') }/>;
     }
 
     return (

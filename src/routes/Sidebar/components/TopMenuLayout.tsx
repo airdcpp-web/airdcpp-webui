@@ -6,24 +6,28 @@ import ActionButton from 'components/ActionButton';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import { MenuIcon } from 'components/menu/MenuIcon';
-import { SessionMainLayoutProps, SessionBaseType } from './SessionLayout';
+import { SessionMainLayoutProps } from './SessionLayout';
 
 import * as UI from 'types/ui';
+import { translate } from 'utils/TranslationUtils';
 
 
-type SessionDropdownProps<SessionT extends SessionBaseType> = 
-  Pick<SessionMainLayoutProps<SessionT>, 'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter'>;
+type SessionDropdownProps<SessionT extends UI.SessionItemBase> = 
+  Pick<
+    SessionMainLayoutProps<SessionT>, 
+    'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter' | 't'
+  >;
 
-const SessionDropdown: React.FC<SessionDropdownProps</*SessionT*/ any>> = ({ 
-  sessionMenuItems, newButton, unreadInfoStore, listActionMenuGetter 
-}) => (
+const SessionDropdown = <SessionT extends UI.SessionItemBase>({ 
+  sessionMenuItems, newButton, unreadInfoStore, listActionMenuGetter, t
+}: SessionDropdownProps<SessionT>) => (
   <SectionedDropdown 
     triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}
   >
-    <MenuSection caption="New">
+    <MenuSection caption={ translate('New', t, UI.Modules.COMMON) }>
       { newButton }
     </MenuSection>
-    <MenuSection caption="Current sessions">
+    <MenuSection caption={ translate('Current sessions', t, UI.Modules.COMMON) }>
       { sessionMenuItems }
     </MenuSection>
     <MenuSection>
@@ -33,7 +37,7 @@ const SessionDropdown: React.FC<SessionDropdownProps</*SessionT*/ any>> = ({
 );
 
 
-type CloseButtonProps<SessionT extends SessionBaseType> = 
+type CloseButtonProps<SessionT extends UI.SessionItemBase> = 
   Pick<SessionMainLayoutProps<SessionT>, 'closeAction' | 'activeItem' | 'moduleId'>;
 
 const CloseButton: React.FC<CloseButtonProps<any>> = (

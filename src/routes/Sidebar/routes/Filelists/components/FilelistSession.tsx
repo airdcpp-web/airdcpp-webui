@@ -21,13 +21,17 @@ class FilelistSession extends React.Component<FilelistSessionProps> {
   static displayName = 'FilelistSession';
 
   render() {
-    const { user, location, state } = this.props.session;
+    const { session, sessionT } = this.props;
+    const { user, location, state } = session;
 
     if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('self') === -1) {
       return (
         <Message 
-          title="User offline"
-          description="You will be able to continue browsing when the user comes back online"
+          title={ sessionT.t('userOffline', 'User offline') }
+          description={ sessionT.t<string>(
+            'userOfflineDesc', 
+            'You will be able to continue browsing when the user comes back online'
+          ) }
         />
       );
     }
@@ -43,7 +47,8 @@ class FilelistSession extends React.Component<FilelistSessionProps> {
         />
 
         <FilelistFooter
-          session={ this.props.session }
+          session={ session }
+          sessionT={ sessionT }
         />
       </div>
     );

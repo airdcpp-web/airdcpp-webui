@@ -48,7 +48,7 @@ const SpeedChart = withContentRect('bounds')(
               </Charts>
               <YAxis
                 id="traffic"
-                label={ widgetT('trafficBps', 'Traffic (bps)') }
+                label={ widgetT.translate('Traffic (bps)') }
                 min={ -maxUpload } 
                 max={ maxDownload }
                 absolute={true}

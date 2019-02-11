@@ -6,13 +6,15 @@ import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFoot
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 interface FilelistFooterProps {
   session: API.FilelistSession;
+  sessionT: UI.ModuleTranslator;
 }
 
-const FilelistFooter: React.FC<FilelistFooterProps> = ({ session }) => {
+const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) => {
   if (useMobileLayout()) {
     return null;
   }
@@ -24,8 +26,14 @@ const FilelistFooter: React.FC<FilelistFooterProps> = ({ session }) => {
 
   return (
     <SessionFooter>
-      <FooterItem label="Directory size" text={ locationText }/>
-      <FooterItem label="Total list size" text={ formatSize(session.total_size) }/>
+      <FooterItem 
+        label={ sessionT.translate('Directory size') } 
+        text={ locationText }
+      />
+      <FooterItem 
+        label={ sessionT.translate('Total list size') } 
+        text={ formatSize(session.total_size) }
+      />
     </SessionFooter>
   );
 };

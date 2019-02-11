@@ -10,20 +10,14 @@ import HubActions from 'actions/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
-import { Location } from 'history';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 
 
-interface HubNewProps {
-  location: Location;
-}
-
-class HubNew extends React.Component<HubNewProps> {
+class HubNew extends React.Component<NewSessionLayoutProps> {
   handleConnect = (hubUrl: string) => {
     HubActions.actions.createSession(this.props.location, hubUrl, HubSessionStore);
   }
@@ -41,6 +35,7 @@ class HubNew extends React.Component<HubNewProps> {
   }
 
   render() {
+    const { sessionT } = this.props;
     return (
       <div className="session new">
         <HubSearchInput 
@@ -48,7 +43,7 @@ class HubNew extends React.Component<HubNewProps> {
         />
         <Message
           description={(
-            <Trans i18nKey={ toI18nKey('favoriteHubsHint', UI.Modules.HUBS) }>
+            <Trans i18nKey={ sessionT.toI18nKey('favoriteHubsHint') }>
               Tip: visit the <Link to="/favorite-hubs">Favorite hubs</Link> page to connect using custom settings
             </Trans>
           )}

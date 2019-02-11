@@ -61,7 +61,7 @@ const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession
       unreadInfoStore={ FilelistSessionStore }
       sessionItemLayout={ FilelistSession }
       newLayout={ FilelistNew }
-
+      t={ t }
       { ...ItemHandler }
       { ...other }
     />

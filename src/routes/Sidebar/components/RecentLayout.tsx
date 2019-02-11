@@ -11,6 +11,9 @@ import { ListItem } from 'components/semantic/List';
 import HistoryConstants from 'constants/HistoryConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+import i18next from 'i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
 interface RecentLayoutProps {
@@ -18,6 +21,7 @@ interface RecentLayoutProps {
   entryType: string;
   entryTitleRenderer: (entry: API.HistoryItem) => React.ReactNode;
   hasSession: (entry: API.HistoryItem) => boolean;
+  t: i18next.TFunction;
 }
 
 interface DataProps {
@@ -26,7 +30,7 @@ interface DataProps {
 
 type Props = RecentLayoutProps & DataProps & DataProviderDecoratorChildProps;
 
-const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession, entryIcon }) => {
+const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession, entryIcon, t }) => {
   if (entries.length === 0) {
     return null;
   }
@@ -34,7 +38,7 @@ const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession
   return (
     <div className="recents">
       <LayoutHeader
-        title="Recent sessions"
+        title={ translate('Recent sessions', t, UI.Modules.COMMON) }
         size="medium"
       />
       <div className="ui relaxed divided list">
@@ -42,7 +46,12 @@ const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession
           <ListItem 
             key={ index }
             header={ entryTitleRenderer(entry) }
-            description={ entry.last_opened ? (`Opened ${formatRelativeTime(entry.last_opened)}`) : null }
+            description={ !!entry.last_opened && t(toI18nKey('openedAgo', UI.Modules.COMMON), {
+              defaultValue: 'Opened {{timeAgo}}',
+              replace: {
+                timeAgo: formatRelativeTime(entry.last_opened)
+              }
+            }) }
             icon={ (hasSession(entry) ? 'green ' : '') + entryIcon }
           />
         )) }

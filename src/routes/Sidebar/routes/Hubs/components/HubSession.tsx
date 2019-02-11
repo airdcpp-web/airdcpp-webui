@@ -19,7 +19,7 @@ import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
 const getStorageKey = (props: HubSessionProps) => {
-  return 'view_userlist_' + props.session.id;
+  return `view_userlist_${props.session.id}`;
 };
 
 const checkList = (props: HubSessionProps) => {
@@ -50,15 +50,15 @@ class HubSession extends React.Component<HubSessionProps> {
   }
 
   getMessage = () => {
-    const { session } = this.props;
+    const { session, sessionT } = this.props;
     const connectState = session.connect_state.id;
 
     if (connectState === API.HubConnectStateEnum.PASSWORD) {
       return (
         <HubActionPrompt 
-          title="Password required"
+          title={ sessionT.translate('Password required') }
           icon="lock"
-          content={ <PasswordPrompt hub={ session }/> }
+          content={ <PasswordPrompt hub={ session } sessionT={ sessionT }/> }
         />
       );
     }
@@ -66,9 +66,9 @@ class HubSession extends React.Component<HubSessionProps> {
     if (connectState === API.HubConnectStateEnum.REDIRECT) {
       return (
         <HubActionPrompt 
-          title="Redirect requested"
+          title={ sessionT.translate('Redirect requested') }
           icon="forward mail"
-          content={ <RedirectPrompt hub={ session }/> }
+          content={ <RedirectPrompt hub={ session } sessionT={ sessionT }/> }
         />
       );
     }
@@ -83,13 +83,13 @@ class HubSession extends React.Component<HubSessionProps> {
   }
 
   render() {
-    const { session, actions } = this.props;
+    const { session, actions, sessionT } = this.props;
     const { showList } = this.state;
 
     const checkbox = (
       <Checkbox
         type="toggle"
-        caption="User list"
+        caption={ sessionT.translate('User list') }
         onChange={ this.onClickUsers }
         checked={ showList }
       />
@@ -101,6 +101,7 @@ class HubSession extends React.Component<HubSessionProps> {
         { showList ? (
           <HubUserTable
             session={ session }
+            sessionT={ sessionT }
           />
         ) : (
           <ChatLayout
@@ -108,12 +109,12 @@ class HubSession extends React.Component<HubSessionProps> {
             actions={ actions }
             chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
-            //location={ location }
           />
         ) }
         <HubFooter
           userlistToggle={ checkbox }
           session={ session }
+          sessionT={ sessionT }
         />
       </div>
     );

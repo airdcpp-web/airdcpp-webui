@@ -8,16 +8,13 @@ import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
-import { Location } from 'history';
 
 import * as API from 'types/api';
 
+import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 
-interface FilelistNewProps {
-  location: Location;
-}
 
-class FilelistNew extends React.Component<FilelistNewProps> {
+class FilelistNew extends React.Component<NewSessionLayoutProps> {
   handleSubmit = (nick: string | null, user: API.HintedUser) => {
     FilelistSessionActions.actions.createSession(this.props.location, user, FilelistSessionStore);
   }
@@ -29,7 +26,7 @@ class FilelistNew extends React.Component<FilelistNewProps> {
   recentUserRender = (entry: API.HistoryItem) => {
     return (
       <a onClick={ _ => this.handleSubmit(null, entry.user!) }>
-        { entry.user!.nicks + (entry.description ? ' (' + entry.description + ')' : '') }
+        { entry.user!.nicks + (entry.description ? ` (${entry.description})` : '') }
       </a> 
     );
   }
@@ -39,14 +36,19 @@ class FilelistNew extends React.Component<FilelistNewProps> {
   }
 
   render() {
+    const { sessionT } = this.props;
     return (
       <div className="session new">
         <UserSearchInput 
           submitHandler={ this.handleSubmit } 
-          offlineMessage="You must to be connected to at least one hub in order to download filelists from other users"
+          offlineMessage={ sessionT.t<string>(
+            'offlineMessage',
+            'You must to be connected to at least one hub in order to download filelists from other users') 
+          }
         />
          <ShareProfileSelector 
            onProfileChanged={ this.onProfileChanged }
+           sessionT={ sessionT }
          />
         <RecentLayout
           entryType={ HistoryEntryEnum.FILELIST }

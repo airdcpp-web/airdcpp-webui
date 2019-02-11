@@ -120,6 +120,6 @@ FilelistItemActions.refreshShare.listen(function ({ session, item }: ActionFilel
 });
 
 export default {
-  id: UI.Modules.FAVORITE_HUBS,
+  moduleId: UI.Modules.FILELISTS,
   actions: FilelistItemActions,
 };

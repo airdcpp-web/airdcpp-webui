@@ -35,11 +35,11 @@ const WidgetActionConfig: UI.ActionConfigList<WidgetItemInfo> = [
     displayName: 'Remove widget',
     filter: notAlwaysShow,
     icon: IconConstants.REMOVE,
-    confirmation: widget => ({
-      content: `Are you sure that you want to remove the widget ${widget.settings.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the widget {{item.settings.name}}?',
       approveCaption: 'Remove widget',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
 ];
 
@@ -55,6 +55,6 @@ WidgetActions.edit.listen(function ({ id, widgetInfo }: WidgetItemInfo, location
 });
 
 export default {
-  id: UI.Modules.WIDGETS,
+  moduleId: UI.Modules.WIDGETS,
   actions: WidgetActions,
 };

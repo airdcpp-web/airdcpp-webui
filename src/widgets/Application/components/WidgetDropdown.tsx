@@ -29,7 +29,7 @@ const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = (
   { componentId, location, widgetT }
 ) => (
   <Dropdown 
-    caption={ widgetT('addWidget', 'Add widget...') }
+    caption={ widgetT.translate('Add widget...') }
     className="create-widget"
     button={ true }
     contextElement={ `.${componentId}` }

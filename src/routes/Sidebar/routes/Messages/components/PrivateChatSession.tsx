@@ -7,20 +7,19 @@ import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFoot
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
 import * as API from 'types/api';
-//import * as UI from 'types/ui';
+
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
 interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, ChatActions> {
-  //session: API.PrivateChat;
-  //actions: UI.SessionActions<API.PrivateChat, ChatActions>;
+
 }
 
 class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';
 
   render() {
-    const { session, actions } = this.props;
+    const { session, actions, sessionT } = this.props;
     return (
       <div className="private chat session">
         <ChatLayout
@@ -32,6 +31,7 @@ class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
 
         <MessageFooter
           session={ session }
+          sessionT={ sessionT }
         />
       </div>
     );

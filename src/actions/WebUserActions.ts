@@ -35,11 +35,11 @@ const WebUserActionConfig: UI.ActionConfigList<API.WebUser> = [
     displayName: 'Remove user', 
     filter: isOther,
     icon: IconConstants.REMOVE,
-    confirmation: user => ({
-      content: `Are you sure that you want to remove the user ${user.username}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the user {{item.username}}?',
       approveCaption: 'Remove user',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
 ];
 
@@ -61,6 +61,6 @@ WebUserActions.remove.listen(function (this: UI.AsyncActionType<API.WebUser>, us
 });
 
 export default {
-  id: UI.Modules.SETTINGS,
+  moduleId: UI.Modules.SETTINGS,
   actions: WebUserActions,
 };

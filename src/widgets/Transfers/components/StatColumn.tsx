@@ -18,7 +18,7 @@ interface LimiterValueProps extends Pick<UI.WidgetProps, 'widgetT'> {
 }
 
 const LimiterValue: React.FC<LimiterValueProps> = ({ limit, settingKey, widgetT }) => {
-  const value = limit ? formatSpeed(limit * 1024) : widgetT('disabled', 'Disabled');
+  const value = limit ? formatSpeed(limit * 1024) : widgetT.translate('Disabled');
   if (!LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT)) {
     return <span>{ value }</span>;
   }
@@ -44,18 +44,18 @@ interface StatColumnProps extends Pick<UI.WidgetProps, 'widgetT'> {
 
 const StatColumn: React.FC<StatColumnProps> = ({ stats, widgetT }) => (
   <div className="ui list info tiny stats">
-    <ListItem header={ widgetT('downloads', 'Downloads') } description={ stats.downloads }/>
-    <ListItem header={ widgetT('uploads', 'Uploads') } description={ stats.uploads }/>
+    <ListItem header={ widgetT.translate('Downloads') } description={ stats.downloads }/>
+    <ListItem header={ widgetT.translate('Uploads') } description={ stats.uploads }/>
     <div className="section-separator"/>
-    <ListItem header={ widgetT('downloaded', 'Downloaded') } description={ formatSize(stats.session_downloaded) }/>
-    <ListItem header={ widgetT('uploaded', 'Uploaded') } description={ formatSize(stats.session_uploaded) }/>
+    <ListItem header={ widgetT.translate('Downloaded') } description={ formatSize(stats.session_downloaded) }/>
+    <ListItem header={ widgetT.translate('Uploaded') } description={ formatSize(stats.session_uploaded) }/>
     <div className="section-separator"/>
     <ListItem 
-      header={ widgetT('downloadLimit', 'Download limit') } 
+      header={ widgetT.translate('Download limit') } 
       description={ <LimiterValue widgetT={ widgetT } limit={ stats.limit_down } settingKey="download_limit_main"/> }
     />
     <ListItem 
-      header={ widgetT('uploadLimit', 'Upload limit') }
+      header={ widgetT.translate('Upload limit') }
       description={ <LimiterValue widgetT={ widgetT } limit={ stats.limit_up } settingKey="upload_limit_main"/> }
     />
   </div>

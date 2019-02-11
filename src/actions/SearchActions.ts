@@ -57,6 +57,6 @@ SearchActions.result.listen(function (data: API.GroupedSearchResult, location: L
 });
 
 export default {
-  id: UI.Modules.SEARCH,
+  moduleId: UI.Modules.SEARCH,
   actions: SearchActions,
 };

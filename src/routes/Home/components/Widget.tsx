@@ -11,6 +11,7 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import { getModuleT } from 'utils/TranslationUtils';
 
 
 const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, t: i18next.TFunction) => {
@@ -47,10 +48,7 @@ const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, chil
     return ret;
   };
 
-  const widgetT: i18next.TFunction = (key, options) => {
-    return t(toWidgetI18nKey(key), options);
-  };
-
+  const widgetT = getModuleT(t, toWidgetI18nKey());
   return (
     <div 
       className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 

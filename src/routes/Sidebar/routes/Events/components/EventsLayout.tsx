@@ -47,7 +47,7 @@ const SystemLog: React.FC<SystemLogProps> = memo(
             rightComponent={
               <ActionButton 
                 action={ EventActions.actions.clear }
-                moduleId={ EventActions.id }
+                moduleId={ EventActions.moduleId }
               />
             }
           />

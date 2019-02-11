@@ -10,6 +10,7 @@ import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFoot
 import EncryptionState from 'components/EncryptionState';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
@@ -20,6 +21,7 @@ import {
 interface HubFooterProps {
   session: API.Hub;
   userlistToggle: React.ReactNode;
+  sessionT: UI.ModuleTranslator;
 }
 
 interface State {
@@ -80,7 +82,7 @@ class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
   }
 
   render() {
-    const { userlistToggle, session }: HubFooterProps = this.props;
+    const { userlistToggle, session, sessionT } = this.props;
     const { shared, users } = this.state;
 
     const averageShare = formatSize(users > 0 ? (shared / users) : 0);
@@ -91,12 +93,28 @@ class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
           text={(
             <>
               <EncryptionState encryption={ session.encryption }/>
-              { `${users} users` }
+              { sessionT.t('xUsers', {
+                  defaultValue: '{{count}} user',
+                  defaultValue_plural: '{{count}} users',
+                  count: users,
+                  replace: {
+                    count: users
+                  }
+                }
+              ) }
             </>
           )}
         />
         { window.innerWidth > 700 && (
-          <FooterItem text={ `${formatSize(shared)} (${averageShare}/user)` }/> 
+          <FooterItem 
+            text={ sessionT.t('sharePerUser', {
+              defaultValue: '{{total}} ({{averageShare}}/user)',
+              replace: {
+                total: formatSize(shared),
+                average: averageShare
+              }
+            }) }
+          /> 
         ) }
         <div className="userlist-button">
           { userlistToggle }

@@ -7,7 +7,11 @@ import * as UI from 'types/ui';
 import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
 import { withModalCloseContext, ModalCloseContextProps } from 'decorators/ModalRouteDecorator';
 import { InputDialog } from 'components/semantic/InputDialog';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 
+import { camelCase } from 'lodash';
 
 
 interface ActionHandlerDecoratorProps {
@@ -17,6 +21,7 @@ interface ActionHandlerDecoratorProps {
 export interface ActionData<ItemDataT = any> {
   actionId: string;
   action: UI.ActionType<ItemDataT>;
+  moduleId: string;
   itemData: ItemDataT | undefined;
 }
 
@@ -26,18 +31,53 @@ export interface ActionHandlerDecoratorChildProps<ItemDataT = any> extends Route
   onClickAction: ActionClickHandler<ItemDataT>;
 }
 
+const toKey = (propName: string, actionData: ActionData) => {
+  return toI18nKey(
+    //`${actionData.actionId}${propName}`, 
+    camelCase(actionData.action.displayName) + propName,
+    [ actionData.moduleId, UI.SubNamespaces.ACTIONS, UI.SubNamespaces.PROMPTS ]
+  );
+};
+
+const translateInput = <ItemDataT extends any>(
+  input: UI.ActionConfirmation,
+  actionData: ActionData,
+  t: i18next.TFunction
+): UI.ActionConfirmation /*& { rejectCaption: string; }*/ => {
+  //const { itemData } = actionData;
+  const { approveCaption, rejectCaption, checkboxCaption, content } = input;
+
+  const ret = {
+    approveCaption: t(toKey('Approve', actionData), approveCaption),
+    rejectCaption: rejectCaption ? t(toKey('Reject', actionData), rejectCaption) : undefined,
+    content: t(toKey('Content', actionData), {
+      defaultValue: content,
+      replace: {
+        item: actionData.itemData,
+      },
+    }),
+    checkboxCaption: checkboxCaption ? t(toKey('Checkbox', actionData), checkboxCaption) : undefined,
+  };
+
+  return ret;
+};
+
 
 const isSidebarAction = (actionId: string) => actionId === 'browse' || actionId === 'message';
 
 const getCommonConfirmDialogProps = <ItemDataT extends {}>(
   actionData: ActionData<ItemDataT>,
   confirmation: UI.ActionConfirmation,
-): Omit<ConfirmDialogProps, 'onApproved'> => {
+  defaultRejectCaption: string,
+  t: i18next.TFunction,
+): Omit<ConfirmDialogProps, 'onApproved' /*| 'approveCaption' | 'rejectCaption'*/> => {
   const { icon, displayName } = actionData.action;
-  const { approveCaption, rejectCaption, content, checkboxCaption } = confirmation!;
+  const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(confirmation!, actionData, t);
   return {
-    approveCaption,
-    rejectCaption,
+    approveCaption, 
+    rejectCaption: rejectCaption || translate(defaultRejectCaption, t, UI.Modules.COMMON),
+    //approveCaption: approveCaption || translate('Yes', t, UI.Modules.COMMON),
+    //rejectCaption: rejectCaption || translate('No', t, UI.Modules.COMMON),
     content,
     icon,
     title: displayName,
@@ -54,30 +94,40 @@ interface ConfirmHandlerProps<ItemDataT> {
 const ConfirmHandler = <ItemDataT extends any>(
   { actionData, onApproved, onRejected }: ConfirmHandlerProps<ItemDataT>
 ) => {
+  const { t } = useTranslation();
   if (!actionData) {
     return null;
   }
 
   const { confirmation, input } = actionData.action;
   if (confirmation) {
+    //const moduleT = getModuleT(t, actionData.moduleId);
     const options = typeof confirmation === 'object' ? confirmation : confirmation(actionData.itemData!);
     return (
       <ConfirmDialog
         onApproved={ onApproved }
         onRejected={ onRejected }
-        { ...getCommonConfirmDialogProps(actionData, options) }
+        { ...getCommonConfirmDialogProps(actionData, options, 'No', t) }
       />
     );
   }
 
   if (input) {
+    //const moduleT = getModuleT(t, actionData.moduleId);
     const options = typeof input === 'object' ? input : input(actionData.itemData!);
+    if (options.inputProps.placeholder) {
+      options.inputProps.placeholder = t(
+        toKey('Placeholder', actionData),
+        options.inputProps.placeholder
+      );
+    }
+
     return (
       <InputDialog
         onApproved={ onApproved }
         onRejected={ onRejected }
         inputProps={ options.inputProps }
-        { ...getCommonConfirmDialogProps(actionData, options) }
+        { ...getCommonConfirmDialogProps(actionData, options, 'Cancel', t) }
       />
     );
   }

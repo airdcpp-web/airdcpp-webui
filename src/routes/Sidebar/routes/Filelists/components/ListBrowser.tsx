@@ -26,6 +26,8 @@ import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/downloa
 import { Location } from 'history';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import FilelistConstants from 'constants/FilelistConstants';
 import { FilelistItem } from 'types/api';
 
@@ -33,6 +35,7 @@ import { FilelistItem } from 'types/api';
 interface ListBrowserProps {
   session: API.FilelistSession;
   location: Location;
+  sessionT: UI.ModuleTranslator;
 }
 
 type LocationState = { directory: string; } | undefined;
@@ -42,10 +45,11 @@ class ListBrowser extends React.Component<ListBrowserProps> {
 
   routerWillLeave = (nextLocation: Location, action: string) => {
     if (action === 'POP' && this.hasClickedDirectory && nextLocation.pathname !== this.props.location.pathname) {
+      const { sessionT } = this.props;
       this.hasClickedDirectory = false;
       NotificationActions.info({
-        title: 'Confirm action',
-        message: 'Click the back button again to leave this filelist',
+        title: sessionT.t('confirmLeave', 'Confirm action'),
+        message: sessionT.t('confirmLeaveDesc', 'Click the back button again to leave this filelist'),
       });
       return false;
     }
@@ -113,12 +117,13 @@ class ListBrowser extends React.Component<ListBrowserProps> {
 
   emptyRowsNodeGetter = () => {
     const { location, state } = this.props.session;
+    const { translate } = this.props.sessionT;
 
     if (state.id === 'download_failed') {
       return (
         <Message 
           icon={ IconConstants.ERROR }
-          title="Download failed"
+          title={ translate('Download failed') }
           description={ state.str }
         />
       );
@@ -127,18 +132,18 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     // The list finished downloading but the view hasn't updated yet
     const { files, directories } = location.type as API.DirectoryType;
     if (files !== 0 || directories !== 0) {
-      return <Loader text="Updating view"/>;
+      return <Loader text={ translate('Updating view') }/>;
     }
 
     // The directory was changed but the download state hasn't changed yet
     if (!location.complete) {
-      return <Loader text="Preparing download"/>;
+      return <Loader text={ translate('Preparing download') }/>;
     }
 
     return (
       <Message 
-        title={ 'No content to display' }
-        description={ 'The directory is empty' }
+        title={ translate('No content to display') }
+        description={ translate('The directory is empty') }
       />
     );
   }
@@ -210,7 +215,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           entityId={ session.id }
           viewId={ session.location.path }
           sessionStore={ FilelistSessionStore }
-          moduleId={ FilelistItemActions.id }
+          moduleId={ FilelistItemActions.moduleId }
         >
           <Column
             name="Name"

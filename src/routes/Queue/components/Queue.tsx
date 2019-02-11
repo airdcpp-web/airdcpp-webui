@@ -27,7 +27,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { getModuleT } from 'utils/TranslationUtils';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
@@ -57,21 +57,22 @@ class Queue extends React.Component<WithTranslation> {
   }
 
   emptyRowsNodeGetter = () => {
-    const { t } = this.props;
+    const { t } = this.queueT;
     return (
       <Message 
-        title={ t(toI18nKey('queueEmpty', UI.Modules.QUEUE), 'The queue is empty') }
+        title={ t('queueEmpty', 'The queue is empty') }
         icon="file outline"
-        description={ t(
-          toI18nKey('queueEmptyDesc', UI.Modules.QUEUE), 
+        description={ t<string>(
+          'queueEmptyDesc', 
           'New items can be queued from search or filelists'
-        ) as string }
+        ) }
       />
     );
   }
 
+  queueT = getModuleT(this.props.t, UI.Modules.QUEUE);
   render() {
-    const { t } = this.props;
+    const { translate } = this.queueT;
     return (
       <>
         <VirtualTable
@@ -80,14 +81,14 @@ class Queue extends React.Component<WithTranslation> {
           footerData={ 
             <ActionMenu 
               className="top left pointing"
-              caption={ translate('Actions...', t, UI.Modules.QUEUE) } 
+              caption={ translate('Actions...') } 
               actions={ QueueActions }
-              header={ translate('Queue actions', t, UI.Modules.QUEUE) } 
+              header={ translate('Queue actions') } 
               triggerIcon="chevron up"
               button={ true }
             />
           }
-          moduleId={ QueueActions.id }
+          moduleId={ QueueActions.moduleId }
         >
           <Column
             name="Name"
@@ -177,7 +178,7 @@ class Queue extends React.Component<WithTranslation> {
             hideWidth={1200}
           />
         </VirtualTable>
-        <SourceDialog/>
+        <SourceDialog queueT={ this.queueT }/>
         <BundleFileDialog/>
       </>
     );

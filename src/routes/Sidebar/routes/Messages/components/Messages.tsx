@@ -36,7 +36,7 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
       actionIds={ sessionActions }
       sessionItemLayout={ PrivateChatSession }
       newLayout={ MessageNew }
-
+      t={ t }
       { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
       { ...other }
     />

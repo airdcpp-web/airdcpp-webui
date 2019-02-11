@@ -80,7 +80,7 @@ const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResul
 export interface ResultTableProps {
   running: boolean;
   searchString: string;
-  t: i18next.TFunction;
+  searchT: UI.ModuleTranslator;
 }
 
 class ResultTable extends React.Component<ResultTableProps> {
@@ -91,7 +91,7 @@ class ResultTable extends React.Component<ResultTableProps> {
   }
 
   emptyRowsNodeGetter = () => {
-    const { running, searchString, t } = this.props;
+    const { running, searchString, searchT } = this.props;
     if (running) {
       return null;
     }
@@ -108,14 +108,14 @@ class ResultTable extends React.Component<ResultTableProps> {
 
     return (
       <Message 
-        title={ t(toI18nKey('noResults', UI.Modules.SEARCH), {
+        title={ searchT.t('noResults', {
           defaultValue: `No results found for "{{searchString}}"`,
           replace: {
             searchString
           }
         }) }
         description={ (
-          <Trans i18nKey={ toI18nKey('noResultsHint', UI.Modules.SEARCH) }>
+          <Trans i18nKey={ searchT.toI18nKey('noResultsHint') }>
             <div className="ui bulleted list">
               <div className="item">Ensure that you spelled the words correctly</div>
               <div className="item">Use different keywords</div>
@@ -132,6 +132,7 @@ class ResultTable extends React.Component<ResultTableProps> {
   }
 
   render() {
+    const { searchT } = this.props;
     return (
       <>
         <VirtualTable
@@ -141,7 +142,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           textFilterProps={{
             autoFocus: false,
           }}
-          moduleId={ SearchActions.id }
+          moduleId={ SearchActions.moduleId }
         >
           <Column
             name="Name"
@@ -207,7 +208,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           downloadHandler={ SearchActions.actions.download }
           itemDataGetter={ SearchResultGetter }
         />
-        <ResultDialog/>
+        <ResultDialog searchT={ searchT }/>
       </>
     );
   }

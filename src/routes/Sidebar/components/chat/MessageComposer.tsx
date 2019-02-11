@@ -60,7 +60,7 @@ export interface MessageComposerProps extends ChatSessionProps {
 
 
 const getStorageKey = (props: RouteComponentProps) => {
-  return 'last_message_' + props.location.pathname;
+  return `last_message_${props.location.pathname}`;
 };
 
 const loadState = (props: RouteComponentProps) => {

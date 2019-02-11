@@ -2,7 +2,7 @@ import React from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
 
-import { actionFilter, actionAccess, getActionCaptionKey } from 'utils/ActionUtils';
+import { actionFilter, actionAccess, toActionI18nKey } from 'utils/ActionUtils';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 import { Location } from 'history';
@@ -127,7 +127,7 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
     actionIds: ids,
     itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT | undefined,
     actions: props.actions.actions,
-    moduleId: props.actions.id,
+    moduleId: props.actions.moduleId,
   };
 
   return ret;
@@ -164,7 +164,8 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
         onClickAction({
           actionId,
           action, 
-          itemData: menu.itemDataGetter()
+          itemData: menu.itemDataGetter(),
+          moduleId: menu.moduleId,
         });
 
         //if (!!closeModal && isSidebarAction(actionId)) {
@@ -177,7 +178,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
       icon={ action.icon }
     >
       <Trans
-        i18nKey={ getActionCaptionKey(action, menu.moduleId) }
+        i18nKey={ toActionI18nKey(action, menu.moduleId) }
         defaults={ action.displayName }
       >
         { action.displayName }

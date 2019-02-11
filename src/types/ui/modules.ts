@@ -1,3 +1,6 @@
+import i18next from 'i18next';
+
+
 export const enum Modules {
   QUEUE = 'queue',
   SEARCH = 'search',
@@ -21,6 +24,13 @@ export const enum Modules {
 
 export enum SubNamespaces {
   ACTIONS = 'actions',
+  PROMPTS = 'prompts',
   TABLE = 'table',
   NAVIGATION = 'navigation',
+}
+
+export interface ModuleTranslator {
+  t: i18next.TFunction;
+  toI18nKey: (text: string) => string;
+  translate: (text: string) => string;
 }

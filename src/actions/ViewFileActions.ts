@@ -84,6 +84,6 @@ const ViewFileActionsDecorated = SessionActionDecorator(
 );
 
 export default {
-  id: UI.Modules.VIEWED_FILES,
+  moduleId: UI.Modules.VIEWED_FILES,
   actions: ViewFileActionsDecorated,
 };

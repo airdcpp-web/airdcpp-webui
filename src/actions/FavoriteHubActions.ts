@@ -36,11 +36,11 @@ const FavoriteHubActionConfig: UI.ActionConfigList<API.FavoriteHubEntry> = [
     displayName: 'Remove',
     access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.REMOVE,
-    confirmation: hub => ({
-      content: `Are you sure that you want to remove the favorite hub ${hub.name}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the favorite hub {{item.name}}?',
       approveCaption: 'Remove favorite hub',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
   { 'update': { 
     asyncResult: true
@@ -89,6 +89,6 @@ FavoriteHubActions.remove.failed.listen(function (error: ErrorResponse, hub: API
 });
 
 export default {
-  id: UI.Modules.FAVORITE_HUBS,
+  moduleId: UI.Modules.FAVORITE_HUBS,
   actions: FavoriteHubActions,
 };

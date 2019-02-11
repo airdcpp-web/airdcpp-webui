@@ -29,11 +29,11 @@ const ShareExcludeActionConfig: UI.ActionConfigList<string> = [
     displayName: 'Remove path',
     access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.REMOVE,
-    confirmation: path => ({
-      content: `Are you sure that you want to remove the excluded path ${path}?`,
+    confirmation: {
+      content: 'Are you sure that you want to remove the excluded path {{item}}?',
       approveCaption: 'Remove path',
       rejectCaption: `Don't remove`,
-    })
+    }
   } }, 
 ];
 
@@ -62,6 +62,6 @@ ShareExcludeActions.removeExclude.listen(function (this: UI.AsyncActionType<API.
 });
 
 export default {
-  id: UI.Modules.SETTINGS,
+  moduleId: UI.Modules.SETTINGS,
   actions: ShareExcludeActions,
 };

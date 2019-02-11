@@ -33,6 +33,6 @@ ConnectivityActions.detect.listen(function (
 
 
 export default {
-  id: UI.Modules.SETTINGS,
+  moduleId: UI.Modules.SETTINGS,
   actions: ConnectivityActions,
 };

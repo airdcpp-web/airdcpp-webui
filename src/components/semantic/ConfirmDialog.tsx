@@ -21,8 +21,8 @@ interface ConfirmDialogOptions {
   content?: React.ReactNode;
   title: React.ReactNode;
 
-  approveCaption?: string;
-  rejectCaption?: string;
+  approveCaption: string;
+  rejectCaption: string;
 
   checkboxCaption?: React.ReactNode;
 }
@@ -61,10 +61,10 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
     checkboxCaption: PropTypes.node,
   };
 
-  static defaultProps: Pick<ConfirmDialogProps, 'approveCaption' | 'rejectCaption'> = {
+  /*static defaultProps: Pick<ConfirmDialogProps, 'approveCaption' | 'rejectCaption'> = {
     approveCaption: 'Yes',
     rejectCaption: 'No',
-  };
+  };*/
 
   state = {
     checked: false,

@@ -62,6 +62,7 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.FileType>> = props 
       actions={ ViewFileActions }
       unreadInfoStore={ ViewFileStore }
       sessionItemLayout={ FileSession }
+      t={ t }
       { ...ItemHandler }
       { ...other }
     />

@@ -20,7 +20,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
+import { getModuleT } from 'utils/TranslationUtils';
 
 
 const SEARCH_PERIOD = 4000;
@@ -90,13 +90,14 @@ class Search extends React.Component<SearchProps & WithTranslation> {
     );
   }
 
+  searchT = getModuleT(this.props.t, UI.Modules.SEARCH);
   render() {
     const { searchString, running } = this.state;
-    const { t } = this.props;
+    const { t, translate } = this.searchT;
     return (
       <OfflineHubMessageDecorator 
         offlineMessage={ t<string>(
-          toI18nKey('searchOffline', UI.Modules.SEARCH), 
+          'searchOffline', 
           'You must to be connected to at least one hub in order to perform searches'
         ) }
       >
@@ -108,11 +109,11 @@ class Search extends React.Component<SearchProps & WithTranslation> {
                 submitHandler={ this.search } 
                 disabled={ running }
                 defaultValue={ searchString }
-                placeholder={ translate('Enter search string...', t, UI.Modules.SEARCH) }
+                placeholder={ translate('Enter search string...') }
                 button={ 
                   <Button
                     icon="search icon"
-                    caption={ translate('Search', t, UI.Modules.SEARCH) }
+                    caption={ translate('Search') }
                     loading={ running }
                   />
                 }
@@ -122,7 +123,7 @@ class Search extends React.Component<SearchProps & WithTranslation> {
           <ResultTable 
             searchString={ searchString } 
             running={ running }
-            t={ t }
+            searchT={ this.searchT }
           />
         </div>
       </OfflineHubMessageDecorator>

@@ -17,11 +17,14 @@ import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
 
 export interface FileSessionProps extends SessionChildProps<API.ViewFile> {
   session: API.ViewFile;
+  sessionT: UI.ModuleTranslator;
 }
 
 export interface FileSessionContentProps {
@@ -29,6 +32,7 @@ export interface FileSessionContentProps {
   url: string;
   type: string;
   extension: string;
+  sessionT: UI.ModuleTranslator;
 }
 
 const getViewerElement = (item: API.ViewFile): React.ComponentType<FileSessionContentProps> | null => {
@@ -52,13 +56,13 @@ const getUrl = (tth: string) => {
 
 class FileSession extends React.Component<FileSessionProps> {
   render() {
-    const { session } = this.props;
+    const { session, sessionT } = this.props;
     if (!session.content_ready) {
       if (session.download_state.id === 'download_failed') {
         return (
           <Message 
             icon={ IconConstants.ERROR }
-            title="Download failed"
+            title={ sessionT.translate('Download failed') }
             description={ session.download_state.str }
           />
         );
@@ -71,7 +75,7 @@ class FileSession extends React.Component<FileSessionProps> {
 
     let child;
     if (!ViewerElement) {
-      child = 'Unsupported format';
+      child = sessionT.translate('Unsupported format');
     } else {
       child = (
         <ViewerElement 
@@ -79,6 +83,7 @@ class FileSession extends React.Component<FileSessionProps> {
           url={ getUrl(session.tth) }
           type={ session.mime_type }
           extension={ session.type.str }
+          sessionT={ sessionT }
         />
       );
     }
@@ -88,7 +93,10 @@ class FileSession extends React.Component<FileSessionProps> {
         <div className="content">
           { child }
         </div>
-        <FileFooter item={ session }/>
+        <FileFooter 
+          item={ session }
+          sessionT={ sessionT }
+        />
       </div>
     );
   }

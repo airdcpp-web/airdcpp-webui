@@ -34,12 +34,12 @@ const ShareRootActionConfig: UI.ActionConfigList<API.ShareRootEntry> = [
     displayName: 'Remove directory',
     access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
-    confirmation: root => ({
+    confirmation: {
       // tslint:disable-next-line:max-line-length
-      content: `Are you sure that you want to remove the directory ${root.virtual_name} from share? It will be removed from all share profiles.`,
+      content: 'Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles.',
       approveCaption: 'Remove directory',
       rejectCaption: `Don't remove`,
-    })
+    }
   } },
 ];
 
@@ -65,6 +65,6 @@ ShareRootActions.remove.listen(function (
 });
 
 export default {
-  id: UI.Modules.SHARE,
+  moduleId: UI.Modules.SHARE,
   actions: ShareRootActions,
 };

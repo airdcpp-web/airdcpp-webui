@@ -50,7 +50,7 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
           method: API.FilterMethod.EXACT,
           property: 'bundle',
         } }
-        moduleId={ QueueFileActions.id }
+        moduleId={ QueueFileActions.moduleId }
       >
         <Column
           name="Name"

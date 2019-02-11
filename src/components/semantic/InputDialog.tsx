@@ -50,11 +50,10 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
   }
 
   render() {
-    const { onApproved, rejectCaption, inputProps, ...other } = this.props;
+    const { onApproved, inputProps, ...other } = this.props;
     return (
       <ConfirmDialog
         onApproved={ this.onApproved }
-        rejectCaption={ !!rejectCaption ? rejectCaption : 'Cancel' }
         { ...other }
       >
         <form className="ui input dialog">

@@ -68,7 +68,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
       actions={ HubActions } 
       sessionItemLayout={ HubSession }
       newLayout={ HubNew }
-
+      t={ t }
       unreadInfoStore={ HubSessionStore }
       { ...ItemHandler }
       { ...other }

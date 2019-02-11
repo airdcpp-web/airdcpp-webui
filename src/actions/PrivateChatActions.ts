@@ -126,6 +126,6 @@ const PrivateChatActionsDecorated = SessionActionDecorator(
 );
 
 export default {
-  id: UI.Modules.MESSAGES,
+  moduleId: UI.Modules.MESSAGES,
   actions: PrivateChatActionsDecorated,
 };
