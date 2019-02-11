@@ -60,12 +60,12 @@ const userSort = (a: API.QueueBundleSource, b: API.QueueBundleSource) => a.user.
 
 
 interface BundleSourceTableProps {
-  bundle?: API.QueueBundle; // REQUIRED, CLONED
+  bundle: API.QueueBundle;
+  queueT: UI.ModuleTranslator;
 }
 
 interface BundleSourceTableDataProps extends DataProviderDecoratorChildProps {
   sources: API.QueueBundleSource[];
-  queueT: UI.ModuleTranslator;
 }
 
 const BundleSourceTable: React.FC<BundleSourceTableProps & BundleSourceTableDataProps> = (

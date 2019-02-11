@@ -28,7 +28,7 @@ class SourceDialog extends React.Component<Props & DataProps> {
   static displayName = 'SourceDialog';
 
   render() {
-    const { bundle } = this.props;
+    const { bundle, queueT } = this.props;
     return (
       <Modal 
         className="source" 
@@ -40,6 +40,7 @@ class SourceDialog extends React.Component<Props & DataProps> {
       >
         <SourceTable 
           bundle={ bundle }
+          queueT={ queueT }
         />
       </Modal>
     );

@@ -117,5 +117,6 @@ QueueFileActions.setFilePriority.listen(function (
 
 export default {
   moduleId: UI.Modules.QUEUE,
+  //subId: 'file',
   actions: QueueFileActions,
 } as UI.ModuleActions<API.QueueFile>;

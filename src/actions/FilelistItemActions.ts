@@ -121,5 +121,6 @@ FilelistItemActions.refreshShare.listen(function ({ session, item }: ActionFilel
 
 export default {
   moduleId: UI.Modules.FILELISTS,
+  subId: 'item',
   actions: FilelistItemActions,
-};
+} as UI.ModuleActions<ActionFilelistItemData>;

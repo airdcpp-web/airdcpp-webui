@@ -81,5 +81,6 @@ SystemActions.setAway.completed.listen(function (away: boolean) {
 
 export default {
   moduleId: UI.Modules.COMMON,
+  subId: 'system',
   actions: SystemActions,
-};
+} as UI.ModuleActions<void>;

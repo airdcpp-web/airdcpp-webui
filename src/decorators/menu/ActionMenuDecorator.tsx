@@ -87,10 +87,11 @@ const filterExtraDividers = (ids: string[]) => {
 };
 
 interface MenuType<ItemDataT> {
-  moduleId: string;
+  //moduleId: string;
   actionIds: string[];
   itemDataGetter: (() => ItemDataT | undefined);
-  actions: UI.ActionListType<ItemDataT>;
+  //actions: UI.ActionListType<ItemDataT>;
+  actions: UI.ModuleActions<ItemDataT>;
 }
 
 // Get IDs to display from the specified menu
@@ -126,8 +127,8 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
   const ret: MenuType<ItemDataT> = {
     actionIds: ids,
     itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT | undefined,
-    actions: props.actions.actions,
-    moduleId: props.actions.moduleId,
+    actions: props.actions,
+    //moduleId: props.actions.moduleId,
   };
 
   return ret;
@@ -156,7 +157,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
     return actionId;
   }
 
-  const action = menu.actions[actionId];
+  const action = menu.actions.actions[actionId];
   return (
     <MenuItemLink 
       key={ actionId } 
@@ -165,7 +166,8 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
           actionId,
           action, 
           itemData: menu.itemDataGetter(),
-          moduleId: menu.moduleId,
+          moduleId: menu.actions.moduleId,
+          subId: menu.actions.subId,
         });
 
         //if (!!closeModal && isSidebarAction(actionId)) {
@@ -178,7 +180,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
       icon={ action.icon }
     >
       <Trans
-        i18nKey={ toActionI18nKey(action, menu.moduleId) }
+        i18nKey={ toActionI18nKey(action, menu.actions.moduleId) }
         defaults={ action.displayName }
       >
         { action.displayName }

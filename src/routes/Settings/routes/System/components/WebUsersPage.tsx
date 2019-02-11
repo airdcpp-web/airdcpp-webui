@@ -52,8 +52,8 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
     return (
       <div>
         <ActionButton 
-          action={ WebUserActions.actions.create } 
-          moduleId={ WebUserActions.moduleId }
+          actions={ WebUserActions }
+          actionId="create"
         />
         <table className="ui striped table">
           <thead>

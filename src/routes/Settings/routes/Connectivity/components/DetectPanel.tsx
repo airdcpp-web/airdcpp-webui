@@ -50,10 +50,10 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
     </div>
     <ActionButton 
       className="detect-button"
-      action={ ConnectivityActions.actions.detect }
+      actions={ ConnectivityActions }
+      actionId="detect"
       disabled={ !status.status_v4.auto_detect && !status.status_v6.auto_detect }
       loading={ runningV6 || runningV4 } 
-      moduleId={ ConnectivityActions.moduleId }
     />
   </div>
 );

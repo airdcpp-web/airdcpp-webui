@@ -44,8 +44,8 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => (
 		/>*/}
 
     <ActionButton 
-      action={ SystemActions.actions.restartWeb }
-      moduleId={ SystemActions.moduleId }
+      actions={ SystemActions }
+      actionId="restartWeb"
     />
 
     <div className="ui header">HTTP</div>

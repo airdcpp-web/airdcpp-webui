@@ -193,5 +193,6 @@ QueueBundleActions.content.listen(function (data: API.QueueBundle, location: Loc
 
 export default {
   moduleId: UI.Modules.QUEUE,
+  //subId: 'bundle',
   actions: QueueBundleActions,
-};
+} as UI.ModuleActions<API.QueueBundle>;

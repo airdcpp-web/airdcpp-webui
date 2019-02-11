@@ -66,5 +66,6 @@ ShareRootActions.remove.listen(function (
 
 export default {
   moduleId: UI.Modules.SHARE,
+  subId: 'root',
   actions: ShareRootActions,
-};
+} as UI.ModuleActions<API.ShareRootEntry>;

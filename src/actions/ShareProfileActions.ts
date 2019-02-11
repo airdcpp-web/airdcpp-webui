@@ -133,5 +133,6 @@ ShareProfileActions.browse.listen(function (
 
 export default {
   moduleId: UI.Modules.SETTINGS,
+  subId: 'profile',
   actions: ShareProfileActions,
-};
+} as UI.ModuleActions<API.ShareProfile>;

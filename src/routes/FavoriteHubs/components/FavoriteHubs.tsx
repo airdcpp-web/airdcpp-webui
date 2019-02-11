@@ -55,8 +55,8 @@ class FavoriteHubs extends React.Component {
   render() {
     const footerData = (
       <ActionButton 
-        action={ FavoriteHubActions.actions.create }
-        moduleId={ FavoriteHubActions.moduleId }
+        actions={ FavoriteHubActions }
+        actionId="create"
       />
     );
 

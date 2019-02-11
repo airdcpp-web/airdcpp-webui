@@ -88,7 +88,7 @@ export interface SessionMainLayoutProps<SessionT extends SessionBaseType, Action
   newButton: React.ReactElement<any> | null;
   listActionMenuGetter: () => React.ReactNode;
   sessionMenuItems: React.ReactNode[];
-  closeAction: UI.SessionActions<SessionT, ActionT>['removeSession'];
+  //closeAction: UI.SessionActions<SessionT, ActionT>['removeSession'];
   activeItem: SessionT | null;
 
   itemHeaderTitle: React.ReactNode;
@@ -96,7 +96,9 @@ export interface SessionMainLayoutProps<SessionT extends SessionBaseType, Action
   itemHeaderIcon: IconType;
   onKeyDown: (event: React.KeyboardEvent) => void;
   children: React.ReactNode;
-  moduleId: string;
+
+  //moduleId: string;
+  actions: SessionLayoutProps<SessionT>['actions'];
   t: i18next.TFunction;
 }
 
@@ -480,12 +482,13 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
 
         activeItem={ activeItem }
         unreadInfoStore={ unreadInfoStore }
-        closeAction={ actions.actions.removeSession }
+        //closeAction={ actions.actions.removeSession }
         newButton={ this.getNewButton() }
         sessionMenuItems={ items.map(this.getSessionMenuItem) }
         listActionMenuGetter={ this.getListActionMenu }
         onKeyDown={ this.onKeyDown }
-        moduleId={ actions.moduleId }
+        //moduleId={ actions.moduleId }
+        actions={ actions }
         t={ t }
       >
         <Route

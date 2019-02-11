@@ -63,5 +63,6 @@ FavoriteDirectoryActions.remove.listen(function (
 
 export default {
   moduleId: UI.Modules.SETTINGS,
+  subId: 'favoriteDirectory',
   actions: FavoriteDirectoryActions,
-};
+} as UI.ModuleActions<API.FavoriteDirectoryEntry>;

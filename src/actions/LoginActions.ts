@@ -103,5 +103,6 @@ LoginActions.logout.listen(function (this: UI.AsyncActionType<any>) {
 
 export default {
   moduleId: UI.Modules.COMMON,
+  subId: 'login',
   actions: LoginActions,
-};
+} as UI.ModuleActions<any>;

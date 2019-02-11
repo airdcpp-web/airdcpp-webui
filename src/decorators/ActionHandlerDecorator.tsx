@@ -11,17 +11,16 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 
-import { camelCase } from 'lodash';
+import { startCase } from 'lodash';
 
 
 interface ActionHandlerDecoratorProps {
 
 }
 
-export interface ActionData<ItemDataT = any> {
+export interface ActionData<ItemDataT = any> extends Pick<UI.ModuleActions<ItemDataT>, 'moduleId' | 'subId'> {
   actionId: string;
   action: UI.ActionType<ItemDataT>;
-  moduleId: string;
   itemData: ItemDataT | undefined;
 }
 
@@ -31,10 +30,17 @@ export interface ActionHandlerDecoratorChildProps<ItemDataT = any> extends Route
   onClickAction: ActionClickHandler<ItemDataT>;
 }
 
-const toKey = (propName: string, actionData: ActionData) => {
+const toKey = (fieldName: string, actionData: ActionData) => {
+  let keyName = actionData.actionId;
+  if (actionData.subId) {
+    keyName += startCase(actionData.subId);
+  }
+
+  keyName += startCase(fieldName);
+
   return toI18nKey(
     //`${actionData.actionId}${propName}`, 
-    camelCase(actionData.action.displayName) + propName,
+    keyName,
     [ actionData.moduleId, UI.SubNamespaces.ACTIONS, UI.SubNamespaces.PROMPTS ]
   );
 };

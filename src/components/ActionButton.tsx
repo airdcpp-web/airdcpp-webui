@@ -10,28 +10,35 @@ import { useTranslation } from 'react-i18next';
 
 
 interface ActionButtonProps extends Omit<ButtonProps, 'caption'> {
-  action: UI.ActionType;
-  moduleId: string;
+  //action: UI.ActionType;
+  actions: UI.ModuleActions<any>;
+  actionId: string;
+  //moduleId: string;
   itemData?: UI.ActionItemDataValueType;
   icon?: IconType;
 }
 
-const ActionButton: React.FC<ActionButtonProps & ActionHandlerDecoratorChildProps> = (
-  { action, itemData, onClickAction, icon = true, location, history, match, staticContext, moduleId, ...other }
-) => {
+const ActionButton: React.FC<ActionButtonProps & ActionHandlerDecoratorChildProps> = ({ 
+  actionId, itemData, onClickAction, icon = true, 
+  location, history, match, staticContext, actions,
+  ...other 
+}) => {
+  const action = actions.actions[actionId];
+  const { t } = useTranslation();
   if (!showAction(action, itemData)) {
     return null;
   }
 
-  const { t } = useTranslation();
+  const { moduleId, subId } = actions;
   return (
     <Button
       icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : null }
       onClick={ () => onClickAction({ 
         itemData, 
         action, 
-        actionId: '', // TODO: figure this out when refactoring actions
+        actionId,
         moduleId,
+        subId
       }) }
       caption={ t(toActionI18nKey(action, moduleId), action.displayName) }
       { ...other }

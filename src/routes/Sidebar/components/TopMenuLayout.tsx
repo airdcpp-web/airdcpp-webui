@@ -38,10 +38,10 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
 
 
 type CloseButtonProps<SessionT extends UI.SessionItemBase> = 
-  Pick<SessionMainLayoutProps<SessionT>, 'closeAction' | 'activeItem' | 'moduleId'>;
+  Pick<SessionMainLayoutProps<SessionT>, 'actions' | 'activeItem'>;
 
 const CloseButton: React.FC<CloseButtonProps<any>> = (
-  { closeAction, activeItem, moduleId }
+  { actions, activeItem }
 ) => {
   if (!activeItem || useMobileLayout()) {
     return null;
@@ -50,10 +50,11 @@ const CloseButton: React.FC<CloseButtonProps<any>> = (
   return (
     <ActionButton 
       className="basic small item close-button"
-      action={ closeAction } 
+      actions={ actions } 
+      actionId="removeSession"
       itemData={ activeItem }
       icon="grey remove"
-      moduleId={ moduleId }
+      //moduleId={ moduleId }
     />
   );
 };

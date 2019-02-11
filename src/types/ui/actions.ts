@@ -42,11 +42,16 @@ export type ConfirmActionType<ItemDataT> = ActionType<ItemDataT> & {
   confirmed: (...params: any[]) => void;
 };
 
+//type GenericActionType<ItemDataT> = AsyncActionType<ItemDataT> & 
+//  EditorActionType<ItemDataT> & 
+//  ConfirmActionType<ItemDataT>;
+
 export type ActionConfigList<ItemDataT> = Array<string | { [actionKey: string]: ActionConfig<ItemDataT> }>;
 
 export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> };
 
 export interface ModuleActions<ItemDataT> {
   moduleId: string;
+  subId?: string;
   actions: ActionListType<ItemDataT>;
 }

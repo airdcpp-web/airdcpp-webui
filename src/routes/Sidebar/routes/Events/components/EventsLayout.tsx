@@ -46,8 +46,8 @@ const SystemLog: React.FC<SystemLogProps> = memo(
             title={ translate('Events', t, UI.Modules.EVENTS) }
             rightComponent={
               <ActionButton 
-                action={ EventActions.actions.clear }
-                moduleId={ EventActions.moduleId }
+                actions={ EventActions }
+                actionId="clear"
               />
             }
           />

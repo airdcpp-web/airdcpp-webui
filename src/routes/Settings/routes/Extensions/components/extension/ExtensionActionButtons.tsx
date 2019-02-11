@@ -26,11 +26,11 @@ const InstallButton: React.FC<ExtensionActionButtonsProps> = (
 
   return (
     <ActionButton
-      action={ hasUpdate ? ExtensionActions.actions.updateNpm : ExtensionActions.actions.installNpm }
+      actions={ ExtensionActions }
+      actionId={ hasUpdate ? 'updateNpm' : 'installNpm' }
       className="right floated primary"
       itemData={ npmPackage }
       loading={ installing }
-      moduleId={ ExtensionActions.moduleId }
     />
   );
 };
@@ -41,10 +41,10 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
   <div className="extra buttons">
     { installedPackage && (
       <ActionButton
-        action={ ExtensionActions.actions.remove }
+        actions={ ExtensionActions }
+        actionId="remove"
         className="right floated"
         itemData={ installedPackage }
-        moduleId={ ExtensionActions.moduleId }
       />
     ) }
     { npmPackage && (
@@ -62,18 +62,18 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
     ) }
     { installedPackage && (
       <ActionButton
-        action={ installedPackage.running ? ExtensionActions.actions.stop : ExtensionActions.actions.start }
+        actions={ ExtensionActions }
+        actionId={ installedPackage.running ? 'stop' : 'start' }
         className="right floated"
         itemData={ installedPackage }
-        moduleId={ ExtensionActions.moduleId }
       />
     ) }
     { installedPackage && (
       <ActionButton
-        action={ ExtensionActions.actions.configure }
+        actions={ ExtensionActions }
+        actionId="configure"
         className="right floated"
         itemData={ installedPackage }
-        moduleId={ ExtensionActions.moduleId }
       />
     ) }
   </div>

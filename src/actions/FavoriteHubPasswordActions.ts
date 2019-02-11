@@ -91,5 +91,6 @@ FavoriteHubPasswordActions.remove.listen(function (hub: API.FavoriteHubEntry) {
 
 export default {
   moduleId: UI.Modules.FAVORITE_HUBS,
+  subId: 'password',
   actions: FavoriteHubPasswordActions,
-};
+} as UI.ModuleActions<API.FavoriteHubEntry>;

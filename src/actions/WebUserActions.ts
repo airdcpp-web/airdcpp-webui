@@ -62,5 +62,6 @@ WebUserActions.remove.listen(function (this: UI.AsyncActionType<API.WebUser>, us
 
 export default {
   moduleId: UI.Modules.SETTINGS,
+  subId: 'webUser',
   actions: WebUserActions,
-};
+} as UI.ModuleActions<API.WebUser>;

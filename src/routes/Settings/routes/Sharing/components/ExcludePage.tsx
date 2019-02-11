@@ -13,6 +13,8 @@ import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
+import * as UI from 'types/ui';
+
 
 const Row: React.FC<{ path: string; }> = ({ path }) => (
   <tr>
@@ -20,7 +22,7 @@ const Row: React.FC<{ path: string; }> = ({ path }) => (
       <ActionMenu 
         caption={ <strong>{ path }</strong> } 
         actions={ ShareExcludeActions } 
-        ids={ [ 'removeExclude' ] } 
+        ids={ [ 'remove' ] } 
         itemData={ path }
         contextElement="#setting-scroll-context"
       />
@@ -57,8 +59,8 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
               </div>
               <br/>
               <ActionButton
-                action={ ShareActions.actions.refresh }
-                moduleId={ ShareActions.moduleId }
+                actions={ ShareActions }
+                actionId="refresh"
               />
             </div>
           }
@@ -66,8 +68,8 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
         />
 
         <ActionButton
-          action={ ShareExcludeActions.actions.addExclude }
-          moduleId={ ShareExcludeActions.moduleId }
+          actions={ ShareExcludeActions }
+          actionId="add"
           className="add"
         />
 
@@ -85,7 +87,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
         ) }
 
         <FileBrowserDialog
-          onConfirm={ ShareExcludeActions.actions.addExclude.saved }
+          onConfirm={ (ShareExcludeActions.actions.add as UI.EditorActionType<string>).saved }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
           subHeader="Add excluded path"
