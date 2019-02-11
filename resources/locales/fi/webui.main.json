@@ -27,11 +27,18 @@
       },
       "actions": {
         "editWidget": "Muokkaa widgettiä",
-        "removeWidget": "Poista widgetti"
+        "removeWidget": "Poista widgetti",
+        "prompts": {
+          "removeApprove": "Poista widgetti",
+          "removeReject": "Älä poista",
+          "removeContent": "Haluatko varmasti poistaa widgetin {{item.settings.name}}?"
+        }
       },
       "widgetPositionHint": "Widgetit ja niiden sijainnit ovat selainkohtaisia"
     },
     "events": {
+      "events": "Tapahtumat",
+      "loadingMessages": "Ladataan viestejä",
       "actions": {
         "clear": "Tyhjennä"
       }
@@ -50,7 +57,7 @@
     },
     "search": {
       "table": {
-        "name": "Name",
+        "name": "Nimi",
         "size": "Koko",
         "relevance": "Relevanssi",
         "type": "Tyyppi",
@@ -63,6 +70,12 @@
         "resultDetails": "Osuman tiedot",
         "browseContent": "Selaa sisältöä"
       },
+      "user": "Käyttäjä",
+      "hubs": "Hubit",
+      "connection": "Yhteys",
+      "slots": "Latauspaikat",
+      "ip": "Ip",
+      "path": "Polku",
       "searchOffline": "Sinun on oltava vähintään yhdessä hubissa, jotta voit tehdä hakua",
       "enterSearchString": "Syötä hakusana...",
       "search": "Etsi",
@@ -96,7 +109,12 @@
         "editDirectory": "Muokkaa kansiota",
         "removeDirectory": "Poista kansio",
         "addDirectory": "Lisää kansio",
-        "refreshAll": "Päivitä kaikki"
+        "refreshAll": "Päivitä kaikki",
+        "prompts": {
+          "removeRootApprove": "Poista kansio",
+          "removeRootReject": "Älä poista",
+          "removeRootContent": "Haluatko varmasti poistaa kansion {{item.virtual_name}} jaosta? Se poistetaan kaikista jakoprofiileista."
+        }
       },
       "actionsCaption": "Toiminnot...",
       "shareActions": "Jakotoiminnot"
@@ -107,25 +125,45 @@
         "setPassword": "Aseta salasana",
         "edit": "Muokkaa",
         "remove": "Poista",
-        "reload": "Lataa uudestaan",
         "changePassword": "Muuta salasanaa",
-        "removePassword": "Poista salasana"
+        "removePassword": "Poista salasana",
+        "prompts": {
+          "changePasswordPlaceholder": "Syötä salasana",
+          "changePasswordApprove": "Päivitä salasana",
+          "changePasswordContent": "Syötä uusi salasana hubille {{item.name}}",
+          "removePasswordApprove": "Poista salasana",
+          "removePasswordReject": "Älä poista",
+          "removePasswordContent": "Haluatko varmasti nollata salasanan hubille {{item.name}}?",
+          "createPasswordPlaceholder": "Syötä salasana",
+          "createPasswordApprove": "Aseta salasana",
+          "createPasswordContent": "Aseta salasana hubille {{item.name}}"
+        }
       },
       "table": {
         "connectState": "Tila",
-        "name": "Name",
+        "name": "Nimi",
         "autoConnect": "Autom. yhdistäminen",
-        "shareProfile": "Jakoprofiili",
         "nick": "Nimimerkki",
         "hasPassword": "Salasana",
-        "hubUrl": "Osoite",
-        "size": "Koko",
-        "time": "Viimeksi muokattu",
-        "type": "Tyyppi"
+        "hubUrl": "Osoite"
       }
     },
     "filelists": {
+      "new": "Avaa tiedostolista",
+      "newDesc": "Aloita uuden tiedostolistan selaaminen",
+      "offlineMessage": "Sinun on oltava yhteydessä vähintään yhteen hubiin, jotta voit ladata tiedostolistoja muilta käyttäjiltä",
+      "directorySize": "Kansion koko",
+      "totalListSize": "Listan yhteiskoko",
+      "browseOwnShare": "Selaa omia jakoja...",
+      "table": {
+        "name": "Nimi",
+        "size": "Koko",
+        "time": "Viimeksi muokattu",
+        "type": "Tyyppi"
+      },
       "actions": {
+        "reload": "Lataa uudestaan",
+        "refreshInShare": "Päivitä jaoissa",
         "close": "Sulje"
       }
     },
@@ -142,8 +180,19 @@
         "copyMagnetLink": "Kopioi magnet-linkki",
         "shutDownApplication": "Sammuta ohjelma",
         "restartWebServer": "Käynnistä web-palvelin uudestaan",
-        "unignoreMessages": "Poista viestien esto"
+        "unignoreMessages": "Poista viestien esto",
+        "closeAndDontShowAgain": "Sulje ja älä näytä uudestaan"
       },
+      "new": "Uusi...",
+      "currentSessions": "Nykyiset istunnot",
+      "closeAll": "Sulje kaikki",
+      "recentSessions": "Viimeaikaiset istunnot",
+      "openedAgo": "Avattu {{timeAgo}}",
+      "waitingForServerResponse": "Odotetaan palvelimen vastausta",
+      "loadingMessages": "Ladataan viestejä",
+      "loadingSession": "Ladataan istuntoa",
+      "no": "Ei",
+      "cancel": "Peruuta",
       "loading": "Ladataan",
       "loadingData": "Ladataan dataa...",
       "noOnlineHubs": "Ei yhdistettyjä hubeja"
@@ -167,11 +216,17 @@
       },
       "enterHubAddress": "Syötä hubin osoite...",
       "connect": "Yhdistä",
-      "favoriteHubsHint": "Vinkki: mene <1>Suosikkihubit</1> -sivulle, jos haluat yhdistää käyttämällä mukautettuja asetuksia"
+      "favoriteHubsHint": "Vinkki: mene <1>Suosikkihubit</1> -sivulle, jos haluat yhdistää käyttämällä mukautettuja asetuksia",
+      "new": "Yhdistä",
+      "newDesc": "Yhdistä uuteen hubiin",
+      "userList": "Käyttäjälista",
+      "sharePerUser": "{{total}} ({{average}}/käyttäjä)",
+      "xUsers": "{{count}} käyttäjää",
+      "xUsers_plural": "{{count}} käyttäjää"
     },
     "queue": {
       "table": {
-        "name": "Name",
+        "name": "Nimi",
         "size": "Koko",
         "status": "Tila",
         "sources": "Lähteet",
@@ -194,7 +249,17 @@
         "searchForeground": "Hae (välilehdessä)",
         "searchForAlternates": "Etsi vaihtoehtoisia lähteitä",
         "remove": "Poista",
-        "removeSource": "Poista lähde"
+        "removeSource": "Poista lähde",
+        "prompts": {
+          "removeBundleApprove": "Poista bundle",
+          "removeBundleReject": "Älä poista",
+          "removeBundleContent": "Haluatko varmasti poistaa bundlen {{item.name}}?",
+          "removeBundleCheckbox": "Poista valmiit tiedostot",
+          "removeFileApprove": "Poista tiedosto",
+          "removeFileReject": "Älä poista",
+          "removeFileContent": "Haluatko varmasti poistaa tiedoston {{item.name}}?",
+          "removeFileCheckbox": "Poista levyltä"
+        }
       },
       "paused": "Keskeytetty",
       "lowest": "Matalin",
@@ -213,13 +278,13 @@
     "transfers": {
       "table": {
         "user": "Käyttäjä",
-        "name": "Name",
+        "name": "Nimi",
         "size": "Segmentti",
         "status": "Tila",
         "secondsLeft": "Aikaa jäljellä",
         "speed": "Nopeus",
         "flags": "Arvot",
-        "ip": "Ip"
+        "ip": "IP"
       },
       "actions": {
         "forceConnect": "Pakota yhteys",
@@ -240,7 +305,12 @@
         "browseFiles": "Selaa tiedostoja",
         "renameProfile": "Uudelleennimeä profiili",
         "addPath": "Lisää polku",
-        "removePath": "Poista polku"
+        "removePath": "Poista polku",
+        "prompts": {
+          "removeShareExcludeApprove": "Poista polku",
+          "removeShareExcludeReject": "Älä poista",
+          "removeShareExcludeContent": "Haluatko varmasti poistaa piilotetun polun {{item}}?"
+        }
       }
     },
     "extensions": {
@@ -277,7 +347,26 @@
     "viewedFiles": {
       "actions": {
         "close": "Sulje"
-      }
+      },
+      "noFiles": "Ei näytettäviä tiedostoja",
+      "noFilesDesc": "Voit avata näytettäviä teksti- tai mediatiedostoja hausta tai tiedostolistoista"
+    },
+    "messages": {
+      "actions": {
+        "clearChat": "Tyhjennä keskusteluikkuna",
+        "close": "Sulje",
+        "disconnect": "Katkaise yhteys"
+      },
+      "new": "Uusi istunto",
+      "newDesc": "Avaa uusi yksityisviesti-istunto",
+      "offlineMessage": "Sinun on oltava yhteydessä vähintään yhteen hubiin, jotta voit lähettää yksityisviestejä",
+      "directEncryptedChannelAvailable": "Suora salattu yhteys käytettävissä",
+      "establishingConnection": "Muodostetaan yhteyttä...",
+      "directEncryptedChannelEstablished": "Suora salattu yhteys muodostettu"
+    },
+    "home": {
+      "newUserIntro": "Tietoa uudelle käyttäjälle",
+      "newUserIntroDesc": "<0><0>Lisää <1>Jaot</1>-sivulta muutama kansio, jotka jaetaan muille käyttäjille.</0><1>Käy <1>ohjelman asetuksista</1> läpi vähintään osioiden pääsivut ennen aloittamista.  <3>On tärkeää, että <1>määrität yhteytesi nopeuden</1> oikein, sillä ohjelma ei pysty muutoin hyödyntämään kaistaasi täysimääräisesti.</3></1><2>Ohjelmassa ei ole tällä hetkellä listausta julkisista hubeista, joten sinulla on oltava tiedossa osoitteet, joihin haluat yhdistää.</2></0><1>Saat lisätietoja ohjelmasta sekä sen toiminnoista vierailemalla ohjelman <1>kotisivuilla</1>.</1><2>Mikäli sinulla herää kysymyksiä, voit lähettää ne <1>GitHubiin</1> tai liittyä ohjelman kehitys-/tukihubiin: <3></3></2>"
     }
   }
 }

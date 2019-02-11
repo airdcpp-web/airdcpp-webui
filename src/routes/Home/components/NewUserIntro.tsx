@@ -9,6 +9,10 @@ import Message from 'components/semantic/Message';
 
 import LoginActions from 'actions/LoginActions';
 import LoginStore from 'stores/LoginStore';
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 const NewUserIntro = () => {
@@ -18,42 +22,45 @@ const NewUserIntro = () => {
 
   return (
     <Message 
-      title="Information for new user"
+      title={ (
+        <Trans i18nKey={ toI18nKey('newUserIntro', UI.Modules.HOME) }>
+          Information for new user
+        </Trans>
+      ) }
       description={ (
         <div className="new-user-message">
-          <ul>
-            <li>
-              Add a few directories that are shared to other users from the <Link to="/share">Share</Link> page.
-            </li>
-            <li>
-              You might want to go through at least each main page 
-              of <Link to="/settings">the client settings</Link> before you start.
-              &nbsp;
-              <strong>
-                It's important that 
-                you <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
-                because the client won't be able to utilize your bandwidth efficiently otherwise.
-              </strong>
-            </li>
-            <li>
-              There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.
-            </li>
-          </ul>
-          <p>
-            Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information 
-            about the client and its features.
-          </p>
-          <TextDecorator
-            text={ 
-              <p>
-                If you have questions, you may post them on 
-                the <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>GitHub tracker</ExternalLink> or 
-                join the dev/support hub: <span>{ LinkConstants.DEV_HUB_URL }</span>
-              </p>
-            }
-          />
+          <Trans i18nKey={ toI18nKey('newUserIntroDesc', UI.Modules.HOME) }>
+            <ul>
+              <li>
+                Add a few directories that are shared to other users from the <Link to="/share">Share</Link> page.
+              </li>
+              <li>
+                You might want to go through at least each main page 
+                of <Link to="/settings">the client settings</Link> before you start.
+                &nbsp;
+                <strong>
+                  It's important that 
+                  you <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
+                  because the client won't be able to utilize your bandwidth efficiently otherwise.
+                </strong>
+              </li>
+              <li>
+                There is no listing of public hubs yet so you need to know 
+                the hub addresses where you wish to connect to.
+              </li>
+            </ul>
+            <p>
+              Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information 
+              about the client and its features.
+            </p>
+            <p>
+              If you have questions, you may post them on 
+              the <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>GitHub tracker</ExternalLink> or 
+              join the dev/support hub: <TextDecorator text={ LinkConstants.DEV_HUB_URL }/>
+            </p>
+          </Trans>
           <ActionButton 
-            actions={ LoginActions.actions }
+            actions={ LoginActions }
             actionId="newUserIntroSeen"
           />
         </div>

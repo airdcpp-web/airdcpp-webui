@@ -27,11 +27,18 @@
       },
       "actions": {
         "editWidget": "Edit widget",
-        "removeWidget": "Remove widget"
+        "removeWidget": "Remove widget",
+        "prompts": {
+          "removeApprove": "Remove widget",
+          "removeReject": "Don't remove",
+          "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
+        }
       },
       "widgetPositionHint": "Widgets and their positions are browser-specific"
     },
     "events": {
+      "events": "Events",
+      "loadingMessages": "Loading messages",
       "actions": {
         "clear": "Clear"
       }
@@ -63,6 +70,12 @@
         "resultDetails": "Result details",
         "browseContent": "Browse content"
       },
+      "user": "User",
+      "hubs": "Hubs",
+      "connection": "Connection",
+      "slots": "Slots",
+      "ip": "IP",
+      "path": "Path",
       "searchOffline": "You must to be connected to at least one hub in order to perform searches",
       "enterSearchString": "Enter search string...",
       "search": "Search",
@@ -96,7 +109,12 @@
         "editDirectory": "Edit directory",
         "removeDirectory": "Remove directory",
         "addDirectory": "Add directory",
-        "refreshAll": "Refresh all"
+        "refreshAll": "Refresh all",
+        "prompts": {
+          "removeRootApprove": "Remove directory",
+          "removeRootReject": "Don't remove",
+          "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
+        }
       },
       "actionsCaption": "Actions...",
       "shareActions": "Share actions"
@@ -108,7 +126,18 @@
         "edit": "Edit",
         "remove": "Remove",
         "changePassword": "Change password",
-        "removePassword": "Remove password"
+        "removePassword": "Remove password",
+        "prompts": {
+          "changePasswordPlaceholder": "Enter password",
+          "changePasswordApprove": "Update password",
+          "changePasswordContent": "Enter new password for the hub {{item.name}}",
+          "removePasswordApprove": "Remove password",
+          "removePasswordReject": "Don't remove",
+          "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
+          "createPasswordPlaceholder": "Enter password",
+          "createPasswordApprove": "Set password",
+          "createPasswordContent": "Set password for the hub {{item.name}}"
+        }
       },
       "table": {
         "connectState": "State",
@@ -120,7 +149,21 @@
       }
     },
     "filelists": {
+      "new": "Open filelist",
+      "newDesc": "Start browsing a new filelist",
+      "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
+      "directorySize": "Directory size",
+      "totalListSize": "Total list size",
+      "browseOwnShare": "Browse own share...",
+      "table": {
+        "name": "Name",
+        "size": "Size",
+        "time": "Last modified",
+        "type": "Type"
+      },
       "actions": {
+        "reload": "Reload",
+        "refreshInShare": "Refresh in share",
         "close": "Close"
       }
     },
@@ -137,8 +180,19 @@
         "copyMagnetLink": "Copy magnet link",
         "shutDownApplication": "Shut down application",
         "restartWebServer": "Restart web server",
-        "unignoreMessages": "Unignore messages"
+        "unignoreMessages": "Unignore messages",
+        "closeAndDontShowAgain": "Close and don't show again"
       },
+      "new": "New",
+      "currentSessions": "Current sessions",
+      "closeAll": "Close all",
+      "recentSessions": "Recent sessions",
+      "openedAgo": "Opened {{timeAgo}}",
+      "waitingForServerResponse": "Waiting for server response",
+      "loadingMessages": "Loading messages",
+      "loadingSession": "Loading session",
+      "no": "No",
+      "cancel": "Cancel",
       "loading": "Loading",
       "loadingData": "Loading data...",
       "noOnlineHubs": "No online hubs"
@@ -162,7 +216,13 @@
       },
       "enterHubAddress": "Enter hub address...",
       "connect": "Connect",
-      "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings"
+      "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
+      "new": "Connect",
+      "newDesc": "Connect to a new hub",
+      "userList": "User list",
+      "sharePerUser": "{{total}} ({{average}}/user)",
+      "xUsers": "{{count}} users",
+      "xUsers_plural": "{{count}} users"
     },
     "queue": {
       "table": {
@@ -189,7 +249,17 @@
         "searchForeground": "Search (foreground)",
         "searchForAlternates": "Search for alternates",
         "remove": "Remove",
-        "removeSource": "Remove source"
+        "removeSource": "Remove source",
+        "prompts": {
+          "removeBundleApprove": "Remove bundle",
+          "removeBundleReject": "Don't remove",
+          "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
+          "removeBundleCheckbox": "Remove finished files",
+          "removeFileApprove": "Remove file",
+          "removeFileReject": "Don't remove",
+          "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
+          "removeFileCheckbox": "Remove on disk"
+        }
       },
       "paused": "Paused",
       "lowest": "Lowest",
@@ -235,7 +305,12 @@
         "browseFiles": "Browse files",
         "renameProfile": "Rename profile",
         "addPath": "Add path",
-        "removePath": "Remove path"
+        "removePath": "Remove path",
+        "prompts": {
+          "removeShareExcludeApprove": "Remove path",
+          "removeShareExcludeReject": "Don't remove",
+          "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?"
+        }
       }
     },
     "extensions": {
@@ -272,7 +347,26 @@
     "viewedFiles": {
       "actions": {
         "close": "Close"
-      }
+      },
+      "noFiles": "No files to view",
+      "noFilesDesc": "You may open text or media files to be viewed here from search or filelists"
+    },
+    "messages": {
+      "actions": {
+        "clearChat": "Clear chat",
+        "close": "Close",
+        "disconnect": "Disconnect"
+      },
+      "new": "New session",
+      "newDesc": "Open a new private chat session",
+      "offlineMessage": "You must to be connected to at least one hub in order to send private messages",
+      "directEncryptedChannelAvailable": "Direct encrypted channel available",
+      "establishingConnection": "Establishing connection...",
+      "directEncryptedChannelEstablished": "Direct encrypted channel established"
+    },
+    "home": {
+      "newUserIntro": "Information for new user",
+      "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
     }
   }
 }

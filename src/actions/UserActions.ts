@@ -125,4 +125,4 @@ export default {
   moduleId: UI.Modules.COMMON,
   subId: 'user',
   actions: UserActions,
-} as UI.ModuleActions<API.User>;
+} as UI.ModuleActions<ActionUserData>;

@@ -108,7 +108,7 @@ class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
         { window.innerWidth > 700 && (
           <FooterItem 
             text={ sessionT.t('sharePerUser', {
-              defaultValue: '{{total}} ({{averageShare}}/user)',
+              defaultValue: '{{total}} ({{average}}/user)',
               replace: {
                 total: formatSize(shared),
                 average: averageShare
