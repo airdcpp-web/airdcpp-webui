@@ -39,18 +39,16 @@ const toKey = (fieldName: string, actionData: ActionData) => {
   keyName += startCase(fieldName);
 
   return toI18nKey(
-    //`${actionData.actionId}${propName}`, 
     keyName,
     [ actionData.moduleId, UI.SubNamespaces.ACTIONS, UI.SubNamespaces.PROMPTS ]
   );
 };
 
-const translateInput = <ItemDataT extends any>(
+const translateInput = (
   input: UI.ActionConfirmation,
   actionData: ActionData,
   t: i18next.TFunction
-): UI.ActionConfirmation /*& { rejectCaption: string; }*/ => {
-  //const { itemData } = actionData;
+): UI.ActionConfirmation => {
   const { approveCaption, rejectCaption, checkboxCaption, content } = input;
 
   const ret = {
@@ -76,14 +74,12 @@ const getCommonConfirmDialogProps = <ItemDataT extends {}>(
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
   t: i18next.TFunction,
-): Omit<ConfirmDialogProps, 'onApproved' /*| 'approveCaption' | 'rejectCaption'*/> => {
+): Omit<ConfirmDialogProps, 'onApproved'> => {
   const { icon, displayName } = actionData.action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(confirmation!, actionData, t);
   return {
     approveCaption, 
     rejectCaption: rejectCaption || translate(defaultRejectCaption, t, UI.Modules.COMMON),
-    //approveCaption: approveCaption || translate('Yes', t, UI.Modules.COMMON),
-    //rejectCaption: rejectCaption || translate('No', t, UI.Modules.COMMON),
     content,
     icon,
     title: displayName,
@@ -107,7 +103,6 @@ const ConfirmHandler = <ItemDataT extends any>(
 
   const { confirmation, input } = actionData.action;
   if (confirmation) {
-    //const moduleT = getModuleT(t, actionData.moduleId);
     const options = typeof confirmation === 'object' ? confirmation : confirmation(actionData.itemData!);
     return (
       <ConfirmDialog
@@ -119,7 +114,6 @@ const ConfirmHandler = <ItemDataT extends any>(
   }
 
   if (input) {
-    //const moduleT = getModuleT(t, actionData.moduleId);
     const options = typeof input === 'object' ? input : input(actionData.itemData!);
     if (options.inputProps.placeholder) {
       options.inputProps.placeholder = t(
@@ -165,11 +159,7 @@ function ActionHandlerDecorator<PropsT, ItemDataT = any>(
 
       setTimeout(() => {
         const { location } = this.props;
-        //if ((action as UI.ConfirmActionType<ItemDataT>).confirmed) {
-        //  (action as UI.ConfirmActionType<ItemDataT>).confirmed(itemData, location, confirmData);
-        //} else {
         action(itemData, location, confirmData);
-        //}
       });
     }
 

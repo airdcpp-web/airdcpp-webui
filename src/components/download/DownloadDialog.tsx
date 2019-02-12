@@ -8,43 +8,37 @@ import IconConstants from 'constants/IconConstants';
 
 import HistoryActions from 'actions/HistoryActions';
 
-import DownloadFileBrowser from './DownloadFileBrowser';
-import PathList from './PathList';
-import AccordionTargets from './AccordionTargets';
-
 import { getParentPath } from 'utils/FileUtils';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
-import LoginStore from 'stores/LoginStore';
-
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import Modal from 'components/semantic/Modal';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import './style.css';
+
 import { RouteComponentProps } from 'react-router-dom';
 import { APISocket } from 'airdcpp-apisocket';
 import { DownloadHandler, DownloadableItemInfo } from 'actions/DownloadableItemActions';
 
+import i18next from 'i18next';
+import { toI18nKey, translate } from 'utils/TranslationUtils';
+import { Translation } from 'react-i18next';
+import { getDownloadSections, DownloadSection } from './sections';
 
-interface Section {
-  name: string;
-  key: string;
-  list?: string[] | API.GroupedPath[];
-  component: React.ReactNode;
-}
 
 interface LayoutProps {
   menuItems: React.ReactNode[];
-  section: Section;
+  title: string;
 }
 
-const NormalLayout: React.FC<LayoutProps> = ({ menuItems, section }) => (
+const NormalLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
   <div className="ui grid normal layout">
     <div className="four wide column">
       <div className="ui vertical fluid tabular menu">
@@ -53,19 +47,19 @@ const NormalLayout: React.FC<LayoutProps> = ({ menuItems, section }) => (
     </div>
     <div className="twelve wide stretched column">
       <div className="ui segment main-content">
-        { section.component }
+        { children }
       </div>
     </div>
   </div>
 );
 
-const MobileLayout: React.FC<LayoutProps> = ({ menuItems, section }) => (
+const MobileLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
   <div className="mobile layout">
-    <Dropdown className="selection fluid" caption={ section.name }>
+    <Dropdown className="selection fluid" caption={ title }>
       { menuItems }
     </Dropdown>
     <div className="ui segment main-content">
-      { section.component }
+      { children }
     </div>
   </div>
 );
@@ -105,25 +99,33 @@ type Props<ItemT extends DownloadableItemInfo = DownloadableItemInfo> = Download
   DownloadDialogDataProps<ItemT> & 
   DownloadDialogRouteProps;
 
+
+
+
+const getMenuItem = (
+  section: DownloadSection, 
+  activeSection: string, 
+  onClick: (key: string) => void, 
+  t: i18next.TFunction
+) => (
+  <MenuItemLink 
+    key={ section.key }
+    onClick={ () => onClick(section.key) } 
+    active={ activeSection === section.key }
+  >
+    { t(toI18nKey(section.key, UI.Modules.COMMON), section.name) }
+    { !!section.list && (
+      <div className="ui small right label"> 
+        { section.list.length }
+      </div>
+    ) }
+  </MenuItemLink>
+);
+
 class DownloadDialog extends React.Component<Props> {
   static displayName = 'DownloadDialog';
 
-  /*static propTypes = {
-		// Function handling the path selection. Receives the selected path as argument.
-		// Required
-    downloadHandler: PropTypes.func.isRequired,
-
-		// Information about the item to download
-		// Required
-    itemInfo: PropTypes.shape({
-      path: PropTypes.string,
-      dupe: PropTypes.object,
-      name: PropTypes.string,
-      type: PropTypes.object
-    }),
-  };*/
-
-  sections: Section[];
+  sections: DownloadSection[];
   modal: any;
 
   constructor(props: Props) {
@@ -131,37 +133,9 @@ class DownloadDialog extends React.Component<Props> {
     const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
     const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
 
-    this.sections = [
-      {
-        name: 'Previous',
-        key: 'history',
-        list: historyPaths,
-        component: <PathList paths={ historyPaths } downloadHandler={ this.handleDownload }/>
-      }, {
-        name: 'Shared',
-        key: 'shared',
-        list: sharePaths,
-        component: <AccordionTargets groupedPaths={ sharePaths } downloadHandler={ this.handleDownload }/>
-      }, {
-        name: 'Favorites',
-        key: 'favorites',
-        list: favoritePaths,
-        component: <AccordionTargets groupedPaths={ favoritePaths } downloadHandler={ this.handleDownload }/>
-      }, {
-        name: 'Dupes',
-        key: 'dupes',
-        list: dupePaths,
-        component: <PathList paths={ dupePaths } downloadHandler={ this.handleDownload }/>
-      }
-    ];
-
-    if (LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW)) {
-      this.sections.push({
-        name: 'Browse',
-        key: 'browse',
-        component: <DownloadFileBrowser history={ historyPaths } downloadHandler={ this.handleDownload }/>
-      });
-    }
+    this.sections = getDownloadSections({
+      historyPaths, sharePaths, favoritePaths, dupePaths
+    });
   }
 
   state = {
@@ -184,48 +158,49 @@ class DownloadDialog extends React.Component<Props> {
     this.modal.hide();
   }
 
-  getMenuItem = (section: Section) => {
-    return (
-      <MenuItemLink 
-        key={ section.key }
-        onClick={ () => this.setState({ activeSection: section.key }) } 
-        active={ this.state.activeSection === section.key }
-      >
-        { section.name }
-        { !!section.list && (
-          <div className="ui small right label"> 
-            { section.list.length }
-          </div>
-        ) }
-      </MenuItemLink>
-    );
+  handleClickSession = (key: string) => {
+    this.setState({ 
+      activeSection: key,
+    });
   }
 
   render() {
-    const section = this.sections.find(s => s.key === this.state.activeSection);
-    if (!section) {
+    const { sections } = this;
+    const { activeSection: activeSessionKey } = this.state;
+    const activeSection = sections.find(s => s.key === this.state.activeSection);
+    if (!activeSection) {
       return null;
     }
 
-    const menuItems = this.sections.map(this.getMenuItem);
-
     const Component = useMobileLayout() ? MobileLayout : NormalLayout;
     return (
-      <Modal 
-        ref={ c => this.modal = c }
-        className="download-dialog" 
-        title="Download" 
-        closable={ true } 
-        icon={ IconConstants.DOWNLOAD }
-        fullHeight={ true }
-        { ...this.props }
-      >
-        <Component
-          key={ section.key } // Ensure that section-specific data is refetched
-          menuItems={ menuItems }
-          section={ section }
-        />
-      </Modal>
+      <Translation>
+        { t => {
+          const menuItems = sections.map(s => getMenuItem(s, activeSessionKey, this.handleClickSession, t));
+          return (
+            <Modal 
+              ref={ c => this.modal = c }
+              className="download-dialog" 
+              title={ translate('Download', t, UI.Modules.COMMON) }
+              closable={ true } 
+              icon={ IconConstants.DOWNLOAD }
+              fullHeight={ true }
+              { ...this.props }
+            >
+              <Component
+                key={ activeSection.key } // Ensure that section-specific data is refetched
+                menuItems={ menuItems }
+                title={ activeSection.name }
+              >
+                <activeSection.component
+                  t={ t }
+                  downloadHandler={ this.handleDownload }
+                />
+              </Component>
+            </Modal>
+          );
+        } }
+      </Translation>
     );
   }
 }

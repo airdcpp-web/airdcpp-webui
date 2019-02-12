@@ -26,38 +26,40 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { ShareRootEntryBase } from 'types/api';
+import { translateForm } from 'utils/FormUtils';
+import { Trans } from 'react-i18next';
 
 
-const getFields = (profiles: API.ShareProfile[]) => {
-  return [
-    {
-      key: 'path',
-      type: API.SettingTypeEnum.DIRECTORY_PATH,
-    },
-    {
-      key: 'virtual_name',
-      type: API.SettingTypeEnum.STRING,
-      help: 'Directories with identical virtual names will be merged in filelist',
-    },
-    {
-      key: 'profiles',
-      type: API.SettingTypeEnum.LIST,
-      item_type: API.SettingTypeEnum.NUMBER,
-      title: 'Share profiles',
-      help: 'New share profiles can be created from application settings',
-      options: profiles,
-      default_value: [ profiles.find(profile => profile.default)!.id ],
-    }, 
-    {
-      key: 'incoming',
-      type: API.SettingTypeEnum.BOOLEAN,
-    },
-  ] as UI.FormFieldDefinition[];
-};
+const Fields: UI.FormFieldDefinition[] = [
+  {
+    key: 'path',
+    title: 'Path',
+    type: API.SettingTypeEnum.DIRECTORY_PATH,
+  },
+  {
+    key: 'virtual_name',
+    title: 'Virtual name',
+    type: API.SettingTypeEnum.STRING,
+    help: 'Directories with identical virtual names will be merged in filelist',
+  },
+  {
+    key: 'profiles',
+    type: API.SettingTypeEnum.LIST,
+    item_type: API.SettingTypeEnum.NUMBER,
+    title: 'Share profiles',
+    help: 'New share profiles can be created from application settings',
+  }, 
+  {
+    key: 'incoming',
+    title: 'Incoming',
+    type: API.SettingTypeEnum.BOOLEAN,
+  },
+];
 
 export interface ShareDirectoryDialogProps {
-
+  shareT: UI.ModuleTranslator;
 }
 
 export interface DataProps extends ShareProfileDecoratorChildProps {
@@ -81,7 +83,14 @@ class ShareDirectoryDialog extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.fieldDefinitions = getFields(props.profiles);
+    this.fieldDefinitions = translateForm(Fields, props.shareT);
+
+    // Share profiles shouldn't be translated...
+    const shareProfile = this.fieldDefinitions.find(def => def.key === 'profiles')!;
+    Object.assign(shareProfile, {
+      options: props.profiles,
+      default_value: [ props.profiles.find(profile => profile.default)!.id ],
+    });
   }
 
   isNew = () => {
@@ -129,8 +138,8 @@ class ShareDirectoryDialog extends React.Component<Props> {
   }
 
   render() {
-    const title = this.isNew() ? 'Add share directory' : 'Edit share directory';
-    const { rootEntry, ...other } = this.props;
+    const { rootEntry, shareT, ...other } = this.props;
+    const title = shareT.translate(this.isNew() ? 'Add share directory' : 'Edit share directory');
     return (
       <Modal 
         className="share-directory" 
@@ -141,16 +150,16 @@ class ShareDirectoryDialog extends React.Component<Props> {
         { ...other }
       >
         <Message 
-          title="Hashing information"
+          title={ shareT.translate('Hashing information') }
           icon={ IconConstants.INFO }
           description={ 
-            <span>
+            <Trans i18nKey={ shareT.toI18nKey('hashingInformationDesc') }>
               <p>
                 New files will appear in share only after they have finished hashing 
                 (the client has calculated checksums for them). 
                 Information about hashing progress will be posted to the event log.
               </p>
-            </span>
+            </Trans>
           }
         />
         <Form<Entry>

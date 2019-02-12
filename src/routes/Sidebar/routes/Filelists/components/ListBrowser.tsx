@@ -190,7 +190,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   }
 
   render() {
-    const { session } = this.props;
+    const { session, sessionT } = this.props;
     return (
       <div className="browser">
         <Prompt
@@ -201,6 +201,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           path={ session.location.path }
           separator="/"
           rootPath="/"
+          rootName={ sessionT.translate('Root') }
           itemClickHandler={ this.handleClickDirectory }
           selectedNameFormatter={ this.selectedNameFormatter }
 

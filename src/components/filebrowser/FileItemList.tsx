@@ -5,6 +5,10 @@ import FormattedFile from 'components/format/FormattedFile';
 import { formatSize } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
@@ -37,6 +41,7 @@ const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGet
 
 export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler' | 'itemIconGetter'> {
   items: API.FilesystemItem[];
+  t: i18next.TFunction;
 }
 
 class FileItemList extends React.Component<FileItemListProps> {
@@ -60,14 +65,14 @@ class FileItemList extends React.Component<FileItemListProps> {
   }
 
   render() {
-    const { items, itemClickHandler, itemIconGetter } = this.props;
+    const { items, itemClickHandler, itemIconGetter, t } = this.props;
     return (
       <div className="table-container">
         <table className="ui striped compact table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Size</th>
+              <th>{ translate('Name', t, UI.Modules.COMMON) }</th>
+              <th>{ translate('Size', t, UI.Modules.COMMON) }</th>
             </tr>
           </thead>
           <tbody>

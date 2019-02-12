@@ -12,7 +12,7 @@ import { Section, SelectedSection, SelectedNameFormatter } from './Section';
 
 interface BrowserBarProps {
   itemClickHandler: (name: string) => void;
-  rootName?: string;
+  rootName: string;
   rootPath: string;
   separator: string;
   path: string;
@@ -57,9 +57,9 @@ class BrowserBar extends React.PureComponent<BrowserBarProps> {
   breadcrumb: HTMLDivElement;
   wrapper: HTMLDivElement;
 
-  static defaultProps = {
-    rootName: 'Root',
-  };
+  //static defaultProps = {
+  //  rootName: 'Root',
+  //};
 
   state = {
     overflow: false,

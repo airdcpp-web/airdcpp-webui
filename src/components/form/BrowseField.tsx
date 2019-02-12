@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import History from 'utils/History';
-import t from 'utils/tcomb-form';
+import tcomb from 'utils/tcomb-form';
 
 import Button from 'components/semantic/Button';
 import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
@@ -10,12 +10,19 @@ import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
-import { FormContext } from './Form';
+import * as UI from 'types/ui';
+
+import { translate } from 'utils/TranslationUtils';
 
 
-const BrowseField = t.form.Form.templates.textbox.clone({
+interface BrowseFieldConfig {
+  historyId: string;
+  isFile?: boolean;
+}
+
+const BrowseField = tcomb.form.Form.templates.textbox.clone({
   // override default implementation
-  renderInput: (locals: any) => {
+  renderInput: (locals: UI.FormLocals<any, string, BrowseFieldConfig>) => {
     let _input: HTMLInputElement;
     
     const onConfirm = (path: string) => {
@@ -27,7 +34,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
     };
 
     const showBrowseDialog = () => {
-      const { location } = locals.context as FormContext;
+      const { location } = locals.context;
       History.push(`${location.pathname}/browse`);
     };
 
@@ -41,7 +48,8 @@ const BrowseField = t.form.Form.templates.textbox.clone({
       'ui fluid input field',
       { 'action': hasAccess },
     );
-
+    
+    const { t } = locals.context;
     return (
       <div className={ fieldStyle }>
         <input
@@ -53,7 +61,7 @@ const BrowseField = t.form.Form.templates.textbox.clone({
         />
         { hasAccess && (
           <Button
-            caption="Browse"
+            caption={ translate('Browse', t, UI.Modules.COMMON) }
             onClick={ showBrowseDialog }
           />
         ) }

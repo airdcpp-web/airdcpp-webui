@@ -2,16 +2,17 @@
 import React from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
-import FileBrowserLayout from './FileBrowserLayout';
+import FileBrowserLayout, { FileBrowserLayoutProps } from './FileBrowserLayout';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
 
-interface FileBrowserDialogProps extends Omit<ModalProps, 'title' | keyof ModalRouteDecoratorChildProps> {
-  initialPath: string;
+interface FileBrowserDialogProps 
+  extends Omit<ModalProps, 'title' | keyof ModalRouteDecoratorChildProps>, 
+  Pick<FileBrowserLayoutProps, 'historyId' | 'initialPath'> {
+    
   onConfirm: (path: string) => void;
   title?: React.ReactNode;
-  historyId: string;
 }
 
 class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRouteDecoratorChildProps> {

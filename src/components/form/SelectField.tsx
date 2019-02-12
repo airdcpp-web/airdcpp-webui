@@ -5,9 +5,10 @@ import Select from 'react-select';
 
 import invariant from 'invariant';
 
-import t from 'utils/tcomb-form';
+import tcomb from 'utils/tcomb-form';
 
 import * as UI from 'types/ui';
+import { translate } from 'utils/TranslationUtils';
 
 
 const MultiValueContainer: React.FC<any> = ({ css, children, innerProps }) => {
@@ -54,12 +55,14 @@ const SelectTemplate: TCombTemplate = {
       return option;
     });
 
+    const { t } = locals.context;
     return (
       <Select
         value={ value }
         options={ options }
         onChange={ onChange }
         isMulti={ true }
+        noOptionsMessage={ () => translate('No options', t, UI.Modules.COMMON) }
         components={{ 
           MultiValueContainer,
           MultiValueLabel,
@@ -71,6 +74,6 @@ const SelectTemplate: TCombTemplate = {
   }
 };
 
-const ReactSelect = (t as any).form.Form.templates.select.clone(SelectTemplate);
+const ReactSelect = (tcomb as any).form.Form.templates.select.clone(SelectTemplate);
 
 export default ReactSelect;

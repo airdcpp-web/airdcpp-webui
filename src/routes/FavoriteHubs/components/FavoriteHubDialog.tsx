@@ -14,7 +14,7 @@ import IconConstants from 'constants/IconConstants';
 import t from 'utils/tcomb-form';
 
 import Form, { FormFieldChangeHandler, FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
-import { normalizeEnumValue, intTransformer } from 'utils/FormUtils';
+import { normalizeEnumValue, intTransformer, translateForm } from 'utils/FormUtils';
 import { RouteComponentProps } from 'react-router-dom';
 //import { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
@@ -22,6 +22,8 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { FavoriteHubEntry } from 'types/api';
 import Entry from 'widgets/RSS/components/Entry';
+//import i18next from 'i18next';
+//import { translate } from 'utils/TranslationUtils';
 
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
@@ -45,6 +47,7 @@ const Fields: UI.FormFieldDefinition[] = [
     definitions: [
       {
         key: 'name',
+        title: 'Name',
         type: API.SettingTypeEnum.STRING,
       }, {
         key: 'hub_url',
@@ -52,14 +55,19 @@ const Fields: UI.FormFieldDefinition[] = [
         type: API.SettingTypeEnum.STRING,
       }, {
         key: 'hub_description',
+        title: 'Hub description',
         type: API.SettingTypeEnum.STRING,
         optional: true,
       }, {
         key: 'share_profile',
+        title: 'Share profile',
         type: API.SettingTypeEnum.NUMBER,
+        // tslint:disable-next-line:max-line-length
+        help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
         optional: true,
       }, {
         key: 'auto_connect',
+        title: 'Auto connect',
         type: API.SettingTypeEnum.BOOLEAN,
       }
     ]
@@ -70,10 +78,12 @@ const Fields: UI.FormFieldDefinition[] = [
     definitions: [
       {
         key: 'nick',
+        title: 'Nick',
         type: API.SettingTypeEnum.STRING,
         optional: true,
       }, {
         key: 'user_description',
+        title: 'User description',
         type: API.SettingTypeEnum.STRING,
         optional: true,
       }
@@ -155,17 +165,16 @@ const getFieldProfiles = (profiles: API.SettingEnumOption[], url?: string) => {
     .map(normalizeEnumValue);
 };
 
-const nullOption = { value: 'null', text: 'Global default' };
-
 interface FavoriteHubDialogProps {
-
+  //t: i18next.TFunction;
+  favT: UI.ModuleTranslator;
 }
 
 interface DataProps {
   hubEntry?: API.FavoriteHubEntry;
 }
 
-type Props = DataProps & ShareProfileDecoratorChildProps & 
+type Props = FavoriteHubDialogProps & DataProps & ShareProfileDecoratorChildProps & 
   ModalRouteDecoratorChildProps & RouteComponentProps<{ entryId: string; }>;
 
 class FavoriteHubDialog extends React.Component<Props> {
@@ -177,11 +186,19 @@ class FavoriteHubDialog extends React.Component<Props> {
     super(props);
 
     this.formValue = toFormEntry(props.hubEntry);
+    this.definitions = translateForm(Fields, props.favT);
+    this.nullOption = { 
+      value: 'null', 
+      text: props.favT.translate('Global default') 
+    };
   }
 
   isNew = () => {
     return !this.props.hubEntry;
   }
+
+  nullOption: any;
+  definitions: UI.FormFieldDefinition[];
 
   form: Form<Entry>;
 
@@ -215,22 +232,22 @@ class FavoriteHubDialog extends React.Component<Props> {
     if (id === 'share_profile') {
       Object.assign(fieldOptions, {
         // tslint:disable-next-line:max-line-length
-        help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
-        nullOption,
+        nullOption: this.nullOption,
         factory: t.form.Select,
         options: getFieldProfiles(this.props.profiles, formValue.generic ? formValue.generic.hub_url : undefined),
         transformer: intTransformer,
       });
     } else if (id === 'connection_mode_v4' || id === 'connection_mode_v6') {
       Object.assign(fieldOptions, {
-        nullOption,
+        nullOption: this.nullOption,
         transformer: intTransformer,
       });
     }
   }
 
   render() {
-    const title = this.isNew() ? 'Add favorite hub' : 'Edit favorite hub';
+    const { translate } = this.props.favT;
+    const title = translate(this.isNew() ? 'Add favorite hub' : 'Edit favorite hub');
     return (
       <Modal 
         className="fav-hub" 
@@ -245,7 +262,7 @@ class FavoriteHubDialog extends React.Component<Props> {
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          fieldDefinitions={ Fields }
+          fieldDefinitions={ this.definitions }
           value={ this.formValue }
           location={ this.props.location }
         />

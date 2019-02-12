@@ -6,6 +6,10 @@ import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestFiel
 import OfflineHubMessageDecorator, { OfflineHubMessageDecoratorProps } from 'decorators/OfflineHubMessageDecorator';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 export interface UserSearchInputProps extends 
@@ -14,18 +18,21 @@ export interface UserSearchInputProps extends
     
 }
 
-const UserSearchInput: React.FC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => (
-  <OfflineHubMessageDecorator 
-    offlineMessage={ offlineMessage }
-  >
-    <RemoteSuggestField
-      placeholder="Enter nick..."
-      submitHandler={ submitHandler }
-      valueField="nick"
-      descriptionField="hub_name"
-      url={ UserConstants.SEARCH_NICKS_URL }
-    />
-  </OfflineHubMessageDecorator>
-);
+const UserSearchInput: React.FC<UserSearchInputProps> = ({ offlineMessage, submitHandler }) => {
+  const { t } = useTranslation();
+  return (
+    <OfflineHubMessageDecorator 
+      offlineMessage={ offlineMessage }
+    >
+      <RemoteSuggestField
+        placeholder={ translate('Enter nick...', t, UI.Modules.COMMON) }
+        submitHandler={ submitHandler }
+        valueField="nick"
+        descriptionField="hub_name"
+        url={ UserConstants.SEARCH_NICKS_URL }
+      />
+    </OfflineHubMessageDecorator>
+  );
+};
 
 export default UserSearchInput;

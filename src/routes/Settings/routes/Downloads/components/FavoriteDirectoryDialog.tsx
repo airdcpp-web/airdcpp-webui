@@ -26,10 +26,12 @@ import * as UI from 'types/ui';
 const Entry: UI.FormFieldDefinition[] = [
   {
     key: 'path',
+    title: 'Path',
     type: API.SettingTypeEnum.DIRECTORY_PATH,
   },
   {
     key: 'name',
+    title: 'Name',
     type: API.SettingTypeEnum.STRING,
   },
 ];

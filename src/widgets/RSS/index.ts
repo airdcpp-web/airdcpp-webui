@@ -12,14 +12,12 @@ export const RSS = {
     {
       key: 'feed_url',
       title: 'Feed URL',
-      titleKey: 'feedUrl',
       type: API.SettingTypeEnum.STRING,
       help: 'RSS and Atom feeds are supported',
     },
     {
       key: 'feed_cache_minutes',
       title: 'Minimum refetch interval (minutes)',
-      titleKey: 'refrechInterval',
       type: API.SettingTypeEnum.NUMBER,
       default_value: 60,
     },

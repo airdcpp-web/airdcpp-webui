@@ -19,19 +19,27 @@ import LoginStore from 'stores/LoginStore';
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { translate, getModuleT } from 'utils/TranslationUtils';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = (
-  { cellData, rowDataGetter }
+  { cellData, rowDataGetter, t }
 ) => (
   <TableActionMenu 
-    caption={ cellData ? <strong>Set</strong> : 'Not set' } 
+    caption={ cellData ? (
+      <strong>
+        { translate('Set', t!, UI.Modules.FAVORITE_HUBS) }
+      </strong>
+    ) : translate('Not set', t!, UI.Modules.FAVORITE_HUBS) } 
     actions={ FavoriteHubPasswordActions } 
     itemData={ rowDataGetter! }
   />
 );
 
-class FavoriteHubs extends React.Component {
+class FavoriteHubs extends React.Component<WithTranslation> {
   static displayName = 'FavoriteHubs';
 
   rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
@@ -52,6 +60,7 @@ class FavoriteHubs extends React.Component {
     FavoriteHubActions.actions.update(rowData, { auto_connect: checked });
   }
 
+  favT = getModuleT(this.props.t, UI.Modules.FAVORITE_HUBS);
   render() {
     const footerData = (
       <ActionButton 
@@ -124,10 +133,12 @@ class FavoriteHubs extends React.Component {
             cell={ <PasswordCell/> }
           />
         </VirtualTable>
-        <FavoriteHubDialog/>
+        <FavoriteHubDialog
+          favT={ this.favT }
+        />
       </>
     );
   }
 }
 
-export default FavoriteHubs;
+export default withTranslation()(FavoriteHubs);

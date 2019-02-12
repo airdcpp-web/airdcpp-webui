@@ -171,7 +171,7 @@ const parseTypeOptions = (type: API.SettingTypeEnum) => {
   return options;
 };
 
-const parseTitle = (definition: UI.FormFieldDefinition) => {
+const parseTitle = (definition: UI.FormFieldDefinition, trans: i18next.TFunction) => {
   if (definition.title && definition.optional) {
     return `${definition.title} (optional)`;
   }
@@ -179,7 +179,7 @@ const parseTitle = (definition: UI.FormFieldDefinition) => {
   return definition.title;
 };
 
-const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
+const parseFieldOptions = (definition: UI.FormFieldDefinition, trans: i18next.TFunction) => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
@@ -189,7 +189,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
       // Struct item fields
       options['item']['fields'] = definition.definitions.reduce(
         (reduced, itemDefinition) => {
-          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition);
+          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, trans);
           return reduced;
         }, 
         {}
@@ -201,7 +201,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition) => {
   }
 
   // Captions
-  options['legend'] = parseTitle(definition);
+  options['legend'] = parseTitle(definition, t);
   options['help'] = definition.help;
 
   // Enum select field?
@@ -274,7 +274,62 @@ const reduceChangedFieldValues = (
   return changedValues;
 };
 
+
+
+import { camelCase } from 'lodash';
+//import i18next from 'i18next';
+import { toI18nKey } from './TranslationUtils';
+import i18next from 'i18next';
+
+
+const translateDefinition = (
+  def: UI.FormFieldDefinition, 
+  moduleT: UI.ModuleTranslator,
+  //trans: i18next.TFunction, 
+  //moduleId: string
+): UI.FormFieldDefinition => {
+  const translateProp = (name: string, value: string | undefined) => {
+    if (!value) {
+      return undefined;
+    }
+
+    const key = def.key + name;
+    return moduleT.t(toI18nKey(key, UI.SubNamespaces.FORM), value);
+    //return trans(toI18nKey(key, [ moduleId, UI.SubNamespaces.FORM ]), value);
+  };
+
+  return {
+    title: translateProp('Name', def.title),
+    help: translateProp('Help', def.help),
+    options: def.options ? def.options.map(opt => ({
+      ...opt,
+      name: translateProp(`Option${camelCase(opt.id.toString())}`, opt.name)! // TODO
+    })) : undefined,
+    definitions: !!def.definitions ? def.definitions.map(subDef => {
+      //return translateDefinition(subDef, trans, moduleId);
+      return translateDefinition(subDef, moduleT);
+    }) : undefined,
+    ...def
+  };
+};
+
+const translateForm = (
+  definitions: UI.FormFieldDefinition[], 
+  moduleT: UI.ModuleTranslator,
+  //trans: i18next.TFunction,
+  //moduleId: string
+): UI.FormFieldDefinition[] => {
+  return definitions
+    .map(def => {
+      return translateDefinition(def, moduleT);
+      //return translateDefinition(def, trans, moduleId);
+    });
+};
+
+
 export {
+  translateForm,
+
   // Migrates simple key -> value fields to an array that is compatible with the form
   // undefined values will also be initialized with nulled property fields
   normalizeSettingValueMap,

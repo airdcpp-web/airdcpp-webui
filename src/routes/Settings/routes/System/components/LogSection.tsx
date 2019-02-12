@@ -3,9 +3,10 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import '../style.css';
 import { FormSourceValueUpdateHandler, FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-export interface LogSectionProps {
+export interface LogSectionProps extends SettingSectionChildProps {
   section: string;
 }
 

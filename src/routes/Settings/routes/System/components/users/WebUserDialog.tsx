@@ -74,6 +74,7 @@ const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
+      title: 'User name',
       type: API.SettingTypeEnum.STRING,
     },
     {
@@ -84,6 +85,7 @@ const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
     },
     {
       key: 'permissions',
+      title: 'Permissions,',
       type: API.SettingTypeEnum.LIST,
       item_type: API.SettingTypeEnum.STRING,
       options: Object.keys(AccessConstants).reduce(reducePermissions, []),

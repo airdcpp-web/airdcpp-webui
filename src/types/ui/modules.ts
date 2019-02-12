@@ -23,6 +23,7 @@ export const enum Modules {
 }
 
 export enum SubNamespaces {
+  FORM = 'form',
   ACTIONS = 'actions',
   PROMPTS = 'prompts',
   TABLE = 'table',
@@ -31,6 +32,6 @@ export enum SubNamespaces {
 
 export interface ModuleTranslator {
   t: i18next.TFunction;
-  toI18nKey: (text: string) => string;
-  translate: (text: string) => string;
+  toI18nKey: (text: string, subModuleIds?: string[]) => string;
+  translate: (text: string, subModuleIds?: string[]) => string;
 }

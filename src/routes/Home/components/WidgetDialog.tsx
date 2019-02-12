@@ -19,7 +19,9 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { toI18nKey, getModuleT } from 'utils/TranslationUtils';
+import { translateForm } from 'utils/FormUtils';
+import i18next from 'i18next';
 
 
 type FormData = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
@@ -34,6 +36,24 @@ const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget
     name: settings.name,
     ...settings.widget,
   };
+};
+
+
+const buildDefinitions = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
+  const Entry: UI.FormFieldDefinition[] = [
+    {
+      key: 'name',
+      title: 'Name',
+      type: API.SettingTypeEnum.STRING,
+      default_value: name,
+    },
+  ];
+
+  if (widgetInfo.formSettings) {
+    Entry.push(...widgetInfo.formSettings);
+  }
+
+  return translateForm(Entry, getModuleT(t, UI.Modules.WIDGETS));
 };
 
 interface WidgetDialogProps {
@@ -86,22 +106,11 @@ class WidgetDialog extends React.Component<Props & WithTranslation> {
       return null;
     }
 
-    const { formSettings, name, icon } = widgetInfo;
-    const formValue = settingsToFormValue(widgetId, widgetInfo);
-
-    const Entry: UI.FormFieldDefinition[] = [
-      {
-        key: 'name',
-        type: API.SettingTypeEnum.STRING,
-        default_value: name,
-      },
-    ];
-
-    if (formSettings) {
-      Entry.push(...formSettings);
-    }
-
     const { t } = this.props;
+    const { name, icon } = widgetInfo;
+
+    const formValue = settingsToFormValue(widgetId, widgetInfo);
+    const Entry = buildDefinitions(widgetInfo, t);
     return (
       <Modal 
         className="home-widget" 

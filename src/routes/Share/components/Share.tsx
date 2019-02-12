@@ -20,14 +20,15 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { getModuleT } from 'utils/TranslationUtils';
 
 
 class Share extends React.Component<WithTranslation> {
   static displayName = 'Share';
 
+  shareT = getModuleT(this.props.t, UI.Modules.SHARE);
   render() {
-    const { t } = this.props;
+    const { translate } = this.shareT;
     const editAccess = LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
     return (
       <>
@@ -37,9 +38,9 @@ class Share extends React.Component<WithTranslation> {
           footerData={ 
             <ActionMenu 
               className="top left pointing"
-              caption={ translate('Actions...', t, UI.Modules.SHARE) }
+              caption={ translate('Actions...') }
               actions={ ShareRootActions }
-              header={ translate('Share actions', t, UI.Modules.SHARE) }
+              header={ translate('Share actions') }
               triggerIcon="chevron up"
               ids={ [ 'create' ]}
               button={ true }
@@ -96,7 +97,9 @@ class Share extends React.Component<WithTranslation> {
             cell={ editAccess ? <RefreshCell/> : <DurationCell/> }
           />
         </VirtualTable>
-        <ShareDirectoryDialog/>
+        <ShareDirectoryDialog
+          shareT={ this.shareT }
+        />
       </>
     );
   }

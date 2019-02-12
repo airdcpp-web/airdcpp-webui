@@ -16,27 +16,31 @@ import Loader from 'components/semantic/Loader';
 import FileItemList, { FileItemListProps } from './FileItemList';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import './style.css';
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 
 interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
-
+  t: i18next.TFunction;
 }
 
-const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction }) => (
+const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction, t }) => (
   <Accordion>
     <div className="title create-section">
       <i className="dropdown icon"/>
-      Create directory
+      { translate('Create directory', t, UI.Modules.COMMON) }
     </div>
 
     <div className="content create-section">
       <ActionInput 
-        caption="Create" 
+        caption={ translate('Create', t, UI.Modules.COMMON) } 
         icon="plus" 
         handleAction={ handleAction } 
-        placeholder="Directory name"
+        placeholder={ translate('Directory name', t, UI.Modules.COMMON) }
       />
     </div>
   </Accordion>
@@ -48,8 +52,8 @@ CreateDirectorySection.propTypes = {
 };
 
 
-interface FileBrowserProps extends Pick<FileItemListProps, 'itemIconGetter'> {
-  historyId: string;
+export interface FileBrowserLayoutProps extends Pick<FileItemListProps, 'itemIconGetter'> {
+  historyId?: string;
   initialPath: string;
   onDirectoryChanged: (path: string) => void;
   selectedNameFormatter?: SelectedNameFormatter;
@@ -62,17 +66,19 @@ interface State {
   error: string | null;
 }
 
-class FileBrowser extends React.Component<FileBrowserProps, State> {
+
+type Props = FileBrowserLayoutProps & WithTranslation;
+class FileBrowserLayout extends React.Component<Props, State> {
   static propTypes = {
     // Local storage ID used for saving/loading the last path
     // This will have priority over initialPath
     historyId: PropTypes.string,
 
     // Initial directory to show
-    initialPath: PropTypes.string,
+    initialPath: PropTypes.string.isRequired,
 
     // Function to call when changing the directory. Receives the path as param.
-    onDirectoryChanged: PropTypes.func,
+    onDirectoryChanged: PropTypes.func.isRequired,
 
     // Getter for additional content displayed next to file/directory items
     itemIconGetter: PropTypes.func,
@@ -80,7 +86,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
     selectedNameFormatter: PropTypes.func,
   };
 
-  static defaultProps: Pick<FileBrowserProps, 'initialPath'> = {
+  static defaultProps: Pick<Props, 'initialPath'> = {
     initialPath: '',
   };
 
@@ -94,7 +100,7 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
 
   initialFetchCompleted: boolean = false;
 
-  constructor(props: FileBrowserProps) {
+  constructor(props: Props) {
     super(props);
 
     let currentDirectory = loadLocalProperty<string | undefined>(this.getStorageKey());
@@ -111,14 +117,15 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   }
 
   getStorageKey = () => {
-    if (!this.props.historyId) {
+    const { historyId } = this.props;
+    if (!historyId) {
       return undefined;
     }
 
-    return `browse_${this.props.historyId}`;
+    return `browse_${historyId}`;
   }
 
-  componentDidUpdate(prevProps: FileBrowserProps, prevState: State) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.currentDirectory !== this.state.currentDirectory) {
       this.onDirectoryChanged();
     }
@@ -205,21 +212,22 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
   }
 
   render() {
-    if (this.state.loading) {
-      return <Loader text="Loading items"/>;
+    const { currentDirectory, error, items, loading } = this.state;
+    const { selectedNameFormatter, itemIconGetter, t } = this.props;
+
+    if (loading) {
+      return <Loader text={ translate('Loading items', t, UI.Modules.COMMON) }/>;
     }
 
-    const { currentDirectory, error, items } = this.state;
-    const { selectedNameFormatter, itemIconGetter } = this.props;
 
     const hasEditAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_EDIT);
-    const rootName = this.isWindows ? 'Computer' : 'Root';
+    const rootName = translate(this.isWindows ? 'Computer' : 'Root', t, UI.Modules.COMMON);
     return (
       <div className="file-browser">
         { !!error && (
           <Message 
             isError={ true } 
-            title="Failed to load content" 
+            title={ translate('Failed to load content', t, UI.Modules.COMMON) } 
             description={ error }
           /> 
         ) }
@@ -235,13 +243,17 @@ class FileBrowser extends React.Component<FileBrowserProps, State> {
           items={ items } 
           itemClickHandler={ this._handleSelect }
           itemIconGetter={ itemIconGetter }
+          t={ t }
         />
         { !!this.state.currentDirectory && hasEditAccess && (
-          <CreateDirectorySection handleAction={ this._createDirectory }/>
+          <CreateDirectorySection 
+            handleAction={ this._createDirectory }
+            t={ t }
+          />
         ) }
       </div>
     );
   }
 }
 
-export default FileBrowser;
+export default withTranslation()(FileBrowserLayout);

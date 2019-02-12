@@ -8,6 +8,7 @@ import { formatSize } from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 
 import * as API from 'types/api';
+import i18next from 'i18next';
 
 
 export type PathDownloadHandler = (path: string) => void;
@@ -34,6 +35,7 @@ const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
 interface PathListProps {
   downloadHandler: PathDownloadHandler;
   paths: string[];
+  t: i18next.TFunction;
 }
 
 interface PathListDataProps {

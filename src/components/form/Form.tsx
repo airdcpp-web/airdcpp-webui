@@ -9,16 +9,76 @@ import {
   normalizeSettingValueMap, parseDefinitions, parseFieldOptions, 
   setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues 
 } from 'utils/FormUtils';
-import t from 'utils/tcomb-form';
+import tcomb from 'utils/tcomb-form';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import './style.css';
-import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
-import { RouteComponentProps /*, withRouter*/ } from 'react-router';
 
-const TcombForm = t.form.Form;
+import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
+import { Translation } from 'react-i18next';
+import { FormContext } from 'types/ui';
+import i18next from 'i18next';
+
+const TcombForm = tcomb.form.Form;
+
+
+// Reduces an array of field setting objects by calling props.onFieldSetting
+const fieldOptionReducer = (
+  reducedOptions: { [key: string]: any }, 
+  fieldDefinitions: UI.FormFieldDefinition,
+  onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
+  t: i18next.TFunction,
+  formValue: Partial<UI.FormValueMap>
+) => {
+  //const { onFieldSetting, t } = props;
+  reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, t);
+
+  if (onFieldSetting) {
+    onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], formValue);
+  }
+
+  if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
+    reducedOptions[fieldDefinitions.key].fields = {};
+    fieldDefinitions.definitions!.reduce(
+      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, t, formValue), 
+      reducedOptions[fieldDefinitions.key].fields
+    );
+  }
+
+  return reducedOptions;
+};
+
+// Returns an options object for Tcomb form
+const getFieldOptions = (
+  fieldDefinitions: UI.FormFieldDefinition[],
+  onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
+  t: i18next.TFunction,
+  formValue: Partial<UI.FormValueMap>,
+  error: FieldError | null
+) => {
+  const options = {
+    // Parent handlers
+    fields: fieldDefinitions.reduce(
+      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, t, formValue), 
+      {}
+    ),
+  };
+
+  // Do we have an error object from the API?
+  // Show the error message for the respective field
+  //const { error } = this.state;
+  if (!!error) {
+    options.fields[error.field] = {
+      ...options.fields[error.field],
+      error: error.message,
+      hasError: true,
+    };
+  }
+
+  return options;
+};
 
 
 export type FormFieldSettingHandler<ValueType = UI.FormValueMap> = (
@@ -40,7 +100,9 @@ export type FormFieldChangeHandler<ValueType = UI.FormValueMap> = (
 
 export type FormSourceValueUpdateHandler<ValueType = UI.FormValueMap> = (sourceValue: Partial<ValueType>) => void;
 
-export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> {
+export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> 
+  extends Pick<FormContext, 'location'> {
+
   fieldDefinitions: UI.FormFieldDefinition[];
   value?: ValueType;
   onSave: FormSaveHandler<ValueType>;
@@ -56,11 +118,8 @@ interface State<ValueType> {
   formValue: Partial<ValueType>;
 }
 
-export type FormContext = Pick<RouteComponentProps, 'location'>;
-
-class Form<ValueType 
-  extends Partial<UI.FormValueMap> = UI.FormValueMap> 
-  extends React.Component<FormProps<ValueType> & FormContext> {
+type Props<ValueType> = FormProps<ValueType>;
+class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends React.Component<Props<ValueType>> {
   /*static propTypes = {
     // Form items to list
     fieldDefinitions: PropTypes.array.isRequired,
@@ -210,72 +269,74 @@ class Form<ValueType
     return Promise.reject(new Error('Validation failed'));
   }
 
-  // Reduces an array of field setting objects by calling props.onFieldSetting
-  fieldOptionReducer = (reducedOptions: { [key: string]: any }, fieldDefinitions: UI.FormFieldDefinition) => {
-    reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions);
-
-    if (this.props.onFieldSetting) {
-      this.props.onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], this.state.formValue);
-    }
-
-    if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
-      reducedOptions[fieldDefinitions.key].fields = {};
-      fieldDefinitions.definitions!.reduce(this.fieldOptionReducer, reducedOptions[fieldDefinitions.key].fields);
-    }
-
-    return reducedOptions;
-  }
-
-  // Returns an options object for Tcomb form
-  getFieldOptions = () => {
-    const options = {
-      // Parent handlers
-      fields: this.props.fieldDefinitions.reduce(this.fieldOptionReducer, {}),
-    };
-
-    // Do we have an error object from the API?
-    // Show the error message for the respective field
-    const { error } = this.state;
-    if (!!error) {
-      options.fields[error.field] = {
-        ...options.fields[error.field],
-        error: error.message,
-        hasError: true,
-      };
-    }
-
-    return options;
-  }
-
   render() {
-    const { title, fieldDefinitions, className, location } = this.props;
-    const { formValue } = this.state;
-
-    const type = parseDefinitions(fieldDefinitions);
-    const options = this.getFieldOptions();
-
-    const context: FormContext = {
-      location
-    };
-
     return (
-      <div className={ classNames('form', className) }>
-        { !!title && (
-          <div className="ui form header">
-            { title } 
-          </div>
-        ) }
-        <TcombForm
-          ref={ (c: any) => this.form = c }
-          type={ type }
-          options={ options }
-          value={ formValue }
-          onChange={ this.onFieldChanged }
-          context={ context }
-        />
-      </div>
+      <Translation>
+        { t => {
+          //const { location } = useRouter(); // TODO
+          const { title, fieldDefinitions, className, onFieldSetting, location } = this.props;
+          const { formValue, error } = this.state;
+
+          const type = parseDefinitions(fieldDefinitions);
+          const options = getFieldOptions(fieldDefinitions, onFieldSetting, t, formValue, error);
+
+          const context: FormContext = {
+            location,
+            t
+          };
+
+          return (
+            <div className={ classNames('form', className) }>
+              { !!title && (
+                <div className="ui form header">
+                  { title } 
+                </div>
+              ) }
+              <TcombForm
+                ref={ (c: any) => this.form = c }
+                type={ type }
+                options={ options }
+                value={ formValue }
+                onChange={ this.onFieldChanged }
+                context={ context }
+              />
+            </div>
+          );
+        } }
+      </Translation>
     );
   }
 }
 
 export default Form;
+
+/*const FormWrapper = React.forwardRef(<ValueT extends Partial<UI.FormValueMap> = UI.FormValueMap>
+  (props: FormProps<ValueT>, ref: any) => {
+    const { t } = useTranslation();
+    const { location } = useRouter();
+    return (
+      <Form<ValueT>
+        ref={ ref }
+        t={ t }
+        location={ location }
+        { ...props }
+      />
+    );
+  }
+);
+
+export default FormWrapper;*/
+
+/*const FormWrapper = <ValueT extends Partial<UI.FormValueMap> = UI.FormValueMap>(props: FormProps<ValueT>) => {
+  const { t } = useTranslation();
+  const { location } = useRouter();
+  return (
+    <Form<ValueT>
+      t={ t }
+      location={ location }
+      { ...props }
+    />
+  );
+};
+
+export default FormWrapper;*/

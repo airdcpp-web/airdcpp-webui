@@ -6,11 +6,16 @@ import Message from 'components/semantic/Message';
 import PathList, { PathDownloadHandler } from './PathList';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import i18next from 'i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];
   downloadHandler: PathDownloadHandler;
+  t: i18next.TFunction;
 }
 
 class AccordionTargets extends React.Component<AccordionTargetsProps> {
@@ -23,6 +28,7 @@ class AccordionTargets extends React.Component<AccordionTargetsProps> {
   };
 
   formatParent = (parent: API.GroupedPath) => {
+    const { downloadHandler, t } = this.props;
     return (
       <div key={ parent.name }>
         <div className="title">
@@ -33,7 +39,8 @@ class AccordionTargets extends React.Component<AccordionTargetsProps> {
         <div className="content">
           <PathList 
             paths={ parent.paths } 
-            downloadHandler={ this.props.downloadHandler }
+            downloadHandler={ downloadHandler }
+            t={ t }
           />
         </div>
       </div>
@@ -41,11 +48,11 @@ class AccordionTargets extends React.Component<AccordionTargetsProps> {
   }
 
   render() {
-    const { groupedPaths } = this.props;
+    const { groupedPaths, t } = this.props;
     if (groupedPaths.length === 0) {
       return (
         <Message
-          title="No paths to display"
+          title={ translate('No paths to display', t, UI.Modules.COMMON) }
         />
       );
     }

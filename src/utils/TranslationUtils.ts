@@ -39,14 +39,14 @@ export const translate = (text: string, t: i18next.TFunction, moduleId: string |
   return t(toI18nKey(text, moduleId), text);
 };
 
-export const getModuleT = (t: i18next.TFunction, moduleId: string | string[]): UI.ModuleTranslator => {
+export const getModuleT = (t: i18next.TFunction, moduleId: string /*| string[]*/): UI.ModuleTranslator => {
   const moduleT: i18next.TFunction = (key, options) => {
     return t(toI18nKey(key as string, moduleId), options);
   };
 
   return {
     t: moduleT,
-    toI18nKey: (key: string) => toI18nKey(key, moduleId),
-    translate: (text: string) => translate(text, t, moduleId),
+    toI18nKey: (key: string, subModuleIds: string[]) => toI18nKey(key, [ moduleId, ...subModuleIds ]),
+    translate: (text: string, subModuleIds: string[]) => translate(text, t, [ moduleId, ...subModuleIds ]),
   };
 };

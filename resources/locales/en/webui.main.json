@@ -145,7 +145,8 @@
         "autoConnect": "Auto connect",
         "nick": "Nick",
         "hasPassword": "Password",
-        "hubUrl": "Address"
+        "hubUrl": "Address",
+        "shareProfile": "Share profile"
       }
     },
     "filelists": {
