@@ -1,8 +1,15 @@
 import React from 'react';
 
 import SocketService from 'services/SocketService';
-import Message, { MessageDescriptionType } from 'components/semantic/Message';
+import Message from 'components/semantic/Message';
 import { ErrorResponse } from 'airdcpp-apisocket';
+
+import { Translation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
+import i18next from 'i18next';
+
 
 export interface StatisticsDecoratorProps<DataT> {
   stats?: DataT;
@@ -13,13 +20,13 @@ export interface StatisticsDecoratorChildProps<DataT> {
 }
 
 // Decorator for statistics pages that fetch the content from API
-export default function <DataT, PropsT = {}>(
+const StatisticsDecorator = function <DataT, PropsT = {}>(
   Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>, 
   fetchUrl: string, 
-  unavailableMessage: MessageDescriptionType, 
+  unavailableMessage: ((t: i18next.TFunction) => string) | null, 
   fetchIntervalSeconds: number = 0
 ) {
-  class StatisticsDecorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
+  class Decorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
     state = {
       stats: null
     };
@@ -62,10 +69,14 @@ export default function <DataT, PropsT = {}>(
 
       if (stats === undefined) {
         return (
-          <Message
-            title="Statistics not available"
-            description={ unavailableMessage }
-          />
+          <Translation>
+            { t => (
+              <Message
+                title={ translate('Statistics not available', t, UI.Modules.COMMON) }
+                description={ !unavailableMessage ? undefined : unavailableMessage(t) }
+              />
+            ) }
+          </Translation>
         );
       }
 
@@ -78,5 +89,7 @@ export default function <DataT, PropsT = {}>(
     }
   }
 
-  return StatisticsDecorator;
-}
+  return Decorator;
+};
+
+export default StatisticsDecorator;

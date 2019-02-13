@@ -13,6 +13,10 @@ import 'semantic-ui-css/components/modal';
 import 'semantic-ui-css/components/modal.min.css';
 import { IconType } from 'components/semantic/Icon';
 import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import { Translation } from 'react-i18next';
+
+import * as UI from 'types/ui';
+import { translate } from 'utils/TranslationUtils';
 
 
 export interface ModalProps {
@@ -185,25 +189,27 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
             { children }
           </div>
 
-          { onApprove ? (
-            <div className="actions">
-              <div className={ approveStyle }>
-                <i className={ IconConstants.SAVE + ' icon' }/>
-                { approveCaption }
+          <Translation>
+            { t => onApprove ? (
+              <div className="actions">
+                <div className={ approveStyle }>
+                  <i className={ IconConstants.SAVE + ' icon' }/>
+                  { approveCaption }
+                </div>
+                <div className="ui cancel red basic button">
+                  <i className="remove icon"/>
+                  { translate('Cancel', t, UI.Modules.COMMON) }
+                </div>
               </div>
-              <div className="ui cancel red basic button">
-                <i className="remove icon"/>
-                Cancel
+            ) : (
+              <div className="actions">
+                <div className="ui cancel button">
+                  <i className="remove icon"/>
+                  { translate('Close', t, UI.Modules.COMMON) }
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="actions">
-              <div className="ui cancel button">
-                <i className="remove icon"/>
-                Close
-              </div>
-            </div>
-          ) }
+            ) }
+          </Translation>
         </div>
       ), 
       document.getElementById(NODE_ID)!

@@ -17,21 +17,22 @@ export interface PopupProps {
   position?: string;
   triggerClassName?: string;
   className?: string;
-  children: ChildType | (() => ChildType);
+  children: ChildType | ((hide: () => void) => ChildType);
 }
 
 
-interface PopupContentProps {
+interface PopupContentProps extends Pick<PopupProps, 'children'> {
   node: Element;
   onHide: () => void;
   onShow: () => void;
+  hide: () => void;
 }
 
 const PopupContent: React.FC<PopupContentProps> = props => {
   const content = useMemo<ChildType>(
     () => {
       const { children } = props;
-      return typeof children === 'function' ? children() : children as ChildType;
+      return typeof children === 'function' ? children(props.hide) : children as ChildType;
     }, 
     []
   );
@@ -175,6 +176,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
             node={ this.node }
             onShow={ this.show }
             onHide={ this.destroyPortal }
+            hide={ this.hide }
           />
         ) }
       </>

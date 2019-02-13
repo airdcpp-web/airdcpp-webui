@@ -3,7 +3,10 @@ import React from 'react';
 
 import Popup from 'components/semantic/Popup';
 
-import { EncryptionInfo } from 'types/api';
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 interface Info {
@@ -11,9 +14,10 @@ interface Info {
   messageColor: string;
   message: string;
   icon: string;
+  translationKey: string;
 }
 
-const encryptionToInfo = (encryption: EncryptionInfo): Info => {
+const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
   const tlsVersion = encryption.str.match(/TLSv([\d\.]+)/);
   if (tlsVersion && tlsVersion.length === 2 && parseFloat(tlsVersion[1]) < 1.2) {
     return {
@@ -21,6 +25,7 @@ const encryptionToInfo = (encryption: EncryptionInfo): Info => {
       messageColor: 'red',
       message: 'Outdated cryptographic protocol with known security vulnerabilities',
       icon: 'orange warning',
+      translationKey: 'tlsOutdatedWarning',
     };
   }
 
@@ -30,6 +35,7 @@ const encryptionToInfo = (encryption: EncryptionInfo): Info => {
       messageColor: 'orange',
       message: 'Authenticity of the certificate could not be validated',
       icon: 'blue help',
+      translationKey: 'tlsAuthenticityWarning',
     };
   }
 
@@ -38,13 +44,14 @@ const encryptionToInfo = (encryption: EncryptionInfo): Info => {
     messageColor: 'green',
     message: 'Authenticity of the certificate is validated',
     icon: '',
+    translationKey: 'tlsOk',
   };
 };
 
 
 interface InfoMessageProps {
   info: Info;
-  encryption: EncryptionInfo;
+  encryption: API.EncryptionInfo;
 }
 
 const InfoMessage: React.FC<InfoMessageProps> = ({ info, encryption }) => (
@@ -53,13 +60,15 @@ const InfoMessage: React.FC<InfoMessageProps> = ({ info, encryption }) => (
       { encryption.str }
     </p>
     <p style={ { color: info.messageColor } }>
-      { info.message }
+      <Trans i18nKey={ toI18nKey(info.translationKey, UI.Modules.COMMON) }>
+        { info.message }
+      </Trans>
     </p>
   </div>
 );
 
 interface EncryptionStateProps extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
-  encryption?: EncryptionInfo;
+  encryption?: API.EncryptionInfo;
   alwaysVisible?: boolean;
 }
 
@@ -92,8 +101,8 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
         className="basic encryption content" 
         trigger={ 
           <i className="link icons">
-            <i className={ info.iconColor + ' lock icon' }/>
-            <i className={ info.icon + ' corner icon' }/>
+            <i className={ `${info.iconColor} lock icon` }/>
+            <i className={ `${info.icon} corner icon` }/>
           </i>
         }
         settings={ {

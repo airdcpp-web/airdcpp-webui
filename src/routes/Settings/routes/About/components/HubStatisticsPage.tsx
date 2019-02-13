@@ -9,6 +9,9 @@ import HubConstants from 'constants/HubConstants';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 
 import { Row, Header } from 'components/semantic/Grid';
+import { translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 class HubStatisticsPage extends React.Component<StatisticsDecoratorChildProps<any>> {
@@ -49,4 +52,9 @@ class HubStatisticsPage extends React.Component<StatisticsDecoratorChildProps<an
   }
 }
 
-export default StatisticsDecorator(HubStatisticsPage, HubConstants.STATS_URL, 'No hubs online', 10);
+export default StatisticsDecorator(
+  HubStatisticsPage, 
+  HubConstants.STATS_URL, 
+  t => translate('No hubs online', t, UI.Modules.SETTINGS), 
+  10
+);

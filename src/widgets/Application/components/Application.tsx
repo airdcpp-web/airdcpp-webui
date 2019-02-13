@@ -35,7 +35,7 @@ const Statistics = StatisticsDecorator<any, StatisticsProps>(
     </div>
   ), 
   SystemConstants.STATS_URL, 
-  'Failed to fetch information', 
+  null,
   10
 );
 

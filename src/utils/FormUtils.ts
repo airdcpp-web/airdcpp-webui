@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import t from 'utils/tcomb-form';
+import tcomb from 'utils/tcomb-form';
 
 import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
@@ -19,15 +19,15 @@ const typeToComponent = (
   switch (type) {
     case API.SettingTypeEnum.NUMBER: {
       if (min || max) {
-        return t.Range(min, max);
+        return tcomb.Range(min, max);
       }
-      return isEnum ? t.Number : t.Positive;
+      return isEnum ? tcomb.Number : tcomb.Positive;
     }
-    case API.SettingTypeEnum.BOOLEAN: return t.Bool;
+    case API.SettingTypeEnum.BOOLEAN: return tcomb.Bool;
     case API.SettingTypeEnum.STRING:
     case API.SettingTypeEnum.TEXT:
     case API.SettingTypeEnum.FILE_PATH:
-    case API.SettingTypeEnum.DIRECTORY_PATH: return t.Str;
+    case API.SettingTypeEnum.DIRECTORY_PATH: return tcomb.Str;
     default: 
   }
 
@@ -39,16 +39,16 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
     (reduced, def) => {
       if (def.type === API.SettingTypeEnum.LIST) {
         if (def.item_type === API.SettingTypeEnum.STRUCT) {
-          reduced[def.key] = t.list(parseDefinitions(def.definitions!));
+          reduced[def.key] = tcomb.list(parseDefinitions(def.definitions!));
         } else {
-          reduced[def.key] = t.list(typeToComponent(def.item_type!, def.min, def.max, !!def.options));
+          reduced[def.key] = tcomb.list(typeToComponent(def.item_type!, def.min, def.max, !!def.options));
         }
       } else {
         if (def.type === API.SettingTypeEnum.STRUCT) {
           reduced[def.key] = parseDefinitions(def.definitions!);
         } else {
           const fieldComponent = typeToComponent(def.type, def.min, def.max, !!def.options);
-          reduced[def.key] = def.optional ? t.maybe(fieldComponent) : fieldComponent;
+          reduced[def.key] = def.optional ? tcomb.maybe(fieldComponent) : fieldComponent;
         }
       }
 
@@ -57,7 +57,7 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
     {}
   );
 
-  return t.struct(ret);
+  return tcomb.struct(ret);
 };
 
 type IdItemValue = { id: API.SettingValueBase };
@@ -155,7 +155,7 @@ const parseTypeOptions = (type: API.SettingTypeEnum) => {
     } 
     //case FieldTypes.FILE_PATH:
     case API.SettingTypeEnum.DIRECTORY_PATH: {
-      options['factory'] = t.form.Textbox;
+      options['factory'] = tcomb.form.Textbox;
       options['template'] = BrowseField;
 
       // TODO: file selector dialog
@@ -173,7 +173,12 @@ const parseTypeOptions = (type: API.SettingTypeEnum) => {
 
 const parseTitle = (definition: UI.FormFieldDefinition, trans: i18next.TFunction) => {
   if (definition.title && definition.optional) {
-    return `${definition.title} (optional)`;
+    return trans(toI18nKey('fieldOptional', UI.Modules.COMMON), {
+      defaultValue: '{{definition.title}} (optional)',
+      replace: {
+        definition
+      }
+    });
   }
 
   return definition.title;
@@ -201,7 +206,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition, trans: i18next.TF
   }
 
   // Captions
-  options['legend'] = parseTitle(definition, t);
+  options['legend'] = parseTitle(definition, trans);
   options['help'] = definition.help;
 
   // Enum select field?
@@ -212,7 +217,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition, trans: i18next.TF
     );
 
     Object.assign(options, {
-      factory: t.form.Select,
+      factory: tcomb.form.Select,
       options: definition.options.map(normalizeEnumValue),
       nullOption: false,
     });

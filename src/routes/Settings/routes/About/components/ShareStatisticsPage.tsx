@@ -10,6 +10,9 @@ import ShareConstants from 'constants/ShareConstants';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 
 import { Row, Header } from 'components/semantic/Grid';
+import { translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 class ShareStatisticsPage extends React.Component<StatisticsDecoratorChildProps<any>> {
@@ -62,4 +65,9 @@ class ShareStatisticsPage extends React.Component<StatisticsDecoratorChildProps<
   }
 }
 
-export default StatisticsDecorator(ShareStatisticsPage, ShareConstants.STATS_URL, 'No files shared', 60);
+export default StatisticsDecorator(
+  ShareStatisticsPage, 
+  ShareConstants.STATS_URL, 
+  t => translate('No files shared', t, UI.Modules.SETTINGS), 
+  60
+);

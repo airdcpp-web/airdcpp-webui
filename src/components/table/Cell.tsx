@@ -25,9 +25,9 @@ const getCellContent = (cellData: any) => {
     return Array.isArray(cellData) ? cellData.length : cellData.str;
   }
 
-  if (typeof cellData === 'boolean') {
-    return cellData ? 'Yes' : 'No';
-  }
+  //if (typeof cellData === 'boolean') {
+  //  return cellData ? 'Yes' : 'No';
+  //}
 
   if (cellData === 0) {
     return null;

@@ -29,10 +29,13 @@ const LimiterValue: React.FC<LimiterValueProps> = ({ limit, settingKey, widgetT 
       className="limiter" 
       trigger={ value }
     >
-      <LimiterConfig
-        limit={ limit }
-        settingKey={ settingKey }
-      />
+      { hide => (
+        <LimiterConfig
+          limit={ limit }
+          settingKey={ settingKey }
+          hide={ hide }
+        />
+      ) }
     </Popup>
   );
 };
