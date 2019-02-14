@@ -22,7 +22,7 @@ const SharingOptionsPage: React.FC<SettingSectionChildProps> = props => (
       keys={ Entry }
     />
     <RemoteSettingForm
-      title="Skiplist"
+      title={ props.settingsT.translate('Skiplist') }
       { ...props }
       keys={ Skiplist }
     />

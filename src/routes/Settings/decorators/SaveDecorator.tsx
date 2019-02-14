@@ -11,12 +11,15 @@ import LoginStore from 'stores/LoginStore';
 import Form, { FormFieldChangeHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { ChildSectionType } from './SettingsMenuDecorator';
 import { Location } from 'history';
 
 
 export interface SaveDecoratorProps {
   currentMenuItem: ChildSectionType;
+  settingsT: UI.ModuleTranslator;
 }
 
 export interface SaveDecoratorChildProps {
@@ -77,9 +80,10 @@ export default function <PropsT extends object>(
     }
 
     onSettingsSaved = () => {
+      const { translate } = this.props.settingsT;
       NotificationActions.success({ 
-        title: 'Saving completed',
-        message: 'Settings were saved successfully',
+        title: translate('Saving completed'),
+        message: translate('Settings were saved successfully'),
       });
 
       this.forceUpdate();
@@ -99,7 +103,7 @@ export default function <PropsT extends object>(
     }
 
     promptSave = (nextLocation: Location) => {
-      const { currentMenuItem } = this.props;
+      const { currentMenuItem, settingsT } = this.props;
       if (currentMenuItem.noSave) {
         return true;
       }
@@ -112,7 +116,8 @@ export default function <PropsT extends object>(
       }
 
       const hasChanges = this.hasChanges() && LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
-      return hasChanges ? 'You have unsaved changes. Are you sure you want to leave?' : true;
+      return !hasChanges ? true :
+        settingsT.t('unsavedChangesPrompt', 'You have unsaved changes. Are you sure you want to leave?');
     }
 
     saveFormRef = (c: SaveableRef) => {
@@ -135,11 +140,14 @@ export default function <PropsT extends object>(
     };
 
     render() {
-      const { currentMenuItem, children } = this.props;
+      const { currentMenuItem, children, settingsT } = this.props;
 
       const message = currentMenuItem.local && (
         <Message 
-          description="Settings listed on this page are browser-specific"
+          description={ settingsT.t<string>(
+            'browserSpecificNote', 
+            'Settings listed on this page are browser-specific'
+          ) }
           icon="blue info"
         />
       );
@@ -149,6 +157,7 @@ export default function <PropsT extends object>(
           saveHandler={ this.handleSave } 
           hasChanges={ this.hasChanges() }
           local={ currentMenuItem.local }
+          settingsT={ settingsT }
         />
       );
 

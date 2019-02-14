@@ -5,7 +5,8 @@ import Button from 'components/semantic/Button';
 import LoginStore from 'stores/LoginStore';
 import classNames from 'classnames';
 
-import { AccessEnum } from 'types/api';
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 export interface SaveButtonProps {
@@ -13,6 +14,7 @@ export interface SaveButtonProps {
   hasChanges: boolean;
   local?: boolean;
   className?: string;
+  settingsT: UI.ModuleTranslator;
 }
 
 class SaveButton extends React.Component<SaveButtonProps> {
@@ -46,15 +48,15 @@ class SaveButton extends React.Component<SaveButtonProps> {
   }
 
   render() {
-    const { local, hasChanges, className } = this.props;
+    const { local, hasChanges, className, settingsT } = this.props;
 
-    const hasAccess: boolean = local || LoginStore.hasAccess(AccessEnum.SETTINGS_EDIT);
+    const hasAccess: boolean = local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
 
     let title;
     if (!hasAccess) {
-      title = 'No save permission';
+      title = settingsT.translate('No save permission');
     } else {
-      title = hasChanges ? 'Save changes' : 'No unsaved changes';
+      title = settingsT.translate(hasChanges ? 'Save changes' : 'No unsaved changes');
     }
 
     return (

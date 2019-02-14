@@ -1,8 +1,13 @@
 'use strict';
 
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-import SettingsMenuDecorator, { SettingsMenuDecoratorProps } from '../decorators/SettingsMenuDecorator';
+import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
+import { getModuleT } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 import '../style.css';
 
@@ -27,20 +32,22 @@ const MainLayout = SettingsMenuDecorator(({ children }) => {
   );
 });
 
-export interface SettingsProps extends SettingsMenuDecoratorProps {
+export interface SettingsProps extends RouteComponentProps, WithTranslation {
 
 }
 
 // Only to pass menu items to the decorated component
 class Settings extends React.Component<SettingsProps> {
+  settingsT = getModuleT(this.props.t, UI.Modules.SETTINGS);
   render() {
     return (
       <MainLayout 
         { ...this.props } 
         menuItems={ menu }
+        settingsT={ this.settingsT }
       />
     );
   }
 }
 
-export default Settings;
+export default withTranslation()(Settings);

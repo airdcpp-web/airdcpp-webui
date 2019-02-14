@@ -7,12 +7,15 @@ import Form, { FormProps, FormSaveHandler, FormFieldChangeHandler } from 'compon
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
 import { RouteComponentProps } from 'react-router';
+import { translateForm } from 'utils/FormUtils';
 
 
 export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
   keys: string[];
+  settingsT: UI.ModuleTranslator;
 }
 
 
@@ -24,7 +27,7 @@ class LocalSettingForm extends React.Component<Props> {
     keys: PropTypes.array.isRequired,
   };*/
 
-  definitions: API.SettingDefinition[];
+  definitions: UI.FormFieldDefinition[];
   state: {
     settings: API.SettingValueMap,
   };
@@ -32,7 +35,7 @@ class LocalSettingForm extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.definitions = LocalSettingStore.getDefinitions(props.keys);
+    this.definitions = translateForm(LocalSettingStore.getDefinitions(props.keys), props.settingsT);
 
     this.state = {
       settings: LocalSettingStore.getValues(),

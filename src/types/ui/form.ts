@@ -19,6 +19,13 @@ export interface FormOption<OptionValueT = any> {
   text: string;
 }
 
+
+export const enum TranslatableFormDefinitionProperties {
+  HELP = 'Help',
+  NAME = 'Name',
+  OPTION = 'Option',
+}
+
 export type FormContext = Pick<RouteComponentProps, 'location'> & Pick<WithTranslation, 't'>;
 
 export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = {

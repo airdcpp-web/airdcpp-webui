@@ -6,9 +6,9 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems'>;
+type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems' | 'settingsT'>;
 
-const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menuItems, advancedMenuItems }) => {
+const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menuItems, advancedMenuItems, settingsT }) => {
   return (
     <div className="three wide column menu-column">
       <div className="ui vertical secondary menu">
@@ -16,7 +16,7 @@ const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menuItems, advancedMenu
         { !!advancedMenuItems && (
           <div>
             <div className="item header">
-              Advanced
+              { settingsT.translate('Advanced') }
             </div>
             <div className="menu">
               { advancedMenuItems }
@@ -46,7 +46,7 @@ const Content: React.FC<ContentProps> = (
     <div className="ui segment">
       <LayoutHeader
         title={ currentMenuItem.title }
-        icon={ classNames(parent.icon, 'green') }
+        icon={ classNames(parent!.icon, 'green') }
         rightComponent={ saveButton }
       />
       <div className="options">

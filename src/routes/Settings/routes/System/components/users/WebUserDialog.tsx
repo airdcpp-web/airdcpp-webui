@@ -21,56 +21,137 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { translateForm } from 'utils/FormUtils';
 
 
-const AccessCaptions = {
+const enum PermissionAction {
+  EDIT = 'Edit',
+  VIEW = 'View',
+  SEND_MESSAGES = 'Send messages'
+}
+
+type CaptionEntry = string | {
+  title: string;
+  action: PermissionAction;
+};
+
+
+const AccessCaptions: { [key in string]: CaptionEntry } = {
   ADMIN: 'Administrator',
 
   SEARCH: 'Search',
   DOWNLOAD: 'Download',
   TRANSFERS: 'Transfers',
 
-  EVENTS_VIEW: 'Events: View',
-  EVENTS_EDIT: 'Events: Edit',
+  EVENTS_VIEW: {
+    title: 'Events',
+    action: PermissionAction.VIEW,
+  },
+  EVENTS_EDIT: {
+    title: 'Events',
+    action: PermissionAction.EDIT,
+  },
 
-  QUEUE_VIEW: 'Queue: View',
-  QUEUE_EDIT: 'Queue: Modify',
+  QUEUE_VIEW: {
+    title: 'Queue',
+    action: PermissionAction.VIEW,
+  },
+  QUEUE_EDIT: {
+    title: 'Queue',
+    action: PermissionAction.EDIT,
+  },
 
-  FAVORITE_HUBS_VIEW: 'Favorite hubs: View',
-  FAVORITE_HUBS_EDIT: 'Favorite hubs: Modify',
+  FAVORITE_HUBS_VIEW: {
+    title: 'Favorite hubs',
+    action: PermissionAction.VIEW,
+  },
+  FAVORITE_HUBS_EDIT: {
+    title: 'Favorite hubs',
+    action: PermissionAction.EDIT,
+  },
 
-  SETTINGS_VIEW: 'Settings: View',
-  SETTINGS_EDIT: 'Settings: Edit',
+  SETTINGS_VIEW: {
+    title: 'Settings',
+    action: PermissionAction.VIEW,
+  },
+  SETTINGS_EDIT: {
+    title: 'Settings',
+    action: PermissionAction.EDIT,
+  },
+  
+  FILESYSTEM_VIEW: {
+    title: 'Local filesystem',
+    action: PermissionAction.VIEW,
+  },
+  FILESYSTEM_EDIT: {
+    title: 'Local filesystem',
+    action: PermissionAction.EDIT,
+  },
 
-  FILESYSTEM_VIEW: 'Local filesystem: Browse',
-  FILESYSTEM_EDIT: 'Local filesystem: Edit',
+  HUBS_VIEW: {
+    title: 'Hubs',
+    action: PermissionAction.VIEW,
+  },
+  HUBS_EDIT: {
+    title: 'Hubs',
+    action: PermissionAction.EDIT,
+  },
+  HUBS_SEND: {
+    title: 'Hubs',
+    action: PermissionAction.SEND_MESSAGES,
+  },
 
-  HUBS_VIEW: 'Hubs: View',
-  HUBS_EDIT: 'Hubs: Modify',
-  HUBS_SEND: 'Hubs: Send messages',
+  PRIVATE_CHAT_VIEW: {
+    title: 'Private chat',
+    action: PermissionAction.VIEW,
+  },
+  PRIVATE_CHAT_EDIT: {
+    title: 'Private chat',
+    action: PermissionAction.EDIT,
+  },
+  PRIVATE_CHAT_SEND: {
+    title: 'Private chat',
+    action: PermissionAction.SEND_MESSAGES,
+  },
 
-  PRIVATE_CHAT_VIEW: 'Private chat: View',
-  PRIVATE_CHAT_EDIT: 'Private chat: Modify',
-  PRIVATE_CHAT_SEND: 'Private chat: Send messages',
-
-  FILELISTS_VIEW: 'Filelists: View',
-  FILELISTS_EDIT: 'Filelists: Modify',
-
-  VIEW_FILE_VIEW: 'Viewed files: View',
-  VIEW_FILE_EDIT: 'Viewed files: Modify',
+  FILELISTS_VIEW: {
+    title: 'Filelists',
+    action: PermissionAction.VIEW,
+  },
+  FILELISTS_EDIT: {
+    title: 'Filelists',
+    action: PermissionAction.EDIT,
+  },
+  
+  VIEW_FILE_VIEW: {
+    title: 'Viewed files',
+    action: PermissionAction.VIEW,
+  },
+  VIEW_FILE_EDIT: {
+    title: 'Viewed files',
+    action: PermissionAction.EDIT,
+  },
 };
 
 
-const reducePermissions = (options: API.SettingEnumOption[], key: string) => {
-  options.push({
-    id: AccessConstants[key],
-    name: AccessCaptions[key],
-  });
+const reducePermissions = (options: API.SettingEnumOption[], key: string, settingsT: UI.ModuleTranslator) => {
+  const captionEntry = AccessCaptions[key];
+  if (typeof captionEntry === 'string') {
+    options.push({
+      id: AccessConstants[key],
+      name: settingsT.translate(captionEntry),
+    });
+  } else {
+    options.push({
+      id: AccessConstants[key],
+      name: `${settingsT.translate(captionEntry.title)} (${settingsT.translate(captionEntry.action)})`,
+    }); 
+  }
 
   return options;
 };
 
-const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
+const getEntry = (isNew: boolean /*, settingsT: UI.ModuleTranslator*/): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
@@ -85,16 +166,15 @@ const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
     },
     {
       key: 'permissions',
-      title: 'Permissions,',
+      title: 'Permissions',
       type: API.SettingTypeEnum.LIST,
       item_type: API.SettingTypeEnum.STRING,
-      options: Object.keys(AccessConstants).reduce(reducePermissions, []),
     },
   ];
 };
 
 interface WebUserDialogProps {
-
+  settingsT: UI.ModuleTranslator;
 }
 
 interface Entry extends API.WebUserInput, UI.FormValueMap {
@@ -118,7 +198,14 @@ class WebUserDialog extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.entry = getEntry(this.isNew());
+    this.entry = translateForm(getEntry(this.isNew()), props.settingsT);
+    const permissions = this.entry.find(def => def.key === 'permissions');
+    Object.assign(permissions, {
+      options: Object.keys(AccessConstants).reduce(
+        (reduced, cur) => reducePermissions(reduced, cur, props.settingsT), 
+        []
+      )
+    });
   }
 
   isNew = () => {
@@ -139,9 +226,10 @@ class WebUserDialog extends React.Component<Props> {
 
   onFieldSetting: FormFieldSettingHandler<API.WebUserBase> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
+      const { user, settingsT } = this.props;
       fieldOptions['factory'] = t.form.Select;
-      fieldOptions['template'] = PermissionSelector;
-      fieldOptions['disabled'] = !this.isNew() && this.props.user.username === LoginStore.user.username;
+      fieldOptions['template'] = PermissionSelector(settingsT);
+      fieldOptions['disabled'] = !this.isNew() && user.username === LoginStore.user.username;
     } else if (id === 'password') {
       fieldOptions['type'] = 'password';
     } else if (id === 'username') {
@@ -150,8 +238,8 @@ class WebUserDialog extends React.Component<Props> {
   }
 
   render() {
-    const { user, ...other } = this.props;
-    const title = this.isNew() ? 'Add web user' : `Edit user ${user.username}`;
+    const { user, settingsT, ...other } = this.props;
+    const title = settingsT.translate(this.isNew() ? 'Add web user' : 'Edit user');
 
     return (
       <Modal 

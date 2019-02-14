@@ -17,14 +17,17 @@ const PopupEntry = [
   LocalSettings.NOTIFY_EVENTS_ERROR,
 ];
 
-const NotificationPage: React.FC<SettingSectionChildProps> = props => (
-  <div>
-    <LocalSettingForm
-      title="Popup notifications"
-      { ...props }
-      keys={ PopupEntry }
-    />
-  </div>
-);
+const NotificationPage: React.FC<SettingSectionChildProps> = props => {
+  const { translate } = props.settingsT;
+  return (
+    <div>
+      <LocalSettingForm
+        title={ translate('Popup notifications') }
+        { ...props }
+        keys={ PopupEntry }
+      />
+    </div>
+  );
+};
 
 export default NotificationPage;

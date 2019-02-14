@@ -10,16 +10,16 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 
 // tslint:disable-next-line:max-line-length
-type TopSectionSelectionMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'currentMenuItem' | 'parent' | 'advancedMenuItems' | 'parentMenuItems'>;
+type TopSectionSelectionMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'currentMenuItem' | 'parent' | 'advancedMenuItems' | 'parentMenuItems' | 'settingsT'>;
 
 const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
-  { menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent }
+  { menuItems, advancedMenuItems, currentMenuItem, parentMenuItems, parent, settingsT }
 ) => (
   <div className="ui top-menu">
     <Dropdown 
       className="selection fluid" 
-      caption={ parent.title }
-      captionIcon={ 'green ' + parent.icon }
+      caption={ parent!.title }
+      captionIcon={ `green ${parent!.icon}` }
     >
       { parentMenuItems }
     </Dropdown>
@@ -33,7 +33,7 @@ const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
       <MenuSection>
         { menuItems }
       </MenuSection>
-      <MenuSection caption="Advanced">
+      <MenuSection caption={ settingsT.translate('Advanced') }>
         { advancedMenuItems }
       </MenuSection>
     </SectionedDropdown>

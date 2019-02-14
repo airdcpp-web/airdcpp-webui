@@ -14,20 +14,23 @@ const Manual = [
   'download_highest_prio_slots',
 ];
 
-const DownloadLimitPage: React.FC<SettingSectionChildProps> = props => (
-  <div>
-    <AutoValuePanel
-      { ...props }
-      keys={ Auto }
-      type="download"
-    />
+const DownloadLimitPage: React.FC<SettingSectionChildProps> = props => {
+  const { translate } = props.settingsT;
+  return (
+    <div>
+      <AutoValuePanel
+        { ...props }
+        keys={ Auto }
+        type="download"
+      />
 
-    <RemoteSettingForm
-      { ...props }
-      title="Manually set"
-      keys={ Manual }
-    />
-  </div>
-);
+      <RemoteSettingForm
+        { ...props }
+        title={ translate('Manually set') }
+        keys={ Manual }
+      />
+    </div>
+  );
+};
 
 export default DownloadLimitPage;

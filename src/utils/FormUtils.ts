@@ -280,38 +280,53 @@ const reduceChangedFieldValues = (
 };
 
 
-
-import { camelCase } from 'lodash';
-//import i18next from 'i18next';
 import { toI18nKey } from './TranslationUtils';
 import i18next from 'i18next';
+import { startCase } from 'lodash';
 
+
+const toFormI18nKey = (
+  propName: UI.TranslatableFormDefinitionProperties, 
+  definitionKey: string,
+  extraKeyPostfix: string | undefined
+) => {
+  let key = toI18nKey(definitionKey, UI.SubNamespaces.FORM);
+  key += propName;
+  if (extraKeyPostfix) {
+    key += startCase(extraKeyPostfix);
+  }
+
+  return key;
+};
 
 const translateDefinition = (
   def: UI.FormFieldDefinition, 
-  moduleT: UI.ModuleTranslator,
-  //trans: i18next.TFunction, 
-  //moduleId: string
+  moduleT: UI.ModuleTranslator
 ): UI.FormFieldDefinition => {
-  const translateProp = (name: string, value: string | undefined) => {
+  const translateProp = (
+    propName: UI.TranslatableFormDefinitionProperties, 
+    value: string | undefined, 
+    extraKeyPostfix?: string
+  ) => {
     if (!value) {
       return undefined;
     }
 
-    const key = def.key + name;
-    return moduleT.t(toI18nKey(key, UI.SubNamespaces.FORM), value);
-    //return trans(toI18nKey(key, [ moduleId, UI.SubNamespaces.FORM ]), value);
+    return moduleT.t(toFormI18nKey(propName, def.key, extraKeyPostfix), value);
   };
 
   return {
-    title: translateProp('Name', def.title),
-    help: translateProp('Help', def.help),
+    title: translateProp(UI.TranslatableFormDefinitionProperties.NAME, def.title),
+    help: translateProp(UI.TranslatableFormDefinitionProperties.HELP, def.help),
     options: def.options ? def.options.map(opt => ({
       ...opt,
-      name: translateProp(`Option${camelCase(opt.id.toString())}`, opt.name)! // TODO
+      name: translateProp(
+        UI.TranslatableFormDefinitionProperties.OPTION, 
+        opt.name,
+        opt.id.toString()
+      )!
     })) : undefined,
     definitions: !!def.definitions ? def.definitions.map(subDef => {
-      //return translateDefinition(subDef, trans, moduleId);
       return translateDefinition(subDef, moduleT);
     }) : undefined,
     ...def
@@ -321,19 +336,17 @@ const translateDefinition = (
 const translateForm = (
   definitions: UI.FormFieldDefinition[], 
   moduleT: UI.ModuleTranslator,
-  //trans: i18next.TFunction,
-  //moduleId: string
 ): UI.FormFieldDefinition[] => {
   return definitions
     .map(def => {
       return translateDefinition(def, moduleT);
-      //return translateDefinition(def, trans, moduleId);
     });
 };
 
 
 export {
   translateForm,
+  toFormI18nKey,
 
   // Migrates simple key -> value fields to an array that is compatible with the form
   // undefined values will also be initialized with nulled property fields

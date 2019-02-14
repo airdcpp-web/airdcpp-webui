@@ -11,6 +11,7 @@ import { ActionMenu } from 'components/menu';
 import FavoriteDirectoryDialog from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryDialog';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 const Row: React.FC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }) => (
@@ -39,7 +40,7 @@ const getRow = (directory: API.FavoriteDirectoryEntry) => {
 };
 
 interface FavoriteDirectoryPageProps {
-
+  settingsT: UI.ModuleTranslator;
 }
 
 interface FavoriteDirectoryPageDataProps extends DataProviderDecoratorChildProps {
@@ -47,7 +48,7 @@ interface FavoriteDirectoryPageDataProps extends DataProviderDecoratorChildProps
 }
 
 const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirectoryPageDataProps> = (
-  { directories }
+  { directories, settingsT }
 ) => (
   <div id="directory-table">
     <ActionButton
@@ -59,8 +60,8 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
       <table className="ui striped table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Path</th>
+            <th>{ settingsT.translate('Name') }</th>
+            <th>{ settingsT.translate('Path') }</th>
           </tr>
         </thead>
         <tbody>
@@ -68,7 +69,9 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
         </tbody>
       </table>
     ) }
-    <FavoriteDirectoryDialog/>
+    <FavoriteDirectoryDialog
+      settingsT={ settingsT }
+    />
   </div>
 );
 

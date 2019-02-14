@@ -21,7 +21,7 @@ const SkippingOptionsPage: React.FC<SettingSectionChildProps> = props => (
     />
 
     <RemoteSettingForm
-      title="Skiplist"
+      title={ props.settingsT.translate('Skiplist') }
       { ...props }
       keys={ Skiplist }
     />

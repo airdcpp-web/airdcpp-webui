@@ -12,9 +12,17 @@ import { ActionMenu } from 'components/menu';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-const WebUserRow: React.FC<{ user: API.WebUser }> = ({ user }) => (
+interface WebUserRowProps {
+  user: API.WebUser;
+  settingsT: UI.ModuleTranslator;
+}
+
+const WebUserRow: React.FC<WebUserRowProps> = ({ user, settingsT }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -25,7 +33,10 @@ const WebUserRow: React.FC<{ user: API.WebUser }> = ({ user }) => (
       />
     </td>
     <td>
-      { user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1 ? 'Administrator' : user.permissions.length }
+      { user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1 ? 
+          settingsT.translate('Administrator') : 
+          user.permissions.length
+      }
     </td>
     <td>
       { user.active_sessions }
@@ -36,7 +47,7 @@ const WebUserRow: React.FC<{ user: API.WebUser }> = ({ user }) => (
   </tr>
 );
 
-interface WebUsersPageProps {
+interface WebUsersPageProps extends SettingSectionChildProps {
 
 }
 
@@ -48,7 +59,8 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
   static displayName = 'WebUsersPage';
 
   render() {
-    const { users } = this.props;
+    const { users, settingsT } = this.props;
+    const { translate } = settingsT;
     return (
       <div>
         <ActionButton 
@@ -58,22 +70,25 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
         <table className="ui striped table">
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Permissions</th>
-              <th>Active sessions</th>
-              <th>Last logged in</th>
+              <th>{ translate('Username') }</th>
+              <th>{ translate('Permissions') }</th>
+              <th>{ translate('Active sessions') }</th>
+              <th>{ translate('Last logged in') }</th>
             </tr>
           </thead>
           <tbody>
             { users.map(user => (
               <WebUserRow 
-                key={ user.username } 
-                user={ user } 
+                key={ user.username }
+                user={ user }
+                settingsT={ settingsT }
               />
             )) }
           </tbody>
         </table>
-        <WebUserDialog/>
+        <WebUserDialog
+          settingsT={ settingsT }
+        />
       </div>
     );
   }

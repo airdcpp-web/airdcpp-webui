@@ -17,7 +17,9 @@ const HashingPage: React.FC<SettingSectionChildProps> = props => (
       keys={ Entry }
     />
 
-    <HashDatabaseLayout/>
+    <HashDatabaseLayout
+      settingsT={ props.settingsT }
+    />
   </div>
 );
 

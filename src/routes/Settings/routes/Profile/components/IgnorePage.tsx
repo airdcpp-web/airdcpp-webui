@@ -8,6 +8,7 @@ import Message from 'components/semantic/Message';
 import { UserMenu } from 'components/menu';
 
 import * as API from 'types/api';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
@@ -27,51 +28,49 @@ const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
 );
 
 
+const getRow = (ignoreInfo: API.IgnoredUser) => {
+  return (
+    <Row 
+      key={ ignoreInfo.user.cid } 
+      ignoreInfo={ ignoreInfo } 
+    />
+  );
+};
+
+type IgnorePageProps = SettingSectionChildProps;
+
 interface IgnorePageDataProps extends DataProviderDecoratorChildProps {
   ignores: API.IgnoredUser[];
 }
 
-class IgnorePage extends React.Component<IgnorePageDataProps> {
-  static displayName = 'IgnorePage';
-
-  getRow = (ignoreInfo: API.IgnoredUser) => {
+const IgnorePage: React.FC<IgnorePageProps & IgnorePageDataProps> = ({ ignores, settingsT }) => {
+  const { translate } = settingsT;
+  if (ignores.length === 0) {
     return (
-      <Row 
-        key={ ignoreInfo.user.cid } 
-        ignoreInfo={ ignoreInfo } 
+      <Message
+        title={ translate('No ignored users') }
       />
     );
   }
 
-  render() {
-    const { ignores } = this.props;
-    if (ignores.length === 0) {
-      return (
-        <Message
-          title="No ignored users"
-        />
-      );
-    }
+  return (
+    <div>
+      <table className="ui striped table">
+        <thead>
+          <tr>
+            <th>{ translate('User') }</th>
+            <th>{ translate('Messages ignored') }</th>
+          </tr>
+        </thead>
+        <tbody>
+          { ignores.map(getRow) }
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-    return (
-      <div>
-        <table className="ui striped table">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Messages ignored</th>
-            </tr>
-          </thead>
-          <tbody>
-            { ignores.map(this.getRow) }
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-}
-
-export default DataProviderDecorator(IgnorePage, {
+export default DataProviderDecorator<IgnorePageProps, IgnorePageDataProps>(IgnorePage, {
   urls: {
     ignores: UserConstants.IGNORES_URL,
   },

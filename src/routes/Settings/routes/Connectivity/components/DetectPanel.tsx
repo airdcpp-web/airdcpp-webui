@@ -11,26 +11,33 @@ import { Row } from 'components/semantic/Grid';
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
-const formatStatus = (protocolStatus: API.ConnectivityProtocolStatus, running: boolean) => {
+const formatStatus = (
+  protocolStatus: API.ConnectivityProtocolStatus, 
+  running: boolean,
+  settingsT: UI.ModuleTranslator
+) => {
+  const { translate, t } = settingsT;
   if (running) {
-    return 'Detecting...';
+    return translate('Detecting...');
   }
 
-  let ret = protocolStatus.text;
-  if (protocolStatus.auto_detect) {
-    ret += ' (auto detected)';
-  } else {
-    ret += ' (manual configuration)';
-  }
+  const auto = protocolStatus.auto_detect;
+  const ret = t(auto ? 'autoDetected' : 'manualConfiguration', {
+    defaultValue: auto ? '{{status}} (auto detected)' : '{{status}} (manual configuration)',
+    replace: {
+      status: protocolStatus.text
+    }
+  });
 
   return ret;
 };
 
 
 interface DetectPanelProps {
-
+  settingsT: UI.ModuleTranslator;
 }
 
 interface DetectPanelDataProps extends DataProviderDecoratorChildProps {
@@ -40,13 +47,15 @@ interface DetectPanelDataProps extends DataProviderDecoratorChildProps {
 }
 
 const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
-  { status, runningV4, runningV6 }
+  { status, runningV4, runningV6, settingsT }
 ) => (
   <div className="ui segment detect-panel">
-    <h3 className="header">Current auto detection status</h3>
+    <h3 className="header">
+      { settingsT.translate('Current auto detection status') }
+    </h3>
     <div className="ui grid two column">
-      <Row title="IPv4 connectivity" text={ formatStatus(status.status_v4, runningV4) }/>
-      <Row title="IPv6 connectivity" text={ formatStatus(status.status_v6, runningV6) }/>
+      <Row title="IPv4 connectivity" text={ formatStatus(status.status_v4, runningV4, settingsT) }/>
+      <Row title="IPv6 connectivity" text={ formatStatus(status.status_v6, runningV6, settingsT) }/>
     </div>
     <ActionButton 
       className="detect-button"

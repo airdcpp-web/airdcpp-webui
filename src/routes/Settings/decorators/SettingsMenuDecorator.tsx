@@ -1,13 +1,18 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
+import { 
+  Redirect,
+  RouteComponentProps 
+} from 'react-router-dom';
 
-import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
-import LoginStore from 'stores/LoginStore';
+import * as UI from 'types/ui';
+import { 
+  menuItemsToRouteComponentArray, findMenuItem, sectionToUrl 
+} from '../components/MenuItems';
 
 
-interface SectionType {
+export interface SectionType {
   url: string;
   access?: string;
   title: string;
@@ -29,24 +34,17 @@ export interface ChildSectionType extends SectionType {
 
 }
 
-const sectionToUrl = (section: SectionType, parent?: SectionType) => {
-  if (typeof parent === 'object') {
-    return `/settings/${parent.url}/${section.url}`;
-  }
-
-  return `/settings/${section.url}`;
-};
-
 export interface SettingsMenuDecoratorProps extends RouteComponentProps<{}> {
-  parent: RootSectionType;
+  parent?: RootSectionType;
   menuItems?: ChildSectionType[] | RootSectionType[];
   advancedMenuItems?: ChildSectionType[];
-  parentMenuItems: RootSectionType[];
+  parentMenuItems?: RootSectionType[];
+  settingsT: UI.ModuleTranslator;
 }
 
 export interface SettingsMenuDecoratorChildProps extends SettingsMenuDecoratorProps {
   currentMenuItem: SectionType;
-  menuItemToLink: (menuItemInfo: SectionType, parent?: RootSectionType) => React.ReactNode;
+  parent?: RootSectionType;
 }
 
 export default function <PropsT>(Component: React.ComponentType<SettingsMenuDecoratorChildProps & PropsT>) {
@@ -59,83 +57,19 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
       match: PropTypes.object.isRequired,
     };
 
-    isItemActive = (item: SectionType) => {
-      const { location, parent } = this.props;
-      return location.pathname.indexOf(sectionToUrl(item, parent)) === 0;
-    }
-
-    findMenuItem = (menuItems?: SectionType[]) => {
-      if (!menuItems) {
-        return null;
-      }
-
-      return menuItems.find(this.isItemActive);
-    }
-
-    menuItemToLinkComponent = (menuItemInfo: SectionType, parent: RootSectionType) => {
-      if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
-        return null;
-      }
-
-      if (menuItemInfo.access && !LoginStore.hasAccess(menuItemInfo.access)) {
-        return null;
-      }
-
-      let url = sectionToUrl(menuItemInfo, parent);
-
-      // Browsing is smoother when the child page is loaded directly
-      // Don't use the child URL for currently active parent so that the route is detected as active correctly
-      if (menuItemInfo.menuItems && this.props.location.pathname.indexOf(url) !== 0) {
-        url = sectionToUrl(menuItemInfo.menuItems[0], menuItemInfo);
-      }
-
-      return (
-        <RouterMenuItemLink 
-          key={ url } 
-          url={ url } 
-          icon={ !!menuItemInfo.icon ? `green ${menuItemInfo.icon}` : null }
-        >
-          { menuItemInfo.title }
-        </RouterMenuItemLink>
-      );
-    }
-
-    menuItemsToRouteComponentArray = (currentMenuItem: SectionType, menuItems?: SectionType[]) => {
-      if (!menuItems) {
-        return null;
-      }
-
-      const { parent } = this.props;
-      return menuItems.map(item => (
-        <Route
-          key={ item.url }
-          path={ sectionToUrl(item, parent) }
-          render={ props => {
-            const ret = React.createElement(item.component, {
-              ...props,
-              menuItems: currentMenuItem.menuItems,
-              advancedMenuItems: currentMenuItem.advancedMenuItems,
-              parent: currentMenuItem,
-              parentMenuItems: menuItems,
-            });
-
-            return ret;
-          } }
-        />
-      ));
-    }
-
     render() {
-      const { location, match, parent, menuItems, advancedMenuItems } = this.props;
+      const { location, match, parent, menuItems, advancedMenuItems, settingsT } = this.props;
       if (location.pathname === match.url ||
-        (parent && location.pathname === sectionToUrl(parent))
+        (parent && location.pathname === sectionToUrl(parent as SectionType))
       ) {
         if (!!menuItems && menuItems.length) {
           return <Redirect to={ sectionToUrl(menuItems[0], parent) }/>;
         }
       }
 
-      const currentMenuItem = this.findMenuItem(menuItems) || this.findMenuItem(advancedMenuItems);
+      const currentMenuItem = findMenuItem(menuItems, parent, location) || 
+        findMenuItem(advancedMenuItems, parent, location);
+
       if (!currentMenuItem) {
         return null;
       }
@@ -143,11 +77,10 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
       return (
         <Component 
           { ...this.props } 
-          currentMenuItem={ currentMenuItem } 
-          menuItemToLink={ this.menuItemToLinkComponent }
+          currentMenuItem={ currentMenuItem }
         >
-          { this.menuItemsToRouteComponentArray(currentMenuItem, menuItems) }
-          { this.menuItemsToRouteComponentArray(currentMenuItem, advancedMenuItems) }
+          { menuItemsToRouteComponentArray(currentMenuItem, menuItems, settingsT, parent) }
+          { menuItemsToRouteComponentArray(currentMenuItem, advancedMenuItems, settingsT, parent) }
         </Component>
       );
     }

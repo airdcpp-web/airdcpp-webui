@@ -46,7 +46,9 @@ export const getModuleT = (t: i18next.TFunction, moduleId: string /*| string[]*/
 
   return {
     t: moduleT,
-    toI18nKey: (key: string, subModuleIds: string[]) => toI18nKey(key, [ moduleId, ...subModuleIds ]),
-    translate: (text: string, subModuleIds: string[]) => translate(text, t, [ moduleId, ...subModuleIds ]),
+    toI18nKey: (key: string, subModuleIds?: string[]) => 
+      toI18nKey(key, !subModuleIds ? moduleId : [ moduleId, ...subModuleIds ]),
+    translate: (text: string, subModuleIds?: string[]) => 
+      translate(text, t, !subModuleIds ? moduleId : [ moduleId, ...subModuleIds ]),
   };
 };

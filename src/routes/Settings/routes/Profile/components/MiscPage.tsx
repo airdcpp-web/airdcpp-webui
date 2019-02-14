@@ -2,61 +2,75 @@ import React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import LoginStore from 'stores/LoginStore';
+
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import '../style.css';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { FormFieldSettingHandler } from 'components/form/Form';
+import { Trans } from 'react-i18next';
+import { toFormI18nKey } from 'utils/FormUtils';
 
 
-class MiscPage extends React.Component<SettingSectionChildProps> {
-  onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
+const FieldOptionGetter = (settingsT: UI.ModuleTranslator) => {
+  const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
+    //const { toI18nKey } = this.props.settingsT;
     if (id === 'nmdc_encoding') {
       fieldOptions['help'] = (
-        <div>
-          Encoding setting is only used in NMDC hub. ADC hubs will always use UTF-8 encoding.
-          <br/>
-          <br/>
+        <Trans 
+          i18nKey={ settingsT.toI18nKey(
+            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
+          ) }
+        >
           <div>
-            Commonly used values:
-            <ul>
-              <li>Central Europe: cp1250</li>
-              <li>Cyrillic: cp1251</li>
-              <li>Western_Europe: cp1252</li>
-              <li>Greek: cp1253</li>
-              <li>Turkish: cp1254</li>
-              <li>Hebrew: cp1256</li>
-            </ul>
+            Encoding setting is only used in NMDC hub. ADC hubs will always use UTF-8 encoding.
+            <br/>
+            <br/>
+            <div>
+              Commonly used values:
+              <ul>
+                <li>Central Europe: cp1250</li>
+                <li>Cyrillic: cp1251</li>
+                <li>Western_Europe: cp1252</li>
+                <li>Greek: cp1253</li>
+                <li>Turkish: cp1254</li>
+                <li>Hebrew: cp1256</li>
+              </ul>
+            </div>
           </div>
-        </div>
+        </Trans>
       );
     }
+  };
+
+  return onFieldSetting;
+};
+
+
+const Entry = [
+  'auto_follow_redirects',
+  'disconnect_offline_users',
+  'disconnect_hubs_noreg',
+  'min_search_interval',
+];
+
+const MiscPage: React.FC<SettingSectionChildProps> = props => {
+  // The locale-specific system encoding is used on Windows by default
+  // while other system use UTF-8
+  if (LoginStore.systemInfo.platform !== API.PlatformEnum.WINDOWS) {
+    Entry.push('nmdc_encoding');
   }
 
-  render() {
-    const Entry = [
-      'auto_follow_redirects',
-      'disconnect_offline_users',
-      'disconnect_hubs_noreg',
-      'min_search_interval',
-    ];
-
-    // The locale-specific system encoding is used on Windows by default
-    // while other system use UTF-8
-    if (LoginStore.systemInfo.platform !== API.PlatformEnum.WINDOWS) {
-      Entry.push('nmdc_encoding');
-    }
-
-    return (
-      <div>
-        <RemoteSettingForm
-          { ...this.props }
-          keys={ Entry }
-          onFieldSetting={ this.onFieldSetting }
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <RemoteSettingForm
+        { ...props }
+        keys={ Entry }
+        onFieldSetting={ FieldOptionGetter(props.settingsT) }
+      />
+    </div>
+  );
+};
 
 export default MiscPage;

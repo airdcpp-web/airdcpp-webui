@@ -14,43 +14,54 @@ import { formatSize } from 'utils/ValueFormat';
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { Trans } from 'react-i18next';
 
 
 interface OptimizeLayoutProps {
-  checkboxHandler: (checked: boolean) => void;
   running: boolean;
-  checkboxState: boolean;
-  startHandler: () => void;
+  startHandler: (verify: boolean) => void;
+  settingsT: UI.ModuleTranslator;
 }
 
 const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
-  { startHandler, checkboxState, checkboxHandler, running }
-) => (
-  <div className="optimize-layout">
-    <h4 className="header">Maintenance</h4>
-    <Message 
-      // tslint:disable-next-line:max-line-length
-      description="This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
-      icon="blue warning"
-    />
+  { startHandler, running, settingsT }
+) => {
+  const { toI18nKey, translate } = settingsT;
+  const [ verify, setVerify ] = React.useState(false);
+  return (
+    <div className="optimize-layout">
+      <h4 className="header">Maintenance</h4>
+      <Message 
+        description={ (
+          <Trans i18nKey={ toI18nKey('hashDBOptimizeNote') }>
+            This operation will delete all hash information for files that aren't currently in share. 
+            If you are sharing files from network disks or from a removable storage, 
+            make sure that the files are currently shown in share (otherwise they have to be rehashed)
+          </Trans>
+        ) }
+        icon="blue warning"
+      />
 
-    <Checkbox 
-      caption="Verify integrity of hash data" 
-      checked={ checkboxState } 
-      disabled={ running }
-      onChange={ checkboxHandler }
-      floating={ true }
-    />
-    <Button 
-      className="optimize-button"
-      caption="Optimize now"
-      icon="gray configure"
-      loading={ running } 
-      onClick={ startHandler }
-    />
-  </div>
-);
+      <Checkbox 
+        caption={ translate('Verify integrity of hash data') } 
+        checked={ verify } 
+        disabled={ running }
+        onChange={ setVerify }
+        floating={ true }
+      />
+      <Button 
+        className="optimize-button"
+        caption={ translate('Optimize now') }
+        icon="gray configure"
+        loading={ running } 
+        onClick={ () => startHandler(verify) }
+      />
+    </div>
+  );
+};
 
 
 interface SizeRowProps {
@@ -72,39 +83,43 @@ const SizeRow: React.FC<SizeRowProps> = ({ title, size }) => (
 );
 
 interface HashDatabaseLayoutProps {
-
+  settingsT: UI.ModuleTranslator;
 }
 interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
   status: API.HashDatabaseStatus;
 }
 
-class HashDatabaseLayout extends React.Component<HashDatabaseLayoutDataProps> {
-  state = {
-    verify: false,
-  };
-
-  handleOptimize = () => {
-    SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify: this.state.verify })
+class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashDatabaseLayoutDataProps> {
+  handleOptimize = (verify: boolean) => {
+    SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify })
       .catch((error: ErrorResponse) => 
         console.error(`Failed to optimize database: ${error}`)
       );
   }
 
   render() {
-    const { status } = this.props;
+    const { status, settingsT } = this.props;
+    const { translate } = settingsT;
     return (
       <div className="ui segment hash-database">
-        <h3 className="header">Hash database</h3>
+        <h3 className="header">
+          { translate('Hash database') }
+        </h3>
         <div className="ui grid two column">
-          <SizeRow title="File index size" size={ status.file_index_size }/>
-          <SizeRow title="Hash store size" size={ status.hash_store_size }/>
+          <SizeRow 
+            title={ translate('File index size') } 
+            size={ status.file_index_size }
+          />
+          <SizeRow 
+            title={ translate('Hash store size') }
+            size={ status.hash_store_size }
+          />
         </div>
         { LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
           <OptimizeLayout
             running={ status.maintenance_running }
             startHandler={ this.handleOptimize }
-            checkboxState={ this.state.verify }
-            checkboxHandler={ (checked) => this.setState({ verify: checked }) }
+            settingsT={ settingsT }
           /> 
         ) }
       </div>

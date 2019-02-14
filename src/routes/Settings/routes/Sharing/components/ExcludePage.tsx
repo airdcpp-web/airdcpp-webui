@@ -14,6 +14,7 @@ import Message from 'components/semantic/Message';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
 import * as UI from 'types/ui';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
 const Row: React.FC<{ path: string; }> = ({ path }) => (
@@ -30,32 +31,37 @@ const Row: React.FC<{ path: string; }> = ({ path }) => (
   </tr>
 );
 
+const getRow = (path: string) => {
+  return (
+    <Row 
+      key={ path } 
+      path={ path } 
+    />
+  );
+};
+
+
+interface ExcludePageProps extends SettingSectionChildProps {
+
+}
 
 interface ExcludePageDataProps extends DataProviderDecoratorChildProps {
   excludes: string[];
 }
 
-class ExcludePage extends React.Component<ExcludePageDataProps> {
+class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProps> {
   static displayName = 'ExcludePage';
 
-  getRow = (path: string) => {
-    return (
-      <Row 
-        key={ path } 
-        path={ path } 
-      />
-    );
-  }
-
   render() {
-    const { excludes } = this.props;
+    const { excludes, settingsT } = this.props;
+    const { translate, t } = settingsT;
     return (
       <div>
         <Message
           title={
             <div>
               <div>
-                Share must be refreshed for the changes to take effect
+                { t('shareRefreshNote', 'Share must be refreshed for the changes to take effect') }
               </div>
               <br/>
               <ActionButton
@@ -77,11 +83,11 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
           <table className="ui striped table">
             <thead>
               <tr>
-                <th>Path</th>
+                <th>{ translate('Path') }</th>
               </tr>
             </thead>
             <tbody>
-              { excludes.map(this.getRow) }
+              { excludes.map(getRow) }
             </tbody>
           </table>
         ) }
@@ -90,7 +96,7 @@ class ExcludePage extends React.Component<ExcludePageDataProps> {
           onConfirm={ (ShareExcludeActions.actions.add as UI.EditorActionType<string>).saved }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
-          subHeader="Add excluded path"
+          subHeader={ translate('Add excluded path') }
         />
       </div>
     );

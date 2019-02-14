@@ -11,6 +11,9 @@ import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 import SaveDecorator, { SaveDecoratorChildProps, SaveDecoratorProps } from '../decorators/SaveDecorator';
 import { RouteComponentProps } from 'react-router';
 
+import * as UI from 'types/ui';
+import { menuItemToLinkComponent } from './MenuItems';
+
 
 export interface SettingSectionProps {
 
@@ -23,6 +26,7 @@ export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<
   parentMenuItems: React.ReactNode[];
   menuItems: React.ReactNode[];
   advancedMenuItems?: React.ReactNode[];
+  settingsT: UI.ModuleTranslator;
 }
 
 
@@ -30,21 +34,29 @@ export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<
 const SettingSection: React.FC<Props> = (props) => {
   const Component = useMobileLayout() || window.innerWidth < 950 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
 
-  const { menuItemToLink, parentMenuItems, menuItems, advancedMenuItems, ...childProps } = props;
+  const { settingsT, parentMenuItems, menuItems, advancedMenuItems, location, ...childProps } = props;
   const { parent, currentMenuItem } = props;
 
   const contentClassname = classNames(
     'section-content',
-    `${parent.url} ${currentMenuItem.url}`,
+    `${parent!.url} ${currentMenuItem.url}`,
   );
 
   return (
     <Component 
       { ...childProps }
+      settingsT={ settingsT }
+      location={ location }
       contentClassname={ contentClassname }
-      parentMenuItems={ props.parentMenuItems.map(item => menuItemToLink(item)) }
-      menuItems={ !!props.menuItems ? props.menuItems.map(item => menuItemToLink(item, parent)) : [] }
-      advancedMenuItems={ advancedMenuItems ? advancedMenuItems.map(item => menuItemToLink(item, parent)) : undefined }
+      parentMenuItems={ 
+        props.parentMenuItems!.map(item => menuItemToLinkComponent(item, undefined, settingsT, location)) 
+      }
+      menuItems={ !props.menuItems ? [] : 
+        props.menuItems.map(item => menuItemToLinkComponent(item, parent, settingsT, location)) 
+      }
+      advancedMenuItems={ !advancedMenuItems ? undefined : 
+        advancedMenuItems.map(item => menuItemToLinkComponent(item, parent, settingsT, location)) 
+      }
     />
   );
 };

@@ -23,7 +23,7 @@ class AutoValuePanel extends React.Component<AutoValuePanelProps> {
   };
 
   getAutoKey = () => {
-    return this.props.type + '_auto_limits';
+    return `${this.props.type}_auto_limits`;
   }
 
   // Fetch auto settings when enabling auto detection

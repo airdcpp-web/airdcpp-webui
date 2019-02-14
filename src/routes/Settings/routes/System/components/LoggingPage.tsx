@@ -24,33 +24,38 @@ const sections = [
   'status',
 ];
 
-const LoggingPage: React.FC<SettingSectionChildProps> = props => (
-  <div>
-    <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-    />
-    <div className="sections">
-      <div className="ui header">Sections</div>
-      <Message
-        icon="blue info"
-        description={
-          <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>
-            Variable information for Filename and Format fields
-          </ExternalLink>
-        }
+const LoggingPage: React.FC<SettingSectionChildProps> = props => {
+  const { t, translate } = props.settingsT;
+  return (
+    <div>
+      <RemoteSettingForm
+        { ...props }
+        keys={ Entry }
       />
-      <Accordion className="styled" controlled={ true }>
-        { sections.map(section => (
-          <LogSection 
-            { ...props }
-            key={ section } 
-            section={ section }
-          />
-        )) }
-      </Accordion>
+      <div className="sections">
+        <div className="ui header">
+          { translate('Sections') }
+        </div>
+        <Message
+          icon="blue info"
+          description={
+            <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>
+              { t('variableHelp', 'Variable information for Filename and Format fields') }
+            </ExternalLink>
+          }
+        />
+        <Accordion className="styled" controlled={ true }>
+          { sections.map(section => (
+            <LogSection 
+              { ...props }
+              key={ section } 
+              section={ section }
+            />
+          )) }
+        </Accordion>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LoggingPage;

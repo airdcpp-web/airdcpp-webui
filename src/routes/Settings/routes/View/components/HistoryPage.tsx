@@ -22,24 +22,26 @@ const SessionEntry = [
   'history_filelist_sessions',
 ];
 
-const HistoryPage: React.FC<SettingSectionChildProps> = props => (
-  <div>
-    <RemoteSettingForm
-      //title="Miscellaneous"
-      { ...props }
-      keys={ Entry }
-    />
-    <RemoteSettingForm
-      title="Maximum number of messages to cache"
-      { ...props }
-      keys={ MessageEntry }
-    />
-    <RemoteSettingForm
-      title="Maximum number of previously opened sessions"
-      { ...props }
-      keys={ SessionEntry }
-    />
-  </div>
-);
+const HistoryPage: React.FC<SettingSectionChildProps> = props => {
+  const { t } = props.settingsT;
+  return (
+    <div>
+      <RemoteSettingForm
+        { ...props }
+        keys={ Entry }
+      />
+      <RemoteSettingForm
+        title={ t('maxMessageHistory', 'Maximum number of messages to cache') }
+        { ...props }
+        keys={ MessageEntry }
+      />
+      <RemoteSettingForm
+        title={ t('maxSessionHistory', 'Maximum number of previously opened sessions') }
+        { ...props }
+        keys={ SessionEntry }
+      />
+    </div>
+  );
+};
 
 export default HistoryPage;

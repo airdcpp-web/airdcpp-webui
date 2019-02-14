@@ -13,7 +13,7 @@ interface ProtocolPageProps extends SettingSectionChildProps {
 
 class ProtocolPage extends React.Component<ProtocolPageProps> {
   convertValue = (key: string) => {
-    return key + '_' + this.props.protocol;
+    return `${key}_${this.props.protocol}`;
   }
 
   onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {

@@ -21,6 +21,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { translateForm } from 'utils/FormUtils';
 
 
 const Entry: UI.FormFieldDefinition[] = [
@@ -37,7 +38,7 @@ const Entry: UI.FormFieldDefinition[] = [
 ];
 
 export interface FavoriteDirectoryDialogProps {
-
+  settingsT: UI.ModuleTranslator;
 }
 
 interface Entry extends API.FavoriteDirectoryEntryBase, UI.FormValueMap {
@@ -57,6 +58,8 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
 
   form: Form<Entry>;
+  fieldDefinitions = translateForm(Entry, this.props.settingsT);
+
   isNew = () => {
     return !this.props.directoryEntry;
   }
@@ -102,7 +105,8 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
   }
 
   render() {
-    const title = this.isNew() ? 'Add favorite directory' : 'Edit favorite directory';
+    const { settingsT, directoryEntry } = this.props;
+    const title =  settingsT.translate(this.isNew() ? 'Add favorite directory' : 'Edit favorite directory');
     return (
       <Modal 
         className="favorite-directory" 
@@ -113,12 +117,12 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
         { ...this.props }
       >
         <Form<Entry>
-          ref={ (c: any) => this.form = c }
-          fieldDefinitions={ Entry }
+          ref={ c => this.form = c! }
+          fieldDefinitions={ this.fieldDefinitions }
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ this.props.directoryEntry as Entry }
+          value={ directoryEntry as Entry }
           location={ this.props.location }
         />
       </Modal>

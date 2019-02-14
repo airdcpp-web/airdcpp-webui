@@ -27,56 +27,62 @@ const Generic = [
   'ping_timeout',
 ];
 
-const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => (
-  <div>
-    {/*<Message 
-			description={ (
-				<div>
-					<div>
-						New settings will take effect after restarting the management interface
-					</div>
-					<ActionButton 
-						action={ SystemActions.restartWeb }
-					/>
-				</div>
-			) }
-			icon="blue info"
-		/>*/}
-
-    <ActionButton 
-      actions={ SystemActions }
-      actionId="restartWeb"
-    />
-
-    <div className="ui header">HTTP</div>
-    <div className="ui segment">
-      <RemoteSettingForm
-        { ...props }
-        keys={ PlainEntry }
-      />
-    </div>
-
-    <div className="ui header">HTTPS</div>
-    <div className="ui segment">
-      <RemoteSettingForm
-        { ...props }
-        keys={ TlsEntry }
-      />
-
-      <Message 
-        description="The default client certificate is used if the certificate paths are empty"
+const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
+  const { t } = props.settingsT;
+  return (
+    <div>
+      {/*<Message 
+        description={ (
+          <div>
+            <div>
+              New settings will take effect after restarting the management interface
+            </div>
+            <ActionButton 
+              action={ SystemActions.restartWeb }
+            />
+          </div>
+        ) }
         icon="blue info"
-      />
-    </div>
+      />*/}
 
-    <div className="ui header">Advanced</div>
-    <div className="ui segment">
-      <RemoteSettingForm
-        { ...props }
-        keys={ Generic }
+      <ActionButton 
+        actions={ SystemActions }
+        actionId="restartWeb"
       />
+
+      <div className="ui header">HTTP</div>
+      <div className="ui segment">
+        <RemoteSettingForm
+          { ...props }
+          keys={ PlainEntry }
+        />
+      </div>
+
+      <div className="ui header">HTTPS</div>
+      <div className="ui segment">
+        <RemoteSettingForm
+          { ...props }
+          keys={ TlsEntry }
+        />
+
+        <Message 
+          description={ t<string>(
+            'defaultCertNote', 
+            'The default client certificate is used if the certificate paths are empty') 
+          }
+          icon="blue info"
+        />
+      </div>
+
+      <div className="ui header">Advanced</div>
+      <div className="ui segment">
+        <RemoteSettingForm
+          { ...props }
+          keys={ Generic }
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ServerSettingsPage;

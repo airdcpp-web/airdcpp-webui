@@ -7,7 +7,8 @@ import NotificationActions from 'actions/NotificationActions';
 
 import { 
   normalizeSettingValueMap, parseDefinitions, parseFieldOptions, 
-  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues 
+  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues, 
+  //translateFormProperty 
 } from 'utils/FormUtils';
 import tcomb from 'utils/tcomb-form';
 
@@ -34,6 +35,14 @@ const fieldOptionReducer = (
 ) => {
   //const { onFieldSetting, t } = props;
   reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, t);
+
+  /*const tmp = (
+    name: UI.TranslatableFormDefinitionProperties, 
+    caption: string, 
+    extraKeyPostfix: string | undefined
+  ) => {
+    translateFormProperty(name, caption, extraKeyPostfix, fieldDefinitions, t);
+  };*/
 
   if (onFieldSetting) {
     onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], formValue);
@@ -84,7 +93,12 @@ const getFieldOptions = (
 export type FormFieldSettingHandler<ValueType = UI.FormValueMap> = (
   key: string, 
   definitions: UI.FormFieldDefinition[], 
-  formValue: Partial<ValueType>
+  formValue: Partial<ValueType>,
+  /*translationHandler: (
+    propName: UI.TranslatableFormDefinitionProperties, 
+    caption: string, 
+    extraKeyPostfix: string
+  ) => string*/
 ) => void;
 
 export type FormSaveHandler<ValueType> = (

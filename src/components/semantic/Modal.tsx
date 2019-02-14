@@ -65,7 +65,7 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
 
   static defaultProps: Pick<ModalProps, 'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'> = {
     closable: true,
-    approveCaption: 'Save',
+    //approveCaption: 'Save',
     fullHeight: false,
     dynamicHeight: false,
   };
@@ -194,7 +194,7 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
               <div className="actions">
                 <div className={ approveStyle }>
                   <i className={ IconConstants.SAVE + ' icon' }/>
-                  { approveCaption }
+                  { approveCaption || translate('Save', t, UI.Modules.COMMON) }
                 </div>
                 <div className="ui cancel red basic button">
                   <i className="remove icon"/>

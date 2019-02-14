@@ -15,6 +15,9 @@ import '../style.css';
 
 import * as API from 'types/api';
 
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { Trans } from 'react-i18next';
+
 
 const Row: React.FC<{ profile: API.ShareProfile; }> = ({ profile }) => (
   <tr>
@@ -35,24 +38,29 @@ const Row: React.FC<{ profile: API.ShareProfile; }> = ({ profile }) => (
   </tr>
 );
 
-class ShareProfilesPage extends React.Component<ShareProfileDecoratorChildProps> {
-  static displayName = 'ShareProfilesPage';
+const getRow = (profile: API.ShareProfile) => {
+  return (
+    <Row 
+      key={ profile.id } 
+      profile={ profile } 
+    />
+  );
+};
 
-  getRow = (profile: API.ShareProfile) => {
-    return (
-      <Row 
-        key={ profile.id } 
-        profile={ profile } 
-      />
-    );
-  }
+interface ShareProfilesPageProps extends SettingSectionChildProps {
+  
+}
 
-  render() {
-    return (
-      <div>
-        <Message 
-          description={
-            <div>
+const ShareProfilesPage: React.FC<ShareProfilesPageProps & ShareProfileDecoratorChildProps> = (
+  { settingsT, profiles }
+) => {
+  const { translate, toI18nKey } = settingsT;
+  return (
+    <div>
+      <Message 
+        description={
+          <div>
+            <Trans i18nKey={ toI18nKey('shareProfilesNote') }>
               <p>
                 Queued files are shared via the partial file sharing feature in all hubs where the share 
                 has not been hidden, regardless of the configured share profiles.
@@ -60,30 +68,30 @@ class ShareProfilesPage extends React.Component<ShareProfileDecoratorChildProps>
               <p>
                 Share profiles are assigned for individual directories from the <Link to="/share">Share</Link> page.
               </p>
-            </div>
-          }
-          icon="blue info"
-        />
-        <ActionButton
-          actions={ ShareProfileActions }
-          actionId="create"
-        />
+            </Trans>
+          </div>
+        }
+        icon="blue info"
+      />
+      <ActionButton
+        actions={ ShareProfileActions }
+        actionId="create"
+      />
 
-        <table className="ui striped table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Total size</th>
-              <th>Total files</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.props.profiles.map(this.getRow) }
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-}
+      <table className="ui striped table">
+        <thead>
+          <tr>
+            <th>{ translate('Name') }</th>
+            <th>{ translate('Total size') }</th>
+            <th>{ translate('Total files') }</th>
+          </tr>
+        </thead>
+        <tbody>
+          { profiles.map(getRow) }
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default ShareProfileDecorator(ShareProfilesPage, false, undefined, false);
