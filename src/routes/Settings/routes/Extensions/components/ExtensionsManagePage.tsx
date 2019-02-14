@@ -12,9 +12,13 @@ import Message from 'components/semantic/Message';
 import LocalExtension from 'routes/Settings/routes/Extensions/components/LocalExtension';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { Trans } from 'react-i18next';
 
 
-interface ExtensionsManagePageProps {
+interface ExtensionsManagePageProps extends SettingSectionChildProps {
 
 }
 
@@ -22,48 +26,48 @@ interface ExtensionsManagePageDataProps extends DataProviderDecoratorChildProps 
   installedPackages: API.Extension[];
 }
 
-class ExtensionsManagePage extends React.Component<ExtensionsManagePageProps & ExtensionsManagePageDataProps> {
-  static displayName = 'ExtensionsManagePage';
+const getItem = (extension: API.Extension, settingsT: UI.ModuleTranslator) => {
+  return (
+    <LocalExtension 
+      key={ extension.name } 
+      installedPackage={ extension } 
+      settingsT={ settingsT }
+    />
+  );
+};
 
-  getItem = (extension: API.Extension) => {
+const ExtensionsManagePage: React.FC<ExtensionsManagePageProps & ExtensionsManagePageDataProps> = ({ 
+  installedPackages, settingsT 
+}) => {
+  if (installedPackages.length === 0) {
     return (
-      <LocalExtension 
-        key={ extension.name } 
-        installedPackage={ extension } 
+      <Message 
+        description={
+          <Trans i18nKey={ settingsT.toI18nKey('noInstalledExtensions') }>
+            No installed extensions were found. New extensions 
+            can be installed from the <Link to="/settings/extensions/packages">Extension catalog</Link> page.
+          </Trans>
+        }
+        icon="blue info"
       />
     );
-  }
+  } 
 
-  render() {
-    const { installedPackages } = this.props;
-    if (installedPackages.length === 0) {
-      return (
-        <Message 
-          description={
-            <span>
-              No installed extensions were found. New extensions 
-              can be installed from the <Link to="/settings/extensions/packages">Extension catalog</Link> page.
-            </span>
-          }
-          icon="blue info"
-        />
-      );
-    } 
-
-    return (
-      <div className="extension-layout">
-        <EngineStatusMessage/>
-        <div className="ui divider"/>
-        <div className="ui divided items">
-          { installedPackages.map(this.getItem) }
-        </div>
-        <ExtensionsConfigureDialog/>
+  return (
+    <div className="extension-layout">
+      <EngineStatusMessage 
+        settingsT={ settingsT }
+      />
+      <div className="ui divider"/>
+      <div className="ui divided items">
+        { installedPackages.map(p => getItem(p, settingsT)) }
       </div>
-    );
-  }
-}
+      <ExtensionsConfigureDialog/>
+    </div>
+  );
+};
 
-export default DataProviderDecorator(ExtensionsManagePage, {
+export default DataProviderDecorator<ExtensionsManagePageProps, ExtensionsManagePageDataProps>(ExtensionsManagePage, {
   urls: {
     installedPackages: ExtensionConstants.EXTENSIONS_URL,
   },

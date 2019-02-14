@@ -11,11 +11,17 @@ import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/S
 import SystemConstants from 'constants/SystemConstants';
 import { formatRelativeTime } from 'utils/ValueFormat';
 import InstallPrompt from 'components/InstallPrompt';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-class AboutPage extends React.Component<StatisticsDecoratorChildProps<any>> {
+interface AboutPageProps extends SettingSectionChildProps {
+
+}
+
+class AboutPage extends React.Component<AboutPageProps & StatisticsDecoratorChildProps<any>> {
   render() {
-    const { stats } = this.props;
+    const { stats, settingsT } = this.props;
+    const { translate } = settingsT;
     const systemInfo = LoginStore.systemInfo;
 
     const buildDate = Moment(new Date(JSON.parse(UI_BUILD_DATE))).format('LLL');
@@ -23,14 +29,14 @@ class AboutPage extends React.Component<StatisticsDecoratorChildProps<any>> {
     return (
       <>
         <div className="ui grid two column">
-          <Row title="Application version" text={ systemInfo.client_version }/>
-          <Row title="Web UI version" text={ UI_VERSION }/>
-          <Row title="Web UI build date" text={ buildDate }/>
-          <Row title="API version" text={ systemInfo.api_version }/>
-          <Row title="API feature level" text={ systemInfo.api_feature_level }/>
-          <Row title="Started" text={ formatRelativeTime(systemInfo.client_started) }/>
-          <Row title="Active sessions" text={ stats.active_sessions }/>
-          <Row title="Server threads" text={ stats.server_threads }/>
+          <Row title={ translate('Application version') } text={ systemInfo.client_version }/>
+          <Row title={ translate('Web UI version') } text={ UI_VERSION }/>
+          <Row title={ translate('Web UI build date') } text={ buildDate }/>
+          <Row title={ translate('API version') } text={ systemInfo.api_version }/>
+          <Row title={ translate('API feature level') } text={ systemInfo.api_feature_level }/>
+          <Row title={ translate('Started') } text={ formatRelativeTime(systemInfo.client_started) }/>
+          <Row title={ translate('Active sessions') } text={ stats.active_sessions }/>
+          <Row title={ translate('Server threads') } text={ stats.server_threads }/>
         </div>
         <InstallPrompt alwaysShow={ true }/>
       </>

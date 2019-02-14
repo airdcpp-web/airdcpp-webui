@@ -12,6 +12,8 @@ import versionCompare from 'compare-versions';
 import 'semantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
@@ -26,46 +28,79 @@ interface VersionProps {
     date?: number;
     version: string;
   };
+  settingsT: UI.ModuleTranslator;
 }
 
-const Version: React.FC<VersionProps> = ({ title, packageInfo, className }) => {
+const Version: React.FC<VersionProps> = ({ title, packageInfo, className, settingsT }) => {
   if (!packageInfo) {
     return null;
   }
 
-  const publishDate = packageInfo.date ? ` (published ${Moment(packageInfo.date).from(Moment())})` : '';
+  const versionDesc = !packageInfo.date ? packageInfo.version : settingsT.t(
+    'datePublished',
+    {
+      defaultValue: '{{version}} (published {{date}})',
+      replace: {
+        version: packageInfo.version,
+        date: Moment(packageInfo.date).from(Moment())
+      }
+    }
+  );
+
   return (
     <div className={ className }>
-      { (title ? title + ': ' : '') }
+      { `${title}: ` }
       <span> 
-        { packageInfo.version + publishDate }
+        { versionDesc }
       </span>
     </div>
   );
 };
 
-const formatAuthor = (npmPackage?: NpmPackage, installedPackage?: API.Extension) => {
+const formatAuthor = (settingsT: UI.ModuleTranslator, npmPackage?: NpmPackage, installedPackage?: API.Extension) => {
+  let author: string | undefined;
   if (installedPackage && installedPackage.author) {
-    return 'by ' + installedPackage.author;
+    author = installedPackage.author;
   }
 
   if (npmPackage) {
-    return 'by ' + npmPackage.publisher.username;
+    author = npmPackage.publisher.username;
   }
 
-  return null;
+  if (!author) {
+    return null;
+  }
+
+  return settingsT.t('byAuthor', {
+    defaultValue: 'by {{author}}',
+    replace: {
+      author
+    }
+  });
 };
 
-const formatNote = (installedPackage?: API.Extension, npmError?: ErrorResponse | null) => {
+const formatNote = (
+  settingsT: UI.ModuleTranslator, 
+  installedPackage?: API.Extension, 
+  npmError?: ErrorResponse | null
+) => {
   if (installedPackage && !installedPackage.managed) {
-    return 'Unmanaged extension';
+    return settingsT.translate('Unmanaged extension');
   }
 
   if (npmError) {
-    return `Failed to fetch information from the extension directory: ${errorResponseToString(npmError)}`;
+    return settingsT.t(
+      'extensionDirectoryFetchError',
+      {
+        defaultValue: 'Failed to fetch information from the extension directory: {{error}}',
+        replace: {
+          error: errorResponseToString(npmError)
+        }
+      }
+    );
   }
 
-  return 'Non-listed extension';
+  return settingsT.translate('Non-listed extension');
 };
 
 
@@ -82,6 +117,7 @@ export interface ExtensionProps {
   installedPackage?: API.Extension;
   npmPackage?: NpmPackage;
   npmError?: ErrorResponse | null;
+  settingsT: UI.ModuleTranslator;
 }
 
 
@@ -147,8 +183,9 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
   }
 
   render() {
-    const { npmPackage, installedPackage, npmError } = this.props;
+    const { npmPackage, installedPackage, npmError, settingsT } = this.props;
     const { installing } = this.state;
+    const { translate } = settingsT;
 
     const hasUpdate = !!installedPackage && !!npmPackage && 
       versionCompare(installedPackage.version, npmPackage.version) < 0;
@@ -164,7 +201,7 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
             { npmPackage ? npmPackage.name : installedPackage!.name }
           </a>
           <div className="meta author">
-            { formatAuthor(npmPackage, installedPackage) }
+            { formatAuthor(settingsT, npmPackage, installedPackage) }
           </div>
           <div className="description">
             <span>{ npmPackage ? npmPackage.description : installedPackage!.description }</span>
@@ -172,16 +209,18 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
           <div className="extra version">
             <Version 
               className="npm"
-              title="Latest version" 
+              title={ translate('Latest version') }
               packageInfo={ npmPackage }
+              settingsT={ settingsT }
             />
             <div>
-              { !npmPackage && formatNote(installedPackage, npmError) }
+              { !npmPackage && formatNote(settingsT, installedPackage, npmError) }
             </div>
             <Version 
               className={ npmPackage ? (!hasUpdate ? 'latest' : 'outdated') : undefined }
-              title="Installed version" 
+              title={ translate('Installed version') } 
               packageInfo={ installedPackage }
+              settingsT={ settingsT }
             />
           </div>
           <ExtensionActionButtons

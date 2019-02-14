@@ -10,64 +10,134 @@ import ShareConstants from 'constants/ShareConstants';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 
 import { Row, Header } from 'components/semantic/Grid';
-import { translate } from 'utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+//import * as UI from 'types/ui';
+import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-class ShareStatisticsPage extends React.Component<StatisticsDecoratorChildProps<any>> {
-  render() {
-    const { stats } = this.props;
-    const averageFileAge = Moment.duration(stats.average_file_age * 1000).humanize();
-    return (
-      <div className="ui grid two column">
-        <Row title="Total share size" text={ formatSize(stats.total_size) }/>
-        <Row 
-          title="Total files" 
-          // tslint:disable-next-line:max-line-length
-          text={ `${stats.total_file_count} (${formatPercentage(stats.unique_file_count, stats.total_file_count)} unique)` }
-        />
-        <Row title="Total directories" text={ stats.total_directory_count }/>
-        <Row title="Average file age" text={ averageFileAge }/>
-        <Row 
-          title="Average files per directory" 
-          text={ formatAverage(stats.total_file_count, stats.total_directory_count) }
-        />
+interface ShareStatisticsPageProps extends SettingSectionChildProps {
 
-        <Header title="Incoming searches"/>
-        <Row 
-          title="Total searches" 
-          text={ `${stats.total_searches} (${stats.total_searches_per_second.toFixed(1)} per second)` }
-        />
-        <Row title="TTH searches" text={ formatPercentage(stats.tth_searches, stats.total_searches) }/>
-        <Row 
-          title="Text searches" 
-          // tslint:disable-next-line:max-line-length
-          text={ `${stats.recursive_searches} (${stats.unfiltered_recursive_searches_per_second.toFixed(2)}  matched per second)` }
-        />
-        <Row 
-          title="Filtered text searches" 
-          text={ 
-            formatPercentage(stats.filtered_searches, stats.recursive_searches) + 
-      ' (' + 
-      formatPercentage(stats.recursive_searches_responded, stats.recursive_searches - stats.filtered_searches) + 
-      ' of the matched ones returned results)' 
-          }
-        />
-        <Row 
-          title="Average text search tokens (non-filtered)" 
-          // tslint:disable-next-line:max-line-length
-          text={ `${stats.average_search_token_count.toFixed(1)} (${stats.average_search_token_length.toFixed(1)} bytes per token)` }
-        />
-        <Row title="Average matching time per text search" text={ `${stats.average_match_ms} ms` }/>
-      </div>
-    );
-  }
 }
+
+const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>> = (
+  { stats, settingsT }
+) => {
+  const averageFileAge = Moment.duration(stats.average_file_age * 1000).humanize();
+  const { translate, t } = settingsT;
+  return (
+    <div className="ui grid two column">
+      <Row 
+        title={ translate('Total share size') } 
+        text={ formatSize(stats.total_size) }
+      />
+      <Row 
+        title={ translate('Total files') } 
+        // tslint:disable-next-line:max-line-length
+        text={ t(
+          'totalFilesValue',
+          {
+            defaultValue: '{{totalCount}} ({{uniqueCount}} unique)',
+            replace: {
+              totalCount: stats.total_file_count,
+              uniqueCount: formatPercentage(stats.unique_file_count, stats.total_file_count)
+            }
+          }
+        ) }
+      />
+      <Row 
+        title={ translate('Total directories') } 
+        text={ stats.total_directory_count }
+      />
+      <Row 
+        title={ translate('Average file age') } 
+        text={ averageFileAge }
+      />
+      <Row 
+        title={ translate('Average files per directory') } 
+        text={ formatAverage(stats.total_file_count, stats.total_directory_count) }
+      />
+
+      <Header title={ translate('Incoming searches') }/>
+      <Row 
+        title={ translate('Total searches') } 
+        text={ t(
+          'searchesTotalValue',
+          {
+            defaultValue: '{{totalCount}} ({{perSecondCount}} per second)',
+            replace: {
+              totalCount: stats.total_searches,
+              perSecondCount: stats.total_searches_per_second.toFixed(1)
+            }
+          }
+        ) }
+      />
+      <Row 
+        title={ translate('TTH searches') } 
+        text={ formatPercentage(stats.tth_searches, stats.total_searches) }
+      />
+      <Row 
+        title={ 'Text searches' } 
+        // tslint:disable-next-line:max-line-length
+        text={ t(
+          'searchesPerSecondValue',
+          {
+            defaultValue: '{{totalCount}} ({{matchedCount}} matched per second)',
+            replace: {
+              totalCount: stats.recursive_searches,
+              matchedCount: stats.unfiltered_recursive_searches_per_second.toFixed(2)
+            }
+          }
+        ) }
+      />
+      <Row 
+        title={ translate('Filtered text searches') } 
+        text={ t(
+          'searchesFilteredValue',
+          {
+            defaultValue: '{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)',
+            replace: {
+              filteredPercentage: formatPercentage(stats.filtered_searches, stats.recursive_searches),
+              resultPercentage: formatPercentage(
+                stats.recursive_searches_responded, 
+                stats.recursive_searches - stats.filtered_searches
+              )
+            }
+          }
+        ) }
+      />
+      <Row 
+        title={ translate('Average text search tokens (non-filtered)') }
+        // tslint:disable-next-line:max-line-length
+        text={ t(
+          'searchesAverageTokensValue',
+          {
+            defaultValue: '{{tokenCount}} ({{tokenLength}} bytes per token)',
+            replace: {
+              tokenCount: stats.average_search_token_count.toFixed(1),
+              tokenLength: stats.average_search_token_length.toFixed(1)
+            }
+          }
+        ) }
+      />
+      <Row 
+        title={ translate('Average matching time per text search') } 
+        text={ t(
+          'searchesAverageMatchTimeValue',
+          {
+            defaultValue: '{{matchTime}} ms',
+            replace: {
+              matchTime: stats.average_match_ms
+            }
+          }
+        ) }
+      />
+    </div>
+  );
+};
 
 export default StatisticsDecorator(
   ShareStatisticsPage, 
   ShareConstants.STATS_URL, 
-  t => translate('No files shared', t, UI.Modules.SETTINGS), 
+  (t, props) => props.settingsT.translate('No files shared'), 
   60
 );

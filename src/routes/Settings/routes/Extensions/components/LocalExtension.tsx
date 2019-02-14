@@ -7,6 +7,8 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import Extension, { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { toCorsSafeUrl } from 'utils/HttpUtils';
 
 
@@ -35,6 +37,7 @@ const convertNpmPackage = ({ name, description, version, _npmUser }: NpmPackageD
 
 interface LocalExtensionProps {
   installedPackage: API.Extension;
+  settingsT: UI.ModuleTranslator;
 }
 
 interface LocalExtensionDataProps extends DataProviderDecoratorChildProps {
@@ -42,12 +45,13 @@ interface LocalExtensionDataProps extends DataProviderDecoratorChildProps {
 }
 
 const LocalExtension = DataProviderDecorator<LocalExtensionProps, LocalExtensionDataProps>(
-  ({ installedPackage, npmPackage, dataError }) => (
+  ({ installedPackage, npmPackage, dataError, settingsT }) => (
     <Extension 
       key={ installedPackage.name } 
       installedPackage={ installedPackage } 
       npmPackage={ !!npmPackage ? convertNpmPackage(npmPackage) : undefined }
       npmError={ dataError }
+      settingsT={ settingsT }
     />
   ), 
   {

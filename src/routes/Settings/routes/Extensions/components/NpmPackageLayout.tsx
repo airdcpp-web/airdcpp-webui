@@ -8,17 +8,17 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import 'semantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { toCorsSafeUrl } from 'utils/HttpUtils';
 
 
 interface NpmPackageLayoutProps {
-  
+  settingsT: UI.ModuleTranslator;
 }
 
 interface NpmCatalogItem {
-  //data: {
-    package: NpmPackage;
-  //};
+  package: NpmPackage;
 }
 
 interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
@@ -26,32 +26,30 @@ interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
   packageCatalog: NpmCatalogItem[];
 }
 
-class NpmPackageLayout extends React.Component<NpmPackageLayoutProps & NpmPackageLayoutDataProps> {
-  getItem = (npmPackage: NpmPackage) => {
-    const installedPackage = this.props.installedPackages.find(p => p.name === npmPackage.name);
-    return (
-      <Extension 
-        key={ npmPackage.name } 
-        npmPackage={ npmPackage } 
-        installedPackage={ installedPackage }
-      />
-    );
-  }
+const getItem = (npmPackage: NpmPackage, settingsT: UI.ModuleTranslator, installedPackages: API.Extension[]) => {
+  const installedPackage = installedPackages.find(p => p.name === npmPackage.name);
+  return (
+    <Extension 
+      key={ npmPackage.name } 
+      npmPackage={ npmPackage } 
+      installedPackage={ installedPackage }
+      settingsT={ settingsT }
+    />
+  );
+};
 
-  render() {
-    const { packageCatalog } = this.props;
-    return (
-      <div className="extension-layout">
-        <div className="ui divider"/>
-        { packageCatalog.length > 0 && (
-          <div className="ui divided items">
-            { packageCatalog.map(data => this.getItem(data.package)) }
-          </div>
-        ) }
+const NpmPackageLayout: React.FC<NpmPackageLayoutProps & NpmPackageLayoutDataProps> = ({
+  packageCatalog, settingsT, installedPackages
+}) => (
+  <div className="extension-layout">
+    <div className="ui divider"/>
+    { packageCatalog.length > 0 && (
+      <div className="ui divided items">
+        { packageCatalog.map(data => getItem(data.package, settingsT, installedPackages)) }
       </div>
-    );
-  }
-}
+    ) }
+  </div>
+);
 
 export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutDataProps>(NpmPackageLayout, {
   urls: {

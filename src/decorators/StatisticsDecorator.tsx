@@ -23,7 +23,7 @@ export interface StatisticsDecoratorChildProps<DataT> {
 const StatisticsDecorator = function <DataT, PropsT = {}>(
   Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>, 
   fetchUrl: string, 
-  unavailableMessage: ((t: i18next.TFunction) => string) | null, 
+  unavailableMessage: ((t: i18next.TFunction, props: PropsT) => string) | null, 
   fetchIntervalSeconds: number = 0
 ) {
   class Decorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
@@ -73,7 +73,7 @@ const StatisticsDecorator = function <DataT, PropsT = {}>(
             { t => (
               <Message
                 title={ translate('Statistics not available', t, UI.Modules.COMMON) }
-                description={ !unavailableMessage ? undefined : unavailableMessage(t) }
+                description={ !unavailableMessage ? undefined : unavailableMessage(t, this.props) }
               />
             ) }
           </Translation>
