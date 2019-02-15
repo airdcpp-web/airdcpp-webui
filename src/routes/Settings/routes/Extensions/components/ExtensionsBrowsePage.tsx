@@ -12,14 +12,14 @@ import * as UI from 'types/ui';
 
 
 interface ExtensionBrowsePageProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
-const ExtensionBrowsePage: React.FC<ExtensionBrowsePageProps> = ({ settingsT }) => {
+const ExtensionBrowsePage: React.FC<ExtensionBrowsePageProps> = ({ moduleT }) => {
   return (
     <div>
       <EngineStatusMessage
-        settingsT={ settingsT }
+        moduleT={ moduleT }
       />
       <div className="table-actions">
         <ActionButton
@@ -29,7 +29,7 @@ const ExtensionBrowsePage: React.FC<ExtensionBrowsePageProps> = ({ settingsT }) 
         />
       </div>
       <NpmPackageLayout
-        settingsT={ settingsT }
+        moduleT={ moduleT }
       />
       <ExtensionsConfigureDialog/>
     </div>

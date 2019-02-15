@@ -20,8 +20,8 @@ interface AboutPageProps extends SettingSectionChildProps {
 
 class AboutPage extends React.Component<AboutPageProps & StatisticsDecoratorChildProps<any>> {
   render() {
-    const { stats, settingsT } = this.props;
-    const { translate } = settingsT;
+    const { stats, moduleT } = this.props;
+    const { translate } = moduleT;
     const systemInfo = LoginStore.systemInfo;
 
     const buildDate = Moment(new Date(JSON.parse(UI_BUILD_DATE))).format('LLL');

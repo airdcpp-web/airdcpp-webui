@@ -8,7 +8,6 @@ import invariant from 'invariant';
 import tcomb from 'utils/tcomb-form';
 
 import * as UI from 'types/ui';
-import { translate } from 'utils/TranslationUtils';
 
 
 const MultiValueContainer: React.FC<any> = ({ css, children, innerProps }) => {
@@ -55,14 +54,14 @@ const SelectTemplate: TCombTemplate = {
       return option;
     });
 
-    const { t } = locals.context;
+    const { formT } = locals.context;
     return (
       <Select
         value={ value }
         options={ options }
         onChange={ onChange }
         isMulti={ true }
-        noOptionsMessage={ () => translate('No options', t, UI.Modules.COMMON) }
+        noOptionsMessage={ () => formT.translate('No options') }
         components={{ 
           MultiValueContainer,
           MultiValueLabel,

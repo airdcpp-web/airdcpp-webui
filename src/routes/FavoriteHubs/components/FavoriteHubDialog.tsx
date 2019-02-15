@@ -20,6 +20,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { FavoriteHubEntry } from 'types/api';
 import Entry from 'widgets/RSS/components/Entry';
 //import i18next from 'i18next';
@@ -89,7 +90,7 @@ const Fields: UI.FormFieldDefinition[] = [
       }
     ], 
   }, {
-    key: 'connectivityV4',
+    key: 'connectivity_v4',
     title: 'Connectivity setting overrides (IPv4)',
     type: API.SettingTypeEnum.STRUCT,
     definitions: [
@@ -107,7 +108,7 @@ const Fields: UI.FormFieldDefinition[] = [
       }
     ]
   }, {
-    key: 'connectivityV6',
+    key: 'connectivity_v6',
     title: 'Connectivity setting overrides (IPv6)',
     type: API.SettingTypeEnum.STRUCT,
     definitions: [

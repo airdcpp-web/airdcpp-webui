@@ -23,7 +23,7 @@ const SessionEntry = [
 ];
 
 const HistoryPage: React.FC<SettingSectionChildProps> = props => {
-  const { t } = props.settingsT;
+  const { t } = props.moduleT;
   return (
     <div>
       <RemoteSettingForm

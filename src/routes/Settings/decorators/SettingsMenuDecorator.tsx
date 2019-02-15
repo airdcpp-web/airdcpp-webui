@@ -40,6 +40,7 @@ export interface SettingsMenuDecoratorProps extends RouteComponentProps<{}> {
   advancedMenuItems?: ChildSectionType[];
   parentMenuItems?: RootSectionType[];
   settingsT: UI.ModuleTranslator;
+  moduleT?: UI.ModuleTranslator;
 }
 
 export interface SettingsMenuDecoratorChildProps extends SettingsMenuDecoratorProps {
@@ -58,7 +59,7 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
     };
 
     render() {
-      const { location, match, parent, menuItems, advancedMenuItems, settingsT } = this.props;
+      const { location, match, parent, menuItems, advancedMenuItems, settingsT, moduleT } = this.props;
       if (location.pathname === match.url ||
         (parent && location.pathname === sectionToUrl(parent as SectionType))
       ) {
@@ -79,8 +80,8 @@ export default function <PropsT>(Component: React.ComponentType<SettingsMenuDeco
           { ...this.props } 
           currentMenuItem={ currentMenuItem }
         >
-          { menuItemsToRouteComponentArray(currentMenuItem, menuItems, settingsT, parent) }
-          { menuItemsToRouteComponentArray(currentMenuItem, advancedMenuItems, settingsT, parent) }
+          { menuItemsToRouteComponentArray(currentMenuItem, menuItems, settingsT, moduleT, parent) }
+          { menuItemsToRouteComponentArray(currentMenuItem, advancedMenuItems, settingsT, moduleT, parent) }
         </Component>
       );
     }

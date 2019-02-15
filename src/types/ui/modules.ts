@@ -34,4 +34,6 @@ export interface ModuleTranslator {
   t: i18next.TFunction;
   toI18nKey: (text: string, subModuleIds?: string[]) => string;
   translate: (text: string, subModuleIds?: string[]) => string;
+  moduleId: string | string[];
+  plainT: i18next.TFunction;
 }

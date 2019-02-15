@@ -15,9 +15,9 @@ interface TransferStatisticsPageProps extends SettingSectionChildProps {
 }
 
 const TransferStatisticsPage: React.FC<TransferStatisticsPageProps & StatisticsDecoratorChildProps<any>> = (
-  { stats, settingsT }
+  { stats, moduleT }
 ) => {
-  const { translate } = settingsT;
+  const { translate } = moduleT;
 
   const totalUp = stats.session_uploaded + stats.start_total_uploaded;
   const totalDown = stats.session_downloaded + stats.start_total_downloaded;

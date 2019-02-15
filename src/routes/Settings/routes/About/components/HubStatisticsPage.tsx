@@ -34,9 +34,9 @@ const formatClientRow = (uniqueUsers: number, client: ClientInfo) => {
 };
 
 const HubStatisticsPage: React.FC<HubStatisticsPageProps & StatisticsDecoratorChildProps<any>> = (
-  { stats, settingsT }
+  { stats, moduleT }
 ) => {
-  const { translate } = settingsT;
+  const { translate } = moduleT;
   return (
     <div className="ui grid two column">
       <Row 
@@ -76,6 +76,6 @@ const HubStatisticsPage: React.FC<HubStatisticsPageProps & StatisticsDecoratorCh
 export default StatisticsDecorator(
   HubStatisticsPage, 
   HubConstants.STATS_URL, 
-  (t, props) => props.settingsT.translate('No hubs online'), 
+  (t, props) => props.moduleT.translate('No hubs online'), 
   10
 );

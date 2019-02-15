@@ -8,7 +8,10 @@ import { formatSize } from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import i18next from 'i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
 export type PathDownloadHandler = (path: string) => void;
@@ -16,14 +19,32 @@ export type PathDownloadHandler = (path: string) => void;
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
   downloadHandler: PathDownloadHandler;
+  t: i18next.TFunction;
 }
 
-const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler }) => (
+const formatPath = (pathInfo: API.DiskSpaceInfo, t: i18next.TFunction) => {
+  if (pathInfo.free_space <= 0) {
+    return pathInfo.path;
+  }
+
+  return t(
+    toI18nKey('pathSpaceFree', UI.Modules.COMMON),
+    {
+      defaultValue: '{{path}} ({{freeSpace}} free)',
+      replace: {
+        path: pathInfo.path,
+        freeSpace: formatSize(pathInfo.free_space)
+      }
+    }
+  );
+};
+
+const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => (
   <div className="item">
     <i className="yellow folder icon"/>
     <div className="content">
       <a onClick={ evt => downloadHandler(pathInfo.path) }>
-        { pathInfo.path }
+        { formatPath(pathInfo, t) }
         <span className="disk-info">
           { pathInfo.free_space > 0 && ' (' + formatSize(pathInfo.free_space) + ' free)' }
         </span>
@@ -43,13 +64,14 @@ interface PathListDataProps {
 }
 
 const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(
-  ({ downloadHandler, pathInfos }) => (
+  ({ downloadHandler, pathInfos, t }) => (
     <div className="ui relaxed list">
       { pathInfos.map(pathInfo => (
         <PathItem 
           key={ pathInfo.path } 
           pathInfo={ pathInfo } 
           downloadHandler={ downloadHandler }
+          t={ t }
         />
       )) }
     </div>
@@ -73,7 +95,7 @@ export default (props: PathListProps) => {
   if (props.paths.length === 0) {
     return (
       <Message
-        title="No paths to display"
+        title={ translate('No paths to display', props.t, UI.Modules.COMMON) }
       />
     );
   }

@@ -10,11 +10,11 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 
 const DetectionPage: React.FC<SettingSectionChildProps> = props => {
-  const { toI18nKey } = props.settingsT;
+  const { toI18nKey } = props.moduleT;
   return (
     <div>
       <DetectPanel
-        settingsT={ props.settingsT }
+        moduleT={ props.moduleT }
       />
       <Message 
         description={

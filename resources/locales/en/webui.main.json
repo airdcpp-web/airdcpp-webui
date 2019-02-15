@@ -117,7 +117,19 @@
         }
       },
       "actionsCaption": "Actions...",
-      "shareActions": "Share actions"
+      "shareActions": "Share actions",
+      "hashingInformation": "Hashing information",
+      "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
+      "addShareDirectory": "Add share directory",
+      "editShareDirectory": "Edit share directory",
+      "form": {
+        "pathName": "Path",
+        "virtualNameName": "Virtual name",
+        "virtualNameHelp": "Directories with identical virtual names will be merged in filelist",
+        "profilesName": "Share profiles",
+        "profilesHelp": "New share profiles can be created from application settings",
+        "incomingName": "Incoming"
+      }
     },
     "favoriteHubs": {
       "actions": {
@@ -147,6 +159,35 @@
         "hasPassword": "Password",
         "hubUrl": "Address",
         "shareProfile": "Share profile"
+      },
+      "notSet": "Not set",
+      "set": "Set",
+      "globalDefault": "Global default",
+      "addFavoriteHub": "Add favorite hub",
+      "editFavoriteHub": "Edit favorite hub",
+      "form": {
+        "genericName": "Hub properties",
+        "nameName": "Name",
+        "hubUrlName": "Hub URL",
+        "hubDescriptionName": "Hub description",
+        "shareProfileName": "Share profile",
+        "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
+        "autoConnectName": "Auto connect",
+        "userName": "User setting overrides",
+        "nickName": "Nick",
+        "userDescriptionName": "User description",
+        "connectivityV4Name": "Connectivity setting overrides (IPv4)",
+        "connectionModeV4Name": "Connectivity mode",
+        "connectionModeV4Option1": "Disabled",
+        "connectionModeV4Option0": "Active mode",
+        "connectionModeV4Option2": "Passive mode",
+        "connectionIpV4Name": "IP address",
+        "connectivityV6Name": "Connectivity setting overrides (IPv6)",
+        "connectionModeV6Name": "Connectivity mode",
+        "connectionModeV6Option1": "Disabled",
+        "connectionModeV6Option0": "Active mode",
+        "connectionModeV6Option2": "Passive mode",
+        "connectionIpV6Name": "IP address"
       }
     },
     "filelists": {
@@ -156,6 +197,9 @@
       "directorySize": "Directory size",
       "totalListSize": "Total list size",
       "browseOwnShare": "Browse own share...",
+      "root": "Root",
+      "userOffline": "User offline",
+      "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
       "table": {
         "name": "Name",
         "size": "Size",
@@ -196,7 +240,18 @@
       "cancel": "Cancel",
       "loading": "Loading",
       "loadingData": "Loading data...",
-      "noOnlineHubs": "No online hubs"
+      "noOnlineHubs": "No online hubs",
+      "installAsLocalApplication": "Install as local application",
+      "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
+      "install": "Install",
+      "dontInstall": "Don't install",
+      "statisticsNotAvailable": "Statistics not available",
+      "save": "Save",
+      "form": {
+        "browse": "Browse",
+        "noOptions": "No options",
+        "fieldOptional": "{{definition.title}} (optional)"
+      }
     },
     "hubs": {
       "table": {
@@ -241,6 +296,8 @@
       "actionsCaption": "Actions...",
       "queueActions": "Queue actions",
       "pausedForced": "Paused (forced)",
+      "queueEmpty": "The queue is empty",
+      "queueEmptyDesc": "New items can be queued from search or filelists",
       "actions": {
         "removeCompletedBundles": "Remove completed bundles",
         "pauseAllBundles": "Pause all bundles",
@@ -319,7 +376,14 @@
         "uninstall": "Uninstall",
         "start": "Start",
         "installFromUrl": "Install from URL",
-        "install": "Install"
+        "install": "Install",
+        "stop": "Stop",
+        "configure": "Configure",
+        "prompts": {
+          "installUrlPlaceholder": "Enter URL",
+          "installUrlApprove": "Install",
+          "installUrlContent": "Enter download URL"
+        }
       }
     },
     "navigation": {
@@ -343,7 +407,8 @@
       "password": "Password",
       "keepMeLoggedIn": "Keep me logged in",
       "login": "Login",
-      "authenticationFailed": "Authentication failed: {{lastError}}"
+      "authenticationFailed": "Authentication failed: {{lastError}}",
+      "connectingToTheServer": "Connecting to the server..."
     },
     "viewedFiles": {
       "actions": {

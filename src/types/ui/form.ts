@@ -1,6 +1,7 @@
 import * as API from 'types/api';
 import { RouteComponentProps } from 'react-router';
-import { WithTranslation } from 'react-i18next';
+import { ModuleTranslator } from './modules';
+
 
 export type FormValueBase = API.SettingValueBase | object;
 export type FormValue = API.SettingValue<FormValueBase>;
@@ -26,7 +27,10 @@ export const enum TranslatableFormDefinitionProperties {
   OPTION = 'Option',
 }
 
-export type FormContext = Pick<RouteComponentProps, 'location'> & Pick<WithTranslation, 't'>;
+export type FormContext = Pick<RouteComponentProps, 'location'> & {
+  //t: i18next.TFunction;
+  formT: ModuleTranslator;
+};
 
 export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = {
   onChange: (values: ValueT) => void,

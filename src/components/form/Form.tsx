@@ -20,7 +20,8 @@ import './style.css';
 import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
 import { Translation } from 'react-i18next';
 import { FormContext } from 'types/ui';
-import i18next from 'i18next';
+//import i18next from 'i18next';
+import { getModuleT } from 'utils/TranslationUtils';
 
 const TcombForm = tcomb.form.Form;
 
@@ -30,11 +31,12 @@ const fieldOptionReducer = (
   reducedOptions: { [key: string]: any }, 
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
-  t: i18next.TFunction,
+  //t: i18next.TFunction,
+  formT: UI.ModuleTranslator,
   formValue: Partial<UI.FormValueMap>
 ) => {
   //const { onFieldSetting, t } = props;
-  reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, t);
+  reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, formT);
 
   /*const tmp = (
     name: UI.TranslatableFormDefinitionProperties, 
@@ -51,7 +53,7 @@ const fieldOptionReducer = (
   if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
     reducedOptions[fieldDefinitions.key].fields = {};
     fieldDefinitions.definitions!.reduce(
-      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, t, formValue), 
+      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue), 
       reducedOptions[fieldDefinitions.key].fields
     );
   }
@@ -63,14 +65,15 @@ const fieldOptionReducer = (
 const getFieldOptions = (
   fieldDefinitions: UI.FormFieldDefinition[],
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
-  t: i18next.TFunction,
+  //t: i18next.TFunction,
+  formT: UI.ModuleTranslator,
   formValue: Partial<UI.FormValueMap>,
   error: FieldError | null
 ) => {
   const options = {
     // Parent handlers
     fields: fieldDefinitions.reduce(
-      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, t, formValue), 
+      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue), 
       {}
     ),
   };
@@ -291,12 +294,13 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
           const { title, fieldDefinitions, className, onFieldSetting, location } = this.props;
           const { formValue, error } = this.state;
 
+          const formT = getModuleT(t, [ UI.Modules.COMMON, UI.SubNamespaces.FORM ]);
           const type = parseDefinitions(fieldDefinitions);
-          const options = getFieldOptions(fieldDefinitions, onFieldSetting, t, formValue, error);
+          const options = getFieldOptions(fieldDefinitions, onFieldSetting, formT, formValue, error);
 
           const context: FormContext = {
             location,
-            t
+            formT
           };
 
           return (

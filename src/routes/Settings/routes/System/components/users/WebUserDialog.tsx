@@ -22,6 +22,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { translateForm } from 'utils/FormUtils';
+import { getSubModuleT } from 'utils/TranslationUtils';
 
 
 const enum PermissionAction {
@@ -134,24 +135,24 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
 };
 
 
-const reducePermissions = (options: API.SettingEnumOption[], key: string, settingsT: UI.ModuleTranslator) => {
+const reducePermissions = (options: API.SettingEnumOption[], key: string, moduleT: UI.ModuleTranslator) => {
   const captionEntry = AccessCaptions[key];
   if (typeof captionEntry === 'string') {
     options.push({
       id: AccessConstants[key],
-      name: settingsT.translate(captionEntry),
+      name: moduleT.translate(captionEntry),
     });
   } else {
     options.push({
       id: AccessConstants[key],
-      name: `${settingsT.translate(captionEntry.title)} (${settingsT.translate(captionEntry.action)})`,
+      name: `${moduleT.translate(captionEntry.title)} (${moduleT.translate(captionEntry.action)})`,
     }); 
   }
 
   return options;
 };
 
-const getEntry = (isNew: boolean /*, settingsT: UI.ModuleTranslator*/): UI.FormFieldDefinition[] => {
+const getEntry = (isNew: boolean /*, moduleT: UI.ModuleTranslator*/): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
@@ -174,7 +175,7 @@ const getEntry = (isNew: boolean /*, settingsT: UI.ModuleTranslator*/): UI.FormF
 };
 
 interface WebUserDialogProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface Entry extends API.WebUserInput, UI.FormValueMap {
@@ -198,11 +199,13 @@ class WebUserDialog extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.entry = translateForm(getEntry(this.isNew()), props.settingsT);
+    this.entry = translateForm(getEntry(this.isNew()), props.moduleT);
     const permissions = this.entry.find(def => def.key === 'permissions');
+
+    const permissionT = getSubModuleT(props.moduleT, 'permissionSelector');
     Object.assign(permissions, {
       options: Object.keys(AccessConstants).reduce(
-        (reduced, cur) => reducePermissions(reduced, cur, props.settingsT), 
+        (reduced, cur) => reducePermissions(reduced, cur, permissionT), 
         []
       )
     });
@@ -226,9 +229,9 @@ class WebUserDialog extends React.Component<Props> {
 
   onFieldSetting: FormFieldSettingHandler<API.WebUserBase> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
-      const { user, settingsT } = this.props;
+      const { user, moduleT } = this.props;
       fieldOptions['factory'] = t.form.Select;
-      fieldOptions['template'] = PermissionSelector(settingsT);
+      fieldOptions['template'] = PermissionSelector(moduleT);
       fieldOptions['disabled'] = !this.isNew() && user.username === LoginStore.user.username;
     } else if (id === 'password') {
       fieldOptions['type'] = 'password';
@@ -238,8 +241,8 @@ class WebUserDialog extends React.Component<Props> {
   }
 
   render() {
-    const { user, settingsT, ...other } = this.props;
-    const title = settingsT.translate(this.isNew() ? 'Add web user' : 'Edit user');
+    const { user, moduleT, ...other } = this.props;
+    const title = moduleT.translate(this.isNew() ? 'Add web user' : 'Edit user');
 
     return (
       <Modal 

@@ -5,6 +5,10 @@ import Modal, { ModalProps } from 'components/semantic/Modal';
 import FileBrowserLayout, { FileBrowserLayoutProps } from './FileBrowserLayout';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import { Translation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 interface FileBrowserDialogProps 
@@ -30,7 +34,6 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
   };*/
 
   static defaultProps: Pick<FileBrowserDialogProps, 'title' | 'initialPath'> = {
-    title: 'Browse...',
     initialPath: '',
   };
 
@@ -53,23 +56,27 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
     const { currentPath } = this.state;
     const { title, initialPath, historyId } = this.props;
     return (
-      <Modal
-        { ...this.props }
-        className="file-browser-dialog"
-        title={ title } 
-        onApprove={ this.onConfirm }  
-        closable={ true }
-        fullHeight={ true }
-        approveDisabled={ currentPath.length === 0 }
-        approveCaption="Select"
-        icon="yellow folder open"
-      >
-        <FileBrowserLayout
-          initialPath={ initialPath }
-          onDirectoryChanged={ this.onDirectoryChanged }
-          historyId={ historyId }
-        />
-      </Modal>
+      <Translation>
+        { t => (
+          <Modal
+            { ...this.props }
+            className="file-browser-dialog"
+            title={ title || translate('Browse...', t, UI.Modules.COMMON) } 
+            onApprove={ this.onConfirm }  
+            closable={ true }
+            fullHeight={ true }
+            approveDisabled={ currentPath.length === 0 }
+            approveCaption={ translate('Select', t, UI.Modules.COMMON) }
+            icon="yellow folder open"
+          >
+            <FileBrowserLayout
+              initialPath={ initialPath }
+              onDirectoryChanged={ this.onDirectoryChanged }
+              historyId={ historyId }
+            />
+          </Modal>
+        ) }
+      </Translation>
     );
   }
 }

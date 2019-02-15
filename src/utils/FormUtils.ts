@@ -6,8 +6,13 @@ import SelectField from 'components/form/SelectField';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { isArray } from 'util';
+
 import isEqual from 'lodash/isEqual';
+import startCase from 'lodash/startCase';
+
+import { textToI18nKey } from './TranslationUtils';
 
 
 const typeToComponent = (
@@ -171,9 +176,12 @@ const parseTypeOptions = (type: API.SettingTypeEnum) => {
   return options;
 };
 
-const parseTitle = (definition: UI.FormFieldDefinition, trans: i18next.TFunction) => {
+const parseTitle = (
+  definition: UI.FormFieldDefinition,
+  formT: UI.ModuleTranslator
+) => {
   if (definition.title && definition.optional) {
-    return trans(toI18nKey('fieldOptional', UI.Modules.COMMON), {
+    return formT.t('fieldOptional', {
       defaultValue: '{{definition.title}} (optional)',
       replace: {
         definition
@@ -184,7 +192,10 @@ const parseTitle = (definition: UI.FormFieldDefinition, trans: i18next.TFunction
   return definition.title;
 };
 
-const parseFieldOptions = (definition: UI.FormFieldDefinition, trans: i18next.TFunction) => {
+const parseFieldOptions = (
+  definition: UI.FormFieldDefinition,
+  formT: UI.ModuleTranslator
+) => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
@@ -194,7 +205,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition, trans: i18next.TF
       // Struct item fields
       options['item']['fields'] = definition.definitions.reduce(
         (reduced, itemDefinition) => {
-          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, trans);
+          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, formT);
           return reduced;
         }, 
         {}
@@ -206,7 +217,7 @@ const parseFieldOptions = (definition: UI.FormFieldDefinition, trans: i18next.TF
   }
 
   // Captions
-  options['legend'] = parseTitle(definition, trans);
+  options['legend'] = parseTitle(definition, formT);
   options['help'] = definition.help;
 
   // Enum select field?
@@ -279,18 +290,12 @@ const reduceChangedFieldValues = (
   return changedValues;
 };
 
-
-import { toI18nKey } from './TranslationUtils';
-import i18next from 'i18next';
-import { startCase } from 'lodash';
-
-
 const toFormI18nKey = (
   propName: UI.TranslatableFormDefinitionProperties, 
   definitionKey: string,
   extraKeyPostfix: string | undefined
 ) => {
-  let key = toI18nKey(definitionKey, UI.SubNamespaces.FORM);
+  let key = textToI18nKey(definitionKey, UI.SubNamespaces.FORM);
   key += propName;
   if (extraKeyPostfix) {
     key += startCase(extraKeyPostfix);

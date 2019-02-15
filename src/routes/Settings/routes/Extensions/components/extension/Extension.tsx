@@ -28,15 +28,15 @@ interface VersionProps {
     date?: number;
     version: string;
   };
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
-const Version: React.FC<VersionProps> = ({ title, packageInfo, className, settingsT }) => {
+const Version: React.FC<VersionProps> = ({ title, packageInfo, className, moduleT }) => {
   if (!packageInfo) {
     return null;
   }
 
-  const versionDesc = !packageInfo.date ? packageInfo.version : settingsT.t(
+  const versionDesc = !packageInfo.date ? packageInfo.version : moduleT.t(
     'datePublished',
     {
       defaultValue: '{{version}} (published {{date}})',
@@ -57,7 +57,7 @@ const Version: React.FC<VersionProps> = ({ title, packageInfo, className, settin
   );
 };
 
-const formatAuthor = (settingsT: UI.ModuleTranslator, npmPackage?: NpmPackage, installedPackage?: API.Extension) => {
+const formatAuthor = (moduleT: UI.ModuleTranslator, npmPackage?: NpmPackage, installedPackage?: API.Extension) => {
   let author: string | undefined;
   if (installedPackage && installedPackage.author) {
     author = installedPackage.author;
@@ -71,7 +71,7 @@ const formatAuthor = (settingsT: UI.ModuleTranslator, npmPackage?: NpmPackage, i
     return null;
   }
 
-  return settingsT.t('byAuthor', {
+  return moduleT.t('byAuthor', {
     defaultValue: 'by {{author}}',
     replace: {
       author
@@ -80,16 +80,16 @@ const formatAuthor = (settingsT: UI.ModuleTranslator, npmPackage?: NpmPackage, i
 };
 
 const formatNote = (
-  settingsT: UI.ModuleTranslator, 
+  moduleT: UI.ModuleTranslator, 
   installedPackage?: API.Extension, 
   npmError?: ErrorResponse | null
 ) => {
   if (installedPackage && !installedPackage.managed) {
-    return settingsT.translate('Unmanaged extension');
+    return moduleT.translate('Unmanaged extension');
   }
 
   if (npmError) {
-    return settingsT.t(
+    return moduleT.t(
       'extensionDirectoryFetchError',
       {
         defaultValue: 'Failed to fetch information from the extension directory: {{error}}',
@@ -100,7 +100,7 @@ const formatNote = (
     );
   }
 
-  return settingsT.translate('Non-listed extension');
+  return moduleT.translate('Non-listed extension');
 };
 
 
@@ -117,7 +117,7 @@ export interface ExtensionProps {
   installedPackage?: API.Extension;
   npmPackage?: NpmPackage;
   npmError?: ErrorResponse | null;
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 
@@ -183,9 +183,9 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
   }
 
   render() {
-    const { npmPackage, installedPackage, npmError, settingsT } = this.props;
+    const { npmPackage, installedPackage, npmError, moduleT } = this.props;
     const { installing } = this.state;
-    const { translate } = settingsT;
+    const { translate } = moduleT;
 
     const hasUpdate = !!installedPackage && !!npmPackage && 
       versionCompare(installedPackage.version, npmPackage.version) < 0;
@@ -201,7 +201,7 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
             { npmPackage ? npmPackage.name : installedPackage!.name }
           </a>
           <div className="meta author">
-            { formatAuthor(settingsT, npmPackage, installedPackage) }
+            { formatAuthor(moduleT, npmPackage, installedPackage) }
           </div>
           <div className="description">
             <span>{ npmPackage ? npmPackage.description : installedPackage!.description }</span>
@@ -211,16 +211,16 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
               className="npm"
               title={ translate('Latest version') }
               packageInfo={ npmPackage }
-              settingsT={ settingsT }
+              moduleT={ moduleT }
             />
             <div>
-              { !npmPackage && formatNote(settingsT, installedPackage, npmError) }
+              { !npmPackage && formatNote(moduleT, installedPackage, npmError) }
             </div>
             <Version 
               className={ npmPackage ? (!hasUpdate ? 'latest' : 'outdated') : undefined }
               title={ translate('Installed version') } 
               packageInfo={ installedPackage }
-              settingsT={ settingsT }
+              moduleT={ moduleT }
             />
           </div>
           <ExtensionActionButtons

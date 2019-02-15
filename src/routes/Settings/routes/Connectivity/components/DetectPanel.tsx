@@ -17,9 +17,9 @@ import * as UI from 'types/ui';
 const formatStatus = (
   protocolStatus: API.ConnectivityProtocolStatus, 
   running: boolean,
-  settingsT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator
 ) => {
-  const { translate, t } = settingsT;
+  const { translate, t } = moduleT;
   if (running) {
     return translate('Detecting...');
   }
@@ -37,7 +37,7 @@ const formatStatus = (
 
 
 interface DetectPanelProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface DetectPanelDataProps extends DataProviderDecoratorChildProps {
@@ -47,15 +47,15 @@ interface DetectPanelDataProps extends DataProviderDecoratorChildProps {
 }
 
 const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
-  { status, runningV4, runningV6, settingsT }
+  { status, runningV4, runningV6, moduleT }
 ) => (
   <div className="ui segment detect-panel">
     <h3 className="header">
-      { settingsT.translate('Current auto detection status') }
+      { moduleT.translate('Current auto detection status') }
     </h3>
     <div className="ui grid two column">
-      <Row title="IPv4 connectivity" text={ formatStatus(status.status_v4, runningV4, settingsT) }/>
-      <Row title="IPv6 connectivity" text={ formatStatus(status.status_v6, runningV6, settingsT) }/>
+      <Row title="IPv4 connectivity" text={ formatStatus(status.status_v4, runningV4, moduleT) }/>
+      <Row title="IPv6 connectivity" text={ formatStatus(status.status_v6, runningV6, moduleT) }/>
     </div>
     <ActionButton 
       className="detect-button"

@@ -15,7 +15,7 @@ const Manual = [
 ];
 
 const DownloadLimitPage: React.FC<SettingSectionChildProps> = props => {
-  const { translate } = props.settingsT;
+  const { translate } = props.moduleT;
   return (
     <div>
       <AutoValuePanel

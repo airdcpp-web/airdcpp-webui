@@ -26,24 +26,24 @@ interface ExtensionsManagePageDataProps extends DataProviderDecoratorChildProps 
   installedPackages: API.Extension[];
 }
 
-const getItem = (extension: API.Extension, settingsT: UI.ModuleTranslator) => {
+const getItem = (extension: API.Extension, moduleT: UI.ModuleTranslator) => {
   return (
     <LocalExtension 
       key={ extension.name } 
       installedPackage={ extension } 
-      settingsT={ settingsT }
+      moduleT={ moduleT }
     />
   );
 };
 
 const ExtensionsManagePage: React.FC<ExtensionsManagePageProps & ExtensionsManagePageDataProps> = ({ 
-  installedPackages, settingsT 
+  installedPackages, moduleT 
 }) => {
   if (installedPackages.length === 0) {
     return (
       <Message 
         description={
-          <Trans i18nKey={ settingsT.toI18nKey('noInstalledExtensions') }>
+          <Trans i18nKey={ moduleT.toI18nKey('noInstalledExtensions') }>
             No installed extensions were found. New extensions 
             can be installed from the <Link to="/settings/extensions/packages">Extension catalog</Link> page.
           </Trans>
@@ -56,11 +56,11 @@ const ExtensionsManagePage: React.FC<ExtensionsManagePageProps & ExtensionsManag
   return (
     <div className="extension-layout">
       <EngineStatusMessage 
-        settingsT={ settingsT }
+        moduleT={ moduleT }
       />
       <div className="ui divider"/>
       <div className="ui divided items">
-        { installedPackages.map(p => getItem(p, settingsT)) }
+        { installedPackages.map(p => getItem(p, moduleT)) }
       </div>
       <ExtensionsConfigureDialog/>
     </div>

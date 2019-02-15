@@ -14,7 +14,7 @@ const Entry = [
 ];
 
 const SpeedPage: React.FC<SettingSectionChildProps> = props => {
-  const { toI18nKey } = props.settingsT;
+  const { toI18nKey } = props.moduleT;
   return (
     <div>
       <div className="ui message">

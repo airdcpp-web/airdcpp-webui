@@ -27,6 +27,7 @@ export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<
   menuItems: React.ReactNode[];
   advancedMenuItems?: React.ReactNode[];
   settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 
@@ -34,7 +35,7 @@ export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<
 const SettingSection: React.FC<Props> = (props) => {
   const Component = useMobileLayout() || window.innerWidth < 950 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
 
-  const { settingsT, parentMenuItems, menuItems, advancedMenuItems, location, ...childProps } = props;
+  const { moduleT, settingsT, parentMenuItems, menuItems, advancedMenuItems, location, ...childProps } = props;
   const { parent, currentMenuItem } = props;
 
   const contentClassname = classNames(
@@ -46,6 +47,7 @@ const SettingSection: React.FC<Props> = (props) => {
     <Component 
       { ...childProps }
       settingsT={ settingsT }
+      moduleT={ moduleT! }
       location={ location }
       contentClassname={ contentClassname }
       parentMenuItems={ 

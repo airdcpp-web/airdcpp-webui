@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom';
 import { SectionType, RootSectionType } from '../decorators/SettingsMenuDecorator';
 
 import * as UI from 'types/ui';
+import { getSubModuleT } from 'utils/TranslationUtils';
 
 
 export const sectionToUrl = (section: SectionType, parent?: SectionType) => {
@@ -54,6 +55,7 @@ export const menuItemsToRouteComponentArray = (
   currentMenuItem: SectionType, 
   menuItems: SectionType[] | undefined,
   settingsT: UI.ModuleTranslator,
+  moduleT: UI.ModuleTranslator | undefined,
   parent: SectionType | undefined
 ) => {
   if (!menuItems) {
@@ -72,6 +74,7 @@ export const menuItemsToRouteComponentArray = (
           parent={ currentMenuItem }
           parentMenuItems={ menuItems }
           settingsT={ settingsT }
+          moduleT={ getSubModuleT(moduleT || settingsT, item.url) }
         />
       ) }
     />

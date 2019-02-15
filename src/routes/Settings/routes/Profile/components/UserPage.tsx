@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
   Entry.push('language_file');
 }
 
-const FieldOptionGetter = (settingsT: UI.ModuleTranslator) => {
+const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     if (id === 'setting_profile') {
       let message;
@@ -45,7 +45,7 @@ const FieldOptionGetter = (settingsT: UI.ModuleTranslator) => {
       }
 
       if (message) {
-        fieldOptions['help'] = settingsT.t(
+        fieldOptions['help'] = moduleT.t(
           toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, profileId.toString()),
           message
         );
@@ -61,7 +61,7 @@ const UserPage: React.FC<SettingSectionChildProps> = props => (
     <RemoteSettingForm
       { ...props }
       keys={ Entry }
-      onFieldSetting={ FieldOptionGetter(props.settingsT) }
+      onFieldSetting={ FieldOptionGetter(props.moduleT) }
     />
   </div>
 );

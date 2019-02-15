@@ -19,10 +19,10 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 interface WebUserRowProps {
   user: API.WebUser;
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
-const WebUserRow: React.FC<WebUserRowProps> = ({ user, settingsT }) => (
+const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -34,7 +34,7 @@ const WebUserRow: React.FC<WebUserRowProps> = ({ user, settingsT }) => (
     </td>
     <td>
       { user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1 ? 
-          settingsT.translate('Administrator') : 
+          moduleT.translate('Administrator') : 
           user.permissions.length
       }
     </td>
@@ -59,8 +59,8 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
   static displayName = 'WebUsersPage';
 
   render() {
-    const { users, settingsT } = this.props;
-    const { translate } = settingsT;
+    const { users, moduleT } = this.props;
+    const { translate } = moduleT;
     return (
       <div>
         <ActionButton 
@@ -81,13 +81,13 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
               <WebUserRow 
                 key={ user.username }
                 user={ user }
-                settingsT={ settingsT }
+                moduleT={ moduleT }
               />
             )) }
           </tbody>
         </table>
         <WebUserDialog
-          settingsT={ settingsT }
+          moduleT={ moduleT }
         />
       </div>
     );

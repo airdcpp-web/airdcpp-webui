@@ -12,7 +12,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const PermissionSelector = (settingsT: UI.ModuleTranslator) => {
+const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
   return t.form.Form.templates.select.clone({
     renderSelect: (locals: UI.FormLocals<API.AccessEnum, API.AccessEnum[]>) => {
       const onChange = (access: API.AccessEnum, checked: boolean) => {
@@ -52,7 +52,7 @@ const PermissionSelector = (settingsT: UI.ModuleTranslator) => {
       return (
         <div className="permission-select">
           <Message 
-            description={ settingsT.t<string>(
+            description={ moduleT.t<string>(
               'adminPermissionNote',
               'Administrator permission is required in order to access the System section in settings'
             ) }

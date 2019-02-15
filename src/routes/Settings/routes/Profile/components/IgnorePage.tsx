@@ -43,8 +43,8 @@ interface IgnorePageDataProps extends DataProviderDecoratorChildProps {
   ignores: API.IgnoredUser[];
 }
 
-const IgnorePage: React.FC<IgnorePageProps & IgnorePageDataProps> = ({ ignores, settingsT }) => {
-  const { translate } = settingsT;
+const IgnorePage: React.FC<IgnorePageProps & IgnorePageDataProps> = ({ ignores, moduleT }) => {
+  const { translate } = moduleT;
   if (ignores.length === 0) {
     return (
       <Message

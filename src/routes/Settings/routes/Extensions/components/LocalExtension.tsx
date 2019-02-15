@@ -37,7 +37,7 @@ const convertNpmPackage = ({ name, description, version, _npmUser }: NpmPackageD
 
 interface LocalExtensionProps {
   installedPackage: API.Extension;
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface LocalExtensionDataProps extends DataProviderDecoratorChildProps {
@@ -45,13 +45,13 @@ interface LocalExtensionDataProps extends DataProviderDecoratorChildProps {
 }
 
 const LocalExtension = DataProviderDecorator<LocalExtensionProps, LocalExtensionDataProps>(
-  ({ installedPackage, npmPackage, dataError, settingsT }) => (
+  ({ installedPackage, npmPackage, dataError, moduleT }) => (
     <Extension 
       key={ installedPackage.name } 
       installedPackage={ installedPackage } 
       npmPackage={ !!npmPackage ? convertNpmPackage(npmPackage) : undefined }
       npmError={ dataError }
-      settingsT={ settingsT }
+      moduleT={ moduleT }
     />
   ), 
   {

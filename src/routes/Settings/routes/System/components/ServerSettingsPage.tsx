@@ -28,7 +28,7 @@ const Generic = [
 ];
 
 const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
-  const { t } = props.settingsT;
+  const { t } = props.moduleT;
   return (
     <div>
       {/*<Message 

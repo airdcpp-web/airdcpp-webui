@@ -12,8 +12,6 @@ import LoginStore from 'stores/LoginStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { translate } from 'utils/TranslationUtils';
-
 
 interface BrowseFieldConfig {
   historyId: string;
@@ -49,7 +47,7 @@ const BrowseField = tcomb.form.Form.templates.textbox.clone({
       { 'action': hasAccess },
     );
     
-    const { t } = locals.context;
+    const { formT } = locals.context;
     return (
       <div className={ fieldStyle }>
         <input
@@ -61,7 +59,7 @@ const BrowseField = tcomb.form.Form.templates.textbox.clone({
         />
         { hasAccess && (
           <Button
-            caption={ translate('Browse', t, UI.Modules.COMMON) }
+            caption={ formT.translate('Browse') }
             onClick={ showBrowseDialog }
           />
         ) }

@@ -40,7 +40,7 @@ const getRow = (directory: API.FavoriteDirectoryEntry) => {
 };
 
 interface FavoriteDirectoryPageProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface FavoriteDirectoryPageDataProps extends DataProviderDecoratorChildProps {
@@ -48,7 +48,7 @@ interface FavoriteDirectoryPageDataProps extends DataProviderDecoratorChildProps
 }
 
 const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirectoryPageDataProps> = (
-  { directories, settingsT }
+  { directories, moduleT }
 ) => (
   <div id="directory-table">
     <ActionButton
@@ -60,8 +60,8 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
       <table className="ui striped table">
         <thead>
           <tr>
-            <th>{ settingsT.translate('Name') }</th>
-            <th>{ settingsT.translate('Path') }</th>
+            <th>{ moduleT.translate('Name') }</th>
+            <th>{ moduleT.translate('Path') }</th>
           </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
       </table>
     ) }
     <FavoriteDirectoryDialog
-      settingsT={ settingsT }
+      moduleT={ moduleT }
     />
   </div>
 );

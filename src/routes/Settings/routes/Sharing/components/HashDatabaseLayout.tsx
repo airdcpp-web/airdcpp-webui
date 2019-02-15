@@ -23,13 +23,13 @@ import { Trans } from 'react-i18next';
 interface OptimizeLayoutProps {
   running: boolean;
   startHandler: (verify: boolean) => void;
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
-  { startHandler, running, settingsT }
+  { startHandler, running, moduleT }
 ) => {
-  const { toI18nKey, translate } = settingsT;
+  const { toI18nKey, translate } = moduleT;
   const [ verify, setVerify ] = React.useState(false);
   return (
     <div className="optimize-layout">
@@ -83,7 +83,7 @@ const SizeRow: React.FC<SizeRowProps> = ({ title, size }) => (
 );
 
 interface HashDatabaseLayoutProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
   status: API.HashDatabaseStatus;
@@ -98,8 +98,8 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
   }
 
   render() {
-    const { status, settingsT } = this.props;
-    const { translate } = settingsT;
+    const { status, moduleT } = this.props;
+    const { translate } = moduleT;
     return (
       <div className="ui segment hash-database">
         <h3 className="header">
@@ -119,7 +119,7 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
           <OptimizeLayout
             running={ status.maintenance_running }
             startHandler={ this.handleOptimize }
-            settingsT={ settingsT }
+            moduleT={ moduleT }
           /> 
         ) }
       </div>

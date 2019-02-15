@@ -14,7 +14,7 @@ import { toCorsSafeUrl } from 'utils/HttpUtils';
 
 
 interface NpmPackageLayoutProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface NpmCatalogItem {
@@ -26,26 +26,26 @@ interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
   packageCatalog: NpmCatalogItem[];
 }
 
-const getItem = (npmPackage: NpmPackage, settingsT: UI.ModuleTranslator, installedPackages: API.Extension[]) => {
+const getItem = (npmPackage: NpmPackage, moduleT: UI.ModuleTranslator, installedPackages: API.Extension[]) => {
   const installedPackage = installedPackages.find(p => p.name === npmPackage.name);
   return (
     <Extension 
       key={ npmPackage.name } 
       npmPackage={ npmPackage } 
       installedPackage={ installedPackage }
-      settingsT={ settingsT }
+      moduleT={ moduleT }
     />
   );
 };
 
 const NpmPackageLayout: React.FC<NpmPackageLayoutProps & NpmPackageLayoutDataProps> = ({
-  packageCatalog, settingsT, installedPackages
+  packageCatalog, moduleT, installedPackages
 }) => (
   <div className="extension-layout">
     <div className="ui divider"/>
     { packageCatalog.length > 0 && (
       <div className="ui divided items">
-        { packageCatalog.map(data => getItem(data.package, settingsT, installedPackages)) }
+        { packageCatalog.map(data => getItem(data.package, moduleT, installedPackages)) }
       </div>
     ) }
   </div>

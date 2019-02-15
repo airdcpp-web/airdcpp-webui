@@ -25,7 +25,7 @@ const LocationsPage: React.FC<SettingSectionChildProps> = props => (
     <Message 
       description={ (
         <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>
-          { props.settingsT.translate('Available path variables') }
+          { props.moduleT.translate('Available path variables') }
         </ExternalLink>
       ) }
       icon="blue info"
@@ -33,12 +33,12 @@ const LocationsPage: React.FC<SettingSectionChildProps> = props => (
 
     <div className="ui segment setting-form">
       <LayoutHeader 
-        title={ props.settingsT.translate('Favorite download directories') }
+        title={ props.moduleT.translate('Favorite download directories') }
         icon="yellow folder" 
         size="normal"
       />
       <FavoriteDirectoryTable
-        settingsT={ props.settingsT }
+        moduleT={ props.moduleT }
       />
     </div>
   </div>

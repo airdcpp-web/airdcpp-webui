@@ -25,7 +25,7 @@ const sections = [
 ];
 
 const LoggingPage: React.FC<SettingSectionChildProps> = props => {
-  const { t, translate } = props.settingsT;
+  const { t, translate } = props.moduleT;
   return (
     <div>
       <RemoteSettingForm

@@ -53,8 +53,8 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
   static displayName = 'ExcludePage';
 
   render() {
-    const { excludes, settingsT } = this.props;
-    const { translate, t } = settingsT;
+    const { excludes, moduleT } = this.props;
+    const { translate, t } = moduleT;
     return (
       <div>
         <Message

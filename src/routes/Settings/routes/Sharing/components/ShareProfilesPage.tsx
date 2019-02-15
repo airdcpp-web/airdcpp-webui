@@ -52,9 +52,9 @@ interface ShareProfilesPageProps extends SettingSectionChildProps {
 }
 
 const ShareProfilesPage: React.FC<ShareProfilesPageProps & ShareProfileDecoratorChildProps> = (
-  { settingsT, profiles }
+  { moduleT, profiles }
 ) => {
-  const { translate, toI18nKey } = settingsT;
+  const { translate, toI18nKey } = moduleT;
   return (
     <div>
       <Message 

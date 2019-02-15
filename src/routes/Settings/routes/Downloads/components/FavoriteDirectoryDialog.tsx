@@ -38,7 +38,7 @@ const Entry: UI.FormFieldDefinition[] = [
 ];
 
 export interface FavoriteDirectoryDialogProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface Entry extends API.FavoriteDirectoryEntryBase, UI.FormValueMap {
@@ -58,7 +58,7 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
 
   form: Form<Entry>;
-  fieldDefinitions = translateForm(Entry, this.props.settingsT);
+  fieldDefinitions = translateForm(Entry, this.props.moduleT);
 
   isNew = () => {
     return !this.props.directoryEntry;
@@ -105,8 +105,8 @@ class FavoriteDirectoryDialog extends React.Component<Props> {
   }
 
   render() {
-    const { settingsT, directoryEntry } = this.props;
-    const title =  settingsT.translate(this.isNew() ? 'Add favorite directory' : 'Edit favorite directory');
+    const { moduleT, directoryEntry } = this.props;
+    const title =  moduleT.translate(this.isNew() ? 'Add favorite directory' : 'Edit favorite directory');
     return (
       <Modal 
         className="favorite-directory" 

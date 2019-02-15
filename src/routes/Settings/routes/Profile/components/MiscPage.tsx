@@ -13,13 +13,13 @@ import { Trans } from 'react-i18next';
 import { toFormI18nKey } from 'utils/FormUtils';
 
 
-const FieldOptionGetter = (settingsT: UI.ModuleTranslator) => {
+const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
-    //const { toI18nKey } = this.props.settingsT;
+    //const { toI18nKey } = this.props.moduleT;
     if (id === 'nmdc_encoding') {
       fieldOptions['help'] = (
         <Trans 
-          i18nKey={ settingsT.toI18nKey(
+          i18nKey={ moduleT.toI18nKey(
             toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
           ) }
         >
@@ -67,7 +67,7 @@ const MiscPage: React.FC<SettingSectionChildProps> = props => {
       <RemoteSettingForm
         { ...props }
         keys={ Entry }
-        onFieldSetting={ FieldOptionGetter(props.settingsT) }
+        onFieldSetting={ FieldOptionGetter(props.moduleT) }
       />
     </div>
   );

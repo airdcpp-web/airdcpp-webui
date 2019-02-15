@@ -20,10 +20,10 @@ interface ShareStatisticsPageProps extends SettingSectionChildProps {
 }
 
 const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>> = (
-  { stats, settingsT }
+  { stats, moduleT }
 ) => {
   const averageFileAge = Moment.duration(stats.average_file_age * 1000).humanize();
-  const { translate, t } = settingsT;
+  const { translate, t } = moduleT;
   return (
     <div className="ui grid two column">
       <Row 
@@ -138,6 +138,6 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
 export default StatisticsDecorator(
   ShareStatisticsPage, 
   ShareConstants.STATS_URL, 
-  (t, props) => props.settingsT.translate('No files shared'), 
+  (t, props) => props.moduleT.translate('No files shared'), 
   60
 );

@@ -14,7 +14,7 @@ import { Trans } from 'react-i18next';
 
 
 interface EngineStatusMessageProps {
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 interface EngineStatusMessageDataProps extends DataProviderDecoratorChildProps {
@@ -23,7 +23,7 @@ interface EngineStatusMessageDataProps extends DataProviderDecoratorChildProps {
 
 // Show an info message if the default extension engine is not installed
 const EngineStatusMessage: React.FC<EngineStatusMessageProps & EngineStatusMessageDataProps> = (
-  { enginesStatus, settingsT }
+  { enginesStatus, moduleT }
 ) => {
   if (enginesStatus[ExtensionConstants.DEFAULT_ENGINE]) {
     return null;
@@ -32,7 +32,7 @@ const EngineStatusMessage: React.FC<EngineStatusMessageProps & EngineStatusMessa
   return (
     <Message 
       description={
-        <Trans i18nKey={ settingsT.toI18nKey('defaultExtensionEngineMissing') }>
+        <Trans i18nKey={ moduleT.toI18nKey('defaultExtensionEngineMissing') }>
           The default extension engine <b>{ ExtensionConstants.DEFAULT_ENGINE }</b> is not installed on your system. 
           Please visit <ExternalLink url={ LinkConstants.DEFAULT_ENGINE_URL }>engine's home page</ExternalLink> for 
           installation instructions.
