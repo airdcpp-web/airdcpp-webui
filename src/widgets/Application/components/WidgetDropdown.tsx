@@ -11,14 +11,14 @@ import * as UI from 'types/ui';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 
-const getWidgetItem = (widgetInfo: UI.Widget, location: Location) => {
+const getWidgetItem = (widgetInfo: UI.Widget, location: Location, widgetT: UI.ModuleTranslator) => {
   return (
     <MenuItemLink 
       key={ widgetInfo.typeId }
       onClick={ () => WidgetActions.actions.create(widgetInfo, location) }
       icon={ widgetInfo.icon }
     >
-      { widgetInfo.name }
+      { widgetT.translate(widgetInfo.name) }
     </MenuItemLink>
   );
 };
@@ -36,7 +36,7 @@ const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = (
   >
     { WidgetStore.widgets
       .filter(widgetInfo => !widgetInfo.alwaysShow)
-      .map(widgetInfo => getWidgetItem(widgetInfo, location)) }
+      .map(widgetInfo => getWidgetItem(widgetInfo, location, widgetT)) }
   </Dropdown>
 );
 

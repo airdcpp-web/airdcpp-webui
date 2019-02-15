@@ -23,6 +23,8 @@ import Severity = API.SeverityEnum;
 import { 
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
 } from 'decorators/SocketSubscriptionDecorator';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
 const getSeverityStr = (severity: Severity) => {
@@ -39,7 +41,7 @@ interface SocketNotificationListenerProps {
   location: Location;
 }
 
-type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildProps;
+type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildProps & WithTranslation;
 
 class SocketNotificationListener extends React.Component<Props> {
   //notifications: System | null;
@@ -75,15 +77,15 @@ class SocketNotificationListener extends React.Component<Props> {
     addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, undefined, API.AccessEnum.VIEW_FILE_VIEW);
   }
 
-  onLogMessage(message: API.StatusMessage) {
+  onLogMessage = (message: API.StatusMessage) => {
     const { text, id, severity } = message;
 
     const notification: UI.Notification = {
-      title: getSeverityStr(severity),
+      title: this.translate(getSeverityStr(severity), UI.Modules.EVENTS),
       message: text,
       uid: id,
       action: severity === Severity.NOTIFY ? undefined : {
-        label: 'View events',
+        label: this.translate('View events', UI.Modules.EVENTS, true),
         callback: () => { 
           History.push('/events'); 
         }
@@ -101,17 +103,17 @@ class SocketNotificationListener extends React.Component<Props> {
     }
   }
 
-  onViewFileDownloaded(file: API.ViewFile) {
+  onViewFileDownloaded = (file: API.ViewFile) => {
     if (!file.content_ready) {
       return;
     }
 
     NotificationActions.info({
       title: file.name,
-      message: 'File has finished downloading',
+      message: this.translate('File has finished downloading', UI.Modules.VIEWED_FILES),
       uid: file.id,
       action: {
-        label: 'View file',
+        label: this.translate('View file', UI.Modules.VIEWED_FILES, true),
         callback: () => {
           History.push(`/files/session/${file.id}`);
         }
@@ -119,7 +121,7 @@ class SocketNotificationListener extends React.Component<Props> {
     } as UI.Notification);
   }
 
-  onPrivateMessage(message: API.ChatMessage) {
+  onPrivateMessage = (message: API.ChatMessage) => {
     const cid = message.reply_to!.cid;
     if (message.is_read || (PrivateChatSessionStore.getActiveSessionId() === cid && document.hasFocus())) {
       return;
@@ -138,7 +140,7 @@ class SocketNotificationListener extends React.Component<Props> {
       message: message.text,
       uid: cid,
       action: {
-        label: 'View message',
+        label: this.translate('View message', UI.Modules.MESSAGES, true),
         callback: () => { 
           History.push(`/messages/session/${cid}`); 
         }
@@ -146,42 +148,70 @@ class SocketNotificationListener extends React.Component<Props> {
     } as UI.Notification);
   }
 
-  onBundleStatus(bundle: API.QueueBundle) {
+  translate = (text: string, moduleId: UI.Modules, isAction: boolean = false) => {
+    const moduleIds = [ moduleId, UI.SubNamespaces.NOTIFICATIONS ];
+    if (isAction) {
+      moduleIds.push(UI.SubNamespaces.ACTIONS);
+    }
+
+    const { t } = this.props;
+    return translate(text, t, moduleIds);
+  }
+
+  onBundleStatus = (bundle: API.QueueBundle) => {
     if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
       return;
     }
 
     let text;
-    let level;
+    let level: 'info' | 'error' | undefined;
+    const { t } = this.props;
     switch (bundle.status.id) {
       case API.QueueBundleStatusEnum.QUEUED: {
-        text = 'Bundle was added in queue';
+        text = this.translate('Bundle was added in queue', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
       case API.QueueBundleStatusEnum.DOWNLOAD_ERROR: {
-        text = 'Download error: ' + bundle.status.str;
+        text = t(
+          toI18nKey('bundleDownloadError', [ UI.Modules.QUEUE, UI.SubNamespaces.NOTIFICATIONS ]),
+          {
+            defaultValue: 'Download error: {{error}}',
+            replace: {
+              error: bundle.status.str,
+            }
+          }
+        );
         level = 'error';
         break;
       }
       case API.QueueBundleStatusEnum.COMPLETION_VALIDATION_RUNNING: {
-        text = 'Validating downloaded bundle';
+        text = this.translate('Validating downloaded bundle', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
       case API.QueueBundleStatusEnum.COMPLETION_VALIDATION_ERROR: {
         const { hook_name, str } = bundle.status.hook_error;
-        text = `Bundle content validation failed: ${str} (${hook_name})`;
+        text = t(
+          toI18nKey('bundleContentValidationError', [ UI.Modules.QUEUE, UI.SubNamespaces.NOTIFICATIONS ]),
+          {
+            defaultValue: 'Bundle content validation failed: {{error}} ({{hook}})',
+            replace: {
+              error: str,
+              hook: hook_name,
+            }
+          }
+        );
         level = 'error';
         break;
       }
       case API.QueueBundleStatusEnum.COMPLETED: {
-        text = 'Bundle was completed successfully';
+        text = this.translate('Bundle was completed successfully', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
       case API.QueueBundleStatusEnum.SHARED: {
-        text = 'Bundle was added in share';
+        text = this.translate('Bundle was added in share', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
@@ -189,12 +219,13 @@ class SocketNotificationListener extends React.Component<Props> {
     }
 
     if (level) {
-      NotificationActions.info({
+      const action = level === 'info' ? NotificationActions.info : NotificationActions.error;
+      action({
         title: bundle.name,
         message: text,
         uid: bundle.id,
         action: {
-          label: 'View queue',
+          label: this.translate('View queue', UI.Modules.QUEUE, true),
           callback: () => { 
             History.push('/queue'); 
           }
@@ -208,4 +239,6 @@ class SocketNotificationListener extends React.Component<Props> {
   }
 }
 
-export default SocketSubscriptionDecorator<SocketNotificationListenerProps>(SocketNotificationListener);
+export default SocketSubscriptionDecorator<SocketNotificationListenerProps>(
+  withTranslation()(SocketNotificationListener)
+);

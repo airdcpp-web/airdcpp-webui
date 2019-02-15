@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { camelCase } from 'lodash';
 import i18next from 'i18next';
 
 import { Table, ColumnProps } from 'fixed-data-table-2';
@@ -14,6 +13,8 @@ import RowWrapperCell from 'components/table/RowWrapperCell';
 import { TextCell, HeaderCell } from 'components/table/Cell';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+import { textToI18nKey, toArray } from 'utils/TranslationUtils';
 
 
 
@@ -33,7 +34,7 @@ export interface TableContainerProps {
   store: any;
   dataLoader: any;
   t: i18next.TFunction;
-  moduleId: string;
+  moduleId: string | string[];
 }
 
 interface State {
@@ -46,11 +47,14 @@ interface State {
 const formatColumnName = (
   column: React.ReactElement<ColumnProps>, 
   store: any, 
-  moduleId: string, 
+  moduleId: string | string[], 
   t: i18next.TFunction
 ) => {
   const { name, columnKey } = column.props;
-  let displayName = t(`${moduleId}.table.${camelCase(columnKey as string)}`, name);
+  let displayName = t(
+    textToI18nKey(columnKey as string, [ ...toArray(moduleId), UI.SubNamespaces.TABLE ]),
+    name
+  );
 
   {
     const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';

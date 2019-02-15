@@ -15,7 +15,7 @@ import { translateForm } from 'utils/FormUtils';
 
 export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
   keys: string[];
-  settingsT: UI.ModuleTranslator;
+  moduleT: UI.ModuleTranslator;
 }
 
 
@@ -35,7 +35,7 @@ class LocalSettingForm extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.definitions = translateForm(LocalSettingStore.getDefinitions(props.keys), props.settingsT);
+    this.definitions = translateForm(LocalSettingStore.getDefinitions(props.keys), props.moduleT);
 
     this.state = {
       settings: LocalSettingStore.getValues(),

@@ -12,7 +12,8 @@ export interface WidgetProps<SettingsT = object> {
   componentId: string;
   settings: SettingsT;
   widgetT: ModuleTranslator;
-  toWidgetI18nKey: (key?: string) => string;
+  rootWidgetT: ModuleTranslator;
+  //toWidgetI18nKey: (key?: string) => string;
 }
 
 export interface Widget {

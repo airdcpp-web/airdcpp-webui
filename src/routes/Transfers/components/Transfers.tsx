@@ -17,6 +17,8 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({ cellData }) => (
@@ -25,7 +27,12 @@ const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({
   </span>
 );
 
-class Transfers extends React.Component {
+
+interface TransfersProps extends WithTranslation {
+
+}
+
+class Transfers extends React.Component<TransfersProps> {
   static displayName = 'Transfers';
 
   isPositive = (cellData: number) => {
@@ -37,9 +44,10 @@ class Transfers extends React.Component {
   }
 
   emptyRowsNodeGetter = () => {
+    const { t } = this.props;
     return (
       <Message 
-        title="No active transfers"
+        title={ translate('No active transfers', t, UI.Modules.TRANSFERS) }
         icon="exchange"
       />
     );
@@ -118,4 +126,4 @@ class Transfers extends React.Component {
   }
 }
 
-export default Transfers;
+export default withTranslation()(Transfers);

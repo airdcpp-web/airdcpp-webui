@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { translateSettingSectionTitle } from './MenuItems';
 
 
 type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems' | 'settingsT'>;
@@ -37,15 +38,15 @@ const TopRootSectionMenu: React.FC<TopMenuProps> = ({ parentMenuItems }) => (
 );
 
 // tslint:disable-next-line:max-line-length
-type ContentProps = Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message'>;
+type ContentProps = Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message' | 'settingsT'>;
 
 const Content: React.FC<ContentProps> = (
-  { contentClassname, currentMenuItem, parent, saveButton, children, message }
+  { contentClassname, currentMenuItem, parent, saveButton, children, message, settingsT }
 ) => (
   <div className={ classNames('thirteen wide column', contentClassname) }>
     <div className="ui segment">
       <LayoutHeader
-        title={ currentMenuItem.title }
+        title={ translateSettingSectionTitle(currentMenuItem.title, settingsT) }
         icon={ classNames(parent!.icon, 'green') }
         rightComponent={ saveButton }
       />

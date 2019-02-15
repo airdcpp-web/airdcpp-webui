@@ -13,13 +13,16 @@ import 'react-resizable/css/styles.css';
 
 import 'semantic-ui-css/components/card.min.css';
 import { useStore } from 'effects/StoreListenerEffect';
-//import { useTranslation } from 'react-i18next';
+
+import { useTranslation } from 'react-i18next';
+import * as UI from 'types/ui';
+import { getModuleT } from 'utils/TranslationUtils';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
 // Convert a layout entry to a component
-const mapWidget = (layoutItem: Layout): React.ReactNode => {
+const mapWidget = (layoutItem: Layout, rootWidgetT: UI.ModuleTranslator): React.ReactNode => {
   const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i!);
   invariant(widgetInfo, 'Widget info missing');
   if (!widgetInfo) {
@@ -34,14 +37,20 @@ const mapWidget = (layoutItem: Layout): React.ReactNode => {
       widgetInfo={ widgetInfo }
       settings={ settings }
       data-grid={ layoutItem }
+      rootWidgetT={ rootWidgetT }
     />
   );
 };
 
-const WidgetLayout: React.FC = React.memo(() => {
+interface HomeLayoutProps {
+
+}
+
+const WidgetLayout = React.memo<HomeLayoutProps>(() => {
   const [ breakpoint, setBreakpoint ] = useState('lg');
 
-  //const { t } = useTranslation();
+  const { t } = useTranslation();
+  const rootWidgetT = getModuleT(t, UI.Modules.WIDGETS, WidgetStore.widgets.map(w => w.typeId));
   const layouts = useStore<Layouts>(WidgetStore /*, () => {
     WidgetStore.ensureDefaultWidgets(t);
   }*/);
@@ -62,10 +71,12 @@ const WidgetLayout: React.FC = React.memo(() => {
         layouts={ layouts }
       >
         { layouts[breakpoint]
-          .map(mapWidget)
+          .map(w => mapWidget(w, rootWidgetT))
           .filter((widget: any) => widget) }
       </ResponsiveReactGridLayout>
-      <WidgetDialog/>
+      <WidgetDialog
+        rootWidgetT={ rootWidgetT }
+      />
     </>
   );
 });

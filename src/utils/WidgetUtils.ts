@@ -1,14 +1,18 @@
-const createId = (typeId: string) => typeId + '_' + Math.floor((Math.random() * 100000000) + 1);
 
-const idToSettingKey = (id: string) => 'widget_' + id;
+import * as UI from 'types/ui';
+import { getModuleT } from './TranslationUtils';
+import i18next from 'i18next';
 
-const idToWidgetType = (id: string) => {
+
+export const createWidgetId = (typeId: string) => `${typeId}_${Math.floor((Math.random() * 100000000) + 1)}`;
+
+export const widgetIdToSettingKey = (id: string) => 'widget_' + id;
+
+export const widgetIdToType = (id: string) => {
   const pos = id.indexOf('_');
   return pos !== -1 ? id.substring(0, pos) : id;
 };
 
-export default {
-  createId,
-  idToSettingKey,
-  idToWidgetType
+export const getWidgetT = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
+  return getModuleT(t, [ UI.Modules.WIDGETS, widgetInfo.typeId ]);
 };

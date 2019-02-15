@@ -317,11 +317,13 @@ const translateDefinition = (
       return undefined;
     }
 
-    return moduleT.t(toFormI18nKey(propName, def.key, extraKeyPostfix), value);
+    const key = toFormI18nKey(propName, def.key, extraKeyPostfix);
+    return moduleT.t(key, value);
   };
 
-  return {
-    title: translateProp(UI.TranslatableFormDefinitionProperties.NAME, def.title),
+  const ret = {
+    ...def,
+    title: translateProp(UI.TranslatableFormDefinitionProperties.NAME, def.title)!,
     help: translateProp(UI.TranslatableFormDefinitionProperties.HELP, def.help),
     options: def.options ? def.options.map(opt => ({
       ...opt,
@@ -334,18 +336,21 @@ const translateDefinition = (
     definitions: !!def.definitions ? def.definitions.map(subDef => {
       return translateDefinition(subDef, moduleT);
     }) : undefined,
-    ...def
   };
+
+  return ret;
 };
 
 const translateForm = (
   definitions: UI.FormFieldDefinition[], 
   moduleT: UI.ModuleTranslator,
 ): UI.FormFieldDefinition[] => {
-  return definitions
+  const ret = definitions
     .map(def => {
       return translateDefinition(def, moduleT);
     });
+
+  return ret;
 };
 
 

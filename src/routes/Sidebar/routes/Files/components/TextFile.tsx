@@ -47,7 +47,7 @@ class TextFile extends React.Component<FileSessionContentProps> {
 
   onTextFailed = (error: JQuery.jqXHR) => {
     this.setState({ 
-      error: formatHttpError(error),
+      error: formatHttpError(error, this.props.sessionT.plainT),
     });
   }
 

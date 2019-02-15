@@ -8,6 +8,7 @@ import { SectionType, RootSectionType } from '../decorators/SettingsMenuDecorato
 
 import * as UI from 'types/ui';
 import { getSubModuleT } from 'utils/TranslationUtils';
+import { camelCase } from 'lodash';
 
 
 export const sectionToUrl = (section: SectionType, parent?: SectionType) => {
@@ -16,6 +17,10 @@ export const sectionToUrl = (section: SectionType, parent?: SectionType) => {
   }
 
   return `/settings/${section.url}`;
+};
+
+export const translateSettingSectionTitle = (title: string, settingsT: UI.ModuleTranslator) => {
+  return settingsT.translate(title, [ UI.SubNamespaces.NAVIGATION ]);
 };
 
 export const menuItemToLinkComponent = (
@@ -46,7 +51,7 @@ export const menuItemToLinkComponent = (
       url={ url } 
       icon={ !!menuItemInfo.icon ? `green ${menuItemInfo.icon}` : null }
     >
-      { settingsT.translate(menuItemInfo.title, [ UI.SubNamespaces.NAVIGATION ]) }
+      { translateSettingSectionTitle(menuItemInfo.title, settingsT) }
     </RouterMenuItemLink>
   );
 };
@@ -74,7 +79,7 @@ export const menuItemsToRouteComponentArray = (
           parent={ currentMenuItem }
           parentMenuItems={ menuItems }
           settingsT={ settingsT }
-          moduleT={ getSubModuleT(moduleT || settingsT, item.url) }
+          moduleT={ getSubModuleT(moduleT || settingsT, camelCase(item.url)) }
         />
       ) }
     />

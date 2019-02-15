@@ -1,8 +1,8 @@
 import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
-import { camelCase } from 'lodash';
 
 import * as UI from 'types/ui';
+import { textToI18nKey, toArray } from './TranslationUtils';
 
 
 export const actionFilter = (action: UI.ActionType, itemData?: UI.ActionItemDataValueType) => {
@@ -22,6 +22,7 @@ export const showAction = (action: UI.ActionType, itemData?: UI.ActionItemDataVa
   return actionFilter(action, itemData) && actionAccess(action);
 };
 
-export const toActionI18nKey = (action: UI.ActionType, moduleId: string) => {
-  return `${moduleId}.${UI.SubNamespaces.ACTIONS}.${camelCase(action.displayName)}`;
+export const toActionI18nKey = (action: UI.ActionType, moduleId: string | string[]) => {
+  invariant(!!action.displayName, 'Invalid action');
+  return textToI18nKey(action.displayName!, [ ...toArray(moduleId), UI.SubNamespaces.ACTIONS ]);
 };

@@ -16,6 +16,7 @@ import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { Location } from 'history';
 import { toCorsSafeUrl, toApiError } from 'utils/HttpUtils';
+import { i18n } from 'services/LocalizationService';
 
 
 interface NpmPackage {
@@ -46,7 +47,6 @@ const ExtensionActionConfig: UI.ActionConfigList<API.Extension> = [
     access: API.AccessEnum.ADMIN,
     input: {
       approveCaption: 'Install',
-      title: 'Install extension from URL',
       content: 'Enter download URL',
       inputProps: {
         placeholder: 'Enter URL',
@@ -140,7 +140,7 @@ ExtensionActions.installNpm.listen(function (npmPackage: NpmPackage, location: L
 });
 
 ExtensionActions.installNpm.failed.listen(function (error: JQuery.jqXHR) {
-  NotificationActions.apiError('Installation failed', toApiError(error));
+  NotificationActions.apiError('Installation failed', toApiError(error, i18n.t));
 });
 
 ExtensionActions.updateNpm.listen(function (npmPackage: NpmPackage, location: Location) {
@@ -152,7 +152,7 @@ ExtensionActions.updateNpm.listen(function (npmPackage: NpmPackage, location: Lo
 });
 
 ExtensionActions.updateNpm.failed.listen(function (error: JQuery.jqXHR) {
-  NotificationActions.apiError('Updating failed', toApiError(error));
+  NotificationActions.apiError('Updating failed', toApiError(error, i18n.t));
 });
 
 ExtensionActions.installUrl.listen(function (

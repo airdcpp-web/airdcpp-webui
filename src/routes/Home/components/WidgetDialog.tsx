@@ -12,21 +12,19 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
-import WidgetUtils from 'utils/WidgetUtils';
+import { getWidgetT, createWidgetId } from 'utils/WidgetUtils';
 import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { toI18nKey, getModuleT } from 'utils/TranslationUtils';
 import { translateForm } from 'utils/FormUtils';
-import i18next from 'i18next';
 
 
-type FormData = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
+type FormValue = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
 
-const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget): FormData | undefined => {
+const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget): FormValue | undefined => {
   if (!widgetId) {
     return undefined;
   }
@@ -39,31 +37,35 @@ const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget
 };
 
 
-const buildDefinitions = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
-  const Entry: UI.FormFieldDefinition[] = [
-    {
-      key: 'name',
-      title: 'Name',
-      type: API.SettingTypeEnum.STRING,
-      default_value: name,
-    },
-  ];
+const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslator) => {
+  const Entry: UI.FormFieldDefinition[] = translateForm(
+    [
+      {
+        key: 'name',
+        title: 'Name',
+        type: API.SettingTypeEnum.STRING,
+        default_value: name,
+      },
+    ], 
+    rootWidgetT
+  );
 
   if (widgetInfo.formSettings) {
-    Entry.push(...widgetInfo.formSettings);
+    const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
+    Entry.push(...translateForm(widgetInfo.formSettings, widgetT));
   }
 
-  return translateForm(Entry, getModuleT(t, UI.Modules.WIDGETS));
+  return Entry;
 };
 
 interface WidgetDialogProps {
-
+  rootWidgetT: UI.ModuleTranslator;
 }
 
-type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & 
+type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & WithTranslation &
   RouteComponentProps<{ widgetId?: string; typeId: string; }>;
 
-class WidgetDialog extends React.Component<Props & WithTranslation> {
+class WidgetDialog extends React.Component<Props> {
   static displayName = 'WidgetDialog';
 
   /*static propTypes = {
@@ -74,13 +76,34 @@ class WidgetDialog extends React.Component<Props & WithTranslation> {
     typeId: PropTypes.string, // Required
   };*/
 
-  form: Form<FormData>;
+  formData: null | {
+    value: FormValue | undefined,
+    definitions: UI.FormFieldDefinition[],
+    widgetInfo: UI.Widget,
+  } = null;
+  form: Form<FormValue>;
+
+  constructor(props: Props) {
+    super(props);
+
+    const { rootWidgetT } = props;
+
+    const { typeId, widgetId } = props.match.params;
+    const widgetInfo = WidgetStore.getWidgetInfoById(typeId);
+    if (!!widgetInfo) {
+      this.formData = {
+        value: settingsToFormValue(widgetId, widgetInfo),
+        definitions: buildDefinitions(widgetInfo, rootWidgetT),
+        widgetInfo
+      };
+    }
+  }
 
   save = () => {
     return this.form.save();
   }
 
-  onSave: FormSaveHandler<FormData> = (changedFields, value) => {
+  onSave: FormSaveHandler<FormValue> = (changedFields, value) => {
     const { name, ...other } = value;
     const settings: UI.WidgetSettings = {
       name: name!,
@@ -90,7 +113,7 @@ class WidgetDialog extends React.Component<Props & WithTranslation> {
     const { typeId, widgetId } = this.props.match.params;
     if (!widgetId) {
       // New widget
-      WidgetActions.actions.create.saved(WidgetUtils.createId(typeId!), settings, typeId);
+      WidgetActions.actions.create.saved(createWidgetId(typeId!), settings, typeId);
     } else {
       // Existing widget
       WidgetActions.actions.edit.saved(widgetId, settings);
@@ -100,36 +123,33 @@ class WidgetDialog extends React.Component<Props & WithTranslation> {
   }
 
   render() {
-    const { typeId, widgetId } = this.props.match.params;
-    const widgetInfo = WidgetStore.getWidgetInfoById(typeId);
-    if (!widgetInfo) {
+    if (!this.formData) {
       return null;
     }
 
-    const { t } = this.props;
+    const { location, rootWidgetT } = this.props;
+    const { value, widgetInfo, definitions } = this.formData;
     const { name, icon } = widgetInfo;
-
-    const formValue = settingsToFormValue(widgetId, widgetInfo);
-    const Entry = buildDefinitions(widgetInfo, t);
+    const { translate, t } = rootWidgetT;
     return (
       <Modal 
         className="home-widget" 
-        title={ name } 
+        title={ translate(name) } 
         onApprove={ this.save }
         icon={ icon }
         { ...this.props }
       >
-        <Form<FormData>
+        <Form<FormValue>
           ref={ c => this.form = c! }
-          value={ formValue }
-          fieldDefinitions={ Entry }
+          value={ value }
+          fieldDefinitions={ definitions }
           onSave={ this.onSave }
-          location={ this.props.location }
+          location={ location }
         />
 
         <Message
           description={ t<string>(
-            toI18nKey('widgetPositionHint', UI.Modules.WIDGETS), 
+            'widgetPositionHint', 
             'Widgets and their positions are browser-specific'
           ) }
           icon={ IconConstants.INFO }

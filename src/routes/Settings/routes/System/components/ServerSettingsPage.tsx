@@ -28,7 +28,7 @@ const Generic = [
 ];
 
 const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
-  const { t } = props.moduleT;
+  const { t, translate } = props.moduleT;
   return (
     <div>
       {/*<Message 
@@ -50,7 +50,9 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
         actionId="restartWeb"
       />
 
-      <div className="ui header">HTTP</div>
+      <div className="ui header">
+        HTTP
+      </div>
       <div className="ui segment">
         <RemoteSettingForm
           { ...props }
@@ -58,7 +60,9 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
         />
       </div>
 
-      <div className="ui header">HTTPS</div>
+      <div className="ui header">
+        HTTPS
+      </div>
       <div className="ui segment">
         <RemoteSettingForm
           { ...props }
@@ -74,7 +78,9 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
         />
       </div>
 
-      <div className="ui header">Advanced</div>
+      <div className="ui header">
+        { translate('Advanced') }
+      </div>
       <div className="ui segment">
         <RemoteSettingForm
           { ...props }

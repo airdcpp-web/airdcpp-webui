@@ -124,7 +124,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
     )
       .catch(err => {
         console.log('RSS feed download failed', feedUrl, err);
-        this.setError(formatHttpError(err));
+        this.setError(formatHttpError(err, widgetT.plainT));
       });
   }
 
@@ -216,7 +216,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
   }
 
   render() {
-    const { error, entries } = this.state;
+    const { error, entries, date } = this.state;
     if (!!error) {
       return (
         <Message
@@ -225,7 +225,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
       );
     }
 
-    const { settings, componentId, toWidgetI18nKey, widgetT } = this.props;
+    const { settings, componentId, widgetT } = this.props;
     if (!entries) {
       return <Loader text={ widgetT.translate('Loading feed') } inline={true}/>;
     }
@@ -240,15 +240,15 @@ class RSS extends React.PureComponent<RSSProps, State> {
                 entry={ entry }
                 componentId={ componentId }
                 feedUrl={ settings.feed_url }
-                toWidgetI18nKey={ toWidgetI18nKey }
+                widgetT={ widgetT }
               />
             ))
           }
         </div>
         <Footer
-          lastUpdated={ this.state.date }
+          lastUpdated={ date }
           handleUpdate={ this.handleUpdate }
-          toWidgetI18nKey={ toWidgetI18nKey }
+          widgetT={ widgetT }
         />
       </div>
     );

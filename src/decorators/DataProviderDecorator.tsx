@@ -181,16 +181,16 @@ export default function <PropsT extends object, DataT extends object>(
         return;
       }
 
+      const { t } = this.props;
       let error: ErrorResponse;
       if ((fetchError as JQuery.jqXHR).statusCode) {
         // HTTP error
-        error = toApiError(fetchError as JQuery.jqXHR);
+        error = toApiError(fetchError as JQuery.jqXHR, t);
       } else {
         // API error
         error = fetchError as ErrorResponse;
       }
       
-      const { t } = this.props;
       NotificationActions.apiError(translate('Failed to fetch data', t, UI.Modules.COMMON), error);
       this.setState({
         error,

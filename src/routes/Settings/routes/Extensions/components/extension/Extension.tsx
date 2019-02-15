@@ -228,6 +228,7 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
             npmPackage={ npmPackage }
             installing={ installing }
             hasUpdate={ hasUpdate }
+            moduleT={ moduleT }
           />
         </div>
       </div>

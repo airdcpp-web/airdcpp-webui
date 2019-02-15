@@ -8,17 +8,18 @@ import * as UI from 'types/ui';
 import '../style.css';
 
 
-export interface FooterProps extends Pick<UI.WidgetProps, 'toWidgetI18nKey'> {
+export interface FooterProps {
   lastUpdated?: number;
   handleUpdate: () => void;
+  widgetT: UI.ModuleTranslator;
 }
 
 const Footer = RedrawDecorator(
-  ({ lastUpdated, handleUpdate, toWidgetI18nKey }: FooterProps) => (
+  ({ lastUpdated, handleUpdate, widgetT }: FooterProps) => (
     <div className="extra content">
       <i className="icon refresh link" onClick={ handleUpdate }/>
       { !!lastUpdated && (
-        <Trans i18nKey={ toWidgetI18nKey('lastUpdated') }>
+        <Trans i18nKey={ widgetT.toI18nKey('lastUpdated') }>
           Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}
         </Trans>
       ) }

@@ -2,8 +2,8 @@ import { default as WidgetStore, EmptyWidgetSettings } from 'stores/WidgetStore'
 
 import { RSS } from 'widgets/RSS';
 
-import WidgetUtils from 'utils/WidgetUtils';
 import { Layouts, Layout } from 'react-grid-layout';
+import { createWidgetId } from 'utils/WidgetUtils';
 
 
 const countWidgetIds = (id: string, layouts: Layouts) => {
@@ -45,7 +45,7 @@ describe('widget store', () => {
   });
 
 
-  const widgetId = WidgetUtils.createId(RSS.typeId);
+  const widgetId = createWidgetId(RSS.typeId);
   const settings = {
     name: 'RSS feed',
     widget: {

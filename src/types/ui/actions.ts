@@ -51,7 +51,7 @@ export type ActionConfigList<ItemDataT> = Array<string | { [actionKey: string]: 
 export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> };
 
 export interface ModuleActions<ItemDataT> {
-  moduleId: string;
+  moduleId: string | string[];
   subId?: string;
   actions: ActionListType<ItemDataT>;
 }

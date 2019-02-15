@@ -9,9 +9,10 @@ import { withModalCloseContext, ModalCloseContextProps } from 'decorators/ModalR
 import { InputDialog } from 'components/semantic/InputDialog';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 
 import { startCase } from 'lodash';
+import { toActionI18nKey } from 'utils/ActionUtils';
 
 
 interface ActionHandlerDecoratorProps {
@@ -40,7 +41,7 @@ const toKey = (fieldName: string, actionData: ActionData) => {
 
   return toI18nKey(
     keyName,
-    [ actionData.moduleId, UI.SubNamespaces.ACTIONS, UI.SubNamespaces.PROMPTS ]
+    [ ...toArray(actionData.moduleId), UI.SubNamespaces.ACTIONS, UI.SubNamespaces.PROMPTS ]
   );
 };
 
@@ -82,7 +83,7 @@ const getCommonConfirmDialogProps = <ItemDataT extends {}>(
     rejectCaption: rejectCaption || translate(defaultRejectCaption, t, UI.Modules.COMMON),
     content,
     icon,
-    title: displayName,
+    title: t(toActionI18nKey(actionData.action, actionData.moduleId), displayName),
     checkboxCaption,
   };
 };

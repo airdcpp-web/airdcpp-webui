@@ -1,6 +1,10 @@
 import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import i18next from 'i18next';
+
+import * as UI from 'types/ui';
+import { translate } from './TranslationUtils';
 
 
 export const toCorsSafeUrl = (url: string) => {
@@ -8,13 +12,13 @@ export const toCorsSafeUrl = (url: string) => {
   return !!proxyUrl ? proxyUrl + url : url;
 };
 
-export const formatHttpError = (error: JQuery.jqXHR) => {
-  return error.status === 0 ? 'Network/client error' : error.statusText;
+export const formatHttpError = (error: JQuery.jqXHR, t: i18next.TFunction) => {
+  return error.status === 0 ? translate('Network/client error', t, UI.Modules.COMMON) : error.statusText;
 };
 
 
-export const toApiError = (error: JQuery.jqXHR): ErrorResponse => {
-  const message = formatHttpError(error);
+export const toApiError = (error: JQuery.jqXHR, t: i18next.TFunction): ErrorResponse => {
+  const message = formatHttpError(error, t);
   return {
     code: error.status,
     message,

@@ -11,7 +11,7 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
-import { getModuleT } from 'utils/TranslationUtils';
+import { getWidgetT } from 'utils/WidgetUtils';
 
 
 const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, t: i18next.TFunction) => {
@@ -20,7 +20,6 @@ const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, t: i18next
   }
 
   if (widgetInfo.access && !LoginStore.hasAccess(widgetInfo.access)) {
-    // tslint:disable-next-line:quotemark
     return t('widget.accessDenied');
   }
 
@@ -32,23 +31,18 @@ export interface WidgetProps {
   className?: string;
   settings: UI.WidgetSettings;
   componentId: string;
+  rootWidgetT: UI.ModuleTranslator;
 }
 
-const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, children, className, ...other }) => {
+const Widget: React.FC<WidgetProps> = ({ 
+  widgetInfo, settings, componentId, children, className, rootWidgetT, ...other 
+}) => {
   const { t } = useTranslation();
   const error = getError(widgetInfo, settings, t);
   const Component = widgetInfo.component;
+  
 
-  const toWidgetI18nKey = (key?: string | string[]) => {
-    let ret = `${UI.Modules.WIDGETS}.${widgetInfo.typeId}`;
-    if (!!key) {
-      ret += `.${key}`;
-    }
-
-    return ret;
-  };
-
-  const widgetT = getModuleT(t, toWidgetI18nKey());
+  const widgetT = getWidgetT(widgetInfo, t);
   return (
     <div 
       className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
@@ -83,7 +77,7 @@ const Widget: React.FC<WidgetProps> = ({ widgetInfo, settings, componentId, chil
             componentId={ componentId }
             settings={ settings.widget }
             widgetT={ widgetT }
-            toWidgetI18nKey={ toWidgetI18nKey }
+            rootWidgetT={ rootWidgetT }
           />
         ) }
       </div>

@@ -2,7 +2,6 @@
 import Reflux from 'reflux';
 
 import WidgetActions, { WidgetItemInfo } from 'actions/WidgetActions';
-import WidgetUtils from 'utils/WidgetUtils';
 
 import reject from 'lodash/reject';
 import { loadLocalProperty, removeLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
@@ -13,6 +12,7 @@ import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
+import { widgetIdToSettingKey, widgetIdToType } from 'utils/WidgetUtils';
 //import i18next from 'i18next';
 
 
@@ -37,7 +37,7 @@ export const EmptyWidgetSettings = {
 // HELPERS
 const getWidgetSettings = (id: string, widgetInfo?: UI.Widget): UI.WidgetSettings => {
   const settings = loadLocalProperty<UI.WidgetSettings>(
-    WidgetUtils.idToSettingKey(id), 
+    widgetIdToSettingKey(id), 
     EmptyWidgetSettings
   );
 
@@ -55,7 +55,7 @@ const getWidgetSettings = (id: string, widgetInfo?: UI.Widget): UI.WidgetSetting
 };
 
 const saveSettings = <SettingsT>(id: string, settings: UI.WidgetSettings<SettingsT>) => {
-  saveLocalProperty(WidgetUtils.idToSettingKey(id), settings);
+  saveLocalProperty(widgetIdToSettingKey(id), settings);
 };
 
 const createWidget = (layouts: Layouts, widgetInfo: UI.Widget, id: string, x?: number, y?: number) => {
@@ -98,7 +98,7 @@ const createDefaultWidget = <SettingsT>(
 };
 
 const getWidgetInfoById = (id: string) => {
-  const widgetType = WidgetUtils.idToWidgetType(id);
+  const widgetType = widgetIdToType(id);
   return widgets.find(item => item.typeId === widgetType);
 };
 
@@ -169,7 +169,7 @@ const Store = {
   },
 
   onRemove({ id }: Pick<WidgetItemInfo, 'id'>) {
-    removeLocalProperty(WidgetUtils.idToSettingKey(id));
+    removeLocalProperty(widgetIdToSettingKey(id));
 
     this.layouts = Object.keys(cols)
       .reduce(

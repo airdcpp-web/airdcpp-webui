@@ -12,6 +12,7 @@ import {
   ActionHandlerDecorator, ActionHandlerDecoratorChildProps, ActionClickHandler
 } from 'decorators/ActionHandlerDecorator';
 import { Trans } from 'react-i18next';
+import { parseTranslationModules } from 'utils/TranslationUtils';
 
 export type OnClickActionHandler = (actionId: string) => void;
 
@@ -180,7 +181,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
       icon={ action.icon }
     >
       <Trans
-        i18nKey={ toActionI18nKey(action, menu.actions.moduleId) }
+        i18nKey={ toActionI18nKey(action, parseTranslationModules(menu.actions.moduleId)) }
         defaults={ action.displayName }
       >
         { action.displayName }

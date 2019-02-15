@@ -8,6 +8,7 @@ import ExternalLink from 'components/ExternalLink';
 import { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 
 export interface ExtensionActionButtonsProps {
@@ -15,9 +16,13 @@ export interface ExtensionActionButtonsProps {
   installedPackage?: API.Extension;
   hasUpdate: boolean;
   installing: boolean;
+  moduleT: UI.ModuleTranslator;
 }
 
-const InstallButton: React.FC<ExtensionActionButtonsProps> = (
+
+type InstallButtonProps = Omit<ExtensionActionButtonsProps, 'moduleT'>;
+
+const InstallButton: React.FC<InstallButtonProps> = (
   { npmPackage, installedPackage, hasUpdate, installing }
 ) => {
   if (installedPackage && !hasUpdate) {
@@ -36,7 +41,7 @@ const InstallButton: React.FC<ExtensionActionButtonsProps> = (
 };
 
 const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
-  { npmPackage, installedPackage, hasUpdate, installing }
+  { npmPackage, installedPackage, hasUpdate, installing, moduleT }
 ) => (
   <div className="extra buttons">
     { installedPackage && (
@@ -57,7 +62,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
     ) }
     { npmPackage && (
       <ExternalLink className="ui right floated button" url={ ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name }>
-        Read more
+        { moduleT.translate('Read more') }
       </ExternalLink> 
     ) }
     { installedPackage && (

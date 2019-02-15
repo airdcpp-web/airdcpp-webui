@@ -9,6 +9,11 @@ import { useStore } from 'effects/StoreListenerEffect';
 import { useLoginGuard } from '../effects/LoginGuardEffect';
 import { usePageTitle } from '../effects/PageTitleEffect';
 import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { toI18nKey, translate } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
 
 
 interface AuthenticationGuardDecoratorProps {
@@ -17,12 +22,13 @@ interface AuthenticationGuardDecoratorProps {
 
 
 
-const getConnectStatusMessage = (lastError: string | null) => {
+const getConnectStatusMessage = (lastError: string | null, t: i18next.TFunction) => {
   if (!!lastError) {
-    return lastError + '. Attempting to re-establish connection...';
+    const msg = t(toI18nKey('reestablishConnection', UI.Modules.LOGIN), 'Attempting to re-establish connection...');
+    return `${lastError}. ${msg}`;
   }
 
-  return 'Connecting to the server...';
+  return translate('Connecting to the server...', t, UI.Modules.LOGIN);
 };
 
 function AuthenticationGuardDecorator<PropsT>(
@@ -33,12 +39,13 @@ function AuthenticationGuardDecorator<PropsT>(
     useLoginGuard(login, props.location);
     usePageTitle(login);
     useStoreDataFetch(login);
+    const { t } = useTranslation();
 
     if (!login.socketAuthenticated) {
       // Dim the screen until the server can be reached (we can't do anything without the socket)
       return (
         <SocketConnectStatus 
-          message={ getConnectStatusMessage(login.lastError) }
+          message={ getConnectStatusMessage(login.lastError, t) }
         />
       );
     }

@@ -31,12 +31,12 @@ const parseTitle = (entry: FeedItem) => {
   return title;
 };
 
-export interface EntryProps extends Pick<UI.WidgetProps, 'toWidgetI18nKey' | 'componentId'> {
+export interface EntryProps extends Pick<UI.WidgetProps, 'widgetT' | 'componentId'> {
   entry: FeedItem;
   feedUrl: string;
 }
 
-const Entry: React.FC<EntryProps> = ({ entry, feedUrl, toWidgetI18nKey }) => {
+const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
   const date = entry.pubDate ? entry.pubDate : entry.updated;
   return (
     <div className="item">
@@ -46,7 +46,7 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, toWidgetI18nKey }) => {
           caption={ parseTitle(entry) }
           actions={{ 
             actions: RSSActions,
-            moduleId: toWidgetI18nKey()
+            moduleId: widgetT.moduleId
           }}
           itemData={ {
             entry,
