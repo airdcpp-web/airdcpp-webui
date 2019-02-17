@@ -8,6 +8,7 @@
         "activeSessions": "Active sessions"
       },
       "rss": {
+        "widgetName": "RSS feed",
         "invalidUrl": "Invalid URL",
         "lastUpdated": "Last updated: {{time}}",
         "actions": {
@@ -22,6 +23,7 @@
         }
       },
       "transfers": {
+        "widgetName": "Transfers",
         "trafficBps": "Traffic (bps)",
         "downloads": "Downloads",
         "uploads": "Uploads",

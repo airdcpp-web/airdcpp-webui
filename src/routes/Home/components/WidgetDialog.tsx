@@ -12,7 +12,7 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 
 import WidgetActions from 'actions/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
-import { getWidgetT, createWidgetId } from 'utils/WidgetUtils';
+import { getWidgetT, createWidgetId, translateWidgetName } from 'utils/WidgetUtils';
 import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
@@ -129,12 +129,12 @@ class WidgetDialog extends React.Component<Props> {
 
     const { location, rootWidgetT } = this.props;
     const { value, widgetInfo, definitions } = this.formData;
-    const { name, icon } = widgetInfo;
-    const { translate, t } = rootWidgetT;
+    const { icon } = widgetInfo;
+    const { t } = rootWidgetT;
     return (
       <Modal 
         className="home-widget" 
-        title={ translate(name) } 
+        title={ translateWidgetName(widgetInfo, rootWidgetT.plainT) } 
         onApprove={ this.save }
         icon={ icon }
         { ...this.props }

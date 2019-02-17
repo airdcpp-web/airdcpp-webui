@@ -1,6 +1,6 @@
 
 import * as UI from 'types/ui';
-import { getModuleT } from './TranslationUtils';
+import { getModuleT, toI18nKey } from './TranslationUtils';
 import i18next from 'i18next';
 
 
@@ -15,4 +15,8 @@ export const widgetIdToType = (id: string) => {
 
 export const getWidgetT = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
   return getModuleT(t, [ UI.Modules.WIDGETS, widgetInfo.typeId ]);
+};
+
+export const translateWidgetName = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
+  return t(toI18nKey('widgetName', [ UI.Modules.WIDGETS, widgetInfo.typeId ]), widgetInfo.name);
 };

@@ -9,16 +9,18 @@ import { Location } from 'history';
 
 import * as UI from 'types/ui';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import i18next from 'i18next';
+import { translateWidgetName } from 'utils/WidgetUtils';
 
 
-const getWidgetItem = (widgetInfo: UI.Widget, location: Location, widgetT: UI.ModuleTranslator) => {
+const getWidgetItem = (widgetInfo: UI.Widget, location: Location, t: i18next.TFunction) => {
   return (
     <MenuItemLink 
       key={ widgetInfo.typeId }
       onClick={ () => WidgetActions.actions.create(widgetInfo, location) }
       icon={ widgetInfo.icon }
     >
-      { widgetT.translate(widgetInfo.name) }
+      { /*widgetT.translate(widgetInfo.name)*/ translateWidgetName(widgetInfo, t) }
     </MenuItemLink>
   );
 };
@@ -36,7 +38,7 @@ const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = (
   >
     { WidgetStore.widgets
       .filter(widgetInfo => !widgetInfo.alwaysShow)
-      .map(widgetInfo => getWidgetItem(widgetInfo, location, widgetT)) }
+      .map(widgetInfo => getWidgetItem(widgetInfo, location, widgetT.plainT)) }
   </Dropdown>
 );
 
