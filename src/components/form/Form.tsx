@@ -20,7 +20,6 @@ import './style.css';
 import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
 import { Translation } from 'react-i18next';
 import { FormContext } from 'types/ui';
-//import i18next from 'i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 
 const TcombForm = tcomb.form.Form;
@@ -31,20 +30,10 @@ const fieldOptionReducer = (
   reducedOptions: { [key: string]: any }, 
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
-  //t: i18next.TFunction,
   formT: UI.ModuleTranslator,
   formValue: Partial<UI.FormValueMap>
 ) => {
-  //const { onFieldSetting, t } = props;
   reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, formT);
-
-  /*const tmp = (
-    name: UI.TranslatableFormDefinitionProperties, 
-    caption: string, 
-    extraKeyPostfix: string | undefined
-  ) => {
-    translateFormProperty(name, caption, extraKeyPostfix, fieldDefinitions, t);
-  };*/
 
   if (onFieldSetting) {
     onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], formValue);
@@ -65,7 +54,6 @@ const fieldOptionReducer = (
 const getFieldOptions = (
   fieldDefinitions: UI.FormFieldDefinition[],
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
-  //t: i18next.TFunction,
   formT: UI.ModuleTranslator,
   formValue: Partial<UI.FormValueMap>,
   error: FieldError | null
@@ -96,12 +84,7 @@ const getFieldOptions = (
 export type FormFieldSettingHandler<ValueType = UI.FormValueMap> = (
   key: string, 
   definitions: UI.FormFieldDefinition[], 
-  formValue: Partial<ValueType>,
-  /*translationHandler: (
-    propName: UI.TranslatableFormDefinitionProperties, 
-    caption: string, 
-    extraKeyPostfix: string
-  ) => string*/
+  formValue: Partial<ValueType>
 ) => void;
 
 export type FormSaveHandler<ValueType> = (

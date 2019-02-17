@@ -8,12 +8,18 @@
         "activeSessions": "Aktiiviset istunnot"
       },
       "rss": {
+        "invalidUrl": "Virheellinen URL-osoite",
         "lastUpdated": "Viimeksi päivitetty: {{time}}",
         "actions": {
           "openLink": "Avaa linkki",
           "search": "Etsi"
         },
-        "loadingFeed": "Ladataan syötettä"
+        "loadingFeed": "Ladataan syötettä",
+        "form": {
+          "feedUrlName": "Syötteen URL-osoite",
+          "feedUrlHelp": "RSS- ja Atom-syötteet ovat tuettuina",
+          "feedCacheMinutesName": "Uudelleenhaun vähimmäisaikaväli (minuutteina)"
+        }
       },
       "transfers": {
         "trafficBps": "Liikenne (bps)",
@@ -34,11 +40,15 @@
           "removeContent": "Haluatko varmasti poistaa widgetin {{item.settings.name}}?"
         }
       },
+      "form": {
+        "nameName": "Nimi"
+      },
       "widgetPositionHint": "Widgetit ja niiden sijainnit ovat selainkohtaisia"
     },
     "events": {
       "events": "Tapahtumat",
       "loadingMessages": "Ladataan viestejä",
+      "noMessagesToShow": "Ei näytettäviä viestejä",
       "actions": {
         "clear": "Tyhjennä"
       }
@@ -200,6 +210,8 @@
       "root": "Juuri",
       "userOffline": "Käyttäjä offline-tilassa",
       "userOfflineDesc": "Voit jatkaa selaamista, kun käyttäjä on jälleen online-tilassa",
+      "noContentToDisplay": "Ei näytettävää sisältöä",
+      "theDirectoryIsEmpty": "Kansio on tyhjä",
       "table": {
         "name": "Nimi",
         "size": "Koko",
@@ -222,12 +234,16 @@
         "browseShare": "Selaa jakoja",
         "ignoreMessages": "Estä viestit",
         "viewAsText": "Näytä tekstinä",
+        "playVideo": "Toista video",
+        "viewImage": "Näytä kuva",
+        "playAudio": "Toista audio",
         "copyMagnetLink": "Kopioi magnet-linkki",
         "shutDownApplication": "Sammuta ohjelma",
         "restartWebServer": "Käynnistä web-palvelin uudestaan",
         "unignoreMessages": "Poista viestien esto",
         "closeAndDontShowAgain": "Sulje ja älä näytä uudestaan"
       },
+      "networkClientError": "Verkko-/selainvirhe",
       "loadingItems": "Ladataan kohteita",
       "root": "Juuri",
       "name": "Nimi",
@@ -265,6 +281,10 @@
       "dontInstall": "Älä asenna",
       "statisticsNotAvailable": "Tilastot eivät ole käytettävissä",
       "save": "Tallenna",
+      "enterNick": "Syötä nimimerkki...",
+      "enterLimitKBS": "Syötä raja (kt/s)",
+      "enterLimit": "Syötä raja...",
+      "removeLimit": "Poista raja",
       "form": {
         "browse": "Selaa",
         "noOptions": "Ei vaihtoehtoja",
@@ -290,13 +310,22 @@
       },
       "enterHubAddress": "Syötä hubin osoite...",
       "connect": "Yhdistä",
+      "notConnectedToTheHub": "Ei yhdistettyjä hubeja",
+      "connecting": "Yhdistetään",
+      "loadingUserlist": "Ladataan käyttäjälistaa",
       "favoriteHubsHint": "Vinkki: mene <1>Suosikkihubit</1> -sivulle, jos haluat yhdistää käyttämällä mukautettuja asetuksia",
       "new": "Yhdistä",
       "newDesc": "Yhdistä uuteen hubiin",
       "userList": "Käyttäjälista",
       "sharePerUser": "{{total}} ({{average}}/käyttäjä)",
       "xUsers": "{{count}} käyttäjää",
-      "xUsers_plural": "{{count}} käyttäjää"
+      "xUsers_plural": "{{count}} käyttäjää",
+      "redirectRequested": "Uudelleenohjauspyyntö",
+      "acceptRedirect": "Hyväksy uudelleenohjaus osoitteeseen {{url}}",
+      "passwordRequired": "Salasana vaaditaan",
+      "password": "Salasana",
+      "submit": "Lähetä",
+      "passwordPromptHelp": "Tämä yleensä tarkoittaa, että hubissa on käyttämällesi nimimerkille luotu käyttäjätili. Mikäli et muista omaavasi rekisteröityä käyttäjätiliä tässä hubissa, joku muu mahdollisesti käyttää samaa nimimerkkiä."  
     },
     "queue": {
       "table": {
@@ -367,7 +396,8 @@
         "disconnect": "Katkaise yhteys",
         "removeFileFromQueue": "Poista tiedosto jonosta",
         "removeUserFromQueue": "Hylkää lähde latausjonosta"
-      }
+      },
+      "noActiveTransfers": "Ei aktiivisia tiedostosiirtoja"
     },
     "settings": {
       "actions": {
@@ -396,7 +426,7 @@
         "sharing": "Jakaminen",
         "view": "Näytä",
         "about": "Tietoja",
-        "extensions": "Jatkeet",
+        "extensions": "Lisäosat",
         "system": "Järjestelmä",
         "autoDetection": "Automaattinen tunnistaminen",
         "iPv4ConnectivityManual": "IPv4-yhteys (manuaalinen)",
@@ -433,18 +463,29 @@
         "searchMatching": "Hakutulosten täsmääminen",
         "downloadOptions": "AirLataukset",
         "priorities": "Tärkeydet",
-        "notifications": "Ilmoitukset",
+        "notificationsCaption": "Ilmoitukset",
         "histories": "Historiat",
         "events": "Tapahtumat"
       },
       "advanced": "Edistynyt",
       "noUnsavedChanges": "Ei tallentamattomia muutoksia",
+      "saveChanges": "Tallenna muutokset",
+      "savingCompleted": "Tallennus valmis",
+      "settingsWereSavedSuccessfully": "Asetukset tallennettiin onnistuneesti",
+      "unsavedChangesPrompt": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti lähteä?",
       "connectivity": {
         "detection": {
           "connectivityDetectionNote": "Mikäli tiedostosiirtojen kanssa on ongelmia, tarkista että TCP-ovat varmasti avoinna käyttämällä esimerkiksi <1>verkon porttitarkistussivustoa</1>. Huomio, että UDP-portin (haut) avoimuutta ei voi tarkistaa verkkosivustojen kautta. Saat lisätietoja eri yhteystiloista <4>DC++:n ohjesivustolta</4>.",
           "currentAutoDetectionStatus": "Automaattisen tunnistamisen tila",
           "manualConfiguration": "{{status}} (manuaaliset määritykset)",
           "autoDetected": "{{status}} (tunnistettu automaattisesti)"
+        },
+        "ports": {
+          "form": {
+            "tcpPortHelp": "TCP-porttia käytetään salaamattomille tiedostosiirroille",
+            "udpPortHelp": "UDP-porttia käytetään hauille",
+            "tlsPortHelp": "TLS-porttia (TCP) käytetään salatuille tiedostosiirroille"
+          }
         }
       },
       "profile": {
@@ -454,9 +495,15 @@
             "settingProfileHelp1": "Ohjelmaa käytetään RAR-arkistoihin pilkottujen tiedostojen (tai muiden pienikokoisten tiedostojen) lataamiseen"
           }
         },
-        "ignored-users": {
+        "ignoredUsers": {
           "user": "Käyttäjä",
-          "messagesIgnored": "Estetyt viestit"
+          "messagesIgnored": "Estetyt viestit",
+          "noIgnoredUsers": "Ei estettyjä käyttäjiä"
+        },
+        "miscellaneous": {
+          "form": {
+            "nmdcEncodingHelp": "<0>Merkistöasetusta käytetään ainoastaan NMDC-hubeissa. ADC-hubit käyttävät aina UTF-8 -merkistöä.<1></1><2></2><3>Yleisesti käytetyt arvot:<1><0>Keski-Eurooppa: cp1250</0><1>Kyrillinen: cp1251</1><2>Länsi-Eurooppa: cp1252</2><3>Kreikka: cp1253</3><4>Turkki: cp1254</4><5>Heprea: cp1256</5></1></3></0>"
+          }
         }
       },
       "extensions": {
@@ -464,13 +511,16 @@
           "byAuthor": "tekijältä {{author}}",
           "latestVersion": "Viimeisin versio",
           "installedVersion": "Asennettu versio",
-          "datePublished": "{{version}} (julkaistu {{date}})"
+          "datePublished": "{{version}} (julkaistu {{date}})",
+          "readMore": "Lue lisää"
         },
         "manage": {
           "byAuthor": "tekijältä {{author}}",
           "latestVersion": "Viimeisin versio",
           "installedVersion": "Asennettu versio",
-          "nonListedExtension": "Listaamaton lisäosa"
+          "nonListedExtension": "Listaamaton lisäosa",
+          "readMore": "Lue lisää",
+          "noInstalledExtensions": "Asennettuja lisäosia ei löytynyt. Uusia lisäosia voidaan asentaa <1>Lisäosien katalogi</1> -sivulta."
         }
       },
       "about": {
@@ -480,7 +530,7 @@
           "webUiBuildDate": "Web-käyttöliittymän päiväys",
           "apiVersion": "API-versio",
           "apiFeatureLevel": "API:n toiminnallisuustaso",
-          "started": "Aloitettu",
+          "started": "Käynnistetty",
           "activeSessions": "Aktiiviset istunnot",
           "serverThreads": "Palvelinsäikeet"
         },
@@ -492,6 +542,7 @@
           "sessionUploaded": "Lähetetty istunnossa"
         },
         "share": {
+          "noFilesShared": "Ei jaettuja tiedostoja",
           "totalShareSize": "Jakojen yhteiskoko",
           "totalFiles": "Tiedostojen yhteismäärä",
           "totalFilesValue": "{{totalCount}} ({{uniqueCount}} uniikkia)",
@@ -511,7 +562,15 @@
           "searchesAverageMatchTimeValue": "{{matchTime}} ms"
         },
         "hubs": {
-          "noHubsOnline": "Ei yhdistettyjä hubeja"
+          "noHubsOnline": "Ei yhdistettyjä hubeja",
+          "totalUsers": "Käyttäjien kokonaismäärä",
+          "uniqueUsers": "Uniikit käyttäjät",
+          "activeUsers": "Aktiivitilassa olevat käyttäjät",
+          "totalShare": "Kokonaisjaot",
+          "averageSharePerUser": "Käyttäjäkohtainen jakokeskiarvo",
+          "averageAdcDownloadSpeed": "ADC-latausnopeuden keskiarvo",
+          "clients": "Ohjelmat",
+          "averageAdcUploadSpeed": "ADC-lähetysnopeuden keskiarvo"
         }
       },
       "system": {
@@ -519,8 +578,9 @@
           "sections": "Osiot",
           "variableHelp": "Muuttujien tiedot tiedostonimi- ja muotokentille"
         },
-        "server-settings": {
-          "defaultCertNote": "Mikäli sertifikaattien polut ovat tyhjiä, käytetään ohjelman oletussertifikaattia"
+        "serverSettings": {
+          "defaultCertNote": "Mikäli sertifikaattien polut ovat tyhjiä, käytetään ohjelman oletussertifikaattia",
+          "advanced": "Edistynyt"
         },
         "users": {
           "username": "Käyttäjänimi",
@@ -567,7 +627,7 @@
           "totalFiles": "Tiedostojen yhteismäärä",
           "shareProfilesNote": "<0>Ladatut tiedostot jaetaan kaikissa hubeissa, joissa jakoja ei ole piilotettu, osittaisen tiedostojakotoiminnon avulla asetetuista jakoprofiileista riippumatta .</0><1>Jakoprofiilit voidaan määrittää yksittäisille kansioille <1>Jaot</1>-sivulla.</1>"
         },
-        "sharing-options": {
+        "sharingOptions": {
           "skiplist": "Ohituslista"
         },
         "hashing": {
@@ -579,25 +639,25 @@
           "hashDBOptimizeNote": "Tämä operaatio poistaa kaikkien tällä hetkellä jakamattomien tiedostojen tallennetut tarkistussummat. Mikäli jaat tiedostoja verkkolevyiltä tai muulta siirrettävältä tallennusvälineeltä, tarkista, että tiedostot näkyvät tällä hetkellä jaoissa (muutoin ne on indeksoitava uudestaan)."
         }
       },
-      "speed-limits": {
+      "speedLimits": {
         "speed": {
           "connectionSpeedNote": "Ole niin tarkka kuin mahdollista ja määritä yhteytesi TODELLINEN nopeus. Voit käyttää yhteyden nopeuden testaamiseen verkkosivustoa, kuten <1>Speedtest.net</1>."
         },
-        "upload-limits": {
+        "uploadLimits": {
           "manuallySet": "Manuaalisesti asetettu"
         },
-        "download-limits": {
+        "downloadLimits": {
           "manuallySet": "Manuaalisesti asetettu"
         }
       },
       "downloads": {
         "locations": {
           "availablePathVariables": "Käytettävissä olevat polkumuuttujat",
-          "favoriteDownloadDirectories": "AirDC++\\Suosikki kohdekansiot",
+          "favoriteDownloadDirectories": "Suosikkikansiot",
           "name": "Nimi",
           "path": "Polku"
         },
-        "skipping-options": {
+        "skippingOptions": {
           "skiplist": "Ohituslista"
         },
         "priorities": {
@@ -670,14 +730,18 @@
       "keepMeLoggedIn": "Pidä minut sisäänkirjautuneena",
       "login": "Käyttäjätunnus",
       "authenticationFailed": "Tunnistautuminen epäonnistui: {{lastError}}",
-      "connectingToTheServer": "Yhdistetään palvelimeen..."
+      "connectingToTheServer": "Yhdistetään palvelimeen...",
+      "reestablishConnection": "Yritetään uudelleenmuodostaa yhteyttä..."
     },
     "viewedFiles": {
       "actions": {
         "close": "Sulje"
       },
       "noFiles": "Ei näytettäviä tiedostoja",
-      "noFilesDesc": "Voit avata näytettäviä teksti- tai mediatiedostoja hausta tai tiedostolistoista"
+      "noFilesDesc": "Voit avata näytettäviä teksti- tai mediatiedostoja hausta tai tiedostolistoista",
+      "preparingView": "Valmistellaan näkymää",
+      "opened": "Avattu",
+      "downloaded": "Ladattu"
     },
     "messages": {
       "actions": {

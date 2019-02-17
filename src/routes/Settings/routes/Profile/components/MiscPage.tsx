@@ -24,7 +24,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
           ) }
         >
           <div>
-            Encoding setting is only used in NMDC hub. ADC hubs will always use UTF-8 encoding.
+            Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.
             <br/>
             <br/>
             <div>
@@ -32,7 +32,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
               <ul>
                 <li>Central Europe: cp1250</li>
                 <li>Cyrillic: cp1251</li>
-                <li>Western_Europe: cp1252</li>
+                <li>Western Europe: cp1252</li>
                 <li>Greek: cp1253</li>
                 <li>Turkish: cp1254</li>
                 <li>Hebrew: cp1256</li>

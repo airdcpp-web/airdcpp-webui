@@ -8,6 +8,7 @@
         "activeSessions": "Active sessions"
       },
       "rss": {
+        "invalidUrl": "Invalid URL",
         "lastUpdated": "Last updated: {{time}}",
         "actions": {
           "openLink": "Open link",
@@ -50,6 +51,15 @@
       "noMessagesToShow": "No messages to show",
       "actions": {
         "clear": "Clear"
+      },
+      "notifications": {
+        "information": "Information",
+        "info": "INFO",
+        "warning": "WARNING",
+        "error": "ERROR",
+        "actions": {
+          "viewEvents": "View events"
+        }
       }
     },
     "table": {
@@ -209,6 +219,8 @@
       "root": "Root",
       "userOffline": "User offline",
       "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
+      "noContentToDisplay": "No content to display",
+      "theDirectoryIsEmpty": "The directory is empty",
       "table": {
         "name": "Name",
         "size": "Size",
@@ -231,12 +243,16 @@
         "browseShare": "Browse share",
         "ignoreMessages": "Ignore messages",
         "viewAsText": "View as text",
+        "playVideo": "Play video",
+        "viewImage": "View image",
+        "playAudio": "Play audio",
         "copyMagnetLink": "Copy magnet link",
         "shutDownApplication": "Shut down application",
         "restartWebServer": "Restart web server",
         "unignoreMessages": "Unignore messages",
         "closeAndDontShowAgain": "Close and don't show again"
       },
+      "networkClientError": "Network/client error",
       "loadingItems": "Loading items",
       "root": "Root",
       "name": "Name",
@@ -303,6 +319,9 @@
       },
       "enterHubAddress": "Enter hub address...",
       "connect": "Connect",
+      "notConnectedToTheHub": "Not connected to the hub",
+      "connecting": "Connecting",
+      "loadingUserlist": "Loading userlist",
       "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
       "new": "Connect",
       "newDesc": "Connect to a new hub",
@@ -368,7 +387,18 @@
       "hubs": "Hubs",
       "lastKnownSpeed": "Last known speed",
       "files": "Files",
-      "size": "Size"
+      "size": "Size",
+      "notifications": {
+        "bundleWasAddedInQueue": "Bundle was added in queue",
+        "bundleDownloadError": "Download error: {{error}}",
+        "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
+        "validatingDownloadedBundle": "Validating downloaded bundle",
+        "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
+        "bundleWasAddedInShare": "Bundle was added in share",
+        "actions": {
+          "viewQueue": "View queue"
+        }
+      }
     },
     "transfers": {
       "table": {
@@ -386,7 +416,8 @@
         "disconnect": "Disconnect",
         "removeFileFromQueue": "Remove file from queue",
         "removeUserFromQueue": "Remove user from queue"
-      }
+      },
+      "noActiveTransfers": "No active transfers"
     },
     "settings": {
       "actions": {
@@ -452,12 +483,16 @@
         "searchMatching": "Search matching",
         "downloadOptions": "Download options",
         "priorities": "Priorities",
-        "notifications": "Notifications",
+        "notificationsCaption": "Notifications",
         "histories": "Histories",
         "events": "Events"
       },
       "advanced": "Advanced",
       "noUnsavedChanges": "No unsaved changes",
+      "saveChanges": "Save changes",
+      "savingCompleted": "Saving completed",
+      "settingsWereSavedSuccessfully": "Settings were saved successfully",
+      "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
       "connectivity": {
         "detection": {
           "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
@@ -482,7 +517,13 @@
         },
         "ignoredUsers": {
           "user": "User",
-          "messagesIgnored": "Messages ignored"
+          "messagesIgnored": "Messages ignored",
+          "noIgnoredUsers": "No ignored users"
+        },
+        "miscellaneous": {
+          "form": {
+            "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
+          }
         }
       },
       "extensions": {
@@ -498,7 +539,8 @@
           "latestVersion": "Latest version",
           "installedVersion": "Installed version",
           "nonListedExtension": "Non-listed extension",
-          "readMore": "Read more"
+          "readMore": "Read more",
+          "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page."
         }
       },
       "about": {
@@ -517,10 +559,10 @@
           "totalUploaded": "Total uploaded",
           "session": "Session",
           "sessionDownloaded": "Session downloaded",
-          "sessionUploaded": "Session uploaded",
-          "noActiveTransfers": "No active transfers"
+          "sessionUploaded": "Session uploaded"
         },
         "share": {
+          "noFilesShared": "No files shared",
           "totalShareSize": "Total share size",
           "totalFiles": "Total files",
           "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
@@ -719,7 +761,13 @@
       "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
       "preparingView": "Preparing view",
       "opened": "Opened",
-      "downloaded": "Downloaded"
+      "downloaded": "Downloaded",
+      "notifications": {
+        "fileHasFinishedDownloading": "File has finished downloading",
+        "actions": {
+          "viewFile": "View file"
+        }
+      }
     },
     "messages": {
       "actions": {
@@ -732,7 +780,12 @@
       "offlineMessage": "You must to be connected to at least one hub in order to send private messages",
       "directEncryptedChannelAvailable": "Direct encrypted channel available",
       "establishingConnection": "Establishing connection...",
-      "directEncryptedChannelEstablished": "Direct encrypted channel established"
+      "directEncryptedChannelEstablished": "Direct encrypted channel established",
+      "notifications": {
+        "actions": {
+          "viewMessage": "View message"
+        }
+      }
     },
     "home": {
       "newUserIntro": "Information for new user",

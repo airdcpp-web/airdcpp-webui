@@ -4,7 +4,8 @@ import * as LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
 import * as resources from '../../resources/locales';
-import { camelCase } from 'lodash';
+//import { camelCase } from 'lodash';
+import Moment from 'moment';
 ​
 ​
 
@@ -48,14 +49,22 @@ i18n
         //bindI18n: 'languageChanged loaded',
         //bindStore: 'added removed',
         nsMode: 'default',
-        hashTransKey: (defaultValue: string) => {
+        /*hashTransKey: (defaultValue: string) => {
           return camelCase(defaultValue);
           // return a key based on defaultValue or if you prefer to just 
           // remind you should set a key return false and throw an error
-        },
-      } as any
+        },*/
+      }
     }, 
     undefined
-  );
+  )
+  .then(() => {
+    Moment.locale('fi');
+    //Moment.locale(i18n.language);
+  });
 ​
+i18n.on('languageChanged', lng => {
+  Moment.locale(lng);
+});
+
 export { i18n };

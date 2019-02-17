@@ -223,7 +223,6 @@ class SocketNotificationListener extends React.Component<Props> {
       action({
         title: bundle.name,
         message: text,
-        uid: bundle.id,
         action: {
           label: this.translate('View queue', UI.Modules.QUEUE, true),
           callback: () => { 

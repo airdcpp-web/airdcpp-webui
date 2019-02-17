@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -25,9 +26,19 @@ const demo = (process.env.DEMO_MODE === '1');
 const chalk = require('chalk');
 
 
+const parseLocaleRegex = () => {
+  const locales = fs.readdirSync(path.join(__dirname, 'resources/locales'))
+    .filter(f => !f.endsWith('.js'))
+    .map(loc => `${loc}$`);
+
+  const ret = `${locales.join('|')}`;
+  return new RegExp(ret);
+}
+
 // PLUGINS
 let plugins = [
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Those are about 40 kilobytes
+  //new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Those are about 40 kilobytes
+  new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, parseLocaleRegex()),
   new webpack.ProvidePlugin({
     $: 'jquery',
     jQuery: 'jquery',
