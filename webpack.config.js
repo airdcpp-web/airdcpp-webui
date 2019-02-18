@@ -151,17 +151,33 @@ module.exports = {
         include: /src/, 
         use: 'babel-loader' 
       },*/ 
-      {
+      /*{
         test: /locales/,
         loader: '@alienfast/i18next-loader',
         // options here
         //query: { overrides: [ '../node_modules/lib/locales' ] }
-      }, /*{ 
-        test: /locales/,
-        use: [ 'json-loader' ]
       },*/ { 
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
+      }, {
+        test: /webui\.main\.json$/,
+        use: [
+          {
+            // Use a modified bundle-loader until the following issues have been solved:
+            // https://github.com/webpack-contrib/bundle-loader/issues/45
+            // https://github.com/webpack-contrib/bundle-loader/issues/74
+            // 
+            //loader: 'bundle-loader',
+            loader: path.resolve('webpack/bundle-loader.js'),
+            options: {
+              name: (resourcePath) => {
+                const match = resourcePath.match(/locales[\\\/](.*)[\\\/]webui/);
+                const languageCode = match[1];
+                return `locales/${languageCode}`;
+              }
+            },
+          }
+        ]
       }, { 
         test: /\.(jpg|png|ico)$/,
         use: [

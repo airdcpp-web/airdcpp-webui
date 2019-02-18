@@ -39,7 +39,7 @@ const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted
 
   return (
     <div className={ style }>
-      { text || <Trans i18nKey={ toI18nKey('loading', UI.Modules.COMMON) }>Loading</Trans> }
+      { text !== undefined ? text : <Trans i18nKey={ toI18nKey('loading', UI.Modules.COMMON) }>Loading</Trans> }
     </div>
   );
 };
