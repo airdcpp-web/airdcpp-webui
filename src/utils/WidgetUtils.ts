@@ -6,7 +6,7 @@ import i18next from 'i18next';
 
 export const createWidgetId = (typeId: string) => `${typeId}_${Math.floor((Math.random() * 100000000) + 1)}`;
 
-export const widgetIdToSettingKey = (id: string) => 'widget_' + id;
+export const widgetIdToSettingKey = (id: string) => `widget_${id}`;
 
 export const widgetIdToType = (id: string) => {
   const pos = id.indexOf('_');

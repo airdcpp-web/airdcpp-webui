@@ -120,9 +120,9 @@ export const formatTimestamp = (time: number) => {
   return Moment.unix(time).format('HH:mm:ss');
 };
 
-export const formatBool = (value: boolean) => {
+/*export const formatBool = (value: boolean) => {
   return value ? 'Yes' : 'No';
-};
+};*/
 
 export const formatDecimal = (value: number) => {
   return parseFloat(Math.round(value * 100) / 100 as any).toFixed(2);

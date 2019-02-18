@@ -12,9 +12,12 @@ import SocketService from 'services/SocketService';
 import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { AccessEnum } from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { i18n } from 'services/LocalizationService';
+import { translate } from 'utils/TranslationUtils';
 
 
 export interface LoginState {
@@ -49,10 +52,16 @@ const LoginStore = {
     } catch (e) {
       if (e.code === DOMException.QUOTA_EXCEEDED_ERR && sessionStorage.length === 0) {
         // Safari and private mode
-        this._lastError = `This site can't be used with your browser if private browsing mode is enabled`;
+        this._lastError = i18n.t<string>(
+          'privateBrowsingNotSupported', 
+          `This site can't be used with your browser if private browsing mode is enabled`
+        );
         this._allowLogin = false;
       } else {
-        this._lastError = `This site can't be used with your browser because it doesn't have support data storage`;
+        this._lastError = i18n.t<string>(
+          'dataStorageNotSupported',
+          `This site can't be used with your browser because it doesn't support data storage`
+        );
         this._allowLogin = false;
       }
     }
@@ -104,15 +113,18 @@ const LoginStore = {
     (this as any).trigger(this.getState());
   },
 
-  // Expired refresh token
-  onLoginRefreshTokenFailed(error: ErrorResponse | string) {
-    this.clearData();
-    
+  setLoginError(error: ErrorResponse | string) {
     if ((error as ErrorResponse).code === 400) {
-      this._lastError = 'Session lost';
+      this._lastError = translate('Session lost', i18n.t, UI.Modules.LOGIN);
     } else { 
       this._lastError = errorToString(error);
     }
+  },
+
+  // Expired refresh token
+  onLoginRefreshTokenFailed(error: ErrorResponse | string) {
+    this.clearData();
+    this.setLoginError(error);
 
     (this as any).trigger(this.getState());
   },
@@ -137,12 +149,7 @@ const LoginStore = {
   // Can't connect to the server or session not valid
   onConnectFailed(error: ErrorResponse | string) {
     this.resetSession();
-
-    if ((error as ErrorResponse).code === 400) {
-      this._lastError = 'Session lost';
-    } else { 
-      this._lastError = errorToString(error);
-    }
+    this.setLoginError(error);
 
     (this as any).trigger(this.getState());
   },
@@ -156,7 +163,7 @@ const LoginStore = {
     this._socketAuthenticated = false;
     if (this.user) {
       if (error === '') {
-        this._lastError = 'Connection closed';
+        this._lastError = translate('Connection closed', i18n.t, UI.Modules.LOGIN);
       } else {
         this._lastError = error;
       }

@@ -13,11 +13,8 @@ const Entry = [
   'description',
   'email',
   'setting_profile',
+  'language_file'
 ];
-
-if (process.env.NODE_ENV !== 'production') {
-  Entry.push('language_file');
-}
 
 const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
