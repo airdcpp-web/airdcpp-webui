@@ -1,801 +1,799 @@
 {
-  "main": {
-    "widgets": {
-      "application": {
-        "addWidget": "Voeg widget toe...",
-        "loggedInAs": "Ingelogd als",
-        "clientStarted": "Client gestart",
-        "activeSessions": "Actieve sessies"
-      },
-      "rss": {
-        "widgetName": "RSS feed",
-        "invalidUrl": "Ongeldige URL",
-        "lastUpdated": "Laatste keer geüpdatet : {{time}}",
-        "actions": {
-          "openLink": "Open link",
-          "search": "Zoek"
-        },
-        "loadingFeed": "Laad feed",
-        "form": {
-          "feedUrlName": "Feed URL",
-          "feedUrlHelp": "RSS en Atom feeds worden ondersteund",
-          "feedCacheMinutesName": "Minimale refetch interval (minuten)"
-        }
-      },
-      "transfers": {
-        "widgetName": "Overdrachten",
-        "trafficBps": "Dataverkeer (bps)",
-        "downloads": "Downloads",
-        "uploads": "Uploads",
-        "downloaded": "Gedownload",
-        "uploaded": "Geüpload",
-        "downloadLimit": "Download limiet",
-        "uploadLimit": "Upload limiet",
-        "disabled": "Uitgeschakeld"
-      },
+  "widgets": {
+    "application": {
+      "addWidget": "Voeg widget toe...",
+      "loggedInAs": "Ingelogd als",
+      "clientStarted": "Client gestart",
+      "activeSessions": "Actieve sessies"
+    },
+    "rss": {
+      "widgetName": "RSS feed",
+      "invalidUrl": "Ongeldige URL",
+      "lastUpdated": "Laatste keer geüpdatet : {{time}}",
       "actions": {
-        "editWidget": "Edit widget",
-        "removeWidget": "Verwijder widget",
-        "prompts": {
-          "removeApprove": "Verwijder widget",
-          "removeReject": "Niet verwijderen",
-          "removeContent": "Weet je zeker dat je de volgende widget wil verwijderen  {{item.settings.name}}?"
-        }
+        "openLink": "Open link",
+        "search": "Zoek"
       },
+      "loadingFeed": "Laad feed",
       "form": {
-        "nameName": "Naam"
-      },
-      "widgetPositionHint": "Widgets en hun posities zijn browser-specifiek"
-    },
-    "events": {
-      "events": "Gebeurtenissen",
-      "loadingMessages": "Laadt berichten",
-      "noMessagesToShow": "Geen berichten om te laten zien",
-      "actions": {
-        "clear": "Leeg maken"
-      },
-      "notifications": {
-        "information": "Informatie",
-        "info": "INFO",
-        "warning": "WAARSCHUWING",
-        "error": "ERROR",
-        "actions": {
-          "viewEvents": "Bekijk gebeurtenissen"
-        }
-      }
-    },
-    "table": {
-      "filter": {
-        "filter": "Filter",
-        "matchType": "Vergelijk type",
-        "partial": "Gedeeltelijk",
-        "regex": "Regex",
-        "wildcard": "Wildcard",
-        "exact": "Exact",
-        "filterByProfile": "Filteren per profiel",
-        "allProfiles": "Alle profielen"
-      }
-    },
-    "search": {
-      "table": {
-        "name": "Naam",
-        "size": "Grootte",
-        "relevance": "Relevantie",
-        "type": "Type",
-        "connection": "Connectie",
-        "users": "Gebruikers",
-        "time": "Laatst veranderd",
-        "slots": "Sloten"
-      },
-      "actions": {
-        "resultDetails": "Resultaten",
-        "browseContent": "Blader door inhoud"
-      },
-      "user": "Gebruiker",
-      "hubs": "Hubs",
-      "connection": "Connectie",
-      "slots": "Sloten",
-      "ip": "IP",
-      "path": "Pad",
-      "searchOffline": "Je moet in tenminste één hub zitten om iets te kunnen zoeken",
-      "enterSearchString": "Zoektekst invullen...",
-      "search": "Zoek",
-      "typeContent": "Type/Inhoud",
-      "size": "Grootte",
-      "lastModified": "Laatst veranderd",
-      "dupeType": "Dupe type",
-      "shareFull": "Share (volledig)",
-      "dupePaths": "Dupe mappen",
-      "actionsCaption": "Acties...",
-      "usersCount": "User ({{count}})",
-      "usersCount_plural": "Users ({{count}})",
-      "tth": "TTH",
-      "xUsersNicks": "{{count}} user ({{user.nicks}})",
-      "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
-      "noResults": "Geen zoekresultaten voor \"{{searchString}}\"",
-      "noResultsHint": "<0><0>Zorg voor juiste spelling</0><1>Gebruik verschillende keywords</1><2>Je zoekt te vaak (hubs hebben vaak een minimum zoek interval)</2><3>Als je nooit iets vinden kan, ook niet op simpele opdrachten, zorg dan dat je verbindingsinstellingen goed ingesteld zijn</3></0>"
-    },
-    "share": {
-      "table": {
-        "path": "Pad",
-        "size": "Grootte",
-        "virtual_name": "Virtuele naam",
-        "profiles": "Profielen",
-        "last_refresh_time": "Laatste keer refresh",
-        "type": "Inhoud",
-        "virtualName": "Virtuele naam",
-        "lastRefreshTime": "Laatste keer refresh"
-      },
-      "actions": {
-        "editDirectory": "Edit map",
-        "removeDirectory": "Verwijder map",
-        "addDirectory": "Voeg map toe",
-        "refreshAll": "Ververs alles",
-        "prompts": {
-          "removeRootApprove": "Verwijder map",
-          "removeRootReject": "Niet verwijderen",
-          "removeRootContent": "AWeet je zeker dat je de map {{item.virtual_name}} niet meer wil delen? Hij wordt verwijderd uit alles deel profielen."
-        }
-      },
-      "actionsCaption": "Acties...",
-      "shareActions": "Deelmap acties",
-      "hashingInformation": "Hashed informatie",
-      "hashingInformationDesc": "<0>Nieuwe bestanden komen alleen in share nadat het hashen voltoid is (de client heeft checksums ervoor berekend). Informatie betreffende hash vooruitgang is te zien in het event log.</0>",
-      "addShareDirectory": "Voeg deelmap toe",
-      "editShareDirectory": "Pas deel map aan",
-      "form": {
-        "pathName": "Pad",
-        "virtualNameName": "Virtuele naam",
-        "virtualNameHelp": "Mappen met identieke virtuele namen worden samengevoegd in je filelist",
-        "profilesName": "Share profielen",
-        "profilesHelp": "Nieuwe share profielen kunnen ingesteld worden vanuit instellingen",
-        "incomingName": "Inkomend"
-      }
-    },
-    "favoriteHubs": {
-      "actions": {
-        "addNew": "Voeg nieuwe toe",
-        "setPassword": "Stel wachtwoord in",
-        "edit": "Bewerken",
-        "remove": "Verwijder",
-        "changePassword": "Verander wachtwoord",
-        "removePassword": "Verwijder wachtwoord",
-        "prompts": {
-          "changePasswordPlaceholder": "Geef wachtwoord",
-          "changePasswordApprove": "Update wachtwoord",
-          "changePasswordContent": "Geef nieuw wachtwoord op voor hub {{item.name}}",
-          "removePasswordApprove": "Verwijder wachtwoord",
-          "removePasswordReject": "Niet verwijderen",
-          "removePasswordContent": "Weet je zeker dat je het wachtwoord wil resetten voor hub {{item.name}}?",
-          "createPasswordPlaceholder": "Geef wachtwoord",
-          "createPasswordApprove": "Stel wachtwoord in",
-          "createPasswordContent": "Stel wachtwoord in voor hub {{item.name}}"
-        }
-      },
-      "table": {
-        "connectState": "Instelling",
-        "name": "Naam",
-        "autoConnect": "Autom. verbinden",
-        "nick": "Nick",
-        "hasPassword": "Wachtwoord",
-        "hubUrl": "Hubadres",
-        "shareProfile": "Share profiel"
-      },
-      "notSet": "Not set",
-      "set": "Set",
-      "globalDefault": "Global default",
-      "addFavoriteHub": "Add favorite hub",
-      "editFavoriteHub": "Edit favorite hub",
-      "form": {
-        "genericName": "Hub properties",
-        "nameName": "Naam",
-        "hubUrlName": "Hub URL",
-        "hubDescriptionName": "Hub description",
-        "shareProfileName": "Share profiel",
-        "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
-        "autoConnectName": "Autom. verbinden",
-        "userName": "User setting overrides",
-        "nickName": "Nick",
-        "userDescriptionName": "Beschrijving gebruiker",
-        "connectivityV4Name": "Connectivity setting overrides (IPv4)",
-        "connectionModeV4Name": "Connectivity mode",
-        "connectionModeV4Option1": "Uitgeschakeld",
-        "connectionModeV4Option0": "Actieve instelling",
-        "connectionModeV4Option2": "Passieve instelling",
-        "connectionIpV4Name": "IP address",
-        "connectivityV6Name": "Connectivity setting overrides (IPv6)",
-        "connectionModeV6Name": "Connectivity mode",
-        "connectionModeV6Option1": "Uitgeschakeld",
-        "connectionModeV6Option0": "Actieve instelling",
-        "connectionModeV6Option2": "Passieve instelling",
-        "connectionIpV6Name": "IP address"
-      }
-    },
-    "filelists": {
-      "new": "Open bestandslijst",
-      "newDesc": "Start bladeren door een nieuwe bestandslijst",
-      "offlineMessage": "Je moet in tenminste één hub zitten bestandslijsten te kunnen downloaden van andere gebruikers",
-      "directorySize": "Map grootte",
-      "totalListSize": "Totale lijst grootte",
-      "browseOwnShare": "Blader door eigen share...",
-      "root": "Root",
-      "userOffline": "Gebruiker niet verbonden",
-      "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
-      "noContentToDisplay": "No content to display",
-      "theDirectoryIsEmpty": "De map is leeg",
-      "table": {
-        "name": "Naam",
-        "size": "Grootte",
-        "time": "Laatst veranderd",
-        "type": "Type"
-      },
-      "actions": {
-        "reload": "Herladen",
-        "refreshInShare": "Ververs in share",
-        "close": "Sluiten"
-      }
-    },
-    "common": {    
-      "actions": {
-        "download": "Download",
-        "downloadTo": "Download naar...",
-        "findNfo": "Zoek NFO",
-        "search": "Zoek",
-        "sendMessage": "Zend bericht",
-        "browseShare": "Blader door share",
-        "ignoreMessages": "Negeer berichten",
-        "viewAsText": "Bekijk als tekst",
-        "playVideo": "Play video",
-        "viewImage": "View image",
-        "playAudio": "Play audio",
-        "copyMagnetLink": "Copyeer magnet link",
-        "shutDownApplication": "Sluit applicatie",
-        "restartWebServer": "Herstart web server",
-        "unignoreMessages": "Stop berichten te negeren",
-        "closeAndDontShowAgain": "Sluit en laat niet meer zien"
-      },
-      "networkClientError": "Network/client error",
-      "loadingItems": "Loading items",
-      "root": "Root",
-      "name": "Naam",
-      "size": "Grootte",
-      "createDirectory": "Create directory",
-      "create": "Create",
-      "directoryName": "Directory name",
-      "computer": "Computer",
-      "history": "Previous",
-      "shared": "Gedeeld",
-      "favorites": "Favorieten",
-      "dupes": "Dupes",
-      "browse": "Browse",
-      "download": "Download",
-      "close": "Sluiten",
-      "noPathsToDisplay": "No paths to display",
-      "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
-      "select": "Selecteer",
-      "new": "Nieuw",
-      "currentSessions": "Huidige sessies",
-      "closeAll": "Sluit allemaal",
-      "recentSessions": "Recente sessies",
-      "openedAgo": "Geopend {{timeAgo}}",
-      "waitingForServerResponse": "Wacht op antwoord van de server",
-      "loadingMessages": "Laadt berichten",
-      "loadingSession": "Laadt sessie",
-      "no": "Nee",
-      "cancel": "Annuleren",
-      "loading": "Laadt",
-      "loadingData": "Laadt data...",
-      "noOnlineHubs": "Geen online hubs",
-      "installAsLocalApplication": "Install as local application",
-      "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
-      "install": "Installeer",
-      "dontInstall": "Don't install",
-      "statisticsNotAvailable": "Statistics not available",
-      "save": "Save",
-      "enterNick": "Enter nick...",
-      "enterLimitKBS": "Enter limit (kB/s)",
-      "enterLimit": "Enter limit...",
-      "removeLimit": "Remove limit",
-      "form": {
-        "browse": "Browse",
-        "noOptions": "No options",
-        "fieldOptional": "{{definition.title}} (optional)"
-      }
-    },
-    "hubs": {
-      "table": {
-        "nick": "Nick",
-        "shareSize": "Deel grootte",
-        "description": "Omschrijving",
-        "tag": "Label",
-        "uploadSpeed": "Upload snelheid",
-        "downloadSpeed": "Download",
-        "ip4": "IP (v4)",
-        "ip6": "IP (v6)",
-        "fileCount": "Bestanden"
-      },
-      "actions": {
-        "reconnect": "Opnieuw verbinden",
-        "clearChat": "Chat schoonmaken",
-        "close": "Sluiten"
-      },
-      "enterHubAddress": "Geef hub adres op...",
-      "connect": "Verbinden",
-      "notConnectedToTheHub": "Not connected to the hub",
-      "connecting": "Connecting",
-      "loadingUserlist": "Loading userlist",
-      "favoriteHubsHint": "Tip: ga naar de <1>Favoriete hubs</1> pagina om te verbinden met gebruik van custom settings",
-      "new": "Verbinden",
-      "newDesc": "Verbind met een nieuwe hub",
-      "userList": "Gebruikers lijst",
-      "sharePerUser": "{{total}} ({{average}}/user)",
-      "xUsers": "{{count}} gebruikers",
-      "xUsers_plural": "{{count}} gebruikers",
-      "redirectRequested": "Redirect requested",
-      "acceptRedirect": "Accept redirect to {{url}}",
-      "passwordRequired": "Password required",
-      "password": "Wachtwoord",
-      "submit": "Submit",
-      "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
-    },
-    "queue": {
-      "table": {
-        "name": "Naam",
-        "size": "Grootte",
-        "status": "Status",
-        "sources": "Bronnen",
-        "secondsLeft": "Te gaan",
-        "speed": "Snelheid",
-        "priority": "Prioriteit",
-        "type": "Type/Inhoud",
-        "timeAdded": "Toegevoegd",
-        "timeFinished": "Voltooid"
-      },
-      "actionsCaption": "Acties...",
-      "queueActions": "Queue acties",
-      "pausedForced": "Pause (geforceerd)",
-      "queueEmpty": "The queue is empty",
-      "queueEmptyDesc": "New items can be queued from search or filelists",
-      "actions": {
-        "removeCompletedBundles": "Verwijder voltooide bundels",
-        "pauseAllBundles": "Pauzeer alle bundels",
-        "resumeAllBundles": "Hervat alle bundels",
-        "manageFiles": "Beheer bestanden...",
-        "manageSources": "Beheer bronnen...",
-        "searchForeground": "Zoek (voorgrond)",
-        "searchForAlternates": "Zoeken naar alternatieve downloadlocaties",
-        "remove": "Verwijder",
-        "removeSource": "Verwijder bron",
-        "prompts": {
-          "removeBundleApprove": "Verwijder bundel",
-          "removeBundleReject": "Niet verwijderen",
-          "removeBundleContent": "Weet je zeker dat je de bundel wilt verwijderen  {{item.name}}?",
-          "removeBundleCheckbox": "Verwijder voltooide bestanden",
-          "removeFileApprove": "Verwijder bestand",
-          "removeFileReject": "Niet verwijderen",
-          "removeFileContent": "Weet je zeker dat je het volgende bestand wilt verwijderen {{item.name}}?",
-          "removeFileCheckbox": "Verwijder van schijf"
-        }
-      },
-      "paused": "Pauze",
-      "lowest": "Laagste",
-      "low": "Laag",
-      "normal": "Normaal",
-      "high": "Hoog",
-      "highest": "Hoogste",
-      "auto": "Auto",
-      "sources": "Bronnen",
-      "user": "Gebruiker",
-      "hubs": "Hubs",
-      "lastKnownSpeed": "Laatst bekende snelheid",
-      "files": "Bestanden",
-      "size": "Grootte",
-      "notifications": {
-        "bundleWasAddedInQueue": "Bundle was added in queue",
-        "bundleDownloadError": "Download error: {{error}}",
-        "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
-        "validatingDownloadedBundle": "Validating downloaded bundle",
-        "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
-        "bundleWasAddedInShare": "Bundle was added in share",
-        "actions": {
-          "viewQueue": "View queue"
-        }
+        "feedUrlName": "Feed URL",
+        "feedUrlHelp": "RSS en Atom feeds worden ondersteund",
+        "feedCacheMinutesName": "Minimale refetch interval (minuten)"
       }
     },
     "transfers": {
-      "table": {
-        "user": "Gebruiker",
-        "name": "Naam",
-        "size": "Segment",
-        "status": "Status",
-        "secondsLeft": "Te gaan",
-        "speed": "Snelheid",
-        "flags": "Kenmerken",
-        "ip": "IP"
-      },
-      "actions": {
-        "forceConnect": "Forceer verbinding",
-        "disconnect": "Verbreek verbinding",
-        "removeFileFromQueue": "Verwijder bestand van queue",
-        "removeUserFromQueue": "Verwijder gebruiker uit queue"
-      },
-      "noActiveTransfers": "No active transfers"
+      "widgetName": "Overdrachten",
+      "trafficBps": "Dataverkeer (bps)",
+      "downloads": "Downloads",
+      "uploads": "Uploads",
+      "downloaded": "Gedownload",
+      "uploaded": "Geüpload",
+      "downloadLimit": "Download limiet",
+      "uploadLimit": "Upload limiet",
+      "disabled": "Uitgeschakeld"
     },
-    "settings": {
+    "actions": {
+      "editWidget": "Edit widget",
+      "removeWidget": "Verwijder widget",
+      "prompts": {
+        "removeApprove": "Verwijder widget",
+        "removeReject": "Niet verwijderen",
+        "removeContent": "Weet je zeker dat je de volgende widget wil verwijderen  {{item.settings.name}}?"
+      }
+    },
+    "form": {
+      "nameName": "Naam"
+    },
+    "widgetPositionHint": "Widgets en hun posities zijn browser-specifiek"
+  },
+  "events": {
+    "events": "Gebeurtenissen",
+    "loadingMessages": "Laadt berichten",
+    "noMessagesToShow": "Geen berichten om te laten zien",
+    "actions": {
+      "clear": "Leeg maken"
+    },
+    "notifications": {
+      "information": "Informatie",
+      "info": "INFO",
+      "warning": "WAARSCHUWING",
+      "error": "ERROR",
       "actions": {
-        "detectNow": "Zoek nu",
-        "addDirectory": "Voeg map toe",
-        "addUser": "Voeg gebruiker toe",
-        "editUser": "Edit gebruiker",
-        "editDirectory": "Edit map",
-        "removeDirectory": "Verwijder map",
-        "addProfile": "Maak profiel",
-        "browseFiles": "Blader door bestanden",
-        "renameProfile": "Hernoem profiel",
-        "addPath": "Voeg path toe",
-        "removePath": "Verwijder path",
-        "prompts": {
-          "removeShareExcludeApprove": "Verwijder path",
-          "removeShareExcludeReject": "Niet verwijderen",
-          "removeShareExcludeContent": "Weet je zeker dat je het volgende path wilt verwijderen {{item}}?"
+        "viewEvents": "Bekijk gebeurtenissen"
+      }
+    }
+  },
+  "table": {
+    "filter": {
+      "filter": "Filter",
+      "matchType": "Vergelijk type",
+      "partial": "Gedeeltelijk",
+      "regex": "Regex",
+      "wildcard": "Wildcard",
+      "exact": "Exact",
+      "filterByProfile": "Filteren per profiel",
+      "allProfiles": "Alle profielen"
+    }
+  },
+  "search": {
+    "table": {
+      "name": "Naam",
+      "size": "Grootte",
+      "relevance": "Relevantie",
+      "type": "Type",
+      "connection": "Connectie",
+      "users": "Gebruikers",
+      "time": "Laatst veranderd",
+      "slots": "Sloten"
+    },
+    "actions": {
+      "resultDetails": "Resultaten",
+      "browseContent": "Blader door inhoud"
+    },
+    "user": "Gebruiker",
+    "hubs": "Hubs",
+    "connection": "Connectie",
+    "slots": "Sloten",
+    "ip": "IP",
+    "path": "Pad",
+    "searchOffline": "Je moet in tenminste één hub zitten om iets te kunnen zoeken",
+    "enterSearchString": "Zoektekst invullen...",
+    "search": "Zoek",
+    "typeContent": "Type/Inhoud",
+    "size": "Grootte",
+    "lastModified": "Laatst veranderd",
+    "dupeType": "Dupe type",
+    "shareFull": "Share (volledig)",
+    "dupePaths": "Dupe mappen",
+    "actionsCaption": "Acties...",
+    "usersCount": "User ({{count}})",
+    "usersCount_plural": "Users ({{count}})",
+    "tth": "TTH",
+    "xUsersNicks": "{{count}} user ({{user.nicks}})",
+    "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
+    "noResults": "Geen zoekresultaten voor \"{{searchString}}\"",
+    "noResultsHint": "<0><0>Zorg voor juiste spelling</0><1>Gebruik verschillende keywords</1><2>Je zoekt te vaak (hubs hebben vaak een minimum zoek interval)</2><3>Als je nooit iets vinden kan, ook niet op simpele opdrachten, zorg dan dat je verbindingsinstellingen goed ingesteld zijn</3></0>"
+  },
+  "share": {
+    "table": {
+      "path": "Pad",
+      "size": "Grootte",
+      "virtual_name": "Virtuele naam",
+      "profiles": "Profielen",
+      "last_refresh_time": "Laatste keer refresh",
+      "type": "Inhoud",
+      "virtualName": "Virtuele naam",
+      "lastRefreshTime": "Laatste keer refresh"
+    },
+    "actions": {
+      "editDirectory": "Edit map",
+      "removeDirectory": "Verwijder map",
+      "addDirectory": "Voeg map toe",
+      "refreshAll": "Ververs alles",
+      "prompts": {
+        "removeRootApprove": "Verwijder map",
+        "removeRootReject": "Niet verwijderen",
+        "removeRootContent": "AWeet je zeker dat je de map {{item.virtual_name}} niet meer wil delen? Hij wordt verwijderd uit alles deel profielen."
+      }
+    },
+    "actionsCaption": "Acties...",
+    "shareActions": "Deelmap acties",
+    "hashingInformation": "Hashed informatie",
+    "hashingInformationDesc": "<0>Nieuwe bestanden komen alleen in share nadat het hashen voltoid is (de client heeft checksums ervoor berekend). Informatie betreffende hash vooruitgang is te zien in het event log.</0>",
+    "addShareDirectory": "Voeg deelmap toe",
+    "editShareDirectory": "Pas deel map aan",
+    "form": {
+      "pathName": "Pad",
+      "virtualNameName": "Virtuele naam",
+      "virtualNameHelp": "Mappen met identieke virtuele namen worden samengevoegd in je filelist",
+      "profilesName": "Share profielen",
+      "profilesHelp": "Nieuwe share profielen kunnen ingesteld worden vanuit instellingen",
+      "incomingName": "Inkomend"
+    }
+  },
+  "favoriteHubs": {
+    "actions": {
+      "addNew": "Voeg nieuwe toe",
+      "setPassword": "Stel wachtwoord in",
+      "edit": "Bewerken",
+      "remove": "Verwijder",
+      "changePassword": "Verander wachtwoord",
+      "removePassword": "Verwijder wachtwoord",
+      "prompts": {
+        "changePasswordPlaceholder": "Geef wachtwoord",
+        "changePasswordApprove": "Update wachtwoord",
+        "changePasswordContent": "Geef nieuw wachtwoord op voor hub {{item.name}}",
+        "removePasswordApprove": "Verwijder wachtwoord",
+        "removePasswordReject": "Niet verwijderen",
+        "removePasswordContent": "Weet je zeker dat je het wachtwoord wil resetten voor hub {{item.name}}?",
+        "createPasswordPlaceholder": "Geef wachtwoord",
+        "createPasswordApprove": "Stel wachtwoord in",
+        "createPasswordContent": "Stel wachtwoord in voor hub {{item.name}}"
+      }
+    },
+    "table": {
+      "connectState": "Instelling",
+      "name": "Naam",
+      "autoConnect": "Autom. verbinden",
+      "nick": "Nick",
+      "hasPassword": "Wachtwoord",
+      "hubUrl": "Hubadres",
+      "shareProfile": "Share profiel"
+    },
+    "notSet": "Not set",
+    "set": "Set",
+    "globalDefault": "Global default",
+    "addFavoriteHub": "Add favorite hub",
+    "editFavoriteHub": "Edit favorite hub",
+    "form": {
+      "genericName": "Hub properties",
+      "nameName": "Naam",
+      "hubUrlName": "Hub URL",
+      "hubDescriptionName": "Hub description",
+      "shareProfileName": "Share profiel",
+      "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
+      "autoConnectName": "Autom. verbinden",
+      "userName": "User setting overrides",
+      "nickName": "Nick",
+      "userDescriptionName": "Beschrijving gebruiker",
+      "connectivityV4Name": "Connectivity setting overrides (IPv4)",
+      "connectionModeV4Name": "Connectivity mode",
+      "connectionModeV4Option1": "Uitgeschakeld",
+      "connectionModeV4Option0": "Actieve instelling",
+      "connectionModeV4Option2": "Passieve instelling",
+      "connectionIpV4Name": "IP address",
+      "connectivityV6Name": "Connectivity setting overrides (IPv6)",
+      "connectionModeV6Name": "Connectivity mode",
+      "connectionModeV6Option1": "Uitgeschakeld",
+      "connectionModeV6Option0": "Actieve instelling",
+      "connectionModeV6Option2": "Passieve instelling",
+      "connectionIpV6Name": "IP address"
+    }
+  },
+  "filelists": {
+    "new": "Open bestandslijst",
+    "newDesc": "Start bladeren door een nieuwe bestandslijst",
+    "offlineMessage": "Je moet in tenminste één hub zitten bestandslijsten te kunnen downloaden van andere gebruikers",
+    "directorySize": "Map grootte",
+    "totalListSize": "Totale lijst grootte",
+    "browseOwnShare": "Blader door eigen share...",
+    "root": "Root",
+    "userOffline": "Gebruiker niet verbonden",
+    "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
+    "noContentToDisplay": "No content to display",
+    "theDirectoryIsEmpty": "De map is leeg",
+    "table": {
+      "name": "Naam",
+      "size": "Grootte",
+      "time": "Laatst veranderd",
+      "type": "Type"
+    },
+    "actions": {
+      "reload": "Herladen",
+      "refreshInShare": "Ververs in share",
+      "close": "Sluiten"
+    }
+  },
+  "common": {    
+    "actions": {
+      "download": "Download",
+      "downloadTo": "Download naar...",
+      "findNfo": "Zoek NFO",
+      "search": "Zoek",
+      "sendMessage": "Zend bericht",
+      "browseShare": "Blader door share",
+      "ignoreMessages": "Negeer berichten",
+      "viewAsText": "Bekijk als tekst",
+      "playVideo": "Play video",
+      "viewImage": "View image",
+      "playAudio": "Play audio",
+      "copyMagnetLink": "Copyeer magnet link",
+      "shutDownApplication": "Sluit applicatie",
+      "restartWebServer": "Herstart web server",
+      "unignoreMessages": "Stop berichten te negeren",
+      "closeAndDontShowAgain": "Sluit en laat niet meer zien"
+    },
+    "networkClientError": "Network/client error",
+    "loadingItems": "Loading items",
+    "root": "Root",
+    "name": "Naam",
+    "size": "Grootte",
+    "createDirectory": "Create directory",
+    "create": "Create",
+    "directoryName": "Directory name",
+    "computer": "Computer",
+    "history": "Previous",
+    "shared": "Gedeeld",
+    "favorites": "Favorieten",
+    "dupes": "Dupes",
+    "browse": "Browse",
+    "download": "Download",
+    "close": "Sluiten",
+    "noPathsToDisplay": "No paths to display",
+    "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
+    "select": "Selecteer",
+    "new": "Nieuw",
+    "currentSessions": "Huidige sessies",
+    "closeAll": "Sluit allemaal",
+    "recentSessions": "Recente sessies",
+    "openedAgo": "Geopend {{timeAgo}}",
+    "waitingForServerResponse": "Wacht op antwoord van de server",
+    "loadingMessages": "Laadt berichten",
+    "loadingSession": "Laadt sessie",
+    "no": "Nee",
+    "cancel": "Annuleren",
+    "loading": "Laadt",
+    "loadingData": "Laadt data...",
+    "noOnlineHubs": "Geen online hubs",
+    "installAsLocalApplication": "Install as local application",
+    "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
+    "install": "Installeer",
+    "dontInstall": "Don't install",
+    "statisticsNotAvailable": "Statistics not available",
+    "save": "Save",
+    "enterNick": "Enter nick...",
+    "enterLimitKBS": "Enter limit (kB/s)",
+    "enterLimit": "Enter limit...",
+    "removeLimit": "Remove limit",
+    "form": {
+      "browse": "Browse",
+      "noOptions": "No options",
+      "fieldOptional": "{{definition.title}} (optional)"
+    }
+  },
+  "hubs": {
+    "table": {
+      "nick": "Nick",
+      "shareSize": "Deel grootte",
+      "description": "Omschrijving",
+      "tag": "Label",
+      "uploadSpeed": "Upload snelheid",
+      "downloadSpeed": "Download",
+      "ip4": "IP (v4)",
+      "ip6": "IP (v6)",
+      "fileCount": "Bestanden"
+    },
+    "actions": {
+      "reconnect": "Opnieuw verbinden",
+      "clearChat": "Chat schoonmaken",
+      "close": "Sluiten"
+    },
+    "enterHubAddress": "Geef hub adres op...",
+    "connect": "Verbinden",
+    "notConnectedToTheHub": "Not connected to the hub",
+    "connecting": "Connecting",
+    "loadingUserlist": "Loading userlist",
+    "favoriteHubsHint": "Tip: ga naar de <1>Favoriete hubs</1> pagina om te verbinden met gebruik van custom settings",
+    "new": "Verbinden",
+    "newDesc": "Verbind met een nieuwe hub",
+    "userList": "Gebruikers lijst",
+    "sharePerUser": "{{total}} ({{average}}/user)",
+    "xUsers": "{{count}} gebruikers",
+    "xUsers_plural": "{{count}} gebruikers",
+    "redirectRequested": "Redirect requested",
+    "acceptRedirect": "Accept redirect to {{url}}",
+    "passwordRequired": "Password required",
+    "password": "Wachtwoord",
+    "submit": "Submit",
+    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+  },
+  "queue": {
+    "table": {
+      "name": "Naam",
+      "size": "Grootte",
+      "status": "Status",
+      "sources": "Bronnen",
+      "secondsLeft": "Te gaan",
+      "speed": "Snelheid",
+      "priority": "Prioriteit",
+      "type": "Type/Inhoud",
+      "timeAdded": "Toegevoegd",
+      "timeFinished": "Voltooid"
+    },
+    "actionsCaption": "Acties...",
+    "queueActions": "Queue acties",
+    "pausedForced": "Pause (geforceerd)",
+    "queueEmpty": "The queue is empty",
+    "queueEmptyDesc": "New items can be queued from search or filelists",
+    "actions": {
+      "removeCompletedBundles": "Verwijder voltooide bundels",
+      "pauseAllBundles": "Pauzeer alle bundels",
+      "resumeAllBundles": "Hervat alle bundels",
+      "manageFiles": "Beheer bestanden...",
+      "manageSources": "Beheer bronnen...",
+      "searchForeground": "Zoek (voorgrond)",
+      "searchForAlternates": "Zoeken naar alternatieve downloadlocaties",
+      "remove": "Verwijder",
+      "removeSource": "Verwijder bron",
+      "prompts": {
+        "removeBundleApprove": "Verwijder bundel",
+        "removeBundleReject": "Niet verwijderen",
+        "removeBundleContent": "Weet je zeker dat je de bundel wilt verwijderen  {{item.name}}?",
+        "removeBundleCheckbox": "Verwijder voltooide bestanden",
+        "removeFileApprove": "Verwijder bestand",
+        "removeFileReject": "Niet verwijderen",
+        "removeFileContent": "Weet je zeker dat je het volgende bestand wilt verwijderen {{item.name}}?",
+        "removeFileCheckbox": "Verwijder van schijf"
+      }
+    },
+    "paused": "Pauze",
+    "lowest": "Laagste",
+    "low": "Laag",
+    "normal": "Normaal",
+    "high": "Hoog",
+    "highest": "Hoogste",
+    "auto": "Auto",
+    "sources": "Bronnen",
+    "user": "Gebruiker",
+    "hubs": "Hubs",
+    "lastKnownSpeed": "Laatst bekende snelheid",
+    "files": "Bestanden",
+    "size": "Grootte",
+    "notifications": {
+      "bundleWasAddedInQueue": "Bundle was added in queue",
+      "bundleDownloadError": "Download error: {{error}}",
+      "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
+      "validatingDownloadedBundle": "Validating downloaded bundle",
+      "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
+      "bundleWasAddedInShare": "Bundle was added in share",
+      "actions": {
+        "viewQueue": "View queue"
+      }
+    }
+  },
+  "transfers": {
+    "table": {
+      "user": "Gebruiker",
+      "name": "Naam",
+      "size": "Segment",
+      "status": "Status",
+      "secondsLeft": "Te gaan",
+      "speed": "Snelheid",
+      "flags": "Kenmerken",
+      "ip": "IP"
+    },
+    "actions": {
+      "forceConnect": "Forceer verbinding",
+      "disconnect": "Verbreek verbinding",
+      "removeFileFromQueue": "Verwijder bestand van queue",
+      "removeUserFromQueue": "Verwijder gebruiker uit queue"
+    },
+    "noActiveTransfers": "No active transfers"
+  },
+  "settings": {
+    "actions": {
+      "detectNow": "Zoek nu",
+      "addDirectory": "Voeg map toe",
+      "addUser": "Voeg gebruiker toe",
+      "editUser": "Edit gebruiker",
+      "editDirectory": "Edit map",
+      "removeDirectory": "Verwijder map",
+      "addProfile": "Maak profiel",
+      "browseFiles": "Blader door bestanden",
+      "renameProfile": "Hernoem profiel",
+      "addPath": "Voeg path toe",
+      "removePath": "Verwijder path",
+      "prompts": {
+        "removeShareExcludeApprove": "Verwijder path",
+        "removeShareExcludeReject": "Niet verwijderen",
+        "removeShareExcludeContent": "Weet je zeker dat je het volgende path wilt verwijderen {{item}}?"
+      }
+    },
+    "navigation": {
+      "profile": "Profile",
+      "connectivity": "Verbinding",
+      "speedAndLimits": "Speed and limits",
+      "downloads": "Downloads",
+      "sharing": "Delen",
+      "view": "Beeld",
+      "about": "About",
+      "extensions": "Uitbreidingen",
+      "system": "System",
+      "autoDetection": "Auto detection",
+      "iPv4ConnectivityManual": "IPv4 connectivity (manual)",
+      "iPv6ConnectivityManual": "IPv6 connectivity (manual)",
+      "portsManual": "Ports (manual)",
+      "proxies": "Proxies",
+      "encryption": "Versleuteling",
+      "user": "Gebruiker",
+      "awayMode": "Afwezigheids modus",
+      "ignoredUsers": "Genegeerde gebruikers",
+      "miscellaneous": "Willekeurig",
+      "manageInstalled": "Manage installed",
+      "extensionCatalog": "Extension catalog",
+      "extensionOptions": "Extension options",
+      "application": "Applicatie",
+      "transferStatistics": "Transfer statistics",
+      "shareStatistics": "Share statistics",
+      "hubStatistics": "Hub statistics",
+      "users": "Gebruikers",
+      "logging": "Loggen",
+      "webServer": "Web server",
+      "refreshOptions": "Refresh options",
+      "shareProfiles": "Share profielen",
+      "sharingOptions": "Deel opties",
+      "hashing": "Hashen",
+      "excludedPaths": "Excluded paths",
+      "connectionSpeed": "Verbindings snelheid",
+      "bandwidthLimiting": "Bandwidth limiting",
+      "downloadLimits": "Download limieten",
+      "uploadLimits": "Upload Limieten",
+      "perUserLimits": "Per-user limits",
+      "locations": "Locaties",
+      "skippingOptions": "Oversla opties",
+      "searchMatching": "Zoek gelijken",
+      "downloadOptions": "AirDownloads",
+      "priorities": "Prioriteiten",
+      "notificationsCaption": "Notifications",
+      "histories": "Geschiedenissen",
+      "events": "Gebeurtenissen"
+    },
+    "advanced": "Geavanceerd",
+    "noUnsavedChanges": "No unsaved changes",
+    "saveChanges": "Save changes",
+    "savingCompleted": "Saving completed",
+    "settingsWereSavedSuccessfully": "Settings were saved successfully",
+    "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
+    "connectivity": {
+      "detection": {
+        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
+        "currentAutoDetectionStatus": "Current auto detection status",
+        "manualConfiguration": "{{status}} (manual configuration)",
+        "autoDetected": "{{status}} (auto detected)"
+      },
+      "ports": {
+        "form": {
+          "tcpPortHelp": "TCP port is used for unencrypted transfers",
+          "udpPortHelp": "UDP port is used for searching",
+          "tlsPortHelp": "TLS port (TCP) is used for encrypted transfers"
+        }
+      }
+    },
+    "profile": {
+      "user": {
+        "form": {
+          "settingProfileHelp0": "AirDC++ word in normale privé en publieke hubs gebruikt om bestanden over het internet uit te wisselen. Gebruik dit profiel bij twijfel",
+          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)"
         }
       },
-      "navigation": {
-        "profile": "Profile",
-        "connectivity": "Verbinding",
-        "speedAndLimits": "Speed and limits",
-        "downloads": "Downloads",
-        "sharing": "Delen",
-        "view": "Beeld",
-        "about": "About",
-        "extensions": "Uitbreidingen",
-        "system": "System",
-        "autoDetection": "Auto detection",
-        "iPv4ConnectivityManual": "IPv4 connectivity (manual)",
-        "iPv6ConnectivityManual": "IPv6 connectivity (manual)",
-        "portsManual": "Ports (manual)",
-        "proxies": "Proxies",
-        "encryption": "Versleuteling",
+      "ignoredUsers": {
         "user": "Gebruiker",
-        "awayMode": "Afwezigheids modus",
-        "ignoredUsers": "Genegeerde gebruikers",
-        "miscellaneous": "Willekeurig",
-        "manageInstalled": "Manage installed",
-        "extensionCatalog": "Extension catalog",
-        "extensionOptions": "Extension options",
-        "application": "Applicatie",
-        "transferStatistics": "Transfer statistics",
-        "shareStatistics": "Share statistics",
-        "hubStatistics": "Hub statistics",
-        "users": "Gebruikers",
-        "logging": "Loggen",
-        "webServer": "Web server",
-        "refreshOptions": "Refresh options",
-        "shareProfiles": "Share profielen",
-        "sharingOptions": "Deel opties",
-        "hashing": "Hashen",
-        "excludedPaths": "Excluded paths",
-        "connectionSpeed": "Verbindings snelheid",
-        "bandwidthLimiting": "Bandwidth limiting",
-        "downloadLimits": "Download limieten",
-        "uploadLimits": "Upload Limieten",
-        "perUserLimits": "Per-user limits",
-        "locations": "Locaties",
-        "skippingOptions": "Oversla opties",
-        "searchMatching": "Zoek gelijken",
-        "downloadOptions": "AirDownloads",
-        "priorities": "Prioriteiten",
-        "notificationsCaption": "Notifications",
-        "histories": "Geschiedenissen",
-        "events": "Gebeurtenissen"
+        "messagesIgnored": "Messages ignored",
+        "noIgnoredUsers": "No ignored users"
       },
-      "advanced": "Geavanceerd",
-      "noUnsavedChanges": "No unsaved changes",
-      "saveChanges": "Save changes",
-      "savingCompleted": "Saving completed",
-      "settingsWereSavedSuccessfully": "Settings were saved successfully",
-      "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
-      "connectivity": {
-        "detection": {
-          "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
-          "currentAutoDetectionStatus": "Current auto detection status",
-          "manualConfiguration": "{{status}} (manual configuration)",
-          "autoDetected": "{{status}} (auto detected)"
-        },
-        "ports": {
-          "form": {
-            "tcpPortHelp": "TCP port is used for unencrypted transfers",
-            "udpPortHelp": "UDP port is used for searching",
-            "tlsPortHelp": "TLS port (TCP) is used for encrypted transfers"
-          }
-        }
-      },
-      "profile": {
-        "user": {
-          "form": {
-            "settingProfileHelp0": "AirDC++ word in normale privé en publieke hubs gebruikt om bestanden over het internet uit te wisselen. Gebruik dit profiel bij twijfel",
-            "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)"
-          }
-        },
-        "ignoredUsers": {
-          "user": "Gebruiker",
-          "messagesIgnored": "Messages ignored",
-          "noIgnoredUsers": "No ignored users"
-        },
-        "miscellaneous": {
-          "form": {
-            "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
-          }
-        }
-      },
-      "extensions": {
-        "packages": {
-          "byAuthor": "by {{author}}",
-          "latestVersion": "Nieuwste versie",
-          "installedVersion": "Installed version",
-          "datePublished": "{{version}} (published {{date}})",
-          "readMore": "Read more"
-        },
-        "manage": {
-          "byAuthor": "by {{author}}",
-          "latestVersion": "Nieuwste versie",
-          "installedVersion": "Installed version",
-          "nonListedExtension": "Non-listed extension",
-          "readMore": "Read more",
-          "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page."
-        }
-      },
-      "about": {
-        "application": {
-          "applicationVersion": "Application version",
-          "webUiVersion": "Web UI version",
-          "webUiBuildDate": "Web UI build date",
-          "apiVersion": "API version",
-          "apiFeatureLevel": "API feature level",
-          "started": "Gestart",
-          "activeSessions": "Actieve sessies",
-          "serverThreads": "Server threads"
-        },
-        "transfers": {
-          "totalDownloaded": "Total downloaded",
-          "totalUploaded": "Total uploaded",
-          "session": "Session",
-          "sessionDownloaded": "Session downloaded",
-          "sessionUploaded": "Session uploaded"
-        },
-        "share": {
-          "noFilesShared": "No files shared",
-          "totalShareSize": "Total share size",
-          "totalFiles": "Total files",
-          "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
-          "totalDirectories": "Total directories",
-          "averageFileAge": "Average file age",
-          "averageFilesPerDirectory": "Average files per directory",
-          "incomingSearches": "Incoming searches",
-          "totalSearches": "Total searches",
-          "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
-          "tthSearches": "TTH searches",
-          "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
-          "filteredTextSearches": "Filtered text searches",
-          "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
-          "averageTextSearchTokensNonFiltered": "Average text search tokens (non-filtered)",
-          "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} bytes per token)",
-          "averageMatchingTimePerTextSearch": "Average matching time per text search",
-          "searchesAverageMatchTimeValue": "{{matchTime}} ms"
-        },
-        "hubs": {
-          "noHubsOnline": "No hubs online",
-          "totalUsers": "Total users",
-          "uniqueUsers": "Unique users",
-          "activeUsers": "Active users",
-          "totalShare": "Total share",
-          "averageSharePerUser": "Average share per user",
-          "averageAdcDownloadSpeed": "Average ADC download speed",
-          "clients": "Clients",
-          "averageAdcUploadSpeed": "Average ADC upload speed"
-        }
-      },
-      "system": {
-        "logging": {
-          "sections": "Sections",
-          "variableHelp": "Variable information for Filename and Format fields"
-        },
-        "serverSettings": {
-          "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
-          "advanced": "Geavanceerd"
-        },
-        "users": {
-          "username": "Gebruikersnaam",
-          "permissions": "Permissions",
-          "activeSessions": "Actieve sessies",
-          "lastLoggedIn": "Last logged in",
-          "administrator": "Administrator",
-          "form": {
-            "usernameName": "User name",
-            "passwordName": "Wachtwoord",
-            "permissionsName": "Permissions"
-          },
-          "permissionSelector": {
-            "administrator": "Administrator",
-            "search": "Zoek",
-            "download": "Download",
-            "transfers": "Overdrachten",
-            "events": "Gebeurtenissen",
-            "view": "Beeld",
-            "edit": "Bewerken",
-            "queue": "Queue",
-            "favoriteHubs": "Favoriete hubs",
-            "settings": "Instellingen",
-            "localFilesystem": "Local filesystem",
-            "hubs": "Hubs",
-            "sendMessages": "Send messages",
-            "privateChat": "Prive chat",
-            "filelists": "Bestandslijsten",
-            "viewedFiles": "Viewed files"
-          },
-          "addWebUser": "Add web user",
-          "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
-        }
-      },
-      "sharing": {
-        "excludes": {
-          "shareRefreshNote": "Share must be refreshed for the changes to take effect",
-          "addExcludedPath": "Add excluded path",
-          "path": "Pad"
-        },
-        "profiles": {
-          "name": "Naam",
-          "totalSize": "Total size",
-          "totalFiles": "Total files",
-          "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
-        },
-        "sharingOptions": {
-          "skiplist": "Skiplist"
-        },
-        "hashing": {
-          "hashDatabase": "Hash database",
-          "fileIndexSize": "File index size",
-          "hashStoreSize": "Hash store size",
-          "verifyIntegrityOfHashData": "Verify integrity of hash data",
-          "optimizeNow": "Optimize now",
-          "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
-        }
-      },
-      "speedLimits": {
-        "speed": {
-          "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <1>Speedtest.net</1>, to test your speed."
-        },
-        "uploadLimits": {
-          "manuallySet": "Manually set"
-        },
-        "downloadLimits": {
-          "manuallySet": "Manually set"
-        }
-      },
-      "downloads": {
-        "locations": {
-          "availablePathVariables": "Available path variables",
-          "favoriteDownloadDirectories": "Favoriete downloadmappen",
-          "name": "Naam",
-          "path": "Pad"
-        },
-        "skippingOptions": {
-          "skiplist": "Skiplist"
-        },
-        "priorities": {
-          "filePriorities": "File priorities",
-          "highPriorityFiles": "High priority files"
-        }
-      },
-      "browserSpecificNote": "Settings listed on this page are browser-specific",
-      "view": {
-        "notifications": {
-          "popupNotifications": "Popup notifications",
-          "form": {
-            "notifyPmUserName": "Private messages (users)",
-            "notifyPmBotName": "Private messages (bots)",
-            "notifyBundleStatusName": "Bundle status changes",
-            "notifyEventsInfoName": "Info events",
-            "notifyEventsWarningName": "Warning events",
-            "notifyEventsErrorName": "Error events"
-          }
-        },
-        "histories": {
-          "maxMessageHistory": "Maximum number of messages to cache",
-          "maxSessionHistory": "Maximum number of previously opened sessions"
-        },
-        "miscellaneous": {
-          "form": {
-            "unreadLabelDelayName": "Delay for marking chat sessions as read (seconds)",
-            "backgroundImageUrlName": "Custom background image URL",
-            "noInstallPromptName": "Never show the application install prompt in Home view",
-            "corsProxyName": "CORS proxy URL",
-            "corsProxyHelp": "CORS proxy to use for fetching data from extenal sites (e.g. RSS feeds and extensions). The target URL will be put directly after the configured proxy URL. No proxy will be used if the field is left empty, but it may prevent accessing various external URLs as they aren't often configured to be accessible from other sites."
-          }
+      "miscellaneous": {
+        "form": {
+          "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
         }
       }
     },
     "extensions": {
-      "actions": {
-        "uninstall": "Verwijder",
-        "start": "Start",
-        "installFromUrl": "Installeer vanuit URL",
-        "install": "Installeer",
-        "stop": "Stop",
-        "configure": "Configureren",
-        "prompts": {
-          "installUrlPlaceholder": "Enter URL",
-          "installUrlApprove": "Installeer",
-          "installUrlContent": "Enter download URL"
-        }
-      }
-    },
-    "navigation": {
-      "home": "Home",
-      "queue": "Queue",
-      "search": "Zoek",
-      "transfers": "Overdrachten",
-      "hubs": "Hubs",
-      "messages": "Berichten",
-      "filelists": "Bestandslijsten",
-      "files": "Bestanden",
-      "events": "Gebeurtenissen",
-      "favoriteHubs": "Favoriete hubs",
-      "share": "Share",
-      "settings": "Instellingen",
-      "logout": "Log uit",
-      "more": "Meer..."
-    },
-    "login": {
-      "username": "Gebruikersnaam",
-      "password": "Wachtwoord",
-      "keepMeLoggedIn": "Houd me ingelogd",
-      "login": "Gebruikersnaam",
-      "authenticationFailed": "Authenticatie mislukt: {{lastError}}",
-      "connectingToTheServer": "Connecting to the server...",
-      "reestablishConnection": "Attempting to re-establish connection...",
-      "sessionLost": "Session lost",
-      "connectionClosed": "Verbinding gesloten",
-      "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
-      "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
-    },
-    "viewedFiles": {
-      "actions": {
-        "close": "Sluiten"
+      "packages": {
+        "byAuthor": "by {{author}}",
+        "latestVersion": "Nieuwste versie",
+        "installedVersion": "Installed version",
+        "datePublished": "{{version}} (published {{date}})",
+        "readMore": "Read more"
       },
-      "noFiles": "Geen bestanden om te bekijken",
-      "noFilesDesc": "Je kan tekst en media bestanden openen om hier te bekijken vanuit zoek- en bestandslijsten",
-      "preparingView": "Bekijken voorbereiden",
-      "opened": "Geopend",
-      "downloaded": "Gedownload",
-      "notifications": {
-        "fileHasFinishedDownloading": "Bestand is gedownload",
-        "actions": {
-          "viewFile": "Bekijk bestand"
-        }
+      "manage": {
+        "byAuthor": "by {{author}}",
+        "latestVersion": "Nieuwste versie",
+        "installedVersion": "Installed version",
+        "nonListedExtension": "Non-listed extension",
+        "readMore": "Read more",
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page."
       }
     },
-    "messages": {
-      "actions": {
-        "clearChat": "Chat schoonmaken",
-        "close": "Sluiten",
-        "disconnect": "Verbreek verbinding"
+    "about": {
+      "application": {
+        "applicationVersion": "Application version",
+        "webUiVersion": "Web UI version",
+        "webUiBuildDate": "Web UI build date",
+        "apiVersion": "API version",
+        "apiFeatureLevel": "API feature level",
+        "started": "Gestart",
+        "activeSessions": "Actieve sessies",
+        "serverThreads": "Server threads"
       },
-      "new": "Nieuwe sessie",
-      "newDesc": "Open een nieuwe privé chat sessie",
-      "offlineMessage": "Je moet in tenminste één hub zitten om privé berichten te kunnen versturen",
-      "directEncryptedChannelAvailable": "Direct versleuteld kanaal beschikbaar",
-      "establishingConnection": "Verbinding tot stand brengen...",
-      "directEncryptedChannelEstablished": "Directe versleutelde verbinding is tot stand gekomen",
-      "notifications": {
-        "actions": {
-          "viewMessage": "Bekijk bericht"
-        }
+      "transfers": {
+        "totalDownloaded": "Total downloaded",
+        "totalUploaded": "Total uploaded",
+        "session": "Session",
+        "sessionDownloaded": "Session downloaded",
+        "sessionUploaded": "Session uploaded"
+      },
+      "share": {
+        "noFilesShared": "No files shared",
+        "totalShareSize": "Total share size",
+        "totalFiles": "Total files",
+        "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
+        "totalDirectories": "Total directories",
+        "averageFileAge": "Average file age",
+        "averageFilesPerDirectory": "Average files per directory",
+        "incomingSearches": "Incoming searches",
+        "totalSearches": "Total searches",
+        "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
+        "tthSearches": "TTH searches",
+        "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
+        "filteredTextSearches": "Filtered text searches",
+        "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
+        "averageTextSearchTokensNonFiltered": "Average text search tokens (non-filtered)",
+        "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} bytes per token)",
+        "averageMatchingTimePerTextSearch": "Average matching time per text search",
+        "searchesAverageMatchTimeValue": "{{matchTime}} ms"
+      },
+      "hubs": {
+        "noHubsOnline": "No hubs online",
+        "totalUsers": "Total users",
+        "uniqueUsers": "Unique users",
+        "activeUsers": "Active users",
+        "totalShare": "Total share",
+        "averageSharePerUser": "Average share per user",
+        "averageAdcDownloadSpeed": "Average ADC download speed",
+        "clients": "Clients",
+        "averageAdcUploadSpeed": "Average ADC upload speed"
       }
     },
-    "home": {
-      "newUserIntro": "Informatie voor nieuwe gebruikers",
-      "newUserIntroDesc": "<0><0>Voeg een paar mappen toe die met andere gebruikers gedeeld kunnen worden vanuit je<1>Delen</1> pagina.</0><1>Je kan eens door alle<1>instellingen</1> kunnen lopen voordat je begint.  <3>Het is belangrijk dat je je <1>snelheid</1> correct insteld omdat de client anders je bandbreedte niet volledig kan benutten.</3></1><2>Er is geen lijst met publieke hus dus je moet al een adres hebben om mee te verbinden.</2></0><1>Bezoek de <1>home page</1> voor meer info over de client en de opties.</1><2>Als je vragen heb, kan je ze stellen op de <1>GitHub tracker</1> of ga bij de dev/support hub: <3></3></2>"
+    "system": {
+      "logging": {
+        "sections": "Sections",
+        "variableHelp": "Variable information for Filename and Format fields"
+      },
+      "serverSettings": {
+        "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
+        "advanced": "Geavanceerd"
+      },
+      "users": {
+        "username": "Gebruikersnaam",
+        "permissions": "Permissions",
+        "activeSessions": "Actieve sessies",
+        "lastLoggedIn": "Last logged in",
+        "administrator": "Administrator",
+        "form": {
+          "usernameName": "User name",
+          "passwordName": "Wachtwoord",
+          "permissionsName": "Permissions"
+        },
+        "permissionSelector": {
+          "administrator": "Administrator",
+          "search": "Zoek",
+          "download": "Download",
+          "transfers": "Overdrachten",
+          "events": "Gebeurtenissen",
+          "view": "Beeld",
+          "edit": "Bewerken",
+          "queue": "Queue",
+          "favoriteHubs": "Favoriete hubs",
+          "settings": "Instellingen",
+          "localFilesystem": "Local filesystem",
+          "hubs": "Hubs",
+          "sendMessages": "Send messages",
+          "privateChat": "Prive chat",
+          "filelists": "Bestandslijsten",
+          "viewedFiles": "Viewed files"
+        },
+        "addWebUser": "Add web user",
+        "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
+      }
+    },
+    "sharing": {
+      "excludes": {
+        "shareRefreshNote": "Share must be refreshed for the changes to take effect",
+        "addExcludedPath": "Add excluded path",
+        "path": "Pad"
+      },
+      "profiles": {
+        "name": "Naam",
+        "totalSize": "Total size",
+        "totalFiles": "Total files",
+        "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
+      },
+      "sharingOptions": {
+        "skiplist": "Skiplist"
+      },
+      "hashing": {
+        "hashDatabase": "Hash database",
+        "fileIndexSize": "File index size",
+        "hashStoreSize": "Hash store size",
+        "verifyIntegrityOfHashData": "Verify integrity of hash data",
+        "optimizeNow": "Optimize now",
+        "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
+      }
+    },
+    "speedLimits": {
+      "speed": {
+        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <1>Speedtest.net</1>, to test your speed."
+      },
+      "uploadLimits": {
+        "manuallySet": "Manually set"
+      },
+      "downloadLimits": {
+        "manuallySet": "Manually set"
+      }
+    },
+    "downloads": {
+      "locations": {
+        "availablePathVariables": "Available path variables",
+        "favoriteDownloadDirectories": "Favoriete downloadmappen",
+        "name": "Naam",
+        "path": "Pad"
+      },
+      "skippingOptions": {
+        "skiplist": "Skiplist"
+      },
+      "priorities": {
+        "filePriorities": "File priorities",
+        "highPriorityFiles": "High priority files"
+      }
+    },
+    "browserSpecificNote": "Settings listed on this page are browser-specific",
+    "view": {
+      "notifications": {
+        "popupNotifications": "Popup notifications",
+        "form": {
+          "notifyPmUserName": "Private messages (users)",
+          "notifyPmBotName": "Private messages (bots)",
+          "notifyBundleStatusName": "Bundle status changes",
+          "notifyEventsInfoName": "Info events",
+          "notifyEventsWarningName": "Warning events",
+          "notifyEventsErrorName": "Error events"
+        }
+      },
+      "histories": {
+        "maxMessageHistory": "Maximum number of messages to cache",
+        "maxSessionHistory": "Maximum number of previously opened sessions"
+      },
+      "miscellaneous": {
+        "form": {
+          "unreadLabelDelayName": "Delay for marking chat sessions as read (seconds)",
+          "backgroundImageUrlName": "Custom background image URL",
+          "noInstallPromptName": "Never show the application install prompt in Home view",
+          "corsProxyName": "CORS proxy URL",
+          "corsProxyHelp": "CORS proxy to use for fetching data from external sites (e.g. RSS feeds and extensions). The target URL will be put directly after the configured proxy URL. No proxy will be used if the field is left empty, but it may prevent accessing various external URLs as they aren't often configured to be accessible from other sites."
+        }
+      }
     }
+  },
+  "extensions": {
+    "actions": {
+      "uninstall": "Verwijder",
+      "start": "Start",
+      "installFromUrl": "Installeer vanuit URL",
+      "install": "Installeer",
+      "stop": "Stop",
+      "configure": "Configureren",
+      "prompts": {
+        "installUrlPlaceholder": "Enter URL",
+        "installUrlApprove": "Installeer",
+        "installUrlContent": "Enter download URL"
+      }
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "queue": "Queue",
+    "search": "Zoek",
+    "transfers": "Overdrachten",
+    "hubs": "Hubs",
+    "messages": "Berichten",
+    "filelists": "Bestandslijsten",
+    "files": "Bestanden",
+    "events": "Gebeurtenissen",
+    "favoriteHubs": "Favoriete hubs",
+    "share": "Share",
+    "settings": "Instellingen",
+    "logout": "Log uit",
+    "more": "Meer..."
+  },
+  "login": {
+    "username": "Gebruikersnaam",
+    "password": "Wachtwoord",
+    "keepMeLoggedIn": "Houd me ingelogd",
+    "login": "Gebruikersnaam",
+    "authenticationFailed": "Authenticatie mislukt: {{lastError}}",
+    "connectingToTheServer": "Connecting to the server...",
+    "reestablishConnection": "Attempting to re-establish connection...",
+    "sessionLost": "Session lost",
+    "connectionClosed": "Verbinding gesloten",
+    "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
+    "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
+  },
+  "viewedFiles": {
+    "actions": {
+      "close": "Sluiten"
+    },
+    "noFiles": "Geen bestanden om te bekijken",
+    "noFilesDesc": "Je kan tekst en media bestanden openen om hier te bekijken vanuit zoek- en bestandslijsten",
+    "preparingView": "Bekijken voorbereiden",
+    "opened": "Geopend",
+    "downloaded": "Gedownload",
+    "notifications": {
+      "fileHasFinishedDownloading": "Bestand is gedownload",
+      "actions": {
+        "viewFile": "Bekijk bestand"
+      }
+    }
+  },
+  "messages": {
+    "actions": {
+      "clearChat": "Chat schoonmaken",
+      "close": "Sluiten",
+      "disconnect": "Verbreek verbinding"
+    },
+    "new": "Nieuwe sessie",
+    "newDesc": "Open een nieuwe privé chat sessie",
+    "offlineMessage": "Je moet in tenminste één hub zitten om privé berichten te kunnen versturen",
+    "directEncryptedChannelAvailable": "Direct versleuteld kanaal beschikbaar",
+    "establishingConnection": "Verbinding tot stand brengen...",
+    "directEncryptedChannelEstablished": "Directe versleutelde verbinding is tot stand gekomen",
+    "notifications": {
+      "actions": {
+        "viewMessage": "Bekijk bericht"
+      }
+    }
+  },
+  "home": {
+    "newUserIntro": "Informatie voor nieuwe gebruikers",
+    "newUserIntroDesc": "<0><0>Voeg een paar mappen toe die met andere gebruikers gedeeld kunnen worden vanuit je<1>Delen</1> pagina.</0><1>Je kan eens door alle<1>instellingen</1> kunnen lopen voordat je begint.  <3>Het is belangrijk dat je je <1>snelheid</1> correct insteld omdat de client anders je bandbreedte niet volledig kan benutten.</3></1><2>Er is geen lijst met publieke hus dus je moet al een adres hebben om mee te verbinden.</2></0><1>Bezoek de <1>home page</1> voor meer info over de client en de opties.</1><2>Als je vragen heb, kan je ze stellen op de <1>GitHub tracker</1> of ga bij de dev/support hub: <3></3></2>"
   }
 }

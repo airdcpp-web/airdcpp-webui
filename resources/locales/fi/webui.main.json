@@ -52,6 +52,15 @@
     "noMessagesToShow": "Ei näytettäviä viestejä",
     "actions": {
       "clear": "Tyhjennä"
+    },
+    "notifications": {
+      "information": "Ilmoitus",
+      "info": "TIETOA",
+      "warning": "VAROITUS",
+      "error": "VIRHE",
+      "actions": {
+        "viewEvents": "Näytä tapahtumat"
+      }
     }
   },
   "table": {
@@ -302,7 +311,7 @@
       "downloadSpeed": "Latausnopeus",
       "ip4": "IP (v4)",
       "ip6": "IP (v6)",
-      "fileCount": "Tiedostoa"
+      "fileCount": "Tiedostot"
     },
     "actions": {
       "reconnect": "Uudelleenyhdistä",
@@ -378,8 +387,19 @@
     "user": "Käyttäjä",
     "hubs": "Hubit",
     "lastKnownSpeed": "Viimeinen nopeus",
-    "files": "Tiedostoa",
-    "size": "Koko"
+    "files": "Tiedostot",
+    "size": "Koko",
+    "notifications": {
+      "bundleWasAddedInQueue": "Bundle lisättiin latausjonoon",
+      "bundleDownloadError": "Latausvirhe: {{error}}",
+      "bundleContentValidationError": "Bundlen sisältötarkistus epäonnistui: {{error}} ({{hook}})",
+      "validatingDownloadedBundle": "Tarkistetaan ladattua bundlea",
+      "bundleWasCompletedSuccessfully": "Bundle on ladattu onnistuneesti",
+      "bundleWasAddedInShare": "Bundle lisättiin jakoon",
+      "actions": {
+        "viewQueue": "Näytä jono"
+      }
+    }
   },
   "transfers": {
     "table": {
@@ -390,7 +410,7 @@
       "secondsLeft": "Aikaa jäljellä",
       "speed": "Nopeus",
       "flags": "Arvot",
-      "ip": "IP"
+      "ip": "Ip"
     },
     "actions": {
       "forceConnect": "Pakota yhteys",
@@ -717,7 +737,7 @@
     "hubs": "Hubit",
     "messages": "Viestit",
     "filelists": "Listat",
-    "files": "Tiedostot",
+    "files": "Tiedostoa",
     "events": "Tapahtumat",
     "favoriteHubs": "Suosikit",
     "share": "Jaot",
@@ -732,7 +752,11 @@
     "login": "Käyttäjätunnus",
     "authenticationFailed": "Tunnistautuminen epäonnistui: {{lastError}}",
     "connectingToTheServer": "Yhdistetään palvelimeen...",
-    "reestablishConnection": "Yritetään uudelleenmuodostaa yhteyttä..."
+    "reestablishConnection": "Yritetään uudelleenmuodostaa yhteyttä...",
+    "sessionLost": "Istunto katosi",
+    "connectionClosed": "Yhteys suljettu",
+    "privateBrowsingNotSupported": "Tätä sivustoa ei voi käyttää selaimellasi, jos yksityinen selaustila on käytössä",
+    "dataStorageNotSupported": "Tätä sivustoa ei voi käyttää selaimellasi, sillä se ei tue datan tallentamista"
   },
   "viewedFiles": {
     "actions": {
@@ -742,7 +766,13 @@
     "noFilesDesc": "Voit avata näytettäviä teksti- tai mediatiedostoja hausta tai tiedostolistoista",
     "preparingView": "Valmistellaan näkymää",
     "opened": "Avattu",
-    "downloaded": "Ladattu"
+    "downloaded": "Ladattu",
+    "notifications": {
+      "fileHasFinishedDownloading": "Tiedoston lataus on valmis",
+      "actions": {
+        "viewFile": "Näytä tiedosto"
+      }
+    }
   },
   "messages": {
     "actions": {
@@ -755,7 +785,12 @@
     "offlineMessage": "Sinun on oltava yhteydessä vähintään yhteen hubiin, jotta voit lähettää yksityisviestejä",
     "directEncryptedChannelAvailable": "Suora salattu yhteys käytettävissä",
     "establishingConnection": "Muodostetaan yhteyttä...",
-    "directEncryptedChannelEstablished": "Suora salattu yhteys muodostettu"
+    "directEncryptedChannelEstablished": "Suora salattu yhteys muodostettu",
+    "notifications": {
+      "actions": {
+        "viewMessage": "Näytä viesti"
+      }
+    }
   },
   "home": {
     "newUserIntro": "Tietoa uudelle käyttäjälle",

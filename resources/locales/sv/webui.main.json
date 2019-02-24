@@ -1,801 +1,799 @@
 {
-  "main": {
-    "widgets": {
-      "application": {
-        "addWidget": "Lägg till widget...",
-        "loggedInAs": "Inloggad som",
-        "clientStarted": "Klienten startad",
-        "activeSessions": "Aktiva sessioner"
-      },
-      "rss": {
-        "widgetName": "RSS-flöde",
-        "invalidUrl": "Ogiltig webbadress",
-        "lastUpdated": "Senaste uppdaterad: {{time}}",
-        "actions": {
-          "openLink": "Öppna länk",
-          "search": "Sök"
-        },
-        "loadingFeed": "Laddar flöde",
-        "form": {
-          "feedUrlName": "Flödeswebbadress",
-          "feedUrlHelp": "RSS- och Atom-flöden stöds",
-          "feedCacheMinutesName": "Minsta uppdateringsintervall (minuter)"
-        }
-      },
-      "transfers": {
-        "widgetName": "Överföringar",
-        "trafficBps": "Trafik (bps)",
-        "downloads": "Nedladdningar",
-        "uploads": "Uppladdningar",
-        "downloaded": "Nedladdat",
-        "uploaded": "Uppladdat",
-        "downloadLimit": "Nedladdningsbegränsning",
-        "uploadLimit": "Uppladdningsbegränsning",
-        "disabled": "Inaktiverad"
-      },
+  "widgets": {
+    "application": {
+      "addWidget": "Lägg till widget...",
+      "loggedInAs": "Inloggad som",
+      "clientStarted": "Klienten startad",
+      "activeSessions": "Aktiva sessioner"
+    },
+    "rss": {
+      "widgetName": "RSS-flöde",
+      "invalidUrl": "Ogiltig webbadress",
+      "lastUpdated": "Senaste uppdaterad: {{time}}",
       "actions": {
-        "editWidget": "Redigera widget",
-        "removeWidget": "Ta bort widget",
-        "prompts": {
-          "removeApprove": "Ta bort widget",
-          "removeReject": "Ta inte bort",
-          "removeContent": "Är du säker på att du vill ta bort widgeten {{item.settings.name}}?"
-        }
+        "openLink": "Öppna länk",
+        "search": "Sök"
       },
+      "loadingFeed": "Laddar flöde",
       "form": {
-        "nameName": "Namn"
-      },
-      "widgetPositionHint": "Widgetar och deras positioner är webbläsarspecifika"
-    },
-    "events": {
-      "events": "Händelser",
-      "loadingMessages": "Laddar meddelanden",
-      "noMessagesToShow": "Inga meddelanden att visa",
-      "actions": {
-        "clear": "Rensa"
-      },
-      "notifications": {
-        "information": "Information",
-        "info": "INFO",
-        "warning": "VARNING",
-        "error": "FEL",
-        "actions": {
-          "viewEvents": "Visa händelser"
-        }
-      }
-    },
-    "table": {
-      "filter": {
-        "filter": "Filter",
-        "matchType": "Typ av matchning",
-        "partial": "Delvis",
-        "regex": "Regex",
-        "wildcard": "Jokertecken",
-        "exact": "Exakt",
-        "filterByProfile": "Filtrera efter profil",
-        "allProfiles": "Alla profiler"
-      }
-    },
-    "search": {
-      "table": {
-        "name": "Namn",
-        "size": "Storlek",
-        "relevance": "Relevans",
-        "type": "Typ",
-        "connection": "Anslutning",
-        "users": "Användare",
-        "time": "Senast ändrad",
-        "slots": "Slottar"
-      },
-      "actions": {
-        "resultDetails": "Resultatdetaljer",
-        "browseContent": "Bläddra innehåll"
-      },
-      "user": "Användare",
-      "hubs": "Hubbar",
-      "connection": "Anslutning",
-      "slots": "Slottar",
-      "ip": "IP-adress",
-      "path": "Sökväg",
-      "searchOffline": "Du måste vara ansluten till minst en hubb för att kunna söka",
-      "enterSearchString": "Ange söksträng...",
-      "search": "Sök",
-      "typeContent": "Typ/innehåll",
-      "size": "Storlek",
-      "lastModified": "Senast ändrad",
-      "dupeType": "Dubblettyp",
-      "shareFull": "Utdelning (full)",
-      "dupePaths": "Dubblettsökvägar",
-      "actionsCaption": "Åtgärder...",
-      "usersCount": "Användare ({{count}})",
-      "usersCount_plural": "Användare ({{count}})",
-      "tth": "TTH",
-      "xUsersNicks": "{{count}} användare ({{user.nicks}})",
-      "xUsersNicks_plural": "{{count}} användare ({{user.nicks}})",
-      "noResults": "Inget hittades för \"{{searchString}}\"",
-      "noResultsHint": "<0><0>Se till att du stavade orden rätt</0><1>Använd olika sökord</1><2>Du söker för ofta (hubbar har ofta ett minsta sökintervall)</2><3>Om du aldrig får några träffar på vanliga sökord, kontrollera att dina anslutningsinställningar är konfigurerade korrekt</3></0>"
-    },
-    "share": {
-      "table": {
-        "path": "Sökväg",
-        "size": "Storlek",
-        "virtual_name": "Virtuellt namn",
-        "profiles": "Profiler",
-        "last_refresh_time": "Senast uppdaterad",
-        "type": "Innehåll",
-        "virtualName": "Virtuellt namn",
-        "lastRefreshTime": "Senast uppdaterad"
-      },
-      "actions": {
-        "editDirectory": "Redigera katalog",
-        "removeDirectory": "Ta bort katalog",
-        "addDirectory": "Lägg till katalog",
-        "refreshAll": "Uppdatera alla",
-        "prompts": {
-          "removeRootApprove": "Ta bort katalog",
-          "removeRootReject": "Ta inte bort",
-          "removeRootContent": "Är du säker på att du vill ta bort katalogen {{item.virtual_name}} från utdelningen? Den kommer att tas bort från alla utdelningsprofiler."
-        }
-      },
-      "actionsCaption": "Åtgärder...",
-      "shareActions": "Utdelningsåtgärder",
-      "hashingInformation": "Indexeringsinformation",
-      "hashingInformationDesc": "<0>Nya filer kommer att synas i utdelningen när de har indexerats (klienten har beräknat kontrollsumman på dem). Information om indexeringen kommer att finnas i händelseloggen.</0>",
-      "addShareDirectory": "Lägg till utdelningskatalog",
-      "editShareDirectory": "Redigera utdelningskatalog",
-      "form": {
-        "pathName": "Sökväg",
-        "virtualNameName": "Virtuellt namn",
-        "virtualNameHelp": "Kataloger med identiska virtuella namn kommer att slås samman i fillistan",
-        "profilesName": "Utdelningsprofiler",
-        "profilesHelp": "Nya utdelningsprofiler kan skapas från applikationsinställningarna",
-        "incomingName": "Inkommande"
-      }
-    },
-    "favoriteHubs": {
-      "actions": {
-        "addNew": "Lägg till ny",
-        "setPassword": "Ange lösenord",
-        "edit": "Ändra",
-        "remove": "Ta bort",
-        "changePassword": "Ändra lösenord",
-        "removePassword": "Ta bort lösenord",
-        "prompts": {
-          "changePasswordPlaceholder": "Ange lösenord",
-          "changePasswordApprove": "Uppdatera lösenord",
-          "changePasswordContent": "Ange ett nytt lösenord för hubben {{item.name}}",
-          "removePasswordApprove": "Ta bort lösenord",
-          "removePasswordReject": "Ta inte bort",
-          "removePasswordContent": "Är du säker på att du vill återställa lösenordet i hubben {{item.name}}?",
-          "createPasswordPlaceholder": "Ange lösenord",
-          "createPasswordApprove": "Ange lösenord",
-          "createPasswordContent": "Ange lösenord för hubben {{item.name}}"
-        }
-      },
-      "table": {
-        "connectState": "Tillstånd",
-        "name": "Namn",
-        "autoConnect": "Anslut automatiskt",
-        "nick": "Användarnamn",
-        "hasPassword": "Lösenord",
-        "hubUrl": "Adress",
-        "shareProfile": "Utdelningprofil"
-      },
-      "notSet": "Ej inställt",
-      "set": "Inställt",
-      "globalDefault": "Global standard",
-      "addFavoriteHub": "Lägg till favorithubb",
-      "editFavoriteHub": "Redigera favorithubb",
-      "form": {
-        "genericName": "Hubbegenskaper",
-        "nameName": "Namn",
-        "hubUrlName": "Hubbwebbadress",
-        "hubDescriptionName": "Hubbbeskrivning",
-        "shareProfileName": "Utdelningsprofil",
-        "shareProfileHelp": "Egen utdelningsprofiler kan bara väljas efter att du har angett en ADC-hubbadress (börjar med adc:// eller adcs://)",
-        "autoConnectName": "Anslut automatiskt",
-        "userName": "Användarinställning överrider",
-        "nickName": "Användarnamn",
-        "userDescriptionName": "Användarbeskrivning",
-        "connectivityV4Name": "Anslutningsinställningen överrider (IPv4)",
-        "connectionModeV4Name": "Anslutningsläge",
-        "connectionModeV4Option1": "Inaktiverad",
-        "connectionModeV4Option0": "Aktivt läge",
-        "connectionModeV4Option2": "Passivt läge",
-        "connectionIpV4Name": "IP-adress",
-        "connectivityV6Name": "Anslutningsinställningen överrider (IPv6)",
-        "connectionModeV6Name": "Anslutningsläge",
-        "connectionModeV6Option1": "Inaktiverad",
-        "connectionModeV6Option0": "Aktivt läge",
-        "connectionModeV6Option2": "Passivt läge",
-        "connectionIpV6Name": "IP-adress"
-      }
-    },
-    "filelists": {
-      "new": "Öppna fillista",
-      "newDesc": "Börja bläddra i en ny fillista",
-      "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna ladda ner fillistor från andra användare",
-      "directorySize": "Katalogstorlek",
-      "totalListSize": "Sammanlagt liststorlek",
-      "browseOwnShare": "Bläddra i din fillista...",
-      "root": "Root",
-      "userOffline": "Användaren är frånkopplad",
-      "userOfflineDesc": "Du kommer att kunna bläddra vidare när användaren ansluter sig igen",
-      "noContentToDisplay": "Inget att visa",
-      "theDirectoryIsEmpty": "Katalogen är tom",
-      "table": {
-        "name": "Namn",
-        "size": "Storlek",
-        "time": "Senast ändrad",
-        "type": "Typ"
-      },
-      "actions": {
-        "reload": "Uppdatera",
-        "refreshInShare": "Uppdatera i utdelning",
-        "close": "Stäng"
-      }
-    },
-    "common": {    
-      "actions": {
-        "download": "Ladda ned",
-        "downloadTo": "Ladda ned till...",
-        "findNfo": "Sök efter NFO-fil",
-        "search": "Sök",
-        "sendMessage": "Skicka meddelande",
-        "browseShare": "Bläddra i utdelningen",
-        "ignoreMessages": "Ignorera meddelanden",
-        "viewAsText": "Visa som text",
-        "playVideo": "Spela upp video",
-        "viewImage": "Visa bild",
-        "playAudio": "Spela upp ljud",
-        "copyMagnetLink": "Kopiera magnet-länk",
-        "shutDownApplication": "Stäng ner applikationen",
-        "restartWebServer": "Starta om webbservern",
-        "unignoreMessages": "Sluta ignorera meddelanden",
-        "closeAndDontShowAgain": "Stäng och visa inte igen"
-      },
-      "networkClientError": "Nätverk-/klientfel",
-      "loadingItems": "Laddar objekt",
-      "root": "Root",
-      "name": "Namn",
-      "size": "Storlek",
-      "createDirectory": "Skapa katalog",
-      "create": "Skapa",
-      "directoryName": "Katalognamn",
-      "computer": "Dator",
-      "history": "Föregående",
-      "shared": "Utdelat",
-      "favorites": "Favoriter",
-      "dupes": "Dubbletter",
-      "browse": "Bläddra",
-      "download": "Ladda ned",
-      "close": "Stäng",
-      "noPathsToDisplay": "Ingen sökväg att visa",
-      "pathSpaceFree": "{{path}} ({{freeSpace}} ledigt)",
-      "select": "Välj",
-      "new": "Ny",
-      "currentSessions": "Nuvarande sessioner",
-      "closeAll": "Stäng alla",
-      "recentSessions": "Tidigare sessioner",
-      "openedAgo": "Öppnad {{timeAgo}}",
-      "waitingForServerResponse": "Väntar på svar från servern",
-      "loadingMessages": "Laddar meddelanden",
-      "loadingSession": "Laddar session",
-      "no": "Nej",
-      "cancel": "Avbryt",
-      "loading": "Laddar",
-      "loadingData": "Laddar data...",
-      "noOnlineHubs": "Inga anslutna hubbar",
-      "installAsLocalApplication": "Installera som lokal applikation",
-      "pwaInstallDesc": "Denna webbapplikation kan installeras lokalt, vilket ger en bättre användarupplevelse",
-      "install": "Installera",
-      "dontInstall": "Installera ej",
-      "statisticsNotAvailable": "Statestik inte tillgänglig",
-      "save": "Spara",
-      "enterNick": "Ange nick...",
-      "enterLimitKBS": "Ange begränsning (kB/s)",
-      "enterLimit": "Ange begränsning...",
-      "removeLimit": "Ta bort begränsning",
-      "form": {
-        "browse": "Bläddra",
-        "noOptions": "Inga alternativ",
-        "fieldOptional": "{{definition.title}} (valfritt)"
-      }
-    },
-    "hubs": {
-      "table": {
-        "nick": "Användarnamn",
-        "shareSize": "Utdelningsstorlek",
-        "description": "Beskrivning",
-        "tag": "Tagg",
-        "uploadSpeed": "Hastighet upp",
-        "downloadSpeed": "Hastighet ned",
-        "ip4": "IP (v4)",
-        "ip6": "IP (v6)",
-        "fileCount": "Filer"
-      },
-      "actions": {
-        "reconnect": "Återanslut",
-        "clearChat": "Rensa chatt",
-        "close": "Stäng"
-      },
-      "enterHubAddress": "Ange hubbadress...",
-      "connect": "Anslut",
-      "notConnectedToTheHub": "Inte anstuten till hubben",
-      "connecting": "Ansluter",
-      "loadingUserlist": "Laddar användarlista",
-      "favoriteHubsHint": "Tips: gå till <1>Favorithubbar</1> för att ansluta med anpassade inställningar",
-      "new": "Anslut",
-      "newDesc": "Anslut till en ny hubb",
-      "userList": "Användarlistan",
-      "sharePerUser": "{{total}} ({{average}}/användare)",
-      "xUsers": "{{count}} användare",
-      "xUsers_plural": "{{count}} användare",
-      "redirectRequested": "Omdirigering begärd",
-      "acceptRedirect": "Acceptera omdirigering till {{url}}",
-      "passwordRequired": "Lösenord krävs",
-      "password": "Lösenord",
-      "submit": "Utför",
-      "passwordPromptHelp": "Detta brukar betyda att det finns ett registrerat konto med ditt användarnamn. Om du inte har registrerat dig i denna hubben är det troligen någon annan som använder samma användarnamn."  
-    },
-    "queue": {
-      "table": {
-        "name": "Namn",
-        "size": "Storlek",
-        "status": "Status",
-        "sources": "Källor",
-        "secondsLeft": "Tid kvar",
-        "speed": "Hastighet",
-        "priority": "Prioritet",
-        "type": "Typ/innehåll",
-        "timeAdded": "Lagts till",
-        "timeFinished": "Färdiga"
-      },
-      "actionsCaption": "Åtgärder...",
-      "queueActions": "Köåtgärder",
-      "pausedForced": "Pausad (tvingad)",
-      "queueEmpty": "Kön är tom",
-      "queueEmptyDesc": "Nya objekt kan köas från sök eller fillistor",
-      "actions": {
-        "removeCompletedBundles": "Ta bort färdiga filsamlingar",
-        "pauseAllBundles": "Pausa alla filsamlingar",
-        "resumeAllBundles": "Återuppta alla filsamlingar",
-        "manageFiles": "Hantera filer...",
-        "manageSources": "Hantera källor...",
-        "searchForeground": "Sök (sökfönster)",
-        "searchForAlternates": "Sök efter nya källor",
-        "remove": "Ta bort",
-        "removeSource": "Ta bort källa",
-        "prompts": {
-          "removeBundleApprove": "Ta bort filsamling",
-          "removeBundleReject": "Ta inte bort",
-          "removeBundleContent": "Är du säker på att du vill du ta bort filsamlingen {{item.name}}?",
-          "removeBundleCheckbox": "Ta bort färdiga filer",
-          "removeFileApprove": "Ta bort fil",
-          "removeFileReject": "Ta inte bort",
-          "removeFileContent": "Är du säker på att du vill ta bort filen {{item.name}}?",
-          "removeFileCheckbox": "Ta bort från disken"
-        }
-      },
-      "paused": "Pausad",
-      "lowest": "Lägsta",
-      "low": "Låg",
-      "normal": "Normal",
-      "high": "Hög",
-      "highest": "Högsta",
-      "auto": "Automatisk",
-      "sources": "Källor",
-      "user": "Användare",
-      "hubs": "Hubbar",
-      "lastKnownSpeed": "Senast kända hastigheten",
-      "files": "Filer",
-      "size": "Storlek",
-      "notifications": {
-        "bundleWasAddedInQueue": "Filsamlingen har lagts till i kön",
-        "bundleDownloadError": "Nedladdningsfel: {{error}}",
-        "bundleContentValidationError": "Validering av filsamlingsinnehåll misslyckades: {{error}} ({{hook}})",
-        "validatingDownloadedBundle": "Validerar nedladdad filsamling",
-        "bundleWasCompletedSuccessfully": "Filsamlingen är klar",
-        "bundleWasAddedInShare": "Filsamlingen har lagts till i utdelningen",
-        "actions": {
-          "viewQueue": "Visa kö"
-        }
+        "feedUrlName": "Flödeswebbadress",
+        "feedUrlHelp": "RSS- och Atom-flöden stöds",
+        "feedCacheMinutesName": "Minsta uppdateringsintervall (minuter)"
       }
     },
     "transfers": {
-      "table": {
-        "user": "Användare",
-        "name": "Namn",
-        "size": "Segment",
-        "status": "Status",
-        "secondsLeft": "Tid kvar",
-        "speed": "Hastighet",
-        "flags": "Flaggor",
-        "ip": "IP-adress"
-      },
-      "actions": {
-        "forceConnect": "Tvinga anslutning",
-        "disconnect": "Koppla från",
-        "removeFileFromQueue": "Ta bort fil från kön",
-        "removeUserFromQueue": "Ta bort källa"
-      },
-      "noActiveTransfers": "Inga aktiva överföringar"
+      "widgetName": "Överföringar",
+      "trafficBps": "Trafik (bps)",
+      "downloads": "Nedladdningar",
+      "uploads": "Uppladdningar",
+      "downloaded": "Nedladdat",
+      "uploaded": "Uppladdat",
+      "downloadLimit": "Nedladdningsbegränsning",
+      "uploadLimit": "Uppladdningsbegränsning",
+      "disabled": "Inaktiverad"
     },
-    "settings": {
+    "actions": {
+      "editWidget": "Redigera widget",
+      "removeWidget": "Ta bort widget",
+      "prompts": {
+        "removeApprove": "Ta bort widget",
+        "removeReject": "Ta inte bort",
+        "removeContent": "Är du säker på att du vill ta bort widgeten {{item.settings.name}}?"
+      }
+    },
+    "form": {
+      "nameName": "Namn"
+    },
+    "widgetPositionHint": "Widgetar och deras positioner är webbläsarspecifika"
+  },
+  "events": {
+    "events": "Händelser",
+    "loadingMessages": "Laddar meddelanden",
+    "noMessagesToShow": "Inga meddelanden att visa",
+    "actions": {
+      "clear": "Rensa"
+    },
+    "notifications": {
+      "information": "Information",
+      "info": "INFO",
+      "warning": "VARNING",
+      "error": "FEL",
       "actions": {
-        "detectNow": "Upptäck nu",
-        "addDirectory": "Lägg till katalog",
-        "addUser": "Lägg till användare",
-        "editUser": "Redigera användare",
-        "editDirectory": "Redigera katalog",
-        "removeDirectory": "Ta bort katalog",
-        "addProfile": "Lägg till profil",
-        "browseFiles": "Bläddra filer",
-        "renameProfile": "Döp om profil",
-        "addPath": "Lägg till sökväg",
-        "removePath": "Ta bort sökväg",
-        "prompts": {
-          "removeShareExcludeApprove": "Ta bort sökväg",
-          "removeShareExcludeReject": "Ta inte bort",
-          "removeShareExcludeContent": "Är du säker på att du vill ta bort den uteslutna sökvägen {{item}}?"
+        "viewEvents": "Visa händelser"
+      }
+    }
+  },
+  "table": {
+    "filter": {
+      "filter": "Filter",
+      "matchType": "Typ av matchning",
+      "partial": "Delvis",
+      "regex": "Regex",
+      "wildcard": "Jokertecken",
+      "exact": "Exakt",
+      "filterByProfile": "Filtrera efter profil",
+      "allProfiles": "Alla profiler"
+    }
+  },
+  "search": {
+    "table": {
+      "name": "Namn",
+      "size": "Storlek",
+      "relevance": "Relevans",
+      "type": "Typ",
+      "connection": "Anslutning",
+      "users": "Användare",
+      "time": "Senast ändrad",
+      "slots": "Slottar"
+    },
+    "actions": {
+      "resultDetails": "Resultatdetaljer",
+      "browseContent": "Bläddra innehåll"
+    },
+    "user": "Användare",
+    "hubs": "Hubbar",
+    "connection": "Anslutning",
+    "slots": "Slottar",
+    "ip": "IP-adress",
+    "path": "Sökväg",
+    "searchOffline": "Du måste vara ansluten till minst en hubb för att kunna söka",
+    "enterSearchString": "Ange söksträng...",
+    "search": "Sök",
+    "typeContent": "Typ/innehåll",
+    "size": "Storlek",
+    "lastModified": "Senast ändrad",
+    "dupeType": "Dubblettyp",
+    "shareFull": "Utdelning (full)",
+    "dupePaths": "Dubblettsökvägar",
+    "actionsCaption": "Åtgärder...",
+    "usersCount": "Användare ({{count}})",
+    "usersCount_plural": "Användare ({{count}})",
+    "tth": "TTH",
+    "xUsersNicks": "{{count}} användare ({{user.nicks}})",
+    "xUsersNicks_plural": "{{count}} användare ({{user.nicks}})",
+    "noResults": "Inget hittades för \"{{searchString}}\"",
+    "noResultsHint": "<0><0>Se till att du stavade orden rätt</0><1>Använd olika sökord</1><2>Du söker för ofta (hubbar har ofta ett minsta sökintervall)</2><3>Om du aldrig får några träffar på vanliga sökord, kontrollera att dina anslutningsinställningar är konfigurerade korrekt</3></0>"
+  },
+  "share": {
+    "table": {
+      "path": "Sökväg",
+      "size": "Storlek",
+      "virtual_name": "Virtuellt namn",
+      "profiles": "Profiler",
+      "last_refresh_time": "Senast uppdaterad",
+      "type": "Innehåll",
+      "virtualName": "Virtuellt namn",
+      "lastRefreshTime": "Senast uppdaterad"
+    },
+    "actions": {
+      "editDirectory": "Redigera katalog",
+      "removeDirectory": "Ta bort katalog",
+      "addDirectory": "Lägg till katalog",
+      "refreshAll": "Uppdatera alla",
+      "prompts": {
+        "removeRootApprove": "Ta bort katalog",
+        "removeRootReject": "Ta inte bort",
+        "removeRootContent": "Är du säker på att du vill ta bort katalogen {{item.virtual_name}} från utdelningen? Den kommer att tas bort från alla utdelningsprofiler."
+      }
+    },
+    "actionsCaption": "Åtgärder...",
+    "shareActions": "Utdelningsåtgärder",
+    "hashingInformation": "Indexeringsinformation",
+    "hashingInformationDesc": "<0>Nya filer kommer att synas i utdelningen när de har indexerats (klienten har beräknat kontrollsumman på dem). Information om indexeringen kommer att finnas i händelseloggen.</0>",
+    "addShareDirectory": "Lägg till utdelningskatalog",
+    "editShareDirectory": "Redigera utdelningskatalog",
+    "form": {
+      "pathName": "Sökväg",
+      "virtualNameName": "Virtuellt namn",
+      "virtualNameHelp": "Kataloger med identiska virtuella namn kommer att slås samman i fillistan",
+      "profilesName": "Utdelningsprofiler",
+      "profilesHelp": "Nya utdelningsprofiler kan skapas från applikationsinställningarna",
+      "incomingName": "Inkommande"
+    }
+  },
+  "favoriteHubs": {
+    "actions": {
+      "addNew": "Lägg till ny",
+      "setPassword": "Ange lösenord",
+      "edit": "Ändra",
+      "remove": "Ta bort",
+      "changePassword": "Ändra lösenord",
+      "removePassword": "Ta bort lösenord",
+      "prompts": {
+        "changePasswordPlaceholder": "Ange lösenord",
+        "changePasswordApprove": "Uppdatera lösenord",
+        "changePasswordContent": "Ange ett nytt lösenord för hubben {{item.name}}",
+        "removePasswordApprove": "Ta bort lösenord",
+        "removePasswordReject": "Ta inte bort",
+        "removePasswordContent": "Är du säker på att du vill återställa lösenordet i hubben {{item.name}}?",
+        "createPasswordPlaceholder": "Ange lösenord",
+        "createPasswordApprove": "Ange lösenord",
+        "createPasswordContent": "Ange lösenord för hubben {{item.name}}"
+      }
+    },
+    "table": {
+      "connectState": "Tillstånd",
+      "name": "Namn",
+      "autoConnect": "Anslut automatiskt",
+      "nick": "Användarnamn",
+      "hasPassword": "Lösenord",
+      "hubUrl": "Adress",
+      "shareProfile": "Utdelningsprofil"
+    },
+    "notSet": "Ej inställt",
+    "set": "Inställt",
+    "globalDefault": "Global standard",
+    "addFavoriteHub": "Lägg till favorithubb",
+    "editFavoriteHub": "Redigera favorithubb",
+    "form": {
+      "genericName": "Hubbegenskaper",
+      "nameName": "Namn",
+      "hubUrlName": "Hubbwebbadress",
+      "hubDescriptionName": "Hubbbeskrivning",
+      "shareProfileName": "Utdelningsprofil",
+      "shareProfileHelp": "Egen utdelningsprofiler kan bara väljas efter att du har angett en ADC-hubbadress (börjar med adc:// eller adcs://)",
+      "autoConnectName": "Anslut automatiskt",
+      "userName": "Användarinställning överrider",
+      "nickName": "Användarnamn",
+      "userDescriptionName": "Användarbeskrivning",
+      "connectivityV4Name": "Anslutningsinställningen överrider (IPv4)",
+      "connectionModeV4Name": "Anslutningsläge",
+      "connectionModeV4Option1": "Inaktiverad",
+      "connectionModeV4Option0": "Aktivt läge",
+      "connectionModeV4Option2": "Passivt läge",
+      "connectionIpV4Name": "IP-adress",
+      "connectivityV6Name": "Anslutningsinställningen överrider (IPv6)",
+      "connectionModeV6Name": "Anslutningsläge",
+      "connectionModeV6Option1": "Inaktiverad",
+      "connectionModeV6Option0": "Aktivt läge",
+      "connectionModeV6Option2": "Passivt läge",
+      "connectionIpV6Name": "IP-adress"
+    }
+  },
+  "filelists": {
+    "new": "Öppna fillista",
+    "newDesc": "Börja bläddra i en ny fillista",
+    "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna ladda ner fillistor från andra användare",
+    "directorySize": "Katalogstorlek",
+    "totalListSize": "Sammanlagt liststorlek",
+    "browseOwnShare": "Bläddra i din fillista...",
+    "root": "Root",
+    "userOffline": "Användaren är frånkopplad",
+    "userOfflineDesc": "Du kommer att kunna bläddra vidare när användaren ansluter sig igen",
+    "noContentToDisplay": "Inget att visa",
+    "theDirectoryIsEmpty": "Katalogen är tom",
+    "table": {
+      "name": "Namn",
+      "size": "Storlek",
+      "time": "Senast ändrad",
+      "type": "Typ"
+    },
+    "actions": {
+      "reload": "Uppdatera",
+      "refreshInShare": "Uppdatera i utdelning",
+      "close": "Stäng"
+    }
+  },
+  "common": {    
+    "actions": {
+      "download": "Ladda ned",
+      "downloadTo": "Ladda ned till...",
+      "findNfo": "Sök efter NFO-fil",
+      "search": "Sök",
+      "sendMessage": "Skicka meddelande",
+      "browseShare": "Bläddra i utdelningen",
+      "ignoreMessages": "Ignorera meddelanden",
+      "viewAsText": "Visa som text",
+      "playVideo": "Spela upp video",
+      "viewImage": "Visa bild",
+      "playAudio": "Spela upp ljud",
+      "copyMagnetLink": "Kopiera magnet-länk",
+      "shutDownApplication": "Stäng ner applikationen",
+      "restartWebServer": "Starta om webbservern",
+      "unignoreMessages": "Sluta ignorera meddelanden",
+      "closeAndDontShowAgain": "Stäng och visa inte igen"
+    },
+    "networkClientError": "Nätverk-/klientfel",
+    "loadingItems": "Laddar objekt",
+    "root": "Root",
+    "name": "Namn",
+    "size": "Storlek",
+    "createDirectory": "Skapa katalog",
+    "create": "Skapa",
+    "directoryName": "Katalognamn",
+    "computer": "Dator",
+    "history": "Föregående",
+    "shared": "Utdelat",
+    "favorites": "Favoriter",
+    "dupes": "Dubbletter",
+    "browse": "Bläddra",
+    "download": "Ladda ned",
+    "close": "Stäng",
+    "noPathsToDisplay": "Ingen sökväg att visa",
+    "pathSpaceFree": "{{path}} ({{freeSpace}} ledigt)",
+    "select": "Välj",
+    "new": "Ny",
+    "currentSessions": "Nuvarande sessioner",
+    "closeAll": "Stäng alla",
+    "recentSessions": "Tidigare sessioner",
+    "openedAgo": "Öppnad {{timeAgo}}",
+    "waitingForServerResponse": "Väntar på svar från servern",
+    "loadingMessages": "Laddar meddelanden",
+    "loadingSession": "Laddar session",
+    "no": "Nej",
+    "cancel": "Avbryt",
+    "loading": "Laddar",
+    "loadingData": "Laddar data...",
+    "noOnlineHubs": "Inga anslutna hubbar",
+    "installAsLocalApplication": "Installera som lokal applikation",
+    "pwaInstallDesc": "Denna webbapplikation kan installeras lokalt, vilket ger en bättre användarupplevelse",
+    "install": "Installera",
+    "dontInstall": "Installera ej",
+    "statisticsNotAvailable": "Statestik inte tillgänglig",
+    "save": "Spara",
+    "enterNick": "Ange nick...",
+    "enterLimitKBS": "Ange begränsning (kB/s)",
+    "enterLimit": "Ange begränsning...",
+    "removeLimit": "Ta bort begränsning",
+    "form": {
+      "browse": "Bläddra",
+      "noOptions": "Inga alternativ",
+      "fieldOptional": "{{definition.title}} (valfritt)"
+    }
+  },
+  "hubs": {
+    "table": {
+      "nick": "Användarnamn",
+      "shareSize": "Utdelningsstorlek",
+      "description": "Beskrivning",
+      "tag": "Tagg",
+      "uploadSpeed": "Hastighet upp",
+      "downloadSpeed": "Hastighet ned",
+      "ip4": "IP (v4)",
+      "ip6": "IP (v6)",
+      "fileCount": "Filer"
+    },
+    "actions": {
+      "reconnect": "Återanslut",
+      "clearChat": "Rensa chatt",
+      "close": "Stäng"
+    },
+    "enterHubAddress": "Ange hubbadress...",
+    "connect": "Anslut",
+    "notConnectedToTheHub": "Inte anstuten till hubben",
+    "connecting": "Ansluter",
+    "loadingUserlist": "Laddar användarlista",
+    "favoriteHubsHint": "Tips: gå till <1>Favorithubbar</1> för att ansluta med anpassade inställningar",
+    "new": "Anslut",
+    "newDesc": "Anslut till en ny hubb",
+    "userList": "Användarlistan",
+    "sharePerUser": "{{total}} ({{average}}/användare)",
+    "xUsers": "{{count}} användare",
+    "xUsers_plural": "{{count}} användare",
+    "redirectRequested": "Omdirigering begärd",
+    "acceptRedirect": "Acceptera omdirigering till {{url}}",
+    "passwordRequired": "Lösenord krävs",
+    "password": "Lösenord",
+    "submit": "Utför",
+    "passwordPromptHelp": "Detta brukar betyda att det finns ett registrerat konto med ditt användarnamn. Om du inte har registrerat dig i denna hubben är det troligen någon annan som använder samma användarnamn."  
+  },
+  "queue": {
+    "table": {
+      "name": "Namn",
+      "size": "Storlek",
+      "status": "Status",
+      "sources": "Källor",
+      "secondsLeft": "Tid kvar",
+      "speed": "Hastighet",
+      "priority": "Prioritet",
+      "type": "Typ/innehåll",
+      "timeAdded": "Lagts till",
+      "timeFinished": "Färdiga"
+    },
+    "actionsCaption": "Åtgärder...",
+    "queueActions": "Köåtgärder",
+    "pausedForced": "Pausad (tvingad)",
+    "queueEmpty": "Kön är tom",
+    "queueEmptyDesc": "Nya objekt kan köas från sök eller fillistor",
+    "actions": {
+      "removeCompletedBundles": "Ta bort färdiga filsamlingar",
+      "pauseAllBundles": "Pausa alla filsamlingar",
+      "resumeAllBundles": "Återuppta alla filsamlingar",
+      "manageFiles": "Hantera filer...",
+      "manageSources": "Hantera källor...",
+      "searchForeground": "Sök (sökfönster)",
+      "searchForAlternates": "Sök efter nya källor",
+      "remove": "Ta bort",
+      "removeSource": "Ta bort källa",
+      "prompts": {
+        "removeBundleApprove": "Ta bort filsamling",
+        "removeBundleReject": "Ta inte bort",
+        "removeBundleContent": "Är du säker på att du vill du ta bort filsamlingen {{item.name}}?",
+        "removeBundleCheckbox": "Ta bort färdiga filer",
+        "removeFileApprove": "Ta bort fil",
+        "removeFileReject": "Ta inte bort",
+        "removeFileContent": "Är du säker på att du vill ta bort filen {{item.name}}?",
+        "removeFileCheckbox": "Ta bort från disken"
+      }
+    },
+    "paused": "Pausad",
+    "lowest": "Lägsta",
+    "low": "Låg",
+    "normal": "Normal",
+    "high": "Hög",
+    "highest": "Högsta",
+    "auto": "Automatisk",
+    "sources": "Källor",
+    "user": "Användare",
+    "hubs": "Hubbar",
+    "lastKnownSpeed": "Senast kända hastigheten",
+    "files": "Filer",
+    "size": "Storlek",
+    "notifications": {
+      "bundleWasAddedInQueue": "Filsamlingen har lagts till i kön",
+      "bundleDownloadError": "Nedladdningsfel: {{error}}",
+      "bundleContentValidationError": "Validering av filsamlingsinnehåll misslyckades: {{error}} ({{hook}})",
+      "validatingDownloadedBundle": "Validerar nedladdad filsamling",
+      "bundleWasCompletedSuccessfully": "Filsamlingen är klar",
+      "bundleWasAddedInShare": "Filsamlingen har lagts till i utdelningen",
+      "actions": {
+        "viewQueue": "Visa kö"
+      }
+    }
+  },
+  "transfers": {
+    "table": {
+      "user": "Användare",
+      "name": "Namn",
+      "size": "Segment",
+      "status": "Status",
+      "secondsLeft": "Tid kvar",
+      "speed": "Hastighet",
+      "flags": "Flaggor",
+      "ip": "IP-adress"
+    },
+    "actions": {
+      "forceConnect": "Tvinga anslutning",
+      "disconnect": "Koppla från",
+      "removeFileFromQueue": "Ta bort fil från kön",
+      "removeUserFromQueue": "Ta bort källa"
+    },
+    "noActiveTransfers": "Inga aktiva överföringar"
+  },
+  "settings": {
+    "actions": {
+      "detectNow": "Upptäck nu",
+      "addDirectory": "Lägg till katalog",
+      "addUser": "Lägg till användare",
+      "editUser": "Redigera användare",
+      "editDirectory": "Redigera katalog",
+      "removeDirectory": "Ta bort katalog",
+      "addProfile": "Lägg till profil",
+      "browseFiles": "Bläddra filer",
+      "renameProfile": "Döp om profil",
+      "addPath": "Lägg till sökväg",
+      "removePath": "Ta bort sökväg",
+      "prompts": {
+        "removeShareExcludeApprove": "Ta bort sökväg",
+        "removeShareExcludeReject": "Ta inte bort",
+        "removeShareExcludeContent": "Är du säker på att du vill ta bort den uteslutna sökvägen {{item}}?"
+      }
+    },
+    "navigation": {
+      "profile": "Profil",
+      "connectivity": "Anslutning",
+      "speedAndLimits": "Hastighet och begränsningar",
+      "downloads": "Nedladdningar",
+      "sharing": "Utdelning",
+      "view": "Visa",
+      "about": "Om",
+      "extensions": "Filändelser",
+      "system": "System",
+      "autoDetection": "Detektera automatisk",
+      "iPv4ConnectivityManual": "IPv4-anslutning (manuellt)",
+      "iPv6ConnectivityManual": "IPv6-anslutning (manuellt)",
+      "portsManual": "Portar (manuellt)",
+      "proxies": "Proxyservrar",
+      "encryption": "Kryptering",
+      "user": "Användare",
+      "awayMode": "Tillfälligt borta",
+      "ignoredUsers": "Ignorerade användare",
+      "miscellaneous": "Diverse",
+      "manageInstalled": "Hantera installerade",
+      "extensionCatalog": "Tilläggskatalog",
+      "extensionOptions": "Tilläggsalternativ",
+      "application": "Program",
+      "transferStatistics": "Överföringsstatistik",
+      "shareStatistics": "Utdelningsstatistik",
+      "hubStatistics": "Hubbstatistik",
+      "users": "Användare",
+      "logging": "Loggning",
+      "webServer": "Webbserver",
+      "refreshOptions": "Uppdateringsalternativ",
+      "shareProfiles": "Utdelningsprofiler",
+      "sharingOptions": "Utdelningsalternatv",
+      "hashing": "Indexering",
+      "excludedPaths": "Uteslutna sökvägar",
+      "connectionSpeed": "Anslutningshastighet",
+      "bandwidthLimiting": "Bandbreddsbegränsning",
+      "downloadLimits": "Nedladdningsbegränsningar",
+      "uploadLimits": "Uppladdningsbegränsningar",
+      "perUserLimits": "Begränsning per användare",
+      "locations": "Platser",
+      "skippingOptions": "Alternativ för uteslutning av filer",
+      "searchMatching": "Sökmatchning",
+      "downloadOptions": "Nedladdningsalternativ",
+      "priorities": "Prioriteter",
+      "notificationsCaption": "Aviseringar",
+      "histories": "Historik",
+      "events": "Händelser"
+    },
+    "advanced": "Avancerat",
+    "noUnsavedChanges": "Inga osparade ändringar",
+    "saveChanges": "Spara ändringarna",
+    "savingCompleted": "Sparad",
+    "settingsWereSavedSuccessfully": "Inställningarna sparade",
+    "unsavedChangesPrompt": "Du har inte sparat dina ändringar. Är det säkert du vill lämna?",
+    "connectivity": {
+      "detection": {
+        "connectivityDetectionNote": "Vid problem med filöverföringen, se till att dina TCP-portar är öppna genom att använda en <1>online porttestare</1>. Observera att kontroll av UDP-porten (sök) inte kan göras online. För mer information om olika anslutningsmöjligheter, besök <4>DC++'s connectivity FAQ</4>.",
+        "currentAutoDetectionStatus": "Nuvarande automatisk detekteringsstatus",
+        "manualConfiguration": "{{status}} (manuell konfiguration)",
+        "autoDetected": "{{status}} (detektera automatiskt)"
+      },
+      "ports": {
+        "form": {
+          "tcpPortHelp": "TCP-porten används till okrypterade överföringar",
+          "udpPortHelp": "UDP-porten används till sökningar",
+          "tlsPortHelp": "TLS-porten (TCP) används till krypterade överföringar"
+        }
+      }
+    },
+    "profile": {
+      "user": {
+        "form": {
+          "settingProfileHelp0": "Klienten används i normala privat/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
+          "settingProfileHelp1": "Klienten används till att överföra RAR-arkiv (eller i andra småformat)"
         }
       },
-      "navigation": {
-        "profile": "Profil",
-        "connectivity": "Anslutning",
-        "speedAndLimits": "Hastighet och begränsningar",
-        "downloads": "Nedladdningar",
-        "sharing": "Utdelning",
-        "view": "Visa",
-        "about": "Om",
-        "extensions": "Filändelser",
-        "system": "System",
-        "autoDetection": "Detektera automatisk",
-        "iPv4ConnectivityManual": "IPv4-anslutning (manuellt)",
-        "iPv6ConnectivityManual": "IPv6-anslutning (manuellt)",
-        "portsManual": "Portar (manuellt)",
-        "proxies": "Proxyservrar",
-        "encryption": "Kryptering",
+      "ignoredUsers": {
         "user": "Användare",
-        "awayMode": "Tillfälligt borta",
-        "ignoredUsers": "Ignorerade användare",
-        "miscellaneous": "Diverse",
-        "manageInstalled": "Hantera installerade",
-        "extensionCatalog": "Tilläggskatalog",
-        "extensionOptions": "Tilläggsalternativ",
-        "application": "Program",
-        "transferStatistics": "Överföringsstatistik",
-        "shareStatistics": "Utdelningsstatistik",
-        "hubStatistics": "Hubbstatistik",
-        "users": "Användare",
-        "logging": "Loggning",
-        "webServer": "Webbserver",
-        "refreshOptions": "Uppdateringsalternativ",
-        "shareProfiles": "Utdelningsprofiler",
-        "sharingOptions": "Utdelningsalternatv",
-        "hashing": "Indexering",
-        "excludedPaths": "Uteslutna sökvägar",
-        "connectionSpeed": "Anslutningshastighet",
-        "bandwidthLimiting": "Bandbreddsbegränsning",
-        "downloadLimits": "Nedladdningsbegränsningar",
-        "uploadLimits": "Uppladdningsbegränsningar",
-        "perUserLimits": "Begränsning per användare",
-        "locations": "Platser",
-        "skippingOptions": "Alternativ för uteslutning av filer",
-        "searchMatching": "Sökmatchning",
-        "downloadOptions": "Nedladdningsalternativ",
-        "priorities": "Prioriteter",
-        "notificationsCaption": "Aviseringar",
-        "histories": "Historik",
-        "events": "Händelser"
+        "messagesIgnored": "Meddelande ignoreras",
+        "noIgnoredUsers": "Inga ignorerade användare"
       },
-      "advanced": "Avancerat",
-      "noUnsavedChanges": "Inga osparade ändringar",
-      "saveChanges": "Spara ändringarna",
-      "savingCompleted": "Sparad",
-      "settingsWereSavedSuccessfully": "Inställningarna sparade",
-      "unsavedChangesPrompt": "Du har inte sparat dina ändringar. Är det säkert du vill lämna?",
-      "connectivity": {
-        "detection": {
-          "connectivityDetectionNote": "Vid problem med filöverföringen, se till att dina TCP-portar är öppna genom att använda en <1>online porttestare</1>. Observera att kontroll av UDP-porten (sök) inte kan göras online. För mer information om olika anslutningsmöjligheter, besök <4>DC++'s connectivity FAQ</4>.",
-          "currentAutoDetectionStatus": "Nuvarande automatisk detekteringsstatus",
-          "manualConfiguration": "{{status}} (manuell konfiguration)",
-          "autoDetected": "{{status}} (detektera automatiskt)"
-        },
-        "ports": {
-          "form": {
-            "tcpPortHelp": "TCP-porten används till okrypterade överföringar",
-            "udpPortHelp": "UDP-porten används till sökningar",
-            "tlsPortHelp": "TLS-porten (TCP) används till krypterade överföringar"
-          }
-        }
-      },
-      "profile": {
-        "user": {
-          "form": {
-            "settingProfileHelp0": "Klienten används i normala privat/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
-            "settingProfileHelp1": "Klienten används till att överföra RAR-arkiv (eller i andra småformat)"
-          }
-        },
-        "ignoredUsers": {
-          "user": "Användare",
-          "messagesIgnored": "Meddelande ignoreras",
-          "noIgnoredUsers": "Inga ignorerade användare"
-        },
-        "miscellaneous": {
-          "form": {
-            "nmdcEncodingHelp": "<0>Kodningsinställning används endast i NMDC-hubbar. ADC-hubbar använder alltid kodningen UTF-8.<1></1><2></2><3>Vanliga använda värden:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
-          }
-        }
-      },
-      "extensions": {
-        "packages": {
-          "byAuthor": "av {{author}}",
-          "latestVersion": "Senaste version",
-          "installedVersion": "Installerad version",
-          "datePublished": "{{version}} (publicerat {{date}})",
-          "readMore": "Lär mer"
-        },
-        "manage": {
-          "byAuthor": "av {{author}}",
-          "latestVersion": "Senaste version",
-          "installedVersion": "Installerad version",
-          "nonListedExtension": "Icke-listade tillägg",
-          "readMore": "Lär mer",
-          "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>."
-        }
-      },
-      "about": {
-        "application": {
-          "applicationVersion": "Applikationsversion",
-          "webUiVersion": "WebUI-version",
-          "webUiBuildDate": "WebUI-byggdatum",
-          "apiVersion": "API-version",
-          "apiFeatureLevel": "API-funktionsnivå",
-          "started": "Startad",
-          "activeSessions": "Aktiva sessioner",
-          "serverThreads": "Servertrådar"
-        },
-        "transfers": {
-          "totalDownloaded": "Totalt nedladdat",
-          "totalUploaded": "Totalt uppladdat",
-          "session": "Session",
-          "sessionDownloaded": "Sessionsnedladdat",
-          "sessionUploaded": "Sessionsuppladdat"
-        },
-        "share": {
-          "noFilesShared": "Inga filer delas ut",
-          "totalShareSize": "Total utdelningsstorlek",
-          "totalFiles": "Totalt antal filer",
-          "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unika)",
-          "totalDirectories": "Totalt antal kataloger",
-          "averageFileAge": "Genomsnittlig filålder",
-          "averageFilesPerDirectory": "Genomsnittliga filer per katalog",
-          "incomingSearches": "Inkommande sökningar",
-          "totalSearches": "Totalt antal sökningar",
-          "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per sekund)",
-          "tthSearches": "TTH-sökningar",
-          "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matchning per sekund)",
-          "filteredTextSearches": "Filtrerade textsökningar",
-          "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} av de matchade returnerade resultaten)",
-          "averageTextSearchTokensNonFiltered": "Genomsnittlig textsökningtokens (ofiltrerat)",
-          "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} byte per token)",
-          "averageMatchingTimePerTextSearch": "Genomsnittlig matchningstid per textsökning",
-          "searchesAverageMatchTimeValue": "{{matchTime}} ms"
-        },
-        "hubs": {
-          "noHubsOnline": "Inga hubbar är anslutna",
-          "totalUsers": "Totalt antal användare",
-          "uniqueUsers": "Unika användare",
-          "activeUsers": "Aktiva användare",
-          "totalShare": "Totalt utdelat",
-          "averageSharePerUser": "Genomsnittlig utdelning per användare",
-          "averageAdcDownloadSpeed": "Genomsnittlig ADC-nedladdningshastighet",
-          "clients": "Klienter",
-          "averageAdcUploadSpeed": "Genomsnittlig ADC-uppladdningshastighet"
-        }
-      },
-      "system": {
-        "logging": {
-          "sections": "Sektioner",
-          "variableHelp": "Variabelinformation för Filnamn och Formatfält"
-        },
-        "serverSettings": {
-          "defaultCertNote": "Om certifikatsökvägarna lämnat tomma kommer klientens standardcertifikat att användas",
-          "advanced": "Avancerat"
-        },
-        "users": {
-          "username": "Användarnamn",
-          "permissions": "Behörigheter",
-          "activeSessions": "Aktiva sessioner",
-          "lastLoggedIn": "Senast inloggad",
-          "administrator": "Administratör",
-          "form": {
-            "usernameName": "Användarnamn",
-            "passwordName": "Lösenord",
-            "permissionsName": "Behörigheter"
-          },
-          "permissionSelector": {
-            "administrator": "Administratör",
-            "search": "Sök",
-            "download": "Ladda ned",
-            "transfers": "Överföringar",
-            "events": "Händelser",
-            "view": "Visa",
-            "edit": "Ändra",
-            "queue": "Kö",
-            "favoriteHubs": "Favorithubbar",
-            "settings": "Inställningar",
-            "localFilesystem": "Lokalt filsystem",
-            "hubs": "Hubbar",
-            "sendMessages": "Skicka meddelanden",
-            "privateChat": "Privata meddelanden",
-            "filelists": "Fillistor",
-            "viewedFiles": "Visade filer"
-          },
-          "addWebUser": "Lägg till webbanvändare",
-          "adminPermissionNote": "Administratörsrättigheter krävs för att komma åt systemsektionen i inställningarna"
-        }
-      },
-      "sharing": {
-        "excludes": {
-          "shareRefreshNote": "Utdelning måste uppdateras för att ändringarna ska träda i kraft",
-          "addExcludedPath": "Lägg till utesluten sökväg",
-          "path": "Sökväg"
-        },
-        "profiles": {
-          "name": "Namn",
-          "totalSize": "Total storlek",
-          "totalFiles": "Totalt antal filer",
-          "shareProfilesNote": "<0>Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.</0><1>Utdelningsprofilerna är tilldelade för enskilda kataloger från <1>Utdelnings</1>sidan.</1>"
-        },
-        "sharingOptions": {
-          "skiplist": "Uteslutningslista"
-        },
-        "hashing": {
-          "hashDatabase": "Indexdatabas",
-          "fileIndexSize": "Filindexstorlek",
-          "hashStoreSize": "Storlek på indexlagring",
-          "verifyIntegrityOfHashData": "Verifiera integriteten av indexdata",
-          "optimizeNow": "Optimera nu",
-          "hashDBOptimizeNote": "Denna åtgärd kommer att ta bort all indexinformation för filer som inte finns i utdelningen. Om du delar filer från nätverksdiskar eller från flyttbara enheter, försäkra dig om att filerna syns i utdelningen (annars kommer de att behövas indexeras igen)."
-        }
-      },
-      "speedLimits": {
-        "speed": {
-          "connectionSpeedNote": "Försök att vara så noggrann som möjligt och ställ in FAKTISKA hastighet för din anslutning. Du kan använda en testsida så som <1>Speedtest.net</1> för att mäta din hastighet."
-        },
-        "uploadLimits": {
-          "manuallySet": "Manuellt inställd"
-        },
-        "downloadLimits": {
-          "manuallySet": "Manuellt inställd"
-        }
-      },
-      "downloads": {
-        "locations": {
-          "availablePathVariables": "Tillgängliga sökvägsvariabler",
-          "favoriteDownloadDirectories": "Favoritkataloger",
-          "name": "Namn",
-          "path": "Sökväg"
-        },
-        "skippingOptions": {
-          "skiplist": "Uteslutningslista"
-        },
-        "priorities": {
-          "filePriorities": "Filprioriteringar",
-          "highPriorityFiles": "Högprioriterade filer"
-        }
-      },
-      "browserSpecificNote": "Inställningar som är listade på den här sidan är webbläsarspecifika",
-      "view": {
-        "notifications": {
-          "popupNotifications": "Popupaviseringar",
-          "form": {
-            "notifyPmUserName": "Privatmeddelanden (användare)",
-            "notifyPmBotName": "Privatmeddelanden (botar)",
-            "notifyBundleStatusName": "Filsamlingsstatus ändrad",
-            "notifyEventsInfoName": "Infohändelser",
-            "notifyEventsWarningName": "Varningshändelser",
-            "notifyEventsErrorName": "Felhändelser"
-          }
-        },
-        "histories": {
-          "maxMessageHistory": "Maximalt antal buffrade meddelanden",
-          "maxSessionHistory": "Maximalt antal tidigare öppnade sessioner"
-        },
-        "miscellaneous": {
-          "form": {
-            "unreadLabelDelayName": "Fördröjning för att markera chattsessioner som lästa (sekunder)",
-            "backgroundImageUrlName": "Egen webbadress till bakgrundsbilden",
-            "noInstallPromptName": "Visa aldrig applikationsistallationen i hemfönstret",
-            "corsProxyName": "CORS-proxywebbadress",
-            "corsProxyHelp": "CORS-proxy att använda för att hämta data från externa webbplatser (t.ex RSS-flöde och tillägg). Målwebbadressen läggs direkt efter den konfigurerade proxywebbadressen. Ingen proxy kommer att användas om fältet lämnas tomt, men det kan förhindra åtkomst till olika externa webbadresser eftersom de inte ofta är konfigurerade för att vara tillgängliga från andra webbplatser."
-          }
+      "miscellaneous": {
+        "form": {
+          "nmdcEncodingHelp": "<0>Kodningsinställning används endast i NMDC-hubbar. ADC-hubbar använder alltid kodningen UTF-8.<1></1><2></2><3>Vanliga använda värden:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
         }
       }
     },
     "extensions": {
-      "actions": {
-        "uninstall": "Avinstallera",
-        "start": "Start",
-        "installFromUrl": "Installera från webbadress",
-        "install": "Installera",
-        "stop": "Stopp",
-        "configure": "Konfigurera",
-        "prompts": {
-          "installUrlPlaceholder": "Ange webbadress",
-          "installUrlApprove": "Installera",
-          "installUrlContent": "Ange nedladdningswebbadress"
-        }
-      }
-    },
-    "navigation": {
-      "home": "Hem",
-      "queue": "Kö",
-      "search": "Sök",
-      "transfers": "Överföringar",
-      "hubs": "Hubbar",
-      "messages": "Meddelanden",
-      "filelists": "Fillistor",
-      "files": "Filer",
-      "events": "Händelser",
-      "favoriteHubs": "Favorithubbar",
-      "share": "Utdelning",
-      "settings": "Inställningar",
-      "logout": "Logga ut",
-      "more": "Mer..."
-    },
-    "login": {
-      "username": "Användarnamn",
-      "password": "Lösenord",
-      "keepMeLoggedIn": "Håll mig inloggad",
-      "login": "Användarnamn",
-      "authenticationFailed": "Autentisering misslyckades: {{lastError}}",
-      "connectingToTheServer": "Ansluter till servern...",
-      "reestablishConnection": "Försöker återuppta anslutningen...",
-      "sessionLost": "Sessionen förlorad",
-      "connectionClosed": "Anslutningen stängdes",
-      "privateBrowsingNotSupported": "Den här webbplatsen kan inte användas med din webbläsare om privat surfläge är aktiverat",
-      "dataStorageNotSupported": "Den här webbplatsen kan inte användas med din webbläsare eftersom den inte stöder datalagring"
-    },
-    "viewedFiles": {
-      "actions": {
-        "close": "Stäng"
+      "packages": {
+        "byAuthor": "av {{author}}",
+        "latestVersion": "Senaste version",
+        "installedVersion": "Installerad version",
+        "datePublished": "{{version}} (publicerat {{date}})",
+        "readMore": "Lär mer"
       },
-      "noFiles": "Inga filer att visa",
-      "noFilesDesc": "Text- eller mediefiler från sök- eller fillistor går att titta på här",
-      "preparingView": "Förbereder visning",
-      "opened": "Öppnad",
-      "downloaded": "Nedladdat",
-      "notifications": {
-        "fileHasFinishedDownloading": "Filen är nedladdad",
-        "actions": {
-          "viewFile": "Visa fil"
-        }
+      "manage": {
+        "byAuthor": "av {{author}}",
+        "latestVersion": "Senaste version",
+        "installedVersion": "Installerad version",
+        "nonListedExtension": "Icke-listade tillägg",
+        "readMore": "Lär mer",
+        "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>."
       }
     },
-    "messages": {
-      "actions": {
-        "clearChat": "Rensa chatt",
-        "close": "Stäng",
-        "disconnect": "Koppla från"
+    "about": {
+      "application": {
+        "applicationVersion": "Applikationsversion",
+        "webUiVersion": "WebUI-version",
+        "webUiBuildDate": "WebUI-byggdatum",
+        "apiVersion": "API-version",
+        "apiFeatureLevel": "API-funktionsnivå",
+        "started": "Startad",
+        "activeSessions": "Aktiva sessioner",
+        "serverThreads": "Servertrådar"
       },
-      "new": "Ny session",
-      "newDesc": "Öppna en ny privat chattsession",
-      "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna skicka privata meddelanden",
-      "directEncryptedChannelAvailable": "Direktkrypterad förbindelse tillgänglig",
-      "establishingConnection": "Etablerar förbindelse...",
-      "directEncryptedChannelEstablished": "Krypterad förbindelse har etablerats",
-      "notifications": {
-        "actions": {
-          "viewMessage": "Visa meddelande"
-        }
+      "transfers": {
+        "totalDownloaded": "Totalt nedladdat",
+        "totalUploaded": "Totalt uppladdat",
+        "session": "Session",
+        "sessionDownloaded": "Sessionsnedladdat",
+        "sessionUploaded": "Sessionsuppladdat"
+      },
+      "share": {
+        "noFilesShared": "Inga filer delas ut",
+        "totalShareSize": "Total utdelningsstorlek",
+        "totalFiles": "Totalt antal filer",
+        "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unika)",
+        "totalDirectories": "Totalt antal kataloger",
+        "averageFileAge": "Genomsnittlig filålder",
+        "averageFilesPerDirectory": "Genomsnittliga filer per katalog",
+        "incomingSearches": "Inkommande sökningar",
+        "totalSearches": "Totalt antal sökningar",
+        "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per sekund)",
+        "tthSearches": "TTH-sökningar",
+        "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matchning per sekund)",
+        "filteredTextSearches": "Filtrerade textsökningar",
+        "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} av de matchade returnerade resultaten)",
+        "averageTextSearchTokensNonFiltered": "Genomsnittlig textsökningtokens (ofiltrerat)",
+        "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} byte per token)",
+        "averageMatchingTimePerTextSearch": "Genomsnittlig matchningstid per textsökning",
+        "searchesAverageMatchTimeValue": "{{matchTime}} ms"
+      },
+      "hubs": {
+        "noHubsOnline": "Inga hubbar är anslutna",
+        "totalUsers": "Totalt antal användare",
+        "uniqueUsers": "Unika användare",
+        "activeUsers": "Aktiva användare",
+        "totalShare": "Totalt utdelat",
+        "averageSharePerUser": "Genomsnittlig utdelning per användare",
+        "averageAdcDownloadSpeed": "Genomsnittlig ADC-nedladdningshastighet",
+        "clients": "Klienter",
+        "averageAdcUploadSpeed": "Genomsnittlig ADC-uppladdningshastighet"
       }
     },
-    "home": {
-      "newUserIntro": "Information till nya användare",
-      "newUserIntroDesc": "<0><0>Lägg till några kataloger som delas med andra användare från sidan <1>Utdelning</1>.</0><1>You might want to go through at least each main page of <1>klientinställningar</1> innan du startar.  <3>Det är viktigt att du <1>konfigurerar din anslutningshastighet</1> korrekt eftersom annars kommer inte klienten att kunna utnyttja din bandbredd effektivt.</3></1><2>Det finns än så länge inga listor över publika hubbar så du måste kunna hubbadressen där du vill ansluta till.</2></0><1>Besök <1>hemsidan</1> för mer information om klienten dess funktioner.</1><2>Om du har några frågor, kan du ställa dem på <1>GitHub</1> eller så kan du ansluta till dev-/supporthubben: <3></3></2>"
+    "system": {
+      "logging": {
+        "sections": "Sektioner",
+        "variableHelp": "Variabelinformation för Filnamn och Formatfält"
+      },
+      "serverSettings": {
+        "defaultCertNote": "Om certifikatsökvägarna lämnat tomma kommer klientens standardcertifikat att användas",
+        "advanced": "Avancerat"
+      },
+      "users": {
+        "username": "Användarnamn",
+        "permissions": "Behörigheter",
+        "activeSessions": "Aktiva sessioner",
+        "lastLoggedIn": "Senast inloggad",
+        "administrator": "Administratör",
+        "form": {
+          "usernameName": "Användarnamn",
+          "passwordName": "Lösenord",
+          "permissionsName": "Behörigheter"
+        },
+        "permissionSelector": {
+          "administrator": "Administratör",
+          "search": "Sök",
+          "download": "Ladda ned",
+          "transfers": "Överföringar",
+          "events": "Händelser",
+          "view": "Visa",
+          "edit": "Ändra",
+          "queue": "Kö",
+          "favoriteHubs": "Favorithubbar",
+          "settings": "Inställningar",
+          "localFilesystem": "Lokalt filsystem",
+          "hubs": "Hubbar",
+          "sendMessages": "Skicka meddelanden",
+          "privateChat": "Privata meddelanden",
+          "filelists": "Fillistor",
+          "viewedFiles": "Visade filer"
+        },
+        "addWebUser": "Lägg till webbanvändare",
+        "adminPermissionNote": "Administratörsrättigheter krävs för att komma åt systemsektionen i inställningarna"
+      }
+    },
+    "sharing": {
+      "excludes": {
+        "shareRefreshNote": "Utdelning måste uppdateras för att ändringarna ska träda i kraft",
+        "addExcludedPath": "Lägg till utesluten sökväg",
+        "path": "Sökväg"
+      },
+      "profiles": {
+        "name": "Namn",
+        "totalSize": "Total storlek",
+        "totalFiles": "Totalt antal filer",
+        "shareProfilesNote": "<0>Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.</0><1>Utdelningsprofilerna är tilldelade för enskilda kataloger från <1>Utdelnings</1>sidan.</1>"
+      },
+      "sharingOptions": {
+        "skiplist": "Uteslutningslista"
+      },
+      "hashing": {
+        "hashDatabase": "Indexdatabas",
+        "fileIndexSize": "Filindexstorlek",
+        "hashStoreSize": "Storlek på indexlagring",
+        "verifyIntegrityOfHashData": "Verifiera integriteten av indexdata",
+        "optimizeNow": "Optimera nu",
+        "hashDBOptimizeNote": "Denna åtgärd kommer att ta bort all indexinformation för filer som inte finns i utdelningen. Om du delar filer från nätverksdiskar eller från flyttbara enheter, försäkra dig om att filerna syns i utdelningen (annars kommer de att behövas indexeras igen)."
+      }
+    },
+    "speedLimits": {
+      "speed": {
+        "connectionSpeedNote": "Försök att vara så noggrann som möjligt och ställ in FAKTISKA hastighet för din anslutning. Du kan använda en testsida så som <1>Speedtest.net</1> för att mäta din hastighet."
+      },
+      "uploadLimits": {
+        "manuallySet": "Manuellt inställd"
+      },
+      "downloadLimits": {
+        "manuallySet": "Manuellt inställd"
+      }
+    },
+    "downloads": {
+      "locations": {
+        "availablePathVariables": "Tillgängliga sökvägsvariabler",
+        "favoriteDownloadDirectories": "Favoritkataloger",
+        "name": "Namn",
+        "path": "Sökväg"
+      },
+      "skippingOptions": {
+        "skiplist": "Uteslutningslista"
+      },
+      "priorities": {
+        "filePriorities": "Filprioriteringar",
+        "highPriorityFiles": "Högprioriterade filer"
+      }
+    },
+    "browserSpecificNote": "Inställningar som är listade på den här sidan är webbläsarspecifika",
+    "view": {
+      "notifications": {
+        "popupNotifications": "Popupaviseringar",
+        "form": {
+          "notifyPmUserName": "Privatmeddelanden (användare)",
+          "notifyPmBotName": "Privatmeddelanden (botar)",
+          "notifyBundleStatusName": "Filsamlingsstatus ändrad",
+          "notifyEventsInfoName": "Infohändelser",
+          "notifyEventsWarningName": "Varningshändelser",
+          "notifyEventsErrorName": "Felhändelser"
+        }
+      },
+      "histories": {
+        "maxMessageHistory": "Maximalt antal buffrade meddelanden",
+        "maxSessionHistory": "Maximalt antal tidigare öppnade sessioner"
+      },
+      "miscellaneous": {
+        "form": {
+          "unreadLabelDelayName": "Fördröjning för att markera chattsessioner som lästa (sekunder)",
+          "backgroundImageUrlName": "Egen webbadress till bakgrundsbilden",
+          "noInstallPromptName": "Visa aldrig applikationsistallationen i hemfönstret",
+          "corsProxyName": "CORS-proxywebbadress",
+          "corsProxyHelp": "CORS-proxy att använda för att hämta data från externa webbplatser (t.ex RSS-flöde och tillägg). Målwebbadressen läggs direkt efter den konfigurerade proxywebbadressen. Ingen proxy kommer att användas om fältet lämnas tomt, men det kan förhindra åtkomst till olika externa webbadresser eftersom de inte ofta är konfigurerade för att vara tillgängliga från andra webbplatser."
+        }
+      }
     }
+  },
+  "extensions": {
+    "actions": {
+      "uninstall": "Avinstallera",
+      "start": "Start",
+      "installFromUrl": "Installera från webbadress",
+      "install": "Installera",
+      "stop": "Stopp",
+      "configure": "Konfigurera",
+      "prompts": {
+        "installUrlPlaceholder": "Ange webbadress",
+        "installUrlApprove": "Installera",
+        "installUrlContent": "Ange nedladdningswebbadress"
+      }
+    }
+  },
+  "navigation": {
+    "home": "Hem",
+    "queue": "Kö",
+    "search": "Sök",
+    "transfers": "Överföringar",
+    "hubs": "Hubbar",
+    "messages": "Meddelanden",
+    "filelists": "Fillistor",
+    "files": "Filer",
+    "events": "Händelser",
+    "favoriteHubs": "Favorithubbar",
+    "share": "Utdelning",
+    "settings": "Inställningar",
+    "logout": "Logga ut",
+    "more": "Mer..."
+  },
+  "login": {
+    "username": "Användarnamn",
+    "password": "Lösenord",
+    "keepMeLoggedIn": "Håll mig inloggad",
+    "login": "Användarnamn",
+    "authenticationFailed": "Autentisering misslyckades: {{lastError}}",
+    "connectingToTheServer": "Ansluter till servern...",
+    "reestablishConnection": "Försöker återuppta anslutningen...",
+    "sessionLost": "Sessionen förlorad",
+    "connectionClosed": "Anslutningen stängdes",
+    "privateBrowsingNotSupported": "Den här webbplatsen kan inte användas med din webbläsare om privat surfläge är aktiverat",
+    "dataStorageNotSupported": "Den här webbplatsen kan inte användas med din webbläsare eftersom den inte stöder datalagring"
+  },
+  "viewedFiles": {
+    "actions": {
+      "close": "Stäng"
+    },
+    "noFiles": "Inga filer att visa",
+    "noFilesDesc": "Text- eller mediefiler från sök- eller fillistor går att titta på här",
+    "preparingView": "Förbereder visning",
+    "opened": "Öppnad",
+    "downloaded": "Nedladdat",
+    "notifications": {
+      "fileHasFinishedDownloading": "Filen är nedladdad",
+      "actions": {
+        "viewFile": "Visa fil"
+      }
+    }
+  },
+  "messages": {
+    "actions": {
+      "clearChat": "Rensa chatt",
+      "close": "Stäng",
+      "disconnect": "Koppla från"
+    },
+    "new": "Ny session",
+    "newDesc": "Öppna en ny privat chattsession",
+    "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna skicka privata meddelanden",
+    "directEncryptedChannelAvailable": "Direktkrypterad förbindelse tillgänglig",
+    "establishingConnection": "Etablerar förbindelse...",
+    "directEncryptedChannelEstablished": "Krypterad förbindelse har etablerats",
+    "notifications": {
+      "actions": {
+        "viewMessage": "Visa meddelande"
+      }
+    }
+  },
+  "home": {
+    "newUserIntro": "Information till nya användare",
+    "newUserIntroDesc": "<0><0>Lägg till några kataloger som delas med andra användare från sidan <1>Utdelning</1>.</0><1>You might want to go through at least each main page of <1>klientinställningar</1> innan du startar.  <3>Det är viktigt att du <1>konfigurerar din anslutningshastighet</1> korrekt eftersom annars kommer inte klienten att kunna utnyttja din bandbredd effektivt.</3></1><2>Det finns än så länge inga listor över publika hubbar så du måste kunna hubbadressen där du vill ansluta till.</2></0><1>Besök <1>hemsidan</1> för mer information om klienten dess funktioner.</1><2>Om du har några frågor, kan du ställa dem på <1>GitHub</1> eller så kan du ansluta till dev-/supporthubben: <3></3></2>"
   }
 }
