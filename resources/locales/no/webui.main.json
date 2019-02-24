@@ -254,6 +254,7 @@
       "closeAndDontShowAgain": "Close and don't show again"
     },
     "networkClientError": "Network/client error",
+    "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Loading items",
     "root": "Root",
     "name": "Navn",
@@ -541,7 +542,8 @@
         "installedVersion": "Installed version",
         "nonListedExtension": "Non-listed extension",
         "readMore": "Read more",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page."
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
+        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
     "about": {

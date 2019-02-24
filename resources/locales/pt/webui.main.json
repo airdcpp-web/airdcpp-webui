@@ -254,6 +254,7 @@
       "closeAndDontShowAgain": "Fechar e não mostrar de novo"
     },
     "networkClientError": "Erro de rede / cliente",
+    "failedToFetchData": "Failed to fetch data",
     "loadingItems": "A carregar itens",
     "root": "Raiz",
     "name": "Nome",
@@ -541,7 +542,8 @@
         "installedVersion": "Versão instalada",
         "nonListedExtension": "Extensão não listada",
         "readMore": "Ler mais",
-        "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>."
+        "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>.",
+        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
     "about": {

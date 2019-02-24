@@ -254,6 +254,7 @@
       "closeAndDontShowAgain": "Sulje ja älä näytä uudestaan"
     },
     "networkClientError": "Verkko-/selainvirhe",
+    "failedToFetchData": "Tiedon hakeminen epäonnistui",
     "loadingItems": "Ladataan kohteita",
     "root": "Juuri",
     "name": "Nimi",
@@ -541,7 +542,8 @@
         "installedVersion": "Asennettu versio",
         "nonListedExtension": "Listaamaton lisäosa",
         "readMore": "Lue lisää",
-        "noInstalledExtensions": "Asennettuja lisäosia ei löytynyt. Uusia lisäosia voidaan asentaa <1>Lisäosien katalogi</1> -sivulta."
+        "noInstalledExtensions": "Asennettuja lisäosia ei löytynyt. Uusia lisäosia voidaan asentaa <1>Lisäosien katalogi</1> -sivulta.",
+        "extensionDirectoryFetchError": "Tiedon hakeminen lisäosien katalogista epäonnistui: {{error}}"
       }
     },
     "about": {

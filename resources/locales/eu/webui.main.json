@@ -254,6 +254,7 @@
       "closeAndDontShowAgain": "Itxi eta ez erakutsi berriro"
     },
     "networkClientError": "Sarea/bezeroaren errorea",
+    "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Elementuak kargatzen",
     "root": "Erroa",
     "name": "Izena",
@@ -541,7 +542,8 @@
         "installedVersion": "Instalatutako bertsioa",
         "nonListedExtension": "Non-listed extension",
         "readMore": "Gehiago irakurri",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page."
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
+        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
     "about": {

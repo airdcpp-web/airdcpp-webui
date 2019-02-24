@@ -115,7 +115,7 @@ const LoginStore = {
 
   setLoginError(error: ErrorResponse | string) {
     if ((error as ErrorResponse).code === 400) {
-      this._lastError = translate('Session lost', i18n.t, UI.Modules.LOGIN);
+      this._lastError = translate('Session lost', i18n.t.bind(i18n), UI.Modules.LOGIN);
     } else { 
       this._lastError = errorToString(error);
     }
@@ -163,7 +163,7 @@ const LoginStore = {
     this._socketAuthenticated = false;
     if (this.user) {
       if (error === '') {
-        this._lastError = translate('Connection closed', i18n.t, UI.Modules.LOGIN);
+        this._lastError = translate('Connection closed', i18n.t.bind(i18n), UI.Modules.LOGIN);
       } else {
         this._lastError = error;
       }

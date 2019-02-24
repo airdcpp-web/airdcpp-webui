@@ -254,6 +254,7 @@
       "closeAndDontShowAgain": "Stäng och visa inte igen"
     },
     "networkClientError": "Nätverk-/klientfel",
+    "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Laddar objekt",
     "root": "Root",
     "name": "Namn",
@@ -541,7 +542,8 @@
         "installedVersion": "Installerad version",
         "nonListedExtension": "Icke-listade tillägg",
         "readMore": "Lär mer",
-        "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>."
+        "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>.",
+        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
     "about": {
