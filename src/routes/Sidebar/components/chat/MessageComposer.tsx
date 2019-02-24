@@ -228,12 +228,13 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
         ) }
         <Dropzone
           onDrop={ this.onDrop }
-          disableClick={ true }
         >
-          {({getRootProps}) => (
+          {({ getRootProps }) => (
             <div 
               className={ className }
-              { ...getRootProps() }
+              { ...getRootProps({
+                onClick: evt => evt.preventDefault()
+              }) }
             >
               <MentionsInput 
                 className="input"
