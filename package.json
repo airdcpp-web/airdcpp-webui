@@ -30,7 +30,7 @@
     "build": "npm run clean && npm run build-webpack",
     "build-debug": "npm run clean && webpack --progress",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "tx pull -a && npm run build"
   },
   "pre-commit": [
     "test"
