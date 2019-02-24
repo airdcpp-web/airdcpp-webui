@@ -19,9 +19,9 @@ const abbreviatedRelativeUnits = {
   }
 };
 
-const normalRelativeUnits = {
-  relativeTime:	(Moment.localeData('en') as any)._relativeTime
-};
+const getNormalRelativeUnits = () => ({
+  relativeTime:	(Moment.localeData(Moment.locale()) as any)._relativeTime
+});
 
 
 const byteUnits = [ 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' ];
@@ -105,9 +105,11 @@ export const formatAbbreviatedDuration = (time: number) => {
   const finish = Moment().add(time, 'seconds');
 
   // Change the relative units temporarily
-  Moment.updateLocale('en', abbreviatedRelativeUnits);
+  const normalRelativeUnits = getNormalRelativeUnits();
+  Moment.updateLocale(Moment.locale(), abbreviatedRelativeUnits);
+
   const ret = now.to(finish);
-  Moment.updateLocale('en', normalRelativeUnits);
+  Moment.updateLocale(Moment.locale(), normalRelativeUnits);
 
   return ret;
 };
