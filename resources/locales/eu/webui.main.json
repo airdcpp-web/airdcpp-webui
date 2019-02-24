@@ -1,0 +1,801 @@
+{
+  "main": {
+    "widgets": {
+      "application": {
+        "addWidget": "Gehitu trepeta...",
+        "loggedInAs": "Gisa konektatuta",
+        "clientStarted": "Hasitako bezeroa",
+        "activeSessions": "Saio aktiboak"
+      },
+      "rss": {
+        "widgetName": "RSS feed",
+        "invalidUrl": "Baliogabeko URL-a",
+        "lastUpdated": "Azken eguneratzea: {{time}}",
+        "actions": {
+          "openLink": "Ireki lotura",
+          "search": "Bilatu"
+        },
+        "loadingFeed": "Jarioa kargatzen",
+        "form": {
+          "feedUrlName": "URL jarioa",
+          "feedUrlHelp": "RSS and Atom feeds are supported",
+          "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        }
+      },
+      "transfers": {
+        "widgetName": "Transferentziak",
+        "trafficBps": "Trafikoa (bps)",
+        "downloads": "Deskargak",
+        "uploads": "Igoerak",
+        "downloaded": "Jaitsita",
+        "uploaded": "Igota",
+        "downloadLimit": "Deskarga muga",
+        "uploadLimit": "Igo muga",
+        "disabled": "Ezgaitu"
+      },
+      "actions": {
+        "editWidget": "Editatu trepeta",
+        "removeWidget": "Ezabatu trepeta",
+        "prompts": {
+          "removeApprove": "Ezabatu trepeta",
+          "removeReject": "Ez ezabatu",
+          "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
+        }
+      },
+      "form": {
+        "nameName": "Izena"
+      },
+      "widgetPositionHint": "Widgets and their positions are browser-specific"
+    },
+    "events": {
+      "events": "Ekitaldiak",
+      "loadingMessages": "Mezuak kargatzen",
+      "noMessagesToShow": "Ez dago mezurik erakusteko",
+      "actions": {
+        "clear": "Garbitu"
+      },
+      "notifications": {
+        "information": "Informazioa",
+        "info": "INFO",
+        "warning": "KONTUZ",
+        "error": "ERROREA",
+        "actions": {
+          "viewEvents": "Ikusi gertaerak"
+        }
+      }
+    },
+    "table": {
+      "filter": {
+        "filter": "Iragazkia",
+        "matchType": "Konparazio mota",
+        "partial": "Partzial",
+        "regex": "Adierazpen erregularra",
+        "wildcard": "Komodin",
+        "exact": "Zehatza",
+        "filterByProfile": "Profil bidez iragazi",
+        "allProfiles": "Profil guztiak"
+      }
+    },
+    "search": {
+      "table": {
+        "name": "Izena",
+        "size": "Tamaina",
+        "relevance": "Garrantzia",
+        "type": "Mota",
+        "connection": "Konekxioa",
+        "users": "Erabiltzaileak",
+        "time": "Azken aldaketa",
+        "slots": "Slot-ak"
+      },
+      "actions": {
+        "resultDetails": "Emaitza xehetasunak",
+        "browseContent": "Arakatu edukia"
+      },
+      "user": "Erabiltzailea",
+      "hubs": "Hub-ak",
+      "connection": "Konekxioa",
+      "slots": "Slot-ak",
+      "ip": "IP",
+      "path": "Bidea",
+      "searchOffline": "Konektatuta hub baten egon behar du gutxienez bilaketak egiteko ",
+      "enterSearchString": "Sartu bilaketa-testua...",
+      "search": "Bilatu",
+      "typeContent": "Mota/edukia",
+      "size": "Tamaina",
+      "lastModified": "Azken aldaketa",
+      "dupeType": "Dupe type",
+      "shareFull": "Partekatu (full)",
+      "dupePaths": "Dupe paths",
+      "actionsCaption": "Ekintzak...",
+      "usersCount": "Erabiltzailea ({{count}})",
+      "usersCount_plural": "Erabiltzaileak ({{count}})",
+      "tth": "TTH",
+      "xUsersNicks": "{{count}} erabiltzailea ({{user.nicks}})",
+      "xUsersNicks_plural": "{{count}} erabiltzaileak ({{user.nicks}})",
+      "noResults": "Ez da \"{{searchString}}\" aurkitu",
+      "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
+    },
+    "share": {
+      "table": {
+        "path": "Bidea",
+        "size": "Tamaina",
+        "virtual_name": "Izen birtuala",
+        "profiles": "Profilak",
+        "last_refresh_time": "Azken freskatua",
+        "type": "Edukia",
+        "virtualName": "Izen birtuala",
+        "lastRefreshTime": "Azken freskatua"
+      },
+      "actions": {
+        "editDirectory": "Editatu direktorioa",
+        "removeDirectory": "Ezabatu direktorioa",
+        "addDirectory": "Direktorioa gehitu",
+        "refreshAll": "Freskatu guztia",
+        "prompts": {
+          "removeRootApprove": "Ezabatu direktorioa",
+          "removeRootReject": "Ez ezabatu",
+          "removeRootContent": "Ziur zaude {{item.virtual_name}} partekatzetik direktorioa ezabatu nahi duzula? Partekatutako profiletatik kenduko da."
+        }
+      },
+      "actionsCaption": "Ekintzak...",
+      "shareActions": "Share actions",
+      "hashingInformation": "Indexatze informazioa",
+      "hashingInformationDesc": "<0>Fitxategi berriak partekatzeko agertzen indexaketa bukatu ondoren bakarrik (bezeroak checksum kalkulatu behar du beraientzat). Indexatzeko aurrerapenei buruzko informazioa gertaera erregistroan argitaratuko da.</0>",
+      "addShareDirectory": "Add share directory",
+      "editShareDirectory": "Edit share directory",
+      "form": {
+        "pathName": "Bidea",
+        "virtualNameName": "Izen birtuala",
+        "virtualNameHelp": "Izen birtual berdinak dituzten direktorioak artxibozerrenda batean bateratuko dira",
+        "profilesName": "Profilak partekatu",
+        "profilesHelp": "Partekatze profil berriak sor ditzakezu aplikazioaren konfigurazioan ",
+        "incomingName": "Harkorra"
+      }
+    },
+    "favoriteHubs": {
+      "actions": {
+        "addNew": "gehitu berria",
+        "setPassword": "Ezarri pasahitza",
+        "edit": "Editatu",
+        "remove": "Ezabatu",
+        "changePassword": "Pasa-hitza aldatu",
+        "removePassword": "Ezabatu pasahitza",
+        "prompts": {
+          "changePasswordPlaceholder": "Idatzi pasahitza",
+          "changePasswordApprove": "Eguneratu pasahitza",
+          "changePasswordContent": "Enter new password for the hub {{item.name}}",
+          "removePasswordApprove": "Ezabatu pasahitza",
+          "removePasswordReject": "Ez ezabatu",
+          "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
+          "createPasswordPlaceholder": "Idatzi pasahitza",
+          "createPasswordApprove": "Ezarri pasahitza",
+          "createPasswordContent": "Set password for the hub {{item.name}}"
+        }
+      },
+      "table": {
+        "connectState": "Egoera",
+        "name": "Izena",
+        "autoConnect": "Auto konektatu",
+        "nick": "Ezizena",
+        "hasPassword": "Pasa-hitza",
+        "hubUrl": "Helbidea",
+        "shareProfile": "Profila partekatu"
+      },
+      "notSet": "Ez da ezarri",
+      "set": "Ezarri da",
+      "globalDefault": "Lehenetsi orokorrak",
+      "addFavoriteHub": "Gehitu gogoko hub",
+      "editFavoriteHub": "Editatu hub gogokoa",
+      "form": {
+        "genericName": "Hub propietateak",
+        "nameName": "Izena",
+        "hubUrlName": "Hubaren URLa",
+        "hubDescriptionName": "Hubaren deskribapena",
+        "shareProfileName": "Profila partekatu",
+        "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
+        "autoConnectName": "Auto konektatu",
+        "userName": "User setting overrides",
+        "nickName": "Ezizena",
+        "userDescriptionName": "Erabiltzaile deskibapena",
+        "connectivityV4Name": "Connectivity setting overrides (IPv4)",
+        "connectionModeV4Name": "Konektagarritasun modua",
+        "connectionModeV4Option1": "Ezgaitu",
+        "connectionModeV4Option0": "Modu aktiboa",
+        "connectionModeV4Option2": "Modu pasiboa",
+        "connectionIpV4Name": "IP helbidea",
+        "connectivityV6Name": "Connectivity setting overrides (IPv6)",
+        "connectionModeV6Name": "Konektagarritasun modua",
+        "connectionModeV6Option1": "Ezgaitu",
+        "connectionModeV6Option0": "modu aktiboa",
+        "connectionModeV6Option2": "Modu pasiboa",
+        "connectionIpV6Name": "IP helbidea"
+      }
+    },
+    "filelists": {
+      "new": "Ireki fitxategi zerrenda",
+      "newDesc": "Fitxategi zerrenda bilatzen hasi",
+      "offlineMessage": "Hub baten konektatuta egon behar zara gutxienez beste erabiltzaile batengandik fitxategi-zerrenda deskargatzeko",
+      "directorySize": "Direktorioaren tamaina",
+      "totalListSize": "Zerrenda osoaren tamaina",
+      "browseOwnShare": "Browse own share...",
+      "root": "Erroa",
+      "userOffline": "Erabiltzailea lineaz kanpo",
+      "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
+      "noContentToDisplay": "Ez dago edukirik bistaratzeko",
+      "theDirectoryIsEmpty": "Direktorioa hutsik dago",
+      "table": {
+        "name": "Izena",
+        "size": "Tamaina",
+        "time": "Azken aldaketa",
+        "type": "Mota"
+      },
+      "actions": {
+        "reload": "Birkargatu",
+        "refreshInShare": "Partekatzea freskatu",
+        "close": "Itxi"
+      }
+    },
+    "common": {    
+      "actions": {
+        "download": "Jaitsi",
+        "downloadTo": "-ra jaitsi",
+        "findNfo": "Aurkitu NFO",
+        "search": "Bilatu",
+        "sendMessage": "Mezua bidali",
+        "browseShare": "Browse share",
+        "ignoreMessages": "Mezua ez ikusi",
+        "viewAsText": "Testu gisa ikusi",
+        "playVideo": "Erreproduzitu bideoa",
+        "viewImage": "Ikusi irudia",
+        "playAudio": "Erreproduzitu audioa",
+        "copyMagnetLink": "Copy magnet link",
+        "shutDownApplication": "Itzali aplikazioa",
+        "restartWebServer": "Web zerbitzaria berrabiarazi",
+        "unignoreMessages": "Unignore messages",
+        "closeAndDontShowAgain": "Itxi eta ez erakutsi berriro"
+      },
+      "networkClientError": "Sarea/bezeroaren errorea",
+      "loadingItems": "Elementuak kargatzen",
+      "root": "Erroa",
+      "name": "Izena",
+      "size": "Tamaina",
+      "createDirectory": "Directorioa sortu",
+      "create": "Sortu",
+      "directoryName": "Direktorioaren izena",
+      "computer": "Ordenagailua",
+      "history": "Aurrekoa",
+      "shared": "Partekatua",
+      "favorites": "Gogokoak",
+      "dupes": "Dupes",
+      "browse": "Nabigatu",
+      "download": "Jaitsi",
+      "close": "Itxi",
+      "noPathsToDisplay": "Bistaratzeko bideik ez",
+      "pathSpaceFree": "{{path}} ({{freeSpace}} eskuragarri)",
+      "select": "Aukeratu",
+      "new": "Berria",
+      "currentSessions": "Oraingo saioak",
+      "closeAll": "Itxi guztia",
+      "recentSessions": "Azken aldiko saioak",
+      "openedAgo": "Irekita {{timeAgo}}",
+      "waitingForServerResponse": "Zerbitzariaren erantzunaren zain",
+      "loadingMessages": "Mezuak kargatzen",
+      "loadingSession": "Saioa kargatzen",
+      "no": "Ez",
+      "cancel": "Deusestu",
+      "loading": "Kargatzen",
+      "loadingData": "Datuak kargatzen ...",
+      "noOnlineHubs": "Lineako hub bat ere ez",
+      "installAsLocalApplication": "Install as local application",
+      "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
+      "install": "Instalatu",
+      "dontInstall": "Ez Instalatu",
+      "statisticsNotAvailable": "Estatistikak ez daude eskuragarri",
+      "save": "Gorde",
+      "enterNick": "Ezizena sartu...",
+      "enterLimitKBS": "Sartu muga (kB/s)",
+      "enterLimit": "Sartu muga...",
+      "removeLimit": "Ezabatu muga",
+      "form": {
+        "browse": "Nabigatu",
+        "noOptions": "Ez dago aukerarik",
+        "fieldOptional": "{{definition.title}} (optional)"
+      }
+    },
+    "hubs": {
+      "table": {
+        "nick": "Ezizena",
+        "shareSize": "Share size",
+        "description": "Deskripzioa",
+        "tag": "Etiketa",
+        "uploadSpeed": "Upload speed",
+        "downloadSpeed": "Deskarga abiadura",
+        "ip4": "IP (v4)",
+        "ip6": "IP (v6)",
+        "fileCount": "Fitxategia"
+      },
+      "actions": {
+        "reconnect": "Birkonektatu",
+        "clearChat": "Garbitu txata",
+        "close": "Itxi"
+      },
+      "enterHubAddress": "Enter hub address...",
+      "connect": "Konektatu",
+      "notConnectedToTheHub": "Not connected to the hub",
+      "connecting": "Konektatzen",
+      "loadingUserlist": "Loading userlist",
+      "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
+      "new": "Konektatu",
+      "newDesc": "Connect to a new hub",
+      "userList": "Erabiltzaile zerrenda",
+      "sharePerUser": "{{total}} ({{average}}/user)",
+      "xUsers": "{{count}} erabiltzaileak",
+      "xUsers_plural": "{{count}} erabiltzaileak",
+      "redirectRequested": "Redirect requested",
+      "acceptRedirect": "Accept redirect to {{url}}",
+      "passwordRequired": "Password required",
+      "password": "Pasahitza",
+      "submit": "Bidali",
+      "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+    },
+    "queue": {
+      "table": {
+        "name": "Izena",
+        "size": "Tamaina",
+        "status": "Egoera",
+        "sources": "Iturria",
+        "secondsLeft": "Falta den denbora",
+        "speed": "Abiadura",
+        "priority": "Lehentasuna",
+        "type": "Mota/edukia",
+        "timeAdded": "Gehituta",
+        "timeFinished": "Amaituta"
+      },
+      "actionsCaption": "Ekintzak...",
+      "queueActions": "Queue actions",
+      "pausedForced": "Etenduta (behartuta)",
+      "queueEmpty": "The queue is empty",
+      "queueEmptyDesc": "New items can be queued from search or filelists",
+      "actions": {
+        "removeCompletedBundles": "Remove completed bundles",
+        "pauseAllBundles": "Pause all bundles",
+        "resumeAllBundles": "Resume all bundles",
+        "manageFiles": "Manage files...",
+        "manageSources": "Manage sources...",
+        "searchForeground": "Bilatu (lehen planoan)",
+        "searchForAlternates": "Bilatu erabiltzaile alternatiboak",
+        "remove": "Ezabatu",
+        "removeSource": "Ezabatu deskargatzeko iturburua",
+        "prompts": {
+          "removeBundleApprove": "Remove bundle",
+          "removeBundleReject": "Ez ezabatu",
+          "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
+          "removeBundleCheckbox": "Remove finished files",
+          "removeFileApprove": "Ezabatu fitxategia",
+          "removeFileReject": "Ez ezabatu",
+          "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
+          "removeFileCheckbox": "Remove on disk"
+        }
+      },
+      "paused": "Etenduta",
+      "lowest": "Baxuena",
+      "low": "Baxua",
+      "normal": "Normala",
+      "high": "Goi",
+      "highest": "Altuena",
+      "auto": "Auto",
+      "sources": "Iturria",
+      "user": "Erabiltzailea",
+      "hubs": "Hub-ak",
+      "lastKnownSpeed": "Azkeneko abiadura ezaguna",
+      "files": "Fitxategia",
+      "size": "Tamaina",
+      "notifications": {
+        "bundleWasAddedInQueue": "Bundle was added in queue",
+        "bundleDownloadError": "Download error: {{error}}",
+        "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
+        "validatingDownloadedBundle": "Validating downloaded bundle",
+        "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
+        "bundleWasAddedInShare": "Bundle was added in share",
+        "actions": {
+          "viewQueue": "Ikusi ilara"
+        }
+      }
+    },
+    "transfers": {
+      "table": {
+        "user": "Erabiltzailea",
+        "name": "Izena",
+        "size": "Segmentu",
+        "status": "Egoera",
+        "secondsLeft": "Falta den denbora",
+        "speed": "Abiadura",
+        "flags": "Banderak",
+        "ip": "IP"
+      },
+      "actions": {
+        "forceConnect": "Indarrean konektatu",
+        "disconnect": "Deskonektatu",
+        "removeFileFromQueue": "Kendu fitxategia ilaratik",
+        "removeUserFromQueue": "Kendu erabiltzailea ilaratik"
+      },
+      "noActiveTransfers": "No active transfers"
+    },
+    "settings": {
+      "actions": {
+        "detectNow": "Orain atzeman",
+        "addDirectory": "Direktorioa gehitu",
+        "addUser": "Gehitu erabiltzailea",
+        "editUser": "Editatu erabiltzailea",
+        "editDirectory": "Editatu direktorioa",
+        "removeDirectory": "Ezabatu direktorioa",
+        "addProfile": "Gehitu profila",
+        "browseFiles": "Arakatu fitxategiak",
+        "renameProfile": "Profilren izena aldatu",
+        "addPath": "Gehitu bidea",
+        "removePath": "Kendu bidea",
+        "prompts": {
+          "removeShareExcludeApprove": "Kendu bidea",
+          "removeShareExcludeReject": "Ez ezabatu",
+          "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?"
+        }
+      },
+      "navigation": {
+        "profile": "Profila",
+        "connectivity": "Konektibitatea",
+        "speedAndLimits": "Abiadura eta mugak",
+        "downloads": "Deskargak",
+        "sharing": "Partekatzen",
+        "view": "Ikusi",
+        "about": "-ri buruz",
+        "extensions": "Luzapenak",
+        "system": "Sistema",
+        "autoDetection": "Auto detection",
+        "iPv4ConnectivityManual": "IPv4 konektagarritasuna (eskuz)",
+        "iPv6ConnectivityManual": "IPv6 konektagarritasuna (eskuz)",
+        "portsManual": "Portuak (eskuz)",
+        "proxies": "Proxi-ak",
+        "encryption": "Enkriptazio",
+        "user": "Erabiltzailea",
+        "awayMode": "Kanpoan modua",
+        "ignoredUsers": "Erabiltzaileak ez ikusi ",
+        "miscellaneous": "Denetarik",
+        "manageInstalled": "Manage installed",
+        "extensionCatalog": "Extension catalog",
+        "extensionOptions": "Extension options",
+        "application": "Aplizakio",
+        "transferStatistics": "Transfer statistics",
+        "shareStatistics": "Share statistics",
+        "hubStatistics": "Hub statistics",
+        "users": "Erabiltzaileak",
+        "logging": "Logging",
+        "webServer": "Web zerbitzaria",
+        "refreshOptions": "Freskatu aukerak",
+        "shareProfiles": "Profilak partekatu",
+        "sharingOptions": "Partekatze aukerak",
+        "hashing": "Indexatzen",
+        "excludedPaths": "Excluded paths",
+        "connectionSpeed": "Konexio abiadura",
+        "bandwidthLimiting": "Banda-zabalera mugatzen",
+        "downloadLimits": "Deskarga mugak",
+        "uploadLimits": "Igo mugak",
+        "perUserLimits": "Per-user limits",
+        "locations": "Kokapenak",
+        "skippingOptions": "Aukerak saltatzen",
+        "searchMatching": "Bilaketa parekatu",
+        "downloadOptions": "Deskarga aukerak",
+        "priorities": "Lehentasunak",
+        "notificationsCaption": "Jakinarazpenak",
+        "histories": "Historioak",
+        "events": "Ekitaldiak"
+      },
+      "advanced": "Aurreratua",
+      "noUnsavedChanges": "Ez dago gorde gabeko aldakerik",
+      "saveChanges": "Aldaketak gorde",
+      "savingCompleted": "Gordetzea amaiturik",
+      "settingsWereSavedSuccessfully": "Settings were saved successfully",
+      "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
+      "connectivity": {
+        "detection": {
+          "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
+          "currentAutoDetectionStatus": "Current auto detection status",
+          "manualConfiguration": "{{status}} (manual configuration)",
+          "autoDetected": "{{status}} (auto detected)"
+        },
+        "ports": {
+          "form": {
+            "tcpPortHelp": "TCP port is used for unencrypted transfers",
+            "udpPortHelp": "UDP port is used for searching",
+            "tlsPortHelp": "TLS port (TCP) is used for encrypted transfers"
+          }
+        }
+      },
+      "profile": {
+        "user": {
+          "form": {
+            "settingProfileHelp0": "Bezeroa hub pribatu/publiko arruntetan erabiltzen da internet bidez fitxategiak transferitzeko. Erabili profila ez bazaude ziur.",
+            "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)"
+          }
+        },
+        "ignoredUsers": {
+          "user": "Erabiltzailea",
+          "messagesIgnored": "Ez ikusitako mezuak",
+          "noIgnoredUsers": "No ignored users"
+        },
+        "miscellaneous": {
+          "form": {
+            "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
+          }
+        }
+      },
+      "extensions": {
+        "packages": {
+          "byAuthor": "by {{author}}",
+          "latestVersion": "Azken bertsioa",
+          "installedVersion": "Instalatutako bertsioa",
+          "datePublished": "{{version}} (published {{date}})",
+          "readMore": "Gehiago irakurri"
+        },
+        "manage": {
+          "byAuthor": "by {{author}}",
+          "latestVersion": "Azken bertsioa",
+          "installedVersion": "Instalatutako bertsioa",
+          "nonListedExtension": "Non-listed extension",
+          "readMore": "Gehiago irakurri",
+          "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page."
+        }
+      },
+      "about": {
+        "application": {
+          "applicationVersion": "Aplizakio bertsioa",
+          "webUiVersion": "Web UI bertsioa",
+          "webUiBuildDate": "Web UI eraikitze data",
+          "apiVersion": "API bertsioa",
+          "apiFeatureLevel": "API feature level",
+          "started": "Hasita",
+          "activeSessions": "Saio aktiboak",
+          "serverThreads": "Server threads"
+        },
+        "transfers": {
+          "totalDownloaded": "Deskargatutakoa guztira",
+          "totalUploaded": "Igotakoa guztira",
+          "session": "Saioa",
+          "sessionDownloaded": "Jaitsitakoa saioan",
+          "sessionUploaded": "Igotakoa saioan"
+        },
+        "share": {
+          "noFilesShared": "Ez da artxiborik partekatu",
+          "totalShareSize": "Partekatutako tamaina guztira",
+          "totalFiles": "Artxiboak guztira",
+          "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
+          "totalDirectories": "Direktorioak guztira",
+          "averageFileAge": "Batezbesteko artxiboen adina",
+          "averageFilesPerDirectory": "Direktorio bakoitzeko batez besteko artxiboak",
+          "incomingSearches": "Incoming searches",
+          "totalSearches": "Bilaketak guztira",
+          "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
+          "tthSearches": "TTH searches",
+          "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
+          "filteredTextSearches": "Testu-bilaketa filtratuak",
+          "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
+          "averageTextSearchTokensNonFiltered": "Average text search tokens (non-filtered)",
+          "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} bytes per token)",
+          "averageMatchingTimePerTextSearch": "Average matching time per text search",
+          "searchesAverageMatchTimeValue": "{{matchTime}} ms"
+        },
+        "hubs": {
+          "noHubsOnline": "No hubs online",
+          "totalUsers": "Erabiltzaileak guztira",
+          "uniqueUsers": "Unique users",
+          "activeUsers": "ERabiltzaile aktiboak",
+          "totalShare": "Partekatua guztira",
+          "averageSharePerUser": "Erabiltzaile bakoitzaren batez besteko kuota",
+          "averageAdcDownloadSpeed": "Batez besteko ADC deskarga abiadura",
+          "clients": "Bezeroak",
+          "averageAdcUploadSpeed": "Batez besteko ADC igoera abiadura"
+        }
+      },
+      "system": {
+        "logging": {
+          "sections": "Atalak",
+          "variableHelp": "Variable information for Filename and Format fields"
+        },
+        "serverSettings": {
+          "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
+          "advanced": "Aurreratua"
+        },
+        "users": {
+          "username": "Erabiltzaile izena",
+          "permissions": "Baimenak",
+          "activeSessions": "Saio aktiboak",
+          "lastLoggedIn": "Last logged in",
+          "administrator": "Administratzailea",
+          "form": {
+            "usernameName": "Erabiltzaile izena",
+            "passwordName": "Pasa-hitza",
+            "permissionsName": "Baimenak"
+          },
+          "permissionSelector": {
+            "administrator": "Administratzailea",
+            "search": "Bilatu",
+            "download": "Jaitsi",
+            "transfers": "Transferentziak",
+            "events": "Ekitaldiak",
+            "view": "Ikusi",
+            "edit": "Editatu",
+            "queue": "Ilara",
+            "favoriteHubs": "Gogoko hub-a",
+            "settings": "Ezarpenak",
+            "localFilesystem": "Local filesystem",
+            "hubs": "Hub-ak",
+            "sendMessages": "Mezuak bidali",
+            "privateChat": "Txat pribatua",
+            "filelists": "Fitxategi zerrenda",
+            "viewedFiles": "Viewed files"
+          },
+          "addWebUser": "Add web user",
+          "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
+        }
+      },
+      "sharing": {
+        "excludes": {
+          "shareRefreshNote": "Share must be refreshed for the changes to take effect",
+          "addExcludedPath": "Add excluded path",
+          "path": "Bidea"
+        },
+        "profiles": {
+          "name": "Izena",
+          "totalSize": "Tamaina guztira",
+          "totalFiles": "Artxiboak guztira",
+          "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
+        },
+        "sharingOptions": {
+          "skiplist": "Skiplist"
+        },
+        "hashing": {
+          "hashDatabase": "Indexatutako datu basea",
+          "fileIndexSize": "File index size",
+          "hashStoreSize": "Hash store size",
+          "verifyIntegrityOfHashData": "Verify integrity of hash data",
+          "optimizeNow": "Optimize now",
+          "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
+        }
+      },
+      "speedLimits": {
+        "speed": {
+          "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <1>Speedtest.net</1>, to test your speed."
+        },
+        "uploadLimits": {
+          "manuallySet": "Manually set"
+        },
+        "downloadLimits": {
+          "manuallySet": "Manually set"
+        }
+      },
+      "downloads": {
+        "locations": {
+          "availablePathVariables": "Available path variables",
+          "favoriteDownloadDirectories": "Favorite download directories",
+          "name": "Izena",
+          "path": "Bidea"
+        },
+        "skippingOptions": {
+          "skiplist": "Skiplist"
+        },
+        "priorities": {
+          "filePriorities": "File priorities",
+          "highPriorityFiles": "High priority files"
+        }
+      },
+      "browserSpecificNote": "Settings listed on this page are browser-specific",
+      "view": {
+        "notifications": {
+          "popupNotifications": "Popup notifications",
+          "form": {
+            "notifyPmUserName": "Private messages (users)",
+            "notifyPmBotName": "Private messages (bots)",
+            "notifyBundleStatusName": "Bundle status changes",
+            "notifyEventsInfoName": "Info events",
+            "notifyEventsWarningName": "Warning events",
+            "notifyEventsErrorName": "Error events"
+          }
+        },
+        "histories": {
+          "maxMessageHistory": "Maximum number of messages to cache",
+          "maxSessionHistory": "Maximum number of previously opened sessions"
+        },
+        "miscellaneous": {
+          "form": {
+            "unreadLabelDelayName": "Delay for marking chat sessions as read (seconds)",
+            "backgroundImageUrlName": "Custom background image URL",
+            "noInstallPromptName": "Never show the application install prompt in Home view",
+            "corsProxyName": "CORS proxy URL",
+            "corsProxyHelp": "CORS proxy to use for fetching data from extenal sites (e.g. RSS feeds and extensions). The target URL will be put directly after the configured proxy URL. No proxy will be used if the field is left empty, but it may prevent accessing various external URLs as they aren't often configured to be accessible from other sites."
+          }
+        }
+      }
+    },
+    "extensions": {
+      "actions": {
+        "uninstall": "Kendu",
+        "start": "Hasi",
+        "installFromUrl": "Install from URL",
+        "install": "Instalatu",
+        "stop": "Gelditu",
+        "configure": "Konfiguratu",
+        "prompts": {
+          "installUrlPlaceholder": "Enter URL",
+          "installUrlApprove": "Instalatu",
+          "installUrlContent": "Enter download URL"
+        }
+      }
+    },
+    "navigation": {
+      "home": "Hasiera",
+      "queue": "Ilara",
+      "search": "Bilatu",
+      "transfers": "Transferentziak",
+      "hubs": "Hub-ak",
+      "messages": "Mezuak",
+      "filelists": "Fitxategi zerrenda",
+      "files": "Fitxategia",
+      "events": "Ekitaldiak",
+      "favoriteHubs": "Gogoko hub-a",
+      "share": "Partekatu",
+      "settings": "Ezarpenak",
+      "logout": "Saioa amaitu",
+      "more": "Gehiago..."
+    },
+    "login": {
+      "username": "Erabiltzaile izena",
+      "password": "Pasa-hitza",
+      "keepMeLoggedIn": "Keep me logged in",
+      "login": "Saioa hasi",
+      "authenticationFailed": "Authentication failed: {{lastError}}",
+      "connectingToTheServer": "Zerbitzarira konektatzen...",
+      "reestablishConnection": "Attempting to re-establish connection...",
+      "sessionLost": "Saio galdua",
+      "connectionClosed": "Konekxioa itxita",
+      "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
+      "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
+    },
+    "viewedFiles": {
+      "actions": {
+        "close": "Itxi"
+      },
+      "noFiles": "Ez dago artxiborik ikusteko",
+      "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
+      "preparingView": "Ikuspegia prestatzen",
+      "opened": "Irekita",
+      "downloaded": "Jaitsita",
+      "notifications": {
+        "fileHasFinishedDownloading": "Artxiboaa deskargatzen amaitu da",
+        "actions": {
+          "viewFile": "Ikusi artxiboa"
+        }
+      }
+    },
+    "messages": {
+      "actions": {
+        "clearChat": "Garbitu txata",
+        "close": "Itxi",
+        "disconnect": "Deskonektatu"
+      },
+      "new": "Saio berria",
+      "newDesc": "Ireki berriketa txat pribatu berri bat",
+      "offlineMessage": "You must to be connected to at least one hub in order to send private messages",
+      "directEncryptedChannelAvailable": "Direct encrypted channel available",
+      "establishingConnection": "Konexioa ezartzen...",
+      "directEncryptedChannelEstablished": "Direct encrypted channel established",
+      "notifications": {
+        "actions": {
+          "viewMessage": "Mezua ikusi"
+        }
+      }
+    },
+    "home": {
+      "newUserIntro": "Informazioa erabiltzaile berrientzat",
+      "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
+    }
+  }
+}

@@ -1,1 +1,801 @@
-{}
+{
+  "main": {
+    "widgets": {
+      "application": {
+        "addWidget": "Adicionar widget...",
+        "loggedInAs": "Autenticado como",
+        "clientStarted": "Cliente iniciado",
+        "activeSessions": "Sessões ativas"
+      },
+      "rss": {
+        "widgetName": "Feed RSS",
+        "invalidUrl": "URL inválido",
+        "lastUpdated": "Última atualização: {{time}}",
+        "actions": {
+          "openLink": "Abrir hiperligação",
+          "search": "Pesquisar"
+        },
+        "loadingFeed": "A carregar o feed",
+        "form": {
+          "feedUrlName": "URL do feed",
+          "feedUrlHelp": "São suportados feeds RSS e Atom",
+          "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        }
+      },
+      "transfers": {
+        "widgetName": "Transferências",
+        "trafficBps": "Tráfego (bps)",
+        "downloads": "Descarregamentos",
+        "uploads": "Envios",
+        "downloaded": "Descarregado",
+        "uploaded": "Enviado",
+        "downloadLimit": "Limite de descarregamento",
+        "uploadLimit": "Limite de envio",
+        "disabled": "Desativado"
+      },
+      "actions": {
+        "editWidget": "Editar widget",
+        "removeWidget": "Remover widget",
+        "prompts": {
+          "removeApprove": "Remover widget",
+          "removeReject": "Não remover",
+          "removeContent": "Tem a certeza que quer remover o widget {{item.settings.name}}?"
+        }
+      },
+      "form": {
+        "nameName": "Name"
+      },
+      "widgetPositionHint": "Os widgets e as suas posições são específicas para cada navegador de Internet"
+    },
+    "events": {
+      "events": "Eventos",
+      "loadingMessages": "A carregar mensagens",
+      "noMessagesToShow": "Não há mensagens para mostrar",
+      "actions": {
+        "clear": "Limpar"
+      },
+      "notifications": {
+        "information": "Informação",
+        "info": "INFO",
+        "warning": "AVISO",
+        "error": "ERRO",
+        "actions": {
+          "viewEvents": "Ver eventos"
+        }
+      }
+    },
+    "table": {
+      "filter": {
+        "filter": "Filtro",
+        "matchType": "Tipo de resultado",
+        "partial": "Parcial",
+        "regex": "ExpReg",
+        "wildcard": "Curinga",
+        "exact": "Exato",
+        "filterByProfile": "Filtrar por perfil",
+        "allProfiles": "Todos os perfis"
+      }
+    },
+    "search": {
+      "table": {
+        "name": "Name",
+        "size": "Tamanho",
+        "relevance": "Relevância",
+        "type": "Tipo",
+        "connection": "Conexão",
+        "users": "Utilizadores",
+        "time": "Última alteração",
+        "slots": "Aberturas"
+      },
+      "actions": {
+        "resultDetails": "Detalhes do resultado",
+        "browseContent": "Navegar conteúdo"
+      },
+      "user": "Utilizador",
+      "hubs": "Hubs",
+      "connection": "Conexão",
+      "slots": "Aberturas",
+      "ip": "Ip",
+      "path": "Caminho",
+      "searchOffline": "Tem de estar conectado a pelo menos um concentrador para poder fazer pesquisas",
+      "enterSearchString": "Introduza os termos a pesquisar...",
+      "search": "Pesquisar",
+      "typeContent": "Tipo / conteúdo",
+      "size": "Tamanho",
+      "lastModified": "Última alteração",
+      "dupeType": "Tipo de duplicado",
+      "shareFull": "Partilha (total)",
+      "dupePaths": "Caminhos do duplicado",
+      "actionsCaption": "Ações...",
+      "usersCount": "Utilizador ({{count}})",
+      "usersCount_plural": "Utilizadores ({{count}})",
+      "tth": "TTH",
+      "xUsersNicks": "{{count}} utilizador ({{user.nicks}})",
+      "xUsersNicks_plural": "{{count}} utilizadores ({{user.nicks}})",
+      "noResults": "Não foram encontrados resultados para \"{{searchString}}\"",
+      "noResultsHint": "<0><0>Certifique-se que escreveu as palavras corretamente</0><1>Use palavras-chave diferentes</1><2>Está a pesquisar demasiadas vezes (os concentradores têm um intervalo de pesquisas mínimo)</2><3>Se nunca receber resultados de termos comuns de pesquisa, certifique-se que as suas configurações da ligação estão corretas</3></0>"
+    },
+    "share": {
+      "table": {
+        "path": "Caminho",
+        "size": "Tamanho",
+        "virtual_name": "Nome virtual",
+        "profiles": "Perfis",
+        "last_refresh_time": "Última atualização",
+        "type": "Conteúdo",
+        "virtualName": "Nome virtual",
+        "lastRefreshTime": "Última atualização"
+      },
+      "actions": {
+        "editDirectory": "Editar pasta",
+        "removeDirectory": "Remover pasta",
+        "addDirectory": "Adicionar pasta",
+        "refreshAll": "Atualizar tudo",
+        "prompts": {
+          "removeRootApprove": "Remover pasta",
+          "removeRootReject": "Não remover",
+          "removeRootContent": "Tem a certeza que quer remover a pasta {{item.virtual_name}} da partilha? Será removida de todos os perfis de partilha."
+        }
+      },
+      "actionsCaption": "Ações...",
+      "shareActions": "Ações de partilha",
+      "hashingInformation": "Informação de hashing",
+      "hashingInformationDesc": "<0>Os novos ficheiros aparecem na partilha apenas após terminar o hashing (o cliente calculou as somas de verificação para eles). A informação sobre o progresso do hashing será colocada no registo de eventos.</0>",
+      "addShareDirectory": "Adicionar pasta partilhada",
+      "editShareDirectory": "Editar pasta partilhada",
+      "form": {
+        "pathName": "Caminho",
+        "virtualNameName": "Nome virtual",
+        "virtualNameHelp": "As pastas com nomes virtuais idênticos serão unidas na lista de ficheiros",
+        "profilesName": "Perfis de partilha",
+        "profilesHelp": "Podem ser criados novos perfis de partilha nas configurações da aplicação",
+        "incomingName": "Entrando"
+      }
+    },
+    "favoriteHubs": {
+      "actions": {
+        "addNew": "Adicionar novo",
+        "setPassword": "Definir palavra-passe",
+        "edit": "Editar",
+        "remove": "Remover",
+        "changePassword": "Mudar palavra-passe",
+        "removePassword": "Remover palavra-passe",
+        "prompts": {
+          "changePasswordPlaceholder": "Introduzir palavra-passe",
+          "changePasswordApprove": "Atualizar palavra-passe",
+          "changePasswordContent": "introduza a nova palavra-passe para o concentrador {{item.name}}",
+          "removePasswordApprove": "Remover palavra-passe",
+          "removePasswordReject": "Não remover",
+          "removePasswordContent": "Tem a certeza que quer redefinir a palavra-passe do concentrador {{item.name}}?",
+          "createPasswordPlaceholder": "Introduzir palavra-passe",
+          "createPasswordApprove": "Definir palavra-passe",
+          "createPasswordContent": "Definir a palavra-passe para o concentrador {{item.name}}"
+        }
+      },
+      "table": {
+        "connectState": "Estado",
+        "name": "Name",
+        "autoConnect": "Conectar automaticamente",
+        "nick": "Alcunha",
+        "hasPassword": "Palavra-passe",
+        "hubUrl": "Endereço",
+        "shareProfile": "Perfil de partilha"
+      },
+      "notSet": "Não definido",
+      "set": "Definir",
+      "globalDefault": "Padrão global",
+      "addFavoriteHub": "Adicionar concentrador favorito",
+      "editFavoriteHub": "Editar concentrador favorito",
+      "form": {
+        "genericName": "Propriedades do concentrador",
+        "nameName": "Name",
+        "hubUrlName": "URL do concentrador",
+        "hubDescriptionName": "Descrição do concentrador",
+        "shareProfileName": "Perfil de partilha",
+        "shareProfileHelp": "Os perfis de partilha personalizados podem ser selecionados apenas após introduzir um endereço de um concentrador ADC (começa com adc:// ou adcs://)",
+        "autoConnectName": "Conectar automaticamente",
+        "userName": "Primazia de utilizador",
+        "nickName": "Alcunha",
+        "userDescriptionName": "Descrição do Usuário",
+        "connectivityV4Name": "Primazia de conectividade (IPv4)",
+        "connectionModeV4Name": "Modo de conectividade",
+        "connectionModeV4Option1": "Desativado",
+        "connectionModeV4Option0": "Modo ativo",
+        "connectionModeV4Option2": "Modo passivo",
+        "connectionIpV4Name": "Endereço IP",
+        "connectivityV6Name": "Primazia de conectividade (IPv6)",
+        "connectionModeV6Name": "Modo de conectividade",
+        "connectionModeV6Option1": "Desativado",
+        "connectionModeV6Option0": "Modo ativo",
+        "connectionModeV6Option2": "Modo passivo",
+        "connectionIpV6Name": "Endereço IP"
+      }
+    },
+    "filelists": {
+      "new": "Abrir lista de ficheiros",
+      "newDesc": "Começar a navegar numa nova lista de ficheiros",
+      "offlineMessage": "Tem de estar ligado a pelo menos um concentrador para poder descarregar listas de ficheiros de outros utilizadores",
+      "directorySize": "Tamanho da pasta",
+      "totalListSize": "Tamanho total da lista",
+      "browseOwnShare": "Navegar pela própria partilha...",
+      "root": "Raiz",
+      "userOffline": "Usuário offline",
+      "userOfflineDesc": "Você poderá continuar a navegar quando o utilizador voltar a ligar-se",
+      "noContentToDisplay": "Sem conteúdo para mostrar",
+      "theDirectoryIsEmpty": "A pasta está vazia",
+      "table": {
+        "name": "Name",
+        "size": "Tamanho",
+        "time": "Última alteração",
+        "type": "Tipo"
+      },
+      "actions": {
+        "reload": "Recarregar",
+        "refreshInShare": "Atualizar na partilha",
+        "close": "Fechar"
+      }
+    },
+    "common": {    
+      "actions": {
+        "download": "Descarregar",
+        "downloadTo": "Descarregar para...",
+        "findNfo": "Procurar NFO",
+        "search": "Pesquisar",
+        "sendMessage": "Enviar mensagem",
+        "browseShare": "Navegar partilhado",
+        "ignoreMessages": "Ignorar mensagens",
+        "viewAsText": "Visualizar como texto",
+        "playVideo": "Reproduzir vídeo",
+        "viewImage": "Ver imagem",
+        "playAudio": "Reproduzir áudio",
+        "copyMagnetLink": "Copiar hiperligação magnética",
+        "shutDownApplication": "Desligar a aplicação",
+        "restartWebServer": "Reiniciar o servidor web",
+        "unignoreMessages": "Deixar de ignorar mensagens",
+        "closeAndDontShowAgain": "Fechar e não mostrar de novo"
+      },
+      "networkClientError": "Erro de rede / cliente",
+      "loadingItems": "A carregar itens",
+      "root": "Raiz",
+      "name": "Name",
+      "size": "Tamanho",
+      "createDirectory": "Criar pasta",
+      "create": "Criar",
+      "directoryName": "Nome da pasta",
+      "computer": "Computador",
+      "history": "Anterior",
+      "shared": "Compartilhado",
+      "favorites": "Favoritos",
+      "dupes": "Dupes",
+      "browse": "Navegar",
+      "download": "Descarregar",
+      "close": "Fechar",
+      "noPathsToDisplay": "Sem caminhos para mostrar",
+      "pathSpaceFree": "{{path}} ({{freeSpace}} livre)",
+      "select": "Selecionar",
+      "new": "Novo",
+      "currentSessions": "Sessões atuais",
+      "closeAll": "Fechar tudo",
+      "recentSessions": "Sessões recentes",
+      "openedAgo": "Aberto {{timeAgo}}",
+      "waitingForServerResponse": "À espera da resposta do servidor",
+      "loadingMessages": "A carregar mensagens",
+      "loadingSession": "A carregar a sessão",
+      "no": "Não",
+      "cancel": "Cancelar",
+      "loading": "A carregar",
+      "loadingData": "A carregar dados...",
+      "noOnlineHubs": "Sem concentradores online",
+      "installAsLocalApplication": "Instalar como aplicação local",
+      "pwaInstallDesc": "Esta aplicação web pode ser instalada localmente, fornecendo uma melhor experiência de utilizador",
+      "install": "Instalar",
+      "dontInstall": "Não instalar",
+      "statisticsNotAvailable": "Estatísticas não disponíveis",
+      "save": "Guardar",
+      "enterNick": "Introduzir alcunha...",
+      "enterLimitKBS": "Introduzir limite (kB/s)",
+      "enterLimit": "Introduzir limite...",
+      "removeLimit": "Remover limite",
+      "form": {
+        "browse": "Navegar",
+        "noOptions": "Sem opções",
+        "fieldOptional": "{{definition.title}} (opcional)"
+      }
+    },
+    "hubs": {
+      "table": {
+        "nick": "Alcunha",
+        "shareSize": "Tamanho da partilha",
+        "description": "Descrição",
+        "tag": "Etiqueta",
+        "uploadSpeed": "Vel. Envio",
+        "downloadSpeed": "Vel. Descarregar",
+        "ip4": "IP (v4)",
+        "ip6": "IP (v6)",
+        "fileCount": "Ficheiros"
+      },
+      "actions": {
+        "reconnect": "Reconectar",
+        "clearChat": "Limpar conversação",
+        "close": "Fechar"
+      },
+      "enterHubAddress": "Introduza o endereço do concentrador...",
+      "connect": "Conectar",
+      "notConnectedToTheHub": "Não conectado ao concentrador",
+      "connecting": "A conectar",
+      "loadingUserlist": "A carregar a lista de utilizadores",
+      "favoriteHubsHint": "Dica: visite a página dos <1>Concentradores favoritos</1> para conectar utilizando configurações personalizadas",
+      "new": "Conectar",
+      "newDesc": "Conectar a um concentrador novo",
+      "userList": "Lista de utilizadores",
+      "sharePerUser": "{{total}} ({{average}}/utilizador)",
+      "xUsers": "{{count}} utilizadores",
+      "xUsers_plural": "{{count}} utilizadores",
+      "redirectRequested": "Pedido o redirecionamento",
+      "acceptRedirect": "Aceitar redirecionamento para {{url}}",
+      "passwordRequired": "Necessária a palavra-passe",
+      "password": "Palavra-passe",
+      "submit": "Submeter",
+      "passwordPromptHelp": "Isto significa normalmente que existe uma conta registada associada à sua alcunha. Se não se lembra de ter uma conta registada com este concentrador, pode haver alguém a usar a mesma alcunha."  
+    },
+    "queue": {
+      "table": {
+        "name": "Name",
+        "size": "Tamanho",
+        "status": "Estado",
+        "sources": "Fontes",
+        "secondsLeft": "Tempo restante",
+        "speed": "Velocidade",
+        "priority": "Prioridade",
+        "type": "Tipo / conteúdo",
+        "timeAdded": "Adicionado",
+        "timeFinished": "Terminado"
+      },
+      "actionsCaption": "Ações...",
+      "queueActions": "Ações de fila",
+      "pausedForced": "Pausado (forçado)",
+      "queueEmpty": "O pedido está vazio",
+      "queueEmptyDesc": "Os novos itens podem ser adicionados à fila nas pesquisas ou listas de ficheiros",
+      "actions": {
+        "removeCompletedBundles": "Remover pacotes completos",
+        "pauseAllBundles": "Pausar todos os pacotes",
+        "resumeAllBundles": "Continuar todos os pacotes",
+        "manageFiles": "Gerir ficheiros...",
+        "manageSources": "Gerir fontes...",
+        "searchForeground": "Pesquisa (primeiro plano)",
+        "searchForAlternates": "Pesquisar por alternativos",
+        "remove": "Remover",
+        "removeSource": "Remover fonte",
+        "prompts": {
+          "removeBundleApprove": "Remover pacote",
+          "removeBundleReject": "Não remover",
+          "removeBundleContent": "Tem a certeza que quer remover o pacote {{item.name}}?",
+          "removeBundleCheckbox": "Remover ficheiros terminados",
+          "removeFileApprove": "Remover ficheiro",
+          "removeFileReject": "Não remover",
+          "removeFileContent": "Tem a certeza que quer remover o ficheiro {{item.name}}?",
+          "removeFileCheckbox": "Remover no disco"
+        }
+      },
+      "paused": "Pausado",
+      "lowest": "Baixíssimo",
+      "low": "Baixo",
+      "normal": "Normal",
+      "high": "Alta",
+      "highest": "Altíssima",
+      "auto": "Automático",
+      "sources": "Fontes",
+      "user": "Utilizador",
+      "hubs": "Concentradores",
+      "lastKnownSpeed": "Última velocidade conhecida",
+      "files": "Ficheiros",
+      "size": "Tamanho",
+      "notifications": {
+        "bundleWasAddedInQueue": "O pacote foi adicionado ao pedido",
+        "bundleDownloadError": "Erro de descarregamento: {{error}}",
+        "bundleContentValidationError": "Falhou a validação do conteúdo do pacote: {{error}} ({{hook}})",
+        "validatingDownloadedBundle": "A validar o pacote descarregado",
+        "bundleWasCompletedSuccessfully": "O pacote foi terminado com sucesso",
+        "bundleWasAddedInShare": "O pacote foi adicionado à partilha",
+        "actions": {
+          "viewQueue": "Ver fila"
+        }
+      }
+    },
+    "transfers": {
+      "table": {
+        "user": "Utilizador",
+        "name": "Name",
+        "size": "Segmento",
+        "status": "Estado",
+        "secondsLeft": "Tempo restante",
+        "speed": "Velocidade",
+        "flags": "Sinalizadores",
+        "ip": "IP"
+      },
+      "actions": {
+        "forceConnect": "Forçar conexão",
+        "disconnect": "Desconectar",
+        "removeFileFromQueue": "Remover ficheiro da fila",
+        "removeUserFromQueue": "Remover utilizador da fila"
+      },
+      "noActiveTransfers": "Sem transferências ativas"
+    },
+    "settings": {
+      "actions": {
+        "detectNow": "Detetar agora",
+        "addDirectory": "Adicionar pasta",
+        "addUser": "Adicionar utilizador",
+        "editUser": "Editar utilizador",
+        "editDirectory": "Editar pasta",
+        "removeDirectory": "Remover pasta",
+        "addProfile": "Adicionar perfil",
+        "browseFiles": "Navegar pelos ficheiros",
+        "renameProfile": "Renomear perfil",
+        "addPath": "Adicionar caminho",
+        "removePath": "Remover caminho",
+        "prompts": {
+          "removeShareExcludeApprove": "Remover caminho",
+          "removeShareExcludeReject": "Não remover",
+          "removeShareExcludeContent": "Tem a certeza que quer remover o caminho excluído {{item}}?"
+        }
+      },
+      "navigation": {
+        "profile": "Perfil",
+        "connectivity": "Conectividade",
+        "speedAndLimits": "Velocidade e limites",
+        "downloads": "Descarregamentos",
+        "sharing": "Partilha",
+        "view": "Visualizar",
+        "about": "Sobre",
+        "extensions": "Extensões",
+        "system": "Sistema",
+        "autoDetection": "Deteção automática",
+        "iPv4ConnectivityManual": "Conectividade IPv4 (manual)",
+        "iPv6ConnectivityManual": "Conectividade IPv6 (manual)",
+        "portsManual": "Portas (manual)",
+        "proxies": "Proxies",
+        "encryption": "Encriptação",
+        "user": "Utilizador",
+        "awayMode": "Modo ausente",
+        "ignoredUsers": "Usuários Ignorados",
+        "miscellaneous": "Miscelânea",
+        "manageInstalled": "Gerir instalados",
+        "extensionCatalog": "Catálogo de extensões",
+        "extensionOptions": "Opções das extensões",
+        "application": "Aplicação",
+        "transferStatistics": "Estatísticas de transferências",
+        "shareStatistics": "Estatísticas de partilhas",
+        "hubStatistics": "Estatísticas de concentradores",
+        "users": "Utilizadores",
+        "logging": "Relatórios (LOG)",
+        "webServer": "Servidor web",
+        "refreshOptions": "Atualizar opções",
+        "shareProfiles": "Perfis de partilha",
+        "sharingOptions": "Opções de partilha",
+        "hashing": "Hashing",
+        "excludedPaths": "Caminhos excluídos",
+        "connectionSpeed": "Velocidade da conexão",
+        "bandwidthLimiting": "Limitação de largura de banda",
+        "downloadLimits": "Limites de descarregamento",
+        "uploadLimits": "Limites de envio",
+        "perUserLimits": "Limites por utilizador",
+        "locations": "Localizações",
+        "skippingOptions": "Opções de ignorar",
+        "searchMatching": "Correspondência nas pesquisas",
+        "downloadOptions": "AirDownloads",
+        "priorities": "Prioridades",
+        "notificationsCaption": "Notificações",
+        "histories": "Históricos",
+        "events": "Eventos"
+      },
+      "advanced": "Avançado",
+      "noUnsavedChanges": "Sem alterações por guardar",
+      "saveChanges": "Guardar alterações",
+      "savingCompleted": "Guardar terminado",
+      "settingsWereSavedSuccessfully": "As configurações foram guardadas com sucesso",
+      "unsavedChangesPrompt": "Tem alterações por guardar. Tem a certeza que quer sair?",
+      "connectivity": {
+        "detection": {
+          "connectivityDetectionNote": "No caso de haver problemas de conectividade, por favor confirme que as suas portas estão mesmo abertas utilizando um <1>verificador de portas na Internet</1>. Note que a validade da porta UDP (pesquisa) não pode ser verificada na Internet. Para mais informações sobre os diferentes modos de conetividade, visite a página<4>Perguntas frequentes de conectividade do DC++</4>.",
+          "currentAutoDetectionStatus": "Estado atual da deteção automática",
+          "manualConfiguration": "{{status}} (configuração manual)",
+          "autoDetected": "{{status}} (detetado automaticamente)"
+        },
+        "ports": {
+          "form": {
+            "tcpPortHelp": "A porta TCP é usada para transferências não encriptadas",
+            "udpPortHelp": "A porta UDP é usada nas pesquisas",
+            "tlsPortHelp": "A porta TLS (TCP) é usada para transferências encriptadas"
+          }
+        }
+      },
+      "profile": {
+        "user": {
+          "form": {
+            "settingProfileHelp0": "O cliente é utilizado em concentradores normais privados/públicos para transferência de ficheiros através da Internet. Utilize este perfil se não tiver a certeza.",
+            "settingProfileHelp1": "O cliente é utilizado para transferir ficheiros que são separados em arquivos RAR (ou em outros formatos pequenos)"
+          }
+        },
+        "ignoredUsers": {
+          "user": "Utilizador",
+          "messagesIgnored": "Mensagens ignoradas",
+          "noIgnoredUsers": "Sem utilizadores ignorados"
+        },
+        "miscellaneous": {
+          "form": {
+            "nmdcEncodingHelp": "<0>A definição de codificação é usada apenas em concentradores NMDC. Os concentradores ADC irão utilizar sempre a codificação UTF-8.<1></1><2></2><3>Valores comuns mais utilizados:<1><0>Europa Central: cp1250</0><1>Cirílico: cp1251</1><2>Europa Ocidental: cp1252</2><3>Grego: cp1253</3><4>Turco: cp1254</4><5>Hebraico: cp1256</5></1></3></0>"
+          }
+        }
+      },
+      "extensions": {
+        "packages": {
+          "byAuthor": "por {{author}}",
+          "latestVersion": "Última Versão",
+          "installedVersion": "Versão instalada",
+          "datePublished": "{{version}} (publicada em {{date}})",
+          "readMore": "Ler mais"
+        },
+        "manage": {
+          "byAuthor": "por {{author}}",
+          "latestVersion": "Última Versão",
+          "installedVersion": "Versão instalada",
+          "nonListedExtension": "Extensão não listada",
+          "readMore": "Ler mais",
+          "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>."
+        }
+      },
+      "about": {
+        "application": {
+          "applicationVersion": "Versão da aplicação",
+          "webUiVersion": "Versão da interface de utilizador da web",
+          "webUiBuildDate": "Data de compilação da interface de utilizador da web",
+          "apiVersion": "Versão da API",
+          "apiFeatureLevel": "Nível de funcionalidades da API",
+          "started": "Iniciado",
+          "activeSessions": "Sessões ativas",
+          "serverThreads": "Threads do servidor"
+        },
+        "transfers": {
+          "totalDownloaded": "Total descarregado",
+          "totalUploaded": "Total enviado",
+          "session": "Sessão",
+          "sessionDownloaded": "Descarregado na sessão",
+          "sessionUploaded": "Enviado na sessão"
+        },
+        "share": {
+          "noFilesShared": "Nenhum ficheiro partilhado",
+          "totalShareSize": "Tamanho total da partilha",
+          "totalFiles": "Total de ficheiros",
+          "totalFilesValue": "{{totalCount}} ({{uniqueCount}} únicos)",
+          "totalDirectories": "Total de pastas",
+          "averageFileAge": "Idade média dos ficheiros",
+          "averageFilesPerDirectory": "Média de ficheiros por pasta",
+          "incomingSearches": "Pesquisas recebidas",
+          "totalSearches": "Total de pesquisas",
+          "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} por segundo)",
+          "tthSearches": "Pesquisas TTH",
+          "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} correspondências por segundo)",
+          "filteredTextSearches": "Pesquisas de texto filtradas",
+          "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} dos resultados correspondentes retornaram resultados)",
+          "averageTextSearchTokensNonFiltered": "Média de tokens de pesquisas de texto (não filtrado)",
+          "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} bytes por token)",
+          "averageMatchingTimePerTextSearch": "Média de tempo correspondente por pesquisa de texto",
+          "searchesAverageMatchTimeValue": "{{matchTime}} ms"
+        },
+        "hubs": {
+          "noHubsOnline": "Nenhum concentrador ligado à Internet",
+          "totalUsers": "Total de utilizadores",
+          "uniqueUsers": "Utilizadores únicos",
+          "activeUsers": "Utilizadores ativos",
+          "totalShare": "Total da partilha",
+          "averageSharePerUser": "Média de partilha por utilizador",
+          "averageAdcDownloadSpeed": "Média de velocidade de descarregamento ADC",
+          "clients": "Clientes",
+          "averageAdcUploadSpeed": "Média de velocidade de envio ADC"
+        }
+      },
+      "system": {
+        "logging": {
+          "sections": "Secções",
+          "variableHelp": "Informação variável para os campos Nome de ficheiro e Formato"
+        },
+        "serverSettings": {
+          "defaultCertNote": "É usado o certificado padrão do cliente caso os caminhos do certificado estejam vazios",
+          "advanced": "Avançado"
+        },
+        "users": {
+          "username": "Nome do utilizador",
+          "permissions": "Permissões",
+          "activeSessions": "Sessões ativas",
+          "lastLoggedIn": "Último autenticado",
+          "administrator": "Administrador",
+          "form": {
+            "usernameName": "Nome de utilizador",
+            "passwordName": "Palavra-passe",
+            "permissionsName": "Permissões"
+          },
+          "permissionSelector": {
+            "administrator": "Administrador",
+            "search": "Pesquisar",
+            "download": "Descarregar",
+            "transfers": "Transferências",
+            "events": "Eventos",
+            "view": "Visualizar",
+            "edit": "Editar",
+            "queue": "Fila",
+            "favoriteHubs": "Concentradores favoritos",
+            "settings": "Configurações",
+            "localFilesystem": "Sistema de ficheiros local",
+            "hubs": "Concentradores",
+            "sendMessages": "Enviar mensagens",
+            "privateChat": "Conversação privada",
+            "filelists": "Lista de ficheiros",
+            "viewedFiles": "Ficheiros vistos"
+          },
+          "addWebUser": "Adicionar utilizador web",
+          "adminPermissionNote": "É necessário permissão de administrador para aceder à secção do sistema nas configurações"
+        }
+      },
+      "sharing": {
+        "excludes": {
+          "shareRefreshNote": "A partilha tem de ser atualizada para que as alterações surtam efeito",
+          "addExcludedPath": "Adicionar caminho excluído",
+          "path": "Caminho"
+        },
+        "profiles": {
+          "name": "Name",
+          "totalSize": "Tamanho total",
+          "totalFiles": "Total de ficheiros",
+          "shareProfilesNote": "<0>Os ficheiros na fila são partilhados através da funcionalidade de partilha de ficheiro parcial em todos os concentradores onde a partilha não foi ocultada, independentemente dos perfis de partilha configurados.</0><1>Os perfis de partilha são atribuídos a pastas individuais na página <1>Partilha</1>.</1>"
+        },
+        "sharingOptions": {
+          "skiplist": "Lista de ignorados"
+        },
+        "hashing": {
+          "hashDatabase": "Base de Dados de Índice",
+          "fileIndexSize": "Tamanho do índice de ficheiros",
+          "hashStoreSize": "Tamanho do armazenamento das hash",
+          "verifyIntegrityOfHashData": "Verificar integridade dos dados hash",
+          "optimizeNow": "Otimizar agora",
+          "hashDBOptimizeNote": "Esta operação irá eliminar toda a informação de hash para ficheiros que não estejam atualmente na partilha. Se estiver a partilhar ficheiros de discos na rede ou de um armazenamento amovível, certifique-se que os ficheiros são mostrados atualmente na partilha (caso contrário terão que ser novamente rehashed)"
+        }
+      },
+      "speedLimits": {
+        "speed": {
+          "connectionSpeedNote": "Por favor seja preciso o mais possível e defina a velocidade ATUAL da sua conexão. Pode usar um site de teste de velocidade como por exemplo o <1>Speedtest.net</1> para testar a sua velocidade."
+        },
+        "uploadLimits": {
+          "manuallySet": "Definido manualmente"
+        },
+        "downloadLimits": {
+          "manuallySet": "Definido manualmente"
+        }
+      },
+      "downloads": {
+        "locations": {
+          "availablePathVariables": "Variáveis de caminhos disponíveis",
+          "favoriteDownloadDirectories": "Diretórios favoritos de Download",
+          "name": "Name",
+          "path": "Caminho"
+        },
+        "skippingOptions": {
+          "skiplist": "Lista de ignorados"
+        },
+        "priorities": {
+          "filePriorities": "Prioridades de ficheiros",
+          "highPriorityFiles": "Ficheiros de prioridade alta"
+        }
+      },
+      "browserSpecificNote": "As configurações nesta página são específicas para navegadores",
+      "view": {
+        "notifications": {
+          "popupNotifications": "Notificações popup",
+          "form": {
+            "notifyPmUserName": "Mensagens privadas (utilizadores)",
+            "notifyPmBotName": "Mensagens privadas (robôs)",
+            "notifyBundleStatusName": "Alterações de estado de pacotes",
+            "notifyEventsInfoName": "Eventos informativos",
+            "notifyEventsWarningName": "Eventos de avisos",
+            "notifyEventsErrorName": "Eventos de erros"
+          }
+        },
+        "histories": {
+          "maxMessageHistory": "Número máximo de mensagens na cache",
+          "maxSessionHistory": "Número máximo de sessões anteriormente abertas"
+        },
+        "miscellaneous": {
+          "form": {
+            "unreadLabelDelayName": "Atraso para marcar as sessões de conversação como lidas (segundos)",
+            "backgroundImageUrlName": "URL da imagem de fundo personalizada",
+            "noInstallPromptName": "Nunca mostrar a solicitação de instalação da aplicação na vista inicial.",
+            "corsProxyName": "URL do proxy CORS",
+            "corsProxyHelp": "Proxy CORS a usar para processar dados de sites externos (por ex. feeds RSS e extensões). O URL alvo será colocado diretamente após o URL do proxy configurado. Não será utilizado nenhum proxy e o campo estiver vazio, mas pode impedir que aceda a vários URLs externos uma vez que eles não são muitas vezes configurados para serem acessíveis de outros sites."
+          }
+        }
+      }
+    },
+    "extensions": {
+      "actions": {
+        "uninstall": "Desinstalar",
+        "start": "Iniciar",
+        "installFromUrl": "Instalar do URL",
+        "install": "Instalar",
+        "stop": "Parar",
+        "configure": "Configurar",
+        "prompts": {
+          "installUrlPlaceholder": "Introduzir URL",
+          "installUrlApprove": "Instalar",
+          "installUrlContent": "Introduzir URL de descarregamento"
+        }
+      }
+    },
+    "navigation": {
+      "home": "Início",
+      "queue": "Fila",
+      "search": "Pesquisar",
+      "transfers": "Transferências",
+      "hubs": "Concentradores",
+      "messages": "Mensagens",
+      "filelists": "Lista de ficheiros",
+      "files": "Ficheiros",
+      "events": "Eventos",
+      "favoriteHubs": "Concentradores favoritos",
+      "share": "Partilha",
+      "settings": "Configurações",
+      "logout": "Sair",
+      "more": "Mais..."
+    },
+    "login": {
+      "username": "Nome do utilizador",
+      "password": "Palavra-passe",
+      "keepMeLoggedIn": "Manter-me autenticado",
+      "login": "Entrar",
+      "authenticationFailed": "A autenticação fachou: {{lastError}}",
+      "connectingToTheServer": "A conectar ao servidor...",
+      "reestablishConnection": "A tentar restabelecer a conexão...",
+      "sessionLost": "Sessão perdida",
+      "connectionClosed": "Conexão terminada",
+      "privateBrowsingNotSupported": "Este site não pode ser utilizado no seu navegador de Internet se o modo de navegação privada estiver ativo",
+      "dataStorageNotSupported": "Este site não pode ser utilizado no seu navegador de Internet porque não suporta armazenamento de dados"
+    },
+    "viewedFiles": {
+      "actions": {
+        "close": "Fechar"
+      },
+      "noFiles": "Não há ficheiros para ver",
+      "noFilesDesc": "Pode abrir media de texto ou ficheiro para serem vistos aqui nas pesquisas ou listas de ficheiros",
+      "preparingView": "A preparar a visualização",
+      "opened": "Aberto",
+      "downloaded": "Descarregado",
+      "notifications": {
+        "fileHasFinishedDownloading": "O descarregamento do ficheiro terminou",
+        "actions": {
+          "viewFile": "Ver ficheiro"
+        }
+      }
+    },
+    "messages": {
+      "actions": {
+        "clearChat": "Limpar conversação",
+        "close": "Fechar",
+        "disconnect": "Desconectar"
+      },
+      "new": "Nova sessão",
+      "newDesc": "Abrir uma nova sessão de conversação privada",
+      "offlineMessage": "Tem de estar conectado a pelo menos um concentrador para poder enviar mensagens",
+      "directEncryptedChannelAvailable": "Canal encriptado direto disponível",
+      "establishingConnection": "A estabelecer a conexão...",
+      "directEncryptedChannelEstablished": "Canal encriptado direto estabelecido",
+      "notifications": {
+        "actions": {
+          "viewMessage": "Ver mensagem"
+        }
+      }
+    },
+    "home": {
+      "newUserIntro": "Informação para o novo utilizador",
+      "newUserIntroDesc": "<0><0>Adicione algumas pastas que sejam partilhadas com outros utilizadores na página <1>Partilha</1>.</0><1>Pode querer ver cada uma das páginas das <1>configurações do cliente</1> antes de começar.  <3>É importante que <1>configure a velocidade da ligação</1> corretamente caso contrário não poderá utilizar a sua largura de banda de forma eficiente..</3></1><2>Ainda não existe uma lista de concentradores públicos por isso tem de saber os endereços dos concentradores com os quais se quer conectar.</2></0><1>Visite a <1>página inicial</1> para mais informações sobre os clientes e as suas funcionalidades.</1><2>Se tiver dúvidas, pode colocá-las no <1>rastreador do GitHub</1> ou junte-se ao concentrador dev/support: <3></3></2>"
+    }
+  }
+}
