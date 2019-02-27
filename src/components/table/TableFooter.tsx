@@ -5,6 +5,11 @@ import TextFilter, { TextFilterProps } from './TextFilter';
 
 
 const CountInfo: React.FC<{ store: any }> = ({ store }) => {
+  if (store.totalCount < 0) {
+    // Not initialized yet
+    return null;
+  }
+
   let ret = store.totalCount;
   if (store.totalCount !== store.rowCount) {
     ret = store.rowCount + '/' + store.totalCount;
@@ -25,7 +30,7 @@ export interface TableFooterProps {
   textFilterProps?: TextFilterProps;
 }
 
-const TableFooter = React.memo<TableFooterProps>(({ store, customFilter, footerData, textFilterProps }) => {
+const TableFooter: React.FC<TableFooterProps> = ({ store, customFilter, footerData, textFilterProps }) => {
   let clonedFilter = null;
   if (!!customFilter) {
     clonedFilter = React.cloneElement(customFilter, { 
@@ -46,7 +51,7 @@ const TableFooter = React.memo<TableFooterProps>(({ store, customFilter, footerD
       </div>
     </div>
   );
-});
+};
 
 /*TableFooter.propTypes = {
   customFilter: PropTypes.node,
