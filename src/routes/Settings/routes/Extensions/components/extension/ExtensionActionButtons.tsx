@@ -1,18 +1,17 @@
 import React from 'react';
 
-import ExtensionActions from 'actions/ExtensionActions';
+import ExtensionActions from 'actions/ui/ExtensionActions';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import ActionButton from 'components/ActionButton';
 import ExternalLink from 'components/ExternalLink';
-import { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
 export interface ExtensionActionButtonsProps {
-  npmPackage?: NpmPackage;
+  npmPackage?: UI.NpmPackage;
   installedPackage?: API.Extension;
   hasUpdate: boolean;
   installing: boolean;
@@ -31,7 +30,7 @@ const InstallButton: React.FC<InstallButtonProps> = (
 
   return (
     <ActionButton
-      actions={ ExtensionActions }
+      actions={ ExtensionActions.npm }
       actionId={ hasUpdate ? 'updateNpm' : 'installNpm' }
       className="right floated primary"
       itemData={ npmPackage }
@@ -46,7 +45,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
   <div className="extra buttons">
     { installedPackage && (
       <ActionButton
-        actions={ ExtensionActions }
+        actions={ ExtensionActions.manage }
         actionId="remove"
         className="right floated"
         itemData={ installedPackage }
@@ -67,7 +66,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
     ) }
     { installedPackage && (
       <ActionButton
-        actions={ ExtensionActions }
+        actions={ ExtensionActions.manage }
         actionId={ installedPackage.running ? 'stop' : 'start' }
         className="right floated"
         itemData={ installedPackage }
@@ -75,7 +74,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
     ) }
     { installedPackage && (
       <ActionButton
-        actions={ ExtensionActions }
+        actions={ ExtensionActions.manage }
         actionId="configure"
         className="right floated"
         itemData={ installedPackage }

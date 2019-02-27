@@ -2,7 +2,7 @@ import React from 'react';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
-import QueueBundleActions from 'actions/QueueBundleActions';
+import QueueBundleSourceActions from 'actions/ui/QueueBundleSourceActions';
 import QueueConstants from 'constants/QueueConstants';
 
 import IconConstants from 'constants/IconConstants';
@@ -11,7 +11,7 @@ import Message from 'components/semantic/Message';
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
 import { ActionMenu, UserMenu } from 'components/menu';
-import { UserFileActions } from 'actions/UserActions';
+import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -32,8 +32,8 @@ const Source: React.FC<SourceProps> = ({ source, bundle }) => (
         contextElement=".source.modal"
       >
         <ActionMenu 
-          actions={ QueueBundleActions } 
-          ids={ [ 'removeBundleSource' ]} 
+          actions={ QueueBundleSourceActions } 
+          //ids={ [ 'removeBundleSource' ]} 
           itemData={ {
             source,
             bundle,

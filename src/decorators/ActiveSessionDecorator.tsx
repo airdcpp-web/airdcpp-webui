@@ -12,8 +12,10 @@ import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 type SessionType = UI.SessionItemBase;
 
 interface ActiveSessionDecoratorProps<SessionT extends SessionType, ActionT extends object> 
-  extends Pick<SessionChildProps<SessionT, ActionT>, 'actions' | 'session'> {
+  extends Pick<SessionChildProps<SessionT, ActionT>, 'session'> {
 
+  sessionApi: UI.SessionActions<SessionT>;
+  //uiActions: 
   //session: SessionT;
 }
 
@@ -32,7 +34,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
     readTimeout: NodeJS.Timer | null;
 
     setRead = (session: SessionT) => {
-      this.props.actions.actions.setRead(session);
+      this.props.sessionApi.setRead(session);
       this.readTimeout = null;
     }
 
@@ -43,7 +45,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
         this.setRead(this.props.session);
       }
 
-      this.props.actions.actions.sessionChanged(session);
+      this.props.sessionApi.sessionChanged(session);
       if (!session) {
         return;
       }

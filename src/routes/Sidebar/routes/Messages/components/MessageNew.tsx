@@ -3,7 +3,7 @@ import React from 'react';
 import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
-import PrivateChatActions from 'actions/PrivateChatActions';
+import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
@@ -19,7 +19,7 @@ const hasSession = (entry: API.HistoryItem) => {
 
 class MessageNew extends React.Component<NewSessionLayoutProps> {
   handleSubmit = (nick: string | null, user: API.HintedUser) => {
-    PrivateChatActions.actions.createSession(this.props.location, user, PrivateChatSessionStore);
+    PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
   }
 
   recentUserRender = (entry: API.HistoryItem) => {

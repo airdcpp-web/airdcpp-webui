@@ -12,25 +12,43 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   loading?: boolean;
   disabled?: boolean;
   caption: React.ReactNode;
+  tag?: string;
+  semanticClassName?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ className, loading, icon, caption, disabled, ...other }) => {
+const Button: React.FC<ButtonProps> = ({ 
+  className, loading, icon, caption, disabled, 
+  tag = 'button', semanticClassName = 'ui button', ...other 
+}) => {
   const buttonStyle = classNames(
-    'ui button',
+    semanticClassName,
     { 'disabled': !!disabled || !!loading },
     { 'loading': !!loading },
     className,
   );
 
-  return (
-    <button 
+  return React.createElement(
+    tag,
+    {
+      className: buttonStyle, 
+       ...other
+    },
+    (
+      <>
+        <Icon icon={ icon }/>
+        { caption }
+      </>
+    )
+  );
+  /*return (
+    <tag 
       className={ buttonStyle } 
       { ...other }
     >
       <Icon icon={ icon }/>
       { caption }
-    </button>
-  );
+    </tag>
+  );*/
 };
 
 /*Button.propTypes = {

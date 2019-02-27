@@ -3,7 +3,7 @@ import { Location } from 'history';
 import * as API from 'types/api';
 import { IconType } from 'components/semantic/Icon';
 import { RouteComponentProps } from 'react-router-dom';
-import { ActionListType } from './actions';
+import { /*ActionListType,*/ RefluxActionListType } from './actions';
 
 
 export interface SessionInfoGetter<SessionT> {
@@ -18,7 +18,7 @@ export interface SessionInfoGetter<SessionT> {
 export type SessionActions<
   SessionT extends SessionItemBase, 
   ActionT = {}
-> = ActionListType<SessionItemBase> & ActionT & {
+> = RefluxActionListType<SessionItemBase> & ActionT & {
   removeSession: (session: SessionT) => void;  
   setRead: (session: SessionT) => void;
   sessionChanged: (session: SessionT | null) => void;

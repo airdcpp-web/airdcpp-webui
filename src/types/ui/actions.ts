@@ -1,3 +1,5 @@
+import { Location } from 'history';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
 //import { ModuleTranslator } from './modules';
 
@@ -16,39 +18,59 @@ interface ActionInput<ItemDataT> extends ActionConfirmation {
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
-export interface ActionConfig<ItemDataT> {
+interface HandlerData<ItemDataT> {
+  data: ItemDataT;
+  location: Location;
+}
+
+export type ActionHandler<ItemDataT> = (
+  handlerData: HandlerData<ItemDataT>, 
+  confirmData?: boolean | string
+) => Promise<any> | void;
+
+export interface ActionType<ItemDataT> {
+  handler: ActionHandler<ItemDataT>;
   filter?: (itemData: ItemDataT) => boolean;
   access?: string;
-  displayName?: string;
-  icon?: string;
-  children?: string[];
-  asyncResult?: boolean;
+  displayName: string;
+  icon: string;
+
   confirmation?: ((item: ItemDataT /*, t: ModuleTranslator*/) => ActionConfirmation) | ActionConfirmation;
   input?: ((item: ItemDataT /*, t: ModuleTranslator*/) => ActionInput<ItemDataT>) | ActionInput<ItemDataT>;
 }
 
-export type ActionType<ItemDataT = any> = ((...params: any[]) => void) & ActionConfig<ItemDataT>;
+export interface RefluxActionConfig<ItemDataT> {
+  children?: string[];
+  asyncResult?: boolean;
+}
 
-export type AsyncActionType<ItemDataT> = ActionType<ItemDataT> & {
+export type RefluxActionType<ItemDataT = any> = ((...params: any[]) => void) & RefluxActionConfig<ItemDataT>;
+
+export type AsyncActionType<ItemDataT> = RefluxActionType<ItemDataT> & {
   completed: (...params: any[]) => void;
   failed: (error: ErrorResponse, item?: ItemDataT) => void;
 };
 
-export type EditorActionType<ItemDataT> = ActionType<ItemDataT> & {
+/*export type EditorActionType<ItemDataT> = ActionType<ItemDataT> & {
   saved: (...params: any[]) => void;
-};
+};*/
 
-export type ConfirmActionType<ItemDataT> = ActionType<ItemDataT> & {
+/*export type ConfirmActionType<ItemDataT> = ActionType<ItemDataT> & {
   confirmed: (...params: any[]) => void;
-};
+};*/
 
 //type GenericActionType<ItemDataT> = AsyncActionType<ItemDataT> & 
 //  EditorActionType<ItemDataT> & 
 //  ConfirmActionType<ItemDataT>;
 
-export type ActionConfigList<ItemDataT> = Array<string | { [actionKey: string]: ActionConfig<ItemDataT> }>;
+export type RefluxActionConfigList<ItemDataT> = Array<string | { [actionKey: string]: RefluxActionConfig<ItemDataT> }>;
 
-export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> };
+export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> | null };
+
+export type RefluxActionListType<ItemDataT = any> = { 
+  [actionKey: string]: RefluxActionType | AsyncActionType<ItemDataT>
+};
+
 
 export interface ModuleActions<ItemDataT> {
   moduleId: string | string[];

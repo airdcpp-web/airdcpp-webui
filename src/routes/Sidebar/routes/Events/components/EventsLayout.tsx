@@ -1,6 +1,8 @@
 import React, { useEffect, memo } from 'react';
 
-import EventActions from 'actions/EventActions';
+import EventAPIActions from 'actions/reflux/EventActions';
+import EventUIActions from 'actions/ui/EventActions';
+
 import EventStore from 'stores/EventStore';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
@@ -24,14 +26,14 @@ const SystemLog: React.FC<SystemLogProps> = memo(
   () => {
     useEffect(
       () => {
-        EventActions.actions.setActive(true);
-        EventActions.actions.setRead();
+        EventAPIActions.setActive(true);
+        EventAPIActions.setRead();
     
         if (!EventStore.isInitialized()) {
-          EventActions.actions.fetchMessages();
+          EventAPIActions.fetchMessages();
         }
 
-        return () => EventActions.actions.setActive(false);
+        return () => EventAPIActions.setActive(false);
       },
       []
     );
@@ -46,7 +48,7 @@ const SystemLog: React.FC<SystemLogProps> = memo(
             title={ translate('Events', t, UI.Modules.EVENTS) }
             rightComponent={
               <ActionButton 
-                actions={ EventActions }
+                actions={ EventUIActions }
                 actionId="clear"
               />
             }

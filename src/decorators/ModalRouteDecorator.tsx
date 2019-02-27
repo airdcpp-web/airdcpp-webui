@@ -5,7 +5,7 @@ import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'rea
 export type ModalCloseContext = () => void;
 
 export interface ModalCloseContextProps {
-  closeModal: ModalCloseContext;
+  closeModal: ModalCloseContext | undefined;
 }
 
 export const ModalRouteCloseContext = React.createContext<ModalCloseContext | undefined>(undefined);

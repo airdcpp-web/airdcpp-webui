@@ -55,11 +55,11 @@ describe('widget store', () => {
   };
 
   test('should handle widget actions', () => {
-    WidgetStore.onCreateSaved(widgetId, settings, RSS.typeId);
+    WidgetStore.onCreate(widgetId, settings, RSS.typeId);
     expect(hasLayoutItems(widgetId)).toEqual(true);
     expect(WidgetStore.getWidgetSettings(widgetId)).toEqual(settings);
 
-    WidgetStore.onRemove({ id: widgetId });
+    WidgetStore.onRemove(widgetId);
     expect(countWidgetIds(widgetId, WidgetStore.layouts)).toEqual(0);
     expect(WidgetStore.getWidgetSettings(widgetId)).toEqual(EmptyWidgetSettings);
   });

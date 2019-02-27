@@ -3,7 +3,7 @@ import React from 'react';
 import ActionButton from 'components/ActionButton';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
-import ConnectivityActions from 'actions/ConnectivityActions';
+import ConnectivityActions from 'actions/ui/ConnectivityActions';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 import { Row } from 'components/semantic/Grid';

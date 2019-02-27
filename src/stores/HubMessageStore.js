@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import invariant from 'invariant';
 
 import HubConstants from 'constants/HubConstants';
-import HubActions from 'actions/HubActions';
+import HubActions from 'actions/reflux/HubActions';
 
 import MessageStoreDecorator from './decorators/MessageStoreDecorator';
 

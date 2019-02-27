@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Extension, { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
+import Extension from 'routes/Settings/routes/Extensions/components/extension/Extension';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
@@ -18,7 +18,7 @@ interface NpmPackageLayoutProps {
 }
 
 interface NpmCatalogItem {
-  package: NpmPackage;
+  package: UI.NpmPackage;
 }
 
 interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
@@ -26,7 +26,7 @@ interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
   packageCatalog: NpmCatalogItem[];
 }
 
-const getItem = (npmPackage: NpmPackage, moduleT: UI.ModuleTranslator, installedPackages: API.Extension[]) => {
+const getItem = (npmPackage: UI.NpmPackage, moduleT: UI.ModuleTranslator, installedPackages: API.Extension[]) => {
   const installedPackage = installedPackages.find(p => p.name === npmPackage.name);
   return (
     <Extension 

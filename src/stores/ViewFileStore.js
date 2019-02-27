@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import invariant from 'invariant';
 
 import ViewFileConstants from 'constants/ViewFileConstants';
-import ViewFileActions from 'actions/ViewFileActions';
+import ViewFileActions from 'actions/reflux/ViewFileActions';
 
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';

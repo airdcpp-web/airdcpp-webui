@@ -10,7 +10,7 @@ import FilelistSessionStore from 'stores/FilelistSessionStore';
 import ViewFileStore from 'stores/ViewFileStore';
 import EventStore from 'stores/EventStore';
 
-import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import IconConstants from 'constants/IconConstants';
 import { Location } from 'history';
@@ -150,7 +150,7 @@ export const secondaryRoutes = [
 
 const onClickLogout: RouteItemClickHandler = (path, e) => {
   e.preventDefault();
-  LoginActions.actions.logout();
+  LoginActions.logout();
 };
 
 export const logoutItem: RouteItem = { 

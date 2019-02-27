@@ -3,7 +3,8 @@ import React from 'react';
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
 import ViewFileStore from 'stores/ViewFileStore';
-import ViewFileActions from 'actions/ViewFileActions';
+import ViewFileUIActions from 'actions/ui/ViewFileActions';
+import ViewFileAPIActions from 'actions/reflux/ViewFileActions';
 
 import FileIcon from 'components/icon/FileIcon';
 import Message from 'components/semantic/Message';
@@ -59,7 +60,8 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.FileType>> = props 
       baseUrl="files"
       disableSideMenu={ true }
       editAccess={ API.AccessEnum.VIEW_FILE_EDIT }
-      actions={ ViewFileActions }
+      uiActions={ ViewFileUIActions }
+      sessionApi={ ViewFileAPIActions as UI.SessionActions<API.ViewFile> }
       unreadInfoStore={ ViewFileStore }
       sessionItemLayout={ FileSession }
       t={ t }

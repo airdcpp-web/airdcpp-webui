@@ -11,18 +11,18 @@ type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
 const SessionStoreDecorator = function (
   store: any, 
-  actions: any, 
+  actions: UI.RefluxActionListType<SessionType>, 
   messageUrgencyMappings: UI.UrgencyCountMap
 ) {
   let sessions: Array<SessionType> = [];
   let activeSessionId: API.IdType | null = null;
   let isInitialized = false;
 
-  actions.actions.sessionChanged.listen((session: SessionType | null) => {
+  (actions.sessionChanged as any).listen((session: SessionType | null) => {
     activeSessionId = session ? session.id : null;
   });
 
-  actions.actions.fetchSessions.completed.listen((data: SessionType[]) => {
+  (actions.fetchSessions as any).completed.listen((data: SessionType[]) => {
     isInitialized = true;
     sessions = data;
     store.trigger(sessions);
@@ -74,7 +74,7 @@ const SessionStoreDecorator = function (
       if (id === activeSessionId && (updatedProperties.message_counts || updatedProperties.hasOwnProperty('read'))) {
         updatedProperties = checkUnreadSessionInfo(
           updatedProperties as UI.UnreadInfo, 
-          () => actions.actions.setRead({ id })
+          () => actions.setRead({ id })
         );
       }
 

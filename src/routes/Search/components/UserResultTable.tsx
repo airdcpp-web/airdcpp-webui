@@ -9,7 +9,7 @@ import Message from 'components/semantic/Message';
 import SearchConstants from 'constants/SearchConstants';
 
 import { UserMenu } from 'components/menu';
-import { UserFileActions } from 'actions/UserActions';
+import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

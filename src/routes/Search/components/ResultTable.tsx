@@ -1,6 +1,8 @@
 import React from 'react';
 
-import SearchActions from 'actions/SearchActions';
+import SearchAPIActions from 'actions/reflux/SearchActions';
+import SearchUIActions from 'actions/ui/SearchActions';
+
 import SearchViewStore from 'stores/SearchViewStore';
 
 import { Column } from 'fixed-data-table-2';
@@ -10,7 +12,7 @@ import { TableActionMenu } from 'components/menu';
 
 import { dupeToStringType } from 'utils/TypeConvert';
 import { TableUserMenu } from 'components/menu';
-import { UserFileActions } from 'actions/UserActions';
+import { UserFileActions } from 'actions/ui/UserActions';
 import Message from 'components/semantic/Message';
 
 import DownloadDialog from 'components/download/DownloadDialog';
@@ -52,7 +54,7 @@ const UserCell: React.FC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.
     ids={ UserFileActions }
   >
     <TableActionMenu 
-      actions={ SearchActions }
+      actions={ SearchUIActions }
       itemData={ rowDataGetter }
       ids={ [ 'result' ] }
     />
@@ -67,11 +69,11 @@ const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResul
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
-    downloadHandler={ SearchActions.actions.download }
+    downloadHandler={ SearchAPIActions.download }
     { ...props }
   >
     <TableActionMenu 
-      actions={ SearchActions }
+      actions={ SearchUIActions }
       itemData={ rowDataGetter }
     />
   </FileDownloadCell>
@@ -142,7 +144,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           textFilterProps={{
             autoFocus: false,
           }}
-          moduleId={ SearchActions.moduleId }
+          moduleId={ SearchUIActions.moduleId }
         >
           <Column
             name="Name"
@@ -205,7 +207,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           />
         </VirtualTable>
         <DownloadDialog 
-          downloadHandler={ SearchActions.actions.download }
+          downloadHandler={ SearchAPIActions.download }
           itemDataGetter={ SearchResultGetter }
         />
         <ResultDialog searchT={ searchT }/>

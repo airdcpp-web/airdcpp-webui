@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FavoriteDirectoryActions from 'actions/FavoriteDirectoryActions';
+import FavoriteDirectoryActions from 'actions/ui/FavoriteDirectoryActions';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -19,7 +19,7 @@ const Row: React.FC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }
     <td>
       <ActionMenu 
         caption={ <strong>{ directory.name }</strong> } 
-        actions={ FavoriteDirectoryActions }
+        actions={ FavoriteDirectoryActions.edit }
         itemData={ directory }
         contextElement="#setting-scroll-context"
       />
@@ -52,7 +52,7 @@ const FavoriteDirectoryPage: React.FC<FavoriteDirectoryPageProps & FavoriteDirec
 ) => (
   <div id="directory-table">
     <ActionButton
-      actions={ FavoriteDirectoryActions }
+      actions={ FavoriteDirectoryActions.create }
       actionId="create"
     />
 

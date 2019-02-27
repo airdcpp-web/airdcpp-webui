@@ -13,7 +13,7 @@ import './chat.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 //import { useActiveSessionEffect } from 'effects';
-import { SessionActions } from 'types/ui';
+//import { SessionActions } from 'types/ui';
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import { useTranslation } from 'react-i18next';
 
@@ -22,26 +22,36 @@ export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
 }
 
+export interface ChatAPI extends UI.RefluxActionListType<UI.SessionItemBase> {
+  //clear: UI.RefluxActionType<UI.SessionItemBase>;
+  sendMessage: UI.RefluxActionType<UI.SessionItemBase>;
+  fetchMessages: UI.RefluxActionType<UI.SessionItemBase>;
+}
+
 export interface ChatActions extends UI.ActionListType<UI.SessionItemBase> {
   clear: UI.ActionType<UI.SessionItemBase>;
-  sendMessage: UI.ActionType<UI.SessionItemBase>;
-  fetchMessages: UI.ActionType<UI.SessionItemBase>;
+  //sendMessage: UI.RefluxActionType<UI.SessionItemBase>;
+  //fetchMessages: UI.RefluxActionType<UI.SessionItemBase>;
 }
 
-export interface ChatSessionProps {
-  actions: UI.ModuleActions<UI.SessionItemBase> & {
-    actions: ChatActions & SessionActions<UI.SessionItemBase>;
-  };
+export interface ChatLayoutProps {
+  //actions: UI.ModuleActions<UI.SessionItemBase> & {
+  //  actions: ChatActions & SessionActions<UI.SessionItemBase>;
+  //};
+  //chatApi: ChatActions & SessionActions<UI.SessionItemBase>;
+  chatApi: ChatAPI;
+  chatActions: ChatActions;
   session: ChatSession;
-}
-
-export interface ChatLayoutProps extends ChatSessionProps {
   chatAccess: string;
   messageStore: any;
 }
 
+//export interface ChatLayoutProps extends ChatSessionProps {
 
-const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions: ChatActions) => {
+//}
+
+
+const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI: ChatAPI) => {
   const [ messages, setMessages ] = useState<UI.MessageListItem[] | null>([]);
 
   useEffect(
@@ -49,7 +59,7 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions:
       // Session changes, update the messages
       if (!messageStore.isSessionInitialized(session.id)) {
         setMessages(null);
-        actions.fetchMessages(session);
+        chatAPI.fetchMessages(session);
       } else {
         setMessages(messageStore.getSessionMessages(session.id));
       }
@@ -78,10 +88,10 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, actions:
 };
 
 
-const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, messageStore }) => {
+const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, chatApi, chatActions, messageStore }) => {
   //useActiveSessionEffect(session, actions, true);
   const { t } = useTranslation();
-  const messages = useChatMessagesEffect(session, messageStore, actions.actions);
+  const messages = useChatMessagesEffect(session, messageStore, chatApi);
   const hasChatAccess = LoginStore.hasAccess(chatAccess);
   return (
     <div className="message-view">
@@ -99,7 +109,9 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, actions, m
       { hasChatAccess && (
         <MessageComposer 
           session={ session }
-          actions={ actions }
+          chatApi={ chatApi }
+          chatActions={ chatActions }
+          //chatAccess={ chatAccess }
         />
       ) }
     </div>

@@ -10,7 +10,7 @@ import Form, { FormSaveHandler } from 'components/form/Form';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
-import WidgetActions from 'actions/WidgetActions';
+import WidgetActions from 'actions/reflux/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import { getWidgetT, createWidgetId, translateWidgetName } from 'utils/WidgetUtils';
 import { RouteComponentProps } from 'react-router-dom';
@@ -113,10 +113,10 @@ class WidgetDialog extends React.Component<Props> {
     const { typeId, widgetId } = this.props.match.params;
     if (!widgetId) {
       // New widget
-      WidgetActions.actions.create.saved(createWidgetId(typeId!), settings, typeId);
+      WidgetActions.create(createWidgetId(typeId!), settings, typeId);
     } else {
       // Existing widget
-      WidgetActions.actions.edit.saved(widgetId, settings);
+      WidgetActions.edit(widgetId, settings);
     }
 
     return Promise.resolve();

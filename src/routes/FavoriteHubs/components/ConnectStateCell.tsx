@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import HubActions from 'actions/HubActions';
+import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import Icon from 'components/semantic/Icon';
@@ -33,12 +33,12 @@ const getIcon = (state: API.FavoriteHubConnectState) => {
 class ConnectStateCell extends React.Component<ConnectStateCellProps & RouteComponentProps> {
   handleCreateSession = () => {
     const { location, rowDataGetter } = this.props;
-    HubActions.actions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
+    HubActions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
   }
 
   handleRemoveSession = () => {
     const { cellData } = this.props;
-    HubActions.actions.removeSession({ id: cellData!.current_hub_id });
+    HubActions.removeSession({ id: cellData!.current_hub_id });
   }
 
   getClickAction = () => {

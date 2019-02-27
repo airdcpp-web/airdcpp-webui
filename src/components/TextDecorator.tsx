@@ -17,7 +17,7 @@ import emoji from 'react-easy-emoji';
 import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';
 
 import History from 'utils/History';
-import HubActions from 'actions/HubActions';
+import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import LoginStore from 'stores/LoginStore';
@@ -90,7 +90,7 @@ const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location)
       return;
     }
 
-    HubActions.actions.createSession(location, uri, HubSessionStore);
+    HubActions.createSession(location, uri, HubSessionStore);
   }
 };
 

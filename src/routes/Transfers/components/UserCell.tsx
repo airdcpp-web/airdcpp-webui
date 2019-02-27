@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TransferActions from 'actions/TransferActions';
-import { UserFileActions } from 'actions/UserActions';
+import TransferActions from 'actions/ui/TransferActions';
+import { UserFileActions } from 'actions/ui/UserActions';
 
 import { TableActionMenu, TableUserMenu } from 'components/menu';
 import IconConstants from 'constants/IconConstants';

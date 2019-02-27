@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/reflux/LoginActions';
 import SocketService from 'services/SocketService';
 
 import ActivityStore from 'stores/ActivityStore';
@@ -27,7 +27,7 @@ class ActivityTracker extends React.Component {
     this.aliveInterval = setInterval(this.checkAlive, 2000);
     this.lastAlive = (new Date()).getTime();
 
-    LoginActions.actions.activity();
+    LoginActions.activity();
   }
 
   componentWillUnmount() {
@@ -59,7 +59,7 @@ class ActivityTracker extends React.Component {
       return;
     }
 
-    LoginActions.actions.activity();
+    LoginActions.activity();
     userActive = false;
   }
 
@@ -71,7 +71,7 @@ class ActivityTracker extends React.Component {
     // Change the state instantly when the user came back
     userActive = true;
     if (ActivityStore.away === AwayEnum.IDLE) {
-      LoginActions.actions.activity();
+      LoginActions.activity();
     }
   }
 

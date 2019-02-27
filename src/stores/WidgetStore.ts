@@ -1,7 +1,7 @@
 //@ts-ignore
 import Reflux from 'reflux';
 
-import WidgetActions, { WidgetItemInfo } from 'actions/WidgetActions';
+import WidgetActions /*, { WidgetItemInfo }*/ from 'actions/reflux/WidgetActions';
 
 import reject from 'lodash/reject';
 import { loadLocalProperty, removeLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
@@ -149,7 +149,7 @@ const Store = {
     return this.layouts;
   },
 
-  onCreateSaved(id: string, settings: UI.WidgetSettings, typeId: string) {
+  onCreate(id: string, settings: UI.WidgetSettings, typeId: string) {
     saveSettings(id, settings);
 
 
@@ -158,7 +158,7 @@ const Store = {
     (this as any).trigger(this.layouts);
   },
 
-  onEditSaved(id: string, settings: UI.WidgetSettings) {
+  onEdit(id: string, settings: UI.WidgetSettings) {
     saveSettings(id, settings);
 
     this.layouts = { 
@@ -168,7 +168,7 @@ const Store = {
     (this as any).trigger(this.layouts);
   },
 
-  onRemove({ id }: Pick<WidgetItemInfo, 'id'>) {
+  onRemove(id: string) {
     removeLocalProperty(widgetIdToSettingKey(id));
 
     this.layouts = Object.keys(cols)

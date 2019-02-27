@@ -1,7 +1,7 @@
 import React from 'react';
 
 import WebUserConstants from 'constants/WebUserConstants';
-import WebUserActions from 'actions/WebUserActions';
+import WebUserActions from 'actions/ui/WebUserActions';
 
 import ActionButton from 'components/ActionButton';
 import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUserDialog';
@@ -27,7 +27,7 @@ const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
     <td>
       <ActionMenu 
         caption={ <strong>{ user.username }</strong> }
-        actions={ WebUserActions } 
+        actions={ WebUserActions.edit } 
         itemData={ user }
         contextElement="#setting-scroll-context"
       />
@@ -64,7 +64,7 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
     return (
       <div>
         <ActionButton 
-          actions={ WebUserActions }
+          actions={ WebUserActions.create }
           actionId="create"
         />
         <table className="ui striped table">

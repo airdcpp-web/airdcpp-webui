@@ -4,38 +4,38 @@ import { useEffect } from 'react';
 import LoginStore, { LoginState } from 'stores/LoginStore';
 
 
-import HubActions from 'actions/HubActions';
-import PrivateChatActions from 'actions/PrivateChatActions';
-import FilelistSessionActions from 'actions/FilelistSessionActions';
-import ViewFileActions from 'actions/ViewFileActions';
-import EventActions from 'actions/EventActions';
-import SystemActions from 'actions/SystemActions';
+import HubActions from 'actions/reflux/HubActions';
+import PrivateChatActions from 'actions/reflux/PrivateChatActions';
+import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
+import ViewFileActions from 'actions/reflux/ViewFileActions';
+import EventActions from 'actions/reflux/EventActions';
+import SystemActions from 'actions/reflux/SystemActions';
 
 import { AccessEnum } from 'types/api';
 
 
 const fetchStoreData = () => {
   if (LoginStore.hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
-    PrivateChatActions.actions.fetchSessions();
+    PrivateChatActions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.HUBS_VIEW)) {
-    HubActions.actions.fetchSessions();
+    HubActions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.FILELISTS_VIEW)) {
-    FilelistSessionActions.actions.fetchSessions();
+    FilelistSessionActions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.VIEW_FILE_VIEW)) {
-    ViewFileActions.actions.fetchSessions();
+    ViewFileActions.fetchSessions();
   }
 
   if (LoginStore.hasAccess(AccessEnum.EVENTS_VIEW)) {
-    EventActions.actions.fetchInfo();
+    EventActions.fetchInfo();
   }
 
-  SystemActions.actions.fetchAway();
+  SystemActions.fetchAway();
 };
 
 export const useStoreDataFetch = (login: LoginState) => {

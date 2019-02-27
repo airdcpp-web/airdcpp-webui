@@ -76,6 +76,10 @@
   flex-shrink: 0;
 }
 
+.settings-layout .options {
+  min-height: 80px;
+}
+
 .settings-layout .options > .ui.grid {
   margin: 0px;
 }

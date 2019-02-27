@@ -1,4 +1,6 @@
 export * from './actions';
+export * from './downloads';
+export * from './extensions';
 export * from './form';
 export * from './messages';
 export * from './modules';

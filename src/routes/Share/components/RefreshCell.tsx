@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import ShareActions from 'actions/ShareActions';
+import ShareActions from 'actions/reflux/ShareActions';
 import { formatRelativeTime } from 'utils/ValueFormat';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
@@ -26,7 +26,7 @@ const RefreshCell: React.FC<RefreshCellProps> = (
     <div>
       <i 
         className={ 'icon large link green refresh' } 
-        onClick={ () => ShareActions.actions.refreshPaths([ rowDataGetter!().path ]) }
+        onClick={ () => ShareActions.refreshPaths([ rowDataGetter!().path ]) }
       />
       { cellData === 0 ? translate('Unknown', t!, UI.Modules.SHARE) : formatRelativeTime(cellData!) }
     </div>

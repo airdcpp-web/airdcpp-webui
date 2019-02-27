@@ -8,15 +8,9 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 
 import '../style.css';
 import * as UI from 'types/ui';
+import { FeedItem } from '../types';
 
 
-export interface FeedItem {
-  title?: string | { content: string };
-  updated?: string;
-  pubDate?: string;
-  guid?: string | { content: string };
-  id?: string | { content: string };
-}
 
 const parseTitle = (entry: FeedItem) => {
   if (!entry.title) {

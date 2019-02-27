@@ -3,7 +3,7 @@ import React from 'react';
 import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
-import FilelistSessionActions from 'actions/FilelistSessionActions';
+import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
@@ -16,11 +16,11 @@ import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 
 class FilelistNew extends React.Component<NewSessionLayoutProps> {
   handleSubmit = (nick: string | null, user: API.HintedUser) => {
-    FilelistSessionActions.actions.createSession(this.props.location, user, FilelistSessionStore);
+    FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
   }
 
   onProfileChanged = (profileId: number) => {
-    FilelistSessionActions.actions.ownList(this.props.location, profileId, FilelistSessionStore);
+    FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
   }
 
   recentUserRender = (entry: API.HistoryItem) => {

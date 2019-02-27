@@ -1,8 +1,9 @@
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 
-import FilelistItemActions from 'actions/FilelistItemActions';
-import FilelistSessionActions from 'actions/FilelistSessionActions';
+import FilelistItemUIActions from 'actions/ui/FilelistItemActions';
+import FilelistItemAPIActions from 'actions/reflux/FilelistItemActions';
+import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 
 import { dupeToStringType } from 'utils/TypeConvert';
 import BrowserBar from 'components/browserbar/BrowserBar';
@@ -112,7 +113,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   }
 
   sendChangeDirectory = (directory: string) => {
-    FilelistSessionActions.actions.changeDirectory(this.props.session, directory);
+    FilelistSessionActions.changeDirectory(this.props.session, directory);
   }
 
   emptyRowsNodeGetter = () => {
@@ -166,7 +167,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         caption={ caption }
         user={ this.props.session.user }
         itemInfoGetter={ this.getCurrentDirectory }
-        downloadHandler={ FilelistItemActions.actions.download }
+        downloadHandler={ FilelistItemAPIActions.download }
         contextElement=".session-container"
       >
         <ActionMenu
@@ -174,7 +175,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
             item: this.props.session.location,
             session: this.props.session,
           } }
-          actions={ FilelistItemActions }
+          actions={ FilelistItemUIActions }
         />
       </DownloadMenu>
     );
@@ -216,7 +217,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           entityId={ session.id }
           viewId={ session.location.path }
           sessionStore={ FilelistSessionStore }
-          moduleId={ FilelistItemActions.moduleId }
+          moduleId={ FilelistItemUIActions.moduleId }
         >
           <Column
             name="Name"
@@ -226,7 +227,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
               <FileDownloadCell 
                 clickHandlerGetter={ this.onClickDirectory }
                 userGetter={ this.userGetter }
-                downloadHandler={ FilelistItemActions.actions.download } 
+                downloadHandler={ FilelistItemAPIActions.download } 
               /> 
             }
             flexGrow={8}
@@ -254,7 +255,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           />
         </VirtualTable>
         <DownloadDialog 
-          downloadHandler={ FilelistItemActions.actions.download }
+          downloadHandler={ FilelistItemAPIActions.download }
           itemDataGetter={ this.filelistItemGetter }
           userGetter={ this.userGetter }
         />

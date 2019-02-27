@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import LoginStore from 'stores/LoginStore';
 
 import { ActionMenu } from 'components/menu';
-import WidgetActions from 'actions/WidgetActions';
+import WidgetActions from 'actions/ui/WidgetActions';
 
 import * as UI from 'types/ui';
 
@@ -56,7 +56,7 @@ const Widget: React.FC<WidgetProps> = ({
 
         <ActionMenu 
           className="widget-menu right top pointing"
-          actions={ WidgetActions }
+          actions={ WidgetActions.edit }
           itemData={{
             id: componentId,
             widgetInfo,

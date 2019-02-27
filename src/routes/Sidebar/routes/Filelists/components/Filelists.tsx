@@ -4,7 +4,8 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import FilelistSessionStore from 'stores/FilelistSessionStore';
-import FilelistSessionActions from 'actions/FilelistSessionActions';
+import FilelistSessionUIActions from 'actions/ui/FilelistSessionActions';
+import FilelistSessionAPIActions from 'actions/reflux/FilelistSessionActions';
 
 import FilelistNew from 'routes/Sidebar/routes/Filelists/components/FilelistNew';
 import FilelistSession from 'routes/Sidebar/routes/Filelists/components/FilelistSession';
@@ -57,7 +58,8 @@ const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession
       newIcon="browser" 
       disableSideMenu={ true }
       editAccess={ API.AccessEnum.FILELISTS_EDIT }
-      actions={ FilelistSessionActions }
+      uiActions={ FilelistSessionUIActions }
+      sessionApi={ FilelistSessionAPIActions as UI.SessionActions<API.FilelistSession> }
       unreadInfoStore={ FilelistSessionStore }
       sessionItemLayout={ FilelistSession }
       newLayout={ FilelistNew }

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import FavoriteHubActions from 'actions/FavoriteHubActions';
-import FavoriteHubPasswordActions from 'actions/FavoriteHubPasswordActions';
+import FavoriteHubAPIActions from 'actions/reflux/FavoriteHubActions';
+import FavoriteHubUIActions from 'actions/ui/FavoriteHubActions';
+import FavoriteHubPasswordActions from 'actions/ui/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
 
@@ -57,14 +58,14 @@ class FavoriteHubs extends React.Component<WithTranslation> {
   }
 
   onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
-    FavoriteHubActions.actions.update(rowData, { auto_connect: checked });
+    FavoriteHubAPIActions.update(rowData, { auto_connect: checked });
   }
 
   favT = getModuleT(this.props.t, UI.Modules.FAVORITE_HUBS);
   render() {
     const footerData = (
       <ActionButton 
-        actions={ FavoriteHubActions }
+        actions={ FavoriteHubUIActions.create }
         actionId="create"
       />
     );
@@ -76,7 +77,7 @@ class FavoriteHubs extends React.Component<WithTranslation> {
           rowClassNameGetter={ this.rowClassNameGetter }
           footerData={ footerData }
           store={ FavoriteHubStore }
-          moduleId={ FavoriteHubActions.moduleId }
+          moduleId={ UI.Modules.FAVORITE_HUBS }
         >
           <Column
             name="State"
@@ -92,7 +93,7 @@ class FavoriteHubs extends React.Component<WithTranslation> {
             flexGrow={ 6 }
             cell={ 
               <ActionMenuCell 
-                actions={ FavoriteHubActions }
+                actions={ FavoriteHubUIActions.edit }
               /> 
             }
           />

@@ -6,7 +6,7 @@ import { default as HistoryConstants, HistoryStringEnum } from 'constants/Histor
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
-import HistoryActions from 'actions/HistoryActions';
+import HistoryActions from 'actions/reflux/HistoryActions';
 
 import { getParentPath } from 'utils/FileUtils';
 import { useMobileLayout } from 'utils/BrowserUtils';
@@ -25,7 +25,7 @@ import './style.css';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { APISocket } from 'airdcpp-apisocket';
-import { DownloadHandler, DownloadableItemInfo } from 'actions/DownloadableItemActions';
+//import { DownloadHandler, DownloadableItemInfo } from 'types';
 
 import i18next from 'i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
@@ -66,18 +66,18 @@ const MobileLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => 
 
 type DownloadItemIdType = string;
 
-export type DownloadDialogUserGetter<ItemT extends DownloadableItemInfo> = (
+export type DownloadDialogUserGetter<ItemT extends UI.DownloadableItemInfo> = (
   itemId: DownloadItemIdType, 
   props: Props<ItemT>
 ) => API.HintedUserBase;
 
-export type DownloadDialogItemDataGetter<ItemT extends DownloadableItemInfo> = (
+export type DownloadDialogItemDataGetter<ItemT extends UI.DownloadableItemInfo> = (
   itemId: DownloadItemIdType, 
   socket: APISocket
 ) => Promise<ItemT>;
 
-interface DownloadDialogProps<ItemT extends DownloadableItemInfo = DownloadableItemInfo> {
-  downloadHandler: DownloadHandler<ItemT>;
+interface DownloadDialogProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> {
+  downloadHandler: UI.DownloadHandler<ItemT>;
   itemDataGetter: DownloadDialogItemDataGetter<ItemT>;
   userGetter?: DownloadDialogUserGetter<ItemT>;
 }
@@ -86,7 +86,7 @@ type DownloadDialogRouteProps = ModalRouteDecoratorChildProps & RouteComponentPr
   downloadItemId: DownloadItemIdType; 
 }>;
 
-interface DownloadDialogDataProps<ItemT extends DownloadableItemInfo = DownloadableItemInfo> 
+interface DownloadDialogDataProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> 
 extends DataProviderDecoratorChildProps {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
@@ -95,7 +95,7 @@ extends DataProviderDecoratorChildProps {
 }
 
 
-type Props<ItemT extends DownloadableItemInfo = DownloadableItemInfo> = DownloadDialogProps<ItemT> & 
+type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> = DownloadDialogProps<ItemT> & 
   DownloadDialogDataProps<ItemT> & 
   DownloadDialogRouteProps;
 

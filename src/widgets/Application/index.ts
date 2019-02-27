@@ -13,7 +13,7 @@ export const Application = {
     minH: 4,
   },
   actionMenu: {
-    actions: require('actions/SystemActions').default,
+    actions: require('actions/ui/SystemActions').default,
     ids: [ 'shutdown' ],
   },
 } as UI.Widget;

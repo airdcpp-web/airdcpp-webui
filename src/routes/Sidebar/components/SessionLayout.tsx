@@ -48,9 +48,12 @@ export interface SessionLayoutProps<
   items: SessionT[];
 
   // Session actions (should contain 'removeSession')
-  actions: UI.ModuleActions<SessionT> & {
-    actions: UI.SessionActions<SessionT, ActionT>;
-  };
+  /*actions: UI.ModuleActions<SessionT> & {
+    actions: UI.SessionUIActions<SessionT, ActionT>;
+  };*/
+
+  uiActions: UI.ModuleActions<SessionT>;
+  sessionApi: UI.SessionActions<SessionT>;
 
   // Session actions to show in the action menu
   actionIds?: string[];
@@ -98,7 +101,7 @@ export interface SessionMainLayoutProps<SessionT extends SessionBaseType, Action
   children: React.ReactNode;
 
   //moduleId: string;
-  actions: SessionLayoutProps<SessionT>['actions'];
+  actions: SessionLayoutProps<SessionT>['uiActions'];
   t: i18next.TFunction;
 }
 
@@ -107,7 +110,7 @@ interface State<SessionT extends SessionBaseType> {
 }
 
 export type SessionChildProps<SessionT extends SessionBaseType, ActionT extends object = {}> = 
-  Pick<SessionLayoutProps<SessionT, ActionT>, 'actions' | 'location'> & 
+  Pick<SessionLayoutProps<SessionT, ActionT>, 'location' | 'sessionApi'> & 
   { 
     session: SessionT;
     sessionT: UI.ModuleTranslator;
@@ -151,7 +154,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     itemStatusGetter: PropTypes.func,
 
     // Session actions (should contain 'removeSession')
-    actions: PropTypes.object.isRequired,
+    uiActions: PropTypes.object.isRequired,
 
     // Session actions to show in the action menu
     actionIds: PropTypes.array,
@@ -315,10 +318,10 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
       // Delete
       event.preventDefault();
 
-      const { items, activeId, actions } = this.props;
+      const { items, activeId, sessionApi } = this.props;
       const item = findItem(items, activeId);
       if (!!item) {
-        actions.actions.removeSession(item);
+        sessionApi.removeSession(item);
       }
     }
   }
@@ -365,7 +368,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   }
 
   getItemHeaderTitle = () => {
-    const { actions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
+    const { uiActions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
 
     const { activeItem } = this.state;
     if (!activeItem) {
@@ -380,7 +383,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     const actionMenu = (
       <ActionMenu 
         caption={ itemNameGetter(activeItem) }
-        actions={ actions }
+        actions={ uiActions }
         itemData={ activeItem }
         ids={ ids }
       />
@@ -429,8 +432,8 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   }
 
   handleCloseAll = () => {
-    const { actions, items } = this.props;
-    items.forEach(session => actions.actions.removeSession(session));
+    const { sessionApi, items } = this.props;
+    items.forEach(session => sessionApi.removeSession(session));
   }
 
   getListActionMenu = () => {
@@ -450,11 +453,11 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     );
   }
 
-  sessionT = getModuleT(this.props.t, this.props.actions.moduleId);
+  sessionT = getModuleT(this.props.t, this.props.uiActions.moduleId);
   render() {
     const { 
-      disableSideMenu, /*width,*/ items, unreadInfoStore, location, t,
-      actions, newLayout: NewLayout, sessionItemLayout: SessionItemLayout, activeId 
+      disableSideMenu, /*width,*/ items, unreadInfoStore, location, t, sessionApi,
+      uiActions, newLayout: NewLayout, sessionItemLayout: SessionItemLayout, activeId 
     } = this.props;
     
     if (!this.hasEditAccess() && items.length === 0) {
@@ -488,7 +491,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
         listActionMenuGetter={ this.getListActionMenu }
         onKeyDown={ this.onKeyDown }
         //moduleId={ actions.moduleId }
-        actions={ actions }
+        actions={ uiActions }
         t={ t }
       >
         <Route
@@ -512,7 +515,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
             return (
               <SessionItemLayout
                 session={ activeItem }
-                actions={ actions }
+                sessionApi={ sessionApi }
                 location={ location }
                 sessionT={ this.sessionT }
               />

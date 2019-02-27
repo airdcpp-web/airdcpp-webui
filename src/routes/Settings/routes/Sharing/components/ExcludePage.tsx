@@ -1,7 +1,8 @@
 import React from 'react';
+import SocketService from 'services/SocketService';
 
-import ShareActions from 'actions/ShareActions';
-import ShareExcludeActions from 'actions/ShareExcludeActions';
+import ShareActions from 'actions/ui/ShareActions';
+import ShareExcludeActions from 'actions/ui/ShareExcludeActions';
 import ShareConstants from 'constants/ShareConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -13,7 +14,7 @@ import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
-import * as UI from 'types/ui';
+//import * as UI from 'types/ui';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
@@ -22,8 +23,8 @@ const Row: React.FC<{ path: string; }> = ({ path }) => (
     <td>
       <ActionMenu 
         caption={ <strong>{ path }</strong> } 
-        actions={ ShareExcludeActions } 
-        ids={ [ 'remove' ] } 
+        actions={ ShareExcludeActions.edit } 
+        //ids={ [ 'remove' ] } 
         itemData={ path }
         contextElement="#setting-scroll-context"
       />
@@ -74,7 +75,7 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
         />
 
         <ActionButton
-          actions={ ShareExcludeActions }
+          actions={ ShareExcludeActions.create }
           actionId="add"
           className="add"
         />
@@ -93,7 +94,7 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
         ) }
 
         <FileBrowserDialog
-          onConfirm={ (ShareExcludeActions.actions.add as UI.EditorActionType<string>).saved }
+          onConfirm={ path => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }) }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
           subHeader={ translate('Add excluded path') }

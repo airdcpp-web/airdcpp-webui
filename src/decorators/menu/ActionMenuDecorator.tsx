@@ -9,7 +9,7 @@ import { Location } from 'history';
 
 import * as UI from 'types/ui';
 import { 
-  ActionHandlerDecorator, ActionHandlerDecoratorChildProps, ActionClickHandler
+  ActionHandlerDecorator, ActionClickHandler
 } from 'decorators/ActionHandlerDecorator';
 import { Trans } from 'react-i18next';
 import { parseTranslationModules } from 'utils/TranslationUtils';
@@ -25,18 +25,21 @@ export interface ActionMenuDecoratorProps<ItemDataT extends UI.ActionItemDataVal
   actions: UI.ModuleActions<ItemDataT>;
   
   itemData?: UI.ActionItemDataType<ItemDataT>;
-  onClickAction?: OnClickActionHandler;
+  //onClickAction?: OnClickActionHandler;
 }
 
 export interface ActionMenuDecoratorChildProps {
   children: () => React.ReactNode;
 }
 
-type FilterType = (action: UI.ActionType, itemData: UI.ActionItemDataValueType | undefined) => boolean;
+type FilterType<ItemDataT extends UI.ActionItemDataValueType> = (
+  action: UI.ActionType<ItemDataT>, 
+  itemData: ItemDataT
+) => boolean;
 
 
 const parseItemData = <ItemDataT extends UI.ActionItemDataValueType>(
-  itemData?: UI.ActionItemDataType<ItemDataT>
+  itemData: UI.ActionItemDataType<ItemDataT> | undefined
 ): ItemDataT | undefined => {
   return itemData instanceof Function ? itemData() : itemData;
 };
@@ -44,7 +47,7 @@ const parseItemData = <ItemDataT extends UI.ActionItemDataValueType>(
 // Returns true if the provided ID matches the specified filter
 const filterItem = <ItemDataT extends UI.ActionItemDataValueType>(
   props: ActionMenuDecoratorProps<ItemDataT>, 
-  filter: FilterType, 
+  filter: FilterType<ItemDataT>, 
   actionId: string
 ) => {
   const action = props.actions.actions[actionId];
@@ -53,13 +56,13 @@ const filterItem = <ItemDataT extends UI.ActionItemDataValueType>(
     return true;
   }
 
-  return filter(action, parseItemData<ItemDataT>(props.itemData));
+  return filter(action, parseItemData<ItemDataT>(props.itemData) as ItemDataT);
 };
 
 // Get IDs matching the provided filter
 const filterItems = <ItemDataT extends UI.ActionItemDataValueType>(
   props: ActionMenuDecoratorProps<ItemDataT>, 
-  filter: FilterType, 
+  filter: FilterType<ItemDataT>, 
   actionIds: string[]
 ) => {
   let ids = actionIds.filter(id =>  filterItem(props, filter, id));
@@ -90,7 +93,7 @@ const filterExtraDividers = (ids: string[]) => {
 interface MenuType<ItemDataT> {
   //moduleId: string;
   actionIds: string[];
-  itemDataGetter: (() => ItemDataT | undefined);
+  itemDataGetter: (() => ItemDataT);
   //actions: UI.ActionListType<ItemDataT>;
   actions: UI.ModuleActions<ItemDataT>;
 }
@@ -102,7 +105,8 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
 ): MenuType<ItemDataT> | string => {
   let ids: string[] | null;
   ids = props.ids || Object.keys(props.actions.actions).filter(id => {
-    return id === 'divider' || props.actions.actions[id].displayName;
+    const action = props.actions.actions[id];
+    return /*id === 'divider'*/ !action || action.displayName;
   });
 
   // Only return a single error for each menu
@@ -127,7 +131,7 @@ const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
 
   const ret: MenuType<ItemDataT> = {
     actionIds: ids,
-    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT | undefined,
+    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT,
     actions: props.actions,
     //moduleId: props.actions.moduleId,
   };
@@ -144,7 +148,13 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
   location: Location, 
   onClickAction: ActionClickHandler<ItemDataT>
 ) => {
-  if (actionId === 'divider') {
+  // A custom element
+  if (typeof actionId !== 'string') {
+    return actionId;
+  }
+
+  const action = menu.actions.actions[actionId];
+  if (!action) {
     return (
       <div 
         key={ `divider${menuIndex}_${itemIndex}` } 
@@ -153,12 +163,6 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
     );
   }
 
-  // A custom element
-  if (typeof actionId !== 'string') {
-    return actionId;
-  }
-
-  const action = menu.actions.actions[actionId];
   return (
     <MenuItemLink 
       key={ actionId } 
@@ -198,7 +202,7 @@ const notError = <ItemDataT extends UI.ActionItemDataValueType>(
 export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionItemDataValueType>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
-  type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT & ActionHandlerDecoratorChildProps;
+  type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT;
   class ActionMenuDecorator extends React.PureComponent<Props> {
     /*static propTypes = {
 
@@ -220,9 +224,14 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     };*/
 
     // Reduce menus to an array of DropdownItems
-    reduceMenuItems = (items: React.ReactChild[], menu: MenuType<ItemDataT>, menuIndex: number) => {
-      const { location } = this.props;
-      const { onClickAction } = this.props;
+    reduceMenuItems = (
+      onClickAction: ActionClickHandler,
+      location: Location,
+      items: React.ReactChild[], 
+      menu: MenuType<ItemDataT>, 
+      menuIndex: number,
+    ) => {
+      //const { location, onClickAction } = this.props;
 
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
         return getMenuItem(menu, menuIndex, actionId, actionIndex, location, onClickAction);
@@ -249,47 +258,54 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       return menus;
     }
 
-    getChildren = () => {
+    getChildren = (onClickAction: ActionClickHandler, location: Location) => {
       const menus = this.getMenus();
       return menus
         .filter(notError)
-        .reduce(this.reduceMenuItems, []);
+        .reduce(this.reduceMenuItems.bind(this, onClickAction, location), []);
     }
 
     render() {
-      let { ids, actions, children, itemData, ...other } = this.props;
-
-      const menus = this.getMenus();
-
-      // Are there any items to show?
-      if (!menus.some(notError)) {
-        if (this.props.button) {
-          return null;
-        }
-
-        const dropdownClassName = classNames(
-          { 'no-access': menus.indexOf('no-access') !== -1 },
-          { 'filtered': menus.indexOf('filtered') !== -1 },
-          this.props.className,
-        );
-
-        return (
-          <EmptyDropdown
-            caption={ this.props.caption }
-            className={ dropdownClassName }
-          />
-        );
-      }
-
       return (
-        <Component 
-          { ...other as ActionMenuDecoratorChildProps & DropdownComponentPropsT }
-        >
-          { this.getChildren }
-        </Component>
+        <ActionHandlerDecorator/*<ItemDataT>*/>
+          { ({ onClickAction, location }) => {
+            let { ids, actions, children, itemData, ...other } = this.props;
+
+            const menus = this.getMenus();
+
+            // Are there any items to show?
+            if (!menus.some(notError)) {
+              if (this.props.button) {
+                return null;
+              }
+
+              const dropdownClassName = classNames(
+                { 'no-access': menus.indexOf('no-access') !== -1 },
+                { 'filtered': menus.indexOf('filtered') !== -1 },
+                this.props.className,
+              );
+
+              return (
+                <EmptyDropdown
+                  caption={ this.props.caption }
+                  className={ dropdownClassName }
+                />
+              );
+            }
+
+            return (
+              <Component 
+                { ...other as ActionMenuDecoratorChildProps & DropdownComponentPropsT }
+              >
+                { () => this.getChildren(onClickAction, location) }
+              </Component>
+            );
+          } }
+        </ActionHandlerDecorator>
       );
     }
   }
 
-  return ActionHandlerDecorator<ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT>(ActionMenuDecorator);
+  return ActionMenuDecorator;
+  //return ActionHandlerDecorator<ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT>(ActionMenuDecorator);
 }

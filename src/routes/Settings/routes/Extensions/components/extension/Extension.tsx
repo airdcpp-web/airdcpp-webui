@@ -57,7 +57,7 @@ const Version: React.FC<VersionProps> = ({ title, packageInfo, className, module
   );
 };
 
-const formatAuthor = (moduleT: UI.ModuleTranslator, npmPackage?: NpmPackage, installedPackage?: API.Extension) => {
+const formatAuthor = (moduleT: UI.ModuleTranslator, npmPackage?: UI.NpmPackage, installedPackage?: API.Extension) => {
   let author: string | undefined;
   if (installedPackage && installedPackage.author) {
     author = installedPackage.author;
@@ -104,18 +104,9 @@ const formatNote = (
 };
 
 
-export interface NpmPackage {
-  name: string;
-  description: string;
-  version: string;
-  publisher: {
-    username: string;
-  };
-}
-
 export interface ExtensionProps {
   installedPackage?: API.Extension;
-  npmPackage?: NpmPackage;
+  npmPackage?: UI.NpmPackage;
   npmError?: ErrorResponse | null;
   moduleT: UI.ModuleTranslator;
 }

@@ -1,6 +1,4 @@
 import React from 'react';
-//@ts-ignore
-import Reflux from 'reflux';
 
 import Loader from 'components/semantic/Loader';
 

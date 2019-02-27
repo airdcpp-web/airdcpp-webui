@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExtensionActions from 'actions/ExtensionActions';
+import ExtensionActions from 'actions/ui/ExtensionActions';
 
 import ActionButton from 'components/ActionButton';
 
@@ -17,13 +17,13 @@ interface ExtensionBrowsePageProps {
 
 const ExtensionBrowsePage: React.FC<ExtensionBrowsePageProps> = ({ moduleT }) => {
   return (
-    <div>
+    <>
       <EngineStatusMessage
         moduleT={ moduleT }
       />
       <div className="table-actions">
         <ActionButton
-          actions={ ExtensionActions }
+          actions={ ExtensionActions.install }
           actionId="installUrl"
           className="add"
         />
@@ -32,7 +32,7 @@ const ExtensionBrowsePage: React.FC<ExtensionBrowsePageProps> = ({ moduleT }) =>
         moduleT={ moduleT }
       />
       <ExtensionsConfigureDialog/>
-    </div>
+    </>
   );
 };
 

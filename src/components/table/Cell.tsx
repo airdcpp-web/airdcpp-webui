@@ -12,12 +12,15 @@ import FormattedIp from 'components/format/FormattedIp';
 import Checkbox, { CheckboxProps } from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
 import { Cell, CellProps } from 'fixed-data-table-2';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
+//import { withRouter, RouteComponentProps } from 'react-router-dom';
+//import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as UI from 'types/ui';
 import * as API from 'types/api';
+//import { ActionHandlerDecorator, ActionHandlerDecoratorChildProps } from 'decorators/ActionHandlerDecorator';
+//import ActionButton, { ActionButtonProps } from 'components/ActionButton';
+import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
 
 
 const getCellContent = (cellData: any) => {
@@ -95,16 +98,25 @@ export const ActionMenuCell = <CellDataT, ItemDataT extends UI.ActionItemDataVal
 
 export interface ActionLinkCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> 
   extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
+  /*Pick<ActionButtonProps<ItemDataT>, 'actions' | 'actionId'>*/
 
   //action: (itemData: any, location: Location) => void;
-  action: UI.ActionType;
+  //action: UI.ActionType<ItemDataT>;
+  actions: UI.ModuleActions<ItemDataT>;
+  actionId: string;
 }
 
-const ActionLinkCellPlain = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
+export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
   { 
-    cellData, rowDataGetter, action, location, ...props
-  }: ActionLinkCellProps<CellDataT, ItemDataT> & RouteComponentProps
+    cellData, 
+    rowDataGetter, 
+    //location, 
+    //onClickAction, action,
+    actions, actionId,
+    ...props
+  }: ActionLinkCellProps<CellDataT, ItemDataT> /*& ActionHandlerDecoratorChildProps*/
 ) => {
+  const action = actions.actions[actionId]!;
   if (!showAction(action, rowDataGetter!())) {
     return (
       <TextCell 
@@ -115,13 +127,36 @@ const ActionLinkCellPlain = <CellDataT, ItemDataT extends UI.ActionItemDataValue
   }
 
   return (
-    <a className="plain link cell" onClick={ () => action(rowDataGetter!(), location) }>
-      { getCellContent(cellData) }
-    </a>
+    <ActionHandlerDecorator/*<ItemDataT>*/>
+      { ({ onClickAction }) => (
+        <a 
+          className="plain link cell" 
+          onClick={ () => onClickAction({
+            actionId,
+            action,
+            moduleId: actions.moduleId,
+            itemData: rowDataGetter!(),
+          }) }
+        >
+          { getCellContent(cellData) }
+        </a>
+      ) }
+    </ActionHandlerDecorator>
   );
+
+  /*return (
+    <ActionButton
+      actions={ actions }
+      actionId={ actionId }
+      tag="a"
+      semanticClassName="plain link cell"
+      icon={ null }
+      caption={ getCellContent(cellData) }
+    />
+  );*/
 };
 
-export const ActionLinkCell = withRouter(ActionLinkCellPlain);
+//export const ActionLinkCell = ActionHandlerDecorator(ActionLinkCellPlain);
 
 export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;
@@ -184,7 +219,7 @@ export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.ActionIte
 
   userGetter: (rowData: ItemDataT) => API.HintedUserBase;
   clickHandlerGetter?: FileDownloadCellClickHandler;
-  downloadHandler: DownloadHandlerType;
+  downloadHandler: () => void;
 }
 
 export const FileDownloadCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType & FileItemBase>(

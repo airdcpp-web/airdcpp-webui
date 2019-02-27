@@ -6,7 +6,7 @@ import {
   loadSessionProperty, saveSessionProperty, removeSessionProperty 
 } from 'utils/BrowserUtils';
 
-import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/reflux/LoginActions';
 import SocketService from 'services/SocketService';
 
 import AccessConstants from 'constants/AccessConstants';
@@ -36,7 +36,7 @@ const LOGIN_PROPS_KEY = 'login_properties';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
 const LoginStore = {
-  listenables: LoginActions.actions,
+  listenables: LoginActions,
   loginProperties: loadSessionProperty(LOGIN_PROPS_KEY, null) as API.LoginInfo | null,
 
   _allowLogin: true,

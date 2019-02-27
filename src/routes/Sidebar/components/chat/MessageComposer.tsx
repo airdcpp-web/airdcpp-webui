@@ -12,7 +12,7 @@ import NotificationActions from 'actions/NotificationActions';
 
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
-import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
+import { ChatLayoutProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
@@ -53,7 +53,7 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
   };
 };
 
-export interface MessageComposerProps extends ChatSessionProps {
+export interface MessageComposerProps extends Pick<ChatLayoutProps, 'chatApi' | 'session' | 'chatActions'> {
 
 }
 
@@ -111,8 +111,8 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   }
 
   handleSend = (text: string) => {
-    const { actions, session } = this.props;
-    actions.actions.sendMessage(session, text);
+    const { chatApi, session } = this.props;
+    chatApi.sendMessage(session, text);
   }
 
   componentWillUnmount() {

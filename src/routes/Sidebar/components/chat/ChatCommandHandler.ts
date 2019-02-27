@@ -1,26 +1,27 @@
 import { showAction } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
-import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
+import { MessageComposerProps } from './MessageComposer';
+//import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 
 type ParamsType = string | undefined;
 
-const handleMe = (params: ParamsType, { actions, session }: ChatSessionProps) => {
+const handleMe = (params: ParamsType, { chatApi, session }: MessageComposerProps) => {
   if (params) {
-    actions.actions.sendMessage(session, params, true);
+    chatApi.sendMessage(session, params, true);
   }
 };
 
-const handleClear = (params: ParamsType, { actions, session }: ChatSessionProps) => {
-  actions.actions.clear(session);
+const handleClear = (params: ParamsType, { chatApi, session }: MessageComposerProps) => {
+  chatApi.clear(session);
 };
 
-const CommandHandler = (sessionProps: ChatSessionProps) => {
+const CommandHandler = (sessionProps: MessageComposerProps) => {
   const commands = {
     clear: {
       help: 'Clear message cache',
       handler: handleClear,
-      access: sessionProps.actions.actions.clear.access,
+      access: sessionProps.chatActions.clear.access,
     },
     help: {
       handler: () => {

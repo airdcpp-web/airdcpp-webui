@@ -3,7 +3,7 @@ import React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import WidgetActions from 'actions/WidgetActions';
+import WidgetActions from 'actions/ui/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import { Location } from 'history';
 
@@ -17,10 +17,13 @@ const getWidgetItem = (widgetInfo: UI.Widget, location: Location, t: i18next.TFu
   return (
     <MenuItemLink 
       key={ widgetInfo.typeId }
-      onClick={ () => WidgetActions.actions.create(widgetInfo, location) }
+      onClick={ () => WidgetActions.create.actions.create!.handler({
+        data: widgetInfo, 
+        location
+      }) }
       icon={ widgetInfo.icon }
     >
-      { /*widgetT.translate(widgetInfo.name)*/ translateWidgetName(widgetInfo, t) }
+      { translateWidgetName(widgetInfo, t) }
     </MenuItemLink>
   );
 };

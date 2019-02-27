@@ -6,7 +6,7 @@ import HubMessageStore from 'stores/HubMessageStore';
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
-import ChatLayout, { ChatActions } from 'routes/Sidebar/components/chat/ChatLayout';
+import ChatLayout, { ChatActions, ChatLayoutProps, ChatAPI } from 'routes/Sidebar/components/chat/ChatLayout';
 import HubUserTable from 'routes/Sidebar/routes/Hubs/components/HubUserTable';
 
 import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
@@ -16,6 +16,7 @@ import '../style.css';
 
 import * as API from 'types/api';
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
+import HubActions from 'actions/reflux/HubActions';
 
 
 const getStorageKey = (props: HubSessionProps) => {
@@ -27,7 +28,8 @@ const checkList = (props: HubSessionProps) => {
 };
 
 
-interface HubSessionProps extends SessionChildProps<API.Hub, ChatActions> {
+interface HubSessionProps extends SessionChildProps<API.Hub, ChatActions>, 
+  Pick<ChatLayoutProps, 'chatApi' | 'chatActions'> {
   //session: API.Hub;
   //actions: UI.SessionActions<API.Hub, ChatActions>;
 }
@@ -83,7 +85,7 @@ class HubSession extends React.Component<HubSessionProps> {
   }
 
   render() {
-    const { session, actions, sessionT } = this.props;
+    const { session, chatActions, sessionApi, sessionT } = this.props;
     const { showList } = this.state;
 
     const checkbox = (
@@ -106,7 +108,9 @@ class HubSession extends React.Component<HubSessionProps> {
         ) : (
           <ChatLayout
             messageStore={ HubMessageStore }
-            actions={ actions }
+            chatApi={ HubActions as ChatAPI }
+            sessionApi={ sessionApi }
+            chatActions={ chatActions }
             chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
           />

@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import invariant from 'invariant';
 
-import HubActions from 'actions/HubActions';
+import HubActions from 'actions/reflux/HubActions';
 import HubConstants from 'constants/HubConstants';
 
 import { HubMessageUrgencies } from 'constants/UrgencyConstants';

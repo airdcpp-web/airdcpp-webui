@@ -8,7 +8,7 @@ import Message from 'components/semantic/Message';
 
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 
-import Entry, { FeedItem } from 'widgets/RSS/components/Entry';
+import Entry from 'widgets/RSS/components/Entry';
 import Footer from 'widgets/RSS/components/Footer';
 import { Settings } from 'widgets/RSS';
 
@@ -16,6 +16,7 @@ import '../style.css';
 
 import * as UI from 'types/ui';
 import { toCorsSafeUrl, formatHttpError } from 'utils/HttpUtils';
+import { FeedItem } from '../types';
 
 
 const getEntryKey = (entry: FeedItem): string => {

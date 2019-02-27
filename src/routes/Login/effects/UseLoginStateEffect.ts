@@ -1,7 +1,7 @@
 import LoginStore, { LoginState } from 'stores/LoginStore';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/reflux/LoginActions';
 
 import * as API from 'types/api';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +43,7 @@ const useLoginState = (props: RouteComponentProps) => {
     () => {
       const refreshToken: string | null = LoginStore.refreshToken;
       if (!!refreshToken) {
-        LoginActions.actions.loginRefreshToken(refreshToken);
+        LoginActions.loginRefreshToken(refreshToken);
         setLoading(true);
       }
     },

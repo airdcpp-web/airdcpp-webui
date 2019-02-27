@@ -2,7 +2,7 @@ import React from 'react';
 
 import { formatRelativeTime, formatSize } from 'utils/ValueFormat';
 
-import SearchActions from 'actions/SearchActions';
+import SearchActions from 'actions/reflux/SearchActions';
 import { DownloadMenu } from 'components/menu';
 
 import * as API from 'types/api';
@@ -113,7 +113,7 @@ const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult, searchT }
         button={ true }
         user={ parentResult.users.user }
         itemInfoGetter={ () => parentResult }
-        downloadHandler={ SearchActions.actions.download }
+        downloadHandler={ SearchActions.download }
       />
     </div>
   );

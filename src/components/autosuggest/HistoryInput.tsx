@@ -4,7 +4,7 @@ import React from 'react';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import HistoryConstants from 'constants/HistoryConstants';
-import HistoryActions from 'actions/HistoryActions';
+import HistoryActions from 'actions/reflux/HistoryActions';
 
 import LocalSuggestField, { LocalSuggestFieldProps } from './LocalSuggestField';
 

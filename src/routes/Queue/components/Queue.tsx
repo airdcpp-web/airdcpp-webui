@@ -1,8 +1,9 @@
 import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueActions from 'actions/QueueActions';
-import QueueBundleActions from 'actions/QueueBundleActions';
+import QueueActions from 'actions/ui/QueueActions';
+import QueueBundleAPIActions from 'actions/reflux/QueueBundleActions';
+import QueueBundleUIActions from 'actions/ui/QueueBundleActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';
@@ -36,7 +37,7 @@ const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.Que
   <PriorityMenu 
     itemPrio={ cellData! } 
     item={ rowDataGetter!() }
-    prioAction={ QueueBundleActions.actions.setBundlePriority }
+    prioAction={ QueueBundleAPIActions.setBundlePriority }
     t={ t! }
   />
 );
@@ -97,7 +98,7 @@ class Queue extends React.Component<WithTranslation> {
             columnKey="name"
             cell={ 
               <FileActionCell 
-                actions={ QueueBundleActions } 
+                actions={ QueueBundleUIActions } 
                 ids={[ 
                   'content', 'sources', 
                   'divider', 
@@ -122,7 +123,12 @@ class Queue extends React.Component<WithTranslation> {
             width={150}
             columnKey="type"
             hideWidth={1000}
-            cell={ <ActionLinkCell action={ QueueBundleActions.actions.content }/> }
+            cell={ 
+              <ActionLinkCell 
+                actions={ QueueBundleUIActions }
+                actionId="content"
+              /> 
+            }
           />
           <Column
             name="Status"
@@ -137,7 +143,12 @@ class Queue extends React.Component<WithTranslation> {
             columnKey="sources"
             renderCondition={ this.isActive }
             flexGrow={1}
-            cell={ <ActionLinkCell action={ QueueBundleActions.actions.sources }/> }
+            cell={ 
+              <ActionLinkCell 
+                actions={ QueueBundleUIActions }
+                actionId="sources"
+              /> 
+            }
           />
           <Column
             name="Time left"

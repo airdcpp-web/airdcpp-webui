@@ -10,7 +10,7 @@ import * as UI from 'types/ui';
 import { isArray } from 'util';
 
 import isEqual from 'lodash/isEqual';
-import startCase from 'lodash/startCase';
+import upperFirst from 'lodash/upperFirst';
 
 import { textToI18nKey } from './TranslationUtils';
 
@@ -298,7 +298,7 @@ const toFormI18nKey = (
   let key = textToI18nKey(definitionKey, UI.SubNamespaces.FORM);
   key += propName;
   if (extraKeyPostfix) {
-    key += startCase(extraKeyPostfix);
+    key += upperFirst(extraKeyPostfix);
   }
 
   return key;

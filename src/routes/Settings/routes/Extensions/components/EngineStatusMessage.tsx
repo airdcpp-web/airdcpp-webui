@@ -47,4 +47,5 @@ export default DataProviderDecorator<EngineStatusMessageProps, EngineStatusMessa
   urls: {
     enginesStatus: ExtensionConstants.ENGINES_STATUS_URL,
   },
+  loaderText: null
 });

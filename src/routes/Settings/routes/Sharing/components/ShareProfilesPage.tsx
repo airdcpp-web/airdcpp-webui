@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ShareProfileActions from 'actions/ShareProfileActions';
+import ShareProfileActions from 'actions/ui/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu';
@@ -24,7 +24,7 @@ const Row: React.FC<{ profile: API.ShareProfile; }> = ({ profile }) => (
     <td>
       <ActionMenu 
         caption={ <strong>{ profile.str }</strong> } 
-        actions={ ShareProfileActions } 
+        actions={ ShareProfileActions.edit } 
         itemData={ profile }
         contextElement="#setting-scroll-context"
       />
@@ -74,7 +74,7 @@ const ShareProfilesPage: React.FC<ShareProfilesPageProps & ShareProfileDecorator
         icon="blue info"
       />
       <ActionButton
-        actions={ ShareProfileActions }
+        actions={ ShareProfileActions.create }
         actionId="create"
       />
 

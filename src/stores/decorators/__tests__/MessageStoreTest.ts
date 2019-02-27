@@ -1,5 +1,5 @@
 import { checkUnreadSessionInfo } from 'utils/MessageUtils';
-import PrivateChatActions from 'actions/PrivateChatActions';
+import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
 import * as API from 'types/api';
@@ -103,7 +103,7 @@ describe('message store', () => {
     PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
     PrivateChatMessageStore._onChatMessage(ChatMessage2, SESSION_ID);
 
-    PrivateChatActions.actions.fetchMessages.completed(SESSION_BASE, messages);
+    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(SESSION_BASE, messages);
     jest.runAllTimers();
 
     // All three messages should have been stored
@@ -116,7 +116,7 @@ describe('message store', () => {
   });
 
   test('should remove duplicates arriving after fetching', () => {
-    PrivateChatActions.actions.fetchMessages.completed(SESSION_BASE, messages);
+    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(SESSION_BASE, messages);
     jest.runAllTimers();
 
     PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
@@ -125,7 +125,7 @@ describe('message store', () => {
   });
 
   test('should remove session data', () => {
-    PrivateChatActions.actions.fetchMessages.completed(SESSION_BASE, messages);
+    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(SESSION_BASE, messages);
     jest.runAllTimers();
 
     expect(PrivateChatMessageStore.isSessionInitialized(SESSION_ID));

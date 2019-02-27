@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Checkbox from 'components/semantic/Checkbox';
@@ -47,7 +47,7 @@ const Login: React.FC<LoginProps> = props => {
       return;
     }
 
-    LoginActions.actions.login(username, password, rememberMe);
+    LoginActions.login(username, password, rememberMe);
     setLoading(true);
   };
 

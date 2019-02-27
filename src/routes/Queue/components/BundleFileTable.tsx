@@ -1,7 +1,9 @@
 import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueFileActions from 'actions/QueueFileActions';
+import QueueFileAPIActions from 'actions/reflux/QueueFileActions';
+import QueueFileUIActions from 'actions/ui/QueueFileActions';
+
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';
@@ -23,7 +25,7 @@ const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.Que
   <PriorityMenu 
     itemPrio={ cellData! } 
     item={ rowDataGetter!() }
-    prioAction={ QueueFileActions.actions.setFilePriority }
+    prioAction={ QueueFileAPIActions.setFilePriority }
     t={ t! }
   />
 );
@@ -50,7 +52,7 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
           method: API.FilterMethod.EXACT,
           property: 'bundle',
         } }
-        moduleId={ QueueFileActions.moduleId }
+        moduleId={ QueueFileUIActions.moduleId }
       >
         <Column
           name="Name"
@@ -59,7 +61,7 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
           columnKey="name"
           cell={ 
             <FileActionCell 
-              actions={ QueueFileActions }
+              actions={ QueueFileUIActions }
             /> 
           }
         />

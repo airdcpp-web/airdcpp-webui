@@ -13,7 +13,7 @@ export const Transfers = {
     minH: 5,
   },
   actionMenu: {
-    actions: require('actions/QueueActions').default,
+    actions: require('actions/ui/QueueActions').default,
     ids: [ 'resume', 'pause' ],
   },
 } as UI.Widget;

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import History from 'utils/History';
 
-import LoginActions from 'actions/LoginActions';
+import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore, { LoginState } from 'stores/LoginStore';
 
 import { Location } from 'history';
@@ -17,10 +17,10 @@ export const useLoginGuard = (login: LoginState, location: Location) => {
         if (prevSocketAuthenticated) {
           // Connection lost, reconnect (but not too fast)
           console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
-          setTimeout(() => LoginActions.actions.connect(LoginStore.authToken), 2000);
+          setTimeout(() => LoginActions.connect(LoginStore.authToken), 2000);
         } else {
           // The page was loaded with a cached session token, attempt to reconnect
-          LoginActions.actions.connect(LoginStore.authToken);
+          LoginActions.connect(LoginStore.authToken);
         }
       } else if (!login.hasSession) {
         // Go to the login page as we don't have a valid session

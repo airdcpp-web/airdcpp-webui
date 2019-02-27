@@ -3,7 +3,7 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
-import SystemActions from 'actions/SystemActions';
+import SystemActions from 'actions/ui/SystemActions';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 

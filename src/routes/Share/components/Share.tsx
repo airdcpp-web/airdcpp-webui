@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ShareActions from 'actions/ShareActions';
-import ShareRootActions from 'actions/ShareRootActions';
+import ShareActions from 'actions/ui/ShareActions';
+import ShareRootActions from 'actions/ui/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
@@ -39,7 +39,7 @@ class Share extends React.Component<WithTranslation> {
             <ActionMenu 
               className="top left pointing"
               caption={ translate('Actions...') }
-              actions={ ShareRootActions }
+              actions={ ShareRootActions.create }
               header={ translate('Share actions') }
               triggerIcon="chevron up"
               ids={ [ 'create' ]}
@@ -59,7 +59,7 @@ class Share extends React.Component<WithTranslation> {
             columnKey="path"
             cell={
               <FileActionCell 
-                actions={ ShareRootActions }
+                actions={ ShareRootActions.edit }
               /> 
             }
             flexGrow={10}

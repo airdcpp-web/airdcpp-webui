@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import { AwayEnum } from 'constants/SystemConstants';
-import SystemActions from 'actions/SystemActions';
+import SystemActions from 'actions/reflux/SystemActions';
 import ActivityStore from 'stores/ActivityStore';
 import { useStore } from 'effects/StoreListenerEffect';
 
@@ -21,7 +21,7 @@ const AwayIcon = memo(() => {
   return (
     <i 
       className={ iconColor + ' away-state link large wait icon' } 
-      onClick={ () => SystemActions.actions.setAway(!isAway(awayState)) }
+      onClick={ () => SystemActions.setAway(!isAway(awayState)) }
     />
   );
 });

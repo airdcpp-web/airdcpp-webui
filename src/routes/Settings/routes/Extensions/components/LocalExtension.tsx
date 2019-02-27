@@ -4,7 +4,7 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 
-import Extension, { NpmPackage } from 'routes/Settings/routes/Extensions/components/extension/Extension';
+import Extension from 'routes/Settings/routes/Extensions/components/extension/Extension';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -31,7 +31,7 @@ const convertNpmPackage = ({ name, description, version, _npmUser }: NpmPackageD
     publisher: {
       username: _npmUser.name,
     }
-  } as NpmPackage;
+  } as UI.NpmPackage;
 };
 
 

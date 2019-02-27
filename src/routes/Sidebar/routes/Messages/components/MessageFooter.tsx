@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-import PrivateChatActions from 'actions/PrivateChatActions';
+import PrivateChatActions from 'actions/ui/PrivateChatActions';
 
 import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import Loader from 'components/semantic/Loader';

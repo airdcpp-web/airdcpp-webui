@@ -5,7 +5,8 @@ import TextDecorator from 'components/TextDecorator';
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
 import HubSessionStore from 'stores/HubSessionStore';
-import HubActions from 'actions/HubActions';
+import HubUIActions from 'actions/ui/HubActions';
+import HubAPIActions from 'actions/reflux/HubActions';
 
 import { hubOnlineStatusToColor } from 'utils/TypeConvert';
 
@@ -65,7 +66,8 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
       newDescription={ t(toI18nKey('newDesc', UI.Modules.HUBS), 'Connect to a new hub') } 
       newIcon="sitemap"
       editAccess={ API.AccessEnum.HUBS_EDIT }
-      actions={ HubActions } 
+      uiActions={ HubUIActions }
+      sessionApi={ HubAPIActions as UI.SessionActions<API.Hub> }
       sessionItemLayout={ HubSession }
       newLayout={ HubNew }
       t={ t }

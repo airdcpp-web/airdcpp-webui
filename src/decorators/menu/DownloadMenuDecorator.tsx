@@ -2,36 +2,28 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import DownloadableItemActions from 'actions/DownloadableItemActions';
+import DownloadableItemActions from 'actions/ui/DownloadableItemActions';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-export type DownloadHandlerType = () => void;
-
-interface DownloadMenuItemData<ItemDataT extends UI.ActionItemDataValueType> {
-  handler: DownloadHandlerType;
-  user: API.HintedUser;
-  itemInfo: ItemDataT;
-}
-
-export interface DownloadMenuDecoratorProps {
+export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo> {
   user: API.HintedUserBase;
-  itemInfoGetter: () => any;
-  downloadHandler: DownloadHandlerType;
+  itemInfoGetter: () => ItemDataT;
+  downloadHandler: UI.DownloadHandler<ItemDataT>;
   caption: React.ReactNode;
   className?: string;
 }
 
-type DownloadMenuDecoratorChildProps<ItemDataT extends UI.ActionItemDataValueType> = 
-  ActionMenuDecoratorProps<DownloadMenuItemData<ItemDataT>>;
+type DownloadMenuDecoratorChildProps<ItemDataT extends UI.DownloadableItemInfo> = 
+  ActionMenuDecoratorProps<UI.DownloadableItemData<ItemDataT>>;
 
-export default function <DropdownPropsT, ItemDataT extends UI.ActionItemDataValueType>(
+export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemInfo>(
   Component: React.ComponentType<DownloadMenuDecoratorChildProps<ItemDataT> & DropdownPropsT>
 ) {
-  class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps & DropdownPropsT> {
+  class DownloadMenu extends React.PureComponent<DownloadMenuDecoratorProps<ItemDataT> & DropdownPropsT> {
     /*static propTypes = {
 
       // Target user
@@ -44,13 +36,13 @@ export default function <DropdownPropsT, ItemDataT extends UI.ActionItemDataValu
       downloadHandler: PropTypes.func.isRequired,
     };*/
 
-    itemData: DownloadMenuItemData<ItemDataT>;
-    constructor(props: DownloadMenuDecoratorProps & DropdownPropsT) {
+    itemData: UI.DownloadableItemData<ItemDataT>;
+    constructor(props: DownloadMenuDecoratorProps<ItemDataT> & DropdownPropsT) {
       super(props);
 
       this.itemData = { 
         handler: props.downloadHandler,
-      } as DownloadMenuItemData<ItemDataT>;
+      } as UI.DownloadableItemData<ItemDataT>;
 
       // Since table cells are recycled, the same menu can be re-used for different items
       // as it's not necessarily re-rendered due to performance reasons

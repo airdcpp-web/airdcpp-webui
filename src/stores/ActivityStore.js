@@ -1,13 +1,13 @@
 import Reflux from 'reflux';
 
 import { default as SystemConstants, AwayEnum } from 'constants/SystemConstants';
-import SystemActions from 'actions/SystemActions';
+import SystemActions from 'actions/reflux/SystemActions';
 
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 
 
 const ActivityStore = Reflux.createStore({
-  listenables: SystemActions.actions,
+  listenables: SystemActions,
   init: function () {
     this._away = AwayEnum.OFF;
     this.getInitialState = this.getState;

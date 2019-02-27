@@ -6,7 +6,7 @@ import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 import Message from 'components/semantic/Message';
 import { Link } from 'react-router-dom';
 
-import HubActions from 'actions/HubActions';
+import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
@@ -19,7 +19,7 @@ import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 
 class HubNew extends React.Component<NewSessionLayoutProps> {
   handleConnect = (hubUrl: string) => {
-    HubActions.actions.createSession(this.props.location, hubUrl, HubSessionStore);
+    HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
   }
 
   hasSession = (entry: API.HistoryItem) => {

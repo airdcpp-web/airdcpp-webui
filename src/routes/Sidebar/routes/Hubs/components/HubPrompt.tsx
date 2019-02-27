@@ -4,7 +4,7 @@ import React from 'react';
 import ActionInput from 'components/semantic/ActionInput';
 import Button from 'components/semantic/Button';
 
-import HubActions from 'actions/HubActions';
+import HubActions from 'actions/reflux/HubActions';
 
 import LoginStore from 'stores/LoginStore';
 import Icon, { IconType } from 'components/semantic/Icon';
@@ -62,7 +62,7 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT }) => (
       placeholder={ sessionT.translate('Password') } 
       caption={ sessionT.translate('Submit') }
       icon="green play" 
-      handleAction={ text => HubActions.actions.password(hub, text) }
+      handleAction={ text => HubActions.password(hub, text) }
     />
     <div className="help">
       <Trans i18nKey={ sessionT.toI18nKey('passwordPromptHelp') }>
@@ -82,7 +82,7 @@ interface RedirectPromptProps {
 const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub, sessionT }) => (
   <Button
     icon="green play"
-    onClick={ _ => HubActions.actions.redirect(hub) }
+    onClick={ _ => HubActions.redirect(hub) }
     caption={ sessionT.t('acceptRedirect', {
       defaultValue: 'Accept redirect to {{url}}',
       replace: {

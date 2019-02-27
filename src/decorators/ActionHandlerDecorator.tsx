@@ -1,28 +1,33 @@
-import React from 'react';
+import React, { 
+//  useContext 
+} from 'react';
 
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { /*withRouter,*/ RouteComponentProps, withRouter } from 'react-router-dom';
 
 import * as UI from 'types/ui';
 
 import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
-import { withModalCloseContext, ModalCloseContextProps } from 'decorators/ModalRouteDecorator';
+import { ModalCloseContextProps, withModalCloseContext } from 'decorators/ModalRouteDecorator';
 import { InputDialog } from 'components/semantic/InputDialog';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 
-import { startCase } from 'lodash';
+import { upperFirst } from 'lodash';
 import { toActionI18nKey } from 'utils/ActionUtils';
+//import { useRouter } from 'effects/RouterEffect';
+
+//import useRouter from 'use-react-router';
 
 
-interface ActionHandlerDecoratorProps {
-
+interface ActionHandlerDecoratorProps<ItemDataT> {
+  children: (props: ActionHandlerDecoratorChildProps<ItemDataT>) => React.ReactNode;
 }
 
 export interface ActionData<ItemDataT = any> extends Pick<UI.ModuleActions<ItemDataT>, 'moduleId' | 'subId'> {
   actionId: string;
   action: UI.ActionType<ItemDataT>;
-  itemData: ItemDataT | undefined;
+  itemData: ItemDataT;
 }
 
 export type ActionClickHandler<ItemDataT = any> = (action: ActionData<ItemDataT>) => void;
@@ -34,10 +39,10 @@ export interface ActionHandlerDecoratorChildProps<ItemDataT = any> extends Route
 const toKey = (fieldName: string, actionData: ActionData) => {
   let keyName = actionData.actionId;
   if (actionData.subId) {
-    keyName += startCase(actionData.subId);
+    keyName += upperFirst(actionData.subId);
   }
 
-  keyName += startCase(fieldName);
+  keyName += upperFirst(fieldName);
 
   return toI18nKey(
     keyName,
@@ -136,86 +141,159 @@ const ConfirmHandler = <ItemDataT extends any>(
   return null;
 };
 
+/*const handleAction = async <ItemDataT extends any>(
+  actionData: ActionData<ItemDataT>, 
+  confirmData: boolean | string | undefined,
+) => {
+  const { actionId, action, itemData } = actionData;
+  //const { closeModal } = this.props;
+  if (!!closeModal && isSidebarAction(actionId)) {
+    closeModal();
+  }
+
+  setTimeout(async () => {
+    const { location } = this.props;
+    const handlerData = {
+      data: itemData, 
+      location
+    };
+
+    try {
+      const res = await action.handler(handlerData, confirmData);
+    } catch (e) {
+      //
+    }
+  });
+}*/
+
 type ActionHandlerDataProps = RouteComponentProps & ModalCloseContextProps;
 
-function ActionHandlerDecorator<PropsT, ItemDataT = any>(
-  Component: React.ComponentType<PropsT & ActionHandlerDecoratorChildProps<ItemDataT>>
-) {
-  interface State {
-    confirmActionData: ActionData<ItemDataT> | null;
-  }
-
-  type Props = PropsT & ActionHandlerDecoratorProps & ActionHandlerDataProps;
-  class ActionHandler extends React.PureComponent<Props, State> {
-    state: State = {
-      confirmActionData: null,
-    };
-  
-    handleAction = async (actionData: ActionData<ItemDataT>, confirmData: boolean | string | undefined) => {
-      const { actionId, action, itemData } = actionData;
-      const { closeModal } = this.props;
-      if (!!closeModal && isSidebarAction(actionId)) {
-        closeModal();
-      }
-
-      setTimeout(() => {
-        const { location } = this.props;
-        action(itemData, location, confirmData);
-      });
-    }
-
-    closeConfirmation = () => {
-      setTimeout(() => {
-        this.setState({
-          confirmActionData: null,
-        });
-      });
-    }
-
-    handleConfirm = async (data: boolean | string) => {
-      const { confirmActionData } = this.state;
-      if (!confirmActionData) {
-        return;
-      }
-
-      await this.handleAction(confirmActionData, data);
-      this.closeConfirmation();
-    }
-  
-    handleClickAction: ActionClickHandler<ItemDataT> = (actionData) => {
-      if (actionData.action.confirmation) {
-        this.setState({
-          confirmActionData: actionData,
-        });
-      } else if (actionData.action.input) { 
-        this.setState({
-          confirmActionData: actionData,
-        });
-      } else {
-        this.handleAction(actionData, undefined);
-      }
-    }
-
-    render() {
-      const { confirmActionData } = this.state;
-      const { closeModal, ...other } = this.props;
-      return (
-        <>
-          <Component
-            { ...other as PropsT & ActionHandlerDataProps }
-            onClickAction={ this.handleClickAction }
-          />
-          <ConfirmHandler
-            onApproved={ this.handleConfirm }
-            onRejected={ this.closeConfirmation }
-            actionData={ confirmActionData }
-          />
-        </>
-      );
-    }
-  }
-
-  return withRouter(withModalCloseContext(ActionHandler));
+//function ActionHandlerDecorator<PropsT, ItemDataT = any>(
+//  Component: React.ComponentType<PropsT & ActionHandlerDecoratorChildProps<ItemDataT>>
+//) {
+interface State<ItemDataT> {
+  confirmActionData: ActionData<ItemDataT> | null;
 }
 
-export { ActionHandlerDecorator };
+type Props<ItemDataT> = /*PropsT &*/ ActionHandlerDecoratorProps<ItemDataT> & ActionHandlerDataProps;
+class ActionHandlerDecorator<ItemDataT> extends React.PureComponent<Props<ItemDataT>, State<ItemDataT>> {
+  state: State<ItemDataT> = {
+    confirmActionData: null,
+  };
+
+  //static contextType = ModalRouteCloseContext;
+  //context: ModalCloseContextProps;
+
+  handleAction = async (
+    actionData: ActionData<ItemDataT>, 
+    confirmData: boolean | string | undefined,
+  ) => {
+    const { actionId, action, itemData } = actionData;
+    //if (this.context) {
+    const { closeModal } = this.props;
+    if (!!closeModal && isSidebarAction(actionId)) {
+      closeModal();
+    }
+    //}
+  
+    setTimeout(async () => {
+      const { location } = this.props;
+      const handlerData = {
+        data: itemData, 
+        location
+      };
+  
+      try {
+        await action.handler(handlerData, confirmData);
+      } catch (e) {
+        //
+      }
+    });
+  }
+
+  closeConfirmation = () => {
+    setTimeout(() => {
+      this.setState({
+        confirmActionData: null,
+      });
+    });
+  }
+
+  handleConfirm = async (data: boolean | string) => {
+    const { confirmActionData } = this.state;
+    if (!confirmActionData) {
+      return;
+    }
+
+    await this.handleAction(confirmActionData, data);
+    this.closeConfirmation();
+  }
+
+  handleClickAction: ActionClickHandler<ItemDataT> = (actionData) => {
+    if (actionData.action.confirmation) {
+      this.setState({
+        confirmActionData: actionData,
+      });
+    } else if (actionData.action.input) { 
+      this.setState({
+        confirmActionData: actionData,
+      });
+    } else {
+      this.handleAction(actionData, undefined);
+    }
+  }
+
+  render() {
+    const { confirmActionData } = this.state;
+    const { children, ...other } = this.props;
+    return (
+      <>
+        {/*<Component
+          { ...other as PropsT & ActionHandlerDataProps }
+          onClickAction={ this.handleClickAction }
+        />*/}
+        { children({
+          onClickAction: this.handleClickAction,
+          ...other
+        }) }
+        <ConfirmHandler
+          onApproved={ this.handleConfirm }
+          onRejected={ this.closeConfirmation }
+          actionData={ confirmActionData }
+        />
+      </>
+    );
+  }
+}
+
+/*const RouterProvider = <ItemDataT extends any>(props: ActionHandlerDecoratorProps<ItemDataT>) => {
+  return (
+
+  )
+};*/
+
+/*const ActionHandlerDecorator = <ItemDataT extends any>(props: ActionHandlerDecoratorProps<ItemDataT>) => {
+  //const route = useRouter();
+  //const closeModal = useContext(ModalRouteCloseContext);
+  return (
+    <ActionHandler
+      { ...props as any }
+      //closeModal={ closeModal }
+      //{ ...route }
+    />
+  );
+  //withRouter(withModalCloseContext(ActionHandler));
+};*/
+
+//  return withRouter(withModalCloseContext(ActionHandler));
+//}
+
+//export { ActionHandlerDecorator };
+
+
+// TODO: replace with useRouter hook when possible
+const Decorator = withModalCloseContext<ActionHandlerDecoratorProps<any>>(
+  withRouter<Props<any>>(ActionHandlerDecorator)
+);
+
+export { Decorator as ActionHandlerDecorator };
