@@ -22,21 +22,20 @@ interface PathItemProps {
   t: i18next.TFunction;
 }
 
-const formatPath = (pathInfo: API.DiskSpaceInfo, t: i18next.TFunction) => {
+const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: i18next.TFunction) => {
   if (pathInfo.free_space <= 0) {
     return pathInfo.path;
   }
 
-  return t(
-    toI18nKey('pathSpaceFree', UI.Modules.COMMON),
+  return ` (${t(
+    toI18nKey('spaceFree', UI.Modules.COMMON),
     {
-      defaultValue: '{{path}} ({{freeSpace}} free)',
+      defaultValue: '{{freeSpace}} free',
       replace: {
-        path: pathInfo.path,
         freeSpace: formatSize(pathInfo.free_space)
       }
     }
-  );
+  )})`;
 };
 
 const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => (
@@ -44,9 +43,9 @@ const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => 
     <i className="yellow folder icon"/>
     <div className="content">
       <a onClick={ evt => downloadHandler(pathInfo.path) }>
-        { formatPath(pathInfo, t) }
+        { pathInfo.path }
         <span className="disk-info">
-          { pathInfo.free_space > 0 && ' (' + formatSize(pathInfo.free_space) + ' free)' }
+          { formatFreeSpace(pathInfo, t) }
         </span>
       </a>
     </div>

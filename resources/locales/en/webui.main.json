@@ -271,7 +271,7 @@
     "download": "Download",
     "close": "Close",
     "noPathsToDisplay": "No paths to display",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
+    "spaceFree": "{{freeSpace}} free",
     "select": "Select",
     "new": "New",
     "currentSessions": "Current sessions",
@@ -635,6 +635,7 @@
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
+        "editUser": "Edit user",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
@@ -678,7 +679,13 @@
         "availablePathVariables": "Available path variables",
         "favoriteDownloadDirectories": "Favorite download directories",
         "name": "Name",
-        "path": "Path"
+        "path": "Path",
+        "form": {
+          "pathName": "Path",
+          "nameName": "Name"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Skiplist"
