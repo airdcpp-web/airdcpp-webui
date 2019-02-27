@@ -55,10 +55,4 @@ ShareActions.refreshVirtual.failed.listen(function (error: ErrorResponse) {
   });
 });
 
-
-//export default {
-//  moduleId: UI.Modules.SHARE,
-//  actions: ShareActions,
-//};
-
 export default ShareActions as UI.RefluxActionListType<void>;

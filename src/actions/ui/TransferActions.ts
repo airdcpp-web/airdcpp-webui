@@ -3,7 +3,7 @@
 import SocketService from 'services/SocketService';
 import QueueActions from 'actions/reflux/QueueActions';
 
-import QueueFileActions from 'actions/reflux/QueueFileActions';
+import QueueFileActions from 'actions/ui/QueueFileActions';
 
 import { default as TransferConstants, StatusEnum } from 'constants/TransferConstants';
 import IconConstants from 'constants/IconConstants';
@@ -28,11 +28,14 @@ const handleDisconnect: UI.ActionHandler<API.Transfer> = ({ data: transfer }) =>
   return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`);
 };
 
-const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
-  return QueueFileActions.removeFile({
-    id: transfer.queue_file_id,
-    target: transfer.target,
-    name: transfer.name,
+const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({ data: transfer, ...other }) => {
+  return QueueFileActions.actions.removeFile!.handler({
+    data: {
+      id: transfer.queue_file_id,
+      target: transfer.target,
+      name: transfer.name
+    } as API.QueueFile,
+    ...other
   });
 };
 
@@ -63,6 +66,9 @@ const TransferActions: UI.ActionListType<API.Transfer> = {
     icon: IconConstants.REMOVE,
     filter: removeFile,
     handler: handleRemoveFile,
+    notifications: {
+      onSuccess: 'File {{item.name}} was removed from queue',
+    }
   },
   removeSource: {
     displayName: 'Remove user from queue',

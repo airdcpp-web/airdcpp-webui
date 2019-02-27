@@ -33,4 +33,4 @@ export default {
   moduleId: UI.Modules.QUEUE,
   subId: 'bundleSource',
   actions: BundleSourceActions,
-} as UI.ModuleActions<ActionBundleSourceData>;
+};

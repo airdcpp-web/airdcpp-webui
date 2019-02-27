@@ -1,11 +1,8 @@
 'use strict';
-//@ts-ignore
 import QueueConstants from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
-
-//import NotificationActions from 'actions/NotificationActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -29,14 +26,6 @@ const handleRemoveCompleted = () => {
   return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_completed');
 };
 
-/*QueueActions.removeCompleted.completed.listen(function (data: { count: number }) {
-  NotificationActions.success({ 
-    title: 'Action completed',
-    message: data.count > 0 ? `${data.count} completed bundles were removed` : 'No bundles were removed',
-  });
-});*/
-
-
 
 const QueueActions: UI.ActionListType<null> = {
   removeCompleted: {
@@ -44,6 +33,9 @@ const QueueActions: UI.ActionListType<null> = {
     displayName: 'Remove completed bundles', 
     icon: IconConstants.REMOVE,
     handler: handleRemoveCompleted,
+    notifications: {
+      onSuccess: '{{result.count}} completed bundles were removed'
+    }
   },
   divider: null,
   pause: {

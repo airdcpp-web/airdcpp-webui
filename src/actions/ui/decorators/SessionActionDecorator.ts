@@ -17,14 +17,11 @@ export default function (
   const handleRemoveSession: UI.ActionHandler<SessionType> = (
     { data: session }
   ) => {
-    SocketService.delete(`${sessionsUrl}/${session.id}`);
+    return SocketService.delete(`${sessionsUrl}/${session.id}`);
   };
-
-  /*SessionActions.removeSession.failed.listen(function (session: SessionType, error: ErrorResponse) {
-    NotificationActions.apiError('Failed to remove session ' + session.id, error);
-  });*/  
   
   const SessionActions: UI.ActionListType<SessionType> = {
+    divider: null,
     removeSession: { 
       displayName: 'Close',
       access: editAccess,

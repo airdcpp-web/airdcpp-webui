@@ -19,28 +19,9 @@ const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {
   History.push(`/favorite-hubs/entries/${hub.id}`);
 };
 
-/*FavoriteHubActions.update.listen(function (
-  hub: API.FavoriteHubEntry, 
-  data: Partial<API.FavoriteHubEntryBase>
-) {
-  return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, data);
-});*/
-
 const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {
   return SocketService.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id);
 };
-
-/*FavoriteHubActions.remove.completed.listen(function (hub: API.FavoriteHubEntry) {
-  NotificationActions.success({ 
-    title: hub.name,
-    message: 'The hub was removed successfully',
-  });
-});
-
-FavoriteHubActions.remove.failed.listen(function (error: ErrorResponse, hub: API.FavoriteHubEntry) {
-  NotificationActions.apiError(`Failed to remove the hub ${hub.name}`, error);
-});*/
-
 
 
 const FavoriteHubCreateActions: UI.ActionListType<{}> = {
@@ -69,10 +50,10 @@ const FavoriteHubEditActions: UI.ActionListType<API.FavoriteHubEntry> = {
       rejectCaption: `Don't remove`,
     },
     handler: handleRemove,
-  },
-  /*update: { 
-    asyncResult: true
-  },*/
+    //notifications: {
+    //  onSuccess: 'The hub {{item.name}} was removed successfully',
+    //}
+  }
 };
 
 

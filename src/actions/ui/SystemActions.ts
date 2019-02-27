@@ -9,11 +9,11 @@ import * as UI from 'types/ui';
 
 
 const handleRestartWeb = () => {
-  SocketService.post(SystemConstants.MODULE_URL + '/restart_web');
+  return SocketService.post(SystemConstants.MODULE_URL + '/restart_web');
 };
 
 const handleShutdown = () => {
-  SocketService.post(SystemConstants.MODULE_URL + '/shutdown');
+  return SocketService.post(SystemConstants.MODULE_URL + '/shutdown');
 };
 
 

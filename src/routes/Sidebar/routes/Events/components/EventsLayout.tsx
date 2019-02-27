@@ -50,6 +50,7 @@ const SystemLog: React.FC<SystemLogProps> = memo(
               <ActionButton 
                 actions={ EventUIActions }
                 actionId="clear"
+                icon={ null }
               />
             }
           />

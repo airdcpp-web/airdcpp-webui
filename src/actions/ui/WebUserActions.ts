@@ -14,7 +14,6 @@ import * as UI from 'types/ui';
 
 
 const isOther = (user: API.WebUser) => user.id !== LoginStore.user.id;
-const noData = (data: any) => !data;
 
 
 const handleCreate: UI.ActionHandler<void> = ({ location }) => {
@@ -35,7 +34,6 @@ const WebUserCreateActions: UI.ActionListType<undefined> = {
   create: { 
     displayName: 'Add user',
     icon: IconConstants.CREATE,
-    filter: noData,
     handler: handleCreate
   },
 };

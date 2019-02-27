@@ -20,15 +20,13 @@ const handleDisconnectCCPM: UI.ActionHandler<API.PrivateChat> = ({ data: session
 };
 
 const PrivateChatActions: UI.ActionListType<API.PrivateChat> = {
-  connectCCPM: { 
-    //asyncResult: true,
+  connectCCPM: {
     displayName: 'Connect',
     access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     icon: IconConstants.PLAY,
     handler: handleConnectCCPM,
   },
-  disconnectCCPM: { 
-    //asyncResult: true,
+  disconnectCCPM: {
     access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     displayName: 'Disconnect', 
     icon: IconConstants.REMOVE,

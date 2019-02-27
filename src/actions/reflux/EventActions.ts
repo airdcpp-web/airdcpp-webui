@@ -39,10 +39,4 @@ EventActions.setRead.listen(function () {
   return SocketService.post(EventConstants.READ_URL);
 });
 
-
-//export default {
-//  moduleId: UI.Modules.EVENTS,
-//  actions: EventActions,
-//};
-
 export default EventActions as UI.RefluxActionListType<void>;

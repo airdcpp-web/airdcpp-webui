@@ -37,10 +37,4 @@ QueueActions.removeSource.completed.listen(function (user: API.HintedUser, data:
   });
 });
 
-
-//export default {
-//  moduleId: UI.Modules.QUEUE,
-//  actions: QueueActions,
-//};
-
 export default QueueActions as UI.RefluxActionListType<void>;

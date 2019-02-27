@@ -1,7 +1,7 @@
 import { Location } from 'history';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
-//import { ModuleTranslator } from './modules';
+import i18next from 'i18next';
 
 export type ActionItemDataValueType = object | string | number | undefined;
 export type ActionItemDataType<ItemDataT extends ActionItemDataValueType> = (() => ItemDataT) | ItemDataT;
@@ -18,13 +18,15 @@ interface ActionInput<ItemDataT> extends ActionConfirmation {
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
-interface HandlerData<ItemDataT> {
+export interface ActionHandlerData<ItemDataT> {
   data: ItemDataT;
   location: Location;
+  t: i18next.TFunction;
+  //chain: (action: ActionType)
 }
 
 export type ActionHandler<ItemDataT> = (
-  handlerData: HandlerData<ItemDataT>, 
+  handlerData: ActionHandlerData<ItemDataT>, 
   confirmData?: boolean | string
 ) => Promise<any> | void;
 
@@ -37,6 +39,10 @@ export interface ActionType<ItemDataT> {
 
   confirmation?: ((item: ItemDataT /*, t: ModuleTranslator*/) => ActionConfirmation) | ActionConfirmation;
   input?: ((item: ItemDataT /*, t: ModuleTranslator*/) => ActionInput<ItemDataT>) | ActionInput<ItemDataT>;
+  notifications?: {
+    onSuccess?: string /*| ((data: any) => string)*/;
+    errorTitleGetter?: (itemData: ItemDataT) => string;
+  };
 }
 
 export interface RefluxActionConfig<ItemDataT> {

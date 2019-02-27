@@ -8,13 +8,13 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-//const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
-
-
 const QueueFileActionConfig: UI.RefluxActionConfigList<API.QueueFile> = [
   { 'setFilePriority': { 
     asyncResult: true,
   } },
+  /*{ 'removeFile': { 
+    asyncResult: true,
+  } },*/
 ];
 
 const QueueFileActions = Reflux.createActions(QueueFileActionConfig);
@@ -32,10 +32,17 @@ QueueFileActions.setFilePriority.listen(function (
     .catch(that.failed.bind(that, file));
 });
 
-//export default {
-//  moduleId: UI.Modules.QUEUE,
-  //subId: 'file',
-//  actions: QueueFileActions,
-//} as UI.ModuleActions<API.QueueFile>;
+/*QueueFileActions.removeFile.listen(function (
+  this: UI.AsyncActionType<API.QueueFile>, 
+  item: API.QueueFile, 
+  removeFinished: boolean
+) {
+  const that = this;
+  return SocketService.post(`${QueueConstants.FILES_URL}/${item.id}/remove`, {
+    remove_finished: removeFinished,
+  })
+    .then(QueueFileActions.removeFile.completed.bind(that, item))
+    .catch(QueueFileActions.removeFile.failed.bind(that, item));
+});*/
 
 export default QueueFileActions as UI.RefluxActionListType<void>;

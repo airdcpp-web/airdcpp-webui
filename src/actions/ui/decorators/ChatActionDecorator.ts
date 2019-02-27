@@ -20,15 +20,6 @@ export default function (
     return SocketService.delete(`${sessionUrl}/${session.id}/messages`);
   };
 
-  /*ChatActions.clear.failed.listen(function (
-    this: UI.AsyncActionType<SessionType>, 
-    session: SessionType, 
-    error: ErrorResponse
-  ) {
-    NotificationActions.apiError('Failed to clear chat messages', error, session.id);
-  });*/
-
-
   const ChatActions: UI.ActionListType<SessionType> = {
     clear: {
       displayName: 'Clear chat',

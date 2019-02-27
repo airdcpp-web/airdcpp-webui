@@ -13,10 +13,4 @@ const WidgetActionConfig: UI.RefluxActionConfigList<any> = [
 
 const WidgetActions = Reflux.createActions(WidgetActionConfig);
 
-
-//export default {
-//  moduleId: UI.Modules.WIDGETS,
-//  actions: WidgetActions,
-//};
-
 export default WidgetActions as UI.RefluxActionListType<void>;

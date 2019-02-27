@@ -9,11 +9,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-/*interface FavoriteHubPasswordData {
-  hub: API.FavoriteHubEntry;
-  password: string | null;
-}*/
-
 const sendPassword = (
   hub: API.FavoriteHubEntry,
   password: string | null
@@ -34,18 +29,6 @@ const handleSetPassword: UI.ActionHandler<API.FavoriteHubEntry> = (
 const handleRemovePassword: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {
   return sendPassword(hub, null);
 };
-
-/*const handleCreate: UI.ActionHandler<FavoriteHubPasswordData> = data => {
-  sendPassword(data);
-};
-
-FavoriteHubPasswordActions.change.listen(function (hub: API.FavoriteHubEntry, location: any, password: string) {
-  sendPassword(hub, password, FavoriteHubPasswordActions.change);
-});
-
-FavoriteHubPasswordActions.remove.listen(function (hub: API.FavoriteHubEntry) {
-  sendPassword(hub, null, FavoriteHubPasswordActions.remove);
-});*/
 
 const hasPassword = (data: API.FavoriteHubEntry) => data.has_password;
 const noPassword = (data: API.FavoriteHubEntry) => !hasPassword(data);

@@ -30,14 +30,6 @@ const handleEdit: UI.ActionHandler<API.ShareProfile> = (
   return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, { name: name });
 };
 
-/*ShareProfileActions.edit.failed.listen(function (profile: API.ShareProfile, error: ErrorResponse) {
-  NotificationActions.apiError('Failed to rename profile', error, profile.id);
-});
-
-ShareProfileActions.create.failed.listen(function (error: ErrorResponse) {
-  NotificationActions.apiError('Failed to create profile', error);
-});*/
-
 const handleRemove: UI.ActionHandler<API.ShareProfile> = (
   { data: profile }
 ) => {

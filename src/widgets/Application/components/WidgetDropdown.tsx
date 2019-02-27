@@ -5,21 +5,26 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import WidgetActions from 'actions/ui/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
-import { Location } from 'history';
 
 import * as UI from 'types/ui';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import i18next from 'i18next';
 import { translateWidgetName } from 'utils/WidgetUtils';
+import { ActionHandlerDecorator, ActionClickHandler } from 'decorators/ActionHandlerDecorator';
 
 
-const getWidgetItem = (widgetInfo: UI.Widget, location: Location, t: i18next.TFunction) => {
+const getWidgetItem = (
+  widgetInfo: UI.Widget,
+  t: i18next.TFunction, 
+  onClickAction: ActionClickHandler<UI.Widget>
+) => {
   return (
     <MenuItemLink 
       key={ widgetInfo.typeId }
-      onClick={ () => WidgetActions.create.actions.create!.handler({
-        data: widgetInfo, 
-        location
+      onClick={ () => onClickAction({
+        actionId: 'create',
+        action: WidgetActions.create.actions.create!,
+        itemData: widgetInfo,
+        moduleId: WidgetActions.create.moduleId
       }) }
       icon={ widgetInfo.icon }
     >
@@ -30,8 +35,8 @@ const getWidgetItem = (widgetInfo: UI.Widget, location: Location, t: i18next.TFu
 
 export type WidgetDropdownProps = Pick<UI.WidgetProps, 'componentId' | 'widgetT'>;
 
-const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = (
-  { componentId, location, widgetT }
+const WidgetDropdown: React.FC<WidgetDropdownProps> = (
+  { componentId, widgetT }
 ) => (
   <Dropdown 
     caption={ widgetT.translate('Add widget...') }
@@ -39,12 +44,14 @@ const WidgetDropdown: React.FC<WidgetDropdownProps & RouteComponentProps> = (
     button={ true }
     contextElement={ `.${componentId}` }
   >
-    { WidgetStore.widgets
-      .filter(widgetInfo => !widgetInfo.alwaysShow)
-      .map(widgetInfo => getWidgetItem(widgetInfo, location, widgetT.plainT)) }
+    <ActionHandlerDecorator>
+      { ({ onClickAction }) => {
+        return WidgetStore.widgets
+          .filter(widgetInfo => !widgetInfo.alwaysShow)
+          .map(widgetInfo => getWidgetItem(widgetInfo, widgetT.plainT, onClickAction)); 
+      } }
+    </ActionHandlerDecorator>
   </Dropdown>
 );
 
-const Decorated = withRouter(WidgetDropdown);
-
-export default Decorated;
+export default WidgetDropdown;

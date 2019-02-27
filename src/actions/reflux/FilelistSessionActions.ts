@@ -168,8 +168,4 @@ const FilelistSessionActionsDecorated = SessionActionDecorator(
   FilelistConstants.SESSIONS_URL
 );
 
-//export default {
-//  moduleId: UI.Modules.FILELISTS,
-//  actions: FilelistSessionActionsDecorated,
-//};
 export default FilelistSessionActionsDecorated as UI.RefluxActionListType<void>;

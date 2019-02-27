@@ -9,7 +9,6 @@ import IconConstants from 'constants/IconConstants';
 
 export const EventActions: UI.ActionListType<{}> = {
   clear: {
-    //asyncResult: true,
     displayName: 'Clear',
     access: AccessConstants.EVENTS_EDIT,
     icon: IconConstants.CLEAR, 

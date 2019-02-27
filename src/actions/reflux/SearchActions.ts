@@ -52,9 +52,4 @@ SearchActions.search.listen((
   );
 });
 
-//export default {
-//  moduleId: UI.Modules.SEARCH,
-//  actions: SearchActions,
-//};
-
 export default SearchActions as UI.RefluxActionListType<void>;

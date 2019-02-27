@@ -92,9 +92,4 @@ const PrivateChatActionsDecorated = SessionActionDecorator(
   PrivateChatConstants.SESSIONS_URL
 );
 
-//export default {
-//  moduleId: UI.Modules.MESSAGES,
-//  actions: PrivateChatActionsDecorated,
-//};
-
 export default PrivateChatActionsDecorated as UI.RefluxActionListType<void>;

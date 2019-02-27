@@ -92,9 +92,4 @@ const HubActionsDecorated = SessionActionDecorator(
   HubConstants.SESSIONS_URL
 );
 
-//export default {
-//  moduleId: UI.Modules.HUBS,
-//  actions: HubActionsDecorated,
-//};
-
 export default HubActionsDecorated as UI.RefluxActionListType<void>;

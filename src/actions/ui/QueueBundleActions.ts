@@ -5,10 +5,9 @@ import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
-//import DownloadableItemActions from './DownloadableItemActions';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import SearchActions from 'actions/reflux/SearchActions';
 
 
@@ -16,7 +15,6 @@ const bundleValidationFailed = (bundle: API.QueueBundle) => bundle.status.id ===
 const itemNotFinished = (bundle: API.QueueBundle) => bundle.time_finished === 0;
 const isDirectoryBundle = (bundle: API.QueueBundle) => bundle.type.id === 'directory';
 const hasSources = (bundle: API.QueueBundle) => bundle.sources.total > 0 && itemNotFinished(bundle);
-
 
 
 const shareBundle = (
@@ -36,16 +34,6 @@ const handleForceShare: UI.ActionHandler<API.QueueBundle> = ({ data: bundle }) =
   return shareBundle(bundle, true);
 };
 
-/*interface ActionBundleSourceData {
-  source: API.QueueBundleSource;
-  bundle: API.QueueBundle;
-}
-
-const handleRemoveBundleSource: UI.ActionHandler<ActionBundleSourceData> = ({ data }) => {
-  const { source, bundle } = data;
-  return SocketService.delete(`${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`);
-};*/
-
 const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
   { data: bundle },
   removeFinished
@@ -56,38 +44,14 @@ const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
 };
 
 const handleSearch: UI.ActionHandler<API.QueueBundle> = ({ data: itemInfo, location }) => {
-  /*return DownloadableItemActions.actions.search!.handler({
-    data: {
-      itemInfo,
-      handler: () => void
-    },
-    location
-  });*/
-
-  SearchActions.search(itemInfo, location);
+  return SearchActions.search(itemInfo, location);
 };
 
 const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = (
   { data: bundle }
 ) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
-  //  .then(that.completed.bind(that, bundle))
-  //  .catch(that.failed.bind(that, bundle));
 };
-
-/*QueueBundleActions.searchBundleAlternates.completed.listen(function (bundle: API.QueueBundle) {
-  NotificationActions.success({ 
-    title: 'Action completed',
-    message: `The bundle ${bundle.name} was searched for alternates`,
-  });
-});
-
-QueueBundleActions.searchBundleAlternates.failed.listen(function (bundle: API.QueueBundle, error: ErrorResponse) {
-  NotificationActions.error({ 
-    title: 'Action failed',
-    message: `Failed to search the bundle ${bundle.name} for alternates: ${error.message}`,
-  });
-});*/
 
 const handleSources: UI.ActionHandler<API.QueueBundle> = ({ data, location }) => {
   History.push(`${location.pathname}/sources/${data.id}`);
@@ -125,6 +89,9 @@ const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {
     icon: IconConstants.SEARCH_ALTERNATES,
     filter: itemNotFinished,
     handler: handleSearchBundleAlternates,
+    notifications: {
+      onSuccess: 'The bundle {{item.name}} was searched for alternates'
+    }
   },
   divider2: null,
   removeBundle: {
@@ -155,16 +122,6 @@ const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {
     handler: handleForceShare,
   }
 };
-
-/*const BundleSourceActions: UI.ActionListType<ActionBundleSourceData> = {
-  removeBundleSource: { 
-    //asyncResult: true,
-    access: API.AccessEnum.QUEUE_EDIT, 
-    displayName: 'Remove source', 
-    icon: IconConstants.REMOVE,
-    handler: handleRemoveBundleSource,
-  },
-};*/
 
 
 export default {

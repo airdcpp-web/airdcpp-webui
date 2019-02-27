@@ -41,11 +41,11 @@ const checkUnignore = ({ user }: ActionUserData) => {
 
 
 const handleMessage: UI.ActionHandler<ActionUserData> = ({ data: userData, location }) => {
-  PrivateChatActions.createSession(location, userData.user, PrivateChatSessionStore);
+  return PrivateChatActions.createSession(location, userData.user, PrivateChatSessionStore);
 };
 
 const handleBrowse: UI.ActionHandler<ActionUserData> = ({ data: userData, location }) => {
-  FilelistSessionActions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
+  return FilelistSessionActions.createSession(location, userData.user, FilelistSessionStore, userData.directory);
 };
 
 const handleIgnore: UI.ActionHandler<ActionUserData> = ({ data: userData }) => {
@@ -58,26 +58,8 @@ const handleUnignore: UI.ActionHandler<ActionUserData> = (
   return SocketService.delete(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
 };
 
-/*UserActions.ignore.completed.listen(function ({ user }: ActionUserData) {
-  NotificationActions.info({ 
-    title: user.nick ? user.nick : user.nicks,
-    uid: user.cid,
-    message: 'User was added in ignored users',
-  });
-});
-
-UserActions.unignore.completed.listen(function ({ user }: ActionUserData) {
-  NotificationActions.info({ 
-    title: user.nick ? user.nick : user.nicks,
-    uid: user.cid,
-    message: 'User was removed from ignored users',
-  });
-});*/
-
-
 
 export const UserFileActions = [ 'message', 'browse' ];
-
 
 const UserActions: UI.ActionListType<ActionUserData> = {
   message: { 
@@ -101,6 +83,9 @@ const UserActions: UI.ActionListType<ActionUserData> = {
     filter: checkIgnore,
     icon: 'red ban',
     handler: handleIgnore,
+    notifications: {
+      onSuccess: 'User {{item.nicks}} was added in ignored users',
+    }
   },
   unignore: {
     displayName: 'Unignore messages', 
@@ -108,6 +93,9 @@ const UserActions: UI.ActionListType<ActionUserData> = {
     filter: checkUnignore,
     icon: 'ban',
     handler: handleUnignore,
+    notifications: {
+      onSuccess: 'User {{item.nicks}} was removed from ignored users',
+    }
   },
 };
 
@@ -115,4 +103,4 @@ export default {
   moduleId: UI.Modules.COMMON,
   subId: 'user',
   actions: UserActions,
-} as UI.ModuleActions<ActionUserData>;
+};

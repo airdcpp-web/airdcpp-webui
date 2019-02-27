@@ -15,10 +15,6 @@ const handleAdd: UI.ActionHandler<void> = ({ location }) => {
   History.push(`${location.pathname}/browse`);
 };
 
-/*const handleAdd = (error: ErrorResponse) => {
-  NotificationActions.apiError('Failed to add directory', error);
-};*/
-
 const handleRemove: UI.ActionHandler<string> = ({ data: path }) => {
   return SocketService.post(ShareConstants.EXCLUDES_REMOVE_URL, { path });
 };

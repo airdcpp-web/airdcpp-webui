@@ -73,22 +73,11 @@ LoginActions.connect.listen(async function (this: UI.AsyncActionType<any>, token
   }
 });
 
-/*LoginActions.connect.failed.listen(function (token) {
-
-});*/
-
 LoginActions.logout.listen(function (this: UI.AsyncActionType<any>) {
   let that = this;
   return SocketService.logout()
     .then(that.completed)
     .catch(this.failed);
 });
-
-
-//export default {
-//  moduleId: UI.Modules.COMMON,
-//  subId: 'login',
-//  actions: LoginActions,
-//} as UI.ModuleActions<any>;
 
 export default LoginActions as UI.RefluxActionListType<void>;

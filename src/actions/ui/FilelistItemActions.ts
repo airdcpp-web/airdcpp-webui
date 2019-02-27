@@ -26,14 +26,14 @@ const handleReloadDirectory: UI.ActionHandler<ActionFilelistItemData> = (
 ) => {
   const { session, item } = data;
 
-  SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, { 
+  return SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, { 
     list_path: item.path,
     reload: true,
   });
 };
 
 const handleRefreshShare: UI.ActionHandler<ActionFilelistItemData> = ({ data }) => {
-  ShareActions.refreshVirtual(data.item.path, data.session.share_profile!.id);
+  return ShareActions.refreshVirtual(data.item.path, data.session.share_profile!.id);
 };
 
 const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {

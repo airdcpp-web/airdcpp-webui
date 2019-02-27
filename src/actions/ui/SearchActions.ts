@@ -11,7 +11,7 @@ import * as UI from 'types/ui';
 
 
 const handleBrowseContent: UI.ActionHandler<API.GroupedSearchResult> = ({ data, location }) => {
-  FilelistSessionActions.createSession(location, data.users.user, FilelistSessionStore, data.path);
+  return FilelistSessionActions.createSession(location, data.users.user, FilelistSessionStore, data.path);
 };
 
 const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({ data, location }) => {

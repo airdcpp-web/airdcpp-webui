@@ -84,9 +84,4 @@ const ViewFileActionsDecorated = SessionActionDecorator(
   ViewFileConstants.SESSIONS_URL
 );
 
-//export default {
-//  moduleId: UI.Modules.VIEWED_FILES,
-//  actions: ViewFileActionsDecorated,
-//};
-
 export default ViewFileActionsDecorated as UI.RefluxActionListType<void>;

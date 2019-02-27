@@ -30,11 +30,4 @@ QueueBundleActions.setBundlePriority.listen(function (
     .catch(that.failed);
 });
 
-
-//export default {
-//  moduleId: UI.Modules.QUEUE,
-  //subId: 'bundle',
-//  actions: QueueBundleActions,
-//} as UI.ModuleActions<API.QueueBundle>;
-
 export default QueueBundleActions as UI.RefluxActionListType<void>;

@@ -10,9 +10,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-//const noData = (item: any) => !item;
-
-
 const handleCreate: UI.ActionHandler<{}> = ({ location }) => {
   History.push(`${location.pathname}/directories`);
 };
@@ -32,7 +29,6 @@ const FavoriteDirectoryCreateActions: UI.ActionListType<API.FavoriteDirectoryEnt
     displayName: 'Add directory',
     access: API.AccessEnum.SETTINGS_EDIT, 
     icon: IconConstants.CREATE,
-    //filter: noData,
     handler: handleCreate,
   },
 };

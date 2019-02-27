@@ -10,7 +10,8 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { toCorsSafeUrl /*, toApiError*/ } from 'utils/HttpUtils';
+import { toCorsSafeUrl, toApiError } from 'utils/HttpUtils';
+import { i18n } from 'services/LocalizationService';
 
 
 const isManaged = (extension: API.Extension) => extension.managed;
@@ -29,45 +30,39 @@ const handleStop: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
   return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`);
 };
 
-/*ExtensionActions.start.failed.listen(function (extension: API.Extension, error: ErrorResponse) {
-  NotificationActions.info({ 
-    title: 'Failed to start the extension ' + extension.name,
-    message: error.message,
-  });
-});
-
-ExtensionActions.stop.failed.listen(function (extension: API.Extension, error: ErrorResponse) {
-  NotificationActions.info({ 
-    title: 'Failed to stop the extension ' + extension.name,
-    message: error.message,
-  });
-});*/
-
-
 interface InstallData {
   url: string;
   shasum: string;
   installId?: string;
 }
 
-const handleInstallNpm: UI.ActionHandler<UI.NpmPackage> = ({ data: npmPackage, location }) => {
-  $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest'), responseData => {
-    const { tarball, shasum } = responseData.dist;
-    handleInstallUrl({
-      location, 
-      data: {
-        url: tarball, 
-        installId: npmPackage.name, 
-        shasum
-      }
-    });
-  });
-  //  .catch(ExtensionActions.installNpm.failed);
-};
+const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = (
+  { data: npmPackage, ...other }
+): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest'), async (responseData) => {
+      const { tarball, shasum } = responseData.dist;
 
-/*ExtensionActions.installNpm.failed.listen(function (error: JQuery.jqXHR) {
-  NotificationActions.apiError('Installation failed', toApiError(error, i18n.t));
-});*/
+      try {
+        const ret = await handleInstallUrl({
+          data: {
+            url: tarball, 
+            installId: npmPackage.name, 
+            shasum
+          },
+          ...other
+        });
+
+        resolve(ret);
+      } catch (e) {
+        reject(e);
+      }
+    })
+      .catch(error => {
+        reject(toApiError(error, i18n.t));
+      });
+  });
+};
 
 const handleInstallUrl: UI.ActionHandler<InstallData> = (
   { data }
@@ -81,40 +76,19 @@ const handleInstallUrl: UI.ActionHandler<InstallData> = (
 };
 
 
-/*ExtensionActions.installUrl.failed.listen(function (error: ErrorResponse) {
-  NotificationActions.apiError('Extension installation failed', error);
-});*/
-
-const handleUpdateNpm: UI.ActionHandler<UI.NpmPackage> = ({ data: npmPackage, location }) => {
-  $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest'), data => {
-    const { tarball, shasum } = data.dist;
-    handleInstallUrl({
-      location, 
-      data: {
-        url: tarball, 
-        shasum
-      }
-    });
-  });
+/*const handleInstallNpm: UI.ActionHandler<UI.NpmPackage> = ({ data: npmPackage, location, t }) => {
+  return handleNpmAction(npmPackage, location);
 };
 
-/*ExtensionActions.updateNpm.failed.listen(function (error: JQuery.jqXHR) {
-  NotificationActions.apiError('Updating failed', toApiError(error, i18n.t));
-});*/
+const handleUpdateNpm: UI.ActionHandler<UI.NpmPackage> = ({ data: npmPackage, location }) => {
+  return handleNpmAction(npmPackage, location);
+};*/
 
 const handleRemove: UI.ActionHandler<API.Extension> = (
   { data }
 ) => {
   return SocketService.delete(ExtensionConstants.EXTENSIONS_URL + '/' + data.name);
 };
-
-/*ExtensionActions.remove.failed.listen(function (extension: API.Extension, error: ErrorResponse) {
-  NotificationActions.info({ 
-    title: 'Failed to remove the extension ' + extension.name,
-    message: error.message,
-  });
-});*/
-
 
 
 const ExtensionInstallActions: UI.ActionListType<InstallData> = {
@@ -141,13 +115,13 @@ const ExtensionNpmActions: UI.ActionListType<UI.NpmPackage> = {
     displayName: 'Install',
     icon: IconConstants.CREATE,
     access: API.AccessEnum.ADMIN,
-    handler: handleInstallNpm,
+    handler: handleNpmAction,
   },
   updateNpm: {
     displayName: 'Update',
     icon: IconConstants.REFRESH,
     access: API.AccessEnum.ADMIN,
-    handler: handleUpdateNpm,
+    handler: handleNpmAction,
   },
 };
 

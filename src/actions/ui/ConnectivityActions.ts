@@ -9,8 +9,7 @@ import * as UI from 'types/ui';
 
 
 const ConnectivityActions: UI.ActionListType<{}> = {
-  detect: { 
-    //asyncResult: true,
+  detect: {
     displayName: 'Detect now',
     access: AccessConstants.SETTINGS_EDIT,
     icon: 'gray configure',

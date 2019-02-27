@@ -78,10 +78,4 @@ FilelistItemActions.findNfo.listen(function (
     .catch(that.failed);
 });
 
-//export default {
-//  moduleId: UI.Modules.FILELISTS,
-//  subId: 'item',
-//  actions: FilelistItemActions,
-//} as UI.ModuleActions<ActionFilelistItemData>;
-
 export default FilelistItemActions as UI.RefluxActionListType<void>;
