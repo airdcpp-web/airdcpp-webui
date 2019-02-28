@@ -531,6 +531,8 @@
       "detection": {
         "connectivityDetectionNote": "Mikäli tiedostosiirtojen kanssa on ongelmia, tarkista että TCP-ovat varmasti avoinna käyttämällä esimerkiksi <1>verkon porttitarkistussivustoa</1>. Huomio, että UDP-portin (haut) avoimuutta ei voi tarkistaa verkkosivustojen kautta. Saat lisätietoja eri yhteystiloista <4>DC++:n ohjesivustolta</4>.",
         "currentAutoDetectionStatus": "Automaattisen tunnistamisen tila",
+        "iPv4Connectivity": "IPv4-yhteys",
+        "iPv6Connectivity": "IPv6-yhteys",
         "manualConfiguration": "{{status}} (manuaaliset määritykset)",
         "autoDetected": "{{status}} (tunnistettu automaattisesti)"
       },

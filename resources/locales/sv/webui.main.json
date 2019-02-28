@@ -531,6 +531,8 @@
       "detection": {
         "connectivityDetectionNote": "Vid problem med filöverföringen, se till att dina TCP-portar är öppna genom att använda en <1>online porttestare</1>. Observera att kontroll av UDP-porten (sök) inte kan göras online. För mer information om olika anslutningsmöjligheter, besök <4>DC++'s connectivity FAQ</4>.",
         "currentAutoDetectionStatus": "Nuvarande automatisk detekteringsstatus",
+        "iPv4Connectivity": "IPv4 connectivity",
+        "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (manuell konfiguration)",
         "autoDetected": "{{status}} (detektera automatiskt)"
       },

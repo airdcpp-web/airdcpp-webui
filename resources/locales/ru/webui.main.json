@@ -531,6 +531,8 @@
       "detection": {
         "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
         "currentAutoDetectionStatus": "Current auto detection status",
+        "iPv4Connectivity": "IPv4 connectivity",
+        "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)"
       },

@@ -54,8 +54,14 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
       { moduleT.translate('Current auto detection status') }
     </h3>
     <div className="ui grid two column">
-      <Row title="IPv4 connectivity" text={ formatStatus(status.status_v4, runningV4, moduleT) }/>
-      <Row title="IPv6 connectivity" text={ formatStatus(status.status_v6, runningV6, moduleT) }/>
+      <Row 
+        title={ moduleT.translate('IPv4 connectivity') } 
+        text={ formatStatus(status.status_v4, runningV4, moduleT) }
+      />
+      <Row 
+        title={ moduleT.translate('IPv6 connectivity') } 
+        text={ formatStatus(status.status_v6, runningV6, moduleT) }
+      />
     </div>
     <ActionButton 
       className="detect-button"

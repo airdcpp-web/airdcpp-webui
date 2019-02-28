@@ -531,6 +531,8 @@
       "detection": {
         "connectivityDetectionNote": "No caso de haver problemas de conectividade, por favor confirme que as suas portas estão mesmo abertas utilizando um <1>verificador de portas na Internet</1>. Note que a validade da porta UDP (pesquisa) não pode ser verificada na Internet. Para mais informações sobre os diferentes modos de conetividade, visite a página<4>Perguntas frequentes de conectividade do DC++</4>.",
         "currentAutoDetectionStatus": "Estado atual da deteção automática",
+        "iPv4Connectivity": "IPv4 connectivity",
+        "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (configuração manual)",
         "autoDetected": "{{status}} (detetado automaticamente)"
       },
