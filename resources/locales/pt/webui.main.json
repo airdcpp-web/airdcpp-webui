@@ -168,7 +168,10 @@
         "removePasswordContent": "Tem a certeza que quer redefinir a palavra-passe do concentrador {{item.name}}?",
         "createPasswordPlaceholder": "Introduzir palavra-passe",
         "createPasswordApprove": "Definir palavra-passe",
-        "createPasswordContent": "Definir a palavra-passe para o concentrador {{item.name}}"
+        "createPasswordContent": "Definir a palavra-passe para o concentrador {{item.name}}",
+        "removeApprove": "Remove favorite hub",
+        "removeReject": "Não remover",
+        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Descrição do utilizador",
       "connectivityV4Name": "Primazia de conectividade (IPv4)",
       "connectionModeV4Name": "Modo de conectividade",
-      "connectionModeV4Option1": "Desativado",
+      "connectionModeV4Option-1": "Desativado",
       "connectionModeV4Option0": "Modo ativo",
       "connectionModeV4Option2": "Modo passivo",
       "connectionIpV4Name": "Endereço IP",
       "connectivityV6Name": "Primazia de conectividade (IPv6)",
       "connectionModeV6Name": "Modo de conectividade",
-      "connectionModeV6Option1": "Desativado",
+      "connectionModeV6Option-1": "Desativado",
       "connectionModeV6Option0": "Modo ativo",
       "connectionModeV6Option2": "Modo passivo",
       "connectionIpV6Name": "Endereço IP"
@@ -251,8 +254,17 @@
       "shutDownApplication": "Desligar a aplicação",
       "restartWebServer": "Reiniciar o servidor web",
       "unignoreMessages": "Deixar de ignorar mensagens",
-      "closeAndDontShowAgain": "Fechar e não mostrar de novo"
+      "closeAndDontShowAgain": "Fechar e não mostrar de novo",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Erro de rede / cliente",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "A carregar itens",
@@ -271,7 +283,7 @@
     "download": "Descarregar",
     "close": "Fechar",
     "noPathsToDisplay": "Sem caminhos para mostrar",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} livre)",
+    "spaceFree": "{{freeSpace}} free",
     "select": "Selecionar",
     "new": "Novo",
     "currentSessions": "Sessões atuais",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Introduzir limite (kB/s)",
     "enterLimit": "Introduzir limite...",
     "removeLimit": "Remover limite",
+    "tlsOk": "Authenticity of the certificate is validated",
+    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
+    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Reconectar",
       "clearChat": "Limpar conversação",
-      "close": "Fechar"
+      "close": "Fechar",
+      "addToFavorites": "Adicionar aos favoritos",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Introduza o endereço do concentrador...",
     "connect": "Conectar",
@@ -375,6 +394,11 @@
         "removeFileReject": "Não remover",
         "removeFileContent": "Tem a certeza que quer remover o ficheiro {{item.name}}?",
         "removeFileCheckbox": "Remover no disco"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Pausado",
@@ -417,7 +441,11 @@
       "forceConnect": "Forçar conexão",
       "disconnect": "Desconectar",
       "removeFileFromQueue": "Remover ficheiro da fila",
-      "removeUserFromQueue": "Remover utilizador da fila"
+      "removeUserFromQueue": "Remover utilizador da fila",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "Sem transferências ativas"
   },
@@ -635,6 +663,7 @@
           "viewedFiles": "Ficheiros vistos"
         },
         "addWebUser": "Adicionar utilizador web",
+        "editUser": "Editar utilizador",
         "adminPermissionNote": "É necessário permissão de administrador para aceder à secção do sistema nas configurações"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Variáveis de caminhos disponíveis",
         "favoriteDownloadDirectories": "Pastas de descarregamento favoritas",
         "name": "Nome",
-        "path": "Caminho"
+        "path": "Caminho",
+        "form": {
+          "pathName": "Caminho",
+          "nameName": "Nome"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Lista de ignorados"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "Introduzir URL",
         "installUrlApprove": "Instalar",
-        "installUrlContent": "Introduzir URL de descarregamento"
+        "installUrlContent": "Introduzir URL de descarregamento",
+        "removeApprove": "Remove extension",
+        "removeReject": "Não remover",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },

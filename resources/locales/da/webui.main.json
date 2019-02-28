@@ -168,7 +168,10 @@
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Enter password",
         "createPasswordApprove": "Set password",
-        "createPasswordContent": "Set password for the hub {{item.name}}"
+        "createPasswordContent": "Set password for the hub {{item.name}}",
+        "removeApprove": "Remove favorite hub",
+        "removeReject": "Don't remove",
+        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Brugerbeskrivelse",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
-      "connectionModeV4Option1": "Deaktiver",
+      "connectionModeV4Option-1": "Deaktiver",
       "connectionModeV4Option0": "Aktiv tilstand",
       "connectionModeV4Option2": "Passiv tilstand",
       "connectionIpV4Name": "IP address",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
-      "connectionModeV6Option1": "Deaktiver",
+      "connectionModeV6Option-1": "Deaktiver",
       "connectionModeV6Option0": "Aktiv tilstand",
       "connectionModeV6Option2": "Passiv tilstand",
       "connectionIpV6Name": "IP address"
@@ -251,8 +254,17 @@
       "shutDownApplication": "Shut down application",
       "restartWebServer": "Restart web server",
       "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again"
+      "closeAndDontShowAgain": "Close and don't show again",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Loading items",
@@ -271,7 +283,7 @@
     "download": "Download",
     "close": "Luk",
     "noPathsToDisplay": "No paths to display",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
+    "spaceFree": "{{freeSpace}} free",
     "select": "Vælg",
     "new": "Ny...",
     "currentSessions": "Current sessions",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Enter limit (kB/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
+    "tlsOk": "Authenticity of the certificate is validated",
+    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
+    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "form": {
       "browse": "Browse",
       "noOptions": "No options",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Reconnect",
       "clearChat": "Ryd chat ",
-      "close": "Luk"
+      "close": "Luk",
+      "addToFavorites": "Tilføj til favorit",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Enter hub address...",
     "connect": "Tilslut",
@@ -375,6 +394,11 @@
         "removeFileReject": "Don't remove",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Remove on disk"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Pause",
@@ -417,7 +441,11 @@
       "forceConnect": "Force connect",
       "disconnect": "Disconnect",
       "removeFileFromQueue": "Fjern fil fra kø",
-      "removeUserFromQueue": "Fjern bruger fra kø"
+      "removeUserFromQueue": "Fjern bruger fra kø",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "No active transfers"
   },
@@ -635,6 +663,7 @@
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
+        "editUser": "Edit user",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Available path variables",
         "favoriteDownloadDirectories": "Standardmappe til download",
         "name": "Navn",
-        "path": "Sti"
+        "path": "Sti",
+        "form": {
+          "pathName": "Sti",
+          "nameName": "Navn"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Skiplist"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Install",
-        "installUrlContent": "Enter download URL"
+        "installUrlContent": "Enter download URL",
+        "removeApprove": "Remove extension",
+        "removeReject": "Don't remove",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },

@@ -65,7 +65,7 @@
   },
   "table": {
     "filter": {
-      "filter": "F&amp;iltro",
+      "filter": "Filtro",
       "matchType": "Tipo de comparación",
       "partial": "Parcial",
       "regex": "Expresión regular",
@@ -111,7 +111,7 @@
     "tth": "TTH",
     "xUsersNicks": "{{count}} usuario ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} usuarios ({{user.nicks}})",
-    "noResults": "No results found for \"{{searchString}}\"",
+    "noResults": "Sin resultados para \"{{searchString}}\"",
     "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
   },
   "share": {
@@ -148,14 +148,14 @@
       "virtualNameHelp": "Los directorios con nombres virtuales idénticos se fusionarán en la lista de archivos.",
       "profilesName": "Perfiles de compartido",
       "profilesHelp": "Se pueden crear nuevos perfiles de compartir desde la configuración de la aplicación",
-      "incomingName": "entrante"
+      "incomingName": "Entrante"
     }
   },
   "favoriteHubs": {
     "actions": {
       "addNew": "Añadir nuevo",
       "setPassword": "Establecer contraseña",
-      "edit": "&amp;Editar",
+      "edit": "Editar",
       "remove": "Eliminar",
       "changePassword": "Cambiar contraseña",
       "removePassword": "Eliminar contraseña",
@@ -168,7 +168,10 @@
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Introducir contraseña",
         "createPasswordApprove": "Establecer contraseña",
-        "createPasswordContent": "Set password for the hub {{item.name}}"
+        "createPasswordContent": "Set password for the hub {{item.name}}",
+        "removeApprove": "Remove favorite hub",
+        "removeReject": "No eliminar",
+        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Descripción de usuario",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Modo de conectividad",
-      "connectionModeV4Option1": "Desactivado",
+      "connectionModeV4Option-1": "Desactivado",
       "connectionModeV4Option0": "Modo activo",
       "connectionModeV4Option2": "Modo pasivo",
       "connectionIpV4Name": "Dirección IP",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Modo de conectividad",
-      "connectionModeV6Option1": "Desactivado",
+      "connectionModeV6Option-1": "Desactivado",
       "connectionModeV6Option0": "Modo activo",
       "connectionModeV6Option2": "Modo pasivo",
       "connectionIpV6Name": "Dirección IP"
@@ -251,8 +254,17 @@
       "shutDownApplication": "Apagar aplicación",
       "restartWebServer": "Reiniciar servidor web",
       "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again"
+      "closeAndDontShowAgain": "Close and don't show again",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Error de red/cliente",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Cargando articulos",
@@ -271,7 +283,7 @@
     "download": "Descargar",
     "close": "Cerrar",
     "noPathsToDisplay": "No hay rutas para mostrar",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
+    "spaceFree": "{{freeSpace}} free",
     "select": "Seleccionar",
     "new": "Nueva",
     "currentSessions": "Sesión actual",
@@ -296,9 +308,12 @@
     "enterLimitKBS": "Enter limit (kB/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
+    "tlsOk": "Authenticity of the certificate is validated",
+    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
+    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "form": {
       "browse": "Navegar",
-      "noOptions": "No options",
+      "noOptions": "Sin opciones",
       "fieldOptional": "{{definition.title}} (optional)"
     }
   },
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Reconectar",
       "clearChat": "Limpiar chat",
-      "close": "Cerrar"
+      "close": "Cerrar",
+      "addToFavorites": "Añadir a usuarios favoritos",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Enter hub address...",
     "connect": "Conectar",
@@ -375,6 +394,11 @@
         "removeFileReject": "No eliminar",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Remove on disk"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Parado",
@@ -417,7 +441,11 @@
       "forceConnect": "Forzar conexión",
       "disconnect": "Desconectar",
       "removeFileFromQueue": "Borrar archivo de la cola",
-      "removeUserFromQueue": "Eliminar usuario de la cola"
+      "removeUserFromQueue": "Eliminar usuario de la cola",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "No active transfers"
   },
@@ -470,7 +498,7 @@
       "users": "Usuarios",
       "logging": "Guardar registros de actividad (Logs)",
       "webServer": "Servidor web",
-      "refreshOptions": "Refresh options",
+      "refreshOptions": "Actualizar opciones",
       "shareProfiles": "Perfiles de compartido",
       "sharingOptions": "Opciones de compartir",
       "hashing": "Indexando",
@@ -481,7 +509,7 @@
       "uploadLimits": "Límites de subida",
       "perUserLimits": "Per-user limits",
       "locations": "Ubicaciones",
-      "skippingOptions": "Opciones de omisión",
+      "skippingOptions": "Opciones por omisión",
       "searchMatching": "Coincidencias de búsquedas",
       "downloadOptions": "Opciones de descarga",
       "priorities": "Prioridades",
@@ -490,11 +518,11 @@
       "events": "Eventos"
     },
     "advanced": "Avanzado",
-    "noUnsavedChanges": "No unsaved changes",
+    "noUnsavedChanges": "Sin cambios no guardados",
     "saveChanges": "Guardar cambios",
-    "savingCompleted": "Saving completed",
-    "settingsWereSavedSuccessfully": "Settings were saved successfully",
-    "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
+    "savingCompleted": "Guardado completado",
+    "settingsWereSavedSuccessfully": "Los ajustes se guardaron correctamente",
+    "unsavedChangesPrompt": "Usted tiene cambios no guardados. ¿Seguro que quieres salir?",
     "connectivity": {
       "detection": {
         "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
@@ -635,6 +663,7 @@
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
+        "editUser": "Editar usuario",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Available path variables",
         "favoriteDownloadDirectories": "Carpetas de descargas favoritas",
         "name": "Nombre",
-        "path": "Ruta"
+        "path": "Ruta",
+        "form": {
+          "pathName": "Ruta",
+          "nameName": "Nombre"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Skiplist"
@@ -723,11 +758,14 @@
       "installFromUrl": "Install from URL",
       "install": "Install",
       "stop": "Parar",
-      "configure": "&amp;Configurar",
+      "configure": "Configurar",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Install",
-        "installUrlContent": "Enter download URL"
+        "installUrlContent": "Enter download URL",
+        "removeApprove": "Remove extension",
+        "removeReject": "No eliminar",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },
@@ -750,12 +788,12 @@
   "login": {
     "username": "Nombre de usuario",
     "password": "Contraseña",
-    "keepMeLoggedIn": "Keep me logged in",
+    "keepMeLoggedIn": "Mantenme conectado",
     "login": "Usuario",
-    "authenticationFailed": "Authentication failed: {{lastError}}",
+    "authenticationFailed": "Autenticación fallida: {{lastError}}",
     "connectingToTheServer": "Connecting to the server...",
     "reestablishConnection": "Attempting to re-establish connection...",
-    "sessionLost": "Session lost",
+    "sessionLost": "Sesión perdida",
     "connectionClosed": "Conexión cerrada",
     "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
     "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"

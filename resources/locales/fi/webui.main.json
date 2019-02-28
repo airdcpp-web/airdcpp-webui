@@ -168,7 +168,10 @@
         "removePasswordContent": "Haluatko varmasti nollata salasanan hubille {{item.name}}?",
         "createPasswordPlaceholder": "Syötä salasana",
         "createPasswordApprove": "Aseta salasana",
-        "createPasswordContent": "Aseta salasana hubille {{item.name}}"
+        "createPasswordContent": "Aseta salasana hubille {{item.name}}",
+        "removeApprove": "Poista suosikkihubi",
+        "removeReject": "Älä poista",
+        "removeContent": "Haluatko varmasti poistaa suosikkihubin {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Käyttäjän ominaisuudet",
       "connectivityV4Name": "Ohitetut yhteysasetukset (IPv4)",
       "connectionModeV4Name": "Yhteystila",
-      "connectionModeV4Option1": "Ei käytössä",
+      "connectionModeV4Option-1": "Ei käytössä",
       "connectionModeV4Option0": "Aktiivitila",
       "connectionModeV4Option2": "Passiivitila",
       "connectionIpV4Name": "IP-osoite",
       "connectivityV6Name": "Ohitetut yhteysasetukset (IPv6)",
       "connectionModeV6Name": "Yhteystila",
-      "connectionModeV6Option1": "Ei käytössä",
+      "connectionModeV6Option-1": "Ei käytössä",
       "connectionModeV6Option0": "Aktiivitila",
       "connectionModeV6Option2": "Passiivitila",
       "connectionIpV6Name": "IP-osoite"
@@ -251,8 +254,17 @@
       "shutDownApplication": "Sammuta ohjelma",
       "restartWebServer": "Käynnistä web-palvelin uudestaan",
       "unignoreMessages": "Poista viestien esto",
-      "closeAndDontShowAgain": "Sulje ja älä näytä uudestaan"
+      "closeAndDontShowAgain": "Sulje ja älä näytä uudestaan",
+      "notifications": {
+        "ignoreUserSuccess": "Käyttäjä {{item.nicks}} lisättiin hylättyihin käyttäjiin",
+        "unignoreUserSuccess": "Käyttäjä {{item.nicks}} poistettiin hylätyistä käyttäjistä"
+      }
     },
+    "awayModeWasEnabled": "Poissa-tila käytössä",
+    "awayModeWasDisabled": "Poissa-tila pois käytöstä",
+    "actionSucceed": "Toiminto onnistui",
+    "actionFailed": "Toiminto epäonnistui",
+    "noNfoResultsWereReceived": "Yhtään NFO-tulosta ei vastaanotettu",
     "networkClientError": "Verkko-/selainvirhe",
     "failedToFetchData": "Tiedon hakeminen epäonnistui",
     "loadingItems": "Ladataan kohteita",
@@ -271,7 +283,7 @@
     "download": "Lataus",
     "close": "Sulje",
     "noPathsToDisplay": "Ei näytettäviä polkuja",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} vapaana)",
+    "spaceFree": "{{freeSpace}} vapaana",
     "select": "Valitse",
     "new": "Uusi...",
     "currentSessions": "Nykyiset istunnot",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Syötä raja (kt/s)",
     "enterLimit": "Syötä raja...",
     "removeLimit": "Poista raja",
+    "tlsOk": "Sertifikaatin aitous on vahvistettu",
+    "tlsOutdatedWarning": "Vanhentunut kryptografinen protokolla, jossa on tunnettuja heikkouksia",
+    "tlsAuthenticityWarning": "Sertifikaatin aitoutta ei voitu vahvistaa",
     "form": {
       "browse": "Selaa",
       "noOptions": "Ei vaihtoehtoja",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Uudelleenyhdistä",
       "clearChat": "Tyhjennä keskusteluikkuna",
-      "close": "Sulje"
+      "close": "Sulje",
+      "addToFavorites": "Lisää suosikkeihin",
+      "notifications": {
+        "favoriteSuccess": "Hubi {{item.identity.name}} lisättiin suosikkeihin"
+      }
     },
     "enterHubAddress": "Syötä hubin osoite...",
     "connect": "Yhdistä",
@@ -375,6 +394,11 @@
         "removeFileReject": "Älä poista",
         "removeFileContent": "Haluatko varmasti poistaa tiedoston {{item.name}}?",
         "removeFileCheckbox": "Poista levyltä"
+      },
+      "notifications": {
+        "removeFileSuccess": "Tiedosto {{item.name}} poistettiin jonosta",
+        "removeCompletedSuccess": "{{result.count}} valmista bundlea poistettiin",
+        "searchBundleAlternatesSuccess": "Bundlelle {{item.name}} haettiin vaihtoehtoisia lähteitä"
       }
     },
     "paused": "Keskeytetty",
@@ -417,7 +441,11 @@
       "forceConnect": "Pakota yhteys",
       "disconnect": "Katkaise yhteys",
       "removeFileFromQueue": "Poista tiedosto jonosta",
-      "removeUserFromQueue": "Hylkää lähde latausjonosta"
+      "removeUserFromQueue": "Hylkää lähde latausjonosta",
+      "notifications": {
+        "removeFileSuccess": "Tiedosto {{item.name}} poistettiin jonosta",
+        "removeSourceSuccess": "Käyttäjä {{item.user.nicks}} poistettiin {{result.count}} tiedostolta"
+      }
     },
     "noActiveTransfers": "Ei aktiivisia tiedostosiirtoja"
   },
@@ -635,6 +663,7 @@
           "viewedFiles": "Näytettävät tiedostot"
         },
         "addWebUser": "Lisää web-käyttäjä",
+        "editUser": "Muokkaa käyttäjää",
         "adminPermissionNote": "Asetusten Järjestelmä-osion käyttämiseen vaaditaan ylläpitäjän oikeudet"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Käytettävissä olevat polkumuuttujat",
         "favoriteDownloadDirectories": "Suosikkikansiot",
         "name": "Nimi",
-        "path": "Polku"
+        "path": "Polku",
+        "form": {
+          "pathName": "Polku",
+          "nameName": "Nimi"
+        },
+        "addFavoriteDirectory": "Lisää suosikkikansio",
+        "editFavoriteDirectory": "Muokkaa suosikkikansiota"
       },
       "skippingOptions": {
         "skiplist": "Ohituslista"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "Syötä URL-osoite",
         "installUrlApprove": "Asenna",
-        "installUrlContent": "Syötä latausosoite"
+        "installUrlContent": "Syötä latausosoite",
+        "removeApprove": "Poista lisäosa",
+        "removeReject": "Älä poista",
+        "removeContent": "Haluatko varmasti poistaa lisäosan {{item.name}}? Tämä poistaa myös mahdolliset lisäosakohtaiset asetukset."
       }
     }
   },

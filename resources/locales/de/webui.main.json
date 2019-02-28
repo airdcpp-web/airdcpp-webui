@@ -83,7 +83,7 @@
       "type": "Typ",
       "connection": "Verbindung",
       "users": "Benutzer",
-      "time": "Last modified",
+      "time": "Zuletzt geändert",
       "slots": "Slots"
     },
     "actions": {
@@ -101,7 +101,7 @@
     "search": "Suche",
     "typeContent": "Typ/Inhalt",
     "size": "Größe",
-    "lastModified": "Last modified",
+    "lastModified": "Zuletzt geändert",
     "dupeType": "Dupe type",
     "shareFull": "Share (full)",
     "dupePaths": "Dupe paths",
@@ -168,7 +168,10 @@
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Passwort eingeben",
         "createPasswordApprove": "Passwort festlegen",
-        "createPasswordContent": "Set password for the hub {{item.name}}"
+        "createPasswordContent": "Set password for the hub {{item.name}}",
+        "removeApprove": "Remove favorite hub",
+        "removeReject": "Nicht entfernen",
+        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Benutzerbeschreibung",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
-      "connectionModeV4Option1": "Deaktiviert",
+      "connectionModeV4Option-1": "Deaktiviert",
       "connectionModeV4Option0": "Aktiver Modus",
       "connectionModeV4Option2": "Passiver Modus",
       "connectionIpV4Name": "IP-Adresse",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
-      "connectionModeV6Option1": "Deaktiviert",
+      "connectionModeV6Option-1": "Deaktiviert",
       "connectionModeV6Option0": "Aktiver Modus",
       "connectionModeV6Option2": "Passiver Modus",
       "connectionIpV6Name": "IP-Adresse"
@@ -225,7 +228,7 @@
     "table": {
       "name": "Name",
       "size": "Größe",
-      "time": "Last modified",
+      "time": "Zuletzt geändert",
       "type": "Typ"
     },
     "actions": {
@@ -251,8 +254,17 @@
       "shutDownApplication": "Shut down application",
       "restartWebServer": "Restart web server",
       "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again"
+      "closeAndDontShowAgain": "Close and don't show again",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Loading items",
@@ -271,7 +283,7 @@
     "download": "Herunterladen",
     "close": "Schließen",
     "noPathsToDisplay": "No paths to display",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} frei)",
+    "spaceFree": "{{freeSpace}} free",
     "select": "Auswählen",
     "new": "&amp;Neu...",
     "currentSessions": "Aktuelle Sitzung",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Enter limit (kB/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
+    "tlsOk": "Authenticity of the certificate is validated",
+    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
+    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "form": {
       "browse": "Durchsuchen",
       "noOptions": "Keine Optionen",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Reconnect",
       "clearChat": "Chat löschen",
-      "close": "Schließen"
+      "close": "Schließen",
+      "addToFavorites": "Zu Bevorzugten hinzufügen",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Enter hub address...",
     "connect": "&amp;Verbinden",
@@ -375,6 +394,11 @@
         "removeFileReject": "Nicht entfernen",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Auf der Festplatte entfernen"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Pause",
@@ -417,7 +441,11 @@
       "forceConnect": "Force connect",
       "disconnect": "Trennen",
       "removeFileFromQueue": "Entferne Datei von der Warteschlange",
-      "removeUserFromQueue": "Benutzer von der Warteschlange entfernen"
+      "removeUserFromQueue": "Benutzer von der Warteschlange entfernen",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "Keine aktiven Übertragungen"
   },
@@ -635,6 +663,7 @@
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
+        "editUser": "Benutzer bearbeiten",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Verfügbare Pfadvariablen",
         "favoriteDownloadDirectories": "Bevorzugte Herunterladeverzeichnisse",
         "name": "Name",
-        "path": "Pfad"
+        "path": "Pfad",
+        "form": {
+          "pathName": "Pfad",
+          "nameName": "Name"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Skiplist"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "URL eingeben",
         "installUrlApprove": "Installieren",
-        "installUrlContent": "Enter download URL"
+        "installUrlContent": "Enter download URL",
+        "removeApprove": "Remove extension",
+        "removeReject": "Nicht entfernen",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },

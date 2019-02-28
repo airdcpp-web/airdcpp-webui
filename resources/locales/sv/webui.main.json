@@ -168,7 +168,10 @@
         "removePasswordContent": "Är du säker på att du vill återställa lösenordet i hubben {{item.name}}?",
         "createPasswordPlaceholder": "Ange lösenord",
         "createPasswordApprove": "Ange lösenord",
-        "createPasswordContent": "Ange lösenord för hubben {{item.name}}"
+        "createPasswordContent": "Ange lösenord för hubben {{item.name}}",
+        "removeApprove": "Ta bort favorithubb",
+        "removeReject": "Ta inte bort",
+        "removeContent": "Är du säker på att du vill ta bort favorithubben {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Användarbeskrivning",
       "connectivityV4Name": "Anslutningsinställningen överrider (IPv4)",
       "connectionModeV4Name": "Anslutningsläge",
-      "connectionModeV4Option1": "Inaktiverad",
+      "connectionModeV4Option-1": "Inaktiverad",
       "connectionModeV4Option0": "Aktivt läge",
       "connectionModeV4Option2": "Passivt läge",
       "connectionIpV4Name": "IP-adress",
       "connectivityV6Name": "Anslutningsinställningen överrider (IPv6)",
       "connectionModeV6Name": "Anslutningsläge",
-      "connectionModeV6Option1": "Inaktiverad",
+      "connectionModeV6Option-1": "Inaktiverad",
       "connectionModeV6Option0": "Aktivt läge",
       "connectionModeV6Option2": "Passivt läge",
       "connectionIpV6Name": "IP-adress"
@@ -251,8 +254,17 @@
       "shutDownApplication": "Stäng ner applikationen",
       "restartWebServer": "Starta om webbservern",
       "unignoreMessages": "Sluta ignorera meddelanden",
-      "closeAndDontShowAgain": "Stäng och visa inte igen"
+      "closeAndDontShowAgain": "Stäng och visa inte igen",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Nätverk-/klientfel",
     "failedToFetchData": "Misslyckades med att hämta data",
     "loadingItems": "Laddar objekt",
@@ -271,7 +283,7 @@
     "download": "Ladda ned",
     "close": "Stäng",
     "noPathsToDisplay": "Ingen sökväg att visa",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} ledigt)",
+    "spaceFree": "{{freeSpace}} ledigt",
     "select": "Välj",
     "new": "Ny",
     "currentSessions": "Nuvarande sessioner",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Ange begränsning (kB/s)",
     "enterLimit": "Ange begränsning...",
     "removeLimit": "Ta bort begränsning",
+    "tlsOk": "Certifikatets äkthet är validerat",
+    "tlsOutdatedWarning": "Föråldrat kryptografiskt protokoll med kända säkerhetsproblem",
+    "tlsAuthenticityWarning": "Certifikatets äkthet kunde inte valideras",
     "form": {
       "browse": "Bläddra",
       "noOptions": "Inga alternativ",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Återanslut",
       "clearChat": "Rensa chatt",
-      "close": "Stäng"
+      "close": "Stäng",
+      "addToFavorites": "Lägg till i favoriter",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Ange hubbadress...",
     "connect": "Anslut",
@@ -375,6 +394,11 @@
         "removeFileReject": "Ta inte bort",
         "removeFileContent": "Är du säker på att du vill ta bort filen {{item.name}}?",
         "removeFileCheckbox": "Ta bort från disken"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Pausad",
@@ -417,7 +441,11 @@
       "forceConnect": "Tvinga anslutning",
       "disconnect": "Koppla från",
       "removeFileFromQueue": "Ta bort fil från kön",
-      "removeUserFromQueue": "Ta bort källa"
+      "removeUserFromQueue": "Ta bort källa",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "Inga aktiva överföringar"
   },
@@ -635,6 +663,7 @@
           "viewedFiles": "Visade filer"
         },
         "addWebUser": "Lägg till webbanvändare",
+        "editUser": "Redigera användare",
         "adminPermissionNote": "Administratörsrättigheter krävs för att komma åt systemsektionen i inställningarna"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Tillgängliga sökvägsvariabler",
         "favoriteDownloadDirectories": "Favoritkataloger",
         "name": "Namn",
-        "path": "Sökväg"
+        "path": "Sökväg",
+        "form": {
+          "pathName": "Sökväg",
+          "nameName": "Namn"
+        },
+        "addFavoriteDirectory": "Lägg till favoritkatalog",
+        "editFavoriteDirectory": "Redigera favoritkatalog"
       },
       "skippingOptions": {
         "skiplist": "Uteslutningslista"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "Ange webbadress",
         "installUrlApprove": "Installera",
-        "installUrlContent": "Ange nedladdningswebbadress"
+        "installUrlContent": "Ange nedladdningswebbadress",
+        "removeApprove": "Remove extension",
+        "removeReject": "Ta inte bort",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },

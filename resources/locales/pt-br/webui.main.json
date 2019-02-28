@@ -111,7 +111,7 @@
     "tth": "TTH",
     "xUsersNicks": "{{count}} usuário ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} usuários ({{user.nicks}})",
-    "noResults": "No results found for \"{{searchString}}\"",
+    "noResults": "Nenhum resultado encontrado para \"{{searchString}}\"",
     "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
   },
   "share": {
@@ -129,7 +129,7 @@
       "editDirectory": "Editar diretório",
       "removeDirectory": "Remover diretório",
       "addDirectory": "Adicionar diretório",
-      "refreshAll": "Refresh all",
+      "refreshAll": "Atualizar tudo",
       "prompts": {
         "removeRootApprove": "Remover diretório",
         "removeRootReject": "Não remover",
@@ -138,7 +138,7 @@
     },
     "actionsCaption": "Ações...",
     "shareActions": "Share actions",
-    "hashingInformation": "Hashing information",
+    "hashingInformation": "Informção do hashing",
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
     "addShareDirectory": "Adicionar diretório ao compartilhamento",
     "editShareDirectory": "Editar diretórios de compartilhamento",
@@ -147,7 +147,7 @@
       "virtualNameName": "Nome Virtual",
       "virtualNameHelp": "Diretórios com nomes virtuais idênticos irão ser fundidos na lista de arquivos",
       "profilesName": "Perfis de compartilhamento",
-      "profilesHelp": "New share profiles can be created from application settings",
+      "profilesHelp": "Novos perfis de compartilhamento podem ser criados nas configurações do aplicativo",
       "incomingName": "Entrando"
     }
   },
@@ -162,13 +162,16 @@
       "prompts": {
         "changePasswordPlaceholder": "Digitar senha",
         "changePasswordApprove": "Atualizar senha",
-        "changePasswordContent": "Enter new password for the hub {{item.name}}",
+        "changePasswordContent": "Digite uma nova senha para o hub {{item.name}}",
         "removePasswordApprove": "Remover senha",
         "removePasswordReject": "Não remover",
-        "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
+        "removePasswordContent": "Você está certo de que quer restaurara a senha do hub {{item.name}}?",
         "createPasswordPlaceholder": "Digitar senha",
         "createPasswordApprove": "Definir senha",
-        "createPasswordContent": "Set password for the hub {{item.name}}"
+        "createPasswordContent": "Definir senha para o hub {{item.name}}",
+        "removeApprove": "Remove favorite hub",
+        "removeReject": "Não remover",
+        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Descrição do Usuário",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Modo de conectividade",
-      "connectionModeV4Option1": "Desabilitado",
+      "connectionModeV4Option-1": "Desabilitado",
       "connectionModeV4Option0": "Modo ativo",
       "connectionModeV4Option2": "Modo passivo",
       "connectionIpV4Name": "Endereço de IP",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Modo de conectividade",
-      "connectionModeV6Option1": "Desabilitado",
+      "connectionModeV6Option-1": "Desabilitado",
       "connectionModeV6Option0": "Modo ativo",
       "connectionModeV6Option2": "Modo passivo",
       "connectionIpV6Name": "Endereço de IP"
@@ -214,13 +217,13 @@
     "new": "Abrir lista de arquivos",
     "newDesc": "Start browsing a new filelist",
     "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
-    "directorySize": "Directory size",
-    "totalListSize": "Total list size",
-    "browseOwnShare": "Browse own share...",
-    "root": "Root",
+    "directorySize": "Tamanho do diretório",
+    "totalListSize": "Tamanho total da lista",
+    "browseOwnShare": "Navegar no próprio compartilhamento",
+    "root": "Raiz",
     "userOffline": "Usuário offline",
-    "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
-    "noContentToDisplay": "No content to display",
+    "userOfflineDesc": "Você irá estar habilitado a continuar navegado quando o usuário ficar online novamente",
+    "noContentToDisplay": "Nenhum conteúdo para exibir",
     "theDirectoryIsEmpty": "O diretório está vazio",
     "table": {
       "name": "Nome",
@@ -238,55 +241,64 @@
     "actions": {
       "download": "Download",
       "downloadTo": "Baixar para...",
-      "findNfo": "Find NFO",
+      "findNfo": "Procurar NFO",
       "search": "Pesquisar",
       "sendMessage": "Enviar mensagem",
-      "browseShare": "Browse share",
+      "browseShare": "Navegar no compartilhamento",
       "ignoreMessages": "Ignorar mensagens",
       "viewAsText": "Visualizar como texto",
       "playVideo": "Tocar vídeo",
       "viewImage": "Ver imagem",
       "playAudio": "Tocar áudio",
       "copyMagnetLink": "Copiar link magnet",
-      "shutDownApplication": "Shut down application",
-      "restartWebServer": "Restart web server",
-      "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again"
+      "shutDownApplication": "Desligar aplicativo",
+      "restartWebServer": "Reinicar servidor de web",
+      "unignoreMessages": "Designorar mensagens",
+      "closeAndDontShowAgain": "Fechar e não exibir novament",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
-    "loadingItems": "Loading items",
-    "root": "Root",
+    "loadingItems": "Carregando itens",
+    "root": "Raiz",
     "name": "Nome",
     "size": "Tamanho",
     "createDirectory": "Criar diretório",
     "create": "Criar",
     "directoryName": "Nome do diretório",
     "computer": "Computador",
-    "history": "Previous",
+    "history": "Anterior",
     "shared": "Compartilhado",
     "favorites": "Favoritos",
     "dupes": "Dupes",
     "browse": "Navegar",
     "download": "Download",
     "close": "Fechar",
-    "noPathsToDisplay": "No paths to display",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
+    "noPathsToDisplay": "Nenhum caminho a exibir",
+    "spaceFree": "{{freeSpace}} livre",
     "select": "Selecionar",
     "new": "&amp;Novo...",
-    "currentSessions": "Current sessions",
-    "closeAll": "Close all",
-    "recentSessions": "Recent sessions",
-    "openedAgo": "Opened {{timeAgo}}",
-    "waitingForServerResponse": "Waiting for server response",
+    "currentSessions": "Sessões atuais",
+    "closeAll": "Fecha tudo",
+    "recentSessions": "Sessões recentes",
+    "openedAgo": "Aberto {{timeAgo}}",
+    "waitingForServerResponse": "Aguardando por resposta do servidor",
     "loadingMessages": "Carregando mensagens",
     "loadingSession": "Carregando sessão",
     "no": "Não",
     "cancel": "Cancelar",
     "loading": "Carregando",
     "loadingData": "Carregando dados...",
-    "noOnlineHubs": "No online hubs",
-    "installAsLocalApplication": "Install as local application",
+    "noOnlineHubs": "Nenhum hub online",
+    "installAsLocalApplication": "Instalar como aplicativo local",
     "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
     "install": "Instalar",
     "dontInstall": "Não instalar",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Enter limit (kB/s)",
     "enterLimit": "Digitar limite...",
     "removeLimit": "Remover limite",
+    "tlsOk": "Autenticidade do certificado foi validado",
+    "tlsOutdatedWarning": "Protocolo criptográfico ultrapassado com vulnerabilidades de segurança conhecidos",
+    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
@@ -305,7 +320,7 @@
   "hubs": {
     "table": {
       "nick": "Apelido",
-      "shareSize": "Share size",
+      "shareSize": "Tamanho do compartilhamento",
       "description": "Descrição",
       "tag": "Etiqueta",
       "uploadSpeed": "Vel. Upload",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Reconectar",
       "clearChat": "Limpar bate-papo",
-      "close": "Fechar"
+      "close": "Fechar",
+      "addToFavorites": "Adicionar Aos Favoritos",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Digite endereço do hub...",
     "connect": "&amp;Conectar",
@@ -370,11 +389,16 @@
         "removeBundleApprove": "Remove bundle",
         "removeBundleReject": "Não remover",
         "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
-        "removeBundleCheckbox": "Remove finished files",
-        "removeFileApprove": "Remove file",
+        "removeBundleCheckbox": "Remover arquivos concluídos",
+        "removeFileApprove": "Remover arquivo",
         "removeFileReject": "Não remover",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
-        "removeFileCheckbox": "Remove on disk"
+        "removeFileCheckbox": "Remover do disco"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Pausado",
@@ -387,11 +411,11 @@
     "sources": "Fontes",
     "user": "Usuário",
     "hubs": "Hubs",
-    "lastKnownSpeed": "Last known speed",
+    "lastKnownSpeed": "Última velocidade conhecida",
     "files": "Arquivos",
     "size": "Tamanho",
     "notifications": {
-      "bundleWasAddedInQueue": "Bundle was added in queue",
+      "bundleWasAddedInQueue": "Download foi adicionado na fila",
       "bundleDownloadError": "Download error: {{error}}",
       "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
       "validatingDownloadedBundle": "Validating downloaded bundle",
@@ -417,7 +441,11 @@
       "forceConnect": "Force connect",
       "disconnect": "Desconectar",
       "removeFileFromQueue": "Remover Arquivo da Lista",
-      "removeUserFromQueue": "Remover usuário da lista de espera"
+      "removeUserFromQueue": "Remover usuário da lista de espera",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "No active transfers"
   },
@@ -491,9 +519,9 @@
     },
     "advanced": "Avançado",
     "noUnsavedChanges": "No unsaved changes",
-    "saveChanges": "Save changes",
-    "savingCompleted": "Saving completed",
-    "settingsWereSavedSuccessfully": "Settings were saved successfully",
+    "saveChanges": "Salvar mudnaças",
+    "savingCompleted": "Salvamento completado",
+    "settingsWereSavedSuccessfully": "Configurações foram salvas com sucesso",
     "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
     "connectivity": {
       "detection": {
@@ -635,6 +663,7 @@
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
+        "editUser": "Editar usuário",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Available path variables",
         "favoriteDownloadDirectories": "Diretórios favoritos de Download",
         "name": "Nome",
-        "path": "Caminho"
+        "path": "Caminho",
+        "form": {
+          "pathName": "Caminho",
+          "nameName": "Nome"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Lista de arquivos ignorados"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "Digitar URL",
         "installUrlApprove": "Instalar",
-        "installUrlContent": "Digitar URL do download"
+        "installUrlContent": "Digitar URL do download",
+        "removeApprove": "Remove extension",
+        "removeReject": "Não remover",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },

@@ -168,7 +168,10 @@
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Enter password",
         "createPasswordApprove": "Set password",
-        "createPasswordContent": "Set password for the hub {{item.name}}"
+        "createPasswordContent": "Set password for the hub {{item.name}}",
+        "removeApprove": "Remove favorite hub",
+        "removeReject": "Don't remove",
+        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
@@ -198,13 +201,13 @@
       "userDescriptionName": "Felhasználó leírása",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
-      "connectionModeV4Option1": "Kikapcsolva",
+      "connectionModeV4Option-1": "Kikapcsolva",
       "connectionModeV4Option0": "Aktív mód",
       "connectionModeV4Option2": "Passive mode",
       "connectionIpV4Name": "IP address",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
-      "connectionModeV6Option1": "Kikapcsolva",
+      "connectionModeV6Option-1": "Kikapcsolva",
       "connectionModeV6Option0": "Aktív mód",
       "connectionModeV6Option2": "Passive mode",
       "connectionIpV6Name": "IP address"
@@ -251,8 +254,17 @@
       "shutDownApplication": "Shut down application",
       "restartWebServer": "Restart web server",
       "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again"
+      "closeAndDontShowAgain": "Close and don't show again",
+      "notifications": {
+        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
+    "actionSucceed": "Action succeed",
+    "actionFailed": "Action failed",
+    "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Loading items",
@@ -271,7 +283,7 @@
     "download": "Letöltés",
     "close": "Bezárás",
     "noPathsToDisplay": "No paths to display",
-    "pathSpaceFree": "{{path}} ({{freeSpace}} free)",
+    "spaceFree": "{{freeSpace}} free",
     "select": "Select",
     "new": "&amp;Új...",
     "currentSessions": "Current sessions",
@@ -296,6 +308,9 @@
     "enterLimitKBS": "Enter limit (kB/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
+    "tlsOk": "Authenticity of the certificate is validated",
+    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
+    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "form": {
       "browse": "Browse",
       "noOptions": "No options",
@@ -317,7 +332,11 @@
     "actions": {
       "reconnect": "Reconnect",
       "clearChat": "Clear chat",
-      "close": "Bezárás"
+      "close": "Bezárás",
+      "addToFavorites": "Hozzáadás a kedvencekhez",
+      "notifications": {
+        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+      }
     },
     "enterHubAddress": "Enter hub address...",
     "connect": "&amp;Kapcsolódás",
@@ -375,6 +394,11 @@
         "removeFileReject": "Don't remove",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Remove on disk"
+      },
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
+        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Szüneteltetve",
@@ -417,7 +441,11 @@
       "forceConnect": "Force connect",
       "disconnect": "Disconnect",
       "removeFileFromQueue": "Fájl eltávolítása a sorból",
-      "removeUserFromQueue": "Felhasználó eltávolítása a sorból"
+      "removeUserFromQueue": "Felhasználó eltávolítása a sorból",
+      "notifications": {
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+      }
     },
     "noActiveTransfers": "No active transfers"
   },
@@ -635,6 +663,7 @@
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
+        "editUser": "Edit user",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
@@ -678,7 +707,13 @@
         "availablePathVariables": "Available path variables",
         "favoriteDownloadDirectories": "Kedvenc letöltési könyvtárak",
         "name": "Név",
-        "path": "Útvonal"
+        "path": "Útvonal",
+        "form": {
+          "pathName": "Útvonal",
+          "nameName": "Név"
+        },
+        "addFavoriteDirectory": "Add favorite directory",
+        "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
         "skiplist": "Skiplist"
@@ -727,7 +762,10 @@
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Install",
-        "installUrlContent": "Enter download URL"
+        "installUrlContent": "Enter download URL",
+        "removeApprove": "Remove extension",
+        "removeReject": "Don't remove",
+        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
   },
