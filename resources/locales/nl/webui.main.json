@@ -462,10 +462,14 @@
       "renameProfile": "Hernoem profiel",
       "addPath": "Voeg path toe",
       "removePath": "Verwijder path",
+      "removeUser": "Remove user",
       "prompts": {
         "removeShareExcludeApprove": "Verwijder path",
         "removeShareExcludeReject": "Niet verwijderen",
-        "removeShareExcludeContent": "Weet je zeker dat je het volgende path wilt verwijderen {{item}}?"
+        "removeShareExcludeContent": "Weet je zeker dat je het volgende path wilt verwijderen {{item}}?",
+        "removeWebUserApprove": "Remove user",
+        "removeWebUserReject": "Niet verwijderen",
+        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
       }
     },
     "navigation": {

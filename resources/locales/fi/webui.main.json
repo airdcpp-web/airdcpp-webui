@@ -462,10 +462,14 @@
       "renameProfile": "Uudelleennimeä profiili",
       "addPath": "Lisää polku",
       "removePath": "Poista polku",
+      "removeUser": "Poista käyttäjä",
       "prompts": {
         "removeShareExcludeApprove": "Poista polku",
         "removeShareExcludeReject": "Älä poista",
-        "removeShareExcludeContent": "Haluatko varmasti poistaa piilotetun polun {{item}}?"
+        "removeShareExcludeContent": "Haluatko varmasti poistaa piilotetun polun {{item}}?",
+        "removeWebUserApprove": "Poista käyttäjä",
+        "removeWebUserReject": "Älä poista",
+        "removeWebUserContent": "Haluatko varmasti poistaa käyttäjän {{item.username}}?"
       }
     },
     "navigation": {

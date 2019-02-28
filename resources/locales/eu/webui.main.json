@@ -462,10 +462,14 @@
       "renameProfile": "Profilren izena aldatu",
       "addPath": "Gehitu bidea",
       "removePath": "Kendu bidea",
+      "removeUser": "Remove user",
       "prompts": {
         "removeShareExcludeApprove": "Kendu bidea",
         "removeShareExcludeReject": "Ez ezabatu",
-        "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?"
+        "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
+        "removeWebUserApprove": "Remove user",
+        "removeWebUserReject": "Ez ezabatu",
+        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
       }
     },
     "navigation": {

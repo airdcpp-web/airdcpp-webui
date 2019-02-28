@@ -57,19 +57,19 @@ const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({ data, loc
   History.push(`${pathname}/download/${data.itemInfo.id}`);
 };
 
-const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
   return ViewFileActions.createSession(data, true, location, ViewFileStore);
 };
 
-const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
   return ViewFileActions.createSession(data, false, location, ViewFileStore);
 };
 
-const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
   return ViewFileActions.createSession(data, false, location, ViewFileStore);
 };
 
-const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
   return ViewFileActions.createSession(data, false, location, ViewFileStore);
 };
 

@@ -110,7 +110,7 @@ interface StorageLayouts {
 
 const Store = {
   layouts: {} as Layouts,
-  listenables: WidgetActions.actions,
+  listenables: WidgetActions,
   init: function () {
     // Try to load saved ones
     let layoutInfo = loadLocalProperty<StorageLayouts>(LAYOUT_STORAGE_KEY);

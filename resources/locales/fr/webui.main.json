@@ -462,10 +462,14 @@
       "renameProfile": "Rename profile",
       "addPath": "Add path",
       "removePath": "Remove path",
+      "removeUser": "Remove user",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Ne pas retirer",
-        "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?"
+        "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
+        "removeWebUserApprove": "Remove user",
+        "removeWebUserReject": "Ne pas retirer",
+        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
       }
     },
     "navigation": {
