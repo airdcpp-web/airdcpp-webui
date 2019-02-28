@@ -2,7 +2,9 @@ import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
 
 import * as UI from 'types/ui';
-import { textToI18nKey, toArray } from './TranslationUtils';
+import { textToI18nKey, toArray, translate } from './TranslationUtils';
+import i18next from 'i18next';
+import NotificationActions from 'actions/NotificationActions';
 
 
 export const actionFilter = <ItemDataT>(action: UI.ActionType<ItemDataT>, itemData?: ItemDataT) => {
@@ -25,4 +27,19 @@ export const showAction = <ItemDataT>(action: UI.ActionType<ItemDataT>, itemData
 export const toActionI18nKey = <ItemDataT>(action: UI.ActionType<ItemDataT>, moduleId: string | string[]) => {
   invariant(!!action.displayName, 'Invalid action');
   return textToI18nKey(action.displayName!, [ ...toArray(moduleId), UI.SubNamespaces.ACTIONS ]);
+};
+
+
+type SocketActionHandler = () => Promise<any>;
+
+export const runBackgroundSocketAction = (
+  handler: SocketActionHandler, 
+  t: i18next.TFunction
+) => {
+  handler().catch(e => {
+    NotificationActions.apiError(
+      translate('Action failed', t, UI.Modules.COMMON),
+      e
+    );
+  });
 };

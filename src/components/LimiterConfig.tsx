@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 
 interface LimiterConfigProps {
@@ -30,15 +31,19 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
     hide: PropTypes.func.isRequired,
   };*/
 
+  const { t } = useTranslation();
+
   const save = (newLimit = 0) => {
-    SocketService.post(SettingConstants.ITEMS_SET_URL, {
-      [settingKey]: newLimit,
-    });
+    runBackgroundSocketAction(
+      () => SocketService.post(SettingConstants.ITEMS_SET_URL, {
+        [settingKey]: newLimit,
+      }),
+      t
+    );
 
     hide();
   };
 
-  const { t } = useTranslation();
   return (
     <div className="limiter-config">
       <div className="ui header">

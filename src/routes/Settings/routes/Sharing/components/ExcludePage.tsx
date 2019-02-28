@@ -16,6 +16,7 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 
 //import * as UI from 'types/ui';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 
 const Row: React.FC<{ path: string; }> = ({ path }) => (
@@ -94,7 +95,10 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
         ) }
 
         <FileBrowserDialog
-          onConfirm={ path => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }) }
+          onConfirm={ path => runBackgroundSocketAction(
+            () => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }), 
+            moduleT.plainT
+          ) }
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
           subHeader={ translate('Add excluded path') }

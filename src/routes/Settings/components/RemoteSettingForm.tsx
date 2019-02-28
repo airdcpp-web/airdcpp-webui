@@ -30,7 +30,8 @@ class RemoteSettingForm extends React.Component<Props> {
       return Promise.resolve();
     }
 
-    return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(this.refetchValues);
+    return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues)
+      .then(this.refetchValues);
   }
 
   refetchValues = () => {

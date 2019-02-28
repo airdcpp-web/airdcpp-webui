@@ -60,7 +60,7 @@ export const toErrorResponse = (errorCode: number, message: string): ErrorRespon
 export const errorResponseToString = (error: ErrorResponse): string => {
   let message = error.message;
   if (error.code) {
-    message += `(code ${error.code})`;
+    message += ` (code ${error.code})`;
   }
 
   return message;

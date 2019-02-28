@@ -16,8 +16,8 @@ import '../style.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { ErrorResponse } from 'airdcpp-apisocket';
 import { Trans } from 'react-i18next';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 
 interface OptimizeLayoutProps {
@@ -91,10 +91,10 @@ interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
 
 class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashDatabaseLayoutDataProps> {
   handleOptimize = (verify: boolean) => {
-    SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify })
-      .catch((error: ErrorResponse) => 
-        console.error(`Failed to optimize database: ${error}`)
-      );
+    runBackgroundSocketAction(
+      () => SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify }),
+      this.props.moduleT.plainT
+    );
   }
 
   render() {
