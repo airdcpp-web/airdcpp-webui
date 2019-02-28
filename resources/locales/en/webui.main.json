@@ -260,6 +260,8 @@
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
       }
     },
+    "awayModeWasEnabled": "Away mode was enabled",
+    "awayModeWasDisabled": "Away mode was disabled",
     "actionSucceed": "Action succeed",
     "actionFailed": "Action failed",
     "noNfoResultsWereReceived": "No NFO results were received",
@@ -441,7 +443,8 @@
       "removeFileFromQueue": "Remove file from queue",
       "removeUserFromQueue": "Remove user from queue",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue"
+        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
     "noActiveTransfers": "No active transfers"

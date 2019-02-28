@@ -1,7 +1,9 @@
 'use strict';
 
 import SocketService from 'services/SocketService';
-import QueueActions from 'actions/reflux/QueueActions';
+
+//import QueueActions from 'actions/reflux/QueueActions';
+import QueueSourceActions from 'actions/ui/QueueSourceActions';
 
 import QueueFileActions from 'actions/ui/QueueFileActions';
 
@@ -39,8 +41,16 @@ const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({ data: transfer, ...o
   });
 };
 
-const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
-  return QueueActions.removeSource(transfer);
+const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({ data: transfer, ...other }) => {
+  //return QueueActions.removeSource(transfer, t);
+  return QueueSourceActions.actions.removeSource!.handler({
+    data: {
+      ...transfer.user,
+      hub_urls: [ transfer.user.hub_url ],
+      flags: transfer.user.flags as API.UserFlag[]
+    },
+    ...other
+  });
 };
 
 
@@ -76,6 +86,9 @@ const TransferActions: UI.ActionListType<API.Transfer> = {
     icon: IconConstants.REMOVE,
     filter: removeSource,
     handler: handleRemoveSource,
+    notifications: {
+      onSuccess: 'The user {{item.user.nicks}} was removed from {{result.count}} files',
+    }
   },
 };
 
