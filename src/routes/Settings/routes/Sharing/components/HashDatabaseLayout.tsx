@@ -33,7 +33,9 @@ const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
   const [ verify, setVerify ] = React.useState(false);
   return (
     <div className="optimize-layout">
-      <h4 className="header">Maintenance</h4>
+      <h4 className="header" style={{ marginTop: '30px' }}>
+        { translate('Maintenance') }
+      </h4>
       <Message 
         description={ (
           <Trans i18nKey={ toI18nKey('hashDBOptimizeNote') }>

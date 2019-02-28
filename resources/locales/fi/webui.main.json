@@ -690,6 +690,7 @@
         "hashDatabase": "Tarkistussummatietokanta",
         "fileIndexSize": "Tiedostoindeksin koko",
         "hashStoreSize": "Tarkistussummatietokannan koko",
+        "maintenance": "Operaatiot",
         "verifyIntegrityOfHashData": "Tarkista tarkistussummatietokannan eheys",
         "optimizeNow": "Optimoi nyt",
         "hashDBOptimizeNote": "Tämä operaatio poistaa kaikkien tällä hetkellä jakamattomien tiedostojen tallennetut tarkistussummat. Mikäli jaat tiedostoja verkkolevyiltä tai muulta siirrettävältä tallennusvälineeltä, tarkista, että tiedostot näkyvät tällä hetkellä jaoissa (muutoin ne on indeksoitava uudestaan)."

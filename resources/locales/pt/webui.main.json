@@ -690,6 +690,7 @@
         "hashDatabase": "Base de Dados de Índice",
         "fileIndexSize": "Tamanho do índice de ficheiros",
         "hashStoreSize": "Tamanho do armazenamento das hash",
+        "maintenance": "Manutenção",
         "verifyIntegrityOfHashData": "Verificar integridade dos dados hash",
         "optimizeNow": "Otimizar agora",
         "hashDBOptimizeNote": "Esta operação irá eliminar toda a informação de hash para ficheiros que não estejam atualmente na partilha. Se estiver a partilhar ficheiros de discos na rede ou de um armazenamento amovível, certifique-se que os ficheiros são mostrados atualmente na partilha (caso contrário terão que ser novamente rehashed)"

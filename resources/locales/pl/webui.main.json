@@ -690,6 +690,7 @@
         "hashDatabase": "Baza indeksów",
         "fileIndexSize": "File index size",
         "hashStoreSize": "Hash store size",
+        "maintenance": "Maintenance",
         "verifyIntegrityOfHashData": "Verify integrity of hash data",
         "optimizeNow": "Optimize now",
         "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
