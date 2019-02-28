@@ -546,7 +546,9 @@
       "user": {
         "form": {
           "settingProfileHelp0": "Klienten bliver brugt i normale private/offentlige hubs til at overføre filer via internettet. Brug denne profil, hvis usikker.",
-          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)"
+          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
+          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
+          "languageFileHelp": "The application must be restarted for the new language to take effect"
         }
       },
       "ignoredUsers": {

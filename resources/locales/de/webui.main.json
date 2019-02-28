@@ -546,7 +546,9 @@
       "user": {
         "form": {
           "settingProfileHelp0": "Das Programm wird in normalen Privaten/Öffentlichen Hubs benutzt, um Dateien via Internet zu übertragen. Benutze das Profil wenn sie nicht sicher sind.",
-          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)"
+          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
+          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
+          "languageFileHelp": "The application must be restarted for the new language to take effect"
         }
       },
       "ignoredUsers": {

@@ -546,7 +546,9 @@
       "user": {
         "form": {
           "settingProfileHelp0": "O cliente é utilizado em concentradores normais privados/públicos para transferência de ficheiros através da Internet. Utilize este perfil se não tiver a certeza.",
-          "settingProfileHelp1": "O cliente é utilizado para transferir ficheiros que são separados em arquivos RAR (ou em outros formatos pequenos)"
+          "settingProfileHelp1": "O cliente é utilizado para transferir ficheiros que são separados em arquivos RAR (ou em outros formatos pequenos)",
+          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
+          "languageFileHelp": "The application must be restarted for the new language to take effect"
         }
       },
       "ignoredUsers": {

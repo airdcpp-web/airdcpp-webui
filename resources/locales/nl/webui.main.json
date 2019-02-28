@@ -546,7 +546,9 @@
       "user": {
         "form": {
           "settingProfileHelp0": "AirDC++ word in normale privé en publieke hubs gebruikt om bestanden over het internet uit te wisselen. Gebruik dit profiel bij twijfel",
-          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)"
+          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
+          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
+          "languageFileHelp": "The application must be restarted for the new language to take effect"
         }
       },
       "ignoredUsers": {

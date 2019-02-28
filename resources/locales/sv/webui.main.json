@@ -3,7 +3,7 @@
     "application": {
       "addWidget": "Lägg till widget...",
       "loggedInAs": "Inloggad som",
-      "clientStarted": "Klienten startad",
+      "clientStarted": "Klienten startades",
       "activeSessions": "Aktiva sessioner"
     },
     "rss": {
@@ -335,7 +335,7 @@
       "close": "Stäng",
       "addToFavorites": "Lägg till i favoriter",
       "notifications": {
-        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+        "favoriteSuccess": "Hubben {{item.identity.name}} har lagts till i favoriter"
       }
     },
     "enterHubAddress": "Ange hubbadress...",
@@ -396,9 +396,9 @@
         "removeFileCheckbox": "Ta bort från disken"
       },
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "removeFileSuccess": "Filen {{item.name}} har tagits bort från kön",
+        "removeCompletedSuccess": "{{result.count}} färdiga filsamlingar har tagits bort",
+        "searchBundleAlternatesSuccess": "Filsamlingen {{item.name}} har sökt efter nya källor"
       }
     },
     "paused": "Pausad",
@@ -443,8 +443,8 @@
       "removeFileFromQueue": "Ta bort fil från kön",
       "removeUserFromQueue": "Ta bort källa",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+        "removeFileSuccess": "Filen {{item.name}} har tagits bort från kön",
+        "removeSourceSuccess": "Användaren {{item.user.nicks}} har tagits bort från {{result.count}} filer"
       }
     },
     "noActiveTransfers": "Inga aktiva överföringar"
@@ -469,7 +469,7 @@
         "removeShareExcludeContent": "Är du säker på att du vill ta bort den uteslutna sökvägen {{item}}?",
         "removeWebUserApprove": "Ta bort användare",
         "removeWebUserReject": "Ta inte bort",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
+        "removeWebUserContent": "Är det säkert att du vill ta bort användaren {{item.username}}?"
       }
     },
     "navigation": {
@@ -545,8 +545,10 @@
     "profile": {
       "user": {
         "form": {
-          "settingProfileHelp0": "Klienten används i normala privat/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
-          "settingProfileHelp1": "Klienten används till att överföra RAR-arkiv (eller i andra småformat)"
+          "settingProfileHelp0": "Klienten används i normala privata/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
+          "settingProfileHelp1": "Klienten används till att överföra RAR-arkiv (eller i andra småformat)",
+          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
+          "languageFileHelp": "The application must be restarted for the new language to take effect"
         }
       },
       "ignoredUsers": {
@@ -794,7 +796,7 @@
     "username": "Användarnamn",
     "password": "Lösenord",
     "keepMeLoggedIn": "Håll mig inloggad",
-    "login": "Användarnamn",
+    "login": "Logga in",
     "authenticationFailed": "Autentisering misslyckades: {{lastError}}",
     "connectingToTheServer": "Ansluter till servern...",
     "reestablishConnection": "Försöker återuppta anslutningen...",

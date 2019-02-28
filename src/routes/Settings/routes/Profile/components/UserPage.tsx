@@ -47,6 +47,11 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
           message
         );
       }
+    } else if (id === 'language_file') {
+      fieldOptions['help'] = moduleT.t(
+        toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined),
+        'The application must be restarted for the new language to take effect'
+      );
     }
   };
 

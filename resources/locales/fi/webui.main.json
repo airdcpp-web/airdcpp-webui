@@ -546,7 +546,9 @@
       "user": {
         "form": {
           "settingProfileHelp0": "Ohjelmaa käytetään tiedostojen jakamiseen internetin välityksellä normaaleissa yksityisissä tai julkisissa hubeissa. Käytä tätä profiilia, jos olet epävarma.",
-          "settingProfileHelp1": "Ohjelmaa käytetään RAR-arkistoihin pilkottujen tiedostojen (tai muiden pienikokoisten tiedostojen) lataamiseen"
+          "settingProfileHelp1": "Ohjelmaa käytetään RAR-arkistoihin pilkottujen tiedostojen (tai muiden pienikokoisten tiedostojen) lataamiseen",
+          "settingProfileHelp2": "Sovellusta käytetään tiedostojen siirtämiseen paikallisverkossa (esim. lanit) tai muussa suljetussa verkossa (esim. yliopistoverkko)",
+          "languageFileHelp": "Sovellus on käynnistettävä uudestaan, jotta uusi kieli tulee käyttöön"
         }
       },
       "ignoredUsers": {

@@ -6,6 +6,7 @@ import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import Icon from 'components/semantic/Icon';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { translateSettingSectionTitle } from './MenuItems';
 
 
 
@@ -18,7 +19,7 @@ const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
   <div className="ui top-menu">
     <Dropdown 
       className="selection fluid" 
-      caption={ parent!.title }
+      caption={ translateSettingSectionTitle(parent!.title, settingsT) }
       captionIcon={ `green ${parent!.icon}` }
     >
       { parentMenuItems }
@@ -28,7 +29,7 @@ const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
 
     <SectionedDropdown 
       className="selection fluid" 
-      caption={ currentMenuItem.title }
+      caption={ translateSettingSectionTitle(currentMenuItem.title, settingsT) }
     >
       <MenuSection>
         { menuItems }
