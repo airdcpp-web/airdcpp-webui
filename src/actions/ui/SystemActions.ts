@@ -27,7 +27,7 @@ const SystemActions: UI.ActionListType<undefined> = {
       content: `When changing the binding options, it's recommended to restart the web server only 
                 when you are able to access the server for troubleshooting. If  \
                 the web server won't come back online, you should start the application 
-                manually to see if there are any error messages. The configuration file is location in your \
+                manually to see if there are any error messages. The configuration file is located in your \
                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.`,
       approveCaption: 'Continue and restart',
       rejectCaption: `Don't restart`,

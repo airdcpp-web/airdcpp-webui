@@ -258,6 +258,14 @@
       "notifications": {
         "ignoreUserSuccess": "Käyttäjä {{item.nicks}} lisättiin hylättyihin käyttäjiin",
         "unignoreUserSuccess": "Käyttäjä {{item.nicks}} poistettiin hylätyistä käyttäjistä"
+      },
+      "prompts": {
+        "restartWebSystemApprove": "Jatka ja käynnistä uudestaan",
+        "restartWebSystemReject": "Älä käynnistä uudestaan",
+        "restartWebSystemContent": "Osoiteasetuksia muutettaessa on suositeltavaa käynnistää web-palvelin uudestaan vain silloin, kun sinulla on pääsy palvelimeen vikatilanteiden selvittämistä varten. Mikäli palvelin ei palaa takaisin online-tilaan, käynnistä ohjelma manuaalisesti, jotta näet mahdolliset virheviestit. Mikäli asetustiedostoa täytyy muokata käsin, tiedosto sijaitsee oletuksena järjestelmän käyttäjäkansiossa (.airdc++-kansiossa).",
+        "shutdownSystemApprove": "Jatka ja sammuta",
+        "shutdownSystemReject": "Peruuta",
+        "shutdownSystemContent": "Haluatko varmasti sammuttaa sovelluksen?"
       }
     },
     "awayModeWasEnabled": "Poissa-tila käytössä",
@@ -827,6 +835,7 @@
     "actions": {
       "clearChat": "Tyhjennä keskusteluikkuna",
       "close": "Sulje",
+      "connect": "Yhdistä",
       "disconnect": "Katkaise yhteys"
     },
     "new": "Uusi istunto",

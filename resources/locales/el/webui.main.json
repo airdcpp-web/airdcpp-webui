@@ -258,6 +258,14 @@
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+      },
+      "prompts": {
+        "restartWebSystemApprove": "Continue and restart",
+        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
+        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemReject": "Ακυρώνω",
+        "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
     },
     "awayModeWasEnabled": "Away mode was enabled",
@@ -827,6 +835,7 @@
     "actions": {
       "clearChat": "Clear chat",
       "close": "Κλείσε",
+      "connect": "Σύνδεση",
       "disconnect": "Disconnect"
     },
     "new": "New session",

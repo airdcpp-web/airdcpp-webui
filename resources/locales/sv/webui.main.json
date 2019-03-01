@@ -177,7 +177,7 @@
     "table": {
       "connectState": "Tillstånd",
       "name": "Namn",
-      "autoConnect": "Anslut automatiskt",
+      "autoConnect": "Auto-anslut",
       "nick": "Användarnamn",
       "hasPassword": "Lösenord",
       "hubUrl": "Adress",
@@ -258,6 +258,14 @@
       "notifications": {
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
         "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare"
+      },
+      "prompts": {
+        "restartWebSystemApprove": "Continue and restart",
+        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
+        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemReject": "Avbryt",
+        "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
     },
     "awayModeWasEnabled": "Tillfälligt borta har aktiverats",
@@ -531,8 +539,8 @@
       "detection": {
         "connectivityDetectionNote": "Vid problem med filöverföringen, se till att dina TCP-portar är öppna genom att använda en <1>online porttestare</1>. Observera att kontroll av UDP-porten (sök) inte kan göras online. För mer information om olika anslutningsmöjligheter, besök <4>DC++'s connectivity FAQ</4>.",
         "currentAutoDetectionStatus": "Nuvarande automatisk detekteringsstatus",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
+        "iPv4Connectivity": "IPv4-anslutning",
+        "iPv6Connectivity": "IPv6-anslutning",
         "manualConfiguration": "{{status}} (manuell konfiguration)",
         "autoDetected": "{{status}} (detektera automatiskt)"
       },
@@ -549,8 +557,8 @@
         "form": {
           "settingProfileHelp0": "Klienten används i normala privata/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
           "settingProfileHelp1": "Klienten används till att överföra RAR-arkiv (eller i andra småformat)",
-          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "The application must be restarted for the new language to take effect"
+          "settingProfileHelp2": "Klienten används för överföring av filer i ett lokalt nätverk (t.ex. LAN-party) eller annat stängt nätverk (t.ex. universitetsnätverk).",
+          "languageFileHelp": "Applikationen måste startas om för att det nya språket ska aktiveras"
         }
       },
       "ignoredUsers": {
@@ -685,7 +693,7 @@
         "name": "Namn",
         "totalSize": "Total storlek",
         "totalFiles": "Totalt antal filer",
-        "shareProfilesNote": "<0>Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.</0><1>Utdelningsprofilerna är tilldelade för enskilda kataloger från <1>Utdelnings</1>sidan.</1>"
+        "shareProfilesNote": "<0>Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.</0><1>Utdelningsprofilerna är tilldelade för enskilda kataloger från <1>Utdelningssidan</1>.</1>"
       },
       "sharingOptions": {
         "skiplist": "Uteslutningslista"
@@ -753,7 +761,7 @@
         "form": {
           "unreadLabelDelayName": "Fördröjning för att markera chattsessioner som lästa (sekunder)",
           "backgroundImageUrlName": "Egen webbadress till bakgrundsbilden",
-          "noInstallPromptName": "Visa aldrig applikationsistallationen i hemfönstret",
+          "noInstallPromptName": "Visa aldrig applikationsinstallationen i hemfönstret",
           "corsProxyName": "CORS-proxywebbadress",
           "corsProxyHelp": "CORS-proxy att använda för att hämta data från externa webbplatser (t.ex RSS-flöde och tillägg). Målwebbadressen läggs direkt efter den konfigurerade proxywebbadressen. Ingen proxy kommer att användas om fältet lämnas tomt, men det kan förhindra åtkomst till olika externa webbadresser eftersom de inte ofta är konfigurerade för att vara tillgängliga från andra webbplatser."
         }
@@ -827,6 +835,7 @@
     "actions": {
       "clearChat": "Rensa chatt",
       "close": "Stäng",
+      "connect": "Anslut",
       "disconnect": "Koppla från"
     },
     "new": "Ny session",
