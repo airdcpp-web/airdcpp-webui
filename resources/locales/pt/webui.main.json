@@ -169,9 +169,9 @@
         "createPasswordPlaceholder": "Introduzir palavra-passe",
         "createPasswordApprove": "Definir palavra-passe",
         "createPasswordContent": "Definir a palavra-passe para o concentrador {{item.name}}",
-        "removeApprove": "Remove favorite hub",
+        "removeApprove": "Remover concentrador favorito",
         "removeReject": "Não remover",
-        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
+        "removeContent": "Tem a certeza que quer remover o concentrador favorito {{item.name}}?"
       }
     },
     "table": {
@@ -256,23 +256,23 @@
       "unignoreMessages": "Deixar de ignorar mensagens",
       "closeAndDontShowAgain": "Fechar e não mostrar de novo",
       "notifications": {
-        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+        "ignoreUserSuccess": "O utilizador {{item.nicks}} foi adicionado aos utilizadores ignorados",
+        "unignoreUserSuccess": "O utilizador {{item.nicks}} foi removido dos utilizadores ignorados"
       },
       "prompts": {
-        "restartWebSystemApprove": "Continue and restart",
-        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemApprove": "Continuar e reiniciar",
+        "restartWebSystemReject": "Não reiniciar",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
-        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemApprove": "Continuar e desligar",
         "shutdownSystemReject": "Cancelar",
-        "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
+        "shutdownSystemContent": "Tem a certeza que quer desligar a aplicação?"
       }
     },
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
-    "actionSucceed": "Action succeed",
-    "actionFailed": "Action failed",
-    "noNfoResultsWereReceived": "No NFO results were received",
+    "awayModeWasEnabled": "O modo ausente foi ativado",
+    "awayModeWasDisabled": "O modo ausente foi desativado",
+    "actionSucceed": "Ação bem sucedida",
+    "actionFailed": "Ação falhou",
+    "noNfoResultsWereReceived": "Não foram recebidos resultados NFO",
     "networkClientError": "Erro de rede / cliente",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "A carregar itens",
@@ -286,12 +286,12 @@
     "history": "Anterior",
     "shared": "Compartilhado",
     "favorites": "Favoritos",
-    "dupes": "Dupes",
+    "dupes": "Duplicados",
     "browse": "Navegar",
     "download": "Descarregar",
     "close": "Fechar",
     "noPathsToDisplay": "Sem caminhos para mostrar",
-    "spaceFree": "{{freeSpace}} free",
+    "spaceFree": "{{freeSpace}} livre",
     "select": "Selecionar",
     "new": "Novo",
     "currentSessions": "Sessões atuais",
@@ -316,9 +316,9 @@
     "enterLimitKBS": "Introduzir limite (kB/s)",
     "enterLimit": "Introduzir limite...",
     "removeLimit": "Remover limite",
-    "tlsOk": "Authenticity of the certificate is validated",
-    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
-    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
+    "tlsOk": "Autenticidade do certificado foi validada",
+    "tlsOutdatedWarning": "Protocolo criptográfico desatualizado com vulnerabilidades de segurança conhecidos",
+    "tlsAuthenticityWarning": "Não foi possível validar a autenticidade do certificado",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
@@ -343,7 +343,7 @@
       "close": "Fechar",
       "addToFavorites": "Adicionar aos favoritos",
       "notifications": {
-        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+        "favoriteSuccess": "O concentrador {{item.identity.name}} foi adicionado aos favoritos"
       }
     },
     "enterHubAddress": "Introduza o endereço do concentrador...",
@@ -404,9 +404,9 @@
         "removeFileCheckbox": "Remover no disco"
       },
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "removeFileSuccess": "O ficheiro {{item.name}} foi removido a fila",
+        "removeCompletedSuccess": "Foram removidos {{result.count}} pacotes completos",
+        "searchBundleAlternatesSuccess": "O pacote {{item.name}} foi pesquisado por alternativas"
       }
     },
     "paused": "Pausado",
@@ -451,8 +451,8 @@
       "removeFileFromQueue": "Remover ficheiro da fila",
       "removeUserFromQueue": "Remover utilizador da fila",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+        "removeFileSuccess": "O ficheiro {{item.name}} foi removido a fila",
+        "removeSourceSuccess": "O utilizador {{item.user.nicks}} foi removido de {{result.count}} ficheiros"
       }
     },
     "noActiveTransfers": "Sem transferências ativas"
@@ -470,14 +470,14 @@
       "renameProfile": "Renomear perfil",
       "addPath": "Adicionar caminho",
       "removePath": "Remover caminho",
-      "removeUser": "Remove user",
+      "removeUser": "Remover utilizador",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",
         "removeShareExcludeContent": "Tem a certeza que quer remover o caminho excluído {{item}}?",
-        "removeWebUserApprove": "Remove user",
+        "removeWebUserApprove": "Remover utilizador",
         "removeWebUserReject": "Não remover",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
+        "removeWebUserContent": "Tem a certeza que quer remover o utilizador {{item.username}}?"
       }
     },
     "navigation": {
@@ -539,8 +539,8 @@
       "detection": {
         "connectivityDetectionNote": "No caso de haver problemas de conectividade, por favor confirme que as suas portas estão mesmo abertas utilizando um <1>verificador de portas na Internet</1>. Note que a validade da porta UDP (pesquisa) não pode ser verificada na Internet. Para mais informações sobre os diferentes modos de conetividade, visite a página<4>Perguntas frequentes de conectividade do DC++</4>.",
         "currentAutoDetectionStatus": "Estado atual da deteção automática",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
+        "iPv4Connectivity": "Conectividade IPv4",
+        "iPv6Connectivity": "Conectividade IPv6",
         "manualConfiguration": "{{status}} (configuração manual)",
         "autoDetected": "{{status}} (detetado automaticamente)"
       },
@@ -558,7 +558,7 @@
           "settingProfileHelp0": "O cliente é utilizado em concentradores normais privados/públicos para transferência de ficheiros através da Internet. Utilize este perfil se não tiver a certeza.",
           "settingProfileHelp1": "O cliente é utilizado para transferir ficheiros que são separados em arquivos RAR (ou em outros formatos pequenos)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "The application must be restarted for the new language to take effect"
+          "languageFileHelp": "A aplicação tem de ser reiniciada para que o novo idioma surta efeito"
         }
       },
       "ignoredUsers": {
@@ -729,8 +729,8 @@
           "pathName": "Caminho",
           "nameName": "Nome"
         },
-        "addFavoriteDirectory": "Add favorite directory",
-        "editFavoriteDirectory": "Edit favorite directory"
+        "addFavoriteDirectory": "Adicionar diretório favorito",
+        "editFavoriteDirectory": "Editar diretório favorito"
       },
       "skippingOptions": {
         "skiplist": "Lista de ignorados"
@@ -780,7 +780,7 @@
         "installUrlPlaceholder": "Introduzir URL",
         "installUrlApprove": "Instalar",
         "installUrlContent": "Introduzir URL de descarregamento",
-        "removeApprove": "Remove extension",
+        "removeApprove": "Remover extensão",
         "removeReject": "Não remover",
         "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }

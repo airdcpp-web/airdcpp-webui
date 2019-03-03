@@ -263,18 +263,18 @@
         "restartWebSystemApprove": "Continue and restart",
         "restartWebSystemReject": "Don't restart",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
-        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemApprove": "Continue e desligue",
         "shutdownSystemReject": "Cancelar",
-        "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
+        "shutdownSystemContent": "Tem certeza de que deseja encerrar o aplicativo?"
       }
     },
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
-    "actionSucceed": "Action succeed",
-    "actionFailed": "Action failed",
+    "awayModeWasEnabled": "O modo ausente foi ativado",
+    "awayModeWasDisabled": "O modo ausente foi desativado",
+    "actionSucceed": "Ação bem sucedida",
+    "actionFailed": "Ação: falhou",
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
-    "failedToFetchData": "Failed to fetch data",
+    "failedToFetchData": "Falha ao buscar dados",
     "loadingItems": "Carregando itens",
     "root": "Raiz",
     "name": "Nome",
@@ -307,18 +307,18 @@
     "loadingData": "Carregando dados...",
     "noOnlineHubs": "Nenhum hub online",
     "installAsLocalApplication": "Instalar como aplicativo local",
-    "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
+    "pwaInstallDesc": "Este aplicativo da web pode ser instalado localmente, proporcionando uma melhor experiência ao usuário",
     "install": "Instalar",
     "dontInstall": "Não instalar",
     "statisticsNotAvailable": "Estatísticas não disponíveis",
     "save": "Salvar",
     "enterNick": "Digitar apelido...",
-    "enterLimitKBS": "Enter limit (kB/s)",
+    "enterLimitKBS": "Digite o limite (kB/s)",
     "enterLimit": "Digitar limite...",
     "removeLimit": "Remover limite",
     "tlsOk": "Autenticidade do certificado foi validado",
     "tlsOutdatedWarning": "Protocolo criptográfico ultrapassado com vulnerabilidades de segurança conhecidos",
-    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
+    "tlsAuthenticityWarning": "A autenticidade do certificado não pôde ser validada",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
@@ -343,7 +343,7 @@
       "close": "Fechar",
       "addToFavorites": "Adicionar Aos Favoritos",
       "notifications": {
-        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+        "favoriteSuccess": "O hub {{item.identity.name}} foi adicionado nos favoritos"
       }
     },
     "enterHubAddress": "Digite endereço do hub...",
@@ -359,11 +359,11 @@
     "xUsers": "{{count}} usuários",
     "xUsers_plural": "{{count}} usuários",
     "redirectRequested": "Pedido redirecionado",
-    "acceptRedirect": "Accept redirect to {{url}}",
+    "acceptRedirect": "Aceitar redirecionar para {{url}}",
     "passwordRequired": "Senha requerida",
     "password": "Senha",
     "submit": "Enviar",
-    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+    "passwordPromptHelp": "Isso geralmente significa que há uma conta registrada associada ao seu nick. Se você não se lembra de ter uma conta registrada neste hub, pode haver outra pessoa usando o mesmo nick."  
   },
   "queue": {
     "table": {
@@ -379,7 +379,7 @@
       "timeFinished": "Concluído"
     },
     "actionsCaption": "Ações...",
-    "queueActions": "Queue actions",
+    "queueActions": "Ações de fila",
     "pausedForced": "Pausado (forçado)",
     "queueEmpty": "The queue is empty",
     "queueEmptyDesc": "New items can be queued from search or filelists",
@@ -599,7 +599,7 @@
         "apiFeatureLevel": "API feature level",
         "started": "Started",
         "activeSessions": "Sessões ativas",
-        "serverThreads": "Server threads"
+        "serverThreads": "Processos do servidor"
       },
       "transfers": {
         "totalDownloaded": "Total downloaded",

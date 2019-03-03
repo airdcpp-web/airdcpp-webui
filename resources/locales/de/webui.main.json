@@ -3,13 +3,13 @@
     "application": {
       "addWidget": "Add widget...",
       "loggedInAs": "Angemeldet als",
-      "clientStarted": "Client started",
+      "clientStarted": "Client gestartet",
       "activeSessions": "Aktive Sitzungen"
     },
     "rss": {
       "widgetName": "RSS feed",
       "invalidUrl": "Ungültige URL",
-      "lastUpdated": "Last updated: {{time}}",
+      "lastUpdated": "Zuletzt aktualisiert: {{time}}",
       "actions": {
         "openLink": "Link öffnen",
         "search": "Suche"
@@ -23,7 +23,7 @@
     },
     "transfers": {
       "widgetName": "Übertragungen",
-      "trafficBps": "Traffic (bps)",
+      "trafficBps": "Datenverkehr (bit/s)",
       "downloads": "Downloads",
       "uploads": "Uploads",
       "downloaded": "Heruntergeladen",
@@ -71,7 +71,7 @@
       "regex": "Regex",
       "wildcard": "Platzhalter",
       "exact": "Exakt",
-      "filterByProfile": "Filter by profile",
+      "filterByProfile": "Nach Profil filtern",
       "allProfiles": "Alle Profile"
     }
   },
@@ -87,7 +87,7 @@
       "slots": "Slots"
     },
     "actions": {
-      "resultDetails": "Result details",
+      "resultDetails": "Ergebnisdetails",
       "browseContent": "Browse content"
     },
     "user": "Benutzer",
@@ -177,7 +177,7 @@
     "table": {
       "connectState": "State",
       "name": "Name",
-      "autoConnect": "Auto connect",
+      "autoConnect": "Automatisch verbinden",
       "nick": "Nick",
       "hasPassword": "Passwort",
       "hubUrl": "Adresse",
@@ -185,7 +185,7 @@
     },
     "notSet": "Nicht festgelegt",
     "set": "Festgelegt",
-    "globalDefault": "Global default",
+    "globalDefault": "Globaler Standard",
     "addFavoriteHub": "Add favorite hub",
     "editFavoriteHub": "Edit favorite hub",
     "form": {
@@ -195,18 +195,18 @@
       "hubDescriptionName": "Hub description",
       "shareProfileName": "Freigabeprofil",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
-      "autoConnectName": "Auto connect",
+      "autoConnectName": "Automatisch verbinden",
       "userName": "User setting overrides",
       "nickName": "Nick",
       "userDescriptionName": "Benutzerbeschreibung",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
-      "connectionModeV4Name": "Connectivity mode",
+      "connectionModeV4Name": "Verbindungsmodus",
       "connectionModeV4Option-1": "Deaktiviert",
       "connectionModeV4Option0": "Aktiver Modus",
       "connectionModeV4Option2": "Passiver Modus",
       "connectionIpV4Name": "IP-Adresse",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
-      "connectionModeV6Name": "Connectivity mode",
+      "connectionModeV6Name": "Verbindungsmodus",
       "connectionModeV6Option-1": "Deaktiviert",
       "connectionModeV6Option0": "Aktiver Modus",
       "connectionModeV6Option2": "Passiver Modus",
@@ -218,7 +218,7 @@
     "newDesc": "Start browsing a new filelist",
     "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
     "directorySize": "Verzeichnisgröße",
-    "totalListSize": "Total list size",
+    "totalListSize": "Gesamtlistengröße",
     "browseOwnShare": "Browse own share...",
     "root": "Root",
     "userOffline": "Benutzer Offline",
@@ -247,12 +247,12 @@
       "browseShare": "Browse share",
       "ignoreMessages": "Nachrichten ignorieren",
       "viewAsText": "Als Text ansehen",
-      "playVideo": "Play video",
-      "viewImage": "View image",
-      "playAudio": "Play audio",
-      "copyMagnetLink": "Copy magnet link",
-      "shutDownApplication": "Shut down application",
-      "restartWebServer": "Restart web server",
+      "playVideo": "Video wiedergeben",
+      "viewImage": "Bild ansehen",
+      "playAudio": "Audio wiedergeben",
+      "copyMagnetLink": "Magnet-Link kopieren",
+      "shutDownApplication": "Anwendung herunterfahren",
+      "restartWebServer": "Webserver neu starten",
       "unignoreMessages": "Unignore messages",
       "closeAndDontShowAgain": "Close and don't show again",
       "notifications": {
@@ -261,7 +261,7 @@
       },
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
-        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemReject": "Nicht neu starten",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
         "shutdownSystemApprove": "Continue and shut down",
         "shutdownSystemReject": "Abbrechen",
@@ -275,7 +275,7 @@
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
-    "loadingItems": "Loading items",
+    "loadingItems": "Elemente werden geladen",
     "root": "Root",
     "name": "Name",
     "size": "Größe",
@@ -291,11 +291,11 @@
     "download": "Herunterladen",
     "close": "Schließen",
     "noPathsToDisplay": "No paths to display",
-    "spaceFree": "{{freeSpace}} free",
+    "spaceFree": "{{freeSpace}} frei",
     "select": "Auswählen",
     "new": "&amp;Neu...",
     "currentSessions": "Aktuelle Sitzung",
-    "closeAll": "Close all",
+    "closeAll": "Alles schließen",
     "recentSessions": "Recent sessions",
     "openedAgo": "Opened {{timeAgo}}",
     "waitingForServerResponse": "Waiting for server response",
@@ -338,7 +338,7 @@
       "fileCount": "Dateien"
     },
     "actions": {
-      "reconnect": "Reconnect",
+      "reconnect": "Wiederverbinden",
       "clearChat": "Chat löschen",
       "close": "Schließen",
       "addToFavorites": "Zu Bevorzugten hinzufügen",
@@ -350,7 +350,7 @@
     "connect": "&amp;Verbinden",
     "notConnectedToTheHub": "Not connected to the hub",
     "connecting": "Connecting",
-    "loadingUserlist": "Loading userlist",
+    "loadingUserlist": "Benutzerliste wird geladen",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
     "new": "&amp;Verbinden",
     "newDesc": "Connect to a new hub",
@@ -381,7 +381,7 @@
     "actionsCaption": "Aktionen...",
     "queueActions": "Queue actions",
     "pausedForced": "Pause (erzwungen)",
-    "queueEmpty": "The queue is empty",
+    "queueEmpty": "Die Warteschlange ist leer",
     "queueEmptyDesc": "New items can be queued from search or filelists",
     "actions": {
       "removeCompletedBundles": "Remove completed bundles",
@@ -419,7 +419,7 @@
     "sources": "Quellen",
     "user": "Benutzer",
     "hubs": "Hubs",
-    "lastKnownSpeed": "Last known speed",
+    "lastKnownSpeed": "Letzte bekannte Geschwindigkeit",
     "files": "Dateien",
     "size": "Größe",
     "notifications": {
@@ -470,12 +470,12 @@
       "renameProfile": "Profil umbenennen",
       "addPath": "Pfad hinzufügen",
       "removePath": "Pfad entfernen",
-      "removeUser": "Remove user",
+      "removeUser": "Benutzer entfernen",
       "prompts": {
         "removeShareExcludeApprove": "Pfad entfernen",
         "removeShareExcludeReject": "Nicht entfernen",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
-        "removeWebUserApprove": "Remove user",
+        "removeWebUserApprove": "Benutzer entfernen",
         "removeWebUserReject": "Nicht entfernen",
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
       }
@@ -491,8 +491,8 @@
       "extensions": "Erweiterungen",
       "system": "System",
       "autoDetection": "Automatische Erkennung",
-      "iPv4ConnectivityManual": "IPv4 connectivity (manual)",
-      "iPv6ConnectivityManual": "IPv6 connectivity (manual)",
+      "iPv4ConnectivityManual": "IPv4-Verbindung (manuell)",
+      "iPv6ConnectivityManual": "IPv6-Verbindung (manuell)",
       "portsManual": "Ports (manual)",
       "proxies": "Proxies",
       "encryption": "Verschlüsselung",
@@ -539,8 +539,8 @@
       "detection": {
         "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
         "currentAutoDetectionStatus": "Current auto detection status",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
+        "iPv4Connectivity": "IPv4-Verbindung",
+        "iPv6Connectivity": "IPv6-Verbindung",
         "manualConfiguration": "{{status}} (manuelle Konfiguration)",
         "autoDetected": "{{status}} (automatisch erkannt)"
       },
@@ -577,15 +577,15 @@
         "byAuthor": "von {{author}}",
         "latestVersion": "Neueste Version",
         "installedVersion": "Installierte Version",
-        "datePublished": "{{version}} (published {{date}})",
-        "readMore": "Read more"
+        "datePublished": "{{version}} (veröffentlicht {{date}})",
+        "readMore": "Weiterlesen"
       },
       "manage": {
         "byAuthor": "von {{author}}",
         "latestVersion": "Neueste Version",
         "installedVersion": "Installierte Version",
         "nonListedExtension": "Non-listed extension",
-        "readMore": "Read more",
+        "readMore": "Weiterlesen",
         "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
@@ -614,7 +614,7 @@
         "totalFiles": "Total files",
         "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
         "totalDirectories": "Total directories",
-        "averageFileAge": "Average file age",
+        "averageFileAge": "Durchschnittliches Dateialter",
         "averageFilesPerDirectory": "Average files per directory",
         "incomingSearches": "Incoming searches",
         "totalSearches": "Total searches",
@@ -624,7 +624,7 @@
         "filteredTextSearches": "Filtered text searches",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
         "averageTextSearchTokensNonFiltered": "Average text search tokens (non-filtered)",
-        "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} bytes per token)",
+        "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} Bytes pro Token)",
         "averageMatchingTimePerTextSearch": "Average matching time per text search",
         "searchesAverageMatchTimeValue": "{{matchTime}} ms"
       },
@@ -653,7 +653,7 @@
         "username": "Benutzername",
         "permissions": "Berechtigungen",
         "activeSessions": "Aktive Sitzungen",
-        "lastLoggedIn": "Last logged in",
+        "lastLoggedIn": "Zuletzt angemeldet",
         "administrator": "Administrator",
         "form": {
           "usernameName": "Benutzername",
@@ -827,7 +827,7 @@
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {
-        "viewFile": "View file"
+        "viewFile": "Datei ansehen"
       }
     }
   },
@@ -846,7 +846,7 @@
     "directEncryptedChannelEstablished": "Direkt verschlüsselter Kanal aufgebaut",
     "notifications": {
       "actions": {
-        "viewMessage": "View message"
+        "viewMessage": "Nachricht ansehen"
       }
     }
   },

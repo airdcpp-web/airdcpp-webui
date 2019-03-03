@@ -806,14 +806,14 @@
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "keepMeLoggedIn": "Mantenme conectado",
-    "login": "Usuario",
+    "login": "Iniciar sesión",
     "authenticationFailed": "Autenticación fallida: {{lastError}}",
-    "connectingToTheServer": "Connecting to the server...",
-    "reestablishConnection": "Attempting to re-establish connection...",
+    "connectingToTheServer": "Conectando al servidor...",
+    "reestablishConnection": "Intentando restablecer la conexión...",
     "sessionLost": "Sesión perdida",
     "connectionClosed": "Conexión cerrada",
-    "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
-    "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
+    "privateBrowsingNotSupported": "Este sitio no se puede usar con su navegador si el modo de navegación privada está habilitado",
+    "dataStorageNotSupported": "Este sitio no se puede usar con su navegador porque no admite el almacenamiento de datos"
   },
   "viewedFiles": {
     "actions": {
