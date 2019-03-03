@@ -1,6 +1,7 @@
 {
   "widgets": {
     "application": {
+      "widgetName": "Приложение",
       "addWidget": "Добавить виджет...",
       "loggedInAs": "Логин как",
       "clientStarted": "Клиент запущен",
@@ -267,7 +268,21 @@
         "shutdownSystemReject": "Отмена",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
+    },    
+    "units": {
+      "b": "Б",
+      "kib": "КБ",
+      "mib": "MБ",
+      "gib": "ГБ",
+      "tib": "TБ",
+      "pib": "ПБ",
+      "eib": "ЭБ",
+      "bits": "bit/s",
+      "kbits": "Кбит/с",
+      "mbits": "Мбит/с",
+      "gbits": "Гбит/с"
     },
+    "unitsPerSecond": "{{units}}/s",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
     "actionSucceed": "Action succeed",
@@ -558,7 +573,7 @@
           "settingProfileHelp0": "Клиент используется в обычных частных/публичных хабах для передачи файлов через интернет. Используйте этот профиль, если не уверены.",
           "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "The application must be restarted for the new language to take effect"
+          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
         }
       },
       "ignoredUsers": {

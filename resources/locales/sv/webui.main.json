@@ -1,6 +1,7 @@
 {
   "widgets": {
     "application": {
+      "widgetName": "Program",
       "addWidget": "Lägg till widget...",
       "loggedInAs": "Inloggad som",
       "clientStarted": "Klienten startades",
@@ -267,7 +268,21 @@
         "shutdownSystemReject": "Avbryt",
         "shutdownSystemContent": "Är du säker på att du vill avsluta applikationen?"
       }
+    },    
+    "units": {
+      "b": "B",
+      "kib": "KiB",
+      "mib": "MiB",
+      "gib": "GiB",
+      "tib": "TiB",
+      "pib": "PiB",
+      "eib": "EiB",
+      "bits": "bit/s",
+      "kbits": "Kbit/s",
+      "mbits": "Mbit/s",
+      "gbits": "Gbit/s"
     },
+    "unitsPerSecond": "{{units}}/s",
     "awayModeWasEnabled": "Tillfälligt borta har aktiverats",
     "awayModeWasDisabled": "Tillfälligt borta har inaktiverats",
     "actionSucceed": "Åtgärden lyckades",
@@ -558,7 +573,7 @@
           "settingProfileHelp0": "Klienten används i normala privata/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
           "settingProfileHelp1": "Klienten används till att överföra filer som är delade i RAR-arkiv (eller i andra småformat)",
           "settingProfileHelp2": "Klienten används för överföring av filer i ett lokalt nätverk (t.ex. LAN-party) eller annat stängt nätverk (t.ex. universitetsnätverk).",
-          "languageFileHelp": "Applikationen måste startas om för att det nya språket ska aktiveras"
+          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
         }
       },
       "ignoredUsers": {

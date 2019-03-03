@@ -51,7 +51,7 @@ const formatUnits = (value: number, units: string[], threshold: number, t: i18ne
 
   const formattedValue = value > 0 ? value.toFixed(2) : '0';
   const localizedUnit = t(
-    toI18nKey(units[u].toLowerCase(), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
+    toI18nKey(units[u].toLowerCase().replace('/', ''), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
     units[u]
   );
 

@@ -1,6 +1,7 @@
 {
   "widgets": {
     "application": {
+      "widgetName": "Application",
       "addWidget": "Add widget...",
       "loggedInAs": "Logged in as",
       "clientStarted": "Client started",
@@ -267,7 +268,21 @@
         "shutdownSystemReject": "Cancella",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
+    },    
+    "units": {
+      "b": "B",
+      "kib": "KiB",
+      "mib": "MiB",
+      "gib": "GiB",
+      "tib": "TiB",
+      "pib": "PiB",
+      "eib": "EB",
+      "bits": "bit/s",
+      "kbits": "Kbit/s",
+      "mbits": "Mbit/s",
+      "gbits": "Gbit/s"
     },
+    "unitsPerSecond": "{{units}}/s",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
     "actionSucceed": "Action succeed",
@@ -558,7 +573,7 @@
           "settingProfileHelp0": "The client is used in normal private/public hubs for transferring files via internet. Use this profile if unsure.",
           "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "The application must be restarted for the new language to take effect"
+          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
         }
       },
       "ignoredUsers": {

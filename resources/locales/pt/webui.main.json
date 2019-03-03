@@ -1,6 +1,7 @@
 {
   "widgets": {
     "application": {
+      "widgetName": "Aplicação",
       "addWidget": "Adicionar widget...",
       "loggedInAs": "Autenticado como",
       "clientStarted": "Cliente iniciado",
@@ -267,7 +268,21 @@
         "shutdownSystemReject": "Cancelar",
         "shutdownSystemContent": "Tem a certeza que quer desligar a aplicação?"
       }
+    },    
+    "units": {
+      "b": "B",
+      "kib": "KiB",
+      "mib": "MiB",
+      "gib": "GiB",
+      "tib": "TiB",
+      "pib": "PiB",
+      "eib": "EiB",
+      "bits": "bit/s",
+      "kbits": "Kbit/s",
+      "mbits": "Mbit/s",
+      "gbits": "Gbit/s"
     },
+    "unitsPerSecond": "{{units}}/s",
     "awayModeWasEnabled": "O modo ausente foi ativado",
     "awayModeWasDisabled": "O modo ausente foi desativado",
     "actionSucceed": "Ação bem sucedida",
@@ -558,7 +573,7 @@
           "settingProfileHelp0": "O cliente é utilizado em concentradores normais privados/públicos para transferência de ficheiros através da Internet. Utilize este perfil se não tiver a certeza.",
           "settingProfileHelp1": "O cliente é utilizado para transferir ficheiros que são separados em arquivos RAR (ou em outros formatos pequenos)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "A aplicação tem de ser reiniciada para que o novo idioma surta efeito"
+          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
         }
       },
       "ignoredUsers": {

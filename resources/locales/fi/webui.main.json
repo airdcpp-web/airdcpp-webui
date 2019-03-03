@@ -268,7 +268,21 @@
         "shutdownSystemReject": "Peruuta",
         "shutdownSystemContent": "Haluatko varmasti sammuttaa sovelluksen?"
       }
+    },    
+    "units": {
+      "b": "t",
+      "kib": "Kt",
+      "mib": "Mt",
+      "gib": "Gt",
+      "tib": "Tt",
+      "pib": "Pt",
+      "eib": "Et",
+      "bits": "bit/s",
+      "kbits": "Kbit/s",
+      "mbits": "Mbit/s",
+      "gbits": "Gbit/s"
     },
+    "unitsPerSecond": "{{units}}/s",
     "awayModeWasEnabled": "Poissa-tila käytössä",
     "awayModeWasDisabled": "Poissa-tila pois käytöstä",
     "actionSucceed": "Toiminto onnistui",
@@ -559,7 +573,7 @@
           "settingProfileHelp0": "Ohjelmaa käytetään tiedostojen jakamiseen internetin välityksellä normaaleissa yksityisissä tai julkisissa hubeissa. Käytä tätä profiilia, jos olet epävarma.",
           "settingProfileHelp1": "Ohjelmaa käytetään RAR-arkistoihin pilkottujen tiedostojen (tai muiden pienikokoisten tiedostojen) lataamiseen",
           "settingProfileHelp2": "Sovellusta käytetään tiedostojen siirtämiseen paikallisverkossa (esim. lanit) tai muussa suljetussa verkossa (esim. yliopistoverkko)",
-          "languageFileHelp": "Sovellus on käynnistettävä uudestaan, jotta uusi kieli tulee käyttöön"
+          "languageFileHelp": "<0>Sovellus on käynnistettävä uudestaan, jotta uusi kieli tulee käyttöön.</0><1>Mikäli haluat auttaa nykyisten käännösten parantamisessa tai haluat kääntää ohjelman uudelle kielelle, katso <1>ohjeet kääntäjille</1>.</1>"
         }
       },
       "ignoredUsers": {
