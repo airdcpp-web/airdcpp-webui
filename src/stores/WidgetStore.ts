@@ -82,7 +82,7 @@ const createDefaultWidget = <SettingsT>(
   widgetInfo: UI.Widget, 
   x: number, 
   y: number, 
-  name: string, 
+  name?: string, 
   settings?: SettingsT, 
   suffix: string = '_default'
 ) => {
@@ -129,7 +129,7 @@ const Store = {
     }
 
     // Initialize the default layout
-    this.layouts = createDefaultWidget(this.layouts, Application, 0, 0, Application.name);
+    this.layouts = createDefaultWidget(this.layouts, Application, 0, 0);
     this.layouts = createDefaultWidget(
       this.layouts, 
       RSS, 
@@ -142,7 +142,7 @@ const Store = {
       '_releases'
     );
 
-    this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0, Transfers.name);
+    this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0);
   },
 
   getInitialState: function () {

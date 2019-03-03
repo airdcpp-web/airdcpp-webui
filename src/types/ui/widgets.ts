@@ -5,7 +5,7 @@ import { ModuleTranslator } from './modules';
 
 export interface WidgetSettings<SettingsT = object> {
   widget: SettingsT;
-  name: string;
+  name?: string;
 }
 
 export interface WidgetProps<SettingsT = object> {

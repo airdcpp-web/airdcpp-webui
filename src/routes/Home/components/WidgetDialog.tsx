@@ -45,6 +45,7 @@ const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslato
         title: 'Name',
         type: API.SettingTypeEnum.STRING,
         default_value: name,
+        optional: true,
       },
     ], 
     rootWidgetT

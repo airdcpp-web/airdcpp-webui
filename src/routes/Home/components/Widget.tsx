@@ -11,7 +11,7 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
-import { getWidgetT } from 'utils/WidgetUtils';
+import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
 
 
 const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, t: i18next.TFunction) => {
@@ -51,7 +51,7 @@ const Widget: React.FC<WidgetProps> = ({
       <div className="content header-row">
         <div className="header">
           <i className={ classNames('left floated large icon', widgetInfo.icon) }/>
-          { settings.name }
+          { !!settings.name ? settings.name : translateWidgetName(widgetInfo, t) }
         </div>
 
         <ActionMenu 
