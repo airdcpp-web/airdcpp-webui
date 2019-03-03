@@ -1,4 +1,9 @@
 import Moment from 'moment';
+import i18next from 'i18next';
+
+import { toI18nKey } from './TranslationUtils';
+import * as UI from 'types/ui';
+
 
 const abbreviatedRelativeUnits = {
   relativeTime: {
@@ -23,39 +28,52 @@ const getNormalRelativeUnits = () => ({
   relativeTime:	(Moment.localeData(Moment.locale()) as any)._relativeTime
 });
 
-
-const byteUnits = [ 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' ];
-const bitUnits = [ ' bit', ' Kbit', ' Mbit', ' Gbit', ' Tbit', ' Pbit' ];
-
-export const formatSize = (fileSizeInBytes: number) => {
-  const thresh = 1024;
-  if (Math.abs(fileSizeInBytes) < thresh) {
-    return fileSizeInBytes + ' B';
-  }
-
-  let u = -1;
-  do {
-    fileSizeInBytes /= thresh;
-    ++u;
-  } while (Math.abs(fileSizeInBytes) >= thresh && u < byteUnits.length - 1);
-
-  return fileSizeInBytes.toFixed(2) + ' ' + byteUnits[u];
+const formatUnitsPerSecond = (units: string, t: i18next.TFunction) => {
+  return t(
+    toI18nKey('unitsPerSecond', UI.Modules.COMMON),
+    {
+      defaultValue: '{{units}}/s',
+      replace: {
+        units,
+      }
+    }
+  );
 };
 
-export const formatConnection = (bytes: number) => {
+const formatUnits = (value: number, units: string[], threshold: number, t: i18next.TFunction) => {
+  let u = 0;
+  if (Math.abs(value) >= threshold) {
+    do {
+      value /= threshold;
+      ++u;
+    } while (Math.abs(value) >= threshold && u < units.length - 1);
+  }
+
+  const formattedValue = value > 0 ? value.toFixed(2) : '0';
+  const localizedUnit = t(
+    toI18nKey(units[u].toLowerCase(), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
+    units[u]
+  );
+
+  return `${formattedValue} ${localizedUnit}`;
+};
+
+
+const byteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
+
+export const formatSize = (bytes: number, t: i18next.TFunction) => {
+  return formatUnits(bytes, byteUnits, 1024, t);
+};
+
+
+const bitUnits = [ 'bit/s', 'Kbit/s', 'Mbit/s', 'Gbit/s' ];
+
+export const formatConnection = (bytes: number, t: i18next.TFunction) => {
   if (bytes === 0) {
     return null;
   }
 
-  let bits = bytes * 8;
-  let i = 0;
-
-  do {
-    bits = bits / 1000;
-    i++;
-  } while (bits > 1000);
-
-  return Math.max(bits, 0.0).toFixed(2) + bitUnits[i] + '/s';
+  return formatUnits(bytes, bitUnits, 1000, t);
 };
 
 // http://momentjs.com/docs/#/displaying/from/
@@ -122,16 +140,12 @@ export const formatTimestamp = (time: number) => {
   return Moment.unix(time).format('HH:mm:ss');
 };
 
-/*export const formatBool = (value: boolean) => {
-  return value ? 'Yes' : 'No';
-};*/
-
 export const formatDecimal = (value: number) => {
   return parseFloat(Math.round(value * 100) / 100 as any).toFixed(2);
 };
 
-export const formatSpeed = (bytesPerSecond: number) => {
-  return formatSize(bytesPerSecond) + '/s';
+export const formatSpeed = (bytesPerSecond: number, t: i18next.TFunction) => {
+  return formatUnitsPerSecond(formatSize(bytesPerSecond, t), t);
 };
 
 export const formatAverage = (countFrom: number, total: number) => {
@@ -139,5 +153,5 @@ export const formatAverage = (countFrom: number, total: number) => {
 };
 
 export const formatPercentage = (countFrom: number, total: number) => {
-  return (parseFloat(formatAverage(countFrom, total)) * 100).toFixed(2) + ' %';
+  return `${(parseFloat(formatAverage(countFrom, total)) * 100).toFixed(2)} %`;
 };

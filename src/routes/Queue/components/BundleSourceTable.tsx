@@ -15,14 +15,16 @@ import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import i18next from 'i18next';
 
 
 interface SourceProps {
   bundle: API.QueueBundle;
   source: API.QueueBundleSource;
+  t: i18next.TFunction;
 }
 
-const Source: React.FC<SourceProps> = ({ source, bundle }) => (
+const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (
   <tr>
     <td className="user dropdown">
       <UserMenu 
@@ -45,13 +47,13 @@ const Source: React.FC<SourceProps> = ({ source, bundle }) => (
       { source.user.hub_names }
     </td>
     <td className="speed">
-      { source.last_speed > 0 && formatSpeed(source.last_speed) }
+      { source.last_speed > 0 && formatSpeed(source.last_speed, t) }
     </td>
     <td className="files">
       { source.files }
     </td>
     <td className="size">
-      { formatSize(source.size) }
+      { formatSize(source.size, t) }
     </td>
   </tr>
 );
@@ -101,6 +103,7 @@ const BundleSourceTable: React.FC<BundleSourceTableProps & BundleSourceTableData
               key={ source.user.cid }
               source={ source }
               bundle={ bundle! }
+              t={ queueT.plainT }
             />
           )) }
         </tbody>

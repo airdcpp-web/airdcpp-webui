@@ -28,7 +28,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
     <div className="ui grid two column">
       <Row 
         title={ translate('Total share size') } 
-        text={ formatSize(stats.total_size) }
+        text={ formatSize(stats.total_size, moduleT.plainT) }
       />
       <Row 
         title={ translate('Total files') } 

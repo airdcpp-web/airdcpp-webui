@@ -53,19 +53,22 @@ const HubStatisticsPage: React.FC<HubStatisticsPageProps & StatisticsDecoratorCh
       />
       <Row 
         title={ translate('Total share') } 
-        text={ formatSize(stats.total_share) }
+        text={ formatSize(stats.total_share, moduleT.plainT) }
       />
       <Row 
         title={ translate('Average share per user') }
-        text={ formatSize(formatAverage(stats.total_share, stats.unique_users) as any as number) }
+        text={ formatSize(
+          (formatAverage(stats.total_share, stats.unique_users) as any as number),
+          moduleT.plainT
+        ) }
       />
       <Row 
         title={ translate('Average ADC download speed') } 
-        text={ formatConnection(stats.adc_down_per_user) }
+        text={ formatConnection(stats.adc_down_per_user, moduleT.plainT) }
       />
       <Row 
         title={ translate('Average ADC upload speed') } 
-        text={ formatConnection(stats.adc_up_per_user) }
+        text={ formatConnection(stats.adc_up_per_user, moduleT.plainT) }
       />
       <Header title={ translate('Clients') }/>
       { stats.clients.map((c: ClientInfo) => formatClientRow(stats.unique_users, c)) }

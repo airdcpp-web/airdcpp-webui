@@ -16,6 +16,7 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
+import i18next from 'i18next';
 //import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 
@@ -28,7 +29,12 @@ import { translate, toI18nKey } from 'utils/TranslationUtils';
   }
 };*/
 
-const UserResult: React.FC<{ result: API.ChildSearchResult; }> = ({ result }) => (
+interface UserResultProps {
+  result: API.ChildSearchResult;
+  t: i18next.TFunction;
+}
+
+const UserResult: React.FC<UserResultProps> = ({ result, t }) => (
   <tr>
     <td className="user dropdown">
       <UserMenu 
@@ -44,7 +50,7 @@ const UserResult: React.FC<{ result: API.ChildSearchResult; }> = ({ result }) =>
       { result.user.hub_names }
     </td>
     <td className="connection">
-      { formatConnection(result.connection) }
+      { formatConnection(result.connection, t) }
     </td>
     <td className="slots">
       { result.slots.str }
@@ -107,6 +113,7 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
             <UserResult 
               key={ result.user.cid }
               result={ result }
+              t={ t }
             />
           )) }
         </tbody>

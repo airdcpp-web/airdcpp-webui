@@ -18,9 +18,10 @@ export interface FileItemProps {
   item: API.FilesystemItem;
   itemClickHandler: FileItemClickHandler;
   itemIconGetter?: FileItemIconGetter;
+  t: i18next.TFunction;
 }
 
-const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter }) => {
+const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter, t }) => {
   const isFile = item.type.id === 'file';
   return (
     <tr>
@@ -33,7 +34,7 @@ const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGet
         { !!itemIconGetter && itemIconGetter(item) }
       </td>
       <td>
-        { !!isFile && formatSize(item.size) }
+        { !!isFile && formatSize(item.size, t) }
       </td>
     </tr>
   );
@@ -82,6 +83,7 @@ class FileItemList extends React.Component<FileItemListProps> {
                 item={ item }
                 itemClickHandler={ itemClickHandler }
                 itemIconGetter={ itemIconGetter }
+                t={ t }
               />
             )) }
           </tbody>

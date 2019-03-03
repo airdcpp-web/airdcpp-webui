@@ -72,7 +72,7 @@ interface ResultInfoGridProps {
 }
 
 const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult, searchT }) => {
-  const { translate } = searchT;
+  const { translate, plainT } = searchT;
   return (
     <div className="ui segment">
       <div className="ui grid stackable two column">
@@ -82,7 +82,7 @@ const ResultInfoGrid: React.FC<ResultInfoGridProps> = ({ parentResult, searchT }
         />
         <GridRow 
           title={ translate('Size') } 
-          text={ formatSize(parentResult.size) }
+          text={ formatSize(parentResult.size, plainT) }
         />
         <GridRow 
           title={ translate('Last modified') }

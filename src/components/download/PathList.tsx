@@ -32,7 +32,7 @@ const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: i18next.TFunction) => {
     {
       defaultValue: '{{freeSpace}} free',
       replace: {
-        freeSpace: formatSize(pathInfo.free_space)
+        freeSpace: formatSize(pathInfo.free_space, t)
       }
     }
   )})`;

@@ -17,9 +17,15 @@ import * as API from 'types/api';
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { Trans } from 'react-i18next';
+import i18next from 'i18next';
 
 
-const Row: React.FC<{ profile: API.ShareProfile; }> = ({ profile }) => (
+interface ShareProfileRowProps { 
+  profile: API.ShareProfile;
+  t: i18next.TFunction;
+}
+
+const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
   <tr>
     <td>
       <ActionMenu 
@@ -30,22 +36,13 @@ const Row: React.FC<{ profile: API.ShareProfile; }> = ({ profile }) => (
       />
     </td>
     <td>
-      { formatSize(profile.size) }
+      { formatSize(profile.size, t) }
     </td>
     <td>
       { profile.files }
     </td>
   </tr>
 );
-
-const getRow = (profile: API.ShareProfile) => {
-  return (
-    <Row 
-      key={ profile.id } 
-      profile={ profile } 
-    />
-  );
-};
 
 interface ShareProfilesPageProps extends SettingSectionChildProps {
   
@@ -87,7 +84,13 @@ const ShareProfilesPage: React.FC<ShareProfilesPageProps & ShareProfileDecorator
           </tr>
         </thead>
         <tbody>
-          { profiles.map(getRow) }
+          { profiles.map(profile => (
+            <ShareProfileRow
+              key={ profile.id }
+              profile={ profile }
+              t={ moduleT.plainT }
+            />
+          )) }
         </tbody>
       </table>
     </div>

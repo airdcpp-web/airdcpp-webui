@@ -18,6 +18,7 @@ import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import i18next from 'i18next';
 
 
 interface OptimizeLayoutProps {
@@ -69,9 +70,10 @@ const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
 interface SizeRowProps {
   title: string;
   size: number;
+  t: i18next.TFunction;
 }
 
-const SizeRow: React.FC<SizeRowProps> = ({ title, size }) => (
+const SizeRow: React.FC<SizeRowProps> = ({ title, size, t }) => (
   <div className="ui row compact">
     <div className="three wide column">
       <div className="ui tiny header">
@@ -79,7 +81,7 @@ const SizeRow: React.FC<SizeRowProps> = ({ title, size }) => (
       </div>
     </div>
     <div className="twelve wide column">
-      { formatSize(size) }
+      { formatSize(size, t) }
     </div>
   </div>
 );
@@ -101,7 +103,7 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
 
   render() {
     const { status, moduleT } = this.props;
-    const { translate } = moduleT;
+    const { translate, plainT } = moduleT;
     return (
       <div className="ui segment hash-database">
         <h3 className="header">
@@ -111,10 +113,12 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
           <SizeRow 
             title={ translate('File index size') } 
             size={ status.file_index_size }
+            t={ plainT }
           />
           <SizeRow 
             title={ translate('Hash store size') }
             size={ status.hash_store_size }
+            t={ plainT }
           />
         </div>
         { LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (

@@ -85,7 +85,7 @@ class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
     const { userlistToggle, session, sessionT } = this.props;
     const { shared, users } = this.state;
 
-    const averageShare = formatSize(users > 0 ? (shared / users) : 0);
+    const averageShare = formatSize(users > 0 ? (shared / users) : 0, sessionT.plainT);
 
     return (
       <SessionFooter>
@@ -110,7 +110,7 @@ class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
             text={ sessionT.t('sharePerUser', {
               defaultValue: '{{total}} ({{average}}/user)',
               replace: {
-                total: formatSize(shared),
+                total: formatSize(shared, sessionT.plainT),
                 average: averageShare
               }
             }) }

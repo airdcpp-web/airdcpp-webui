@@ -30,6 +30,9 @@ export type SocketConnectHandler<DataT, PropsT> = (
 export interface DataProviderDecoratorProps {
 
 }
+
+export type DataConverter<PropsT extends object> = (data: any, props: PropsT & WithTranslation) => any;
+
 export interface DataProviderDecoratorSettings<PropsT extends object, DataT extends object> {
   urls: {
     [key: string]: ((props: PropsT, socket: APISocket) => Promise<object | undefined>) | string
@@ -38,7 +41,7 @@ export interface DataProviderDecoratorSettings<PropsT extends object, DataT exte
   onSocketConnected?: SocketConnectHandler<DataT, PropsT>;
 
   dataConverters?: {
-    [key: string]: (data: any, props: PropsT) => any
+    [key: string]: DataConverter<PropsT>
   };
   
   loaderText?: React.ReactNode;

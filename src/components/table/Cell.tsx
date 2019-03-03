@@ -162,15 +162,15 @@ export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;
 }
 
-export const SizeCell: React.FC<NumberCellProps> = ({ cellData }) => (
+export const SizeCell: React.FC<NumberCellProps> = ({ cellData, t }) => (
   <span className="plain size cell">
-    { formatSize(cellData!) }
+    { formatSize(cellData!, t!) }
   </span>
 );
 
-export const SpeedCell: React.FC<NumberCellProps> = ({ cellData }) => (
+export const SpeedCell: React.FC<NumberCellProps> = ({ cellData, t }) => (
   <span className="plain speed cell">
-    { formatSpeed(cellData!) }
+    { formatSpeed(cellData!, t!) }
   </span>
 );
 
@@ -200,9 +200,9 @@ export const IpCell: React.FC<IpCellProps> = ({ cellData }) => (
   <FormattedIp item={ cellData! }/>
 );
 
-export const ConnectionCell: React.FC<NumberCellProps> = ({ cellData }) => (
+export const ConnectionCell: React.FC<NumberCellProps> = ({ cellData, t }) => (
   <span className="plain connection cell">
-    { formatConnection(cellData!) }
+    { formatConnection(cellData!, t!) }
   </span>
 );
 

@@ -21,7 +21,7 @@ const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) =>
 
   let locationText = session.location.type.str;
   if (locationText.length > 0) {
-    locationText = `${formatSize(session.location.size)} (${locationText})`;
+    locationText = `${formatSize(session.location.size, sessionT.plainT)} (${locationText})`;
   }
 
   return (
@@ -32,7 +32,7 @@ const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) =>
       />
       <FooterItem 
         label={ sessionT.translate('Total list size') } 
-        text={ formatSize(session.total_size) }
+        text={ formatSize(session.total_size, sessionT.plainT) }
       />
     </SessionFooter>
   );

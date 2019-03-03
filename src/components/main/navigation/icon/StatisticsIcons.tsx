@@ -16,17 +16,20 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
+import i18next from 'i18next';
+import { Translation } from 'react-i18next';
 
 
 interface StatisticsIconProps {
   icon: IconType;
   cornerIcon?: CornerIconType; 
   bytes: number;
-  formatter: (bytes: number) => React.ReactNode;
+  formatter: (bytes: number, t: i18next.TFunction) => React.ReactNode;
+  t: i18next.TFunction;
 }
 
 const StatisticsIcon: React.FC<StatisticsIconProps> = (
-  { icon, cornerIcon, bytes, formatter }
+  { icon, cornerIcon, bytes, formatter, t }
   ) => {
   if (bytes === 0) {
     return null;
@@ -42,7 +45,7 @@ const StatisticsIcon: React.FC<StatisticsIconProps> = (
         <Icon icon={ icon }/>
       ) }
       <div className="content" style={ !!cornerIcon ? { paddingLeft: '.2em' } : undefined }>
-        <div className="header">{ formatter(bytes) }</div>
+        <div className="header">{ formatter(bytes, t) }</div>
       </div>
     </div>
   );
@@ -97,34 +100,43 @@ class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketS
 
   render() {
     return (
-      <div className={ classNames('ui centered inverted mini list statistics-icons', this.props.className) }>
-        <StatisticsIcon 
-          icon={ IconConstants.DOWNLOAD }
-          bytes={ this.state.speed_down }
-          formatter={ formatSpeed }
-        />
-        <StatisticsIcon 
-          icon={ IconConstants.UPLOAD }
-          bytes={ this.state.speed_up }
-          formatter={ formatSpeed }
-        />
-        <StatisticsIcon 
-          icon={ IconConstants.HASH }
-          bytes={ this.state.hash_speed }
-          formatter={ formatSpeed }
-        />
-        <StatisticsIcon 
-          icon={ IconConstants.HASH }
-          cornerIcon="wait"
-          bytes={ this.state.hash_bytes_left }
-          formatter={ formatSize }
-        />
-        <StatisticsIcon 
-          icon={ IconConstants.QUEUE }
-          bytes={ this.state.queued_bytes }
-          formatter={ formatSize }
-        />
-      </div>
+      <Translation>
+        { t => (
+          <div className={ classNames('ui centered inverted mini list statistics-icons', this.props.className) }>
+            <StatisticsIcon 
+              icon={ IconConstants.DOWNLOAD }
+              bytes={ this.state.speed_down }
+              formatter={ formatSpeed }
+              t={ t }
+            />
+            <StatisticsIcon 
+              icon={ IconConstants.UPLOAD }
+              bytes={ this.state.speed_up }
+              formatter={ formatSpeed }
+              t={ t }
+            />
+            <StatisticsIcon 
+              icon={ IconConstants.HASH }
+              bytes={ this.state.hash_speed }
+              formatter={ formatSpeed }
+              t={ t }
+            />
+            <StatisticsIcon 
+              icon={ IconConstants.HASH }
+              cornerIcon="wait"
+              bytes={ this.state.hash_bytes_left }
+              formatter={ formatSize }
+              t={ t }
+            />
+            <StatisticsIcon 
+              icon={ IconConstants.QUEUE }
+              bytes={ this.state.queued_bytes }
+              formatter={ formatSize }
+              t={ t }
+            />
+          </div>
+        ) }
+      </Translation>
     );
   }
 }

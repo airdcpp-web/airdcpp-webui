@@ -18,7 +18,7 @@ interface LimiterValueProps extends Pick<UI.WidgetProps, 'widgetT'> {
 }
 
 const LimiterValue: React.FC<LimiterValueProps> = ({ limit, settingKey, widgetT }) => {
-  const value = limit ? formatSpeed(limit * 1024) : widgetT.translate('Disabled');
+  const value = limit ? formatSpeed(limit * 1024, widgetT.plainT) : widgetT.translate('Disabled');
   if (!LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT)) {
     return <span>{ value }</span>;
   }
@@ -50,8 +50,14 @@ const StatColumn: React.FC<StatColumnProps> = ({ stats, widgetT }) => (
     <ListItem header={ widgetT.translate('Downloads') } description={ stats.downloads }/>
     <ListItem header={ widgetT.translate('Uploads') } description={ stats.uploads }/>
     <div className="section-separator"/>
-    <ListItem header={ widgetT.translate('Downloaded') } description={ formatSize(stats.session_downloaded) }/>
-    <ListItem header={ widgetT.translate('Uploaded') } description={ formatSize(stats.session_uploaded) }/>
+    <ListItem 
+      header={ widgetT.translate('Downloaded') } 
+      description={ formatSize(stats.session_downloaded, widgetT.plainT) }
+    />
+    <ListItem 
+      header={ widgetT.translate('Uploaded') } 
+      description={ formatSize(stats.session_uploaded, widgetT.plainT) }
+    />
     <div className="section-separator"/>
     <ListItem 
       header={ widgetT.translate('Download limit') } 

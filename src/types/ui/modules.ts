@@ -29,6 +29,7 @@ export enum SubNamespaces {
   TABLE = 'table',
   NAVIGATION = 'navigation',
   NOTIFICATIONS = 'notifications',
+  UNITS = 'units',
 }
 
 export interface ModuleTranslator {
