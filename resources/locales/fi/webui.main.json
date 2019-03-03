@@ -1,6 +1,7 @@
 {
   "widgets": {
     "application": {
+      "widgetName": "Sovellus",
       "addWidget": "Lisää widgetti...",
       "loggedInAs": "Kirjautunut käyttäjä",
       "clientStarted": "Ohjelma käynnistetty",

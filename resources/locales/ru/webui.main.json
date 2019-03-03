@@ -1,31 +1,31 @@
 {
   "widgets": {
     "application": {
-      "addWidget": "Add widget...",
-      "loggedInAs": "Logged in as",
-      "clientStarted": "Client started",
-      "activeSessions": "Active sessions"
+      "addWidget": "Добавить виджет...",
+      "loggedInAs": "Логин как",
+      "clientStarted": "Клиент запущен",
+      "activeSessions": "Активная сессия"
     },
     "rss": {
-      "widgetName": "RSS feed",
-      "invalidUrl": "Invalid URL",
-      "lastUpdated": "Last updated: {{time}}",
+      "widgetName": "RSS-лента",
+      "invalidUrl": "Ошибочный URL",
+      "lastUpdated": "Последнее обновление: {{time}}",
       "actions": {
         "openLink": "Открыть ссылку",
         "search": "Поиск"
       },
-      "loadingFeed": "Loading feed",
+      "loadingFeed": "Лента загружена",
       "form": {
-        "feedUrlName": "Feed URL",
-        "feedUrlHelp": "RSS and Atom feeds are supported",
-        "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        "feedUrlName": "URL ленты",
+        "feedUrlHelp": "Поддерживаются RSS и Atom ленты",
+        "feedCacheMinutesName": "Минимальный интервал обновления (минут)"
       }
     },
     "transfers": {
       "widgetName": "&amp;Передачи",
-      "trafficBps": "Traffic (bps)",
+      "trafficBps": "Поток (бит/сек)",
       "downloads": "Скачивание",
-      "uploads": "Uploads",
+      "uploads": "Отдача",
       "downloaded": "Скачано",
       "uploaded": "Отдано",
       "downloadLimit": "Ограничение загрузки",
@@ -33,33 +33,33 @@
       "disabled": "Выключить"
     },
     "actions": {
-      "editWidget": "Edit widget",
-      "removeWidget": "Remove widget",
+      "editWidget": "Редактировать виджет",
+      "removeWidget": "Удалить виджет",
       "prompts": {
-        "removeApprove": "Remove widget",
-        "removeReject": "Don't remove",
-        "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
+        "removeApprove": "Удалить виджет",
+        "removeReject": "Не удалять",
+        "removeContent": "Уверены что хотите удалить виджет  {{item.settings.name}}?"
       }
     },
     "form": {
       "nameName": "Имя"
     },
-    "widgetPositionHint": "Widgets and their positions are browser-specific"
+    "widgetPositionHint": "Виджеты и их позиции зависят от браузера"
   },
   "events": {
-    "events": "Events",
-    "loadingMessages": "Loading messages",
-    "noMessagesToShow": "No messages to show",
+    "events": "События",
+    "loadingMessages": "Загрузка сообщений",
+    "noMessagesToShow": "Нет сообщения для показа",
     "actions": {
       "clear": "Очистить"
     },
     "notifications": {
-      "information": "Information",
-      "info": "INFO",
-      "warning": "WARNING",
-      "error": "ERROR",
+      "information": "Информация",
+      "info": "ИНФО",
+      "warning": "ПРЕДУПРЕЖДЕНИЯ",
+      "error": "ОШИБКИ",
       "actions": {
-        "viewEvents": "View events"
+        "viewEvents": "Просмотр событий"
       }
     }
   },
@@ -67,12 +67,12 @@
     "filter": {
       "filter": "Ф&amp;ильтр",
       "matchType": "Тип сравнения",
-      "partial": "Partial",
-      "regex": "Regex",
+      "partial": "Частичный",
+      "regex": "Регуляр. вырражение",
       "wildcard": "Wildcard",
-      "exact": "Exact",
-      "filterByProfile": "Filter by profile",
-      "allProfiles": "All profiles"
+      "exact": "Точное соотв.",
+      "filterByProfile": "Фильтры профиля",
+      "allProfiles": "Все профили"
     }
   },
   "search": {
@@ -83,12 +83,12 @@
       "type": "Тип",
       "connection": "Соединение",
       "users": "Пользователи",
-      "time": "Last modified",
+      "time": "Последняя модификация",
       "slots": "Слоты"
     },
     "actions": {
-      "resultDetails": "Result details",
-      "browseContent": "Browse content"
+      "resultDetails": "Детали результата",
+      "browseContent": "Просмотр содержимого"
     },
     "user": "Пользователь",
     "hubs": "Хабы",
@@ -96,18 +96,18 @@
     "slots": "Слоты",
     "ip": "Ip",
     "path": "Путь",
-    "searchOffline": "You must to be connected to at least one hub in order to perform searches",
-    "enterSearchString": "Enter search string...",
+    "searchOffline": "Для выполнения поиска необходимо подключение хотя бы к одному хабу",
+    "enterSearchString": "Введите строку поиска...",
     "search": "Поиск",
-    "typeContent": "Type/content",
+    "typeContent": "Тип/содержимое",
     "size": "Размер",
-    "lastModified": "Last modified",
-    "dupeType": "Dupe type",
-    "shareFull": "Share (full)",
-    "dupePaths": "Dupe paths",
-    "actionsCaption": "Actions...",
-    "usersCount": "User ({{count}})",
-    "usersCount_plural": "Users ({{count}})",
+    "lastModified": "Последняя модификация",
+    "dupeType": "Обманные типы",
+    "shareFull": "Шара (полностью)",
+    "dupePaths": "Обманный путь",
+    "actionsCaption": "Действия...",
+    "usersCount": "Пользовател  ({{count}})",
+    "usersCount_plural": "Пользователи ({{count}})",
     "tth": "TTH",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
@@ -132,11 +132,11 @@
       "refreshAll": "Refresh all",
       "prompts": {
         "removeRootApprove": "Remove directory",
-        "removeRootReject": "Don't remove",
+        "removeRootReject": "Не удалять",
         "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
       }
     },
-    "actionsCaption": "Actions...",
+    "actionsCaption": "Действия...",
     "shareActions": "Share actions",
     "hashingInformation": "Hashing information",
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
@@ -164,13 +164,13 @@
         "changePasswordApprove": "Update password",
         "changePasswordContent": "Enter new password for the hub {{item.name}}",
         "removePasswordApprove": "Remove password",
-        "removePasswordReject": "Don't remove",
+        "removePasswordReject": "Не удалять",
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Enter password",
         "createPasswordApprove": "Set password",
         "createPasswordContent": "Set password for the hub {{item.name}}",
         "removeApprove": "Remove favorite hub",
-        "removeReject": "Don't remove",
+        "removeReject": "Не удалять",
         "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
@@ -228,7 +228,7 @@
     "table": {
       "name": "Имя",
       "size": "Размер",
-      "time": "Last modified",
+      "time": "Последняя модификация",
       "type": "Тип"
     },
     "actions": {
@@ -299,7 +299,7 @@
     "recentSessions": "Recent sessions",
     "openedAgo": "Opened {{timeAgo}}",
     "waitingForServerResponse": "Waiting for server response",
-    "loadingMessages": "Loading messages",
+    "loadingMessages": "Загрузка сообщений",
     "loadingSession": "Loading session",
     "no": "Нет",
     "cancel": "Отмена",
@@ -374,11 +374,11 @@
       "secondsLeft": "Осталось",
       "speed": "Скорость",
       "priority": "Приоритет",
-      "type": "Type/content",
+      "type": "Тип/содержимое",
       "timeAdded": "Добавлено",
       "timeFinished": "Завершено"
     },
-    "actionsCaption": "Actions...",
+    "actionsCaption": "Действия...",
     "queueActions": "Queue actions",
     "pausedForced": "Пауза (принудительно)",
     "queueEmpty": "The queue is empty",
@@ -395,11 +395,11 @@
       "removeSource": "Удалить источник",
       "prompts": {
         "removeBundleApprove": "Remove bundle",
-        "removeBundleReject": "Don't remove",
+        "removeBundleReject": "Не удалять",
         "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
         "removeBundleCheckbox": "Remove finished files",
         "removeFileApprove": "Remove file",
-        "removeFileReject": "Don't remove",
+        "removeFileReject": "Не удалять",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Remove on disk"
       },
@@ -473,10 +473,10 @@
       "removeUser": "Remove user",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
-        "removeShareExcludeReject": "Don't remove",
+        "removeShareExcludeReject": "Не удалять",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
         "removeWebUserApprove": "Remove user",
-        "removeWebUserReject": "Don't remove",
+        "removeWebUserReject": "Не удалять",
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
       }
     },
@@ -527,7 +527,7 @@
       "priorities": "Приоритеты",
       "notificationsCaption": "Notifications",
       "histories": "Истории",
-      "events": "Events"
+      "events": "События"
     },
     "advanced": "Дополнительно",
     "noUnsavedChanges": "No unsaved changes",
@@ -598,8 +598,8 @@
         "apiVersion": "API version",
         "apiFeatureLevel": "API feature level",
         "started": "Начато",
-        "activeSessions": "Active sessions",
-        "serverThreads": "Server threads"
+        "activeSessions": "Активная сессия",
+        "serverThreads": "Потоки сервера"
       },
       "transfers": {
         "totalDownloaded": "Total downloaded",
@@ -652,7 +652,7 @@
       "users": {
         "username": "Имя пользователя",
         "permissions": "Permissions",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Активная сессия",
         "lastLoggedIn": "Last logged in",
         "administrator": "Administrator",
         "form": {
@@ -665,7 +665,7 @@
           "search": "Поиск",
           "download": "Скачивание",
           "transfers": "&amp;Передачи",
-          "events": "Events",
+          "events": "События",
           "view": "&amp;Вид",
           "edit": "&amp;Правка",
           "queue": "Очередь",
@@ -781,7 +781,7 @@
         "installUrlApprove": "Install",
         "installUrlContent": "Enter download URL",
         "removeApprove": "Remove extension",
-        "removeReject": "Don't remove",
+        "removeReject": "Не удалять",
         "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
@@ -795,7 +795,7 @@
     "messages": "Messages",
     "filelists": "Filelists",
     "files": "Файлы",
-    "events": "Events",
+    "events": "События",
     "favoriteHubs": "Избранные хабы",
     "share": "Share",
     "settings": "Настройки",

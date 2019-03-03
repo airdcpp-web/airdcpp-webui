@@ -10,4 +10,6 @@ export default {
 
   DEFAULT_ENGINE_URL: 'https://www.nodejs.org',
   DEV_HUB_URL: 'adcs://web-dev.airdcpp.net:1511',
+
+  TRANSLATOR_HELP: 'https://airdcpp-web.github.io/docs/advanced/translations.html',
 };

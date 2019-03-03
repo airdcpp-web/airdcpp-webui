@@ -169,9 +169,9 @@
         "createPasswordPlaceholder": "Digitar senha",
         "createPasswordApprove": "Definir senha",
         "createPasswordContent": "Definir senha para o hub {{item.name}}",
-        "removeApprove": "Remove favorite hub",
+        "removeApprove": "Remover hub dos favoritos",
         "removeReject": "Não remover",
-        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
+        "removeContent": "Você está certo de que quer remover dos favoritos o hub {{item.name}}?"
       }
     },
     "table": {
@@ -194,9 +194,9 @@
       "hubUrlName": "URL do Hub",
       "hubDescriptionName": "Descrição do Hub",
       "shareProfileName": "Perfil de compartilhamento",
-      "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
+      "shareProfileHelp": "Perfis de compartilhamento personalizados podem ser selecionados somente após entrar um endereço de hub do ADC (começando com adc:// ou adcs://)",
       "autoConnectName": "Auto conectar",
-      "userName": "User setting overrides",
+      "userName": "Substituir configurações do usuário",
       "nickName": "Apelido",
       "userDescriptionName": "Descrição do Usuário",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
@@ -215,8 +215,8 @@
   },
   "filelists": {
     "new": "Abrir lista de arquivos",
-    "newDesc": "Start browsing a new filelist",
-    "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
+    "newDesc": "Comece a navegar por uma nova lista de arquivos",
+    "offlineMessage": "Você deve estar conectado a pelo menos um hub para baixar listas de arquivos de outros usuários",
     "directorySize": "Tamanho do diretório",
     "totalListSize": "Tamanho total da lista",
     "browseOwnShare": "Navegar no próprio compartilhamento",
@@ -256,12 +256,12 @@
       "unignoreMessages": "Designorar mensagens",
       "closeAndDontShowAgain": "Fechar e não exibir novament",
       "notifications": {
-        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+        "ignoreUserSuccess": "Usuário {{item.nicks}} foi adicionado aos usuários ignorados",
+        "unignoreUserSuccess": "Usuário {{item.nicks}} foi removido de usuários ignorados"
       },
       "prompts": {
-        "restartWebSystemApprove": "Continue and restart",
-        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemApprove": "Continuar e reiniciar",
+        "restartWebSystemReject": "Não reiniciar",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
         "shutdownSystemApprove": "Continue e desligue",
         "shutdownSystemReject": "Cancelar",
@@ -381,12 +381,12 @@
     "actionsCaption": "Ações...",
     "queueActions": "Ações de fila",
     "pausedForced": "Pausado (forçado)",
-    "queueEmpty": "The queue is empty",
-    "queueEmptyDesc": "New items can be queued from search or filelists",
+    "queueEmpty": "A fila está vazia",
+    "queueEmptyDesc": "Novos itens podem ser enfileirados na pesquisa ou nas lista de arquivos",
     "actions": {
-      "removeCompletedBundles": "Remove completed bundles",
-      "pauseAllBundles": "Pause all bundles",
-      "resumeAllBundles": "Resume all bundles",
+      "removeCompletedBundles": "Remover download completados",
+      "pauseAllBundles": "Pausar todos downloads",
+      "resumeAllBundles": "Resumir todos downloads",
       "manageFiles": "Gerenciar arquivos...",
       "manageSources": "Gerenciar fontes...",
       "searchForeground": "Pesquisa (primeiro plano)",
@@ -394,7 +394,7 @@
       "remove": "Remover",
       "removeSource": "Remover fonte",
       "prompts": {
-        "removeBundleApprove": "Remove bundle",
+        "removeBundleApprove": "Remover download",
         "removeBundleReject": "Não remover",
         "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
         "removeBundleCheckbox": "Remover arquivos concluídos",

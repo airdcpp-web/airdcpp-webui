@@ -6,6 +6,9 @@ import { FormFieldSettingHandler } from 'components/form/Form';
 
 import * as UI from 'types/ui';
 import { toFormI18nKey } from 'utils/FormUtils';
+import ExternalLink from 'components/ExternalLink';
+import LinkConstants from 'constants/LinkConstants';
+import { Trans } from 'react-i18next';
 
 
 const Entry = [
@@ -48,9 +51,19 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
         );
       }
     } else if (id === 'language_file') {
-      fieldOptions['help'] = moduleT.t(
-        toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined),
-        'The application must be restarted for the new language to take effect'
+      fieldOptions['help'] = (
+        <Trans
+          i18nKey={ moduleT.toI18nKey(toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)) }
+        >
+          <p>
+            The application must be restarted for the new language to take effect.
+          </p>
+          <p>
+            If you want to help with improving the existing translations 
+            or translate the application into a new language, please see 
+            the <ExternalLink url={ LinkConstants.TRANSLATOR_HELP }>instructions for translators</ExternalLink>.
+          </p>
+        </Trans>
       );
     }
   };

@@ -305,7 +305,7 @@
     "cancel": "Cancelar",
     "loading": "Cargando",
     "loadingData": "Cargando datos...",
-    "noOnlineHubs": "No online hubs",
+    "noOnlineHubs": "No hay hubs en línea",
     "installAsLocalApplication": "Install as local application",
     "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
     "install": "Install",
@@ -343,12 +343,12 @@
       "close": "Cerrar",
       "addToFavorites": "Añadir a usuarios favoritos",
       "notifications": {
-        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+        "favoriteSuccess": "El hub {{item.identity.name}} fue agregado en favoritos"
       }
     },
-    "enterHubAddress": "Enter hub address...",
+    "enterHubAddress": "Introduce la dirección del hub...",
     "connect": "Conectar",
-    "notConnectedToTheHub": "Not connected to the hub",
+    "notConnectedToTheHub": "No conectado al hub",
     "connecting": "Conectando",
     "loadingUserlist": "Loading userlist",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
@@ -629,7 +629,7 @@
         "searchesAverageMatchTimeValue": "{{matchTime}} ms"
       },
       "hubs": {
-        "noHubsOnline": "No hubs online",
+        "noHubsOnline": "No hay hubs en línea",
         "totalUsers": "Total users",
         "uniqueUsers": "Unique users",
         "activeUsers": "Active users",
