@@ -10,13 +10,7 @@ interface SocketConnectStatusProps {
 const SocketConnectStatus: React.FC<SocketConnectStatusProps> = (
   { message }
 ) => (
-  <div className="ui dimmer page visible active">
-    <div className="content">
-      <div className="center">
-        <Loader text={ message }/>
-      </div>
-    </div>
-  </div>
+  <Loader fullPage={ true } text={ message }/>
 );
 
 export default SocketConnectStatus;

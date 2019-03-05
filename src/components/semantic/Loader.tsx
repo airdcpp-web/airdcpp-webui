@@ -16,11 +16,12 @@ interface LoaderProps {
   text?: React.ReactNode;
   size?: string;
   inverted?: boolean;
+  fullPage?: boolean;
 }
 
-const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted }) => {
+const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted, fullPage }) => {
   const style = classNames(
-    'ui active  loader',
+    'ui active loader',
     { 'inverted': inverted },
     { 'inline': inline },
     { 'text': !inline }, // Should be used even if there is no text because of styling
@@ -28,18 +29,35 @@ const Loader: React.FC<LoaderProps> = ({ text, className, inline, size, inverted
     size,
   );
 
-  if (inline && !!text) {
+  const content = text !== undefined ? text : 
+    <Trans i18nKey={ toI18nKey('loading', UI.Modules.COMMON) }>Loading</Trans>;
+
+  if (inline) {
     return (
       <div className="inline-loader">
         <div className={ style }/>
-        { text }
+        { content }
+      </div>
+    );
+  }
+
+  if (fullPage) {
+    return (
+      <div className="ui dimmer page visible active">
+        <div className="content">
+          <div className="center">
+            <div className={ style }>
+              { content }
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className={ style }>
-      { text !== undefined ? text : <Trans i18nKey={ toI18nKey('loading', UI.Modules.COMMON) }>Loading</Trans> }
+      { content }
     </div>
   );
 };

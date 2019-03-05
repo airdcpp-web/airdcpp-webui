@@ -19,7 +19,7 @@
       "form": {
         "feedUrlName": "URL do feed",
         "feedUrlHelp": "São suportados feeds RSS e Atom",
-        "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        "feedCacheMinutesName": "Intervalo mínimo para tornar a buscar (minutos)"
       }
     },
     "transfers": {
@@ -263,7 +263,7 @@
       "prompts": {
         "restartWebSystemApprove": "Continuar e reiniciar",
         "restartWebSystemReject": "Não reiniciar",
-        "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
+        "restartWebSystemContent": "Ao alterar as opções de associação, é recomendável reiniciar apenas o servidor web \n                quando pode acender ao servidor para resolver problemas. Se o servidor não voltar a estar online, deve iniciar a aplicação manualmente \n                para ver se existe alguma mensagem de erro. O ficheiro de configuração está localizado na sua                 pasta de utilizador por padrão (dentro da pasta .airdc++) no caso de necessitar de editá-lo manualmente.",
         "shutdownSystemApprove": "Continuar e desligar",
         "shutdownSystemReject": "Cancelar",
         "shutdownSystemContent": "Tem a certeza que quer desligar a aplicação?"
@@ -289,7 +289,7 @@
     "actionFailed": "Ação falhou",
     "noNfoResultsWereReceived": "Não foram recebidos resultados NFO",
     "networkClientError": "Erro de rede / cliente",
-    "failedToFetchData": "Failed to fetch data",
+    "failedToFetchData": "Não foi possível buscar os dados",
     "loadingItems": "A carregar itens",
     "root": "Raiz",
     "name": "Nome",
@@ -572,8 +572,8 @@
         "form": {
           "settingProfileHelp0": "O cliente é utilizado em concentradores normais privados/públicos para transferência de ficheiros através da Internet. Utilize este perfil se não tiver a certeza.",
           "settingProfileHelp1": "O cliente é utilizado para transferir ficheiros que são separados em arquivos RAR (ou em outros formatos pequenos)",
-          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
+          "settingProfileHelp2": "O cliente é utilizado para transferir ficheiros na rede local (por ex. LAN parties) ou noutra rede fechada (por ex. um rede de uma universidade)",
+          "languageFileHelp": "<0>A aplicação tem de ser reiniciada para que o novo idioma surta efeito.</0><1>Se quiser ajudar a melhorar a tradução existente ou traduzir a aplicação para um novo idioma, por favor consulte as <1>instruções para tradutores</1>.</1>"
         }
       },
       "ignoredUsers": {
@@ -602,7 +602,7 @@
         "nonListedExtension": "Extensão não listada",
         "readMore": "Ler mais",
         "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>.",
-        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
+        "extensionDirectoryFetchError": "Falhou a busca de informação da pasta de extensões: {{error}}"
       }
     },
     "about": {
@@ -778,7 +778,7 @@
           "backgroundImageUrlName": "URL da imagem de fundo personalizada",
           "noInstallPromptName": "Nunca mostrar a solicitação de instalação da aplicação na vista inicial.",
           "corsProxyName": "URL do proxy CORS",
-          "corsProxyHelp": "CORS proxy to use for fetching data from external sites (e.g. RSS feeds and extensions). The target URL will be put directly after the configured proxy URL. No proxy will be used if the field is left empty, but it may prevent accessing various external URLs as they aren't often configured to be accessible from other sites."
+          "corsProxyHelp": "Proxy CORS a usar para buscar dados de sites externos (por ex. RSS feeds e extensões). O URL alvo será colocado logo após o URL do proxy. Não será utilizado nenhum proxy se o campo for deixado vazio, mas poderá impedir o acesso a vários URLs externos uma vez que eles não estão muitas vezes configurados para serem acedidos a partir de outros sites."
         }
       }
     }
@@ -797,7 +797,7 @@
         "installUrlContent": "Introduzir URL de descarregamento",
         "removeApprove": "Remover extensão",
         "removeReject": "Não remover",
-        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
+        "removeContent": "Tem a certeza que quer remover a extensão {{item.name}}? Isto também irá remover configurações específicas de extensões."
       }
     }
   },

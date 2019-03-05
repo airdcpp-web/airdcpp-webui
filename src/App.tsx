@@ -83,7 +83,7 @@ const useInstallPrompt = () => {
 const App = () => {
   const prompt = useInstallPrompt();
   return (
-    <Suspense fallback={ <Loader text=""/> }>
+    <Suspense fallback={ <Loader fullPage={ true } text=""/> }>
       <I18nextProvider i18n={ i18n }>
         <InstallPromptContext.Provider value={ prompt }>
           <Router history={ History }>
