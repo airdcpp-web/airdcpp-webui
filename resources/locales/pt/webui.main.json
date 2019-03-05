@@ -593,7 +593,8 @@
         "latestVersion": "Última versão",
         "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (publicada em {{date}})",
-        "readMore": "Ler mais"
+        "readMore": "Ler mais",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
       },
       "manage": {
         "byAuthor": "por {{author}}",
@@ -602,6 +603,7 @@
         "nonListedExtension": "Extensão não listada",
         "readMore": "Ler mais",
         "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>.",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
         "extensionDirectoryFetchError": "Falhou a busca de informação da pasta de extensões: {{error}}"
       }
     },
@@ -789,6 +791,7 @@
       "start": "Iniciar",
       "installFromUrl": "Instalar do URL",
       "install": "Instalar",
+      "update": "Atualizar",
       "stop": "Parar",
       "configure": "Configurar",
       "prompts": {

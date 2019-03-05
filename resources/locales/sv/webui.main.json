@@ -593,7 +593,8 @@
         "latestVersion": "Senaste version",
         "installedVersion": "Installerad version",
         "datePublished": "{{version}} (publicerat {{date}})",
-        "readMore": "Lär mer"
+        "readMore": "Lär mer",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
       },
       "manage": {
         "byAuthor": "av {{author}}",
@@ -602,6 +603,7 @@
         "nonListedExtension": "Icke-listade tillägg",
         "readMore": "Lär mer",
         "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>.",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
         "extensionDirectoryFetchError": "Misslyckades med att hämta information från tilläggskatalogen: {{error}}"
       }
     },
@@ -789,6 +791,7 @@
       "start": "Start",
       "installFromUrl": "Installera från webbadress",
       "install": "Installera",
+      "update": "Uppdatera",
       "stop": "Stopp",
       "configure": "Konfigurera",
       "prompts": {

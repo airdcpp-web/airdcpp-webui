@@ -593,7 +593,8 @@
         "latestVersion": "Latest version",
         "installedVersion": "Installed version",
         "datePublished": "{{version}} (published {{date}})",
-        "readMore": "Read more"
+        "readMore": "Read more",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
       },
       "manage": {
         "byAuthor": "by {{author}}",
@@ -602,6 +603,7 @@
         "nonListedExtension": "Non-listed extension",
         "readMore": "Read more",
         "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
@@ -789,6 +791,7 @@
       "start": "Start",
       "installFromUrl": "Install from URL",
       "install": "Install",
+      "update": "Update",
       "stop": "Stop",
       "configure": "Διαμόρφωσε",
       "prompts": {

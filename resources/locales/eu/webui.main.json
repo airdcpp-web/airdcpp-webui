@@ -593,7 +593,8 @@
         "latestVersion": "Azken bertsioa",
         "installedVersion": "Instalatutako bertsioa",
         "datePublished": "{{version}} (published {{date}})",
-        "readMore": "Gehiago irakurri"
+        "readMore": "Gehiago irakurri",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
       },
       "manage": {
         "byAuthor": "by {{author}}",
@@ -602,6 +603,7 @@
         "nonListedExtension": "Non-listed extension",
         "readMore": "Gehiago irakurri",
         "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
@@ -789,6 +791,7 @@
       "start": "Hasi",
       "installFromUrl": "URL-tik instalatu",
       "install": "Instalatu",
+      "update": "Update",
       "stop": "Gelditu",
       "configure": "Konfiguratu",
       "prompts": {
