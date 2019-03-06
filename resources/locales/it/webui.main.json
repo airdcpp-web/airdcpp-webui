@@ -492,7 +492,10 @@
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
         "removeWebUserApprove": "Remove user",
         "removeWebUserReject": "Don't remove",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
+        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Remove directory",
+        "removeFavoriteDirectoryReject": "Don't remove",
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
       }
     },
     "navigation": {
@@ -840,6 +843,7 @@
     "noFiles": "No files to view",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
     "preparingView": "Preparing view",
+    "failedToFetchContent": "Failed to fetch content",
     "opened": "Opened",
     "downloaded": "Scaricato",
     "notifications": {

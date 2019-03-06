@@ -492,7 +492,10 @@
         "removeShareExcludeContent": "Är du säker på att du vill ta bort den uteslutna sökvägen {{item}}?",
         "removeWebUserApprove": "Ta bort användare",
         "removeWebUserReject": "Ta inte bort",
-        "removeWebUserContent": "Är det säkert att du vill ta bort användaren {{item.username}}?"
+        "removeWebUserContent": "Är det säkert att du vill ta bort användaren {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Ta bort katalog",
+        "removeFavoriteDirectoryReject": "Ta inte bort",
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
       }
     },
     "navigation": {
@@ -840,6 +843,7 @@
     "noFiles": "Inga filer att visa",
     "noFilesDesc": "Text- eller mediafiler från sök- eller fillistor går att titta på här",
     "preparingView": "Förbereder visning",
+    "failedToFetchContent": "Failed to fetch content",
     "opened": "Öppnad",
     "downloaded": "Nedladdat",
     "notifications": {

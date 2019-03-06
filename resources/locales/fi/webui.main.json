@@ -492,7 +492,10 @@
         "removeShareExcludeContent": "Haluatko varmasti poistaa piilotetun polun {{item}}?",
         "removeWebUserApprove": "Poista käyttäjä",
         "removeWebUserReject": "Älä poista",
-        "removeWebUserContent": "Haluatko varmasti poistaa käyttäjän {{item.username}}?"
+        "removeWebUserContent": "Haluatko varmasti poistaa käyttäjän {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Poista kansio",
+        "removeFavoriteDirectoryReject": "Älä poista",
+        "removeFavoriteDirectoryContent": "Haluatko varmasti poistaa suosikkikansion {{item.name}}?"
       }
     },
     "navigation": {
@@ -840,6 +843,7 @@
     "noFiles": "Ei näytettäviä tiedostoja",
     "noFilesDesc": "Voit avata näytettäviä teksti- tai mediatiedostoja hausta tai tiedostolistoista",
     "preparingView": "Valmistellaan näkymää",
+    "failedToFetchContent": "Sisällön lataaminen epäonnistui",
     "opened": "Avattu",
     "downloaded": "Ladattu",
     "notifications": {

@@ -492,7 +492,10 @@
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
         "removeWebUserApprove": "Remove user",
         "removeWebUserReject": "Ez ezabatu",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
+        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Ezabatu direktorioa",
+        "removeFavoriteDirectoryReject": "Ez ezabatu",
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
       }
     },
     "navigation": {
@@ -840,6 +843,7 @@
     "noFiles": "Ez dago artxiborik ikusteko",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
     "preparingView": "Ikuspegia prestatzen",
+    "failedToFetchContent": "Failed to fetch content",
     "opened": "Irekita",
     "downloaded": "Jaitsita",
     "notifications": {

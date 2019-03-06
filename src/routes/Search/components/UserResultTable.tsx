@@ -4,8 +4,6 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import FormattedIp from 'components/format/FormattedIp';
 import { formatConnection } from 'utils/ValueFormat';
 
-import IconConstants from 'constants/IconConstants';
-import Message from 'components/semantic/Message';
 import SearchConstants from 'constants/SearchConstants';
 
 import { UserMenu } from 'components/menu';
@@ -17,17 +15,7 @@ import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import i18next from 'i18next';
-//import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
-
-//import { OnClickActionHandler } from 'decorators/menu/ActionMenuDecorator';
-
-
-/*const OnClickUserAction: OnClickActionHandler = (actionId) => {
-  if (actionId === 'browse' || actionId === 'message') {
-    close();
-  }
-};*/
 
 interface UserResultProps {
   result: API.ChildSearchResult;
@@ -43,7 +31,6 @@ const UserResult: React.FC<UserResultProps> = ({ result, t }) => (
         directory={ result.path }
         ids={ UserFileActions }
         contextElement=".result.modal"
-        //onClickAction={ (actionId) => isSidebarAction(actionId) ? close() : undefined  }
       />
     </td>
     <td className="hubs">
@@ -75,19 +62,9 @@ interface UserResultTableDataProps extends DataProviderDecoratorChildProps {
 }
 
 const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps> = (
-  { results, dataError }
+  { results }
 ) => {
   const { t } = useTranslation();
-  if (dataError) {
-    return (
-      <Message 
-        title={ translate('Failed to load user listing', t, UI.Modules.SEARCH) }
-        icon={ IconConstants.ERROR }
-        description={ dataError.message }
-      />
-    );
-  }
-
   return (
     <div className="users">
       <h2>
@@ -125,6 +102,5 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
 export default DataProviderDecorator<UserResultTableProps, UserResultTableDataProps>(UserResultTable, {
   urls: {
     results: ({ parentResult }, socket) => socket.get(`${SearchConstants.RESULTS_URL}/${parentResult.id}/children`),
-  },
-  renderOnError: true,
+  }
 });

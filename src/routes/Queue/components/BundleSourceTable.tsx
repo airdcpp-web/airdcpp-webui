@@ -5,9 +5,6 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import QueueBundleSourceActions from 'actions/ui/QueueBundleSourceActions';
 import QueueConstants from 'constants/QueueConstants';
 
-import IconConstants from 'constants/IconConstants';
-import Message from 'components/semantic/Message';
-
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
 import { ActionMenu, UserMenu } from 'components/menu';
@@ -71,18 +68,9 @@ interface BundleSourceTableDataProps extends DataProviderDecoratorChildProps {
 }
 
 const BundleSourceTable: React.FC<BundleSourceTableProps & BundleSourceTableDataProps> = (
-  { sources, bundle, dataError, queueT }
+  { sources, bundle, queueT }
 ) => {
   const { translate } = queueT;
-  if (dataError) {
-    return (
-      <Message 
-        title={ translate('Failed to load source listing') }
-        icon={ IconConstants.ERROR }
-        description={ dataError.message }
-      />
-    );
-  }
 
   return (
     <div className="sources">
@@ -123,6 +111,5 @@ export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDa
         refetchData();
       }
     });
-  },
-  renderOnError: true,
+  }
 });

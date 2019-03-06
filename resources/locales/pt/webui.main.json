@@ -492,7 +492,10 @@
         "removeShareExcludeContent": "Tem a certeza que quer remover o caminho excluído {{item}}?",
         "removeWebUserApprove": "Remover utilizador",
         "removeWebUserReject": "Não remover",
-        "removeWebUserContent": "Tem a certeza que quer remover o utilizador {{item.username}}?"
+        "removeWebUserContent": "Tem a certeza que quer remover o utilizador {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Remover pasta",
+        "removeFavoriteDirectoryReject": "Não remover",
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
       }
     },
     "navigation": {
@@ -840,6 +843,7 @@
     "noFiles": "Não há ficheiros para ver",
     "noFilesDesc": "Pode abrir media de texto ou ficheiro para serem vistos aqui nas pesquisas ou listas de ficheiros",
     "preparingView": "A preparar a visualização",
+    "failedToFetchContent": "Failed to fetch content",
     "opened": "Aberto",
     "downloaded": "Descarregado",
     "notifications": {

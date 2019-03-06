@@ -492,7 +492,10 @@
         "removeShareExcludeContent": "Weet je zeker dat je het volgende path wilt verwijderen {{item}}?",
         "removeWebUserApprove": "Remove user",
         "removeWebUserReject": "Niet verwijderen",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?"
+        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Verwijder map",
+        "removeFavoriteDirectoryReject": "Niet verwijderen",
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
       }
     },
     "navigation": {
@@ -840,6 +843,7 @@
     "noFiles": "Geen bestanden om te bekijken",
     "noFilesDesc": "Je kan tekst en media bestanden openen om hier te bekijken vanuit zoek- en bestandslijsten",
     "preparingView": "Bekijken voorbereiden",
+    "failedToFetchContent": "Failed to fetch content",
     "opened": "Geopend",
     "downloaded": "Gedownload",
     "notifications": {
