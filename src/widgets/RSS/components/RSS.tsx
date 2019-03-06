@@ -16,28 +16,16 @@ import '../style.css';
 
 import * as UI from 'types/ui';
 import { toCorsSafeUrl, formatHttpError } from 'utils/HttpUtils';
-import { FeedItem } from '../types';
+import { FeedItem, parseNodeContent } from '../types';
 
 
 const getEntryKey = (entry: FeedItem): string => {
   if (!!entry.guid) {
-    if (typeof entry.guid === 'object') {
-      if (!!entry.guid.content) {
-        return entry.guid.content;
-      }
-    } else {
-      return entry.guid;
-    }
+    return parseNodeContent(entry.guid);
   }
 
   if (!!entry.id) {
-    if (typeof entry.id === 'object') {
-      if (!!entry.id.content) {
-        return entry.id.content;
-      }
-    } else {
-      return entry.id;
-    }
+    return parseNodeContent(entry.id);
   }
 
   return 'DUMMY';
@@ -115,6 +103,11 @@ class RSS extends React.PureComponent<RSSProps, State> {
         console.log('RSS feed received', feedUrl, res);
 
         const jsonFeed = parseXML(xhr.responseText, {
+          attrNodeName: 'attr',
+          textNodeName : 'text',
+          parseAttributeValue : true,
+          ignoreAttributes : false,
+          attributeNamePrefix: '',
           attrValueProcessor: a => decode(a, { isAttributeValue: true }),
           tagValueProcessor : a => decode(a),
         });

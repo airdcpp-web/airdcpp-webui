@@ -8,8 +8,7 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 
 import '../style.css';
 import * as UI from 'types/ui';
-import { FeedItem } from '../types';
-
+import { FeedItem, parseNodeContent } from '../types';
 
 
 const parseTitle = (entry: FeedItem) => {
@@ -17,7 +16,7 @@ const parseTitle = (entry: FeedItem) => {
     return '(title missing)';
   }
 
-  let title = typeof entry.title !== 'object' ? entry.title : entry.title.content;
+  let title = parseNodeContent(entry.title);
   if (typeof title !== 'string') {
     title = '(unsupported title format)';
   }
@@ -51,7 +50,7 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
       </div>
 
       <div className="description">
-        { !!date && formatRelativeTime(Date.parse(date) / 1000) }
+        { !!date && formatRelativeTime(Date.parse(parseNodeContent(date)) / 1000) }
       </div>
     </div>
   );

@@ -193,7 +193,7 @@
       "genericName": "Hubbegenskaper",
       "nameName": "Namn",
       "hubUrlName": "Hubbwebbadress",
-      "hubDescriptionName": "Hubbbeskrivning",
+      "hubDescriptionName": "Hubbeskrivning",
       "shareProfileName": "Utdelningsprofil",
       "shareProfileHelp": "Egen utdelningsprofiler kan bara väljas efter att du har angett en ADC-hubbadress (börjar med adc:// eller adcs://)",
       "autoConnectName": "Anslut automatiskt",
@@ -594,7 +594,7 @@
         "installedVersion": "Installerad version",
         "datePublished": "{{version}} (publicerat {{date}})",
         "readMore": "Lär mer",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
+        "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner."
       },
       "manage": {
         "byAuthor": "av {{author}}",
@@ -603,7 +603,7 @@
         "nonListedExtension": "Icke-listade tillägg",
         "readMore": "Lär mer",
         "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner.",
         "extensionDirectoryFetchError": "Misslyckades med att hämta information från tilläggskatalogen: {{error}}"
       }
     },

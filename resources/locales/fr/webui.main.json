@@ -220,11 +220,11 @@
     "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
     "directorySize": "Taille du répertoire",
     "totalListSize": "Total list size",
-    "browseOwnShare": "Browse own share...",
+    "browseOwnShare": "Parcourir sa propre liste...",
     "root": "Root",
     "userOffline": "Utilisateur déconnecté",
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
-    "noContentToDisplay": "No content to display",
+    "noContentToDisplay": "Pas de contenu à afficher",
     "theDirectoryIsEmpty": "Le dossier est vide",
     "table": {
       "name": "Nom",
@@ -246,7 +246,7 @@
       "search": "Recherche",
       "sendMessage": "Envoyer un message",
       "browseShare": "Parcourir le dossier de partage",
-      "ignoreMessages": "Ignore messages",
+      "ignoreMessages": "Ignorer les messages",
       "viewAsText": "Afficher comme texte",
       "playVideo": "Visualiser la vidéo",
       "viewImage": "Voir l'image",
@@ -255,16 +255,16 @@
       "shutDownApplication": "Quitter l'application",
       "restartWebServer": "Redémarrer le serveur web",
       "unignoreMessages": "Ne plus ignorer les messages",
-      "closeAndDontShowAgain": "Close and don't show again",
+      "closeAndDontShowAgain": "Fermer et ne plus afficher",
       "notifications": {
-        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+        "ignoreUserSuccess": "L'utilisateur {{item.nicks}} est maintenant ignoré",
+        "unignoreUserSuccess": "L'utilisateur {{item.nicks}} n'est maintenant plus ignoré"
       },
       "prompts": {
-        "restartWebSystemApprove": "Continue and restart",
-        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemApprove": "Continuer et redémarrer",
+        "restartWebSystemReject": "Ne pas redémarrer",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
-        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemApprove": "Continuer et arrêter",
         "shutdownSystemReject": "Annuler",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
@@ -283,12 +283,12 @@
       "gbits": "Gbit/s"
     },
     "unitsPerSecond": "{{units}}/s",
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
+    "awayModeWasEnabled": "Le mode Absent est activé",
+    "awayModeWasDisabled": "Le mode Absent est désactivé",
     "actionSucceed": "Action succeed",
-    "actionFailed": "Action failed",
+    "actionFailed": "L'action a échoué",
     "noNfoResultsWereReceived": "No NFO results were received",
-    "networkClientError": "Network/client error",
+    "networkClientError": "Erreur de réseau/client",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Loading items",
     "root": "Root",
@@ -309,9 +309,9 @@
     "spaceFree": "{{freeSpace}} free",
     "select": "Sélectionner",
     "new": "Nouveau",
-    "currentSessions": "Current sessions",
-    "closeAll": "Close all",
-    "recentSessions": "Recent sessions",
+    "currentSessions": "Sessions actuelles",
+    "closeAll": "Tout fermer",
+    "recentSessions": "Sessions récentes",
     "openedAgo": "Opened {{timeAgo}}",
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Chargement des messages",
@@ -337,7 +337,7 @@
     "form": {
       "browse": "Parcourir",
       "noOptions": "Pas d'options",
-      "fieldOptional": "{{definition.title}} (optional)"
+      "fieldOptional": "{{definition.title}} (optionnel)"
     }
   },
   "hubs": {
@@ -363,8 +363,8 @@
     },
     "enterHubAddress": "Entrer l'adresse du hub",
     "connect": "Se connecter",
-    "notConnectedToTheHub": "Not connected to the hub",
-    "connecting": "Connecting",
+    "notConnectedToTheHub": "Pas connecter au hub",
+    "connecting": "En cours de connexion",
     "loadingUserlist": "Loading userlist",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
     "new": "Se connecter",
@@ -470,7 +470,7 @@
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
-    "noActiveTransfers": "No active transfers"
+    "noActiveTransfers": "Pas de transfert actif"
   },
   "settings": {
     "actions": {
@@ -482,7 +482,7 @@
       "removeDirectory": "Supprimer le dossier",
       "addProfile": "Ajouter un profil",
       "browseFiles": "Parcourir les fichiers",
-      "renameProfile": "Rename profile",
+      "renameProfile": "Renommer le profil",
       "addPath": "Add path",
       "removePath": "Remove path",
       "removeUser": "Remove user",
@@ -517,15 +517,15 @@
       "miscellaneous": "Divers",
       "manageInstalled": "Manage installed",
       "extensionCatalog": "Extension catalog",
-      "extensionOptions": "Extension options",
+      "extensionOptions": "Options des extensions",
       "application": "Application",
-      "transferStatistics": "Transfer statistics",
+      "transferStatistics": "Statistiques de transfert",
       "shareStatistics": "Share statistics",
-      "hubStatistics": "Hub statistics",
+      "hubStatistics": "Statistiques des hubs",
       "users": "Utilisateurs",
       "logging": "Enregistrement journal",
       "webServer": "Serveur web",
-      "refreshOptions": "Refresh options",
+      "refreshOptions": "Option de rafraîchissement",
       "shareProfiles": "Profiles de partage",
       "sharingOptions": "Option de partage",
       "hashing": "Hachage",
@@ -546,7 +546,7 @@
     },
     "advanced": "Avancé",
     "noUnsavedChanges": "No unsaved changes",
-    "saveChanges": "Save changes",
+    "saveChanges": "Sauvegarder les changements",
     "savingCompleted": "Saving completed",
     "settingsWereSavedSuccessfully": "Settings were saved successfully",
     "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
@@ -554,10 +554,10 @@
       "detection": {
         "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
         "currentAutoDetectionStatus": "Current auto detection status",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
-        "manualConfiguration": "{{status}} (manual configuration)",
-        "autoDetected": "{{status}} (auto detected)"
+        "iPv4Connectivity": "Connectivité IPv4",
+        "iPv6Connectivity": "Connectivité IPv6",
+        "manualConfiguration": "{{status}} (configuration manuelle)",
+        "autoDetected": "{{status}} (détection auto)"
       },
       "ports": {
         "form": {
@@ -578,8 +578,8 @@
       },
       "ignoredUsers": {
         "user": "Utilisateur",
-        "messagesIgnored": "Messages ignored",
-        "noIgnoredUsers": "No ignored users"
+        "messagesIgnored": "Messages ignorés",
+        "noIgnoredUsers": "Aucun utilisateur ignoré"
       },
       "miscellaneous": {
         "form": {
@@ -589,19 +589,19 @@
     },
     "extensions": {
       "packages": {
-        "byAuthor": "by {{author}}",
+        "byAuthor": "par {{author}}",
         "latestVersion": "Dernière version",
-        "installedVersion": "Installed version",
+        "installedVersion": "Version installée",
         "datePublished": "{{version}} (published {{date}})",
-        "readMore": "Read more",
+        "readMore": "En savoir plus",
         "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
       },
       "manage": {
-        "byAuthor": "by {{author}}",
+        "byAuthor": "par {{author}}",
         "latestVersion": "Dernière version",
-        "installedVersion": "Installed version",
+        "installedVersion": "Version installée",
         "nonListedExtension": "Non-listed extension",
-        "readMore": "Read more",
+        "readMore": "En savoir plus",
         "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
         "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
@@ -609,10 +609,10 @@
     },
     "about": {
       "application": {
-        "applicationVersion": "Application version",
-        "webUiVersion": "Web UI version",
+        "applicationVersion": "Version de l'application",
+        "webUiVersion": "Version de l'interface web",
         "webUiBuildDate": "Web UI build date",
-        "apiVersion": "API version",
+        "apiVersion": "Version de l'API",
         "apiFeatureLevel": "API feature level",
         "started": "Démarré",
         "activeSessions": "Sessions actives",
@@ -636,7 +636,7 @@
         "incomingSearches": "Incoming searches",
         "totalSearches": "Total searches",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
-        "tthSearches": "TTH searches",
+        "tthSearches": "Recherches TTH",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
         "filteredTextSearches": "Filtered text searches",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
@@ -646,7 +646,7 @@
         "searchesAverageMatchTimeValue": "{{matchTime}} ms"
       },
       "hubs": {
-        "noHubsOnline": "No hubs online",
+        "noHubsOnline": "Aucun hub en ligne",
         "totalUsers": "Total users",
         "uniqueUsers": "Unique users",
         "activeUsers": "Active users",
@@ -671,14 +671,14 @@
         "permissions": "Permissions",
         "activeSessions": "Sessions actives",
         "lastLoggedIn": "Last logged in",
-        "administrator": "Administrator",
+        "administrator": "Administrateur",
         "form": {
-          "usernameName": "User name",
+          "usernameName": "Nom d'utilisateur",
           "passwordName": "Mot de passe",
           "permissionsName": "Permissions"
         },
         "permissionSelector": {
-          "administrator": "Administrator",
+          "administrator": "Administrateur",
           "search": "Recherche",
           "download": "Réception",
           "transfers": "Transferts",
@@ -690,9 +690,9 @@
           "settings": "Paramètres",
           "localFilesystem": "Local filesystem",
           "hubs": "Hubs",
-          "sendMessages": "Send messages",
+          "sendMessages": "Envoyer les messages",
           "privateChat": "Discussion privée",
-          "filelists": "Filelists",
+          "filelists": "Liste de fichiers",
           "viewedFiles": "Viewed files"
         },
         "addWebUser": "Add web user",
@@ -805,20 +805,20 @@
     }
   },
   "navigation": {
-    "home": "Home",
+    "home": "Accueil",
     "queue": "File d'attente",
     "search": "Recherche",
     "transfers": "Transferts",
     "hubs": "Hubs",
     "messages": "Messages",
-    "filelists": "Filelists",
+    "filelists": "Liste de fichiers",
     "files": "Fichiers",
     "events": "Événements",
     "favoriteHubs": "Hubs favoris",
     "share": "Share",
     "settings": "Paramètres",
-    "logout": "Logout",
-    "more": "More..."
+    "logout": "Se déconnecter",
+    "more": "Plus..."
   },
   "login": {
     "username": "Nom d'utilisateur",
@@ -845,7 +845,7 @@
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {
-        "viewFile": "View file"
+        "viewFile": "Voir le fichier"
       }
     }
   },
@@ -864,7 +864,7 @@
     "directEncryptedChannelEstablished": "Direct encrypted channel established",
     "notifications": {
       "actions": {
-        "viewMessage": "View message"
+        "viewMessage": "Voir le message"
       }
     }
   },

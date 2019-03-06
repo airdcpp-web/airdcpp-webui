@@ -3,7 +3,7 @@
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
-import { FeedItem } from '../types';
+import { FeedItem, parseNodeContent } from '../types';
 
 import * as UI from 'types/ui';
 import { SearchActions } from 'actions/reflux/SearchActions';
@@ -15,6 +15,7 @@ interface RSSItemData {
 }
 
 const hasLink = ({ entry }: RSSItemData) => !!entry.link;
+const hasTitle = ({ entry }: RSSItemData) => !!entry.title;
 
 const getLocation = (href: string) => {
   var match = href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/);
@@ -36,10 +37,10 @@ const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
 
   if (typeof entry.link === 'string') {
     link = entry.link;
-  } else if (entry.link && entry.link.href && entry.link.href.length > 2) {
-    link = entry.link.href;
+  } else if (entry.link && entry.link.attr.href && entry.link.attr.href.length > 2) {
+    link = entry.link.attr.href;
 
-    if (entry.link.href[0] === '/' && entry.link.href[1] !== '/') {
+    if (link[0] === '/' && link[1] !== '/') {
       // Relative paths, add the base URL (at least Github seems to use these)
       const urlLocation = getLocation(feedUrl);
       if (urlLocation) {
@@ -52,13 +53,15 @@ const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
 };
 
 const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
-  const item = {
-    itemInfo: {
-      name: data.entry.title,
-    },
+  if (!data.entry.title) {
+    return;
+  }
+
+  const itemInfo = {
+    name: parseNodeContent(data.entry.title),
   };
 
-  return SearchActions.search(item, location);
+  return SearchActions.search(itemInfo, location);
 };
 
 
@@ -74,6 +77,7 @@ export const RSSActions: UI.ActionListType<RSSItemData> = {
     access: AccessConstants.SEARCH,
     icon: IconConstants.SEARCH,
     handler: handleSearch,
+    filter: hasTitle,
   }
 };
 
