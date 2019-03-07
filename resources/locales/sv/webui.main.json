@@ -283,6 +283,10 @@
       "gbits": "Gbit/s"
     },
     "unitsPerSecond": "{{units}}/s",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Tillfälligt borta har aktiverats",
     "awayModeWasDisabled": "Tillfälligt borta har inaktiverats",
     "actionSucceed": "Åtgärden lyckades",
@@ -325,7 +329,7 @@
     "pwaInstallDesc": "Denna webbapplikation kan installeras lokalt, vilket ger en bättre användarupplevelse",
     "install": "Installera",
     "dontInstall": "Installera ej",
-    "statisticsNotAvailable": "Statestik inte tillgänglig",
+    "statisticsNotAvailable": "Statistik inte tillgänglig",
     "save": "Spara",
     "enterNick": "Ange nick...",
     "enterLimitKBS": "Ange begränsning (kB/s)",
@@ -495,7 +499,7 @@
         "removeWebUserContent": "Är det säkert att du vill ta bort användaren {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Ta bort katalog",
         "removeFavoriteDirectoryReject": "Ta inte bort",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Är du säker på att du vill ta bort favoritkatalogen {{item.name}}?"
       }
     },
     "navigation": {
@@ -843,7 +847,7 @@
     "noFiles": "Inga filer att visa",
     "noFilesDesc": "Text- eller mediafiler från sök- eller fillistor går att titta på här",
     "preparingView": "Förbereder visning",
-    "failedToFetchContent": "Failed to fetch content",
+    "failedToFetchContent": "Misslyckades med att hämta innehåll",
     "opened": "Öppnad",
     "downloaded": "Nedladdat",
     "notifications": {

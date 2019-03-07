@@ -283,6 +283,10 @@
       "gbits": "Gbit/s"
     },
     "unitsPerSecond": "{{units}}/s",
+    "today": "Tänään",
+    "yesterday": "Eilen",
+    "tomorrow": "Huomenna",
+    "lastWeek": "[Viime] {{weekDay}}",
     "awayModeWasEnabled": "Poissa-tila käytössä",
     "awayModeWasDisabled": "Poissa-tila pois käytöstä",
     "actionSucceed": "Toiminto onnistui",

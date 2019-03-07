@@ -47,10 +47,11 @@ const showDivider = (index: number, messageList: UI.MessageListItem[]) => {
 
 
 const getMessageListItem = (
+  t: i18next.TFunction,
   reduced: React.ReactNode[], 
   message: UI.MessageListItem, 
   index: number, 
-  messageList: UI.MessageListItem[]
+  messageList: UI.MessageListItem[],
 ) => {
   // Push a divider when the date was changed
   if (showDivider(index, messageList)) {
@@ -62,7 +63,7 @@ const getMessageListItem = (
           className="ui horizontal date divider"
         >
           <i className="calendar icon"/>
-          { formatCalendarTime(messageObj.time) }
+          { formatCalendarTime(messageObj.time, t) }
         </div>
       );
     }
@@ -107,7 +108,7 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
       >
         { !!messages ? (
           <div className="ui list message-list">
-            { messages.reduce(getMessageListItem, []) }
+            { messages.reduce(getMessageListItem.bind(null, t), []) }
           </div>
         ) : (
           <Loader text={ translate('Loading messages', t, UI.Modules.COMMON) }/>

@@ -1,7 +1,7 @@
 import Moment from 'moment';
 import i18next from 'i18next';
 
-import { toI18nKey } from './TranslationUtils';
+import { toI18nKey, translate } from './TranslationUtils';
 import * as UI from 'types/ui';
 
 
@@ -86,18 +86,23 @@ export const formatRelativeTime = (time: number) => {
 };
 
 // http://momentjs.com/docs/#/displaying/calendar-time/
-export const formatCalendarTime = (time: number) => {
+export const formatCalendarTime = (time: number, t: i18next.TFunction) => {
   if (time === 0) {
     return '';
   }
 
   return Moment.unix(time).calendar(undefined, {
-    sameDay: '[Today]',
-    nextDay: '[Tomorrow]',
+    sameDay: `[${translate('Today', t, UI.Modules.COMMON)}]`,
+    nextDay: `[${translate('Tomorrow', t, UI.Modules.COMMON)}]`,
     nextWeek: 'dddd',
-    lastDay: '[Yesterday]',
-    lastWeek: '[Last] dddd',
-    sameElse: 'DD/MM/YYYY'
+    lastDay: `[${translate('Yesterday', t, UI.Modules.COMMON)}]`,
+    lastWeek: t(toI18nKey('lastWeek', UI.Modules.COMMON), {
+      defaultValue: '[Last] {{weekDay}}',
+      replace: {
+        weekDay: 'dddd',
+      }
+    }),
+    sameElse: Moment.locale() === 'en' ? 'DD/MM/YYYY' : 'L',
   });
 };
 

@@ -283,6 +283,10 @@
       "gbits": "Gbit/s"
     },
     "unitsPerSecond": "{{units}}/s",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
     "actionSucceed": "Action succeed",
