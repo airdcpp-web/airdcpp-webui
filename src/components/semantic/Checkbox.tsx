@@ -15,6 +15,7 @@ export interface CheckboxProps {
   floating?: boolean;
   checked: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 class Checkbox extends React.PureComponent<CheckboxProps> {
@@ -58,7 +59,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
   }
 
   render() {
-    const { className, checked, caption, type, disabled, floating } = this.props;
+    const { className, checked, caption, type, disabled, floating, style } = this.props;
 
     const checkboxStyle = classNames(
       'ui checkbox',
@@ -72,6 +73,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
       <div 
         ref={ c => this.c = c! }
         className={ checkboxStyle }
+        style={ style }
       >
         <input type="checkbox" defaultChecked={ checked }/>
         { !!caption && (

@@ -52,3 +52,10 @@ export interface SearchInstance {
   result_count: number;
   searches_sent_ago: number;
 }
+
+export interface SearchType {
+  id: string;
+  str: string;
+  extensions: string[];
+  default_type: boolean;
+}

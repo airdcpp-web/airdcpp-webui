@@ -2,15 +2,11 @@ import React from 'react';
 
 import SocketService from 'services/SocketService';
 
-import { HistoryStringEnum } from 'constants/HistoryConstants';
 import SearchConstants from 'constants/SearchConstants';
 
 import History from 'utils/History';
-import HistoryInput from 'components/autosuggest/HistoryInput';
 
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
-
-import Button from 'components/semantic/Button';
 
 import '../style.css';
 import ResultTable from 'routes/Search/components/ResultTable';
@@ -21,6 +17,7 @@ import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
+import { SearchInput } from './SearchInput';
 
 
 const SEARCH_PERIOD = 4000;
@@ -93,7 +90,7 @@ class Search extends React.Component<SearchProps & WithTranslation> {
   searchT = getModuleT(this.props.t, UI.Modules.SEARCH);
   render() {
     const { searchString, running } = this.state;
-    const { t, translate } = this.searchT;
+    const { t } = this.searchT;
     return (
       <OfflineHubMessageDecorator 
         offlineMessage={ t<string>(
@@ -102,24 +99,12 @@ class Search extends React.Component<SearchProps & WithTranslation> {
         ) }
       >
         <div className="search-layout">
-          <div className="search-container">
-            <div className="search-area">
-              <HistoryInput 
-                historyId={ HistoryStringEnum.SEARCH } 
-                submitHandler={ this.search } 
-                disabled={ running }
-                defaultValue={ searchString }
-                placeholder={ translate('Enter search string...') }
-                button={ 
-                  <Button
-                    icon="search icon"
-                    caption={ translate('Search') }
-                    loading={ running }
-                  />
-                }
-              />
-            </div>
-          </div>
+          <SearchInput
+            moduleT={ this.searchT }
+            running={ running }
+            defaultValue={ searchString }
+            handleSubmit={ this.search }
+          />
           <ResultTable 
             searchString={ searchString } 
             running={ running }

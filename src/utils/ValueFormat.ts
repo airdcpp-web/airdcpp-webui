@@ -40,6 +40,13 @@ const formatUnitsPerSecond = (units: string, t: i18next.TFunction) => {
   );
 };
 
+export const formatUnit = (unit: string, t: i18next.TFunction) => {
+  return t(
+    toI18nKey(unit.toLowerCase().replace('/', ''), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
+    unit
+  );
+};
+
 const formatUnits = (value: number, units: string[], threshold: number, t: i18next.TFunction) => {
   let u = 0;
   if (Math.abs(value) >= threshold) {
@@ -50,19 +57,15 @@ const formatUnits = (value: number, units: string[], threshold: number, t: i18ne
   }
 
   const formattedValue = value > 0 ? value.toFixed(2) : '0';
-  const localizedUnit = t(
-    toI18nKey(units[u].toLowerCase().replace('/', ''), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
-    units[u]
-  );
-
+  const localizedUnit = formatUnit(units[u], t);
   return `${formattedValue} ${localizedUnit}`;
 };
 
 
-const byteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
+export const ByteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
 
 export const formatSize = (bytes: number, t: i18next.TFunction) => {
-  return formatUnits(bytes, byteUnits, 1024, t);
+  return formatUnits(bytes, ByteUnits, 1024, t);
 };
 
 

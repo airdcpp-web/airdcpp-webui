@@ -7,4 +7,6 @@ export default {
 
   HUB_SEARCH_URL: INSTANCE_URL + '/hub_search',
   RESULTS_URL: INSTANCE_URL + '/results',
+
+  SEARCH_TYPES_URL: MODULE_URL + '/types',
 };

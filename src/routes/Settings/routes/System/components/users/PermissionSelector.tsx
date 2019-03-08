@@ -1,8 +1,6 @@
 'use strict';
 
 import React from 'react';
-
-import update from 'immutability-helper';
 import t from 'utils/tcomb-form';
 
 import Checkbox from 'components/semantic/Checkbox';
@@ -10,21 +8,16 @@ import Message from 'components/semantic/Message';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { updateMultiselectValues } from 'utils/FormUtils';
 
 
 const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
   return t.form.Form.templates.select.clone({
     renderSelect: (locals: UI.FormLocals<API.AccessEnum, API.AccessEnum[]>) => {
       const onChange = (access: API.AccessEnum, checked: boolean) => {
-        let values: API.AccessEnum[] = locals.value;
-        if (checked) {
-          values = [ ...values, access ];
-        } else {
-          const index = values.indexOf(access);
-          values = update(values, { $splice: [ [ index, 1 ] ] });
-        }
-
-        locals.onChange(values);
+        locals.onChange(
+          updateMultiselectValues(locals.value, access, checked)
+        );
       };
 
       const mapPermission = ({ value, text }: UI.FormOption<API.AccessEnum>) => (

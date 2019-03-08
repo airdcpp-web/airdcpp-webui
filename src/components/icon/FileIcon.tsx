@@ -32,13 +32,15 @@ const fileItemTypeToIcon = (typeInfo: API.FilesystemItemType) => {
 };
 
 export interface FileIconProps {
+  size?: string;
   typeInfo: API.FilesystemItemType;
   onClick?: () => void;
 }
 
-const FileIcon: React.FC<FileIconProps> = ({ typeInfo, onClick }) => {
+const FileIcon: React.FC<FileIconProps> = ({ typeInfo, onClick, size = 'large' }) => {
   const iconClass = classNames(
-    'icon large',
+    'icon',
+    size,
     { 'link': !!onClick },
     fileItemTypeToIcon(typeInfo),
   );

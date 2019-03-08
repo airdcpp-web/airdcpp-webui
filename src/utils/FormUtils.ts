@@ -353,6 +353,19 @@ const translateForm = (
   return ret;
 };
 
+import update from 'immutability-helper';
+
+const updateMultiselectValues = <ValueT>(values: ValueT[], value: ValueT, checked: boolean) => {
+  if (checked) {
+    values = [ ...values, value ];
+  } else {
+    const index = values.indexOf(value);
+    values = update(values, { $splice: [ [ index, 1 ] ] });
+  }
+
+  return values;
+};
+
 
 export {
   translateForm,
@@ -377,5 +390,7 @@ export {
 
   findFieldValueByPath,
   setFieldValueByPath,
+
+  updateMultiselectValues,
 }
 ;
