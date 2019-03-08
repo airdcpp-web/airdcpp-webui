@@ -45,7 +45,9 @@
     "form": {
       "nameName": "Nimi"
     },
-    "widgetPositionHint": "Widgetit ja niiden sijainnit ovat selainkohtaisia"
+    "widgetPositionHint": "Widgetit ja niiden sijainnit ovat selainkohtaisia",
+    "accessDenied": "Sinulla ei ole oikeuksia käyttää tätä widgettiä",
+    "settingsMissing": "Widgetin asetukset puuttuvat"
   },
   "events": {
     "events": "Tapahtumat",
@@ -338,6 +340,16 @@
     "tlsOk": "Sertifikaatin aitous on vahvistettu",
     "tlsOutdatedWarning": "Vanhentunut kryptografinen protokolla, jossa on tunnettuja heikkouksia",
     "tlsAuthenticityWarning": "Sertifikaatin aitoutta ei voitu vahvistaa",
+    "upload": "Lähetys",
+    "sendFile": "Lähetä tiedosto",
+    "removeSharedFile": "Poista jaettu tiedosto",
+    "fileNoLongerShared": "Tiedosto {{file.name}} ei ole enää jaettu",
+    "fileTooLarge": "Tiedosto on liian iso (maksimikoko on {{maxSize}})",
+    "previewIsNotAvailable": "Esikatselu ei ole käytettävissä",
+    "failedToFetchContent": "Sisällön lataaminen epäonnistui",
+    "noItemsToShow": "Ei näytettäviä kohteita",
+    "noSessionEditAccess": "Sinulla ei ole oikeuksia avata uusia istuntoja",
+    "noChatAccess": "Sinulla ei ole oikeuksia lähettää uusia viestejä",
     "form": {
       "browse": "Selaa",
       "noOptions": "Ei vaihtoehtoja",
@@ -553,6 +565,7 @@
     },
     "advanced": "Edistynyt",
     "noUnsavedChanges": "Ei tallentamattomia muutoksia",
+    "noSavePermission": "Ei tallennusoikeuksia",
     "saveChanges": "Tallenna muutokset",
     "savingCompleted": "Tallennus valmis",
     "settingsWereSavedSuccessfully": "Asetukset tallennettiin onnistuneesti",
@@ -847,7 +860,6 @@
     "noFiles": "Ei näytettäviä tiedostoja",
     "noFilesDesc": "Voit avata näytettäviä teksti- tai mediatiedostoja hausta tai tiedostolistoista",
     "preparingView": "Valmistellaan näkymää",
-    "failedToFetchContent": "Sisällön lataaminen epäonnistui",
     "opened": "Avattu",
     "downloaded": "Ladattu",
     "notifications": {

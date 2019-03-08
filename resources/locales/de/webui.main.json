@@ -45,7 +45,9 @@
     "form": {
       "nameName": "Name"
     },
-    "widgetPositionHint": "Widgets and their positions are browser-specific"
+    "widgetPositionHint": "Widgets and their positions are browser-specific",
+    "accessDenied": "You aren't allowed to access this widget",
+    "settingsMissing": "Widget settings missing"
   },
   "events": {
     "events": "Ereignisse",
@@ -338,6 +340,16 @@
     "tlsOk": "Authenticity of the certificate is validated",
     "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
     "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
+    "upload": "Hochladen",
+    "sendFile": "Send file",
+    "removeSharedFile": "Remove shared file",
+    "fileNoLongerShared": "File {{file.name}} is no longer shared",
+    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
+    "previewIsNotAvailable": "Preview is not available",
+    "failedToFetchContent": "Failed to fetch content",
+    "noItemsToShow": "No items to show",
+    "noSessionEditAccess": "You aren't allowed to open new sessions",
+    "noChatAccess": "You aren't allowed to send new messages",
     "form": {
       "browse": "Durchsuchen",
       "noOptions": "Keine Optionen",
@@ -553,6 +565,7 @@
     },
     "advanced": "Fortgeschritten",
     "noUnsavedChanges": "Keine ungespeicherten Änderungen",
+    "noSavePermission": "No save permission",
     "saveChanges": "Änderungen speichern",
     "savingCompleted": "Saving completed",
     "settingsWereSavedSuccessfully": "Einstellungen wurden erfolgreich gespeichert",
@@ -847,7 +860,6 @@
     "noFiles": "No files to view",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
     "preparingView": "Preparing view",
-    "failedToFetchContent": "Failed to fetch content",
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",
     "notifications": {

@@ -45,7 +45,9 @@
     "form": {
       "nameName": "Namn"
     },
-    "widgetPositionHint": "Widgetar och deras positioner är webbläsarspecifika"
+    "widgetPositionHint": "Widgetar och deras positioner är webbläsarspecifika",
+    "accessDenied": "You aren't allowed to access this widget",
+    "settingsMissing": "Widget settings missing"
   },
   "events": {
     "events": "Händelser",
@@ -338,6 +340,16 @@
     "tlsOk": "Certifikatets äkthet är validerat",
     "tlsOutdatedWarning": "Föråldrat kryptografiskt protokoll med kända säkerhetsproblem",
     "tlsAuthenticityWarning": "Certifikatets äkthet kunde inte valideras",
+    "upload": "Uppladdning",
+    "sendFile": "Send file",
+    "removeSharedFile": "Remove shared file",
+    "fileNoLongerShared": "File {{file.name}} is no longer shared",
+    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
+    "previewIsNotAvailable": "Preview is not available",
+    "failedToFetchContent": "Misslyckades med att hämta innehåll",
+    "noItemsToShow": "No items to show",
+    "noSessionEditAccess": "You aren't allowed to open new sessions",
+    "noChatAccess": "You aren't allowed to send new messages",
     "form": {
       "browse": "Bläddra",
       "noOptions": "Inga alternativ",
@@ -553,6 +565,7 @@
     },
     "advanced": "Avancerat",
     "noUnsavedChanges": "Inga osparade ändringar",
+    "noSavePermission": "No save permission",
     "saveChanges": "Spara ändringarna",
     "savingCompleted": "Sparad",
     "settingsWereSavedSuccessfully": "Inställningarna sparade",
@@ -847,7 +860,6 @@
     "noFiles": "Inga filer att visa",
     "noFilesDesc": "Text- eller mediafiler från sök- eller fillistor går att titta på här",
     "preparingView": "Förbereder visning",
-    "failedToFetchContent": "Misslyckades med att hämta innehåll",
     "opened": "Öppnad",
     "downloaded": "Nedladdat",
     "notifications": {
