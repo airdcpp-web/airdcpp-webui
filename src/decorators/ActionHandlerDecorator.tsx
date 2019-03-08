@@ -200,7 +200,7 @@ const handleAction = async <ItemDataT extends any>(
 
       NotificationActions.error({ 
         title: translate('Action failed', t, UI.Modules.COMMON),
-        message: typeof e === 'string' ? e : e.message,
+        message: !e ? undefined : typeof e === 'string' ? e : e.message,
       });
     }
   });
