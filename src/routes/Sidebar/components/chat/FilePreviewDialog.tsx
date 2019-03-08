@@ -77,13 +77,7 @@ const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ file, onConfirm, 
       fullHeight={ true }
       approveCaption={ translate('Upload', t, UI.Modules.COMMON) }
       icon={ IconConstants.UPLOAD }
-    >      
-      {/*<div>
-        { file.name }
-        <span style={{ color: 'gray' }}>
-          { ` (${formatSize(file.size, t)})` }
-        </span>
-      </div>*/}
+    >
       <LayoutHeader
         title={ file.name }
         subHeader={ formatSize(file.size, t) }
