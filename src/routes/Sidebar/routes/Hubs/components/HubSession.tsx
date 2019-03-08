@@ -17,6 +17,7 @@ import '../style.css';
 import * as API from 'types/api';
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import HubActions from 'actions/reflux/HubActions';
+import { shareTempFile } from 'services/api/ShareApi';
 
 
 const getStorageKey = (props: HubSessionProps) => {
@@ -84,6 +85,11 @@ class HubSession extends React.Component<HubSessionProps> {
     saveSessionProperty(getStorageKey(this.props), this.state.showList);
   }
 
+  handleFileUpload = (file: File) => {
+    const { hub_url } = this.props.session;
+    return shareTempFile(file, hub_url, undefined);
+  }
+
   render() {
     const { session, chatActions, sessionApi, sessionT } = this.props;
     const { showList } = this.state;
@@ -113,6 +119,7 @@ class HubSession extends React.Component<HubSessionProps> {
             chatActions={ chatActions }
             chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
+            handleFileUpload={ this.handleFileUpload }
           />
         ) }
         <HubFooter

@@ -8,10 +8,9 @@ import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
 
-import AudioFile from 'routes/Sidebar/routes/Files/components/AudioFile';
-import ImageFile from 'routes/Sidebar/routes/Files/components/ImageFile';
-import TextFile from 'routes/Sidebar/routes/Files/components/TextFile';
-import VideoFile from 'routes/Sidebar/routes/Files/components/VideoFile';
+import { AudioFile, ImageFile, VideoFile, TextFile } from 'components/file-preview';
+
+import Moment from 'moment';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
@@ -20,6 +19,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
+import { fetchData } from 'utils/HttpUtils';
 
 
 export interface FileSessionProps extends SessionChildProps<API.ViewFile> {
@@ -35,15 +35,38 @@ export interface FileSessionContentProps {
   sessionT: UI.ModuleTranslator;
 }
 
+const useAutoPlay = (item: API.ViewFile) => {
+  const diff = Moment.duration(Moment().diff(Moment.unix(item.time_opened)));
+  return diff.asMinutes() <= 1;
+};
+
 const getViewerElement = (item: API.ViewFile): React.ComponentType<FileSessionContentProps> | null => {
   if (item.text) {
-    return TextFile;
+    return (props: FileSessionContentProps) => (
+      <TextFile
+        textGetter={ () => {
+          return fetchData(props.url + 'fsafasf')
+            .then(data => data.text());
+        }}
+        url={ props.url }
+      />
+    );
   }
 
   switch (item.type.content_type) {
-    case 'audio': return AudioFile;
+    case 'audio': return (props: FileSessionContentProps) => (
+      <AudioFile 
+        autoPlay={ useAutoPlay(item) }
+        { ...props }
+      />
+    );
     case 'picture': return ImageFile;
-    case 'video': return VideoFile;
+    case 'video': return (props: FileSessionContentProps) => (
+      <VideoFile
+        autoPlay={ useAutoPlay(item) }
+        { ...props }
+      />
+    );
     default:
   }
 

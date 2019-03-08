@@ -22,6 +22,7 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   caption?: React.ReactNode;
   className?: string;
   captionIcon?: IconType;
+  dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
 class Dropdown extends React.PureComponent<DropdownProps> {
@@ -121,7 +122,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
   }
 
   render() {
-    const { leftIcon, caption, button, triggerIcon, captionIcon } = this.props;
+    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps } = this.props;
     const className = classNames(
       'ui',
       'dropdown',
@@ -142,10 +143,13 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     return (
       <div 
         ref={ c => this.c = c! } 
+        { ...dropDownElementProps }
         className={ className }
       >
         { (leftIcon && !!caption) && icon }
-        <DropdownCaption icon={ captionIcon }>
+        <DropdownCaption 
+          icon={ captionIcon }
+        >
           { !!caption ? caption : icon }
         </DropdownCaption>
         { leftIcon || !caption ? null : icon }

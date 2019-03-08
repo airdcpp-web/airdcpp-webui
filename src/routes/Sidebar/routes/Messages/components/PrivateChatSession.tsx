@@ -11,6 +11,7 @@ import * as API from 'types/api';
 
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
+import { shareTempFile } from 'services/api/ShareApi';
 
 
 interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, ChatActions>, 
@@ -20,6 +21,11 @@ interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, Cha
 
 class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';
+
+  handleFileUpload = (file: File) => {
+    const { hub_url, cid } = this.props.session.user;
+    return shareTempFile(file, hub_url, cid);
+  }
 
   render() {
     const { session, chatActions, sessionApi, sessionT } = this.props;
@@ -32,6 +38,7 @@ class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
           sessionApi={ sessionApi }
           messageStore={ PrivateChatMessageStore }
           session={ session }
+          handleFileUpload={ this.handleFileUpload }
         />
 
         <MessageFooter

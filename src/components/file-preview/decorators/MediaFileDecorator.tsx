@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Moment from 'moment';
-import { FileSessionContentProps } from 'routes/Sidebar/routes/Files/components/FileSession';
+//import Moment from 'moment';
 
 
 const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
@@ -21,7 +20,7 @@ const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
 };
 
 
-export interface MediaFileDecoratorChildProps extends FileSessionContentProps {
+export interface MediaFileDecoratorChildProps extends Pick<MediaFileDecoratorProps, 'url'> {
   mediaRef: (c: HTMLMediaElement) => void;
   mediaProps: {
     onError: (event: React.SyntheticEvent<HTMLMediaElement>) => void;
@@ -31,18 +30,23 @@ export interface MediaFileDecoratorChildProps extends FileSessionContentProps {
   };
 }
 
+export interface MediaFileDecoratorProps {
+  url: string;
+  autoPlay: boolean;
+}
+
 export default function (
   Component: React.ComponentType<MediaFileDecoratorChildProps>
 ) {
-  class MediaFileDecorator extends React.Component<FileSessionContentProps> {
+  class MediaFileDecorator extends React.Component<MediaFileDecoratorProps> {
     state = {
       error: null,
     };
 
     media: HTMLMediaElement;
 
-    componentDidUpdate(prevProps: FileSessionContentProps) {
-      if (prevProps.item !== this.props.item) {
+    componentDidUpdate(prevProps: MediaFileDecoratorProps) {
+      if (prevProps.url !== this.props.url) {
         if (this.media) {
           this.media.load();
         }
@@ -63,20 +67,20 @@ export default function (
     }
 
     render() {
-      const { item } = this.props;
       if (this.state.error) {
-        return <div>{ this.state.error }</div>;	
+        return (
+          <div>
+            { this.state.error }
+          </div>
+        );	
       }
 
-      // Use autoplay only for recently opened files
-      const diff = Moment.duration(Moment().diff(Moment.unix(item.time_opened)));
-      const autoPlay = diff.asMinutes() <= 1;
-
+      const { url, autoPlay } = this.props;
       const mediaProps = {
         onError: this.onMediaError,
         autoPlay,
         controls: true,
-        src: this.props.url,
+        src: url,
       };
 
       return (

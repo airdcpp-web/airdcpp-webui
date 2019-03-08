@@ -9,18 +9,16 @@ import WidgetActions from 'actions/ui/WidgetActions';
 
 import * as UI from 'types/ui';
 
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
 
 
-const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, t: i18next.TFunction) => {
+const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, rootWidgetT: UI.ModuleTranslator) => {
   if (widgetInfo.formSettings && !settings.widget) {
-    return t('widget.settingsMissing');
+    return rootWidgetT.t('settingsMissing', 'Widget settings missing');
   }
 
   if (widgetInfo.access && !LoginStore.hasAccess(widgetInfo.access)) {
-    return t('widget.accessDenied');
+    return rootWidgetT.t('accessDenied', `You aren't allowed to access this widget`);
   }
 
   return null;
@@ -37,12 +35,11 @@ export interface WidgetProps {
 const Widget: React.FC<WidgetProps> = ({ 
   widgetInfo, settings, componentId, children, className, rootWidgetT, ...other 
 }) => {
-  const { t } = useTranslation();
-  const error = getError(widgetInfo, settings, t);
+  const error = getError(widgetInfo, settings, rootWidgetT);
   const Component = widgetInfo.component;
   
 
-  const widgetT = getWidgetT(widgetInfo, t);
+  const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
   return (
     <div 
       className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
@@ -51,7 +48,7 @@ const Widget: React.FC<WidgetProps> = ({
       <div className="content header-row">
         <div className="header">
           <i className={ classNames('left floated large icon', widgetInfo.icon) }/>
-          { !!settings.name ? settings.name : translateWidgetName(widgetInfo, t) }
+          { !!settings.name ? settings.name : translateWidgetName(widgetInfo, rootWidgetT.plainT) }
         </div>
 
         <ActionMenu 

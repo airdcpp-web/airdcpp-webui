@@ -74,7 +74,7 @@ export type RefluxActionConfigList<ItemDataT> = Array<string | { [actionKey: str
 export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> | null };
 
 export type RefluxActionListType<ItemDataT = any> = { 
-  [actionKey: string]: RefluxActionType | AsyncActionType<ItemDataT>
+  [actionKey: string]: RefluxActionType<ItemDataT> | AsyncActionType<ItemDataT>
 };
 
 

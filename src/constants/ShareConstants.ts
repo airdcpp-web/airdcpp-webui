@@ -16,5 +16,9 @@ export default {
 
   EXCLUDE_ADDED: 'share_exclude_added',
   EXCLUDE_REMOVED: 'share_exclude_removed',
-}
-;
+
+  TEMP_ITEM_ADDED: 'share_temp_item_added',
+  TEMP_ITEM_REMOVED: 'share_temp_item_removed',
+  
+  TEMP_SHARES_URL: MODULE_URL + '/temp_shares',
+};

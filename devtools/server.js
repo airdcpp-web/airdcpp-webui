@@ -69,6 +69,10 @@ app.get('/view/*', (req, res) => {
   proxy.web(req, res);
 });
 
+app.post('/temp', (req, res) => {
+  proxy.web(req, res);
+});
+
 // Set up Webpack
 const webpack = require('webpack');
 const config = require('../webpack.config.js');

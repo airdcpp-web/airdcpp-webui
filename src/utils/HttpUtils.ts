@@ -27,3 +27,13 @@ export const toApiError = (error: JQuery.jqXHR, t: i18next.TFunction): ErrorResp
     }
   };
 };
+
+export const fetchData = async (url: string, options?: RequestInit) => {
+  const res = await fetch(url, options);
+
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+
+  return res;
+};

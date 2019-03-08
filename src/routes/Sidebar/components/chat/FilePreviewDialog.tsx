@@ -1,112 +1,96 @@
-//import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
-//import FileBrowserLayout from './FileBrowserLayout';
+import { formatSize } from 'utils/ValueFormat';
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
-//import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import * as UI from 'types/ui';
 
+import { AudioFile, ImageFile, TextFile, VideoFile } from 'components/file-preview';
 
-/*Omit<ModalProps, 'title' | keyof ModalRouteDecoratorChildProps>*/
+import Message from 'components/semantic/Message';
+import i18next from 'i18next';
+import LayoutHeader from 'components/semantic/LayoutHeader';
+import { fileToText } from 'utils/FileUtils';
+
 
 interface FilePreviewDialogProps extends ModalProps {
   file: File;
-  //initialPath: string;
   onConfirm: (file: File) => Promise<void>;
-  //title?: React.ReactNode;
-  //historyId: string;
 
 }
 
-class FilePreviewDialog extends React.Component<FilePreviewDialogProps/* & ModalRouteDecoratorChildProps*/> {
-  static displayName = 'FilePreviewDialog';
-
-  /*static propTypes = {
-		 // Function handling the path selection. Receives the selected path as argument.
-		 // Required
-    onConfirm: PropTypes.func,
-
-    // Information about the item to download
-    title: PropTypes.node,
-
-    initialPath: PropTypes.string,
-  };*/
-
-  /*static defaultProps: Pick<FilePreviewDialogProps, 'title' | 'initialPath'> = {
-    title: 'Browse...',
-    initialPath: '',
-  };*/
-
-  /*state = {
-    currentPath: this.props.initialPath,
-  };
-
-  onDirectoryChanged = (path: string) => {
-    this.setState({ 
-      currentPath: path 
-    });
-  }*/
-
-
-  preview: string;
-
-  constructor(props: FilePreviewDialogProps /*& ModalRouteDecoratorChildProps*/) {
-    super(props);
-
-    this.preview = URL.createObjectURL(props.file);
-  }
-
-  onConfirm = () => {
-    const { file, onConfirm } = this.props;
-    return onConfirm(file);
-  }
-
-  componentWillUnmount() {
-    URL.revokeObjectURL(this.preview);
-  }
-
-  render() {
-    //const { currentPath } = this.state;
-    //const { title, initialPath, historyId } = this.props;
-
-    const { file } = this.props;
-    const isImage = file.type.startsWith('image');
+const getViewerElement = (file: File, previewUrl: string, t: i18next.TFunction) => {
+  if (file.type.indexOf('text') !== -1 && file.size <= 1 * 1024 * 1024) {
     return (
-      <Modal
-        { ...this.props }
-        className="file-preview-dialog"
-        //title={ title }
-        onApprove={ this.onConfirm }
-        closable={ true }
-        fullHeight={ true }
-        //approveDisabled={ currentPath.length === 0 }
-        approveCaption="Upload"
-        icon={ IconConstants.UPLOAD }
-      >
-        { isImage && (
-          <img 
-            key={ file.name } 
-            alt={ file.name }
-            src={ this.preview }
-            style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-            }}
-          />
-        ) }
-
-        <div>
-          { file.name }
-        </div>
-      </Modal>
+      <TextFile
+        textGetter={ () => fileToText(file) }
+      />
     );
   }
-}
 
-/*export default ModalRouteDecorator<FilePreviewDialogProps>(
-  FilePreviewDialog,
-  'file-preview'
-);*/
+  if (file.type.indexOf('audio') !== -1) {
+    return <AudioFile url={ previewUrl } autoPlay={ false }/>;
+  }
+
+  if (file.type.indexOf('image') !== -1) {
+    return <ImageFile url={ previewUrl } alt={ file.name }/>;
+  }
+
+  if (file.type.indexOf('video') !== -1) {
+    return <VideoFile url={ previewUrl } autoPlay={ false }/>;
+  }
+
+  return (
+    <Message
+      title={ translate('Preview is not available', t, UI.Modules.COMMON) }
+    />
+  );
+};
+
+const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ file, onConfirm, ...other }) => {
+  const [ preview, setPreview ] = useState<string | null>(null);
+  const { t } = useTranslation();
+
+  useEffect(
+    () => {
+      const p = URL.createObjectURL(file);
+      setPreview(p);
+      return () => URL.revokeObjectURL(p); 
+    },
+    []
+  );
+
+  const handleConfirm = () => {
+    return onConfirm(file);
+  };
+
+  const PreviewElement = getViewerElement(file, preview!, t);
+  return (
+    <Modal
+      { ...other }
+      className="file-preview-dialog"
+      onApprove={ handleConfirm }
+      closable={ true }
+      fullHeight={ true }
+      approveCaption={ translate('Upload', t, UI.Modules.COMMON) }
+      icon={ IconConstants.UPLOAD }
+    >      
+      {/*<div>
+        { file.name }
+        <span style={{ color: 'gray' }}>
+          { ` (${formatSize(file.size, t)})` }
+        </span>
+      </div>*/}
+      <LayoutHeader
+        title={ file.name }
+        subHeader={ formatSize(file.size, t) }
+      />
+      { PreviewElement }
+    </Modal>
+  );
+};
 
 export default FilePreviewDialog;

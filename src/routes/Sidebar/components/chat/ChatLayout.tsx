@@ -16,6 +16,8 @@ import * as UI from 'types/ui';
 //import { SessionActions } from 'types/ui';
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import { useTranslation } from 'react-i18next';
+import { AddTempShareResponse } from 'services/api/ShareApi';
+import { toI18nKey } from 'utils/TranslationUtils';
 
 
 export interface ChatSession extends UI.SessionItemBase {
@@ -41,6 +43,7 @@ export interface ChatLayoutProps {
   //chatApi: ChatActions & SessionActions<UI.SessionItemBase>;
   chatApi: ChatAPI;
   chatActions: ChatActions;
+  handleFileUpload: (file: File) => Promise<AddTempShareResponse>;
   session: ChatSession;
   chatAccess: string;
   messageStore: any;
@@ -88,7 +91,9 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI:
 };
 
 
-const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, chatApi, chatActions, messageStore }) => {
+const ChatLayout: React.FC<ChatLayoutProps> = (
+  { session, chatAccess, chatApi, chatActions, messageStore, handleFileUpload }
+) => {
   //useActiveSessionEffect(session, actions, true);
   const { t } = useTranslation();
   const messages = useChatMessagesEffect(session, messageStore, chatApi);
@@ -97,7 +102,10 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, chatApi, c
     <div className="message-view">
       { !hasChatAccess && (
         <Message 
-          description={ t<string>('noChatAccess', `You aren't allowed to send new messages`) }
+          description={ t<string>(
+            toI18nKey('noChatAccess', UI.Modules.COMMON), 
+            `You aren't allowed to send new messages`
+          ) }
         />
       ) }
       <MessageView 
@@ -111,6 +119,8 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({ session, chatAccess, chatApi, c
           session={ session }
           chatApi={ chatApi }
           chatActions={ chatActions }
+          t={ t }
+          handleFileUpload={ handleFileUpload }
           //chatAccess={ chatAccess }
         />
       ) }

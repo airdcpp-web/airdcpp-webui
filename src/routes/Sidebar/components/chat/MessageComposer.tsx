@@ -15,8 +15,16 @@ import SocketService from 'services/SocketService';
 import { ChatLayoutProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
 import FilePreviewDialog from './FilePreviewDialog';
+import TempShareDropdown from './TempShareDropdown';
+import i18next from 'i18next';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { formatSize } from 'utils/ValueFormat';
+import LoginStore from 'stores/LoginStore';
+import AccessConstants from 'constants/AccessConstants';
 
 const ENTER_KEY_CODE = 13;
 
@@ -53,11 +61,11 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
   };
 };
 
-export interface MessageComposerProps extends Pick<ChatLayoutProps, 'chatApi' | 'session' | 'chatActions'> {
+export interface MessageComposerProps extends 
+  Pick<ChatLayoutProps, 'chatApi' | 'session' | 'chatActions' | 'handleFileUpload'> {
 
+  t: i18next.TFunction;
 }
-
-
 
 const getStorageKey = (props: RouteComponentProps) => {
   return `last_message_${props.location.pathname}`;
@@ -92,6 +100,8 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     actions: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
   };*/
+
+  dropzoneRef = React.createRef<Dropzone>();
 
   handleCommand = (text: string) => {
     let command, params;
@@ -168,28 +178,62 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
         console.log(`Failed to fetch suggestions: ${error}`)
       );
   }
+  
+  appendText = (text: string) => {
+    let newText = this.state.text;
+    if (newText) {
+      newText += ' ';
+    }
+    newText += text;
 
-  onDrop: DropFilesEventHandler = (acceptedFiles, rejectedFiles) => {
+    this.setState({
+      text: newText
+    });
+  }
+
+  onDropFile: DropFilesEventHandler = (acceptedFiles, rejectedFiles) => {
     if (!acceptedFiles.length) {
       return;
     }
 
-    if (process.env.NODE_ENV === 'production') {
-      NotificationActions.info({ 
-        title: 'File uploads are not yet supported'
+    const { t } = this.props;
+    const file = acceptedFiles[0];
+    const maxSize = 100 * 1024 * 1024;
+    if (file.size > maxSize) {
+      NotificationActions.error({
+        title: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
+          defaultValue: 'File is too large (maximum size is {{maxSize}})',
+          replace: {
+            maxSize: formatSize(maxSize, t)
+          }
+        })
       });
 
       return;
     }
 
     this.setState({
-      file: acceptedFiles[0]
+      file
     });
   }
 
-  onUploadFile = (file: File) => {
+  onUploadFile = async (file: File) => {
     this.resetFile();
-    return Promise.resolve();
+
+    try {
+      const { handleFileUpload } = this.props;
+      const res = await handleFileUpload(file);
+
+      this.appendText(res.magnet);
+    } catch (e) {
+      NotificationActions.apiError('Failed to send the file', e);
+    }
+  }
+
+  handleClickUpload = () => {
+    if (this.dropzoneRef.current) {
+      this.dropzoneRef.current.open();
+    }
   }
 
   resetFile = () => {
@@ -211,11 +255,15 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       { large: !mobile },
     );
 
-    const inputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'onSelect'> = {
+    const textInputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'onSelect'> = {
       autoFocus: !useMobileLayout(),
     };
 
-    const { file } = this.state;
+    const hasFileUploadAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) && 
+      LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+
+    const { file, text } = this.state;
+    const { t } = this.props;
     return (
       <>
         { !!file && (
@@ -223,26 +271,34 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
             file={ file }
             onConfirm={ this.onUploadFile }
             onReject={ this.resetFile }
-            title="Upload file"
+            title={ translate('Send file', t, UI.Modules.COMMON) }
           />
         ) }
         <Dropzone
-          onDrop={ this.onDrop }
+          onDrop={ this.onDropFile }
+          ref={ this.dropzoneRef }
+          disabled={ !hasFileUploadAccess }
         >
-          {({ getRootProps }) => (
+          {({ getRootProps, getInputProps }) => (
             <div 
               className={ className }
               { ...getRootProps({
                 onClick: evt => evt.preventDefault()
               }) }
             >
+              { hasFileUploadAccess && (
+                <TempShareDropdown
+                  handleUpload={ this.handleClickUpload }
+                />
+              ) }
+              <input { ...getInputProps() }/>
               <MentionsInput 
                 className="input"
-                value={ this.state.text } 
+                value={ text } 
                 onChange={ this.handleChange }
                 onKeyDown={ this.onKeyDown }
                 style={ getMentionFieldStyle(mobile) }
-                { ...inputProps }
+                { ...textInputProps }
               >
                 <Mention 
                   trigger="@"
