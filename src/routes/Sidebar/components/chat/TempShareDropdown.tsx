@@ -1,5 +1,6 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
+import cx from 'classnames';
 
 import SocketService from 'services/SocketService';
 
@@ -23,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 export interface TempShareDropdownProps {
   handleUpload: () => void;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 interface DataProps {
@@ -48,7 +50,7 @@ const getDropdownItem = (
   );
 };
 
-const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style }) => {
+const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, className }) => {
   const { t } = useTranslation();
 
   const onClickFile = (file: API.TempShareItem) => {
@@ -68,9 +70,14 @@ const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style }) => 
       });
   };
 
+  const classNames = cx(
+    'top left pointing circular',
+    className
+  );
+
   return (
     <SectionedDropdown 
-      className="top left pointing circular" 
+      className={ classNames }
       triggerIcon="plus" 
       button={ true }
       contextElement=".message-view"

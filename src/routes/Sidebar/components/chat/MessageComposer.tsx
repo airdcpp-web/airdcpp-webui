@@ -25,6 +25,8 @@ import { translate, toI18nKey } from 'utils/TranslationUtils';
 import { formatSize } from 'utils/ValueFormat';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
+import Icon from 'components/semantic/Icon';
+import Button from 'components/semantic/Button';
 
 const ENTER_KEY_CODE = 13;
 
@@ -301,12 +303,11 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                   appendSpaceOnAdd={ false }
                 />
               </MentionsInput>
-              <div 
-                className="blue large ui icon send button" 
+              <Button 
+                className="blue large icon send" 
                 onClick={ this.sendText }
-              >
-                <i className="send icon"/>
-              </div>
+                caption={ <Icon icon="send"/> }
+              />
               { hasFileUploadAccess && (
                 <TempShareDropdown
                   handleUpload={ this.handleClickUpload }

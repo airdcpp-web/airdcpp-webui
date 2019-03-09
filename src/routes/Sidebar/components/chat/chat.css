@@ -35,11 +35,6 @@
 	margin: 0px;
 }
 
-.chat.session .composer.large .send.button i {
-	vertical-align: -webkit-baseline-middle !important;
-	vertical-align: -moz-middle-with-baseline !important;
-}
-
 .chat.session .composer > .input {
 	width: calc(100% - 86px);
 }
