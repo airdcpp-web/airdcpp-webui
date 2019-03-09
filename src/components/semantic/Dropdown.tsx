@@ -23,7 +23,7 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   className?: string;
   captionIcon?: IconType;
   selection?: boolean;
-  dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
+  //dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
 class Dropdown extends React.PureComponent<DropdownProps> {
@@ -57,7 +57,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     leftIcon: false,
   };
 
-  c: HTMLDivElement;
+  c: Element;
   state = {
     visible: false,
   };
@@ -122,7 +122,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
   }
 
   render() {
-    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection } = this.props;
+    const { leftIcon, caption, button, triggerIcon, captionIcon, selection } = this.props;
     const className = classNames(
       'ui',
       'dropdown',
@@ -141,24 +141,28 @@ class Dropdown extends React.PureComponent<DropdownProps> {
       />
     );
 
-    return (
-      <div 
-        ref={ c => this.c = c! } 
-        { ...dropDownElementProps }
-        className={ className }
-      >
-        { (leftIcon && !!caption) && icon }
-        <DropdownCaption 
-          icon={ captionIcon }
-        >
-          { !!caption ? caption : icon }
-        </DropdownCaption>
-        { leftIcon || !caption ? null : icon }
+    return React.createElement(
+      button ? 'button' : 'div', 
+      {
+        ref: c => this.c = c!, 
+        //{ ...dropDownElementProps }
+        className
+      }, 
+      (
+        <>
+          { (leftIcon && !!caption) && icon }
+          <DropdownCaption 
+            icon={ captionIcon }
+          >
+            { !!caption ? caption : icon }
+          </DropdownCaption>
+          { leftIcon || !caption ? null : icon }
 
-        <div className="menu">
-          { this.getMenuItems() }
-        </div>
-      </div>
+          <div className="menu">
+            { this.getMenuItems() }
+          </div>
+        </>
+      )
     );
   }
 }

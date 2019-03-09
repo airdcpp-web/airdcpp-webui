@@ -193,7 +193,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     });
   }
 
-  onDropFile: DropFilesEventHandler = (acceptedFiles, rejectedFiles) => {
+  onDropFile = (acceptedFiles: File[]) => {
     if (!acceptedFiles.length) {
       return;
     }
@@ -232,6 +232,13 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
   }
 
+  onPaste = (evt: React.ClipboardEvent<HTMLInputElement>) => {
+    if ((event as any).clipboardData.files.length) {
+      evt.preventDefault();
+      this.onDropFile((event as any).clipboardData.files);
+    }
+  }
+
   handleClickUpload = () => {
     if (this.dropzoneRef.current) {
       this.dropzoneRef.current.open();
@@ -259,6 +266,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
 
     const textInputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'onSelect'> = {
       autoFocus: !mobile,
+      onPaste: this.onPaste
     };
 
     const hasFileUploadAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) && 
@@ -303,14 +311,17 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                   appendSpaceOnAdd={ false }
                 />
               </MentionsInput>
-              <Button 
-                className="blue large icon send" 
-                onClick={ this.sendText }
-                caption={ <Icon icon="send"/> }
-              />
               { hasFileUploadAccess && (
                 <TempShareDropdown
+                  className="blue large" 
                   handleUpload={ this.handleClickUpload }
+                  overrideContent={ !text ? null : (
+                    <Button 
+                      className="blue large icon send" 
+                      onClick={ this.sendText }
+                      caption={ <Icon icon="send"/> }
+                    />
+                  ) }
                 />
               ) }
             </div>

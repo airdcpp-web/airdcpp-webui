@@ -25,6 +25,10 @@ export interface TempShareDropdownProps {
   handleUpload: () => void;
   style?: React.CSSProperties;
   className?: string;
+
+  // Allows temporarily replacing the content without
+  // the need to refetch all temp share data
+  overrideContent?: React.ReactElement | null;
 }
 
 interface DataProps {
@@ -50,8 +54,12 @@ const getDropdownItem = (
   );
 };
 
-const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, className }) => {
+const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, className, overrideContent }) => {
   const { t } = useTranslation();
+
+  if (!!overrideContent) {
+    return overrideContent;
+  }
 
   const onClickFile = (file: API.TempShareItem) => {
     SocketService.delete(`${ShareConstants.TEMP_SHARES_URL}/${file.id}`)
@@ -71,7 +79,7 @@ const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, class
   };
 
   const classNames = cx(
-    'top left pointing circular',
+    'top left pointing actions',
     className
   );
 
@@ -81,15 +89,6 @@ const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, class
       triggerIcon="plus" 
       button={ true }
       contextElement=".message-view"
-      dropDownElementProps={{
-        style: {
-          width: '38px',
-          height: 'fit-content',
-          alignSelf: 'center',
-          marginLeft: '5px',
-          ...style
-        }
-      }}
     >
       <MenuItemLink 
         onClick={ handleUpload }

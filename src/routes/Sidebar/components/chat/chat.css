@@ -29,14 +29,14 @@
 	margin-left: 1px;
 }
 
-.chat.session .composer .send.button {
+.chat.session .composer .button {
 	border-radius: 0 .28571429rem .28571429rem 0;
 	width: 45px;
 	margin: 0px;
 }
 
 .chat.session .composer > .input {
-	width: calc(100% - 86px);
+	width: calc(100% - 60px);
 }
 
 
