@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { MentionsInput, Mention, OnChangeHandlerFunc } from 'react-mentions';
-import Dropzone, { DropFilesEventHandler } from 'react-dropzone';
+import Dropzone from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
