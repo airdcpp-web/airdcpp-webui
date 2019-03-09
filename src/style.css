@@ -38,7 +38,8 @@ section#container-main,
 	margin-right: 5px !important;
 }
 
-.ui.dropdown:not(.table-items):not(.fluid):not(td) {
+.ui.dropdown:not(.table-items):not(.fluid):not(td),
+.cell-wrapper .dropdown {
   display: inline-flex !important;
 }
 

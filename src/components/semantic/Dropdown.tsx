@@ -131,7 +131,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
       { 'icon button': button },
       { 'labeled': !!button && !!caption },
       { 'left-icon': leftIcon },
-      { 'selection': selection },
+      { 'selection fluid': selection },
     );
 
     let icon = (
