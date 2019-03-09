@@ -1,6 +1,6 @@
 .message-section {
 	flex: 1;
-	overflow-y: hidden;
+	overflow-y: auto;
 }
 
 .message-list .item .text {
