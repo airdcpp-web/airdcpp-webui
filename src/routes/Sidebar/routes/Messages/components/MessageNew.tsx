@@ -33,7 +33,7 @@ class MessageNew extends React.Component<NewSessionLayoutProps> {
   render() {
     const { sessionT } = this.props;
     return (
-      <div className="session new"> 
+      <div className="private chat session new"> 
         <UserSearchInput 
           submitHandler={ this.handleSubmit } 
           offlineMessage={ sessionT.t<string>(

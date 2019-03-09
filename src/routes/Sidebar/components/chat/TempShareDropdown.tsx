@@ -42,10 +42,6 @@ const getDropdownItem = (
       key={ file.id }
       onClick={ () => onClick(file) }
       icon={ <FileIcon typeInfo={ file.type }/> }
-      style={{
-        maxWidth: '300px',
-        overflowX: 'hidden',
-      }}
     >
       { file.name }
     </MenuItemLink>
@@ -74,13 +70,16 @@ const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style }) => 
 
   return (
     <SectionedDropdown 
-      className="top left pointing" 
+      className="top left pointing circular" 
       triggerIcon="plus" 
       button={ true }
       contextElement=".message-view"
       dropDownElementProps={{
         style: {
           width: '38px',
+          height: 'fit-content',
+          alignSelf: 'center',
+          marginLeft: '5px',
           ...style
         }
       }}

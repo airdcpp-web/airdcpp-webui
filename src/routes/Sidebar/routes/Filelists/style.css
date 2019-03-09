@@ -33,6 +33,7 @@
 .filelist.session {
 	height: 100%;
 	overflow: hidden;
+	margin-top: 10px;
 }
 
 .session.new .profile.ui.dropdown {

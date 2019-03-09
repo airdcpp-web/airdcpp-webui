@@ -43,6 +43,11 @@ section#container-main,
   display: inline-flex !important;
 }
 
+.ui.dropdown .menu > .item {
+	max-width: 300px;
+	overflow-x: hidden;
+}
+
 .ui.dropdown.fluid {
   display: flex !important;
 }

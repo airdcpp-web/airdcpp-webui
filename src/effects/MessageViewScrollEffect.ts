@@ -10,8 +10,8 @@ export const useMessageViewScrollEffect = (messages: UI.MessageListItem[] | null
   const [ shouldScrollToBottom, setShouldScrollToBottom ] = useState(true);
   const scrollable = useRef<HTMLDivElement | null>(null);
 
-  const onScroll = (evt: UIEvent) => {
-    const { scrollHeight, scrollTop, offsetHeight } = evt.target as HTMLElement;
+  const onScroll = (container: HTMLDivElement) => {
+    const { scrollHeight, scrollTop, offsetHeight } = container;
     const offSetFromBottom = scrollHeight - (scrollTop + offsetHeight);
 
     //console.log('SHOULD SCROLL', Math.abs(offSetFromBottom) < 10, offSetFromBottom);
@@ -25,14 +25,14 @@ export const useMessageViewScrollEffect = (messages: UI.MessageListItem[] | null
     }
   };
 
-  useLayoutEffect(
+  /*useLayoutEffect(
     () => {
       // Scroll listener for the element
       if (scrollable.current) {
-        scrollable.current.addEventListener('scroll', onScroll);
+        scrollable.current.addEventListener('ps-scroll-y', onScroll);
 
         return () => {
-          scrollable.current!.removeEventListener('scroll', onScroll);
+          scrollable.current!.removeEventListener('ps-scroll-y', onScroll);
         };
       } else {
         // Shouldn't happen
@@ -40,7 +40,7 @@ export const useMessageViewScrollEffect = (messages: UI.MessageListItem[] | null
       }
     },
     []
-  );
+  );*/
 
   useLayoutEffect(
     () => {
@@ -61,5 +61,8 @@ export const useMessageViewScrollEffect = (messages: UI.MessageListItem[] | null
     [ !!session, !!session ? session.id : null ]
   );
 
-  return scrollable;
+  return { 
+    scrollableRef: scrollable, 
+    onScroll 
+  };
 };

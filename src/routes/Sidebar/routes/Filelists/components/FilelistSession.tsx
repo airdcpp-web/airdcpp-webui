@@ -26,18 +26,24 @@ class FilelistSession extends React.Component<FilelistSessionProps> {
 
     if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('self') === -1) {
       return (
-        <Message 
-          title={ sessionT.t('userOffline', 'User offline') }
-          description={ sessionT.t<string>(
-            'userOfflineDesc', 
-            'You will be able to continue browsing when the user comes back online'
-          ) }
-        />
+        <div className="filelist session">
+          <Message 
+            title={ sessionT.t('userOffline', 'User offline') }
+            description={ sessionT.t<string>(
+              'userOfflineDesc', 
+              'You will be able to continue browsing when the user comes back online'
+            ) }
+          />
+        </div>
       );
     }
 
     if ((state.id !== 'loaded' && state.id !== 'download_failed') || !location) {
-      return <Loader text={ state.str }/>;
+      return (
+        <div className="filelist session">
+          <Loader text={ state.str }/>
+        </div>
+      );
     }
 
     return (

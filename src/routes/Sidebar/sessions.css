@@ -10,6 +10,10 @@
   margin: 0 .35714286em 0 0 !important;
 }
 
+.session-container.horizontal .session-layout > .ui.divider {
+  margin: 5px 0px 0px 0px;
+}
+
 .session-container.vertical {
   padding: 15px;
   display: flex;
@@ -26,6 +30,7 @@
 
 .session-container.vertical .menu-bar {
   justify-content: space-between;
+  margin: 0px !important;
 }
 
 .session-container.vertical .menu-bar .content-left {
@@ -90,10 +95,6 @@
 .session-container.vertical .menu-bar {
   border-radius: 0px !important;
   padding-bottom: 0px;
-}
-
-#mobile-layout .session-container.vertical .menu-bar {
-  margin-bottom: 10px;
 }
 
 .session-container, 
@@ -197,7 +198,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 1px;
 }
 

@@ -15,7 +15,7 @@ export interface MenuItemLinkProps extends React.AnchorHTMLAttributes<HTMLAnchor
 }
 
 const MenuItemLink: React.FC<MenuItemLinkProps> = (
-  { className = undefined, icon, children, onClick, active = false, disabled = false, ...other }
+  { className = undefined, icon, children, onClick, active = false, disabled = false, style, ...other }
 ) => {
   const itemClass = classNames(
     'item',

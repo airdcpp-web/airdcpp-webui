@@ -36,7 +36,7 @@ const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({
             title={ <div className="title">{ itemHeaderTitle }</div> }
             subHeader={ itemHeaderDescription }
           />
-          <div className="ui divider"/>
+          <div className="ui divider" style={{ margin: '5px 0px 0px 0px' }}/>
           { children }
         </div>
       </div>

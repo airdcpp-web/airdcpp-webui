@@ -8,18 +8,18 @@
 	overflow-y: hidden;
 }
 
-.chat.session .message-section {
-	margin-bottom: 10px;
-}
-
 .chat.session .message-list {
-	margin-right: 10px !important;
+	margin: 10px 10px 10px 0px;
 }
 
 
 /* Composer */
 .chat.session .composer {
 	display: flex;
+}
+
+.chat.session .composer:focus {
+	outline: none;;
 }
 
 .chat.session .composer textarea, 
@@ -32,12 +32,12 @@
 .chat.session .composer .send.button {
 	border-radius: 0 .28571429rem .28571429rem 0;
 	width: 45px;
+	margin: 0px;
 }
 
-.chat.session .composer.large .send.button,
-.chat.session .composer.large .ui.dropdown .caption {
-	display: flex;
-	align-items: center;
+.chat.session .composer.large .send.button i {
+	vertical-align: -webkit-baseline-middle !important;
+	vertical-align: -moz-middle-with-baseline !important;
 }
 
 .chat.session .composer > .input {

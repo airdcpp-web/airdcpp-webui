@@ -286,11 +286,6 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                 onClick: evt => evt.preventDefault()
               }) }
             >
-              { hasFileUploadAccess && (
-                <TempShareDropdown
-                  handleUpload={ this.handleClickUpload }
-                />
-              ) }
               <input { ...getInputProps() }/>
               <MentionsInput 
                 className="input"
@@ -312,6 +307,11 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
               >
                 <i className="send icon"/>
               </div>
+              { hasFileUploadAccess && (
+                <TempShareDropdown
+                  handleUpload={ this.handleClickUpload }
+                />
+              ) }
             </div>
           ) }
         </Dropzone>

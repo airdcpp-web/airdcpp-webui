@@ -121,6 +121,7 @@
     "react-measure": "^2.2.4",
     "react-mentions": "^2.4.2",
     "react-notification-system": "^0.2.17",
+    "react-perfect-scrollbar": "^1.4.4",
     "react-router": "^4.4.0-beta.7",
     "react-router-dom": "^4.3.1",
     "react-select": "^2.4.1",

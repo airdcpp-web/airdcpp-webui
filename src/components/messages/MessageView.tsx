@@ -9,6 +9,8 @@ import { ChatMessage, StatusMessage } from './Message';
 import { formatCalendarTime } from 'utils/ValueFormat';
 
 import './messages.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import * as UI from 'types/ui';
 import i18next from 'i18next';
@@ -100,16 +102,25 @@ interface MessageViewProps {
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
   ({ messages, session, className, t }) => {
-    const scrollableRef = useMessageViewScrollEffect(messages, session);
+    const { scrollableRef, onScroll } = useMessageViewScrollEffect(messages, session);
     return (
       <div 
-        ref={ scrollableRef }
+        //ref={ scrollableRef }
         className={ classNames('message-section', className) }
       >
         { !!messages ? (
-          <div className="ui list message-list">
-            { messages.reduce(getMessageListItem.bind(null, t), []) }
-          </div>
+          <PerfectScrollbar 
+            className="scroll-wrapper"
+            option={{
+              suppressScrollX: true
+            }}
+            containerRef={ ref => scrollableRef.current = ref }
+            onScrollY={ onScroll }
+          >
+            <div className="ui list message-list">
+              { messages.reduce(getMessageListItem.bind(null, t), []) }
+            </div>
+          </PerfectScrollbar>
         ) : (
           <Loader text={ translate('Loading messages', t, UI.Modules.COMMON) }/>
         ) }

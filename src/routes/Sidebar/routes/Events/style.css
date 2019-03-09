@@ -24,13 +24,14 @@
 }
 
 .simple-layout .divider.top {
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 }
 
 
 /* Message layout */
 .system-log .message-list {
 	width: 100%;
+	margin: 10px 0px !important;
 }
 
 .system-log .status.item i {

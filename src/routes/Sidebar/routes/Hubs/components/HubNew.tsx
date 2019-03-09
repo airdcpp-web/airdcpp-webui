@@ -37,7 +37,7 @@ class HubNew extends React.Component<NewSessionLayoutProps> {
   render() {
     const { sessionT } = this.props;
     return (
-      <div className="session new">
+      <div className="hub session new">
         <HubSearchInput 
           submitHandler={ this.handleConnect }
         />

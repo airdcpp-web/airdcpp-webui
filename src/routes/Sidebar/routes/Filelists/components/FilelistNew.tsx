@@ -38,7 +38,7 @@ class FilelistNew extends React.Component<NewSessionLayoutProps> {
   render() {
     const { sessionT } = this.props;
     return (
-      <div className="session new">
+      <div className="filelist session new">
         <UserSearchInput 
           submitHandler={ this.handleSubmit } 
           offlineMessage={ sessionT.t<string>(
