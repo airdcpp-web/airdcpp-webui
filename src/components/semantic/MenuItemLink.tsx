@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 import Icon, { IconType } from 'components/semantic/Icon';
 
-export interface MenuItemLinkProps {
+export interface MenuItemLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   className?: string;
   icon?: IconType;
   onClick: () => void;
@@ -15,7 +15,7 @@ export interface MenuItemLinkProps {
 }
 
 const MenuItemLink: React.FC<MenuItemLinkProps> = (
-  { className = undefined, icon, children, onClick, active = false, disabled = false }
+  { className = undefined, icon, children, onClick, active = false, disabled = false, ...other }
 ) => {
   const itemClass = classNames(
     'item',
@@ -25,7 +25,11 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = (
   );
 
   return (
-    <a className={ itemClass } onClick={ onClick }>
+    <a 
+      { ...other }
+      className={ itemClass } 
+      onClick={ onClick }
+    >
       <Icon icon={ icon }/>
       { children }
     </a>

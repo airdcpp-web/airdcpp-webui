@@ -42,6 +42,10 @@ const getDropdownItem = (
       key={ file.id }
       onClick={ () => onClick(file) }
       icon={ <FileIcon typeInfo={ file.type }/> }
+      style={{
+        maxWidth: '300px',
+        overflowX: 'hidden',
+      }}
     >
       { file.name }
     </MenuItemLink>
