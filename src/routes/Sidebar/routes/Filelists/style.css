@@ -15,17 +15,16 @@
 	height: calc(100% - 10px);
 }
 
-@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) 
-{ @media {
+@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) {
 	/* Safari specific CSS */
 	.filelist.session .browser {
 		height: calc(100% - 95px);
 	}
 
-	#mobile-layout .filelist.session. .browser {
+	#mobile-layout .filelist.session .browser {
 		height: calc(100% - 60px);
 	}
-}}
+}
 
 .filelist.session .browser .ui.segment {
 	margin-bottom: 10px;
@@ -36,7 +35,7 @@
 	overflow: hidden;
 }
 
-.session.new .profile.dropdown {
+.session.new .profile.ui.dropdown {
 	margin-top: 10px;
 	color: gray;
 	align-self: flex-end;

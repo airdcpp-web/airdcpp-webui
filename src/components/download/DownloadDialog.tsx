@@ -55,7 +55,10 @@ const NormalLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => 
 
 const MobileLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
   <div className="mobile layout">
-    <Dropdown className="selection fluid" caption={ title }>
+    <Dropdown  
+      selection={ true }
+      caption={ title }
+    >
       { menuItems }
     </Dropdown>
     <div className="ui segment main-content">

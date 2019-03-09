@@ -144,12 +144,12 @@
 }
 
 .session-container.horizontal .menu-column .session-item span.session-name,
-.session-container .session-header .dropdown .caption {
+.session-container .session-header .ui.dropdown .caption {
   overflow: hidden;
   white-space: nowrap;
 }
 
-.session-container .session-header .title .dropdown {
+.session-container .session-header .title .ui.dropdown {
   width: 100%;
 }
 

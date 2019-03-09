@@ -18,7 +18,7 @@ const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
 ) => (
   <div className="ui top-menu">
     <Dropdown 
-      className="selection fluid" 
+      selection={ true }
       caption={ translateSettingSectionTitle(parent!.title, settingsT) }
       captionIcon={ `green ${parent!.icon}` }
     >
@@ -28,7 +28,7 @@ const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
     <Icon icon="large caret right"/>
 
     <SectionedDropdown 
-      className="selection fluid" 
+      selection={ true }
       caption={ translateSettingSectionTitle(currentMenuItem.title, settingsT) }
     >
       <MenuSection>

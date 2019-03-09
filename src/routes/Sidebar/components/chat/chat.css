@@ -35,7 +35,7 @@
 }
 
 .chat.session .composer.large .send.button,
-.chat.session .composer.large .dropdown .caption {
+.chat.session .composer.large .ui.dropdown .caption {
 	display: flex;
 	align-items: center;
 }
@@ -88,7 +88,7 @@
 	vertical-align: middle;
 }
 
-.chat.session .chat.item .third-person .author .dropdown {
+.chat.session .chat.item .third-person .author .ui.dropdown {
 	margin-left: 3px;
 }
 

@@ -46,7 +46,7 @@
 	overflow-x: hidden;
 }
 
-.result.modal .download.dropdown {
+.result.modal .download.ui.dropdown {
 	max-width: 150px;
 	margin-top: 10px;
 }

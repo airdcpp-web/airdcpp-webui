@@ -22,6 +22,7 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   caption?: React.ReactNode;
   className?: string;
   captionIcon?: IconType;
+  selection?: boolean;
   dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
@@ -51,8 +52,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     settings: PropTypes.object,
   };
 
-  static defaultProps: Pick<DropdownProps, 'triggerIcon' | 'direction' | 'leftIcon'> = {
-    triggerIcon: 'dropdown',
+  static defaultProps: Pick<DropdownProps, 'direction' | 'leftIcon'> = {
     direction: 'auto',
     leftIcon: false,
   };
@@ -122,7 +122,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
   }
 
   render() {
-    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps } = this.props;
+    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection } = this.props;
     const className = classNames(
       'ui',
       'dropdown',
@@ -131,11 +131,12 @@ class Dropdown extends React.PureComponent<DropdownProps> {
       { 'icon button': button },
       { 'labeled': !!button && !!caption },
       { 'left-icon': leftIcon },
+      { 'selection': selection },
     );
 
     let icon = (
       <Icon 
-        icon={ triggerIcon } 
+        icon={ triggerIcon !== undefined ? triggerIcon : (selection ? 'dropdown' : 'angle down') } 
         className="trigger"
       />
     );

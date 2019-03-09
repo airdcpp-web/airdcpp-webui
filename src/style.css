@@ -38,11 +38,11 @@ section#container-main,
 	margin-right: 5px !important;
 }
 
-.dropdown:not(.table-items):not(.fluid):not(td) {
+.ui.dropdown:not(.table-items):not(.fluid):not(td) {
   display: inline-flex !important;
 }
 
-.dropdown.fluid {
+.ui.dropdown.fluid {
   display: flex !important;
 }
 
@@ -107,7 +107,7 @@ section#container-main,
 }
 
 /* Can't be applied to dropdown cells */
-.ui.modal.full td:not(.dropdown) {
+.ui.modal.full td:not(.ui.dropdown) {
 	overflow-x: hidden;
 }
 

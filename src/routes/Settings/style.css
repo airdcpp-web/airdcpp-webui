@@ -58,8 +58,8 @@
   flex-shrink: 0;
 }
 
-.settings-layout .top-menu > .dropdown,
-.settings-layout .top-menu > .dropdown > .caption {
+.settings-layout .top-menu > .ui.dropdown,
+.settings-layout .top-menu > .ui.dropdown > .caption {
   display: flex;
 }
 

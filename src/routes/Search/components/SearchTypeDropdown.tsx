@@ -57,7 +57,7 @@ const SearchTypeDropdown: React.FC<Props> = ({ searchTypes }) => {
   const [ selectedItem, setSelectedItem ] = useState<API.SearchType | null>(null);
   return (
     <Dropdown
-      className="fluid selection"
+      selection={ true }
       caption={ (
         <>
           <SearchTypeIcon type={ selectedItem } size=""/>
