@@ -35,6 +35,11 @@
 	margin: 0px;
 }
 
+.chat.session .composer.large .actions.button .caption {
+	display: flex !important;
+	align-items: center !important;
+}
+
 .chat.session .composer > .input {
 	width: calc(100% - 60px);
 }
