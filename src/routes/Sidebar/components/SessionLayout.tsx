@@ -28,6 +28,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { getModuleT, translate, toI18nKey } from 'utils/TranslationUtils';
 import i18next from 'i18next';
+import { LayoutWidthContext, LayoutWidthContextType } from 'context/LayoutWidthContext';
 
 
 
@@ -185,6 +186,9 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   state: State<SessionT> = {
     activeItem: null
   };
+
+  static contextType = LayoutWidthContext;
+  context: LayoutWidthContextType;
 
   // HELPERS
   getSessionUrl = (id: API.IdType) => {
@@ -474,7 +478,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     }
 
     const { activeItem } = this.state;
-    const useTopMenu = disableSideMenu || useMobileLayout() /*|| width < 700*/;
+    const useTopMenu = disableSideMenu || useMobileLayout(this.context);
 
     const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
     return (

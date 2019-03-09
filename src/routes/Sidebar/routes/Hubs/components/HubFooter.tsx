@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
@@ -17,6 +17,7 @@ import {
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
 } from 'decorators/SocketSubscriptionDecorator';
 import { useMobileLayout } from 'utils/BrowserUtils';
+import { LayoutWidthContext } from 'context/LayoutWidthContext';
 
 
 interface HubFooterProps {
@@ -54,6 +55,8 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
     [ props.session ]
   );
 
+  const layoutWidth = useContext(LayoutWidthContext);
+
   const { userlistToggle, session, sessionT } = props;
   const { user_count: users, share_size: shared } = counts;
 
@@ -76,7 +79,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
           </>
         )}
       />
-      { !useMobileLayout() && (
+      { !useMobileLayout(layoutWidth) && (
         <FooterItem 
           text={ sessionT.t('sharePerUser', {
             defaultValue: '{{total}} ({{average}}/user)',

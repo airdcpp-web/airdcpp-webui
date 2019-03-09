@@ -58,6 +58,6 @@ export const hasTouchSupport = () => {
   //return false;
 };
 
-export const useMobileLayout = () => {
-  return window.innerWidth < 700;
+export const useMobileLayout = (width?: number | null) => {
+  return (width || window.innerWidth) < 700;
 };

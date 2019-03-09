@@ -4,12 +4,12 @@ import React, { useContext } from 'react';
 //import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 import Button from 'components/semantic/Button';
-import { InstallPromptContext } from 'App';
 
 import IconConstants from 'constants/IconConstants';
 import { LocalSettings } from 'constants/SettingConstants';
 import { useStore } from 'effects/StoreListenerEffect';
 import LocalSettingStore from 'stores/LocalSettingStore';
+import { InstallPromptContext } from 'context/InstallPromptContext';
 
 import * as UI from 'types/ui';
 

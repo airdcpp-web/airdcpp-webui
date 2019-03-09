@@ -1,4 +1,4 @@
-import React, { createContext, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import History from 'utils/History';
@@ -30,6 +30,8 @@ import { I18nextProvider } from 'react-i18next';
 import { i18n } from 'services/LocalizationService';
 import Loader from 'components/semantic/Loader';
 import { useInstallPrompt } from 'components/main/effects/InstallPromptEffect';
+import { InstallPromptContext } from 'context/InstallPromptContext';
+import { LayoutWidthContext } from 'context/LayoutWidthContext';
 
 
 global.Promise = Promise;
@@ -51,10 +53,6 @@ const getBackgroundImage = () => {
   return window.innerWidth < 1440 ? Background1500px : Background3840px;
 };
 
-export type InstallPromptContextType = (() => void) | null;
-export const InstallPromptContext = createContext<InstallPromptContextType>(null);
-
-
 const App = () => {
   const prompt = useInstallPrompt();
   return (
@@ -65,21 +63,25 @@ const App = () => {
             <Measure
               bounds={ true }
             >
-              { ({ measureRef }) => (
-                <div 
-                  ref={ measureRef } 
-                  id="background-wrapper" 
-                  style={{
-                    backgroundImage: 'url(' + getBackgroundImage() + ')',
-                    height: '100%',
-                  }}
+              { ({ measureRef, contentRect }) => (
+                <LayoutWidthContext.Provider 
+                  value={ !!contentRect.bounds ? contentRect.bounds.width : null }
                 >
-                  <Switch>
-                    <Route path="/login" component={ Login }/>
-                    <Route exact path="/" component={() => <Redirect to="/home" />}/>
-                    <Route path="/" component={ AuthenticatedApp }/>
-                  </Switch>
-                </div>
+                  <div 
+                    ref={ measureRef } 
+                    id="background-wrapper" 
+                    style={{
+                      backgroundImage: 'url(' + getBackgroundImage() + ')',
+                      height: '100%',
+                    }}
+                  >
+                    <Switch>
+                      <Route path="/login" component={ Login }/>
+                      <Route exact path="/" component={ () => <Redirect to="/home"/> }/>
+                      <Route path="/" component={ AuthenticatedApp }/>
+                    </Switch>
+                  </div>
+                </LayoutWidthContext.Provider>
               ) }
             </Measure>
           </Router>

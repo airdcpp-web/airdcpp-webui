@@ -45,7 +45,7 @@ const getViewerElement = (item: API.ViewFile): React.ComponentType<FileSessionCo
     return (props: FileSessionContentProps) => (
       <TextFile
         textGetter={ () => {
-          return fetchData(props.url + 'fsafasf')
+          return fetchData(props.url)
             .then(data => data.text());
         }}
         url={ props.url }

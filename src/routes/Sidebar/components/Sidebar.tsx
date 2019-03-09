@@ -8,6 +8,7 @@ import History from 'utils/History';
 import '../style.css';
 import { Location } from 'history';
 import { RouteItem, parseRoutes } from 'routes/Routes';
+import { LayoutWidthContext } from 'context/LayoutWidthContext';
 
 
 const MIN_WIDTH = 500;
@@ -127,9 +128,11 @@ class Sidebar extends React.Component<SidebarProps, State> {
         }}
         onResizeStop={ this.onResizeStop }
       >
-        <div id="sidebar-container">
-          { !contentActive ? <Loader text=""/> : parseRoutes(this.props.routes, this.props.location)  }
-        </div>
+        <LayoutWidthContext.Provider value={ width }>
+          <div id="sidebar-container">
+            { !contentActive ? <Loader text=""/> : parseRoutes(this.props.routes, this.props.location)  }
+          </div>
+        </LayoutWidthContext.Provider>
       </Resizable>
     );
   }
