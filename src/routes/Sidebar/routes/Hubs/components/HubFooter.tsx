@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
@@ -16,6 +16,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
 } from 'decorators/SocketSubscriptionDecorator';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 
 interface HubFooterProps {
@@ -24,105 +25,74 @@ interface HubFooterProps {
   sessionT: UI.ModuleTranslator;
 }
 
-interface State {
-  shared: number;
-  users: number;
-}
-
 
 type DataProps = SocketSubscriptionDecoratorChildProps<HubFooterProps>;
-class HubFooter extends React.PureComponent<HubFooterProps & DataProps, State> {
-  //displayName: 'HubFooter',
+const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
+  const [ counts, setCounts ] = useState<API.HubCounts>({
+    share_size: 0,
+    user_count: 0
+  });
 
-  /*static propTypes = {
-    // Currently active session (required)
-    session: PropTypes.any,
+  useEffect(
+    () => {
+      // Fetch initial
+      SocketService.get<API.HubCounts>(`${HubConstants.SESSIONS_URL}/${props.session.id}/counts`)
+        .then(setCounts)
+        .catch((error: ErrorResponse) => console.error('Failed to fetch hub counts', error.message));
 
-    userlistToggle: PropTypes.node.isRequired,
-  };*/
+      // Subscription
+      const url = HubConstants.SESSIONS_URL;
+      props.addSocketListener<API.HubCounts>(
+        url, 
+        HubConstants.SESSION_COUNTS_UPDATED, 
+        data => setCounts(data), 
+        props.session.id
+      );
 
-  addSocketListeners = () => {
-    const url = HubConstants.SESSIONS_URL;
+      return () => props.removeSocketListeners(props);
+    },
+    [ props.session ]
+  );
 
-    const { session, addSocketListener } = this.props;
-    addSocketListener(url, HubConstants.SESSION_COUNTS_UPDATED, this.onCountsReceived, session.id);
-  }
+  const { userlistToggle, session, sessionT } = props;
+  const { user_count: users, share_size: shared } = counts;
 
-  state: State = {
-    users: 0,
-    shared: 0,
-  };
-
-  onCountsReceived = (data: API.HubCounts) => {
-    this.setState({ 
-      users: data.user_count,
-      shared: data.share_size,
-    });
-  }
-
-  fetchCounts = () => {
-    SocketService.get(`${HubConstants.SESSIONS_URL}/${this.props.session.id}/counts`)
-      .then(this.onCountsReceived)
-      .catch((error: ErrorResponse) => console.error('Failed to fetch hub counts', error.message));
-  }
-
-  componentDidMount() {
-    this.fetchCounts();
-
-    this.addSocketListeners();
-  }
-
-  componentDidUpdate(prevProps: HubFooterProps) {
-    if (prevProps.session.id !== this.props.session.id) {
-      this.fetchCounts();
-
-      this.props.removeSocketListeners(prevProps);
-      this.addSocketListeners();
-    }
-  }
-
-  render() {
-    const { userlistToggle, session, sessionT } = this.props;
-    const { shared, users } = this.state;
-
-    const averageShare = formatSize(users > 0 ? (shared / users) : 0, sessionT.plainT);
-
-    return (
-      <SessionFooter>
-        <FooterItem 
-          text={(
-            <>
-              <EncryptionState encryption={ session.encryption }/>
-              { sessionT.t('xUsers', {
-                  defaultValue: '{{count}} user',
-                  defaultValue_plural: '{{count}} users',
-                  count: users,
-                  replace: {
-                    count: users
-                  }
+  const averageShare = formatSize(users > 0 ? (shared / users) : 0, sessionT.plainT);
+  return (
+    <SessionFooter>
+      <FooterItem 
+        text={(
+          <>
+            <EncryptionState encryption={ session.encryption }/>
+            { sessionT.t('xUsers', {
+                defaultValue: '{{count}} user',
+                defaultValue_plural: '{{count}} users',
+                count: users,
+                replace: {
+                  count: users
                 }
-              ) }
-            </>
-          )}
-        />
-        { window.innerWidth > 700 && (
-          <FooterItem 
-            text={ sessionT.t('sharePerUser', {
-              defaultValue: '{{total}} ({{average}}/user)',
-              replace: {
-                total: formatSize(shared, sessionT.plainT),
-                average: averageShare
               }
-            }) }
-          /> 
-        ) }
-        <div className="userlist-button">
-          { userlistToggle }
-        </div>
-      </SessionFooter>
-    );
-  }
-}
+            ) }
+          </>
+        )}
+      />
+      { !useMobileLayout() && (
+        <FooterItem 
+          text={ sessionT.t('sharePerUser', {
+            defaultValue: '{{total}} ({{average}}/user)',
+            replace: {
+              total: formatSize(shared, sessionT.plainT),
+              average: averageShare
+            }
+          }) }
+        /> 
+      ) }
+      <div className="userlist-button">
+        { userlistToggle }
+      </div>
+    </SessionFooter>
+  );
+};
 
 export default SocketSubscriptionDecorator(
   HubFooter,

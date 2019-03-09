@@ -85,18 +85,18 @@ export default DataProviderDecorator<DetectPanelProps, DetectPanelDataProps>(Det
       });
     };
 
-    addSocketListener(
+    addSocketListener<API.ConnectivityDetectionStarted>(
       ConnectivityConstants.MODULE_URL, 
       ConnectivityConstants.CONNECTIVITY_STARTED, 
-      (data: API.ConnectivityDetectionStarted) => {
+      data => {
         setDetectState(data.v6, true);
       }
     );
 
-    addSocketListener(
+    addSocketListener<API.ConnectivityDetectionFinished>(
       ConnectivityConstants.MODULE_URL, 
       ConnectivityConstants.CONNECTIVITY_FINISHED, 
-      (data: API.ConnectivityDetectionFinished) => {
+      data => {
         setDetectState(data.v6, false);
         refetchData();
       }

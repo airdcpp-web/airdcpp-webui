@@ -105,7 +105,7 @@ export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDa
     sources: ({ bundle }, socket) => socket.get(`${QueueConstants.BUNDLES_URL}/${bundle!.id}/sources`),
   },
   onSocketConnected: (addSocketListener, { refetchData, props }) => {
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, (data: API.QueueBundle) => {
+    addSocketListener<API.QueueBundle>(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_SOURCES, data => {
       // Avoid flickering when there are many bundles running
       if (data.id === props.bundle!.id) {
         refetchData();

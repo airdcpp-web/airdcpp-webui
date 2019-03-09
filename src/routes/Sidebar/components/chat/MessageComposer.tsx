@@ -256,7 +256,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     );
 
     const textInputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'onSelect'> = {
-      autoFocus: !useMobileLayout(),
+      autoFocus: !mobile,
     };
 
     const hasFileUploadAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) && 

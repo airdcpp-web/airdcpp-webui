@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, Suspense } from 'react';
+import React, { createContext, Suspense } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import History from 'utils/History';
@@ -29,6 +29,7 @@ import Background3840px from '../resources/images/background_winter_3840px.jpg';
 import { I18nextProvider } from 'react-i18next';
 import { i18n } from 'services/LocalizationService';
 import Loader from 'components/semantic/Loader';
+import { useInstallPrompt } from 'components/main/effects/InstallPromptEffect';
 
 
 global.Promise = Promise;
@@ -53,32 +54,6 @@ const getBackgroundImage = () => {
 export type InstallPromptContextType = (() => void) | null;
 export const InstallPromptContext = createContext<InstallPromptContextType>(null);
 
-const useInstallPrompt = () => {
-  const [ prompt, setPrompt ] = useState<null | Event>(null);
-
-  useEffect(
-    () => {
-      function handleBeforeInstallPrompt(e: Event) {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        setPrompt(e);
-
-        //console.log(`beforeinstallprompt`, e);
-      }
-
-      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-      return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    },
-    []
-  );
-
-  return !prompt ? null : () => {
-    (prompt as any).prompt();
-    setPrompt(null);
-  };
-};
 
 const App = () => {
   const prompt = useInstallPrompt();

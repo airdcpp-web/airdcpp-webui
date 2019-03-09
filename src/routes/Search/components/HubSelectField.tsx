@@ -7,6 +7,7 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import HubConstants from 'constants/HubConstants';
 import Checkbox from 'components/semantic/Checkbox';
 import { updateMultiselectValues } from 'utils/FormUtils';
+import HubIcon from 'components/icon/HubIcon';
 
 
 interface HubSelectFieldProps {
@@ -28,7 +29,12 @@ const HubSelectField: React.FC<Props> = ({ hubs }) => {
       { onlineHubs.map(hub => (
         <div key={ hub.id } className="field">
           <Checkbox
-            caption={ hub.identity.name }
+            caption={ (
+              <>
+                <HubIcon hub={ hub }/>
+                { hub.identity.name }
+              </>
+            ) }
             checked={ selectedHubs.indexOf(hub.id) !== -1 }
             onChange={ checked => {
               setSelectedHubs(
