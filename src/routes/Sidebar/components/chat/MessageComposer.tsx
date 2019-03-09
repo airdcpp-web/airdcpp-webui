@@ -274,6 +274,15 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
 
     const { file, text } = this.state;
     const { t } = this.props;
+
+    const sendButton = (
+      <Button 
+        className="blue large icon send" 
+        onClick={ this.sendText }
+        caption={ <Icon icon="send"/> }
+      />
+    );
+
     return (
       <>
         { !!file && (
@@ -311,17 +320,11 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                   appendSpaceOnAdd={ false }
                 />
               </MentionsInput>
-              { hasFileUploadAccess && (
+              { !hasFileUploadAccess ? sendButton : (
                 <TempShareDropdown
                   className="blue large" 
                   handleUpload={ this.handleClickUpload }
-                  overrideContent={ !text ? null : (
-                    <Button 
-                      className="blue large icon send" 
-                      onClick={ this.sendText }
-                      caption={ <Icon icon="send"/> }
-                    />
-                  ) }
+                  overrideContent={ !text ? null : sendButton }
                 />
               ) }
             </div>
