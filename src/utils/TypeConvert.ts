@@ -1,6 +1,6 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { ErrorResponse } from 'airdcpp-apisocket';
+import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
 
 
 export const dupeToStringType = (dupeInfo: API.Dupe) => {
@@ -61,6 +61,10 @@ export const errorResponseToString = (error: ErrorResponse): string => {
   let message = error.message;
   if (error.code) {
     message += ` (code ${error.code})`;
+  }
+
+  if (error.json && (error.json as FieldError).field) {
+    message += ` (field ${(error.json as FieldError).field})`;
   }
 
   return message;

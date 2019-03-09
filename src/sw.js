@@ -89,6 +89,8 @@ function respondCache(e, cacheUrl) {
 
  
 self.addEventListener('fetch', e => {
+  if (event.request.method !== 'GET') return;
+
   if (e.request.mode === 'navigate' || (
       e.request.url.startsWith(basePath) &&
       e.request.url.indexOf('.', basePath.length) === -1 && // no file extension?

@@ -3,6 +3,7 @@ import ShareConstants from 'constants/ShareConstants';
 import SocketService from 'services/SocketService';
 
 import LoginStore from 'stores/LoginStore';
+import { fetchData } from 'utils/HttpUtils';
 
 
 export interface AddTempShareResponse { 
@@ -14,20 +15,15 @@ export const shareTempFile = async (
 ): Promise<AddTempShareResponse> => {
   let fileId;
   try {
-    fileId = await fetch(`${getBasePath()}temp`, {
+    const res = await fetchData(`${getBasePath()}temp`, {
       method: 'POST',
       headers: {
         'Authorization': LoginStore.authToken,
       },
       body: file
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Failed');
-        }
+    });
 
-        return res.headers.get('Location');
-      });
+    fileId = res.headers.get('Location');
   } catch (e) {
     throw e;
   }
