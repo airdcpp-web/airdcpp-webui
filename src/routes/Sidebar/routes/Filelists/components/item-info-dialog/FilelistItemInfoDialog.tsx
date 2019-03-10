@@ -51,6 +51,7 @@ class FilelistItemInfoDialog extends React.Component<Props & DataProps> {
         <DownloadDialog 
           downloadHandler={ FilelistItemActions.download }
           itemDataGetter={ FilelistItemGetter(session) }
+          userGetter={ () => session.user }
         />
         <FileItemInfoGrid 
           fileItem={ fileItem }
