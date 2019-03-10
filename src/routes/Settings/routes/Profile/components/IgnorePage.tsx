@@ -13,7 +13,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
   <tr>
-    <td>
+    <td className="user dropdown">
       <UserMenu 
         ids={ [ 'unignore' ] } 
         userIcon="simple"
@@ -21,7 +21,7 @@ const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
         contextElement="#setting-scroll-context"
       />
     </td>
-    <td>
+    <td className="count">
       { ignoreInfo.ignored_messages }
     </td>
   </tr>

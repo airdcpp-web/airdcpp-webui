@@ -16,7 +16,7 @@ import * as UI from 'types/ui';
 
 const Row: React.FC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }) => (
   <tr>
-    <td>
+    <td className="name dropdown">
       <ActionMenu 
         caption={ <strong>{ directory.name }</strong> } 
         actions={ FavoriteDirectoryActions.edit }
@@ -24,7 +24,7 @@ const Row: React.FC<{ directory: API.FavoriteDirectoryEntry; }> = ({ directory }
         contextElement="#setting-scroll-context"
       />
     </td>
-    <td>
+    <td className="path">
       { directory.path }
     </td>
   </tr>

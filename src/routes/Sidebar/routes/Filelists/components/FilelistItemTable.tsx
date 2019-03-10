@@ -54,6 +54,7 @@ const NameCell: React.FC<NameCellProps> = (
       <TableActionMenu 
         actions={ FilelistItemActions }
         itemData={ itemDataGetter }
+        ids={ [ 'refreshShare', 'details' ] }
       />
     </FileDownloadCell>
   );

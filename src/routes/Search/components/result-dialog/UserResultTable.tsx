@@ -79,8 +79,8 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
           <tr>
             <th>{ translate('User', t, UI.Modules.SEARCH) }</th>
             <th>{ translate('Hubs', t, UI.Modules.SEARCH) }</th>
-            <th>{ translate('Connection', t, UI.Modules.SEARCH) }</th>
-            <th>{ translate('Slots', t, UI.Modules.SEARCH) }</th>
+            <th style={{ width: '70px' }}>{ translate('Connection', t, UI.Modules.SEARCH) }</th>
+            <th style={{ width: '50px' }}>{ translate('Slots', t, UI.Modules.SEARCH) }</th>
             <th>{ translate('IP', t, UI.Modules.SEARCH) }</th>
             <th>{ translate('Path', t, UI.Modules.SEARCH) }</th>
           </tr>

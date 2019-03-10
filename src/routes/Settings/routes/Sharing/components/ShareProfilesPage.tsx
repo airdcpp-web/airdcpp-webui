@@ -27,7 +27,7 @@ interface ShareProfileRowProps {
 
 const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
   <tr>
-    <td>
+    <td className="name dropdown">
       <ActionMenu 
         caption={ <strong>{ profile.str }</strong> } 
         actions={ ShareProfileActions.edit } 
@@ -35,10 +35,10 @@ const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
         contextElement="#setting-scroll-context"
       />
     </td>
-    <td>
+    <td className="size">
       { formatSize(profile.size, t) }
     </td>
-    <td>
+    <td className="files">
       { profile.files }
     </td>
   </tr>

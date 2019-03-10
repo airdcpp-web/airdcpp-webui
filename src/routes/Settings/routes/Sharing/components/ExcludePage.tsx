@@ -21,7 +21,7 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 const Row: React.FC<{ path: string; }> = ({ path }) => (
   <tr>
-    <td>
+    <td className="path dropdown">
       <ActionMenu 
         caption={ <strong>{ path }</strong> } 
         actions={ ShareExcludeActions.edit } 

@@ -80,53 +80,51 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
   };
 
   return (
-    <div className="fileitem info grid">
-      <div className="ui segment">
-        <div className="ui grid stackable two column">
-          <GridRow 
-            title={ gridT('Name') }
-            text={ fileItem.name }
-          />
-          <GridRow 
-            title={ gridT('Type/content') } 
-            text={ fileItem.type.str }
-          />
-          <GridRow 
-            title={ gridT('Size') } 
-            text={ formatSize(fileItem.size, t) }
-          />
-          <GridRow 
-            title={ gridT('Last modified') }
-            text={ formatRelativeTime(fileItem.time) }
-          />
-          { fileItem.type.id === 'file' && (
-            <GridRow 
-              title={ gridT('TTH') } 
-              text={ fileItem.tth }
-            /> 
-          )}
-          { !!fileItem.dupe && (
-            <GridRow 
-              title={ gridT('Dupe type') }
-              text={ gridT(DupeStrings[fileItem.dupe.id]) }
-            /> 
-          )}
-          { !!fileItem.dupe && (
-            <GridRow 
-              title={ gridT('Dupe paths') }
-              text={ <DupePaths paths={ fileItem.dupe.paths }/> }
-            /> 
-          )}
-        </div>
-
-        <DownloadMenu 
-          caption={ gridT('Actions...') }
-          button={ true }
-          user={ user }
-          itemInfoGetter={ () => fileItem }
-          downloadHandler={ downloadHandler }
+    <div className="ui fileitem info segment">
+      <div className="ui grid stackable two column">
+        <GridRow 
+          title={ gridT('Name') }
+          text={ fileItem.name }
         />
+        <GridRow 
+          title={ gridT('Type/content') } 
+          text={ fileItem.type.str }
+        />
+        <GridRow 
+          title={ gridT('Size') } 
+          text={ formatSize(fileItem.size, t) }
+        />
+        <GridRow 
+          title={ gridT('Last modified') }
+          text={ formatRelativeTime(fileItem.time) }
+        />
+        { fileItem.type.id === 'file' && (
+          <GridRow 
+            title={ gridT('TTH') } 
+            text={ fileItem.tth }
+          /> 
+        )}
+        { !!fileItem.dupe && (
+          <GridRow 
+            title={ gridT('Dupe type') }
+            text={ gridT(DupeStrings[fileItem.dupe.id]) }
+          /> 
+        )}
+        { !!fileItem.dupe && (
+          <GridRow 
+            title={ gridT('Dupe paths') }
+            text={ <DupePaths paths={ fileItem.dupe.paths }/> }
+          /> 
+        )}
       </div>
+
+      <DownloadMenu 
+        caption={ gridT('Actions...') }
+        button={ true }
+        user={ user }
+        itemInfoGetter={ () => fileItem }
+        downloadHandler={ downloadHandler }
+      />
     </div>
   );
 };

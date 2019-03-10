@@ -24,7 +24,7 @@ interface WebUserRowProps {
 
 const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
   <tr>
-    <td>
+    <td className="name dropdown">
       <ActionMenu 
         caption={ <strong>{ user.username }</strong> }
         actions={ WebUserActions.edit } 
@@ -32,16 +32,16 @@ const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
         contextElement="#setting-scroll-context"
       />
     </td>
-    <td>
+    <td className="permissions">
       { user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1 ? 
           moduleT.translate('Administrator') : 
           user.permissions.length
       }
     </td>
-    <td>
+    <td className="sessions">
       { user.active_sessions }
     </td>
-    <td>
+    <td className="last-login">
       { formatRelativeTime(user.last_login) }
     </td>
   </tr>

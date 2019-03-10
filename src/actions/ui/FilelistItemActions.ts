@@ -61,7 +61,7 @@ const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
     filter: isMe,
     handler: handleRefreshShare,
   },
-  itemDetails: { 
+  details: { 
     displayName: 'Details',
     icon: IconConstants.OPEN,
     handler: handleItemDetails,
