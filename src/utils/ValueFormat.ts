@@ -76,7 +76,7 @@ export const formatConnection = (bytes: number, t: i18next.TFunction) => {
     return null;
   }
 
-  return formatUnits(bytes, bitUnits, 1000, t);
+  return formatUnits(bytes * 8, bitUnits, 1000, t);
 };
 
 // http://momentjs.com/docs/#/displaying/from/
