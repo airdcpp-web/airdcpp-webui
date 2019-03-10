@@ -93,7 +93,8 @@ const userToMention = (user: API.HubUser) => {
 
 interface State {
   text: string;
-  file: File | null;
+  files: File[] | null;
+  uploading: boolean;
 }
 
 class MessageComposer extends React.Component<MessageComposerProps & RouteComponentProps> {
@@ -194,42 +195,56 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   }
 
   onDropFile = (acceptedFiles: File[]) => {
-    if (!acceptedFiles.length) {
-      return;
-    }
-
     const { t } = this.props;
-    const file = acceptedFiles[0];
     const maxSize = 100 * 1024 * 1024;
-    if (file.size > maxSize) {
-      NotificationActions.error({
-        title: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
-          defaultValue: 'File is too large (maximum size is {{maxSize}})',
-          replace: {
-            maxSize: formatSize(maxSize, t)
-          }
-        })
+
+    const files = acceptedFiles
+      .filter(file => {
+        if (file.size > maxSize) {
+          NotificationActions.error({
+            title: file.name,
+            message: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
+              defaultValue: 'File is too large (maximum size is {{maxSize}})',
+              replace: {
+                maxSize: formatSize(maxSize, t)
+              }
+            })
+          });
+    
+          return false;
+        }
+
+        return true;
       });
 
+    if (!files.length) {
       return;
     }
 
     this.setState({
-      file
+      files
     });
   }
 
-  onUploadFile = async (file: File) => {
-    this.resetFile();
+  onUploadFiles = async (files: File[]) => {
+    this.resetFiles();
+    this.setState({
+      uploading: true
+    });
 
-    try {
-      const { handleFileUpload } = this.props;
-      const res = await handleFileUpload(file);
-
-      this.appendText(res.magnet);
-    } catch (e) {
-      NotificationActions.apiError('Failed to send the file', e);
+    const { handleFileUpload } = this.props;
+    for (let file of files) {
+      try {
+        const res = await handleFileUpload(file);
+        this.appendText(res.magnet);
+      } catch (e) {
+        NotificationActions.apiError('Failed to upload the file', e);
+      }
     }
+
+    this.setState({
+      uploading: false
+    });
   }
 
   onPaste = (evt: React.ClipboardEvent<HTMLInputElement>) => {
@@ -245,15 +260,16 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
   }
 
-  resetFile = () => {
+  resetFiles = () => {
     this.setState({
-      file: null,
+      files: null,
     });
   }
 
   state: State = {
     ...loadState(this.props),
-    file: null,
+    files: null,
+    uploading: false,
   };
 
   render() {
@@ -272,7 +288,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     const hasFileUploadAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) && 
       LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
 
-    const { file, text } = this.state;
+    const { files, text, uploading } = this.state;
     const { t } = this.props;
 
     const sendButton = (
@@ -280,16 +296,17 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
         className="blue large icon send" 
         onClick={ this.sendText }
         caption={ <Icon icon="send"/> }
+        loading={ uploading }
       />
     );
 
     return (
       <>
-        { !!file && (
+        { !!files && (
           <FilePreviewDialog
-            file={ file }
-            onConfirm={ this.onUploadFile }
-            onReject={ this.resetFile }
+            files={ files }
+            onConfirm={ this.onUploadFiles }
+            onReject={ this.resetFiles }
             title={ translate('Send file', t, UI.Modules.COMMON) }
           />
         ) }
@@ -297,7 +314,9 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           onDrop={ this.onDropFile }
           ref={ this.dropzoneRef }
           disabled={ !hasFileUploadAccess }
-          multiple={ false }
+          multiple={ true }
+          minSize={ 1 }
+          // Handle max size check elsewhere (report errors)
         >
           {({ getRootProps, getInputProps }) => (
             <div 
@@ -321,7 +340,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                   appendSpaceOnAdd={ false }
                 />
               </MentionsInput>
-              { !hasFileUploadAccess ? sendButton : (
+              { !hasFileUploadAccess || uploading ? sendButton : (
                 <TempShareDropdown
                   className="blue large" 
                   handleUpload={ this.handleClickUpload }

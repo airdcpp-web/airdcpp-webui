@@ -17,8 +17,8 @@ import { fileToText } from 'utils/FileUtils';
 
 
 interface FilePreviewDialogProps extends ModalProps {
-  file: File;
-  onConfirm: (file: File) => Promise<void>;
+  files: File[];
+  onConfirm: (files: File[]) => Promise<void>;
 
 }
 
@@ -50,24 +50,37 @@ const getViewerElement = (file: File, previewUrl: string, t: i18next.TFunction) 
   );
 };
 
-const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ file, onConfirm, ...other }) => {
-  const [ preview, setPreview ] = useState<string | null>(null);
+
+interface PreviewFile {
+  file: File;
+  url: string;
+}
+
+const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ files, onConfirm, ...other }) => {
+  const [ previewFiles, setPreviewFiles ] = useState<PreviewFile[] | null>(null);
   const { t } = useTranslation();
 
   useEffect(
     () => {
-      const p = URL.createObjectURL(file);
-      setPreview(p);
-      return () => URL.revokeObjectURL(p); 
+      const previews = files.map(file => ({
+        url: URL.createObjectURL(file),
+        file
+      }));
+
+      setPreviewFiles(previews);
+      return () => previews.forEach(p => URL.revokeObjectURL(p.url));
     },
     []
   );
 
+  if (!previewFiles) {
+    return null;
+  }
+
   const handleConfirm = () => {
-    return onConfirm(file);
+    return onConfirm(files);
   };
 
-  const PreviewElement = getViewerElement(file, preview!, t);
   return (
     <Modal
       { ...other }
@@ -78,11 +91,15 @@ const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ file, onConfirm, 
       approveCaption={ translate('Upload', t, UI.Modules.COMMON) }
       icon={ IconConstants.UPLOAD }
     >
-      <LayoutHeader
-        title={ file.name }
-        subHeader={ formatSize(file.size, t) }
-      />
-      { PreviewElement }
+      { previewFiles.map(({ file, url }) => (
+        <div className="ui segment">
+          <LayoutHeader
+            title={ file.name }
+            subHeader={ formatSize(file.size, t) }
+          />
+          { getViewerElement(file, url, t) }
+        </div>
+      )) }
     </Modal>
   );
 };
