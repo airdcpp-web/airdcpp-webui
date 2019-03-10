@@ -38,6 +38,7 @@
 .chat.session .composer.large .actions.button .caption {
 	display: flex !important;
 	align-items: center !important;
+	opacity: 0.9;
 }
 
 .chat.session .composer > .input {
