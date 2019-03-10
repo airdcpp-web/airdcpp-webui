@@ -297,6 +297,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           onDrop={ this.onDropFile }
           ref={ this.dropzoneRef }
           disabled={ !hasFileUploadAccess }
+          multiple={ false }
         >
           {({ getRootProps, getInputProps }) => (
             <div 
