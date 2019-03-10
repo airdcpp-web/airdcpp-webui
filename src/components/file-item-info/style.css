@@ -3,11 +3,16 @@
 	overflow-x: hidden;
 }
 
-.fileitem.info.segment .value.column {
-  word-break: break-all;
-}
-
 .fileitem.info.segment .download.ui.dropdown {
 	max-width: 150px;
 	margin-top: 10px;
+}
+
+.fileitem.info.segment .title.column {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.fileitem.info.segment .value.column {
+  word-break: break-all;
 }

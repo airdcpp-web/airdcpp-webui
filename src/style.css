@@ -194,6 +194,7 @@ section#container-main,
 	font-size: 1.3em;
 }
 
-td:not(.dropdown) {
+td:not(.dropdown),
+th {
 	overflow: hidden;
 }

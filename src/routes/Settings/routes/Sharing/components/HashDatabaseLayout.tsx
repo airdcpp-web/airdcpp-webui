@@ -18,7 +18,7 @@ import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import i18next from 'i18next';
+import { Row } from 'components/semantic/Grid';
 
 
 interface OptimizeLayoutProps {
@@ -66,26 +66,6 @@ const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
   );
 };
 
-
-interface SizeRowProps {
-  title: string;
-  size: number;
-  t: i18next.TFunction;
-}
-
-const SizeRow: React.FC<SizeRowProps> = ({ title, size, t }) => (
-  <div className="ui row compact">
-    <div className="three wide column">
-      <div className="ui tiny header">
-        { title }
-      </div>
-    </div>
-    <div className="twelve wide column">
-      { formatSize(size, t) }
-    </div>
-  </div>
-);
-
 interface HashDatabaseLayoutProps {
   moduleT: UI.ModuleTranslator;
 }
@@ -110,15 +90,15 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
           { translate('Hash database') }
         </h3>
         <div className="ui grid two column">
-          <SizeRow 
+          <Row 
             title={ translate('File index size') } 
-            size={ status.file_index_size }
-            t={ plainT }
+            text={ formatSize(status.file_index_size, plainT) }
+            titleWidth="five"
           />
-          <SizeRow 
+          <Row 
             title={ translate('Hash store size') }
-            size={ status.hash_store_size }
-            t={ plainT }
+            text={ formatSize(status.hash_store_size, plainT) }
+            titleWidth="five"
           />
         </div>
         { LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (

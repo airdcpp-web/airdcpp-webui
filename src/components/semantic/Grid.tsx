@@ -3,22 +3,44 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { Trans } from 'react-i18next';
+import { toI18nKey } from 'utils/TranslationUtils';
+
+import * as UI from 'types/ui';
+
 
 export interface RowProps {
   title: React.ReactNode;
   text: React.ReactNode;
   titleWidth?: string;
+  className?: string;
 }
 
-export const Row: React.FC<RowProps> = ({ title, text, titleWidth = 'four' }) => (
-  <div className="ui row">
-    <div className={ classNames(titleWidth, 'wide column') }>
-      <div className="ui tiny header">
+
+
+const formatText = (text: React.ReactNode) => {
+  if (!!text) {
+    return text;
+  }
+  
+  return (
+    <Trans 
+      i18nKey={ toI18nKey('na', UI.Modules.COMMON) }
+    >
+      N/A
+    </Trans>
+  );
+};
+
+export const Row: React.FC<RowProps> = ({ title, text, className, titleWidth = 'four' }) => (
+  <div className={ classNames('ui row', className) }>
+    <div className={ classNames(titleWidth, 'wide column title') }>
+      <div className="ui tiny header" style={{ overflow: 'hidden' }}>
         { title }
       </div>
     </div>
-    <div className="column">
-      { text }
+    <div className="column value">
+      { formatText(text) }
     </div>
   </div>
 );

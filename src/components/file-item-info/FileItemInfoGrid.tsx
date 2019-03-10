@@ -7,44 +7,12 @@ import { DownloadMenu } from 'components/menu';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { Trans, useTranslation } from 'react-i18next';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 import './style.css';
+import { Row } from 'components/semantic/Grid';
 
-
-const formatText = (text: React.ReactNode) => {
-  if (!!text) {
-    return text;
-  }
-  
-  return (
-    <Trans 
-      i18nKey={ toI18nKey('na', UI.Modules.COMMON) }
-    >
-      N/A
-    </Trans>
-  );
-};
-
-
-interface GridRowProps {
-  title: string; 
-  text: React.ReactNode;
-}
-
-const GridRow: React.FC<GridRowProps> = ({ title, text }) => (
-  <div className="ui row">
-    <div className="three wide column title">
-      <div className="ui tiny header">
-        { title }
-      </div>
-    </div>
-    <div className="thirteen wide column value">
-      { formatText(text) }
-    </div>
-  </div>
-);
 
 const DupeStrings = {
   //[API.DupeEnum.NONE]: 'None',
@@ -82,36 +50,36 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
   return (
     <div className="ui fileitem info segment">
       <div className="ui grid stackable two column">
-        <GridRow 
+        <Row 
           title={ gridT('Name') }
           text={ fileItem.name }
         />
-        <GridRow 
+        <Row 
           title={ gridT('Type/content') } 
           text={ fileItem.type.str }
         />
-        <GridRow 
+        <Row 
           title={ gridT('Size') } 
           text={ formatSize(fileItem.size, t) }
         />
-        <GridRow 
+        <Row 
           title={ gridT('Last modified') }
           text={ formatRelativeTime(fileItem.time) }
         />
         { fileItem.type.id === 'file' && (
-          <GridRow 
+          <Row 
             title={ gridT('TTH') } 
             text={ fileItem.tth }
           /> 
         )}
         { !!fileItem.dupe && (
-          <GridRow 
+          <Row 
             title={ gridT('Dupe type') }
             text={ gridT(DupeStrings[fileItem.dupe.id]) }
           /> 
         )}
         { !!fileItem.dupe && (
-          <GridRow 
+          <Row 
             title={ gridT('Dupe paths') }
             text={ <DupePaths paths={ fileItem.dupe.paths }/> }
           /> 
