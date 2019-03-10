@@ -1,0 +1,13 @@
+
+.fileitem.info.grid .dupe-paths .path {
+	overflow-x: hidden;
+}
+
+.fileitem.info.grid .value.column {
+  word-break: break-all;
+}
+
+.fileitem.info.grid .download.ui.dropdown {
+	max-width: 150px;
+	margin-top: 10px;
+}

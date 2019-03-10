@@ -193,3 +193,7 @@ section#container-main,
 .sidebar .icon-panel .icon.large {
 	font-size: 1.3em;
 }
+
+td:not(.dropdown) {
+	overflow: hidden;
+}

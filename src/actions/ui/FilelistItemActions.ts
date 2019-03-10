@@ -9,6 +9,7 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import History from 'utils/History';
 
 
 interface ActionFilelistItemData {
@@ -18,7 +19,12 @@ interface ActionFilelistItemData {
 
 
 const isMe = ({ session }: ActionFilelistItemData) => session.user.flags.indexOf('self') !== -1;
+const isRoot = ({ item }: ActionFilelistItemData) => item.path === '/';
 const isPartialList = ({ session }: ActionFilelistItemData) => session.partial_list;
+const isDirectory = ({ item }: ActionFilelistItemData) => item.type.id === 'directory';
+
+const filterReload = (data: ActionFilelistItemData) => isPartialList(data) && isDirectory(data);
+const filterDetails = (data: ActionFilelistItemData) => !isRoot(data);
 
 
 const handleReloadDirectory: UI.ActionHandler<ActionFilelistItemData> = (
@@ -36,12 +42,16 @@ const handleRefreshShare: UI.ActionHandler<ActionFilelistItemData> = ({ data }) 
   return ShareActions.refreshVirtual(data.item.path, data.session.share_profile!.id);
 };
 
+const handleItemDetails: UI.ActionHandler<ActionFilelistItemData> = ({ data, location }) => {
+  History.push(`${location.pathname}/item/${data.item.id}`);
+};
+
 const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
   reloadDirectory: {
     displayName: 'Reload',
     access: API.AccessEnum.FILELISTS_VIEW,
     icon: IconConstants.RELOAD,
-    filter: isPartialList,
+    filter: filterReload,
     handler: handleReloadDirectory,
   },
   refreshShare: {
@@ -50,6 +60,12 @@ const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
     icon: IconConstants.REFRESH,
     filter: isMe,
     handler: handleRefreshShare,
+  },
+  itemDetails: { 
+    displayName: 'Details',
+    icon: IconConstants.OPEN,
+    handler: handleItemDetails,
+    filter: filterDetails
   },
 };
 

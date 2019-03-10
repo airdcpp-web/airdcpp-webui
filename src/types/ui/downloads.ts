@@ -15,6 +15,7 @@ export interface DownloadableItemInfo {
   type: API.FileItemType;
   path: string;
   dupe: API.Dupe;
+  time: number;
 }
 
 export interface DownloadableItemData<ItemT extends DownloadableItemInfo = DownloadableItemInfo> {

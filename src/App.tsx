@@ -53,6 +53,11 @@ const getBackgroundImage = () => {
   return window.innerWidth < 1440 ? Background1500px : Background3840px;
 };
 
+const getBackgroundImageStyle = () => {
+  const url = getBackgroundImage();
+  return url ? `url(${url})` : undefined;
+};
+
 const App = () => {
   const prompt = useInstallPrompt();
   return (
@@ -71,7 +76,7 @@ const App = () => {
                     ref={ measureRef } 
                     id="background-wrapper" 
                     style={{
-                      backgroundImage: 'url(' + getBackgroundImage() + ')',
+                      backgroundImage: getBackgroundImageStyle(),
                       height: '100%',
                     }}
                   >

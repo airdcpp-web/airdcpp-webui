@@ -3,6 +3,8 @@ import React from 'react';
 import SearchAPIActions from 'actions/reflux/SearchActions';
 import SearchUIActions from 'actions/ui/SearchActions';
 
+import { ResultDialog, SearchResultGetter } from './result-dialog';
+
 import SearchViewStore from 'stores/SearchViewStore';
 
 import { Column } from 'fixed-data-table-2';
@@ -16,7 +18,6 @@ import { UserFileActions } from 'actions/ui/UserActions';
 import Message from 'components/semantic/Message';
 
 import DownloadDialog from 'components/download/DownloadDialog';
-import ResultDialog, { SearchResultGetter } from 'routes/Search/components/ResultDialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
@@ -61,7 +62,13 @@ const UserCell: React.FC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.
   </TableUserMenu>
 );
 
-const resultUserGetter = (rowData: API.GroupedSearchResult) => rowData.users.user;
+const resultUserGetter = (rowData: API.GroupedSearchResult) => {
+  if (!rowData || !rowData.users) {
+    return rowData.users.user;
+  }
+
+  return rowData.users.user;
+};
 
 const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResult>> = (
   { rowDataGetter, ...props }

@@ -58,12 +58,3 @@
 		max-width: 250px;
 	}
 }
-
-.result.modal .dupe-paths .path {
-	overflow-x: hidden;
-}
-
-.result.modal .download.ui.dropdown {
-	max-width: 150px;
-	margin-top: 10px;
-}

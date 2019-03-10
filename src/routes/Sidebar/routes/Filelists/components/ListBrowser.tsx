@@ -5,32 +5,20 @@ import FilelistItemUIActions from 'actions/ui/FilelistItemActions';
 import FilelistItemAPIActions from 'actions/reflux/FilelistItemActions';
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 
-import { dupeToStringType } from 'utils/TypeConvert';
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/menu';
-
-import FilelistViewStore from 'stores/FilelistViewStore';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
 
 import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
-import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DurationCell, FileDownloadCell, FileDownloadCellClickHandler } from 'components/table/Cell';
-import { Column } from 'fixed-data-table-2';
-
-import IconConstants from 'constants/IconConstants';
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
-
-import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
+import DownloadDialog from 'components/download/DownloadDialog';
 import { Location } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import FilelistConstants from 'constants/FilelistConstants';
-import { FilelistItem } from 'types/api';
+import { FilelistItemGetter } from './item-info-dialog';
+import FilelistItemTable from './FilelistItemTable';
 
 
 interface ListBrowserProps {
@@ -56,10 +44,6 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     }
 
     return true;
-  }
-
-  rowClassNameGetter = (rowData: API.FilelistItem) => {
-    return dupeToStringType(rowData.dupe);
   }
 
   handleClickDirectory = (path: string) => {
@@ -116,47 +100,6 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     FilelistSessionActions.changeDirectory(this.props.session, directory);
   }
 
-  emptyRowsNodeGetter = () => {
-    const { location, state } = this.props.session;
-    const { translate } = this.props.sessionT;
-
-    if (state.id === 'download_failed') {
-      return (
-        <Message 
-          icon={ IconConstants.ERROR }
-          title={ translate('Download failed') }
-          description={ state.str }
-        />
-      );
-    }
-
-    // The list finished downloading but the view hasn't updated yet
-    const { files, directories } = location.type as API.DirectoryType;
-    if (files !== 0 || directories !== 0) {
-      return <Loader text={ translate('Updating view') }/>;
-    }
-
-    // The directory was changed but the download state hasn't changed yet
-    if (!location.complete) {
-      return <Loader text={ translate('Preparing download') }/>;
-    }
-
-    return (
-      <Message 
-        title={ translate('No content to display') }
-        description={ translate('The directory is empty') }
-      />
-    );
-  }
-
-  onClickDirectory: FileDownloadCellClickHandler = (cellData, rowDataGetter) => {
-    if (rowDataGetter().type.id === 'directory') {
-      return () => this.handleClickDirectory(this.props.session.location.path + cellData + '/');
-    }
-
-    return undefined;
-  }
-
   getCurrentDirectory = () => {
     return this.props.session.location;
   }
@@ -171,10 +114,10 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         contextElement=".session-container"
       >
         <ActionMenu
-          itemData={ {
+          itemData={{
             item: this.props.session.location,
             session: this.props.session,
-          } }
+          }}
           actions={ FilelistItemUIActions }
         />
       </DownloadMenu>
@@ -185,10 +128,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     return this.props.session.user;
   }
 
-  filelistItemGetter: DownloadDialogItemDataGetter<FilelistItem> = (itemId, socket) => {
-    const { session } = this.props;
-    return socket.get(`${FilelistConstants.MODULE_URL}/${session.id}/items/${itemId}`);
-  }
+  filelistItemFetcher = FilelistItemGetter(this.props.session);
 
   render() {
     const { session, sessionT } = this.props;
@@ -209,54 +149,14 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
           entityId={ session.id }
         />
-
-        <VirtualTable
-          emptyRowsNodeGetter={ this.emptyRowsNodeGetter }
-          rowClassNameGetter={ this.rowClassNameGetter }
-          store={ FilelistViewStore }
-          entityId={ session.id }
-          viewId={ session.location.path }
-          sessionStore={ FilelistSessionStore }
-          moduleId={ FilelistItemUIActions.moduleId }
-        >
-          <Column
-            name="Name"
-            width={200}
-            columnKey="name"
-            cell={
-              <FileDownloadCell 
-                clickHandlerGetter={ this.onClickDirectory }
-                userGetter={ this.userGetter }
-                downloadHandler={ FilelistItemAPIActions.download } 
-              /> 
-            }
-            flexGrow={8}
-          />
-          <Column
-            name="Size"
-            width={60}
-            columnKey="size"
-            cell={ <SizeCell/> }
-            flexGrow={1}
-          />
-          <Column
-            name="Type"
-            width={70}
-            columnKey="type"
-            flexGrow={1}
-            hideWidth={ 500 }
-          />
-          <Column
-            name="Last modified"
-            width={80}
-            columnKey="time"
-            cell={ <DurationCell/> }
-            flexGrow={1}
-          />
-        </VirtualTable>
+        <FilelistItemTable
+          session={ session }
+          sessionT={ sessionT }
+          onClickDirectory={ this.handleClickDirectory }
+        />
         <DownloadDialog 
           downloadHandler={ FilelistItemAPIActions.download }
-          itemDataGetter={ this.filelistItemGetter }
+          itemDataGetter={ this.filelistItemFetcher }
           userGetter={ this.userGetter }
         />
       </div>
