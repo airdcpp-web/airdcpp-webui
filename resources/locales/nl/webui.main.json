@@ -102,16 +102,8 @@
     "searchOffline": "Je moet in tenminste één hub zitten om iets te kunnen zoeken",
     "enterSearchString": "Zoektekst invullen...",
     "search": "Zoek",
-    "typeContent": "Type/Inhoud",
-    "size": "Grootte",
-    "lastModified": "Laatst veranderd",
-    "dupeType": "Dupe type",
-    "shareFull": "Share (volledig)",
-    "dupePaths": "Dupe mappen",
-    "actionsCaption": "Acties...",
     "usersCount": "User ({{count}})",
     "usersCount_plural": "Users ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
     "noResults": "Geen zoekresultaten voor \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "No content to display",
     "theDirectoryIsEmpty": "De map is leeg",
+    "updatingView": "Updating view",
+    "downloadFailed": "Download failed",
     "table": {
       "name": "Naam",
       "size": "Grootte",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Herladen",
       "refreshInShare": "Ververs in share",
-      "close": "Sluiten"
+      "close": "Sluiten",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Sluit en laat niet meer zien",
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Annuleren",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Type/Inhoud",
+    "lastModified": "Laatst veranderd",
+    "dupeType": "Dupe type",
+    "shareFull": "Share (volledig)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Dupe mappen",
+    "actionsCaption": "Acties...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Browse",
       "noOptions": "No options",
@@ -502,6 +513,8 @@
       "addPath": "Voeg path toe",
       "removePath": "Verwijder path",
       "removeUser": "Remove user",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Verwijder profiel",
       "prompts": {
         "removeShareExcludeApprove": "Verwijder path",
         "removeShareExcludeReject": "Niet verwijderen",

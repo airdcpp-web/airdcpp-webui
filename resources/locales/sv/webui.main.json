@@ -102,16 +102,8 @@
     "searchOffline": "Du måste vara ansluten till minst en hubb för att kunna söka",
     "enterSearchString": "Ange söksträng...",
     "search": "Sök",
-    "typeContent": "Typ/innehåll",
-    "size": "Storlek",
-    "lastModified": "Senast ändrad",
-    "dupeType": "Dubblettyp",
-    "shareFull": "Utdelning (full)",
-    "dupePaths": "Dubblettsökvägar",
-    "actionsCaption": "Åtgärder...",
     "usersCount": "Användare ({{count}})",
     "usersCount_plural": "Användare ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} användare ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} användare ({{user.nicks}})",
     "noResults": "Inget hittades för \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "Du kommer att kunna bläddra vidare när användaren ansluter sig igen",
     "noContentToDisplay": "Inget att visa",
     "theDirectoryIsEmpty": "Katalogen är tom",
+    "updatingView": "Updating view",
+    "downloadFailed": "Nedladdning misslyckades",
     "table": {
       "name": "Namn",
       "size": "Storlek",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Uppdatera",
       "refreshInShare": "Uppdatera i utdelning",
-      "close": "Stäng"
+      "close": "Stäng",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Stäng och visa inte igen",
       "notifications": {
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
-        "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare"
+        "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Fortsätt och starta om",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Avbryt",
         "shutdownSystemContent": "Är du säker på att du vill avsluta applikationen?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "Inga objekt att visa",
     "noSessionEditAccess": "Du har inte behörighet att öppna nya sessioner",
     "noChatAccess": "Du har inte behörighet att skicka nya meddelanden",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Typ/innehåll",
+    "lastModified": "Senast ändrad",
+    "dupeType": "Dubblettyp",
+    "shareFull": "Utdelning (full)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Dubblettsökvägar",
+    "actionsCaption": "Åtgärder...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Bläddra",
       "noOptions": "Inga alternativ",
@@ -502,6 +513,8 @@
       "addPath": "Lägg till sökväg",
       "removePath": "Ta bort sökväg",
       "removeUser": "Ta bort användare",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Ta bort profil",
       "prompts": {
         "removeShareExcludeApprove": "Ta bort sökväg",
         "removeShareExcludeReject": "Ta inte bort",

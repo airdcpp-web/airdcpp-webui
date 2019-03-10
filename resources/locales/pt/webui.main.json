@@ -102,16 +102,8 @@
     "searchOffline": "Tem de estar conectado a pelo menos um concentrador para poder fazer pesquisas",
     "enterSearchString": "Introduza os termos a pesquisar...",
     "search": "Pesquisar",
-    "typeContent": "Tipo / conteúdo",
-    "size": "Tamanho",
-    "lastModified": "Última alteração",
-    "dupeType": "Tipo de duplicado",
-    "shareFull": "Partilha (total)",
-    "dupePaths": "Caminhos do duplicado",
-    "actionsCaption": "Ações...",
     "usersCount": "Utilizador ({{count}})",
     "usersCount_plural": "Utilizadores ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} utilizador ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} utilizadores ({{user.nicks}})",
     "noResults": "Não foram encontrados resultados para \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "Você poderá continuar a navegar quando o utilizador voltar a ligar-se",
     "noContentToDisplay": "Sem conteúdo para mostrar",
     "theDirectoryIsEmpty": "A pasta está vazia",
+    "updatingView": "Updating view",
+    "downloadFailed": "O descarregamento falhou",
     "table": {
       "name": "Nome",
       "size": "Tamanho",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Recarregar",
       "refreshInShare": "Atualizar na partilha",
-      "close": "Fechar"
+      "close": "Fechar",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Fechar e não mostrar de novo",
       "notifications": {
         "ignoreUserSuccess": "O utilizador {{item.nicks}} foi adicionado aos utilizadores ignorados",
-        "unignoreUserSuccess": "O utilizador {{item.nicks}} foi removido dos utilizadores ignorados"
+        "unignoreUserSuccess": "O utilizador {{item.nicks}} foi removido dos utilizadores ignorados",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuar e reiniciar",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Cancelar",
         "shutdownSystemContent": "Tem a certeza que quer desligar a aplicação?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Tipo / conteúdo",
+    "lastModified": "Última alteração",
+    "dupeType": "Tipo de duplicado",
+    "shareFull": "Partilha (total)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Caminhos do duplicado",
+    "actionsCaption": "Ações...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
@@ -502,6 +513,8 @@
       "addPath": "Adicionar caminho",
       "removePath": "Remover caminho",
       "removeUser": "Remover utilizador",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Remover perfil",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",

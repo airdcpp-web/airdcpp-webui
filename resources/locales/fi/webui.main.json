@@ -102,16 +102,8 @@
     "searchOffline": "Sinun on oltava vähintään yhdessä hubissa, jotta voit tehdä hakua",
     "enterSearchString": "Syötä hakusana...",
     "search": "Etsi",
-    "typeContent": "Tyyppi/sisältö",
-    "size": "Koko",
-    "lastModified": "Viimeksi muokattu",
-    "dupeType": "Kaksoiskappaleen tyyppi",
-    "shareFull": "Jako (täysi)",
-    "dupePaths": "Kaksoiskappaleiden polut",
-    "actionsCaption": "Toiminnot...",
     "usersCount": "Käyttäjä ({{count}})",
     "usersCount_plural": "Käyttäjät ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} käyttäjä ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} käyttäjää ({{user.nicks}})",
     "noResults": "Hakusanalla \"{{searchString}}\" ei löytynyt tuloksia",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "Voit jatkaa selaamista, kun käyttäjä on jälleen online-tilassa",
     "noContentToDisplay": "Ei näytettävää sisältöä",
     "theDirectoryIsEmpty": "Kansio on tyhjä",
+    "updatingView": "Päivitetään näkymää",
+    "downloadFailed": "Lataus epäonnistui",
     "table": {
       "name": "Nimi",
       "size": "Koko",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Lataa uudestaan",
       "refreshInShare": "Päivitä jaoissa",
-      "close": "Sulje"
+      "close": "Sulje",
+      "details": "Tiedot"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Sulje ja älä näytä uudestaan",
       "notifications": {
         "ignoreUserSuccess": "Käyttäjä {{item.nicks}} lisättiin hylättyihin käyttäjiin",
-        "unignoreUserSuccess": "Käyttäjä {{item.nicks}} poistettiin hylätyistä käyttäjistä"
+        "unignoreUserSuccess": "Käyttäjä {{item.nicks}} poistettiin hylätyistä käyttäjistä",
+        "copyMagnetSuccess": "Magnet-linkki kopioitiin leikepöydälle"
       },
       "prompts": {
         "restartWebSystemApprove": "Jatka ja käynnistä uudestaan",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Peruuta",
         "shutdownSystemContent": "Haluatko varmasti sammuttaa sovelluksen?"
       }
-    },    
+    },
     "units": {
       "b": "t",
       "kib": "Kt",
@@ -350,6 +346,21 @@
     "noItemsToShow": "Ei näytettäviä kohteita",
     "noSessionEditAccess": "Sinulla ei ole oikeuksia avata uusia istuntoja",
     "noChatAccess": "Sinulla ei ole oikeuksia lähettää uusia viestejä",
+    "loadingSessions": "Ladataan istuntoja",
+    "typeContent": "Tyyppi/sisältö",
+    "lastModified": "Viimeksi muokattu",
+    "dupeType": "Kaksoiskappaleen tyyppi",
+    "shareFull": "Jako (täysi)",
+    "sharePartial": "Jako (osittainen)",
+    "queueFull": "Latausjono (täysi)",
+    "queuePartial": "Latausjono (osittainen)",
+    "finishedFull": "Valmistunut (täysi)",
+    "finishedPartial": "Valmistunut (osittainen)",
+    "shareAndQueue": "Jako ja latausjono",
+    "dupePaths": "Kaksoiskappaleiden polut",
+    "actionsCaption": "Toiminnot...",
+    "tth": "TTH",
+    "na": "Ei saatavilla",
     "form": {
       "browse": "Selaa",
       "noOptions": "Ei vaihtoehtoja",
@@ -502,6 +513,8 @@
       "addPath": "Lisää polku",
       "removePath": "Poista polku",
       "removeUser": "Poista käyttäjä",
+      "setAsDefault": "Aseta oletukseksi",
+      "removeProfile": "Poista profiili",
       "prompts": {
         "removeShareExcludeApprove": "Poista polku",
         "removeShareExcludeReject": "Älä poista",

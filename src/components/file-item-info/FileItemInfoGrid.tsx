@@ -20,9 +20,9 @@ const formatText = (text: React.ReactNode) => {
   
   return (
     <Trans 
-      i18nKey={ toI18nKey('unknown', UI.Modules.COMMON) }
+      i18nKey={ toI18nKey('na', UI.Modules.COMMON) }
     >
-      (unknown)
+      N/A
     </Trans>
   );
 };

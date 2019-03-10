@@ -102,16 +102,8 @@
     "searchOffline": "You must to be connected to at least one hub in order to perform searches",
     "enterSearchString": "Enter search string...",
     "search": "Szukaj",
-    "typeContent": "Type/content",
-    "size": "Rozmiar",
-    "lastModified": "Last modified",
-    "dupeType": "Dupe type",
-    "shareFull": "Share (full)",
-    "dupePaths": "Dupe paths",
-    "actionsCaption": "Actions...",
     "usersCount": "User ({{count}})",
     "usersCount_plural": "Users ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
     "noResults": "No results found for \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "No content to display",
     "theDirectoryIsEmpty": "The directory is empty",
+    "updatingView": "Updating view",
+    "downloadFailed": "Download failed",
     "table": {
       "name": "Nazwa",
       "size": "Rozmiar",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Przeładuj",
       "refreshInShare": "Refresh in share",
-      "close": "Zamknij"
+      "close": "Zamknij",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Close and don't show again",
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Anuluj",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Type/content",
+    "lastModified": "Last modified",
+    "dupeType": "Dupe type",
+    "shareFull": "Share (full)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Dupe paths",
+    "actionsCaption": "Actions...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Browse",
       "noOptions": "No options",
@@ -502,6 +513,8 @@
       "addPath": "Add path",
       "removePath": "Remove path",
       "removeUser": "Remove user",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Remove profile",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Don't remove",

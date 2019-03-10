@@ -102,16 +102,8 @@
     "searchOffline": "Debe estar conectado a al menos un hub para realizar búsquedas",
     "enterSearchString": "Introducir texto de búsqueda...",
     "search": "Buscar",
-    "typeContent": "Tipo/contenido",
-    "size": "Tamaño",
-    "lastModified": "Última modificación",
-    "dupeType": "Tipo de duplicado",
-    "shareFull": "Compartir (total)",
-    "dupePaths": "Rutas de duplicados",
-    "actionsCaption": "Acciones...",
     "usersCount": "Usuario ({count}}",
     "usersCount_plural": "Usuarios ({count}}",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} usuario ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} usuarios ({{user.nicks}})",
     "noResults": "No se han encontrado resultados para \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "Podrás seguir navegando cuando el usuario se vuelva a conectar.",
     "noContentToDisplay": "No hay contenido para mostrar",
     "theDirectoryIsEmpty": "El directorio está vacío",
+    "updatingView": "Updating view",
+    "downloadFailed": "Descarga fallida",
     "table": {
       "name": "Nombre",
       "size": "Tamaño",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Recargar",
       "refreshInShare": "Actualizar en compartidos",
-      "close": "Cerrar"
+      "close": "Cerrar",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Cerrar y no volver a mostrar",
       "notifications": {
         "ignoreUserSuccess": "Se ha añadido al usuario {{item.nicks}} a la lista de usuarios ignorados",
-        "unignoreUserSuccess": "Se ha eliminado al usuario {{item.nicks}} de la lista de usuarios ignorados"
+        "unignoreUserSuccess": "Se ha eliminado al usuario {{item.nicks}} de la lista de usuarios ignorados",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuar y reiniciar",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Cancelar",
         "shutdownSystemContent": "¿Estás seguro de que deseas cerrar la aplicación?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Tipo/contenido",
+    "lastModified": "Última modificación",
+    "dupeType": "Tipo de duplicado",
+    "shareFull": "Compartir (total)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Rutas de duplicados",
+    "actionsCaption": "Acciones...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sin opciones",
@@ -502,6 +513,8 @@
       "addPath": "Añadir ruta",
       "removePath": "Eliminar ruta",
       "removeUser": "Eliminar usuario",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Eliminar perfil",
       "prompts": {
         "removeShareExcludeApprove": "Eliminar ruta",
         "removeShareExcludeReject": "No eliminar",

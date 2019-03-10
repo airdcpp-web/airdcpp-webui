@@ -102,16 +102,8 @@
     "searchOffline": "Konektatuta hub baten egon behar du gutxienez bilaketak egiteko ",
     "enterSearchString": "Sartu bilaketa-testua...",
     "search": "Bilatu",
-    "typeContent": "Mota/edukia",
-    "size": "Tamaina",
-    "lastModified": "Azken aldaketa",
-    "dupeType": "Dupe type",
-    "shareFull": "Partekatu (full)",
-    "dupePaths": "Dupe paths",
-    "actionsCaption": "Ekintzak...",
     "usersCount": "Erabiltzailea ({{count}})",
     "usersCount_plural": "Erabiltzaileak ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} erabiltzailea ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} erabiltzaileak ({{user.nicks}})",
     "noResults": "Ez da \"{{searchString}}\" aurkitu",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "Ez dago edukirik bistaratzeko",
     "theDirectoryIsEmpty": "Direktorioa hutsik dago",
+    "updatingView": "Updating view",
+    "downloadFailed": "Download failed",
     "table": {
       "name": "Izena",
       "size": "Tamaina",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Birkargatu",
       "refreshInShare": "Partekatzea freskatu",
-      "close": "Itxi"
+      "close": "Itxi",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Itxi eta ez erakutsi berriro",
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users"
+        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Deusestu",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Mota/edukia",
+    "lastModified": "Azken aldaketa",
+    "dupeType": "Dupe type",
+    "shareFull": "Partekatu (full)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Dupe paths",
+    "actionsCaption": "Ekintzak...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Nabigatu",
       "noOptions": "Ez dago aukerarik",
@@ -502,6 +513,8 @@
       "addPath": "Gehitu bidea",
       "removePath": "Kendu bidea",
       "removeUser": "Remove user",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Profila ezabatu",
       "prompts": {
         "removeShareExcludeApprove": "Kendu bidea",
         "removeShareExcludeReject": "Ez ezabatu",

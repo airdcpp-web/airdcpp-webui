@@ -22,7 +22,7 @@ import * as UI from 'types/ui';
 
 import { FilelistItemInfoDialog } from './item-info-dialog';
 import FilelistItemActions from 'actions/ui/FilelistItemActions';
-import { RowWrapperCellChildProps } from 'components/table/data.tmp/RowWrapperCell';
+import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.GroupedSearchResult> {

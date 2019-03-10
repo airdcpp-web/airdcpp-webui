@@ -102,16 +102,8 @@
     "searchOffline": "Vous devez être connecté à au moins un hub pour pouvoir effectuer une recherche.",
     "enterSearchString": "Entrez votre recherche...",
     "search": "Recherche",
-    "typeContent": "Type/contenu",
-    "size": "Taille",
-    "lastModified": "Dernière modification",
-    "dupeType": "Dupe type",
-    "shareFull": "Share (full)",
-    "dupePaths": "Dupe paths",
-    "actionsCaption": "Actions…",
     "usersCount": "Utilisateur ({{count}})",
     "usersCount_plural": "Utilisateurs ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
     "noResults": "Pas de résultat pour \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "Pas de contenu à afficher",
     "theDirectoryIsEmpty": "Le dossier est vide",
+    "updatingView": "Updating view",
+    "downloadFailed": "Téléchargement échoué",
     "table": {
       "name": "Nom",
       "size": "Taille",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Recharger",
       "refreshInShare": "Rafraîchir le partageur",
-      "close": "Fermer"
+      "close": "Fermer",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Fermer et ne plus afficher",
       "notifications": {
         "ignoreUserSuccess": "L'utilisateur {{item.nicks}} est maintenant ignoré",
-        "unignoreUserSuccess": "L'utilisateur {{item.nicks}} n'est maintenant plus ignoré"
+        "unignoreUserSuccess": "L'utilisateur {{item.nicks}} n'est maintenant plus ignoré",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuer et redémarrer",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Annuler",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "Ko",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Type/contenu",
+    "lastModified": "Dernière modification",
+    "dupeType": "Dupe type",
+    "shareFull": "Share (full)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Dupe paths",
+    "actionsCaption": "Actions…",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Parcourir",
       "noOptions": "Pas d'options",
@@ -502,6 +513,8 @@
       "addPath": "Add path",
       "removePath": "Remove path",
       "removeUser": "Remove user",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Retirer le profil",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Ne pas retirer",

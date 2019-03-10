@@ -102,16 +102,8 @@
     "searchOffline": "Você deve estar conectado a pelo menos um hub para realizar pesquisas",
     "enterSearchString": "Digite termo para pesquisa...",
     "search": "Pesquisar",
-    "typeContent": "Tipo/conteúdo",
-    "size": "Tamanho",
-    "lastModified": "Última modificação",
-    "dupeType": "Dupe type",
-    "shareFull": "Share (full)",
-    "dupePaths": "Dupe paths",
-    "actionsCaption": "Ações...",
     "usersCount": "Usuário ({{count}})",
     "usersCount_plural": "Usuários ({{count}})",
-    "tth": "TTH",
     "xUsersNicks": "{{count}} usuário ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} usuários ({{user.nicks}})",
     "noResults": "Nenhum resultado encontrado para \"{{searchString}}\"",
@@ -228,6 +220,8 @@
     "userOfflineDesc": "Você irá estar habilitado a continuar navegado quando o usuário ficar online novamente",
     "noContentToDisplay": "Nenhum conteúdo para exibir",
     "theDirectoryIsEmpty": "O diretório está vazio",
+    "updatingView": "Updating view",
+    "downloadFailed": "Falha no Download",
     "table": {
       "name": "Nome",
       "size": "Tamanho",
@@ -237,7 +231,8 @@
     "actions": {
       "reload": "Recarregar",
       "refreshInShare": "Atualizar o compartilhamento",
-      "close": "Fechar"
+      "close": "Fechar",
+      "details": "Details"
     }
   },
   "common": {    
@@ -260,7 +255,8 @@
       "closeAndDontShowAgain": "Fechar e não exibir novament",
       "notifications": {
         "ignoreUserSuccess": "Usuário {{item.nicks}} foi adicionado aos usuários ignorados",
-        "unignoreUserSuccess": "Usuário {{item.nicks}} foi removido de usuários ignorados"
+        "unignoreUserSuccess": "Usuário {{item.nicks}} foi removido de usuários ignorados",
+        "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuar e reiniciar",
@@ -270,7 +266,7 @@
         "shutdownSystemReject": "Cancelar",
         "shutdownSystemContent": "Tem certeza de que deseja encerrar o aplicativo?"
       }
-    },    
+    },
     "units": {
       "b": "B",
       "kib": "KiB",
@@ -350,6 +346,21 @@
     "noItemsToShow": "No items to show",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
+    "loadingSessions": "Loading sessions",
+    "typeContent": "Tipo/conteúdo",
+    "lastModified": "Última modificação",
+    "dupeType": "Dupe type",
+    "shareFull": "Share (full)",
+    "sharePartial": "Share (partial)",
+    "queueFull": "Queue (full)",
+    "queuePartial": "Queue (partial)",
+    "finishedFull": "Finished (full)",
+    "finishedPartial": "Finished (partial)",
+    "shareAndQueue": "Share and queue",
+    "dupePaths": "Dupe paths",
+    "actionsCaption": "Ações...",
+    "tth": "TTH",
+    "na": "N/A",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
@@ -502,6 +513,8 @@
       "addPath": "Adicionar caminho",
       "removePath": "Remover caminho",
       "removeUser": "Remove user",
+      "setAsDefault": "Set as default",
+      "removeProfile": "Remover perfil",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",
