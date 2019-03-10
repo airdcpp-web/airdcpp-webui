@@ -8,13 +8,30 @@
 }
 
 .search-container .search-area {
-	width:90%;
+	width: 90%;
 	max-width: 600px;
 	margin-left: auto;
 	margin-right: auto;
+	display: flex;
 }
 
-.search-area, .search-area .react-autosuggest__container {
+.search-container .search-area .options.trigger {
+	margin-left: 5px;
+}
+
+.search-container .search-area .options.trigger .button {
+	padding-left: 15px;
+	padding-right: 5px;
+	height: 100%;
+}
+
+.search-container .search-area .ui.input.action {
+	flex: 1;
+}
+
+.search-area, 
+.search-area .react-autosuggest__container,
+.search-container .search-area .ui.input.action {
 	flex: 1;
 }
 

@@ -29,7 +29,8 @@ const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValu
         placeholder={ moduleT.translate('Enter search string...') }
         button={ 
           <Button
-            icon="search icon"
+            className={ process.env.NODE_ENV !== 'production' ? 'blue' : undefined }
+            icon={ IconConstants.SEARCH }
             caption={ moduleT.translate('Search') }
             loading={ running }
           />
@@ -37,14 +38,14 @@ const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValu
       />
       { process.env.NODE_ENV !== 'production' && (
         <Popup
-          triggerClassName="limit" 
-          className="limiter" 
+          triggerClassName="options" 
+          className="options" 
           trigger={(
             <Button 
               caption={ (
                 <>
-                  <Icon icon={ IconConstants.SETTINGS }/>
-                  <Icon icon={ 'angle down' }/>
+                  <Icon icon={ IconConstants.OPTIONS }/>
+                  <Icon icon={ IconConstants.EXPAND }/>
                 </>
               ) }
             /> 

@@ -12,6 +12,11 @@
 	flex-direction: column;
 }
 
+.ui.input.fluid .react-autosuggest__container input:focus {
+	border-color: #85b7d9;
+	border-right-color: #85b7d9!important;
+}
+
 .react-autosuggest__container ul {
 	position: absolute;
 	padding: 0px;

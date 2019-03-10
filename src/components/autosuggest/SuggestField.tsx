@@ -137,7 +137,7 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
   }
 
   render() {
-    const { className, autoFocus, placeholder, defaultValue, button, ...other } = this.props;
+    const { className, autoFocus, placeholder, defaultValue, button, children, ...other } = this.props;
     const { text } = this.state;
 
     const inputAttributes: Autosuggest.InputProps<SuggestionT> = {
@@ -172,6 +172,7 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
             onClick: (evt: any) => this.handleSubmit(evt),
             disabled: this.isSubmitDisabled() || this.props.disabled,
           }) }
+          { children }
         </div>
       );
     }
@@ -179,6 +180,7 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
     return (
       <div className={ fieldStyle }>
         { suggestField }
+        { children }
       </div>
     );
   }

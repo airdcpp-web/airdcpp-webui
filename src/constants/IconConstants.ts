@@ -6,6 +6,7 @@ export default {
   DEFAULT: 'blue pin',
   LOCK: 'lock',
   POWER: 'red power',
+  EXPAND: 'angle down',
 
   RELOAD: 'blue refresh',
   REFRESH: 'green refresh',
@@ -35,6 +36,7 @@ export default {
   CLEAR: 'blue erase',
   OPEN: 'external',
   FIND: 'find',
+  OPTIONS: 'list',
 
   INFO: 'blue info',
   WARNING: 'yellow warning sign',
