@@ -92,6 +92,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
         user={ user }
         itemInfoGetter={ () => fileItem }
         downloadHandler={ downloadHandler }
+        contextElement=".ui.modal > .content"
       />
     </div>
   );

@@ -30,7 +30,7 @@ const UserResult: React.FC<UserResultProps> = ({ result, t }) => (
         user={ result.user }
         directory={ result.path }
         ids={ UserFileActions }
-        contextElement=".result.modal"
+        contextElement=".ui.modal > .content"
       />
     </td>
     <td className="hubs">
