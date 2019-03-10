@@ -333,7 +333,7 @@
     "dontInstall": "Installera ej",
     "statisticsNotAvailable": "Statistik inte tillgänglig",
     "save": "Spara",
-    "enterNick": "Ange nick...",
+    "enterNick": "Ange användarnamn...",
     "enterLimitKBS": "Ange begränsning (kB/s)",
     "enterLimit": "Ange begränsning...",
     "removeLimit": "Ta bort begränsning",
