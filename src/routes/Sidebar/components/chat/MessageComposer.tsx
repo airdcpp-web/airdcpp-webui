@@ -307,7 +307,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
             files={ files }
             onConfirm={ this.onUploadFiles }
             onReject={ this.resetFiles }
-            title={ translate('Send file', t, UI.Modules.COMMON) }
+            title={ translate('Send files', t, UI.Modules.COMMON) }
           />
         ) }
         <Dropzone

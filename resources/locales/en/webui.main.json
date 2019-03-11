@@ -337,7 +337,7 @@
     "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
     "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "upload": "Upload",
-    "sendFile": "Send file",
+    "sendFiles": "Send files",
     "removeSharedFile": "Remove shared file",
     "fileNoLongerShared": "File {{file.name}} is no longer shared",
     "fileTooLarge": "File is too large (maximum size is {{maxSize}})",

@@ -390,7 +390,7 @@
     },
     "enterHubAddress": "Syötä hubin osoite...",
     "connect": "Yhdistä",
-    "notConnectedToTheHub": "Ei yhdistettyjä hubeja",
+    "notConnectedToTheHub": "Ei yhdistettynä hubiin",
     "connecting": "Yhdistetään",
     "loadingUserlist": "Ladataan käyttäjälistaa",
     "favoriteHubsHint": "Vinkki: mene <1>Suosikkihubit</1> -sivulle, jos haluat yhdistää käyttämällä mukautettuja asetuksia",

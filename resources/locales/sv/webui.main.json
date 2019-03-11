@@ -220,7 +220,7 @@
     "userOfflineDesc": "Du kommer att kunna bläddra vidare när användaren ansluter sig igen",
     "noContentToDisplay": "Inget att visa",
     "theDirectoryIsEmpty": "Katalogen är tom",
-    "updatingView": "Updating view",
+    "updatingView": "Uppdaterar vyn",
     "downloadFailed": "Nedladdning misslyckades",
     "table": {
       "name": "Namn",
@@ -232,7 +232,7 @@
       "reload": "Uppdatera",
       "refreshInShare": "Uppdatera i utdelning",
       "close": "Stäng",
-      "details": "Details"
+      "details": "Detaljer"
     }
   },
   "common": {    
@@ -256,7 +256,7 @@
       "notifications": {
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
         "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard"
+        "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp"
       },
       "prompts": {
         "restartWebSystemApprove": "Fortsätt och starta om",
@@ -346,17 +346,17 @@
     "noItemsToShow": "Inga objekt att visa",
     "noSessionEditAccess": "Du har inte behörighet att öppna nya sessioner",
     "noChatAccess": "Du har inte behörighet att skicka nya meddelanden",
-    "loadingSessions": "Loading sessions",
+    "loadingSessions": "Laddar sessioner",
     "typeContent": "Typ/innehåll",
     "lastModified": "Senast ändrad",
     "dupeType": "Dubblettyp",
     "shareFull": "Utdelning (full)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
-    "finishedFull": "Finished (full)",
-    "finishedPartial": "Finished (partial)",
-    "shareAndQueue": "Share and queue",
+    "sharePartial": "Utdelning (delvis)",
+    "queueFull": "Kö (full)",
+    "queuePartial": "Kö (delvis)",
+    "finishedFull": "Färdiga (full)",
+    "finishedPartial": "Färdiga (delvis)",
+    "shareAndQueue": "Utdelning och kö",
     "dupePaths": "Dubblettsökvägar",
     "actionsCaption": "Åtgärder...",
     "tth": "TTH",
@@ -513,7 +513,7 @@
       "addPath": "Lägg till sökväg",
       "removePath": "Ta bort sökväg",
       "removeUser": "Ta bort användare",
-      "setAsDefault": "Set as default",
+      "setAsDefault": "Ange som standard",
       "removeProfile": "Ta bort profil",
       "prompts": {
         "removeShareExcludeApprove": "Ta bort sökväg",
@@ -626,7 +626,7 @@
         "latestVersion": "Senaste version",
         "installedVersion": "Installerad version",
         "datePublished": "{{version}} (publicerat {{date}})",
-        "readMore": "Lär mer",
+        "readMore": "Läs mer",
         "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner."
       },
       "manage": {
@@ -634,7 +634,7 @@
         "latestVersion": "Senaste version",
         "installedVersion": "Installerad version",
         "nonListedExtension": "Icke-listade tillägg",
-        "readMore": "Lär mer",
+        "readMore": "Läs mer",
         "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>.",
         "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner.",
         "extensionDirectoryFetchError": "Misslyckades med att hämta information från tilläggskatalogen: {{error}}"
