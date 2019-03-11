@@ -1,4 +1,4 @@
-import { DirectoryType, FileType } from './common';
+import { DirectoryType, FileType, User } from './common';
 import { ShareProfileBasic } from './shareprofiles';
 
 export const enum ShareRootStatusEnum {
@@ -35,4 +35,5 @@ export interface TempShareItem {
   tth: string;
   time_added: number;
   type: FileType;
+  user: User | null;
 }

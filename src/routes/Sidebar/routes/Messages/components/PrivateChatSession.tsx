@@ -23,8 +23,10 @@ class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';
 
   handleFileUpload = (file: File) => {
-    const { hub_url, cid } = this.props.session.user;
-    return shareTempFile(file, hub_url, cid);
+    const { cid, hub_url, flags } = this.props.session.user;
+
+    const isPrivate = flags.indexOf('nmdc') === -1 && flags.indexOf('bot') === -1;
+    return shareTempFile(file, hub_url, isPrivate ? cid : undefined);
   }
 
   render() {

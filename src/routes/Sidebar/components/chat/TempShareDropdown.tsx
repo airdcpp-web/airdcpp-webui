@@ -43,13 +43,18 @@ const getDropdownItem = (
   file: API.TempShareItem, 
   onClick: (p: API.TempShareItem) => void
 ) => {
+  let title = file.name;
+  if (file.user) {
+    title += ` (${file.user.nicks})`;
+  }
+
   return (
     <MenuItemLink 
       key={ file.id }
       onClick={ () => onClick(file) }
       icon={ <FileIcon typeInfo={ file.type }/> }
     >
-      { file.name }
+      { title }
     </MenuItemLink>
   );
 };
