@@ -207,3 +207,7 @@ th {
 	margin-bottom: inherit;
 	max-height: inherit;
 }
+
+.notifications-tl h4.notification-title {
+	overflow: hidden;
+}
