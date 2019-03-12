@@ -64,8 +64,21 @@ const formatUnits = (value: number, units: string[], threshold: number, t: i18ne
 
 export const ByteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
 
-export const formatSize = (bytes: number, t: i18next.TFunction) => {
-  return formatUnits(bytes, ByteUnits, 1024, t);
+export const formatSize = (bytes: number, t: i18next.TFunction, addExact: boolean = false) => {
+  let ret = formatUnits(bytes, ByteUnits, 1024, t);
+  if (addExact && bytes > 1024) {
+    ret += ` (${t(
+      toI18nKey('xBytes', UI.Modules.COMMON),
+      {
+        defaultValue: '{{bytes}} bytes',
+        replace: {
+          bytes,
+        }
+      }
+    )})`;
+  }
+
+  return ret;
 };
 
 

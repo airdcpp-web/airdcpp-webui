@@ -60,7 +60,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
         />
         <Row 
           title={ gridT('Size') } 
-          text={ formatSize(fileItem.size, t) }
+          text={ formatSize(fileItem.size, t, true) }
         />
         <Row 
           title={ gridT('Last modified') }
