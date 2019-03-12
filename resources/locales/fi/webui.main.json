@@ -280,6 +280,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "xBytes": "{{bytes}} tavua",
     "unitsPerSecond": "{{units}}/s",
     "today": "Tänään",
     "yesterday": "Eilen",
@@ -337,7 +338,7 @@
     "tlsOutdatedWarning": "Vanhentunut kryptografinen protokolla, jossa on tunnettuja heikkouksia",
     "tlsAuthenticityWarning": "Sertifikaatin aitoutta ei voitu vahvistaa",
     "upload": "Lähetys",
-    "sendFile": "Lähetä tiedosto",
+    "sendFiles": "Lähetä tiedostoja",
     "removeSharedFile": "Poista jaettu tiedosto",
     "fileNoLongerShared": "Tiedosto {{file.name}} ei ole enää jaettu",
     "fileTooLarge": "Tiedosto on liian iso (maksimikoko on {{maxSize}})",

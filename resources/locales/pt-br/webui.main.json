@@ -280,6 +280,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
     "yesterday": "Yesterday",
@@ -337,7 +338,7 @@
     "tlsOutdatedWarning": "Protocolo criptográfico ultrapassado com vulnerabilidades de segurança conhecidos",
     "tlsAuthenticityWarning": "A autenticidade do certificado não pôde ser validada",
     "upload": "Upload",
-    "sendFile": "Send file",
+    "sendFiles": "Send files",
     "removeSharedFile": "Remove shared file",
     "fileNoLongerShared": "File {{file.name}} is no longer shared",
     "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
@@ -665,11 +666,11 @@
         "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
         "totalDirectories": "Total directories",
         "averageFileAge": "Average file age",
-        "averageFilesPerDirectory": "Average files per directory",
-        "incomingSearches": "Incoming searches",
-        "totalSearches": "Total searches",
+        "averageFilesPerDirectory": "Média de arquivos por diretório",
+        "incomingSearches": "Buscas de entrada",
+        "totalSearches": "Total de buscas",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
-        "tthSearches": "TTH searches",
+        "tthSearches": "Buscas TTH",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
         "filteredTextSearches": "Filtered text searches",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
@@ -679,12 +680,12 @@
         "searchesAverageMatchTimeValue": "{{matchTime}} ms"
       },
       "hubs": {
-        "noHubsOnline": "No hubs online",
+        "noHubsOnline": "Nenhum hub online",
         "totalUsers": "Usuários no total",
         "uniqueUsers": "Usuários únicos",
         "activeUsers": "Usuários ativos",
         "totalShare": "Compartilhamento total",
-        "averageSharePerUser": "Average share per user",
+        "averageSharePerUser": "Média de compartilhamento por usuário",
         "averageAdcDownloadSpeed": "Average ADC download speed",
         "clients": "Clientes",
         "averageAdcUploadSpeed": "Average ADC upload speed"
@@ -701,17 +702,17 @@
       },
       "users": {
         "username": "Nome de usuário",
-        "permissions": "Permissions",
+        "permissions": "Permissões",
         "activeSessions": "Sessões ativas",
         "lastLoggedIn": "Last logged in",
-        "administrator": "Administrator",
+        "administrator": "Administrador",
         "form": {
-          "usernameName": "User name",
+          "usernameName": "Nome de usuário",
           "passwordName": "Senha",
-          "permissionsName": "Permissions"
+          "permissionsName": "Permissões"
         },
         "permissionSelector": {
-          "administrator": "Administrator",
+          "administrator": "Administrador",
           "search": "Pesquisar",
           "download": "Download",
           "transfers": "Transferências",
@@ -723,12 +724,12 @@
           "settings": "Configurações",
           "localFilesystem": "Local filesystem",
           "hubs": "Hubs",
-          "sendMessages": "Send messages",
+          "sendMessages": "Enviar mensagens",
           "privateChat": "Bate-Papo privado",
           "filelists": "Lista de arquivos",
-          "viewedFiles": "Viewed files"
+          "viewedFiles": "Arquivos exibidos"
         },
-        "addWebUser": "Add web user",
+        "addWebUser": "Adicionar usuário de web",
         "editUser": "Editar usuário",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }

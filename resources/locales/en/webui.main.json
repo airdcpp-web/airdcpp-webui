@@ -280,6 +280,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
     "yesterday": "Yesterday",

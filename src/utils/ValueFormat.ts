@@ -3,6 +3,7 @@ import i18next from 'i18next';
 
 import { toI18nKey, translate } from './TranslationUtils';
 import * as UI from 'types/ui';
+import { i18n } from 'services/LocalizationService';
 
 
 const abbreviatedRelativeUnits = {
@@ -72,7 +73,7 @@ export const formatSize = (bytes: number, t: i18next.TFunction, addExact: boolea
       {
         defaultValue: '{{bytes}} bytes',
         replace: {
-          bytes,
+          bytes: bytes.toLocaleString(i18n.language),
         }
       }
     )})`;

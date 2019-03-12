@@ -280,6 +280,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
     "yesterday": "Yesterday",
@@ -337,7 +338,7 @@
     "tlsOutdatedWarning": "Protocolo de seguridad antiguo con vulnerabilidades conocidas",
     "tlsAuthenticityWarning": "No se ha podido validar la autenticidad del certificado",
     "upload": "Enviados",
-    "sendFile": "Send file",
+    "sendFiles": "Send files",
     "removeSharedFile": "Remove shared file",
     "fileNoLongerShared": "File {{file.name}} is no longer shared",
     "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
