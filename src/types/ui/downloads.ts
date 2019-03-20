@@ -23,3 +23,5 @@ export interface DownloadableItemData<ItemT extends DownloadableItemInfo = Downl
   user: API.HintedUser;
   handler: DownloadHandler<ItemT>;
 }
+
+export type PathDownloadHandler = (path: string) => Promise<any>;

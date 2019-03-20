@@ -290,6 +290,7 @@
     "awayModeWasDisabled": "Poissa-tila pois käytöstä",
     "actionSucceed": "Toiminto onnistui",
     "actionFailed": "Toiminto epäonnistui",
+    "queueingFailed": "Kohteen {{item.name}} lisääminen jonoon epäonnistui",
     "noNfoResultsWereReceived": "Yhtään NFO-tulosta ei vastaanotettu",
     "networkClientError": "Verkko-/selainvirhe",
     "failedToFetchData": "Tiedon hakeminen epäonnistui",

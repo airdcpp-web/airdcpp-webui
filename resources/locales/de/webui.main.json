@@ -290,6 +290,7 @@
     "awayModeWasDisabled": "Away mode was disabled",
     "actionSucceed": "Action succeed",
     "actionFailed": "Action failed",
+    "queueingFailed": "Failed to queue the item {{item.name}}",
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",

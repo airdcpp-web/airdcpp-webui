@@ -290,6 +290,7 @@
     "awayModeWasDisabled": "O modo ausente foi desativado",
     "actionSucceed": "Ação bem sucedida",
     "actionFailed": "Ação: falhou",
+    "queueingFailed": "Failed to queue the item {{item.name}}",
     "noNfoResultsWereReceived": "Nenhum resultado de NFO foi recebido",
     "networkClientError": "Erro de rede/cliente",
     "failedToFetchData": "Falha ao buscar dados",

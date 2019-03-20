@@ -7,14 +7,14 @@ import AccordionTargets from './AccordionTargets';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
-//import * as UI from 'types/ui';
+import * as UI from 'types/ui';
 
 import i18next from 'i18next';
 
 
 export interface DownloadSectionChildProps {
   t: i18next.TFunction;
-  downloadHandler: (path: string) => void;
+  downloadHandler: UI.PathDownloadHandler;
 }
 
 export interface DownloadSection {

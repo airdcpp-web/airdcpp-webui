@@ -220,7 +220,7 @@
     "userOfflineDesc": "Podrás seguir navegando cuando el usuario se vuelva a conectar.",
     "noContentToDisplay": "No hay contenido para mostrar",
     "theDirectoryIsEmpty": "El directorio está vacío",
-    "updatingView": "Updating view",
+    "updatingView": "Actualizando vista",
     "downloadFailed": "Descarga fallida",
     "table": {
       "name": "Nombre",
@@ -256,7 +256,7 @@
       "notifications": {
         "ignoreUserSuccess": "Se ha añadido al usuario {{item.nicks}} a la lista de usuarios ignorados",
         "unignoreUserSuccess": "Se ha eliminado al usuario {{item.nicks}} de la lista de usuarios ignorados",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard"
+        "copyMagnetSuccess": "Enlace magnético copiado al portapapeles"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuar y reiniciar",
@@ -285,11 +285,12 @@
     "today": "Hoy",
     "yesterday": "Ayer",
     "tomorrow": "Mañana",
-    "lastWeek": "[Last] {{weekDay}}",
+    "lastWeek": "[Último] {{weekDay}}",
     "awayModeWasEnabled": "Se ha activado el modo ausente",
     "awayModeWasDisabled": "Se ha desactivado el modo ausente",
     "actionSucceed": "Acción realizada con éxito",
     "actionFailed": "Acción fallida",
+    "queueingFailed": "Failed to queue the item {{item.name}}",
     "noNfoResultsWereReceived": "No se han recibido resultados NFO",
     "networkClientError": "Error de red/cliente",
     "failedToFetchData": "Error al buscar los datos",
@@ -338,30 +339,30 @@
     "tlsOutdatedWarning": "Protocolo de seguridad antiguo con vulnerabilidades conocidas",
     "tlsAuthenticityWarning": "No se ha podido validar la autenticidad del certificado",
     "upload": "Enviados",
-    "sendFiles": "Send files",
-    "removeSharedFile": "Remove shared file",
-    "fileNoLongerShared": "File {{file.name}} is no longer shared",
-    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
-    "previewIsNotAvailable": "Preview is not available",
-    "failedToFetchContent": "Failed to fetch content",
-    "noItemsToShow": "No items to show",
-    "noSessionEditAccess": "You aren't allowed to open new sessions",
-    "noChatAccess": "You aren't allowed to send new messages",
-    "loadingSessions": "Loading sessions",
+    "sendFiles": "Enviar ficheros",
+    "removeSharedFile": "Borrar fichero compartido",
+    "fileNoLongerShared": "El fichero {{file.name}} ya no se comparte",
+    "fileTooLarge": "El fichero es muy grande (el tamaño máximo es {{maxSize}})",
+    "previewIsNotAvailable": "Previsualización no disponible",
+    "failedToFetchContent": "Error al buscar el contenido",
+    "noItemsToShow": "No hay items que mostrar",
+    "noSessionEditAccess": "No tienes permisos para abrir una nueva sesión",
+    "noChatAccess": "No tienes permiso para enviar nuevos mensajes",
+    "loadingSessions": "Cargando sesiones",
     "typeContent": "Tipo/contenido",
     "lastModified": "Última modificación",
     "dupeType": "Tipo de duplicado",
     "shareFull": "Compartir (total)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
-    "finishedFull": "Finished (full)",
-    "finishedPartial": "Finished (partial)",
-    "shareAndQueue": "Share and queue",
+    "sharePartial": "Compartir (parcial)",
+    "queueFull": "Cola (completo)",
+    "queuePartial": "Cola (parcial)",
+    "finishedFull": "Finalizados (completo) ",
+    "finishedPartial": "Finalizados (parcial)",
+    "shareAndQueue": "Compartir y poner en cola",
     "dupePaths": "Rutas de duplicados",
     "actionsCaption": "Acciones...",
     "tth": "TTH",
-    "na": "N/A",
+    "na": "N/D",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sin opciones",
@@ -514,7 +515,7 @@
       "addPath": "Añadir ruta",
       "removePath": "Eliminar ruta",
       "removeUser": "Eliminar usuario",
-      "setAsDefault": "Set as default",
+      "setAsDefault": "Usar por defecto",
       "removeProfile": "Eliminar perfil",
       "prompts": {
         "removeShareExcludeApprove": "Eliminar ruta",
@@ -525,7 +526,7 @@
         "removeWebUserContent": "¿Estás seguro de querer eliminar al usuario {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Eliminar directorio",
         "removeFavoriteDirectoryReject": "No eliminar",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "¿Estás seguro querer eliminar el directorio favorito {{item.name}}?"
       }
     },
     "navigation": {
@@ -579,7 +580,7 @@
     },
     "advanced": "Avanzado",
     "noUnsavedChanges": "No hay cambios sin guardar",
-    "noSavePermission": "No save permission",
+    "noSavePermission": "Permisos sin guardar",
     "saveChanges": "Guardar cambios",
     "savingCompleted": "Guardado completado",
     "settingsWereSavedSuccessfully": "Los ajustes se han guardado correctamente",
@@ -628,7 +629,7 @@
         "installedVersion": "Versión instalada",
         "datePublished": "{{version}} (publicada el {{date}})",
         "readMore": "Leer más",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
+        "defaultExtensionEngineMissing": "La extensión de motor por defecto <1>node</1>no está instalado en su sistema. Por favor visita <3>engine's home page</3> para seguir las instrucciones de instalación."
       },
       "manage": {
         "byAuthor": "por {{author}}",
@@ -637,7 +638,7 @@
         "nonListedExtension": "Extensión no listada",
         "readMore": "Leer más",
         "noInstalledExtensions": "Se han encontrado extensiones no instaladas. Las extensiones nuevas se pueden instalar desde la página del <1>Catálogo de extensiones</1>.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "defaultExtensionEngineMissing": "La extensión de motor por defecto <1>node</1>no está instalado en su sistema. Por favor visita <3>engine's home page</3> para seguir las instrucciones de instalación.",
         "extensionDirectoryFetchError": "Fallo al buscar la información en el directorio de extensiones: {{error}}"
       }
     },

@@ -3,7 +3,7 @@ import React from 'react';
 
 import Accordion from 'components/semantic/Accordion';
 import Message from 'components/semantic/Message';
-import PathList, { PathDownloadHandler } from './PathList';
+import PathList from './PathList';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -14,7 +14,7 @@ import { translate } from 'utils/TranslationUtils';
 
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];
-  downloadHandler: PathDownloadHandler;
+  downloadHandler: UI.PathDownloadHandler;
   t: i18next.TFunction;
 }
 

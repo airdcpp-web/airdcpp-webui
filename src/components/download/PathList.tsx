@@ -14,11 +14,9 @@ import i18next from 'i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
-export type PathDownloadHandler = (path: string) => Promise<any>;
-
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
-  downloadHandler: PathDownloadHandler;
+  downloadHandler: UI.PathDownloadHandler;
   t: i18next.TFunction;
 }
 
@@ -53,7 +51,7 @@ const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => 
 );
 
 interface PathListProps {
-  downloadHandler: PathDownloadHandler;
+  downloadHandler: UI.PathDownloadHandler;
   paths: string[];
   t: i18next.TFunction;
 }
