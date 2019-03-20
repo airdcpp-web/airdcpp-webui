@@ -4,7 +4,6 @@ import Modal from 'components/semantic/Modal';
 import FileIcon from 'components/icon/FileIcon';
 
 import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
-import SearchActions from 'actions/reflux/SearchActions';
 
 import UserResultTable from './UserResultTable';
 
@@ -16,6 +15,7 @@ import SearchConstants from 'constants/SearchConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { FileItemInfoGrid } from 'components/file-item-info';
+import { searchDownloadHandler } from 'services/api/SearchApi';
 
 
 interface ResultDialogProps {
@@ -47,12 +47,12 @@ class ResultDialog extends React.Component<Props & DataProps> {
         { ...this.props }
       >
         <DownloadDialog 
-          downloadHandler={ SearchActions.download }
+          downloadHandler={ searchDownloadHandler }
           itemDataGetter={ SearchResultGetter }
         />
         <FileItemInfoGrid 
           fileItem={ parentResult }
-          downloadHandler={ SearchActions.download }
+          downloadHandler={ searchDownloadHandler }
           user={ parentResult.users.user }
         />
         <UserResultTable parentResult={ parentResult }/>

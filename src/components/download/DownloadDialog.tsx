@@ -1,12 +1,10 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import ShareConstants from 'constants/ShareConstants';
 import { default as HistoryConstants, HistoryStringEnum } from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
-
-import HistoryActions from 'actions/reflux/HistoryActions';
 
 import { getParentPath } from 'utils/FileUtils';
 import { useMobileLayout } from 'utils/BrowserUtils';
@@ -25,12 +23,14 @@ import './style.css';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { APISocket } from 'airdcpp-apisocket';
-//import { DownloadHandler, DownloadableItemInfo } from 'types';
 
 import i18next from 'i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
-import { Translation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { getDownloadSections, DownloadSection } from './sections';
+import { addHistory } from 'services/api/HistoryApi';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import NotificationActions from 'actions/NotificationActions';
 
 
 interface LayoutProps {
@@ -125,88 +125,91 @@ const getMenuItem = (
   </MenuItemLink>
 );
 
-class DownloadDialog extends React.Component<Props> {
-  static displayName = 'DownloadDialog';
+const DownloadDialog: React.FC<Props> = props => {
+  const { t } = useTranslation();
+  const modalRef = useRef<Modal>(null);
+  const [ activeSectionKey, setActiveSectionKey ] = useState('history');
 
-  sections: DownloadSection[];
-  modal: any;
+  const sections = React.useMemo(
+    () => {
+      const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
+      const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
+  
+      return getDownloadSections({
+        historyPaths, sharePaths, favoritePaths, dupePaths
+      });
+    },
+    []
+  );
 
-  constructor(props: Props) {
-    super(props);
-    const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-    const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
-
-    this.sections = getDownloadSections({
-      historyPaths, sharePaths, favoritePaths, dupePaths
-    });
-  }
-
-  state = {
-    activeSection: 'history',
-  };
-
-  handleDownload = (path: string) => {
-    const { downloadHandler, itemInfo, userGetter, match } = this.props;
-    downloadHandler(
-      itemInfo, 
-      !!userGetter ? userGetter(match.params.downloadItemId, this.props) : undefined, 
-      {
-        target_name: itemInfo.name, // possibly allow changing this later...
-        target_directory: path,
-        priority: API.QueuePriorityEnum.DEFAULT,
-      }
-    );
-
-    HistoryActions.add(HistoryStringEnum.DOWNLOAD_DIR, path);
-    this.modal.hide();
-  }
-
-  handleClickSession = (key: string) => {
-    this.setState({ 
-      activeSection: key,
-    });
-  }
-
-  render() {
-    const { sections } = this;
-    const { activeSection: activeSessionKey } = this.state;
-    const activeSection = sections.find(s => s.key === this.state.activeSection);
-    if (!activeSection) {
-      return null;
+  const handleDownload = async (path: string) => {
+    const { downloadHandler, itemInfo, userGetter, match } = props;
+    try {
+      await downloadHandler(
+        itemInfo, 
+        !!userGetter ? userGetter(match.params.downloadItemId, props) : undefined, 
+        {
+          target_name: itemInfo.name, // possibly allow changing this later...
+          target_directory: path,
+          priority: API.QueuePriorityEnum.DEFAULT,
+        }
+      );
+    } catch (e) {
+      NotificationActions.error({
+        title: t(
+          toI18nKey('queueingFailed', UI.Modules.COMMON),
+          {
+            defaultValue: 'Failed to queue the item {{item.name}}',
+            replace: {
+              item: itemInfo
+            }
+          }
+        ),
+        message: e.message
+      });
     }
 
-    const Component = useMobileLayout() ? MobileLayout : NormalLayout;
-    return (
-      <Translation>
-        { t => {
-          const menuItems = sections.map(s => getMenuItem(s, activeSessionKey, this.handleClickSession, t));
-          return (
-            <Modal 
-              ref={ c => this.modal = c }
-              className="download-dialog" 
-              title={ translate('Download', t, UI.Modules.COMMON) }
-              closable={ true } 
-              icon={ IconConstants.DOWNLOAD }
-              fullHeight={ true }
-              { ...this.props }
-            >
-              <Component
-                key={ activeSection.key } // Ensure that section-specific data is refetched
-                menuItems={ menuItems }
-                title={ activeSection.name }
-              >
-                <activeSection.component
-                  t={ t }
-                  downloadHandler={ this.handleDownload }
-                />
-              </Component>
-            </Modal>
-          );
-        } }
-      </Translation>
+    runBackgroundSocketAction(
+      () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, path),
+      t
     );
+
+    if (!!modalRef.current) {
+      modalRef.current.hide();
+    }
+  };
+
+  const activeSection = sections.find(s => s.key === activeSectionKey);
+  if (!activeSection) {
+    return null;
   }
-}
+
+  const menuItems = sections.map(s => getMenuItem(s, activeSectionKey, setActiveSectionKey, t));
+
+  const Component = useMobileLayout() ? MobileLayout : NormalLayout;
+  return (
+    <Modal 
+      ref={ modalRef }
+      className="download-dialog" 
+      title={ translate('Download', t, UI.Modules.COMMON) }
+      closable={ true } 
+      icon={ IconConstants.DOWNLOAD }
+      fullHeight={ true }
+      { ...props }
+    >
+      <Component
+        key={ activeSection.key } // Ensure that section-specific data is refetched
+        menuItems={ menuItems }
+        title={ activeSection.name }
+      >
+        <activeSection.component
+          t={ t }
+          downloadHandler={ handleDownload }
+        />
+      </Component>
+    </Modal>
+  );
+};
 
 export default ModalRouteDecorator<DownloadDialogProps>(
   DataProviderDecorator<DownloadDialogProps & DownloadDialogRouteProps, DownloadDialogDataProps>(

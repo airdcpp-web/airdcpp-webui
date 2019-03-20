@@ -21,7 +21,7 @@ const Icon: React.FC<IconProps> = ({ icon, size, className, cornerIcon, ...other
   if (cornerIcon) {
     return (
       <i 
-        className={ classNames(size, className, 'icons') }
+        className={ classNames(size, className, { link: !!other.onClick }, 'icons') }
         { ...other }
       >
         <i className={ classNames(icon, 'icon') }/>
@@ -32,7 +32,7 @@ const Icon: React.FC<IconProps> = ({ icon, size, className, cornerIcon, ...other
 
   return (
     <i 
-      className={ classNames(size, icon, className, 'icon') }
+      className={ classNames(size, icon, className, { link: !!other.onClick }, 'icon') }
       { ...other }
     />
   );

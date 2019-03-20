@@ -1,7 +1,6 @@
 import React from 'react';
 
-import SearchAPIActions from 'actions/reflux/SearchActions';
-import SearchUIActions from 'actions/ui/SearchActions';
+import SearchActions from 'actions/ui/SearchActions';
 
 import { ResultDialog, SearchResultGetter } from './result-dialog';
 
@@ -26,6 +25,7 @@ import * as UI from 'types/ui';
 import i18next from 'i18next';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
+import { searchDownloadHandler } from 'services/api/SearchApi';
 
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: i18next.TFunction) => {
@@ -55,7 +55,7 @@ const UserCell: React.FC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.
     ids={ UserFileActions }
   >
     <TableActionMenu 
-      actions={ SearchUIActions }
+      actions={ SearchActions }
       itemData={ rowDataGetter }
       ids={ [ 'result' ] }
     />
@@ -76,11 +76,11 @@ const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResul
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
-    downloadHandler={ SearchAPIActions.download }
+    downloadHandler={ searchDownloadHandler }
     { ...props }
   >
     <TableActionMenu 
-      actions={ SearchUIActions }
+      actions={ SearchActions }
       itemData={ rowDataGetter }
     />
   </FileDownloadCell>
@@ -151,7 +151,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           textFilterProps={{
             autoFocus: false,
           }}
-          moduleId={ SearchUIActions.moduleId }
+          moduleId={ SearchActions.moduleId }
         >
           <Column
             name="Name"
@@ -214,7 +214,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           />
         </VirtualTable>
         <DownloadDialog 
-          downloadHandler={ SearchAPIActions.download }
+          downloadHandler={ searchDownloadHandler }
           itemDataGetter={ SearchResultGetter }
         />
         <ResultDialog searchT={ searchT }/>

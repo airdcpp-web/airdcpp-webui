@@ -41,3 +41,20 @@ export const shareTempFile = async (
     throw e;
   }
 };
+
+
+export const refresh = (incoming: boolean) => {
+  return SocketService.post(ShareConstants.REFRESH_URL);
+};
+
+export const refreshPaths = (paths: string[]) => {
+  return SocketService.post(ShareConstants.REFRESH_PATHS_URL, { 
+    paths 
+  });
+};
+
+export const refreshVirtual = (path: string) => {
+  return SocketService.post(ShareConstants.REFRESH_VIRTUAL_URL, { 
+    path,
+  });
+};

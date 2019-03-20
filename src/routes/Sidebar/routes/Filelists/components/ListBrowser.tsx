@@ -1,8 +1,7 @@
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 
-import FilelistItemUIActions from 'actions/ui/FilelistItemActions';
-import FilelistItemAPIActions from 'actions/reflux/FilelistItemActions';
+import FilelistItemActions from 'actions/ui/FilelistItemActions';
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 
 import BrowserBar from 'components/browserbar/BrowserBar';
@@ -19,6 +18,7 @@ import * as UI from 'types/ui';
 
 import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
+import { filelistDownloadHandler } from 'services/api/FilelistApi';
 
 
 interface ListBrowserProps {
@@ -110,7 +110,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         caption={ caption }
         user={ this.props.session.user }
         itemInfoGetter={ this.getCurrentDirectory }
-        downloadHandler={ FilelistItemAPIActions.download }
+        downloadHandler={ filelistDownloadHandler }
         contextElement=".session-container"
       >
         <ActionMenu
@@ -118,7 +118,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
             item: this.props.session.location,
             session: this.props.session,
           }}
-          actions={ FilelistItemUIActions }
+          actions={ FilelistItemActions }
         />
       </DownloadMenu>
     );
@@ -155,7 +155,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           onClickDirectory={ this.handleClickDirectory }
         />
         <DownloadDialog 
-          downloadHandler={ FilelistItemAPIActions.download }
+          downloadHandler={ filelistDownloadHandler }
           itemDataGetter={ this.filelistItemFetcher }
           userGetter={ this.userGetter }
         />

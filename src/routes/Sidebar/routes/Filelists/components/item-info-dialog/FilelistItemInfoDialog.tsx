@@ -12,8 +12,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as API from 'types/api';
 //import * as UI from 'types/ui';
 import { FileItemInfoGrid } from 'components/file-item-info';
-import FilelistItemActions from 'actions/reflux/FilelistItemActions';
 import FilelistConstants from 'constants/FilelistConstants';
+import { filelistDownloadHandler } from 'services/api/FilelistApi';
 
 
 interface FilelistItemInfoDialogProps {
@@ -49,13 +49,13 @@ class FilelistItemInfoDialog extends React.Component<Props & DataProps> {
         { ...this.props }
       >
         <DownloadDialog 
-          downloadHandler={ FilelistItemActions.download }
+          downloadHandler={ filelistDownloadHandler }
           itemDataGetter={ FilelistItemGetter(session) }
           userGetter={ () => session.user }
         />
         <FileItemInfoGrid 
           fileItem={ fileItem }
-          downloadHandler={ FilelistItemActions.download }
+          downloadHandler={ filelistDownloadHandler }
           user={ session.user }
         />
       </Modal>

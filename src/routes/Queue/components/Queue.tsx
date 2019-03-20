@@ -2,8 +2,7 @@ import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
 import QueueActions from 'actions/ui/QueueActions';
-import QueueBundleAPIActions from 'actions/reflux/QueueBundleActions';
-import QueueBundleUIActions from 'actions/ui/QueueBundleActions';
+import QueueBundleActions from 'actions/ui/QueueBundleActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';
@@ -29,6 +28,7 @@ import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
+import { setBundlePriority } from 'services/api/QueueApi';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
@@ -37,7 +37,7 @@ const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.Que
   <PriorityMenu 
     itemPrio={ cellData! } 
     item={ rowDataGetter!() }
-    prioAction={ QueueBundleAPIActions.setBundlePriority }
+    prioAction={ setBundlePriority }
     t={ t! }
   />
 );
@@ -98,7 +98,7 @@ class Queue extends React.Component<WithTranslation> {
             columnKey="name"
             cell={ 
               <FileActionCell 
-                actions={ QueueBundleUIActions } 
+                actions={ QueueBundleActions } 
                 ids={[ 
                   'content', 'sources', 
                   'divider', 
@@ -125,7 +125,7 @@ class Queue extends React.Component<WithTranslation> {
             hideWidth={1000}
             cell={ 
               <ActionLinkCell 
-                actions={ QueueBundleUIActions }
+                actions={ QueueBundleActions }
                 actionId="content"
               /> 
             }
@@ -145,7 +145,7 @@ class Queue extends React.Component<WithTranslation> {
             flexGrow={1}
             cell={ 
               <ActionLinkCell 
-                actions={ QueueBundleUIActions }
+                actions={ QueueBundleActions }
                 actionId="sources"
               /> 
             }

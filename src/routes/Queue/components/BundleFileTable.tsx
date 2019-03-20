@@ -1,7 +1,6 @@
 import React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueFileAPIActions from 'actions/reflux/QueueFileActions';
 import QueueFileUIActions from 'actions/ui/QueueFileActions';
 
 import VirtualTable from 'components/table/VirtualTable';
@@ -17,6 +16,7 @@ import '../style.css';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import { setFilePriority } from 'services/api/QueueApi';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
@@ -25,7 +25,7 @@ const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.Que
   <PriorityMenu 
     itemPrio={ cellData! } 
     item={ rowDataGetter!() }
-    prioAction={ QueueFileAPIActions.setFilePriority }
+    prioAction={ setFilePriority }
     t={ t! }
   />
 );

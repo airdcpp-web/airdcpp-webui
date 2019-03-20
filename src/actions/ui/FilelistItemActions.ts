@@ -2,7 +2,6 @@
 
 import FilelistConstants from 'constants/FilelistConstants';
 
-import ShareActions from 'actions/reflux/ShareActions';
 import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
@@ -10,6 +9,7 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import History from 'utils/History';
+import { refreshVirtual } from 'services/api/ShareApi';
 
 
 interface ActionFilelistItemData {
@@ -39,7 +39,7 @@ const handleReloadDirectory: UI.ActionHandler<ActionFilelistItemData> = (
 };
 
 const handleRefreshShare: UI.ActionHandler<ActionFilelistItemData> = ({ data }) => {
-  return ShareActions.refreshVirtual(data.item.path, data.session.share_profile!.id);
+  return refreshVirtual(data.item.path);
 };
 
 const handleItemDetails: UI.ActionHandler<ActionFilelistItemData> = ({ data, location }) => {

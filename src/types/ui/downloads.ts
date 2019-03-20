@@ -5,7 +5,7 @@ export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
   itemInfo: ItemT, 
   user: API.HintedUserBase | undefined, 
   downloadData: API.DownloadData
-) => void;
+) => Promise<any>;
 
 export interface DownloadableItemInfo {
   id: API.IdType;

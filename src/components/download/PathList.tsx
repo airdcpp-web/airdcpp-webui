@@ -14,7 +14,7 @@ import i18next from 'i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
-export type PathDownloadHandler = (path: string) => void;
+export type PathDownloadHandler = (path: string) => Promise<any>;
 
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;

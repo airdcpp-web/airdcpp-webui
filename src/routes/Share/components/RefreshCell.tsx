@@ -1,7 +1,6 @@
 import React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import ShareActions from 'actions/reflux/ShareActions';
 import { formatRelativeTime } from 'utils/ValueFormat';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
@@ -10,6 +9,10 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
+import { refreshPaths } from 'services/api/ShareApi';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 interface RefreshCellProps extends RowWrapperCellChildProps<number, API.ShareRootEntry> {}
@@ -24,9 +27,15 @@ const RefreshCell: React.FC<RefreshCellProps> = (
 
   return (
     <div>
-      <i 
-        className={ 'icon large link green refresh' } 
-        onClick={ () => ShareActions.refreshPaths([ rowDataGetter!().path ]) }
+      <Icon
+        icon={ IconConstants.REFRESH }
+        size="large"
+        onClick={ () => 
+          runBackgroundSocketAction(
+            () => refreshPaths([ rowDataGetter!().path ]),
+            t!
+          )
+        }
       />
       { cellData === 0 ? translate('Unknown', t!, UI.Modules.SHARE) : formatRelativeTime(cellData!) }
     </div>

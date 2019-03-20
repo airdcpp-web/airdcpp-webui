@@ -15,12 +15,13 @@ import * as UI from 'types/ui';
 
 import i18next from 'i18next';
 import { translate } from 'utils/TranslationUtils';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 
 interface PriorityMenuProps {
   itemPrio: API.QueuePriority;
   item: API.QueueItemBase;
-  prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => void;
+  prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => Promise<any>;
   t: i18next.TFunction;
 }
 
@@ -40,7 +41,11 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
   };
 
   setPriority = (priorityId: API.QueuePriorityEnum) => {
-    this.props.prioAction(this.props.item, priorityId);
+    const { item, prioAction, t } = this.props;
+    return runBackgroundSocketAction(
+      () => prioAction(item, priorityId),
+      t
+    );
   }
 
   setAutoPriority = () => {

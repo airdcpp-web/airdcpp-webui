@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
-import FilelistItemUIActions from 'actions/ui/FilelistItemActions';
-import FilelistItemAPIActions from 'actions/reflux/FilelistItemActions';
+import FilelistItemActions from 'actions/ui/FilelistItemActions';
 
 import { dupeToStringType } from 'utils/TypeConvert';
 import { TableActionMenu } from 'components/menu';
@@ -21,11 +20,11 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { FilelistItemInfoDialog } from './item-info-dialog';
-import FilelistItemActions from 'actions/ui/FilelistItemActions';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { filelistDownloadHandler } from 'services/api/FilelistApi';
 
 
-interface NameCellProps extends RowWrapperCellChildProps<string, API.GroupedSearchResult> {
+interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   session: API.FilelistSession;
   onClickDirectory: FileDownloadCellClickHandler; 
 }
@@ -47,7 +46,7 @@ const NameCell: React.FC<NameCellProps> = (
     <FileDownloadCell 
       clickHandlerGetter={ onClickDirectory }
       userGetter={ () => session.user }
-      downloadHandler={ FilelistItemAPIActions.download }
+      downloadHandler={ filelistDownloadHandler }
       rowDataGetter={ rowDataGetter }
       { ...other }
     >
@@ -128,7 +127,7 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
           entityId={ session.id }
           viewId={ session.location.path }
           sessionStore={ FilelistSessionStore }
-          moduleId={ FilelistItemUIActions.moduleId }
+          moduleId={ FilelistItemActions.moduleId }
         >
           <Column
             name="Name"

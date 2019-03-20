@@ -214,15 +214,15 @@ export const DecimalCell: React.FC<NumberCellProps> = ({ cellData }) => (
 
 export type FileDownloadCellClickHandler = (cellData: any, rowDataGetter: () => any) => (() => void) | undefined;
 
-export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> 
+export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.DownloadableItemInfo> 
   extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
 
   userGetter: (rowData: ItemDataT) => API.HintedUserBase;
   clickHandlerGetter?: FileDownloadCellClickHandler;
-  downloadHandler: () => void;
+  downloadHandler: UI.DownloadHandler<ItemDataT>;
 }
 
-export const FileDownloadCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType & FileItemBase>(
+export const FileDownloadCell = <CellDataT, ItemDataT extends UI.DownloadableItemInfo & FileItemBase>(
   { cellData, rowDataGetter, clickHandlerGetter, 
     userGetter, downloadHandler, ...props 
   }: FileDownloadCellProps<CellDataT, ItemDataT>

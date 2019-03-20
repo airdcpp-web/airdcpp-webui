@@ -1,7 +1,6 @@
 import React from 'react';
 
-import FavoriteHubAPIActions from 'actions/reflux/FavoriteHubActions';
-import FavoriteHubUIActions from 'actions/ui/FavoriteHubActions';
+import FavoriteHubActions from 'actions/ui/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/ui/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
@@ -24,6 +23,8 @@ import * as UI from 'types/ui';
 
 import { translate, getModuleT } from 'utils/TranslationUtils';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { updateFavoriteHub } from 'services/api/FavoriteHubApi';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = (
@@ -58,14 +59,19 @@ class FavoriteHubs extends React.Component<WithTranslation> {
   }
 
   onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
-    FavoriteHubAPIActions.update(rowData, { auto_connect: checked });
+    return runBackgroundSocketAction(
+      () => updateFavoriteHub(rowData, { 
+        auto_connect: checked 
+      }),
+      this.props.t
+    );
   }
 
   favT = getModuleT(this.props.t, UI.Modules.FAVORITE_HUBS);
   render() {
     const footerData = (
       <ActionButton 
-        actions={ FavoriteHubUIActions.create }
+        actions={ FavoriteHubActions.create }
         actionId="create"
       />
     );
@@ -93,7 +99,7 @@ class FavoriteHubs extends React.Component<WithTranslation> {
             flexGrow={ 6 }
             cell={ 
               <ActionMenuCell 
-                actions={ FavoriteHubUIActions.edit }
+                actions={ FavoriteHubActions.edit }
               /> 
             }
           />

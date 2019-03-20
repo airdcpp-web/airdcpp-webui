@@ -35,8 +35,8 @@ type SocketActionHandler = () => Promise<any>;
 export const runBackgroundSocketAction = (
   handler: SocketActionHandler, 
   t: i18next.TFunction
-) => {
-  handler().catch(e => {
+): Promise<any> => {
+  return handler().catch(e => {
     NotificationActions.apiError(
       translate('Action failed', t, UI.Modules.COMMON),
       e

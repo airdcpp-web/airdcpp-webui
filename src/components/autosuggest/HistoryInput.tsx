@@ -1,12 +1,13 @@
-//import PropTypes from 'prop-types';
 import React from 'react';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import HistoryConstants from 'constants/HistoryConstants';
-import HistoryActions from 'actions/reflux/HistoryActions';
 
 import LocalSuggestField, { LocalSuggestFieldProps } from './LocalSuggestField';
+import { addHistory } from 'services/api/HistoryApi';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { useTranslation } from 'react-i18next';
 
 
 export interface HistoryInputProps extends Omit<LocalSuggestFieldProps, 'data' | 'submitHandler'> {
@@ -18,38 +19,29 @@ interface HistoryInputDataProps extends DataProviderDecoratorChildProps {
   history: string[];
 }
 
-interface HistoryInputDataProps {
-  history: string[];
-}
 
-class HistoryInput extends React.Component<HistoryInputProps & HistoryInputDataProps> {
-  /*static propTypes = {
-    // ID of the history section
-    historyId: PropTypes.string.isRequired,
-
-    history: PropTypes.array.isRequired,
-
-    submitHandler: PropTypes.func.isRequired,
-  };*/
-
-  handleSubmit = (text: string) => {
-    HistoryActions.add(this.props.historyId, text);
-
-    this.props.refetchData();
-    this.props.submitHandler(text);
-  }
-
-  render() {
-    const { submitHandler, historyId, history, ...other } = this.props; // eslint-disable-line
-    return (
-      <LocalSuggestField 
-        { ...other }
-        data={ history }
-        submitHandler={ this.handleSubmit }
-      />
+const HistoryInput: React.FC<HistoryInputProps & HistoryInputDataProps> = (
+  { submitHandler, historyId, history, refetchData, ...other }
+) => {
+  const { t } = useTranslation();
+  const handleSubmit = async (text: string) => {
+    await runBackgroundSocketAction(
+      () => addHistory(historyId, text),
+      t
     );
-  }
-}
+
+    refetchData();
+    submitHandler(text);
+  };
+
+  return (
+    <LocalSuggestField 
+      { ...other }
+      data={ history }
+      submitHandler={ handleSubmit }
+    />
+  );
+};
 
 export default DataProviderDecorator<HistoryInputProps, HistoryInputDataProps>(HistoryInput, {
   urls: {
