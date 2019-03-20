@@ -46,8 +46,8 @@
       "nameName": "Nome"
     },
     "widgetPositionHint": "Os widgets e suas posições são específicos do navegador",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "accessDenied": "Você não está autorizado a acessar este widget",
+    "settingsMissing": "Configurações do Widget ausente"
   },
   "events": {
     "events": "Eventos",
@@ -107,7 +107,7 @@
     "xUsersNicks": "{{count}} usuário ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} usuários ({{user.nicks}})",
     "noResults": "Nenhum resultado encontrado para \"{{searchString}}\"",
-    "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
+    "noResultsHint": "<0><0>Certifique-se de que você soletrou corretamente as palavras</0><1>Use palavras-chave diferentes</1><2>Você está procurando com muita frequência(hubs têm um mínimo intervalo de busca)</2><3>Se você nunca receber resultados para termos de busca comum, certifique-se de que sua conectividade estão configuradas corretamente</3></0>"
   },
   "share": {
     "table": {
@@ -128,13 +128,13 @@
       "prompts": {
         "removeRootApprove": "Remover diretório",
         "removeRootReject": "Não remover",
-        "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
+        "removeRootContent": "Tem certeza de que deseja remover o diretório {{item.virtual_name}} do compartilhamento? Ele será removido de todas compartilhar perfis."
       }
     },
     "actionsCaption": "Ações...",
-    "shareActions": "Share actions",
+    "shareActions": "Ações de compartilhamento",
     "hashingInformation": "Informção do hashing",
-    "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
+    "hashingInformationDesc": "<0>Novos arquivos aparecerão no compartilhamento apenas depois de terem terminado o hashing (o cliente tem calculado para eles). Informações sobre hashing de progresso será enviado para o registro de eventos.</0>",
     "addShareDirectory": "Adicionar diretório ao compartilhamento",
     "editShareDirectory": "Editar diretórios de compartilhamento",
     "form": {
@@ -194,13 +194,13 @@
       "userName": "Substituir configurações do usuário",
       "nickName": "Apelido",
       "userDescriptionName": "Descrição do Usuário",
-      "connectivityV4Name": "Connectivity setting overrides (IPv4)",
+      "connectivityV4Name": "Substituir configuração de conectividade (IPv4)",
       "connectionModeV4Name": "Modo de conectividade",
       "connectionModeV4Option-1": "Desabilitado",
       "connectionModeV4Option0": "Modo ativo",
       "connectionModeV4Option2": "Modo passivo",
       "connectionIpV4Name": "Endereço de IP",
-      "connectivityV6Name": "Connectivity setting overrides (IPv6)",
+      "connectivityV6Name": "Substituir configuração de conectividade (IPv6)",
       "connectionModeV6Name": "Modo de conectividade",
       "connectionModeV6Option-1": "Desabilitado",
       "connectionModeV6Option0": "Modo ativo",
@@ -220,7 +220,7 @@
     "userOfflineDesc": "Você irá estar habilitado a continuar navegado quando o usuário ficar online novamente",
     "noContentToDisplay": "Nenhum conteúdo para exibir",
     "theDirectoryIsEmpty": "O diretório está vazio",
-    "updatingView": "Updating view",
+    "updatingView": "Atualizando a visualização",
     "downloadFailed": "Falha no Download",
     "table": {
       "name": "Nome",
@@ -232,7 +232,7 @@
       "reload": "Recarregar",
       "refreshInShare": "Atualizar o compartilhamento",
       "close": "Fechar",
-      "details": "Details"
+      "details": "Detalhes"
     }
   },
   "common": {    
@@ -256,12 +256,12 @@
       "notifications": {
         "ignoreUserSuccess": "Usuário {{item.nicks}} foi adicionado aos usuários ignorados",
         "unignoreUserSuccess": "Usuário {{item.nicks}} foi removido de usuários ignorados",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard"
+        "copyMagnetSuccess": "Link magnet foi copiado para área de transferência"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuar e reiniciar",
         "restartWebSystemReject": "Não reiniciar",
-        "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
+        "restartWebSystemContent": "Ao alterar as opções de ligação, é recomendável reiniciar o servidor da web apenas \n                quando você puder acessar o servidor para solução de problemas. E se                  o servidor da web não voltará a ser on-line, você deve iniciar o aplicativo \n                manualmente para ver se há alguma mensagem de erro. O arquivo de configuração está localizado em seu diretório de usuários por padrão (dentro do diretório .airdc ++), caso você precise editá-lo manualmente.",
         "shutdownSystemApprove": "Continue e desligue",
         "shutdownSystemReject": "Cancelar",
         "shutdownSystemContent": "Tem certeza de que deseja encerrar o aplicativo?"
@@ -282,16 +282,16 @@
     },
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
+    "today": "Hoj",
+    "yesterday": "Ontem",
+    "tomorrow": "Amanhã",
     "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "O modo ausente foi ativado",
     "awayModeWasDisabled": "O modo ausente foi desativado",
     "actionSucceed": "Ação bem sucedida",
     "actionFailed": "Ação: falhou",
-    "noNfoResultsWereReceived": "No NFO results were received",
-    "networkClientError": "Network/client error",
+    "noNfoResultsWereReceived": "Nenhum resultado de NFO foi recebido",
+    "networkClientError": "Erro de rede/cliente",
     "failedToFetchData": "Falha ao buscar dados",
     "loadingItems": "Carregando itens",
     "root": "Raiz",
@@ -338,26 +338,26 @@
     "tlsOutdatedWarning": "Protocolo criptográfico ultrapassado com vulnerabilidades de segurança conhecidos",
     "tlsAuthenticityWarning": "A autenticidade do certificado não pôde ser validada",
     "upload": "Upload",
-    "sendFiles": "Send files",
-    "removeSharedFile": "Remove shared file",
-    "fileNoLongerShared": "File {{file.name}} is no longer shared",
-    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
-    "previewIsNotAvailable": "Preview is not available",
-    "failedToFetchContent": "Failed to fetch content",
-    "noItemsToShow": "No items to show",
-    "noSessionEditAccess": "You aren't allowed to open new sessions",
-    "noChatAccess": "You aren't allowed to send new messages",
-    "loadingSessions": "Loading sessions",
+    "sendFiles": "Enviar arquivos",
+    "removeSharedFile": "Remover arquivo compartilhado",
+    "fileNoLongerShared": "Arquivo {{file.name}} não está mais compartilhado",
+    "fileTooLarge": "O arquivo é muito grande (o tamanho máximo é {{maxSize}})",
+    "previewIsNotAvailable": "Prévia não está disponível",
+    "failedToFetchContent": "Falha ao buscar conteúdo",
+    "noItemsToShow": "Nenhum item para mostrar",
+    "noSessionEditAccess": "Você não tem permissão para abrir novas sessões",
+    "noChatAccess": "Você não tem permissão para enviar novas mensagens",
+    "loadingSessions": "Carregando sessões",
     "typeContent": "Tipo/conteúdo",
     "lastModified": "Última modificação",
     "dupeType": "Dupe type",
-    "shareFull": "Share (full)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
-    "finishedFull": "Finished (full)",
-    "finishedPartial": "Finished (partial)",
-    "shareAndQueue": "Share and queue",
+    "shareFull": "Compartilhamento (completo)",
+    "sharePartial": "Compartilhamento (parcial)",
+    "queueFull": "Fila (completa)",
+    "queuePartial": "Fila (parcial)",
+    "finishedFull": "Concluídos (completo)",
+    "finishedPartial": "Concluídos (parcial)",
+    "shareAndQueue": "Comparilhamento e fila",
     "dupePaths": "Dupe paths",
     "actionsCaption": "Ações...",
     "tth": "TTH",
@@ -447,7 +447,7 @@
         "removeFileCheckbox": "Remover do disco"
       },
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeFileSuccess": "Arquivo {{item.name}} foi removido da fila",
         "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
         "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
@@ -467,13 +467,13 @@
     "size": "Tamanho",
     "notifications": {
       "bundleWasAddedInQueue": "Download foi adicionado na fila",
-      "bundleDownloadError": "Download error: {{error}}",
+      "bundleDownloadError": "Erro de download: {{error}}",
       "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
       "validatingDownloadedBundle": "Validating downloaded bundle",
-      "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
-      "bundleWasAddedInShare": "Bundle was added in share",
+      "bundleWasCompletedSuccessfully": "Download foi concluído com sucesso",
+      "bundleWasAddedInShare": "Download foi adicionado ao compartilhamento",
       "actions": {
-        "viewQueue": "View queue"
+        "viewQueue": "Exibir fila"
       }
     }
   },
@@ -485,20 +485,20 @@
       "status": "Status",
       "secondsLeft": "Tempo Restante",
       "speed": "Velocidade",
-      "flags": "Flags",
+      "flags": "Bandeiras",
       "ip": "Ip"
     },
     "actions": {
-      "forceConnect": "Force connect",
+      "forceConnect": "Forçar conexão",
       "disconnect": "Desconectar",
       "removeFileFromQueue": "Remover Arquivo da Lista",
       "removeUserFromQueue": "Remover usuário da lista de espera",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeFileSuccess": "Arquivo {{item.name}} foi removido da fila",
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
-    "noActiveTransfers": "No active transfers"
+    "noActiveTransfers": "Nenhuma transferência ativa"
   },
   "settings": {
     "actions": {
@@ -513,14 +513,14 @@
       "renameProfile": "Renomear perfil",
       "addPath": "Adicionar caminho",
       "removePath": "Remover caminho",
-      "removeUser": "Remove user",
-      "setAsDefault": "Set as default",
+      "removeUser": "Remover usuário",
+      "setAsDefault": "Definirr como padrão",
       "removeProfile": "Remover perfil",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
-        "removeWebUserApprove": "Remove user",
+        "removeWebUserApprove": "Remover usuário",
         "removeWebUserReject": "Não remover",
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remover diretório",
@@ -549,7 +549,7 @@
       "ignoredUsers": "Usuários Ignorados",
       "miscellaneous": "Miscelânea",
       "manageInstalled": "Manage installed",
-      "extensionCatalog": "Extension catalog",
+      "extensionCatalog": "Catálogo de extensão",
       "extensionOptions": "Opções de extensões",
       "application": "Aplicação",
       "transferStatistics": "Estatísticas de transferências",
@@ -583,13 +583,13 @@
     "saveChanges": "Salvar mudnaças",
     "savingCompleted": "Salvamento completado",
     "settingsWereSavedSuccessfully": "Configurações foram salvas com sucesso",
-    "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
+    "unsavedChangesPrompt": "Você tem alterações não salvas. Você tem certeza de que quer sair?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
-        "currentAutoDetectionStatus": "Current auto detection status",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
+        "connectivityDetectionNote": "Em caso de problemas de conectividade de transferência de arquivos, confirme se as portas TCP estão realmente abertas usando <1>um verificador de porta online</1>. Observe que a validade da porta UDP (pesquisa) não pode ser verificada online. Para mais informações sobre diferentes modos de conectividade, visite <4>FAQ2 conectividade DC++'s .",
+        "currentAutoDetectionStatus": "Status atual da auto detecção",
+        "iPv4Connectivity": "Conectividade IPv4",
+        "iPv6Connectivity": "Conectividade IPv6",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)"
       },
@@ -605,9 +605,9 @@
       "user": {
         "form": {
           "settingProfileHelp0": "O cliente é usado em hubs públicos/privados normais para transferir arquivos via internet. Use este perfil se não tiver certeza.",
-          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
-          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
+          "settingProfileHelp1": "O cliente é usado para transferir arquivos que são divididos em arquivos RAR (ou em outros formatos pequenos)",
+          "settingProfileHelp2": "O cliente é usado para transferir arquivos na rede local (por exemplo, as LAN parties) ou em outra rede fechada (por exemplo, rede universitária)",
+          "languageFileHelp": "<0>O aplicativo deve ser reiniciado para que o novo idioma seja efetivado.</0><1>Se você quiser ajudar a melhorar as traduções existentes ou traduzir o aplicativo para um novo idioma, consulte as <1>instruções para tradutores</1>.</1>"
         }
       },
       "ignoredUsers": {
@@ -617,34 +617,34 @@
       },
       "miscellaneous": {
         "form": {
-          "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
+          "nmdcEncodingHelp": "<0>A configuração de codificação é usada apenas em hubs NMDC. Os hubs do ADC sempre usarão a codificação UTF-8.<1></1><2></2><3>Valores comumente usados:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
         }
       }
     },
     "extensions": {
       "packages": {
-        "byAuthor": "by {{author}}",
+        "byAuthor": "por {{author}}",
         "latestVersion": "Última Versão",
-        "installedVersion": "Installed version",
+        "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (published {{date}})",
-        "readMore": "Read more",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
+        "readMore": "Ler mais",
+        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação."
       },
       "manage": {
-        "byAuthor": "by {{author}}",
+        "byAuthor": "por {{author}}",
         "latestVersion": "Última Versão",
-        "installedVersion": "Installed version",
-        "nonListedExtension": "Non-listed extension",
-        "readMore": "Read more",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "installedVersion": "Versão instalada",
+        "nonListedExtension": "Extensão não listada",
+        "readMore": "Ler mais",
+        "noInstalledExtensions": "Nenhuma extensão instalada foi encontrada. Novas extensões podem ser instaladas a partir do <1>Catálogo de extensão</1> pagina.",
+        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
       }
     },
     "about": {
       "application": {
-        "applicationVersion": "Application version",
-        "webUiVersion": "Web UI version",
+        "applicationVersion": "Versão do aplicativo",
+        "webUiVersion": "Versão da Web UI",
         "webUiBuildDate": "Web UI build date",
         "apiVersion": "Versão da API",
         "apiFeatureLevel": "API feature level",
@@ -653,9 +653,9 @@
         "serverThreads": "Processos do servidor"
       },
       "transfers": {
-        "totalDownloaded": "Total downloaded",
-        "totalUploaded": "Total uploaded",
-        "session": "Session",
+        "totalDownloaded": "Total baixado",
+        "totalUploaded": "Total enviado",
+        "session": "Sessão",
         "sessionDownloaded": "Baixaod na sessão",
         "sessionUploaded": "Enviado na sessão"
       },
@@ -664,8 +664,8 @@
         "totalShareSize": "Tamanho total do compartilhamento",
         "totalFiles": "Arquivos no total",
         "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
-        "totalDirectories": "Total directories",
-        "averageFileAge": "Average file age",
+        "totalDirectories": "Diretórios no total",
+        "averageFileAge": "Média de idade do arquivo",
         "averageFilesPerDirectory": "Média de arquivos por diretório",
         "incomingSearches": "Buscas de entrada",
         "totalSearches": "Total de buscas",

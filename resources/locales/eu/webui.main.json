@@ -19,7 +19,7 @@
       "form": {
         "feedUrlName": "URL jarioa",
         "feedUrlHelp": "RSS and Atom feeds are supported",
-        "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        "feedCacheMinutesName": "Berreskuratzeko gutxieneko tartea (minutu)"
       }
     },
     "transfers": {
@@ -39,7 +39,7 @@
       "prompts": {
         "removeApprove": "Ezabatu trepeta",
         "removeReject": "Ez ezabatu",
-        "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
+        "removeContent": "Ziur zaude {{item.settings.name}} trepeta kendu nahi duzula?"
       }
     },
     "form": {
@@ -132,7 +132,7 @@
       }
     },
     "actionsCaption": "Ekintzak...",
-    "shareActions": "Share actions",
+    "shareActions": "partekatze ekintzak",
     "hashingInformation": "Indexatze informazioa",
     "hashingInformationDesc": "<0>Fitxategi berriak partekatzeko agertzen indexaketa bukatu ondoren bakarrik (bezeroak checksum kalkulatu behar du beraientzat). Indexatzeko aurrerapenei buruzko informazioa gertaera erregistroan argitaratuko da.</0>",
     "addShareDirectory": "Add share directory",
@@ -282,9 +282,9 @@
     },
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
+    "today": "Gaur",
+    "yesterday": "Atzo",
+    "tomorrow": "Bihar",
     "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
@@ -304,7 +304,7 @@
     "history": "Aurrekoa",
     "shared": "Partekatua",
     "favorites": "Gogokoak",
-    "dupes": "Dupes",
+    "dupes": "Bikoiztuak",
     "browse": "Nabigatu",
     "download": "Jaitsi",
     "close": "Itxi",
@@ -350,7 +350,7 @@
     "loadingSessions": "Loading sessions",
     "typeContent": "Mota/edukia",
     "lastModified": "Azken aldaketa",
-    "dupeType": "Dupe type",
+    "dupeType": "Bikoiztutako mota",
     "shareFull": "Partekatu (full)",
     "sharePartial": "Share (partial)",
     "queueFull": "Queue (full)",
@@ -358,7 +358,7 @@
     "finishedFull": "Finished (full)",
     "finishedPartial": "Finished (partial)",
     "shareAndQueue": "Share and queue",
-    "dupePaths": "Dupe paths",
+    "dupePaths": "Bikoiztutakoen bidea",
     "actionsCaption": "Ekintzak...",
     "tth": "TTH",
     "na": "N/A",

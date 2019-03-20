@@ -46,8 +46,8 @@
       "nameName": "Nombre"
     },
     "widgetPositionHint": "Los widgets y su posición son específicos del navegador.",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "accessDenied": "No se le permite acceder a este widget",
+    "settingsMissing": "Configuración del widget que faltan"
   },
   "events": {
     "events": "Eventos",
@@ -232,7 +232,7 @@
       "reload": "Recargar",
       "refreshInShare": "Actualizar en compartidos",
       "close": "Cerrar",
-      "details": "Details"
+      "details": "Detalles"
     }
   },
   "common": {    
@@ -282,9 +282,9 @@
     },
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "tomorrow": "Mañana",
     "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Se ha activado el modo ausente",
     "awayModeWasDisabled": "Se ha desactivado el modo ausente",
