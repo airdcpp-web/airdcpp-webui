@@ -18,12 +18,11 @@ import * as UI from 'types/ui';
 import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
+import { changeFilelistHubUrl, changeFilelistShareProfile, changeFilelistDirectory } from 'services/api/FilelistApi';
+
 
 const FilelistSessionActions = Reflux.createActions([
   { 'createSession': { asyncResult: true } },
-  { 'changeDirectory': { asyncResult: true } },
-  { 'changeHubUrl': { asyncResult: true } },
-  { 'changeShareProfile': { asyncResult: true } },
   { 'ownList': { asyncResult: true } },
   { 'setRead': { asyncResult: true } },
 ] as UI.RefluxActionConfigList<API.FilelistSession>);
@@ -50,11 +49,11 @@ FilelistSessionActions.createSession.listen(function (
   const session = sessionStore.getSession(user.cid);
   if (session) {
     if (session.user.hub_url !== user.hub_url) {
-      FilelistSessionActions.changeHubUrl(session, user.hub_url);
+      changeFilelistHubUrl(session, user.hub_url);
     }
 
     if (directory !== '/' && session.location.path !== directory) {
-      FilelistSessionActions.changeDirectory(session, directory);
+      changeFilelistDirectory(session, directory);
     }
 
     this.completed(location, user, session);
@@ -93,7 +92,7 @@ FilelistSessionActions.ownList.listen(function (
   let session = sessionStore.getSession(LoginStore.systemInfo.cid);
   if (session) {
     if (session.share_profile.id !== shareProfileId) {
-      FilelistSessionActions.changeShareProfile(session, shareProfileId);
+      changeFilelistShareProfile(session, shareProfileId);
     }
 
     this.completed(location, shareProfileId, session);
@@ -114,44 +113,6 @@ FilelistSessionActions.ownList.completed.listen(function (location: Location) {
 
 
 // SESSION UPDATES
-FilelistSessionActions.changeHubUrl.listen(function (
-  this: UI.AsyncActionType<API.FilelistSession>, 
-  session: API.FilelistSession, 
-  hubUrl: string
-) {
-  let that = this;
-  SocketService.patch(`${FilelistConstants.SESSIONS_URL}/${session.id}`, { 
-    hub_url: hubUrl 
-  })
-    .then(data => that.completed(session.id, data))
-    .catch(error => that.failed(error, session));
-});
-
-FilelistSessionActions.changeShareProfile.listen(function (
-  this: UI.AsyncActionType<API.FilelistSession>, 
-  session: API.FilelistSession, 
-  shareProfileId: number
-) {
-  let that = this;
-  SocketService.patch(`${FilelistConstants.SESSIONS_URL}/${session.id}`, { 
-    share_profile: shareProfileId 
-  })
-    .then(data => that.completed(session, data))
-    .catch(error => that.failed(error, session));
-});
-
-FilelistSessionActions.changeDirectory.listen(function (
-  this: UI.AsyncActionType<API.FilelistSession>, 
-  session: API.FilelistSession, 
-  path: string
-) {
-  let that = this;
-  SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, { 
-    list_path: path 
-  })
-    .then(data => that.completed(session, data))
-    .catch(error => that.failed(error, session));
-});
 
 FilelistSessionActions.setRead.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>, 

@@ -2,7 +2,6 @@ import React from 'react';
 import { Prompt } from 'react-router-dom';
 
 import FilelistItemActions from 'actions/ui/FilelistItemActions';
-import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/menu';
@@ -18,7 +17,8 @@ import * as UI from 'types/ui';
 
 import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
-import { filelistDownloadHandler } from 'services/api/FilelistApi';
+import { filelistDownloadHandler, changeFilelistDirectory } from 'services/api/FilelistApi';
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 
 interface ListBrowserProps {
@@ -97,7 +97,10 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   }
 
   sendChangeDirectory = (directory: string) => {
-    FilelistSessionActions.changeDirectory(this.props.session, directory);
+    runBackgroundSocketAction(
+      () => changeFilelistDirectory(this.props.session, directory),
+      this.props.sessionT.plainT
+    );
   }
 
   getCurrentDirectory = () => {

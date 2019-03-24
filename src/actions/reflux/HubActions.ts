@@ -21,35 +21,10 @@ const HubActionConfig: UI.RefluxActionConfigList<API.Hub> = [
     asyncResult: true,
     access: API.AccessEnum.HUBS_EDIT, 
   } },
-  { 'redirect': { 
-    asyncResult: true,
-    access: API.AccessEnum.HUBS_EDIT,
-  } },
-  { 'password': { 
-    asyncResult: true,
-    access: API.AccessEnum.HUBS_EDIT,
-  } },
 ];
 
 const HubActions = Reflux.createActions(HubActionConfig);
 
-HubActions.password.listen(function (
-  this: UI.AsyncActionType<API.Hub>, 
-  hub: API.Hub, 
-  password: string
-) {
-  let that = this;
-  SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/password`, { password: password })
-    .then(that.completed.bind(that, hub))
-    .catch(that.failed.bind(that, hub));
-});
-
-HubActions.redirect.listen(function (this: UI.AsyncActionType<API.Hub>, hub: API.Hub) {
-  let that = this;
-  SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/redirect`)
-    .then(that.completed.bind(that, hub))
-    .catch(that.failed.bind(that, hub));
-});
 
 HubActions.createSession.listen(function (
   this: UI.AsyncActionType<API.Hub>,

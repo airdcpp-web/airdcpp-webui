@@ -16,11 +16,11 @@ import * as UI from 'types/ui';
 
 import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { changePrivateChatHubUrl } from 'services/api/PrivateChatApi';
 
 
 const PrivateChatActionConfig: UI.RefluxActionConfigList<API.PrivateChat> = [
   { 'createSession': { asyncResult: true } },
-  { 'changeHubUrl': { asyncResult: true } },
 ];
 
 const PrivateChatActions = Reflux.createActions(PrivateChatActionConfig);
@@ -35,7 +35,8 @@ PrivateChatActions.createSession.listen(function (
   let session = sessionStore.getSession(user.cid);
   if (session) {
     if (session.user.hub_url !== user.hub_url) {
-      PrivateChatActions.changeHubUrl(session, user.hub_url);
+      // TODO: error handling
+      changePrivateChatHubUrl(session, user.hub_url);
     }
 
     this.completed(location, user, session);
@@ -68,19 +69,6 @@ PrivateChatActions.createSession.completed.listen(function (
 
 PrivateChatActions.createSession.failed.listen(function (error: ErrorResponse) {
   NotificationActions.apiError('Failed to create chat session', error);
-});
-
-
-// SESSION UPDATES
-PrivateChatActions.changeHubUrl.listen(function (
-  this: UI.AsyncActionType<API.PrivateChat>, 
-  session: API.PrivateChat, 
-  hubUrl: string
-) {
-  let that = this;
-  SocketService.patch(PrivateChatConstants.SESSIONS_URL + '/' + session.id, { hub_url: hubUrl })
-    .then(data => that.completed(session, data))
-    .catch(error => that.failed(error));
 });
 
 
