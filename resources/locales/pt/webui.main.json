@@ -46,8 +46,8 @@
       "nameName": "Nome"
     },
     "widgetPositionHint": "Os widgets e as suas posições são específicas para cada navegador de Internet",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "accessDenied": "Não tem permissão para aceder a este widget",
+    "settingsMissing": "Faltam as configurações do widget"
   },
   "events": {
     "events": "Eventos",
@@ -220,7 +220,7 @@
     "userOfflineDesc": "Você poderá continuar a navegar quando o utilizador voltar a ligar-se",
     "noContentToDisplay": "Sem conteúdo para mostrar",
     "theDirectoryIsEmpty": "A pasta está vazia",
-    "updatingView": "Updating view",
+    "updatingView": "A atualizar a visualização",
     "downloadFailed": "O descarregamento falhou",
     "table": {
       "name": "Nome",
@@ -232,7 +232,7 @@
       "reload": "Recarregar",
       "refreshInShare": "Atualizar na partilha",
       "close": "Fechar",
-      "details": "Details"
+      "details": "Detalhes"
     }
   },
   "common": {    
@@ -256,7 +256,7 @@
       "notifications": {
         "ignoreUserSuccess": "O utilizador {{item.nicks}} foi adicionado aos utilizadores ignorados",
         "unignoreUserSuccess": "O utilizador {{item.nicks}} foi removido dos utilizadores ignorados",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard"
+        "copyMagnetSuccess": "Hiperligação magnética copiada para a área de transferência"
       },
       "prompts": {
         "restartWebSystemApprove": "Continuar e reiniciar",
@@ -282,15 +282,15 @@
     },
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
-    "lastWeek": "[Last] {{weekDay}}",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "tomorrow": "Amanhã",
+    "lastWeek": "[Última(o)] {{weekDay}}",
     "awayModeWasEnabled": "O modo ausente foi ativado",
     "awayModeWasDisabled": "O modo ausente foi desativado",
     "actionSucceed": "Ação bem sucedida",
     "actionFailed": "Ação falhou",
-    "queueingFailed": "Failed to queue the item {{item.name}}",
+    "queueingFailed": "Não foi possível adicionar o item {{item.name}} à fila",
     "noNfoResultsWereReceived": "Não foram recebidos resultados NFO",
     "networkClientError": "Erro de rede / cliente",
     "failedToFetchData": "Não foi possível buscar os dados",
@@ -339,26 +339,26 @@
     "tlsOutdatedWarning": "Protocolo criptográfico desatualizado com vulnerabilidades de segurança conhecidos",
     "tlsAuthenticityWarning": "Não foi possível validar a autenticidade do certificado",
     "upload": "Envio",
-    "sendFiles": "Send files",
-    "removeSharedFile": "Remove shared file",
-    "fileNoLongerShared": "File {{file.name}} is no longer shared",
-    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
-    "previewIsNotAvailable": "Preview is not available",
-    "failedToFetchContent": "Failed to fetch content",
-    "noItemsToShow": "No items to show",
-    "noSessionEditAccess": "You aren't allowed to open new sessions",
-    "noChatAccess": "You aren't allowed to send new messages",
-    "loadingSessions": "Loading sessions",
+    "sendFiles": "Enviar ficheiros",
+    "removeSharedFile": "Remover ficheiro partilhado",
+    "fileNoLongerShared": "O ficheiro {{file.name}} já não está a ser partilhado",
+    "fileTooLarge": "O ficheiro é demasiado grande (o tamanho máximo é {{maxSize}})",
+    "previewIsNotAvailable": "A pré-visualização não está disponível",
+    "failedToFetchContent": "Não foi possível obter o conteúdo",
+    "noItemsToShow": "Nenhum item para mostrar",
+    "noSessionEditAccess": "Não tem permissão para abrir novas sessões",
+    "noChatAccess": "Não tem permissão para enviar novas mensagens",
+    "loadingSessions": "A carregar as sessões",
     "typeContent": "Tipo / conteúdo",
     "lastModified": "Última alteração",
     "dupeType": "Tipo de duplicado",
     "shareFull": "Partilha (total)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
-    "finishedFull": "Finished (full)",
-    "finishedPartial": "Finished (partial)",
-    "shareAndQueue": "Share and queue",
+    "sharePartial": "Partilha (parcial)",
+    "queueFull": "Fila (completa)",
+    "queuePartial": "Fila (parcial)",
+    "finishedFull": "Concluídos (completo)",
+    "finishedPartial": "Concluídos (parcial)",
+    "shareAndQueue": "Partilha e fila",
     "dupePaths": "Caminhos do duplicado",
     "actionsCaption": "Ações...",
     "tth": "TTH",
@@ -515,7 +515,7 @@
       "addPath": "Adicionar caminho",
       "removePath": "Remover caminho",
       "removeUser": "Remover utilizador",
-      "setAsDefault": "Set as default",
+      "setAsDefault": "Definir como padrão",
       "removeProfile": "Remover perfil",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
@@ -526,7 +526,7 @@
         "removeWebUserContent": "Tem a certeza que quer remover o utilizador {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remover pasta",
         "removeFavoriteDirectoryReject": "Não remover",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Tem certeza de que quer remover a pasta favorita {{item.name}}?"
       }
     },
     "navigation": {
@@ -580,7 +580,7 @@
     },
     "advanced": "Avançado",
     "noUnsavedChanges": "Sem alterações por guardar",
-    "noSavePermission": "No save permission",
+    "noSavePermission": "Sem permissão para guardar",
     "saveChanges": "Guardar alterações",
     "savingCompleted": "Guardar terminado",
     "settingsWereSavedSuccessfully": "As configurações foram guardadas com sucesso",
@@ -629,7 +629,7 @@
         "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (publicada em {{date}})",
         "readMore": "Ler mais",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
+        "defaultExtensionEngineMissing": "O motor de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite a <3>página inicial do motor</3> para ver as instruções de instalação."
       },
       "manage": {
         "byAuthor": "por {{author}}",
@@ -638,7 +638,7 @@
         "nonListedExtension": "Extensão não listada",
         "readMore": "Ler mais",
         "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "defaultExtensionEngineMissing": "O motor de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite a <3>página inicial do motor</3> para ver as instruções de instalação.",
         "extensionDirectoryFetchError": "Falhou a busca de informação da pasta de extensões: {{error}}"
       }
     },

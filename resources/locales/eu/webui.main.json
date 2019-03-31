@@ -1,7 +1,7 @@
 {
   "widgets": {
     "application": {
-      "widgetName": "Aplizakio",
+      "widgetName": "Aplizakioa",
       "addWidget": "Gehitu trepeta...",
       "loggedInAs": "Gisa konektatuta",
       "clientStarted": "Hasitako bezeroa",
@@ -47,7 +47,7 @@
     },
     "widgetPositionHint": "Trepetak eta bere posizioak zehatzak dira nabigatzailearentzat",
     "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "settingsMissing": "Trepeta ezarpenak falta dira"
   },
   "events": {
     "events": "Ekitaldiak",
@@ -536,7 +536,7 @@
       "downloads": "Deskargak",
       "sharing": "Partekatzen",
       "view": "Ikusi",
-      "about": "-ri buruz",
+      "about": "Honi buruz",
       "extensions": "Luzapenak",
       "system": "Sistema",
       "autoDetection": "Auto detection",
@@ -552,7 +552,7 @@
       "manageInstalled": "Kudeatu instalatutakoak",
       "extensionCatalog": "Extension catalog",
       "extensionOptions": "Extension options",
-      "application": "Aplizakio",
+      "application": "Aplizakioa",
       "transferStatistics": "Transfer statistics",
       "shareStatistics": "Share statistics",
       "hubStatistics": "Hub statistics",

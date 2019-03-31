@@ -290,7 +290,7 @@
     "awayModeWasDisabled": "Tillfälligt borta har inaktiverats",
     "actionSucceed": "Åtgärden lyckades",
     "actionFailed": "Åtgärden misslyckades",
-    "queueingFailed": "Failed to queue the item {{item.name}}",
+    "queueingFailed": "Misslyckades med att köa objektet {{item.name}}",
     "noNfoResultsWereReceived": "Ingen NFO-text mottogs",
     "networkClientError": "Nätverk-/klientfel",
     "failedToFetchData": "Misslyckades med att hämta data",
