@@ -111,7 +111,7 @@
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.8.6",
-    "react-dropzone": "^9.0.0",
+    "react-dropzone": "^10.1.0",
     "react-easy-emoji": "^1.2.0",
     "react-emojione": "^5.0.1",
     "react-grid-layout": "^0.16.6",
@@ -144,7 +144,7 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-middleware": "^3.6.1",
+    "webpack-dev-middleware": "^3.6.2",
     "webpack-hot-middleware": "^2.24.3",
     "webpack-visualizer-plugin": "^0.1.11",
     "whatwg-fetch": "^3.0.0"

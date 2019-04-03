@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { MentionsInput, Mention, OnChangeHandlerFunc } from 'react-mentions';
-import Dropzone from 'react-dropzone';
+import Dropzone, { DropzoneRef } from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
@@ -104,7 +104,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     session: PropTypes.object.isRequired,
   };*/
 
-  dropzoneRef = React.createRef<Dropzone>();
+  dropzoneRef = React.createRef<DropzoneRef>();
 
   handleCommand = (text: string) => {
     let command, params;
