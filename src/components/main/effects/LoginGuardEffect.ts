@@ -14,14 +14,7 @@ export const useLoginGuard = (login: LoginState, location: Location) => {
   useEffect(
     () => {
       if (login.hasSession && !login.socketAuthenticated) {
-        if (prevSocketAuthenticated) {
-          // Connection lost, reconnect (but not too fast)
-          console.log('UI: Socket closed, attempting to reconnect in 2 seconds');
-          setTimeout(() => LoginActions.connect(LoginStore.authToken), 2000);
-        } else {
-          // The page was loaded with a cached session token, attempt to reconnect
-          LoginActions.connect(LoginStore.authToken);
-        }
+        LoginActions.connect(LoginStore.authToken);
       } else if (!login.hasSession) {
         // Go to the login page as we don't have a valid session
         // Return to this page if the session was lost (instead of having been logged out) 
