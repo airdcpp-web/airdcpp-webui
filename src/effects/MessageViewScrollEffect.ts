@@ -1,5 +1,5 @@
 import { 
-  useState, useEffect, useRef, useLayoutEffect
+  useState, useRef, useLayoutEffect
 } from 'react';
 
 import * as UI from 'types/ui';
