@@ -4,7 +4,7 @@ import React from 'react';
 import Button, { ButtonProps } from 'components/semantic/Button';
 
 
-export interface ActionInputProps extends ButtonProps {
+export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
   handleAction: (value: string) => void;
   placeholder: string;
   type?: string;

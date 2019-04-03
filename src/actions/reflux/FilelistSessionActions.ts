@@ -43,7 +43,7 @@ FilelistSessionActions.createSession.listen(function (
   location: Location, 
   user: API.HintedUser, 
   sessionStore: any, 
-  path = '/'
+  path: string = '/'
 ) {
   const directory = getFilePath(path);
   const session = sessionStore.getSession(user.cid);

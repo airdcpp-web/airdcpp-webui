@@ -54,7 +54,7 @@ export default function (
     this: UI.AsyncActionType<SessionType>, 
     session: SessionType, 
     text: string, 
-    thirdPerson = false
+    thirdPerson: boolean = false
   ) {
     let that = this;
     SocketService.post(`${sessionUrl}/${session.id}/chat_message`, { 
