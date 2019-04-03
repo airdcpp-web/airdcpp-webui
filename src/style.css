@@ -43,6 +43,10 @@ section#container-main,
   display: inline-flex !important;
 }
 
+.ui.empty.dropdown {
+	cursor: auto !important;
+}
+
 .ui.dropdown .menu > .item {
 	max-width: 300px;
 	overflow-x: hidden;

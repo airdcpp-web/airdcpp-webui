@@ -321,11 +321,13 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           {({ getRootProps, getInputProps }) => (
             <div 
               className={ className }
-              { ...getRootProps({
-                onClick: evt => evt.preventDefault()
-              }) }
+              { ...getRootProps() }
             >
-              <input { ...getInputProps() }/>
+              <input 
+                { ...getInputProps({
+                  onClick: evt => evt.preventDefault()
+                }) }
+              />
               <MentionsInput 
                 className="input"
                 value={ text } 

@@ -13,7 +13,7 @@ interface EmptyDropdownProps {
 const EmptyDropdown: React.FC<EmptyDropdownProps> = ({ caption, className }) => {
   const titleClassName = classNames(
     //'caption',
-    'empty dropdown',
+    'ui empty dropdown',
     className,
   );
 
