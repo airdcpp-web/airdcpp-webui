@@ -53,7 +53,7 @@ export const useMessageViewScrollEffect = (messages: UI.MessageListItem[] | null
   );
 
   
-  useEffect(
+  useLayoutEffect(
     () => {
       // Session changed, always scroll to bottom
       scrollToBottom();
