@@ -208,7 +208,8 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       return;
     }
 
-    const { width, height } = contentRect.bounds;
+    // Bounds may contain incorrect (or outdated) dimensions with animations (such as when opening a modal)
+    const { width, height } = !!contentRect.entry ? contentRect.entry : contentRect.bounds;
     this.setState({
       width,
       height,
