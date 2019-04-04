@@ -3,6 +3,9 @@ import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
+import { 
+  sendChatMessageDecorator, clearMessagesDecorator, setReadDecorator, fetchMessagesDecorator 
+} from './common/ChatActions';
 //import * as UI from 'types/ui';
 
 
@@ -16,3 +19,9 @@ export const sendHubPassword = (
 export const acceptHubRedirect = (hub: API.Hub) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/redirect`);
 };
+
+export const sendHubChatMessage = sendChatMessageDecorator(HubConstants.SESSIONS_URL);
+export const clearHubChatMessages = clearMessagesDecorator(HubConstants.SESSIONS_URL);
+export const fetchHubChatMessages = fetchMessagesDecorator(HubConstants.SESSIONS_URL);
+
+export const setHubSessionRead = setReadDecorator(HubConstants.SESSIONS_URL);

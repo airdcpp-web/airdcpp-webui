@@ -78,8 +78,8 @@ export type RefluxActionListType<ItemDataT = any> = {
 };
 
 
-export interface ModuleActions<ItemDataT> {
+export interface ModuleActions<ItemDataT, ActionsT extends ActionListType<ItemDataT> = ActionListType<ItemDataT>> {
   moduleId: string | string[];
   subId?: string;
-  actions: ActionListType<ItemDataT>;
+  actions: ActionsT;
 }

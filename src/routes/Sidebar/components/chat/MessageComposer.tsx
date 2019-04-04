@@ -107,6 +107,8 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   dropzoneRef = React.createRef<DropzoneRef>();
 
   handleCommand = (text: string) => {
+    const { location } = this.props;
+
     let command, params;
 
     {
@@ -120,12 +122,12 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       }
     }
 
-    ChatCommandHandler(this.props).handle(command, params);
+    ChatCommandHandler(this.props).handle(command, params, location);
   }
 
   handleSend = (text: string) => {
     const { chatApi, session } = this.props;
-    chatApi.sendMessage(session, text);
+    chatApi.sendChatMessage(session, text);
   }
 
   componentWillUnmount() {

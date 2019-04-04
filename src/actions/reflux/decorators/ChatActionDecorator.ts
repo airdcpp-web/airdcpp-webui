@@ -18,7 +18,8 @@ export default function (
 ) {
   const ChatActionConfig: UI.RefluxActionConfigList<SessionType> = [
     { 'fetchMessages': { asyncResult: true } },
-    { 'sendMessage': { asyncResult: true } },
+    { 'sendChatMessage': { asyncResult: true } },
+    { 'sendStatusMessage': { asyncResult: true } },
     { 'setRead': { asyncResult: true } },
     'activeChatChanged',
     'divider'
@@ -50,7 +51,7 @@ export default function (
       .catch(that.failed);
   });
 
-  ChatActions.sendMessage.listen(function (
+  ChatActions.sendChatMessage.listen(function (
     this: UI.AsyncActionType<SessionType>, 
     session: SessionType, 
     text: string, 
@@ -65,8 +66,28 @@ export default function (
       .catch(that.failed.bind(that, session));
   });
 
-  ChatActions.sendMessage.failed.listen(function (session: SessionType, error: ErrorResponse) {
+  ChatActions.sendChatMessage.failed.listen(function (session: SessionType, error: ErrorResponse) {
     NotificationActions.apiError('Failed to send chat message', error, session.id);
+  });
+
+
+  ChatActions.sendStatusMessage.listen(function (
+    this: UI.AsyncActionType<SessionType>, 
+    session: SessionType, 
+    text: string, 
+    severity: API.SeverityEnum
+  ) {
+    let that = this;
+    SocketService.post(`${sessionUrl}/${session.id}/status_message`, { 
+      text,
+      severity,
+    })
+      .then(that.completed.bind(that, session))
+      .catch(that.failed.bind(that, session));
+  });
+
+  ChatActions.sendStatusMessage.failed.listen(function (session: SessionType, error: ErrorResponse) {
+    NotificationActions.apiError('Failed to send status message', error, session.id);
   });
 
   return Object.assign(actions, ChatActions);

@@ -14,7 +14,7 @@ type SessionType = UI.SessionItemBase;
 interface ActiveSessionDecoratorProps<SessionT extends SessionType, ActionT extends object> 
   extends Pick<SessionChildProps<SessionT, ActionT>, 'session'> {
 
-  sessionApi: UI.SessionActions<SessionT>;
+  sessionApi: UI.SessionActions<SessionT> & ActionT;
   //uiActions: 
   //session: SessionT;
 }

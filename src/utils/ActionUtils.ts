@@ -11,11 +11,11 @@ export const actionFilter = <ItemDataT>(action: UI.ActionType<ItemDataT>, itemDa
   return !itemData || !action.filter || action.filter(itemData);
 };
 
-export const actionAccess = <ItemDataT>(action: UI.ActionType<ItemDataT>) => {
-  invariant(
-    !action.hasOwnProperty('access') || action.access, 
-    'Invalid access supplied for an action ' + action.displayName
-  );
+export const actionAccess = <ItemDataT>(action: Pick<UI.ActionType<ItemDataT>, 'access'>) => {
+  //invariant(
+  //  !action.hasOwnProperty('access') || action.access, 
+  //  `Invalid access supplied for an action ${action.displayName}`
+  //);
   
   return !action.access || LoginStore.hasAccess(action.access);
 };

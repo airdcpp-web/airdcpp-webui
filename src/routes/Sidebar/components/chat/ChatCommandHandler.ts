@@ -1,38 +1,59 @@
-import { showAction } from 'utils/ActionUtils';
-import NotificationActions from 'actions/NotificationActions';
+import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
 import { MessageComposerProps } from './MessageComposer';
-//import { ChatSessionProps } from 'routes/Sidebar/components/chat/ChatLayout';
+import { Location } from 'history';
+
+//import * as UI from 'types/ui';
+import * as API from 'types/api';
 
 
 type ParamsType = string | undefined;
+type ChatCommandHandler = (params: ParamsType, props: MessageComposerProps, location: Location) => void;
 
-const handleMe = (params: ParamsType, { chatApi, session }: MessageComposerProps) => {
+
+interface ChatCommand {
+  help: string;
+  handler: ChatCommandHandler;
+  access?: string;
+}
+
+type ChatCommandList = { [key in string]: ChatCommand };
+
+const handleMe: ChatCommandHandler = (params, { chatApi, session }) => {
   if (params) {
-    chatApi.sendMessage(session, params, true);
+    chatApi.sendChatMessage(session, params, true);
   }
 };
 
-const handleClear = (params: ParamsType, { chatApi, session }: MessageComposerProps) => {
-  chatApi.clear(session);
+const handleClear: ChatCommandHandler = (params, { chatActions, session, t }, location) => { 
+  runBackgroundSocketAction(
+    () => chatActions.actions.clear.handler({
+      data: session,
+      location,
+      t
+    }) as Promise<any>,
+    t
+  );
+};
+
+const getHelpString = (commands: ChatCommandList) => {
+  const commandHelp = Object.keys(commands)
+    .filter(command => actionAccess(commands[command]))
+    .map(command => `\t/${command} - ${commands[command].help}`)
+    .join('\n');
+
+  return `
+\tChat commands
+
+${commandHelp}
+`;
 };
 
 const CommandHandler = (sessionProps: MessageComposerProps) => {
-  const commands = {
+  const commands: ChatCommandList = {
     clear: {
       help: 'Clear message cache',
       handler: handleClear,
-      access: sessionProps.chatActions.clear.access,
-    },
-    help: {
-      handler: () => {
-        // TODO: send as chat status message
-        NotificationActions.info({
-          title: 'Available commands',
-          message: Object.keys(commands)
-            .filter(command => showAction(commands[command]))
-            .join(', '),
-        });
-      }
+      access: sessionProps.chatActions.actions.clear.access,
     },
     me: {
       help: 'Send message in third person',
@@ -41,9 +62,13 @@ const CommandHandler = (sessionProps: MessageComposerProps) => {
   };
 
   return {
-    handle: (command: string, params: ParamsType) => {
+    handle: (command: string, params: ParamsType, location: Location) => {
       if (commands[command]) {
-        commands[command].handler(params, sessionProps);
+        commands[command].handler(params, sessionProps, location);
+      } else if (command === 'help') {
+        const { session, chatApi } = sessionProps;
+        const text = getHelpString(commands);
+        chatApi.sendStatusMessage(session, text, API.SeverityEnum.INFO);
       }
     }
   };

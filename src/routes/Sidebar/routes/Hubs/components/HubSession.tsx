@@ -6,7 +6,7 @@ import HubMessageStore from 'stores/HubMessageStore';
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
-import ChatLayout, { ChatActions, ChatLayoutProps, ChatAPI } from 'routes/Sidebar/components/chat/ChatLayout';
+import ChatLayout, { ChatAPI, ChatActionList } from 'routes/Sidebar/components/chat/ChatLayout';
 import HubUserTable from 'routes/Sidebar/routes/Hubs/components/HubUserTable';
 
 import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
@@ -16,8 +16,8 @@ import '../style.css';
 
 import * as API from 'types/api';
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
-import HubActions from 'actions/reflux/HubActions';
 import { shareTempFile } from 'services/api/ShareApi';
+import HubActions from 'actions/reflux/HubActions';
 
 
 const getStorageKey = (props: HubSessionProps) => {
@@ -28,11 +28,8 @@ const checkList = (props: HubSessionProps) => {
   return loadSessionProperty(getStorageKey(props), false);
 };
 
+interface HubSessionProps extends SessionChildProps<API.Hub, {}, ChatActionList> {
 
-interface HubSessionProps extends SessionChildProps<API.Hub, ChatActions>, 
-  Pick<ChatLayoutProps, 'chatApi' | 'chatActions'> {
-  //session: API.Hub;
-  //actions: UI.SessionActions<API.Hub, ChatActions>;
 }
 
 class HubSession extends React.Component<HubSessionProps> {
@@ -91,7 +88,7 @@ class HubSession extends React.Component<HubSessionProps> {
   }
 
   render() {
-    const { session, chatActions, sessionApi, sessionT } = this.props;
+    const { session, sessionApi, sessionT, uiActions } = this.props;
     const { showList } = this.state;
 
     const checkbox = (
@@ -116,7 +113,7 @@ class HubSession extends React.Component<HubSessionProps> {
             messageStore={ HubMessageStore }
             chatApi={ HubActions as ChatAPI }
             sessionApi={ sessionApi }
-            chatActions={ chatActions }
+            chatActions={ uiActions }
             chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
             handleFileUpload={ this.handleFileUpload }

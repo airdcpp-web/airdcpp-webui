@@ -40,7 +40,8 @@ const findItem = <SessionT extends SessionBaseType>(items: SessionT[], id: API.I
 
 export interface SessionLayoutProps<
   SessionT extends SessionBaseType = SessionBaseType,
-  ActionT extends object = {}
+  SessionApiT extends object = {},
+  UIActionT extends UI.ActionListType<UI.SessionItemBase> = {}
 > extends UI.SessionInfoGetter<SessionT>, Omit<RouteComponentProps, 'match'> {
   // Unique ID of the section (used for storing and loading the previously open tab)
   baseUrl: string;
@@ -53,8 +54,8 @@ export interface SessionLayoutProps<
     actions: UI.SessionUIActions<SessionT, ActionT>;
   };*/
 
-  uiActions: UI.ModuleActions<SessionT>;
-  sessionApi: UI.SessionActions<SessionT>;
+  uiActions: UI.ModuleActions<SessionT, UIActionT>;
+  sessionApi: UI.SessionActions<SessionT> & SessionApiT;
 
   // Session actions to show in the action menu
   actionIds?: string[];
@@ -110,8 +111,11 @@ interface State<SessionT extends SessionBaseType> {
   activeItem: SessionT | null;
 }
 
-export type SessionChildProps<SessionT extends SessionBaseType, ActionT extends object = {}> = 
-  Pick<SessionLayoutProps<SessionT, ActionT>, 'location' | 'sessionApi'> & 
+export type SessionChildProps<
+  SessionT extends SessionBaseType, 
+  SessionApiT extends object = {}, 
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = {}
+> = Pick<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, 'location' | 'sessionApi' | 'uiActions'> & 
   { 
     session: SessionT;
     sessionT: UI.ModuleTranslator;
@@ -520,6 +524,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
               <SessionItemLayout
                 session={ activeItem }
                 sessionApi={ sessionApi }
+                uiActions={ uiActions }
                 location={ location }
                 sessionT={ this.sessionT }
               />

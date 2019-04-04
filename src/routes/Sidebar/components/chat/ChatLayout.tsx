@@ -1,5 +1,4 @@
 'use strict';
-//import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import Message from 'components/semantic/Message';
@@ -12,8 +11,7 @@ import './chat.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-//import { useActiveSessionEffect } from 'effects';
-//import { SessionActions } from 'types/ui';
+
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import { useTranslation } from 'react-i18next';
 import { AddTempShareResponse } from 'services/api/ShareApi';
@@ -25,22 +23,18 @@ export interface ChatSession extends UI.SessionItemBase {
 }
 
 export interface ChatAPI extends UI.RefluxActionListType<UI.SessionItemBase> {
-  //clear: UI.RefluxActionType<UI.SessionItemBase>;
-  sendMessage: UI.RefluxActionType<UI.SessionItemBase>;
+  sendChatMessage: UI.RefluxActionType<UI.SessionItemBase>;
+  sendStatusMessage: UI.RefluxActionType<UI.SessionItemBase>;
   fetchMessages: UI.RefluxActionType<UI.SessionItemBase>;
 }
 
-export interface ChatActions extends UI.ActionListType<UI.SessionItemBase> {
+export interface ChatActionList extends UI.ActionListType<UI.SessionItemBase> {
   clear: UI.ActionType<UI.SessionItemBase>;
-  //sendMessage: UI.RefluxActionType<UI.SessionItemBase>;
-  //fetchMessages: UI.RefluxActionType<UI.SessionItemBase>;
 }
 
+export type ChatActions = UI.ModuleActions<UI.SessionItemBase, ChatActionList>;
+
 export interface ChatLayoutProps {
-  //actions: UI.ModuleActions<UI.SessionItemBase> & {
-  //  actions: ChatActions & SessionActions<UI.SessionItemBase>;
-  //};
-  //chatApi: ChatActions & SessionActions<UI.SessionItemBase>;
   chatApi: ChatAPI;
   chatActions: ChatActions;
   handleFileUpload: (file: File) => Promise<AddTempShareResponse>;
@@ -48,10 +42,6 @@ export interface ChatLayoutProps {
   chatAccess: string;
   messageStore: any;
 }
-
-//export interface ChatLayoutProps extends ChatSessionProps {
-
-//}
 
 
 const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI: ChatAPI) => {
@@ -94,7 +84,6 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI:
 const ChatLayout: React.FC<ChatLayoutProps> = (
   { session, chatAccess, chatApi, chatActions, messageStore, handleFileUpload }
 ) => {
-  //useActiveSessionEffect(session, actions, true);
   const { t } = useTranslation();
   const messages = useChatMessagesEffect(session, messageStore, chatApi);
   const hasChatAccess = LoginStore.hasAccess(chatAccess);
@@ -121,7 +110,6 @@ const ChatLayout: React.FC<ChatLayoutProps> = (
           chatActions={ chatActions }
           t={ t }
           handleFileUpload={ handleFileUpload }
-          //chatAccess={ chatAccess }
         />
       ) }
     </div>
