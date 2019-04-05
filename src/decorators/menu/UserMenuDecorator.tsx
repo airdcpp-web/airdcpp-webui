@@ -89,7 +89,7 @@ export default function <DropdownPropsT extends object>(
       if (userIcon) {
         caption = (
           <div className={ classNames('icon-caption', userIcon) }>
-            { userIcon === 'simple' ? <Icon icon="blue user icon"/> : <UserIcon size="large" flags={ user.flags }/> }
+            { userIcon === 'simple' ? <Icon icon="blue user"/> : <UserIcon size="large" flags={ user.flags }/> }
             { nicks }
           </div>
         );

@@ -42,7 +42,6 @@ section#container-main,
 .cell-wrapper .dropdown {
   display: inline-flex !important;
 }
-
 .ui.empty.dropdown {
 	cursor: auto !important;
 }
@@ -86,7 +85,6 @@ section#container-main,
 
 .layout.header .left {
 	max-width: 100%;
-	display: flex;
 	align-items: center;
 	padding: 5px 5px;
 }
@@ -214,4 +212,8 @@ th {
 
 .notifications-tl h4.notification-title {
 	overflow: hidden;
+}
+
+.icon-caption > i {
+	margin-right: 5px;
 }
