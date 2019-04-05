@@ -57,10 +57,8 @@ class TableDropdown extends React.Component<TableDropdownProps> {
 
   getChildren = () => {
     return (
-      <div className="ui text menu vertical">
-        <div className="ui dropdown item table-items">
-          { this.props.children().map(this.addCloseHandler) }
-        </div>
+      <div className="ui text menu vertical table-items">
+        { this.props.children().map(this.addCloseHandler) }
       </div>
     );
   }
