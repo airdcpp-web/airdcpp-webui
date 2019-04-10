@@ -219,6 +219,18 @@ th {
   max-height: inherit;
 }
 
+td .ui.dropdown {
+  max-width: 100%;
+}
+
+td .ui.dropdown > .caption {
+  overflow: hidden;
+}
+
+td .ui.dropdown > .caption > .icon-caption {
+  display: contents;
+}
+
 .notifications-tl h4.notification-title {
   overflow: hidden;
 }
