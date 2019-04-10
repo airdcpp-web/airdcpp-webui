@@ -95,7 +95,9 @@ section#container-main,
 }
 
 .layout.header.icon .left .content {
-  overflow: hidden;
+  /* "overflow: hidden" can't be used because of possible dropdowns */
+  width: 90%;
+  flex: 1 1;
 }
 
 .layout.header i.icons i {
@@ -114,6 +116,7 @@ section#container-main,
 .ui.modal.full .layout.header .content {
   /* https://github.com/airdcpp-web/airdcpp-webclient/issues/324 */
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .ui.modal.full table {
