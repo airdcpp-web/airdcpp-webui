@@ -7,13 +7,15 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
+import Icon from './semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 interface Info {
   iconColor: string;
   messageColor: string;
   message: string;
-  icon: string;
+  cornerIcon: string;
   translationKey: string;
 }
 
@@ -24,7 +26,7 @@ const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
       iconColor: 'orange',
       messageColor: 'red',
       message: 'Outdated cryptographic protocol with known security vulnerabilities',
-      icon: 'orange warning',
+      cornerIcon: 'orange warning',
       translationKey: 'tlsOutdatedWarning',
     };
   }
@@ -34,7 +36,7 @@ const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
       iconColor: 'yellow',
       messageColor: 'orange',
       message: 'Authenticity of the certificate could not be validated',
-      icon: 'blue help',
+      cornerIcon: 'blue help',
       translationKey: 'tlsAuthenticityWarning',
     };
   }
@@ -43,7 +45,7 @@ const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
     iconColor: 'green',
     messageColor: 'green',
     message: 'Authenticity of the certificate is validated',
-    icon: '',
+    cornerIcon: '',
     translationKey: 'tlsOk',
   };
 };
@@ -91,7 +93,7 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
   render() {
     const { encryption, alwaysVisible, boundary } = this.props;
     if (!encryption) {
-      return alwaysVisible ? <i className="grey lock icon"/> : null;
+      return !!alwaysVisible && <Icon color="grey" icon={ IconConstants.LOCK }/>;
     }
 
     const info = encryptionToInfo(encryption);
@@ -99,11 +101,12 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
       <Popup 
         triggerClassName="encryption" 
         className="basic encryption content" 
-        trigger={ 
-          <i className="link icons">
-            <i className={ `${info.iconColor} lock icon` }/>
-            <i className={ `${info.icon} corner icon` }/>
-          </i>
+        trigger={
+          <Icon
+            color={ info.iconColor }
+            icon={ IconConstants.LOCK }
+            cornerIcon={ info.cornerIcon }
+          />
         }
         settings={ {
           boundary,

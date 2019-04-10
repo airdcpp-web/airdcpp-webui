@@ -39,7 +39,7 @@ const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession
     <div className="recents">
       <LayoutHeader
         title={ translate('Recent sessions', t, UI.Modules.COMMON) }
-        size="medium"
+        size=""
       />
       <div className="ui relaxed divided list">
         { entries.map((entry, index) => (

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import './style.css';
 
-import 'semantic-ui-css/components/breadcrumb.min.css';
+import 'fomantic-ui-css/components/breadcrumb.min.css';
 
 import { Section, SelectedSection, SelectedNameFormatter } from './Section';
 

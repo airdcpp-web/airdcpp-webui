@@ -11,9 +11,10 @@ export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   icon?: IconType;
   cornerIcon?: string | null;
   size?: string;
+  color?: string;
 }
 
-const Icon: React.FC<IconProps> = ({ icon, size, className, cornerIcon, ...other }) => {
+const Icon: React.FC<IconProps> = ({ icon, size, color, className, cornerIcon, ...other }) => {
   if (typeof icon !== 'string') {
     return !!icon ? icon : null;
   }
@@ -24,7 +25,7 @@ const Icon: React.FC<IconProps> = ({ icon, size, className, cornerIcon, ...other
         className={ classNames(size, className, { link: !!other.onClick }, 'icons') }
         { ...other }
       >
-        <i className={ classNames(icon, 'icon') }/>
+        <i className={ classNames(color, icon, 'icon') }/>
         <i className={ classNames(cornerIcon, 'corner icon') }/>
       </i>
     );
@@ -32,7 +33,7 @@ const Icon: React.FC<IconProps> = ({ icon, size, className, cornerIcon, ...other
 
   return (
     <i 
-      className={ classNames(size, icon, className, { link: !!other.onClick }, 'icon') }
+      className={ classNames(color, size, icon, className, { link: !!other.onClick }, 'icon') }
       { ...other }
     />
   );

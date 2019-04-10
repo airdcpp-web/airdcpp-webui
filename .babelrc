@@ -18,9 +18,9 @@
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties",
     ["module-resolver", {
-      "root": ["./src", "./node_modules/semantic-ui-css"],
+      "root": ["./src", "./node_modules/fomantic-ui-css"],
       "alias": {
-        "semantic-ui": "semantic-ui-css"
+        "fomantic-ui": "fomantic-ui-css"
       }
     }]
   ],

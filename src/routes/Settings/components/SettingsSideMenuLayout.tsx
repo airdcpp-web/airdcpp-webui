@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { translateSettingSectionTitle } from './MenuItems';
+import Icon from 'components/semantic/Icon';
 
 
 type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems' | 'settingsT'>;
@@ -47,7 +48,7 @@ const Content: React.FC<ContentProps> = (
     <div className="ui segment">
       <LayoutHeader
         title={ translateSettingSectionTitle(currentMenuItem.title, settingsT) }
-        icon={ classNames(parent!.icon, 'green') }
+        icon={ <Icon color="green" icon={ parent!.icon }/> }
         rightComponent={ saveButton }
       />
       <div className="options">

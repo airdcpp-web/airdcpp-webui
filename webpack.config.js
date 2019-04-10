@@ -193,7 +193,7 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|svg)$/, 
         include: [
           path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules/semantic-ui-css') 
+          path.resolve(__dirname, 'node_modules/fomantic-ui-css') 
         ], 
         use: [
           {

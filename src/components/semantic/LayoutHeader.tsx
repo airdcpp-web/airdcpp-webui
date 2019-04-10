@@ -30,7 +30,7 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({ className, icon, rightCompo
   return (
     <div className={ mainClassName }>
       <div className={ headerClassName }>
-        <Icon size="small" icon={ icon }/>
+        <Icon size={ size } icon={ icon }/>
         <div className="content">
           { title }
           { !!subHeader && (

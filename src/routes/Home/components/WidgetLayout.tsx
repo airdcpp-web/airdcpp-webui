@@ -11,7 +11,7 @@ import WidgetStore from 'stores/WidgetStore';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import 'semantic-ui-css/components/card.min.css';
+import 'fomantic-ui-css/components/card.min.css';
 import { useStore } from 'effects/StoreListenerEffect';
 
 import { useTranslation } from 'react-i18next';

@@ -5,7 +5,7 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
-import 'semantic-ui-css/components/item.min.css';
+import 'fomantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

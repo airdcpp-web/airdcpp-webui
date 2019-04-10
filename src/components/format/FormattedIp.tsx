@@ -1,7 +1,7 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 
-import 'semantic-ui-css/components/flag.min.css';
+import 'fomantic-ui-css/components/flag.min.css';
 
 import * as API from 'types/api';
 

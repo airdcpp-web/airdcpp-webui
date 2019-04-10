@@ -40,7 +40,7 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
 };
 
 
-const Files: React.FC<SessionProviderDecoratorChildProps<API.FileType>> = props => {
+const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = props => {
   const { match, t, ...other } = props;
   if (props.items.length === 0) {
     return (

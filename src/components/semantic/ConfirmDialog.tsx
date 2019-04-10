@@ -6,8 +6,8 @@ import cx from 'classnames';
 
 import Checkbox from 'components/semantic/Checkbox';
 
-import 'semantic-ui-css/components/modal';
-import 'semantic-ui-css/components/modal.min.css';
+import 'fomantic-ui-css/components/modal';
+import 'fomantic-ui-css/components/modal.min.css';
 import Icon, { IconType } from 'components/semantic/Icon';
 import { ModalRouteCloseContext, ModalCloseContextProps } from 'decorators/ModalRouteDecorator';
 

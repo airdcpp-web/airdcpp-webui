@@ -3,7 +3,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import 'semantic-ui-css/components/loader.min.css';
+import 'fomantic-ui-css/components/loader.min.css';
 import { Trans } from 'react-i18next';
 
 import * as UI from 'types/ui';

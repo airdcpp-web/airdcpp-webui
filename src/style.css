@@ -42,8 +42,13 @@ section#container-main,
 .cell-wrapper .dropdown {
   display: inline-flex !important;
 }
+
 .ui.empty.dropdown {
 	cursor: auto !important;
+}
+
+.ui.dropdown {
+	font-size: inherit;
 }
 
 .ui.dropdown .menu > .item {
@@ -85,15 +90,15 @@ section#container-main,
 
 .layout.header .left {
 	max-width: 100%;
-	align-items: center;
 	padding: 5px 5px;
+	display: inline-flex;
 }
 
 .layout.header.icon .left .content {
-	width: 90%;
+	overflow: hidden;
 }
 
-.layout.header i.large.icons i {
+.layout.header i.icons i {
 	margin-right: 10px;
 }
 
@@ -107,7 +112,8 @@ section#container-main,
 /* Dialogs start */
 
 .ui.modal.full .layout.header .content {
-	overflow: hidden;
+	/* https://github.com/airdcpp-web/airdcpp-webclient/issues/324 */
+	white-space: nowrap;
 }
 
 .ui.modal.full table {
@@ -216,4 +222,8 @@ th {
 
 .icon-caption > i {
 	margin-right: 5px;
+}
+
+i.icons .icon:first-child {
+	margin-right: 0.25em;
 }

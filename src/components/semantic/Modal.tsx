@@ -9,8 +9,8 @@ import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
-import 'semantic-ui-css/components/modal';
-import 'semantic-ui-css/components/modal.min.css';
+import 'fomantic-ui-css/components/modal';
+import 'fomantic-ui-css/components/modal.min.css';
 import { IconType } from 'components/semantic/Icon';
 import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import { Translation } from 'react-i18next';
@@ -183,7 +183,7 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
             title={ title }
             icon={ icon }
             subHeader={ subHeader }
-            size="medium"
+            size=""
           />
           <div className="content">
             { children }

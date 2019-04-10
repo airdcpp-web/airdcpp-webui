@@ -9,7 +9,7 @@ import ExtensionActionButtons from 'routes/Settings/routes/Extensions/components
 
 import versionCompare from 'compare-versions';
 
-import 'semantic-ui-css/components/item.min.css';
+import 'fomantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
