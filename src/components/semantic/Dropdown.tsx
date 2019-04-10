@@ -7,9 +7,9 @@ import classNames from 'classnames';
 import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
 
-import 'semantic-ui-css/components/button.min.css'; // for button style
-import 'semantic-ui-css/components/dropdown';
-import 'semantic-ui-css/components/dropdown.min.css';
+import 'fomantic-ui-css/components/button.min.css'; // for button style
+import 'fomantic-ui-css/components/dropdown';
+import 'fomantic-ui-css/components/dropdown.min.css';
 
 
 export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>*/ {
@@ -24,6 +24,7 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   captionIcon?: IconType;
   selection?: boolean;
   dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
+  size?: string;
 }
 
 class Dropdown extends React.PureComponent<DropdownProps> {
@@ -58,9 +59,6 @@ class Dropdown extends React.PureComponent<DropdownProps> {
   };
 
   c: HTMLDivElement;
-  state = {
-    visible: false,
-  };
 
   componentDidMount() {
     // Use timeout to allow all parents finish mounting (otherwise we get no context)
@@ -73,32 +71,11 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     }
   }
 
-  onShow = () => {
-    this.setState({
-      visible: true,
-    });
-  }
-
-  onHide = () => {
-    this.setState({
-      visible: false,
-    });
-  }
-
-  hide = () => {
-    // Don't hide before the click event is processed by React
-    setTimeout(() => 
-      $(this.c).dropdown('hide')
-    );
-  }
-
   init = () => {
     const settings: SemanticUI.DropdownSettings = {
       direction: this.props.direction,
-      action: this.hide,
+      action: 'hide',
       showOnFocus: false, // It can become focused when opening a modal
-      onShow: this.onShow,
-      onHide: this.onHide,
       ...this.props.settings,
       //debug: true,
       //verbose: true,
@@ -112,21 +89,13 @@ class Dropdown extends React.PureComponent<DropdownProps> {
     $(this.c).dropdown(settings);
   }
 
-  getMenuItems = () => {
-    if (!this.state.visible) {
-      // The menu wouldn't load otherwise
-      return <div className="item"/>;
-    }
-
-    return this.props.children;
-  }
-
   render() {
-    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection } = this.props;
+    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection, size } = this.props;
     const className = classNames(
       'ui',
       'dropdown',
       'item',
+      size,
       this.props.className,
       { 'icon button': button },
       { 'labeled': !!button && !!caption },
@@ -156,7 +125,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
         { leftIcon || !caption ? null : icon }
 
         <div className="menu">
-          { this.getMenuItems() }
+          { this.props.children }
         </div>
       </div>
     );

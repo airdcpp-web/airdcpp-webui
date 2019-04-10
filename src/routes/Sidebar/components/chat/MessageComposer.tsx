@@ -256,12 +256,6 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
   }
 
-  handleClickUpload = () => {
-    if (this.dropzoneRef.current) {
-      this.dropzoneRef.current.open();
-    }
-  }
-
   resetFiles = () => {
     this.setState({
       files: null,
@@ -318,17 +312,16 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
           disabled={ !hasFileUploadAccess }
           multiple={ true }
           minSize={ 1 }
+          noClick={ true }
           // Handle max size check elsewhere (report errors)
         >
-          {({ getRootProps, getInputProps }) => (
+          {({ getRootProps, getInputProps, open }) => (
             <div 
               className={ className }
               { ...getRootProps() }
             >
               <input 
-                { ...getInputProps({
-                  onClick: evt => evt.preventDefault()
-                }) }
+                { ...getInputProps() }
               />
               <MentionsInput 
                 className="input"
@@ -347,7 +340,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
               { !hasFileUploadAccess || uploading ? sendButton : (
                 <TempShareDropdown
                   className="blue large" 
-                  handleUpload={ this.handleClickUpload }
+                  handleUpload={ open }
                   overrideContent={ !text ? null : sendButton }
                 />
               ) }

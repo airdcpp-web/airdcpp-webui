@@ -9,7 +9,7 @@ import Icon, { IconType } from 'components/semantic/Icon';
 export interface MenuItemLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   className?: string;
   icon?: IconType;
-  onClick: () => void;
+  onClick: (evt: React.SyntheticEvent<any>) => void;
   active?: boolean;
   disabled?: boolean;
 }

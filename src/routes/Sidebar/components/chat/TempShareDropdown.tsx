@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export interface TempShareDropdownProps {
-  handleUpload: () => void;
+  handleUpload: (evt: React.SyntheticEvent<any>) => void;
   style?: React.CSSProperties;
   className?: string;
 
