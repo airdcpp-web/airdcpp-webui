@@ -92,7 +92,13 @@ const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ files, onConfirm,
       icon={ IconConstants.UPLOAD }
     >
       { previewFiles.map(({ file, url }) => (
-        <div key={ url } className="ui segment">
+        <div 
+          key={ url } 
+          className="ui segment" 
+          style={{ 
+            overflowX: 'auto'
+          }}
+        >
           <LayoutHeader
             title={ file.name }
             subHeader={ formatSize(file.size, t) }
