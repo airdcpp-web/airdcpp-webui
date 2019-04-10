@@ -10,7 +10,7 @@
     "rss": {
       "widgetName": "RSS-flöde",
       "invalidUrl": "Ogiltig webbadress",
-      "lastUpdated": "Senaste uppdaterad: {{time}}",
+      "lastUpdated": "Senast uppdaterad: {{time}}",
       "actions": {
         "openLink": "Öppna länk",
         "search": "Sök"
@@ -608,7 +608,7 @@
           "settingProfileHelp0": "Klienten används i normala privata/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
           "settingProfileHelp1": "Klienten används till att överföra filer som är delade i RAR-arkiv (eller i andra småformat)",
           "settingProfileHelp2": "Klienten används för överföring av filer i ett lokalt nätverk (t.ex. LAN-party) eller annat stängt nätverk (t.ex. universitetsnätverk).",
-          "languageFileHelp": "<0>Application måste startas om för att det nya språket ska verkställas.</0><1>Om du vill hjälpa till att förbättra de befintliga översättningarna eller översätta applikationen till ett nytt språk, läs då <1>instruktionerna för översättare</1>.</1>"
+          "languageFileHelp": "<0>Applikationen måste startas om för att det nya språket ska verkställas.</0><1>Om du vill hjälpa till att förbättra de befintliga översättningarna eller översätta applikationen till ett nytt språk, läs då <1>instruktionerna för översättare</1>.</1>"
         }
       },
       "ignoredUsers": {
