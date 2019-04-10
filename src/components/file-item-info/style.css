@@ -1,11 +1,11 @@
 
 .fileitem.info.segment .dupe-paths .path {
-	overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .fileitem.info.segment .download.ui.dropdown {
-	max-width: 150px;
-	margin-top: 10px;
+  max-width: 150px;
+  margin-top: 10px;
 }
 
 .fileitem.info.segment .title.column {

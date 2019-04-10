@@ -1,17 +1,17 @@
 .web-user.modal .ui.checkbox {
-	width: 100%;
-	margin-top: 5px;
+  width: 100%;
+  margin-top: 5px;
 }
 
 .web-user.modal .ui.checkbox.admin {
-	margin-bottom: 10px;
-	font-weight: bold;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .settings-layout .system.logging .log-section.active {
-	background-color: whitesmoke;
+  background-color: whitesmoke;
 }
 
 .settings-layout .system.logging .field-log_directory {
-	margin-bottom: 25px !important;
+  margin-bottom: 25px !important;
 }

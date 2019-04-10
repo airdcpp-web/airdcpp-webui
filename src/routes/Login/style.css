@@ -1,9 +1,9 @@
 .login-grid {
-	margin: 0px !important;
-	height: 100%;
+  margin: 0px !important;
+  height: 100%;
 }
 
 .login-grid .column {
-	max-width: 650px;
-	width: 95% !important;
+  max-width: 650px;
+  width: 95% !important;
 }

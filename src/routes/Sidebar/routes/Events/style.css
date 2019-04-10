@@ -1,49 +1,49 @@
 .simple-layout {
-	height: 100%;
-	padding: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: white;
+  height: 100%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
 }
 
 .simple-layout > div {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .simple-layout .layout-content {
-	display: flex;
-	flex-direction: column;
-	overflow-y: auto;
-	flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1 1 100%;
 }
 
 .simple-layout .layout-content > div {
-	width: 100%;
+  width: 100%;
 }
 
 .simple-layout .divider.top {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 
 /* Message layout */
 .system-log .message-list {
-	width: 100%;
-	margin: 10px 0px !important;
+  width: 100%;
+  margin: 10px 0px !important;
 }
 
 .system-log .status.item i {
-	float: left;
+  float: left;
 }
 
 .system-log .status.item .text {
-	margin-top: 5px;
-	margin-bottom: 10px;
-	overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 
 .system-log .status.item .time {
-	color: gray;
+  color: gray;
 }

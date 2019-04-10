@@ -2,135 +2,135 @@
 
 .chat.session,
 .chat.session .message-view {
-	flex: 100 100 0%;
-	display: flex;
-	flex-direction: column;
-	overflow-y: hidden;
+  flex: 100 100 0%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
 }
 
 .chat.session .message-list {
-	margin: 10px 10px 10px 0px;
+  margin: 10px 10px 10px 0px;
 }
 
 
 /* Composer */
 .chat.session .composer {
-	display: flex;
+  display: flex;
 }
 
 .chat.session .composer:focus {
-	outline: none;;
+  outline: none;;
 }
 
 .chat.session .composer textarea, 
 .chat.session .composer textarea:focus {
-	resize: none;
-	border-radius: .28571429rem 0 0 .28571429rem;
-	margin-left: 1px;
+  resize: none;
+  border-radius: .28571429rem 0 0 .28571429rem;
+  margin-left: 1px;
 }
 
 .chat.session .composer .button {
-	border-radius: 0 .28571429rem .28571429rem 0;
-	width: 45px;
-	margin: 0px;
+  border-radius: 0 .28571429rem .28571429rem 0;
+  width: 45px;
+  margin: 0px;
 }
 
 .chat.session .composer.large .actions.button .caption {
-	display: flex !important;
-	align-items: center !important;
-	opacity: 0.9;
+  display: flex !important;
+  align-items: center !important;
+  opacity: 0.9;
 }
 
 .chat.session .composer > .input {
-	width: calc(100% - 60px);
+  width: calc(100% - 60px);
 }
 
 
 /* Messages common */
 .chat.session .item .time {
-	float:right;
-	color: lightgray;
-	font-size: small;
+  float:right;
+  color: lightgray;
+  font-size: small;
 }
 
 .chat.session .message-list .item .text {
-	flex: 1;
+  flex: 1;
 }
 
 
 /* Chat messages */
 .chat.session .chat.item {
-	margin-top: 5px;
+  margin-top: 5px;
 }
 
 .chat.session .chat.item .author {
-	float: left;
+  float: left;
 }
 
 .chat.session .chat.item .text {
-	padding-right: 60px;
+  padding-right: 60px;
 }
 
 .chat.session .chat.item .normal .text {
-	margin-top: 5px;
-	clear: both;
+  margin-top: 5px;
+  clear: both;
 }
 
 .chat.session .chat.item .third-person {
-	display: flex;
+  display: flex;
 }
 
 .chat.session .chat.item .third-person .text {
-	float: left;
-	margin-left: 3px;
+  float: left;
+  margin-left: 3px;
 }
 
 .chat.session .chat.item img {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .chat.session .chat.item .third-person .author .ui.dropdown {
-	margin-left: 3px;
+  margin-left: 3px;
 }
 
 .chat.session .chat.item .author .caption {
-	color: steelblue !important;
+  color: steelblue !important;
 }
 
 .chat.session .chat.item.op .author .caption {
-	color: darkgoldenrod !important;
+  color: darkgoldenrod !important;
 }
 
 .chat.session .chat.item.self .author .caption {
-	color: black !important;
+  color: black !important;
 }
 
 .chat.session .chat.item.bot .author .caption {
-	color: rgba(0,0,0,.40) !important;
+  color: rgba(0,0,0,.40) !important;
 }
 
 
 /* Status messages */
 .chat.session .status.item {
-	width: 100%;
+  width: 100%;
   display: flex !important;
   flex-direction: row-reverse;
 }
 
 .chat.session .status.item .text {
-	font-size: small;
-	color: rgba(0,0,0,.50);
-	float: left;
+  font-size: small;
+  color: rgba(0,0,0,.50);
+  float: left;
 }
 
 .chat.session .status.item i {
-	display: none !important;
+  display: none !important;
 }
 
 .chat.session .status.item.warning .text {
-	color: orange;
+  color: orange;
 }
 
 .chat.session .status.item.error .text {
-	color: red;
+  color: red;
 }

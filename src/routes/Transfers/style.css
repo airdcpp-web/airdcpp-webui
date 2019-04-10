@@ -1,7 +1,7 @@
 .status .error {
-	color: red;
+  color: red;
 }
 
 .transfer.status .target {
-	word-break: break-all;
+  word-break: break-all;
 }

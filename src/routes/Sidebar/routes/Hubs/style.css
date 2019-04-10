@@ -1,10 +1,10 @@
 .hub-action-prompt {
-	flex-direction: column;
-	align-items: flex-start !important;
+  flex-direction: column;
+  align-items: flex-start !important;
 }
 
 .hub-action-prompt .header {
-	margin: 0 0 1rem !important;
+  margin: 0 0 1rem !important;
 }
 
 .hub-action-prompt .help {
@@ -14,8 +14,8 @@
 .hub.session .virtual-table,
 .hub.session .offline-message,
 .hub.session .loader-wrapper {
-	flex: 1;
-	margin-top: 5px;
+  flex: 1;
+  margin-top: 5px;
 }
 
 .hub.session .cell-wrapper.tag,
@@ -27,7 +27,7 @@
 }
 
 .hub.session .cell-wrapper.nick.op {
-	color: steelblue;
+  color: steelblue;
 }
 .hub.session .session-footer .userlist-button > a,
 .hub.session .session-footer .userlist-button > div {

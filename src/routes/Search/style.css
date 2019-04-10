@@ -1,60 +1,60 @@
 .search-container {
-	width:100%;
-	height: 50px;
+  width:100%;
+  height: 50px;
 }
 
 #mobile-layout .search-container {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .search-container .search-area {
-	width: 90%;
-	max-width: 600px;
-	margin-left: auto;
-	margin-right: auto;
-	display: flex;
+  width: 90%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 }
 
 .search-container .search-area .options.trigger {
-	margin-left: 5px;
+  margin-left: 5px;
 }
 
 .search-container .search-area .options.trigger .button {
-	padding-left: 15px;
-	padding-right: 5px;
-	height: 100%;
+  padding-left: 15px;
+  padding-right: 5px;
+  height: 100%;
 }
 
 .search-container .search-area .ui.input.action {
-	flex: 1;
+  flex: 1;
 }
 
 .search-area, 
 .search-area .react-autosuggest__container,
 .search-container .search-area .ui.input.action {
-	flex: 1;
+  flex: 1;
 }
 
 .search-area, .search-area input {
-	width: 100%;
+  width: 100%;
 }
 
 .search-area button {
-	display: inline-block !important;
+  display: inline-block !important;
 }
 
 .search-layout {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .search-layout .virtual-table {
-	height: calc(100% - 50px);
+  height: calc(100% - 50px);
 }
 
 @media only screen and (min-width: 767px) {
-	.result.modal td {
-		max-width: 250px;
-	}
+  .result.modal td {
+    max-width: 250px;
+  }
 }

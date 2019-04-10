@@ -1,5 +1,5 @@
 .session-container.horizontal.ui.grid {
-	margin: 0px !important;
+  margin: 0px !important;
 }
 
 .session-container.horizontal .menu-column .item.new {
@@ -104,11 +104,11 @@
 .session-container, 
 .session-layout, 
 .session-container.horizontal .column {
-	height: 100%;
+  height: 100%;
 }
 
 .session-container.horizontal .column > div {
-	max-height: 100%;
+  max-height: 100%;
 }
 
 .session-container .session-item {
@@ -142,7 +142,7 @@
 }
 
 .session-container.horizontal .menu-column .menu {
-	width: initial !important;
+  width: initial !important;
   overflow-y: auto;
   padding-top: 10px;
   flex: 1;

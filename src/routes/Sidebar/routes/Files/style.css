@@ -1,32 +1,32 @@
 .file.session {
-	flex: 1 1 auto;
-	display: flex;
-	flex-direction: column;
-	max-height: 100%;
-	margin-top: 10px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  margin-top: 10px;
 }
 
 .file.session .content {
-	flex: 1;
-	overflow-x: auto;
+  flex: 1;
+  overflow-x: auto;
 }
 
 .file.session .content pre {
-	overflow: initial;
+  overflow: initial;
 }
 
 .file.session.nfo .file-content pre {
-	font-family: "Courier New", "DejaVu Sans Mono", monospace;
-	font-size: 11px;
-	line-height: 12px;
-	padding: 3px;
-	margin: 0px;
+  font-family: "Courier New", "DejaVu Sans Mono", monospace;
+  font-size: 11px;
+  line-height: 12px;
+  padding: 3px;
+  margin: 0px;
 }
 
 .file.session img, 
 .file.session video {
-	max-width: 100%;
-	max-height: 99%;
+  max-width: 100%;
+  max-height: 99%;
 }
 
 /* The fullscreen mode conflicts with layout styles in Webkit-based browsers */

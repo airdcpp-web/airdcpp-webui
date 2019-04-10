@@ -1,14 +1,14 @@
 .status .error {
-	color: red;
+  color: red;
 }
 
 @media only screen and (min-width: 767px) {
-	.source.modal td {
-		max-width: 250px;
-	}
+  .source.modal td {
+    max-width: 250px;
+  }
 
-	/* Can't be applied to dropdown cells */
-	.source.modal td:not(.user) {
-		overflow-x: hidden;
-	}
+  /* Can't be applied to dropdown cells */
+  .source.modal td:not(.user) {
+    overflow-x: hidden;
+  }
 }

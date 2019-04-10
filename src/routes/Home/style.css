@@ -8,16 +8,16 @@
 }
 
 #mobile-layout #home {
-	height: 100%;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding-right: 15px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 15px;
 }
 
 #mobile-layout #home .ui.message {
-	margin-top: 10px;
-	margin-left: 8px;
-	margin-right: -5px;
+  margin-top: 10px;
+  margin-left: 8px;
+  margin-right: -5px;
 }
 
 
@@ -29,32 +29,32 @@
 }
 
 .react-grid-layout .widget .main.content > div {
-	max-height: 100%;
-	max-width: 100%;
-	display: flex;
-	width: 100%;
-	flex: 1;
+  max-height: 100%;
+  max-width: 100%;
+  display: flex;
+  width: 100%;
+  flex: 1;
 }
 
 .react-grid-layout .widget .header i.large.icon {
-	font-size: 1.3em !important;
+  font-size: 1.3em !important;
 }
 
 .react-grid-layout .widget .header-row {
-	display: flex;
-	flex: 0 0 auto !important;
+  display: flex;
+  flex: 0 0 auto !important;
 }
 
 .react-grid-layout .widget .header-row .header {
-	flex: 1;
-	height: 100%;
+  flex: 1;
+  height: 100%;
 }
 
 .react-grid-layout .widget .main.content .extra.content {
-	color: rgba(0,0,0,.4);
+  color: rgba(0,0,0,.4);
 }
 
 #mobile-layout .react-grid-layout .react-grid-item {
-	/* Allow touch scrolling */
+  /* Allow touch scrolling */
   touch-action: initial !important;
 }

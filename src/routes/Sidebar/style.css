@@ -1,25 +1,25 @@
 #sidebar {
-	background-color: white;
-	z-index: 10;
-	width:100%;
-	background-color: #1b1c1d;
-	position: absolute !important; /* https://github.com/bokuweb/react-resizable-box/issues/44 */
-	padding: 5px 80px 5px 5px;
+  background-color: white;
+  z-index: 10;
+  width:100%;
+  background-color: #1b1c1d;
+  position: absolute !important; /* https://github.com/bokuweb/react-resizable-box/issues/44 */
+  padding: 5px 80px 5px 5px;
 }
 
 #sidebar-container {
-	height: 100%;
-	background-color: white;
-	border-top-left-radius: .28571429rem;
-	border-bottom-left-radius: .28571429rem;
+  height: 100%;
+  background-color: white;
+  border-top-left-radius: .28571429rem;
+  border-bottom-left-radius: .28571429rem;
 }
 
 /* Internal class from re-resizable, causes height issues */
 *[class^='__resizable'] {
-	display: none;
+  display: none;
 }
 
 .animating.ui.overlay.sidebar,
 .ui.visible.overlay.sidebar {
-	transition: transform 250ms !important;
+  transition: transform 250ms !important;
 }

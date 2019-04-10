@@ -1,34 +1,34 @@
 /* Generic table styles */
 .virtual-table {
-	height: 100%;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .virtual-table .table-container-wrapper {
-	width: 100%;
-	flex: 1 1 auto;
+  width: 100%;
+  flex: 1 1 auto;
 
-	/* The table won't shrink properly without this */
-	height: calc(100% - 50px);
+  /* The table won't shrink properly without this */
+  height: calc(100% - 50px);
 }
 
 .virtual-table .public_fixedDataTable_bodyRow a i:hover {
-	cursor:pointer;
+  cursor:pointer;
 }
 
 .virtual-table .fixedDataTableLayout_main {
-	background-color: rgba(250, 250, 250, 0.8);
+  background-color: rgba(250, 250, 250, 0.8);
 }
 
 .virtual-table .fixedDataTableLayout_main:focus {
-	outline: inherit;
+  outline: inherit;
 }
 
 .virtual-table .public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
-	color: black;
+  color: black;
 }
 
 
@@ -49,43 +49,43 @@
 }
 
 .virtual-table .cell-wrapper .ui.progress .bar {
-	height: 5px;
+  height: 5px;
 }
 
 .virtual-table .cell-wrapper.dupe.queue.full, 
 .virtual-table .cell-wrapper.dupe.queue.full span,
 .virtual-table .cell-wrapper.dupe.queue.full a {
-	color: #FFA500 !important;
+  color: #FFA500 !important;
 }
 
 .virtual-table .cell-wrapper.dupe.queue.partial, 
 .virtual-table .cell-wrapper.dupe.queue.partial span,
 .virtual-table .cell-wrapper.dupe.queue.partial a {
-	color: #FFCA68 !important;
+  color: #FFCA68 !important;
 }
 
 .virtual-table .cell-wrapper.dupe.share.full, 
 .virtual-table .cell-wrapper.dupe.share.full span,
 .virtual-table .cell-wrapper.dupe.share.full a {
-	color: fuchsia !important;
+  color: fuchsia !important;
 }
 
 .virtual-table .cell-wrapper.dupe.share.partial, 
 .virtual-table .cell-wrapper.dupe.share.partial span,
 .virtual-table .cell-wrapper.dupe.share.partial a {
-	color: #FFA2FF !important;
+  color: #FFA2FF !important;
 }
 
 .virtual-table .cell-wrapper.dupe.finished.full, 
 .virtual-table .cell-wrapper.dupe.finished.full span,
 .virtual-table .cell-wrapper.dupe.finished.full a {
-	color: green !important;
+  color: green !important;
 }
 
 .virtual-table .cell-wrapper.dupe.finished.partial, 
 .virtual-table .cell-wrapper.dupe.finished.partial span,
 .virtual-table .cell-wrapper.dupe.finished.partial a {
-	color: #79FF79 !important;
+  color: #79FF79 !important;
 }
 
 
@@ -93,57 +93,57 @@
 /* Footer */
 
 .table-footer {
-	width: 100%;
-	padding: 5px;
-	background-color: #f6f7f8;
-	background-image: -webkit-linear-gradient(#fff, #efefef);
-	background-image: linear-gradient(#fff, #efefef);
-	display:flex;
-	align-items: center;
+  width: 100%;
+  padding: 5px;
+  background-color: #f6f7f8;
+  background-image: -webkit-linear-gradient(#fff, #efefef);
+  background-image: linear-gradient(#fff, #efefef);
+  display:flex;
+  align-items: center;
 }
 
 .table-footer .filter {
-	margin-left: auto;
-	display: flex;
+  margin-left: auto;
+  display: flex;
 }
 
 .table-footer .count-info {
-	margin-right: 0px;
-	color: grey;
+  margin-right: 0px;
+  color: grey;
 }
 
 .table-footer .filter > div:last-child {
-	margin-left: 10px;
+  margin-left: 10px;
 }
 
 .table-footer .filter .dropdown.button {
-	padding-left: 0px;
-	padding-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .table-footer .filter .dropdown .trigger.icon {
-	margin-right: 0px;
+  margin-right: 0px;
 }
 
 .table-footer .filter input {
-	width: 90%;
+  width: 90%;
 }
 
 
 
 /* Table dropdowns */
 .table-container-wrapper .dropdown .trigger {
-	line-height: 21px;
-	display: flex;
-	align-items: flex-start;
+  line-height: 21px;
+  display: flex;
+  align-items: flex-start;
 }
 
 .table-container-wrapper .dropdown .trigger:hover, .public_fixedDataTableCell_main a:hover {
-	cursor:pointer;
+  cursor:pointer;
 }
 
 .table-container-wrapper .dropdown .trigger:hover span, .public_fixedDataTableCell_main a:hover {
-	text-decoration:underline;
+  text-decoration:underline;
 }
 
 .table-container-wrapper .dropdown .trigger i.angle.icon {
@@ -151,15 +151,15 @@
 }
 
 .table-container-wrapper .dropdown .icon-caption .icon {
-	width: inherit !important;
+  width: inherit !important;
 }
 
 .table-container-wrapper .empty.dropdown.filtered:not(.no-access) > div {
-	padding-left: 22px;
+  padding-left: 22px;
 }
 
 .table-container-wrapper .dropdown .trigger i {
-	flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .table-container-wrapper .dropdown .trigger span {
@@ -170,9 +170,9 @@
 
 /* Table dropdown popup content */
 .popup.dropdown-content {
-	padding: 5px 15px;
+  padding: 5px 15px;
 }
 
 .popup.dropdown-content .ui.dropdown.item {
-	margin: 0px 0px;
+  margin: 0px 0px;
 }

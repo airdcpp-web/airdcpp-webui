@@ -1,64 +1,64 @@
 #mobile-layout .site-content {
-	height: 100%;
-	padding-top: 55px;
+  height: 100%;
+  padding-top: 55px;
 }
 
 #mobile-layout .site-content > .ui.message {
-	margin: 10px 5px;
+  margin: 10px 5px;
 }
 
 /* Site header menu */
 #mobile-layout .site-header {
-	height: 55px;
+  height: 55px;
 }
 
 #mobile-layout .site-header .header-content .label {
-	margin-left: 0px;
+  margin-left: 0px;
 }
 
 /* Navigation menu */
 #mobile-menu {
-	z-index: 100 !important;
-	max-width: 200px;
-	padding-bottom: 10px;
-	/* Allow dropdown menu items to escape the sidebar: https://github.com/Semantic-Org/Semantic-UI/issues/1410 */		
-	overflow: visible !important;
+  z-index: 100 !important;
+  max-width: 200px;
+  padding-bottom: 10px;
+  /* Allow dropdown menu items to escape the sidebar: https://github.com/Semantic-Org/Semantic-UI/issues/1410 */		
+  overflow: visible !important;
 }
 
 #mobile-menu i.navigation.icon {
-	float: none !important;
-	margin: 0 .5em 0 0 !important;
+  float: none !important;
+  margin: 0 .5em 0 0 !important;
 }
 
 #mobile-menu .separator {
-	height: 20px;
+  height: 20px;
 }
 
 /* Semantic has issues with right vertical menu */
 #mobile-menu .ui.dropdown.right .menu {
-	right: 100%;
-	border-radius: .28571429rem 0 .28571429rem .28571429rem;
-	left: auto !important;
+  right: 100%;
+  border-radius: .28571429rem 0 .28571429rem .28571429rem;
+  left: auto !important;
 }
 
 #mobile-menu .icon-panel {
-	display: flex;
-	margin: 20px 20px 10px 20px;
+  display: flex;
+  margin: 20px 20px 10px 20px;
 }
 
 #mobile-menu .icon-panel .touch-icons {
-	display: flex;
-	justify-content: space-around;
-	flex: 1;
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
 }
 
 #mobile-menu .icon-panel i {
-	float: none !important;
+  float: none !important;
 }
 
 /* Dialogs */
 .download-dialog .ui.dropdown a.item {
-	display: flex !important;
-	justify-content: space-between;
-	align-items: center;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
 }

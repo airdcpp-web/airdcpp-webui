@@ -1,17 +1,17 @@
 .virtual-table .cell-wrapper.connected, 
 .virtual-table .cell-wrapper.connected span,
 .virtual-table .cell-wrapper.connected strong {
-	color: green;
+  color: green;
 }
 
 .virtual-table .cell-wrapper.connecting, 
 .virtual-table .cell-wrapper.connecting span,
 .virtual-table .cell-wrapper.connecting strong {
-	color: orange;
+  color: orange;
 }
 
 .virtual-table .cell-wrapper.disconnected, 
 .virtual-table .cell-wrapper.disconnected span,
 .virtual-table .cell-wrapper.disconnected strong {
-	color: dimslategray;
+  color: dimslategray;
 }

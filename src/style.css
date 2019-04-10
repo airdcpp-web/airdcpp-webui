@@ -1,24 +1,24 @@
 * {
-	text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 body {
-	background: #eeeeee;
+  background: #eeeeee;
 }
 
 #background-wrapper {
-	background-repeat: no-repeat;
-	background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .site-header .header-content {
-	width: 100%;
-	display: flex;
+  width: 100%;
+  display: flex;
 }
 
 .site-header .right {
-	display: flex;
-	margin-left: auto!important;
+  display: flex;
+  margin-left: auto!important;
 }
 
 section#container-main,
@@ -26,16 +26,16 @@ section#container-main,
 #authenticated-app, 
 .pusher,
 .ui.site-content {
-	height: 100vh;
+  height: 100vh;
 }
 
 .ui.checkbox.floating {
-	width: 100%;
-	margin: 10px 0px;
+  width: 100%;
+  margin: 10px 0px;
 }
 
 .inline-loader > .loader {
-	margin-right: 5px !important;
+  margin-right: 5px !important;
 }
 
 .ui.dropdown:not(.fluid):not(td),
@@ -44,16 +44,16 @@ section#container-main,
 }
 
 .ui.empty.dropdown {
-	cursor: auto !important;
+  cursor: auto !important;
 }
 
 .ui.dropdown {
-	font-size: inherit;
+  font-size: inherit;
 }
 
 .ui.dropdown .menu > .item {
-	max-width: 300px;
-	overflow-x: hidden;
+  max-width: 300px;
+  overflow-x: hidden;
 }
 
 .ui.dropdown.fluid {
@@ -61,7 +61,7 @@ section#container-main,
 }
 
 .popup.trigger:hover {
-	cursor:pointer;
+  cursor:pointer;
 }
 
 .ui.popup:not(.table) {
@@ -69,41 +69,41 @@ section#container-main,
 }
 
 .ui.dropdown.left-icon i.trigger {
-	flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .ui.dropdown .menu .header {
-	display: flex;
+  display: flex;
 }
 
 .divided.list .item .description {
-	font-size: 90%;
+  font-size: 90%;
 }
 
 /* Layout header start */
 
 .layout.header {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .layout.header .left {
-	max-width: 100%;
-	padding: 5px 5px;
-	display: inline-flex;
+  max-width: 100%;
+  padding: 5px 5px;
+  display: inline-flex;
 }
 
 .layout.header.icon .left .content {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .layout.header i.icons i {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .layout.header > div {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 /* Layout header end */
@@ -112,74 +112,74 @@ section#container-main,
 /* Dialogs start */
 
 .ui.modal.full .layout.header .content {
-	/* https://github.com/airdcpp-web/airdcpp-webclient/issues/324 */
-	white-space: nowrap;
+  /* https://github.com/airdcpp-web/airdcpp-webclient/issues/324 */
+  white-space: nowrap;
 }
 
 .ui.modal.full table {
-	table-layout: fixed;
+  table-layout: fixed;
 }
 
 /* Can't be applied to dropdown cells */
 .ui.modal.full td:not(.ui.dropdown) {
-	overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .ui.modal.full > .content {
-	min-height: 350px;
-	height: 65vh;
+  min-height: 350px;
+  height: 65vh;
 }
 
 .ui.modal > .content {
-	overflow-y: auto;
-	max-height: 65vh;
+  overflow-y: auto;
+  max-height: 65vh;
 }
 
 .ui.modal {
-	/* Workaround for https://github.com/Semantic-Org/Semantic-UI/issues/6185 */
-	position: fixed !important;
+  /* Workaround for https://github.com/Semantic-Org/Semantic-UI/issues/6185 */
+  position: fixed !important;
 }
 
 /* Ensure that open modals are dimmed when a confirm dialog is displayed */
 .ui.dimmer.modals-node {
-	z-index: 1002;
+  z-index: 1002;
 }
 
 .ui.dimmer.confirms-node {
-	z-index: 1003;
+  z-index: 1003;
 }
 
 .ui.dimmer.confirms-node:not(:empty) {
-	opacity: 1;
-	display: block;
+  opacity: 1;
+  display: block;
 }
 
 .confirm-dialog {
-	z-index: 1004 !important;
+  z-index: 1004 !important;
 }
 
 .confirm-dialog .description, 
 .input.dialog {
-	display: flex !important;
-	flex-direction: column !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .input.dialog.basic,
 .confirm-dialog.basic label {
-	color: white !important;
+  color: white !important;
 }
 
 .input.dialog input,
 .confirm-dialog label {
-	margin-top: 20px !important;
+  margin-top: 20px !important;
 }
 
 .confirm-dialog .description {
-	width: 100% !important;
+  width: 100% !important;
 }
 
 .limiter-config .remove {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* Dialogs end */
@@ -199,31 +199,31 @@ section#container-main,
 /* Count label transitions end */
 
 .sidebar .icon-panel .icon.large {
-	font-size: 1.3em;
+  font-size: 1.3em;
 }
 
 td:not(.dropdown),
 th {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 /* Override a conflicting Semantic UI style for .image which also affects .icon.image */
 .ui.dropdown .menu>.item>.image.icon {
-	vertical-align: middle;
-	width: 1.18em;
-	margin-top: inherit;
-	margin-bottom: inherit;
-	max-height: inherit;
+  vertical-align: middle;
+  width: 1.18em;
+  margin-top: inherit;
+  margin-bottom: inherit;
+  max-height: inherit;
 }
 
 .notifications-tl h4.notification-title {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .icon-caption > i {
-	margin-right: 5px;
+  margin-right: 5px;
 }
 
 i.icons .icon:first-child {
-	margin-right: 0.25em;
+  margin-right: 0.25em;
 }

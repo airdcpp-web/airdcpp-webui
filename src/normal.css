@@ -1,70 +1,70 @@
 #normal-layout .site-content,
 #normal-layout .header-content {
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 1600px;
-	width: calc(100% - 180px);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1600px;
+  width: calc(100% - 180px);
 }
 
 #normal-layout .site-content {
-	padding-top: 80px;
-	padding-bottom: 10px;
+  padding-top: 80px;
+  padding-bottom: 10px;
 }
 
 /* Sidemenu start */
 
 #side-menu {
-	position: fixed;
-	top: 120px;
-	right: 0px;
-	width: 80px !important;
-	height: auto;
-	padding-bottom: 10px;
-	border-top-left-radius: .28571429rem;
-	border-bottom-left-radius: .28571429rem;
-	background-color: #1b1c1d;
-	z-index: 1000;
+  position: fixed;
+  top: 120px;
+  right: 0px;
+  width: 80px !important;
+  height: auto;
+  padding-bottom: 10px;
+  border-top-left-radius: .28571429rem;
+  border-bottom-left-radius: .28571429rem;
+  background-color: #1b1c1d;
+  z-index: 1000;
 }
 
 #side-menu .navigation .menu {
-	height: auto !important;
-	display: block !important;
-	width: inherit;
+  height: auto !important;
+  display: block !important;
+  width: inherit;
 }
 
 #side-menu .navigation .item {
-	padding: .92857143em 0.34285714em !important;
+  padding: .92857143em 0.34285714em !important;
 }
 
 #side-menu .navigation .item > .label {
-	position: absolute;
-	top: 7px;
-	right: 7px;
-	font-size: .64285714rem;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  font-size: .64285714rem;
 }
 
 #side-menu .ui.divider {
-	margin-top: 0px;
+  margin-top: 0px;
 }
 
 #side-menu .icon-panel .touch-icons {
-	text-align: center;
-	margin-top: 10px;
+  text-align: center;
+  margin-top: 10px;
 }
 
 #side-menu .icon-panel .touch-icons .item {
-	padding: 10px 8px;
+  padding: 10px 8px;
 }
 
 /* Allows up to 3 touch icons to be displayed */
 #side-menu .icon-panel .touch-icons > i {
-	margin: 0px !important;
+  margin: 0px !important;
 }
 
 #side-menu .icon-panel .statistics-icons {
-	margin-left: 10px;
-	margin-right: auto;
-	font-size: 9.5px !important;
+  margin-left: 10px;
+  margin-right: auto;
+  font-size: 9.5px !important;
 }
 
 /* Sidemenu end */
