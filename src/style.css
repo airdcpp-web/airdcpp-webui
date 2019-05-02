@@ -242,3 +242,17 @@ td .ui.dropdown > .caption > .icon-caption {
 i.icons .icon:first-child {
   margin-right: 0.25em;
 }
+
+/* Temp fix for https://github.com/fomantic/Fomantic-UI/issues/620 */
+.ui.dropdown .remove.icon {
+  right: inherit !important;
+  top: inherit !important;
+  position: inherit !important;
+  font-size: inherit !important;
+  padding: 0px !important;
+}
+
+/* Temp fix for https://github.com/fomantic/Fomantic-UI/issues/599 */
+.ui.modal > .image.content {
+  flex-wrap: inherit !important;
+}
