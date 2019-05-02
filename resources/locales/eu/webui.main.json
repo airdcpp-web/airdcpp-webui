@@ -135,8 +135,8 @@
     "shareActions": "partekatze ekintzak",
     "hashingInformation": "Indexatze informazioa",
     "hashingInformationDesc": "<0>Fitxategi berriak partekatzeko agertzen indexaketa bukatu ondoren bakarrik (bezeroak checksum kalkulatu behar du beraientzat). Indexatzeko aurrerapenei buruzko informazioa gertaera erregistroan argitaratuko da.</0>",
-    "addShareDirectory": "Add share directory",
-    "editShareDirectory": "Edit share directory",
+    "addShareDirectory": "Partekatzeko direktorioa gehitu",
+    "editShareDirectory": "Partekatzeko direktorioa editatu",
     "form": {
       "pathName": "Bidea",
       "virtualNameName": "Izen birtuala",
@@ -164,7 +164,7 @@
         "createPasswordPlaceholder": "Idatzi pasahitza",
         "createPasswordApprove": "Ezarri pasahitza",
         "createPasswordContent": "Set password for the hub {{item.name}}",
-        "removeApprove": "Remove favorite hub",
+        "removeApprove": "Kendu gogoko hub-a",
         "removeReject": "Ez ezabatu",
         "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
@@ -191,16 +191,16 @@
       "shareProfileName": "Profila partekatu",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
       "autoConnectName": "Auto konektatu",
-      "userName": "User setting overrides",
+      "userName": "Erabiltzaile doikuntzen baliogabetzeak",
       "nickName": "Ezizena",
       "userDescriptionName": "Erabiltzaile deskibapena",
-      "connectivityV4Name": "Connectivity setting overrides (IPv4)",
+      "connectivityV4Name": "Konektagarritasun doikuntzen baliogabetzeak (IPv4-an)",
       "connectionModeV4Name": "Konektagarritasun modua",
       "connectionModeV4Option-1": "Ezgaitu",
       "connectionModeV4Option0": "Modu aktiboa",
       "connectionModeV4Option2": "Modu pasiboa",
       "connectionIpV4Name": "IP helbidea",
-      "connectivityV6Name": "Connectivity setting overrides (IPv6)",
+      "connectivityV6Name": "Konektagarritasun doikuntzen baliogabetzeak (IPv6-an)",
       "connectionModeV6Name": "Konektagarritasun modua",
       "connectionModeV6Option-1": "Ezgaitu",
       "connectionModeV6Option0": "Modu aktiboa",
@@ -221,7 +221,7 @@
     "noContentToDisplay": "Ez dago edukirik bistaratzeko",
     "theDirectoryIsEmpty": "Direktorioa hutsik dago",
     "updatingView": "Updating view",
-    "downloadFailed": "Download failed",
+    "downloadFailed": "Deskargak huts egin du",
     "table": {
       "name": "Izena",
       "size": "Tamaina",
@@ -232,7 +232,7 @@
       "reload": "Birkargatu",
       "refreshInShare": "Partekatzea freskatu",
       "close": "Itxi",
-      "details": "Details"
+      "details": "Xehetasunak"
     }
   },
   "common": {    
@@ -259,10 +259,10 @@
         "copyMagnetSuccess": "Magnet link was copied to clipboard"
       },
       "prompts": {
-        "restartWebSystemApprove": "Continue and restart",
-        "restartWebSystemReject": "Don't restart",
+        "restartWebSystemApprove": "Jarraitu eta berrabiarazi",
+        "restartWebSystemReject": "Ez berrabiarazi",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
-        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemApprove": "Jarraitu eta itzali",
         "shutdownSystemReject": "Deusestu",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
@@ -280,7 +280,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
-    "xBytes": "{{bytes}} bytes",
+    "xBytes": "{{bytes}} byteak",
     "unitsPerSecond": "{{units}}/s",
     "today": "Gaur",
     "yesterday": "Atzo",
@@ -288,8 +288,8 @@
     "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
-    "actionSucceed": "Action succeed",
-    "actionFailed": "Action failed",
+    "actionSucceed": "Ekintza arrakastatsua",
+    "actionFailed": "Huts egindako ekintza",
     "queueingFailed": "Failed to queue the item {{item.name}}",
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Sarea/bezeroaren errorea",
@@ -338,9 +338,9 @@
     "tlsOk": "Authenticity of the certificate is validated",
     "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
     "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
-    "upload": "Upload",
+    "upload": "Igo",
     "sendFiles": "Send files",
-    "removeSharedFile": "Remove shared file",
+    "removeSharedFile": "Kendu partekatutako fitxategia",
     "fileNoLongerShared": "File {{file.name}} is no longer shared",
     "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
     "previewIsNotAvailable": "Preview is not available",
@@ -372,7 +372,7 @@
   "hubs": {
     "table": {
       "nick": "Ezizena",
-      "shareSize": "Share size",
+      "shareSize": "Partekatutako tamaina",
       "description": "Deskripzioa",
       "tag": "Etiketa",
       "uploadSpeed": "Upload speed",
@@ -397,7 +397,7 @@
     "loadingUserlist": "Erabiltzaile zerrenda kargatzen",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
     "new": "Konektatu",
-    "newDesc": "Connect to a new hub",
+    "newDesc": "Hub berri batekin konektatu",
     "userList": "Erabiltzaile zerrenda",
     "sharePerUser": "{{total}} ({{average}}/user)",
     "xUsers": "{{count}} erabiltzaileak",
@@ -429,7 +429,7 @@
     "queueEmptyDesc": "New items can be queued from search or filelists",
     "actions": {
       "removeCompletedBundles": "Remove completed bundles",
-      "pauseAllBundles": "Pause all bundles",
+      "pauseAllBundles": "Etendu fardel guztiak",
       "resumeAllBundles": "Resume all bundles",
       "manageFiles": "Artxiboak kudeatu..",
       "manageSources": "Iturriak kudeatu...",
@@ -438,10 +438,10 @@
       "remove": "Ezabatu",
       "removeSource": "Ezabatu deskargatzeko iturburua",
       "prompts": {
-        "removeBundleApprove": "Remove bundle",
+        "removeBundleApprove": "Kendu fardela",
         "removeBundleReject": "Ez ezabatu",
         "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
-        "removeBundleCheckbox": "Remove finished files",
+        "removeBundleCheckbox": "Kendu bukatutako fitxategiak",
         "removeFileApprove": "Ezabatu fitxategia",
         "removeFileReject": "Ez ezabatu",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
@@ -515,7 +515,7 @@
       "addPath": "Gehitu bidea",
       "removePath": "Kendu bidea",
       "removeUser": "Remove user",
-      "setAsDefault": "Set as default",
+      "setAsDefault": "Ezarri lehenetsi gisa",
       "removeProfile": "Profila ezabatu",
       "prompts": {
         "removeShareExcludeApprove": "Kendu bidea",
@@ -555,9 +555,9 @@
       "application": "Aplizakioa",
       "transferStatistics": "Transfer statistics",
       "shareStatistics": "Share statistics",
-      "hubStatistics": "Hub statistics",
+      "hubStatistics": "Hub estatistikak",
       "users": "Erabiltzaileak",
-      "logging": "Logging",
+      "logging": "Saioa hasi",
       "webServer": "Web zerbitzaria",
       "refreshOptions": "Freskatu aukerak",
       "shareProfiles": "Profilak partekatu",
