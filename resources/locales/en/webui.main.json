@@ -652,7 +652,11 @@
         "apiFeatureLevel": "API feature level",
         "started": "Started",
         "activeSessions": "Active sessions",
-        "serverThreads": "Server threads"
+        "serverThreads": "Server threads",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Total downloaded",

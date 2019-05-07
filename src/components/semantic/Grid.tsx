@@ -11,9 +11,10 @@ import * as UI from 'types/ui';
 
 export interface RowProps {
   title: React.ReactNode;
-  text: React.ReactNode;
+  text?: React.ReactNode;
   titleWidth?: string;
   className?: string;
+  noText?: boolean;
 }
 
 
@@ -32,16 +33,18 @@ const formatText = (text: React.ReactNode) => {
   );
 };
 
-export const Row: React.FC<RowProps> = ({ title, text, className, titleWidth = 'four' }) => (
+export const Row: React.FC<RowProps> = ({ title, text, className, titleWidth = 'four', noText }) => (
   <div className={ classNames('ui row', className) }>
     <div className={ classNames(titleWidth, 'wide column title') }>
       <div className="ui tiny header" style={{ overflow: 'hidden' }}>
         { title }
       </div>
     </div>
-    <div className="column value">
-      { formatText(text) }
-    </div>
+    { !noText && (
+      <div className="column value">
+        { formatText(text) }
+      </div> 
+    ) }
   </div>
 );
 

@@ -4,7 +4,7 @@ import React from 'react';
 
 import Moment from 'moment';
 
-import { Row } from 'components/semantic/Grid';
+import { Row, Header } from 'components/semantic/Grid';
 
 import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
@@ -12,6 +12,8 @@ import SystemConstants from 'constants/SystemConstants';
 import { formatRelativeTime } from 'utils/ValueFormat';
 import InstallPrompt from 'components/InstallPrompt';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import LinkConstants from 'constants/LinkConstants';
+import ExternalLink from 'components/ExternalLink';
 
 
 interface AboutPageProps extends SettingSectionChildProps {
@@ -37,6 +39,32 @@ class AboutPage extends React.Component<AboutPageProps & StatisticsDecoratorChil
           <Row title={ translate('Started') } text={ formatRelativeTime(systemInfo.client_started) }/>
           <Row title={ translate('Active sessions') } text={ stats.active_sessions }/>
           <Row title={ translate('Server threads') } text={ stats.server_threads }/>
+
+          <Header title={ translate('Resources') }/>
+          <Row
+            title={ 
+              <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>
+                { translate('Home page') }
+              </ExternalLink>
+            }
+            noText={ true }
+          />
+          <Row
+            title={               
+              <ExternalLink url={ LinkConstants.HELP_URL }>
+                { translate('Documentation') }
+              </ExternalLink> 
+            }
+            noText={ true }
+          />
+          <Row
+            title={               
+              <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>
+                { translate('Feature request/bug tracker') }
+              </ExternalLink> 
+            }
+            noText={ true }
+          />
         </div>
         <InstallPrompt alwaysShow={ true }/>
       </>
