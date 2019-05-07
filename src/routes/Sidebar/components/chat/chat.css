@@ -69,6 +69,8 @@
 
 .chat.session .chat.item .text {
   padding-right: 60px;
+  /* Avoid cutting text from the bottom with certain browser because of "overflow: hidden" */
+  line-height: initial !important;
 }
 
 .chat.session .chat.item .normal .text {
