@@ -57,7 +57,7 @@ const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
   refreshShare: {
     displayName: 'Refresh in share',
     access: API.AccessEnum.SETTINGS_EDIT,
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     filter: isMe,
     handler: handleRefreshShare,
   },

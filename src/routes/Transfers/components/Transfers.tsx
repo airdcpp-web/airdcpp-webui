@@ -49,7 +49,7 @@ class Transfers extends React.Component<TransfersProps> {
     return (
       <Message 
         title={ translate('No active transfers', t, UI.Modules.TRANSFERS) }
-        icon={ IconConstants.TRANSFERS }
+        icon={ IconConstants.TRANSFERS_PLAIN }
       />
     );
   }

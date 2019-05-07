@@ -119,7 +119,7 @@ const ExtensionNpmActions: UI.ActionListType<UI.NpmPackage> = {
   },
   updateNpm: {
     displayName: 'Update',
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     access: API.AccessEnum.ADMIN,
     handler: handleNpmAction,
   },

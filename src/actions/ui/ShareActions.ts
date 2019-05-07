@@ -18,7 +18,7 @@ const ShareActions: UI.ActionListType<undefined> = {
   refresh: {
     displayName: 'Refresh all',
     access: API.AccessEnum.SETTINGS_EDIT,
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     handler: handleRefresh,
   },
 };

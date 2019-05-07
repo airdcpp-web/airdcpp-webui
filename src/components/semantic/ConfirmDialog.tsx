@@ -163,7 +163,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
                 { rejectCaption }
               </div>
               <div className={ cx('ui ok green basic submit button', { 'inverted': basic }) }>
-                <Icon icon={ IconConstants.SAVE }/>
+                <Icon icon={ IconConstants.SAVE_PLAIN }/>
                 { approveCaption }
               </div>
             </div>

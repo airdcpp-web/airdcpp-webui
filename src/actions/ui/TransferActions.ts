@@ -57,7 +57,7 @@ const TransferActions: UI.ActionListType<API.Transfer> = {
   force: {
     displayName: 'Force connect',
     access: API.AccessEnum.TRANSFERS,
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     filter: isDownload,
     handler: handleForce,
   },

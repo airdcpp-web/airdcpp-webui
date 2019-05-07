@@ -18,7 +18,7 @@ const LoginActions: UI.ActionListType<undefined> = {
   newUserIntroSeen: {
     displayName: `Close and don't show again`,
     access: AccessConstants.SETTINGS_EDIT,
-    icon: IconConstants.SAVE,
+    icon: IconConstants.SAVE_COLORED,
     handler: handleNewUserIntroSeen,
   },
 };

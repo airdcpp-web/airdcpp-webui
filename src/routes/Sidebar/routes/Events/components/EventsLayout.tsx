@@ -45,7 +45,7 @@ const SystemLog: React.FC<SystemLogProps> = memo(
       <div className="simple-layout">
         <div className="wrapper">
           <LayoutHeader
-            icon={ IconConstants.EVENTS }
+            icon={ IconConstants.EVENTS_COLORED }
             title={ translate('Events', t, UI.Modules.EVENTS) }
             rightComponent={
               <ActionButton 

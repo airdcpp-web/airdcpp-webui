@@ -55,7 +55,7 @@ class FilelistNew extends React.Component<NewSessionLayoutProps> {
           entryType={ HistoryEntryEnum.FILELIST }
           hasSession={ this.hasSession }
           entryTitleRenderer={ this.recentUserRender }
-          entryIcon={ IconConstants.FILELIST }
+          entryIcon={ IconConstants.FILELISTS_PLAIN }
         />
       </div>
     );

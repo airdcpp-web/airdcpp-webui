@@ -110,7 +110,7 @@ const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {
   rescan: {
     displayName: 'Rescan for errors',
     access: API.AccessEnum.QUEUE_EDIT,
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     filter: bundleValidationFailed,
     handler: handleRescan,
   },

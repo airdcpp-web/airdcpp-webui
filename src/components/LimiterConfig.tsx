@@ -53,7 +53,7 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
         placeholder={ translate('Enter limit...', t, UI.Modules.COMMON) } 
         type="number" 
         caption={ translate('Save', t, UI.Modules.COMMON) } 
-        icon={ IconConstants.SAVE }
+        icon={ IconConstants.SAVE_COLORED }
         handleAction={ text => save(parseInt(text)) }
       />
       { !!currentLimit && (

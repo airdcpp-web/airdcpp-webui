@@ -240,7 +240,7 @@ td .ui.dropdown > .caption > .icon-caption {
 }
 
 i.icons .icon:first-child {
-  margin-right: 0.25em;
+  margin-right: .25rem;
 }
 
 /* Temp fix for https://github.com/fomantic/Fomantic-UI/issues/620 */
@@ -250,6 +250,7 @@ i.icons .icon:first-child {
   position: inherit !important;
   font-size: inherit !important;
   padding: 0px !important;
+  opacity: inherit !important;
 }
 
 /* Temp fix for https://github.com/fomantic/Fomantic-UI/issues/599 */

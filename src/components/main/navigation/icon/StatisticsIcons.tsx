@@ -129,7 +129,7 @@ class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketS
               t={ t }
             />
             <StatisticsIcon 
-              icon={ IconConstants.QUEUE }
+              icon={ IconConstants.QUEUE_COLORED }
               bytes={ this.state.queued_bytes }
               formatter={ formatSize }
               t={ t }

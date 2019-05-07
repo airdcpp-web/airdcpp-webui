@@ -20,7 +20,7 @@ const Footer = RedrawDecorator(
   ({ lastUpdated, handleUpdate, widgetT }: FooterProps) => (
     <div className="extra content">
       <Icon 
-        icon={ IconConstants.REFRESH } 
+        icon={ IconConstants.REFRESH_PLAIN } 
         onClick={ handleUpdate }
       />
       { !!lastUpdated && (

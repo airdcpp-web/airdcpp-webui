@@ -22,7 +22,7 @@ const SystemActions: UI.ActionListType<undefined> = {
   restartWeb: {
     displayName: 'Restart web server',
     access: API.AccessEnum.ADMIN,
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     confirmation: {
       content: `When changing the binding options, it's recommended to restart the web server only 
                 when you are able to access the server for troubleshooting. If  \

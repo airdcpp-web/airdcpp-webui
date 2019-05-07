@@ -46,7 +46,7 @@ class MessageNew extends React.Component<NewSessionLayoutProps> {
           entryType={ HistoryEntryEnum.PRIVATE_CHAT }
           hasSession={ hasSession }
           entryTitleRenderer={ this.recentUserRender }
-          entryIcon={ IconConstants.MESSAGES }
+          entryIcon={ IconConstants.MESSAGES_PLAIN }
         />
       </div>
     );

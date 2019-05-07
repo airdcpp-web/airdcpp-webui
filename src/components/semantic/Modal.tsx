@@ -193,7 +193,7 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
             { t => onApprove ? (
               <div className="actions">
                 <div className={ approveStyle }>
-                  <Icon icon={ IconConstants.SAVE }/>
+                  <Icon icon={ IconConstants.SAVE_COLORED }/>
                   { approveCaption || translate('Save', t, UI.Modules.COMMON) }
                 </div>
                 <div className="ui cancel red basic button">

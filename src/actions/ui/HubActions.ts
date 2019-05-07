@@ -26,7 +26,7 @@ const HubActions: UI.ActionListType<API.Hub> = {
   reconnect: { 
     displayName: 'Reconnect',
     access: API.AccessEnum.HUBS_EDIT, 
-    icon: IconConstants.REFRESH,
+    icon: IconConstants.REFRESH_COLORED,
     handler: handleReconnect,
   },
   favorite: { 

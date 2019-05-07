@@ -47,7 +47,7 @@ export const mainRoutes: RouteItem[] = [
   }, {
     title: 'Queue',
     path: '/queue',
-    icon: IconConstants.QUEUE,
+    icon: IconConstants.QUEUE_COLORED,
     access: API.AccessEnum.QUEUE_VIEW,
     component: lazy(() => import(/* webpackChunkName: "queue" */ 'routes/Queue')),
   }, {
@@ -61,7 +61,7 @@ export const mainRoutes: RouteItem[] = [
   }, {
     title: 'Transfers',
     path: '/transfers',
-    icon: IconConstants.TRANSFERS,
+    icon: IconConstants.TRANSFERS_COLORED,
     access: API.AccessEnum.TRANSFERS,
     component: lazy(
       () => import(/* webpackChunkName: "transfers" */ 'routes/Transfers')
@@ -100,7 +100,7 @@ export const secondaryRoutes = [
     title: 'Hubs',
     path: '/hubs',
     matchPath: '/hubs/:session?/:id?',
-    icon: 'blue ' + IconConstants.HUB,
+    icon: IconConstants.HUBS_COLORED,
     unreadInfoStore: HubSessionStore,
     access: API.AccessEnum.HUBS_VIEW,
     component: lazy(
@@ -110,7 +110,7 @@ export const secondaryRoutes = [
     title: 'Messages',
     path: '/messages',
     matchPath: '/messages/:session?/:id?',
-    icon: 'blue ' + IconConstants.MESSAGES,
+    icon: IconConstants.MESSAGES_COLORED,
     unreadInfoStore: PrivateChatSessionStore,
     access: API.AccessEnum.PRIVATE_CHAT_VIEW,
     component: lazy(
@@ -120,7 +120,7 @@ export const secondaryRoutes = [
     title: 'Filelists',
     path: '/filelists',
     matchPath: '/filelists/:session?/:id?',
-    icon: 'blue ' + IconConstants.FILELIST,
+    icon: IconConstants.FILELISTS_COLORED,
     unreadInfoStore: FilelistSessionStore,
     access: API.AccessEnum.FILELISTS_VIEW,
     component: lazy(
@@ -130,7 +130,7 @@ export const secondaryRoutes = [
     title: 'Files',
     path: '/files',
     matchPath: '/files/:session?/:id?',
-    icon: 'blue ' + IconConstants.FILES,
+    icon: IconConstants.FILES_COLORED,
     unreadInfoStore: ViewFileStore,
     access: API.AccessEnum.VIEW_FILE_VIEW,
     component: lazy(
@@ -139,7 +139,7 @@ export const secondaryRoutes = [
   }, {
     title: 'Events',
     path: '/events',
-    icon: 'blue ' + IconConstants.EVENTS,
+    icon: IconConstants.EVENTS_COLORED,
     unreadInfoStore: EventStore,
     access: API.AccessEnum.EVENTS_VIEW,
     component: lazy(

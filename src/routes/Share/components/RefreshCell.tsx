@@ -28,7 +28,7 @@ const RefreshCell: React.FC<RefreshCellProps> = (
   return (
     <div>
       <Icon
-        icon={ IconConstants.REFRESH }
+        icon={ IconConstants.REFRESH_COLORED }
         size="large"
         onClick={ () => 
           runBackgroundSocketAction(
