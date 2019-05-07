@@ -39,9 +39,10 @@ interface FileItemInfoGridProps {
   fileItem: UI.DownloadableItemInfo;
   user: API.HintedUser;
   downloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo>;
+  showPath?: boolean;
 }
 
-const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, downloadHandler }) => {
+const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, downloadHandler, showPath = true }) => {
   const { t } = useTranslation();
   const gridT = (text: string) => {
     return translate(text, t, UI.Modules.COMMON);
@@ -82,6 +83,12 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
           <Row 
             title={ gridT('Dupe paths') }
             text={ <DupePaths paths={ fileItem.dupe.paths }/> }
+          /> 
+        )}
+        { showPath && (
+          <Row 
+            title={ gridT('Path') }
+            text={ fileItem.path }
           /> 
         )}
       </div>

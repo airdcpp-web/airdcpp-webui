@@ -54,6 +54,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
           fileItem={ parentResult }
           downloadHandler={ searchDownloadHandler }
           user={ parentResult.users.user }
+          showPath={ false }
         />
         <UserResultTable parentResult={ parentResult }/>
       </Modal>
