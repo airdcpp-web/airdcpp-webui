@@ -1,5 +1,6 @@
 export default {
   HOME_PAGE_URL:	'https://airdcpp-web.github.io',
+  HELP_URL:	'https://airdcpp-web.github.io/docs/',
   ISSUE_TRACKER_URL: 'https://github.com/airdcpp-web/airdcpp-webclient/issues',
 
   SPEEDTEST_URL:	'http://www.speedtest.net',

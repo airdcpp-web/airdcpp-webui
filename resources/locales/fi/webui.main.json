@@ -298,6 +298,7 @@
     "root": "Juuri",
     "name": "Nimi",
     "size": "Koko",
+    "path": "Polku",
     "createDirectory": "Luo kansio",
     "create": "Luo",
     "directoryName": "Kansion nimi",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "API:n toiminnallisuustaso",
         "started": "Käynnistetty",
         "activeSessions": "Aktiiviset istunnot",
-        "serverThreads": "Palvelinsäikeet"
+        "serverThreads": "Palvelinsäikeet",
+        "resources": "Resurssit",
+        "homePage": "Kotisivut",
+        "featureRequestBugTracker": "Toiveet uusista toiminnoista/bugien raportointi",
+        "documentation": "Ohjeet"
       },
       "transfers": {
         "totalDownloaded": "Ladattu yhteensä",

@@ -8,7 +8,7 @@
       "activeSessions": "Saio aktiboak"
     },
     "rss": {
-      "widgetName": "RSS feed",
+      "widgetName": "RSS kanala",
       "invalidUrl": "Baliogabeko URL-a",
       "lastUpdated": "Azken eguneratzea: {{time}}",
       "actions": {
@@ -18,7 +18,7 @@
       "loadingFeed": "Jarioa kargatzen",
       "form": {
         "feedUrlName": "URL jarioa",
-        "feedUrlHelp": "RSS and Atom feeds are supported",
+        "feedUrlHelp": "RSS eta Atom kanalak oaratzen dira",
         "feedCacheMinutesName": "Berreskuratzeko gutxieneko tartea (minutu)"
       }
     },
@@ -298,6 +298,7 @@
     "root": "Erroa",
     "name": "Izena",
     "size": "Tamaina",
+    "path": "Bidea",
     "createDirectory": "Directorioa sortu",
     "create": "Sortu",
     "directoryName": "Direktorioaren izena",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "API feature level",
         "started": "Hasita",
         "activeSessions": "Saio aktiboak",
-        "serverThreads": "Server threads"
+        "serverThreads": "Server threads",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Deskargatutakoa guztira",

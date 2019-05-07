@@ -298,6 +298,7 @@
     "root": "Root",
     "name": "Namn",
     "size": "Storlek",
+    "path": "Sökväg",
     "createDirectory": "Skapa katalog",
     "create": "Skapa",
     "directoryName": "Katalognamn",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "API-funktionsnivå",
         "started": "Startad",
         "activeSessions": "Aktiva sessioner",
-        "serverThreads": "Servertrådar"
+        "serverThreads": "Servertrådar",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Totalt nedladdat",

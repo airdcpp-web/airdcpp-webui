@@ -35,7 +35,7 @@ const formatText = (text: React.ReactNode) => {
 
 export const Row: React.FC<RowProps> = ({ title, text, className, titleWidth = 'four', noText }) => (
   <div className={ classNames('ui row', className) }>
-    <div className={ classNames(titleWidth, 'wide column title') }>
+    <div className={ classNames(noText ? 'sixteen' : titleWidth, 'wide column title') }>
       <div className="ui tiny header" style={{ overflow: 'hidden' }}>
         { title }
       </div>

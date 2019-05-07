@@ -298,6 +298,7 @@
     "root": "Radacina",
     "name": "Nume",
     "size": "Marime",
+    "path": "Cale",
     "createDirectory": "Creaza director",
     "create": "Creaza",
     "directoryName": "Nume director",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "Nivelul API",
         "started": "Pornit",
         "activeSessions": "Sesiuni active",
-        "serverThreads": "Amenintari Server"
+        "serverThreads": "Amenintari Server",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Descarcare totala",

@@ -298,6 +298,7 @@
     "root": "Root",
     "name": "Navn",
     "size": "Størrelse",
+    "path": "Målmappe",
     "createDirectory": "Create directory",
     "create": "Create",
     "directoryName": "Directory name",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "API feature level",
         "started": "Starta",
         "activeSessions": "Active sessions",
-        "serverThreads": "Server threads"
+        "serverThreads": "Server threads",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Total downloaded",

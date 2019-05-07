@@ -298,6 +298,7 @@
     "root": "Raíz",
     "name": "Nombre",
     "size": "Tamaño",
+    "path": "Ruta",
     "createDirectory": "Cerar directorio",
     "create": "Crear",
     "directoryName": "Nombre del directorio",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "Nivel de características de la API",
         "started": "Iniciado",
         "activeSessions": "Sesiones activas",
-        "serverThreads": "Hilos del servidor"
+        "serverThreads": "Hilos del servidor",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Total descargado",

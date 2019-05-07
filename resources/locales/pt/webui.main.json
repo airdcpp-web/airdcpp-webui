@@ -298,6 +298,7 @@
     "root": "Raiz",
     "name": "Nome",
     "size": "Tamanho",
+    "path": "Caminho",
     "createDirectory": "Criar pasta",
     "create": "Criar",
     "directoryName": "Nome da pasta",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "Nível de funcionalidades da API",
         "started": "Iniciado",
         "activeSessions": "Sessões ativas",
-        "serverThreads": "Threads do servidor"
+        "serverThreads": "Threads do servidor",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Total descarregado",

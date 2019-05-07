@@ -298,6 +298,7 @@
     "root": "Root",
     "name": "Naam",
     "size": "Grootte",
+    "path": "Pad",
     "createDirectory": "Create directory",
     "create": "Create",
     "directoryName": "Directory name",
@@ -651,7 +652,11 @@
         "apiFeatureLevel": "API feature level",
         "started": "Gestart",
         "activeSessions": "Actieve sessies",
-        "serverThreads": "Server threads"
+        "serverThreads": "Server threads",
+        "resources": "Resources",
+        "homePage": "Home page",
+        "featureRequestBugTracker": "Feature request/bug tracker",
+        "documentation": "Documentation"
       },
       "transfers": {
         "totalDownloaded": "Total downloaded",
