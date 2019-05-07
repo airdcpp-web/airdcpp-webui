@@ -10,6 +10,7 @@ import { SessionMainLayoutProps } from './SessionLayout';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 type SessionDropdownProps<SessionT extends UI.SessionItemBase> = 
@@ -53,7 +54,7 @@ const CloseButton: React.FC<CloseButtonProps<any>> = (
       actions={ actions } 
       actionId="removeSession"
       itemData={ activeItem }
-      icon="grey remove"
+      icon={ IconConstants.CLOSE }
       //moduleId={ moduleId }
     />
   );

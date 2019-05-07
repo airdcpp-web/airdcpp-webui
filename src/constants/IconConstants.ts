@@ -15,7 +15,7 @@ export default {
   FILTER: 'filter',
   SEND: 'send',
   CONFIGURE: 'gray configure',
-  CLOSE: 'remove',
+  CLOSE: 'grey remove',
   CANCEL: 'remove',
   DATE: 'calendar',
   MENU: 'content',

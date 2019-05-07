@@ -11,6 +11,7 @@ import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators
 import * as API from 'types/api';
 import { translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
+import IconConstants from 'constants/IconConstants';
 
 
 interface ShareProfileItem {
@@ -65,7 +66,10 @@ const ShareProfileFilter = React.memo<Props>(props => {
       triggerIcon="filter" 
       button={ true }
     >
-      <MenuSection caption={ translate('Filter by profile', t, 'table.filter') } icon="filter">
+      <MenuSection 
+        caption={ translate('Filter by profile', t, 'table.filter') } 
+        icon={ IconConstants.FILTER }
+      >
         { [ defaultItem, ...props.profiles ].map(p => getDropdownItem(p, onClick, selectedProfile)) }
       </MenuSection>
     </SectionedDropdown>
