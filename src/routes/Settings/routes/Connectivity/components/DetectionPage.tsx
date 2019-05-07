@@ -7,6 +7,7 @@ import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 import { Trans } from 'react-i18next';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import IconConstants from 'constants/IconConstants';
 
 
 const DetectionPage: React.FC<SettingSectionChildProps> = props => {
@@ -28,7 +29,7 @@ const DetectionPage: React.FC<SettingSectionChildProps> = props => {
             <ExternalLink url={ LinkConstants.CONNECTIVITY_HELP_URL }>DC++'s connectivity FAQ</ExternalLink>.
           </Trans>
         }
-        icon="blue info"
+        icon={ IconConstants.INFO }
       />
     </div>
   );

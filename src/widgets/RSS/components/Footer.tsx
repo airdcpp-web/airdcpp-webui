@@ -6,6 +6,8 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 
 import * as UI from 'types/ui';
 import '../style.css';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 export interface FooterProps {
@@ -17,7 +19,10 @@ export interface FooterProps {
 const Footer = RedrawDecorator(
   ({ lastUpdated, handleUpdate, widgetT }: FooterProps) => (
     <div className="extra content">
-      <i className="icon refresh link" onClick={ handleUpdate }/>
+      <Icon 
+        icon={ IconConstants.REFRESH } 
+        onClick={ handleUpdate }
+      />
       { !!lastUpdated && (
         <Trans i18nKey={ widgetT.toI18nKey('lastUpdated') }>
           Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}

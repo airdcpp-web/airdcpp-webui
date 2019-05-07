@@ -6,13 +6,14 @@ import AccessConstants from 'constants/AccessConstants';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 import * as UI from 'types/ui';
+import IconConstants from 'constants/IconConstants';
 
 
 const ConnectivityActions: UI.ActionListType<{}> = {
   detect: {
     displayName: 'Detect now',
     access: AccessConstants.SETTINGS_EDIT,
-    icon: 'gray configure',
+    icon: IconConstants.CONFIGURE,
     handler: () => {
       return SocketService.post(ConnectivityConstants.DETECT_URL);
     }

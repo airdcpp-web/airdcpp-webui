@@ -23,6 +23,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { translateForm } from 'utils/FormUtils';
 import { getSubModuleT } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 const enum PermissionAction {
@@ -250,7 +251,7 @@ class WebUserDialog extends React.Component<Props> {
         title={ title } 
         onApprove={ this.save } 
         closable={ false } 
-        icon="user" 
+        icon={ IconConstants.USER }
         { ...other }
       >
         <Form<Entry>

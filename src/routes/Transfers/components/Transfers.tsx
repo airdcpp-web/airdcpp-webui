@@ -19,6 +19,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({ cellData }) => (
@@ -48,7 +49,7 @@ class Transfers extends React.Component<TransfersProps> {
     return (
       <Message 
         title={ translate('No active transfers', t, UI.Modules.TRANSFERS) }
-        icon="exchange"
+        icon={ IconConstants.TRANSFERS }
       />
     );
   }

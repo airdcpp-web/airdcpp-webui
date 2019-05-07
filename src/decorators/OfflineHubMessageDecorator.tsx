@@ -10,6 +10,7 @@ import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 export interface OfflineHubMessageDecoratorProps {
@@ -38,7 +39,7 @@ const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = me
     return (
       <Message 
         className="offline-message" 
-        icon="plug" 
+        icon={ IconConstants.OFFLINE }
         title={ (
           <Trans
             i18nKey={ toI18nKey('noOnlineHubs', UI.Modules.COMMON) }

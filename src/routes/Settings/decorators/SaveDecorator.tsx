@@ -15,6 +15,7 @@ import * as UI from 'types/ui';
 
 import { ChildSectionType } from './SettingsMenuDecorator';
 import { Location } from 'history';
+import IconConstants from 'constants/IconConstants';
 
 
 export interface SaveDecoratorProps {
@@ -148,7 +149,7 @@ export default function <PropsT extends object>(
             'browserSpecificNote', 
             'Settings listed on this page are browser-specific'
           ) }
-          icon="blue info"
+          icon={ IconConstants.INFO }
         />
       );
 

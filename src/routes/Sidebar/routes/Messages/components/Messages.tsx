@@ -18,6 +18,7 @@ import {
   SessionProviderDecoratorChildProps, SessionProviderDecorator
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import { toI18nKey } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 const sessionActions = [ 'clear' ];
@@ -30,7 +31,7 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
       baseUrl="messages"
       newCaption={ t(toI18nKey('new', UI.Modules.MESSAGES), 'New session') }
       newDescription={ t(toI18nKey('newDesc', UI.Modules.MESSAGES), 'Open a new private chat session') } 
-      newIcon="comments"
+      newIcon={ IconConstants.MESSAGES }
       unreadInfoStore={ PrivateChatSessionStore }
       editAccess={ API.AccessEnum.PRIVATE_CHAT_EDIT }
       uiActions={ PrivateChatUIActions }

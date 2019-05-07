@@ -9,6 +9,7 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import FavoriteDirectoryTable from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryTable';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import IconConstants from 'constants/IconConstants';
 
 
 const Entry = [
@@ -28,13 +29,13 @@ const LocationsPage: React.FC<SettingSectionChildProps> = props => (
           { props.moduleT.translate('Available path variables') }
         </ExternalLink>
       ) }
-      icon="blue info"
+      icon={ IconConstants.INFO }
     />
 
     <div className="ui segment setting-form">
       <LayoutHeader 
         title={ props.moduleT.translate('Favorite download directories') }
-        icon="yellow folder" 
+        icon={ IconConstants.FOLDER }
         size="normal"
       />
       <FavoriteDirectoryTable

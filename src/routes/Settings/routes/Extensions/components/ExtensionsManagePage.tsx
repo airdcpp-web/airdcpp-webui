@@ -16,6 +16,7 @@ import * as UI from 'types/ui';
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { Trans } from 'react-i18next';
+import IconConstants from 'constants/IconConstants';
 
 
 interface ExtensionsManagePageProps extends SettingSectionChildProps {
@@ -48,7 +49,7 @@ const ExtensionsManagePage: React.FC<ExtensionsManagePageProps & ExtensionsManag
             can be installed from the <Link to="/settings/extensions/packages">Extension catalog</Link> page.
           </Trans>
         }
-        icon="blue info"
+        icon={ IconConstants.INFO }
       />
     );
   } 

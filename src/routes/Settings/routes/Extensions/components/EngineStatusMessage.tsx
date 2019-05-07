@@ -11,6 +11,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
+import IconConstants from 'constants/IconConstants';
 
 
 interface EngineStatusMessageProps {
@@ -38,7 +39,7 @@ const EngineStatusMessage: React.FC<EngineStatusMessageProps & EngineStatusMessa
           installation instructions.
         </Trans>
       }
-      icon="yellow warning"
+      icon={ IconConstants.WARNING }
     />
   );
 };

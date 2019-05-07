@@ -10,6 +10,7 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 export interface HubSearchInputProps extends Pick<RemoteSuggestFieldProps<API.Hub>, 'submitHandler'> {
 
@@ -26,7 +27,7 @@ const HubSearchInput: React.FC<HubSearchInputProps> = ({ submitHandler }) => {
       url={ `${HistoryConstants.SESSIONS_URL}/${HistoryEntryEnum.HUB}/search` }
       button={ 
         <Button
-          icon="green play"
+          icon={ IconConstants.CONNECT }
           caption={ translate('Connect', t, UI.Modules.HUBS) }
         />
       }

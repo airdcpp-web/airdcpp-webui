@@ -2,11 +2,23 @@ export default {
   CREATE: 'plus',
   EDIT: 'edit',
   REMOVE: 'red remove circle',
+  CONNECT: 'green play',
   DISCONNECT: 'remove circle',
   DEFAULT: 'blue pin',
   LOCK: 'lock',
   POWER: 'red power',
   EXPAND: 'angle down',
+  DROPDOWN: 'dropdown',
+  REDIRECT: 'forward mail',
+  BROWSE: 'yellow folder open',
+  OFFLINE: 'plug',
+  FILTER: 'filter',
+  SEND: 'send',
+  CONFIGURE: 'gray configure',
+  CLOSE: 'remove',
+  CANCEL: 'remove',
+  DATE: 'calendar',
+  MENU: 'content',
 
   RELOAD: 'blue refresh',
   REFRESH: 'green refresh',
@@ -15,6 +27,7 @@ export default {
 
   HOME: 'home',
   FILELIST: 'browser',
+  MESSAGES: 'comments',
   SEARCH: 'search',
   SEARCH_ALTERNATES: 'green zoom',
   FAVORITE: 'yellow star',
@@ -22,6 +35,10 @@ export default {
   QUEUE: 'olive arrow circle down',
   TRANSFERS: 'teal exchange',
   SETTINGS: 'configure',
+  EVENTS: 'history',
+  FILES: 'file',
+  LOGOUT: 'sign out',
+  EXTENSION: 'puzzle',
 
   UPLOAD: 'red upload',
   DOWNLOAD: 'green download',
@@ -42,8 +59,13 @@ export default {
   WARNING: 'yellow warning sign',
   ERROR: 'red warning circle',
 
+  TIP: 'idea',
+  NOTE: 'blue warning',
+
   FILE: 'file outline',
   USER: 'user',
 
   MAGNET: 'magnet',
+  IGNORE: 'red ban',
+  UNIGNORE: 'ban'
 };

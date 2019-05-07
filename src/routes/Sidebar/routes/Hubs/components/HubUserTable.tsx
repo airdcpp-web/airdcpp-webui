@@ -16,6 +16,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import IconConstants from 'constants/IconConstants';
 
 
 const NickCell: React.FC<RowWrapperCellChildProps<string, API.HubUser>> = (
@@ -53,7 +54,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
           <Message 
             className="offline"
             title={ sessionT.translate('Not connected to the hub') }
-            icon="plug"
+            icon={ IconConstants.OFFLINE }
           />
         </div>
       );

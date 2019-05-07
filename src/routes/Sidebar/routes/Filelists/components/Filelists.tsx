@@ -18,6 +18,7 @@ import {
   SessionProviderDecorator, SessionProviderDecoratorChildProps 
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import { toI18nKey } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 const UserItemHandler = UserItemHandlerDecorator([ 'message' ]);
@@ -55,7 +56,7 @@ const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession
       baseUrl="filelists"
       newCaption={ t(toI18nKey('new', UI.Modules.FILELISTS), 'Open filelist') }
       newDescription={ t(toI18nKey('newDesc', UI.Modules.FILELISTS), 'Start browsing a new filelist') } 
-      newIcon="browser" 
+      newIcon={ IconConstants.FILELIST }
       disableSideMenu={ true }
       editAccess={ API.AccessEnum.FILELISTS_EDIT }
       uiActions={ FilelistSessionUIActions }

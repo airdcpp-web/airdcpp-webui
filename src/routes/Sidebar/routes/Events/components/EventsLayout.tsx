@@ -16,6 +16,7 @@ import * as UI from 'types/ui';
 import { useStore } from 'effects/StoreListenerEffect';
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 interface SystemLogProps {
@@ -44,7 +45,7 @@ const SystemLog: React.FC<SystemLogProps> = memo(
       <div className="simple-layout">
         <div className="wrapper">
           <LayoutHeader
-            icon="blue history"
+            icon={ IconConstants.EVENTS }
             title={ translate('Events', t, UI.Modules.EVENTS) }
             rightComponent={
               <ActionButton 

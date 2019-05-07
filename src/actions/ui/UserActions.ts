@@ -81,7 +81,7 @@ const UserActions: UI.ActionListType<ActionUserData> = {
     displayName: 'Ignore messages', 
     access: API.AccessEnum.SETTINGS_EDIT, 
     filter: checkIgnore,
-    icon: 'red ban',
+    icon: IconConstants.IGNORE,
     handler: handleIgnore,
     notifications: {
       onSuccess: 'User {{item.nicks}} was added in ignored users',
@@ -91,7 +91,7 @@ const UserActions: UI.ActionListType<ActionUserData> = {
     displayName: 'Unignore messages', 
     access: API.AccessEnum.SETTINGS_EDIT, 
     filter: checkUnignore,
-    icon: 'ban',
+    icon: IconConstants.UNIGNORE,
     handler: handleUnignore,
     notifications: {
       onSuccess: 'User {{item.nicks}} was removed from ignored users',

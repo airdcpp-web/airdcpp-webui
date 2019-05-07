@@ -5,6 +5,8 @@ import classNames from 'classnames';
 
 import Popup from './Popup';
 import DropdownCaption from './DropdownCaption';
+import Icon from './Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 // A popup-based class for handling dropdowns in Fixed Data Table
@@ -73,7 +75,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     // Caption
     const trigger = (
       <div className="trigger">
-        <i className="large angle down icon"/>
+        <Icon 
+          size="large"
+          icon={ IconConstants.EXPAND }
+        />
         { !!this.props.linkCaption && caption }
       </div>
     );

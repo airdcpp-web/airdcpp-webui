@@ -11,6 +11,7 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import * as API from 'types/api';
 
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
+import IconConstants from 'constants/IconConstants';
 
 
 const hasSession = (entry: API.HistoryItem) => {
@@ -45,7 +46,7 @@ class MessageNew extends React.Component<NewSessionLayoutProps> {
           entryType={ HistoryEntryEnum.PRIVATE_CHAT }
           hasSession={ hasSession }
           entryTitleRenderer={ this.recentUserRender }
-          entryIcon="comments"
+          entryIcon={ IconConstants.MESSAGES }
         />
       </div>
     );

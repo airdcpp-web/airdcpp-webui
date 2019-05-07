@@ -9,6 +9,7 @@ import { Translation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import IconConstants from 'constants/IconConstants';
 
 
 interface FileBrowserDialogProps 
@@ -67,7 +68,7 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
             fullHeight={ true }
             approveDisabled={ currentPath.length === 0 }
             approveCaption={ translate('Select', t, UI.Modules.COMMON) }
-            icon="yellow folder open"
+            icon={ IconConstants.BROWSE }
           >
             <FileBrowserLayout
               initialPath={ initialPath }

@@ -12,6 +12,7 @@ import * as UI from 'types/ui';
 import { Trans } from 'react-i18next';
 import { sendHubPassword, acceptHubRedirect } from 'services/api/HubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 interface HubActionPromptProps {
@@ -61,7 +62,7 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT }) => (
     <ActionInput 
       placeholder={ sessionT.translate('Password') } 
       caption={ sessionT.translate('Submit') }
-      icon="green play" 
+      icon={ IconConstants.CONNECT }
       handleAction={ text => 
         runBackgroundSocketAction(
           () => sendHubPassword(hub, text),
@@ -86,7 +87,7 @@ interface RedirectPromptProps {
 
 const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub, sessionT }) => (
   <Button
-    icon="green play"
+    icon={ IconConstants.CONNECT }
     onClick={ _ => 
       runBackgroundSocketAction(
         () => acceptHubRedirect(hub),

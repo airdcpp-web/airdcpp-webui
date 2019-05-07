@@ -11,7 +11,7 @@ import IconConstants from 'constants/IconConstants';
 
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
-import { IconType } from 'components/semantic/Icon';
+import Icon, { IconType } from 'components/semantic/Icon';
 import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import { Translation } from 'react-i18next';
 
@@ -193,18 +193,18 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
             { t => onApprove ? (
               <div className="actions">
                 <div className={ approveStyle }>
-                  <i className={ IconConstants.SAVE + ' icon' }/>
+                  <Icon icon={ IconConstants.SAVE }/>
                   { approveCaption || translate('Save', t, UI.Modules.COMMON) }
                 </div>
                 <div className="ui cancel red basic button">
-                  <i className="remove icon"/>
+                  <Icon icon={ IconConstants.CANCEL }/>
                   { translate('Cancel', t, UI.Modules.COMMON) }
                 </div>
               </div>
             ) : (
               <div className="actions">
                 <div className="ui cancel button">
-                  <i className="remove icon"/>
+                  <Icon icon={ IconConstants.CLOSE }/>
                   { translate('Close', t, UI.Modules.COMMON) }
                 </div>
               </div>

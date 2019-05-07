@@ -12,6 +12,7 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import * as API from 'types/api';
 
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
+import IconConstants from 'constants/IconConstants';
 
 
 class FilelistNew extends React.Component<NewSessionLayoutProps> {
@@ -54,7 +55,7 @@ class FilelistNew extends React.Component<NewSessionLayoutProps> {
           entryType={ HistoryEntryEnum.FILELIST }
           hasSession={ this.hasSession }
           entryTitleRenderer={ this.recentUserRender }
-          entryIcon="browser"
+          entryIcon={ IconConstants.FILELIST }
         />
       </div>
     );

@@ -26,6 +26,7 @@ import i18next from 'i18next';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import { searchDownloadHandler } from 'services/api/SearchApi';
+import IconConstants from 'constants/IconConstants';
 
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: i18next.TFunction) => {
@@ -109,7 +110,7 @@ class ResultTable extends React.Component<ResultTableProps> {
       return process.env.DEMO_MODE === '1' && (
         <Message 
           title="Demo content available"
-          icon="idea"
+          icon={ IconConstants.TIP }
           description={ 'Use the search string "demo" to receive results from the demo share' }
         />
       );

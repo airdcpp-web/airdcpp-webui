@@ -10,6 +10,8 @@ import * as UI from 'types/ui';
 
 import i18next from 'i18next';
 import { translate } from 'utils/TranslationUtils';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 interface AccordionTargetsProps {
@@ -32,7 +34,7 @@ class AccordionTargets extends React.Component<AccordionTargetsProps> {
     return (
       <div key={ parent.name }>
         <div className="title">
-          <i className="dropdown icon"/>
+          <Icon icon={ IconConstants.DROPDOWN }/>
           { parent.name }
         </div>
 

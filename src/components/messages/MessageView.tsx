@@ -13,6 +13,8 @@ import './messages.css';
 import * as UI from 'types/ui';
 import i18next from 'i18next';
 import { translate } from 'utils/TranslationUtils';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 const getMessageDay = (listItem: UI.MessageListItem) => {
@@ -62,7 +64,9 @@ const getMessageListItem = (
           key={ `divider${messageObj.id}` }
           className="ui horizontal date divider"
         >
-          <i className="calendar icon"/>
+          <Icon 
+            icon={ IconConstants.DATE }
+          />
           { formatCalendarTime(messageObj.time, t) }
         </div>
       );

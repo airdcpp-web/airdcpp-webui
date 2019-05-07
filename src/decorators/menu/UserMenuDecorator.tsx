@@ -9,6 +9,7 @@ import UserIcon from 'components/icon/UserIcon';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 export interface UserMenuDecoratorProps extends 
@@ -89,7 +90,17 @@ export default function <DropdownPropsT extends object>(
       if (userIcon) {
         caption = (
           <div className={ classNames('icon-caption', userIcon) }>
-            { userIcon === 'simple' ? <Icon icon="blue user"/> : <UserIcon size="large" flags={ user.flags }/> }
+            { userIcon === 'simple' ? (
+              <Icon 
+                icon={ IconConstants.USER }
+                color="blue"
+              />
+            ) : (
+              <UserIcon 
+                size="large" 
+                flags={ user.flags }
+              /> 
+            )}
             { nicks }
           </div>
         );

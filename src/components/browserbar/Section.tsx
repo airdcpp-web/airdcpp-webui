@@ -3,6 +3,7 @@ import React from 'react';
 import './style.css';
 
 import 'fomantic-ui-css/components/breadcrumb.min.css';
+import Icon from 'components/semantic/Icon';
 
 
 export type SelectedNameFormatter = (caption: React.ReactNode, token: string) => React.ReactNode;
@@ -17,7 +18,7 @@ export const Section: React.FC<SectionProps> = ({ caption, onClick }) => (
     <a className="section" onClick={ onClick }>
       { caption }
     </a>
-    <i className="right chevron icon divider"/>
+    <Icon icon="right chevron divider"/>
   </div>
 );
 

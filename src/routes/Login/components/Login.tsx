@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 const ENTER_KEY_CODE = 13;
@@ -65,7 +67,7 @@ const Login: React.FC<LoginProps> = props => {
           <div className="ui stacked segment">
             <div className="field">
               <div className="ui left icon input">
-                <i className="user icon"/>
+                <Icon icon={ IconConstants.USER }/>
                 <input 
                   ref={ usernameRef } 
                   type="text" 
@@ -78,7 +80,7 @@ const Login: React.FC<LoginProps> = props => {
             </div>
             <div className="field">
               <div className="ui left icon input">
-                <i className="lock icon"/>
+                <Icon icon={ IconConstants.LOCK }/>
                 <input 
                   ref={ passwordRef }
                   className="password" 

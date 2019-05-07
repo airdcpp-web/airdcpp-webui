@@ -22,6 +22,8 @@ import './style.css';
 import i18next from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import IconConstants from 'constants/IconConstants';
+import Icon from 'components/semantic/Icon';
 
 
 interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
@@ -31,14 +33,14 @@ interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleActi
 const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction, t }) => (
   <Accordion>
     <div className="title create-section">
-      <i className="dropdown icon"/>
+      <Icon icon={ IconConstants.DROPDOWN }/>
       { translate('Create directory', t, UI.Modules.COMMON) }
     </div>
 
     <div className="content create-section">
       <ActionInput 
         caption={ translate('Create', t, UI.Modules.COMMON) } 
-        icon="plus" 
+        icon={ IconConstants.CREATE }
         handleAction={ handleAction } 
         placeholder={ translate('Directory name', t, UI.Modules.COMMON) }
       />

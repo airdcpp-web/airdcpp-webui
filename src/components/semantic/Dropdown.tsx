@@ -10,6 +10,7 @@ import Icon, { IconType } from './Icon';
 import 'fomantic-ui-css/components/button.min.css'; // for button style
 import 'fomantic-ui-css/components/dropdown';
 import 'fomantic-ui-css/components/dropdown.min.css';
+import IconConstants from 'constants/IconConstants';
 
 
 export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>*/ {
@@ -105,7 +106,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
 
     let icon = (
       <Icon 
-        icon={ triggerIcon !== undefined ? triggerIcon : (selection ? 'dropdown' : 'angle down') } 
+        icon={ triggerIcon !== undefined ? triggerIcon : (selection ? 'dropdown' : IconConstants.EXPAND) } 
         className="trigger"
       />
     );

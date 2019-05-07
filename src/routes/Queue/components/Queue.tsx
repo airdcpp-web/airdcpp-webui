@@ -29,6 +29,7 @@ import * as UI from 'types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import { setBundlePriority } from 'services/api/QueueApi';
+import IconConstants from 'constants/IconConstants';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
@@ -62,7 +63,7 @@ class Queue extends React.Component<WithTranslation> {
     return (
       <Message 
         title={ t('queueEmpty', 'The queue is empty') }
-        icon="file outline"
+        icon={ IconConstants.FILE }
         description={ t<string>(
           'queueEmptyDesc', 
           'New items can be queued from search or filelists'

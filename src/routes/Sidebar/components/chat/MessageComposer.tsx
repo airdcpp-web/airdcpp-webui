@@ -27,6 +27,7 @@ import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 import Icon from 'components/semantic/Icon';
 import Button from 'components/semantic/Button';
+import IconConstants from 'constants/IconConstants';
 
 const ENTER_KEY_CODE = 13;
 
@@ -302,7 +303,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       <Button 
         className="blue large icon send" 
         onClick={ this.sendText }
-        caption={ <Icon icon="send"/> }
+        caption={ <Icon icon={ IconConstants.SEND }/> }
         loading={ uploading }
       />
     );

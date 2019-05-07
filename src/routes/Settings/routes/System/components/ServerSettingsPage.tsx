@@ -5,6 +5,7 @@ import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
 import SystemActions from 'actions/ui/SystemActions';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import IconConstants from 'constants/IconConstants';
 
 
 const PlainEntry = [
@@ -42,7 +43,7 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
             />
           </div>
         ) }
-        icon="blue info"
+        icon={ IconConstants.INFO }
       />*/}
 
       <ActionButton 
@@ -74,7 +75,7 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
             'defaultCertNote', 
             'The default client certificate is used if the certificate paths are empty') 
           }
-          icon="blue info"
+          icon={ IconConstants.INFO }
         />
       </div>
 

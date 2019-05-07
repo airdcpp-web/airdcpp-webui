@@ -18,6 +18,7 @@ import * as API from 'types/api';
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import HubActions from 'actions/reflux/HubActions';
+import IconConstants from 'constants/IconConstants';
 
 
 const getStorageKey = (props: HubSessionProps) => {
@@ -57,7 +58,7 @@ class HubSession extends React.Component<HubSessionProps> {
       return (
         <HubActionPrompt 
           title={ sessionT.translate('Password required') }
-          icon="lock"
+          icon={ IconConstants.LOCK }
           content={ <PasswordPrompt hub={ session } sessionT={ sessionT }/> }
         />
       );
@@ -67,7 +68,7 @@ class HubSession extends React.Component<HubSessionProps> {
       return (
         <HubActionPrompt 
           title={ sessionT.translate('Redirect requested') }
-          icon="forward mail"
+          icon={ IconConstants.REDIRECT }
           content={ <RedirectPrompt hub={ session } sessionT={ sessionT }/> }
         />
       );

@@ -6,6 +6,8 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 interface DownloadFileBrowserProps {
@@ -26,8 +28,13 @@ class DownloadFileBrowser extends React.Component<DownloadFileBrowserProps> {
 
     const formatedCaption = (
       <div className="download-handler" onClick={ () => this.props.downloadHandler(this.state.currentPath) }>
-        <i className="green download link icon"/>
-        <a>{ caption }</a>
+        <Icon 
+          className="link"
+          icon={ IconConstants.DOWNLOAD }
+        />
+        <a>
+          { caption }
+        </a>
       </div>
     );
 

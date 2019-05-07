@@ -103,7 +103,7 @@ const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, class
       </MenuItemLink>
       <MenuSection 
         caption={ translate('Remove shared file', t, UI.Modules.COMMON) } 
-        icon="file"
+        icon={ IconConstants.FILE }
       >
         { files.map(p => getDropdownItem(p, onClickFile)) }
       </MenuSection>

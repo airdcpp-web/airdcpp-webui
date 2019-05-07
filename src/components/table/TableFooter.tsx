@@ -2,6 +2,8 @@
 import React from 'react';
 
 import TextFilter, { TextFilterProps } from './TextFilter';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 const CountInfo: React.FC<{ store: any }> = ({ store }) => {
@@ -17,7 +19,7 @@ const CountInfo: React.FC<{ store: any }> = ({ store }) => {
 
   return (
     <div className="count-info">
-      <i className="filter icon"/>
+      <Icon icon={ IconConstants.FILTER }/>
       { ret }
     </div>
   );
@@ -28,13 +30,17 @@ export interface TableFooterProps {
   customFilter?: React.ReactElement<any>;
   store: any;
   textFilterProps?: TextFilterProps;
+  viewId?: string;
 }
 
-const TableFooter: React.FC<TableFooterProps> = ({ store, customFilter, footerData, textFilterProps }) => {
+const TableFooter: React.FC<TableFooterProps> = (
+  { store, customFilter, footerData, textFilterProps }
+) => {
   let clonedFilter = null;
   if (!!customFilter) {
     clonedFilter = React.cloneElement(customFilter, { 
       viewUrl: store.viewUrl,
+      //viewId
     });
   }
 
@@ -45,6 +51,7 @@ const TableFooter: React.FC<TableFooterProps> = ({ store, customFilter, footerDa
         { clonedFilter }
         <TextFilter 
           viewUrl={ store.viewUrl }
+          //viewId={ viewId }
           { ...textFilterProps }
         />
         <CountInfo store={ store }/>

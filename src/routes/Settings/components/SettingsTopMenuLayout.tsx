@@ -25,7 +25,10 @@ const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (
       { parentMenuItems }
     </Dropdown>
 
-    <Icon icon="large caret right"/>
+    <Icon 
+      icon="caret right"
+      size="large"
+    />
 
     <SectionedDropdown 
       selection={ true }

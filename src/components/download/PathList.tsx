@@ -12,6 +12,8 @@ import * as UI from 'types/ui';
 
 import i18next from 'i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
+import Icon from 'components/semantic/Icon';
 
 
 interface PathItemProps {
@@ -38,7 +40,7 @@ const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: i18next.TFunction) => {
 
 const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => (
   <div className="item">
-    <i className="yellow folder icon"/>
+    <Icon icon={ IconConstants.FOLDER }/>
     <div className="content">
       <a onClick={ evt => downloadHandler(pathInfo.path) }>
         { pathInfo.path }

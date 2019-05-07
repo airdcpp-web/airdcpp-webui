@@ -19,6 +19,7 @@ import * as UI from 'types/ui';
 import { Trans } from 'react-i18next';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { Row } from 'components/semantic/Grid';
+import IconConstants from 'constants/IconConstants';
 
 
 interface OptimizeLayoutProps {
@@ -45,7 +46,7 @@ const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
             make sure that the files are currently shown in share (otherwise they have to be rehashed)
           </Trans>
         ) }
-        icon="blue warning"
+        icon={ IconConstants.NOTE }
       />
 
       <Checkbox 
@@ -58,7 +59,7 @@ const OptimizeLayout: React.FC<OptimizeLayoutProps> = (
       <Button 
         className="optimize-button"
         caption={ translate('Optimize now') }
-        icon="gray configure"
+        icon={ IconConstants.CONFIGURE }
         loading={ running } 
         onClick={ () => startHandler(verify) }
       />

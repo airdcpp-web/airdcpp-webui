@@ -10,6 +10,7 @@ import LinkConstants from 'constants/LinkConstants';
 import LogSection from 'routes/Settings/routes/System/components/LogSection';
 import Message from 'components/semantic/Message';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import IconConstants from 'constants/IconConstants';
 
 const Entry = [
   'log_directory',
@@ -37,7 +38,7 @@ const LoggingPage: React.FC<SettingSectionChildProps> = props => {
           { translate('Sections') }
         </div>
         <Message
-          icon="blue info"
+          icon={ IconConstants.INFO }
           description={
             <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>
               { t('variableHelp', 'Variable information for Filename and Format fields') }

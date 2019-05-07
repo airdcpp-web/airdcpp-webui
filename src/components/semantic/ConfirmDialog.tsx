@@ -10,6 +10,7 @@ import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 import Icon, { IconType } from 'components/semantic/Icon';
 import { ModalRouteCloseContext, ModalCloseContextProps } from 'decorators/ModalRouteDecorator';
+import IconConstants from 'constants/IconConstants';
 
 
 type ApproveHandler = (checked: boolean) => void | false;
@@ -158,11 +159,11 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
           <div className="actions">
             <div className={ cx('two fluid ui buttons', { 'inverted': basic }) }>
               <div className={ cx('ui cancel red basic button', { 'inverted': basic }) }>
-                <i className="remove icon"/>
+                <Icon icon={ IconConstants.CANCEL }/>
                 { rejectCaption }
               </div>
               <div className={ cx('ui ok green basic submit button', { 'inverted': basic }) }>
-                <i className="checkmark icon"/>
+                <Icon icon={ IconConstants.SAVE }/>
                 { approveCaption }
               </div>
             </div>

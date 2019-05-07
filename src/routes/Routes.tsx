@@ -100,7 +100,7 @@ export const secondaryRoutes = [
     title: 'Hubs',
     path: '/hubs',
     matchPath: '/hubs/:session?/:id?',
-    icon: 'blue sitemap',
+    icon: 'blue ' + IconConstants.HUB,
     unreadInfoStore: HubSessionStore,
     access: API.AccessEnum.HUBS_VIEW,
     component: lazy(
@@ -110,7 +110,7 @@ export const secondaryRoutes = [
     title: 'Messages',
     path: '/messages',
     matchPath: '/messages/:session?/:id?',
-    icon: 'blue comments',
+    icon: 'blue ' + IconConstants.MESSAGES,
     unreadInfoStore: PrivateChatSessionStore,
     access: API.AccessEnum.PRIVATE_CHAT_VIEW,
     component: lazy(
@@ -120,7 +120,7 @@ export const secondaryRoutes = [
     title: 'Filelists',
     path: '/filelists',
     matchPath: '/filelists/:session?/:id?',
-    icon: 'blue browser',
+    icon: 'blue ' + IconConstants.FILELIST,
     unreadInfoStore: FilelistSessionStore,
     access: API.AccessEnum.FILELISTS_VIEW,
     component: lazy(
@@ -130,7 +130,7 @@ export const secondaryRoutes = [
     title: 'Files',
     path: '/files',
     matchPath: '/files/:session?/:id?',
-    icon: 'blue file',
+    icon: 'blue ' + IconConstants.FILES,
     unreadInfoStore: ViewFileStore,
     access: API.AccessEnum.VIEW_FILE_VIEW,
     component: lazy(
@@ -139,7 +139,7 @@ export const secondaryRoutes = [
   }, {
     title: 'Events',
     path: '/events',
-    icon: 'blue history',
+    icon: 'blue ' + IconConstants.EVENTS,
     unreadInfoStore: EventStore,
     access: API.AccessEnum.EVENTS_VIEW,
     component: lazy(
@@ -154,7 +154,7 @@ const onClickLogout: RouteItemClickHandler = (path, e) => {
 };
 
 export const logoutItem: RouteItem = { 
-  icon: 'sign out', 
+  icon: IconConstants.LOGOUT, 
   path: 'logout', 
   title: 'Logout',
   className: 'logout', 

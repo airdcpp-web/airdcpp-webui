@@ -18,6 +18,7 @@ import * as API from 'types/api';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { Trans } from 'react-i18next';
 import i18next from 'i18next';
+import IconConstants from 'constants/IconConstants';
 
 
 interface ShareProfileRowProps { 
@@ -68,7 +69,7 @@ const ShareProfilesPage: React.FC<ShareProfilesPageProps & ShareProfileDecorator
             </Trans>
           </div>
         }
-        icon="blue info"
+        icon={ IconConstants.INFO }
       />
       <ActionButton
         actions={ ShareProfileActions.create }

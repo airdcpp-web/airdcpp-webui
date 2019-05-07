@@ -21,6 +21,7 @@ import {
   SessionProviderDecorator, SessionProviderDecoratorChildProps 
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import { toI18nKey } from 'utils/TranslationUtils';
+import IconConstants from 'constants/IconConstants';
 
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
@@ -64,7 +65,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
       baseUrl="hubs"
       newCaption={ t(toI18nKey('new', UI.Modules.HUBS), 'Connect') }
       newDescription={ t(toI18nKey('newDesc', UI.Modules.HUBS), 'Connect to a new hub') } 
-      newIcon="sitemap"
+      newIcon={ IconConstants.HUB }
       editAccess={ API.AccessEnum.HUBS_EDIT }
       uiActions={ HubUIActions }
       sessionApi={ HubAPIActions as UI.SessionActions<API.Hub> }
