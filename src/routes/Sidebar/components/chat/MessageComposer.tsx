@@ -250,9 +250,20 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   }
 
   onPaste = (evt: React.ClipboardEvent<HTMLInputElement>) => {
-    if ((event as any).clipboardData.files.length) {
+    if (evt.clipboardData && evt.clipboardData.files && (evt.clipboardData as any).files.length) {
+      let files: File[] = [];
+
+      {
+        // DataTransferItemList isn't a normal array, convert it first
+        // https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItemList
+        const dataTransferItemList = (evt.clipboardData as any).files as any[];
+        for (let i = 0; i < dataTransferItemList.length; i++) {
+          files.push(dataTransferItemList[i]);
+        }
+      }
+
       evt.preventDefault();
-      this.onDropFile((event as any).clipboardData.files);
+      this.onDropFile(files);
     }
   }
 
