@@ -19,7 +19,14 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
     return;
   }
 
-  const waitForLocale = require(`../../resources/locales/${url}`);
+  let waitForLocale;
+  try {
+    waitForLocale = require(`../../resources/locales/${url}`);
+  } catch (e) {
+    callback(null, { status: 404 });
+    return;
+  }
+
   waitForLocale(
     (locale: string) => {
       callback(locale, { status: 200 });
