@@ -653,10 +653,10 @@
         "started": "Startad",
         "activeSessions": "Aktiva sessioner",
         "serverThreads": "Servertrådar",
-        "resources": "Resources",
-        "homePage": "Home page",
-        "featureRequestBugTracker": "Feature request/bug tracker",
-        "documentation": "Documentation"
+        "resources": "Resurser",
+        "homePage": "Hemsida",
+        "featureRequestBugTracker": "Önskemål/rapportera ett fel",
+        "documentation": "Dokumentation"
       },
       "transfers": {
         "totalDownloaded": "Totalt nedladdat",
