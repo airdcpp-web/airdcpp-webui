@@ -28,7 +28,7 @@ const ApplicationPage: React.FC<ApplicationPageProps & StatisticsDecoratorChildP
 
   return (
     <>
-      <Grid columns="two">
+      <Grid columns="two" stackable={ true }>
         <Row title={ translate('Application version') } text={ systemInfo.client_version }/>
         <Row title={ translate('Web UI version') } text={ UI_VERSION }/>
         <Row title={ translate('Web UI build date') } text={ buildDate }/>

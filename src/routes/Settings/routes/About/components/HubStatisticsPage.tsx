@@ -38,7 +38,7 @@ const HubStatisticsPage: React.FC<HubStatisticsPageProps & StatisticsDecoratorCh
 ) => {
   const { translate } = moduleT;
   return (
-    <Grid columns="two">
+    <Grid columns="two" stackable={ true }>
       <Row 
         title={ translate('Total users') } 
         text={ stats.total_users }

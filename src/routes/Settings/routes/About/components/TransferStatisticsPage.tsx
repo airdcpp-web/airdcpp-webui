@@ -23,7 +23,7 @@ const TransferStatisticsPage: React.FC<TransferStatisticsPageProps & StatisticsD
   const totalDown = stats.session_downloaded + stats.start_total_downloaded;
 
   return (
-    <Grid columns="two">
+    <Grid columns="two" stackable={ true }>
       <Row 
         title={ translate('Total downloaded') } 
         text={ formatSize(totalDown, plainT) }

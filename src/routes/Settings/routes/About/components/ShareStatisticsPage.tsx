@@ -25,7 +25,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
   const averageFileAge = Moment.duration(stats.average_file_age * 1000).humanize();
   const { translate, t } = moduleT;
   return (
-    <Grid columns="two">
+    <Grid columns="two" stackable={ true }>
       <Row 
         title={ translate('Total share size') } 
         text={ formatSize(stats.total_size, moduleT.plainT) }
