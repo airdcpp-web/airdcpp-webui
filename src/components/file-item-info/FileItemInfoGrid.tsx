@@ -94,7 +94,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
             text={ fileItem.path }
           /> 
         )}
-      </div>
+      </Grid>
 
       <DownloadMenu 
         caption={ gridT('Actions...') }
