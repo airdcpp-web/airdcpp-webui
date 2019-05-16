@@ -10,7 +10,7 @@ module.exports = {
       title: 'Application', 
       noSave: true,
       url: 'application',
-      component: require('./components/AboutPage').default, 
+      component: require('./components/ApplicationPage').default, 
     }, { 
       title: 'Transfer statistics', 
       noSave: true,

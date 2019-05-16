@@ -6,7 +6,7 @@ import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorato
 import ConnectivityActions from 'actions/ui/ConnectivityActions';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
-import { Row } from 'components/semantic/Grid';
+import { Row, Grid } from 'components/semantic/Grid';
 
 import '../style.css';
 
@@ -53,7 +53,7 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
     <h3 className="header">
       { moduleT.translate('Current auto detection status') }
     </h3>
-    <div className="ui grid two column">
+    <Grid columns="two">
       <Row 
         title={ moduleT.translate('IPv4 connectivity') } 
         text={ formatStatus(status.status_v4, runningV4, moduleT) }
@@ -62,7 +62,7 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = (
         title={ moduleT.translate('IPv6 connectivity') } 
         text={ formatStatus(status.status_v6, runningV6, moduleT) }
       />
-    </div>
+    </Grid>
     <ActionButton 
       className="detect-button"
       actions={ ConnectivityActions }

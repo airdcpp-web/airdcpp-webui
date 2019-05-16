@@ -46,6 +46,14 @@
   padding-bottom: 5px;
 }
 
+.settings-layout .mobile .section-content.about {
+  margin-top: 10px;
+}
+
+.settings-layout .mobile .section-content > * {
+  flex-shrink: 0;
+}
+
 .settings-layout .full .section-content {
   height: 100%;
   padding-bottom: 2px;
@@ -82,8 +90,4 @@
 
 .settings-layout .options > .ui.grid {
   margin: 0px;
-}
-
-.settings-layout .options > .ui.grid .section.header {
-  padding-left: 1rem;
 }

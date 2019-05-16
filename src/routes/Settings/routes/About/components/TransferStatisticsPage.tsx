@@ -8,6 +8,7 @@ import { Row, Header } from 'components/semantic/Grid';
 import TransferConstants from 'constants/TransferConstants';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { AboutGrid } from './AboutGrid';
 
 
 interface TransferStatisticsPageProps extends SettingSectionChildProps {
@@ -23,7 +24,7 @@ const TransferStatisticsPage: React.FC<TransferStatisticsPageProps & StatisticsD
   const totalDown = stats.session_downloaded + stats.start_total_downloaded;
 
   return (
-    <div className="ui grid two column">
+    <AboutGrid>
       <Row 
         title={ translate('Total downloaded') } 
         text={ formatSize(totalDown, plainT) }
@@ -41,7 +42,7 @@ const TransferStatisticsPage: React.FC<TransferStatisticsPageProps & StatisticsD
         title={ translate('Session uploaded') } 
         text={ formatSize(stats.session_uploaded, plainT) }
       />
-    </div>
+    </AboutGrid>
   );
 };
 

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import './style.css';
-import { Row } from 'components/semantic/Grid';
+import { Row, Grid } from 'components/semantic/Grid';
 
 
 const DupeStrings = {
@@ -50,7 +50,10 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
 
   return (
     <div className="ui fileitem info segment">
-      <div className="ui grid stackable two column">
+      <Grid 
+        columns="two"
+        stackable={ true }
+      >
         <Row 
           title={ gridT('Name') }
           text={ fileItem.name }

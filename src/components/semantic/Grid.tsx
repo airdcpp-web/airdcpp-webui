@@ -53,7 +53,30 @@ export interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ title }) => (
-  <div className="ui blue section header">
-    { title }
+  <div className="ui row">
+    <div className="sixteen wide column">
+      <div className="ui blue section header">
+        { title }
+      </div>
+    </div>
+  </div>
+);
+
+export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
+  columns?: string;
+  stackable?: boolean;
+}
+
+export const Grid: React.FC<GridProps> = ({ className, children, columns, stackable }) => (
+  <div 
+    className={ classNames(
+      'ui grid', 
+      //`${columns} column`, 
+      { [`${columns} column`]: !!columns },
+      { stackable: stackable },
+      className
+    ) }
+  >
+    { children }
   </div>
 );

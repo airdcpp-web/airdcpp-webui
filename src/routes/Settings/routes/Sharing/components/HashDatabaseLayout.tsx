@@ -18,7 +18,7 @@ import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import { Row } from 'components/semantic/Grid';
+import { Row, Grid } from 'components/semantic/Grid';
 import IconConstants from 'constants/IconConstants';
 
 
@@ -90,7 +90,7 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
         <h3 className="header">
           { translate('Hash database') }
         </h3>
-        <div className="ui grid two column">
+        <Grid columns="two">
           <Row 
             title={ translate('File index size') } 
             text={ formatSize(status.file_index_size, plainT) }
@@ -101,7 +101,7 @@ class HashDatabaseLayout extends React.Component<HashDatabaseLayoutProps & HashD
             text={ formatSize(status.hash_store_size, plainT) }
             titleWidth="five"
           />
-        </div>
+        </Grid>
         { LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
           <OptimizeLayout
             running={ status.maintenance_running }

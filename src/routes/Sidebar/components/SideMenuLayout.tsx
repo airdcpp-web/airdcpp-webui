@@ -3,6 +3,7 @@ import React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SessionMainLayoutProps } from './SessionLayout';
+import { Grid } from 'components/semantic/Grid';
 
 
 const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({ 
@@ -18,7 +19,10 @@ const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({
   }
 
   return (
-    <div className="ui grid session-container horizontal" onKeyDown={ onKeyDown }>
+    <Grid 
+      className="session-container horizontal" 
+      onKeyDown={ onKeyDown }
+    >
       <div className="four wide column menu-column">
         { newButton }
         { !!sessionMenuItems.length && (
@@ -40,7 +44,7 @@ const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({
           { children }
         </div>
       </div>
-    </div>
+    </Grid>
   );
 };
 

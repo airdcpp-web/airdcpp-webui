@@ -31,6 +31,7 @@ import { getDownloadSections, DownloadSection } from './sections';
 import { addHistory } from 'services/api/HistoryApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
+import { Grid } from 'components/semantic/Grid';
 
 
 interface LayoutProps {
@@ -39,7 +40,7 @@ interface LayoutProps {
 }
 
 const NormalLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
-  <div className="ui grid normal layout">
+  <Grid className="normal layout">
     <div className="four wide column">
       <div className="ui vertical fluid tabular menu">
         { menuItems }
@@ -50,7 +51,7 @@ const NormalLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => 
         { children }
       </div>
     </div>
-  </div>
+  </Grid>
 );
 
 const MobileLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
