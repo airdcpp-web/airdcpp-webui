@@ -55,8 +55,10 @@ const TopMenuLayout: React.FC<SettingSectionChildProps> = (
       className={ contentClassname }
     >
       { !!saveButton && React.cloneElement(saveButton, { className: 'fluid' }) }
-      { message }
-      { children }
+      <div className="options">
+        { message }
+        { children }
+      </div>
     </div>
   </div>
 );

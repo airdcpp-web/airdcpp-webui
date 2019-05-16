@@ -33,7 +33,7 @@ export interface SettingSectionChildProps extends SaveDecoratorChildProps, Pick<
 
 
 const SettingSection: React.FC<Props> = (props) => {
-  const Component = useMobileLayout() || window.innerWidth < 950 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
+  const Component = useMobileLayout() || window.innerWidth < 1000 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
 
   const { moduleT, settingsT, parentMenuItems, menuItems, advancedMenuItems, location, ...childProps } = props;
   const { parent, currentMenuItem } = props;

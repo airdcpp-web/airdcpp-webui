@@ -44,14 +44,19 @@
 
 .settings-layout .mobile .section-content {
   padding-bottom: 5px;
+  /* For possible scrollbar */
+  padding-right: 5px;
 }
 
 .settings-layout .mobile .section-content.about {
   margin-top: 10px;
 }
 
-.settings-layout .mobile .section-content > * {
+.settings-layout .mobile .section-content.about .options {
   flex-shrink: 0;
+  margin: 0px 5px;
+  /* Negative margins for .ui.grid cause issues with flexbox */
+  overflow: hidden;
 }
 
 .settings-layout .full .section-content {

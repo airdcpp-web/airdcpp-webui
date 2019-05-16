@@ -9,11 +9,10 @@ import ShareConstants from 'constants/ShareConstants';
 
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 
-import { Row, Header } from 'components/semantic/Grid';
+import { Row, Header, Grid } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
-import { AboutGrid } from './AboutGrid';
 
 
 interface ShareStatisticsPageProps extends SettingSectionChildProps {
@@ -26,7 +25,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
   const averageFileAge = Moment.duration(stats.average_file_age * 1000).humanize();
   const { translate, t } = moduleT;
   return (
-    <AboutGrid>
+    <Grid columns="two">
       <Row 
         title={ translate('Total share size') } 
         text={ formatSize(stats.total_size, moduleT.plainT) }
@@ -132,7 +131,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
           }
         ) }
       />
-    </AboutGrid>
+    </Grid>
   );
 };
 

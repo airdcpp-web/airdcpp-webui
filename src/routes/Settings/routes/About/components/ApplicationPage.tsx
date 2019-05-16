@@ -4,7 +4,7 @@ import React from 'react';
 
 import Moment from 'moment';
 
-import { Row, Header } from 'components/semantic/Grid';
+import { Row, Header, Grid } from 'components/semantic/Grid';
 
 import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
@@ -14,7 +14,6 @@ import InstallPrompt from 'components/InstallPrompt';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import LinkConstants from 'constants/LinkConstants';
 import ExternalLink from 'components/ExternalLink';
-import { AboutGrid } from './AboutGrid';
 
 
 interface ApplicationPageProps extends SettingSectionChildProps {
@@ -29,7 +28,7 @@ const ApplicationPage: React.FC<ApplicationPageProps & StatisticsDecoratorChildP
 
   return (
     <>
-      <AboutGrid>
+      <Grid columns="two">
         <Row title={ translate('Application version') } text={ systemInfo.client_version }/>
         <Row title={ translate('Web UI version') } text={ UI_VERSION }/>
         <Row title={ translate('Web UI build date') } text={ buildDate }/>
@@ -64,7 +63,7 @@ const ApplicationPage: React.FC<ApplicationPageProps & StatisticsDecoratorChildP
           }
           noText={ true }
         />
-      </AboutGrid>
+      </Grid>
       <InstallPrompt alwaysShow={ true }/>
     </>
   );

@@ -8,11 +8,10 @@ import HubConstants from 'constants/HubConstants';
 
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 
-import { Row, Header } from 'components/semantic/Grid';
+import { Grid, Row, Header } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
-import { AboutGrid } from './AboutGrid';
 
 
 interface HubStatisticsPageProps extends SettingSectionChildProps {
@@ -39,7 +38,7 @@ const HubStatisticsPage: React.FC<HubStatisticsPageProps & StatisticsDecoratorCh
 ) => {
   const { translate } = moduleT;
   return (
-    <AboutGrid>
+    <Grid columns="two">
       <Row 
         title={ translate('Total users') } 
         text={ stats.total_users }
@@ -73,7 +72,7 @@ const HubStatisticsPage: React.FC<HubStatisticsPageProps & StatisticsDecoratorCh
       />
       <Header title={ translate('Clients') }/>
       { stats.clients.map((c: ClientInfo) => formatClientRow(stats.unique_users, c)) }
-    </AboutGrid>
+    </Grid>
   );
 };
 
