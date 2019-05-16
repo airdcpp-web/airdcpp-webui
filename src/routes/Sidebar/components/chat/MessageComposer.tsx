@@ -250,7 +250,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     });
   }
 
-  onPaste = (evt: React.ClipboardEvent<HTMLInputElement>) => {
+  onPaste = (evt: React.ClipboardEvent<HTMLTextAreaElement>) => {
     if (evt.clipboardData && evt.clipboardData.files && (evt.clipboardData as any).files.length) {
       let files: File[] = [];
 
@@ -287,11 +287,6 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       { small: mobile },
       { large: !mobile },
     );
-
-    const textInputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'onSelect'> = {
-      autoFocus: !mobile,
-      onPaste: this.onPaste
-    };
 
     const hasFileUploadAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) && 
       LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
@@ -341,7 +336,8 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                 onChange={ this.handleChange }
                 onKeyDown={ this.onKeyDown }
                 style={ getMentionFieldStyle(mobile) }
-                { ...textInputProps }
+                autoFocus={ !mobile }
+                onPaste={ this.onPaste  }
               >
                 <Mention 
                   trigger="@"
