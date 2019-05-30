@@ -7,7 +7,6 @@ import FileIcon from 'components/icon/FileIcon';
 
 import SourceTable from 'routes/Queue/components/BundleSourceTable';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router-dom';
 import QueueConstants from 'constants/QueueConstants';
 
 import * as API from 'types/api';
@@ -22,7 +21,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   bundle: API.QueueBundle;
 }
 
-type Props = BundleSourceDialogProps & RouteComponentProps<{ bundleId: string; }> & ModalRouteDecoratorChildProps;
+interface RouteProps { 
+  bundleId: string; 
+}
+
+type Props = BundleSourceDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 class SourceDialog extends React.Component<Props & DataProps> {
   static displayName = 'SourceDialog';
@@ -47,7 +50,7 @@ class SourceDialog extends React.Component<Props & DataProps> {
   }
 }
 
-export default ModalRouteDecorator<BundleSourceDialogProps>(
+export default ModalRouteDecorator<BundleSourceDialogProps, RouteProps>(
   DataProviderDecorator<Props, DataProps>(
     SourceDialog, {
       urls: {

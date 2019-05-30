@@ -9,7 +9,6 @@ import UserResultTable from './UserResultTable';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router-dom';
 import SearchConstants from 'constants/SearchConstants';
 
 import * as API from 'types/api';
@@ -26,7 +25,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   parentResult: API.GroupedSearchResult;
 }
 
-type Props = ResultDialogProps & RouteComponentProps<{ resultId: string; }> & ModalRouteDecoratorChildProps;
+interface RouteProps {
+  resultId: string;
+}
+
+type Props = ResultDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 export const SearchResultGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
   return socket.get(`${SearchConstants.RESULTS_URL}/${itemId}`);
@@ -62,7 +65,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
   }
 }
 
-const Decorated = ModalRouteDecorator<ResultDialogProps>(
+const Decorated = ModalRouteDecorator<ResultDialogProps, RouteProps>(
   DataProviderDecorator<Props, DataProps>(
     ResultDialog, {
       urls: {

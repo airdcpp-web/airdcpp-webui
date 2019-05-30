@@ -51,11 +51,11 @@ const fieldOptionReducer = (
 };
 
 // Returns an options object for Tcomb form
-const getFieldOptions = (
+const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   fieldDefinitions: UI.FormFieldDefinition[],
-  onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
+  onFieldSetting: FormFieldSettingHandler<ValueMapT> | undefined,
   formT: UI.ModuleTranslator,
-  formValue: Partial<UI.FormValueMap>,
+  formValue: Partial<ValueMapT>,
   error: FieldError | null
 ) => {
   const options = {
@@ -81,7 +81,7 @@ const getFieldOptions = (
 };
 
 
-export type FormFieldSettingHandler<ValueType = UI.FormValueMap> = (
+export type FormFieldSettingHandler<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> = (
   key: string, 
   definitions: UI.FormFieldDefinition[], 
   formValue: Partial<ValueType>

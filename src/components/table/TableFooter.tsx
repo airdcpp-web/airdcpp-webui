@@ -4,6 +4,7 @@ import React from 'react';
 import TextFilter, { TextFilterProps } from './TextFilter';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
+import { TableFilterDecoratorProps } from 'decorators/TableFilterDecorator';
 
 
 const CountInfo: React.FC<{ store: any }> = ({ store }) => {
@@ -25,40 +26,36 @@ const CountInfo: React.FC<{ store: any }> = ({ store }) => {
   );
 };
 
+export type CustomTableFilter = React.ComponentType<TableFilterDecoratorProps>;
+
 export interface TableFooterProps {
   footerData?: React.ReactNode;
-  customFilter?: React.ReactElement<any>;
+  customFilter?: CustomTableFilter;
   store: any;
   textFilterProps?: TextFilterProps;
   viewId?: string;
 }
 
 const TableFooter: React.FC<TableFooterProps> = (
-  { store, customFilter, footerData, textFilterProps }
-) => {
-  let clonedFilter = null;
-  if (!!customFilter) {
-    clonedFilter = React.cloneElement(customFilter, { 
-      viewUrl: store.viewUrl,
-      //viewId
-    });
-  }
-
-  return (
-    <div className="table-footer">
-      { footerData }
-      <div className="filter item">
-        { clonedFilter }
-        <TextFilter 
+  { store, customFilter: CustomFilter, footerData, textFilterProps }
+) => (
+  <div className="table-footer">
+    { footerData }
+    <div className="filter item">
+      { !CustomFilter ? null : (
+        <CustomFilter
           viewUrl={ store.viewUrl }
-          //viewId={ viewId }
-          { ...textFilterProps }
         />
-        <CountInfo store={ store }/>
-      </div>
+      ) }
+      <TextFilter 
+        viewUrl={ store.viewUrl }
+        //viewId={ viewId }
+        { ...textFilterProps }
+      />
+      <CountInfo store={ store }/>
     </div>
-  );
-};
+  </div>
+);
 
 /*TableFooter.propTypes = {
   customFilter: PropTypes.node,

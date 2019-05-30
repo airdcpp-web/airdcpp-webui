@@ -15,16 +15,12 @@ import t from 'utils/tcomb-form';
 
 import Form, { FormFieldChangeHandler, FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
 import { normalizeEnumValue, intTransformer, translateForm } from 'utils/FormUtils';
-import { RouteComponentProps } from 'react-router-dom';
-//import { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { FavoriteHubEntry } from 'types/api';
 import Entry from 'widgets/RSS/components/Entry';
-//import i18next from 'i18next';
-//import { translate } from 'utils/TranslationUtils';
 
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
@@ -175,8 +171,12 @@ interface DataProps {
   hubEntry?: API.FavoriteHubEntry;
 }
 
+interface RouteProps {
+  entryId: string;
+}
+
 type Props = FavoriteHubDialogProps & DataProps & ShareProfileDecoratorChildProps & 
-  ModalRouteDecoratorChildProps & RouteComponentProps<{ entryId: string; }>;
+  ModalRouteDecoratorChildProps<RouteProps>;
 
 class FavoriteHubDialog extends React.Component<Props> {
   static displayName = 'FavoriteHubDialog';
@@ -272,7 +272,7 @@ class FavoriteHubDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<FavoriteHubDialogProps>(
+export default ModalRouteDecorator<FavoriteHubDialogProps, RouteProps>(
   ShareProfileDecorator(
     FavoriteHubDialog, 
     true,

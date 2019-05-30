@@ -6,7 +6,6 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 import FileIcon from 'components/icon/FileIcon';
 import BundleFileTable from 'routes/Queue/components/BundleFileTable';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router-dom';
 import QueueConstants from 'constants/QueueConstants';
 
 import * as API from 'types/api';
@@ -20,8 +19,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   bundle: API.QueueBundle;
 }
 
-type Props = BundleFileDialogProps & DataProps & 
-  RouteComponentProps<{ bundleId: string; }> & ModalRouteDecoratorChildProps;
+interface RouteProps {
+  bundleId: string;
+}
+
+type Props = BundleFileDialogProps & DataProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 class BundleFileDialog extends React.Component<Props> {
   static displayName = 'BundleFileDialog';
@@ -45,8 +47,8 @@ class BundleFileDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<BundleFileDialogProps>(
-  DataProviderDecorator<Props, DataProps>(
+export default ModalRouteDecorator<BundleFileDialogProps, RouteProps>(
+  DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(
     BundleFileDialog, {
       urls: {
         bundle: ({ match }, socket) => socket.get(`${QueueConstants.BUNDLES_URL}/${match.params.bundleId}`),

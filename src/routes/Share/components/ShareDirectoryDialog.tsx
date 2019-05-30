@@ -22,8 +22,6 @@ import AutoSuggestField from 'components/form/AutoSuggestField';
 
 import '../style.css';
 
-import { RouteComponentProps } from 'react-router-dom';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
@@ -71,8 +69,12 @@ interface Entry extends ShareRootEntryBase, UI.FormValueMap {
 
 }
 
+interface RouteProps {
+  directoryId: string;
+}
+
 type Props = ShareDirectoryDialogProps & DataProps & 
-  ModalRouteDecoratorChildProps & RouteComponentProps<{ directoryId: string; }>;
+  ModalRouteDecoratorChildProps<RouteProps>;
 
 class ShareDirectoryDialog extends React.Component<Props> {
   static displayName = 'ShareDirectoryDialog';
@@ -97,7 +99,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
     return !this.props.rootEntry;
   }
 
-  onFieldChanged: FormFieldChangeHandler<API.ShareRootEntryBase> = (id, value, hasChanges) => {
+  onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
     if (id.indexOf('path') !== -1) {
       const mergeFields = { 
         virtual_name: !!value.path ? getLastDirectory(value.path) : undefined, 
@@ -113,7 +115,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
     return this.form.save();
   }
 
-  onSave: FormSaveHandler<API.ShareRootEntryBase> = (changedFields) => {
+  onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
@@ -121,7 +123,7 @@ class ShareDirectoryDialog extends React.Component<Props> {
     return SocketService.patch(`${ShareRootConstants.ROOTS_URL}/${this.props.rootEntry!.id}`, changedFields);
   }
 
-  onFieldSetting: FormFieldSettingHandler<API.ShareRootEntryBase> = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions['disabled'] = !this.isNew();
       fieldOptions['config'] = Object.assign({} || fieldOptions['config'], {
@@ -176,8 +178,8 @@ class ShareDirectoryDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<ShareDirectoryDialogProps>(
-  ShareProfileDecorator(ShareDirectoryDialog, false, {
+export default ModalRouteDecorator<ShareDirectoryDialogProps, RouteProps>(
+  ShareProfileDecorator<Omit<Props, keyof DataProps>>(ShareDirectoryDialog, false, {
     urls: {
       virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
       rootEntry: ({ match }, socket) => {

@@ -60,7 +60,11 @@ const getViewerElement = (item: API.ViewFile): React.ComponentType<FileSessionCo
         { ...props }
       />
     );
-    case 'picture': return ImageFile;
+    case 'picture': return (props: FileSessionContentProps) => (
+      <ImageFile
+        { ...props }
+      />
+    );
     case 'video': return (props: FileSessionContentProps) => (
       <VideoFile
         autoPlay={ useAutoPlay(item) }

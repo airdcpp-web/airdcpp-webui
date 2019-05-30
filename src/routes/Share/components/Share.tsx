@@ -34,7 +34,7 @@ class Share extends React.Component<WithTranslation> {
       <>
         <VirtualTable
           store={ ShareRootStore }
-          customFilter={ <ShareProfileFilter/> }
+          customFilter={ ShareProfileFilter }
           footerData={ 
             <ActionMenu 
               className="top left pointing"

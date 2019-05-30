@@ -35,15 +35,19 @@ export interface ModalRouteDecoratorProps {
   
 }
 
-export interface ModalRouteDecoratorChildProps extends RouteComponentProps {
+export interface ModalRouteDecoratorChildProps<RoutePropsT extends object = {}> extends 
+  RouteComponentProps<RoutePropsT> {
+    
   returnTo: string;
 }
 
-export default function <PropsT>(
-  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>, 
+export default function <PropsT, RoutePropsT extends object = {}>(
+  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps<RoutePropsT>>, 
   path: string
 ) {
-  class ModalRouteDecorator extends React.Component<PropsT & ModalRouteDecoratorProps & RouteComponentProps> {
+  type Props = PropsT & ModalRouteDecoratorProps & RouteComponentProps<RoutePropsT>;
+
+  class ModalRouteDecorator extends React.Component<Props> {
     handleClose = () => {
       const { history, match } = this.props;
       history.replace(match.url);

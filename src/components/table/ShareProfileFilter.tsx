@@ -6,7 +6,9 @@ import MenuSection from 'components/semantic/MenuSection';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
-import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
+import TableFilterDecorator, { 
+  TableFilterDecoratorChildProps, TableFilterDecoratorProps 
+} from 'decorators/TableFilterDecorator';
 
 import * as API from 'types/api';
 import { translate } from 'utils/TranslationUtils';
@@ -25,7 +27,7 @@ export interface ShareProfileFilterProps {
 
 type Props = 
   ShareProfileFilterProps & TableFilterDecoratorChildProps & 
-  ShareProfileDecoratorChildProps & ShareProfileDecoratorChildProps;
+  ShareProfileDecoratorChildProps;
 
 
 const getDropdownItem = (
@@ -76,7 +78,7 @@ const ShareProfileFilter = React.memo<Props>(props => {
   );
 });
 
-export default ShareProfileDecorator<ShareProfileFilterProps>(
+export default ShareProfileDecorator<ShareProfileFilterProps & TableFilterDecoratorProps>(
   TableFilterDecorator<ShareProfileFilterProps & ShareProfileDecoratorChildProps>(
     ShareProfileFilter, 
     'profiles'

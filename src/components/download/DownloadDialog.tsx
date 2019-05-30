@@ -21,7 +21,6 @@ import * as UI from 'types/ui';
 
 import './style.css';
 
-import { RouteComponentProps } from 'react-router-dom';
 import { APISocket } from 'airdcpp-apisocket';
 
 import i18next from 'i18next';
@@ -86,9 +85,11 @@ interface DownloadDialogProps<ItemT extends UI.DownloadableItemInfo = UI.Downloa
   userGetter?: DownloadDialogUserGetter<ItemT>;
 }
 
-type DownloadDialogRouteProps = ModalRouteDecoratorChildProps & RouteComponentProps<{ 
+interface RouteProps { 
   downloadItemId: DownloadItemIdType; 
-}>;
+}
+
+type DownloadDialogRouteProps = ModalRouteDecoratorChildProps<RouteProps>;
 
 interface DownloadDialogDataProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> 
 extends DataProviderDecoratorChildProps {
@@ -212,7 +213,7 @@ const DownloadDialog: React.FC<Props> = props => {
   );
 };
 
-export default ModalRouteDecorator<DownloadDialogProps>(
+export default ModalRouteDecorator<DownloadDialogProps, RouteProps>(
   DataProviderDecorator<DownloadDialogProps & DownloadDialogRouteProps, DownloadDialogDataProps>(
     DownloadDialog, 
     {

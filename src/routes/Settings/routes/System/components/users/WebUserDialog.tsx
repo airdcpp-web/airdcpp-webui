@@ -17,7 +17,6 @@ import LoginStore from 'stores/LoginStore';
 
 import '../../style.css';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -187,8 +186,12 @@ interface DataProps extends DataProviderDecoratorChildProps {
   user: API.WebUserInput;
 }
 
+interface RouteProps {
+  userId: string;
+}
+
 type Props = WebUserDialogProps & DataProps & 
-  ModalRouteDecoratorChildProps & RouteComponentProps<{ userId: string; }>;
+  ModalRouteDecoratorChildProps<RouteProps>;
 
 class WebUserDialog extends React.Component<Props> {
   static displayName = 'WebUserDialog';
@@ -220,7 +223,7 @@ class WebUserDialog extends React.Component<Props> {
     return this.form.save();
   }
 
-  onSave: FormSaveHandler<API.WebUserBase> = (changedFields) => {
+  onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
@@ -228,7 +231,7 @@ class WebUserDialog extends React.Component<Props> {
     return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user.id}`, changedFields);
   }
 
-  onFieldSetting: FormFieldSettingHandler<API.WebUserBase> = (id, fieldOptions, formValue) => {
+  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
       const { user, moduleT } = this.props;
       fieldOptions['factory'] = t.form.Select;
@@ -267,8 +270,8 @@ class WebUserDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<WebUserDialogProps>(
-  DataProviderDecorator<Props, DataProps>(WebUserDialog, {
+export default ModalRouteDecorator<WebUserDialogProps, RouteProps>(
+  DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(WebUserDialog, {
     urls: {
       user: ({ match }, socket) => {
         if (!match.params.userId) {

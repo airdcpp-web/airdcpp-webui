@@ -10,7 +10,6 @@ import SocketService from 'services/SocketService';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 import IconConstants from 'constants/IconConstants';
-import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -30,8 +29,12 @@ interface DataProps extends DataProviderDecoratorChildProps {
   extension: API.Extension;
 }
 
+interface RouteProps { 
+  extensionId: string; 
+}
+
 type Props = ExtensionsConfigureDialogProps & DataProps & 
-  ModalRouteDecoratorChildProps & RouteComponentProps<{ extensionId: string; }>;
+  ModalRouteDecoratorChildProps<RouteProps>;
 
 class ExtensionsConfigureDialog extends React.Component<Props> {
   static displayName = 'ExtensionsConfigureDialog';
@@ -69,8 +72,8 @@ class ExtensionsConfigureDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<ExtensionsConfigureDialogProps>(
-  DataProviderDecorator<Props, DataProps>(
+export default ModalRouteDecorator<ExtensionsConfigureDialogProps, RouteProps>(
+  DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(
     ExtensionsConfigureDialog, {
       urls: {
         fieldDefinitions: ({ match }) => {

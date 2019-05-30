@@ -7,7 +7,6 @@ import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/downloa
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 //import * as UI from 'types/ui';
@@ -24,7 +23,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   fileItem: API.FilelistItem;
 }
 
-type Props = FilelistItemInfoDialogProps & RouteComponentProps<{ itemId: string; }> & ModalRouteDecoratorChildProps;
+interface RouteProps {
+  itemId: string;
+}
+
+type Props = FilelistItemInfoDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 export const FilelistItemGetter = (session: API.FilelistSession) => {
   const ret: DownloadDialogItemDataGetter<API.FilelistItem> = (itemId, socket) => {
@@ -63,7 +66,7 @@ class FilelistItemInfoDialog extends React.Component<Props & DataProps> {
   }
 }
 
-const Decorated = ModalRouteDecorator<FilelistItemInfoDialogProps>(
+const Decorated = ModalRouteDecorator<FilelistItemInfoDialogProps, RouteProps>(
   DataProviderDecorator<Props, DataProps>(
     FilelistItemInfoDialog, {
       urls: {

@@ -13,7 +13,6 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 import WidgetActions from 'actions/reflux/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 import { getWidgetT, createWidgetId, translateWidgetName } from 'utils/WidgetUtils';
-import { RouteComponentProps } from 'react-router-dom';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -63,8 +62,12 @@ interface WidgetDialogProps {
   rootWidgetT: UI.ModuleTranslator;
 }
 
-type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & WithTranslation &
-  RouteComponentProps<{ widgetId?: string; typeId: string; }>;
+interface RouteProps { 
+  widgetId?: string; 
+  typeId: string; 
+}
+
+type Props = WidgetDialogProps & ModalRouteDecoratorChildProps<RouteProps> & WithTranslation;
 
 class WidgetDialog extends React.Component<Props> {
   static displayName = 'WidgetDialog';
@@ -160,7 +163,7 @@ class WidgetDialog extends React.Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<WidgetDialogProps>(
+export default ModalRouteDecorator<WidgetDialogProps, RouteProps>(
   withTranslation()(WidgetDialog),
   '/home/widget/:typeId/:widgetId?'
 );
