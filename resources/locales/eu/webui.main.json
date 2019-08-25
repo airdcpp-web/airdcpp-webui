@@ -4,7 +4,7 @@
       "widgetName": "Aplizakioa",
       "addWidget": "Gehitu trepeta...",
       "loggedInAs": "Gisa konektatuta",
-      "clientStarted": "Hasitako bezeroa",
+      "clientStarted": "Bezeroaren hasiera",
       "activeSessions": "Saio aktiboak"
     },
     "rss": {
@@ -46,7 +46,7 @@
       "nameName": "Izena"
     },
     "widgetPositionHint": "Trepetak eta bere posizioak zehatzak dira nabigatzailearentzat",
-    "accessDenied": "You aren't allowed to access this widget",
+    "accessDenied": "Ez duzu trepeta honetan sartzeko baimenik",
     "settingsMissing": "Trepeta ezarpenak falta dira"
   },
   "events": {
@@ -220,7 +220,7 @@
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "Ez dago edukirik bistaratzeko",
     "theDirectoryIsEmpty": "Direktorioa hutsik dago",
-    "updatingView": "Updating view",
+    "updatingView": "Ikuspegia eguneratzen",
     "downloadFailed": "Deskargak huts egin du",
     "table": {
       "name": "Izena",
@@ -286,8 +286,8 @@
     "yesterday": "Atzo",
     "tomorrow": "Bihar",
     "lastWeek": "[Last] {{weekDay}}",
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
+    "awayModeWasEnabled": "Modu absentea aktibatu da",
+    "awayModeWasDisabled": "Modu absentea desaktibatu da",
     "actionSucceed": "Ekintza arrakastatsua",
     "actionFailed": "Huts egindako ekintza",
     "queueingFailed": "Failed to queue the item {{item.name}}",
@@ -340,23 +340,23 @@
     "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
     "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
     "upload": "Igo",
-    "sendFiles": "Send files",
+    "sendFiles": "Fitxategiak bidali",
     "removeSharedFile": "Kendu partekatutako fitxategia",
     "fileNoLongerShared": "File {{file.name}} is no longer shared",
     "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
     "previewIsNotAvailable": "Preview is not available",
     "failedToFetchContent": "Failed to fetch content",
-    "noItemsToShow": "No items to show",
+    "noItemsToShow": "Ez dago elementurik erakusteko",
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
     "loadingSessions": "Loading sessions",
     "typeContent": "Mota/edukia",
     "lastModified": "Azken aldaketa",
     "dupeType": "Bikoiztutako mota",
-    "shareFull": "Partekatu (full)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
+    "shareFull": "Partekatu (osoa)",
+    "sharePartial": "Partekatu (partzial)",
+    "queueFull": "Ilara (osoa)",
+    "queuePartial": "Ilara (partzial)",
     "finishedFull": "Finished (full)",
     "finishedPartial": "Finished (partial)",
     "shareAndQueue": "Share and queue",
@@ -426,7 +426,7 @@
     "actionsCaption": "Ekintzak...",
     "queueActions": "Ilaren ekintzak",
     "pausedForced": "Etenduta (behartuta)",
-    "queueEmpty": "The queue is empty",
+    "queueEmpty": "Ilara hutsik dago",
     "queueEmptyDesc": "New items can be queued from search or filelists",
     "actions": {
       "removeCompletedBundles": "Remove completed bundles",
@@ -551,11 +551,11 @@
       "ignoredUsers": "Erabiltzaileak ez ikusi ",
       "miscellaneous": "Denetarik",
       "manageInstalled": "Kudeatu instalatutakoak",
-      "extensionCatalog": "Extension catalog",
-      "extensionOptions": "Extension options",
+      "extensionCatalog": "Hedapen katalogoa",
+      "extensionOptions": "Hedapen aukerak",
       "application": "Aplizakioa",
-      "transferStatistics": "Transfer statistics",
-      "shareStatistics": "Share statistics",
+      "transferStatistics": "Transferentzia estatistikak",
+      "shareStatistics": "Partekatze estatistikak",
       "hubStatistics": "Hub estatistikak",
       "users": "Erabiltzaileak",
       "logging": "Saioa hasi",
@@ -590,8 +590,8 @@
       "detection": {
         "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
         "currentAutoDetectionStatus": "Current auto detection status",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
+        "iPv4Connectivity": "IPv4 konektibitatea",
+        "iPv6Connectivity": "IPv6 konektibitatea",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)"
       },
@@ -609,13 +609,13 @@
           "settingProfileHelp0": "Bezeroa hub pribatu/publiko arruntetan erabiltzen da internet bidez fitxategiak transferitzeko. Erabili profila ez bazaude ziur.",
           "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
+          "languageFileHelp": "<0>Aplikazioak hizkuntza berrian ager dadin berrabiarazi behar da.</0><1>Lehendik dauden itzulpenak hobetzeko edo aplikazioa hizkuntza berrira itzuli nahi baduzu, ikus  <1>itzultzaileen argibideak</1>.</1>"
         }
       },
       "ignoredUsers": {
         "user": "Erabiltzailea",
         "messagesIgnored": "Ez ikusitako mezuak",
-        "noIgnoredUsers": "No ignored users"
+        "noIgnoredUsers": "ez dago baztertutako erabiltzailerik"
       },
       "miscellaneous": {
         "form": {
@@ -653,10 +653,10 @@
         "started": "Hasita",
         "activeSessions": "Saio aktiboak",
         "serverThreads": "Server threads",
-        "resources": "Resources",
-        "homePage": "Home page",
+        "resources": "Baliabideak",
+        "homePage": "Orri nagusia",
         "featureRequestBugTracker": "Feature request/bug tracker",
-        "documentation": "Documentation"
+        "documentation": "Dokumentazioa"
       },
       "transfers": {
         "totalDownloaded": "Deskargatutakoa guztira",
@@ -735,7 +735,7 @@
           "filelists": "Fitxategi zerrenda",
           "viewedFiles": "Viewed files"
         },
-        "addWebUser": "Add web user",
+        "addWebUser": "Gehitu web erabiltzailea",
         "editUser": "Editatu erabiltzailea",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
@@ -753,7 +753,7 @@
         "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
       },
       "sharingOptions": {
-        "skiplist": "Skiplist"
+        "skiplist": "Salto zerrenda"
       },
       "hashing": {
         "hashDatabase": "Indexatutako datu basea",
@@ -786,11 +786,11 @@
           "pathName": "Bidea",
           "nameName": "Izena"
         },
-        "addFavoriteDirectory": "Add favorite directory",
+        "addFavoriteDirectory": "Gehitu direktorio gogokoa",
         "editFavoriteDirectory": "Edit favorite directory"
       },
       "skippingOptions": {
-        "skiplist": "Skiplist"
+        "skiplist": "Salto zerrenda"
       },
       "priorities": {
         "filePriorities": "File priorities",
@@ -831,7 +831,7 @@
       "start": "Hasi",
       "installFromUrl": "URL-tik instalatu",
       "install": "Instalatu",
-      "update": "Update",
+      "update": "Eguneratu",
       "stop": "Gelditu",
       "configure": "Konfiguratu",
       "prompts": {
@@ -910,6 +910,6 @@
   },
   "home": {
     "newUserIntro": "Informazioa erabiltzaile berrientzat",
-    "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
+    "newUserIntroDesc": "<0><0>Gehitu beste erabiltzaile batzuekin partekatuko diren direktorioak <1>Partekatze</1> orrira.</0><1>Baliteke <1> bezeroaren ezarpenen </1> orri nagusira pasatu nahi izatea hasi aurretik.  <3>Garrantzitsua da <1>konexioaren abiadura</1> modu egokian konfiguratzea bezeroak bestelako banda-zabalera modu eraginkorrean erabiltzeko gai ez delako.</3></1><2>Oraindik ez dago hub publikoen zerrendarik, beraz, konektatu nahi duzun hub-en helbideak ezagutu behar dituzu.</2></0><1>Bisitatu <1>hasiera orria</1> bezeroari eta haren ezaugarriei buruzko informazio gehiago lortzeko.</1><2>Galderarik izanez gero, <1>GitHub-en</1> jarraipena egin dezakezu edo dev/support hub-ean sartu: <3></3></2>\n       "
   }
 }

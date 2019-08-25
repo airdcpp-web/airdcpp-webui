@@ -14,11 +14,11 @@ import 'fomantic-ui-css/components/item.min.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
 import { errorResponseToString } from 'utils/TypeConvert';
+import { DataFetchError } from 'decorators/DataProviderDecorator';
 
 
 interface VersionProps {
@@ -82,7 +82,7 @@ const formatAuthor = (moduleT: UI.ModuleTranslator, npmPackage?: UI.NpmPackage, 
 const formatNote = (
   moduleT: UI.ModuleTranslator, 
   installedPackage?: API.Extension, 
-  npmError?: ErrorResponse | null
+  npmError?: DataFetchError | null
 ) => {
   if (installedPackage && !installedPackage.managed) {
     return moduleT.translate('Unmanaged extension');
@@ -107,7 +107,7 @@ const formatNote = (
 export interface ExtensionProps {
   installedPackage?: API.Extension;
   npmPackage?: UI.NpmPackage;
-  npmError?: ErrorResponse | null;
+  npmError?: DataFetchError | null;
   moduleT: UI.ModuleTranslator;
 }
 

@@ -9,7 +9,6 @@ const Entry = [
   LocalSettings.UNREAD_LABEL_DELAY,
   LocalSettings.BACKGROUND_IMAGE_URL,
   LocalSettings.NO_INSTALL_PROMPT,
-  LocalSettings.CORS_PROXY,
 ];
 
 const MiscellaneousPage: React.FC<SettingSectionChildProps> = props => (

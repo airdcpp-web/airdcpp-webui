@@ -221,7 +221,7 @@
     "noContentToDisplay": "No content to display",
     "theDirectoryIsEmpty": "De map is leeg",
     "updatingView": "Updating view",
-    "downloadFailed": "Download failed",
+    "downloadFailed": "Download mislukt",
     "table": {
       "name": "Naam",
       "size": "Grootte",

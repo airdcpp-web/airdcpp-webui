@@ -15,7 +15,7 @@ import { Settings } from 'widgets/RSS';
 import '../style.css';
 
 import * as UI from 'types/ui';
-import { toCorsSafeUrl, formatHttpError } from 'utils/HttpUtils';
+import { fetchCorsSafeData } from 'utils/HttpUtils';
 import { FeedItem, parseNodeContent } from '../types';
 
 
@@ -85,7 +85,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
     this.fetchFeed(this.props.settings.feed_url);
   }
 
-  fetchFeed = (feedUrl: string) => {
+  fetchFeed = async (feedUrl: string) => {
     const { widgetT } = this.props;
     if (!feedUrl.startsWith('http://') && !feedUrl.startsWith('https://')) {
       this.setError(widgetT.translate('Invalid URL'));
@@ -97,29 +97,26 @@ class RSS extends React.PureComponent<RSSProps, State> {
       this.setState({ entries: null });
     }
 
-    $.get(
-      toCorsSafeUrl(feedUrl), 
-      (data, res, xhr) => {
-        console.log('RSS feed received', feedUrl, res);
+    try {
+      const data = await fetchCorsSafeData(feedUrl, false);
 
-        const jsonFeed = parseXML(xhr.responseText, {
-          attrNodeName: 'attr',
-          textNodeName : 'text',
-          parseAttributeValue : true,
-          ignoreAttributes : false,
-          attributeNamePrefix: '',
-          attrValueProcessor: a => decode(a, { isAttributeValue: true }),
-          tagValueProcessor : a => decode(a),
-        });
+      console.log('RSS feed received', feedUrl, data);
 
-        this.onFeedFetched(jsonFeed);
-      },
-      'xml'
-    )
-      .catch(err => {
-        console.log('RSS feed download failed', feedUrl, err);
-        this.setError(formatHttpError(err, widgetT.plainT));
+      const jsonFeed = parseXML(data, {
+        attrNodeName: 'attr',
+        textNodeName : 'text',
+        parseAttributeValue : true,
+        ignoreAttributes : false,
+        attributeNamePrefix: '',
+        attrValueProcessor: a => decode(a, { isAttributeValue: true }),
+        tagValueProcessor : a => decode(a),
       });
+
+      this.onFeedFetched(jsonFeed);
+    } catch (e) {
+      console.log('RSS feed download failed', feedUrl, e);
+      this.setError(e.toString());
+    }
   }
 
   componentDidUpdate(prevProps: RSSProps) {

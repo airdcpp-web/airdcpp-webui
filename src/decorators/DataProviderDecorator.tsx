@@ -11,7 +11,7 @@ import { ModalRouteCloseContext } from './ModalRouteDecorator';
 import { 
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps, AddSocketListener 
 } from './SocketSubscriptionDecorator';
-import { toApiError } from 'utils/HttpUtils';
+//import { toApiError } from 'utils/HttpUtils';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
@@ -29,6 +29,13 @@ export type SocketConnectHandler<DataT, PropsT> = (
 
 export interface DataProviderDecoratorProps {
 
+}
+
+export interface DataFetchError /*extends Omit<ErrorResponse, 'code'>*/ {
+  code?: number;
+  message: string;
+  //status?: string;
+  json?: ErrorResponse['json'];
 }
 
 export type DataConverter<PropsT extends object> = (data: any, props: PropsT & WithTranslation) => any;
@@ -50,12 +57,13 @@ export interface DataProviderDecoratorSettings<PropsT extends object, DataT exte
 
 export interface DataProviderDecoratorChildProps {
   refetchData: (keys?: string[]) => void;
-  dataError: ErrorResponse | null;
+  //dataError: DataError | (Error & { status: undefined; code: undefined }) | null;
+  dataError: DataFetchError | null;
 }
 
 interface State<DataT extends object> {
   data: DataT | null;
-  error: ErrorResponse | null;
+  error: DataFetchError | null;
 }
 
 type DataProps<PropsT = {}> = WithTranslation & SocketSubscriptionDecoratorChildProps<PropsT>;
@@ -179,20 +187,12 @@ export default function <PropsT extends object, DataT extends object>(
       this.mergeData(data);
     }
 
-    onDataFetchFailed = (fetchError: ErrorResponse | JQuery.jqXHR) => {
+    onDataFetchFailed = (error: ErrorResponse | Error) => {
       if (!this.mounted) {
         return;
       }
 
       const { t } = this.props;
-      let error: ErrorResponse;
-      if ((fetchError as JQuery.jqXHR).statusCode) {
-        // HTTP error
-        error = toApiError(fetchError as JQuery.jqXHR, t);
-      } else {
-        // API error
-        error = fetchError as ErrorResponse;
-      }
       
       NotificationActions.apiError(translate('Failed to fetch data', t, UI.Modules.COMMON), error);
       this.setState({

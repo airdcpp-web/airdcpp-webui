@@ -262,6 +262,6 @@ const ActionHandlerDecorator = <ItemDataT extends any>(
 
 
 // TODO: replace with useRouter hook when possible
-const Decorator = withRouter<Props<any>>(ActionHandlerDecorator);
+const Decorator = withRouter(ActionHandlerDecorator);
 
 export { Decorator as ActionHandlerDecorator };

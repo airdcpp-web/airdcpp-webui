@@ -653,10 +653,10 @@
         "started": "Iniciado",
         "activeSessions": "Sesiones activas",
         "serverThreads": "Hilos del servidor",
-        "resources": "Resources",
+        "resources": "Recursos",
         "homePage": "Home page",
         "featureRequestBugTracker": "Feature request/bug tracker",
-        "documentation": "Documentation"
+        "documentation": "Documentación"
       },
       "transfers": {
         "totalDownloaded": "Total descargado",

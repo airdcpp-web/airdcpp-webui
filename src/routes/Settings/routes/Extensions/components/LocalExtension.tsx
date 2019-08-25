@@ -9,7 +9,7 @@ import Extension from 'routes/Settings/routes/Extensions/components/extension/Ex
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { toCorsSafeUrl } from 'utils/HttpUtils';
+import { fetchCorsSafeData } from 'utils/HttpUtils';
 
 
 export interface NpmPackageData {
@@ -61,9 +61,7 @@ const LocalExtension = DataProviderDecorator<LocalExtensionProps, LocalExtension
           return Promise.resolve(undefined);
         }
 
-        return $.getJSON(
-          toCorsSafeUrl(`${ExtensionConstants.NPM_PACKAGE_URL}${installedPackage.name}/latest`)
-        ) as any as Promise<any>;
+        return fetchCorsSafeData(`${ExtensionConstants.NPM_PACKAGE_URL}${installedPackage.name}/latest`, true);
       },
     },
     renderOnError: true,

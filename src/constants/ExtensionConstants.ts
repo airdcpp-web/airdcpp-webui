@@ -1,7 +1,5 @@
 const MODULE_URL = 'extensions';
 
-// CORS may not be enabled on npmjs registry
-//const NPM_URL = 'https://airdcpp-npm.herokuapp.com/';
 const NPM_URL = 'https://registry.npmjs.org/';
 
 export default {

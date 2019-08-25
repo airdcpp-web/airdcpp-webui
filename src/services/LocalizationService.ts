@@ -7,15 +7,14 @@ import { initReactI18next } from 'react-i18next';
 //import { camelCase } from 'lodash';
 import Moment from 'moment';
 
-//@ts-ignore
-import ajax from 'i18next-xhr-backend/dist/commonjs/ajax'; // don't use es because of jest
+//import ajax from 'i18next-xhr-backend/dist/cjs/'; // don't use es because of jest
 import { getFilePath } from 'utils/FileUtils';
 ​
 
 const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) => {
   if (!!data) {
     // Post missing translations (can't be handled by webpack)
-    ajax(url, options, callback, data);
+    XHR['options']['ajax'](url, options, callback, data);
     return;
   }
 
@@ -44,7 +43,8 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
       // Attempt to local plain JSON 
       // Useful for testing custom translation files, such as unpublished translations from Transifex
       const baseUrl = getFilePath(fullUrl);
-      ajax(
+      XHR['options']['ajax'](
+      //ajax(
         baseUrl + url, 
         options, 
         (responseData: any, res: any) => {

@@ -10,8 +10,9 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { toCorsSafeUrl, toApiError } from 'utils/HttpUtils';
-import { i18n } from 'services/LocalizationService';
+import {
+  fetchCorsSafeData 
+} from 'utils/HttpUtils';
 
 
 const isManaged = (extension: API.Extension) => extension.managed;
@@ -36,31 +37,20 @@ interface InstallData {
   installId?: string;
 }
 
-const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = (
+const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async (
   { data: npmPackage, ...other }
-): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest'), async (responseData) => {
-      const { tarball, shasum } = responseData.dist;
+) => {
+  const data = await fetchCorsSafeData(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', true);
 
-      try {
-        const ret = await handleInstallUrl({
-          data: {
-            url: tarball, 
-            installId: npmPackage.name, 
-            shasum
-          },
-          ...other
-        });
+  const { tarball, shasum } = data.dist;
 
-        resolve(ret);
-      } catch (e) {
-        reject(e);
-      }
-    })
-      .catch(error => {
-        reject(toApiError(error, i18n.t));
-      });
+  return handleInstallUrl({
+    data: {
+      url: tarball, 
+      installId: npmPackage.name, 
+      shasum
+    },
+    ...other
   });
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
-import Resizable, { ResizeCallback } from 're-resizable';
+import { Resizable, ResizeCallback } from 're-resizable';
 import History from 'utils/History';
 
 import '../style.css';
@@ -50,15 +50,15 @@ class Sidebar extends React.Component<SidebarProps, State> {
     const prevActive = showSidebar(prevProps);
     if (newActive !== prevActive) {
       if (newActive) {
-        $(this.c.resizable).sidebar('show');
+        $(this.c.resizable!).sidebar('show');
       } else {
-        $(this.c.resizable).sidebar('hide');
+        $(this.c.resizable!).sidebar('hide');
       }
     }
   }
 
   componentDidMount() {
-    $(this.c.resizable).sidebar({
+    $(this.c.resizable!).sidebar({
       context: '.sidebar-context',
       transition: 'overlay',
       mobileTransition: 'overlay',
@@ -70,7 +70,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
     
     const active = showSidebar(this.props);
     if (active) {
-      $(this.c.resizable).sidebar('show');
+      $(this.c.resizable!).sidebar('show');
     }
   }
 
@@ -110,6 +110,11 @@ class Sidebar extends React.Component<SidebarProps, State> {
 
   render() {
     const { width, contentActive } = this.state;
+
+    const otherProps = {
+      id: 'sidebar'
+    };
+
     return (
       <Resizable
         ref={ (c: any) => this.c = c }
@@ -121,7 +126,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
         maxWidth={ window.innerWidth } 
         id="sidebar"
         className="ui right vertical sidebar"
-
+        { ...otherProps }
         enable={{ 
           top: false, right: false, bottom: false, left: !useMobileLayout(), 
           topRight: false, bottomRight: false, bottomLeft: false, topLeft: false 

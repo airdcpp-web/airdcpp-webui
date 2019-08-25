@@ -1,6 +1,7 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
+import { DataFetchError } from 'decorators/DataProviderDecorator';
 
 
 export const dupeToStringType = (dupeInfo: API.Dupe) => {
@@ -57,7 +58,7 @@ export const toErrorResponse = (errorCode: number, message: string): ErrorRespon
   }
 });
 
-export const errorResponseToString = (error: ErrorResponse): string => {
+export const errorResponseToString = (error: DataFetchError): string => {
   let message = error.message;
   if (error.code) {
     message += ` (code ${error.code})`;

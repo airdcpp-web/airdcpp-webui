@@ -2,7 +2,7 @@
   "widgets": {
     "application": {
       "widgetName": "Anwendung",
-      "addWidget": "Add widget...",
+      "addWidget": "Widget hinzufügen...",
       "loggedInAs": "Angemeldet als",
       "clientStarted": "Client gestartet",
       "activeSessions": "Aktive Sitzungen"
@@ -15,11 +15,11 @@
         "openLink": "Link öffnen",
         "search": "Suche"
       },
-      "loadingFeed": "Loading feed",
+      "loadingFeed": "Feed wird geladen",
       "form": {
         "feedUrlName": "Feed URL",
-        "feedUrlHelp": "RSS and Atom feeds are supported",
-        "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        "feedUrlHelp": "RSS und Atom Feeds werden unterstützt",
+        "feedCacheMinutesName": "Minimaler Abfrageintervall (Minuten)"
       }
     },
     "transfers": {
@@ -34,27 +34,27 @@
       "disabled": "Deaktiviert"
     },
     "actions": {
-      "editWidget": "Edit widget",
-      "removeWidget": "Remove widget",
+      "editWidget": "Widget editieren",
+      "removeWidget": "Widget entfernen",
       "prompts": {
-        "removeApprove": "Remove widget",
+        "removeApprove": "Widget entfernen",
         "removeReject": "Nicht entfernen",
-        "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
+        "removeContent": "Sind Sie sicher das Widget {{item.settings.name}} zu entfernen?"
       }
     },
     "form": {
       "nameName": "Name"
     },
-    "widgetPositionHint": "Widgets and their positions are browser-specific",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "widgetPositionHint": "Widgets und ihre Position sind Browser spezifisch",
+    "accessDenied": "Sie haben keinen Zugriff auf dieses Widget",
+    "settingsMissing": "Widget Einstellungen fehlen"
   },
   "events": {
     "events": "Ereignisse",
     "loadingMessages": "Nachrichten werden geladen",
-    "noMessagesToShow": "No messages to show",
+    "noMessagesToShow": "Keinen Nachrichten zum Anzeigen",
     "actions": {
-      "clear": "Bereinigt"
+      "clear": "Ereignisse leeren"
     },
     "notifications": {
       "information": "Information",
@@ -62,13 +62,13 @@
       "warning": "WARNUNG",
       "error": "FEHLER",
       "actions": {
-        "viewEvents": "View events"
+        "viewEvents": "Ereignisse ansehen"
       }
     }
   },
   "table": {
     "filter": {
-      "filter": "F&amp;ilter",
+      "filter": "Filter",
       "matchType": "Übereinstimmungstyp",
       "partial": "Teilweise",
       "regex": "Regex",
@@ -91,7 +91,7 @@
     },
     "actions": {
       "resultDetails": "Ergebnisdetails",
-      "browseContent": "Browse content"
+      "browseContent": "Inhalt durchsuchen"
     },
     "user": "Benutzer",
     "hubs": "Hubs",
@@ -99,15 +99,15 @@
     "slots": "Slots",
     "ip": "IP",
     "path": "Pfad",
-    "searchOffline": "You must to be connected to at least one hub in order to perform searches",
-    "enterSearchString": "Enter search string...",
+    "searchOffline": "Sie müssen zu mindestens einem Hub verbunden sein um Suchen auszuführen",
+    "enterSearchString": "Suchbegriff eingeben...",
     "search": "Suche",
     "usersCount": "Benutzer ({{count}})",
     "usersCount_plural": "Benutzer ({{count}})",
     "xUsersNicks": "{{count}} Benutzer ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} Benutzer ({{user.nicks}})",
-    "noResults": "No results found for \"{{searchString}}\"",
-    "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
+    "noResults": "Keine Ergebnisse gefunden für \"{{searchString}}\"",
+    "noResultsHint": "<0><0>Stellen Sie sicher, dass die Wörter korrekt geschrieben sind</0><1>Nutzen Sie andere Suchbegriffe</1><2>Sie suchen zu häufig (Hubs haben häufig einen minimum Suchintervall)</2><3>Wenn Sie nie Ergebnisse für gängige Suchbegriffe bekommen, stellen Sie sicher, dass Ihre Konnektivitätseinstellungen korrekt sind.</3></0>"
   },
   "share": {
     "table": {
@@ -115,16 +115,16 @@
       "size": "Größe",
       "virtual_name": "Virtueller Name",
       "profiles": "Profile",
-      "last_refresh_time": "Last refreshed",
+      "last_refresh_time": "Zuletzt aktualisiert",
       "type": "Inhalt",
       "virtualName": "Virtueller Name",
-      "lastRefreshTime": "Last refreshed"
+      "lastRefreshTime": "Zuletzt aktualisiert"
     },
     "actions": {
       "editDirectory": "Verzeichnis bearbeiten",
       "removeDirectory": "Verzeichnis entfernen",
       "addDirectory": "Verzeichnis hinzufügen",
-      "refreshAll": "Refresh all",
+      "refreshAll": "Alle aktualisieren",
       "prompts": {
         "removeRootApprove": "Verzeichnis entfernen",
         "removeRootReject": "Nicht entfernen",
@@ -132,45 +132,45 @@
       }
     },
     "actionsCaption": "Aktionen...",
-    "shareActions": "Share actions",
-    "hashingInformation": "Hashing information",
+    "shareActions": "Freigabe Aktionen",
+    "hashingInformation": "Hashing Information",
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
-    "addShareDirectory": "Add share directory",
-    "editShareDirectory": "Edit share directory",
+    "addShareDirectory": "Freigabe Verzeichnis hinzufügen",
+    "editShareDirectory": "Freigabe Verzeichnis editieren",
     "form": {
       "pathName": "Pfad",
       "virtualNameName": "Virtueller Name",
-      "virtualNameHelp": "Directories with identical virtual names will be merged in filelist",
+      "virtualNameHelp": "Verzeichnisse mit identischem virtuellen Namen werden in der Dateiliste zusammengefügt",
       "profilesName": "Freigabeprofile",
-      "profilesHelp": "New share profiles can be created from application settings",
+      "profilesHelp": "Neue Freigabeprofile können in den Programmeinstellungen erstellt werden",
       "incomingName": "eingehend"
     }
   },
   "favoriteHubs": {
     "actions": {
-      "addNew": "Add new",
+      "addNew": "Neu hinzufügen",
       "setPassword": "Passwort festlegen",
-      "edit": "&amp;Bearbeiten",
+      "edit": "Bearbeiten",
       "remove": "Entfernen",
       "changePassword": "Passwort ändern",
       "removePassword": "Passwort entfernen",
       "prompts": {
         "changePasswordPlaceholder": "Passwort eingeben",
         "changePasswordApprove": "Passwort aktualisieren",
-        "changePasswordContent": "Enter new password for the hub {{item.name}}",
+        "changePasswordContent": "Geben Sie das neue Passwort ein für den Hub {{item.name}}",
         "removePasswordApprove": "Passwort entfernen",
         "removePasswordReject": "Nicht entfernen",
-        "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
+        "removePasswordContent": "Sind Sie sicher, dass Sie das Passwort für den Hub {{item.name}} zurücksetzen möchten?",
         "createPasswordPlaceholder": "Passwort eingeben",
         "createPasswordApprove": "Passwort festlegen",
-        "createPasswordContent": "Set password for the hub {{item.name}}",
-        "removeApprove": "Remove favorite hub",
+        "createPasswordContent": "Setze Passwort für den Hub {{item.name}}",
+        "removeApprove": "Bevorzugten Hub entfernen",
         "removeReject": "Nicht entfernen",
-        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
+        "removeContent": "Sind Sie sicher, dass Sie den bevorzugten Hub {{item.name}} entfernen möchten?"
       }
     },
     "table": {
-      "connectState": "State",
+      "connectState": "Status",
       "name": "Name",
       "autoConnect": "Automatisch verbinden",
       "nick": "Nick",
@@ -181,13 +181,13 @@
     "notSet": "Nicht festgelegt",
     "set": "Festgelegt",
     "globalDefault": "Globaler Standard",
-    "addFavoriteHub": "Add favorite hub",
-    "editFavoriteHub": "Edit favorite hub",
+    "addFavoriteHub": "Bevorzugten Hub hinzufügen",
+    "editFavoriteHub": "Bevorzugten Hub editieren",
     "form": {
-      "genericName": "Hub properties",
+      "genericName": "Hub Eigenschaften",
       "nameName": "Name",
       "hubUrlName": "Hub URL",
-      "hubDescriptionName": "Hub description",
+      "hubDescriptionName": "Hub Beschreibung",
       "shareProfileName": "Freigabeprofil",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
       "autoConnectName": "Automatisch verbinden",
@@ -214,14 +214,14 @@
     "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
     "directorySize": "Verzeichnisgröße",
     "totalListSize": "Gesamtlistengröße",
-    "browseOwnShare": "Browse own share...",
+    "browseOwnShare": "Eigene Freigabe durchsuchen",
     "root": "Root",
     "userOffline": "Benutzer Offline",
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "No content to display",
     "theDirectoryIsEmpty": "Das Verzeichnis ist leer",
     "updatingView": "Updating view",
-    "downloadFailed": "Download failed",
+    "downloadFailed": "Download fehlgeschlagen",
     "table": {
       "name": "Name",
       "size": "Größe",
@@ -242,7 +242,7 @@
       "findNfo": "Find NFO",
       "search": "Suche",
       "sendMessage": "Nachricht senden",
-      "browseShare": "Browse share",
+      "browseShare": "Freigabe durchsuchen",
       "ignoreMessages": "Nachrichten ignorieren",
       "viewAsText": "Als Text ansehen",
       "playVideo": "Video wiedergeben",
@@ -313,7 +313,7 @@
     "noPathsToDisplay": "No paths to display",
     "spaceFree": "{{freeSpace}} frei",
     "select": "Auswählen",
-    "new": "&amp;Neu...",
+    "new": "Neu...",
     "currentSessions": "Aktuelle Sitzung",
     "closeAll": "Alles schließen",
     "recentSessions": "Recent sessions",
@@ -652,7 +652,7 @@
         "apiFeatureLevel": "API feature level",
         "started": "Gestartet",
         "activeSessions": "Aktive Sitzungen",
-        "serverThreads": "Server threads",
+        "serverThreads": "Server Threads",
         "resources": "Resources",
         "homePage": "Home page",
         "featureRequestBugTracker": "Feature request/bug tracker",

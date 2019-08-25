@@ -10,7 +10,7 @@ import 'fomantic-ui-css/components/item.min.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { toCorsSafeUrl } from 'utils/HttpUtils';
+import { fetchCorsSafeData } from 'utils/HttpUtils';
 
 
 interface NpmPackageLayoutProps {
@@ -54,7 +54,7 @@ const NpmPackageLayout: React.FC<NpmPackageLayoutProps & NpmPackageLayoutDataPro
 export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutDataProps>(NpmPackageLayout, {
   urls: {
     installedPackages: ExtensionConstants.EXTENSIONS_URL,
-    packageCatalog: () => $.getJSON(toCorsSafeUrl(ExtensionConstants.NPM_PACKAGES_URL)) as any as Promise<any>,
+    packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
   },
   dataConverters: {
     packageCatalog: ({ objects }) => objects,
