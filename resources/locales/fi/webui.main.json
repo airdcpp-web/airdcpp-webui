@@ -818,9 +818,7 @@
         "form": {
           "unreadLabelDelayName": "Viive keskusteluistuntojen merkitsemiselle luetuksi (sekuntia)",
           "backgroundImageUrlName": "Oman taustakuvan URL-osoite",
-          "noInstallPromptName": "Älä näytä sovelluksen asennuskehoitusta kotinäkymässä",
-          "corsProxyName": "CORS-välityspalvelimen osoite",
-          "corsProxyHelp": "CORS-välityspalvelinta käytetään tiedon hakemiseen ulkoisilta sivustoilta (esim. RSS-syötteet ja lisäosat). Kohdeosoite lisätään heti määritetyn välityspalvelimen osoitteen perään. Välityspalvelinta ei käytetä, mikäli kenttä jätetään tyhjäksi, mutta tämä saattaa estää useiden ulkoisten palveluiden käytön, sillä niitä ei usein ole määritetty käytettäväksi muiden verkkosivustojen kautta."
+          "noInstallPromptName": "Älä näytä sovelluksen asennuskehoitusta kotinäkymässä"
         }
       }
     }

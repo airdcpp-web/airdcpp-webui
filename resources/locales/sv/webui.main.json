@@ -818,9 +818,7 @@
         "form": {
           "unreadLabelDelayName": "Fördröjning för att markera chattsessioner som lästa (sekunder)",
           "backgroundImageUrlName": "Egen webbadress till bakgrundsbilden",
-          "noInstallPromptName": "Visa aldrig applikationsinstallationen i hemfönstret",
-          "corsProxyName": "CORS-proxywebbadress",
-          "corsProxyHelp": "CORS-proxy att använda för att hämta data från externa webbplatser (t.ex RSS-flöde och tillägg). Målwebbadressen läggs direkt efter den konfigurerade proxywebbadressen. Ingen proxy kommer att användas om fältet lämnas tomt, men det kan förhindra åtkomst till olika externa webbadresser eftersom de inte ofta är konfigurerade för att vara tillgängliga från andra webbplatser."
+          "noInstallPromptName": "Visa aldrig applikationsinstallationen i hemfönstret"
         }
       }
     }

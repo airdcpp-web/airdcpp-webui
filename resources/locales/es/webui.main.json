@@ -290,7 +290,7 @@
     "awayModeWasDisabled": "Se ha desactivado el modo ausente",
     "actionSucceed": "Acción realizada con éxito",
     "actionFailed": "Acción fallida",
-    "queueingFailed": "Failed to queue the item {{item.name}}",
+    "queueingFailed": "No se ha podido poner en cola el elemento {{item.name}}",
     "noNfoResultsWereReceived": "No se han recibido resultados NFO",
     "networkClientError": "Error de red/cliente",
     "failedToFetchData": "Error al buscar los datos",
@@ -654,8 +654,8 @@
         "activeSessions": "Sesiones activas",
         "serverThreads": "Hilos del servidor",
         "resources": "Recursos",
-        "homePage": "Home page",
-        "featureRequestBugTracker": "Feature request/bug tracker",
+        "homePage": "Página de inicio",
+        "featureRequestBugTracker": "Solicitud de funciones/seguidor de errores",
         "documentation": "Documentación"
       },
       "transfers": {
@@ -818,9 +818,7 @@
         "form": {
           "unreadLabelDelayName": "Retraso para marcar sesiones de chat como leídas (segundos)",
           "backgroundImageUrlName": "URL para imagen de fondo personalizada",
-          "noInstallPromptName": "No mostrar el indicador de instalación de la aplicación en la vista de Inicio",
-          "corsProxyName": "URL del proxy CORS",
-          "corsProxyHelp": "El proxy CORS se usa para buscar datos de sitios externos (por ejemplo feeds RSS y extensiones). La URL objetivo se pondrá directamente a continuación de la URL del proxy. No se usará un proxy si el campo de deja en blanco, pero puede evitar que se accedan a varias URLs externas ya que a menudo no se configuran para que estar accesibles desde otros sitios."
+          "noInstallPromptName": "No mostrar el indicador de instalación de la aplicación en la vista de Inicio"
         }
       }
     }

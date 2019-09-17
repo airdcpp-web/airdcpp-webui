@@ -818,9 +818,7 @@
         "form": {
           "unreadLabelDelayName": "Delay for marking chat sessions as read (seconds)",
           "backgroundImageUrlName": "Atzeko planoko irudi pertsonalizatuen URLa",
-          "noInstallPromptName": "Never show the application install prompt in Home view",
-          "corsProxyName": "CORS proxy URL",
-          "corsProxyHelp": "CORS proxy to use for fetching data from external sites (e.g. RSS feeds and extensions). The target URL will be put directly after the configured proxy URL. No proxy will be used if the field is left empty, but it may prevent accessing various external URLs as they aren't often configured to be accessible from other sites."
+          "noInstallPromptName": "Never show the application install prompt in Home view"
         }
       }
     }

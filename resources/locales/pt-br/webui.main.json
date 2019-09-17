@@ -818,9 +818,7 @@
         "form": {
           "unreadLabelDelayName": "Atraso para marcar sessões de chat como lidas (segundos)",
           "backgroundImageUrlName": "URL de imagem de plano de fundo personalizado",
-          "noInstallPromptName": "Nunca mostrar o prompt de instalação do aplicativo na visualização inicial",
-          "corsProxyName": "CORS proxy URL",
-          "corsProxyHelp": "Proxy CORS a ser usado para buscar dados de sites externos (por exemplo, feeds RSS e extensões). O URL de destino será colocado diretamente após o URL de proxy configurado. Nenhum proxy será usado se o campo for deixado em branco, mas poderá impedir o acesso a vários URLs externos, pois eles nem sempre são configurados para serem acessados ​​de outros sites."
+          "noInstallPromptName": "Nunca mostrar o prompt de instalação do aplicativo na visualização inicial"
         }
       }
     }
