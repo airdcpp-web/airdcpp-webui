@@ -49,7 +49,7 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI:
 
   useEffect(
     () => {
-      // Session changes, update the messages
+      // Session changed, update the messages
       if (!messageStore.isSessionInitialized(session.id)) {
         setMessages(null);
         chatAPI.fetchMessages(session);

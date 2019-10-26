@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { memo } from 'react';
 
 import HubSessionStore from 'stores/HubSessionStore';
 import Message, { MessageDescriptionType } from 'components/semantic/Message';
@@ -11,30 +11,16 @@ import * as UI from 'types/ui';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+import { useStore } from 'effects/StoreListenerEffect';
 
 
 export interface OfflineHubMessageDecoratorProps {
   offlineMessage: MessageDescriptionType;
 }
 
-const useHasConnectedHubs = () => {
-  const [ hasConnectedHubs, setHasConnectedHubs ] = useState(HubSessionStore.hasConnectedHubs());
-
-  useEffect(
-    () => {
-      return HubSessionStore.listen(() => {
-        setHasConnectedHubs(HubSessionStore.hasConnectedHubs());
-      });
-    },
-    []
-  );
-
-  return hasConnectedHubs;
-};
-
 // Disables the component if there are no online hubs
 const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = memo(props => {
-  const hasConnectedHubs = useHasConnectedHubs();
+  const hasConnectedHubs = useStore<boolean>(HubSessionStore, store => store.hasConnectedHubs());
   if (!hasConnectedHubs && LoginStore.hasAccess(API.AccessEnum.HUBS_VIEW)) {
     return (
       <Message 

@@ -1,5 +1,5 @@
 'use strict';
-import React, { useState, useEffect, memo } from 'react';
+import React, { memo } from 'react';
 
 import classNames from 'classnames';
 
@@ -9,6 +9,7 @@ import Icon, { IconType } from 'components/semantic/Icon';
 
 
 import * as UI from 'types/ui';
+import { useStore } from 'effects/StoreListenerEffect';
 
 
 interface RouterMenuItemLinkProps {
@@ -37,27 +38,10 @@ const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null
   return unreadInfoStore.getTotalUrgencies();
 };
 
-const useUrgencies = (props: RouterMenuItemLinkProps) => {
-  const [ urgencies, setUrgencies ] = useState<UI.UrgencyCountMap | null>(getUrgencies(props));
-  useEffect(
-    () => {
-      if (props.unreadInfoStore) {
-        return props.unreadInfoStore.listen(() => {
-          setUrgencies(getUrgencies(props));
-        });
-      }
-    },
-    []
-  );
-
-  return urgencies;
-};
-
 // Route link with support for urgencies
 const RouterMenuItemLink = withRouter(memo<RouterMenuItemLinkProps & RouteComponentProps>(
   (props) => {
-    const urgencies = useUrgencies(props);
-
+    const urgencies = useStore<UI.UrgencyCountMap | null>(props.unreadInfoStore, () => getUrgencies(props));
     const { onClick, className, icon, url, children, unreadInfoStore } = props;
     return (
       <NavLink 

@@ -12,29 +12,32 @@ const useLoginState = (props: RouteComponentProps) => {
   const setLoading = loadingState[1];
   const { i18n } = useTranslation();
 
+  const checkLoginState = (loginInfo: LoginState) => {
+    if (loginInfo.socketAuthenticated) {
+      // Set UI language to match the app language
+      if (!!LoginStore.systemInfo) {
+        const language = (LoginStore.systemInfo as API.SystemInfo).language;
+        if (language !== i18n.language) {
+          i18n.changeLanguage(language);
+        }
+      }
+
+      // Redirect to the main app
+      const { state } = props.location;
+      const nextPath = state && state.nextPath ? state.nextPath : '/';
+      props.history.replace({
+        pathname: nextPath,
+      });
+    } else if (!!loginInfo.lastError) {
+      // Failed
+      setLoading(false);
+    }
+  };
+
   useEffect(
     () => {
-      return LoginStore.listen((loginInfo: LoginState) => {
-        if (loginInfo.socketAuthenticated) {
-          // Set UI language to match the app language
-          if (!!LoginStore.systemInfo) {
-            const language = (LoginStore.systemInfo as API.SystemInfo).language;
-            if (language !== i18n.language) {
-              i18n.changeLanguage(language);
-            }
-          }
-
-          // Redirect to the main app
-          const { state } = props.location;
-          const nextPath = state && state.nextPath ? state.nextPath : '/';
-          props.history.replace({
-            pathname: nextPath,
-          });
-        } else if (!!loginInfo.lastError) {
-          // Failed
-          setLoading(false);
-        }
-      });
+      checkLoginState(LoginStore.getState());
+      return LoginStore.listen(checkLoginState);
     },
     []
   );

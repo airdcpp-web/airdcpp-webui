@@ -2,16 +2,23 @@ import { useEffect, useState } from 'react';
 
 
 export const useStore = <StateT>(
-  store: any,
-  initFunction?: () => void
+  store: any | undefined,
+  calculateState?: (store: any) => StateT
 ) => {
-  if (initFunction) {
-    initFunction();
+  if (!store && !calculateState) {
+    throw new Error('Either "store" or "calculateState" must be present');
   }
 
-  const [ state, setState ] = useState<StateT>(store.getInitialState());
+  const [ state, setState ] = useState<StateT>(!!calculateState ? calculateState(store) : store!.getInitialState());
   useEffect(
-    () => store.listen(setState),
+    () => {
+      if (!!store) {
+        setState(!!calculateState ? calculateState(store) : store!.getInitialState());
+        return store.listen(((data: StateT) => {
+          setState(!!calculateState ? calculateState(store) : data);
+        }));
+      }
+    },
     [ store ]
   );
 
