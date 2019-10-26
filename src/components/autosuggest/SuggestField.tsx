@@ -21,7 +21,7 @@ const theme: Theme = {
 type SubmitHandlerType<SuggestionT> = (value: string, suggestion?: SuggestionT) => void;
 
 export interface SuggestFieldProps<SuggestionT> 
-  extends Omit<Autosuggest.AutosuggestProps<SuggestionT>, 'inputProps'> {
+  extends Omit<Autosuggest.AutosuggestPropsSingleSection<SuggestionT>, 'inputProps'> {
   defaultValue?: string;
   disabled?: boolean;
   button?: React.ReactElement<ButtonProps>;
