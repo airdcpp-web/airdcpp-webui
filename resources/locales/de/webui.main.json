@@ -128,13 +128,13 @@
       "prompts": {
         "removeRootApprove": "Verzeichnis entfernen",
         "removeRootReject": "Nicht entfernen",
-        "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
+        "removeRootContent": "Sind Sie sicher, dass Sie das Verzeichnis {{item.virtual_name}} von der Freigabe entfernen möchten? Es wird aus allen Freigabeprofilen entfernt."
       }
     },
     "actionsCaption": "Aktionen...",
     "shareActions": "Freigabe Aktionen",
     "hashingInformation": "Hashing Information",
-    "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
+    "hashingInformationDesc": "<0>Neue Dateien werden erst nach dem hashen ( der Client berechnet Checksummen für diese) in der Freigabe erscheinen. Informationen über den Hashfortschritt wird im Eventlog geschrieben.",
     "addShareDirectory": "Freigabe Verzeichnis hinzufügen",
     "editShareDirectory": "Freigabe Verzeichnis editieren",
     "form": {
@@ -191,16 +191,16 @@
       "shareProfileName": "Freigabeprofil",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
       "autoConnectName": "Automatisch verbinden",
-      "userName": "User setting overrides",
+      "userName": "Überschreibung der Benutzer Einstellungen",
       "nickName": "Nick",
       "userDescriptionName": "Benutzerbeschreibung",
-      "connectivityV4Name": "Connectivity setting overrides (IPv4)",
+      "connectivityV4Name": "Überschreibung der Konnektivitäts Einstellungen (IPv4)",
       "connectionModeV4Name": "Verbindungsmodus",
       "connectionModeV4Option-1": "Deaktiviert",
       "connectionModeV4Option0": "Aktiver Modus",
       "connectionModeV4Option2": "Passiver Modus",
       "connectionIpV4Name": "IP-Adresse",
-      "connectivityV6Name": "Connectivity setting overrides (IPv6)",
+      "connectivityV6Name": "Überschreibung der Konnektivitäts Einstellungen (IPv6)",
       "connectionModeV6Name": "Verbindungsmodus",
       "connectionModeV6Option-1": "Deaktiviert",
       "connectionModeV6Option0": "Aktiver Modus",
@@ -210,17 +210,17 @@
   },
   "filelists": {
     "new": "Dateiliste öffnen",
-    "newDesc": "Start browsing a new filelist",
-    "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
+    "newDesc": "Durchsuche eine neue Dateiliste",
+    "offlineMessage": "Sie müssen zu mindestens einem Hub verbunden sein um Dateilisten von anderen Benutzern herunterzuladen",
     "directorySize": "Verzeichnisgröße",
     "totalListSize": "Gesamtlistengröße",
     "browseOwnShare": "Eigene Freigabe durchsuchen",
-    "root": "Root",
+    "root": "Hauptverzeichnis",
     "userOffline": "Benutzer Offline",
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "No content to display",
     "theDirectoryIsEmpty": "Das Verzeichnis ist leer",
-    "updatingView": "Updating view",
+    "updatingView": "Aktualisiere Ansicht",
     "downloadFailed": "Download fehlgeschlagen",
     "table": {
       "name": "Name",
@@ -239,7 +239,7 @@
     "actions": {
       "download": "Herunterladen",
       "downloadTo": "Herunterladen nach...",
-      "findNfo": "Find NFO",
+      "findNfo": "Finde NFO",
       "search": "Suche",
       "sendMessage": "Nachricht senden",
       "browseShare": "Freigabe durchsuchen",
@@ -252,17 +252,17 @@
       "shutDownApplication": "Anwendung herunterfahren",
       "restartWebServer": "Webserver neu starten",
       "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again",
+      "closeAndDontShowAgain": "Schließen und nicht wieder anzeigen",
       "notifications": {
-        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard"
+        "ignoreUserSuccess": "Benutzer {{item.nicks}} wurde zu ignorierte Benutzer hinzugefügt",
+        "unignoreUserSuccess": "Benutzer {{item.nicks}} wurde von ignorierte Benutzer entfernt",
+        "copyMagnetSuccess": "Magnet Link wurde in die Zwischenablage kopiert"
       },
       "prompts": {
-        "restartWebSystemApprove": "Continue and restart",
+        "restartWebSystemApprove": "Fortfahren und neustarten",
         "restartWebSystemReject": "Nicht neu starten",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
-        "shutdownSystemApprove": "Continue and shut down",
+        "shutdownSystemApprove": "Fortfahren und herunterfahren",
         "shutdownSystemReject": "Abbrechen",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
@@ -282,20 +282,20 @@
     },
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "tomorrow": "Morgen",
     "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
-    "actionSucceed": "Action succeed",
-    "actionFailed": "Action failed",
+    "actionSucceed": "Aktion erfolgreich",
+    "actionFailed": "Aktion fehlgeschlagen",
     "queueingFailed": "Failed to queue the item {{item.name}}",
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
     "loadingItems": "Elemente werden geladen",
-    "root": "Root",
+    "root": "Hauptverzeichnis",
     "name": "Name",
     "size": "Größe",
     "path": "Pfad",
@@ -316,7 +316,7 @@
     "new": "Neu...",
     "currentSessions": "Aktuelle Sitzung",
     "closeAll": "Alles schließen",
-    "recentSessions": "Recent sessions",
+    "recentSessions": "Letzte Sitzungen",
     "openedAgo": "Opened {{timeAgo}}",
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Nachrichten werden geladen",
@@ -347,9 +347,9 @@
     "previewIsNotAvailable": "Preview is not available",
     "failedToFetchContent": "Failed to fetch content",
     "noItemsToShow": "No items to show",
-    "noSessionEditAccess": "You aren't allowed to open new sessions",
+    "noSessionEditAccess": "Ihnen ist es nicht erlaubt neue Sitzungen zu öffnen",
     "noChatAccess": "You aren't allowed to send new messages",
-    "loadingSessions": "Loading sessions",
+    "loadingSessions": "Sitzungen werden geladen",
     "typeContent": "Typ/Inhalt",
     "lastModified": "Zuletzt geändert",
     "dupeType": "Dupe type",
@@ -397,7 +397,7 @@
     "connecting": "Connecting",
     "loadingUserlist": "Benutzerliste wird geladen",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
-    "new": "&amp;Verbinden",
+    "new": "Verbinden",
     "newDesc": "Connect to a new hub",
     "userList": "Benutzerliste",
     "sharePerUser": "{{total}} ({{average}}/Benutzer)",
@@ -662,7 +662,7 @@
         "totalDownloaded": "Total downloaded",
         "totalUploaded": "Total uploaded",
         "session": "Sitzung",
-        "sessionDownloaded": "Session downloaded",
+        "sessionDownloaded": "Sitzung heruntergeladen",
         "sessionUploaded": "Sitzung hochgeladen"
       },
       "share": {
@@ -724,7 +724,7 @@
           "transfers": "Übertragungen",
           "events": "Ereignisse",
           "view": "Betrachten",
-          "edit": "&amp;Bearbeiten",
+          "edit": "Bearbeiten",
           "queue": "Warteschlange",
           "favoriteHubs": "Bevorzugte Hubs",
           "settings": "Einstellungen",
@@ -812,11 +812,11 @@
       },
       "histories": {
         "maxMessageHistory": "Maximum number of messages to cache",
-        "maxSessionHistory": "Maximum number of previously opened sessions"
+        "maxSessionHistory": "Maximale Anzahl von vorherig geöffneten Sitzungen"
       },
       "miscellaneous": {
         "form": {
-          "unreadLabelDelayName": "Delay for marking chat sessions as read (seconds)",
+          "unreadLabelDelayName": "Wartezeit um Chat Sitzungen als gelesen zu markieren (Sekunden)",
           "backgroundImageUrlName": "Custom background image URL",
           "noInstallPromptName": "Never show the application install prompt in Home view"
         }
@@ -831,7 +831,7 @@
       "install": "Installieren",
       "update": "Aktualisieren",
       "stop": "Stopp",
-      "configure": "&amp;Konfigurieren",
+      "configure": "Konfigurieren",
       "prompts": {
         "installUrlPlaceholder": "URL eingeben",
         "installUrlApprove": "Installieren",
@@ -891,11 +891,11 @@
     "actions": {
       "clearChat": "Chat löschen",
       "close": "Schließen",
-      "connect": "&amp;Verbinden",
+      "connect": "Verbinden",
       "disconnect": "Trennen"
     },
     "new": "Neue Sitzung",
-    "newDesc": "Open a new private chat session",
+    "newDesc": "Öffne eine private Chat Sitzung",
     "offlineMessage": "You must to be connected to at least one hub in order to send private messages",
     "directEncryptedChannelAvailable": "Direkt verschlüsselter Kanal verfügbar",
     "establishingConnection": "Verbindung wird aufgebaut...",

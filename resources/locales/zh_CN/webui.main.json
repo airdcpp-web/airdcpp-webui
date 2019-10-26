@@ -197,13 +197,13 @@
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
       "connectionModeV4Option-1": "Disabled",
-      "connectionModeV4Option0": "Active mode",
+      "connectionModeV4Option0": "活动模式",
       "connectionModeV4Option2": "Passive mode",
       "connectionIpV4Name": "IP address",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
       "connectionModeV6Option-1": "Disabled",
-      "connectionModeV6Option0": "Active mode",
+      "connectionModeV6Option0": "活动模式",
       "connectionModeV6Option2": "Passive mode",
       "connectionIpV6Name": "IP address"
     }
@@ -420,7 +420,7 @@
       "speed": "Speed",
       "priority": "Priority",
       "type": "Type/content",
-      "timeAdded": "Added",
+      "timeAdded": "更多",
       "timeFinished": "Finished"
     },
     "actionsCaption": "Actions...",

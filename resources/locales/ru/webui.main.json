@@ -18,7 +18,7 @@
       "loadingFeed": "Лента загружена",
       "form": {
         "feedUrlName": "URL ленты",
-        "feedUrlHelp": "Поддерживаются RSS и Atom ленты",
+        "feedUrlHelp": "Поддерживаются ленты RSS и Atom",
         "feedCacheMinutesName": "Минимальный интервал обновления (минут)"
       }
     },
@@ -46,8 +46,8 @@
       "nameName": "Имя"
     },
     "widgetPositionHint": "Виджеты и их позиции зависят от браузера",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "accessDenied": "Вы не можете получить доступ к этому виджету",
+    "settingsMissing": "Настройки виджета отсутствуют"
   },
   "events": {
     "events": "События",
@@ -58,7 +58,7 @@
     },
     "notifications": {
       "information": "Информация",
-      "info": "ИНФО",
+      "info": "ИНФОРМАЦИЯ",
       "warning": "ПРЕДУПРЕЖДЕНИЯ",
       "error": "ОШИБКИ",
       "actions": {
@@ -71,7 +71,7 @@
       "filter": "Ф&amp;ильтр",
       "matchType": "Тип сравнения",
       "partial": "Частичный",
-      "regex": "Регуляр. вырражение",
+      "regex": "Регуляр. выражение",
       "wildcard": "Wildcard",
       "exact": "Точное соотв.",
       "filterByProfile": "Фильтры профиля",
@@ -97,16 +97,16 @@
     "hubs": "Хабы",
     "connection": "Соединение",
     "slots": "Слоты",
-    "ip": "Ip",
+    "ip": "IP",
     "path": "Путь",
     "searchOffline": "Для выполнения поиска необходимо подключение хотя бы к одному хабу",
     "enterSearchString": "Введите строку поиска...",
     "search": "Поиск",
-    "usersCount": "Пользовател  ({{count}})",
+    "usersCount": "Пользователь  ({{count}})",
     "usersCount_plural": "Пользователи ({{count}})",
-    "xUsersNicks": "{{count}} user ({{user.nicks}})",
-    "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
-    "noResults": "No results found for \"{{searchString}}\"",
+    "xUsersNicks": "{{count}} пользователь ({{user.nicks}})",
+    "xUsersNicks_plural": "{{count}} пользователи ({{user.nicks}})",
+    "noResults": "Для \"{{searchString}}\" ничего не найдено",
     "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
   },
   "share": {
@@ -114,11 +114,11 @@
       "path": "Путь",
       "size": "Размер",
       "virtual_name": "Виртуальное название",
-      "profiles": "Profiles",
-      "last_refresh_time": "Last refreshed",
+      "profiles": "Профили",
+      "last_refresh_time": "Последнее обновление",
       "type": "Content",
       "virtualName": "Виртуальное название",
-      "lastRefreshTime": "Last refreshed"
+      "lastRefreshTime": "Последнее обновление"
     },
     "actions": {
       "editDirectory": "Edit directory",
@@ -135,34 +135,34 @@
     "shareActions": "Share actions",
     "hashingInformation": "Hashing information",
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
-    "addShareDirectory": "Add share directory",
-    "editShareDirectory": "Edit share directory",
+    "addShareDirectory": "Добавить папку шары",
+    "editShareDirectory": "Изменить папку шары",
     "form": {
       "pathName": "Путь",
       "virtualNameName": "Виртуальное название",
       "virtualNameHelp": "Directories with identical virtual names will be merged in filelist",
       "profilesName": "Профили шары",
       "profilesHelp": "New share profiles can be created from application settings",
-      "incomingName": "входящие"
+      "incomingName": "Входящие"
     }
   },
   "favoriteHubs": {
     "actions": {
-      "addNew": "Add new",
-      "setPassword": "Set password",
+      "addNew": "Добавить новый",
+      "setPassword": "Установить пароль",
       "edit": "&amp;Правка",
       "remove": "&amp;Удалить",
       "changePassword": "Изменить пароль",
-      "removePassword": "Remove password",
+      "removePassword": "Удалить пароль",
       "prompts": {
         "changePasswordPlaceholder": "Enter password",
         "changePasswordApprove": "Update password",
         "changePasswordContent": "Enter new password for the hub {{item.name}}",
-        "removePasswordApprove": "Remove password",
+        "removePasswordApprove": "Удалить пароль",
         "removePasswordReject": "Не удалять",
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Enter password",
-        "createPasswordApprove": "Set password",
+        "createPasswordApprove": "Установить пароль",
         "createPasswordContent": "Set password for the hub {{item.name}}",
         "removeApprove": "Remove favorite hub",
         "removeReject": "Не удалять",
@@ -172,7 +172,7 @@
     "table": {
       "connectState": "State",
       "name": "Имя",
-      "autoConnect": "Auto connect",
+      "autoConnect": "Автосоединение",
       "nick": "Ник",
       "hasPassword": "Пароль",
       "hubUrl": "Адрес",
@@ -186,11 +186,11 @@
     "form": {
       "genericName": "Hub properties",
       "nameName": "Имя",
-      "hubUrlName": "Hub URL",
+      "hubUrlName": "URL хаба",
       "hubDescriptionName": "Hub description",
       "shareProfileName": "Профиль шары",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
-      "autoConnectName": "Auto connect",
+      "autoConnectName": "Автосоединение",
       "userName": "User setting overrides",
       "nickName": "Ник",
       "userDescriptionName": "Описание польователья",
@@ -199,17 +199,17 @@
       "connectionModeV4Option-1": "Выключить",
       "connectionModeV4Option0": "Активный режим",
       "connectionModeV4Option2": "Пассивный режим",
-      "connectionIpV4Name": "IP address",
+      "connectionIpV4Name": "IP-адрес",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
       "connectionModeV6Option-1": "Выключить",
       "connectionModeV6Option0": "Активный режим",
       "connectionModeV6Option2": "Пассивный режим",
-      "connectionIpV6Name": "IP address"
+      "connectionIpV6Name": "IP-адрес"
     }
   },
   "filelists": {
-    "new": "Open filelist",
+    "new": "Открыть список файлов",
     "newDesc": "Start browsing a new filelist",
     "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
     "directorySize": "Directory size",
@@ -243,12 +243,12 @@
       "search": "Поиск",
       "sendMessage": "Послать сообщение",
       "browseShare": "Browse share",
-      "ignoreMessages": "Ignore messages",
+      "ignoreMessages": "Игнорировать сообщения",
       "viewAsText": "Показать как текст",
       "playVideo": "Play video",
       "viewImage": "View image",
       "playAudio": "Play audio",
-      "copyMagnetLink": "Copy magnet link",
+      "copyMagnetLink": "Копировать magnet-ссылку",
       "shutDownApplication": "Shut down application",
       "restartWebServer": "Restart web server",
       "unignoreMessages": "Unignore messages",
