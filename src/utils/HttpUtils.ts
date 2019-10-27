@@ -1,6 +1,3 @@
-//import { ErrorResponse } from 'airdcpp-apisocket';
-//import i18next from 'i18next';
-
 import LoginStore from 'stores/LoginStore';
 
 
@@ -21,26 +18,10 @@ export const toCorsSafeUrl = (url: string) => {
   return proxyUrl;
 };
 
-/*export const toApiError = (error: Error, t: i18next.TFunction): ErrorResponse => {
-  const message = error.toString();
-  return {
-    code: error.status,
-    message,
-    json: {
-      message,
-    }
-  };
-};*/
-
 export const fetchData = async (url: string, options?: RequestInit) => {
   const res = await fetch(url, options);
 
   if (!res.ok) {
-    /*const error = new Error(`${res.statusText} (code ${res.status})`);
-    error.code = res.status;
-    error.status = res.statusText;
-    throw error;*/
-
     throw new HTTPError(res.status, res.statusText);
   }
 

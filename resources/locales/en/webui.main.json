@@ -20,7 +20,8 @@
         "feedUrlName": "Feed URL",
         "feedUrlHelp": "RSS and Atom feeds are supported",
         "feedCacheMinutesName": "Minimum refetch interval (minutes)"
-      }
+      },
+      "invalidFeed": "Invalid/unsupported feed: {{error}}"
     },
     "transfers": {
       "widgetName": "Transfers",
