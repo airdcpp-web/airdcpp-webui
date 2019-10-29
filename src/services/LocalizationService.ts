@@ -3,21 +3,35 @@ import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-//import * as resources from '../../resources/locales';
-//import { camelCase } from 'lodash';
 import Moment from 'moment';
 
-//import ajax from 'i18next-xhr-backend/dist/cjs/'; // don't use es because of jest
 import { getFilePath } from 'utils/FileUtils';
+import { fetchData } from 'utils/HttpUtils';
 ​
 
 const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) => {
   if (!!data) {
     // Post missing translations (can't be handled by webpack)
-    XHR['options']['ajax'](url, options, callback, data);
+    fetchData(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: Object.keys(data).map((key) => {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+      }).join('&')
+    })
+      .then(res => {
+        callback(res);
+      })
+      .catch(e => {
+        callback(null, e);
+      });
+
     return;
   }
 
+  // Load localization file
   let waitForLocale;
   try {
     waitForLocale = require(`../../resources/locales/${url}`);
@@ -40,35 +54,30 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
         return;
       }
 
-      // Attempt to local plain JSON 
+      // Attempt to download local plain JSON 
       // Useful for testing custom translation files, such as unpublished translations from Transifex
       const baseUrl = getFilePath(fullUrl);
-      XHR['options']['ajax'](
-      //ajax(
-        baseUrl + url, 
-        options, 
-        (responseData: any, res: any) => {
+      fetchData(
+        baseUrl + url
+      )
+        .then(async (response) => {
           let json;
 
-          const success = res.status >= 200 && res.status <= 299;
-          if (success) {
-            try {
-              json = JSON.parse(responseData);
-            } catch (e) {
-              console.error(`Failed to parse custom translation file as JSON ${url}`, e);
-              callback(null, { status: 404 });
-              return;
-            }
-
-            console.log(`Custom translation file ${url} was loaded successfully`);
-          } else {
-            console.error(`Failed to download translation resource ${url} (fallback)`, e);
+          try {
+            json = await response.json();
+          } catch (e) {
+            console.error(`Failed to parse custom translation file as JSON ${url}`, e);
+            callback(null, { status: 404 });
+            return;
           }
-  
-          callback(!!json ? json : responseData, res);
-        }, 
-        data
-      );
+
+          console.log(`Custom translation file ${url} was loaded successfully`);
+          callback(json, { status: 200 });
+        })
+        .catch(fetchError => {
+          console.error(`Failed to download translation resource ${url} (fallback)`, fetchError);
+          callback(null, fetchError);
+        });
     }
   );
 };
