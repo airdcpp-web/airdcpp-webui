@@ -28,7 +28,6 @@ export const enum TranslatableFormDefinitionProperties {
 }
 
 export type FormContext = Pick<RouteComponentProps, 'location'> & {
-  //t: i18next.TFunction;
   formT: ModuleTranslator;
 };
 

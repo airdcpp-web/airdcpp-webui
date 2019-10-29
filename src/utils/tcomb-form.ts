@@ -1,15 +1,16 @@
 //@ts-ignore
 import t from 'tcomb-form';
+import { FormContext } from 'types/ui';
 
 t.form.Form.templates = require('tcomb-form-templates-semantic');
 
-t.Positive = t.refinement(t.Number, (n: number) => {
+export const Positive = t.refinement(t.Number, (n: number) => {
   return n >= 0 && n % 1 === 0;
 });
 
 
-t.Range = function (min: number, max: number) {
-  const Range = t.refinement(t.Number, (n: number) => {
+export const Range = function (min: number | undefined, max: number | undefined) {
+  const ret = t.refinement(t.Number, (n: number) => {
     if (min && n < min) {
       return false;
     }
@@ -21,19 +22,25 @@ t.Range = function (min: number, max: number) {
     return true;
   });
 
-  Range.getValidationErrorMessage = (value: number, path: string, context: any) => {
-    if (min && value < min) {
-      return 'Minimum allowed value is ' + min;
+  ret.getValidationErrorMessage = (value: number, path: string, context: FormContext) => {
+    if (!!min && value < min) {
+      return context.formT.t('minimumValueError', {
+        defaultValue: 'Minimum allowed value is {{value}}',
+        value: min
+      });
     }
 
-    if (max && value > max) {
-      return 'Maximum allowed value is ' + max;
+    if (!!max && value > max) {
+      return context.formT.t('maximumValueError', {
+        defaultValue: 'Maximum allowed value is {{value}}',
+        value: max
+      });
     }
 
     return null;
   };
 
-  return Range;
+  return ret;
 };
 
 export default t as any;

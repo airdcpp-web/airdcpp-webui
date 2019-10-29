@@ -64,7 +64,7 @@
     "@types/react-mentions": "^3.0.2",
     "@types/react-notification-system": "^0.2.39",
     "@types/react-router-dom": "^5.1.0",
-    "@types/react-select": "^3.0.5",
+    "@types/react-select": "^3.0.6",
     "@types/react-transition-group": "^4.2.3",
     "@types/semantic-ui": "^2.2.7",
     "@types/webpack": "^4.39.5",

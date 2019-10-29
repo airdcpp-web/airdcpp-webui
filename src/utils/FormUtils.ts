@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import tcomb from 'utils/tcomb-form';
+import tcomb, { Range, Positive } from 'utils/tcomb-form';
 
 import BrowseField from 'components/form/BrowseField';
 import SelectField from 'components/form/SelectField';
@@ -14,6 +14,8 @@ import upperFirst from 'lodash/upperFirst';
 
 import { textToI18nKey } from './TranslationUtils';
 
+import { Type, form } from 'types/ui/tcomb-form';
+
 
 const typeToComponent = (
   type: API.SettingTypeEnum, 
@@ -24,9 +26,9 @@ const typeToComponent = (
   switch (type) {
     case API.SettingTypeEnum.NUMBER: {
       if (min || max) {
-        return tcomb.Range(min, max);
+        return Range(min, max);
       }
-      return isEnum ? tcomb.Number : tcomb.Positive;
+      return isEnum ? tcomb.Number : Positive;
     }
     case API.SettingTypeEnum.BOOLEAN: return tcomb.Bool;
     case API.SettingTypeEnum.STRING:
@@ -39,7 +41,7 @@ const typeToComponent = (
   throw `Field type ${type} is not supported`;
 };
 
-const parseDefinitions = (definitions: UI.FormFieldDefinition[]) => {
+const parseDefinitions = (definitions: UI.FormFieldDefinition[]): Type<any> => {
   const ret = definitions.reduce(
     (reduced, def) => {
       if (def.type === API.SettingTypeEnum.LIST) {
@@ -151,20 +153,20 @@ const intTransformer = {
   },
 };
 
-const parseTypeOptions = (type: API.SettingTypeEnum) => {
-  const options = {};
+const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
+  const options: form.TcombOptions = {};
   switch (type) {
     case API.SettingTypeEnum.TEXT: {
-      options['type'] = 'textarea';
+      options.type = 'textarea';
       break;
     } 
     //case FieldTypes.FILE_PATH:
     case API.SettingTypeEnum.DIRECTORY_PATH: {
-      options['factory'] = tcomb.form.Textbox;
-      options['template'] = BrowseField;
+      options.factory = tcomb.form.Textbox;
+      options.template = BrowseField;
 
       // TODO: file selector dialog
-      options['config'] = {
+      options.config = {
         //isFile: type === FieldTypes.FILE_PATH
         isFile: false
       };
@@ -195,15 +197,16 @@ const parseTitle = (
 const parseFieldOptions = (
   definition: UI.FormFieldDefinition,
   formT: UI.ModuleTranslator
-) => {
+): form.TcombFieldOptions => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
   if (definition.type === API.SettingTypeEnum.LIST) {
-    options['item'] = {};
+    let itemOptions: form.TcombStructOptions = {};
+    // (options as form.TcombListOptions).item = {};
     if (definition.definitions) {
       // Struct item fields
-      options['item']['fields'] = definition.definitions.reduce(
+      itemOptions.fields = definition.definitions.reduce(
         (reduced, itemDefinition) => {
           reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, formT);
           return reduced;
@@ -212,13 +215,15 @@ const parseFieldOptions = (
       );
     } else {
       // Plain items
-      options['item'] = parseTypeOptions(definition.item_type!);
+      itemOptions = parseTypeOptions(definition.item_type!);
     }
+
+    options.item = itemOptions;
   }
 
   // Captions
-  options['legend'] = parseTitle(definition, formT);
-  options['help'] = definition.help;
+  options.legend = parseTitle(definition, formT);
+  options.help = definition.help;
 
   // Enum select field?
   if (definition.options) {
@@ -234,21 +239,44 @@ const parseFieldOptions = (
     });
 
     if (definition.type === API.SettingTypeEnum.LIST) {
-      options['template'] = SelectField;
+      options.template = SelectField;
     } else if (definition.options[0].id === parseInt(definition.options[0].id as string, 10)) {
       // Integer keys won't work with the default template, do string conversion
-      options['transformer'] = intTransformer;
+      options.transformer = intTransformer;
     }
   }
 
   return options;
 };
 
+
+const findFieldByKey = (options: form.TcombStructOptions, wantedKey: string): form.TcombOptions | null => {
+  if (options.fields) {
+    for (const key of Object.keys(options.fields)) {
+      const field = options.fields[key];
+      if (key === wantedKey) {
+        return field;
+      }
+
+      if (field.fields) {
+        const subField = findFieldByKey(field, wantedKey);
+        if (subField) {
+          return subField;
+        }
+      }
+    }
+  }
+
+  return null;
+};
+
 const findFieldValueByPath = (obj: object, path: string[]): any => {
   const value = obj[path[0]];
   if (value && typeof value === 'object' && path.length > 1) {
-    path.shift();
-    return findFieldValueByPath(value, path);
+
+    const subPath = [ ...path ];
+    subPath.shift();
+    return findFieldValueByPath(value, subPath);
   }
 
   return value;
@@ -258,8 +286,10 @@ const setFieldValueByPath = (obj: object, newValue: any, path: string[]): any =>
   const curKey = path[0];
   if (path.length > 1) {
     obj[curKey] = obj[curKey] || {};
-    path.shift();
-    setFieldValueByPath(obj[curKey], newValue, path);
+
+    const subPath = [ ...path ];
+    subPath.shift();
+    setFieldValueByPath(obj[curKey], newValue, subPath);
   } else {
     obj[curKey] = newValue;
   }
@@ -388,6 +418,7 @@ export {
   // Reduces an object of current form values that don't match the source data
   reduceChangedFieldValues,
 
+  findFieldByKey,
   findFieldValueByPath,
   setFieldValueByPath,
 

@@ -7,7 +7,7 @@ import NotificationActions from 'actions/NotificationActions';
 
 import { 
   normalizeSettingValueMap, parseDefinitions, parseFieldOptions, 
-  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues, 
+  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues, findFieldByKey, 
   //translateFormProperty 
 } from 'utils/FormUtils';
 import tcomb from 'utils/tcomb-form';
@@ -22,7 +22,10 @@ import { Translation } from 'react-i18next';
 import { FormContext } from 'types/ui';
 import { getModuleT } from 'utils/TranslationUtils';
 
+import { form } from 'types/ui/tcomb-form';
+
 const TcombForm = tcomb.form.Form;
+
 
 
 // Reduces an array of field setting objects by calling props.onFieldSetting
@@ -32,7 +35,7 @@ const fieldOptionReducer = (
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
   formT: UI.ModuleTranslator,
   formValue: Partial<UI.FormValueMap>
-) => {
+): form.TcombOptions => {
   reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, formT);
 
   if (onFieldSetting) {
@@ -57,8 +60,8 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   formT: UI.ModuleTranslator,
   formValue: Partial<ValueMapT>,
   error: FieldError | null
-) => {
-  const options = {
+): form.TcombStructOptions => {
+  const options: form.TcombStructOptions = {
     // Parent handlers
     fields: fieldDefinitions.reduce(
       (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue), 
@@ -68,13 +71,13 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
 
   // Do we have an error object from the API?
   // Show the error message for the respective field
-  //const { error } = this.state;
   if (!!error) {
-    options.fields[error.field] = {
-      ...options.fields[error.field],
-      error: error.message,
-      hasError: true,
-    };
+    const field = findFieldByKey(options, error.field);
+    console.assert(!!field, `Error field ${error.field} was not found`);
+    if (!!field) {
+      field.error = error.message;
+      field.hasError = true;
+    }
   }
 
   return options;
@@ -158,7 +161,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   };
 
   sourceValue: Partial<ValueType>;
-  form: any;
+  form: form.Form;
 
   setSourceValue = (value?: Partial<ValueType>) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value);
@@ -212,7 +215,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       // Make sure that we have the converted value for the custom 
       // change handler (in case there are transforms for this field) 
       const result = this.form.getComponent(valueKeyPath).validate();
-      setFieldValueByPath(value, result.value, valueKeyPath);
+      setFieldValueByPath(value, (result as any).value, valueKeyPath);
 
       const equal = isEqual(
         findFieldValueByPath(this.sourceValue, valueKeyPath), 
