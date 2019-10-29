@@ -20,7 +20,8 @@
         "feedUrlName": "Flödeswebbadress",
         "feedUrlHelp": "RSS- och Atom-flöden stöds",
         "feedCacheMinutesName": "Minsta uppdateringsintervall (minuter)"
-      }
+      },
+      "invalidFeed": "Invalid/unsupported feed: {{error}}"
     },
     "transfers": {
       "widgetName": "Överföringar",
@@ -367,7 +368,9 @@
     "form": {
       "browse": "Bläddra",
       "noOptions": "Inga alternativ",
-      "fieldOptional": "{{definition.title}} (valfritt)"
+      "fieldOptional": "{{definition.title}} (valfritt)",
+      "minimumValueError": "Minimum allowed value is {{value}}",
+      "maximumValueError": "Maximum allowed value is {{value}}"
     }
   },
   "hubs": {

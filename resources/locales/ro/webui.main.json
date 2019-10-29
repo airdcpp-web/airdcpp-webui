@@ -20,7 +20,8 @@
         "feedUrlName": "Incarcatura URL",
         "feedUrlHelp": "Incarcatura RSS si Atom care sunt suportate",
         "feedCacheMinutesName": "Aduce din nou minim (minute)"
-      }
+      },
+      "invalidFeed": "Invalid/unsupported feed: {{error}}"
     },
     "transfers": {
       "widgetName": "Transferuri",
@@ -367,7 +368,9 @@
     "form": {
       "browse": "Cauta",
       "noOptions": "Fara optiuni",
-      "fieldOptional": "{{definition.title}} (optional)"
+      "fieldOptional": "{{definition.title}} (optional)",
+      "minimumValueError": "Minimum allowed value is {{value}}",
+      "maximumValueError": "Maximum allowed value is {{value}}"
     }
   },
   "hubs": {

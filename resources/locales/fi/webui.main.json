@@ -20,7 +20,8 @@
         "feedUrlName": "Syötteen URL-osoite",
         "feedUrlHelp": "RSS- ja Atom-syötteet ovat tuettuina",
         "feedCacheMinutesName": "Uudelleenhaun vähimmäisaikaväli (minuutteina)"
-      }
+      },
+      "invalidFeed": "Virheellinen/ei-tuettu syöte: {{error}}"
     },
     "transfers": {
       "widgetName": "Siirrot",
@@ -367,7 +368,9 @@
     "form": {
       "browse": "Selaa",
       "noOptions": "Ei vaihtoehtoja",
-      "fieldOptional": "{{definition.title}} (valinnainen)"
+      "fieldOptional": "{{definition.title}} (valinnainen)",
+      "minimumValueError": "Pienin sallittu arvo on {{value}}",
+      "maximumValueError": "Suurin sallittu arvo on {{value}}"
     }
   },
   "hubs": {

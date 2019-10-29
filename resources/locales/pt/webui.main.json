@@ -20,7 +20,8 @@
         "feedUrlName": "URL do feed",
         "feedUrlHelp": "São suportados feeds RSS e Atom",
         "feedCacheMinutesName": "Intervalo mínimo para tornar a buscar (minutos)"
-      }
+      },
+      "invalidFeed": "Invalid/unsupported feed: {{error}}"
     },
     "transfers": {
       "widgetName": "Transferências",
@@ -367,7 +368,9 @@
     "form": {
       "browse": "Navegar",
       "noOptions": "Sem opções",
-      "fieldOptional": "{{definition.title}} (opcional)"
+      "fieldOptional": "{{definition.title}} (opcional)",
+      "minimumValueError": "Minimum allowed value is {{value}}",
+      "maximumValueError": "Maximum allowed value is {{value}}"
     }
   },
   "hubs": {
