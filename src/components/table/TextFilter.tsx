@@ -8,7 +8,7 @@ import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators
 
 import { FilterMethod } from 'types/api';
 import { useMobileLayout } from 'utils/BrowserUtils';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import { Translation } from 'react-i18next';
 
@@ -22,12 +22,12 @@ const getFilterMethodCaption = (method: FilterMethod) => {
   }
 };
 
-const filterMethodToString = (method: FilterMethod, t: i18next.TFunction) => {
+const filterMethodToString = (method: FilterMethod, t: TFunction) => {
   const methodTitle = getFilterMethodCaption(method);
   return translate(methodTitle, t, 'table.filter');
 };
 
-const getPlaceholder = (method: FilterMethod, t: i18next.TFunction) => {
+const getPlaceholder = (method: FilterMethod, t: TFunction) => {
   let ret = t('table.filter.filter', 'Filter');
   if (method !== FilterMethod.PARTIAL) {
     ret += ` (${filterMethodToString(method, t).toLowerCase()})`;
@@ -86,7 +86,7 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
     this.input.focus();
   }
 
-  getFilterMethod = (method: FilterMethod, t: i18next.TFunction) => {
+  getFilterMethod = (method: FilterMethod, t: TFunction) => {
     const isCurrent = method === this.state.method;
     return (
       <MenuItemLink 

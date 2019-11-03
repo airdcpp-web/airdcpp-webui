@@ -8,7 +8,7 @@ import PathList from './PathList';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
@@ -17,7 +17,7 @@ import IconConstants from 'constants/IconConstants';
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];
   downloadHandler: UI.PathDownloadHandler;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 class AccordionTargets extends React.Component<AccordionTargetsProps> {

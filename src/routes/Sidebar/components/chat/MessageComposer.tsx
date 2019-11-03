@@ -20,7 +20,7 @@ import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import FilePreviewDialog from './FilePreviewDialog';
 import TempShareDropdown from './TempShareDropdown';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import { formatSize } from 'utils/ValueFormat';
 import LoginStore from 'stores/LoginStore';
@@ -67,7 +67,7 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
 export interface MessageComposerProps extends 
   Pick<ChatLayoutProps, 'chatApi' | 'session' | 'chatActions' | 'handleFileUpload'> {
 
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const getStorageKey = (props: RouteComponentProps) => {

@@ -10,7 +10,7 @@ import Message from 'components/semantic/Message';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
@@ -19,10 +19,10 @@ import Icon from 'components/semantic/Icon';
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
   downloadHandler: UI.PathDownloadHandler;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
-const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: i18next.TFunction) => {
+const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: TFunction) => {
   if (pathInfo.free_space <= 0) {
     return pathInfo.path;
   }
@@ -55,7 +55,7 @@ const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => 
 interface PathListProps {
   downloadHandler: UI.PathDownloadHandler;
   paths: string[];
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 interface PathListDataProps {

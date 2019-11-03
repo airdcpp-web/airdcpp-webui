@@ -7,7 +7,7 @@ import SocketService from 'services/SocketService';
 import NotificationActions from 'actions/NotificationActions';
 
 import * as UI from 'types/ui';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 
 
@@ -25,7 +25,7 @@ SystemActions.fetchAway.listen(function (this: UI.AsyncActionType<void>) {
     .catch(this.failed);
 });
 
-SystemActions.setAway.listen(function (this: UI.AsyncActionType<void>, away: boolean, t: i18next.TFunction) {
+SystemActions.setAway.listen(function (this: UI.AsyncActionType<void>, away: boolean, t: TFunction) {
   SocketService.post(SystemConstants.MODULE_URL + '/away', { 
     away,
   })
@@ -33,7 +33,7 @@ SystemActions.setAway.listen(function (this: UI.AsyncActionType<void>, away: boo
     .catch(this.failed);
 });
 
-SystemActions.setAway.completed.listen(function (away: boolean, t: i18next.TFunction) {
+SystemActions.setAway.completed.listen(function (away: boolean, t: TFunction) {
   NotificationActions.info({ 
     title: translate(away ? 'Away mode was enabled' : 'Away mode was disabled', t, UI.Modules.COMMON),
     //uid: 'away',

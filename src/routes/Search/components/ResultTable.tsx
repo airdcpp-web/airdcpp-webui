@@ -22,14 +22,14 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import { searchDownloadHandler } from 'services/api/SearchApi';
 import IconConstants from 'constants/IconConstants';
 
 
-const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: i18next.TFunction) => {
+const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: TFunction) => {
   if (count > 1) {
     return t(toI18nKey('xUsersNicks', UI.Modules.SEARCH), {
       defaultValue: `{{count}} user ({{user.nicks}})`,

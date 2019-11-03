@@ -1,5 +1,5 @@
 import Moment from 'moment';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 import { toI18nKey, translate } from './TranslationUtils';
 import * as UI from 'types/ui';
@@ -29,7 +29,7 @@ const getNormalRelativeUnits = () => ({
   relativeTime:	(Moment.localeData(Moment.locale()) as any)._relativeTime
 });
 
-const formatUnitsPerSecond = (units: string, t: i18next.TFunction) => {
+const formatUnitsPerSecond = (units: string, t: TFunction) => {
   return t(
     toI18nKey('unitsPerSecond', UI.Modules.COMMON),
     {
@@ -41,14 +41,14 @@ const formatUnitsPerSecond = (units: string, t: i18next.TFunction) => {
   );
 };
 
-export const formatUnit = (unit: string, t: i18next.TFunction) => {
+export const formatUnit = (unit: string, t: TFunction) => {
   return t(
     toI18nKey(unit.toLowerCase().replace('/', ''), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
     unit
   );
 };
 
-const formatUnits = (value: number, units: string[], threshold: number, t: i18next.TFunction) => {
+const formatUnits = (value: number, units: string[], threshold: number, t: TFunction) => {
   let u = 0;
   if (Math.abs(value) >= threshold) {
     do {
@@ -65,7 +65,7 @@ const formatUnits = (value: number, units: string[], threshold: number, t: i18ne
 
 export const ByteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
 
-export const formatSize = (bytes: number, t: i18next.TFunction, addExact: boolean = false) => {
+export const formatSize = (bytes: number, t: TFunction, addExact: boolean = false) => {
   let ret = formatUnits(bytes, ByteUnits, 1024, t);
   if (addExact && bytes > 1024) {
     ret += ` (${t(
@@ -85,7 +85,7 @@ export const formatSize = (bytes: number, t: i18next.TFunction, addExact: boolea
 
 const bitUnits = [ 'bit/s', 'Kbit/s', 'Mbit/s', 'Gbit/s' ];
 
-export const formatConnection = (bytes: number, t: i18next.TFunction) => {
+export const formatConnection = (bytes: number, t: TFunction) => {
   if (bytes === 0) {
     return null;
   }
@@ -103,7 +103,7 @@ export const formatRelativeTime = (time: number) => {
 };
 
 // http://momentjs.com/docs/#/displaying/calendar-time/
-export const formatCalendarTime = (time: number, t: i18next.TFunction) => {
+export const formatCalendarTime = (time: number, t: TFunction) => {
   if (time === 0) {
     return '';
   }
@@ -166,7 +166,7 @@ export const formatDecimal = (value: number) => {
   return parseFloat(Math.round(value * 100) / 100 as any).toFixed(2);
 };
 
-export const formatSpeed = (bytesPerSecond: number, t: i18next.TFunction) => {
+export const formatSpeed = (bytesPerSecond: number, t: TFunction) => {
   return formatUnitsPerSecond(formatSize(bytesPerSecond, t), t);
 };
 

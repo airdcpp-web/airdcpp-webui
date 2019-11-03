@@ -14,12 +14,12 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 interface UserResultProps {
   result: API.ChildSearchResult;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const UserResult: React.FC<UserResultProps> = ({ result, t }) => (

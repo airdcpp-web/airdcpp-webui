@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CellProps } from 'fixed-data-table-2';
 
 import * as UI from 'types/ui';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 export interface RowWrapperCellChildProps<
@@ -13,7 +13,7 @@ export interface RowWrapperCellChildProps<
   cellData?: CellDataT;
   rowDataGetter?: () => RowDataT;
   rowData?: RowDataT;
-  t?: i18next.TFunction;
+  t?: TFunction;
 }
 
 export interface RowWrapperCellProps extends CellProps {
@@ -24,7 +24,7 @@ export interface RowWrapperCellProps extends CellProps {
   columnKey?: string; // REQUIRED, CLONED
 
   children: React.ReactElement<any>;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 interface State {

@@ -23,7 +23,7 @@ import './style.css';
 
 import { APISocket } from 'airdcpp-apisocket';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import { getDownloadSections, DownloadSection } from './sections';
@@ -111,7 +111,7 @@ const getMenuItem = (
   section: DownloadSection, 
   activeSection: string, 
   onClick: (key: string) => void, 
-  t: i18next.TFunction
+  t: TFunction
 ) => (
   <MenuItemLink 
     key={ section.key }

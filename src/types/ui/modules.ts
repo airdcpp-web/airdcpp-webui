@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 export const enum Modules {
@@ -33,9 +33,9 @@ export enum SubNamespaces {
 }
 
 export interface ModuleTranslator {
-  t: i18next.TFunction;
+  t: TFunction;
   toI18nKey: (text: string, subModuleIds?: string[]) => string;
   translate: (text: string, subModuleIds?: string[]) => string;
   moduleId: string | string[];
-  plainT: i18next.TFunction;
+  plainT: TFunction;
 }

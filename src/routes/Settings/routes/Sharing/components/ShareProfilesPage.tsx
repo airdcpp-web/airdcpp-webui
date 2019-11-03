@@ -17,13 +17,13 @@ import * as API from 'types/api';
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { Trans } from 'react-i18next';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import IconConstants from 'constants/IconConstants';
 
 
 interface ShareProfileRowProps { 
   profile: API.ShareProfile;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (

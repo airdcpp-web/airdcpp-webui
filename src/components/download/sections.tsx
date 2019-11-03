@@ -9,11 +9,11 @@ import LoginStore from 'stores/LoginStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 export interface DownloadSectionChildProps {
-  t: i18next.TFunction;
+  t: TFunction;
   downloadHandler: UI.PathDownloadHandler;
 }
 

@@ -8,7 +8,7 @@ import { Translation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 export interface StatisticsDecoratorProps<DataT> {
@@ -23,7 +23,7 @@ export interface StatisticsDecoratorChildProps<DataT> {
 const StatisticsDecorator = function <DataT, PropsT = {}>(
   Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>, 
   fetchUrl: string, 
-  unavailableMessage: ((t: i18next.TFunction, props: PropsT) => string) | null, 
+  unavailableMessage: ((t: TFunction, props: PropsT) => string) | null, 
   fetchIntervalSeconds: number = 0
 ) {
   class Decorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {

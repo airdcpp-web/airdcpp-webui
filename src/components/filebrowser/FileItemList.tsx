@@ -7,7 +7,7 @@ import { formatSize } from 'utils/ValueFormat';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 
 
@@ -18,7 +18,7 @@ export interface FileItemProps {
   item: API.FilesystemItem;
   itemClickHandler: FileItemClickHandler;
   itemIconGetter?: FileItemIconGetter;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter, t }) => {
@@ -42,7 +42,7 @@ const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGet
 
 export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler' | 'itemIconGetter'> {
   items: API.FilesystemItem[];
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 class FileItemList extends React.Component<FileItemListProps> {

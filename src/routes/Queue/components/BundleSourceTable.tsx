@@ -12,13 +12,13 @@ import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 interface SourceProps {
   bundle: API.QueueBundle;
   source: API.QueueBundleSource;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (

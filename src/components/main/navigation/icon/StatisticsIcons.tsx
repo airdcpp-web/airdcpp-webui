@@ -16,7 +16,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { Translation } from 'react-i18next';
 
 
@@ -24,8 +24,8 @@ interface StatisticsIconProps {
   icon: IconType;
   cornerIcon?: CornerIconType; 
   bytes: number;
-  formatter: (bytes: number, t: i18next.TFunction) => React.ReactNode;
-  t: i18next.TFunction;
+  formatter: (bytes: number, t: TFunction) => React.ReactNode;
+  t: TFunction;
 }
 
 const StatisticsIcon: React.FC<StatisticsIconProps> = (

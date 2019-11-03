@@ -11,7 +11,7 @@ import * as UI from 'types/ui';
 import { AudioFile, ImageFile, TextFile, VideoFile } from 'components/file-preview';
 
 import Message from 'components/semantic/Message';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { fileToText } from 'utils/FileUtils';
 
@@ -22,7 +22,7 @@ interface FilePreviewDialogProps extends ModalProps {
 
 }
 
-const getViewerElement = (file: File, previewUrl: string, t: i18next.TFunction) => {
+const getViewerElement = (file: File, previewUrl: string, t: TFunction) => {
   if (file.type.indexOf('text') !== -1 && file.size <= 1 * 1024 * 1024) {
     return (
       <TextFile

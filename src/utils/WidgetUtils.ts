@@ -1,7 +1,7 @@
 
 import * as UI from 'types/ui';
 import { getModuleT, toI18nKey } from './TranslationUtils';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 
 export const createWidgetId = (typeId: string) => `${typeId}_${Math.floor((Math.random() * 100000000) + 1)}`;
@@ -13,10 +13,10 @@ export const widgetIdToType = (id: string) => {
   return pos !== -1 ? id.substring(0, pos) : id;
 };
 
-export const getWidgetT = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
+export const getWidgetT = (widgetInfo: UI.Widget, t: TFunction) => {
   return getModuleT(t, [ UI.Modules.WIDGETS, widgetInfo.typeId ]);
 };
 
-export const translateWidgetName = (widgetInfo: UI.Widget, t: i18next.TFunction) => {
+export const translateWidgetName = (widgetInfo: UI.Widget, t: TFunction) => {
   return t(toI18nKey('widgetName', [ UI.Modules.WIDGETS, widgetInfo.typeId ]), widgetInfo.name);
 };

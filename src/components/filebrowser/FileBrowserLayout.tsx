@@ -19,7 +19,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import './style.css';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
@@ -27,7 +27,7 @@ import Icon from 'components/semantic/Icon';
 
 
 interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction, t }) => (

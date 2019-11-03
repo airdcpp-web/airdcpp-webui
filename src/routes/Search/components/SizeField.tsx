@@ -1,11 +1,11 @@
 import React from 'react';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { ByteUnits, formatUnit } from 'utils/ValueFormat';
 
 
 interface SizeFieldProps {
-  t: i18next.TFunction;
+  t: TFunction;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
 

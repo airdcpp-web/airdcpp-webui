@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 import { Table, ColumnProps } from 'fixed-data-table-2';
 
@@ -33,7 +33,7 @@ export interface TableContainerProps {
   rowClassNameGetter?: (rowData: any) => string;
   store: any;
   dataLoader: any;
-  t: i18next.TFunction;
+  t: TFunction;
   moduleId: string | string[];
 }
 
@@ -48,7 +48,7 @@ const formatColumnName = (
   column: React.ReactElement<ColumnProps>, 
   store: any, 
   moduleId: string | string[], 
-  t: i18next.TFunction
+  t: TFunction
 ) => {
   const { name, columnKey } = column.props;
   let displayName = t(

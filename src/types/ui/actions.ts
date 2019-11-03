@@ -1,7 +1,7 @@
 import { Location } from 'history';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 
 export type ActionItemDataValueType = object | string | number | undefined;
 export type ActionItemDataType<ItemDataT extends ActionItemDataValueType> = (() => ItemDataT) | ItemDataT;
@@ -21,7 +21,7 @@ interface ActionInput<ItemDataT> extends ActionConfirmation {
 export interface ActionHandlerData<ItemDataT> {
   data: ItemDataT;
   location: Location;
-  t: i18next.TFunction;
+  t: TFunction;
   //chain: (action: ActionType)
 }
 

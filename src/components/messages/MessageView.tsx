@@ -11,7 +11,7 @@ import { formatCalendarTime } from 'utils/ValueFormat';
 import './messages.css';
 
 import * as UI from 'types/ui';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
@@ -49,7 +49,7 @@ const showDivider = (index: number, messageList: UI.MessageListItem[]) => {
 
 
 const getMessageListItem = (
-  t: i18next.TFunction,
+  t: TFunction,
   reduced: React.ReactNode[], 
   message: UI.MessageListItem, 
   index: number, 
@@ -99,7 +99,7 @@ interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
   session?: UI.SessionItemBase;
   className?: string;
-  t: i18next.TFunction;
+  t: TFunction;
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(

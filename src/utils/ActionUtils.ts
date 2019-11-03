@@ -3,7 +3,7 @@ import invariant from 'invariant';
 
 import * as UI from 'types/ui';
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
-import i18next from 'i18next';
+import { TFunction } from 'i18next';
 import NotificationActions from 'actions/NotificationActions';
 
 
@@ -34,7 +34,7 @@ type SocketActionHandler = () => Promise<any>;
 
 export const runBackgroundSocketAction = (
   handler: SocketActionHandler, 
-  t: i18next.TFunction
+  t: TFunction
 ): Promise<any> => {
   return handler().catch(e => {
     NotificationActions.apiError(

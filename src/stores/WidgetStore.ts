@@ -13,7 +13,7 @@ import { Transfers } from 'widgets/Transfers';
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
 import { widgetIdToSettingKey, widgetIdToType } from 'utils/WidgetUtils';
-//import i18next from 'i18next';
+//import { TFunction } from 'i18next';
 
 
 // CONSTANTS
@@ -123,7 +123,7 @@ const Store = {
     this.ensureDefaultWidgets();
   },
 
-  ensureDefaultWidgets: function (/*t: i18next.TFunction*/) {
+  ensureDefaultWidgets: function (/*t: TFunction*/) {
     if (Object.keys(this.layouts).length !== 0) {
       return;
     }
