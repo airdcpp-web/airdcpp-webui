@@ -21,7 +21,7 @@
         "feedUrlHelp": "Feeds RSS e Atom são suportados",
         "feedCacheMinutesName": "Intervalo mínimo de reclassificação (minutos)"
       },
-      "invalidFeed": "Invalid/unsupported feed: {{error}}"
+      "invalidFeed": "Alimentador inválido/não-suportado: {{error}}"
     },
     "transfers": {
       "widgetName": "Transferências",
@@ -369,8 +369,8 @@
       "browse": "Navegar",
       "noOptions": "Sem opções",
       "fieldOptional": "{{definition.title}} (optional)",
-      "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "minimumValueError": "Valor mínimo permitido é {{value}}",
+      "maximumValueError": "Valor máximo permitido é {{value}}"
     }
   },
   "hubs": {
