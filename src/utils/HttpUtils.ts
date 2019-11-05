@@ -37,6 +37,11 @@ export const fetchCorsSafeData = async (url: string, isJSON: boolean, options?: 
       {
         headers: {
           'Authorization': LoginStore.authToken,
+
+          // Temp workaround for people upgrading from versions < 2.7.0
+          // If the new UI was loaded before restarting the app, a cache expiration time of 
+          // one year would have been set for "Not found" errors...
+          'Cache-Control': 'no-store'
         },
         ...options,
       }

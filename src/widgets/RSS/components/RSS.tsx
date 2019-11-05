@@ -115,7 +115,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
       this.onFeedFetched(jsonFeed);
     } catch (e) {
       console.log('RSS feed download failed', feedUrl, e);
-      this.setError(e.toString());
+      this.setError(e.message);
     }
   }
 
