@@ -25,15 +25,15 @@ class ProtocolPage extends React.Component<ProtocolPageProps> {
       id.indexOf('connection_ip') === 0 || id.indexOf('connection_bind') === 0 ||
       id.indexOf('connection_update_ip') === 0 || id.indexOf('connection_ip_override') === 0)
     ) {
-      fieldOptions['disabled'] = true;
+      fieldOptions.disabled = true;
     }
 
     if (autoDetect && id.indexOf('connection_mode') === 0 && protocolEnabled) {
-      fieldOptions['disabled'] = true;
+      fieldOptions.disabled = true;
     }
 
     if (!protocolEnabled && id.indexOf('connection_auto') === 0) {
-      fieldOptions['disabled'] = true;
+      fieldOptions.disabled = true;
     }
   }
 

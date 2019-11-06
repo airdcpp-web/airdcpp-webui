@@ -38,14 +38,29 @@ const StatisticsIcon: React.FC<StatisticsIconProps> = (
   return (
     <div className="item">
       { !!cornerIcon ? (
-        <i className="icon">
-          <Icon icon={ icon } cornerIcon={ cornerIcon }/>
+        <i 
+          className="icon"             
+          style={{
+            paddingLeft: '0.2em'
+          }}
+        >
+          <Icon 
+            icon={ icon } 
+            cornerIcon={ cornerIcon }
+          />
         </i>
       ) : (
         <Icon icon={ icon }/>
       ) }
-      <div className="content" style={ !!cornerIcon ? { paddingLeft: '.2em' } : undefined }>
-        <div className="header">{ formatter(bytes, t) }</div>
+      <div 
+        className="content" 
+        style={{
+          paddingLeft: '.2em'
+        }}
+      >
+        <div className="header">
+          { formatter(bytes, t) }
+        </div>
       </div>
     </div>
   );

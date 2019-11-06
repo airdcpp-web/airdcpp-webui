@@ -24,11 +24,11 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
     };
 
     if (id === 'tcp_port') {
-      fieldOptions['help'] = translate('TCP port is used for unencrypted transfers');
+      fieldOptions.help = translate('TCP port is used for unencrypted transfers');
     } else if (id === 'tls_port') {
-      fieldOptions['help'] = translate('TLS port (TCP) is used for encrypted transfers');
+      fieldOptions.help = translate('TLS port (TCP) is used for encrypted transfers');
     } else if (id === 'udp_port') {
-      fieldOptions['help'] = translate('UDP port is used for searching');
+      fieldOptions.help = translate('UDP port is used for searching');
     }
   };
 

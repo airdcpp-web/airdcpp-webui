@@ -234,13 +234,13 @@ class WebUserDialog extends React.Component<Props> {
   onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
       const { user, moduleT } = this.props;
-      fieldOptions['factory'] = t.form.Select;
-      fieldOptions['template'] = PermissionSelector(moduleT);
-      fieldOptions['disabled'] = !this.isNew() && user.username === LoginStore.user.username;
+      fieldOptions.factory = t.form.Select;
+      fieldOptions.template = PermissionSelector(moduleT);
+      fieldOptions.disabled = !this.isNew() && user.username === LoginStore.user.username;
     } else if (id === 'password') {
-      fieldOptions['type'] = 'password';
+      fieldOptions.type = 'password';
     } else if (id === 'username') {
-      fieldOptions['disabled'] = !this.isNew();
+      fieldOptions.disabled = !this.isNew();
     }
   }
 

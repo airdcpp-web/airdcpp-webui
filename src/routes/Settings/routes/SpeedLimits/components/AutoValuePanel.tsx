@@ -42,7 +42,7 @@ class AutoValuePanel extends React.Component<AutoValuePanelProps> {
   // Disable other fields when auto detection is enabled
   onFieldSetting: FormFieldSettingHandler<any> = (settingKey, fieldOptions, formValue) => {
     if (formValue[this.getAutoKey()] && settingKey !== this.getAutoKey()) {
-      fieldOptions['disabled'] = true;
+      fieldOptions.disabled = true;
     }
   }
 

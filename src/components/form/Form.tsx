@@ -30,7 +30,7 @@ const TcombForm = tcomb.form.Form;
 
 // Reduces an array of field setting objects by calling props.onFieldSetting
 const fieldOptionReducer = (
-  reducedOptions: { [key: string]: any }, 
+  reducedOptions: form.TcombOptions, 
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
   formT: UI.ModuleTranslator,
@@ -86,7 +86,7 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
 
 export type FormFieldSettingHandler<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> = (
   key: string, 
-  definitions: UI.FormFieldDefinition[], 
+  definitions: form.TcombOptions, 
   formValue: Partial<ValueType>
 ) => void;
 
@@ -107,7 +107,7 @@ export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormV
   extends Pick<FormContext, 'location'> {
 
   fieldDefinitions: UI.FormFieldDefinition[];
-  value?: ValueType;
+  value?: ValueType | null;
   onSave: FormSaveHandler<ValueType>;
   onSourceValueUpdated?: FormSourceValueUpdateHandler<ValueType>;
   onFieldSetting?: FormFieldSettingHandler<ValueType>;
@@ -163,8 +163,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   sourceValue: Partial<ValueType>;
   form: form.Form;
 
-  setSourceValue = (value?: Partial<ValueType>) => {
-    this.sourceValue = this.mergeFields(this.state.formValue, value);
+  setSourceValue = (value?: Partial<ValueType> | null) => {
+    this.sourceValue = this.mergeFields(this.state.formValue, value || undefined);
 
     if (this.props.onSourceValueUpdated) {
       this.props.onSourceValueUpdated(this.sourceValue);

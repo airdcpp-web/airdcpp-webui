@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import React from 'react';
 
 import Select from 'react-select';
@@ -73,6 +72,6 @@ const SelectTemplate: TCombTemplate = {
   }
 };
 
-const ReactSelect = (tcomb as any).form.Form.templates.select.clone(SelectTemplate);
+const ReactSelect = tcomb.form.Form.templates.select.clone(SelectTemplate);
 
 export default ReactSelect;

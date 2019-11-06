@@ -17,7 +17,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     //const { toI18nKey } = this.props.moduleT;
     if (id === 'nmdc_encoding') {
-      fieldOptions['help'] = (
+      fieldOptions.help = (
         <Trans 
           i18nKey={ moduleT.toI18nKey(
             toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)

@@ -20,7 +20,7 @@ const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) =>
   const socksEnabled = formValue.outgoing_mode === OutgoingConnectionModeEnum.OUTGOING_SOCKS;
 
   if (!socksEnabled && id.indexOf('socks_') === 0) {
-    fieldOptions['disabled'] = true;
+    fieldOptions.disabled = true;
   }
 };
 

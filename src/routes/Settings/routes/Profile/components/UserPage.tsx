@@ -45,13 +45,13 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
       }
 
       if (message) {
-        fieldOptions['help'] = moduleT.t(
+        fieldOptions.help = moduleT.t(
           toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, profileId.toString()),
           message
         );
       }
     } else if (id === 'language_file') {
-      fieldOptions['help'] = (
+      fieldOptions.help = (
         <Trans
           i18nKey={ moduleT.toI18nKey(toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)) }
         >

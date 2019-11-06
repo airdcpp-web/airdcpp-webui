@@ -32,10 +32,11 @@ export type FormContext = Pick<RouteComponentProps, 'location'> & {
 };
 
 export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = {
-  onChange: (values: ValueT) => void,
-  options: Array<FormOption<OptionValueT>>,
-  value: ValueT,
-  config: ConfigT,
-  context: FormContext,
-  label?: string,
+  onChange: (values: ValueT) => void;
+  options: Array<FormOption<OptionValueT>>;
+  value: ValueT;
+  config: ConfigT;
+  context: FormContext;
+  label?: string;
+  attrs: any;
 };

@@ -20,7 +20,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { FavoriteHubEntry } from 'types/api';
-import Entry from 'widgets/RSS/components/Entry';
 
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [

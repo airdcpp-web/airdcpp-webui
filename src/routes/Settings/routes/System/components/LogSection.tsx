@@ -32,7 +32,7 @@ class LogSection extends React.Component<LogSectionProps> {
   }
 
   onContentSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
-    fieldOptions['disabled'] = !this.state.enabled;
+    fieldOptions.disabled = !this.state.enabled;
   }
 
   getChildClass = (className: string) => {
