@@ -94,6 +94,13 @@
       "resultDetails": "Osuman tiedot",
       "browseContent": "Selaa sisältöä"
     },
+    "form": {
+      "fileTypeName": "Tiedostotyyppi",
+      "hubUrlsName": "Hubit",
+      "maxSizeName": "Maksimikoko",
+      "minSizeName": "Minimikoko"
+    },
+    "resetAll": "Nollaa kaikki",
     "user": "Käyttäjä",
     "hubs": "Hubit",
     "connection": "Yhteys",
@@ -370,7 +377,10 @@
       "noOptions": "Ei vaihtoehtoja",
       "fieldOptional": "{{definition.title}} (valinnainen)",
       "minimumValueError": "Pienin sallittu arvo on {{value}}",
-      "maximumValueError": "Suurin sallittu arvo on {{value}}"
+      "maximumValueError": "Suurin sallittu arvo on {{value}}",
+      "any": "Mikä tahansa",
+      "directory": "Kansio",
+      "file": "Tiedosto"
     }
   },
   "hubs": {

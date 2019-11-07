@@ -94,6 +94,13 @@
       "resultDetails": "Детали результата",
       "browseContent": "Просмотр содержимого"
     },
+    "form": {
+      "fileTypeName": "Тип файла",
+      "hubUrlsName": "Хабы",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Пользователь",
     "hubs": "Хабы",
     "connection": "Соединение",
@@ -370,7 +377,10 @@
       "noOptions": "No options",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Любой",
+      "directory": "Папка",
+      "file": "&amp;Файл"
     }
   },
   "hubs": {

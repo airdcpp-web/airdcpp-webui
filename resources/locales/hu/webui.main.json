@@ -94,6 +94,13 @@
       "resultDetails": "Result details",
       "browseContent": "Browse content"
     },
+    "form": {
+      "fileTypeName": "Fájl típus",
+      "hubUrlsName": "Hubok",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Felhasználó",
     "hubs": "Hubok",
     "connection": "Csatlakozás",
@@ -370,7 +377,10 @@
       "noOptions": "No options",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Bármely",
+      "directory": "Könyvtár",
+      "file": "&amp;Fájl"
     }
   },
   "hubs": {

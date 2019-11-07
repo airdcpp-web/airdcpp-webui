@@ -94,6 +94,13 @@
       "resultDetails": "Detalii resultat",
       "browseContent": "Cauta continut"
     },
+    "form": {
+      "fileTypeName": "Tipul Fisierului",
+      "hubUrlsName": "Huburi",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "User",
     "hubs": "Huburi",
     "connection": "Conexiune",
@@ -370,7 +377,10 @@
       "noOptions": "Fara optiuni",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Oricare",
+      "directory": "Director",
+      "file": "&amp;Fisier"
     }
   },
   "hubs": {

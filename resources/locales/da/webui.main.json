@@ -94,6 +94,13 @@
       "resultDetails": "Result details",
       "browseContent": "Browse content"
     },
+    "form": {
+      "fileTypeName": "Filtype",
+      "hubUrlsName": "Hubs",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Bruger",
     "hubs": "Hubs",
     "connection": "Forbindelse",
@@ -370,7 +377,10 @@
       "noOptions": "No options",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Alle typer",
+      "directory": "Mappe",
+      "file": "Filer"
     }
   },
   "hubs": {

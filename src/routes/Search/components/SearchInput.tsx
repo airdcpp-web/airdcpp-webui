@@ -10,6 +10,7 @@ import { SearchOptionPanel, SearchOptions } from './options-panel';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
 import { RouteComponentProps } from 'react-router';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 
 interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
@@ -21,6 +22,7 @@ interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
 
 const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValue, handleSubmit, location }) => {
   const [ options, setOptions ] = useState<SearchOptions | null>(null);
+  const mobile = useMobileLayout();
   return (
     <div className="search-container">
       <div className="search-area">
@@ -32,9 +34,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValu
           placeholder={ moduleT.translate('Enter search string...') }
           button={ 
             <Button
-              className={ process.env.NODE_ENV !== 'production' ? 'blue' : undefined }
+              className="blue"
               icon={ IconConstants.SEARCH }
-              caption={ moduleT.translate('Search') }
+              caption={ !mobile ? moduleT.translate('Search') : undefined }
               loading={ running }
             />
           }

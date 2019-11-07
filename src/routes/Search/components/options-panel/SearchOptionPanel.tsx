@@ -47,16 +47,16 @@ const Fields: UI.FormFieldDefinition[] = [
     type: API.SettingTypeEnum.LIST,
     item_type: API.SettingTypeEnum.STRING,
   }, {
-    key: 'max_size',
-    title: 'Maximum size',
-    type: API.SettingTypeEnum.NUMBER,
-    optional: true,
-  }, {
     key: 'min_size',
     title: 'Minimum size',
     type: API.SettingTypeEnum.NUMBER,
     optional: true,
-  } /*, {
+  }, {
+    key: 'max_size',
+    title: 'Maximum size',
+    type: API.SettingTypeEnum.NUMBER,
+    optional: true,
+  },  /*, {
     key: 'excluded',
     title: 'Excluded words',
     type: API.SettingTypeEnum.LIST,

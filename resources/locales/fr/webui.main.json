@@ -94,6 +94,13 @@
       "resultDetails": "Détails des résultats",
       "browseContent": "Browse content"
     },
+    "form": {
+      "fileTypeName": "type de fichier",
+      "hubUrlsName": "Hubs",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Utilisateur",
     "hubs": "Hubs",
     "connection": "Connexion",
@@ -370,7 +377,10 @@
       "noOptions": "Pas d'options",
       "fieldOptional": "{{definition.title}} (optionnel)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Tous",
+      "directory": "Dossier",
+      "file": "&amp;Fichier"
     }
   },
   "hubs": {

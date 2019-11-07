@@ -94,6 +94,13 @@
       "resultDetails": "Resultatdetaljer",
       "browseContent": "Bläddra innehåll"
     },
+    "form": {
+      "fileTypeName": "Filtyp",
+      "hubUrlsName": "Hubbar",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Användare",
     "hubs": "Hubbar",
     "connection": "Anslutning",
@@ -370,7 +377,10 @@
       "noOptions": "Inga alternativ",
       "fieldOptional": "{{definition.title}} (valfritt)",
       "minimumValueError": "Minsta tillåtna värde är {{value}}",
-      "maximumValueError": "Maximalt tillåtet värde är {{value}}"
+      "maximumValueError": "Maximalt tillåtet värde är {{value}}",
+      "any": "Alla",
+      "directory": "Katalog",
+      "file": "Arkiv"
     }
   },
   "hubs": {

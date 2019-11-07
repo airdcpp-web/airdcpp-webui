@@ -94,6 +94,13 @@
       "resultDetails": "Detalhes do resultado",
       "browseContent": "Navegar conteúdo"
     },
+    "form": {
+      "fileTypeName": "Tipo de ficheiro",
+      "hubUrlsName": "Concentradores",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Utilizador",
     "hubs": "Concentradores",
     "connection": "Conexão",
@@ -370,7 +377,10 @@
       "noOptions": "Sem opções",
       "fieldOptional": "{{definition.title}} (opcional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Qualquer",
+      "directory": "Pasta",
+      "file": "Ficheiro"
     }
   },
   "hubs": {

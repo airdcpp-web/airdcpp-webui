@@ -94,6 +94,13 @@
       "resultDetails": "Result details",
       "browseContent": "Browse content"
     },
+    "form": {
+      "fileTypeName": "File type",
+      "hubUrlsName": "Hubs",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "User",
     "hubs": "Hubs",
     "connection": "Σύνδεση",
@@ -370,7 +377,10 @@
       "noOptions": "No options",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Οποιοδήποτε",
+      "directory": "Κατάλογος",
+      "file": "File"
     }
   },
   "hubs": {

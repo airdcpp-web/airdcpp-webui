@@ -21,7 +21,7 @@
         "feedUrlHelp": "RSS en Atom feeds worden ondersteund",
         "feedCacheMinutesName": "Minimale refetch interval (minuten)"
       },
-      "invalidFeed": "Invalid/unsupported feed: {{error}}"
+      "invalidFeed": "Niet geldige/ondersteunde feed: {{error}}"
     },
     "transfers": {
       "widgetName": "Overdrachten",
@@ -47,8 +47,8 @@
       "nameName": "Naam"
     },
     "widgetPositionHint": "Widgets en hun posities zijn browser-specifiek",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "accessDenied": "Je hebt geen access tot deze widget",
+    "settingsMissing": "Widget instelling mist"
   },
   "events": {
     "events": "Gebeurtenissen",
@@ -94,6 +94,13 @@
       "resultDetails": "Resultaten",
       "browseContent": "Blader door inhoud"
     },
+    "form": {
+      "fileTypeName": "Bestands type",
+      "hubUrlsName": "Hubs",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Gebruiker",
     "hubs": "Hubs",
     "connection": "Connectie",
@@ -165,9 +172,9 @@
         "createPasswordPlaceholder": "Geef wachtwoord",
         "createPasswordApprove": "Stel wachtwoord in",
         "createPasswordContent": "Stel wachtwoord in voor hub {{item.name}}",
-        "removeApprove": "Remove favorite hub",
+        "removeApprove": "Verwijder favoriete hub",
         "removeReject": "Niet verwijderen",
-        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
+        "removeContent": "Weet je zeker dat je de volgende favotiete hub wilt verwijderen {{item.name}}?"
       }
     },
     "table": {
@@ -179,16 +186,16 @@
       "hubUrl": "Hubadres",
       "shareProfile": "Share profiel"
     },
-    "notSet": "Not set",
-    "set": "Set",
-    "globalDefault": "Global default",
-    "addFavoriteHub": "Add favorite hub",
-    "editFavoriteHub": "Edit favorite hub",
+    "notSet": "Niet ingesteld",
+    "set": "Ingesteld",
+    "globalDefault": "Algemene standaard",
+    "addFavoriteHub": "Voeg favoriete hub toe",
+    "editFavoriteHub": "Edit favoriete hub",
     "form": {
-      "genericName": "Hub properties",
+      "genericName": "Hub eigenschappen",
       "nameName": "Naam",
       "hubUrlName": "Hub URL",
-      "hubDescriptionName": "Hub description",
+      "hubDescriptionName": "Hub omschrijving",
       "shareProfileName": "Share profiel",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
       "autoConnectName": "Autom. verbinden",
@@ -370,7 +377,10 @@
       "noOptions": "No options",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Elke",
+      "directory": "Map",
+      "file": "Bestand"
     }
   },
   "hubs": {

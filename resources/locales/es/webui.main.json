@@ -94,6 +94,13 @@
       "resultDetails": "Detalles del resultado",
       "browseContent": "Examinar contenido"
     },
+    "form": {
+      "fileTypeName": "Tipo de archivo",
+      "hubUrlsName": "Hubs",
+      "maxSizeName": "Maximum size",
+      "minSizeName": "Minimum size"
+    },
+    "resetAll": "Reset all",
     "user": "Usuario",
     "hubs": "Hubs",
     "connection": "Conexión",
@@ -370,7 +377,10 @@
       "noOptions": "Sin opciones",
       "fieldOptional": "{{definition.title}} (opcional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}"
+      "maximumValueError": "Maximum allowed value is {{value}}",
+      "any": "Cualquiera",
+      "directory": "Carpeta",
+      "file": "&amp;Archivo"
     }
   },
   "hubs": {
