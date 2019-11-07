@@ -18,6 +18,7 @@ export interface PopupProps {
   triggerClassName?: string;
   className?: string;
   children: ChildType | ((hide: () => void) => ChildType);
+  contentUpdateTrigger?: any; // Changes to this value will trigger re-render for the popup content
 }
 
 
@@ -26,6 +27,7 @@ interface PopupContentProps extends Pick<PopupProps, 'children'> {
   onHide: () => void;
   onShow: () => void;
   hide: () => void;
+  contentUpdateTrigger?: any;
 }
 
 const PopupContent: React.FC<PopupContentProps> = props => {
@@ -34,7 +36,7 @@ const PopupContent: React.FC<PopupContentProps> = props => {
       const { children } = props;
       return typeof children === 'function' ? children(props.hide) : children as ChildType;
     }, 
-    []
+    [ props.contentUpdateTrigger ]
   );
 
   useEffect(
@@ -152,7 +154,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
   }
 
   render() {
-    const { triggerClassName, onHover, trigger, children } = this.props;
+    const { triggerClassName, onHover, trigger, children, contentUpdateTrigger } = this.props;
     const triggerProps = {
       ref: (c: any) => this.triggerNode = c,
       className: classNames(triggerClassName, 'popup trigger'),
@@ -177,6 +179,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
             onShow={ this.show }
             onHide={ this.destroyPortal }
             hide={ this.hide }
+            contentUpdateTrigger={ contentUpdateTrigger }
           />
         ) }
       </>

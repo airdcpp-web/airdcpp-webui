@@ -16,6 +16,8 @@ export interface CheckboxProps {
   checked: boolean;
   className?: string;
   style?: React.CSSProperties;
+  settings?: SemanticUI.CheckboxSettings;
+  beforeUnchecked?: () => void;
 }
 
 class Checkbox extends React.PureComponent<CheckboxProps> {
@@ -43,6 +45,8 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
       fireOnInit: false,
       onChecked: () => this.props.onChange(true),
       onUnchecked: () => this.props.onChange(false),
+      beforeUnchecked: () => !!this.props.beforeUnchecked && this.props.beforeUnchecked(),
+      ...this.props.settings
     };
 
     $(this.c).checkbox(settings);

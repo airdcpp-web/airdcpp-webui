@@ -48,17 +48,26 @@ export const formatUnit = (unit: string, t: TFunction) => {
   );
 };
 
-const formatUnits = (value: number, units: string[], threshold: number, t: TFunction) => {
-  let u = 0;
+export const parseUnit = (value: number, units: string[], threshold: number) => {
+  let unitIndex = 0;
   if (Math.abs(value) >= threshold) {
     do {
       value /= threshold;
-      ++u;
-    } while (Math.abs(value) >= threshold && u < units.length - 1);
+      ++unitIndex;
+    } while (Math.abs(value) >= threshold && unitIndex < units.length - 1);
   }
 
+  return {
+    value,
+    unitIndex,
+  };
+};
+
+const formatUnits = (initialValue: number, units: string[], threshold: number, t: TFunction) => {
+  const { unitIndex, value } = parseUnit(initialValue, units, threshold);
+
   const formattedValue = value > 0 ? value.toFixed(2) : '0';
-  const localizedUnit = formatUnit(units[u], t);
+  const localizedUnit = formatUnit(units[unitIndex], t);
   return `${formattedValue} ${localizedUnit}`;
 };
 

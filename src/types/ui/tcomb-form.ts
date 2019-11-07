@@ -37,18 +37,19 @@ export declare namespace form {
         up: string;
     };
 
-    interface TemplateLocals {
+    interface TemplateLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> {
         attrs: any;
-        config: any;
+        config: ConfigT;
         context: any;
         disabled?: boolean;
         error?: React.ReactNode;
         hasError?: boolean;
         label?: React.ReactNode;
-        onChange: (value: any) => void;
+        onChange: (value: ValueT) => void;
         path: Path;
         typeInfo: any;
-        value: any;
+        value: ValueT;
+        options: Array<OptionValueT>;
 
         inputs: { [name: string]: React.ReactElement<any> };
     }
@@ -64,7 +65,10 @@ export declare namespace form {
         parse(value: any): any;
     }
 
-    type TemplateFunction = (locals: TemplateLocals) => React.ReactNode;
+    type TemplateFunction<OptionValueT = any, ValueT = any, ConfigT = undefined> = (
+        locals: TemplateLocals<OptionValueT, ValueT, ConfigT>
+    ) => React.ReactNode;
+    
     type ErrorMessageFunction = (value: any, path: Path, context: any) => React.ReactNode | null;
 
     type TcombRenderingOptions = {

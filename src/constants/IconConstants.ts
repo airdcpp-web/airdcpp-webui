@@ -73,6 +73,7 @@ export default {
   TIP: 'idea',
   NOTE: 'blue warning',
 
+  ANY: 'star',
   FILE: 'file outline',
   USER: 'user',
 

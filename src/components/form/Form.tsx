@@ -34,9 +34,10 @@ const fieldOptionReducer = (
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
   formT: UI.ModuleTranslator,
-  formValue: Partial<UI.FormValueMap>
+  formValue: Partial<UI.FormValueMap>,
+  optionTitleFormatter: UI.OptionTitleParser | undefined
 ): form.TcombOptions => {
-  reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, formT);
+  reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, formT, optionTitleFormatter);
 
   if (onFieldSetting) {
     onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], formValue);
@@ -45,7 +46,7 @@ const fieldOptionReducer = (
   if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
     reducedOptions[fieldDefinitions.key].fields = {};
     fieldDefinitions.definitions!.reduce(
-      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue), 
+      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter), 
       reducedOptions[fieldDefinitions.key].fields
     );
   }
@@ -59,12 +60,13 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   onFieldSetting: FormFieldSettingHandler<ValueMapT> | undefined,
   formT: UI.ModuleTranslator,
   formValue: Partial<ValueMapT>,
-  error: FieldError | null
+  error: FieldError | null,
+  optionTitleFormatter: UI.OptionTitleParser | undefined
 ): form.TcombStructOptions => {
   const options: form.TcombStructOptions = {
     // Parent handlers
     fields: fieldDefinitions.reduce(
-      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue), 
+      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter), 
       {}
     ),
   };
@@ -114,6 +116,7 @@ export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormV
   onFieldChanged?: FormFieldChangeHandler<ValueType>;
   title?: string;
   className?: string;
+  optionTitleFormatter?: UI.OptionTitleParser;
 }
 
 interface State<ValueType> {
@@ -277,12 +280,14 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       <Translation>
         { t => {
           //const { location } = useRouter(); // TODO
-          const { title, fieldDefinitions, className, onFieldSetting, location } = this.props;
+          const { title, fieldDefinitions, className, onFieldSetting, location, optionTitleFormatter } = this.props;
           const { formValue, error } = this.state;
 
           const formT = getModuleT(t, [ UI.Modules.COMMON, UI.SubNamespaces.FORM ]);
           const type = parseDefinitions(fieldDefinitions);
-          const options = getFieldOptions(fieldDefinitions, onFieldSetting, formT, formValue, error);
+          const options = getFieldOptions(
+            fieldDefinitions, onFieldSetting, formT, formValue, error, optionTitleFormatter
+          );
 
           const context: FormContext = {
             location,

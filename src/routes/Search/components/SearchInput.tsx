@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import HistoryInput from 'components/autosuggest/HistoryInput';
 import { HistoryStringEnum } from 'constants/HistoryConstants';
@@ -6,60 +6,78 @@ import Button from 'components/semantic/Button';
 
 import * as UI from 'types/ui';
 import Popup from 'components/semantic/Popup';
-import { SearchOptionPanel } from './SearchOptionPanel';
+import { SearchOptionPanel, SearchOptions } from './options-panel';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
+import { RouteComponentProps } from 'react-router';
 
 
-interface SearchInputProps {
+interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
   running: boolean;
   moduleT: UI.ModuleTranslator;
   defaultValue?: string;
-  handleSubmit: (text: string) => void;
+  handleSubmit: (text: string, options?: SearchOptions) => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValue, handleSubmit }) => (
-  <div className="search-container">
-    <div className="search-area">
-      <HistoryInput 
-        historyId={ HistoryStringEnum.SEARCH } 
-        submitHandler={ handleSubmit } 
-        disabled={ running }
-        defaultValue={ defaultValue }
-        placeholder={ moduleT.translate('Enter search string...') }
-        button={ 
-          <Button
-            className={ process.env.NODE_ENV !== 'production' ? 'blue' : undefined }
-            icon={ IconConstants.SEARCH }
-            caption={ moduleT.translate('Search') }
-            loading={ running }
-          />
-        }
-      />
-      { process.env.NODE_ENV !== 'production' && (
-        <Popup
-          triggerClassName="options" 
-          className="options" 
-          trigger={(
-            <Button 
-              caption={ (
-                <>
-                  <Icon icon={ IconConstants.OPTIONS }/>
-                  <Icon icon={ IconConstants.EXPAND }/>
-                </>
-              ) }
-            /> 
-          )}
-        >
-          { hide => (
-            <SearchOptionPanel
-              moduleT={ moduleT }
+const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValue, handleSubmit, location }) => {
+  const [ options, setOptions ] = useState<SearchOptions | null>(null);
+  return (
+    <div className="search-container">
+      <div className="search-area">
+        <HistoryInput 
+          historyId={ HistoryStringEnum.SEARCH } 
+          submitHandler={ value => handleSubmit(value, options || undefined) } 
+          disabled={ running }
+          defaultValue={ defaultValue }
+          placeholder={ moduleT.translate('Enter search string...') }
+          button={ 
+            <Button
+              className={ process.env.NODE_ENV !== 'production' ? 'blue' : undefined }
+              icon={ IconConstants.SEARCH }
+              caption={ moduleT.translate('Search') }
+              loading={ running }
             />
-          ) }
-        </Popup> 
-      )}
+          }
+        />
+        { process.env.NODE_ENV !== 'production' && (
+          <Popup
+            triggerClassName="options" 
+            className="options" 
+            trigger={(
+              <Button 
+                caption={ (
+                  <>
+                    <Icon icon={ IconConstants.OPTIONS }/>
+                    { !!options && (
+                      <span 
+                        style={{ 
+                          fontWeight: 'bold',
+                          marginRight: '3px'
+                        }}
+                      >
+                        { `(${Object.keys(options).length})` }
+                      </span>
+                    ) }
+                    <Icon icon={ IconConstants.EXPAND }/>
+                  </>
+                ) }
+              /> 
+            )}
+            contentUpdateTrigger={ options }
+          >
+            { hide => (
+              <SearchOptionPanel
+                moduleT={ moduleT }
+                location={ location }
+                onChange={ setOptions }
+                value={ options }
+              />
+            ) }
+          </Popup> 
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export { SearchInput };

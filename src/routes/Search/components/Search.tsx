@@ -18,6 +18,8 @@ import * as UI from 'types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import { SearchInput } from './SearchInput';
+import { SearchOptions } from './options-panel';
+import NotificationActions from 'actions/NotificationActions';
 
 
 const SEARCH_PERIOD = 4000;
@@ -54,26 +56,30 @@ class Search extends React.Component<SearchProps & WithTranslation> {
     }
   }
 
-  search = (searchString: string) => {
+  search = async (searchString: string, options?: SearchOptions) => {
     console.log('Searching');
 
     clearTimeout(this._searchTimeout);
 
-    SocketService.post(SearchConstants.HUB_SEARCH_URL, {
-      query: {
-        pattern: searchString,
-      },
-      priority: API.PriorityEnum.HIGH,
-    })
-      .then(this.onSearchPosted)
-      .catch((error: string) => 
-        console.error('Failed to post search: ' + error)
-      );
+    const { hub_urls, ...queryOptions } = options || {};
+    try {
+      const res = await SocketService.post<API.SearchResponse>(SearchConstants.HUB_SEARCH_URL, {
+        query: {
+          pattern: searchString,
+          ...queryOptions,
+        },
+        priority: API.PriorityEnum.HIGH,
+        hub_urls
+      });
 
-    this.setState({
-      searchString,
-      running: true 
-    });
+      this.onSearchPosted(res);
+      this.setState({
+        searchString,
+        running: true 
+      });
+    } catch (error) {
+      NotificationActions.apiError('Search failed', error);
+    }
   }
 
   onSearchPosted = (data: API.SearchResponse) => {
@@ -104,6 +110,7 @@ class Search extends React.Component<SearchProps & WithTranslation> {
             running={ running }
             defaultValue={ searchString }
             handleSubmit={ this.search }
+            location={ this.props.location }
           />
           <ResultTable 
             searchString={ searchString } 
