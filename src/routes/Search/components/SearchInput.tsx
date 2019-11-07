@@ -39,42 +39,41 @@ const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValu
             />
           }
         />
-        { process.env.NODE_ENV !== 'production' && (
-          <Popup
-            triggerClassName="options" 
-            className="options" 
-            trigger={(
-              <Button 
-                caption={ (
-                  <>
-                    <Icon icon={ IconConstants.OPTIONS }/>
-                    { !!options && (
-                      <span 
-                        style={{ 
-                          fontWeight: 'bold',
-                          marginRight: '3px'
-                        }}
-                      >
-                        { `(${Object.keys(options).length})` }
-                      </span>
-                    ) }
-                    <Icon icon={ IconConstants.EXPAND }/>
-                  </>
-                ) }
-              /> 
-            )}
-            contentUpdateTrigger={ options }
-          >
-            { hide => (
-              <SearchOptionPanel
-                moduleT={ moduleT }
-                location={ location }
-                onChange={ setOptions }
-                value={ options }
-              />
-            ) }
-          </Popup> 
-        )}
+        <Popup
+          triggerClassName="options" 
+          className="options" 
+          trigger={(
+            <Button 
+              caption={ (
+                <>
+                  <Icon icon={ IconConstants.OPTIONS }/>
+                  { !!options && (
+                    <span 
+                      style={{ 
+                        fontWeight: 'bold',
+                        marginRight: '3px',
+                        color: 'black'
+                      }}
+                    >
+                      { `(${Object.keys(options).length})` }
+                    </span>
+                  ) }
+                  <Icon icon={ IconConstants.EXPAND }/>
+                </>
+              ) }
+            /> 
+          )}
+          contentUpdateTrigger={ options }
+        >
+          { hide => (
+            <SearchOptionPanel
+              moduleT={ moduleT }
+              location={ location }
+              onChange={ setOptions }
+              value={ options }
+            />
+          ) }
+        </Popup>
       </div>
     </div>
   );

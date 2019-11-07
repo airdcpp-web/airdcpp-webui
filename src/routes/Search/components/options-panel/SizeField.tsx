@@ -48,12 +48,8 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
       const curBytes = valueToBytes();
       if (value !== curBytes) {
         const { value: parsedValue, unitIndex: parsedUnitIndex } = parseUnit(value, ByteUnits, 1024);
-        // if (parsedValue % 1 === 0) {
         setDisplayValue(parsedValue);
         setUnitIndex(!!value ? parsedUnitIndex : DEFAULT_UNIT_INDEX);
-        // } else {
-        //   setDisplayValue(numericValue);
-        // }
       }
     },
     [ value ]

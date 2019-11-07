@@ -116,7 +116,7 @@
     "react-emojione": "^5.0.1",
     "react-grid-layout": "^0.17.1",
     "react-hot-loader": "^4.12.16",
-    "react-i18next": "^11.0.1",
+    "react-i18next": "^11.1.0",
     "react-linkify": "^0.2.2",
     "react-measure": "^2.3.0",
     "react-mentions": "^3.3.1",
