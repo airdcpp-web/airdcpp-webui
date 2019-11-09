@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Wacht op antwoord van de server",
     "loadingMessages": "Laadt berichten",
     "loadingSession": "Laadt sessie",
+    "yes": "Ja",
     "no": "Nee",
     "cancel": "Annuleren",
     "loading": "Laadt",
@@ -531,6 +532,9 @@
       "removeUser": "Remove user",
       "setAsDefault": "Set as default",
       "removeProfile": "Verwijder profiel",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Verwijder path",
         "removeShareExcludeReject": "Niet verwijderen",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Verwijder map",
         "removeFavoriteDirectoryReject": "Niet verwijderen",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Niet verwijderen",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Locaties",
       "skippingOptions": "Oversla opties",
       "searchMatching": "Zoek gelijken",
+      "searchTypes": "Zoek types",
       "downloadOptions": "AirDownloads",
       "priorities": "Prioriteiten",
       "notificationsCaption": "Notifications",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "File priorities",
         "highPriorityFiles": "High priority files"
+      },
+      "searchTypes": {
+        "name": "Naam",
+        "extensions": "Bestands extensies",
+        "default": "Standaard",
+        "searchTypesNote": "PS: Custom zoek types werken alleen in ADC hubs! In NMDC hubs zal het gebruik van voorgedefinieerde zoek types alleen zoeken op sets van vooringestelde niet te definiëren extensies; het gebruik van zelfgedefinieerde types zal standaard zoeken op elke extensie",
+        "form": {
+          "nameName": "Naam",
+          "extensionsName": "Bestands extensies"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",

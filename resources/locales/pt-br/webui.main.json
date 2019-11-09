@@ -97,10 +97,10 @@
     "form": {
       "fileTypeName": "Tipo de arquivo",
       "hubUrlsName": "Hubs",
-      "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "maxSizeName": "Tamanho máximo",
+      "minSizeName": "Tamanho mínimo"
     },
-    "resetAll": "Reset all",
+    "resetAll": "Restaurar tudo",
     "user": "Usuário",
     "hubs": "Hubs",
     "connection": "Connection",
@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Aguardando por resposta do servidor",
     "loadingMessages": "Carregando mensagens",
     "loadingSession": "Carregando sessão",
+    "yes": "Sim",
     "no": "Não",
     "cancel": "Cancelar",
     "loading": "Carregando",
@@ -531,6 +532,9 @@
       "removeUser": "Remover usuário",
       "setAsDefault": "Definir como padrão",
       "removeProfile": "Remover perfil",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Tem certeza de que deseja remover o usuário {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remover diretório",
         "removeFavoriteDirectoryReject": "Não remover",
-        "removeFavoriteDirectoryContent": "Tem certeza de que deseja remover o diretório favorito {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Tem certeza de que deseja remover o diretório favorito {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Não remover",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Localizações",
       "skippingOptions": "Opções de Ignorar",
       "searchMatching": "Correspondência de pesquisa",
+      "searchTypes": "Tipos de pesquisa",
       "downloadOptions": "AirDownloads",
       "priorities": "Prioridades",
       "notificationsCaption": "Notificações",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "Prioridades dos arquivos",
         "highPriorityFiles": "Arquivos de alta prioridade"
+      },
+      "searchTypes": {
+        "name": "Nome",
+        "extensions": "Extensões de arquivo",
+        "default": "Padrão",
+        "searchTypesNote": "Nota; Tipos de pesquisa personalizados serão aplicados somente aos hubs do ADC! Nos hubs NMDC, o uso de um tipo de pesquisa predefinido só procura um conjunto de extensões predefinidas e não configuráveis; usar um tipo personalizado será o padrão para procurar por qualquer extensão.",
+        "form": {
+          "nameName": "Nome",
+          "extensionsName": "Extensões de arquivo"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "As configurações listadas nesta página são específicas do navegador",

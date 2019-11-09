@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Loading messages",
     "loadingSession": "Loading session",
+    "yes": "Yes",
     "no": "No",
     "cancel": "Ακυρώνω",
     "loading": "Loading",
@@ -531,6 +532,9 @@
       "removeUser": "Remove user",
       "setAsDefault": "Set as default",
       "removeProfile": "Remove profile",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Don't remove",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remove directory",
         "removeFavoriteDirectoryReject": "Don't remove",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Don't remove",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Locations",
       "skippingOptions": "Skipping options",
       "searchMatching": "Search matching",
+      "searchTypes": "Search types",
       "downloadOptions": "Download options",
       "priorities": "Priorities",
       "notificationsCaption": "Notifications",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "File priorities",
         "highPriorityFiles": "High priority files"
+      },
+      "searchTypes": {
+        "name": "Name",
+        "extensions": "File extensions",
+        "default": "Προεπιλογή",
+        "searchTypesNote": "Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.",
+        "form": {
+          "nameName": "Name",
+          "extensionsName": "File extensions"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",

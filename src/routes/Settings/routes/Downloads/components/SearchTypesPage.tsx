@@ -70,7 +70,7 @@ const SearchTypesPage: React.FC<Props> = (
         <thead>
           <tr>
             <th>{ moduleT.translate('Name') }</th>
-            <th>{ moduleT.translate('Extensions') }</th>
+            <th>{ moduleT.translate('File extensions') }</th>
             <th>{ moduleT.translate('Default') }</th>
           </tr>
         </thead>

@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Nachrichten werden geladen",
     "loadingSession": "Sitzung wird geladen",
+    "yes": "Ja",
     "no": "Nein",
     "cancel": "Abbrechen",
     "loading": "Wird geladen",
@@ -531,6 +532,9 @@
       "removeUser": "Benutzer entfernen",
       "setAsDefault": "Set as default",
       "removeProfile": "Profil entfernen",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Pfad entfernen",
         "removeShareExcludeReject": "Nicht entfernen",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Verzeichnis entfernen",
         "removeFavoriteDirectoryReject": "Nicht entfernen",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Nicht entfernen",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Orte",
       "skippingOptions": "Übergangsoptionen",
       "searchMatching": "Passende Suche",
+      "searchTypes": "Suchtypen",
       "downloadOptions": "AirDownloads",
       "priorities": "Prioritäten",
       "notificationsCaption": "Benachrichtigungen",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "Dateiprioritäten",
         "highPriorityFiles": "High priority files"
+      },
+      "searchTypes": {
+        "name": "Name",
+        "extensions": "Dateierweiterungen",
+        "default": "Standart",
+        "searchTypesNote": "Hinweis; Benutzerdefinierte Suchtypen werden nur in ADC hubs angewandt! In NMDC Hubs wird das benutzen der vordefinierten Suchtypen nur die Suche nach den vordefinierten, nicht konfigurierbaren Erweiterungen bringen; beim benutzen von benutzerdefinierten Suchtypen wird standardmäßig als nach alle Erweiterungen gesucht.",
+        "form": {
+          "nameName": "Name",
+          "extensionsName": "Dateierweiterungen"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",

@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Odotetaan palvelimen vastausta",
     "loadingMessages": "Ladataan viestejä",
     "loadingSession": "Ladataan istuntoa",
+    "yes": "Kyllä",
     "no": "Ei",
     "cancel": "Peruuta",
     "loading": "Ladataan",
@@ -531,6 +532,9 @@
       "removeUser": "Poista käyttäjä",
       "setAsDefault": "Aseta oletukseksi",
       "removeProfile": "Poista profiili",
+      "addType": "Lisää tyyppi",
+      "editType": "Muokkaa tyyppiä",
+      "removeType": "Poista tyyppi",
       "prompts": {
         "removeShareExcludeApprove": "Poista polku",
         "removeShareExcludeReject": "Älä poista",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Haluatko varmasti poistaa käyttäjän {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Poista kansio",
         "removeFavoriteDirectoryReject": "Älä poista",
-        "removeFavoriteDirectoryContent": "Haluatko varmasti poistaa suosikkikansion {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Haluatko varmasti poistaa suosikkikansion {{item.name}}?",
+        "removeSearchTypeApprove": "Poista tyyppi",
+        "removeSearchTypeReject": "Älä poista",
+        "removeSearchTypeContent": "Haluatko varmasti poistaa hakutyypin {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Sijainnit",
       "skippingOptions": "Ohitusasetukset",
       "searchMatching": "Hakutulosten täsmääminen",
+      "searchTypes": "Hakutyypit",
       "downloadOptions": "AirLataukset",
       "priorities": "Tärkeydet",
       "notificationsCaption": "Ilmoitukset",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "Tiedostojen tärkeydet",
         "highPriorityFiles": "Korkean tärkeyden tiedostot"
+      },
+      "searchTypes": {
+        "name": "Nimi",
+        "extensions": "Tiedostopäätteet",
+        "default": "Oletus",
+        "searchTypesNote": "Huomio, että itse luotuja hakutyyppejä käytetään hakemiseen ainoastaan ADC-hubeissa! NMDC-hubeissa oletushakutyypeillä haetaan vain esiasetettuja tiedostopäätteitä, joita ei voi muokata, ja itse luoduilla hakutyypeillä hakeminen vastaa minkä tahansa tiedoston hakemista.",
+        "form": {
+          "nameName": "Nimi",
+          "extensionsName": "Tiedostopäätteet"
+        },
+        "addSearchType": "Lisää hakutyyppi",
+        "editSearchType": "Muokkaa hakutyyppiä"
       }
     },
     "browserSpecificNote": "Tällä sivulla listatut asetukset ovat selainkohtaisia",

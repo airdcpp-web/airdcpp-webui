@@ -97,10 +97,10 @@
     "form": {
       "fileTypeName": "Filtyp",
       "hubUrlsName": "Hubbar",
-      "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "maxSizeName": "Maximal storlek",
+      "minSizeName": "Minsta storlek"
     },
-    "resetAll": "Reset all",
+    "resetAll": "Återställ alla",
     "user": "Användare",
     "hubs": "Hubbar",
     "connection": "Anslutning",
@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Väntar på svar från servern",
     "loadingMessages": "Laddar meddelanden",
     "loadingSession": "Laddar session",
+    "yes": "Ja",
     "no": "Nej",
     "cancel": "Avbryt",
     "loading": "Laddar",
@@ -531,6 +532,9 @@
       "removeUser": "Ta bort användare",
       "setAsDefault": "Ange som standard",
       "removeProfile": "Ta bort profil",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Ta bort sökväg",
         "removeShareExcludeReject": "Ta inte bort",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Är det säkert att du vill ta bort användaren {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Ta bort katalog",
         "removeFavoriteDirectoryReject": "Ta inte bort",
-        "removeFavoriteDirectoryContent": "Är du säker på att du vill ta bort favoritkatalogen {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Är du säker på att du vill ta bort favoritkatalogen {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Ta inte bort",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Platser",
       "skippingOptions": "Alternativ för uteslutning av filer",
       "searchMatching": "Sökmatchning",
+      "searchTypes": "Söktyper",
       "downloadOptions": "Nedladdningsalternativ",
       "priorities": "Prioriteter",
       "notificationsCaption": "Aviseringar",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "Filprioriteringar",
         "highPriorityFiles": "Högprioriterade filer"
+      },
+      "searchTypes": {
+        "name": "Namn",
+        "extensions": "Filändelser",
+        "default": "Standard",
+        "searchTypesNote": "Obs: Egna söktyper används bara i ADC-hubbar. I NMDC-hubbar, om man använder fördefinierade söktyper kommer en sökning utföras för de förvalda filändelserna. En egen söktyp gör att sökningar kommer att misslyckas.",
+        "form": {
+          "nameName": "Namn",
+          "extensionsName": "Filändelser"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Inställningar som är listade på den här sidan är webbläsarspecifika",

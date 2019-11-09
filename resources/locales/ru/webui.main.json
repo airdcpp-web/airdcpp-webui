@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Загрузка сообщений",
     "loadingSession": "Loading session",
+    "yes": "Да",
     "no": "Нет",
     "cancel": "Отмена",
     "loading": "Loading",
@@ -531,6 +532,9 @@
       "removeUser": "Remove user",
       "setAsDefault": "Set as default",
       "removeProfile": "Удалить профиль",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Не удалять",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remove directory",
         "removeFavoriteDirectoryReject": "Не удалять",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Не удалять",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Месторасположения",
       "skippingOptions": "Опции пропуска",
       "searchMatching": "Совпадения поиска",
+      "searchTypes": "Тип поиска",
       "downloadOptions": "Загрузка",
       "priorities": "Приоритеты",
       "notificationsCaption": "Notifications",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "File priorities",
         "highPriorityFiles": "High priority files"
+      },
+      "searchTypes": {
+        "name": "Имя",
+        "extensions": "Расширение файла",
+        "default": "По умолчанию",
+        "searchTypesNote": "Примечание: Пользовательские типы поиска применимы только для ADC хабов! На  NMDC хабах выполняеться поиск только предопределенных типов, неизменных расширений; по умолчанию используется пользовательские типы для поиска любого расширения.",
+        "form": {
+          "nameName": "Имя",
+          "extensionsName": "Расширение файла"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",

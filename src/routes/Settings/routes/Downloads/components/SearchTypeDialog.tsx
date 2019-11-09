@@ -7,8 +7,6 @@ import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/M
 import IconConstants from 'constants/IconConstants';
 import SocketService from 'services/SocketService';
 
-// import t from 'utils/tcomb-form';
-
 import Form, { FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
@@ -26,7 +24,7 @@ const Entry: UI.FormFieldDefinition[] = [
   },
   {
     key: 'extensions',
-    title: 'Extensions',
+    title: 'File extensions',
     type: API.SettingTypeEnum.LIST,
     item_type: API.SettingTypeEnum.STRING
   },
@@ -59,16 +57,6 @@ class SearchTypeDialog extends React.Component<Props> {
   isNew = () => {
     return !this.props.searchTypeEntry;
   }
-
-  /*onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
-    if (id.indexOf('path') !== -1) {
-      return Promise.resolve({
-        name: !!value.path ? getLastDirectory(value.path) : undefined 
-      });
-    }
-
-    return null;
-  }*/
 
   save = () => {
     return this.form.save();
@@ -107,7 +95,6 @@ class SearchTypeDialog extends React.Component<Props> {
         <Form<Entry>
           ref={ c => this.form = c! }
           fieldDefinitions={ this.fieldDefinitions }
-          // onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           value={ searchTypeEntry as Entry }

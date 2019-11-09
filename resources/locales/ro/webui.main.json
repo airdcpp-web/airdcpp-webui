@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Asteptand ca serverul sa raspunda",
     "loadingMessages": "Mesaje incarcate",
     "loadingSession": "Incarca sesiunea",
+    "yes": "DA",
     "no": "Nu",
     "cancel": "Renunta",
     "loading": "Incarca",
@@ -531,6 +532,9 @@
       "removeUser": "Elimina utizatorul",
       "setAsDefault": "Seteaza ca din fabrica",
       "removeProfile": "Elimina profilul",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Elimina calea",
         "removeShareExcludeReject": "Nu sterge",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Esti sigur/a ca doresti sa elimini utulizatorul  {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Sterge directorul",
         "removeFavoriteDirectoryReject": "Nu sterge",
-        "removeFavoriteDirectoryContent": "Esti sigur/a ca doresti sa elimini directorul favorit  {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Esti sigur/a ca doresti sa elimini directorul favorit  {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Nu sterge",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Locatii",
       "skippingOptions": "Optiuni sarire",
       "searchMatching": "Cautari potrivite",
+      "searchTypes": "Search types",
       "downloadOptions": "Optiuni de descarcare",
       "priorities": "Prioritati",
       "notificationsCaption": "Notificari",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "Prioritatile fisierului",
         "highPriorityFiles": "Prioritate inalta a fisierelor"
+      },
+      "searchTypes": {
+        "name": "Nume",
+        "extensions": "File extensions",
+        "default": "Default",
+        "searchTypesNote": "Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.",
+        "form": {
+          "nameName": "Nume",
+          "extensionsName": "File extensions"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Setarile aratate pe aceasta pagina sunt specific-cautarii",

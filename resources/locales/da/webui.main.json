@@ -329,6 +329,7 @@
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Loading messages",
     "loadingSession": "Loading session",
+    "yes": "Ja",
     "no": "Nej",
     "cancel": "Annullér",
     "loading": "Loading",
@@ -531,6 +532,9 @@
       "removeUser": "Remove user",
       "setAsDefault": "Set as default",
       "removeProfile": "Fjern profil",
+      "addType": "Add type",
+      "editType": "Edit type",
+      "removeType": "Remove type",
       "prompts": {
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Don't remove",
@@ -540,7 +544,10 @@
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remove directory",
         "removeFavoriteDirectoryReject": "Don't remove",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?"
+        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
+        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeReject": "Don't remove",
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
     "navigation": {
@@ -586,6 +593,7 @@
       "locations": "Placeringer",
       "skippingOptions": "Oversprings indstillinger",
       "searchMatching": "Søgesammenligner",
+      "searchTypes": "Søge typer",
       "downloadOptions": "Download indstillinger",
       "priorities": "Prioriteter",
       "notificationsCaption": "Notifications",
@@ -808,6 +816,18 @@
       "priorities": {
         "filePriorities": "File priorities",
         "highPriorityFiles": "High priority files"
+      },
+      "searchTypes": {
+        "name": "Navn",
+        "extensions": "File extensions",
+        "default": "Standard",
+        "searchTypesNote": "Bemærk, Brugerdefinerede søgetyper vil kun blive anvendt til ADC hubs! På NMDC hubs, vil der ved hjælp af en foruddefineret søgetype kun søges efter et sæt af ikke-konfigurerbar foruddefinerede udvidelser; ved hjælp af en brugerdefineret type, vil der som standard søges efter alle udvidelser.",
+        "form": {
+          "nameName": "Navn",
+          "extensionsName": "File extensions"
+        },
+        "addSearchType": "Add search type",
+        "editSearchType": "Edit search type"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",
