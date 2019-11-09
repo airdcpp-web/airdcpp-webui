@@ -43,10 +43,7 @@ export type FormContext = Pick<RouteComponentProps, 'location'> & {
 };*/
 
 export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = 
-  form.TemplateLocals<{
-    value: OptionValueT;
-    text: string;
-  }, ValueT, ConfigT>;
+  form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
 
 export type OptionTitleParser = (
   definition: FormFieldDefinition,

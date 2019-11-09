@@ -27,6 +27,10 @@ module.exports = {
       title: 'Priorities', 
       url: 'priorities',
       component: require('./components/PrioritiesPage').default,
+    }, { 
+      title: 'Search types', 
+      url: 'search-types',
+      component: require('./components/SearchTypesPage').default,
     }
   ],
 };

@@ -11,9 +11,14 @@ import * as UI from 'types/ui';
 import { updateMultiselectValues } from 'utils/FormUtils';
 
 
+type AccessOptionType = {
+  value: API.AccessEnum;
+  text: string;
+};
+
 const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
   return t.form.Form.templates.select.clone({
-    renderSelect: (locals: UI.FormLocals<API.AccessEnum, API.AccessEnum[]>) => {
+    renderSelect: (locals: UI.FormLocals<AccessOptionType, API.AccessEnum[]>) => {
       const onChange = (access: API.AccessEnum, checked: boolean) => {
         locals.onChange(
           updateMultiselectValues(locals.value, access, checked)

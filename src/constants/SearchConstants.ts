@@ -9,4 +9,5 @@ export default {
   RESULTS_URL: INSTANCE_URL + '/results',
 
   SEARCH_TYPES_URL: MODULE_URL + '/types',
+  SEARCH_TYPES_UPDATED: 'search_types_updated'
 };

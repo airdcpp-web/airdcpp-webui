@@ -186,3 +186,7 @@ export const formatAverage = (countFrom: number, total: number) => {
 export const formatPercentage = (countFrom: number, total: number) => {
   return `${(parseFloat(formatAverage(countFrom, total)) * 100).toFixed(2)} %`;
 };
+
+export const formatBoolean = (value: boolean, t: TFunction) => {
+  return value ? translate('Yes', t, UI.Modules.COMMON) : translate('No', t, UI.Modules.COMMON);
+};
