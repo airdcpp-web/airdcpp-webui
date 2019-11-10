@@ -5,12 +5,11 @@ import { HistoryStringEnum } from 'constants/HistoryConstants';
 import Button from 'components/semantic/Button';
 
 import * as UI from 'types/ui';
-import Popup from 'components/semantic/Popup';
-import { SearchOptionPanel, SearchOptions } from './options-panel';
+
 import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
 import { RouteComponentProps } from 'react-router';
 import { useMobileLayout } from 'utils/BrowserUtils';
+import { SearchOptionButton, SearchOptions } from './options-panel';
 
 
 interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
@@ -41,41 +40,12 @@ const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValu
             />
           }
         />
-        <Popup
-          triggerClassName="options" 
-          className="options" 
-          trigger={(
-            <Button 
-              caption={ (
-                <>
-                  <Icon icon={ IconConstants.OPTIONS }/>
-                  { !!options && (
-                    <span 
-                      style={{ 
-                        fontWeight: 'bold',
-                        marginRight: '3px',
-                        color: 'black'
-                      }}
-                    >
-                      { `(${Object.keys(options).length})` }
-                    </span>
-                  ) }
-                  <Icon icon={ IconConstants.EXPAND }/>
-                </>
-              ) }
-            /> 
-          )}
-          contentUpdateTrigger={ options }
-        >
-          { hide => (
-            <SearchOptionPanel
-              moduleT={ moduleT }
-              location={ location }
-              onChange={ setOptions }
-              value={ options }
-            />
-          ) }
-        </Popup>
+        <SearchOptionButton
+          moduleT={ moduleT }
+          location={ location }
+          onChange={ setOptions }
+          value={ options }
+        />
       </div>
     </div>
   );

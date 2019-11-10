@@ -1,1 +1,2 @@
-export * from './SearchOptionPanel';
+export * from './SearchOptionsForm';
+export * from './SearchOptionsButton';

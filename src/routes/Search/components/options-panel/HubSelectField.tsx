@@ -4,8 +4,6 @@ import t from 'utils/tcomb-form';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import HubConstants from 'constants/HubConstants';
 import Checkbox from 'components/semantic/Checkbox';
 import { updateMultiselectValues } from 'utils/FormUtils';
 import HubIcon from 'components/icon/HubIcon';
@@ -21,7 +19,7 @@ interface DataProps {
 }
 
 
-type Props = HubSelectFieldProps & DataProviderDecoratorChildProps & DataProps;
+type Props = HubSelectFieldProps & DataProps;
 
 const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
   const onlineHubs = hubs.filter(hub => hub.connect_state.id === API.HubConnectStateEnum.CONNECTED);
@@ -62,26 +60,18 @@ const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
   );
 };
 
-const HubSelectFieldDecorated = DataProviderDecorator<HubSelectFieldProps, DataProps>(
-  HubSelectField,
-  {
-    urls: {
-      hubs: HubConstants.SESSIONS_URL
-    }
-  }
-);
-
 
 type TCombTemplate = { 
-  renderSelect: (locals: UI.FormLocals<any, string[]>) => React.ReactNode; 
+  renderSelect: (locals: UI.FormLocals<API.Hub, string[]>) => React.ReactNode; 
 };
 
 const HubsSelectField: TCombTemplate = {
   renderSelect(locals) {
     return (
-      <HubSelectFieldDecorated 
+      <HubSelectField 
         onChange={ locals.onChange }
         value={ locals.value }
+        hubs={ locals.options }
       />
     );
   }

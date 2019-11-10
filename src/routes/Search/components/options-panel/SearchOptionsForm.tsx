@@ -24,15 +24,12 @@ interface Entry extends UI.FormValueMap {
   excluded: string[] | null;
 }
 
-interface SearchOptionPanelProps {
+export interface SearchOptionsFormProps extends Pick<RouteComponentProps, 'location'> {
   moduleT: UI.ModuleTranslator;
   onChange: (value: Entry | null) => void;
   value: Entry | null;
+  hubs: API.Hub[];
 }
-
-
-type Props = SearchOptionPanelProps & Pick<RouteComponentProps, 'location'>;
-
 
 
 const Fields: UI.FormFieldDefinition[] = [
@@ -82,12 +79,10 @@ const removeEmptyProperties = (value: Entry) => {
   return ret;
 };
 
-class SearchOptionPanel extends React.Component<Props> {
-  static displayName = 'SearchOptionPanel';
+class SearchOptionsForm extends React.PureComponent<SearchOptionsFormProps> {
+  static displayName = 'SearchOptionForm';
 
-  formValue: Entry | undefined;
-
-  constructor(props: Props) {
+  constructor(props: SearchOptionsFormProps) {
     super(props);
 
     this.definitions = translateForm(Fields, props.moduleT);
@@ -115,7 +110,7 @@ class SearchOptionPanel extends React.Component<Props> {
       Object.assign(fieldOptions, {
         factory: t.form.Select,
         template: HubSelectField,
-        options: [],
+        options: this.props.hubs,
       });
     } else if (id === 'min_size' || id === 'max_size') {
       Object.assign(fieldOptions, {
@@ -160,4 +155,4 @@ class SearchOptionPanel extends React.Component<Props> {
   }
 }
 
-export { SearchOptionPanel, Entry as SearchOptions };
+export { SearchOptionsForm, Entry as SearchOptions };
