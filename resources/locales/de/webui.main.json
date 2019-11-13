@@ -97,10 +97,10 @@
     "form": {
       "fileTypeName": "Dateityp",
       "hubUrlsName": "Hubs",
-      "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "maxSizeName": "Maximale Größe",
+      "minSizeName": "Minimale Größe"
     },
-    "resetAll": "Reset all",
+    "resetAll": "Alles zurücksetzen",
     "user": "Benutzer",
     "hubs": "Hubs",
     "connection": "Verbindung",
@@ -226,7 +226,7 @@
     "root": "Hauptverzeichnis",
     "userOffline": "Benutzer Offline",
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
-    "noContentToDisplay": "No content to display",
+    "noContentToDisplay": "Kein Inhalt zum Anzeigen",
     "theDirectoryIsEmpty": "Das Verzeichnis ist leer",
     "updatingView": "Aktualisiere Ansicht",
     "downloadFailed": "Download fehlgeschlagen",
@@ -259,7 +259,7 @@
       "copyMagnetLink": "Magnet-Link kopieren",
       "shutDownApplication": "Anwendung herunterfahren",
       "restartWebServer": "Webserver neu starten",
-      "unignoreMessages": "Unignore messages",
+      "unignoreMessages": "Nachrichten nicht ignorieren",
       "closeAndDontShowAgain": "Schließen und nicht wieder anzeigen",
       "notifications": {
         "ignoreUserSuccess": "Benutzer {{item.nicks}} wurde zu ignorierte Benutzer hinzugefügt",
@@ -293,15 +293,15 @@
     "today": "Heute",
     "yesterday": "Gestern",
     "tomorrow": "Morgen",
-    "lastWeek": "[Last] {{weekDay}}",
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
+    "lastWeek": "[Letzten] {{weekDay}}",
+    "awayModeWasEnabled": "Abwesenheitsmodus wurde aktiviert ",
+    "awayModeWasDisabled": "Abwesenheitsmodus wurde deaktiviert ",
     "actionSucceed": "Aktion erfolgreich",
     "actionFailed": "Aktion fehlgeschlagen",
-    "queueingFailed": "Failed to queue the item {{item.name}}",
-    "noNfoResultsWereReceived": "No NFO results were received",
-    "networkClientError": "Network/client error",
-    "failedToFetchData": "Failed to fetch data",
+    "queueingFailed": "Fehler beim Anhängen des Objekts {{item.name}} an die Warteschlange",
+    "noNfoResultsWereReceived": "Keine NFO Ergebnisse wurden empfangen",
+    "networkClientError": "Netzwerk/Client Fehler",
+    "failedToFetchData": "Datenempfang fehlgeschlagen",
     "loadingItems": "Elemente werden geladen",
     "root": "Hauptverzeichnis",
     "name": "Name",
@@ -311,22 +311,22 @@
     "create": "Erstellen",
     "directoryName": "Verzeichnisname",
     "computer": "Computer",
-    "history": "Previous",
+    "history": "Vorherige",
     "shared": "Freigegeben",
     "favorites": "Bevorzugte",
     "dupes": "Dupes",
     "browse": "Durchsuchen",
     "download": "Herunterladen",
     "close": "Schließen",
-    "noPathsToDisplay": "No paths to display",
+    "noPathsToDisplay": "Kein Pfad zum Anzeigen",
     "spaceFree": "{{freeSpace}} frei",
     "select": "Auswählen",
     "new": "Neu...",
     "currentSessions": "Aktuelle Sitzung",
     "closeAll": "Alles schließen",
     "recentSessions": "Letzte Sitzungen",
-    "openedAgo": "Opened {{timeAgo}}",
-    "waitingForServerResponse": "Waiting for server response",
+    "openedAgo": "Geöffnet {{timeAgo}}",
+    "waitingForServerResponse": "Warten auf Antwort vom Server",
     "loadingMessages": "Nachrichten werden geladen",
     "loadingSession": "Sitzung wird geladen",
     "yes": "Ja",
@@ -334,41 +334,41 @@
     "cancel": "Abbrechen",
     "loading": "Wird geladen",
     "loadingData": "Daten werden geladen...",
-    "noOnlineHubs": "No online hubs",
+    "noOnlineHubs": "Kein Hub online",
     "installAsLocalApplication": "Als lokale Anwendung installieren",
-    "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
+    "pwaInstallDesc": "Diese Web Applikation kann lokal installiert werden und so ein besseres Benutzererlebnis ermöglichen",
     "install": "Installieren",
     "dontInstall": "Nicht installieren",
     "statisticsNotAvailable": "Statistik nicht verfügbar",
     "save": "Speichern",
-    "enterNick": "Enter nick...",
-    "enterLimitKBS": "Enter limit (kB/s)",
-    "enterLimit": "Enter limit...",
-    "removeLimit": "Remove limit",
-    "tlsOk": "Authenticity of the certificate is validated",
-    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
-    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
+    "enterNick": "Benutzername eingeben...",
+    "enterLimitKBS": "Limit eingeben (kB/s)",
+    "enterLimit": "Limit eingeben...",
+    "removeLimit": "Limit entfernen",
+    "tlsOk": "Authentizität dieses Zertifikats ist validiert",
+    "tlsOutdatedWarning": "Veraltetes cryptografisches Protokoll mit bekannten Sicherheitsschwachstellen",
+    "tlsAuthenticityWarning": "Authentizität dieses Zertifikats konnte nicht validiert werden",
     "upload": "Hochladen",
-    "sendFiles": "Send files",
-    "removeSharedFile": "Remove shared file",
-    "fileNoLongerShared": "File {{file.name}} is no longer shared",
-    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
-    "previewIsNotAvailable": "Preview is not available",
-    "failedToFetchContent": "Failed to fetch content",
-    "noItemsToShow": "No items to show",
+    "sendFiles": "Dateien senden",
+    "removeSharedFile": "Entferne freigegebene Datei",
+    "fileNoLongerShared": "Datei {{file.name}} ist nicht länger freigegeben",
+    "fileTooLarge": "Datei ist zu groß (Maximale Größe ist {{maxSize}})",
+    "previewIsNotAvailable": "Vorschau ist nicht verfügbar",
+    "failedToFetchContent": "Empfang der Inhalte fehlgeschlagen",
+    "noItemsToShow": "Keine Objekte anzuzeigen",
     "noSessionEditAccess": "Ihnen ist es nicht erlaubt neue Sitzungen zu öffnen",
-    "noChatAccess": "You aren't allowed to send new messages",
+    "noChatAccess": "Ihnen ist es nicht erlaubt neue Nachrichten zu senden",
     "loadingSessions": "Sitzungen werden geladen",
     "typeContent": "Typ/Inhalt",
     "lastModified": "Zuletzt geändert",
     "dupeType": "Dupe type",
-    "shareFull": "Share (full)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
-    "finishedFull": "Finished (full)",
-    "finishedPartial": "Finished (partial)",
-    "shareAndQueue": "Share and queue",
+    "shareFull": "Freigabe (komplett)",
+    "sharePartial": "Freigabe (teil)",
+    "queueFull": "Warteschlange (komplett)",
+    "queuePartial": "Warteschlange (teil)",
+    "finishedFull": "Abgeschlossen (komplett)",
+    "finishedPartial": "Abgeschlossen (teil)",
+    "shareAndQueue": "Freigeben und anhängen",
     "dupePaths": "Dupe paths",
     "actionsCaption": "Aktionen...",
     "tth": "TTH",
@@ -381,13 +381,13 @@
       "maximumValueError": "Maximum allowed value is {{value}}",
       "any": "Alles",
       "directory": "Verzeichnis",
-      "file": "&amp;Datei"
+      "file": "Datei"
     }
   },
   "hubs": {
     "table": {
       "nick": "Nick",
-      "shareSize": "Share size",
+      "shareSize": "Freigabegröße",
       "description": "Beschreibung",
       "tag": "Tag",
       "uploadSpeed": "Upload Geschwindigkeit",
@@ -402,13 +402,13 @@
       "close": "Schließen",
       "addToFavorites": "Zu Bevorzugten hinzufügen",
       "notifications": {
-        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+        "favoriteSuccess": "Der Hub {{item.identity.name}} wurde zu den Favoriten hinzugefügt"
       }
     },
-    "enterHubAddress": "Enter hub address...",
-    "connect": "&amp;Verbinden",
-    "notConnectedToTheHub": "Not connected to the hub",
-    "connecting": "Connecting",
+    "enterHubAddress": "Hub Adresse eingeben...",
+    "connect": "Verbinden",
+    "notConnectedToTheHub": "Nicht verbunden zum Hub",
+    "connecting": "Verbinden",
     "loadingUserlist": "Benutzerliste wird geladen",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
     "new": "Verbinden",
@@ -441,11 +441,11 @@
     "queueActions": "Queue actions",
     "pausedForced": "Pause (erzwungen)",
     "queueEmpty": "Die Warteschlange ist leer",
-    "queueEmptyDesc": "New items can be queued from search or filelists",
+    "queueEmptyDesc": "Neue Objekte können von Suchen oder Dateilisten hinzugefügt werden",
     "actions": {
       "removeCompletedBundles": "Remove completed bundles",
-      "pauseAllBundles": "Pause all bundles",
-      "resumeAllBundles": "Resume all bundles",
+      "pauseAllBundles": "Alle Pakete pausieren",
+      "resumeAllBundles": "Alle Pakete fortsetzen",
       "manageFiles": "Dateien verwalten...",
       "manageSources": "Quellen verwalten...",
       "searchForeground": "Suche (Vordergrund)",
@@ -453,19 +453,19 @@
       "remove": "Entfernen",
       "removeSource": "Quelle entfernen",
       "prompts": {
-        "removeBundleApprove": "Remove bundle",
+        "removeBundleApprove": "Paket entfernen",
         "removeBundleReject": "Nicht entfernen",
-        "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
-        "removeBundleCheckbox": "Remove finished files",
+        "removeBundleContent": "Sind Sie sicher, dass Sie das Paket {{item.name}} entfernen möchten? ",
+        "removeBundleCheckbox": "Fertige Dateien entfernen",
         "removeFileApprove": "Datei entfernen",
         "removeFileReject": "Nicht entfernen",
-        "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
+        "removeFileContent": "Sind Sie sicher, dass Sie die Datei {{item.name}} entfernen möchten?",
         "removeFileCheckbox": "Auf der Festplatte entfernen"
       },
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "removeFileSuccess": "Datei {{item.name}} wurde aus der Warteschlange entfernt",
+        "removeCompletedSuccess": "{{result.count}} fertiggestellte Pakete wurden entfernt",
+        "searchBundleAlternatesSuccess": "Das Paket {{item.name}} wurde für Alternativen gesucht"
       }
     },
     "paused": "Pause",
@@ -482,14 +482,14 @@
     "files": "Dateien",
     "size": "Größe",
     "notifications": {
-      "bundleWasAddedInQueue": "Bundle was added in queue",
-      "bundleDownloadError": "Download error: {{error}}",
+      "bundleWasAddedInQueue": "Paket wurde zur Warteschlange hinzugefügt",
+      "bundleDownloadError": "Download Fehler: {{error}}",
       "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
       "validatingDownloadedBundle": "Validating downloaded bundle",
       "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
       "bundleWasAddedInShare": "Bundle was added in share",
       "actions": {
-        "viewQueue": "View queue"
+        "viewQueue": "Warteschlange anzeigen"
       }
     }
   },
@@ -510,8 +510,8 @@
       "removeFileFromQueue": "Entferne Datei von der Warteschlange",
       "removeUserFromQueue": "Benutzer von der Warteschlange entfernen",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+        "removeFileSuccess": "Datei {{item.name}} wurde aus der Warteschlange entfernt",
+        "removeSourceSuccess": "Der Benutzer {{item.user.nicks}} wurde von {{result.count}} Dateien entfernt"
       }
     },
     "noActiveTransfers": "Keine aktiven Übertragungen"
@@ -530,7 +530,7 @@
       "addPath": "Pfad hinzufügen",
       "removePath": "Pfad entfernen",
       "removeUser": "Benutzer entfernen",
-      "setAsDefault": "Set as default",
+      "setAsDefault": "Als Standard setzen",
       "removeProfile": "Profil entfernen",
       "addType": "Add type",
       "editType": "Edit type",
@@ -575,8 +575,8 @@
       "extensionOptions": "Erweiterungsoptionen",
       "application": "Anwendung",
       "transferStatistics": "Übertragungsstatistik",
-      "shareStatistics": "Share statistics",
-      "hubStatistics": "Hub statistics",
+      "shareStatistics": "Freigabestatistik",
+      "hubStatistics": "Hub Statistik",
       "users": "Benutzer",
       "logging": "Protokollierung",
       "webServer": "Webserver",
@@ -687,13 +687,13 @@
         "sessionUploaded": "Sitzung hochgeladen"
       },
       "share": {
-        "noFilesShared": "No files shared",
+        "noFilesShared": "Keine Dateien freigegeben",
         "totalShareSize": "Total share size",
-        "totalFiles": "Total files",
+        "totalFiles": "Alle Dateien",
         "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
         "totalDirectories": "Total directories",
         "averageFileAge": "Durchschnittliches Dateialter",
-        "averageFilesPerDirectory": "Average files per directory",
+        "averageFilesPerDirectory": "Durchschnittliche Dateien pro Verzeichnis",
         "incomingSearches": "Incoming searches",
         "totalSearches": "Total searches",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
@@ -721,7 +721,7 @@
     "system": {
       "logging": {
         "sections": "Sections",
-        "variableHelp": "Variable information for Filename and Format fields"
+        "variableHelp": "Variable Information für Dateinamen und Formatfelder"
       },
       "serverSettings": {
         "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
@@ -754,7 +754,7 @@
           "sendMessages": "Nachrichten senden",
           "privateChat": "Privatchat",
           "filelists": "Dateiliste",
-          "viewedFiles": "Viewed files"
+          "viewedFiles": "Angesehene Dateien"
         },
         "addWebUser": "Add web user",
         "editUser": "Benutzer bearbeiten",
@@ -770,7 +770,7 @@
       "profiles": {
         "name": "Name",
         "totalSize": "Gesamtgröße",
-        "totalFiles": "Total files",
+        "totalFiles": "Alle Dateien",
         "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
       },
       "sharingOptions": {
@@ -815,12 +815,12 @@
       },
       "priorities": {
         "filePriorities": "Dateiprioritäten",
-        "highPriorityFiles": "High priority files"
+        "highPriorityFiles": "Hoch priorisierte Dateien"
       },
       "searchTypes": {
         "name": "Name",
         "extensions": "Dateierweiterungen",
-        "default": "Standart",
+        "default": "Standard",
         "searchTypesNote": "Hinweis; Benutzerdefinierte Suchtypen werden nur in ADC hubs angewandt! In NMDC Hubs wird das benutzen der vordefinierten Suchtypen nur die Suche nach den vordefinierten, nicht konfigurierbaren Erweiterungen bringen; beim benutzen von benutzerdefinierten Suchtypen wird standardmäßig als nach alle Erweiterungen gesucht.",
         "form": {
           "nameName": "Name",
@@ -908,13 +908,13 @@
     "actions": {
       "close": "Schließen"
     },
-    "noFiles": "No files to view",
+    "noFiles": "Keine Dateien zum Ansehen",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
     "preparingView": "Preparing view",
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",
     "notifications": {
-      "fileHasFinishedDownloading": "File has finished downloading",
+      "fileHasFinishedDownloading": "Datei Download wurde beendet",
       "actions": {
         "viewFile": "Datei ansehen"
       }

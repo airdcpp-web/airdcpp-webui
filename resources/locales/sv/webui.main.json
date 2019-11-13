@@ -1,7 +1,7 @@
 {
   "widgets": {
     "application": {
-      "widgetName": "Program",
+      "widgetName": "Applikation",
       "addWidget": "Lägg till widget...",
       "loggedInAs": "Inloggad som",
       "clientStarted": "Klienten startades",
@@ -532,9 +532,9 @@
       "removeUser": "Ta bort användare",
       "setAsDefault": "Ange som standard",
       "removeProfile": "Ta bort profil",
-      "addType": "Add type",
-      "editType": "Edit type",
-      "removeType": "Remove type",
+      "addType": "Lägg till typ",
+      "editType": "Redigera typ",
+      "removeType": "Ta bort typ",
       "prompts": {
         "removeShareExcludeApprove": "Ta bort sökväg",
         "removeShareExcludeReject": "Ta inte bort",
@@ -545,9 +545,9 @@
         "removeFavoriteDirectoryApprove": "Ta bort katalog",
         "removeFavoriteDirectoryReject": "Ta inte bort",
         "removeFavoriteDirectoryContent": "Är du säker på att du vill ta bort favoritkatalogen {{item.name}}?",
-        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeApprove": "Ta bort typ",
         "removeSearchTypeReject": "Ta inte bort",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
+        "removeSearchTypeContent": "Är det säkert att du vill ta bort söktyp {{item.name}}?"
       }
     },
     "navigation": {
@@ -573,7 +573,7 @@
       "manageInstalled": "Hantera installerade",
       "extensionCatalog": "Tilläggskatalog",
       "extensionOptions": "Tilläggsalternativ",
-      "application": "Program",
+      "application": "Applikation",
       "transferStatistics": "Överföringsstatistik",
       "shareStatistics": "Utdelningsstatistik",
       "hubStatistics": "Hubbstatistik",
@@ -821,13 +821,13 @@
         "name": "Namn",
         "extensions": "Filändelser",
         "default": "Standard",
-        "searchTypesNote": "Obs: Egna söktyper används bara i ADC-hubbar. I NMDC-hubbar, om man använder fördefinierade söktyper kommer en sökning utföras för de förvalda filändelserna. En egen söktyp gör att sökningar kommer att misslyckas.",
+        "searchTypesNote": "Obs: Egna söktyper används bara i ADC-hubbar. I NMDC-hubbar används fördefinierade söktyper som endast söker efter förvalda okonfigurerbara  filändelserna; att använda en egen typ leder bara till att söka efter alla typer av filändelser.",
         "form": {
           "nameName": "Namn",
           "extensionsName": "Filändelser"
         },
-        "addSearchType": "Add search type",
-        "editSearchType": "Edit search type"
+        "addSearchType": "Lägg till söktyp",
+        "editSearchType": "Redigera söktyp"
       }
     },
     "browserSpecificNote": "Inställningar som är listade på den här sidan är webbläsarspecifika",
