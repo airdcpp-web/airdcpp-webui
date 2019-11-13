@@ -45,7 +45,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
       fireOnInit: false,
       onChecked: () => this.props.onChange(true),
       onUnchecked: () => this.props.onChange(false),
-      beforeUnchecked: () => !!this.props.beforeUnchecked && this.props.beforeUnchecked(),
+      beforeUnchecked: () => !!this.props.beforeUnchecked ? this.props.beforeUnchecked() : true as any,
       ...this.props.settings
     };
 
