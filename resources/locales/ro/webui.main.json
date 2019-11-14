@@ -702,6 +702,7 @@
         "totalSearches": "Cautari totale",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
         "tthSearches": "Cautari TTH",
+        "textSearches": "Text searches",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} potriviri pe secunda)",
         "filteredTextSearches": "Cautari text filtrate",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",

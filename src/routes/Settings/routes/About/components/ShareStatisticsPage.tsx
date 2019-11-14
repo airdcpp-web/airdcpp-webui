@@ -76,7 +76,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
         text={ formatPercentage(stats.tth_searches, stats.total_searches) }
       />
       <Row 
-        title={ 'Text searches' } 
+        title={ translate('Text searches') } 
         // tslint:disable-next-line:max-line-length
         text={ t(
           'searchesPerSecondValue',

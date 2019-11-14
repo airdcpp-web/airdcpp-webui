@@ -702,6 +702,7 @@
         "totalSearches": "Hakujen kokonaismäärä",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} sekunnissa)",
         "tthSearches": "TTH-haut",
+        "textSearches": "Tekstihaut",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} täsmätty sekunnissa)",
         "filteredTextSearches": "Suodatetut tekstihaut",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} täsmätyistä hauista palautti tuloksia)",

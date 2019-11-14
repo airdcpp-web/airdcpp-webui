@@ -702,6 +702,7 @@
         "totalSearches": "Bilaketak guztira",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
         "tthSearches": "TTH searches",
+        "textSearches": "Text searches",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
         "filteredTextSearches": "Testu-bilaketa filtratuak",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",

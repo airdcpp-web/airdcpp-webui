@@ -702,6 +702,7 @@
         "totalSearches": "Totalt antal sökningar",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per sekund)",
         "tthSearches": "TTH-sökningar",
+        "textSearches": "Text searches",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matchning per sekund)",
         "filteredTextSearches": "Filtrerade textsökningar",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} av de matchade returnerade resultaten)",

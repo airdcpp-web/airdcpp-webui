@@ -702,6 +702,7 @@
         "totalSearches": "Total de buscas",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} por segundo)",
         "tthSearches": "Buscas TTH",
+        "textSearches": "Text searches",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} encontrados por segundo)",
         "filteredTextSearches": "Pesquisas de texto filtrado",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} dos encontrados que retornaram resultados)",
