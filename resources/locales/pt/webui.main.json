@@ -381,7 +381,11 @@
       "maximumValueError": "Maximum allowed value is {{value}}",
       "any": "Qualquer",
       "directory": "Pasta",
-      "file": "Ficheiro"
+      "file": "Ficheiro",
+      "add": "Adicionar",
+      "down": "Para baixo",
+      "remove": "Remover",
+      "up": "Up"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Nome",
-        "extensions": "Extensões de ficheiro",
+        "fileExtensions": "Extensões de ficheiro",
         "default": "Padrão",
         "searchTypesNote": "Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.",
         "form": {

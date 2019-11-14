@@ -381,7 +381,11 @@
       "maximumValueError": "Maximum allowed value is {{value}}",
       "any": "Alles",
       "directory": "Verzeichnis",
-      "file": "Datei"
+      "file": "Datei",
+      "add": "&amp;Hinzufügen",
+      "down": "Abwärts",
+      "remove": "Entfernen",
+      "up": "Up"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Name",
-        "extensions": "Dateierweiterungen",
+        "fileExtensions": "Dateierweiterungen",
         "default": "Standard",
         "searchTypesNote": "Hinweis; Benutzerdefinierte Suchtypen werden nur in ADC hubs angewandt! In NMDC Hubs wird das benutzen der vordefinierten Suchtypen nur die Suche nach den vordefinierten, nicht konfigurierbaren Erweiterungen bringen; beim benutzen von benutzerdefinierten Suchtypen wird standardmäßig als nach alle Erweiterungen gesucht.",
         "form": {

@@ -381,7 +381,11 @@
       "maximumValueError": "Maximalt tillåtet värde är {{value}}",
       "any": "Alla",
       "directory": "Katalog",
-      "file": "Arkiv"
+      "file": "Arkiv",
+      "add": "Lägg till",
+      "down": "Ned",
+      "remove": "Ta bort",
+      "up": "Up"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Namn",
-        "extensions": "Filändelser",
+        "fileExtensions": "Filändelser",
         "default": "Standard",
         "searchTypesNote": "Obs: Egna söktyper används bara i ADC-hubbar. I NMDC-hubbar används fördefinierade söktyper som endast söker efter förvalda okonfigurerbara  filändelserna; att använda en egen typ leder bara till att söka efter alla typer av filändelser.",
         "form": {

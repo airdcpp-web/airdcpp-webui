@@ -381,7 +381,11 @@
       "maximumValueError": "Maximum allowed value is {{value}}",
       "any": "Elke",
       "directory": "Map",
-      "file": "Bestand"
+      "file": "Bestand",
+      "add": "Toevoegen",
+      "down": "Omlaag",
+      "remove": "Verwijder",
+      "up": "Up"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Naam",
-        "extensions": "Bestands extensies",
+        "fileExtensions": "Bestands extensies",
         "default": "Standaard",
         "searchTypesNote": "PS: Custom zoek types werken alleen in ADC hubs! In NMDC hubs zal het gebruik van voorgedefinieerde zoek types alleen zoeken op sets van vooringestelde niet te definiëren extensies; het gebruik van zelfgedefinieerde types zal standaard zoeken op elke extensie",
         "form": {

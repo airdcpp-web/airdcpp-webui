@@ -381,7 +381,11 @@
       "maximumValueError": "Maximum allowed value is {{value}}",
       "any": "Alle typer",
       "directory": "Mappe",
-      "file": "Filer"
+      "file": "Filer",
+      "add": "Tilføj",
+      "down": "Ned",
+      "remove": "Fjern",
+      "up": "Up"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Navn",
-        "extensions": "File extensions",
+        "fileExtensions": "File extensions",
         "default": "Standard",
         "searchTypesNote": "Bemærk, Brugerdefinerede søgetyper vil kun blive anvendt til ADC hubs! På NMDC hubs, vil der ved hjælp af en foruddefineret søgetype kun søges efter et sæt af ikke-konfigurerbar foruddefinerede udvidelser; ved hjælp af en brugerdefineret type, vil der som standard søges efter alle udvidelser.",
         "form": {

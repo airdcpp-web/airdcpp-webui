@@ -381,7 +381,11 @@
       "maximumValueError": "Valor máximo permitido é {{value}}",
       "any": "Qualquer",
       "directory": "Diretório",
-      "file": "Arquivo"
+      "file": "Arquivo",
+      "add": "&amp;Adicionar",
+      "down": "Para Baixo",
+      "remove": "Remover",
+      "up": "Up"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Nome",
-        "extensions": "Extensões de arquivo",
+        "fileExtensions": "Extensões de arquivo",
         "default": "Padrão",
         "searchTypesNote": "Nota; Tipos de pesquisa personalizados serão aplicados somente aos hubs do ADC! Nos hubs NMDC, o uso de um tipo de pesquisa predefinido só procura um conjunto de extensões predefinidas e não configuráveis; usar um tipo personalizado será o padrão para procurar por qualquer extensão.",
         "form": {

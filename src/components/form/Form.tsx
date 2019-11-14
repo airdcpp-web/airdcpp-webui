@@ -61,7 +61,8 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   formT: UI.ModuleTranslator,
   formValue: Partial<ValueMapT>,
   error: FieldError | null,
-  optionTitleFormatter: UI.OptionTitleParser | undefined
+  optionTitleFormatter: UI.OptionTitleParser | undefined,
+  moduleT: UI.ModuleTranslator
 ): form.TcombStructOptions => {
   const options: form.TcombStructOptions = {
     // Parent handlers
@@ -69,6 +70,14 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
       (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter), 
       {}
     ),
+    i18n: {
+      add: moduleT.translate('Add'),
+      down: moduleT.translate('Down'),
+      optional: '', // Not being used
+      required: '', // Not being used
+      remove: moduleT.translate('Remove'),
+      up: moduleT.translate('Up')
+    },
   };
 
   // Do we have an error object from the API?
@@ -286,7 +295,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
           const formT = getModuleT(t, [ UI.Modules.COMMON, UI.SubNamespaces.FORM ]);
           const type = parseDefinitions(fieldDefinitions);
           const options = getFieldOptions(
-            fieldDefinitions, onFieldSetting, formT, formValue, error, optionTitleFormatter
+            fieldDefinitions, onFieldSetting, formT, formValue, error, optionTitleFormatter, formT
           );
 
           const context: FormContext = {

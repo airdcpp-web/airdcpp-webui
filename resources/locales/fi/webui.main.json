@@ -381,7 +381,11 @@
       "maximumValueError": "Suurin sallittu arvo on {{value}}",
       "any": "Mikä tahansa",
       "directory": "Kansio",
-      "file": "Tiedosto"
+      "file": "Tiedosto",
+      "add": "Lisää",
+      "down": "Alas",
+      "remove": "Poista",
+      "up": "Ylös"
     }
   },
   "hubs": {
@@ -819,7 +823,7 @@
       },
       "searchTypes": {
         "name": "Nimi",
-        "extensions": "Tiedostopäätteet",
+        "fileExtensions": "Tiedostopäätteet",
         "default": "Oletus",
         "searchTypesNote": "Huomio, että itse luotuja hakutyyppejä käytetään hakemiseen ainoastaan ADC-hubeissa! NMDC-hubeissa oletushakutyypeillä haetaan vain esiasetettuja tiedostopäätteitä, joita ei voi muokata, ja itse luoduilla hakutyypeillä hakeminen vastaa minkä tahansa tiedoston hakemista.",
         "form": {
