@@ -385,7 +385,7 @@
       "add": "&amp;Adicionar",
       "down": "Para Baixo",
       "remove": "Remover",
-      "up": "Up"
+      "up": "Para Cima"
     }
   },
   "hubs": {
@@ -536,9 +536,9 @@
       "removeUser": "Remover usuário",
       "setAsDefault": "Definir como padrão",
       "removeProfile": "Remover perfil",
-      "addType": "Add type",
-      "editType": "Edit type",
-      "removeType": "Remove type",
+      "addType": "Adicionar tipo",
+      "editType": "Editar tipo",
+      "removeType": "Remover tipo",
       "prompts": {
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",
@@ -549,9 +549,9 @@
         "removeFavoriteDirectoryApprove": "Remover diretório",
         "removeFavoriteDirectoryReject": "Não remover",
         "removeFavoriteDirectoryContent": "Tem certeza de que deseja remover o diretório favorito {{item.name}}?",
-        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeApprove": "Remover tipo",
         "removeSearchTypeReject": "Não remover",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
+        "removeSearchTypeContent": "Você tem certeza que quer remover o tipo de pesquisa {{item.name}}?"
       }
     },
     "navigation": {
@@ -702,7 +702,7 @@
         "totalSearches": "Total de buscas",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} por segundo)",
         "tthSearches": "Buscas TTH",
-        "textSearches": "Text searches",
+        "textSearches": "Buscas de texto",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} encontrados por segundo)",
         "filteredTextSearches": "Pesquisas de texto filtrado",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} dos encontrados que retornaram resultados)",
@@ -831,8 +831,8 @@
           "nameName": "Nome",
           "extensionsName": "Extensões de arquivo"
         },
-        "addSearchType": "Add search type",
-        "editSearchType": "Edit search type"
+        "addSearchType": "Adicionar busca do tipo",
+        "editSearchType": "Editar tipo da busca"
       }
     },
     "browserSpecificNote": "As configurações listadas nesta página são específicas do navegador",

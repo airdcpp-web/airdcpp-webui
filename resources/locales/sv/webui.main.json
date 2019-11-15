@@ -385,7 +385,7 @@
       "add": "Lägg till",
       "down": "Ned",
       "remove": "Ta bort",
-      "up": "Up"
+      "up": "Upp"
     }
   },
   "hubs": {
@@ -702,7 +702,7 @@
         "totalSearches": "Totalt antal sökningar",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per sekund)",
         "tthSearches": "TTH-sökningar",
-        "textSearches": "Text searches",
+        "textSearches": "Textsökningar",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matchning per sekund)",
         "filteredTextSearches": "Filtrerade textsökningar",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} av de matchade returnerade resultaten)",
