@@ -2,7 +2,9 @@
 import t from 'tcomb-form';
 import { FormContext } from 'types/ui';
 
-t.form.Form.templates = require('tcomb-form-templates-semantic');
+import template from 'components/form/template';
+
+t.form.Form.templates = template;
 
 export const Positive = t.refinement(t.Number, (n: number) => {
   return n >= 0 && n % 1 === 0;

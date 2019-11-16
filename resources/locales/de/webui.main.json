@@ -197,7 +197,7 @@
       "hubUrlName": "Hub URL",
       "hubDescriptionName": "Hub Beschreibung",
       "shareProfileName": "Freigabeprofil",
-      "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
+      "shareProfileHelp": "Benutzerdefinierte Freigabeprofile können erst nach der Eingabe einer ADC Hub Adresse ausgewählt werden (beginnen mit adc:// or adcs://)",
       "autoConnectName": "Automatisch verbinden",
       "userName": "Überschreibung der Benutzer Einstellungen",
       "nickName": "Nick",
@@ -225,7 +225,7 @@
     "browseOwnShare": "Eigene Freigabe durchsuchen",
     "root": "Hauptverzeichnis",
     "userOffline": "Benutzer Offline",
-    "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
+    "userOfflineDesc": "Sie können weiter durchsuchen, wenn der Benutzer wieder online kommt",
     "noContentToDisplay": "Kein Inhalt zum Anzeigen",
     "theDirectoryIsEmpty": "Das Verzeichnis ist leer",
     "updatingView": "Aktualisiere Ansicht",
@@ -272,7 +272,7 @@
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
         "shutdownSystemApprove": "Fortfahren und herunterfahren",
         "shutdownSystemReject": "Abbrechen",
-        "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
+        "shutdownSystemContent": "Sind Sie sicher, dass Sie die Anwendung herunterfahren möchten?"
       }
     },
     "units": {
@@ -377,15 +377,15 @@
       "browse": "Durchsuchen",
       "noOptions": "Keine Optionen",
       "fieldOptional": "{{definition.title}} (optional)",
-      "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}",
+      "minimumValueError": "Minimaler erlaubter Wert ist {{value}}",
+      "maximumValueError": "Maximaler erlaubter Wert ist {{value}}",
       "any": "Alles",
       "directory": "Verzeichnis",
       "file": "Datei",
-      "add": "&amp;Hinzufügen",
+      "add": "Hinzufügen",
       "down": "Abwärts",
       "remove": "Entfernen",
-      "up": "Up"
+      "up": "Aufwärts"
     }
   },
   "hubs": {
@@ -416,17 +416,17 @@
     "loadingUserlist": "Benutzerliste wird geladen",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
     "new": "Verbinden",
-    "newDesc": "Connect to a new hub",
+    "newDesc": "Mit neuem Hub verbinden",
     "userList": "Benutzerliste",
     "sharePerUser": "{{total}} ({{average}}/Benutzer)",
     "xUsers": "{{count}} Benutzer",
     "xUsers_plural": "{{count}} Benutzer",
-    "redirectRequested": "Redirect requested",
-    "acceptRedirect": "Accept redirect to {{url}}",
+    "redirectRequested": "Weiterleitung angefordert",
+    "acceptRedirect": "Akzeptiere Weiterleitung zu {{url}}",
     "passwordRequired": "Passwort erforderlich",
     "password": "Passwort",
     "submit": "Absenden",
-    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+    "passwordPromptHelp": "Dies bedeutet normalerweise, dass bereits ein Account mit Ihrem Benutzernamen registriert ist. Wenn Sie sich nicht erinnern einen Account auf diesem Hub registriert zu haben, ist es möglicherweise ein anderer Benutzer, der den gleichen Benutzernamen benutzt."  
   },
   "queue": {
     "table": {
@@ -442,12 +442,12 @@
       "timeFinished": "Beendet"
     },
     "actionsCaption": "Aktionen...",
-    "queueActions": "Queue actions",
+    "queueActions": "Aktion einreihen",
     "pausedForced": "Pause (erzwungen)",
     "queueEmpty": "Die Warteschlange ist leer",
     "queueEmptyDesc": "Neue Objekte können von Suchen oder Dateilisten hinzugefügt werden",
     "actions": {
-      "removeCompletedBundles": "Remove completed bundles",
+      "removeCompletedBundles": "Fertige Pakete entfernen",
       "pauseAllBundles": "Alle Pakete pausieren",
       "resumeAllBundles": "Alle Pakete fortsetzen",
       "manageFiles": "Dateien verwalten...",
@@ -488,10 +488,10 @@
     "notifications": {
       "bundleWasAddedInQueue": "Paket wurde zur Warteschlange hinzugefügt",
       "bundleDownloadError": "Download Fehler: {{error}}",
-      "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
-      "validatingDownloadedBundle": "Validating downloaded bundle",
-      "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
-      "bundleWasAddedInShare": "Bundle was added in share",
+      "bundleContentValidationError": "Überprüfung des Paketinhalts fehlgeschlagen: {{error}} ({{hook}})",
+      "validatingDownloadedBundle": "Überprüfe heruntergeladenes Paket",
+      "bundleWasCompletedSuccessfully": "Paket wurde erfolgreich fertiggestellt",
+      "bundleWasAddedInShare": "Paket wurde zur Freigabe hinzugefügt",
       "actions": {
         "viewQueue": "Warteschlange anzeigen"
       }
@@ -509,7 +509,7 @@
       "ip": "IP"
     },
     "actions": {
-      "forceConnect": "Force connect",
+      "forceConnect": "Verbinden erzwingen",
       "disconnect": "Trennen",
       "removeFileFromQueue": "Entferne Datei von der Warteschlange",
       "removeUserFromQueue": "Benutzer von der Warteschlange entfernen",
@@ -536,9 +536,9 @@
       "removeUser": "Benutzer entfernen",
       "setAsDefault": "Als Standard setzen",
       "removeProfile": "Profil entfernen",
-      "addType": "Add type",
-      "editType": "Edit type",
-      "removeType": "Remove type",
+      "addType": "Typ hinzufügen",
+      "editType": "Typ editieren",
+      "removeType": "Typ entfernen",
       "prompts": {
         "removeShareExcludeApprove": "Pfad entfernen",
         "removeShareExcludeReject": "Nicht entfernen",
@@ -549,15 +549,15 @@
         "removeFavoriteDirectoryApprove": "Verzeichnis entfernen",
         "removeFavoriteDirectoryReject": "Nicht entfernen",
         "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
-        "removeSearchTypeApprove": "Remove type",
+        "removeSearchTypeApprove": "Typ entfernen",
         "removeSearchTypeReject": "Nicht entfernen",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
+        "removeSearchTypeContent": "Sind Sie sicher, dass Sie den Suchtypen {{item.name}} entfernen möchten?"
       }
     },
     "navigation": {
       "profile": "Profil",
       "connectivity": "Konnektivität",
-      "speedAndLimits": "Speed and limits",
+      "speedAndLimits": "Geschwindigkeit und Limits",
       "downloads": "Downloads",
       "sharing": "Freigaben",
       "view": "Betrachten",
@@ -567,14 +567,14 @@
       "autoDetection": "Automatische Erkennung",
       "iPv4ConnectivityManual": "IPv4-Verbindung (manuell)",
       "iPv6ConnectivityManual": "IPv6-Verbindung (manuell)",
-      "portsManual": "Ports (manual)",
+      "portsManual": "Ports (manuell)",
       "proxies": "Proxies",
       "encryption": "Verschlüsselung",
       "user": "Benutzer",
       "awayMode": "Abwesenheitsmodus",
       "ignoredUsers": "Ignorierte Benutzer",
       "miscellaneous": "Verschiedenes",
-      "manageInstalled": "Manage installed",
+      "manageInstalled": "Installierte verwalten",
       "extensionCatalog": "Erweiterungskatalog",
       "extensionOptions": "Erweiterungsoptionen",
       "application": "Anwendung",
@@ -584,16 +584,16 @@
       "users": "Benutzer",
       "logging": "Protokollierung",
       "webServer": "Webserver",
-      "refreshOptions": "Refresh options",
+      "refreshOptions": "Aktualisiere Optionen",
       "shareProfiles": "Freigabeprofile",
       "sharingOptions": "Freigabeoptionen",
       "hashing": "Hashvorgang",
-      "excludedPaths": "Excluded paths",
+      "excludedPaths": "Ausgeschlossene Pfade",
       "connectionSpeed": "Verbindungsgeschwindigkeit",
-      "bandwidthLimiting": "Bandwidth limiting",
+      "bandwidthLimiting": "Bandbreitenlimitierung",
       "downloadLimits": "Download Limit",
       "uploadLimits": "Upload Grenzen",
-      "perUserLimits": "Per-user limits",
+      "perUserLimits": "Limits pro Benutzer",
       "locations": "Orte",
       "skippingOptions": "Übergangsoptionen",
       "searchMatching": "Passende Suche",
@@ -606,15 +606,15 @@
     },
     "advanced": "Fortgeschritten",
     "noUnsavedChanges": "Keine ungespeicherten Änderungen",
-    "noSavePermission": "No save permission",
+    "noSavePermission": "Keine Speicherberechtigung",
     "saveChanges": "Änderungen speichern",
-    "savingCompleted": "Saving completed",
+    "savingCompleted": "Speicherung abgeschlossen",
     "settingsWereSavedSuccessfully": "Einstellungen wurden erfolgreich gespeichert",
-    "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
+    "unsavedChangesPrompt": "Sie haben ungespeicherte Änderungen. Sind Sie sicher, dass Sie fortfahren möchten?",
     "connectivity": {
       "detection": {
         "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
-        "currentAutoDetectionStatus": "Current auto detection status",
+        "currentAutoDetectionStatus": "Status der automatischen Erkennung",
         "iPv4Connectivity": "IPv4-Verbindung",
         "iPv6Connectivity": "IPv6-Verbindung",
         "manualConfiguration": "{{status}} (manuelle Konfiguration)",
@@ -622,9 +622,9 @@
       },
       "ports": {
         "form": {
-          "tcpPortHelp": "TCP port is used for unencrypted transfers",
-          "udpPortHelp": "UDP port is used for searching",
-          "tlsPortHelp": "TLS port (TCP) is used for encrypted transfers"
+          "tcpPortHelp": "TCP Port wird für nicht verschlüsselte Übertragungen genutzt",
+          "udpPortHelp": "UDP Port wird für die Suche genutzt",
+          "tlsPortHelp": "TLS Port (TCP) wird für verschlüsselte Übertragungen genutzt"
         }
       }
     },
@@ -632,8 +632,8 @@
       "user": {
         "form": {
           "settingProfileHelp0": "Das Programm wird in normalen Privaten/Öffentlichen Hubs benutzt, um Dateien via Internet zu übertragen. Benutze das Profil wenn sie nicht sicher sind.",
-          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
-          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
+          "settingProfileHelp1": "Das Programm wird benutzt, um in RAR Archiven geteilte Dateien zu übertragen (oder andere Formate mit kleiner Größe).",
+          "settingProfileHelp2": "Das Programm wird benutzt, um Dateien in lokalen Netzwerken zu übertragen (Bsp. LAN Parties) oder in anderen geschlossenen Netzwerken (Bsp. Universitätsnetzwerke).",
           "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
         }
       },
@@ -655,77 +655,77 @@
         "installedVersion": "Installierte Version",
         "datePublished": "{{version}} (veröffentlicht {{date}})",
         "readMore": "Weiterlesen",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions."
+        "defaultExtensionEngineMissing": "Die Standarderweiterungsengine <1>node</1> ist auf Ihrem System nicht installiert. Bitte gehen Sie auf  die <3>Webseite der Engine</3> für die Installationsanleitung"
       },
       "manage": {
         "byAuthor": "von {{author}}",
         "latestVersion": "Neueste Version",
         "installedVersion": "Installierte Version",
-        "nonListedExtension": "Non-listed extension",
+        "nonListedExtension": "Nicht gelistetete Erweiterung",
         "readMore": "Weiterlesen",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
-        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
+        "noInstalledExtensions": "Keine installierten Erweiterungen gefunden. Neue Erweiterungen können von der <1>Erweiterungskatalogsseite</1> installiert werden.",
+        "defaultExtensionEngineMissing": "Die Standarderweiterungsengine <1>node</1> ist auf Ihrem System nicht installiert. Bitte gehen Sie auf  die <3>Webseite der Engine</3> für die Installationsanleitung",
+        "extensionDirectoryFetchError": "Informationsabruf vom Erweiterungsverzeichnis fehlgeschlagen: {{error}}"
       }
     },
     "about": {
       "application": {
         "applicationVersion": "Anwendungsversion",
         "webUiVersion": "Web UI-Version",
-        "webUiBuildDate": "Web UI build date",
+        "webUiBuildDate": "Weboberfläche Build Datum",
         "apiVersion": "API-Version",
-        "apiFeatureLevel": "API feature level",
+        "apiFeatureLevel": "API Funktionslevel",
         "started": "Gestartet",
         "activeSessions": "Aktive Sitzungen",
         "serverThreads": "Server Threads",
-        "resources": "Resources",
-        "homePage": "Home page",
-        "featureRequestBugTracker": "Feature request/bug tracker",
-        "documentation": "Documentation"
+        "resources": "Informationsquellen",
+        "homePage": "Webseite",
+        "featureRequestBugTracker": "Feature Anfragen / Fehlerberichte",
+        "documentation": "Dokumentation"
       },
       "transfers": {
-        "totalDownloaded": "Total downloaded",
-        "totalUploaded": "Total uploaded",
+        "totalDownloaded": "Gesamt heruntergeladen",
+        "totalUploaded": "Gesamt hochgeladen",
         "session": "Sitzung",
         "sessionDownloaded": "Sitzung heruntergeladen",
         "sessionUploaded": "Sitzung hochgeladen"
       },
       "share": {
         "noFilesShared": "Keine Dateien freigegeben",
-        "totalShareSize": "Total share size",
+        "totalShareSize": "Gesamte Freigabegröße",
         "totalFiles": "Alle Dateien",
         "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
-        "totalDirectories": "Total directories",
+        "totalDirectories": "Gesamte Verzeichnisse",
         "averageFileAge": "Durchschnittliches Dateialter",
         "averageFilesPerDirectory": "Durchschnittliche Dateien pro Verzeichnis",
-        "incomingSearches": "Incoming searches",
-        "totalSearches": "Total searches",
-        "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
-        "tthSearches": "TTH searches",
-        "textSearches": "Text searches",
-        "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
-        "filteredTextSearches": "Filtered text searches",
-        "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
-        "averageTextSearchTokensNonFiltered": "Average text search tokens (non-filtered)",
+        "incomingSearches": "Eingehende Suchen",
+        "totalSearches": "Gesamte Suchen",
+        "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} pro Sekunde)",
+        "tthSearches": "TTH Suchen",
+        "textSearches": "Text Suchen",
+        "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} übereingestimmte pro Sekunde)",
+        "filteredTextSearches": "Gefilterte Text Suchen",
+        "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} der Übereingestimmten haben Ergebnisse zurückgegeben)",
+        "averageTextSearchTokensNonFiltered": "Durchschnittliche Textsuche Token (ungefiltert)",
         "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} Bytes pro Token)",
-        "averageMatchingTimePerTextSearch": "Average matching time per text search",
+        "averageMatchingTimePerTextSearch": "Durchschnittliche Trefferzeit pro Textsuche",
         "searchesAverageMatchTimeValue": "{{matchTime}} ms"
       },
       "hubs": {
-        "noHubsOnline": "No hubs online",
-        "totalUsers": "Total users",
+        "noHubsOnline": "Keine Hubs online",
+        "totalUsers": "Gesamte Benutzer",
         "uniqueUsers": "Unique users",
         "activeUsers": "Aktive Benutzer",
-        "totalShare": "Total share",
-        "averageSharePerUser": "Average share per user",
-        "averageAdcDownloadSpeed": "Average ADC download speed",
+        "totalShare": "Gesamt Freigabe",
+        "averageSharePerUser": "Durchschnittliche Freigabe pro Benutzer",
+        "averageAdcDownloadSpeed": "Durchschnittliche ADC Download Geschwindigkeit",
         "clients": "Clients",
-        "averageAdcUploadSpeed": "Average ADC upload speed"
+        "averageAdcUploadSpeed": "Durchschnittliche ADC Upload Geschwindigkeit"
       }
     },
     "system": {
       "logging": {
-        "sections": "Sections",
+        "sections": "Sektionen",
         "variableHelp": "Variable Information für Dateinamen und Formatfelder"
       },
       "serverSettings": {
@@ -761,15 +761,15 @@
           "filelists": "Dateiliste",
           "viewedFiles": "Angesehene Dateien"
         },
-        "addWebUser": "Add web user",
+        "addWebUser": "Web Benutzer hinzufügen",
         "editUser": "Benutzer bearbeiten",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
     },
     "sharing": {
       "excludes": {
-        "shareRefreshNote": "Share must be refreshed for the changes to take effect",
-        "addExcludedPath": "Add excluded path",
+        "shareRefreshNote": "Freigabe muss aktualisiert werden damit die Änderungen aktiv werden",
+        "addExcludedPath": "Ausgeschlossenen Pfad hinzufügen",
         "path": "Pfad"
       },
       "profiles": {
@@ -779,7 +779,7 @@
         "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
       },
       "sharingOptions": {
-        "skiplist": "Skiplist"
+        "skiplist": "Skipliste"
       },
       "hashing": {
         "hashDatabase": "Hash Datenbank",
@@ -812,11 +812,11 @@
           "pathName": "Pfad",
           "nameName": "Name"
         },
-        "addFavoriteDirectory": "Add favorite directory",
-        "editFavoriteDirectory": "Edit favorite directory"
+        "addFavoriteDirectory": "Bevorzugtes Verzeichnis hinzufügen",
+        "editFavoriteDirectory": "Bevorzugtes Verzeichnis editieren"
       },
       "skippingOptions": {
-        "skiplist": "Skiplist"
+        "skiplist": "Skipliste"
       },
       "priorities": {
         "filePriorities": "Dateiprioritäten",
@@ -826,13 +826,13 @@
         "name": "Name",
         "fileExtensions": "Dateierweiterungen",
         "default": "Standard",
-        "searchTypesNote": "Hinweis; Benutzerdefinierte Suchtypen werden nur in ADC hubs angewandt! In NMDC Hubs wird das benutzen der vordefinierten Suchtypen nur die Suche nach den vordefinierten, nicht konfigurierbaren Erweiterungen bringen; beim benutzen von benutzerdefinierten Suchtypen wird standardmäßig als nach alle Erweiterungen gesucht.",
+        "searchTypesNote": "Hinweis; Benutzerdefinierte Suchtypen werden nur in ADC Hubs angewandt! In NMDC Hubs wird das benutzen der vordefinierten Suchtypen nur die Suche nach den vordefinierten, nicht konfigurierbaren Erweiterungen bringen; beim Benutzen eines benutzerdefinierten Suchtypen wird dann einfach nach allen Erweiterungen gesucht.",
         "form": {
           "nameName": "Name",
           "extensionsName": "Dateierweiterungen"
         },
-        "addSearchType": "Add search type",
-        "editSearchType": "Edit search type"
+        "addSearchType": "Suchtypen hinzufügen",
+        "editSearchType": "Suchtypen editieren"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",
@@ -840,8 +840,8 @@
       "notifications": {
         "popupNotifications": "Popup notifications",
         "form": {
-          "notifyPmUserName": "Private messages (users)",
-          "notifyPmBotName": "Private messages (bots)",
+          "notifyPmUserName": "Private Nachrichten (Benutzer)",
+          "notifyPmBotName": "Private Nachrichten (Bots)",
           "notifyBundleStatusName": "Bundle status changes",
           "notifyEventsInfoName": "Info events",
           "notifyEventsWarningName": "Warning events",
@@ -855,7 +855,7 @@
       "miscellaneous": {
         "form": {
           "unreadLabelDelayName": "Wartezeit um Chat Sitzungen als gelesen zu markieren (Sekunden)",
-          "backgroundImageUrlName": "Custom background image URL",
+          "backgroundImageUrlName": "Benutzerdefiniertes Hintergrundbild URL",
           "noInstallPromptName": "Never show the application install prompt in Home view"
         }
       }
@@ -873,15 +873,15 @@
       "prompts": {
         "installUrlPlaceholder": "URL eingeben",
         "installUrlApprove": "Installieren",
-        "installUrlContent": "Enter download URL",
-        "removeApprove": "Remove extension",
+        "installUrlContent": "Download URL eingeben",
+        "removeApprove": "Erweiterung entfernen",
         "removeReject": "Nicht entfernen",
-        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
+        "removeContent": "Sind Sie sicher, dass Sie die Erweiterung {{item.name}} entfernen möchten? Dies wird auch mögliche erweiterungsspezifische Einstellungen entfernen."
       }
     }
   },
   "navigation": {
-    "home": "Home",
+    "home": "Startseite",
     "queue": "Warteschlange",
     "search": "Suche",
     "transfers": "Übertragungen",
@@ -891,19 +891,19 @@
     "files": "Dateien",
     "events": "Ereignisse",
     "favoriteHubs": "Bevorzugte Hubs",
-    "share": "Share",
+    "share": "Freigabe",
     "settings": "Einstellungen",
     "logout": "Abmelden",
-    "more": "More..."
+    "more": "Mehr..."
   },
   "login": {
     "username": "Benutzername",
     "password": "Passwort",
-    "keepMeLoggedIn": "Keep me logged in",
+    "keepMeLoggedIn": "Eingeloggt bleiben",
     "login": "Anmeldung",
     "authenticationFailed": "Authentifizierung fehlgeschlagen: {{lastError}}",
-    "connectingToTheServer": "Connecting to the server...",
-    "reestablishConnection": "Attempting to re-establish connection...",
+    "connectingToTheServer": "Verbinde mit dem Server...",
+    "reestablishConnection": "Versuche Verbindung wiederherzustellen",
     "sessionLost": "Sitzung verloren",
     "connectionClosed": "Verbindung getrennt",
     "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
