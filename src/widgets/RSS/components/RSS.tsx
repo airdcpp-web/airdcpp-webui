@@ -100,7 +100,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
     try {
       const data = await fetchCorsSafeData(feedUrl, false);
 
-      console.log('RSS feed received', feedUrl, data);
+      console.log('RSS feed received', feedUrl);
 
       const jsonFeed = parseXML(data, {
         attrNodeName: 'attr',
