@@ -67,7 +67,7 @@
     "@types/react-select": "^3.0.8",
     "@types/react-transition-group": "^4.2.3",
     "@types/semantic-ui": "^2.2.7",
-    "@types/webpack": "^4.39.9",
+    "@types/webpack": "^4.41.0",
     "airdcpp-apisocket": "^2.2.0",
     "array.prototype.find": "^1.0.0",
     "babel-core": "^7.0.0-bridge.0",

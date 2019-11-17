@@ -45,7 +45,7 @@ const UserResult: React.FC<UserResultProps> = ({ result, t }) => (
     <td className="ip">
       <FormattedIp item={ result.ip }/>
     </td>
-    <td className="path">
+    <td className="path" title={ result.path }>
       { result.path }
     </td>
   </tr>
