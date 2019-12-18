@@ -564,7 +564,7 @@
       "about": "Om",
       "extensions": "Tillägg",
       "system": "System",
-      "autoDetection": "Detektera automatisk",
+      "autoDetection": "Detektera automatiskt",
       "iPv4ConnectivityManual": "IPv4-anslutning (manuellt)",
       "iPv6ConnectivityManual": "IPv6-anslutning (manuellt)",
       "portsManual": "Portar (manuellt)",
@@ -618,7 +618,7 @@
         "iPv4Connectivity": "IPv4-anslutning",
         "iPv6Connectivity": "IPv6-anslutning",
         "manualConfiguration": "{{status}} (manuell konfiguration)",
-        "autoDetected": "{{status}} (detektera automatiskt)"
+        "autoDetected": "{{status}} (detekterad automatisk)"
       },
       "ports": {
         "form": {
