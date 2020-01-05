@@ -34,7 +34,7 @@ import { InstallPromptContext } from 'context/InstallPromptContext';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
 
 
-global.Promise = Promise;
+global.Promise = Promise as any;
 
 
 Reflux.use(RefluxPromise(Promise));
