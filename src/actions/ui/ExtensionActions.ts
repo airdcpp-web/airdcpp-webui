@@ -31,11 +31,13 @@ const handleStop: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
   return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`);
 };
 
-interface InstallData {
-  url: string;
-  shasum: string;
-  installId?: string;
-}
+const downloadExtension = (url: string, installId?: string, shasum?: string) => {
+  return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
+    install_id: installId ? installId : url,
+    url,
+    shasum
+  });
+};
 
 const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async (
   { data: npmPackage, ...other }
@@ -44,35 +46,14 @@ const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async (
 
   const { tarball, shasum } = data.dist;
 
-  return handleInstallUrl({
-    data: {
-      url: tarball, 
-      installId: npmPackage.name, 
-      shasum
-    },
-    ...other
-  });
+  return downloadExtension(tarball, npmPackage.name, shasum);
 };
 
-const handleInstallUrl: UI.ActionHandler<InstallData> = (
-  { data }
+const handleInstallUrl: UI.ActionHandler<{}> = (
+  { data }, url: string
 ) => {
-  const { installId, url, shasum } = data;
-  return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
-    install_id: installId ? installId : url,
-    url,
-    shasum
-  });
+  return downloadExtension(url);
 };
-
-
-/*const handleInstallNpm: UI.ActionHandler<UI.NpmPackage> = ({ data: npmPackage, location, t }) => {
-  return handleNpmAction(npmPackage, location);
-};
-
-const handleUpdateNpm: UI.ActionHandler<UI.NpmPackage> = ({ data: npmPackage, location }) => {
-  return handleNpmAction(npmPackage, location);
-};*/
 
 const handleRemove: UI.ActionHandler<API.Extension> = (
   { data }
@@ -81,7 +62,7 @@ const handleRemove: UI.ActionHandler<API.Extension> = (
 };
 
 
-const ExtensionInstallActions: UI.ActionListType<InstallData> = {
+const ExtensionInstallActions: UI.ActionListType<{}> = {
   installUrl: {
     displayName: 'Install from URL',
     icon: IconConstants.CREATE,
