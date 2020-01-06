@@ -665,7 +665,8 @@
         "readMore": "Ler mais",
         "noInstalledExtensions": "Nenhuma extensão instalada foi encontrada. Novas extensões podem ser instaladas a partir do <1>Catálogo de extensão</1> pagina.",
         "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação.",
-        "extensionDirectoryFetchError": "Falha ao buscar informações do diretório de extensões: {{error}}"
+        "extensionDirectoryFetchError": "Falha ao buscar informações do diretório de extensões: {{error}}",
+        "unmanagedExtension": "Extensão não gerenciada"
       }
     },
     "about": {

@@ -665,7 +665,8 @@
         "readMore": "Citeste mai mult",
         "noInstalledExtensions": "Nici o extensie instalata a fost gasita.Noi extensii pot fi instalate de la <1>Catalogul paginei  de extensii</1>",
         "defaultExtensionEngineMissing": "Extensia motorului din fabrica<1> nod</1>nu este instalat pe sistemul tau.Te rog viziteaza <3> pagina acasa a motorului </3>pentru instructiuni de instalare.",
-        "extensionDirectoryFetchError": "Esuata afisarea informatiilor din directorul de extensii: {{error}}"
+        "extensionDirectoryFetchError": "Esuata afisarea informatiilor din directorul de extensii: {{error}}",
+        "unmanagedExtension": "Unmanaged extension"
       }
     },
     "about": {

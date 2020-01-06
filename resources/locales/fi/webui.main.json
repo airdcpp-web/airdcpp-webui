@@ -665,7 +665,8 @@
         "readMore": "Lue lisää",
         "noInstalledExtensions": "Asennettuja lisäosia ei löytynyt. Uusia lisäosia voidaan asentaa <1>Lisäosien katalogi</1> -sivulta.",
         "defaultExtensionEngineMissing": "Lisäosien oletusmoottori <1>node</1> ei ole asennettuna järjestelmään. Katso asennusohjeet <3>moottorin kotisivuilta</3>.",
-        "extensionDirectoryFetchError": "Tiedon hakeminen lisäosien katalogista epäonnistui: {{error}}"
+        "extensionDirectoryFetchError": "Tiedon hakeminen lisäosien katalogista epäonnistui: {{error}}",
+        "unmanagedExtension": "Unmanaged extension"
       }
     },
     "about": {

@@ -665,7 +665,8 @@
         "readMore": "Ler mais",
         "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>.",
         "defaultExtensionEngineMissing": "O motor de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite a <3>página inicial do motor</3> para ver as instruções de instalação.",
-        "extensionDirectoryFetchError": "Falhou a busca de informação da pasta de extensões: {{error}}"
+        "extensionDirectoryFetchError": "Falhou a busca de informação da pasta de extensões: {{error}}",
+        "unmanagedExtension": "Unmanaged extension"
       }
     },
     "about": {

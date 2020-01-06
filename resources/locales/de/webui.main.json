@@ -665,7 +665,8 @@
         "readMore": "Weiterlesen",
         "noInstalledExtensions": "Keine installierten Erweiterungen gefunden. Neue Erweiterungen können von der <1>Erweiterungskatalogsseite</1> installiert werden.",
         "defaultExtensionEngineMissing": "Die Standarderweiterungsengine <1>node</1> ist auf Ihrem System nicht installiert. Bitte gehen Sie auf  die <3>Webseite der Engine</3> für die Installationsanleitung",
-        "extensionDirectoryFetchError": "Informationsabruf vom Erweiterungsverzeichnis fehlgeschlagen: {{error}}"
+        "extensionDirectoryFetchError": "Informationsabruf vom Erweiterungsverzeichnis fehlgeschlagen: {{error}}",
+        "unmanagedExtension": "Unmanaged extension"
       }
     },
     "about": {

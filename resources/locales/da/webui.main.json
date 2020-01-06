@@ -665,7 +665,8 @@
         "readMore": "Read more",
         "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
         "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
-        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}"
+        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}",
+        "unmanagedExtension": "Unmanaged extension"
       }
     },
     "about": {
