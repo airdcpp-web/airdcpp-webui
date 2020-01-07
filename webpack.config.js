@@ -186,6 +186,7 @@ module.exports = {
             options: {
               limit: 100000,
               name: 'images/[name].[hash].[ext]',
+              esModule: false
             },
           }
         ]
