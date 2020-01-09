@@ -2,6 +2,7 @@ export default {
   HOME_PAGE_URL:	'https://airdcpp-web.github.io',
   HELP_URL:	'https://airdcpp-web.github.io/docs/',
   ISSUE_TRACKER_URL: 'https://github.com/airdcpp-web/airdcpp-webclient/issues',
+  DBIP_URL: 'https://db-ip.com',
 
   SPEEDTEST_URL:	'http://www.speedtest.net',
   PORTCHECK_URL:	'http://www.yougetsignal.com/tools/open-ports/',

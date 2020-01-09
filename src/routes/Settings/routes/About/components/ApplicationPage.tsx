@@ -63,6 +63,15 @@ const ApplicationPage: React.FC<ApplicationPageProps & StatisticsDecoratorChildP
           }
           noText={ true }
         />
+        <Header title={ translate('Third-party credits') }/>
+        <Row
+          title={               
+            <ExternalLink url={ LinkConstants.DBIP_URL }>
+              IP Geolocation by DB-IP
+            </ExternalLink> 
+          }
+          noText={ true }
+        />
       </Grid>
       <InstallPrompt alwaysShow={ true }/>
     </>
