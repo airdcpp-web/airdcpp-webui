@@ -682,7 +682,8 @@
         "resources": "Baliabideak",
         "homePage": "Orri nagusia",
         "featureRequestBugTracker": "Feature request/bug tracker",
-        "documentation": "Dokumentazioa"
+        "documentation": "Dokumentazioa",
+        "thirdPartyCredits": "Third-party credits"
       },
       "transfers": {
         "totalDownloaded": "Deskargatutakoa guztira",

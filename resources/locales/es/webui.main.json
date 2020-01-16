@@ -682,7 +682,8 @@
         "resources": "Recursos",
         "homePage": "Página de inicio",
         "featureRequestBugTracker": "Solicitud de funciones/seguidor de errores",
-        "documentation": "Documentación"
+        "documentation": "Documentación",
+        "thirdPartyCredits": "Third-party credits"
       },
       "transfers": {
         "totalDownloaded": "Total descargado",

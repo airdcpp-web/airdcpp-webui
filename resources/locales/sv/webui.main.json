@@ -666,7 +666,7 @@
         "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>.",
         "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner.",
         "extensionDirectoryFetchError": "Misslyckades med att hämta information från tilläggskatalogen: {{error}}",
-        "unmanagedExtension": "Unmanaged extension"
+        "unmanagedExtension": "Ohanterat tillägg"
       }
     },
     "about": {
@@ -682,7 +682,8 @@
         "resources": "Resurser",
         "homePage": "Hemsida",
         "featureRequestBugTracker": "Önskemål/rapportera fel",
-        "documentation": "Dokumentation"
+        "documentation": "Dokumentation",
+        "thirdPartyCredits": "Tredjepartsmedverkande"
       },
       "transfers": {
         "totalDownloaded": "Totalt nedladdat",

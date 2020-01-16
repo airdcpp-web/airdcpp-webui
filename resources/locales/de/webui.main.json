@@ -682,7 +682,8 @@
         "resources": "Informationsquellen",
         "homePage": "Webseite",
         "featureRequestBugTracker": "Feature Anfragen / Fehlerberichte",
-        "documentation": "Dokumentation"
+        "documentation": "Dokumentation",
+        "thirdPartyCredits": "Third-party credits"
       },
       "transfers": {
         "totalDownloaded": "Gesamt heruntergeladen",

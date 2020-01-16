@@ -41,8 +41,8 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
 type CloseButtonProps<SessionT extends UI.SessionItemBase> = 
   Pick<SessionMainLayoutProps<SessionT>, 'actions' | 'activeItem'>;
 
-const CloseButton: React.FC<CloseButtonProps<any>> = (
-  { actions, activeItem }
+const CloseButton = <SessionT extends UI.SessionItemBase>(
+  { actions, activeItem }: CloseButtonProps<SessionT>
 ) => {
   if (!activeItem || useMobileLayout()) {
     return null;
