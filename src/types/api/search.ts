@@ -43,14 +43,26 @@ export interface SlotCount {
   str: string;
 }
 
+
+export interface SearchQuery {
+  pattern: string;
+  file_type: string | null;
+  min_size: number | null;
+  max_size: number | null;
+  extensions: string[] | null;
+  excluded: string[] | null;
+}
+
 export interface SearchInstance {
   id: number;
+  owner: string;
   expires_in: number;
   current_search_id: number;
   queue_time: number;
   queued_count: number;
   result_count: number;
   searches_sent_ago: number;
+  query?: SearchQuery;
 }
 
 export interface SearchType {

@@ -28,7 +28,15 @@ const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionList
   };
 
   const onMessageReceived = (sessionId: API.IdType, message: API.Message, type: UI.MessageType) => {
-    messages.set(sessionId, pushMessage({ [type]: message } as UI.MessageListItem, messages.get(sessionId)));
+    messages.set(
+      sessionId, 
+      pushMessage(
+        { 
+          [type]: message
+        } as UI.MessageListItem, 
+        messages.get(sessionId)
+      )
+    );
     store.trigger(messages.get(sessionId), sessionId);
   };
 

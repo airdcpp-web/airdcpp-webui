@@ -2,13 +2,8 @@ import * as API from 'types/api';
 
 
 export type MessageType = 'chat_message' | 'log_message';
-/*export type MessageListItem = { 
-  [key in MessageType]: API.Message
-};*/
 
-export type MessageListItem = 
-  (ChatMessageListItem & { log_message?: undefined }) | 
-  (StatusMessageListItem & { chat_message?: undefined });
+export type MessageListItem = Partial<ChatMessageListItem & StatusMessageListItem>;
 
 export type ChatMessageListItem = {
   chat_message: API.ChatMessage;

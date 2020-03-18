@@ -30,6 +30,7 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import { setBundlePriority } from 'services/api/QueueApi';
 import IconConstants from 'constants/IconConstants';
+import MenuConstants from 'constants/MenuConstants';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
@@ -99,7 +100,8 @@ class Queue extends React.Component<WithTranslation> {
             columnKey="name"
             cell={ 
               <FileActionCell 
-                actions={ QueueBundleActions } 
+                actions={ QueueBundleActions }
+                remoteMenuId={ MenuConstants.QUEUE_BUNDLE }
                 ids={[ 
                   'content', 'sources', 
                   'divider', 

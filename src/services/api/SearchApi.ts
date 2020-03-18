@@ -9,7 +9,11 @@ import * as UI from 'types/ui';
 export const searchDownloadHandler: UI.DownloadHandler<API.GroupedSearchResult> = (
   itemInfo, 
   user, 
-  downloadData
+  downloadData,
+  instance
 ) => {
-  return SocketService.post(`${SearchConstants.RESULTS_URL}/${itemInfo.id}/download`, downloadData);
+  return SocketService.post(
+    `${SearchConstants.MODULE_URL}/${instance.id}/results/${itemInfo.id}/download`, 
+    downloadData
+  );
 };

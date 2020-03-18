@@ -24,7 +24,7 @@ const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => 
 };
 
 
-const FavoriteHubCreateActions: UI.ActionListType<{}> = {
+const FavoriteHubCreateActions: UI.ActionListType<undefined> = {
   create: {
     displayName: 'Add new',
     access: API.AccessEnum.FAVORITE_HUBS_EDIT,

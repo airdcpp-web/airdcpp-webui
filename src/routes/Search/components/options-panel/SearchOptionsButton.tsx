@@ -76,6 +76,21 @@ const SearchOptionsButton: React.FC<Props> = ({
     [ hubs ]
   );
 
+  const filterCount = !value ? null : Object.keys(value)
+    .filter(key => {
+      const curValue = value[key];
+      if (curValue === null) {
+        return false;
+      }
+
+      if (Array.isArray(curValue) && !curValue.length) {
+        return false;
+      }
+      
+      return true;
+    })
+    .length;
+
   return (
     <Popup
       triggerClassName="options" 
@@ -85,7 +100,7 @@ const SearchOptionsButton: React.FC<Props> = ({
           caption={ (
             <>
               <Icon icon={ IconConstants.OPTIONS }/>
-              { !!value && (
+              { !!filterCount && (
                 <span 
                   style={{ 
                     fontWeight: 'bold',
@@ -93,7 +108,7 @@ const SearchOptionsButton: React.FC<Props> = ({
                     color: 'black'
                   }}
                 >
-                  { `(${Object.keys(value).length})` }
+                  { `(${filterCount})` }
                 </span>
               ) }
               <Icon icon={ IconConstants.EXPAND }/>

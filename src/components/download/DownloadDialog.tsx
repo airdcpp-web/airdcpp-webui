@@ -81,6 +81,7 @@ export type DownloadDialogItemDataGetter<ItemT extends UI.DownloadableItemInfo> 
 
 interface DownloadDialogProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> {
   downloadHandler: UI.DownloadHandler<ItemT>;
+  session: UI.SessionItemBase;
   itemDataGetter: DownloadDialogItemDataGetter<ItemT>;
   userGetter?: DownloadDialogUserGetter<ItemT>;
 }
@@ -92,7 +93,8 @@ interface RouteProps {
 type DownloadDialogRouteProps = ModalRouteDecoratorChildProps<RouteProps>;
 
 interface DownloadDialogDataProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> 
-extends DataProviderDecoratorChildProps {
+  extends DataProviderDecoratorChildProps {
+
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
   historyPaths: string[];
@@ -145,7 +147,7 @@ const DownloadDialog: React.FC<Props> = props => {
   );
 
   const handleDownload = async (path: string) => {
-    const { downloadHandler, itemInfo, userGetter, match } = props;
+    const { downloadHandler, itemInfo, userGetter, match, session } = props;
     try {
       await downloadHandler(
         itemInfo, 
@@ -154,7 +156,8 @@ const DownloadDialog: React.FC<Props> = props => {
           target_name: itemInfo.name, // possibly allow changing this later...
           target_directory: path,
           priority: API.QueuePriorityEnum.DEFAULT,
-        }
+        },
+        session
       );
     } catch (e) {
       NotificationActions.error({

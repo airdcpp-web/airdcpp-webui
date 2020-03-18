@@ -42,13 +42,14 @@ const copyMagnet = (data: UI.DownloadableItemData) => !!(navigator as any).clipb
 
 
 const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  const { handler, itemInfo, user } = data;
+  const { handler, itemInfo, user, session } = data;
   return handler(
     itemInfo, 
     user, 
     { 
       target_name: itemInfo.name 
-    }
+    },
+    session
   );
 };
 
@@ -109,9 +110,11 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({ data, 
 
       handleViewText({
         data: {
+          id: results[0].id,
           itemInfo: results[0],
           user: data.user,
           handler: data.handler,
+          session: instance
         },
         ...other
       });

@@ -17,15 +17,22 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import IconConstants from 'constants/IconConstants';
+import MenuConstants from 'constants/MenuConstants';
 
 
-const NickCell: React.FC<RowWrapperCellChildProps<string, API.HubUser>> = (
-  { cellData, rowDataGetter }
+interface NickCellProps extends RowWrapperCellChildProps<string, API.HubUser> {
+  session: API.Hub;
+}
+
+const NickCell: React.FC<NickCellProps> = (
+  { cellData, rowDataGetter, session }
 ) => (
   <TableUserMenu 
     text={ cellData } 
     user={ rowDataGetter!() }
     userIcon={ true }
+    remoteMenuId={ MenuConstants.HUB_USER }
+    entityId={ session.id }
   />
 );
 
@@ -87,7 +94,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
           width={170}
           columnKey="nick"
           flexGrow={8}
-          cell={ <NickCell/> }
+          cell={ <NickCell session={ session }/> }
         />
         <Column
           name="Share size"

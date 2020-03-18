@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchActions from 'actions/ui/SearchActions';
 
-import { ResultDialog, SearchResultGetter } from './result-dialog';
+import { ResultDialog } from './result-dialog';
 
 import SearchViewStore from 'stores/SearchViewStore';
 
@@ -16,7 +16,7 @@ import { TableUserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/ui/UserActions';
 import Message from 'components/semantic/Message';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
@@ -27,6 +27,8 @@ import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import { searchDownloadHandler } from 'services/api/SearchApi';
 import IconConstants from 'constants/IconConstants';
+import MenuConstants from 'constants/MenuConstants';
+import SearchConstants from 'constants/SearchConstants';
 
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: TFunction) => {
@@ -54,6 +56,7 @@ const UserCell: React.FC<RowWrapperCellChildProps<API.SearchResultUserInfo, API.
     directory={ rowDataGetter!().path }
     userIcon="simple"
     ids={ UserFileActions }
+    remoteMenuId={ MenuConstants.HINTED_USER }
   >
     <TableActionMenu 
       actions={ SearchActions }
@@ -71,18 +74,25 @@ const resultUserGetter = (rowData: API.GroupedSearchResult) => {
   return rowData.users.user;
 };
 
-const NameCell: React.FC<RowWrapperCellChildProps<string, API.GroupedSearchResult>> = (
-  { rowDataGetter, ...props }
+interface NameCellProps extends RowWrapperCellChildProps<string, API.GroupedSearchResult> {
+  instance: API.SearchInstance;
+}
+
+const NameCell: React.FC<NameCellProps> = (
+  { rowDataGetter, instance, ...props }
 ) => (
   <FileDownloadCell 
     userGetter={ resultUserGetter }
     rowDataGetter={ rowDataGetter }
     downloadHandler={ searchDownloadHandler }
+    session={ instance }
     { ...props }
   >
     <TableActionMenu 
       actions={ SearchActions }
       itemData={ rowDataGetter }
+      remoteMenuId={ MenuConstants.GROUPED_SEARCH_RESULT }
+      entityId={ instance.id }
     />
   </FileDownloadCell>
 );
@@ -91,6 +101,7 @@ export interface ResultTableProps {
   running: boolean;
   searchString: string;
   searchT: UI.ModuleTranslator;
+  instance: API.SearchInstance;
 }
 
 class ResultTable extends React.Component<ResultTableProps> {
@@ -140,9 +151,14 @@ class ResultTable extends React.Component<ResultTableProps> {
       />
     );
   }
+  
+  itemDataGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
+    const { instance } = this.props;
+    return socket.get(`${SearchConstants.MODULE_URL}/${instance.id}/${itemId}`);
+  }
 
   render() {
-    const { searchT } = this.props;
+    const { searchT, instance } = this.props;
     return (
       <>
         <VirtualTable
@@ -152,6 +168,7 @@ class ResultTable extends React.Component<ResultTableProps> {
           textFilterProps={{
             autoFocus: false,
           }}
+          entityId={ instance.id }
           moduleId={ SearchActions.moduleId }
         >
           <Column
@@ -159,7 +176,7 @@ class ResultTable extends React.Component<ResultTableProps> {
             width={200}
             columnKey="name"
             flexGrow={8}
-            cell={ <NameCell/> }
+            cell={ <NameCell instance={ instance }/> }
           />
           <Column
             name="Size"
@@ -216,9 +233,13 @@ class ResultTable extends React.Component<ResultTableProps> {
         </VirtualTable>
         <DownloadDialog 
           downloadHandler={ searchDownloadHandler }
-          itemDataGetter={ SearchResultGetter }
+          itemDataGetter={ this.itemDataGetter }
+          session={ instance }
         />
-        <ResultDialog searchT={ searchT }/>
+        <ResultDialog 
+          searchT={ searchT }
+          instance={ instance }
+        />
       </>
     );
   }

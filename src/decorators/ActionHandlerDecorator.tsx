@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, useLocation } from 'react-router-dom';
 
 import * as UI from 'types/ui';
 
@@ -29,7 +29,7 @@ export interface ActionData<ItemDataT = any> extends Pick<UI.ModuleActions<ItemD
 
 export type ActionClickHandler<ItemDataT = any> = (action: ActionData<ItemDataT>) => void;
 
-export interface ActionHandlerDecoratorChildProps<ItemDataT = any> extends RouteComponentProps {
+export interface ActionHandlerDecoratorChildProps<ItemDataT = any> extends Pick<RouteComponentProps, 'location'> {
   onClickAction: ActionClickHandler<ItemDataT>;
 }
 
@@ -207,12 +207,7 @@ const handleAction = async <ItemDataT extends any>(
 };
 
 
-
-
-
-type ActionHandlerDataProps = RouteComponentProps;
-
-type Props<ItemDataT> = /*PropsT &*/ ActionHandlerDecoratorProps<ItemDataT> & ActionHandlerDataProps;
+type Props<ItemDataT> = /*PropsT &*/ ActionHandlerDecoratorProps<ItemDataT>;
 
 const ActionHandlerDecorator = <ItemDataT extends any>(
   props: Props<ItemDataT>
@@ -220,6 +215,7 @@ const ActionHandlerDecorator = <ItemDataT extends any>(
   const [ confirmActionData, setConfirmActionData ] = useState<ActionData<ItemDataT> | null>(null);
   const { t } = useTranslation();
   const closeModal = useContext(ModalRouteCloseContext);
+  const location = useLocation();
 
   const closeConfirmation = () => {
     setTimeout(() => setConfirmActionData(null));
@@ -230,7 +226,7 @@ const ActionHandlerDecorator = <ItemDataT extends any>(
       return;
     }
 
-    await handleAction(confirmActionData, data, props.location, t, closeModal);
+    await handleAction(confirmActionData, data, location, t, closeModal);
     closeConfirmation();
   };
 
@@ -240,7 +236,7 @@ const ActionHandlerDecorator = <ItemDataT extends any>(
     } else if (actionData.action.input) { 
       setConfirmActionData(actionData);
     } else {
-      handleAction(actionData, undefined, props.location, t, closeModal);
+      handleAction(actionData, undefined, location, t, closeModal);
     }
   };
 
@@ -249,6 +245,7 @@ const ActionHandlerDecorator = <ItemDataT extends any>(
     <>
       { children({
         onClickAction: handleClickAction,
+        location,
         ...other
       }) }
       <ConfirmHandler
@@ -260,8 +257,4 @@ const ActionHandlerDecorator = <ItemDataT extends any>(
   );
 };
 
-
-// TODO: replace with useRouter hook when possible
-const Decorator = withRouter(ActionHandlerDecorator);
-
-export { Decorator as ActionHandlerDecorator };
+export { ActionHandlerDecorator };

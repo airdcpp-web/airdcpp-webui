@@ -132,6 +132,7 @@ export type UserFlag = 'self' | 'bot' | 'asch' | 'ccpm' | 'ignored' | 'favorite'
 export type HubUserFlag = UserFlag | 'away' | 'op' | 'hidden' | 'noconnect' | 'passive';
 
 export interface User {
+  id: string;
   cid: string;
   nicks: string;
   hub_names: string;
@@ -151,6 +152,7 @@ export interface HintedUser extends HintedUserBase {
 }
 
 export interface HubUser extends HintedUserBase {
+  id: number;
   hub_name: string;
   flags: HubUserFlag[];
   ip4?: IP;

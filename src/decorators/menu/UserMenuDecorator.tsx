@@ -1,6 +1,7 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
+import invariant from 'invariant';
 
 import UserActions, { ActionUserType, ActionUserData } from 'actions/ui/UserActions';
 import { getFilePath } from 'utils/FileUtils';
@@ -59,6 +60,23 @@ export default function <DropdownPropsT extends object>(
       super(props);
 
       this.itemData = {} as ActionUserData;
+      Object.defineProperty(this.itemData, 'id', {
+        get: () => {
+          const { user } = this.props;
+          if (!!user.id) {
+            return user.id;
+          }
+
+          if (!!user.hub_url) {
+            return {
+              cid: user.cid,
+              hub_url: user.hub_url,
+            };
+          }
+
+          invariant(false, 'Invalid user object in UserMenuDecorator: id and hub_url missing');
+        }
+      });
       Object.defineProperty(this.itemData, 'user', {
         get: () => {
           return this.props.user;

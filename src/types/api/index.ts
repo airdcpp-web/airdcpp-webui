@@ -10,6 +10,7 @@ export * from './filesystem';
 export * from './hash';
 export * from './history';
 export * from './hubs';
+export * from './menu';
 export * from './private-chat';
 export * from './queue';
 export * from './search';

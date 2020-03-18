@@ -12,16 +12,17 @@ import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler 
 import { translateForm } from 'utils/FormUtils';
 import { RouteComponentProps } from 'react-router';
 import Button from 'components/semantic/Button';
+import { SearchQuery } from 'types/api';
 
 
 
 
-interface Entry extends UI.FormValueMap {
+interface Entry extends Pick<SearchQuery, 'file_type' | 'min_size' | 'max_size' | 'excluded'>, UI.FormValueMap {
   hub_urls: string[] | null;
-  file_type: string | null;
-  min_size: number | null;
-  max_size: number | null;
-  excluded: string[] | null;
+  // file_type: string | null;
+  // min_size: number | null;
+  // max_size: number | null;
+  // excluded: string[] | null;
 }
 
 export interface SearchOptionsFormProps extends Pick<RouteComponentProps, 'location'> {

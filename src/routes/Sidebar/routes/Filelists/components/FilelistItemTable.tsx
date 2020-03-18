@@ -22,6 +22,7 @@ import * as UI from 'types/ui';
 import { FilelistItemInfoDialog } from './item-info-dialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
+import MenuConstants from 'constants/MenuConstants';
 
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
@@ -48,6 +49,9 @@ const NameCell: React.FC<NameCellProps> = (
       userGetter={ () => session.user }
       downloadHandler={ filelistDownloadHandler }
       rowDataGetter={ rowDataGetter }
+      session={ session }
+      entityId={ session.id }
+      remoteMenuId={ MenuConstants.FILELIST_ITEM }
       { ...other }
     >
       <TableActionMenu 

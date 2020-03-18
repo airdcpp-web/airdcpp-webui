@@ -3,7 +3,11 @@ import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { TFunction } from 'i18next';
 
-export type ActionItemDataValueType = object | string | number | undefined;
+import * as API from 'types/api';
+
+export type ActionIdType = API.IdType | object;
+export type ActionObjectItemData = { id: ActionIdType };
+export type ActionItemDataValueType = ActionObjectItemData | string | number | undefined;
 export type ActionItemDataType<ItemDataT extends ActionItemDataValueType> = (() => ItemDataT) | ItemDataT;
 
 

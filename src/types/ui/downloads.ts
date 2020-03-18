@@ -1,10 +1,11 @@
 import * as API from 'types/api';
-
+import * as UI from 'types/ui';
 
 export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
   itemInfo: ItemT, 
   user: API.HintedUserBase | undefined, 
-  downloadData: API.DownloadData
+  downloadData: API.DownloadData,
+  session: UI.SessionItemBase,
 ) => Promise<any>;
 
 export interface DownloadableItemInfo {
@@ -19,9 +20,11 @@ export interface DownloadableItemInfo {
 }
 
 export interface DownloadableItemData<ItemT extends DownloadableItemInfo = DownloadableItemInfo> {
+  id: API.IdType;
   itemInfo: ItemT;
   user: API.HintedUser;
   handler: DownloadHandler<ItemT>;
+  session: UI.SessionItemBase;
 }
 
 export type PathDownloadHandler = (path: string) => Promise<any>;

@@ -10,7 +10,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const handleCreate: UI.ActionHandler<{}> = ({ location }) => {
+const handleCreate: UI.ActionHandler<undefined> = ({ location }) => {
   History.push(`${location.pathname}/directories`);
 };
 
@@ -24,7 +24,7 @@ const handleRemove: UI.ActionHandler<API.FavoriteDirectoryEntry> = (
   return SocketService.delete(`${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`);
 };
 
-const FavoriteDirectoryCreateActions: UI.ActionListType<API.FavoriteDirectoryEntry> = {
+const FavoriteDirectoryCreateActions: UI.ActionListType<undefined> = {
   create: { 
     displayName: 'Add directory',
     access: API.AccessEnum.SETTINGS_EDIT, 

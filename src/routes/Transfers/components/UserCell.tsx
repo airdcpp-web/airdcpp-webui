@@ -8,6 +8,7 @@ import IconConstants from 'constants/IconConstants';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
+import MenuConstants from 'constants/MenuConstants';
 
 
 const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({ cellData, rowData }) => (
@@ -34,10 +35,12 @@ class UserCell extends React.Component<UserCellProps> {
         userIcon={ null }
         ids={ UserFileActions }
         text={ <UserCaption rowData={ rowDataGetter!() } cellData={ cellData }/> }
+        remoteMenuId={ MenuConstants.HINTED_USER }
       >
         <TableActionMenu 
           itemData={ rowDataGetter }
-          actions={ TransferActions } 
+          actions={ TransferActions }
+          remoteMenuId={ MenuConstants.TRANSFER }
         />
       </TableUserMenu>
     );

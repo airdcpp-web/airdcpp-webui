@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TableActionMenu, TableDownloadMenu, TableActionMenuProps } from 'components/menu';
+import { TableActionMenu, TableDownloadMenu, TableActionMenuProps, TableDownloadMenuProps } from 'components/menu';
 import { 
   formatDecimal, formatAbbreviatedDuration, formatConnection, formatDateTime, 
   formatShortDate, formatSize, formatSpeed, formatRelativeTime 
@@ -215,11 +215,11 @@ export const DecimalCell: React.FC<NumberCellProps> = ({ cellData }) => (
 export type FileDownloadCellClickHandler = (cellData: any, rowDataGetter: () => any) => (() => void) | undefined;
 
 export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.DownloadableItemInfo> 
-  extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
+  extends RowWrapperCellChildProps<CellDataT, ItemDataT>, 
+    Omit<TableDownloadMenuProps<ItemDataT>, 'user' | 'itemInfoGetter' | 'caption'> {
 
   userGetter: (rowData: ItemDataT) => API.HintedUserBase;
   clickHandlerGetter?: FileDownloadCellClickHandler;
-  downloadHandler: UI.DownloadHandler<ItemDataT>;
 }
 
 export const FileDownloadCell = <CellDataT, ItemDataT extends UI.DownloadableItemInfo & FileItemBase>(
@@ -234,7 +234,7 @@ export const FileDownloadCell = <CellDataT, ItemDataT extends UI.DownloadableIte
         onClick={ clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : null }
         caption={ cellData }
       />
-    } 
+    }
     user={ userGetter(rowDataGetter!()) }
     linkCaption={ !!clickHandlerGetter ? false : true }
     itemInfoGetter={ rowDataGetter! }

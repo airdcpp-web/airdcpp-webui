@@ -49,7 +49,7 @@ const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async (
   return downloadExtension(tarball, npmPackage.name, shasum);
 };
 
-const handleInstallUrl: UI.ActionHandler<{}> = (
+const handleInstallUrl: UI.ActionHandler<undefined> = (
   { data }, url: string
 ) => {
   return downloadExtension(url);
@@ -62,7 +62,7 @@ const handleRemove: UI.ActionHandler<API.Extension> = (
 };
 
 
-const ExtensionInstallActions: UI.ActionListType<{}> = {
+const ExtensionInstallActions: UI.ActionListType<undefined> = {
   installUrl: {
     displayName: 'Install from URL',
     icon: IconConstants.CREATE,

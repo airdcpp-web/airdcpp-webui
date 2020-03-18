@@ -25,6 +25,7 @@ import { translate, getModuleT } from 'utils/TranslationUtils';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { updateFavoriteHub } from 'services/api/FavoriteHubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import MenuConstants from 'constants/MenuConstants';
 
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = (
@@ -100,6 +101,7 @@ class FavoriteHubs extends React.Component<WithTranslation> {
             cell={ 
               <ActionMenuCell 
                 actions={ FavoriteHubActions.edit }
+                remoteMenuId={ MenuConstants.FAVORITE_HUB }
               /> 
             }
           />

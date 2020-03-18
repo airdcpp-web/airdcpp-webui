@@ -6,6 +6,7 @@ import UserIcon from 'components/icon/UserIcon';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import MenuConstants from 'constants/MenuConstants';
 
 
 interface UserSessionBase {
@@ -37,6 +38,7 @@ export default function <SessionT extends UI.SessionItemBase & UserSessionBase>(
         <UserMenu 
           user={ user } 
           ids={ itemMenuIds }
+          remoteMenuId={ MenuConstants.HINTED_USER }
         >
           { actionMenu }
         </UserMenu>

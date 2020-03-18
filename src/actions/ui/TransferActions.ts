@@ -44,6 +44,7 @@ const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({ data: transfer, ..
   return QueueSourceActions.actions.removeSource!.handler({
     data: {
       ...transfer.user,
+      id: transfer.user.cid,
       hub_urls: [ transfer.user.hub_url ],
       flags: transfer.user.flags as API.UserFlag[]
     },

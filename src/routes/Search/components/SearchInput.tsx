@@ -17,10 +17,14 @@ interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
   moduleT: UI.ModuleTranslator;
   defaultValue?: string;
   handleSubmit: (text: string, options?: SearchOptions) => void;
+  defaultOptions: SearchOptions | null;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ moduleT, running, defaultValue, handleSubmit, location }) => {
-  const [ options, setOptions ] = useState<SearchOptions | null>(null);
+const SearchInput: React.FC<SearchInputProps> = ({ 
+  moduleT, defaultValue, running, handleSubmit, location, defaultOptions 
+}) => {
+  const [ options, setOptions ] = useState<SearchOptions | null>(defaultOptions);
+
   const mobile = useMobileLayout();
   return (
     <div className="search-container">

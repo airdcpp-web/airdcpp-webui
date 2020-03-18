@@ -9,12 +9,15 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo> {
+export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo> 
+  extends Omit<ActionMenuDecoratorProps<ItemDataT>, 'actions' | 'itemData' | 'caption'> {
+
   user: API.HintedUserBase;
   itemInfoGetter: () => ItemDataT;
   downloadHandler: UI.DownloadHandler<ItemDataT>;
   caption: React.ReactNode;
   className?: string;
+  session: UI.SessionItemBase;
 }
 
 type DownloadMenuDecoratorChildProps<ItemDataT extends UI.DownloadableItemInfo> = 
@@ -47,6 +50,18 @@ export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemIn
       // Since table cells are recycled, the same menu can be re-used for different items
       // as it's not necessarily re-rendered due to performance reasons
       // Use getters so that we get data for the current cell
+      Object.defineProperty(this.itemData, 'id', {
+        get: () => {
+          return this.props.itemInfoGetter().id;
+        }
+      });
+
+      Object.defineProperty(this.itemData, 'session', {
+        get: () => {
+          return this.props.session;
+        }
+      });
+
       Object.defineProperty(this.itemData, 'user', {
         get: () => {
           return this.props.user;

@@ -18,8 +18,7 @@ import { Location } from 'history';
 
 const HubActionConfig: UI.RefluxActionConfigList<API.Hub> = [
   { 'createSession': { 
-    asyncResult: true,
-    access: API.AccessEnum.HUBS_EDIT, 
+    asyncResult: true
   } },
 ];
 

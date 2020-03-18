@@ -17,11 +17,13 @@ import * as UI from 'types/ui';
 import { HubUserFlag } from 'types/api';
 
 
-export type ActionUserType = (API.User & { nick?: string; }) | 
-  (API.HintedUser & { nick?: string; }) | 
-  (API.HubUser & { nicks?: string });
+export type ActionUserType = 
+  (API.User & { nick?: string; hub_url?: string; }) | 
+  (API.HintedUser & { nick?: string; id?: number; }) | 
+  (API.HubUser & { nicks?: string; });
 
 export interface ActionUserData {
+  id: string | API.HintedUserBase;
   user: ActionUserType;
   directory?: string;
 }
@@ -31,8 +33,8 @@ const checkFlags = ({ user }: ActionUserData) => {
     (user.flags as HubUserFlag[]).indexOf('hidden') === -1;
 };
 
-const checkIgnore = ({ user }: ActionUserData) => {
-  return (user.flags as HubUserFlag[]).indexOf('ignored') === -1 && checkFlags({ user });
+const checkIgnore = (userData: ActionUserData) => {
+  return (userData.user.flags as HubUserFlag[]).indexOf('ignored') === -1 && checkFlags(userData);
 };
 
 const checkUnignore = ({ user }: ActionUserData) => {

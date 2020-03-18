@@ -15,6 +15,7 @@ import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import { TFunction } from 'i18next';
+import MenuConstants from 'constants/MenuConstants';
 
 
 interface UserResultProps {
@@ -31,6 +32,7 @@ const UserResult: React.FC<UserResultProps> = ({ result, t }) => (
         directory={ result.path }
         ids={ UserFileActions }
         contextElement=".ui.modal > .content"
+        remoteMenuId={ MenuConstants.HINTED_USER }
       />
     </td>
     <td className="hubs">
@@ -55,6 +57,7 @@ const resultSort = (a: API.ChildSearchResult, b: API.ChildSearchResult) => a.use
 
 interface UserResultTableProps {
   parentResult: API.GroupedSearchResult;
+  instanceId: number;
 }
 
 interface UserResultTableDataProps extends DataProviderDecoratorChildProps {
@@ -101,6 +104,6 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
 
 export default DataProviderDecorator<UserResultTableProps, UserResultTableDataProps>(UserResultTable, {
   urls: {
-    results: ({ parentResult }, socket) => socket.get(`${SearchConstants.RESULTS_URL}/${parentResult.id}/children`),
+    results: ({ parentResult, instanceId }, socket) => socket.get(`${SearchConstants.MODULE_URL}/${instanceId}/results/${parentResult.id}/children`),
   }
 });

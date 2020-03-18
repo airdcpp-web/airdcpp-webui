@@ -38,7 +38,7 @@ const getCommonItems = (moduleT: UI.ModuleTranslator): UI.SearchTypeItem[] => ([
 
 const typeToMenuItem = (type: UI.SearchTypeItem, onChange: OnChangeHandler, selectedItem: UI.SearchTypeItem) => (
   <MenuItemLink 
-    key={ type.id || 'any' }
+    key={ type.id || SearchConstants.DEFAULT_SEARCH_TYPE }
     onClick={ () => onChange(type.id) }
     icon={ <SearchTypeIcon type={ type }/> }
     active={ selectedItem.id === type.id }
@@ -96,5 +96,3 @@ const FileTypeField: TCombTemplate = {
 };
 
 export default t.form.Form.templates.select.clone(FileTypeField);
-
-// export { SearchTypeDropdownDecorated as SearchTypeDropdown };

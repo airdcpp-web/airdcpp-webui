@@ -17,6 +17,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
 import { setFilePriority } from 'services/api/QueueApi';
+import MenuConstants from 'constants/MenuConstants';
 
 
 const PriorityCell: React.FC<RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>> = (
@@ -62,6 +63,7 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
           cell={ 
             <FileActionCell 
               actions={ QueueFileUIActions }
+              remoteMenuId={ MenuConstants.QUEUE_FILE }
             /> 
           }
         />

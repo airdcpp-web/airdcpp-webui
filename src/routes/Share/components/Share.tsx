@@ -21,6 +21,7 @@ import * as UI from 'types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
+import MenuConstants from 'constants/MenuConstants';
 
 
 class Share extends React.Component<WithTranslation> {
@@ -60,6 +61,7 @@ class Share extends React.Component<WithTranslation> {
             cell={
               <FileActionCell 
                 actions={ ShareRootActions.edit }
+                remoteMenuId={ MenuConstants.SHARE_ROOT }
               /> 
             }
             flexGrow={10}

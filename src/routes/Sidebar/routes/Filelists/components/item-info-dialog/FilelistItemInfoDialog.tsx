@@ -55,11 +55,13 @@ class FilelistItemInfoDialog extends React.Component<Props & DataProps> {
           downloadHandler={ filelistDownloadHandler }
           itemDataGetter={ FilelistItemGetter(session) }
           userGetter={ () => session.user }
+          session={ session }
         />
         <FileItemInfoGrid 
           fileItem={ fileItem }
           downloadHandler={ filelistDownloadHandler }
           user={ session.user }
+          session={ session }
         />
       </Modal>
     );

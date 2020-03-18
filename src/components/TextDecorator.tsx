@@ -21,7 +21,7 @@ import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import LoginStore from 'stores/LoginStore';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Location } from 'history';
 
 import * as API from 'types/api';
@@ -122,20 +122,23 @@ interface TextDecoratorProps {
 }
 
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator: React.FC<TextDecoratorProps & RouteComponentProps> = (
-  { emojify = false, text, location }
-) => (
-  <ReactLinkify 
-    properties={{ 
-      target: '_blank',
-      rel: 'noreferrer',
-      onClick: evt => onClickLink(evt, location),
-    } as React.HTMLProps<HTMLLinkElement> }
-  >
-    { !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), emojiRenderer) }
-  </ReactLinkify>
-);
+const TextDecorator: React.FC<TextDecoratorProps> = (
+  { emojify = false, text }
+) => {
+  const location = useLocation();
+  return (
+    <ReactLinkify 
+      properties={{ 
+        target: '_blank',
+        rel: 'noreferrer',
+        onClick: evt => onClickLink(evt, location),
+      } as React.HTMLProps<HTMLLinkElement> }
+    >
+      { !emojify ? text : emoji(emojisToUnicode(text, { output: 'unicode' }), emojiRenderer) }
+    </ReactLinkify>
+  );
+};
 
-const Decorated = withRouter(memo(TextDecorator));
+const Decorated = memo(TextDecorator);
 
 export default Decorated;

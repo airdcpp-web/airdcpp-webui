@@ -13,6 +13,7 @@ import { UserFileActions } from 'actions/ui/UserActions';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { TFunction } from 'i18next';
+import MenuConstants from 'constants/MenuConstants';
 
 
 interface SourceProps {
@@ -29,6 +30,7 @@ const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (
         user={ source.user }
         ids={ UserFileActions }
         contextElement=".source.modal"
+        remoteMenuId={ MenuConstants.HINTED_USER }
       >
         <ActionMenu 
           actions={ QueueBundleSourceActions } 

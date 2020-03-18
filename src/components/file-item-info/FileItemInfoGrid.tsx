@@ -40,9 +40,12 @@ interface FileItemInfoGridProps {
   user: API.HintedUser;
   downloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo>;
   showPath?: boolean;
+  session: UI.SessionItemBase;
 }
 
-const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, downloadHandler, showPath = true }) => {
+const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ 
+  session, fileItem, user, downloadHandler, showPath = true 
+}) => {
   const { t } = useTranslation();
   const gridT = (text: string) => {
     return translate(text, t, UI.Modules.COMMON);
@@ -103,6 +106,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ fileItem, user, dow
         itemInfoGetter={ () => fileItem }
         downloadHandler={ downloadHandler }
         contextElement=".ui.modal > .content"
+        session={ session }
       />
     </div>
   );

@@ -88,7 +88,7 @@ class VirtualTable extends React.PureComponent<VirtualTableProps> {
   }
 
   moduleExists = (entityId: API.IdType | undefined) => {
-    if (!entityId) {
+    if (!entityId || !this.props.sessionStore) {
       return true;
     }
 

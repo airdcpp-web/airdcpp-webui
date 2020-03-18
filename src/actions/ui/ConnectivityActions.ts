@@ -9,7 +9,7 @@ import * as UI from 'types/ui';
 import IconConstants from 'constants/IconConstants';
 
 
-const ConnectivityActions: UI.ActionListType<{}> = {
+const ConnectivityActions: UI.ActionListType<undefined> = {
   detect: {
     displayName: 'Detect now',
     access: AccessConstants.SETTINGS_EDIT,

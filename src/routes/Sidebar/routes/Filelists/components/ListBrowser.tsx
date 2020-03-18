@@ -19,6 +19,7 @@ import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
 import { filelistDownloadHandler, changeFilelistDirectory } from 'services/api/FilelistApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import MenuConstants from 'constants/MenuConstants';
 
 
 interface ListBrowserProps {
@@ -108,18 +109,22 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   }
 
   selectedNameFormatter = (caption: React.ReactNode) => {
+    const { session } = this.props;
     return (
       <DownloadMenu 
         caption={ caption }
-        user={ this.props.session.user }
+        user={ session.user }
         itemInfoGetter={ this.getCurrentDirectory }
         downloadHandler={ filelistDownloadHandler }
         contextElement=".session-container"
+        session={ session }
+        remoteMenuId={ MenuConstants.FILELIST_ITEM }
+        entityId={ session.id }
       >
         <ActionMenu
           itemData={{
-            item: this.props.session.location,
-            session: this.props.session,
+            item: session.location,
+            session,
           }}
           actions={ FilelistItemActions }
         />
@@ -161,6 +166,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
           downloadHandler={ filelistDownloadHandler }
           itemDataGetter={ this.filelistItemFetcher }
           userGetter={ this.userGetter }
+          session={ session }
         />
       </div>
     );

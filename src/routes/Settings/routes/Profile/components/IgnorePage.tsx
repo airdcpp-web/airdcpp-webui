@@ -9,6 +9,7 @@ import { UserMenu } from 'components/menu';
 
 import * as API from 'types/api';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import MenuConstants from 'constants/MenuConstants';
 
 
 const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
@@ -19,6 +20,7 @@ const Row: React.FC<{ ignoreInfo: API.IgnoredUser; }> = ({ ignoreInfo }) => (
         userIcon="simple"
         user={ ignoreInfo.user }
         contextElement="#setting-scroll-context"
+        remoteMenuId={ MenuConstants.USER }
       />
     </td>
     <td className="count">

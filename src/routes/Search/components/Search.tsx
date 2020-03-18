@@ -15,29 +15,42 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { withTranslation, WithTranslation } from 'react-i18next';
+import { WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import { SearchInput } from './SearchInput';
 import { SearchOptions } from './options-panel';
 import NotificationActions from 'actions/NotificationActions';
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import LoginStore from 'stores/LoginStore';
 
 
-const SEARCH_PERIOD = 4000;
+const RESULT_WAIT_PERIOD = 4000;
 
 interface SearchProps extends RouteComponentProps<{}> {
 
 }
 
-class Search extends React.Component<SearchProps & WithTranslation> {
+interface SearchDataProps extends DataProviderDecoratorChildProps, WithTranslation {
+  instance: API.SearchInstance;
+}
+
+class Search extends React.Component<SearchProps & SearchDataProps> {
   state = {
     searchString: '',
     running: false
   };
 
-  _searchTimeout: NodeJS.Timer;
+  searchTimeout: NodeJS.Timer;
 
   componentDidMount() {
     this.checkLocationState(this.props);
+
+    const { query } = this.props.instance;
+    if (!!query) {
+      this.setState({
+        searchString: query.pattern
+      });
+    }
   }
 
   componentDidUpdate(prevProps: SearchProps) {
@@ -59,11 +72,11 @@ class Search extends React.Component<SearchProps & WithTranslation> {
   search = async (searchString: string, options?: SearchOptions) => {
     console.log('Searching');
 
-    clearTimeout(this._searchTimeout);
+    clearTimeout(this.searchTimeout);
 
     const { hub_urls, ...queryOptions } = options || {};
     try {
-      const res = await SocketService.post<API.SearchResponse>(SearchConstants.HUB_SEARCH_URL, {
+      const res = await SocketService.post<API.SearchResponse>(`${SearchConstants.MODULE_URL}/${this.props.instance.id}/hub_search`, {
         query: {
           pattern: searchString,
           ...queryOptions,
@@ -83,18 +96,34 @@ class Search extends React.Component<SearchProps & WithTranslation> {
   }
 
   onSearchPosted = (data: API.SearchResponse) => {
-    this._searchTimeout = setTimeout(
+    this.searchTimeout = setTimeout(
       () => {
         this.setState({ 
           running: false,
         });
       }, 
-      data.queue_time + SEARCH_PERIOD
+      data.queue_time + RESULT_WAIT_PERIOD
     );
+  }
+
+  parseOptions = () => {
+    const { query } = this.props.instance;
+    if (!query) {
+      return null;
+    }
+
+    return {
+      excluded: query.excluded,
+      min_size: query.min_size,
+      max_size: query.max_size,
+      file_type: query.file_type === SearchConstants.DEFAULT_SEARCH_TYPE ? null : query.file_type,
+      hub_urls: []
+    };
   }
 
   searchT = getModuleT(this.props.t, UI.Modules.SEARCH);
   render() {
+    const { instance, location } = this.props;
     const { searchString, running } = this.state;
     const { t } = this.searchT;
     return (
@@ -110,12 +139,14 @@ class Search extends React.Component<SearchProps & WithTranslation> {
             running={ running }
             defaultValue={ searchString }
             handleSubmit={ this.search }
-            location={ this.props.location }
+            location={ location }
+            defaultOptions={ this.parseOptions() }
           />
           <ResultTable 
             searchString={ searchString } 
             running={ running }
             searchT={ this.searchT }
+            instance={ instance }
           />
         </div>
       </OfflineHubMessageDecorator>
@@ -123,4 +154,25 @@ class Search extends React.Component<SearchProps & WithTranslation> {
   }
 }
 
-export default withTranslation()(Search);
+const OWNER_ID_SUFFIX = 'webui';
+
+export default DataProviderDecorator<SearchProps, SearchDataProps>(Search, {
+  urls: {
+    instance: async (props, socket) => {
+      // Try to use a previously created instance for this session
+      const instances = await socket.get<API.SearchInstance[]>(`${SearchConstants.INSTANCES_URL}`);
+
+      const instance = instances.find(i => i.owner === `session:${LoginStore.sessionId}:${OWNER_ID_SUFFIX}`);
+      if (!!instance) {
+        return instance;
+      }
+
+      // Create new instance
+      const instanceId = (await socket.post<{ id: number; }>(SearchConstants.INSTANCES_URL, {
+        owner_suffix: OWNER_ID_SUFFIX
+      })).id;
+
+      return socket.get(`${SearchConstants.INSTANCES_URL}/${instanceId}`);
+    }
+  }
+});

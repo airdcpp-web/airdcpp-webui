@@ -10,6 +10,7 @@ import { formatCalendarTime } from 'utils/ValueFormat';
 
 import './messages.css';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
@@ -50,6 +51,7 @@ const showDivider = (index: number, messageList: UI.MessageListItem[]) => {
 
 const getMessageListItem = (
   t: TFunction,
+  entityId: API.IdType | undefined,
   reduced: React.ReactNode[], 
   message: UI.MessageListItem, 
   index: number, 
@@ -80,6 +82,7 @@ const getMessageListItem = (
         key={ message.chat_message.id }
         message={ message.chat_message }
         dropdownContext=".chat.session"
+        entityId={ entityId! }
       />
     );
   } else if (message.log_message) {
@@ -112,7 +115,7 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
       >
         { !!messages ? (
           <div className="ui list message-list">
-            { messages.reduce(getMessageListItem.bind(null, t), []) }
+            { messages.reduce(getMessageListItem.bind(null, t, session ? session.id : undefined), []) }
           </div>
         ) : (
           <Loader text={ translate('Loading messages', t, UI.Modules.COMMON) }/>

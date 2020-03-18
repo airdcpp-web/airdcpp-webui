@@ -210,6 +210,10 @@ const LoginStore = {
     return this.loginProperties ? this.loginProperties.auth_token : null;
   },
 
+  get sessionId() {
+    return this.loginProperties ? this.loginProperties.session_id : null;
+  },
+
   get systemInfo() {
     return this.loginProperties ? this.loginProperties.system_info : null;
   },

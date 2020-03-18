@@ -12,10 +12,17 @@ import IconConstants from 'constants/IconConstants';
 import { UserMenu } from 'components/menu';
 
 import * as API from 'types/api';
+import MenuConstants from 'constants/MenuConstants';
 
+
+interface AuthorProps {
+  message: API.ChatMessage; 
+  dropdownContext: string;
+  entityId: API.IdType;
+}
 
 // Message sections
-const Author: React.FC<{ message: API.ChatMessage; dropdownContext: string }> = ({ message, dropdownContext }) => (
+const Author: React.FC<AuthorProps> = ({ message, dropdownContext, entityId }) => (
   <div className="header author">
     { message.third_person && <span>*</span> }
     <UserMenu 
@@ -23,6 +30,8 @@ const Author: React.FC<{ message: API.ChatMessage; dropdownContext: string }> = 
       triggerIcon={ null }
       user={ message.from }
       direction="downward"
+      remoteMenuId={ MenuConstants.HUB_USER }
+      entityId={ entityId }
     />
   </div>
 );
@@ -32,13 +41,22 @@ const Author: React.FC<{ message: API.ChatMessage; dropdownContext: string }> = 
   dropdownContext: PropTypes.string.isRequired,
 };*/
 
-const TimeStamp: React.FC<{ message: API.Message }> = ({ message }) => (
+interface TimeStampProps {
+  message: API.Message;
+}
+
+const TimeStamp: React.FC<TimeStampProps> = ({ message }) => (
   <div className="time">
     { formatTimestamp(message.time) }
   </div>
 );
 
-const MessageText: React.FC<{ message: API.Message, emojify: boolean }> = ({ message, emojify }) => (
+interface MessageTextProps {
+  message: API.Message; 
+  emojify: boolean;
+}
+
+const MessageText: React.FC<MessageTextProps> = ({ message, emojify }) => (
   <div className="text">
     <TextDecorator
       emojify={ emojify }
@@ -56,6 +74,7 @@ const MessageText: React.FC<{ message: API.Message, emojify: boolean }> = ({ mes
 interface ChatMessageProps {
   message: API.ChatMessage;
   dropdownContext: string;
+  entityId: API.IdType;
 }
 
 // Main message types
@@ -70,7 +89,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 
   render() {
-    const { message, dropdownContext } = this.props;
+    const { message, dropdownContext, entityId } = this.props;
     return (
       <div className={ 'ui item chat ' + message.from.flags.join(' ')}>
         <TimeStamp 
@@ -80,6 +99,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
           <Author 
             message={ message } 
             dropdownContext={ dropdownContext }
+            entityId={ entityId }
           />
           <MessageText 
             message={ message }

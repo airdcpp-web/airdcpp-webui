@@ -56,6 +56,7 @@ export interface DataProviderDecoratorSettings<PropsT extends object, DataT exte
 }
 
 export interface DataProviderDecoratorChildProps {
+  socket: APISocket;
   refetchData: (keys?: string[]) => void;
   //dataError: DataError | (Error & { status: undefined; code: undefined }) | null;
   dataError: DataFetchError | null;
@@ -231,6 +232,7 @@ export default function <PropsT extends object, DataT extends object>(
         <Component
           refetchData={ this.refetchData }
           dataError={ error }
+          socket={ SocketService }
           { ...this.props }
           { ...data }
         />

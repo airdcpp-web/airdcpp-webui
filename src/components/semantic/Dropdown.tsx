@@ -28,7 +28,11 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   size?: string;
 }
 
-class Dropdown extends React.PureComponent<DropdownProps> {
+interface State {
+  visible: boolean;
+}
+
+class Dropdown extends React.PureComponent<DropdownProps, State> {
   static propTypes = {
     // Node to render as caption
     caption: PropTypes.node,
@@ -71,12 +75,30 @@ class Dropdown extends React.PureComponent<DropdownProps> {
       $(this.c).dropdown('destroy');
     }
   }
+  
+  state: State = {
+    visible: false
+  };
 
   init = () => {
     const settings: SemanticUI.DropdownSettings = {
       direction: this.props.direction,
       action: 'hide',
       showOnFocus: false, // It can become focused when opening a modal
+      onShow: () => {
+        this.setState({
+            visible: true
+        });
+      },
+      onHide: () => {
+        setTimeout( // Handle possible item click events before removing the items...
+          () => {
+            this.setState({
+              visible: false
+            });
+          }
+        );
+      },
       ...this.props.settings,
       //debug: true,
       //verbose: true,
@@ -126,7 +148,7 @@ class Dropdown extends React.PureComponent<DropdownProps> {
         { leftIcon || !caption ? null : icon }
 
         <div className="menu">
-          { this.props.children }
+          { this.state.visible ? this.props.children : <div className="item"/> }
         </div>
       </div>
     );

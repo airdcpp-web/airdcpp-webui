@@ -23,15 +23,16 @@ export interface NpmPackageData {
 
 // The npm registry API returns different data/fieldnames for different calls
 // so we must do some conversions (the primary data format is the one used by the package search method)
-const convertNpmPackage = ({ name, description, version, _npmUser }: NpmPackageData) => {
+const convertNpmPackage = ({ name, description, version, _npmUser }: NpmPackageData): UI.NpmPackage => {
   return {
+    id: name,
     name,
     description,
     version,
     publisher: {
       username: _npmUser.name,
     }
-  } as UI.NpmPackage;
+  };
 };
 
 

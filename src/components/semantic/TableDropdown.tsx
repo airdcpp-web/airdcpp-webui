@@ -1,25 +1,22 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
-import invariant from 'invariant';
 import classNames from 'classnames';
 
 import Popup from './Popup';
 import DropdownCaption from './DropdownCaption';
 import Icon from './Icon';
 import IconConstants from 'constants/IconConstants';
+import { ActionMenuDecoratorChildProps } from 'decorators/menu/ActionMenuDecorator';
 
 
 // A popup-based class for handling dropdowns in Fixed Data Table
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
-type ChildType = React.ReactElement<any>;
-
-export interface TableDropdownProps {
+export interface TableDropdownProps extends ActionMenuDecoratorChildProps {
   caption: React.ReactNode;
   linkCaption?: boolean;
   className?: string;
-  children: () => ChildType[];
 }
 
 class TableDropdown extends React.Component<TableDropdownProps> {
@@ -42,25 +39,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     return nextProps.caption !== this.props.caption;
   }
 
-  addCloseHandler = (elem: ChildType) => {
-    if (elem.type === 'div') {
-      // Divider
-      return elem;
-    }
-
-    invariant(elem.props.onClick, 'Invalid item for table dropdown (click handler missing)');
-    return React.cloneElement(elem, {
-      onClick: () => {
-        this.popupNode.hide();
-        elem.props.onClick();
-      } 
-    });
-  }
-
   getChildren = () => {
     return (
       <div className="ui text menu vertical table-items">
-        { this.props.children().map(this.addCloseHandler) }
+        { this.props.children(this.popupNode.hide) }
       </div>
     );
   }

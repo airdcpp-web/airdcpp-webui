@@ -19,6 +19,7 @@ import { searchDownloadHandler } from 'services/api/SearchApi';
 
 interface ResultDialogProps {
   searchT: UI.ModuleTranslator;
+  instance: API.SearchInstance;
 }
 
 interface DataProps extends DataProviderDecoratorChildProps {
@@ -31,15 +32,17 @@ interface RouteProps {
 
 type Props = ResultDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
-export const SearchResultGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
-  return socket.get(`${SearchConstants.RESULTS_URL}/${itemId}`);
-};
 
 class ResultDialog extends React.Component<Props & DataProps> {
   static displayName = 'ResultDialog';
 
+  itemDataGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
+    const { instance } = this.props;
+    return socket.get(`${SearchConstants.MODULE_URL}/${instance.id}/${itemId}`);
+  }
+
   render() {
-    const { parentResult } = this.props;
+    const { parentResult, instance } = this.props;
     return (
       <Modal 
         className="result" 
@@ -51,15 +54,20 @@ class ResultDialog extends React.Component<Props & DataProps> {
       >
         <DownloadDialog 
           downloadHandler={ searchDownloadHandler }
-          itemDataGetter={ SearchResultGetter }
+          itemDataGetter={ this.itemDataGetter }
+          session={ instance }
         />
         <FileItemInfoGrid 
           fileItem={ parentResult }
           downloadHandler={ searchDownloadHandler }
           user={ parentResult.users.user }
           showPath={ false }
+          session={ instance }
         />
-        <UserResultTable parentResult={ parentResult }/>
+        <UserResultTable 
+          parentResult={ parentResult }
+          instanceId={ instance.id }
+        />
       </Modal>
     );
   }
@@ -69,7 +77,7 @@ const Decorated = ModalRouteDecorator<ResultDialogProps, RouteProps>(
   DataProviderDecorator<Props, DataProps>(
     ResultDialog, {
       urls: {
-        parentResult: ({ match }, socket) => SearchResultGetter(match.params.resultId, socket),
+        parentResult: ({ match, instance }, socket) => socket.get(`${SearchConstants.MODULE_URL}/${instance.id}/${match.params.resultId}`),
       }
     }
   ), 
