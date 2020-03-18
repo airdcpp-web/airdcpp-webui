@@ -445,7 +445,7 @@
     "queueActions": "Queue acties",
     "pausedForced": "Pause (geforceerd)",
     "queueEmpty": "The queue is leeg",
-    "queueEmptyDesc": "New items can be queued from search or filelists",
+    "queueEmptyDesc": "Nieuwe items can gequeued worden vanuit zoeken of filelists",
     "actions": {
       "removeCompletedBundles": "Verwijder voltooide bundels",
       "pauseAllBundles": "Pauzeer alle bundels",
@@ -467,9 +467,9 @@
         "removeFileCheckbox": "Verwijder van schijf"
       },
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "removeFileSuccess": "Bestand {{item.name}} was werd verwijderd uit de queue",
+        "removeCompletedSuccess": "{{result.count}} voltooide bundels werden verwijderd",
+        "searchBundleAlternatesSuccess": "De bundel {{item.name}} werd doorzocht op alternatieven"
       }
     },
     "paused": "Pauze",
@@ -486,14 +486,14 @@
     "files": "Bestanden",
     "size": "Grootte",
     "notifications": {
-      "bundleWasAddedInQueue": "Bundle was added in queue",
+      "bundleWasAddedInQueue": "Bundel werd toegevoegd aan de queue",
       "bundleDownloadError": "Download error: {{error}}",
-      "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
-      "validatingDownloadedBundle": "Validating downloaded bundle",
-      "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
-      "bundleWasAddedInShare": "Bundle was added in share",
+      "bundleContentValidationError": "Bundel inhoud validatie mislukt: {{error}} ({{hook}})",
+      "validatingDownloadedBundle": "Controleerd gedownloade bundel",
+      "bundleWasCompletedSuccessfully": "Bundel succesvol voltooid",
+      "bundleWasAddedInShare": "Bundel toegevoegd aan share",
       "actions": {
-        "viewQueue": "View queue"
+        "viewQueue": "Bekijk queue"
       }
     }
   },
@@ -514,7 +514,7 @@
       "removeFileFromQueue": "Verwijder bestand van queue",
       "removeUserFromQueue": "Verwijder gebruiker uit queue",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
+        "removeFileSuccess": "File {{item.name}} werd verwijderd ui de queue",
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },

@@ -30,8 +30,8 @@
       "uploads": "Uppladdningar",
       "downloaded": "Nedladdat",
       "uploaded": "Uppladdat",
-      "downloadLimit": "Nedladdningsbegränsning",
-      "uploadLimit": "Uppladdningsbegränsning",
+      "downloadLimit": "Nedladdningsbeg",
+      "uploadLimit": "Uppladdningsbeg",
       "disabled": "Inaktiverad"
     },
     "actions": {
@@ -512,7 +512,7 @@
       "forceConnect": "Tvinga anslutning",
       "disconnect": "Koppla från",
       "removeFileFromQueue": "Ta bort fil från kön",
-      "removeUserFromQueue": "Ta bort källa",
+      "removeUserFromQueue": "Ta bort användaren från kön",
       "notifications": {
         "removeFileSuccess": "Filen {{item.name}} har tagits bort från kön",
         "removeSourceSuccess": "Användaren {{item.user.nicks}} har tagits bort från {{result.count}} filer"
@@ -936,7 +936,7 @@
     },
     "new": "Ny session",
     "newDesc": "Öppna en ny privat chattsession",
-    "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna skicka privata meddelanden",
+    "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna skicka privatmeddelanden",
     "directEncryptedChannelAvailable": "Direktkrypterad förbindelse tillgänglig",
     "establishingConnection": "Etablerar förbindelse...",
     "directEncryptedChannelEstablished": "Krypterad förbindelse har etablerats",
