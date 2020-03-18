@@ -26,7 +26,11 @@ import LoginStore from 'stores/LoginStore';
 
 const RESULT_WAIT_PERIOD = 4000;
 
-interface SearchProps extends RouteComponentProps<{}> {
+interface SearchLocationState {
+  searchString?: string;
+}
+
+interface SearchProps extends RouteComponentProps<{}, any, SearchLocationState> {
 
 }
 

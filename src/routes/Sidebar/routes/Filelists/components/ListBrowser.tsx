@@ -22,13 +22,13 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import MenuConstants from 'constants/MenuConstants';
 
 
+export type FilelistLocationState = { directory: string; } | undefined;
+
 interface ListBrowserProps {
   session: API.FilelistSession;
-  location: Location;
+  location: Location<FilelistLocationState>;
   sessionT: UI.ModuleTranslator;
 }
-
-type LocationState = { directory: string; } | undefined;
 
 class ListBrowser extends React.Component<ListBrowserProps> {
   hasClickedDirectory: boolean = false;
@@ -61,19 +61,19 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   componentDidMount() {
     const { session, location } = this.props;
 
-    const locationData: LocationState = location.state;
+    const locationData = location.state;
     if (!locationData || !locationData.directory) {
       // We need an initial path for our history
       History.replace({
         state: { 
           directory: session.location.path 
-        } as LocationState
+        } as FilelistLocationState
       });
     }
   }
 
   componentDidUpdate(prevProps: ListBrowserProps) {
-    const newLocationData: LocationState = this.props.location.state;
+    const newLocationData = this.props.location.state;
     if (!newLocationData || !newLocationData.directory) {
       return;
     }
@@ -83,7 +83,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
       return;
     }
 
-    const oldLocationData: LocationState = prevProps.location.state;
+    const oldLocationData = prevProps.location.state;
     if (!!oldLocationData && oldLocationData.directory !== newLocationData.directory) {
       // It's our change
       this.sendChangeDirectory(newLocationData.directory);

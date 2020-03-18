@@ -87,6 +87,10 @@ export interface SessionLayoutProps<
   t: TFunction;
 }
 
+export interface SessionLocationState {
+  pending?: boolean;
+}
+
 export interface SessionMainLayoutProps<SessionT extends SessionBaseType, ActionT extends object = {}> extends 
   Pick<SessionLayoutProps<SessionT>, 'unreadInfoStore'> {
 
@@ -262,7 +266,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   checkActiveItem = (props: SessionLayoutProps<SessionT>) => {
     // Did we just create this session?
     const routerLocation = props.location;
-    const pending = routerLocation.state && routerLocation.state.pending;
+    const pending = routerLocation.state && (routerLocation.state as SessionLocationState).pending;
 
     // Update the active item
     const activeItem = findItem(props.items, props.activeId);
@@ -507,7 +511,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
           render={ props => {
             if (!activeItem) {
               const { state } = this.props.location;
-              if (!!state && state.pending) {
+              if (!!state && (state as SessionLocationState).pending) {
                 // The session was just created
                 return <Loader text={ translate('Waiting for server response', t, UI.Modules.COMMON) }/>;
               } else if (activeId || items.length !== 0) {

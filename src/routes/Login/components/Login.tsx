@@ -6,7 +6,7 @@ import LoginStore from 'stores/LoginStore';
 import Checkbox from 'components/semantic/Checkbox';
 import { RouteComponentProps } from 'react-router';
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
-import { useLoginState } from '../effects/UseLoginStateEffect';
+import { useLoginState, LoginLocationState } from '../effects/UseLoginStateEffect';
 import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
@@ -20,7 +20,7 @@ import IconConstants from 'constants/IconConstants';
 
 const ENTER_KEY_CODE = 13;
 
-interface LoginProps extends RouteComponentProps {
+interface LoginProps extends RouteComponentProps<{}, any, LoginLocationState> {
 
 }
 

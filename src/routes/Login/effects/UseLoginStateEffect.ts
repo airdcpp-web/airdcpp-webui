@@ -7,7 +7,11 @@ import * as API from 'types/api';
 import { useTranslation } from 'react-i18next';
 
 
-const useLoginState = (props: RouteComponentProps) => {
+export interface LoginLocationState {
+  nextPath?: string;
+}
+
+const useLoginState = (props: RouteComponentProps<{}, any, LoginLocationState>) => {
   const loadingState = useState(false);
   const setLoading = loadingState[1];
   const { i18n } = useTranslation();
