@@ -173,7 +173,8 @@ export default DataProviderDecorator<SearchProps, SearchDataProps>(Search, {
 
       // Create new instance
       const instanceId = (await socket.post<{ id: number; }>(SearchConstants.INSTANCES_URL, {
-        owner_suffix: OWNER_ID_SUFFIX
+        owner_suffix: OWNER_ID_SUFFIX,
+        expiration: 0
       })).id;
 
       return socket.get(`${SearchConstants.INSTANCES_URL}/${instanceId}`);
