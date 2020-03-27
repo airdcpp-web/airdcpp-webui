@@ -6,17 +6,20 @@ import Popup from './Popup';
 import DropdownCaption from './DropdownCaption';
 import Icon from './Icon';
 import IconConstants from 'constants/IconConstants';
-import { ActionMenuDecoratorChildProps } from 'decorators/menu/ActionMenuDecorator';
 
 
 // A popup-based class for handling dropdowns in Fixed Data Table
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
-export interface TableDropdownProps extends ActionMenuDecoratorChildProps {
+
+export type DropdownCloseHandler = () => void;
+
+export interface TableDropdownProps {
   caption: React.ReactNode;
   linkCaption?: boolean;
   className?: string;
+  children: (onClose: DropdownCloseHandler) => React.ReactNode;
 }
 
 class TableDropdown extends React.Component<TableDropdownProps> {

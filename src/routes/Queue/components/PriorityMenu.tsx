@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
 
-import TableDropdown from 'components/semantic/TableDropdown';
+import TableDropdown, { DropdownCloseHandler } from 'components/semantic/TableDropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
@@ -56,7 +56,7 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
   }
 
-  getPriorityListItem = (priority: API.QueuePriority, t: TFunction, onClose: () => void) => {
+  getPriorityListItem = (priority: API.QueuePriority, t: TFunction, onClose: DropdownCloseHandler) => {
     const currentPrio = this.props.item.priority.id;
     return (
       <MenuItemLink 
@@ -72,7 +72,7 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
     );
   }
 
-  getChildren = (onClose: () => void) => {
+  getChildren = (onClose: DropdownCloseHandler) => {
     const { t } = this.props;
 
     let children = Object.keys(PriorityEnum)

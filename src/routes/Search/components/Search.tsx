@@ -120,7 +120,8 @@ class Search extends React.Component<SearchProps & SearchDataProps> {
       excluded: query.excluded,
       min_size: query.min_size,
       max_size: query.max_size,
-      file_type: query.file_type === SearchConstants.DEFAULT_SEARCH_TYPE ? null : query.file_type,
+      file_type: query.file_type === SearchConstants.DEFAULT_SEARCH_TYPE || query.file_type === 'tth' ? 
+        null : query.file_type,
       hub_urls: []
     };
   }
