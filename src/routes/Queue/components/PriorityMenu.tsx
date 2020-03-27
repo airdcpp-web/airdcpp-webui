@@ -56,31 +56,37 @@ class PriorityMenu extends React.Component<PriorityMenuProps> {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
   }
 
-  getPriorityListItem = (priority: API.QueuePriority, t: TFunction) => {
+  getPriorityListItem = (priority: API.QueuePriority, t: TFunction, onClose: () => void) => {
     const currentPrio = this.props.item.priority.id;
     return (
       <MenuItemLink 
         key={ priority.id }
         active={ currentPrio === priority.id } 
-        onClick={ () => this.setPriority(priority.id) }
+        onClick={ () => {
+          this.setPriority(priority.id);
+          onClose();
+        }}
       >
         { translate(priority.str, t, UI.Modules.QUEUE) }
       </MenuItemLink>
     );
   }
 
-  getChildren = () => {
+  getChildren = (onClose: () => void) => {
     const { t } = this.props;
 
     let children = Object.keys(PriorityEnum)
-      .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey], t));
+      .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey], t, onClose));
 
     children.push(<div key="divider" className="ui divider"/>);
     children.push(
       <MenuItemLink 
         key="auto"
         active={ this.props.itemPrio.auto } 
-        onClick={ this.setAutoPriority }
+        onClick={ () => {
+          this.setPriority(API.QueuePriorityEnum.DEFAULT);
+          onClose();
+        } }
       >
         { translate('Auto', t, UI.Modules.QUEUE) }
       </MenuItemLink>
