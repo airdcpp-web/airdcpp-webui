@@ -10,6 +10,8 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ActionMenu } from 'components/menu';
 import MenuConstants from 'constants/MenuConstants';
+import IconConstants from 'constants/IconConstants';
+import Icon from 'components/semantic/Icon';
 
 
 export interface ExtensionActionButtonsProps {
@@ -45,14 +47,6 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
   { npmPackage, installedPackage, hasUpdate, installing, moduleT }
 ) => (
   <div className="extra buttons">
-    { installedPackage && (
-      <ActionButton
-        actions={ ExtensionActions.manage }
-        actionId="remove"
-        className="right floated"
-        itemData={ installedPackage }
-      />
-    ) }
     { npmPackage && (
       <InstallButton
         npmPackage={ npmPackage }
@@ -61,8 +55,26 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
         installing={ installing }
       />
     ) }
+    { installedPackage && (
+      <ActionMenu
+        actions={ ExtensionActions.manage }
+        ids={ [ 'configure', 'divider', 'remove' ] }
+        remoteMenuId={ MenuConstants.EXTENSION }
+        itemData={ installedPackage }
+        className="right floated"
+        caption={ moduleT.translate('Manage...') }
+        button={ true }
+        contextElement="#setting-scroll-context"
+      />
+    ) }
     { npmPackage && (
-      <ExternalLink className="ui right floated button" url={ ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name }>
+      <ExternalLink 
+        className="ui right floated button"
+        url={ ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name }
+      >
+        <Icon
+          icon={ IconConstants.OPEN }
+        />
         { moduleT.translate('Read more') }
       </ExternalLink> 
     ) }
@@ -72,24 +84,6 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
         actionId={ installedPackage.running ? 'stop' : 'start' }
         className="right floated"
         itemData={ installedPackage }
-      />
-    ) }
-    { installedPackage && (
-      <ActionButton
-        actions={ ExtensionActions.manage }
-        actionId="configure"
-        className="right floated"
-        itemData={ installedPackage }
-      />
-    ) }
-    { installedPackage && (
-      <ActionMenu
-        actions={ ExtensionActions.manage }
-        ids={ [] }
-        remoteMenuId={ MenuConstants.EXTENSION }
-        itemData={ installedPackage }
-        caption={ 'Manage...' }
-        button={ true }
       />
     ) }
   </div>

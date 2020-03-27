@@ -16,6 +16,7 @@ import {
 
 
 const isManaged = (extension: API.Extension) => extension.managed;
+const isRunning = (extension: API.Extension) => extension.running;
 const hasSettings = (extension: API.Extension) => extension.has_settings;
 
 
@@ -97,6 +98,28 @@ const ExtensionNpmActions: UI.ActionListType<UI.NpmPackage> = {
 };
 
 const ExtensionManageActions: UI.ActionListType<API.Extension> = {
+  start: {
+    displayName: 'Start',
+    icon: IconConstants.PLAY,
+    filter: ext => isManaged(ext) && !isRunning(ext),
+    access: API.AccessEnum.ADMIN,
+    handler: handleStart,
+  },
+  stop: {
+    displayName: 'Stop',
+    icon: IconConstants.STOP,
+    filter: ext => isManaged(ext) && isRunning(ext),
+    access: API.AccessEnum.ADMIN,
+    handler: handleStop,
+  },
+  configure: {
+    displayName: 'Configure',
+    icon: IconConstants.EDIT,
+    filter: hasSettings,
+    access: API.AccessEnum.SETTINGS_EDIT,
+    handler: handleConfigure,
+  },
+  divider: null,
   remove: {
     displayName: 'Uninstall',
     icon: IconConstants.REMOVE,
@@ -109,27 +132,6 @@ const ExtensionManageActions: UI.ActionListType<API.Extension> = {
       rejectCaption: `Don't remove`,
     },
     handler: handleRemove,
-  },
-  start: {
-    displayName: 'Start',
-    icon: IconConstants.PLAY,
-    filter: isManaged,
-    access: API.AccessEnum.ADMIN,
-    handler: handleStart,
-  },
-  stop: {
-    displayName: 'Stop',
-    icon: IconConstants.STOP,
-    filter: isManaged,
-    access: API.AccessEnum.ADMIN,
-    handler: handleStop,
-  },
-  configure: {
-    displayName: 'Configure',
-    icon: IconConstants.EDIT,
-    filter: hasSettings,
-    access: API.AccessEnum.SETTINGS_EDIT,
-    handler: handleConfigure,
   },
 };
 
