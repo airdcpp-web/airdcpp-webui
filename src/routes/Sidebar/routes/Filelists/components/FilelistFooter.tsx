@@ -19,9 +19,9 @@ const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) =>
     return null;
   }
 
-  let locationText = session.location.type.str;
+  let locationText = session.location!.type.str;
   if (locationText.length > 0) {
-    locationText = `${formatSize(session.location.size, sessionT.plainT)} (${locationText})`;
+    locationText = `${formatSize(session.location!.size, sessionT.plainT)} (${locationText})`;
   }
 
   return (

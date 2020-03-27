@@ -19,6 +19,7 @@ import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 import { changeFilelistHubUrl, changeFilelistShareProfile, changeFilelistDirectory } from 'services/api/FilelistApi';
+import { FilelistSession } from 'types/api';
 
 
 const FilelistSessionActions = Reflux.createActions([
@@ -46,13 +47,13 @@ FilelistSessionActions.createSession.listen(function (
   path: string = '/'
 ) {
   const directory = getFilePath(path);
-  const session = sessionStore.getSession(user.cid);
+  const session: FilelistSession | null = sessionStore.getSession(user.cid);
   if (session) {
     if (session.user.hub_url !== user.hub_url) {
       changeFilelistHubUrl(session, user.hub_url);
     }
 
-    if (directory !== '/' && session.location.path !== directory) {
+    if (directory !== '/' && (!session.location || session.location.path !== directory)) {
       changeFilelistDirectory(session, directory);
     }
 

@@ -30,13 +30,13 @@ export interface Transfer {
   name: string;
   target: string;
   download: boolean;
-  type: FileItemType;
+  type: FileItemType | null;
   size: number;
   bytes_transferred: number;
   time_started: number;
   speed: number;
   seconds_left: number; 
-  encryption: EncryptionInfo;
+  encryption: EncryptionInfo | null;
   ip: IP;
   user: HintedUser;
   status: TransferStatus;

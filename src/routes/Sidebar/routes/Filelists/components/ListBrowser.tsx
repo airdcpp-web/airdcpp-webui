@@ -66,7 +66,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
       // We need an initial path for our history
       History.replace({
         state: { 
-          directory: session.location.path 
+          directory: session.location!.path 
         } as FilelistLocationState
       });
     }
@@ -78,7 +78,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
       return;
     }
 
-    if (this.props.session.location.path === newLocationData.directory) {
+    if (this.props.session.location!.path === newLocationData.directory) {
       // Nothing has changed
       return;
     }
@@ -91,7 +91,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
       // Change initiated by another session/GUI, update our location
       History.replace({ 
         state: {
-          directory: this.props.session.location.path 
+          directory: this.props.session.location!.path 
         }
       });
     }
@@ -147,7 +147,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
         />
 
         <BrowserBar 
-          path={ session.location.path }
+          path={ session.location!.path }
           separator="/"
           rootPath="/"
           rootName={ sessionT.translate('Root') }

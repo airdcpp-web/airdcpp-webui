@@ -33,6 +33,10 @@ class NameCell extends React.Component<NameCellProps> {
     }
 
     const rowData = rowDataGetter!();
+    if (!rowData.type) {
+      return null;
+    }
+
     return (
       <FormattedFile 
         typeInfo={ rowData.type }

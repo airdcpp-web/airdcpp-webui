@@ -90,14 +90,14 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
     }
 
     // The list finished downloading but the view hasn't updated yet
-    const { files, directories } = location.type as API.DirectoryType;
+    const { files, directories } = location!.type as API.DirectoryType;
     if (files !== 0 || directories !== 0) {
       return <Loader text={ translate('Updating view') }/>;
       //return null;
     }
 
     // The directory was changed but the download state hasn't changed yet
-    if (!location.complete) {
+    if (!location!.complete) {
       return <Loader text={ translate('Preparing download') }/>;
     }
 
@@ -111,7 +111,7 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
 
   onClickDirectory: FileDownloadCellClickHandler = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
-      return () => this.props.onClickDirectory(this.props.session.location.path + cellData + '/');
+      return () => this.props.onClickDirectory(this.props.session.location!.path + cellData + '/');
     }
 
     return undefined;
@@ -130,7 +130,7 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
           rowClassNameGetter={ this.rowClassNameGetter }
           store={ FilelistViewStore }
           entityId={ session.id }
-          viewId={ session.location.path }
+          viewId={ session.location!.path }
           sessionStore={ FilelistSessionStore }
           moduleId={ FilelistItemActions.moduleId }
         >

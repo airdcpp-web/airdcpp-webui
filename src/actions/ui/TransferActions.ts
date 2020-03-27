@@ -13,7 +13,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-const isFilelist = (transfer: API.Transfer) => transfer.type && 
+const isFilelist = (transfer: API.Transfer) => !!transfer.type && 
   (transfer.type as API.FileType).content_type === 'filelist';
 const isDownload = (transfer: API.Transfer) => transfer.download;
 const isFinished = (transfer: API.Transfer) => transfer.status.id === StatusEnum.FINISHED;

@@ -8,6 +8,8 @@ import ExternalLink from 'components/ExternalLink';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { ActionMenu } from 'components/menu';
+import MenuConstants from 'constants/MenuConstants';
 
 
 export interface ExtensionActionButtonsProps {
@@ -78,6 +80,16 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
         actionId="configure"
         className="right floated"
         itemData={ installedPackage }
+      />
+    ) }
+    { installedPackage && (
+      <ActionMenu
+        actions={ ExtensionActions.manage }
+        ids={ [] }
+        remoteMenuId={ MenuConstants.EXTENSION }
+        itemData={ installedPackage }
+        caption={ 'Manage...' }
+        button={ true }
       />
     ) }
   </div>
