@@ -9,6 +9,12 @@ export const enum SettingTypeEnum {
   LIST = 'list',
 }
 
+export enum SettingValueMode {
+  CURRENT = 'current',
+  FORCE_AUTO = 'force_auto',
+  FORCE_MANUAL = 'force_manual'
+}
+
 export interface SettingEnumOption {
   id: number | string;
   name: string;

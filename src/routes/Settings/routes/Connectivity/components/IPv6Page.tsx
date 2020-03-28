@@ -1,6 +1,8 @@
 import React from 'react';
 import ProtocolPage from 'routes/Settings/routes/Connectivity/components/ProtocolPage';
+
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+
 
 const Entry = [
   'connection_auto_v6',

@@ -14,6 +14,8 @@ import { RouteComponentProps } from 'react-router';
 
 export interface RemoteSettingFormProps extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions'> {
   keys: string[];
+  onSettingValuesReceived?: (settings: API.SettingValueMap) => void;
+  valueMode?: API.SettingValueMode;
 }
 
 interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
@@ -68,7 +70,20 @@ export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDa
   {
     urls: {
       fieldDefinitions: ({ keys }) => SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
-      settings: ({ keys }) => SocketService.post(SettingConstants.ITEMS_GET_URL, { keys }),
-    },
+      settings: async ({ keys, onSettingValuesReceived, valueMode = API.SettingValueMode.CURRENT }) => {
+        const settings: API.SettingValueMap = await SocketService.post(
+          SettingConstants.ITEMS_GET_URL, { 
+            keys,
+            value_mode: valueMode
+          }
+        );
+
+        if (!!onSettingValuesReceived) {
+          onSettingValuesReceived(settings);
+        }
+
+        return settings;
+      },
+    }
   }
 );

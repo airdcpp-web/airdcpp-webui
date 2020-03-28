@@ -7,6 +7,8 @@ import SettingConstants from 'constants/SettingConstants';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
 
+import * as API from 'types/api';
+
 
 interface AutoValuePanelProps extends SettingSectionChildProps {
   type: string;
@@ -35,7 +37,7 @@ class AutoValuePanel extends React.Component<AutoValuePanelProps> {
 
     return SocketService.post(SettingConstants.ITEMS_GET_URL, { 
       keys: this.props.keys.filter(key => key !== autoSettingKey), 
-      force_auto_values: true 
+      value_mode: API.SettingValueMode.FORCE_AUTO,
     });
   }
 

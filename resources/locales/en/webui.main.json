@@ -621,11 +621,18 @@
         "autoDetected": "{{status}} (auto detected)"
       },
       "ports": {
+        "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
         "form": {
           "tcpPortHelp": "TCP port is used for unencrypted transfers",
           "udpPortHelp": "UDP port is used for searching",
           "tlsPortHelp": "TLS port (TCP) is used for encrypted transfers"
         }
+      },
+      "v6": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+      },
+      "v4": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
       }
     },
     "profile": {
