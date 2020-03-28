@@ -26,6 +26,7 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   selection?: boolean;
   dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
   size?: string;
+  menuElementClassName?: string;
 }
 
 interface State {
@@ -113,7 +114,10 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   render() {
-    const { leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection, size } = this.props;
+    const { 
+      leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection, size, menuElementClassName 
+    } = this.props;
+
     const className = classNames(
       'ui',
       'dropdown',
@@ -147,7 +151,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
         </DropdownCaption>
         { leftIcon || !caption ? null : icon }
 
-        <div className="menu">
+        <div className={ classNames('menu', menuElementClassName) }>
           { this.state.visible ? this.props.children : <div className="item"/> }
         </div>
       </div>

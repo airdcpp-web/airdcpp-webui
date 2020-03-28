@@ -65,6 +65,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = (
         caption={ moduleT.translate('Manage...') }
         button={ true }
         contextElement="#setting-scroll-context"
+        menuElementClassName="left floated"
       />
     ) }
     { npmPackage && (
