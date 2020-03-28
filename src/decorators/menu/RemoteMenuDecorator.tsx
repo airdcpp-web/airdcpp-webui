@@ -35,7 +35,7 @@ const toMenuItem = (
           entity_id: entityId,
         });
       } }
-      icon={ menuItem.icon }
+      icon={ menuItem.icon[MenuConstants.ICON_TYPE_ID] }
     >
       { menuItem.title }
     </MenuItemLink>

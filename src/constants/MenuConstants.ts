@@ -2,6 +2,8 @@ const MODULE_URL = 'menus';
 export default {
   MODULE_URL: MODULE_URL,
 
+  ICON_TYPE_ID: 'semantic',
+
   QUEUE_BUNDLE: 'queue_bundle',
   QUEUE_FILE: 'queue_file',
   TRANSFER: 'transfer',
