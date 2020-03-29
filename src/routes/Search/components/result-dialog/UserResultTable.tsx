@@ -104,6 +104,6 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
 
 export default DataProviderDecorator<UserResultTableProps, UserResultTableDataProps>(UserResultTable, {
   urls: {
-    results: ({ parentResult, instanceId }, socket) => socket.get(`${SearchConstants.MODULE_URL}/${instanceId}/results/${parentResult.id}/children`),
+    results: ({ parentResult, instanceId }, socket) => socket.get(`${SearchConstants.INSTANCES_URL}/${instanceId}/results/${parentResult.id}/children`),
   }
 });

@@ -38,7 +38,7 @@ class ResultDialog extends React.Component<Props & DataProps> {
 
   itemDataGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
     const { instance } = this.props;
-    return socket.get(`${SearchConstants.MODULE_URL}/${instance.id}/${itemId}`);
+    return socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`);
   }
 
   render() {
@@ -77,7 +77,7 @@ const Decorated = ModalRouteDecorator<ResultDialogProps, RouteProps>(
   DataProviderDecorator<Props, DataProps>(
     ResultDialog, {
       urls: {
-        parentResult: ({ match, instance }, socket) => socket.get(`${SearchConstants.MODULE_URL}/${instance.id}/${match.params.resultId}`),
+        parentResult: ({ match, instance }, socket) => socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${match.params.resultId}`),
       }
     }
   ), 

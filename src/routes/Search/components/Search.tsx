@@ -80,7 +80,7 @@ class Search extends React.Component<SearchProps & SearchDataProps> {
 
     const { hub_urls, ...queryOptions } = options || {};
     try {
-      const res = await SocketService.post<API.SearchResponse>(`${SearchConstants.MODULE_URL}/${this.props.instance.id}/hub_search`, {
+      const res = await SocketService.post<API.SearchResponse>(`${SearchConstants.INSTANCES_URL}/${this.props.instance.id}/hub_search`, {
         query: {
           pattern: searchString,
           ...queryOptions,

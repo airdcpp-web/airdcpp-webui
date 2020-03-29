@@ -154,7 +154,7 @@ class ResultTable extends React.Component<ResultTableProps> {
   
   itemDataGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
     const { instance } = this.props;
-    return socket.get(`${SearchConstants.MODULE_URL}/${instance.id}/${itemId}`);
+    return socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`);
   }
 
   render() {
