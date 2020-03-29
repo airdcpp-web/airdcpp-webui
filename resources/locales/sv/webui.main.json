@@ -564,7 +564,7 @@
       "about": "Om",
       "extensions": "Tillägg",
       "system": "System",
-      "autoDetection": "Detektera automatiskt",
+      "autoDetection": "Identifiera automatiskt",
       "iPv4ConnectivityManual": "IPv4-anslutning (manuellt)",
       "iPv6ConnectivityManual": "IPv6-anslutning (manuellt)",
       "portsManual": "Portar (manuellt)",
@@ -614,18 +614,25 @@
     "connectivity": {
       "detection": {
         "connectivityDetectionNote": "Vid problem med filöverföringen, se till att dina TCP-portar är öppna genom att använda en <1>online porttestare</1>. Observera att kontroll av UDP-porten (sök) inte kan göras online. För mer information om olika anslutningsmöjligheter, besök <4>DC++'s connectivity FAQ</4>.",
-        "currentAutoDetectionStatus": "Nuvarande automatisk detekteringsstatus",
+        "currentAutoDetectionStatus": "Nuvarande automatisk identifieringsstatus",
         "iPv4Connectivity": "IPv4-anslutning",
         "iPv6Connectivity": "IPv6-anslutning",
         "manualConfiguration": "{{status}} (manuell konfiguration)",
         "autoDetected": "{{status}} (detekterad automatisk)"
       },
       "ports": {
+        "portsAutoValuesNote": "Portnummer listade på den här sidan kan åsidosättas av portmappare (om aktiverad)",
         "form": {
           "tcpPortHelp": "TCP-porten används till okrypterade överföringar",
           "udpPortHelp": "UDP-porten används till sökningar",
           "tlsPortHelp": "TLS-porten (TCP) används till krypterade överföringar"
         }
+      },
+      "v6": {
+        "protocolAutoValuesNote": "Automatisk anslutningsidentifiering är för närvarande aktiverad; inställda värden på den här sidan används inte"
+      },
+      "v4": {
+        "protocolAutoValuesNote": "Automatisk anslutningsidentifiering är för närvarande aktiverad; inställda värden på den här sidan används inte"
       }
     },
     "profile": {
@@ -655,7 +662,8 @@
         "installedVersion": "Installerad version",
         "datePublished": "{{version}} (publicerat {{date}})",
         "readMore": "Läs mer",
-        "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner."
+        "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner.",
+        "manage": "Hantera..."
       },
       "manage": {
         "byAuthor": "av {{author}}",
@@ -666,7 +674,8 @@
         "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <1>Tilläggskatalogsidan</1>.",
         "defaultExtensionEngineMissing": "Standardtilläggsmotorn <1>node</1> är inte installerad i ditt system. Besök <3>motorns hemsida</3> för installationsinstruktioner.",
         "extensionDirectoryFetchError": "Misslyckades med att hämta information från tilläggskatalogen: {{error}}",
-        "unmanagedExtension": "Ohanterat tillägg"
+        "unmanagedExtension": "Ohanterat tillägg",
+        "manage": "Hantera..."
       }
     },
     "about": {

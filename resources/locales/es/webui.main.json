@@ -621,11 +621,18 @@
         "autoDetected": "{{status}} (auto detectada)"
       },
       "ports": {
+        "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
         "form": {
           "tcpPortHelp": "El puerto TCP se usa para transferencias sin cifrar",
           "udpPortHelp": "El puerto UDP se usa para las búsquedas",
           "tlsPortHelp": "El puerto TLS (TCP) se usa para transferencias cifradas"
         }
+      },
+      "v6": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+      },
+      "v4": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
       }
     },
     "profile": {
@@ -655,7 +662,8 @@
         "installedVersion": "Versión instalada",
         "datePublished": "{{version}} (publicada el {{date}})",
         "readMore": "Leer más",
-        "defaultExtensionEngineMissing": "La extensión de motor por defecto <1>node</1>no está instalado en su sistema. Por favor visita <3>engine's home page</3> para seguir las instrucciones de instalación."
+        "defaultExtensionEngineMissing": "La extensión de motor por defecto <1>node</1>no está instalado en su sistema. Por favor visita <3>engine's home page</3> para seguir las instrucciones de instalación.",
+        "manage": "Manage..."
       },
       "manage": {
         "byAuthor": "por {{author}}",
@@ -666,7 +674,8 @@
         "noInstalledExtensions": "Se han encontrado extensiones no instaladas. Las extensiones nuevas se pueden instalar desde la página del <1>Catálogo de extensiones</1>.",
         "defaultExtensionEngineMissing": "La extensión de motor por defecto <1>node</1>no está instalado en su sistema. Por favor visita <3>engine's home page</3> para seguir las instrucciones de instalación.",
         "extensionDirectoryFetchError": "Fallo al buscar la información en el directorio de extensiones: {{error}}",
-        "unmanagedExtension": "Unmanaged extension"
+        "unmanagedExtension": "Unmanaged extension",
+        "manage": "Manage..."
       }
     },
     "about": {

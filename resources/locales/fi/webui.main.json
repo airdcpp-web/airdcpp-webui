@@ -621,11 +621,18 @@
         "autoDetected": "{{status}} (tunnistettu automaattisesti)"
       },
       "ports": {
+        "portsAutoValuesNote": "Porttikarjoitukset (mikäli käytössä) voivat ohittaa tällä sivulla listatut porttinumerot",
         "form": {
           "tcpPortHelp": "TCP-porttia käytetään salaamattomille tiedostosiirroille",
           "udpPortHelp": "UDP-porttia käytetään hauille",
           "tlsPortHelp": "TLS-porttia (TCP) käytetään salatuille tiedostosiirroille"
         }
+      },
+      "v6": {
+        "protocolAutoValuesNote": "Yhteysasetusten automaattinen tunnistaminen on tällä hetkellä käytössä; tällä sivulla listattuja arvoja ei käytetä"
+      },
+      "v4": {
+        "protocolAutoValuesNote": "Yhteysasetusten automaattinen tunnistaminen on tällä hetkellä käytössä; tällä sivulla listattuja arvoja ei käytetä"
       }
     },
     "profile": {
@@ -655,7 +662,8 @@
         "installedVersion": "Asennettu versio",
         "datePublished": "{{version}} (julkaistu {{date}})",
         "readMore": "Lue lisää",
-        "defaultExtensionEngineMissing": "Lisäosien oletusmoottori <1>node</1> ei ole asennettuna järjestelmään. Katso asennusohjeet <3>moottorin kotisivuilta</3>."
+        "defaultExtensionEngineMissing": "Lisäosien oletusmoottori <1>node</1> ei ole asennettuna järjestelmään. Katso asennusohjeet <3>moottorin kotisivuilta</3>.",
+        "manage": "Hallitse..."
       },
       "manage": {
         "byAuthor": "tekijältä {{author}}",
@@ -666,7 +674,8 @@
         "noInstalledExtensions": "Asennettuja lisäosia ei löytynyt. Uusia lisäosia voidaan asentaa <1>Lisäosien katalogi</1> -sivulta.",
         "defaultExtensionEngineMissing": "Lisäosien oletusmoottori <1>node</1> ei ole asennettuna järjestelmään. Katso asennusohjeet <3>moottorin kotisivuilta</3>.",
         "extensionDirectoryFetchError": "Tiedon hakeminen lisäosien katalogista epäonnistui: {{error}}",
-        "unmanagedExtension": "Ulkoinen lisäosa"
+        "unmanagedExtension": "Ulkoinen lisäosa",
+        "manage": "Hallitse..."
       }
     },
     "about": {
@@ -683,7 +692,7 @@
         "homePage": "Kotisivut",
         "featureRequestBugTracker": "Toiveet uusista toiminnoista/bugien raportointi",
         "documentation": "Ohjeet",
-        "thirdPartyCredits": "Third-party credits"
+        "thirdPartyCredits": "Kolmannen osapuolen maininnat"
       },
       "transfers": {
         "totalDownloaded": "Ladattu yhteensä",

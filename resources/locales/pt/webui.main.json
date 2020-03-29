@@ -621,11 +621,18 @@
         "autoDetected": "{{status}} (detetado automaticamente)"
       },
       "ports": {
+        "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
         "form": {
           "tcpPortHelp": "A porta TCP é usada para transferências não encriptadas",
           "udpPortHelp": "A porta UDP é usada nas pesquisas",
           "tlsPortHelp": "A porta TLS (TCP) é usada para transferências encriptadas"
         }
+      },
+      "v6": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+      },
+      "v4": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
       }
     },
     "profile": {
@@ -655,7 +662,8 @@
         "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (publicada em {{date}})",
         "readMore": "Ler mais",
-        "defaultExtensionEngineMissing": "O motor de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite a <3>página inicial do motor</3> para ver as instruções de instalação."
+        "defaultExtensionEngineMissing": "O motor de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite a <3>página inicial do motor</3> para ver as instruções de instalação.",
+        "manage": "Manage..."
       },
       "manage": {
         "byAuthor": "por {{author}}",
@@ -666,7 +674,8 @@
         "noInstalledExtensions": "Não foram encontradas extensões instaladas. As novas extensões podem ser instaladas na página <1>Catálogo de extensões</1>.",
         "defaultExtensionEngineMissing": "O motor de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite a <3>página inicial do motor</3> para ver as instruções de instalação.",
         "extensionDirectoryFetchError": "Falhou a busca de informação da pasta de extensões: {{error}}",
-        "unmanagedExtension": "Unmanaged extension"
+        "unmanagedExtension": "Unmanaged extension",
+        "manage": "Manage..."
       }
     },
     "about": {

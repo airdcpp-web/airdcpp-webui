@@ -621,11 +621,18 @@
         "autoDetected": "{{status}} (auto detectado)"
       },
       "ports": {
+        "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
         "form": {
           "tcpPortHelp": "Porta TCP é usada para transferências não criptografadas",
           "udpPortHelp": "Porta UDP é usada para pesquisa",
           "tlsPortHelp": "Porta TLS (TCP) é usada para transferências criptografadas"
         }
+      },
+      "v6": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+      },
+      "v4": {
+        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
       }
     },
     "profile": {
@@ -655,7 +662,8 @@
         "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (publicado {{date}})",
         "readMore": "Ler mais",
-        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação."
+        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação.",
+        "manage": "Manage..."
       },
       "manage": {
         "byAuthor": "por {{author}}",
@@ -666,7 +674,8 @@
         "noInstalledExtensions": "Nenhuma extensão instalada foi encontrada. Novas extensões podem ser instaladas a partir do <1>Catálogo de extensão</1> pagina.",
         "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação.",
         "extensionDirectoryFetchError": "Falha ao buscar informações do diretório de extensões: {{error}}",
-        "unmanagedExtension": "Extensão não gerenciada"
+        "unmanagedExtension": "Extensão não gerenciada",
+        "manage": "Manage..."
       }
     },
     "about": {
