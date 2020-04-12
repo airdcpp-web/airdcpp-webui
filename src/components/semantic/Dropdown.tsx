@@ -33,6 +33,8 @@ interface State {
   visible: boolean;
 }
 
+const ANIMATION_DURATION = 200;
+
 class Dropdown extends React.PureComponent<DropdownProps, State> {
   static propTypes = {
     // Node to render as caption
@@ -97,9 +99,11 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
             this.setState({
               visible: false
             });
-          }
+          },
+          ANIMATION_DURATION
         );
       },
+      duration: ANIMATION_DURATION,
       ...this.props.settings,
       //debug: true,
       //verbose: true,

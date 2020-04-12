@@ -85,11 +85,8 @@ const RemoteMenuDecorator: React.FC<Props> = ({
     []
   );
 
-  if (!menus) {
-    return null;
-  }
-
-  const ret = menus
+  // Render the normal menu items for menu height estimation even when the remote items aren't available yet
+  const ret = !menus ? remoteMenuIds.map(id => []) : menus
     .map((menu, menuIndex) => {
       const remoteMenuId = remoteMenuIds[menuIndex];
       if (!remoteMenuId) {

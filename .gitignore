@@ -9,5 +9,5 @@ npm-debug.log*
 stats.html
 /jest/cache
 *.missing.json
-* - Copy
+* - Copy*
 *.tmp

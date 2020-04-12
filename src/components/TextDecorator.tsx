@@ -94,7 +94,7 @@ const onClickLink = (evt: React.MouseEvent<HTMLLinkElement>, location: Location)
   }
 };
 
-const emojiRenderer = (code: string, str: string, key: string) => {
+const emojiRenderer = (code: string, str: string, offset: number) => {
   switch (code) {
     case 'a9': // © copyright
     case 'ae': // ® registered trademark
@@ -113,7 +113,7 @@ const emojiRenderer = (code: string, str: string, key: string) => {
     }
   });
 
-  return renderer(code, str, key);
+  return renderer(code, str, offset);
 };
 
 interface TextDecoratorProps {
