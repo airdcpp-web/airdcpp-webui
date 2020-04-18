@@ -153,6 +153,7 @@ export interface HintedUser extends HintedUserBase {
 
 export interface HubUser extends HintedUserBase {
   id: number;
+  hub_session_id: number;
   hub_name: string;
   flags: HubUserFlag[];
   ip4?: IP;

@@ -31,7 +31,7 @@ const Author: React.FC<AuthorProps> = ({ message, dropdownContext, entityId }) =
       user={ message.from }
       direction="downward"
       remoteMenuId={ MenuConstants.HUB_USER }
-      entityId={ entityId }
+      entityId={ message.from.hub_session_id }
     />
   </div>
 );
