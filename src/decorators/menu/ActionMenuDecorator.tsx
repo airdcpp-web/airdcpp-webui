@@ -246,12 +246,14 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       }
 
       if (!!remoteMenuItems.length) {
-        items.push(
-          <div 
-            key="remote_divider" 
-            className="ui divider"
-          />
-        );
+        if (!!items.length) {
+          items.push(
+            <div 
+              key="remote_divider" 
+              className="ui divider"
+            />
+          );
+        }
 
         items.push(...remoteMenuItems);
       }
