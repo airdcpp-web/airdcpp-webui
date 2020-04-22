@@ -44,7 +44,7 @@ const toMenuItem = (
 
 
 interface RemoteMenuDecoratorProps {
-  children: (menuItems: Array<React.ReactChild[]>) => React.ReactNode;
+  children: (menuItems: Array<React.ReactChild[]> | null) => React.ReactNode;
   remoteMenuIds: Array<string | undefined>;
   onClickMenuItem?: OnClickHandler;
   selectedIds: Array<UI.ActionIdType>[];
@@ -86,7 +86,7 @@ const RemoteMenuDecorator: React.FC<Props> = ({
   );
 
   // Render the normal menu items for menu height estimation even when the remote items aren't available yet
-  const ret = !menus ? remoteMenuIds.map(id => []) : menus
+  const ret = !menus ? null : menus
     .map((menu, menuIndex) => {
       const remoteMenuId = remoteMenuIds[menuIndex];
       if (!remoteMenuId) {

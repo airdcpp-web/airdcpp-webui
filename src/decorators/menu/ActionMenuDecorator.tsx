@@ -13,8 +13,9 @@ import {
   ActionHandlerDecorator, ActionClickHandler
 } from 'decorators/ActionHandlerDecorator';
 import { Trans } from 'react-i18next';
-import { parseTranslationModules } from 'utils/TranslationUtils';
+import { parseTranslationModules, toI18nKey } from 'utils/TranslationUtils';
 import RemoteMenuDecorator from './RemoteMenuDecorator';
+import Loader from 'components/semantic/Loader';
 
 export type OnClickActionHandler = (actionId: string) => void;
 
@@ -284,7 +285,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
 
     getChildren = (
       onClickAction: ActionClickHandler,
-      remoteMenus: Array<React.ReactChild[]>,
+      remoteMenus: Array<React.ReactChild[]> | null,
       onClickMenuItem: MenuItemClickHandler | undefined
     ): React.ReactNode => {
       const menus = this.getMenus();
@@ -292,8 +293,8 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
         // .filter((menu, menuIndex) => !!remoteMenus[menuIndex] || notError(menu))
         .reduce(
           (reduced, menu, menuIndex) => {
-            if (!notError(menu) && !remoteMenus[menuIndex]) {
-              return [];
+            if (!notError(menu) && (!remoteMenus || !remoteMenus[menuIndex])) {
+              return reduced;
             }
 
             return this.reduceMenuItems(
@@ -304,7 +305,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
                 
                 onClickAction(action);
               },
-              remoteMenus[menuIndex], 
+              !!remoteMenus ? remoteMenus[menuIndex] : [], 
               reduced, 
               menu as MenuType<ItemDataT>, 
               menuIndex
@@ -316,7 +317,15 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       if (!children.length) {
         return (
           <div className="item">
-            No actions available
+            { !remoteMenus ? (
+              <Loader inline={ true } text=""/>
+            ) : (
+              <Trans
+                i18nKey={ toI18nKey('noActionsAvailable', UI.Modules.COMMON) }
+              >
+                No actions available
+              </Trans>
+            ) }
           </div>
         );
       }

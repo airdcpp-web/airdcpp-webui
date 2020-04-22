@@ -5,15 +5,15 @@
       "addWidget": "Add widget...",
       "loggedInAs": "Logged in as",
       "clientStarted": "Client started",
-      "activeSessions": "Active sessions"
+      "activeSessions": "Etkin oturumlar"
     },
     "rss": {
-      "widgetName": "RSS feed",
+      "widgetName": "RSS besleme",
       "invalidUrl": "Invalid URL",
       "lastUpdated": "Last updated: {{time}}",
       "actions": {
         "openLink": "Open link",
-        "search": "Search"
+        "search": "Ara"
       },
       "loadingFeed": "Loading feed",
       "form": {
@@ -26,8 +26,8 @@
     "transfers": {
       "widgetName": "Aktarımlar",
       "trafficBps": "Traffic (bps)",
-      "downloads": "Downloads",
-      "uploads": "Uploads",
+      "downloads": "İndirmeler",
+      "uploads": "Yüklemeler",
       "downloaded": "İndirildi",
       "uploaded": "Uploaded",
       "downloadLimit": "Download limit",
@@ -55,7 +55,7 @@
     "loadingMessages": "Loading messages",
     "noMessagesToShow": "No messages to show",
     "actions": {
-      "clear": "Clear"
+      "clear": "Temizle"
     },
     "notifications": {
       "information": "Information",
@@ -109,7 +109,7 @@
     "path": "Path",
     "searchOffline": "You must to be connected to at least one hub in order to perform searches",
     "enterSearchString": "Enter search string...",
-    "search": "Search",
+    "search": "Ara",
     "usersCount": "User ({{count}})",
     "usersCount_plural": "Users ({{count}})",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
@@ -248,7 +248,7 @@
       "download": "İndir",
       "downloadTo": "İndiriliyor...",
       "findNfo": "Find NFO",
-      "search": "Search",
+      "search": "Ara",
       "sendMessage": "Send message",
       "browseShare": "Browse share",
       "ignoreMessages": "Ignore messages",
@@ -558,7 +558,7 @@
       "profile": "Profile",
       "connectivity": "Connectivity",
       "speedAndLimits": "Speed and limits",
-      "downloads": "Downloads",
+      "downloads": "İndirmeler",
       "sharing": "Sharing",
       "view": "Görünüm",
       "about": "About",
@@ -756,7 +756,7 @@
         },
         "permissionSelector": {
           "administrator": "Administrator",
-          "search": "Search",
+          "search": "Ara",
           "download": "İndir",
           "transfers": "Aktarımlar",
           "events": "Events",
@@ -894,7 +894,7 @@
   "navigation": {
     "home": "Home",
     "queue": "Queue",
-    "search": "Search",
+    "search": "Ara",
     "transfers": "Aktarımlar",
     "hubs": "Hubs",
     "messages": "Messages",
