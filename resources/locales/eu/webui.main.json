@@ -373,6 +373,7 @@
     "actionsCaption": "Ekintzak...",
     "tth": "TTH",
     "na": "N/A",
+    "noActionsAvailable": "No actions available",
     "form": {
       "browse": "Nabigatu",
       "noOptions": "Ez dago aukerarik",

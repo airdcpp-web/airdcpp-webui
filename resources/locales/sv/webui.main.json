@@ -373,6 +373,7 @@
     "actionsCaption": "Åtgärder...",
     "tth": "TTH",
     "na": "N/A",
+    "noActionsAvailable": "Inga åtgärder tillgängliga",
     "form": {
       "browse": "Bläddra",
       "noOptions": "Inga alternativ",

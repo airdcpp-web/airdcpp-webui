@@ -373,6 +373,7 @@
     "actionsCaption": "Acciones...",
     "tth": "TTH",
     "na": "N/D",
+    "noActionsAvailable": "No actions available",
     "form": {
       "browse": "Navegar",
       "noOptions": "Sin opciones",

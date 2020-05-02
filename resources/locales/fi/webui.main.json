@@ -373,6 +373,7 @@
     "actionsCaption": "Toiminnot...",
     "tth": "TTH",
     "na": "Ei saatavilla",
+    "noActionsAvailable": "Toimintoja ei käytettävissä",
     "form": {
       "browse": "Selaa",
       "noOptions": "Ei vaihtoehtoja",
