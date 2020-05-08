@@ -12,8 +12,8 @@ import { AwayEnum } from 'constants/SystemConstants';
 let userActive = true;
 
 class ActivityTracker extends React.Component {
-  aliveInterval: NodeJS.Timer;
-  activityInteval: NodeJS.Timer;
+  aliveInterval: number | undefined;
+  activityInteval: number | undefined;
   lastAlive: number;
 
   componentDidMount() {
@@ -21,10 +21,10 @@ class ActivityTracker extends React.Component {
     document.onkeypress = this.onUserActivity;
 
     // Notify the API regurarly if the user is active due to idle away tracking
-    this.activityInteval = setInterval(this.checkActivity, 60 * 1000);
+    this.activityInteval = window.setInterval(this.checkActivity, 60 * 1000);
 
     // Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
-    this.aliveInterval = setInterval(this.checkAlive, 2000);
+    this.aliveInterval = window.setInterval(this.checkAlive, 2000);
     this.lastAlive = (new Date()).getTime();
 
     LoginActions.activity();

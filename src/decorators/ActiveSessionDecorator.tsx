@@ -31,11 +31,11 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
       actions: PropTypes.object, // Required (cloned)
     };*/
 
-    readTimeout: NodeJS.Timer | null;
+    readTimeout: number | undefined;
 
     setRead = (session: SessionT) => {
       this.props.sessionApi.setRead(session);
-      this.readTimeout = null;
+      this.readTimeout = undefined;
     }
 
     setSession = (session: SessionT | null) => {
@@ -51,7 +51,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
       }
 
       const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
-      this.readTimeout = setTimeout(_ => this.setRead(session), timeout);
+      this.readTimeout = window.setTimeout(() => this.setRead(session), timeout);
     }
 
     componentDidMount() {

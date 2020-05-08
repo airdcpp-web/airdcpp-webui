@@ -44,7 +44,7 @@ class Search extends React.Component<SearchProps & SearchDataProps> {
     running: false
   };
 
-  searchTimeout: NodeJS.Timer;
+  searchTimeout: number | undefined;
 
   componentDidMount() {
     this.checkLocationState(this.props);
@@ -100,7 +100,7 @@ class Search extends React.Component<SearchProps & SearchDataProps> {
   }
 
   onSearchPosted = (data: API.SearchResponse) => {
-    this.searchTimeout = setTimeout(
+    this.searchTimeout = window.setTimeout(
       () => {
         this.setState({ 
           running: false,

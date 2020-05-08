@@ -31,14 +31,14 @@ const StatisticsDecorator = function <DataT, PropsT = {}>(
       stats: null
     };
 
-    fetchTimeout: NodeJS.Timer;
+    fetchTimeout: number | undefined;
 
     componentDidMount() {
       this.fetchStats();
     }
 
     componentWillUnmount() {
-      clearTimeout(this.fetchTimeout);
+      window.clearTimeout(this.fetchTimeout);
     }
 
     fetchStats = () => {
@@ -47,7 +47,7 @@ const StatisticsDecorator = function <DataT, PropsT = {}>(
         .catch((error: ErrorResponse) => console.error('Failed to fetch stats', error.message));
 
       if (fetchIntervalSeconds > 0) {
-        this.fetchTimeout = setTimeout(this.fetchStats, fetchIntervalSeconds * 1000);
+        this.fetchTimeout = window.setTimeout(this.fetchStats, fetchIntervalSeconds * 1000);
       }
     }
 

@@ -61,7 +61,7 @@ const hasEllapsedSinceLastUpdate = (points: State['points'], ms: number) => {
 class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDecoratorChildProps, State> {
   //displayName: 'Transfers',
 
-  idleInterval: NodeJS.Timer;
+  idleInterval: number | undefined;
 
   state: State = {
     points: [
@@ -105,7 +105,7 @@ class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDe
     addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsUpdated);
 
     // Add zero values when there is no traffic
-    this.idleInterval = setInterval(this.checkIdle, IDLE_APPEND_INTERVAL_MS);
+    this.idleInterval = window.setInterval(this.checkIdle, IDLE_APPEND_INTERVAL_MS);
   }
 
   onStatsReceived = (stats: API.TransferStats) => {

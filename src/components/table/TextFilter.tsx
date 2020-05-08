@@ -46,7 +46,7 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
     method: FilterMethod.PARTIAL,
   };
 
-  timer: NodeJS.Timer;
+  timer: number | undefined;
   input: HTMLInputElement;
 
   static defaultProps: Pick<TextFilterProps, 'autoFocus'> = {
@@ -69,7 +69,7 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
 
     clearTimeout(this.timer);
 
-    this.timer = setTimeout(
+    this.timer = window.setTimeout(
       () => {
         this.onFilterUpdated();
       }, 

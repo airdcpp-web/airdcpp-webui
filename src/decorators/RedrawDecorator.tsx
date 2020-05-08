@@ -6,7 +6,7 @@ export default function <PropsT>(
   redrawIntervalSeconds: number = 60
 ) {
   class RedrawDecorator extends React.Component<PropsT> {
-    redrawTimeout: NodeJS.Timer;
+    redrawTimeout: number | undefined;
 
     componentDidMount() {
       this.scheduleComponentRefresh();
@@ -17,7 +17,7 @@ export default function <PropsT>(
     }
 
     scheduleComponentRefresh = () => {
-      this.redrawTimeout = setTimeout(
+      this.redrawTimeout = window.setTimeout(
         () => { 
           this.forceUpdate();
           this.scheduleComponentRefresh();

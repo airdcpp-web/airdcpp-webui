@@ -99,7 +99,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     };
   }
 
-  scrollTimer: NodeJS.Timer;
+  scrollTimer: number | undefined;
   scrollPosition = 0;
 
   // This will also be used for setting the initial rows
@@ -138,7 +138,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     TableActions.pause(this.props.store.viewUrl, false);
 
     clearTimeout(this.scrollTimer);
-    this.scrollTimer = setTimeout(this.updateRowRange, 500);
+    this.scrollTimer = window.setTimeout(this.updateRowRange, 500);
     //console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
   }
 
