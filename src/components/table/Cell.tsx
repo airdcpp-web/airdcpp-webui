@@ -127,7 +127,7 @@ export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionItemDataVal
   }
 
   return (
-    <ActionHandlerDecorator/*<ItemDataT>*/>
+    <ActionHandlerDecorator<ItemDataT>>
       { ({ onClickAction }) => (
         <a 
           className="plain link cell" 

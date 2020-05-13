@@ -74,7 +74,7 @@ const translateInput = (
 
 const isSidebarAction = (actionId: string) => actionId === 'browse' || actionId === 'message';
 
-const getCommonConfirmDialogProps = <ItemDataT extends {}>(
+const getCommonConfirmDialogProps = <ItemDataT extends any>(
   actionData: ActionData<ItemDataT>,
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
@@ -92,7 +92,7 @@ const getCommonConfirmDialogProps = <ItemDataT extends {}>(
   };
 };
 
-interface ConfirmHandlerProps<ItemDataT> {
+interface ConfirmHandlerProps<ItemDataT extends any> {
   onApproved: (data: boolean | string) => void;
   onRejected: () => void;
   actionData: ActionData<ItemDataT> | null;
@@ -145,8 +145,7 @@ const handleAction = async <ItemDataT extends any>(
   confirmData: boolean | string | undefined,
   location: Location,
   t: TFunction,
-  closeModal: ModalCloseContext | undefined,
-  //chainHandler: ActionClickHandler<ItemDataT>
+  closeModal: ModalCloseContext | undefined
 ) => {
   const { actionId, action, itemData } = actionData;
   if (!!closeModal && isSidebarAction(actionId)) {
@@ -157,12 +156,7 @@ const handleAction = async <ItemDataT extends any>(
     const handlerData: UI.ActionHandlerData<ItemDataT> = {
       data: itemData, 
       location,
-      t,
-      /*chain: (chainAction: UI.ActionType<ItemDataT>) => {
-        chainHandler({
-          action: 
-        })
-      }*/
+      t
     };
 
     try {
@@ -185,19 +179,6 @@ const handleAction = async <ItemDataT extends any>(
         });
       }
     } catch (e) {
-      /*let title = translate('Action failed', t, UI.Modules.COMMON);
-      if (action.notifications && action.notifications.onSuccess) {
-        const message = t(
-          toFieldI18nKey('OnSuccess', actionData, UI.SubNamespaces.NOTIFICATIONS),
-          {
-            defaultValue: action.notifications,
-            replace: {
-              item: res
-            }
-          }
-        );
-      }*/
-
       NotificationActions.error({ 
         title: translate('Action failed', t, UI.Modules.COMMON),
         message: !e ? undefined : typeof e === 'string' ? e : e.message,
@@ -207,7 +188,7 @@ const handleAction = async <ItemDataT extends any>(
 };
 
 
-type Props<ItemDataT> = /*PropsT &*/ ActionHandlerDecoratorProps<ItemDataT>;
+type Props<ItemDataT> = ActionHandlerDecoratorProps<ItemDataT>;
 
 const ActionHandlerDecorator = <ItemDataT extends any>(
   props: Props<ItemDataT>

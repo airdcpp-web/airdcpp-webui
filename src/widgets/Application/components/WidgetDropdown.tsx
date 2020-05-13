@@ -44,7 +44,7 @@ const WidgetDropdown: React.FC<WidgetDropdownProps> = (
     button={ true }
     contextElement={ `.${componentId}` }
   >
-    <ActionHandlerDecorator>
+    <ActionHandlerDecorator<UI.Widget>>
       { ({ onClickAction }) => {
         return WidgetStore.widgets
           .filter(widgetInfo => !widgetInfo.alwaysShow)

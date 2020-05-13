@@ -337,7 +337,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
 
     render() {
       return (
-        <ActionHandlerDecorator>
+        <ActionHandlerDecorator<ItemDataT>>
           { ({ onClickAction }) => {
             let { actions, children, itemData, remoteMenuId, entityId, ...other } = this.props;
 

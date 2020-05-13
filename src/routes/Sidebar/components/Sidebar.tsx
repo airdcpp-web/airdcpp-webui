@@ -123,8 +123,7 @@ class Sidebar extends React.Component<SidebarProps, State> {
           height: window.innerHeight,
         } }
         minWidth={ Math.min(MIN_WIDTH, window.innerWidth) }
-        maxWidth={ window.innerWidth } 
-        id="sidebar"
+        maxWidth={ window.innerWidth }
         className="ui right vertical sidebar"
         { ...otherProps }
         enable={{ 

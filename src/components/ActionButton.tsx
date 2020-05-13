@@ -31,7 +31,7 @@ const ActionButton = <ItemDataT extends UI.ActionItemDataValueType>({
 
   const { moduleId, subId } = actions;
   return (
-    <ActionHandlerDecorator/*<ItemDataT>*/>
+    <ActionHandlerDecorator<ItemDataT>>
       { ({ onClickAction }) => (
         <Button
           icon={ icon ? (typeof icon === 'string' ? icon : action.icon) : null }

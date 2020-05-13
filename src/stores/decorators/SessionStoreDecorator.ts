@@ -81,7 +81,7 @@ const SessionStoreDecorator = function (
       const index = sessions.indexOf(session);
       sessions = update(sessions, {
         [index]: {
-          $merge: updatedProperties as SessionType
+          $merge: updatedProperties as any
         }
       });
 
