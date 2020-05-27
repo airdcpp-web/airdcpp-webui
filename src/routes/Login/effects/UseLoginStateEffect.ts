@@ -32,7 +32,10 @@ const useLoginState = (props: RouteComponentProps<{}, any, LoginLocationState>) 
       props.history.replace({
         pathname: nextPath,
       });
-    } else if (!!loginInfo.lastError) {
+    } else if (!!loginInfo.lastError && !LoginStore.refreshToken) {
+      // Keep the loading state as true as long as there is socket actions happening
+      // Changing the state to false will allow the login page to update
+
       // Failed
       setLoading(false);
     }
