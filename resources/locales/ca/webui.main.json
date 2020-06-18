@@ -1,7 +1,7 @@
 {
   "widgets": {
     "application": {
-      "widgetName": "Application",
+      "widgetName": "Aplicació",
       "addWidget": "Add widget...",
       "loggedInAs": "Logged in as",
       "clientStarted": "Client started",
@@ -205,13 +205,13 @@
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
       "connectionModeV4Option-1": "Disabled",
-      "connectionModeV4Option0": "Active mode",
+      "connectionModeV4Option0": "Mode Actiu",
       "connectionModeV4Option2": "Passive mode",
       "connectionIpV4Name": "IP address",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
       "connectionModeV6Option-1": "Disabled",
-      "connectionModeV6Option0": "Active mode",
+      "connectionModeV6Option0": "Mode Actiu",
       "connectionModeV6Option2": "Passive mode",
       "connectionIpV6Name": "IP address"
     }
@@ -380,7 +380,7 @@
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
       "maximumValueError": "Maximum allowed value is {{value}}",
-      "any": "Any",
+      "any": "Qualsevol",
       "directory": "Directory",
       "file": "File",
       "add": "Afegeix",
@@ -479,7 +479,7 @@
     "normal": "Normal",
     "high": "High",
     "highest": "Highest",
-    "auto": "Auto",
+    "auto": "Automàtic",
     "sources": "Sources",
     "user": "User",
     "hubs": "Hubs",
@@ -578,7 +578,7 @@
       "manageInstalled": "Manage installed",
       "extensionCatalog": "Extension catalog",
       "extensionOptions": "Extension options",
-      "application": "Application",
+      "application": "Aplicació",
       "transferStatistics": "Transfer statistics",
       "shareStatistics": "Share statistics",
       "hubStatistics": "Hub statistics",
