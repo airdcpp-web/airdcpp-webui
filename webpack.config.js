@@ -59,10 +59,7 @@ let plugins = [
     googleAnalytics: demo,
     chunksSortMode: 'none',
   }),
-  new ForkTsCheckerWebpackPlugin({
-    async: false,
-    memoryLimit: 4096,
-  }),
+  new ForkTsCheckerWebpackPlugin(),
   new ServiceWorkerWebpackPlugin({
     entry: path.join(__dirname, 'src/sw.js'),
     filename: process.env.SERVICEWORKER,
