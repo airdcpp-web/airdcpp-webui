@@ -7,6 +7,9 @@
       "clientStarted": "Client démarré",
       "activeSessions": "Sessions actives"
     },
+    "notepad": {
+      "widgetName": "Remarques"
+    },
     "rss": {
       "widgetName": "Flux RSS",
       "invalidUrl": "URL invalide",

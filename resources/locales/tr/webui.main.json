@@ -7,6 +7,9 @@
       "clientStarted": "Client started",
       "activeSessions": "Etkin oturumlar"
     },
+    "notepad": {
+      "widgetName": "Notlar"
+    },
     "rss": {
       "widgetName": "RSS besleme",
       "invalidUrl": "Invalid URL",

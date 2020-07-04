@@ -7,6 +7,9 @@
       "clientStarted": "Ohjelma käynnistetty",
       "activeSessions": "Aktiiviset istunnot"
     },
+    "notepad": {
+      "widgetName": "Huomautuksia"
+    },
     "rss": {
       "widgetName": "RSS-syöte",
       "invalidUrl": "Virheellinen URL-osoite",

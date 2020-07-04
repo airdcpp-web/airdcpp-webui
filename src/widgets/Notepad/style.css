@@ -1,0 +1,11 @@
+.notepad.widget .main.content {
+	display: flex;
+}
+
+.notepad.widget .main.content > div {
+	flex-direction: column;
+}
+
+.notepad.widget .ui.list {
+	flex-grow: 100;
+}
