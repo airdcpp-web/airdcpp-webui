@@ -21,14 +21,13 @@ class Notepad extends React.PureComponent<NotepadProps, NotepadState> {
       }
     };
 
-    let state:any = loadLocalProperty(widgetIdToSettingKey(componentId), defaultData);
-    console.log('.....', state);
+    let state: any = loadLocalProperty(widgetIdToSettingKey(componentId), defaultData);
     this.state = state;
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event : any) {
+  handleChange(event: any) {
     const { componentId } = this.props;
 
     this.setState({widget : { value: event.target.value } } );
