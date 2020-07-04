@@ -7,9 +7,6 @@
       "clientStarted": "Clientul a pornit",
       "activeSessions": "Sesiuni active"
     },
-    "notepad": {
-      "widgetName": "Notițe"
-    },
     "rss": {
       "widgetName": "Alimentare RSS",
       "invalidUrl": "URL invalid",

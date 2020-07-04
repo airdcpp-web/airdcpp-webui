@@ -7,9 +7,6 @@
       "clientStarted": "Client started",
       "activeSessions": "Active sessions"
     },
-    "notepad": {
-      "widgetName": "Appunti"
-    },
     "rss": {
       "widgetName": "RSS feed",
       "invalidUrl": "Invalid URL",

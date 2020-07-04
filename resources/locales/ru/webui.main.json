@@ -7,9 +7,6 @@
       "clientStarted": "Клиент запущен",
       "activeSessions": "Активная сессия"
     },
-    "notepad": {
-      "widgetName": "Примечания"
-    },
     "rss": {
       "widgetName": "RSS-лента",
       "invalidUrl": "Ошибочный URL",
