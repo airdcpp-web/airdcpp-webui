@@ -6,6 +6,7 @@
 	flex-direction: column;
 }
 
-.notepad.widget .ui.list {
-	flex-grow: 100;
+.notepad.widget .main.content .notepad-container textarea {
+	height: 100vh;
+	display: block;
 }
