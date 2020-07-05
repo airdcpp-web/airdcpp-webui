@@ -8,6 +8,7 @@ import { loadLocalProperty, removeLocalProperty, saveLocalProperty } from 'utils
 
 import { Application } from 'widgets/Application';
 import { RSS } from 'widgets/RSS';
+import { Notepad } from 'widgets/Notepad';
 import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
@@ -23,6 +24,7 @@ const breakpoints: {[P in string]: number } = { lg: 1600, md: 1100, sm: 768, xs:
 const widgets = [
   Application,
   RSS,
+  Notepad,
   Transfers,
 ];
 
@@ -143,6 +145,7 @@ const Store = {
     );
 
     this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0);
+    this.layouts = createDefaultWidget(this.layouts, Notepad, 0, 5);
   },
 
   getInitialState: function () {

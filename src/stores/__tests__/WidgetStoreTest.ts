@@ -26,11 +26,12 @@ const hasLayoutItems = (id: string) => {
 
 describe('widget store', () => {
   test('should initialize default widgets', () => {
-    expect(WidgetStore.widgets.length).toEqual(3);
+    expect(WidgetStore.widgets.length).toEqual(4);
 
     expect(hasLayoutItems('application_default')).toEqual(true);
     expect(hasLayoutItems('transfers_default')).toEqual(true);
     expect(hasLayoutItems('rss_releases')).toEqual(true);
+    expect(hasLayoutItems('notepad_default')).toEqual(true);
 
     expect(hasLayoutItems('dummy')).toEqual(false);
 
