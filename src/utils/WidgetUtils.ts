@@ -6,7 +6,11 @@ import { TFunction } from 'i18next';
 
 export const createWidgetId = (typeId: string) => `${typeId}_${Math.floor((Math.random() * 100000000) + 1)}`;
 
+// Key for widget settings in local storage (should not be accessed directly by the widget)
 export const widgetIdToSettingKey = (id: string) => `widget_${id}`;
+
+// Key for custom widget state in local storage (to be accessed directly by the widget)
+export const widgetIdToLocalStateKey = (id: string) => `${widgetIdToSettingKey(id)}_state`;
 
 export const widgetIdToType = (id: string) => {
   const pos = id.indexOf('_');

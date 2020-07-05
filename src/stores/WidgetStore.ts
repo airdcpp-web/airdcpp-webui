@@ -12,7 +12,7 @@ import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
-import { widgetIdToSettingKey, widgetIdToType } from 'utils/WidgetUtils';
+import { widgetIdToSettingKey, widgetIdToType, widgetIdToLocalStateKey } from 'utils/WidgetUtils';
 //import { TFunction } from 'i18next';
 
 
@@ -170,6 +170,7 @@ const Store = {
 
   onRemove(id: string) {
     removeLocalProperty(widgetIdToSettingKey(id));
+    removeLocalProperty(widgetIdToLocalStateKey(id));
 
     this.layouts = Object.keys(cols)
       .reduce(
