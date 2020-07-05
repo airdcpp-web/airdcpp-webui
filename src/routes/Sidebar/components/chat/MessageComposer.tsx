@@ -56,7 +56,7 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
         },
       },
     },
-    input: {
+    highlighter: {
       minHeight: !mobileLayout ? 63 : 42,
       maxHeight: 200,
       margin: 0,
@@ -337,7 +337,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
                 onKeyDown={ this.onKeyDown }
                 style={ getMentionFieldStyle(mobile) }
                 autoFocus={ !mobile }
-                onPaste={ this.onPaste  }
+                onPaste={ this.onPaste }
               >
                 <Mention 
                   trigger="@"
