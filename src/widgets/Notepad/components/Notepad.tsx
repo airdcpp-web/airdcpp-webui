@@ -36,8 +36,8 @@ class Notepad extends React.PureComponent<NotepadProps, NotepadState> {
       content : ''
     };
 
-    let data:any = loadLocalProperty(this.key, defaultData);
-    if(typeof data == undefined) {
+    let data: any = loadLocalProperty(this.key, defaultData);
+    if (typeof data === undefined) {
       return defaultData;
     }
 
