@@ -6,9 +6,8 @@ import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 import { widgetIdToLocalStateKey } from 'utils/WidgetUtils';
 
 export type NotepadProps = UI.WidgetProps;
-export type NotepadState = UI.WidgetSettings; 
 
-class Notepad extends React.PureComponent<NotepadProps, NotepadState> {
+class Notepad extends React.PureComponent<NotepadProps, any> {
   key: string;
 
   constructor(props: any) {
@@ -17,18 +16,17 @@ class Notepad extends React.PureComponent<NotepadProps, NotepadState> {
     const { componentId } = this.props;
     this.key = widgetIdToLocalStateKey(componentId);
 
-    let state: any = { widget: this.getStoredState() };
-    this.state = state;
+    this.state = this.getStoredState();
 
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event: any) {
-    const data = {
+    const data: Object = {
       content: event.target.value
     };
     saveLocalProperty(this.key, data);
-    this.setState({widget: data});
+    this.setState(data);
   }
 
   getStoredState() {
@@ -36,7 +34,8 @@ class Notepad extends React.PureComponent<NotepadProps, NotepadState> {
       content : ''
     };
 
-    let data: any = loadLocalProperty(this.key, defaultData);
+    const data: Object = loadLocalProperty(this.key, defaultData);
+
     if (typeof data === undefined) {
       return defaultData;
     }
@@ -45,13 +44,11 @@ class Notepad extends React.PureComponent<NotepadProps, NotepadState> {
   }
 
   render() {
-    const { widget }: any = this.state;
-
     return (
       <div className="notepad-container ui input fluid">
         <textarea
           onChange={this.handleChange}
-          value={widget.content}
+          value={this.state.content}
         />
       </div>
     );
