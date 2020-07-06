@@ -35,6 +35,7 @@ class Notepad extends React.PureComponent<NotepadProps, any> {
     };
 
     const data: Object = loadLocalProperty(this.key, defaultData);
+
     if (typeof data === undefined) {
       return defaultData;
     }
