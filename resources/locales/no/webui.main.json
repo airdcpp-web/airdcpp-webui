@@ -34,6 +34,9 @@
       "uploadLimit": "Opplastings grense",
       "disabled": "Ute av funksjon"
     },
+    "notepad": {
+      "widgetName": "Notes"
+    },
     "actions": {
       "editWidget": "Edit widget",
       "removeWidget": "Remove widget",

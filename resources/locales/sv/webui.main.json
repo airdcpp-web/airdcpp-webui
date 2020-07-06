@@ -34,6 +34,9 @@
       "uploadLimit": "Uppladdningsbeg",
       "disabled": "Inaktiverad"
     },
+    "notepad": {
+      "widgetName": "Anteckningar"
+    },
     "actions": {
       "editWidget": "Redigera widget",
       "removeWidget": "Ta bort widget",

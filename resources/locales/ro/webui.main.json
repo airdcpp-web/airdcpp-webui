@@ -34,6 +34,9 @@
       "uploadLimit": "Limita de incarcare",
       "disabled": "Dezactivat"
     },
+    "notepad": {
+      "widgetName": "Notes"
+    },
     "actions": {
       "editWidget": "Editeaza programul",
       "removeWidget": "Sterge programul",

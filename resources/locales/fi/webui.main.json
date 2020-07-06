@@ -34,6 +34,9 @@
       "uploadLimit": "Lähetysraja",
       "disabled": "Ei käytössä"
     },
+    "notepad": {
+      "widgetName": "Muistio"
+    },
     "actions": {
       "editWidget": "Muokkaa widgettiä",
       "removeWidget": "Poista widgetti",

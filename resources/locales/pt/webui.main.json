@@ -34,6 +34,9 @@
       "uploadLimit": "Limite de envio",
       "disabled": "Desativado"
     },
+    "notepad": {
+      "widgetName": "Notes"
+    },
     "actions": {
       "editWidget": "Editar widget",
       "removeWidget": "Remover widget",

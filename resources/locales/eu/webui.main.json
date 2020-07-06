@@ -34,6 +34,9 @@
       "uploadLimit": "Igo muga",
       "disabled": "Ezgaitu"
     },
+    "notepad": {
+      "widgetName": "Notes"
+    },
     "actions": {
       "editWidget": "Editatu trepeta",
       "removeWidget": "Ezabatu trepeta",

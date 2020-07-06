@@ -34,6 +34,9 @@
       "uploadLimit": "Upload Limit",
       "disabled": "Deaktiviert"
     },
+    "notepad": {
+      "widgetName": "Notes"
+    },
     "actions": {
       "editWidget": "Widget editieren",
       "removeWidget": "Widget entfernen",
@@ -373,7 +376,7 @@
     "actionsCaption": "Aktionen...",
     "tth": "TTH",
     "na": "N/A",
-    "noActionsAvailable": "No actions available",
+    "noActionsAvailable": "Keine Aktion verfügbar",
     "form": {
       "browse": "Durchsuchen",
       "noOptions": "Keine Optionen",
@@ -543,13 +546,13 @@
       "prompts": {
         "removeShareExcludeApprove": "Pfad entfernen",
         "removeShareExcludeReject": "Nicht entfernen",
-        "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
+        "removeShareExcludeContent": "Sind sie sicher, dass Sie den ausgenommenen Pfad {{item}} entfernen möchten?",
         "removeWebUserApprove": "Benutzer entfernen",
         "removeWebUserReject": "Nicht entfernen",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
+        "removeWebUserContent": "Sind Sie sicher, dass Sie den Benutzer {{item.username}} entfernen möchten? ",
         "removeFavoriteDirectoryApprove": "Verzeichnis entfernen",
         "removeFavoriteDirectoryReject": "Nicht entfernen",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
+        "removeFavoriteDirectoryContent": "Sind Sie sicher, dass Sie das favorisierte Verzeichnis {{item.name}} entfernen möchten?",
         "removeSearchTypeApprove": "Typ entfernen",
         "removeSearchTypeReject": "Nicht entfernen",
         "removeSearchTypeContent": "Sind Sie sicher, dass Sie den Suchtypen {{item.name}} entfernen möchten?"
@@ -664,7 +667,7 @@
         "datePublished": "{{version}} (veröffentlicht {{date}})",
         "readMore": "Weiterlesen",
         "defaultExtensionEngineMissing": "Die Standarderweiterungsengine <1>node</1> ist auf Ihrem System nicht installiert. Bitte gehen Sie auf  die <3>Webseite der Engine</3> für die Installationsanleitung",
-        "manage": "Manage..."
+        "manage": "Verwalten..."
       },
       "manage": {
         "byAuthor": "von {{author}}",
@@ -676,7 +679,7 @@
         "defaultExtensionEngineMissing": "Die Standarderweiterungsengine <1>node</1> ist auf Ihrem System nicht installiert. Bitte gehen Sie auf  die <3>Webseite der Engine</3> für die Installationsanleitung",
         "extensionDirectoryFetchError": "Informationsabruf vom Erweiterungsverzeichnis fehlgeschlagen: {{error}}",
         "unmanagedExtension": "Unmanaged extension",
-        "manage": "Manage..."
+        "manage": "Verwalten..."
       }
     },
     "about": {
@@ -726,7 +729,7 @@
       "hubs": {
         "noHubsOnline": "Keine Hubs online",
         "totalUsers": "Gesamte Benutzer",
-        "uniqueUsers": "Unique users",
+        "uniqueUsers": "Individuelle Benutzer",
         "activeUsers": "Aktive Benutzer",
         "totalShare": "Gesamt Freigabe",
         "averageSharePerUser": "Durchschnittliche Freigabe pro Benutzer",
@@ -855,9 +858,9 @@
           "notifyPmUserName": "Private Nachrichten (Benutzer)",
           "notifyPmBotName": "Private Nachrichten (Bots)",
           "notifyBundleStatusName": "Bundle status changes",
-          "notifyEventsInfoName": "Info events",
-          "notifyEventsWarningName": "Warning events",
-          "notifyEventsErrorName": "Error events"
+          "notifyEventsInfoName": "Info Ereignisse",
+          "notifyEventsWarningName": "Warn Ereignisse",
+          "notifyEventsErrorName": "Error Ereignisse"
         }
       },
       "histories": {
@@ -946,7 +949,7 @@
     },
     "new": "Neue Sitzung",
     "newDesc": "Öffne eine private Chat Sitzung",
-    "offlineMessage": "You must to be connected to at least one hub in order to send private messages",
+    "offlineMessage": "Sie müssen zu mindestens einem Hub verbunden sein um private Nachrichten zu senden",
     "directEncryptedChannelAvailable": "Direkt verschlüsselter Kanal verfügbar",
     "establishingConnection": "Verbindung wird aufgebaut...",
     "directEncryptedChannelEstablished": "Direkt verschlüsselter Kanal aufgebaut",
@@ -957,7 +960,7 @@
     }
   },
   "home": {
-    "newUserIntro": "Information for new user",
+    "newUserIntro": "Information für neue Benutzer",
     "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
   }
 }
