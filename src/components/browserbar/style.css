@@ -34,10 +34,6 @@
   align-items: baseline;
 }
 
-.browserbar .ui.dropdown .angle.down.icon {
-  align-self: center;
-}
-
 .browserbar .path-token {
   display:flex;
   align-items: baseline;

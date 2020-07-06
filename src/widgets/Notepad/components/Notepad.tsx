@@ -6,49 +6,45 @@ import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 import { widgetIdToLocalStateKey } from 'utils/WidgetUtils';
 
 export type NotepadProps = UI.WidgetProps;
+interface State {
+  content: string;
+}
 
-class Notepad extends React.PureComponent<NotepadProps, any> {
-  key: string;
+class Notepad extends React.PureComponent<NotepadProps, State> {
+  storageKey: string;
 
-  constructor(props: any) {
+  constructor(props: NotepadProps) {
     super(props);
 
     const { componentId } = this.props;
-    this.key = widgetIdToLocalStateKey(componentId);
-
+    this.storageKey = widgetIdToLocalStateKey(componentId);
     this.state = this.getStoredState();
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event: any) {
-    const data: Object = {
+  handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const data = {
       content: event.target.value
     };
-    saveLocalProperty(this.key, data);
+
+    saveLocalProperty(this.storageKey, data);
     this.setState(data);
   }
 
-  getStoredState() {
+  getStoredState = (): State => {
     const defaultData = {
       content : ''
     };
 
-    const data: Object = loadLocalProperty(this.key, defaultData);
-
-    if (typeof data === undefined) {
-      return defaultData;
-    }
-
-    return data;
+    return loadLocalProperty(this.storageKey, defaultData);
   }
 
   render() {
+    const { content } = this.state;
     return (
       <div className="notepad-container ui input fluid">
         <textarea
           onChange={this.handleChange}
-          value={this.state.content}
+          value={content}
         />
       </div>
     );

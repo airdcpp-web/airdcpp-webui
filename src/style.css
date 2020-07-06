@@ -72,6 +72,10 @@ section#container-main,
   flex-shrink: 0;
 }
 
+.ui.dropdown i.trigger {
+  align-self: center;
+}
+
 .ui.dropdown .menu .header {
   display: flex;
 }
