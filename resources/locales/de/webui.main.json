@@ -35,7 +35,7 @@
       "disabled": "Deaktiviert"
     },
     "notepad": {
-      "widgetName": "Notes"
+      "widgetName": "Notizen"
     },
     "actions": {
       "editWidget": "Widget editieren",
@@ -418,7 +418,7 @@
     "notConnectedToTheHub": "Nicht verbunden zum Hub",
     "connecting": "Verbinden",
     "loadingUserlist": "Benutzerliste wird geladen",
-    "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
+    "favoriteHubsHint": "Tip: Gehe auf die <1>Bevorzugte Hubs</1> Seite zum Verbinden mit benutzerdefinierten Einstellungen",
     "new": "Verbinden",
     "newDesc": "Mit neuem Hub verbinden",
     "userList": "Benutzerliste",
@@ -633,10 +633,10 @@
         }
       },
       "v6": {
-        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+        "protocolAutoValuesNote": "Konnektivitäts Auto-Erkennung ist derzeit aktiviert. Eingestellte Werte auf dieser Seite werden nicht genutzt."
       },
       "v4": {
-        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+        "protocolAutoValuesNote": "Konnektivitäts Auto-Erkennung ist derzeit aktiviert. Eingestellte Werte auf dieser Seite werden nicht genutzt."
       }
     },
     "profile": {
@@ -645,7 +645,7 @@
           "settingProfileHelp0": "Das Programm wird in normalen Privaten/Öffentlichen Hubs benutzt, um Dateien via Internet zu übertragen. Benutze das Profil wenn sie nicht sicher sind.",
           "settingProfileHelp1": "Das Programm wird benutzt, um in RAR Archiven geteilte Dateien zu übertragen (oder andere Formate mit kleiner Größe).",
           "settingProfileHelp2": "Das Programm wird benutzt, um Dateien in lokalen Netzwerken zu übertragen (Bsp. LAN Parties) oder in anderen geschlossenen Netzwerken (Bsp. Universitätsnetzwerke).",
-          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
+          "languageFileHelp": "<0>Die Anwendung muss neu gestartet werden damit die neue Sprache aktiv wird</0><1>Wenn Sie helfen möchten die existierenden Übersetzungen zu verbessern, oder die Anwendung in eine neue Sprache übersetzen möchten, bitte lesen Sie die <1>Anleitungen für Übersetzer</1>.</1>"
         }
       },
       "ignoredUsers": {
@@ -850,14 +850,14 @@
         "editSearchType": "Suchtypen editieren"
       }
     },
-    "browserSpecificNote": "Settings listed on this page are browser-specific",
+    "browserSpecificNote": "Einstellungen auf dieser Seite sind Browser spezifisch",
     "view": {
       "notifications": {
-        "popupNotifications": "Popup notifications",
+        "popupNotifications": "Pop-up Benachrichtigungen",
         "form": {
           "notifyPmUserName": "Private Nachrichten (Benutzer)",
           "notifyPmBotName": "Private Nachrichten (Bots)",
-          "notifyBundleStatusName": "Bundle status changes",
+          "notifyBundleStatusName": "Paket Status Änderungen",
           "notifyEventsInfoName": "Info Ereignisse",
           "notifyEventsWarningName": "Warn Ereignisse",
           "notifyEventsErrorName": "Error Ereignisse"
@@ -961,6 +961,6 @@
   },
   "home": {
     "newUserIntro": "Information für neue Benutzer",
-    "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
+    "newUserIntroDesc": "<0><0>Fügen Sie ein paar Verzeichnisse, die mit anderen Benutzern geteilt werden auf der <1>Freigabe</1> Seite hinzu.</0><1>Sie sollten vermutlich durch jede Hauptseite der <1>Einstellungen</1>gehen, bevor Sie los legen. <3>Es ist wichtig, dass Sie <1>ihre Verbindungsgeschwindigkeit korrekt einstellen</1>, weil der Client sonst nicht in der Lage ist Ihre Bandbreite effizient zu nutzen.</3></1><2>Derzeit gibt es keine Auflistung von öffentlichen Hubs, daher müssen Sie die Hub Adresse kennen, zu der Sie verbinden möchten.</2></0><1>Besuchen Sie die<1>Webseite</1> für mehr Informationen über den Client und seine Funktionalitäten.</1><2>Wenn Sie Fragen haben, können Sie diese auf dem <1>GitHub tracker</1> stellen, oder Sie verbinden sich zu dem Entwicklungs/Hilfe Hub: <3></3></2>"
   }
 }
