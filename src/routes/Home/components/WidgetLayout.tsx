@@ -60,7 +60,7 @@ const WidgetLayout = React.memo<HomeLayoutProps>(() => {
       <ResponsiveReactGridLayout 
         className="ui cards layout"
         rowHeight={ 50 } 
-        width={ 1200 }
+        // width={ 1200 }
         onLayoutChange={ WidgetStore.onLayoutChange }
         onBreakpointChange={ bp => setBreakpoint(bp) }
 
@@ -72,7 +72,7 @@ const WidgetLayout = React.memo<HomeLayoutProps>(() => {
       >
         { layouts[breakpoint]
           .map(w => mapWidget(w, rootWidgetT))
-          .filter((widget: any) => widget) }
+          .filter((widget) => widget) }
       </ResponsiveReactGridLayout>
       <WidgetDialog
         rootWidgetT={ rootWidgetT }

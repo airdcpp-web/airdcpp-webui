@@ -23,7 +23,7 @@
 }
 
 .chat.session .composer:focus {
-  outline: none;;
+  outline: none;
 }
 
 .chat.session .composer textarea, 
@@ -45,7 +45,12 @@
   opacity: 0.9;
 }
 
-.chat.session .composer > .input {
+#mobile-layout .chat.session .composer > .input {
+  width: 100%;
+}
+
+#normal-layout .chat.session .composer > .input {
+  /* Leave some empty space to the right for better styling with ugly native scrollbars (especially with Firefox) */
   width: calc(100% - 60px);
 }
 

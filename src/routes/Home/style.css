@@ -11,15 +11,21 @@
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 15px;
+}
+
+#mobile-layout #home > div {
+  margin-left: 8px !important;
+  margin-right: 8px !important;
 }
 
 #mobile-layout #home .ui.message {
   margin-top: 10px;
-  margin-left: 8px;
-  margin-right: -5px;
 }
 
+#mobile-layout .react-grid-layout {
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
 
 /* Widgets */
 .react-grid-layout .widget .main.content {
@@ -57,4 +63,6 @@
 #mobile-layout .react-grid-layout .react-grid-item {
   /* Allow touch scrolling */
   touch-action: initial !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }

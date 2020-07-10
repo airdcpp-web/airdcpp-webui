@@ -65,6 +65,12 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
       minHeight: !mobileLayout ? 63 : 42,
       maxHeight: 200,
       margin: 0,
+
+      // Disable weird hack from react-mentions which breaks styling on iOS
+      // tslint:disable-next-line:max-line-length
+      // https://github.com/signavio/react-mentions/blob/e2b0273d4a629af8107ba1738f0a5846ada790f1/src/MentionsInput.js#L1033
+      marginLeft: 0,
+      marginTop: 0,
     },
   };
 };

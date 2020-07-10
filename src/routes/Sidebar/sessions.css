@@ -70,7 +70,7 @@
 }
 
 .session-container.vertical .session-header > div {
-  max-width: 90%;
+  max-width: 90%; /* Hack, auto width won't work without "overflow: hidden", but that would prevent viewing the menu items  */
   padding: .82857143em 0.4285714em;
   line-height: 1.2;
 }
@@ -91,7 +91,6 @@
 .session-container.horizontal .session-header .header > i,
 .session-container.vertical .session-header > i {
   width: inherit !important;
-  padding-top: .12285714em !important;
   font-size: 1.5em;
 }
 
