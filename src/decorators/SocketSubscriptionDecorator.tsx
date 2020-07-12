@@ -12,11 +12,11 @@ export interface SocketSubscriptionDecoratorProps {
 }
 
 
-export type AddSocketListener = <DataT extends object>(
+export type AddSocketListener = <DataT extends object | void, EntityIdT extends EntityId | undefined = undefined>(
   apiModuleUrl: string, 
   event: string, 
-  callback: SubscriptionCallback<DataT>, 
-  entityId?: EntityId, 
+  callback: SubscriptionCallback<DataT, EntityIdT>, 
+  entityId?: EntityIdT, 
   access?: AccessEnum
 ) => void;
 
@@ -35,18 +35,18 @@ const SocketSubscriptionDecorator = function <PropsT>(
   class Decorator extends React.Component<PropsT & SocketSubscriptionDecoratorProps> {
     socketSubscriptions: SubscriptionRemoveHandler[] = [];
 
-    addSocketListener = <DataT extends object>(
+    addSocketListener = <DataT extends object | void, EntityIdT extends EntityId | undefined>(
       apiModuleUrl: string, 
       event: string, 
-      callback: SubscriptionCallback<DataT>, 
-      entityId: EntityId, 
+      callback: SubscriptionCallback<DataT, EntityIdT>, 
+      entityId: EntityId | undefined, 
       access: AccessEnum
     ) => {
       if (access && !LoginStore.hasAccess(access)) {
         return;
       }
   
-      SocketService.addListener<DataT>(apiModuleUrl, event, callback, entityId)
+      SocketService.addListener<DataT, EntityIdT>(apiModuleUrl, event, callback, entityId)
         .then(removeHandler => this.socketSubscriptions.push(removeHandler));
     }
 
