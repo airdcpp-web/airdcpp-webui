@@ -7,10 +7,12 @@ import LoginConstants from 'constants/LoginConstants';
 import SettingConstants from 'constants/SettingConstants';
 
 import * as UI from 'types/ui';
+import LoginStore from 'stores/LoginStore';
 
 
 
 const handleNewUserIntroSeen = () => {
+  LoginStore.onNewUserIntroSeen();
   return SocketService.post(SettingConstants.ITEMS_SET_URL, { [LoginConstants.WIZARD_PENDING]: false });
 };
 

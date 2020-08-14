@@ -25,6 +25,7 @@ export interface LoginState {
   lastError: string | null;
   hasSession: boolean;
   allowLogin: boolean;
+  showNewUserIntro: boolean;
 }
 
 
@@ -83,6 +84,7 @@ const LoginStore = {
       lastError: this._lastError,
       socketAuthenticated: this._socketAuthenticated,
       hasSession: this.hasSession,
+      showNewUserIntro: this.showNewUserIntro,
     };
   },
 

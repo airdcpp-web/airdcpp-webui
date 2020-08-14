@@ -6,9 +6,10 @@ import ActionButton from 'components/ActionButton';
 import ExternalLink from 'components/ExternalLink';
 import TextDecorator from 'components/TextDecorator';
 import Message from 'components/semantic/Message';
+import { useStore } from 'effects/StoreListenerEffect';
 
 import LoginActions from 'actions/ui/LoginActions';
-import LoginStore from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/LoginStore';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 
@@ -16,7 +17,8 @@ import * as UI from 'types/ui';
 
 
 const NewUserIntro = () => {
-  if (!LoginStore.showNewUserIntro) {
+  const { showNewUserIntro } = useStore<LoginState>(LoginStore);
+  if (!showNewUserIntro) {
     return null;
   }
 
