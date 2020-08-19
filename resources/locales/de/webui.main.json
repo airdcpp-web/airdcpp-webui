@@ -317,7 +317,7 @@
     "history": "Vorherige",
     "shared": "Freigegeben",
     "favorites": "Bevorzugte",
-    "dupes": "Dupes",
+    "dupes": "Duplikate",
     "browse": "Durchsuchen",
     "download": "Herunterladen",
     "close": "Schließen",
@@ -364,7 +364,7 @@
     "loadingSessions": "Sitzungen werden geladen",
     "typeContent": "Typ/Inhalt",
     "lastModified": "Zuletzt geändert",
-    "dupeType": "Dupe type",
+    "dupeType": "Duplikattyp",
     "shareFull": "Freigabe (komplett)",
     "sharePartial": "Freigabe (teil)",
     "queueFull": "Warteschlange (komplett)",
@@ -372,10 +372,10 @@
     "finishedFull": "Abgeschlossen (komplett)",
     "finishedPartial": "Abgeschlossen (teil)",
     "shareAndQueue": "Freigeben und anhängen",
-    "dupePaths": "Dupe paths",
+    "dupePaths": "Duplikatverzeichnisse",
     "actionsCaption": "Aktionen...",
     "tth": "TTH",
-    "na": "N/A",
+    "na": "Nicht verfügbar",
     "noActionsAvailable": "Keine Aktion verfügbar",
     "form": {
       "browse": "Durchsuchen",
@@ -678,7 +678,7 @@
         "noInstalledExtensions": "Keine installierten Erweiterungen gefunden. Neue Erweiterungen können von der <1>Erweiterungskatalogsseite</1> installiert werden.",
         "defaultExtensionEngineMissing": "Die Standarderweiterungsengine <1>node</1> ist auf Ihrem System nicht installiert. Bitte gehen Sie auf  die <3>Webseite der Engine</3> für die Installationsanleitung",
         "extensionDirectoryFetchError": "Informationsabruf vom Erweiterungsverzeichnis fehlgeschlagen: {{error}}",
-        "unmanagedExtension": "Unmanaged extension",
+        "unmanagedExtension": "Unverwaltete Erweiterung",
         "manage": "Verwalten..."
       }
     },
@@ -744,7 +744,7 @@
         "variableHelp": "Variable Information für Dateinamen und Formatfelder"
       },
       "serverSettings": {
-        "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
+        "defaultCertNote": "Das Standard-Client-Zertifikat wird verwendet, falls die Zertifikatverzeichnisse leer sind.",
         "advanced": "Fortgeschritten"
       },
       "users": {
@@ -778,7 +778,7 @@
         },
         "addWebUser": "Web Benutzer hinzufügen",
         "editUser": "Benutzer bearbeiten",
-        "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
+        "adminPermissionNote": "Administrative Berechtigung wird benötigt, um die System-Sektion in den Einstellungen aufzurufen."
       }
     },
     "sharing": {
@@ -799,9 +799,9 @@
       "hashing": {
         "hashDatabase": "Hash Datenbank",
         "fileIndexSize": "Dateiindexgröße",
-        "hashStoreSize": "Hash store size",
+        "hashStoreSize": "Hash-Speichergröße",
         "maintenance": "Wartung",
-        "verifyIntegrityOfHashData": "Verify integrity of hash data",
+        "verifyIntegrityOfHashData": "Integrität der Hash-Daten verifizieren",
         "optimizeNow": "Jetzt optimieren",
         "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
       }
@@ -864,7 +864,7 @@
         }
       },
       "histories": {
-        "maxMessageHistory": "Maximum number of messages to cache",
+        "maxMessageHistory": "Maximale Anzahl Nachrichten im Zwischenspeicher",
         "maxSessionHistory": "Maximale Anzahl von vorherig geöffneten Sitzungen"
       },
       "miscellaneous": {
@@ -930,7 +930,7 @@
     },
     "noFiles": "Keine Dateien zum Ansehen",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
-    "preparingView": "Preparing view",
+    "preparingView": "Bereite Ansicht vor",
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",
     "notifications": {
