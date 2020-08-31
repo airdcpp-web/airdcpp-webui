@@ -51,23 +51,19 @@ const HintedUserFormatter = DataProviderDecorator<HintedUserFormatterProps, Hint
   {
     urls: {
       hintedUser: async ({ option }, socket): Promise<HintedUserFormatterDataProps['hintedUser']> => {
-        /*if ((option as API.HubUser).nick && (option as API.HubUser).hub_name) {
-          // No need to perform a search if we are displaying the option list 
-          return Promise.resolve({
-            hub_names: (option as API.HubUser).hub_name,
-            nicks: (option as API.HubUser).nick,
-          });
-        }*/
+        try {
+          const hintedUser = await socket.post<API.HintedUser | undefined>(
+            UserConstants.SEARCH_HINTED_USER_URL, 
+            { user: option }
+          );
 
-        const hintedUser = await socket.post<API.HintedUser | undefined>(
-          UserConstants.SEARCH_HINTED_USER_URL, 
-          { user: option }
-        );
-
-        if (!!hintedUser) {
           return hintedUser;
+        } catch (e) {
+          // ...
         }
 
+        // This generally shouldn't happen as the application should keep the user references available
+        // even if the users are offline
         return {
           nicks: option.nicks,
           hub_names: option.hub_url,

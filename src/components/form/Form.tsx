@@ -1,14 +1,13 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import isEqual from 'lodash/isEqual';
 
 import NotificationActions from 'actions/NotificationActions';
 
 import { 
   normalizeSettingValueMap, parseDefinitions, parseFieldOptions, 
-  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues, findFieldByKey, 
-  //translateFormProperty 
+  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues, 
+  findFieldByKey, formValuesEqual
 } from 'utils/FormUtils';
 import tcomb from 'utils/tcomb-form';
 
@@ -229,7 +228,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       const result = this.form.getComponent(valueKeyPath).validate();
       setFieldValueByPath(value, (result as any).value, valueKeyPath);
 
-      const equal = isEqual(
+      const equal = formValuesEqual(
         findFieldValueByPath(this.sourceValue, valueKeyPath), 
         findFieldValueByPath(value, valueKeyPath)
       );

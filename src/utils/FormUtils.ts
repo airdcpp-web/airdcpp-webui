@@ -6,14 +6,29 @@ import { BrowseField, HintedUserSelectField, HubUrlField, SelectField } from 'co
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import isEqual from 'lodash/isEqual';
 import upperFirst from 'lodash/upperFirst';
 import update from 'immutability-helper';
 
 import { textToI18nKey } from './TranslationUtils';
 
 import { Type, form } from 'types/ui/tcomb-form';
+import { isEqualWith, isObject } from 'lodash';
 
+
+const formValuesEqual = (parent1: any, parent2: any) => {
+  return isEqualWith(parent1, parent2, (v1, v2) => {
+    // Constructors may differ for object array values, causing incorrect results with isEqual
+    if (
+      isObject(v1) && 
+      isObject(v2) && 
+      Object.getPrototypeOf(v1).constructor.name !== Object.getPrototypeOf(v2).constructor.name
+    ) {
+      return isEqualWith({...v1}, {...v2}, formValuesEqual);
+    }
+  
+    return undefined;
+  });
+};
 
 const typeToComponent = (
   type: API.SettingTypeEnum, 
@@ -337,7 +352,7 @@ const reduceChangedFieldValues = (
     }
   } else {
     // Lists and simple values
-    if (!sourceValue || !isEqual(sourceValue[valueKey], currentFormValue[valueKey])) {
+    if (!sourceValue || !formValuesEqual(sourceValue[valueKey], currentFormValue[valueKey])) {
       changedValues[valueKey] = currentFormValue[valueKey];
     }
   }
@@ -446,5 +461,6 @@ export {
   setFieldValueByPath,
 
   updateMultiselectValues,
+  formValuesEqual,
 }
 ;
