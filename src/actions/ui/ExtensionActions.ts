@@ -1,6 +1,7 @@
 'use strict';
 
 import SocketService from 'services/SocketService';
+import { fetchCorsSafeData } from 'services/HttpService';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 
@@ -9,10 +10,6 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-
-import {
-  fetchCorsSafeData 
-} from 'utils/HttpUtils';
 
 
 const isManaged = (extension: API.Extension) => extension.managed;

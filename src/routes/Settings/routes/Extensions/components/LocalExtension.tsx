@@ -8,8 +8,7 @@ import Extension from 'routes/Settings/routes/Extensions/components/extension/Ex
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-
-import { fetchCorsSafeData } from 'utils/HttpUtils';
+import { fetchCorsSafeData } from 'services/HttpService';
 
 
 export interface NpmPackageData {

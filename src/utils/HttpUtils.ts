@@ -1,5 +1,3 @@
-import LoginStore from 'stores/LoginStore';
-
 
 class HTTPError extends Error {
   constructor(code: number, status: string) {
@@ -13,11 +11,6 @@ class HTTPError extends Error {
   public code: number;
 }
 
-export const toCorsSafeUrl = (url: string) => {
-  const proxyUrl = `${window.location.origin}${getBasePath()}proxy?url=${encodeURIComponent(url)}`;
-  return proxyUrl;
-};
-
 export const fetchData = async (url: string, options?: RequestInit) => {
   const res = await fetch(url, options);
 
@@ -26,34 +19,4 @@ export const fetchData = async (url: string, options?: RequestInit) => {
   }
 
   return res;
-};
-
-export const fetchCorsSafeData = async (url: string, isJSON: boolean, options?: RequestInit) => {
-  try {
-    //console.log(`CORS HTTP request started (${url})`);
-
-    const res = await fetchData(
-      toCorsSafeUrl(url), 
-      {
-        headers: {
-          'Authorization': LoginStore.authToken,
-
-          // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
-          'X-Authorization': LoginStore.authToken,
-
-          // Temp workaround for people upgrading from versions < 2.7.0
-          // If the new UI was loaded before restarting the app, a cache expiration time of 
-          // one year would have been set for "Not found" errors...
-          'Cache-Control': 'no-store, must-revalidate, max-age=0'
-        },
-        ...options,
-      }
-    );
-
-    const data = await isJSON ? res.json() : res.text();
-    return data;
-  } catch (e) {
-    console.error(`CORS HTTP request failed (${url})`, e);
-    throw e;
-  }
 };

@@ -9,8 +9,7 @@ import 'fomantic-ui-css/components/item.min.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-
-import { fetchCorsSafeData } from 'utils/HttpUtils';
+import { fetchCorsSafeData } from 'services/HttpService';
 
 
 interface NpmPackageLayoutProps {

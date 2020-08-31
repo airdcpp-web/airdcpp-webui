@@ -43,10 +43,10 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
 
       // Subscription
       const url = HubConstants.SESSIONS_URL;
-      props.addSocketListener<API.HubCounts, number>(
+      props.addSocketListener(
         url, 
         HubConstants.SESSION_COUNTS_UPDATED, 
-        data => setCounts(data), 
+        (data: API.HubCounts) => setCounts(data), 
         props.session.id
       );
 

@@ -7,6 +7,7 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
+import { fetchCorsSafeData } from 'services/HttpService';
 
 import Entry from 'widgets/RSS/components/Entry';
 import Footer from 'widgets/RSS/components/Footer';
@@ -15,7 +16,7 @@ import { Settings } from 'widgets/RSS';
 import '../style.css';
 
 import * as UI from 'types/ui';
-import { fetchCorsSafeData } from 'utils/HttpUtils';
+
 import { FeedItem, parseNodeContent } from '../types';
 
 

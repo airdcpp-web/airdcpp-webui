@@ -2,8 +2,7 @@
 import ShareConstants from 'constants/ShareConstants';
 import SocketService from 'services/SocketService';
 
-import LoginStore from 'stores/LoginStore';
-import { fetchData } from 'utils/HttpUtils';
+import { uploadTempFile } from '../HttpService';
 
 
 export interface AddTempShareResponse { 
@@ -13,22 +12,8 @@ export interface AddTempShareResponse {
 export const shareTempFile = async (
   file: File, hubUrl: string, cid: string | undefined
 ): Promise<AddTempShareResponse> => {
-  let fileId;
   try {
-    const res = await fetchData(`${getBasePath()}temp`, {
-      method: 'POST',
-      headers: {
-        'Authorization': LoginStore.authToken,
-      },
-      body: file
-    });
-
-    fileId = res.headers.get('Location');
-  } catch (e) {
-    throw e;
-  }
-
-  try {
+    const fileId = await uploadTempFile(file);
     const res = await SocketService.post<AddTempShareResponse>(ShareConstants.TEMP_SHARES_URL, {
       name: file.name,
       file_id: fileId,
