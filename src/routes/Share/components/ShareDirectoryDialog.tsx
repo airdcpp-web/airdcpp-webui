@@ -18,7 +18,7 @@ import { getLastDirectory } from 'utils/FileUtils';
 
 import Form, { FormSaveHandler, FormFieldSettingHandler, FormFieldChangeHandler } from 'components/form/Form';
 import FilesystemConstants from 'constants/FilesystemConstants';
-import AutoSuggestField from 'components/form/AutoSuggestField';
+import { AutoSuggestField } from 'components/form/fields';
 
 import '../style.css';
 

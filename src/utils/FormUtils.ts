@@ -1,16 +1,14 @@
 import invariant from 'invariant';
 import tcomb, { Range, Positive } from 'utils/tcomb-form';
 
-import BrowseField from 'components/form/BrowseField';
-import SelectField from 'components/form/SelectField';
+import { BrowseField, HintedUserSelectField, HubUrlField, SelectField } from 'components/form/fields';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { isArray } from 'util';
-
 import isEqual from 'lodash/isEqual';
 import upperFirst from 'lodash/upperFirst';
+import update from 'immutability-helper';
 
 import { textToI18nKey } from './TranslationUtils';
 
@@ -34,7 +32,13 @@ const typeToComponent = (
     case API.SettingTypeEnum.STRING:
     case API.SettingTypeEnum.TEXT:
     case API.SettingTypeEnum.FILE_PATH:
+    case API.SettingTypeEnum.HUB_URL:
     case API.SettingTypeEnum.DIRECTORY_PATH: return tcomb.Str;
+    case API.SettingTypeEnum.HINTED_USER: return tcomb.struct({
+      nicks: tcomb.Str,
+      cid: tcomb.Str,
+      hub_url: tcomb.Str,
+    });
     default: 
   }
 
@@ -121,15 +125,19 @@ const normalizeSettingValueMap = (
 
               throw `Invalid value for a list struct ${arrayItem}`;
             });
+          } else if (item_type === API.SettingTypeEnum.HINTED_USER) {
+            reducedValue[key] = fieldValue;
           } else {
             reducedValue[key] = fieldValue.map(normalizeField);
           }
         } else if (type === API.SettingTypeEnum.STRUCT) {
-          if (!!fieldValue && typeof fieldValue === 'object' && !isArray(fieldValue)) {
+          if (!!fieldValue && typeof fieldValue === 'object' && !Array.isArray(fieldValue)) {
             reducedValue[key] = normalizeSettingValueMap(fieldValue, definitions!);
           } else {
             throw `Invalid value for a struct ${key}`;
           }
+        } else if (type === API.SettingTypeEnum.HINTED_USER) {
+          reducedValue[key] = fieldValue;
         } else {
           reducedValue[key] = normalizeField(fieldValue);
         }
@@ -170,6 +178,16 @@ const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
         //isFile: type === FieldTypes.FILE_PATH
         isFile: false
       };
+      break;
+    }
+    case API.SettingTypeEnum.HINTED_USER: {
+      options.factory = tcomb.form.Textbox;
+      options.template = HintedUserSelectField;
+      break;
+    }
+    case API.SettingTypeEnum.HUB_URL: {
+      options.factory = tcomb.form.Textbox;
+      options.template = HubUrlField;
       break;
     }
     default:
@@ -303,8 +321,9 @@ const reduceChangedFieldValues = (
   valueKey: string
 ) => {
   if (!!sourceValue && currentFormValue[valueKey] instanceof Object && !Array.isArray(currentFormValue[valueKey])) {
+    // Object values (structs, hinted users...)
     const settingKeys = Object.keys(currentFormValue[valueKey]!);
-    changedValues[valueKey] = settingKeys.reduce(
+    const changedObjectValue = settingKeys.reduce(
       reduceChangedFieldValues.bind(
         null,
         sourceValue[valueKey], 
@@ -312,7 +331,12 @@ const reduceChangedFieldValues = (
       ), 
       {}
     );
+
+    if (Object.keys(changedObjectValue).length > 0) {
+      changedValues[valueKey] = changedObjectValue;
+    }
   } else {
+    // Lists and simple values
     if (!sourceValue || !isEqual(sourceValue[valueKey], currentFormValue[valueKey])) {
       changedValues[valueKey] = currentFormValue[valueKey];
     }
@@ -383,8 +407,6 @@ const translateForm = (
 
   return ret;
 };
-
-import update from 'immutability-helper';
 
 const updateMultiselectValues = <ValueT>(values: ValueT[], value: ValueT, checked: boolean) => {
   if (checked) {

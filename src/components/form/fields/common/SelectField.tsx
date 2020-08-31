@@ -1,31 +1,12 @@
 import React from 'react';
 
 import Select from 'react-select';
-
 import invariant from 'invariant';
 
 import tcomb from 'utils/tcomb-form';
+import { MultiSelectComponents } from 'components/select/common';
 
 import * as UI from 'types/ui';
-
-
-const MultiValueContainer: React.FC<any> = ({ css, children, innerProps }) => {
-  return (
-    <a { ...innerProps } className="ui label">
-      { children }
-    </a>
-  );
-};
-
-const MultiValueLabel: React.FC<any> = ({ children }) => {
-  return children;
-};
-
-const MultiValueRemove: React.FC<any> = ({ css, innerProps }) => {
-  return (
-    <i { ...innerProps } className="delete icon"/>
-  );
-};
 
 
 type TCombTemplate = { 
@@ -61,17 +42,11 @@ const SelectTemplate: TCombTemplate = {
         onChange={ onChange }
         isMulti={ true }
         noOptionsMessage={ () => formT.translate('No options') }
-        components={{ 
-          MultiValueContainer,
-          MultiValueLabel,
-          MultiValueRemove,
-        }}
+        components={MultiSelectComponents}
         menuPlacement="top"
       />
     );
   }
 };
 
-const ReactSelect = tcomb.form.Form.templates.select.clone(SelectTemplate);
-
-export default ReactSelect;
+export const SelectField = tcomb.form.Form.templates.select.clone(SelectTemplate);

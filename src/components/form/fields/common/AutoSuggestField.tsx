@@ -17,7 +17,7 @@ type TCombTemplate = {
   renderInput: (locals: UI.FormLocals<any, string, AutoSuggestFieldConfig>) => React.ReactNode; 
 };
 
-const AutoSuggestField: TCombTemplate = {
+const AutoSuggestTemplate: TCombTemplate = {
   renderInput(locals) {
     return (
       <div className="ui fluid input">
@@ -33,4 +33,4 @@ const AutoSuggestField: TCombTemplate = {
   }
 };
 
-export default t.form.Form.templates.textbox.clone(AutoSuggestField);
+export const AutoSuggestField = t.form.Form.templates.textbox.clone(AutoSuggestTemplate);

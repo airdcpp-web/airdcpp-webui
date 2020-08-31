@@ -12,9 +12,13 @@ import HubSessionStore from 'stores/HubSessionStore';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
+import IconConstants from 'constants/IconConstants';
+import { translate } from 'utils/TranslationUtils';
+import Button from 'components/semantic/Button';
 
 
 class HubNew extends React.Component<NewSessionLayoutProps> {
@@ -40,6 +44,12 @@ class HubNew extends React.Component<NewSessionLayoutProps> {
       <div className="hub session new">
         <HubSearchInput 
           submitHandler={ this.handleConnect }
+          button={ 
+            <Button
+              icon={ IconConstants.CONNECT }
+              caption={ translate('Connect', sessionT.t, UI.Modules.HUBS) }
+            />
+          }
         />
         <Message
           description={(

@@ -14,9 +14,10 @@ import t from 'utils/tcomb-form';
 
 import { getLastDirectory } from 'utils/FileUtils';
 
-import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
+import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form';
+import { AutoSuggestField } from 'components/form/fields';
+
 import FilesystemConstants from 'constants/FilesystemConstants';
-import AutoSuggestField from 'components/form/AutoSuggestField';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

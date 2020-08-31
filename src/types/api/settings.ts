@@ -7,6 +7,8 @@ export const enum SettingTypeEnum {
   DIRECTORY_PATH = 'directory_path',
   STRUCT = 'struct',
   LIST = 'list',
+  HINTED_USER = 'hinted_user',
+  HUB_URL = 'hub_url',
 }
 
 export enum SettingValueMode {

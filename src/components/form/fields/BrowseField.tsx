@@ -18,7 +18,7 @@ interface BrowseFieldConfig {
   isFile?: boolean;
 }
 
-const BrowseField = tcomb.form.Form.templates.textbox.clone({
+export const BrowseField = tcomb.form.Form.templates.textbox.clone({
   // override default implementation
   renderInput: (locals: UI.FormLocals<any, string, BrowseFieldConfig>) => {
     let _input: HTMLInputElement;
@@ -74,5 +74,3 @@ const BrowseField = tcomb.form.Form.templates.textbox.clone({
     );
   }
 });
-
-export default BrowseField;

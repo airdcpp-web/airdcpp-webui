@@ -1,6 +1,5 @@
 import React from 'react';
 
-import UserSearchInput from 'components/autosuggest/UserSearchInput';
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
@@ -12,6 +11,7 @@ import * as API from 'types/api';
 
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 import IconConstants from 'constants/IconConstants';
+import { UserSelectField } from 'components/select';
 
 
 const hasSession = (entry: API.HistoryItem) => {
@@ -19,13 +19,13 @@ const hasSession = (entry: API.HistoryItem) => {
 };
 
 class MessageNew extends React.Component<NewSessionLayoutProps> {
-  handleSubmit = (nick: string | null, user: API.HintedUser) => {
+  handleSubmit = (user: API.HintedUser) => {
     PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
   }
 
   recentUserRender = (entry: API.HistoryItem) => {
     return (
-      <a onClick={ _ => this.handleSubmit(null, entry.user!) }>
+      <a onClick={ _ => this.handleSubmit(entry.user!) }>
         { entry.user!.nicks }
       </a> 
     );
@@ -35,8 +35,8 @@ class MessageNew extends React.Component<NewSessionLayoutProps> {
     const { sessionT } = this.props;
     return (
       <div className="private chat session new"> 
-        <UserSearchInput 
-          submitHandler={ this.handleSubmit } 
+        <UserSelectField 
+          onChange={ this.handleSubmit } 
           offlineMessage={ sessionT.t<string>(
             'offlineMessage',
             'You must to be connected to at least one hub in order to send private messages'
