@@ -12,6 +12,8 @@ import NotificationActions from 'actions/NotificationActions';
 
 type OnClickHandler = () => void;
 
+const SUPPORTS = [ 'urls' ];
+
 const toMenuItem = (
   menuItem: API.ContextMenuItem, 
   remoteMenuId: string,
@@ -28,12 +30,19 @@ const toMenuItem = (
           onClick();
         }
 
-        socket.post(`${MenuConstants.MODULE_URL}/${remoteMenuId}/select`, {
-          selected_ids: selectedIds,
-          hook_id: menuItem.hook_id,
-          menuitem_id: menuItem.id,
-          entity_id: entityId,
-        });
+        if (menuItem.urls && menuItem.urls.length > 0) {
+          for (const url of menuItem.urls) {
+            window.open(url);
+          }
+        } else {
+          socket.post(`${MenuConstants.MODULE_URL}/${remoteMenuId}/select`, {
+            selected_ids: selectedIds,
+            hook_id: menuItem.hook_id,
+            menuitem_id: menuItem.id,
+            entity_id: entityId,
+            supports: SUPPORTS,
+          });
+        }
       } }
       icon={ menuItem.icon[MenuConstants.ICON_TYPE_ID] }
     >
@@ -65,7 +74,8 @@ const RemoteMenuDecorator: React.FC<Props> = ({
           .map((remoteMenuId, menuIndex) => !remoteMenuId ? [] : 
             SocketService.post<API.ContextMenuItem[]>(`${MenuConstants.MODULE_URL}/${remoteMenuId}/list`, {
               selected_ids: selectedIds[menuIndex],
-              entity_id: entityId
+              entity_id: entityId,
+              supports: SUPPORTS,
             })
           );
 

@@ -5,4 +5,5 @@ export interface ContextMenuItem {
   title: string;
   icon: ContextMenuItemIconInfo;
   hook_id: string;
+  urls: string[];
 }
