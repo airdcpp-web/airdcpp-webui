@@ -1,3 +1,4 @@
+//@ts-ignore
 import Reflux from 'reflux';
 import invariant from 'invariant';
 
@@ -7,8 +8,11 @@ import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
-import { PrivateMessageUrgencies } from 'constants/UrgencyConstants';
+import { ChatroomUrgencies, PrivateMessageUrgencies } from 'constants/UrgencyConstants';
 import AccessConstants from 'constants/AccessConstants';
+
+import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
+import * as API from 'types/api';
 
 
 const PrivateChatSessionStore = Reflux.createStore({
@@ -16,7 +20,7 @@ const PrivateChatSessionStore = Reflux.createStore({
     return this.getSessions();
   },
 
-  onSocketConnected(addSocketListener) {
+  onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(this.getSessions().length === 0, 'No existing private chat sessions should exist on socket connect');
 
     const url = PrivateChatConstants.MODULE_URL;
@@ -26,5 +30,11 @@ const PrivateChatSessionStore = Reflux.createStore({
   },
 });
 
-export default SessionStoreDecorator(SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW), PrivateChatActions, PrivateMessageUrgencies)
-;
+export default SessionStoreDecorator(
+  SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW), 
+  PrivateChatActions, 
+  (session: API.PrivateChat) => 
+    session.user.flags.indexOf('bot') !== -1 ? 
+      ChatroomUrgencies : 
+      PrivateMessageUrgencies
+);

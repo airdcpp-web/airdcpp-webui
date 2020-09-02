@@ -1,3 +1,5 @@
+import { SimpleSessionUnreadUrgency } from 'constants/UrgencyConstants';
+
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
@@ -58,7 +60,7 @@ const messageSessionMapper = (
 const simpleSessionMapper = (item: UI.ReadStatus): UI.UrgencyCountMap | null => {
   if (!item.read) {
     return {
-      [UI.UrgencyEnum.HIGH]: 1,
+      [SimpleSessionUnreadUrgency]: 1,
     };
   }
 

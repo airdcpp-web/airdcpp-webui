@@ -9,10 +9,10 @@ import * as UI from 'types/ui';
 
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
-const SessionStoreDecorator = function (
+const SessionStoreDecorator = function <SessionT extends SessionType>(
   store: any, 
-  actions: UI.RefluxActionListType<SessionType>, 
-  messageUrgencyMappings: UI.UrgencyCountMap
+  actions: UI.RefluxActionListType<SessionT>, 
+  messageUrgencyMappings: (session: SessionT) => UI.UrgencyCountMap
 ) {
   let sessions: Array<SessionType> = [];
   let activeSessionId: API.IdType | null = null;
@@ -29,9 +29,9 @@ const SessionStoreDecorator = function (
   });
 
   const Decorator = {
-    getItemUrgencies: (item: SessionType) => {
+    getItemUrgencies: (item: SessionT) => {
       if (messageUrgencyMappings) {
-        return messageSessionMapper(item as UI.MessageCounts, messageUrgencyMappings);
+        return messageSessionMapper(item as UI.MessageCounts, messageUrgencyMappings(item));
       }
 
       return simpleSessionMapper(item as UI.ReadStatus);

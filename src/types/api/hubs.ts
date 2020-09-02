@@ -18,6 +18,13 @@ export interface HubConnectState {
   };
 }
 
+export interface HubSettings {
+  chat_notify: boolean;
+  show_joins: boolean;
+  fav_show_joins: boolean;
+  nick: string;
+}
+
 export interface Hub {
   id: number;
   hub_url: string;
@@ -30,6 +37,7 @@ export interface Hub {
   favorite_hub?: number | null;
   message_counts: ChatMessageCounts;
   encryption?: EncryptionInfo;
+  settings: HubSettings;
 }
 
 export interface HubCounts {

@@ -18,6 +18,8 @@ import {
 } from 'decorators/SocketSubscriptionDecorator';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
+import { ActionMenu } from 'components/menu';
+import HubActions from 'actions/ui/HubActions';
 
 
 interface HubFooterProps {
@@ -90,8 +92,18 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
           }) }
         /> 
       ) }
-      <div className="userlist-button">
-        { userlistToggle }
+      <div className="actions-wrapper">
+        <div className="actions">
+          { userlistToggle }
+          <ActionMenu
+            className="top left pointing"
+            actions={ HubActions }
+            ids={[ 'toggleChatNotify', 'toggleShowJoins' ]}
+            header={ sessionT.translate('Notification settings') } 
+            itemData={ session }
+            triggerIcon={ session.settings.chat_notify || session.settings.show_joins ? 'yellow bell' : 'bell' }
+          />
+        </div>
       </div>
     </SessionFooter>
   );

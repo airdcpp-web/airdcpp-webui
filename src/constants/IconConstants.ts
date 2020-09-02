@@ -19,6 +19,7 @@ export default {
   CANCEL: 'remove',
   DATE: 'calendar',
   MENU: 'content',
+  NOTIFICATION: 'yellow bell',
 
   RELOAD: 'blue refresh',
   REFRESH_PLAIN: 'refresh',

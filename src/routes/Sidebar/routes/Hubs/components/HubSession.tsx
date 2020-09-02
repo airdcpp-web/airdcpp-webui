@@ -94,6 +94,7 @@ class HubSession extends React.Component<HubSessionProps> {
 
     const checkbox = (
       <Checkbox
+        className="userlist-button"
         type="toggle"
         caption={ sessionT.translate('User list') }
         onChange={ this.onClickUsers }

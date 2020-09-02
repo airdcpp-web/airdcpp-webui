@@ -37,9 +37,10 @@ export type ActionHandler<ItemDataT> = (
 export interface ActionType<ItemDataT> {
   handler: ActionHandler<ItemDataT>;
   filter?: (itemData: ItemDataT) => boolean;
+  checked?: (itemData: ItemDataT) => boolean;
   access?: string;
   displayName: string;
-  icon: string;
+  icon?: string;
 
   confirmation?: ((item: ItemDataT /*, t: ModuleTranslator*/) => ActionConfirmation) | ActionConfirmation;
   input?: ((item: ItemDataT /*, t: ModuleTranslator*/) => ActionInput<ItemDataT>) | ActionInput<ItemDataT>;

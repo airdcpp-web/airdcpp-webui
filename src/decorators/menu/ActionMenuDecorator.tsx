@@ -177,6 +177,8 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
     );
   }
 
+  const active = !action.checked ? false : action.checked(menu.itemDataGetter());
+  const icon = !!action.checked ? (active ? 'checkmark' : '') : action.icon;
   return (
     <MenuItemLink 
       key={ actionId } 
@@ -189,7 +191,8 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
           subId: menu.actions.subId,
         });
       } }
-      icon={ action.icon }
+      active={ active }
+      icon={ icon }
     >
       <Trans
         i18nKey={ toActionI18nKey(action, parseTranslationModules(menu.actions.moduleId)) }

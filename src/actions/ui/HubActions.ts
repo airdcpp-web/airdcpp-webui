@@ -18,6 +18,18 @@ const handleFavorite: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/favorite`);
 };
 
+const handleToggleChatNotify: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
+  return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
+    chat_notify: !hub.settings.chat_notify,
+  });
+};
+
+const handleToggleJoins: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
+  return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
+    show_joins: !hub.settings.show_joins,
+  });
+};
+
 const handleReconnect: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/reconnect`);
 };
@@ -37,6 +49,22 @@ const HubActions: UI.ActionListType<API.Hub> = {
     handler: handleFavorite,
     notifications: {
       onSuccess: 'The hub {{item.identity.name}} was added in favorites',
+    }
+  },
+  toggleChatNotify: { 
+    access: API.AccessEnum.HUBS_EDIT, 
+    displayName: 'Use chat notification',
+    handler: handleToggleChatNotify,
+    checked: hub => {
+      return hub.settings.chat_notify;
+    }
+  },
+  toggleShowJoins: { 
+    access: API.AccessEnum.HUBS_EDIT, 
+    displayName: 'Show joins/parts', 
+    handler: handleToggleJoins,
+    checked: hub => {
+      return hub.settings.show_joins;
     }
   },
 };

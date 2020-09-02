@@ -29,8 +29,8 @@
 .hub.session .cell-wrapper.nick.op {
   color: steelblue;
 }
-.hub.session .session-footer .userlist-button > a,
-.hub.session .session-footer .userlist-button > div {
+.hub.session .session-footer .actions-wrapper > a,
+.hub.session .session-footer .actions-wrapper > div {
   /* Don't cut the shadow */
   padding-left: 1px;
   padding-bottom: 1px;
@@ -39,4 +39,8 @@
 .hub.session .session-footer .userlist-button label {
   color: grey;
   font-size: small;
+}
+
+.hub.session .session-footer .actions-wrapper .dropdown {
+  margin-left: 10px;
 }

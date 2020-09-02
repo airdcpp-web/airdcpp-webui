@@ -68,6 +68,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
       newIcon={ IconConstants.HUBS_PLAIN }
       editAccess={ API.AccessEnum.HUBS_EDIT }
       uiActions={ HubUIActions }
+      actionIds={[ 'reconnect', 'favorite' ]}
       sessionApi={ HubAPIActions as UI.SessionActions<API.Hub> }
       sessionItemLayout={ HubSession }
       newLayout={ HubNew }

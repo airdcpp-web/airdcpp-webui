@@ -3,18 +3,32 @@ import { UrgencyEnum } from 'types/ui';
 
 export const HubMessageUrgencies = {
   status: UrgencyEnum.STATUS,
-  bot: UrgencyEnum.INFO,
-  user: UrgencyEnum.LOW,
+  bot: UrgencyEnum.LOW,
+  user: UrgencyEnum.NORMAL,
+};
+
+export const HubMessageNotifyUrgencies = {
+  status: UrgencyEnum.STATUS,
+  bot: UrgencyEnum.LOW,
+  user: UrgencyEnum.HIGH,
 };
 
 export const PrivateMessageUrgencies = {
   status: UrgencyEnum.STATUS,
-  bot: UrgencyEnum.INFO,
+  bot: UrgencyEnum.LOW,
+  user: UrgencyEnum.HIGHEST,
+};
+
+export const ChatroomUrgencies = {
+  status: UrgencyEnum.STATUS,
+  bot: UrgencyEnum.LOW,
   user: UrgencyEnum.HIGH,
 };
 
+export const SimpleSessionUnreadUrgency = UrgencyEnum.HIGHEST;
+
 export const LogMessageUrgencies = {
   [SeverityEnum.INFO]: UrgencyEnum.INFO,
-  [SeverityEnum.WARNING]: UrgencyEnum.MEDIUM,
-  [SeverityEnum.ERROR]: UrgencyEnum.HIGH,
+  [SeverityEnum.WARNING]: UrgencyEnum.WARNING,
+  [SeverityEnum.ERROR]: UrgencyEnum.ERROR,
 };
