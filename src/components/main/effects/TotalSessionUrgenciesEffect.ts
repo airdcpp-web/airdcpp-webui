@@ -1,6 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
-
-import { MenuIcon } from 'components/menu';
+import { useEffect, useState } from 'react';
 
 import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
 import { RouteItem } from 'routes/Routes';
@@ -32,7 +30,7 @@ const getTotalUrgencies = (routes: RouteItem[]) => {
   return validateUrgencies(routes.reduce(reduceMenuItemUrgency, {}));
 };
 
-const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
+export const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
   const [ urgencies, setUrgencies ] = useState<UI.UrgencyCountMap | null>(getTotalUrgencies(routes));
 
   useEffect(
@@ -58,28 +56,3 @@ const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
 
   return urgencies;
 };
-
-
-
-interface MainMenuIconProps {
-  onClickMenu: (evt: React.SyntheticEvent<any>) => void;
-  routes: RouteItem[];
-}
-
-// Main menu icon showing a colored label based on the urgencies counted from all session items
-const MainMenuIcon: React.FC<MainMenuIconProps> = memo(props => {
-  const urgencies = useTotalSessionUrgenciesEffect(props.routes);
-
-  const { onClickMenu } = props;
-  return (
-    <div className="right">
-      <MenuIcon 
-        urgencies={ urgencies }
-        onClick={ onClickMenu }
-        className="item"
-      />
-    </div>
-  );
-});
-
-export { MainMenuIcon };

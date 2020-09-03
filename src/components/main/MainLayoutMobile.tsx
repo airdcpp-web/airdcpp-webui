@@ -6,14 +6,14 @@ import MainNavigation from 'components/main/navigation/MainNavigationMobile';
 import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
 import 'mobile.css';
-import { MainMenuIcon } from './navigation/MainMenuIcon';
 import { MainLayoutProps } from './AuthenticatedApp';
+import { MenuIcon } from 'components/menu';
 
 
 const MainLayoutMobile: React.FC<MainLayoutProps> = memo(props => {
   const [ menuVisible, setMenuVisible ] = useState(false);
 
-  const { className, location } = props;
+  const { className, location, urgencies } = props;
   return (
     <div className={ className } id="mobile-layout">
       <MainNavigation
@@ -25,12 +25,15 @@ const MainLayoutMobile: React.FC<MainLayoutProps> = memo(props => {
       />
       <div className="pusher" id="mobile-layout-inner">
         <SiteHeader>
-          <MainMenuIcon
-            onClickMenu={ () => {
-              setMenuVisible(true);
-            } }
-            routes={ secondaryRoutes }
-          />
+          <div className="right">
+            <MenuIcon
+              urgencies={ urgencies }
+              onClick={ () => {
+                setMenuVisible(true);
+              } }
+              className="item"
+            />
+          </div>
         </SiteHeader>
         <div className="site-content">
           { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }

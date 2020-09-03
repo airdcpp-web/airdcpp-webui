@@ -13,7 +13,6 @@ import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
-// import * as UI from 'types/ui';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 
 

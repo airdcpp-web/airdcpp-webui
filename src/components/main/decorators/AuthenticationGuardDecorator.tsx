@@ -7,7 +7,7 @@ import LoginStore, { LoginState } from 'stores/LoginStore';
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
 import { useStore } from 'effects/StoreListenerEffect';
 import { useLoginGuard } from '../effects/LoginGuardEffect';
-import { usePageTitle } from '../effects/PageTitleEffect';
+import { useAuthPageTitle } from '../effects/PageTitleEffect';
 import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -37,7 +37,7 @@ function AuthenticationGuardDecorator<PropsT>(
   const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = props => {
     const login = useStore<LoginState>(LoginStore);
     useLoginGuard(login, props.location);
-    usePageTitle(login);
+    useAuthPageTitle(login);
     useStoreDataFetch(login);
     const { t } = useTranslation();
 
