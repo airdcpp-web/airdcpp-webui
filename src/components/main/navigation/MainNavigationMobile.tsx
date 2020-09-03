@@ -7,8 +7,7 @@ import {
   parseMenuItems, parseMenuItem, RouteItemClickHandler 
 } from 'routes/Routes';
 
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
+import DropdownCaption from 'components/semantic/DropdownCaption';
 
 import History from 'utils/History';
 import IconPanel from 'components/main/navigation/IconPanel';
@@ -17,6 +16,7 @@ import { Translation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import Popup from 'components/semantic/Popup';
 
 
 interface MainNavigationMobileProps {
@@ -77,20 +77,38 @@ class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
             className="ui right vertical inverted sidebar menu"
           >
             { parseMenuItems(mainRoutes, this.onClick) }
-            <SectionedDropdown 
-              caption={ translate('More...', t, UI.SubNamespaces.NAVIGATION) }
-              captionIcon="ellipsis horizontal caption" 
-              className="right fluid" 
-              triggerIcon=""
+            <Popup
+              // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
+              // https://github.com/Semantic-Org/Semantic-UI/issues/1410
+              trigger={(
+                <DropdownCaption 
+                  icon="ellipsis horizontal caption"
+                >
+                  { translate('More...', t, UI.SubNamespaces.NAVIGATION) }
+                </DropdownCaption> 
+              )}
+              triggerClassName="item"
+              className="inverted"
+              position="bottom left"
+              settings={{
+                distanceAway: -20
+              }}
             >
-              <MenuSection>
-                { parseMenuItems(configRoutes, this.onClick) }
-              </MenuSection>
-              <MenuSection>
-                { parseMenuItem(logoutItem) }
-              </MenuSection>
-            </SectionedDropdown>
-
+              { hide => (
+                <div className="ui dropdown item right fluid active visible">
+                  <div className="ui menu transition visible">
+                    { parseMenuItems(
+                      configRoutes, (path, event) => {
+                        hide();
+                        this.onClick(path, event);
+                      }
+                    ) }
+                    <div className="ui divider"/>
+                    { parseMenuItem(logoutItem) }
+                  </div>
+                </div>
+              ) }
+            </Popup>
             <div className="separator"/>
 
             { parseMenuItems(secondaryRoutes, this.onClickSecondary) }
