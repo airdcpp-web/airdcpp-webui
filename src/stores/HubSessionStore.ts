@@ -14,9 +14,12 @@ import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
+import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
 
 
 const HubSessionStore = Reflux.createStore({
+  scroll: SessionScrollPositionKeeper(),
+
   getInitialState: function () {
     return this.getSessions();
   },
@@ -39,8 +42,11 @@ const HubSessionStore = Reflux.createStore({
 });
 
 
-export default SessionStoreDecorator(
-  SocketSubscriptionDecorator(HubSessionStore, AccessConstants.HUBS_VIEW), 
+export default SessionStoreDecorator<API.Hub>(
+  SocketSubscriptionDecorator(
+    HubSessionStore, 
+    AccessConstants.HUBS_VIEW
+  ), 
   HubActions, 
-  (session: API.Hub) =>  session.settings.chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies
+  session =>  session.settings.chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies
 );

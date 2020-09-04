@@ -1,21 +1,24 @@
 'use strict';
 //import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
+import { InView } from 'react-intersection-observer';
+import { TFunction } from 'i18next';
 
 import Loader from 'components/semantic/Loader';
 import { useMessageViewScrollEffect } from 'effects';
 import { ChatMessage, StatusMessage } from './Message';
 import { formatCalendarTime } from 'utils/ValueFormat';
 
-import './messages.css';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { TFunction } from 'i18next';
+
 import { translate } from 'utils/TranslationUtils';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
+import { getListMessageId, getListMessageIdString } from 'utils/MessageUtils';
+
+import './messages.css';
 
 
 const getMessageDay = (listItem: UI.MessageListItem) => {
@@ -48,10 +51,30 @@ const showDivider = (index: number, messageList: UI.MessageListItem[]) => {
   return getMessageDay(messageList[index - 1]) !== getMessageDay(currentMessage);
 };
 
+const toListMessage = (message: UI.MessageListItem, entityId: API.IdType | undefined) => {
+  if (message.chat_message) {
+    return (
+      <ChatMessage
+        message={ message.chat_message }
+        dropdownContext=".chat.session"
+        entityId={ entityId! }
+      />
+    );
+  } else if (message.log_message) {
+    return (
+      <StatusMessage
+        message={ message.log_message }
+      />
+    );
+  }
 
-const getMessageListItem = (
+  return null;
+};
+
+const reduceMessageListItem = (
   t: TFunction,
   entityId: API.IdType | undefined,
+  onMessageVisibilityChanged: (id: number, inView: boolean) => void,
   reduced: React.ReactNode[], 
   message: UI.MessageListItem, 
   index: number, 
@@ -75,39 +98,54 @@ const getMessageListItem = (
     }
   }
 
-  // Push the message
-  if (message.chat_message) {
-    reduced.push(
-      <ChatMessage
-        key={ message.chat_message.id }
-        message={ message.chat_message }
-        dropdownContext=".chat.session"
-        entityId={ entityId! }
-      />
-    );
-  } else if (message.log_message) {
-    reduced.push(
-      <StatusMessage
-        key={ message.log_message.id }
-        message={ message.log_message }
-      />
-    );
-  }
+  const id = getListMessageId(message)!;
+  reduced.push(
+    <InView 
+      key={ id }
+      id={ getListMessageIdString(id) }
+      onChange={(inView) => {
+        onMessageVisibilityChanged(id, inView);
+      }}
+      threshold={0.4}
+    >
+      { toListMessage(message, entityId) }
+    </InView>
+  );
 
   return reduced;
 };
-
 
 interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
   session?: UI.SessionItemBase;
   className?: string;
+  scrollPositionHandler: UI.ScrollPositionHandler;
   t: TFunction;
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
-  ({ messages, session, className, t }) => {
-    const scrollableRef = useMessageViewScrollEffect(messages, session);
+  ({ messages, session, className, t, scrollPositionHandler }) => {
+    const visibleItems = useMemo(() => new Set<number>(), [session]);
+
+    const onMessageVisibilityChanged = (id: number, inView: boolean) => {
+      if (!inView) {
+        // console.log(`Remove view item ${id}`);
+        visibleItems.delete(id);
+      } else {
+        // console.log(`Add view item ${id}`);
+        visibleItems.add(id);
+      }
+
+      // console.log(`Visible items ${Array.from(visibleItems)}`);
+    };
+
+    const scrollableRef = useMessageViewScrollEffect(
+      messages,
+      visibleItems,
+      scrollPositionHandler,
+      session
+    );
+
     return (
       <div 
         ref={ scrollableRef }
@@ -115,7 +153,11 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
       >
         { !!messages ? (
           <div className="ui list message-list">
-            { messages.reduce(getMessageListItem.bind(null, t, session ? session.id : undefined), []) }
+            { messages.reduce(
+                reduceMessageListItem.bind(null, t, session ? session.id : undefined, onMessageVisibilityChanged), 
+                []
+              ) 
+            }
           </div>
         ) : (
           <Loader text={ translate('Loading messages', t, UI.Modules.COMMON) }/>

@@ -30,10 +30,10 @@ const PrivateChatSessionStore = Reflux.createStore({
   },
 });
 
-export default SessionStoreDecorator(
+export default SessionStoreDecorator<API.PrivateChat>(
   SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW), 
   PrivateChatActions, 
-  (session: API.PrivateChat) => 
+  session => 
     session.user.flags.indexOf('bot') !== -1 ? 
       ChatroomUrgencies : 
       PrivateMessageUrgencies

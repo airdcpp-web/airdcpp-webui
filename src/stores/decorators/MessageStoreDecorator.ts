@@ -2,7 +2,6 @@ import { checkSplice, mergeCacheMessages, pushMessage } from 'utils/MessageUtils
 import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
 
 import * as API from 'types/api';
-import { AccessEnum } from 'types/api';
 import * as UI from 'types/ui';
 
 
@@ -10,7 +9,7 @@ type ChatSession = UI.SessionItemBase;
 
 type MessageCache = UI.MessageListItem[];
 
-const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionListType<ChatSession>, access: AccessEnum) {
+const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionListType<ChatSession>, access: string) {
   // Message arrays mapped by session IDs 
   let messages = new Map();
 
@@ -67,11 +66,19 @@ const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionList
     },
 
     _onSessionRemoved: (session: ChatSession) => {
+      if (store.scroll) {
+        store.scroll._onSessionRemoved(session);
+      }
+
       messages.delete(session.id);
       initializedSession.delete(session.id);
     },
 
     onSocketDisconnected: () => {
+      if (store.scroll) {
+        store.scroll.onSocketDisconnected();
+      }
+      
       messages.clear();
       initializedSession.clear();
     },

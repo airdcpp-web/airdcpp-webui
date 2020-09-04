@@ -13,6 +13,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let items = [];
   let entityId = null;
   let paused = false;
+  let scrollPosition = 0;
 
   let sortProperty = defaultSortProperty;
   let sortAscending = defaultSortAscending;
@@ -164,6 +165,23 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 
     get paused() {
       return paused;
+    },
+
+    setScrollData(data) {
+      if (this._sessionStore) {
+        this._sessionStore.scroll.setScrollData(data, entityId);
+        return;
+      }
+
+      scrollPosition = data;
+    },
+
+    getScrollData() {
+      if (this._sessionStore) {
+        return this._sessionStore.scroll.getScrollData(entityId);
+      }
+
+      return scrollPosition;
     },
 
     _handleUpdate(data) {

@@ -16,9 +16,7 @@ import * as UI from 'types/ui';
 import { AddListener } from 'airdcpp-apisocket';
 
 
-//type MessageCache = API.StatusMessage[];
 type MessageCache = UI.MessageListItem[];
-
 
 const toCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
   return {
@@ -32,12 +30,10 @@ const Store = {
   _viewActive: false,
   _initialized: false,
 
+  scrollPosition: undefined as number | undefined,
   listenables: EventActions,
   init: function () {
-    //this._logMessages = undefined;
-    //this._messageCacheInfo = undefined;
-    //this._viewActive = false;
-    //this._initialized = false;
+    // 
   },
 
   isInitialized() {
@@ -46,6 +42,16 @@ const Store = {
 
   getInitialState() {
     return this._logMessages;
+  },
+
+  getScrollData() {
+    // console.log(`Getting scroll position ${this.scrollPosition} for events`);
+    return this.scrollPosition;
+  },
+
+  setScrollData(data: number) {
+    // console.log(`Setting scroll position ${data} for events`);
+    this.scrollPosition = data;
   },
 
   onSetActive(active: boolean) {

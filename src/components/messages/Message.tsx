@@ -7,7 +7,6 @@ import { formatTimestamp } from 'utils/ValueFormat';
 
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
-//import { SeverityEnum } from 'constants/EventConstants';
 
 import { UserMenu } from 'components/menu';
 
@@ -71,7 +70,7 @@ const MessageText: React.FC<MessageTextProps> = ({ message, emojify }) => (
 };*/
 
 
-interface ChatMessageProps {
+interface ChatMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   message: API.ChatMessage;
   dropdownContext: string;
   entityId: API.IdType;
@@ -89,9 +88,12 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 
   render() {
-    const { message, dropdownContext, entityId } = this.props;
+    const { message, dropdownContext, entityId, ...other } = this.props;
     return (
-      <div className={ 'ui item chat ' + message.from.flags.join(' ')}>
+      <div 
+        className={ 'ui item chat ' + message.from.flags.join(' ')}
+        {...other}
+      >
         <TimeStamp 
           message={ message }
         />
@@ -120,7 +122,7 @@ const getSeverityIcon = (severity: API.SeverityEnum) => {
   }
 };
 
-interface StatusMessageProps {
+interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   message: API.StatusMessage;
 }
 
@@ -134,9 +136,12 @@ class StatusMessage extends React.Component<StatusMessageProps> {
   }
 
   render() {
-    const { message } = this.props;
+    const { message, ...other } = this.props;
     return (
-      <div className={ 'ui item status ' + message.severity }>
+      <div 
+        className={ 'ui item status ' + message.severity }
+        {...other}
+      >
         <Icon icon={ getSeverityIcon(message.severity) }/>
         { message.time > 0 && <TimeStamp message={ message }/> }
         <MessageText 

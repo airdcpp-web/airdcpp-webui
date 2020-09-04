@@ -1,3 +1,4 @@
+//@ts-ignore
 import Reflux from 'reflux';
 import invariant from 'invariant';
 
@@ -7,10 +8,14 @@ import HubActions from 'actions/reflux/HubActions';
 import MessageStoreDecorator from './decorators/MessageStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
+import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
+import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 
 
 const HubMessageStore = Reflux.createStore({
-  onSocketConnected(addSocketListener) {
+  scroll: SessionScrollPositionKeeper(),
+
+  onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(!this.hasMessages(), 'No existing hub messages should exist on socket connect');
     invariant(!this.hasInitializedSessions(), 'No initialized hub sessions should exist on socket connect');
 

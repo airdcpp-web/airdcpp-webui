@@ -101,6 +101,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = (
         className="chat"
         messages={ messages }
         session={ session }
+        scrollPositionHandler={ messageStore.scroll }
         t={ t }
       />
       { hasChatAccess && (

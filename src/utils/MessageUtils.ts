@@ -23,12 +23,16 @@ const filterListed = (messageList: UI.MessageListItem[], message: UI.MessageList
 
 const getListMessageId = (listItem: UI.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
-  return !!message && message.id;
+  return !!message ? message.id : undefined;
+};
+
+const getListMessageIdString = (id: number) => {
+  return `message-list-item-${id}`;
 };
 
 const getListMessageTime = (listItem: UI.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
-  return !!message && message.time;
+  return !!message ? message.time : undefined;
 };
 
 const checkUnreadCacheInfo = (
@@ -110,7 +114,7 @@ const pushMessage = (message: UI.MessageListItem, messages: UI.MessageListItem[]
     // Messages can arrive simultaneously when the cached messages are fetched, don't add duplicates
     const lastMessage = messages[messages.length - 1];
     const currentMessageId = getListMessageId(message);
-    if (getListMessageId(lastMessage) >= currentMessageId) {
+    if (getListMessageId(lastMessage)! >= currentMessageId!) {
       return messages;
     }
   }
@@ -127,4 +131,5 @@ export {
   getListMessageId,
   getListMessageTime,
   checkSplice,
+  getListMessageIdString,
 };

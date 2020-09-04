@@ -10,6 +10,7 @@ import '../style.css';
 import * as UI from 'types/ui';
 import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
+import EventStore from 'stores/EventStore';
 
 
 interface EventMessagesProps {
@@ -34,6 +35,7 @@ const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
     <MessageView 
       className="events"
       messages={ messages }
+      scrollPositionHandler={ EventStore }
       t={ t }
     />
   );

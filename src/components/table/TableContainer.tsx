@@ -101,12 +101,14 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
   scrollTimer: number | undefined;
   scrollPosition = 0;
+  setInitialScrollRow = true;
 
   // This will also be used for setting the initial rows
   componentDidUpdate(prevProps: TableContainerProps, prevState: State) {
     if (prevState.height !== this.state.height) {
       this.updateRowRange();
     } else if (prevProps.entityId !== this.props.entityId) {
+      this.setInitialScrollRow = true;
       this.updateRowRange();
     }
   }
@@ -127,18 +129,28 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   }
 
   onScrollStart = (horizontal: number, vertical: number) => {
+    const { store } = this.props;
+
     //console.log('Scrolling started: ' + vertical, this.props.store.viewUrl);
-    console.assert(this.props.store.active, 'Sending pause for an inactive view');
-    TableActions.pause(this.props.store.viewUrl, true);
+    console.assert(store.active, 'Sending pause for an inactive view');
+    TableActions.pause(store.viewUrl, true);
   }
 
   onScrollEnd = (horizontal: number, vertical: number) => {
+    const { store } = this.props;
+
     this.scrollPosition = vertical;
-    console.assert(this.props.store.active, 'Sending pause for an inactive view');
-    TableActions.pause(this.props.store.viewUrl, false);
+    console.assert(store.active, 'Sending pause for an inactive view');
+    TableActions.pause(store.viewUrl, false);
 
     clearTimeout(this.scrollTimer);
     this.scrollTimer = window.setTimeout(this.updateRowRange, 500);
+
+    if (this.setInitialScrollRow) {
+      this.setInitialScrollRow = false;
+    }
+
+    store.setScrollData(vertical);
     //console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
   }
 
@@ -220,6 +232,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     // Update and insert generic columns props
     const children = React.Children.map(this.props.children, this.childToColumn);
 
+    const { store } = this.props;
     return (
       <Measure 
         bounds={ true }
@@ -235,7 +248,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
               height={ this.state.height } 
 
               rowHeight={ 50 }
-              rowsCount={ this.props.store.rowCount }
+              rowsCount={ store.rowCount }
               headerHeight={ 50 }
               isColumnResizing={ false }
               onColumnResizeEndCallback={ this.onColumnResizeEndCallback }
@@ -244,6 +257,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
               onScrollStart={ this.onScrollStart }
               onScrollEnd={ this.onScrollEnd }
+              scrollTop={ this.setInitialScrollRow ? store.getScrollData() : undefined }
             >
               { children }
             </Table>

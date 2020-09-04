@@ -12,7 +12,7 @@ type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 const SessionStoreDecorator = function <SessionT extends SessionType>(
   store: any, 
   actions: UI.RefluxActionListType<SessionT>, 
-  messageUrgencyMappings: (session: SessionT) => UI.UrgencyCountMap
+  messageUrgencyMappings: ((session: SessionT) => UI.UrgencyCountMap) | undefined = undefined
 ) {
   let sessions: Array<SessionType> = [];
   let activeSessionId: API.IdType | null = null;
@@ -89,12 +89,20 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
     },
 
     _onSessionRemoved: (data: SessionType) => {
+      if (store.scroll) {
+        store.scroll._onSessionRemoved(data);
+      }
+
       const index = sessions.indexOf(store.getSession(data.id));
       sessions = update(sessions, { $splice: [ [ index, 1 ] ] });
       store.trigger(sessions);
     },
 
     onSocketDisconnected: () => {
+      if (store.scroll) {
+        store.scroll.onSocketDisconnected();
+      }
+
       sessions = [];
       activeSessionId = null;
       isInitialized = false;
@@ -103,7 +111,5 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
 
   return Object.assign(store, Decorator);
 };
-
-//type SessionStoreDecorator = typeof Decorator;
 
 export default SessionStoreDecorator;
