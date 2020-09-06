@@ -12,12 +12,10 @@ import HubSessionStore from 'stores/HubSessionStore';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 import IconConstants from 'constants/IconConstants';
-import { translate } from 'utils/TranslationUtils';
 import Button from 'components/semantic/Button';
 
 
