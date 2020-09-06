@@ -13,7 +13,7 @@ export const searchDownloadHandler: UI.DownloadHandler<API.GroupedSearchResult> 
   instance
 ) => {
   return SocketService.post(
-    `${SearchConstants.MODULE_URL}/${instance.id}/results/${itemInfo.id}/download`, 
+    `${SearchConstants.MODULE_URL}/${instance!.id}/results/${itemInfo.id}/download`, 
     downloadData
   );
 };

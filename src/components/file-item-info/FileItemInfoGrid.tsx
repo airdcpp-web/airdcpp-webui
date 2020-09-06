@@ -71,7 +71,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
         />
         <Row 
           title={ gridT('Last modified') }
-          text={ formatRelativeTime(fileItem.time) }
+          text={ formatRelativeTime(fileItem.time || 0) }
         />
         { fileItem.type.id === 'file' && (
           <Row 

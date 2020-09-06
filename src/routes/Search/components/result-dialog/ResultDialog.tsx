@@ -3,7 +3,7 @@ import Modal from 'components/semantic/Modal';
 
 import FileIcon from 'components/icon/FileIcon';
 
-import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
+import DownloadDialog from 'components/download/DownloadDialog';
 
 import UserResultTable from './UserResultTable';
 
@@ -36,7 +36,7 @@ type Props = ResultDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 class ResultDialog extends React.Component<Props & DataProps> {
   static displayName = 'ResultDialog';
 
-  itemDataGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
+  itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
     const { instance } = this.props;
     return socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`);
   }

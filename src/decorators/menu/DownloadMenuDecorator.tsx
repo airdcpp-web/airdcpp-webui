@@ -5,19 +5,17 @@ import classNames from 'classnames';
 import DownloadableItemActions from 'actions/ui/DownloadableItemActions';
 import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
 export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo> 
-  extends Omit<ActionMenuDecoratorProps<ItemDataT>, 'actions' | 'itemData' | 'caption'> {
+  extends Omit<ActionMenuDecoratorProps<ItemDataT>, 'actions' | 'itemData' | 'caption'>,
+  Pick<UI.DownloadableItemData<ItemDataT>, 'session' | 'user'> {
 
-  user: API.HintedUserBase;
   itemInfoGetter: () => ItemDataT;
   downloadHandler: UI.DownloadHandler<ItemDataT>;
   caption: React.ReactNode;
   className?: string;
-  session: UI.SessionItemBase;
 }
 
 type DownloadMenuDecoratorChildProps<ItemDataT extends UI.DownloadableItemInfo> = 

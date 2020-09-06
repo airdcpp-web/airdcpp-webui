@@ -19,7 +19,7 @@ export interface FilelistItem {
   type: FileItemType;
   path: string;
   tth: string;
-  dupe: Dupe;
+  dupe: Dupe | null;
   time: number;
   size: number;
   complete: boolean;

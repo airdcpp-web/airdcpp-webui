@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TextDecorator from 'components/TextDecorator';
+import TextDecorator from 'components/text/TextDecorator';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 

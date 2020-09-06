@@ -11,6 +11,11 @@ import * as UI from 'types/ui';
 
 export const SettingDefinitions: UI.FormFieldDefinition[] = [
   {
+    key: LocalSettings.NOTIFY_MENTION,
+    type: API.SettingTypeEnum.BOOLEAN,
+    default_value: true,
+    title: 'Mentions of my nick',
+  }, {
     key: LocalSettings.NOTIFY_PM_USER,
     type: API.SettingTypeEnum.BOOLEAN,
     default_value: true,

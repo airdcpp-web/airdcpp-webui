@@ -1,7 +1,7 @@
 'use strict';
 import React, { useEffect, useState } from 'react';
 
-import TextDecorator from 'components/TextDecorator';
+import TextDecorator from 'components/text/TextDecorator';
 import Message from 'components/semantic/Message';
 
 import * as UI from 'types/ui';

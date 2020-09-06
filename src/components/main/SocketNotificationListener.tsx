@@ -25,6 +25,8 @@ import {
 } from 'decorators/SocketSubscriptionDecorator';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
+import HubConstants from 'constants/HubConstants';
+import HubSessionStore from 'stores/HubSessionStore';
 
 
 const getSeverityStr = (severity: Severity) => {
@@ -35,6 +37,30 @@ const getSeverityStr = (severity: Severity) => {
     case Severity.WARNING: return 'WARNING';
     default: return '';
   }
+};
+
+const notifyHubMessage = (message: API.ChatMessage) => {
+  if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
+    return true;
+  }
+
+  return false;
+};
+
+const notifyPrivateMessage = (message: API.ChatMessage) => {
+  if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
+    return true;
+  }
+
+  if (message.reply_to!.flags.indexOf('bot') > -1) {
+    if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
+      return true;
+    }
+  } else if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_USER)) {
+    return true;
+  }
+
+  return false;
 };
 
 interface SocketNotificationListenerProps {
@@ -65,6 +91,9 @@ class SocketNotificationListener extends React.Component<Props> {
 
     // tslint:disable-next-line:max-line-length
     addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, undefined, API.AccessEnum.PRIVATE_CHAT_VIEW);
+
+    // tslint:disable-next-line:max-line-length
+    addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_MESSAGE, this.onHubMessage, undefined, API.AccessEnum.HUBS_VIEW);
 
     // tslint:disable-next-line:max-line-length
     addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
@@ -120,6 +149,29 @@ class SocketNotificationListener extends React.Component<Props> {
       }
     } as UI.Notification);
   }
+  
+  onHubMessage = (message: API.ChatMessage) => {
+    const hubId = message.from.hub_session_id;
+    if (message.is_read || (HubSessionStore.getActiveSessionId() === hubId && document.hasFocus())) {
+      return;
+    }
+
+    if (!notifyHubMessage(message)) {
+      return;
+    }
+
+    NotificationActions.info({
+      title: message.from.nick,
+      message: message.text,
+      uid: undefined,
+      action: {
+        label: this.translate('View chat', UI.Modules.HUBS, true),
+        callback: () => { 
+          History.push(`/hubs/session/${hubId}`); 
+        }
+      }
+    } as UI.Notification);
+  }
 
   onPrivateMessage = (message: API.ChatMessage) => {
     const cid = message.reply_to!.cid;
@@ -127,11 +179,7 @@ class SocketNotificationListener extends React.Component<Props> {
       return;
     }
 
-    if (message.reply_to!.flags.indexOf('bot') > -1) {
-      if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
-        return;
-      }
-    } else if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_USER)) {
+    if (!notifyPrivateMessage(message)) {
       return;
     }
 

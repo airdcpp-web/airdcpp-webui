@@ -4,6 +4,10 @@ import SocketService from 'services/SocketService';
 import QueueConstants from 'constants/QueueConstants';
 
 
+export const createFileBundle = (data: API.QueueFileBundleDownloadData) => {
+  return SocketService.post(`${QueueConstants.BUNDLES_URL}/file`, data);
+};
+
 export const setFilePriority = (
   file: API.QueueFile, 
   priority: API.QueuePriorityEnum

@@ -1,12 +1,12 @@
 'use strict';
 //@ts-ignore
 import Reflux from 'reflux';
-import History from 'utils/History';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { Location } from 'history';
+import { doSearch } from 'utils/SearchUtils';
 
 
 const SearchActionConfig: UI.RefluxActionConfigList<API.GroupedSearchResult> = [
@@ -20,16 +20,7 @@ SearchActions.search.listen((
   location: Location
 ) => {
   const searchString = !itemInfo.tth || itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
-
-  History.pushUnique(
-    {
-      pathname: '/search',
-      state: {
-        searchString,
-      }
-    }, 
-    location
-  );
+  doSearch(searchString, location);
 });
 
 export default SearchActions as UI.RefluxActionListType<void>;

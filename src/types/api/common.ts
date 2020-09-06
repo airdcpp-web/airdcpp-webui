@@ -90,11 +90,30 @@ export const enum SeverityEnum {
   ERROR = 'error',
 }
 
+export const enum MessageHighlightTypeEnum {
+  URL = 'url',
+  RELEASE_NAME = 'release',
+  TEMP_SHARE = 'temp_share',
+  ME = 'me',
+}
+
+export interface MessageHighlight {
+  text: string;
+  position: {
+    start: number;
+    end: number;
+  };
+  type: MessageHighlightTypeEnum;
+  dupe: Dupe | null;
+  content_type: FileContentType | null;
+}
+
 export interface MessageBase {
   id: number;
   time: number;
   text: string;
   is_read: boolean;
+  highlights: MessageHighlight[];
 }
 
 export type Message = ChatMessage | StatusMessage;
@@ -104,6 +123,7 @@ export interface ChatMessage extends MessageBase {
   from: HubUser;
   reply_to?: HubUser;
   to?: HubUser;
+  has_mention: boolean;
 }
 
 export interface StatusMessage extends MessageBase {

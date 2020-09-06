@@ -15,7 +15,7 @@ export interface GroupedSearchResult {
   type: FileItemType;
   path: string;
   tth: string;
-  dupe: Dupe;
+  dupe: Dupe | null;
   time: number;
   slots: SlotCount;
   connection: number;

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Popup from './Popup';
 import DropdownCaption from './DropdownCaption';
-import Icon from './Icon';
+import Icon, { IconType } from './Icon';
 import IconConstants from 'constants/IconConstants';
 
 
@@ -19,6 +19,7 @@ export interface TableDropdownProps {
   caption: React.ReactNode;
   linkCaption?: boolean;
   className?: string;
+  triggerIcon?: IconType;
   children: (onClose: DropdownCloseHandler) => React.ReactNode;
 }
 
@@ -33,8 +34,9 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     children: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Pick<TableDropdownProps, 'linkCaption'> = {
+  static defaultProps: Pick<TableDropdownProps, 'linkCaption' | 'triggerIcon'> = {
     linkCaption: true,
+    triggerIcon: IconConstants.EXPAND,
   };
 
   popupNode: Popup;
@@ -51,9 +53,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
   }
 
   render() {
-    let caption = (
+    const { caption, className, linkCaption, triggerIcon } = this.props;
+    let captionNode = (
       <DropdownCaption>
-        { this.props.caption }
+        { caption }
       </DropdownCaption>
     );
 
@@ -62,9 +65,9 @@ class TableDropdown extends React.Component<TableDropdownProps> {
       <div className="trigger">
         <Icon 
           size="large"
-          icon={ IconConstants.EXPAND }
+          icon={ triggerIcon }
         />
-        { !!this.props.linkCaption && caption }
+        { !!linkCaption && captionNode }
       </div>
     );
 
@@ -74,7 +77,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     };
 
     return (
-      <div className={ classNames('dropdown', this.props.className) }>
+      <div className={ classNames('table', 'dropdown', className) }>
         <Popup 
           ref={ c => this.popupNode = c! }
           className="basic dropdown-content" 
@@ -84,7 +87,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
         >
           { this.getChildren }
         </Popup>
-        { !this.props.linkCaption && caption }
+        { !linkCaption && captionNode }
       </div>
     );
   }

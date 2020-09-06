@@ -16,26 +16,31 @@ import * as UI from 'types/ui';
 import { toErrorResponse } from 'utils/TypeConvert';
 import SearchActions from 'actions/reflux/SearchActions';
 import { translate } from 'utils/TranslationUtils';
+import { makeMagnetLink } from 'utils/MagnetUtils';
 
 
-const isAsch = ({ user }: UI.DownloadableItemData) => user.flags.indexOf('asch') !== -1;
+const isAsch = ({ user }: UI.DownloadableItemData) => !user ? false : user.flags.indexOf('asch') !== -1;
 const isSearchable = ({ itemInfo }: UI.DownloadableItemData) => !!itemInfo.name || !!itemInfo.tth;
-const notSelf = ({ user }: UI.DownloadableItemData) => user.flags.indexOf('self') === -1;
+const notSelf = ({ user }: UI.DownloadableItemData) => !user ? true : user.flags.indexOf('self') === -1;
 const isDirectory = ({ itemInfo }: UI.DownloadableItemData) => itemInfo.type.id === 'directory';
 const isPicture = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'picture';
 const isVideo = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'video';
 const isAudio = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'audio';
+const hasValidUser = ({ user }: UI.DownloadableItemData) => !!user && 
+  user.flags.indexOf('bot') === -1 && 
+  user.flags.indexOf('hidden') === -1;
 
 // 200 MB, the web server isn't suitable for sending large files
 const sizeValid = ({ itemInfo }: UI.DownloadableItemData) => itemInfo.size < 200 * 1024 * 1024;
 
-const viewText = (data: UI.DownloadableItemData) => !isDirectory(data) && !isPicture(data) && 
+const viewText = (data: UI.DownloadableItemData) => hasValidUser(data) && !isDirectory(data) && !isPicture(data) && 
   !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256 * 1024;
-const findNfo = (data: UI.DownloadableItemData) => isDirectory(data) && notSelf(data) && isAsch(data);
+const findNfo = (data: UI.DownloadableItemData) => hasValidUser(data) && isDirectory(data) && 
+  notSelf(data) && isAsch(data);
 
-const viewVideo = (data: UI.DownloadableItemData) => isVideo(data) && sizeValid(data);
-const viewAudio = (data: UI.DownloadableItemData) => isAudio(data) && sizeValid(data);
-const viewImage = (data: UI.DownloadableItemData) => isPicture(data) && sizeValid(data);
+const viewVideo = (data: UI.DownloadableItemData) => hasValidUser(data) && isVideo(data) && sizeValid(data);
+const viewAudio = (data: UI.DownloadableItemData) => hasValidUser(data) && isAudio(data) && sizeValid(data);
+const viewImage = (data: UI.DownloadableItemData) => hasValidUser(data) && isPicture(data) && sizeValid(data);
 
 const copyMagnet = (data: UI.DownloadableItemData) => !!(navigator as any).clipboard && !isDirectory(data);
 
@@ -131,10 +136,7 @@ export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({ data, 
 };
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  const { size, tth, name } = data.itemInfo;
-  const sizeParam = size > 0 ? `&xl=${size}` : '';
-  const link = `magnet:?xt=urn:tree:tiger:${tth}${sizeParam}&dn=${encodeURI(name)}`;
-
+  const link = makeMagnetLink(data.itemInfo);
   return (navigator as any).clipboard.writeText(link);
 };
 

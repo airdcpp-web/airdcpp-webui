@@ -16,7 +16,7 @@ import { TableUserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/ui/UserActions';
 import Message from 'components/semantic/Message';
 
-import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
+import DownloadDialog from 'components/download/DownloadDialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
@@ -152,7 +152,7 @@ class ResultTable extends React.Component<ResultTableProps> {
     );
   }
   
-  itemDataGetter: DownloadDialogItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
+  itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {
     const { instance } = this.props;
     return socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`);
   }

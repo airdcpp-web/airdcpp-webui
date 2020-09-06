@@ -21,8 +21,6 @@ import * as UI from 'types/ui';
 
 import './style.css';
 
-import { APISocket } from 'airdcpp-apisocket';
-
 import { TFunction } from 'i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
@@ -69,22 +67,8 @@ const MobileLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => 
 
 type DownloadItemIdType = string;
 
-export type DownloadDialogUserGetter<ItemT extends UI.DownloadableItemInfo> = (
-  itemId: DownloadItemIdType, 
-  props: Props<ItemT>
-) => API.HintedUserBase;
-
-export type DownloadDialogItemDataGetter<ItemT extends UI.DownloadableItemInfo> = (
-  itemId: DownloadItemIdType, 
-  socket: APISocket
-) => Promise<ItemT>;
-
-interface DownloadDialogProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> {
-  downloadHandler: UI.DownloadHandler<ItemT>;
-  session: UI.SessionItemBase;
-  itemDataGetter: DownloadDialogItemDataGetter<ItemT>;
-  userGetter?: DownloadDialogUserGetter<ItemT>;
-}
+export type DownloadDialogProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> = 
+  UI.ItemDownloadHandler<ItemT, Props<ItemT>>;
 
 interface RouteProps { 
   downloadItemId: DownloadItemIdType; 

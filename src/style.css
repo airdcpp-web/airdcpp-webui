@@ -39,7 +39,7 @@ section#container-main,
 }
 
 .ui.dropdown:not(.fluid):not(td),
-.cell-wrapper .dropdown {
+.table.dropdown {
   display: inline-flex !important;
 }
 
@@ -245,4 +245,41 @@ td .ui.dropdown > .caption > .icon-caption {
 
 i.icons .icon:first-child {
   margin-right: .25rem;
+}
+
+
+.dupe.queue.full, 
+.dupe.queue.full span,
+.dupe.queue.full a {
+  color: #FFA500 !important;
+}
+
+.dupe.queue.partial, 
+.dupe.queue.partial span,
+.dupe.queue.partial a {
+  color: #FFCA68 !important;
+}
+
+.dupe.share.full, 
+.dupe.share.full span,
+.dupe.share.full a {
+  color: fuchsia !important;
+}
+
+.dupe.share.partial, 
+.dupe.share.partial span,
+.dupe.share.partial a {
+  color: #FFA2FF !important;
+}
+
+.dupe.finished.full, 
+.dupe.finished.full span,
+.dupe.finished.full a {
+  color: green !important;
+}
+
+.dupe.finished.partial, 
+.dupe.finished.partial span,
+.dupe.finished.partial a {
+  color: #79FF79 !important;
 }

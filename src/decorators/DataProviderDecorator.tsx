@@ -159,7 +159,13 @@ export default function <PropsT extends object, DataT extends object>(
       const promises = keys.map(key => {
         let url = urls[key];
         if (typeof url === 'function') {
-          return url(this.props, SocketService);
+          try {
+            const ret = url(this.props, SocketService);
+            return ret;
+          } catch (e) {
+            // Handle non-async errors
+            return Promise.reject(e);
+          }
         }
 
         return SocketService.get(url);

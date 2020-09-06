@@ -8,6 +8,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 
 const PopupEntry = [
+  LocalSettings.NOTIFY_MENTION,
   LocalSettings.NOTIFY_PM_USER,
   LocalSettings.NOTIFY_PM_BOT,
   LocalSettings.NOTIFY_BUNDLE_STATUS,

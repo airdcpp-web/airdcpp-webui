@@ -218,7 +218,7 @@ export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.Downloada
   extends RowWrapperCellChildProps<CellDataT, ItemDataT>, 
     Omit<TableDownloadMenuProps<ItemDataT>, 'user' | 'itemInfoGetter' | 'caption'> {
 
-  userGetter: (rowData: ItemDataT) => API.HintedUserBase;
+  userGetter: (rowData: ItemDataT) => UI.DownloadSource;
   clickHandlerGetter?: FileDownloadCellClickHandler;
 }
 

@@ -3,13 +3,14 @@ import Modal from 'components/semantic/Modal';
 
 import FileIcon from 'components/icon/FileIcon';
 
-import DownloadDialog, { DownloadDialogItemDataGetter } from 'components/download/DownloadDialog';
+import DownloadDialog from 'components/download/DownloadDialog';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import * as API from 'types/api';
-//import * as UI from 'types/ui';
+import * as UI from 'types/ui';
+
 import { FileItemInfoGrid } from 'components/file-item-info';
 import FilelistConstants from 'constants/FilelistConstants';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
@@ -30,7 +31,7 @@ interface RouteProps {
 type Props = FilelistItemInfoDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 export const FilelistItemGetter = (session: API.FilelistSession) => {
-  const ret: DownloadDialogItemDataGetter<API.FilelistItem> = (itemId, socket) => {
+  const ret: UI.DownloadItemDataGetter<API.FilelistItem> = (itemId, socket) => {
     return socket.get(`${FilelistConstants.MODULE_URL}/${session.id}/items/${itemId}`);
   };
 

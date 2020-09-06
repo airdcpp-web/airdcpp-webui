@@ -11,3 +11,12 @@
 .message-list .date.divider i {
   margin-right: 5px;
 }
+
+.message-list .item .text .highlight.magnet,
+.message-list .item .text .highlight.release {
+  color: #4183c4;
+}
+
+.message-list .item .text .highlight.me {
+  font-weight: bold;
+}

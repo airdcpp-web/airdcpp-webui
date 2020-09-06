@@ -1,8 +1,8 @@
 
 import FilelistConstants from 'constants/FilelistConstants';
-import QueueConstants from 'constants/QueueConstants';
 
 import SocketService from 'services/SocketService';
+import { createFileBundle } from './QueueApi';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -17,7 +17,7 @@ export const filelistDownloadHandler: UI.DownloadHandler<API.FilelistItem> = (it
   if (itemInfo.type.id === 'file') {
     // File
     const { tth, size, time } = itemInfo;
-    return SocketService.post(`${QueueConstants.BUNDLES_URL}/file`, {
+    return createFileBundle({
       ...data,
       tth,
       size,

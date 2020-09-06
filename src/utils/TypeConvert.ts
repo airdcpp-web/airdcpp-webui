@@ -4,7 +4,7 @@ import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
 import { DataFetchError } from 'decorators/DataProviderDecorator';
 
 
-export const dupeToStringType = (dupeInfo: API.Dupe) => {
+export const dupeToStringType = (dupeInfo: API.Dupe | null) => {
   if (!dupeInfo) {
     return '';
   }

@@ -52,7 +52,7 @@
   height: 5px;
 }
 
-.virtual-table .cell-wrapper.dupe.queue.full, 
+/*.virtual-table .cell-wrapper.dupe.queue.full, 
 .virtual-table .cell-wrapper.dupe.queue.full span,
 .virtual-table .cell-wrapper.dupe.queue.full a {
   color: #FFA500 !important;
@@ -86,7 +86,7 @@
 .virtual-table .cell-wrapper.dupe.finished.partial span,
 .virtual-table .cell-wrapper.dupe.finished.partial a {
   color: #79FF79 !important;
-}
+}*/
 
 
 

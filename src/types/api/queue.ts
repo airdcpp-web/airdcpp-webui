@@ -1,4 +1,4 @@
-import { HintedUser, HookError, FileItemType } from './common';
+import { HintedUser, HookError, FileItemType, DownloadData, HintedUserBase } from './common';
 
 
 export interface QueueSource {
@@ -88,4 +88,12 @@ export interface QueueBundle extends QueueItemBase {
   target: string;
   type: FileItemType;
   status: QueueBundleStatus;
+}
+
+
+export interface QueueFileBundleDownloadData extends DownloadData {
+  tth: string;
+  size: number;
+  time?: number;
+  user?: HintedUserBase;
 }
