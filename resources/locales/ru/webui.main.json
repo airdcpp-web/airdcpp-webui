@@ -389,7 +389,9 @@
       "add": "&amp;Добавить",
       "down": "Вниз",
       "remove": "&amp;Удалить",
-      "up": "Up"
+      "up": "Up",
+      "offlineMessage": "No connected hubs",
+      "loading": "Loading"
     }
   },
   "hubs": {

@@ -21,7 +21,7 @@
         "feedUrlHelp": "RSS und Atom Feeds werden unterstützt",
         "feedCacheMinutesName": "Minimaler Abfrageintervall (Minuten)"
       },
-      "invalidFeed": "Invalid/unsupported feed: {{error}}"
+      "invalidFeed": "Ungültiger oder nicht unterstützter Feed: {{error}}"
     },
     "transfers": {
       "widgetName": "Übertragungen",
@@ -110,7 +110,7 @@
     "slots": "Slots",
     "ip": "IP",
     "path": "Pfad",
-    "searchOffline": "Sie müssen zu mindestens einem Hub verbunden sein um Suchen auszuführen",
+    "searchOffline": "Sie müssen zu mindestens einem Hub verbunden sein, um Suchen auszuführen",
     "enterSearchString": "Suchbegriff eingeben...",
     "search": "Suche",
     "usersCount": "Benutzer ({{count}})",
@@ -389,7 +389,9 @@
       "add": "Hinzufügen",
       "down": "Abwärts",
       "remove": "Entfernen",
-      "up": "Aufwärts"
+      "up": "Aufwärts",
+      "offlineMessage": "No connected hubs",
+      "loading": "Wird geladen"
     }
   },
   "hubs": {
@@ -457,7 +459,7 @@
       "manageFiles": "Dateien verwalten...",
       "manageSources": "Quellen verwalten...",
       "searchForeground": "Suche (Vordergrund)",
-      "searchForAlternates": "Such für alternative",
+      "searchForAlternates": "Suche nach Alternativen",
       "remove": "Entfernen",
       "removeSource": "Quelle entfernen",
       "prompts": {
@@ -473,7 +475,7 @@
       "notifications": {
         "removeFileSuccess": "Datei {{item.name}} wurde aus der Warteschlange entfernt",
         "removeCompletedSuccess": "{{result.count}} fertiggestellte Pakete wurden entfernt",
-        "searchBundleAlternatesSuccess": "Das Paket {{item.name}} wurde für Alternativen gesucht"
+        "searchBundleAlternatesSuccess": "Für das Paket {{item.name}} wurde nach Alternativen gesucht"
       }
     },
     "paused": "Pause",
@@ -600,7 +602,7 @@
       "perUserLimits": "Limits pro Benutzer",
       "locations": "Orte",
       "skippingOptions": "Übergangsoptionen",
-      "searchMatching": "Passende Suche",
+      "searchMatching": "Suche passende",
       "searchTypes": "Suchtypen",
       "downloadOptions": "AirDownloads",
       "priorities": "Prioritäten",
@@ -625,7 +627,7 @@
         "autoDetected": "{{status}} (automatisch erkannt)"
       },
       "ports": {
-        "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
+        "portsAutoValuesNote": "Auf dieser Seite gelistete Portnummern können durch Portmapper überschrieben werden (falls aktiviert).",
         "form": {
           "tcpPortHelp": "TCP Port wird für nicht verschlüsselte Übertragungen genutzt",
           "udpPortHelp": "UDP Port wird für die Suche genutzt",
@@ -696,7 +698,7 @@
         "homePage": "Webseite",
         "featureRequestBugTracker": "Feature Anfragen / Fehlerberichte",
         "documentation": "Dokumentation",
-        "thirdPartyCredits": "Third-party credits"
+        "thirdPartyCredits": "Beiträge von Dritten"
       },
       "transfers": {
         "totalDownloaded": "Gesamt heruntergeladen",
@@ -714,7 +716,7 @@
         "averageFileAge": "Durchschnittliches Dateialter",
         "averageFilesPerDirectory": "Durchschnittliche Dateien pro Verzeichnis",
         "incomingSearches": "Eingehende Suchen",
-        "totalSearches": "Gesamte Suchen",
+        "totalSearches": "Gesamtzahl Suchen",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} pro Sekunde)",
         "tthSearches": "TTH Suchen",
         "textSearches": "Text Suchen",
@@ -803,12 +805,12 @@
         "maintenance": "Wartung",
         "verifyIntegrityOfHashData": "Integrität der Hash-Daten verifizieren",
         "optimizeNow": "Jetzt optimieren",
-        "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
+        "hashDBOptimizeNote": "Diese Operation wird alle Hash-Informationen für Dateien löschen, welche sich aktuell nicht im Share befinden. Falls Sie Dateien von Netzwerkfreigaben oder Wechseldatenträgern teilen, versichern Sie sich, dass diese aktuell im Share angezeigt werden. (Anderenfalls müssen diese erneut gehasht werden.)"
       }
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <1>Speedtest.net</1>, to test your speed."
+        "connectionSpeedNote": "Bitte geben Sie die TATSÄCHLICHE Verbindungsgeschwindigkeit so exakt wie möglich an. Um die Bandbreite zu ermitteln, können Sie einen Online-Tester verwenden, beispielsweise <1>Speedtest.net</1>."
       },
       "uploadLimits": {
         "manuallySet": "Manuell festgelegt"
@@ -921,15 +923,15 @@
     "reestablishConnection": "Versuche Verbindung wiederherzustellen",
     "sessionLost": "Sitzung verloren",
     "connectionClosed": "Verbindung getrennt",
-    "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
-    "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
+    "privateBrowsingNotSupported": "Diese Seite kann nicht verwendet werden, falls in Ihrem Browser \"Private Browsing\" aktiviert ist.",
+    "dataStorageNotSupported": "Diese Seite kann mit Ihrem Browser nicht verwendet werden, da dieser \"Data Storage\" nicht unterstützt."
   },
   "viewedFiles": {
     "actions": {
       "close": "Schließen"
     },
     "noFiles": "Keine Dateien zum Ansehen",
-    "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
+    "noFilesDesc": "Sie können Text- oder Mediendateien aus Such- oder Dateilisten öffnen, um diese hier zu betrachten.",
     "preparingView": "Bereite Ansicht vor",
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",

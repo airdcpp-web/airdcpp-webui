@@ -389,7 +389,9 @@
       "add": "Lisää",
       "down": "Alas",
       "remove": "Poista",
-      "up": "Ylös"
+      "up": "Ylös",
+      "offlineMessage": "No connected hubs",
+      "loading": "Ladataan"
     }
   },
   "hubs": {

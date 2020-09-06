@@ -389,7 +389,9 @@
       "add": "Afegeix",
       "down": "Down",
       "remove": "Remove",
-      "up": "Up"
+      "up": "Up",
+      "offlineMessage": "No connected hubs",
+      "loading": "Loading"
     }
   },
   "hubs": {

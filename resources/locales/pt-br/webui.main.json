@@ -389,7 +389,9 @@
       "add": "&amp;Adicionar",
       "down": "Para Baixo",
       "remove": "Remover",
-      "up": "Para Cima"
+      "up": "Para Cima",
+      "offlineMessage": "Nenhum hub conectado",
+      "loading": "Carregando"
     }
   },
   "hubs": {

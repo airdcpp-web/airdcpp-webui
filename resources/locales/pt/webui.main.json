@@ -389,7 +389,9 @@
       "add": "Adicionar",
       "down": "Para baixo",
       "remove": "Remover",
-      "up": "Up"
+      "up": "Up",
+      "offlineMessage": "No connected hubs",
+      "loading": "A carregar"
     }
   },
   "hubs": {

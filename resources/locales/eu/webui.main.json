@@ -389,7 +389,9 @@
       "add": "Gehitu",
       "down": "Behera",
       "remove": "Ezabatu",
-      "up": "Up"
+      "up": "Up",
+      "offlineMessage": "No connected hubs",
+      "loading": "Kargatzen"
     }
   },
   "hubs": {

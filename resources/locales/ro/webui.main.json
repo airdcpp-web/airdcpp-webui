@@ -389,7 +389,9 @@
       "add": "&amp;Adauga",
       "down": "Down",
       "remove": "Inlatura",
-      "up": "Up"
+      "up": "Up",
+      "offlineMessage": "No connected hubs",
+      "loading": "Incarca"
     }
   },
   "hubs": {

@@ -389,7 +389,9 @@
       "add": "Toevoegen",
       "down": "Omlaag",
       "remove": "Verwijder",
-      "up": "Omhoog"
+      "up": "Omhoog",
+      "offlineMessage": "No connected hubs",
+      "loading": "Laadt"
     }
   },
   "hubs": {

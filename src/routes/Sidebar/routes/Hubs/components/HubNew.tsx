@@ -47,7 +47,7 @@ class HubNew extends React.Component<NewSessionLayoutProps> {
           button={ 
             <Button
               icon={ IconConstants.CONNECT }
-              caption={ translate('Connect', sessionT.t, UI.Modules.HUBS) }
+              caption={ sessionT.translate('Connect') }
             />
           }
         />

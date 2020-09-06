@@ -389,7 +389,9 @@
       "add": "Lägg till",
       "down": "Ned",
       "remove": "Ta bort",
-      "up": "Upp"
+      "up": "Upp",
+      "offlineMessage": "Inga anslutna hubbar",
+      "loading": "Laddar"
     }
   },
   "hubs": {

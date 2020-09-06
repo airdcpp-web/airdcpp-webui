@@ -389,7 +389,9 @@
       "add": "&amp;Hozzáad",
       "down": "Le",
       "remove": "&amp;Eltávolít",
-      "up": "Up"
+      "up": "Up",
+      "offlineMessage": "No connected hubs",
+      "loading": "Loading"
     }
   },
   "hubs": {
