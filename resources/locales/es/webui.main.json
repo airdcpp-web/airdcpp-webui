@@ -411,10 +411,19 @@
       "clearChat": "Limpiar chat",
       "close": "Cerrar",
       "addToFavorites": "Añadir a usuarios favoritos",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "Se ha agregado el hub {{item.identity.name}} a favoritos"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Introduce la dirección del hub...",
     "connect": "Conectar",
     "notConnectedToTheHub": "No conectado al hub",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "Conectividad IPv4",
         "iPv6Connectivity": "Conectividad IPv6",
         "manualConfiguration": "{{status}} (configuración manual)",
-        "autoDetected": "{{status}} (auto detectada)"
+        "autoDetected": "{{status}} (auto detectada)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Notificaciones emergentes",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Mensajes privados (usuarios)",
           "notifyPmBotName": "Mensajes privados (bots)",
           "notifyBundleStatusName": "Cambios de estado en los paquetes",
@@ -935,6 +946,7 @@
     "preparingView": "Preparando vista",
     "opened": "Abierto",
     "downloaded": "Descargado",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "El archivo ha terminado de descargarse",
       "actions": {

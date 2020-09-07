@@ -411,10 +411,19 @@
       "clearChat": "Effacer la discussion",
       "close": "Fermer",
       "addToFavorites": "Ajouter aux Favoris",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Entrer l'adresse du hub",
     "connect": "Se connecter",
     "notConnectedToTheHub": "Pas connecter au hub",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "Connectivité IPv4",
         "iPv6Connectivity": "Connectivité IPv6",
         "manualConfiguration": "{{status}} (configuration manuelle)",
-        "autoDetected": "{{status}} (détection auto)"
+        "autoDetected": "{{status}} (détection auto)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Popup notifications",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Private messages (users)",
           "notifyPmBotName": "Private messages (bots)",
           "notifyBundleStatusName": "Bundle status changes",
@@ -935,6 +946,7 @@
     "preparingView": "Preparing view",
     "opened": "Opened",
     "downloaded": "Téléchargé",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {

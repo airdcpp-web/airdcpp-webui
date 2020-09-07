@@ -390,7 +390,7 @@
       "down": "Alas",
       "remove": "Poista",
       "up": "Ylös",
-      "offlineMessage": "No connected hubs",
+      "offlineMessage": "Ei yhdistettyjä hubeja",
       "loading": "Ladataan"
     }
   },
@@ -411,10 +411,19 @@
       "clearChat": "Tyhjennä keskusteluikkuna",
       "close": "Sulje",
       "addToFavorites": "Lisää suosikkeihin",
+      "useChatNotification": "Käytä viesti-ilmoitusta",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Näytä saapuvat/poistuvat",
       "notifications": {
         "favoriteSuccess": "Hubi {{item.identity.name}} lisättiin suosikkeihin"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "Näytä keskustelu"
+      }
+    },
+    "notificationSettings": "Ilmoitusasetukset",
     "enterHubAddress": "Syötä hubin osoite...",
     "connect": "Yhdistä",
     "notConnectedToTheHub": "Ei yhdistettynä hubiin",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "IPv4-yhteys",
         "iPv6Connectivity": "IPv6-yhteys",
         "manualConfiguration": "{{status}} (manuaaliset määritykset)",
-        "autoDetected": "{{status}} (tunnistettu automaattisesti)"
+        "autoDetected": "{{status}} (tunnistettu automaattisesti)",
+        "detecting": "Tunnistetaan..."
       },
       "ports": {
         "portsAutoValuesNote": "Porttikarjoitukset (mikäli käytössä) voivat ohittaa tällä sivulla listatut porttinumerot",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Ponnahdusilmoitukset",
         "form": {
+          "notifyMentionName": "Oman nimimerkin maininnat",
           "notifyPmUserName": "Yksityisviestit (käyttäjät)",
           "notifyPmBotName": "Yksityisviestit (botit)",
           "notifyBundleStatusName": "Bundlen tilamuutokset",
@@ -935,6 +946,7 @@
     "preparingView": "Valmistellaan näkymää",
     "opened": "Avattu",
     "downloaded": "Ladattu",
+    "unsupportedFormat": "Muotoa ei tueta",
     "notifications": {
       "fileHasFinishedDownloading": "Tiedoston lataus on valmis",
       "actions": {

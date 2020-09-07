@@ -411,10 +411,19 @@
       "clearChat": "Chat löschen",
       "close": "Schließen",
       "addToFavorites": "Zu Bevorzugten hinzufügen",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "Der Hub {{item.identity.name}} wurde zu den Favoriten hinzugefügt"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Hub Adresse eingeben...",
     "connect": "Verbinden",
     "notConnectedToTheHub": "Nicht verbunden zum Hub",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "IPv4-Verbindung",
         "iPv6Connectivity": "IPv6-Verbindung",
         "manualConfiguration": "{{status}} (manuelle Konfiguration)",
-        "autoDetected": "{{status}} (automatisch erkannt)"
+        "autoDetected": "{{status}} (automatisch erkannt)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Auf dieser Seite gelistete Portnummern können durch Portmapper überschrieben werden (falls aktiviert).",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Pop-up Benachrichtigungen",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Private Nachrichten (Benutzer)",
           "notifyPmBotName": "Private Nachrichten (Bots)",
           "notifyBundleStatusName": "Paket Status Änderungen",
@@ -935,6 +946,7 @@
     "preparingView": "Bereite Ansicht vor",
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "Datei Download wurde beendet",
       "actions": {

@@ -411,10 +411,19 @@
       "clearChat": "Chat schoonmaken",
       "close": "Sluiten",
       "addToFavorites": "Voeg toe aan favorieten",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "De hub {{item.identity.name}} was toegevoegd aan favorieten"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Geef hub adres op...",
     "connect": "Verbinden",
     "notConnectedToTheHub": "Niet verbonden met de hub",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "IPv4 connectivity",
         "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (manual configuration)",
-        "autoDetected": "{{status}} (auto detected)"
+        "autoDetected": "{{status}} (auto detected)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Popup notifications",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Private messages (users)",
           "notifyPmBotName": "Private messages (bots)",
           "notifyBundleStatusName": "Bundle status changes",
@@ -935,6 +946,7 @@
     "preparingView": "Bekijken voorbereiden",
     "opened": "Geopend",
     "downloaded": "Gedownload",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "Bestand is gedownload",
       "actions": {

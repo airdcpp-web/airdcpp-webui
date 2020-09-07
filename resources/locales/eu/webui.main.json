@@ -411,10 +411,19 @@
       "clearChat": "Garbitu txata",
       "close": "Itxi",
       "addToFavorites": "Gogokoenetara gehitu",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Idatzi hub-aren helbidea...",
     "connect": "Konektatu",
     "notConnectedToTheHub": "Not connected to the hub",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "IPv4 konektibitatea",
         "iPv6Connectivity": "IPv6 konektibitatea",
         "manualConfiguration": "{{status}} (manual configuration)",
-        "autoDetected": "{{status}} (auto detected)"
+        "autoDetected": "{{status}} (auto detected)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Popup notifications",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Private messages (users)",
           "notifyPmBotName": "Private messages (bots)",
           "notifyBundleStatusName": "Bundle status changes",
@@ -935,6 +946,7 @@
     "preparingView": "Ikuspegia prestatzen",
     "opened": "Irekita",
     "downloaded": "Jaitsita",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "Artxiboaa deskargatzen amaitu da",
       "actions": {

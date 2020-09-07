@@ -411,10 +411,19 @@
       "clearChat": "Rensa chatt",
       "close": "Stäng",
       "addToFavorites": "Lägg till i favoriter",
+      "useChatNotification": "Använd chattavisering",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Visa ansluter/kopplar från",
       "notifications": {
         "favoriteSuccess": "Hubben {{item.identity.name}} har lagts till i favoriter"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "Visa chatt"
+      }
+    },
+    "notificationSettings": "Aviseringsinställningar",
     "enterHubAddress": "Ange hubbadress...",
     "connect": "Anslut",
     "notConnectedToTheHub": "Inte anstuten till hubben",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "IPv4-anslutning",
         "iPv6Connectivity": "IPv6-anslutning",
         "manualConfiguration": "{{status}} (manuell konfiguration)",
-        "autoDetected": "{{status}} (detekterad automatisk)"
+        "autoDetected": "{{status}} (detekterad automatisk)",
+        "detecting": "Detekterar..."
       },
       "ports": {
         "portsAutoValuesNote": "Portnummer listade på den här sidan kan åsidosättas av portmappare (om aktiverad)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Popupaviseringar",
         "form": {
+          "notifyMentionName": "När mitt användarnamn nämns",
           "notifyPmUserName": "Privatmeddelanden (användare)",
           "notifyPmBotName": "Privatmeddelanden (botar)",
           "notifyBundleStatusName": "Filsamlingsstatus ändrad",
@@ -935,6 +946,7 @@
     "preparingView": "Förbereder visning",
     "opened": "Öppnad",
     "downloaded": "Nedladdat",
+    "unsupportedFormat": "Formatet stöds inte",
     "notifications": {
       "fileHasFinishedDownloading": "Filen är nedladdad",
       "actions": {

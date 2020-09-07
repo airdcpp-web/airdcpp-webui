@@ -411,10 +411,19 @@
       "clearChat": "Curata mesageria",
       "close": "Inchide",
       "addToFavorites": "Adauga la Favorite",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "The hub {{item.identity.name}} a fost adus in favorite"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Introduce adresa hub-ului",
     "connect": "Conectare",
     "notConnectedToTheHub": "Neconectat la hub",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "IPv4 conexiune",
         "iPv6Connectivity": "IPv6 conexiune",
         "manualConfiguration": "{{status}} (configurare manuala)",
-        "autoDetected": "{{status}} (auto detectata)"
+        "autoDetected": "{{status}} (auto detectata)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Notificari care apar",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Mesaje private (utilizatori)",
           "notifyPmBotName": "Mesaje private (bots)",
           "notifyBundleStatusName": "Schimbarile statusului bundle ",
@@ -935,6 +946,7 @@
     "preparingView": "Pregatesc vizionarea",
     "opened": "Deschis",
     "downloaded": "Descarcat",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "Fisierul sa terminat de descarcat",
       "actions": {

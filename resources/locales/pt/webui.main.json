@@ -411,10 +411,19 @@
       "clearChat": "Limpar conversação",
       "close": "Fechar",
       "addToFavorites": "Adicionar aos favoritos",
+      "useChatNotification": "Use chat notification",
+      "showJoinsPars": "Show joins/pars",
+      "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "O concentrador {{item.identity.name}} foi adicionado aos favoritos"
       }
     },
+    "notifications": {
+      "actions": {
+        "viewChat": "View chat"
+      }
+    },
+    "notificationSettings": "Notification settings",
     "enterHubAddress": "Introduza o endereço do concentrador...",
     "connect": "Conectar",
     "notConnectedToTheHub": "Não conectado ao concentrador",
@@ -624,7 +633,8 @@
         "iPv4Connectivity": "Conectividade IPv4",
         "iPv6Connectivity": "Conectividade IPv6",
         "manualConfiguration": "{{status}} (configuração manual)",
-        "autoDetected": "{{status}} (detetado automaticamente)"
+        "autoDetected": "{{status}} (detetado automaticamente)",
+        "detecting": "Detecting..."
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -857,6 +867,7 @@
       "notifications": {
         "popupNotifications": "Notificações popup",
         "form": {
+          "notifyMentionName": "Mentions of my nick",
           "notifyPmUserName": "Mensagens privadas (utilizadores)",
           "notifyPmBotName": "Mensagens privadas (robôs)",
           "notifyBundleStatusName": "Alterações de estado de pacotes",
@@ -935,6 +946,7 @@
     "preparingView": "A preparar a visualização",
     "opened": "Aberto",
     "downloaded": "Descarregado",
+    "unsupportedFormat": "Unsupported format",
     "notifications": {
       "fileHasFinishedDownloading": "O descarregamento do ficheiro terminou",
       "actions": {
