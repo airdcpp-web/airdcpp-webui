@@ -79,15 +79,21 @@ interface MessageTextDecoratorProps {
   addDownload: UI.AddItemDownload;
 }
 
+
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
 const formatHighlights = (
-  { text, highlights, emojify, user, addDownload }: MessageTextDecoratorProps, 
+  { text: text16, highlights, emojify, user, addDownload }: MessageTextDecoratorProps, 
   location: Location, 
   t: TFunction
 ) => {
+  const text8 = encoder.encode(text16);
+
   let prevReplace = 0;
   const elements: React.ReactNode[] = [];
   const pushText = (newStart: number) => {
-    let textElement: React.ReactNode = text.substr(prevReplace, newStart - prevReplace);
+    let textElement: React.ReactNode = decoder.decode(text8.subarray(prevReplace, newStart));
     if (emojify) {
       textElement = formatEmojis(textElement);
     }
@@ -104,8 +110,8 @@ const formatHighlights = (
     prevReplace = end;
   }
 
-  if (prevReplace !== text.length) {
-    pushText(text.length);
+  if (prevReplace !== text8.length) {
+    pushText(text8.length);
   }
 
   return elements;
