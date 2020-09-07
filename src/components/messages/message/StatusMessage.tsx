@@ -1,7 +1,7 @@
 'use strict';
 import PropTypes from 'prop-types';
 import React from 'react';
-import InView from 'react-intersection-observer';
+import { InView } from 'react-intersection-observer';
 
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
