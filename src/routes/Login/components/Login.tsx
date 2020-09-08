@@ -101,6 +101,7 @@ const Login: React.FC<LoginProps> = props => {
               className="field" 
               style={{
                 marginTop: '10px',
+                marginBottom: '3px'
               }}
             >
               <Checkbox

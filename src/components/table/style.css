@@ -52,43 +52,6 @@
   height: 5px;
 }
 
-/*.virtual-table .cell-wrapper.dupe.queue.full, 
-.virtual-table .cell-wrapper.dupe.queue.full span,
-.virtual-table .cell-wrapper.dupe.queue.full a {
-  color: #FFA500 !important;
-}
-
-.virtual-table .cell-wrapper.dupe.queue.partial, 
-.virtual-table .cell-wrapper.dupe.queue.partial span,
-.virtual-table .cell-wrapper.dupe.queue.partial a {
-  color: #FFCA68 !important;
-}
-
-.virtual-table .cell-wrapper.dupe.share.full, 
-.virtual-table .cell-wrapper.dupe.share.full span,
-.virtual-table .cell-wrapper.dupe.share.full a {
-  color: fuchsia !important;
-}
-
-.virtual-table .cell-wrapper.dupe.share.partial, 
-.virtual-table .cell-wrapper.dupe.share.partial span,
-.virtual-table .cell-wrapper.dupe.share.partial a {
-  color: #FFA2FF !important;
-}
-
-.virtual-table .cell-wrapper.dupe.finished.full, 
-.virtual-table .cell-wrapper.dupe.finished.full span,
-.virtual-table .cell-wrapper.dupe.finished.full a {
-  color: green !important;
-}
-
-.virtual-table .cell-wrapper.dupe.finished.partial, 
-.virtual-table .cell-wrapper.dupe.finished.partial span,
-.virtual-table .cell-wrapper.dupe.finished.partial a {
-  color: #79FF79 !important;
-}*/
-
-
 
 /* Footer */
 
@@ -117,8 +80,8 @@
 }
 
 .table-footer .filter .dropdown.button {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .table-footer .filter .dropdown .trigger.icon {

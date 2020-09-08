@@ -214,13 +214,8 @@ th {
   overflow: hidden;
 }
 
-/* Override a conflicting Semantic UI style for .image which also affects .icon.image */
-.ui.dropdown .menu>.item>.image.icon {
-  vertical-align: middle;
-  width: 1.18em;
-  margin-top: inherit;
-  margin-bottom: inherit;
-  max-height: inherit;
+.ui.dropdown .menu {
+  z-index: 1000;
 }
 
 td .ui.dropdown {
