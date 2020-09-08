@@ -88,6 +88,12 @@ const formatHighlights = (
   location: Location, 
   t: TFunction
 ) => {
+  if (!highlights.length) {
+    return text16;
+  }
+
+  // Highlight positions received from the API are for UTF-8, while JS uses UTF-16
+  // Convert the text to UTF-8 to avoid incorrect formatting results
   const text8 = encoder.encode(text16);
 
   let prevReplace = 0;

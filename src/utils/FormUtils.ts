@@ -181,6 +181,9 @@ const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
   switch (type) {
     case API.SettingTypeEnum.TEXT: {
       options.type = 'textarea';
+      options.attrs = {
+        rows: 3
+      };
       break;
     } 
     //case FieldTypes.FILE_PATH:

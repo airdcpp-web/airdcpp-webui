@@ -13,6 +13,10 @@ export interface FavoriteHubEntryBase {
   connection_mode_v6: ConnectivityModeEnum | null;
   connection_ip_v4: string | null;
   connection_ip_v6: string | null;
+  show_joins: boolean | null;
+  fav_show_joins: boolean | null;
+  chat_notify: boolean | null;
+  away_message: string | null;
 }
 
 /*export const enum FavoriteHubConnectStateEnum {

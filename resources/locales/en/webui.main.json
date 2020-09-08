@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Disabled",
       "connectionModeV6Option0": "Active mode",
       "connectionModeV6Option2": "Passive mode",
-      "connectionIpV6Name": "IP address"
+      "connectionIpV6Name": "IP address",
+      "miscName": "Miscellaneous overrides",
+      "chatNotifyName": "Use chat notification",
+      "awayMessageName": "Away message",
+      "showJoinsName": "Show joins/parts"
     }
   },
   "filelists": {

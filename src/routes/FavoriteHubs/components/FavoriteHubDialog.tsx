@@ -20,6 +20,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { FavoriteHubEntry } from 'types/api';
+import { IndeterminateCheckboxField } from 'components/form/fields/IndeterminateCheckboxField';
 
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
@@ -120,6 +121,28 @@ const Fields: UI.FormFieldDefinition[] = [
         optional: true,
       }
     ]
+  }, {
+    key: 'misc',
+    title: 'Miscellaneous overrides',
+    type: API.SettingTypeEnum.STRUCT,
+    definitions: [
+      {
+        key: 'chat_notify',
+        title: 'Use chat notification',
+        type: API.SettingTypeEnum.BOOLEAN,
+        optional: true,
+      }, {
+        key: 'show_joins',
+        title: 'Show joins/parts',
+        type: API.SettingTypeEnum.BOOLEAN,
+        optional: true,
+      }, {
+        key: 'away_message',
+        title: 'Away message',
+        type: API.SettingTypeEnum.TEXT,
+        optional: true,
+      }
+    ]
   }
 ];
 
@@ -128,6 +151,7 @@ interface Entry extends UI.FormValueMap {
   user: Pick<FavoriteHubEntry, 'nick' | 'user_description'>;
   connectivityV4: Pick<FavoriteHubEntry, 'connection_mode_v4' | 'connection_ip_v4'>;
   connectivityV6: Pick<FavoriteHubEntry, 'connection_mode_v6' | 'connection_ip_v6'>;
+  misc: Pick<FavoriteHubEntry, 'chat_notify' | 'show_joins' | 'away_message'>;
 }
 
 const toFormEntry = (entry?: API.FavoriteHubEntry): Entry | undefined => {
@@ -140,6 +164,7 @@ const toFormEntry = (entry?: API.FavoriteHubEntry): Entry | undefined => {
     user: entry,
     connectivityV4: entry,
     connectivityV6: entry,
+    misc: entry,
   };
 };
 
@@ -149,6 +174,7 @@ const toFavoriteHub = (entry: RecursivePartial<Entry>): RecursivePartial<API.Fav
     ...entry.user,
     ...entry.connectivityV4,
     ...entry.connectivityV6,
+    ...entry.misc,
   };
 };
 
@@ -231,7 +257,6 @@ class FavoriteHubDialog extends React.Component<Props> {
   onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'share_profile') {
       Object.assign(fieldOptions, {
-        // tslint:disable-next-line:max-line-length
         nullOption: this.nullOption,
         factory: t.form.Select,
         options: getFieldProfiles(this.props.profiles, formValue.generic ? formValue.generic.hub_url : undefined),
@@ -241,6 +266,14 @@ class FavoriteHubDialog extends React.Component<Props> {
       Object.assign(fieldOptions, {
         nullOption: this.nullOption,
         transformer: intTransformer,
+      });
+    } else if (id === 'chat_notify' || id === 'show_joins') {
+      Object.assign(fieldOptions, {
+        template: IndeterminateCheckboxField,
+        transformer: {
+          format: (value: boolean | null) => value === undefined ? null : value,
+          parse: (value: boolean | null) => value
+        },
       });
     }
   }
