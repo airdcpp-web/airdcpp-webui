@@ -1,3 +1,7 @@
 .ccpm-state {
   display: flex;
 }
+
+.ccpm-state > i {
+  align-self: center;
+}

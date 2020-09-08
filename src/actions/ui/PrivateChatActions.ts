@@ -19,18 +19,23 @@ const handleDisconnectCCPM: UI.ActionHandler<API.PrivateChat> = ({ data: session
   return SocketService.delete(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
 };
 
+const ccpmConnected = (data: API.PrivateChat) => data.ccpm_state.id === API.CCPMStateEnum.CONNECTED;
+const ccpmDisconnected = (data: API.PrivateChat) => data.ccpm_state.id === API.CCPMStateEnum.DISCONNECTED;
+
 const PrivateChatActions: UI.ActionListType<API.PrivateChat> = {
   connectCCPM: {
     displayName: 'Connect',
     access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     icon: IconConstants.PLAY,
     handler: handleConnectCCPM,
+    filter: ccpmDisconnected,
   },
   disconnectCCPM: {
     access: API.AccessEnum.PRIVATE_CHAT_EDIT, 
     displayName: 'Disconnect', 
     icon: IconConstants.REMOVE,
     handler: handleDisconnectCCPM,
+    filter: ccpmConnected,
   },
 };
 

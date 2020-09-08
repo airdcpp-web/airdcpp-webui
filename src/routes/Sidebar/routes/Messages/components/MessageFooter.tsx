@@ -45,7 +45,6 @@ const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
     return null;
   }
 
-  const actionIds = [ state === API.CCPMStateEnum.CONNECTED ? 'disconnectCCPM' : 'connectCCPM' ];
   return (
     <SessionFooter>
       <div className="ccpm-state">
@@ -57,7 +56,7 @@ const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
         <ActionMenu
           caption={ getCaption(state, sessionT) }
           actions={ PrivateChatActions }
-          ids={ actionIds }
+          ids={[ 'disconnectCCPM', 'connectCCPM' ]}
           itemData={ session }
         />
       </div>
