@@ -11,6 +11,8 @@ const PopupEntry = [
   LocalSettings.NOTIFY_MENTION,
   LocalSettings.NOTIFY_PM_USER,
   LocalSettings.NOTIFY_PM_BOT,
+  LocalSettings.NOTIFY_HUB_MESSAGE,
+
   LocalSettings.NOTIFY_BUNDLE_STATUS,
 
   LocalSettings.NOTIFY_EVENTS_INFO,

@@ -20,9 +20,9 @@ export const enum OutgoingConnectionModeEnum {
 
 export const enum LocalSettings {
   NOTIFY_MENTION = 'notify_mention_my_nick',
-
   NOTIFY_PM_USER = 'notify_pm_user',
   NOTIFY_PM_BOT = 'notify_pm_bot',
+  NOTIFY_HUB_MESSAGE = 'notify_hub_message',
 
   NOTIFY_BUNDLE_STATUS = 'notify_bundle_status',
 

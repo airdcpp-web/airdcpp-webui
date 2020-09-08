@@ -26,6 +26,11 @@ export const SettingDefinitions: UI.FormFieldDefinition[] = [
     default_value: false,
     title: 'Private messages (bots)',
   }, {
+    key: LocalSettings.NOTIFY_HUB_MESSAGE,
+    type: API.SettingTypeEnum.BOOLEAN,
+    default_value: false,
+    title: 'Hub chat messages (only in hubs where chat notifications are enabled)',
+  }, {
     key: LocalSettings.NOTIFY_BUNDLE_STATUS,
     type: API.SettingTypeEnum.BOOLEAN,
     default_value: true,
