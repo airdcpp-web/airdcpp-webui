@@ -412,7 +412,6 @@
       "close": "Fechar",
       "addToFavorites": "Adicionar aos favoritos",
       "useChatNotification": "Use chat notification",
-      "showJoinsPars": "Show joins/pars",
       "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "O concentrador {{item.identity.name}} foi adicionado aos favoritos"

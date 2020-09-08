@@ -412,7 +412,6 @@
       "close": "Fechar",
       "addToFavorites": "Adicionar Aos Favoritos",
       "useChatNotification": "Usar notificação de bate-papo",
-      "showJoinsPars": "Mostrar entradas/saídas",
       "showJoinsParts": "Mostrar entradas/saídas",
       "notifications": {
         "favoriteSuccess": "O hub {{item.identity.name}} foi adicionado nos favoritos"

@@ -412,7 +412,6 @@
       "close": "Sluiten",
       "addToFavorites": "Voeg toe aan favorieten",
       "useChatNotification": "Use chat notification",
-      "showJoinsPars": "Show joins/pars",
       "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "De hub {{item.identity.name}} was toegevoegd aan favorieten"

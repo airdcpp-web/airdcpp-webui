@@ -412,7 +412,6 @@
       "close": "Sulje",
       "addToFavorites": "Lisää suosikkeihin",
       "useChatNotification": "Käytä viesti-ilmoitusta",
-      "showJoinsPars": "Show joins/pars",
       "showJoinsParts": "Näytä saapuvat/poistuvat",
       "notifications": {
         "favoriteSuccess": "Hubi {{item.identity.name}} lisättiin suosikkeihin"

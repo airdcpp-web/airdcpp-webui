@@ -412,7 +412,6 @@
       "close": "Bezárás",
       "addToFavorites": "Hozzáadás a kedvencekhez",
       "useChatNotification": "Use chat notification",
-      "showJoinsPars": "Show joins/pars",
       "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"

@@ -412,7 +412,6 @@
       "close": "Stäng",
       "addToFavorites": "Lägg till i favoriter",
       "useChatNotification": "Använd chattavisering",
-      "showJoinsPars": "Show joins/pars",
       "showJoinsParts": "Visa ansluter/kopplar från",
       "notifications": {
         "favoriteSuccess": "Hubben {{item.identity.name}} har lagts till i favoriter"

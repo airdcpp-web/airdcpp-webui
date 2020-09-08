@@ -412,7 +412,6 @@
       "close": "Schließen",
       "addToFavorites": "Zu Bevorzugten hinzufügen",
       "useChatNotification": "Use chat notification",
-      "showJoinsPars": "Show joins/pars",
       "showJoinsParts": "Show joins/parts",
       "notifications": {
         "favoriteSuccess": "Der Hub {{item.identity.name}} wurde zu den Favoriten hinzugefügt"
