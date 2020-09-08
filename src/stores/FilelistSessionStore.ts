@@ -10,11 +10,11 @@ import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
+import { BrowserSessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
 
 const FilelistSessionStore = Reflux.createStore({
-  scroll: SessionScrollPositionKeeper(),
+  scroll: BrowserSessionScrollPositionKeeper(),
 
   getInitialState() {
     return this.getSessions();

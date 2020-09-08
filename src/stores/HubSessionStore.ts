@@ -14,7 +14,7 @@ import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
+import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
 
 const HubSessionStore = Reflux.createStore({

@@ -28,7 +28,6 @@ export interface VirtualTableProps extends
     
   store: any;
   sessionStore?: any;
-  viewId?: string;
   sourceFilter?: API.TableFilter;
   emptyRowsNodeGetter?: () => React.ReactNode;
 }

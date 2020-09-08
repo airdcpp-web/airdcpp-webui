@@ -35,6 +35,7 @@ export interface TableContainerProps {
   dataLoader: any;
   t: TFunction;
   moduleId: string | string[];
+  viewId?: number | string;
 }
 
 interface State {
@@ -107,7 +108,11 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   componentDidUpdate(prevProps: TableContainerProps, prevState: State) {
     if (prevState.height !== this.state.height) {
       this.updateRowRange();
-    } else if (prevProps.entityId !== this.props.entityId) {
+    } else if (prevProps.entityId !== this.props.entityId || prevProps.viewId !== this.props.viewId) {
+      if (this.props.store.DEBUG) {
+        console.log(`Enabling initial scroll, entity/viewId changed (view ${this.props.viewId})`);
+      }
+
       this.setInitialScrollRow = true;
       this.updateRowRange();
     }
@@ -118,26 +123,34 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   }
 
   updateRowRange = () => {
+    const { store } = this.props;
+    const { height } = this.state;
+
     const startRows = convertStartToRows(this.scrollPosition);
-    const maxRows = convertEndToRows(this.state.height);
+    const maxRows = convertEndToRows(height);
 
-    // tslint:disable-next-line:max-line-length
-    //console.log('Settings changed, start: ' + startRows + ', end: ' + maxRows, ', height: ' + this.state.height, this.props.store.viewName);
+    if (store.DEBUG) {
+      // tslint:disable-next-line:max-line-length
+      console.log(`Settings changed, start: ${startRows}, end: ${maxRows}, height: ${height}`, store.viewName);
+    }
 
-    //console.assert(this.props.store.active, 'Posting data for an inactive view');
-    TableActions.setRange(this.props.store.viewUrl, startRows, maxRows);
+    console.assert(store.active, 'Posting data for an inactive view');
+    TableActions.setRange(store.viewUrl, startRows, maxRows);
   }
 
   onScrollStart = (horizontal: number, vertical: number) => {
     const { store } = this.props;
 
-    //console.log('Scrolling started: ' + vertical, this.props.store.viewUrl);
+    if (store.DEBUG) {
+      console.log(`Scrolling started: ${vertical}`, store.viewUrl);
+    }
+
     console.assert(store.active, 'Sending pause for an inactive view');
     TableActions.pause(store.viewUrl, true);
   }
 
   onScrollEnd = (horizontal: number, vertical: number) => {
-    const { store } = this.props;
+    const { store, viewId } = this.props;
 
     this.scrollPosition = vertical;
     console.assert(store.active, 'Sending pause for an inactive view');
@@ -148,10 +161,16 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
     if (this.setInitialScrollRow) {
       this.setInitialScrollRow = false;
+
+      if (store.DEBUG) {
+        console.log(`Disabling initial scroll (view ${viewId})`);
+      }
     }
 
-    store.setScrollData(vertical);
-    //console.log('Scrolling ended: ' + vertical, this.props.store.viewUrl);
+    store.setScrollData(vertical, viewId);
+    if (store.DEBUG) {
+      console.log(`Scrolling ended: ${vertical}`, store.viewUrl);
+    }
   }
 
   onColumnClicked = (sortProperty: string) => {
@@ -232,7 +251,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     // Update and insert generic columns props
     const children = React.Children.map(this.props.children, this.childToColumn);
 
-    const { store } = this.props;
+    const { store, viewId } = this.props;
     return (
       <Measure 
         bounds={ true }
@@ -257,7 +276,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
               onScrollStart={ this.onScrollStart }
               onScrollEnd={ this.onScrollEnd }
-              scrollTop={ this.setInitialScrollRow ? store.getScrollData() : undefined }
+              scrollTop={ this.setInitialScrollRow ? store.getScrollData(viewId) : undefined }
             >
               { children }
             </Table>

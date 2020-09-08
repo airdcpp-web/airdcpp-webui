@@ -33,7 +33,7 @@ export interface TableFooterProps {
   customFilter?: CustomTableFilter;
   store: any;
   textFilterProps?: TextFilterProps;
-  viewId?: string;
+  // viewId?: string | number;
 }
 
 const TableFooter: React.FC<TableFooterProps> = (

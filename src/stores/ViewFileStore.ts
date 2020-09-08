@@ -10,7 +10,7 @@ import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
+import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
 
 const ViewFileSessionStore = Reflux.createStore({

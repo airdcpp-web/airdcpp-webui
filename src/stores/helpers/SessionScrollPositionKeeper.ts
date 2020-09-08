@@ -4,7 +4,7 @@ import * as UI from 'types/ui';
 
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
-const SessionScrollPositionKeeper = function () {
+export const SessionScrollPositionKeeper = function () {
   let positions = {};
 
   const Decorator = {
@@ -31,4 +31,34 @@ const SessionScrollPositionKeeper = function () {
   return Decorator;
 };
 
-export default SessionScrollPositionKeeper;
+export const BrowserSessionScrollPositionKeeper = function () {
+  let positions = {};
+
+  const Decorator = {
+    getScrollData: (entityId: API.IdType, viewId: string | number) => {
+      if (!positions[entityId]) {
+        return undefined;
+      }
+
+      const ret = positions[entityId][viewId];
+      // console.log(`Getting scroll position ${ret} for session ${entityId} (view ${viewId})`);
+      return ret;
+    },
+
+    setScrollData: (data: number, entityId: API.IdType, viewId: string | number) => {
+      // console.log(`Setting scroll position ${data} for session ${entityId} (view ${viewId})`);
+      positions[entityId] = positions[entityId] || {};
+      positions[entityId][viewId] = data;
+    },
+
+    _onSessionRemoved: (data: UI.SessionItemBase) => {
+      positions[data.id] = undefined;
+    },
+
+    onSocketDisconnected: () => {
+      positions = {};
+    },
+  };
+
+  return Decorator;
+};

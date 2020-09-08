@@ -9,7 +9,7 @@ import MessageStoreDecorator from './decorators/MessageStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
+import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
 
 const PrivateChatMessageStore = Reflux.createStore({

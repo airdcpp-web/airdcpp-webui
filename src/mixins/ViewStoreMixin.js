@@ -14,6 +14,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let entityId = null;
   let paused = false;
   let scrollPosition = 0;
+  const DEBUG = false;
 
   let sortProperty = defaultSortProperty;
   let sortAscending = defaultSortAscending;
@@ -72,7 +73,10 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
         return;
       }
 
-      //console.log(`Closing view ${this.viewUrl}`);
+      if (this.DEBUG) {
+        console.log(`Closing view ${this.viewUrl}`);
+      }
+
       this._removeMessageListener();
       clear();
 
@@ -107,7 +111,10 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       entityId = entity;
 
       this.addMessageListener();
-      //console.log(`Starting view ${this.viewUrl}`);
+      if (this.DEBUG) {
+        console.log(`Starting view ${this.viewUrl}`);
+      }
+
       active = true;
     },
 
@@ -167,18 +174,26 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       return paused;
     },
 
-    setScrollData(data) {
+    setScrollData(data, viewId) {
       if (this._sessionStore) {
-        this._sessionStore.scroll.setScrollData(data, entityId);
+        this._sessionStore.scroll.setScrollData(data, entityId, viewId);
         return;
+      }
+
+      if (this.DEBUG) {
+        console.log(`Setting scroll position ${data} for view ${this.viewUrl} (view ID ${viewId})`);
       }
 
       scrollPosition = data;
     },
 
-    getScrollData() {
+    getScrollData(viewId) {
       if (this._sessionStore) {
-        return this._sessionStore.scroll.getScrollData(entityId);
+        return this._sessionStore.scroll.getScrollData(entityId, viewId);
+      }
+
+      if (this.DEBUG) {
+        console.log(`Getting scroll position ${scrollPosition} for view ${this.viewUrl} (view ID ${viewId})`);
       }
 
       return scrollPosition;

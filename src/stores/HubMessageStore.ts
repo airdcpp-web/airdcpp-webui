@@ -8,7 +8,7 @@ import HubActions from 'actions/reflux/HubActions';
 import MessageStoreDecorator from './decorators/MessageStoreDecorator';
 
 import AccessConstants from 'constants/AccessConstants';
-import SessionScrollPositionKeeper from './helpers/SessionScrollPositionKeeper';
+import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 
 
