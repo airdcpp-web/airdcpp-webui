@@ -79,6 +79,9 @@ interface MessageTextDecoratorProps {
   addDownload: UI.AddItemDownload;
 }
 
+const formatPlainText = (text: string, emojify: boolean | undefined) => {
+  return emojify ? formatEmojis(text) : text; 
+};
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -89,7 +92,7 @@ const formatHighlights = (
   t: TFunction
 ) => {
   if (!highlights.length) {
-    return text16;
+    return formatPlainText(text16, emojify);
   }
 
   // Highlight positions received from the API are for UTF-8, while JS uses UTF-16
@@ -99,10 +102,10 @@ const formatHighlights = (
   let prevReplace = 0;
   const elements: React.ReactNode[] = [];
   const pushText = (newStart: number) => {
-    let textElement: React.ReactNode = decoder.decode(text8.subarray(prevReplace, newStart));
-    if (emojify) {
-      textElement = formatEmojis(textElement);
-    }
+    let textElement: React.ReactNode = formatPlainText(
+      decoder.decode(text8.subarray(prevReplace, newStart)),
+      emojify
+    );
 
     elements.push(textElement);
   };
