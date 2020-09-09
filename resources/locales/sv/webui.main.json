@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Inaktiverad",
       "connectionModeV6Option0": "Aktivt läge",
       "connectionModeV6Option2": "Passivt läge",
-      "connectionIpV6Name": "IP-adress"
+      "connectionIpV6Name": "IP-adress",
+      "miscName": "Miscellaneous overrides",
+      "chatNotifyName": "Använd chattavisering",
+      "awayMessageName": "Away message",
+      "showJoinsName": "Visa ansluter/kopplar från"
     }
   },
   "filelists": {
@@ -866,9 +870,10 @@
       "notifications": {
         "popupNotifications": "Popupaviseringar",
         "form": {
-          "notifyMentionName": "När mitt användarnamn nämns",
+          "notifyMentionMyNickName": "När mitt användarnamn nämns",
           "notifyPmUserName": "Privatmeddelanden (användare)",
           "notifyPmBotName": "Privatmeddelanden (botar)",
+          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
           "notifyBundleStatusName": "Filsamlingsstatus ändrad",
           "notifyEventsInfoName": "Infohändelser",
           "notifyEventsWarningName": "Varningshändelser",

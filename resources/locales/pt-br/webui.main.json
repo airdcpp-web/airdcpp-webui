@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Desabilitado",
       "connectionModeV6Option0": "Modo ativo",
       "connectionModeV6Option2": "Modo passivo",
-      "connectionIpV6Name": "Endereço de IP"
+      "connectionIpV6Name": "Endereço de IP",
+      "miscName": "Modificações diversas",
+      "chatNotifyName": "Usar notificação de bate-papo",
+      "awayMessageName": "Mensagem de ausência",
+      "showJoinsName": "Mostrar entradas/saídas"
     }
   },
   "filelists": {
@@ -866,9 +870,10 @@
       "notifications": {
         "popupNotifications": "Balões de notificações",
         "form": {
-          "notifyMentionName": "Menções do meu apelido",
+          "notifyMentionMyNickName": "Menções do meu apelido",
           "notifyPmUserName": "Mensagens privadas (usuários)",
           "notifyPmBotName": "Mensagens privadas (bots)",
+          "notifyHubMessageName": "Mensagens de bate-papo do hub (apenas em hubs onde as notificações de bate-papo estão ativadas)",
           "notifyBundleStatusName": "Mudanças de status do pacote",
           "notifyEventsInfoName": "Eventos de informação",
           "notifyEventsWarningName": "Eventos de aviso",

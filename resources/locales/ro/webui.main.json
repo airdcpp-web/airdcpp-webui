@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Dezactivat",
       "connectionModeV6Option0": "Mod activ",
       "connectionModeV6Option2": "Mod pasiv",
-      "connectionIpV6Name": "Adresa IP"
+      "connectionIpV6Name": "Adresa IP",
+      "miscName": "Miscellaneous overrides",
+      "chatNotifyName": "Use chat notification",
+      "awayMessageName": "Away message",
+      "showJoinsName": "Show joins/parts"
     }
   },
   "filelists": {
@@ -866,9 +870,10 @@
       "notifications": {
         "popupNotifications": "Notificari care apar",
         "form": {
-          "notifyMentionName": "Mentions of my nick",
+          "notifyMentionMyNickName": "Mentions of my nick",
           "notifyPmUserName": "Mesaje private (utilizatori)",
           "notifyPmBotName": "Mesaje private (bots)",
+          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
           "notifyBundleStatusName": "Schimbarile statusului bundle ",
           "notifyEventsInfoName": "Evenimente info",
           "notifyEventsWarningName": "Evenimente de avertizari ",

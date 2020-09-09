@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Ei käytössä",
       "connectionModeV6Option0": "Aktiivitila",
       "connectionModeV6Option2": "Passiivitila",
-      "connectionIpV6Name": "IP-osoite"
+      "connectionIpV6Name": "IP-osoite",
+      "miscName": "Sekalaiset ohitetut asetukset",
+      "chatNotifyName": "Käytä viesti-ilmoitusta",
+      "awayMessageName": "Poissa-viesti",
+      "showJoinsName": "Näytä saapuvat/poistuvat"
     }
   },
   "filelists": {
@@ -866,9 +870,10 @@
       "notifications": {
         "popupNotifications": "Ponnahdusilmoitukset",
         "form": {
-          "notifyMentionName": "Oman nimimerkin maininnat",
+          "notifyMentionMyNickName": "Oman nimimerkin maininnat",
           "notifyPmUserName": "Yksityisviestit (käyttäjät)",
           "notifyPmBotName": "Yksityisviestit (botit)",
+          "notifyHubMessageName": "Hubin keskusteluviestit (vain hubeissa, joissa viesti-ilmoitukset ovat käytössä)",
           "notifyBundleStatusName": "Bundlen tilamuutokset",
           "notifyEventsInfoName": "Tietotapahtumat",
           "notifyEventsWarningName": "Varoitustapahtumat",

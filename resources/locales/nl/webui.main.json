@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Uitgeschakeld",
       "connectionModeV6Option0": "Actieve instelling",
       "connectionModeV6Option2": "Passieve instelling",
-      "connectionIpV6Name": "IP adres"
+      "connectionIpV6Name": "IP adres",
+      "miscName": "Miscellaneous overrides",
+      "chatNotifyName": "Use chat notification",
+      "awayMessageName": "Away message",
+      "showJoinsName": "Show joins/parts"
     }
   },
   "filelists": {
@@ -866,9 +870,10 @@
       "notifications": {
         "popupNotifications": "Popup notifications",
         "form": {
-          "notifyMentionName": "Mentions of my nick",
+          "notifyMentionMyNickName": "Mentions of my nick",
           "notifyPmUserName": "Private messages (users)",
           "notifyPmBotName": "Private messages (bots)",
+          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
           "notifyBundleStatusName": "Bundle status changes",
           "notifyEventsInfoName": "Info events",
           "notifyEventsWarningName": "Warning events",

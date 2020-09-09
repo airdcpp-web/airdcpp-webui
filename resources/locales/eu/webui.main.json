@@ -216,7 +216,11 @@
       "connectionModeV6Option-1": "Ezgaitu",
       "connectionModeV6Option0": "Modu aktiboa",
       "connectionModeV6Option2": "Modu pasiboa",
-      "connectionIpV6Name": "IP helbidea"
+      "connectionIpV6Name": "IP helbidea",
+      "miscName": "Miscellaneous overrides",
+      "chatNotifyName": "Use chat notification",
+      "awayMessageName": "Away message",
+      "showJoinsName": "Show joins/parts"
     }
   },
   "filelists": {
@@ -866,9 +870,10 @@
       "notifications": {
         "popupNotifications": "Popup notifications",
         "form": {
-          "notifyMentionName": "Mentions of my nick",
+          "notifyMentionMyNickName": "Mentions of my nick",
           "notifyPmUserName": "Private messages (users)",
           "notifyPmBotName": "Private messages (bots)",
+          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
           "notifyBundleStatusName": "Bundle status changes",
           "notifyEventsInfoName": "Info gertaerak",
           "notifyEventsWarningName": "Gertaera abisuak",
