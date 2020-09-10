@@ -101,7 +101,9 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
             ids={[ 'toggleChatNotify', 'toggleShowJoins' ]}
             header={ sessionT.translate('Notification settings') } 
             itemData={ session }
-            triggerIcon={ session.settings.chat_notify || session.settings.show_joins ? 'yellow bell' : 'bell' }
+            triggerIcon={ 
+              session.settings.use_main_chat_notify || session.settings.show_joins ? 'yellow bell' : 'bell' 
+            }
           />
         </div>
       </div>

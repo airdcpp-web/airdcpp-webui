@@ -58,7 +58,7 @@ const fieldOptionReducer = (
     reducedOptions[fieldDefinitions.key].fields = {};
     fieldDefinitions.definitions!.reduce(
       (reduced, cur) => {
-        fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter);
+        return fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter);
       }, 
       reducedOptions[fieldDefinitions.key].fields
     );

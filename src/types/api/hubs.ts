@@ -19,7 +19,7 @@ export interface HubConnectState {
 }
 
 export interface HubSettings {
-  chat_notify: boolean;
+  use_main_chat_notify: boolean;
   show_joins: boolean;
   fav_show_joins: boolean;
   nick: string;

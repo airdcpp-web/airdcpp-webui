@@ -47,7 +47,7 @@ const notifyHubMessage = (message: API.ChatMessage) => {
   if (LocalSettingStore.getValue(LocalSettings.NOTIFY_HUB_MESSAGE)) {
     const sessionId = message.from.hub_session_id;
     const session: API.Hub | null = HubSessionStore.getSession(sessionId);
-    if (session && session.settings.chat_notify) {
+    if (session && session.settings.use_main_chat_notify) {
       return true;
     }
   }

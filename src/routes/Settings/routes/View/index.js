@@ -17,6 +17,10 @@ module.exports = {
       title: 'Events', 
       url: 'events',
       component: require('./components/EventPage').default, 
+    }, { 
+      title: 'Appearance', 
+      url: 'appearance',
+      component: require('./components/AppearancePage').default, 
     },
   ],
   advancedMenuItems: [

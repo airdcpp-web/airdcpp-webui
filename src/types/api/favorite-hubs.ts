@@ -15,7 +15,7 @@ export interface FavoriteHubEntryBase {
   connection_ip_v6: string | null;
   show_joins: boolean | null;
   fav_show_joins: boolean | null;
-  chat_notify: boolean | null;
+  use_main_chat_notify: boolean | null;
   away_message: string | null;
 }
 

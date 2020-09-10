@@ -127,7 +127,7 @@ const Fields: UI.FormFieldDefinition[] = [
     type: API.SettingTypeEnum.STRUCT,
     definitions: [
       {
-        key: 'chat_notify',
+        key: 'use_main_chat_notify',
         title: 'Use chat notification',
         type: API.SettingTypeEnum.BOOLEAN,
         optional: true,
@@ -151,7 +151,7 @@ interface Entry extends UI.FormValueMap {
   user: Pick<FavoriteHubEntry, 'nick' | 'user_description'>;
   connectivityV4: Pick<FavoriteHubEntry, 'connection_mode_v4' | 'connection_ip_v4'>;
   connectivityV6: Pick<FavoriteHubEntry, 'connection_mode_v6' | 'connection_ip_v6'>;
-  misc: Pick<FavoriteHubEntry, 'chat_notify' | 'show_joins' | 'away_message'>;
+  misc: Pick<FavoriteHubEntry, 'use_main_chat_notify' | 'show_joins' | 'away_message'>;
 }
 
 const toFormEntry = (entry?: API.FavoriteHubEntry): Entry | undefined => {
@@ -267,7 +267,7 @@ class FavoriteHubDialog extends React.Component<Props> {
         nullOption: this.nullOption,
         transformer: intTransformer,
       });
-    } else if (id === 'chat_notify' || id === 'show_joins') {
+    } else if (id === 'use_main_chat_notify' || id === 'show_joins') {
       Object.assign(fieldOptions, {
         template: IndeterminateCheckboxField,
         transformer: {

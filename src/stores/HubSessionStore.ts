@@ -48,5 +48,5 @@ export default SessionStoreDecorator<API.Hub>(
     AccessConstants.HUBS_VIEW
   ), 
   HubActions, 
-  session =>  session.settings.chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies
+  session => session.settings.use_main_chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies
 );

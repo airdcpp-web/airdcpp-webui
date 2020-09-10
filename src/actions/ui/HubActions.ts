@@ -20,7 +20,7 @@ const handleFavorite: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
 
 const handleToggleChatNotify: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
   return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
-    chat_notify: !hub.settings.chat_notify,
+    use_main_chat_notify: !hub.settings.use_main_chat_notify,
   });
 };
 
@@ -56,7 +56,7 @@ const HubActions: UI.ActionListType<API.Hub> = {
     displayName: 'Use chat notification',
     handler: handleToggleChatNotify,
     checked: hub => {
-      return hub.settings.chat_notify;
+      return hub.settings.use_main_chat_notify;
     }
   },
   toggleShowJoins: { 
