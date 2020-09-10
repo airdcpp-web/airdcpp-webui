@@ -4,7 +4,7 @@ import LinkConstants from 'constants/LinkConstants';
 
 import ActionButton from 'components/ActionButton';
 import ExternalLink from 'components/ExternalLink';
-import TextDecorator from 'components/text/TextDecorator';
+import { TextDecorator } from 'components/text';
 import Message from 'components/semantic/Message';
 import { useStore } from 'effects/StoreListenerEffect';
 

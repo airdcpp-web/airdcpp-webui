@@ -62,7 +62,7 @@ interface TextDecoratorProps {
 }
 
 // Parses links from plain text and optionally emoticons as well
-const TextDecorator: React.FC<TextDecoratorProps> = (
+export const TextDecorator: React.FC<TextDecoratorProps> = memo((
   { emojify = false, text }
 ) => {
   const location = useLocation();
@@ -81,8 +81,4 @@ const TextDecorator: React.FC<TextDecoratorProps> = (
       { !emojify ? text : formatEmojis(text) }
     </ReactLinkify>
   );
-};
-
-const Decorated = memo(TextDecorator);
-
-export default Decorated;
+});

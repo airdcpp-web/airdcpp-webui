@@ -233,7 +233,8 @@ const parseTitle = (
 const parseFieldOptions = (
   definition: UI.FormFieldDefinition,
   formT: UI.ModuleTranslator,
-  titleFormatter: UI.OptionTitleParser = parseTitle
+  titleFormatter: UI.OptionTitleParser = parseTitle,
+  helpFormatter: (text: string) => React.ReactNode = text => text,
 ): form.TcombFieldOptions => {
   const options = parseTypeOptions(definition.type);
 
@@ -245,7 +246,7 @@ const parseFieldOptions = (
       // Struct item fields
       itemOptions.fields = definition.definitions.reduce(
         (reduced, itemDefinition) => {
-          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, formT, titleFormatter);
+          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, formT, titleFormatter, helpFormatter);
           return reduced;
         }, 
         {}
@@ -260,7 +261,9 @@ const parseFieldOptions = (
 
   // Captions
   options.legend = titleFormatter(definition, formT);
-  options.help = definition.help;
+  if (!!definition.help) {
+    options.help = helpFormatter(definition.help);
+  }
 
   // Enum select field?
   if (definition.options) {

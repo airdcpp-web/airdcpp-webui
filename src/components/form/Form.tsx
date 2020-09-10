@@ -22,10 +22,17 @@ import { FormContext } from 'types/ui';
 import { getModuleT } from 'utils/TranslationUtils';
 
 import { form } from 'types/ui/tcomb-form';
+import { TextDecorator } from 'components/text';
 
 const TcombForm = tcomb.form.Form;
 
 
+const optionHelpFormatter = (text: string) => (
+  <TextDecorator
+    text={ text }
+    emojify={ false }
+  />
+);
 
 // Reduces an array of field setting objects by calling props.onFieldSetting
 const fieldOptionReducer = (
@@ -36,7 +43,12 @@ const fieldOptionReducer = (
   formValue: Partial<UI.FormValueMap>,
   optionTitleFormatter: UI.OptionTitleParser | undefined
 ): form.TcombOptions => {
-  reducedOptions[fieldDefinitions.key] = parseFieldOptions(fieldDefinitions, formT, optionTitleFormatter);
+  reducedOptions[fieldDefinitions.key] = parseFieldOptions(
+    fieldDefinitions, 
+    formT, 
+    optionTitleFormatter, 
+    optionHelpFormatter
+  );
 
   if (onFieldSetting) {
     onFieldSetting(fieldDefinitions.key, reducedOptions[fieldDefinitions.key], formValue);
@@ -45,7 +57,9 @@ const fieldOptionReducer = (
   if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
     reducedOptions[fieldDefinitions.key].fields = {};
     fieldDefinitions.definitions!.reduce(
-      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter), 
+      (reduced, cur) => {
+        fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter);
+      }, 
       reducedOptions[fieldDefinitions.key].fields
     );
   }
