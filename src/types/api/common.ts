@@ -98,6 +98,7 @@ export const enum MessageHighlightTypeEnum {
 }
 
 export interface MessageHighlight {
+  id: number;
   text: string;
   position: {
     start: number;

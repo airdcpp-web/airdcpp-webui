@@ -41,6 +41,7 @@ export interface ChatLayoutProps {
   session: ChatSession;
   chatAccess: string;
   messageStore: any;
+  highlightRemoteMenuId: string;
 }
 
 
@@ -82,7 +83,7 @@ const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI:
 
 
 const ChatLayout: React.FC<ChatLayoutProps> = (
-  { session, chatAccess, chatApi, chatActions, messageStore, handleFileUpload }
+  { session, chatAccess, chatApi, chatActions, messageStore, handleFileUpload, highlightRemoteMenuId }
 ) => {
   const { t } = useTranslation();
   const messages = useChatMessagesEffect(session, messageStore, chatApi);
@@ -103,6 +104,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = (
         session={ session }
         scrollPositionHandler={ messageStore.scroll }
         t={ t }
+        highlightRemoteMenuId={ highlightRemoteMenuId }
       />
       { hasChatAccess && (
         <MessageComposer 

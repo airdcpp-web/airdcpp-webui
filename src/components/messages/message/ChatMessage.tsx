@@ -6,7 +6,6 @@ import { InView } from 'react-intersection-observer';
 import { UserMenu } from 'components/menu';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import MenuConstants from 'constants/MenuConstants';
 import { CommonMessageProps } from '../types';
@@ -42,8 +41,6 @@ const Author: React.FC<AuthorProps> = ({ message, dropdownContext }) => (
 interface ChatMessageProps extends CommonMessageProps {
   message: API.ChatMessage;
   dropdownContext: string;
-  entityId: API.IdType;
-  addDownload: UI.AddItemDownload;
 }
 
 // Main message types
@@ -58,7 +55,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 
   render() {
-    const { message, dropdownContext, entityId, addDownload, ...other } = this.props;
+    const { message, dropdownContext, entityId, addDownload, highlightRemoteMenuId, ...other } = this.props;
     return (
       <InView 
         className={ 'ui item chat ' + message.from.flags.join(' ')}
@@ -77,6 +74,8 @@ class ChatMessage extends React.Component<ChatMessageProps> {
             emojify={ true }
             user={ message.from }
             addDownload={ addDownload }
+            highlightRemoteMenuId={ highlightRemoteMenuId }
+            entityId={ entityId }
           />
         </div>
       </InView>

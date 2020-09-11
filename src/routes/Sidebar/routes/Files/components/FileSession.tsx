@@ -28,11 +28,13 @@ class FileSession extends React.Component<FileSessionProps> {
     if (!session.content_ready) {
       if (session.download_state.id === 'download_failed') {
         return (
-          <Message 
-            icon={ IconConstants.ERROR }
-            title={ sessionT.translate('Download failed') }
-            description={ session.download_state.str }
-          />
+          <div className="file session">
+            <Message 
+              icon={ IconConstants.ERROR }
+              title={ sessionT.translate('Download failed') }
+              description={ session.download_state.str }
+            />
+          </div>
         );
       }
 

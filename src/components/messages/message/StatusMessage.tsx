@@ -35,7 +35,7 @@ class StatusMessage extends React.Component<StatusMessageProps> {
   }
 
   render() {
-    const { message, addDownload, ...other } = this.props;
+    const { message, addDownload, highlightRemoteMenuId, entityId, ...other } = this.props;
     return (
       <InView
         className={ 'ui item status ' + message.severity }
@@ -47,6 +47,8 @@ class StatusMessage extends React.Component<StatusMessageProps> {
           message={ message }
           emojify={ false }
           addDownload={ addDownload }
+          highlightRemoteMenuId={ highlightRemoteMenuId }
+          entityId={ entityId }
         />
       </InView>
     );

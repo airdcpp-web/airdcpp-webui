@@ -12,6 +12,7 @@ import * as API from 'types/api';
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
+import MenuConstants from 'constants/MenuConstants';
 
 
 interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, {}, ChatActionList> {
@@ -40,6 +41,7 @@ class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
           messageStore={ PrivateChatMessageStore }
           session={ session }
           handleFileUpload={ this.handleFileUpload }
+          highlightRemoteMenuId={ MenuConstants.PRIVATE_CHAT_MESSAGE_HIGHLIGHT }
         />
 
         <MessageFooter

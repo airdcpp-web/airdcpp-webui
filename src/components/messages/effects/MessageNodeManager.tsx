@@ -16,10 +16,11 @@ interface MessageItemData {
   entityId: API.IdType | undefined;
   onMessageVisibilityChanged: (id: number, inView: boolean) => void;
   addDownload: UI.AddItemDownload;
+  highlightRemoteMenuId: string | undefined;
 }
 
 const reduceMessageListItem = (
-  { entityId, onMessageVisibilityChanged, addDownload }: MessageItemData,
+  { entityId, onMessageVisibilityChanged, addDownload, highlightRemoteMenuId }: MessageItemData,
   reduced: React.ReactNode[], 
   message: UI.MessageListItem, 
   index: number, 
@@ -47,19 +48,25 @@ const reduceMessageListItem = (
       onChange={(inView) => {
         onMessageVisibilityChanged(id, inView);
       }}
-      threshold={0.4}
-      message={message}
-      addDownload={addDownload}
-      entityId={entityId}
+      threshold={ 0.4 }
+      message={ message }
+      addDownload={ addDownload }
+      entityId={ entityId }
+      highlightRemoteMenuId={ highlightRemoteMenuId }
     />
   );
 
   return reduced;
 };
 
+interface Props {
+  messages: UI.MessageListItem[] | null;
+  session?: UI.SessionItemBase;
+  highlightRemoteMenuId?: string;
+}
+
 export const useMessagesNode = (
-  messages: UI.MessageListItem[] | null, 
-  session: UI.SessionItemBase | undefined,
+  { highlightRemoteMenuId, messages, session }: Props, 
   downloadManager: ItemDownloadManager,
 ) => {
   const visibleItems = useMemo(() => new Set<number>(), [session]);
@@ -86,7 +93,8 @@ export const useMessagesNode = (
         reduceMessageListItem.bind(
           null, 
           {
-            session: session ? session.id : undefined, 
+            highlightRemoteMenuId,
+            entityId: session ? session.id : undefined, 
             onMessageVisibilityChanged,
             addDownload: downloadManager.addDownloadItem,
           }

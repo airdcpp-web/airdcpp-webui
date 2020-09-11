@@ -24,16 +24,19 @@ const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (item
 
 
 export interface MagnetHighlightProps {
+  highlightId: number;
   text: string;
   contentType: API.FileContentType;
   dupe: API.Dupe | null;
   user: UI.DownloadSource | undefined; 
   addDownload: UI.AddItemDownload;
+  highlightRemoteMenuId?: string;
+  entityId: API.IdType | undefined;
   t: TFunction;
 }
 
 export const MagnetHighlight: React.FC<MagnetHighlightProps> = ({
-  text, dupe, user, contentType, addDownload, t
+  text, dupe, user, contentType, addDownload, t, highlightRemoteMenuId, highlightId, entityId
 }) => {
   const magnet = parseMagnetLink(text);
   if (!magnet) {
@@ -55,13 +58,9 @@ export const MagnetHighlight: React.FC<MagnetHighlightProps> = ({
     user.flags.indexOf('bot') === -1 && 
     user.flags.indexOf('hidden') === -1 ? user : undefined;
 
-  let downloadId = magnet.tth;
-  if (downloadUser) {
-    downloadId += `:${downloadUser.cid}`;
-  }
 
   const downloadData: UI.DownloadableItemInfo = {
-    id: downloadId,
+    id: highlightId,
     ...magnet,
     type: {
       id: 'file',
@@ -76,7 +75,7 @@ export const MagnetHighlight: React.FC<MagnetHighlightProps> = ({
 
   useEffect(
     () => {    
-      addDownload(downloadId, {
+      addDownload(highlightId, {
         downloadHandler: magnetDownloadHandler,
         itemDataGetter: () => Promise.resolve(downloadData),
         userGetter: () => downloadUser,
@@ -96,6 +95,8 @@ export const MagnetHighlight: React.FC<MagnetHighlightProps> = ({
       downloadHandler={ magnetDownloadHandler }
       triggerIcon={ null }
       session={ undefined }
+      remoteMenuId={ highlightRemoteMenuId }
+      entityId={ entityId }
     />
   );
 };

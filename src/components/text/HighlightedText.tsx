@@ -15,12 +15,18 @@ import { formatEmojis } from 'utils/EmojiFormat';
 import { MagnetHighlight, MeHighlight, ReleaseHighlight, UrlHighlight } from './highlights';
 
 
+interface HighlightProps {
+  user: UI.DownloadSource | undefined; 
+  addDownload: UI.AddItemDownload;
+  highlightRemoteMenuId?: string;
+  entityId?: API.IdType;
+}
+
 const getHighlightNode = (
   highlight: API.MessageHighlight, 
-  user: UI.DownloadSource | undefined, 
-  addDownload: UI.AddItemDownload,
   location: Location, 
-  t: TFunction
+  t: TFunction,
+  { addDownload, user, highlightRemoteMenuId, entityId }: HighlightProps
 ): React.ReactNode => {
   const { start, end } = highlight.position;
   const key = `${start}-${end}`;
@@ -37,8 +43,11 @@ const getHighlightNode = (
       return (
         <ReleaseHighlight
           key={ key }
+          highlightId={ highlight.id }
           text={ highlight.text }
           location={ location }
+          highlightRemoteMenuId={ highlightRemoteMenuId }
+          entityId={ entityId }
         />
       );
     case API.MessageHighlightTypeEnum.TEMP_SHARE:
@@ -52,7 +61,10 @@ const getHighlightNode = (
             contentType={ highlight.content_type }
             user={ user }
             addDownload={ addDownload }
+            highlightRemoteMenuId={ highlightRemoteMenuId }
+            highlightId={ highlight.id }
             t={ t }
+            entityId={ entityId }
           />
         );
       }
@@ -71,12 +83,14 @@ const getHighlightNode = (
   }
 };
 
-interface MessageTextDecoratorProps {
+interface HighlightedTextProps {
   text: string;
   highlights: API.MessageHighlight[];
   user: UI.DownloadSource | undefined;
   emojify?: boolean;
   addDownload: UI.AddItemDownload;
+  highlightRemoteMenuId?: string;
+  entityId?: API.IdType;
 }
 
 const formatPlainText = (text: string, emojify: boolean | undefined) => {
@@ -87,7 +101,7 @@ const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 const formatHighlights = (
-  { text: text16, highlights, emojify, user, addDownload }: MessageTextDecoratorProps, 
+  { text: text16, highlights, emojify, ...other }: HighlightedTextProps, 
   location: Location, 
   t: TFunction
 ) => {
@@ -114,7 +128,7 @@ const formatHighlights = (
     const { start, end } = highlight.position;
 
     pushText(start);
-    elements.push(getHighlightNode(highlight, user, addDownload, location, t));
+    elements.push(getHighlightNode(highlight, location, t, other));
 
     prevReplace = end;
   }
@@ -126,7 +140,7 @@ const formatHighlights = (
   return elements;
 };
 
-export const HighlightedText: React.FC<MessageTextDecoratorProps> = memo((
+export const HighlightedText: React.FC<HighlightedTextProps> = memo((
   props
 ) => {
   const location = useLocation();

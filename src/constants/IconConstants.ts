@@ -78,6 +78,7 @@ export default {
   FILE: 'file outline',
   USER: 'user',
 
+  COPY: 'copy',
   MAGNET: 'magnet',
   IGNORE: 'red ban',
   UNIGNORE: 'ban'

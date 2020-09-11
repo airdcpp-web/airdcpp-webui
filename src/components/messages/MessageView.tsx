@@ -23,19 +23,18 @@ interface MessageViewProps {
   session?: UI.SessionItemBase;
   className?: string;
   scrollPositionHandler: UI.ScrollPositionHandler;
+  highlightRemoteMenuId?: string;
   t: TFunction;
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
-  ({ messages, session, className, t, scrollPositionHandler }) => {
-    const downloadManager = useItemDownloadManager(session);
-    const { messageNodes, visibleItems } = useMessagesNode(messages, session, downloadManager);
+  ({ className, t, ...other }) => {
+    const downloadManager = useItemDownloadManager(other.session);
+    const { messageNodes, visibleItems } = useMessagesNode(other, downloadManager);
 
     const scrollableRef = useMessageViewScrollEffect(
-      messages,
-      visibleItems,
-      scrollPositionHandler,
-      session
+      other,
+      visibleItems
     );
 
     return (

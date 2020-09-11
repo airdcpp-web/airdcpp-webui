@@ -14,11 +14,15 @@ const isScrolledToBottom = (element: HTMLElement) => {
 
 const DEBUG = false;
 
+interface Props {
+  scrollPositionHandler: UI.ScrollPositionHandler;
+  session?: UI.SessionItemBase;
+  messages: UI.MessageListItem[] | null;
+}
+
 export const useMessageViewScrollEffect = (
-  messages: UI.MessageListItem[] | null,
+  { messages, scrollPositionHandler, session }: Props,
   visibleItems: Set<number>,
-  scrollPositionHandler: UI.ScrollPositionHandler,
-  session?: UI.SessionItemBase
 ) => {
   const [ shouldScrollToBottom, setShouldScrollToBottom ] = useState(true);
   const scrollable = useRef<HTMLDivElement | null>(null);

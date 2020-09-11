@@ -17,7 +17,15 @@ import { toErrorResponse } from 'utils/TypeConvert';
 import SearchActions from 'actions/reflux/SearchActions';
 import { translate } from 'utils/TranslationUtils';
 import { makeMagnetLink } from 'utils/MagnetUtils';
+import { hasCopySupport } from 'utils/BrowserUtils';
+import { DupeEnum } from 'types/api';
 
+
+const isShareDupe = (dupe: API.Dupe | null) => !!dupe && (
+  dupe.id === DupeEnum.SHARE_FULL || 
+  dupe.id === DupeEnum.SHARE_PARTIAL || 
+  dupe.id === DupeEnum.SHARE_QUEUE
+);
 
 const isAsch = ({ user }: UI.DownloadableItemData) => !user ? false : user.flags.indexOf('asch') !== -1;
 const isSearchable = ({ itemInfo }: UI.DownloadableItemData) => !!itemInfo.name || !!itemInfo.tth;
@@ -26,23 +34,36 @@ const isDirectory = ({ itemInfo }: UI.DownloadableItemData) => itemInfo.type.id 
 const isPicture = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'picture';
 const isVideo = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'video';
 const isAudio = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'audio';
-const hasValidUser = ({ user }: UI.DownloadableItemData) => !!user && 
-  user.flags.indexOf('bot') === -1 && 
-  user.flags.indexOf('hidden') === -1;
+
+const hasValidViewUser = (data: UI.DownloadableItemData) => {
+  const { itemInfo, user } = data;
+  if (!user) {
+    return false;
+  }
+
+  // Can't view files from bots
+  const notBot = user.flags.indexOf('bot') === -1 && user.flags.indexOf('hidden') === -1;
+  if (!notBot) {
+    return false;
+  }
+
+  // Can't view files from yourself unless it's a share dupe
+  return notSelf(data) || isShareDupe(itemInfo.dupe);
+};
 
 // 200 MB, the web server isn't suitable for sending large files
 const sizeValid = ({ itemInfo }: UI.DownloadableItemData) => itemInfo.size < 200 * 1024 * 1024;
 
-const viewText = (data: UI.DownloadableItemData) => hasValidUser(data) && !isDirectory(data) && !isPicture(data) && 
+const viewText = (data: UI.DownloadableItemData) => hasValidViewUser(data) && !isDirectory(data) && !isPicture(data) && 
   !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256 * 1024;
-const findNfo = (data: UI.DownloadableItemData) => hasValidUser(data) && isDirectory(data) && 
+const findNfo = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isDirectory(data) && 
   notSelf(data) && isAsch(data);
 
-const viewVideo = (data: UI.DownloadableItemData) => hasValidUser(data) && isVideo(data) && sizeValid(data);
-const viewAudio = (data: UI.DownloadableItemData) => hasValidUser(data) && isAudio(data) && sizeValid(data);
-const viewImage = (data: UI.DownloadableItemData) => hasValidUser(data) && isPicture(data) && sizeValid(data);
+const viewVideo = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isVideo(data) && sizeValid(data);
+const viewAudio = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isAudio(data) && sizeValid(data);
+const viewImage = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isPicture(data) && sizeValid(data);
 
-const copyMagnet = (data: UI.DownloadableItemData) => !!(navigator as any).clipboard && !isDirectory(data);
+const copyMagnet = (data: UI.DownloadableItemData) => hasCopySupport() && !isDirectory(data);
 
 
 
@@ -137,7 +158,7 @@ export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({ data, 
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
   const link = makeMagnetLink(data.itemInfo);
-  return (navigator as any).clipboard.writeText(link);
+  return navigator.clipboard.writeText(link);
 };
 
 

@@ -1,21 +1,37 @@
+import MessageHighlightActions from 'actions/ui/MessageHighlightActions';
+import { TableActionMenu } from 'components/menu';
 import { Location } from 'history';
 
+import * as API from 'types/api';
+// import * as UI from 'types/ui';
+
 import React from 'react';
-import { doSearch } from 'utils/SearchUtils';
 
 
 export interface ReleaseHighlightProps {
   text: string;
   location: Location;
+  highlightRemoteMenuId?: string;
+  entityId: API.IdType | undefined;
+  highlightId: number;
 }
 
-export const ReleaseHighlight: React.FC<ReleaseHighlightProps> = ({ text, location }) => (
-  <a
+export const ReleaseHighlight: React.FC<ReleaseHighlightProps> = ({ 
+  text, highlightRemoteMenuId, highlightId, entityId 
+}) => (
+  <TableActionMenu
     className="highlight release"
-    onClick={() => {
-      doSearch(text, location);
+    actions={ MessageHighlightActions }
+    itemData={{
+      id: highlightId,
+      text
     }}
-  >
-    { text }
-  </a>
+    remoteMenuId={ highlightRemoteMenuId }
+    entityId={ entityId }
+    caption={ text }
+    triggerIcon={ null }
+    popupSettings={{
+      boundary: '.message-list'
+    }}
+  />
 );

@@ -19,6 +19,7 @@ import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import HubActions from 'actions/reflux/HubActions';
 import IconConstants from 'constants/IconConstants';
+import MenuConstants from 'constants/MenuConstants';
 
 
 const getStorageKey = (props: HubSessionProps) => {
@@ -119,6 +120,7 @@ class HubSession extends React.Component<HubSessionProps> {
             chatAccess={ API.AccessEnum.HUBS_SEND }
             session={ session }
             handleFileUpload={ this.handleFileUpload }
+            highlightRemoteMenuId={ MenuConstants.HUB_MESSAGE_HIGHLIGHT }
           />
         ) }
         <HubFooter

@@ -11,13 +11,11 @@ import { CommonMessageProps } from '../types';
 interface MessageListItemProps extends CommonMessageProps {
   id: string;
   message: UI.MessageListItem;
-  addDownload: UI.AddItemDownload;
   entityId: API.IdType | undefined;
 }
 
 export const MessageListItem: React.FC<MessageListItemProps> = ({
   message,
-  entityId,
   ...other
 }) => {
   if (message.chat_message) {
@@ -25,7 +23,6 @@ export const MessageListItem: React.FC<MessageListItemProps> = ({
       <ChatMessage
         message={ message.chat_message }
         dropdownContext=".chat.session"
-        entityId={ entityId! }
         { ...other }
       />
     );

@@ -57,4 +57,4 @@ export interface ItemDownloadHandler<
   userGetter?: DownloadUserGetter<PropsT>;
 }
 
-export type AddItemDownload = (itemId: string, handler: ItemDownloadHandler) => void;
+export type AddItemDownload = (itemId: string | number, handler: ItemDownloadHandler) => void;

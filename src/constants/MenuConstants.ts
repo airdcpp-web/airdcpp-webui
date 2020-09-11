@@ -16,4 +16,7 @@ export default {
   HUB_USER: 'hub_user',
   GROUPED_SEARCH_RESULT: 'grouped_search_result',
   FILELIST_ITEM: 'filelist_item',
+
+  HUB_MESSAGE_HIGHLIGHT: 'hub_message_highlight',
+  PRIVATE_CHAT_MESSAGE_HIGHLIGHT: 'private_chat_message_highlight',
 };
