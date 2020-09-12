@@ -218,7 +218,7 @@
       "connectionModeV6Option2": "Mod pasiv",
       "connectionIpV6Name": "Adresa IP",
       "miscName": "Miscellaneous overrides",
-      "chatNotifyName": "Use chat notification",
+      "useMainChatNotifyName": "Use chat notification",
       "awayMessageName": "Away message",
       "showJoinsName": "Show joins/parts"
     }
@@ -252,6 +252,7 @@
   },
   "common": {    
     "actions": {
+      "copy": "Copiaza",
       "download": "Descarcare",
       "downloadTo": "Descarca in...",
       "findNfo": "Gaseste NFO",
@@ -271,7 +272,8 @@
       "notifications": {
         "ignoreUserSuccess": "Utilizatorul {{item.nicks}} a fost adaugat in utilizatori ignorati ",
         "unignoreUserSuccess": "Utilizatorul {{item.nicks}} a fost eliminat din utilizatori ignorati",
-        "copyMagnetSuccess": "Legatura magnet a fost copiata in memorie-clipboard"
+        "copyMagnetSuccess": "Legatura magnet a fost copiata in memorie-clipboard",
+        "copySuccess": "Text was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Contiuua si restarteaza",
@@ -620,7 +622,8 @@
       "priorities": "Prioritati",
       "notificationsCaption": "Notificari",
       "histories": "Istorie",
-      "events": "Evenimente"
+      "events": "Evenimente",
+      "appearance": "Aspect"
     },
     "advanced": "Avansat",
     "noUnsavedChanges": "Nici o schimbare salvata",

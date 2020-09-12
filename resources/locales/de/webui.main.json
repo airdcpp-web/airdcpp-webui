@@ -218,7 +218,7 @@
       "connectionModeV6Option2": "Passiver Modus",
       "connectionIpV6Name": "IP-Adresse",
       "miscName": "Miscellaneous overrides",
-      "chatNotifyName": "Use chat notification",
+      "useMainChatNotifyName": "Use chat notification",
       "awayMessageName": "Away message",
       "showJoinsName": "Show joins/parts"
     }
@@ -252,6 +252,7 @@
   },
   "common": {    
     "actions": {
+      "copy": "Kopieren",
       "download": "Herunterladen",
       "downloadTo": "Herunterladen nach...",
       "findNfo": "Finde NFO",
@@ -271,7 +272,8 @@
       "notifications": {
         "ignoreUserSuccess": "Benutzer {{item.nicks}} wurde zu ignorierte Benutzer hinzugefügt",
         "unignoreUserSuccess": "Benutzer {{item.nicks}} wurde von ignorierte Benutzer entfernt",
-        "copyMagnetSuccess": "Magnet Link wurde in die Zwischenablage kopiert"
+        "copyMagnetSuccess": "Magnet Link wurde in die Zwischenablage kopiert",
+        "copySuccess": "Text was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Fortfahren und neustarten",
@@ -620,7 +622,8 @@
       "priorities": "Prioritäten",
       "notificationsCaption": "Benachrichtigungen",
       "histories": "Chroniken",
-      "events": "Ereignisse"
+      "events": "Ereignisse",
+      "appearance": "Erscheinungsbild"
     },
     "advanced": "Fortgeschritten",
     "noUnsavedChanges": "Keine ungespeicherten Änderungen",

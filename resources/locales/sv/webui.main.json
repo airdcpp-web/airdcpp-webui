@@ -218,7 +218,7 @@
       "connectionModeV6Option2": "Passivt läge",
       "connectionIpV6Name": "IP-adress",
       "miscName": "Miscellaneous overrides",
-      "chatNotifyName": "Använd chattavisering",
+      "useMainChatNotifyName": "Använd chattavisering",
       "awayMessageName": "Away message",
       "showJoinsName": "Visa ansluter/kopplar från"
     }
@@ -252,6 +252,7 @@
   },
   "common": {    
     "actions": {
+      "copy": "Kopiera",
       "download": "Ladda ned",
       "downloadTo": "Ladda ned till...",
       "findNfo": "Sök efter NFO-fil",
@@ -271,7 +272,8 @@
       "notifications": {
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
         "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare",
-        "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp"
+        "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp",
+        "copySuccess": "Text was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Fortsätt och starta om",
@@ -620,7 +622,8 @@
       "priorities": "Prioriteter",
       "notificationsCaption": "Aviseringar",
       "histories": "Historik",
-      "events": "Händelser"
+      "events": "Händelser",
+      "appearance": "Utseende"
     },
     "advanced": "Avancerat",
     "noUnsavedChanges": "Inga osparade ändringar",

@@ -218,7 +218,7 @@
       "connectionModeV6Option2": "Passieve instelling",
       "connectionIpV6Name": "IP adres",
       "miscName": "Miscellaneous overrides",
-      "chatNotifyName": "Use chat notification",
+      "useMainChatNotifyName": "Use chat notification",
       "awayMessageName": "Away message",
       "showJoinsName": "Show joins/parts"
     }
@@ -252,6 +252,7 @@
   },
   "common": {    
     "actions": {
+      "copy": "Kopiëren",
       "download": "Download",
       "downloadTo": "Download naar...",
       "findNfo": "Zoek NFO",
@@ -271,7 +272,8 @@
       "notifications": {
         "ignoreUserSuccess": "Gebruiker {{item.nicks}} was toegevoegd aan genegeerde gebruikers",
         "unignoreUserSuccess": "Gebruiker {{item.nicks}} was verwijderd uit genegeerde gebruikers",
-        "copyMagnetSuccess": "Magnet link werd gekopieerd naar klembord"
+        "copyMagnetSuccess": "Magnet link werd gekopieerd naar klembord",
+        "copySuccess": "Text was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Doorgaan en herstarten",
@@ -620,7 +622,8 @@
       "priorities": "Prioriteiten",
       "notificationsCaption": "Notifications",
       "histories": "Geschiedenissen",
-      "events": "Gebeurtenissen"
+      "events": "Gebeurtenissen",
+      "appearance": "Weergave"
     },
     "advanced": "Geavanceerd",
     "noUnsavedChanges": "No unsaved changes",

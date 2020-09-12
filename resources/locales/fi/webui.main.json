@@ -218,7 +218,7 @@
       "connectionModeV6Option2": "Passiivitila",
       "connectionIpV6Name": "IP-osoite",
       "miscName": "Sekalaiset ohitetut asetukset",
-      "chatNotifyName": "Käytä viesti-ilmoitusta",
+      "useMainChatNotifyName": "Käytä viesti-ilmoitusta",
       "awayMessageName": "Poissa-viesti",
       "showJoinsName": "Näytä saapuvat/poistuvat"
     }
@@ -252,6 +252,7 @@
   },
   "common": {    
     "actions": {
+      "copy": "Kopioi",
       "download": "Lataus",
       "downloadTo": "Lataa kohteeseen...",
       "findNfo": "Hae NFO",
@@ -271,7 +272,8 @@
       "notifications": {
         "ignoreUserSuccess": "Käyttäjä {{item.nicks}} lisättiin hylättyihin käyttäjiin",
         "unignoreUserSuccess": "Käyttäjä {{item.nicks}} poistettiin hylätyistä käyttäjistä",
-        "copyMagnetSuccess": "Magnet-linkki kopioitiin leikepöydälle"
+        "copyMagnetSuccess": "Magnet-linkki kopioitiin leikepöydälle",
+        "copySuccess": "Teksti kopioitiin leikepöydälle"
       },
       "prompts": {
         "restartWebSystemApprove": "Jatka ja käynnistä uudestaan",
@@ -620,7 +622,8 @@
       "priorities": "Tärkeydet",
       "notificationsCaption": "Ilmoitukset",
       "histories": "Historiat",
-      "events": "Tapahtumat"
+      "events": "Tapahtumat",
+      "appearance": "Ulkoasu"
     },
     "advanced": "Edistynyt",
     "noUnsavedChanges": "Ei tallentamattomia muutoksia",

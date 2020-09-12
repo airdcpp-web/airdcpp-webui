@@ -218,7 +218,7 @@
       "connectionModeV6Option2": "Passive mode",
       "connectionIpV6Name": "IP address",
       "miscName": "Miscellaneous overrides",
-      "chatNotifyName": "Use chat notification",
+      "useMainChatNotifyName": "Use chat notification",
       "awayMessageName": "Away message",
       "showJoinsName": "Show joins/parts"
     }
@@ -252,6 +252,7 @@
   },
   "common": {    
     "actions": {
+      "copy": "Copia",
       "download": "Download",
       "downloadTo": "Scarica in...",
       "findNfo": "Find NFO",
@@ -271,7 +272,8 @@
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard"
+        "copyMagnetSuccess": "Magnet link was copied to clipboard",
+        "copySuccess": "Text was copied to clipboard"
       },
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
@@ -620,7 +622,8 @@
       "priorities": "Priorities",
       "notificationsCaption": "Notifications",
       "histories": "Histories",
-      "events": "Events"
+      "events": "Events",
+      "appearance": "Aspetto"
     },
     "advanced": "Avanzato",
     "noUnsavedChanges": "No unsaved changes",
