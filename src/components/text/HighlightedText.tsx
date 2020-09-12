@@ -12,7 +12,7 @@ import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { formatEmojis } from 'utils/EmojiFormat';
 
-import { MagnetHighlight, MeHighlight, ReleaseHighlight, UrlHighlight } from './highlights';
+import { HighlightBold, HighlightMagnet, HighlightUrlLink, HighlightTextLink } from './highlights';
 
 
 interface HighlightProps {
@@ -31,17 +31,17 @@ const getHighlightNode = (
   const { start, end } = highlight.position;
   const key = `${start}-${end}`;
   switch (highlight.type) {
-    case API.MessageHighlightTypeEnum.ME:
+    case API.MessageHighlightTypeEnum.BOLD:
+    case API.MessageHighlightTypeEnum.USER:
       return (
-        <MeHighlight
+        <HighlightBold
           key={ key }
           text={ highlight.text }
-          location={ location }
         />
       );
-    case API.MessageHighlightTypeEnum.RELEASE_NAME:
+    case API.MessageHighlightTypeEnum.LINK_TEXT:
       return (
-        <ReleaseHighlight
+        <HighlightTextLink
           key={ key }
           highlightId={ highlight.id }
           text={ highlight.text }
@@ -50,11 +50,10 @@ const getHighlightNode = (
           entityId={ entityId }
         />
       );
-    case API.MessageHighlightTypeEnum.TEMP_SHARE:
-    case API.MessageHighlightTypeEnum.URL: {
+    case API.MessageHighlightTypeEnum.LINK_URL: {
       if (highlight.text.startsWith('magnet:?') && highlight.content_type !== null) {
         return (
-          <MagnetHighlight
+          <HighlightMagnet
             key={ key }
             text={ highlight.text }
             dupe={ highlight.dupe }
@@ -70,7 +69,7 @@ const getHighlightNode = (
       }
 
       return (
-        <UrlHighlight
+        <HighlightUrlLink
           key={ key }
           text={ highlight.text }
           location={ location }

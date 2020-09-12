@@ -12,11 +12,10 @@
   margin-right: 5px;
 }
 
-.message-list .item .text .highlight.magnet,
-.message-list .item .text .highlight.release {
+.message-list .item .text .highlight.link {
   color: #4183c4;
 }
 
-.message-list .item .text .highlight.me {
+.message-list .item .text .highlight.bold {
   font-weight: bold;
 }

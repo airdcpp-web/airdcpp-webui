@@ -23,7 +23,7 @@ const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (item
 };
 
 
-export interface MagnetHighlightProps {
+export interface HighlightMagnetProps {
   highlightId: number;
   text: string;
   contentType: API.FileContentType;
@@ -35,7 +35,7 @@ export interface MagnetHighlightProps {
   t: TFunction;
 }
 
-export const MagnetHighlight: React.FC<MagnetHighlightProps> = ({
+export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
   text, dupe, user, contentType, addDownload, t, highlightRemoteMenuId, highlightId, entityId
 }) => {
   const magnet = parseMagnetLink(text);
@@ -88,7 +88,7 @@ export const MagnetHighlight: React.FC<MagnetHighlightProps> = ({
   // Use table dropdown to avoid issues with overflow and dupe coloring
   return (
     <TableDownloadMenu
-      className={ cx('highlight magnet', dupeToStringType(dupe)) }
+      className={ cx('highlight magnet url link', dupeToStringType(dupe)) }
       caption={ caption }
       user={ downloadUser }
       itemInfoGetter={ () => downloadData }

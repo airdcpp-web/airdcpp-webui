@@ -8,7 +8,7 @@ import * as API from 'types/api';
 import React from 'react';
 
 
-export interface ReleaseHighlightProps {
+export interface HighlightTextLinkProps {
   text: string;
   location: Location;
   highlightRemoteMenuId?: string;
@@ -16,11 +16,11 @@ export interface ReleaseHighlightProps {
   highlightId: number;
 }
 
-export const ReleaseHighlight: React.FC<ReleaseHighlightProps> = ({ 
+export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({ 
   text, highlightRemoteMenuId, highlightId, entityId 
 }) => (
   <TableActionMenu
-    className="highlight release"
+    className="highlight text link"
     actions={ MessageHighlightActions }
     itemData={{
       id: highlightId,

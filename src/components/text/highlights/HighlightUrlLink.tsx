@@ -33,14 +33,14 @@ const onClickLink = (evt: React.MouseEvent, location: Location) => {
   }
 };
 
-export interface UrlHighlightProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface HighlightUrlLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   text: string;
   location: Location;
 }
 
-export const UrlHighlight: React.FC<UrlHighlightProps> = ({ text, location, ...other }) => (
+export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, location, ...other }) => (
   <a
-    className="highlight url"
+    className="highlight url link"
     href={ text }
     target="_blank"
     rel="noreferrer"

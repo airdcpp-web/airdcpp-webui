@@ -49,16 +49,6 @@ export interface Dupe {
   paths: string[];
 }
 
-/*export interface FileItemInfo {
-  id: IdType;
-  name: string;
-  tth: string;
-  size: number;
-  type: FileItemType;
-  path: string;
-  dupe: Dupe;
-}*/
-
 
 // MESSAGES
 export interface ChatMessageCounts {
@@ -91,10 +81,10 @@ export const enum SeverityEnum {
 }
 
 export const enum MessageHighlightTypeEnum {
-  URL = 'url',
-  RELEASE_NAME = 'release',
-  TEMP_SHARE = 'temp_share',
-  ME = 'me',
+  LINK_URL = 'link_url',
+  LINK_TEXT = 'link_text',
+  USER = 'user',
+  BOLD = 'bold',
 }
 
 export interface MessageHighlight {
@@ -105,6 +95,7 @@ export interface MessageHighlight {
     end: number;
   };
   type: MessageHighlightTypeEnum;
+  tag: string;
   dupe: Dupe | null;
   content_type: FileContentType | null;
 }

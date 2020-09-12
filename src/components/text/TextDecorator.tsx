@@ -11,7 +11,7 @@ import { formatEmojis } from 'utils/EmojiFormat';
 
 import LinkifyIt from 'linkify-it';
 import tlds from 'tlds';
-import { UrlHighlight } from './highlights';
+import { HighlightUrlLink } from './highlights';
 
 const linkify = new LinkifyIt();
 linkify.tlds(tlds);
@@ -70,7 +70,7 @@ export const TextDecorator: React.FC<TextDecoratorProps> = memo((
     <ReactLinkify 
       matchDecorator={ matchDecorator }
       componentDecorator={ (decoratedHref, decoratedText, key) => (
-        <UrlHighlight
+        <HighlightUrlLink
           key={ key }
           text={ decoratedText }
           href={ decoratedHref }
