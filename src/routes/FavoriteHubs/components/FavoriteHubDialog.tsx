@@ -86,7 +86,7 @@ const Fields: UI.FormFieldDefinition[] = [
       }
     ], 
   }, {
-    key: 'connectivity_v4',
+    key: 'connectivityV4',
     title: 'Connectivity setting overrides (IPv4)',
     type: API.SettingTypeEnum.STRUCT,
     definitions: [
@@ -104,7 +104,7 @@ const Fields: UI.FormFieldDefinition[] = [
       }
     ]
   }, {
-    key: 'connectivity_v6',
+    key: 'connectivityV6',
     title: 'Connectivity setting overrides (IPv6)',
     type: API.SettingTypeEnum.STRUCT,
     definitions: [
