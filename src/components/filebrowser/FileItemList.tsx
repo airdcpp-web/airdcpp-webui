@@ -12,23 +12,24 @@ import { translate } from 'utils/TranslationUtils';
 
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
-export type FileItemClickHandler = (name: string) => void;
+export type FileItemClickHandler = (item: API.FilesystemItem) => void;
 
 export interface FileItemProps {
   item: API.FilesystemItem;
   itemClickHandler: FileItemClickHandler;
   itemIconGetter?: FileItemIconGetter;
   t: TFunction;
+  selectMode: UI.FileSelectModeEnum;
 }
 
-const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter, t }) => {
+const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter, t, selectMode }) => {
   const isFile = item.type.id === 'file';
   return (
     <tr>
       <td>
         <FormattedFile 
           typeInfo={ item.type } 
-          onClick={ isFile ? null : () => itemClickHandler(item.name) }
+          onClick={ isFile && selectMode === UI.FileSelectModeEnum.DIRECTORY ? null : () => itemClickHandler(item) }
           caption={ item.name }
         />
         { !!itemIconGetter && itemIconGetter(item) }
@@ -43,6 +44,7 @@ const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGet
 export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler' | 'itemIconGetter'> {
   items: API.FilesystemItem[];
   t: TFunction;
+  selectMode: UI.FileSelectModeEnum;
 }
 
 class FileItemList extends React.Component<FileItemListProps> {
@@ -66,7 +68,7 @@ class FileItemList extends React.Component<FileItemListProps> {
   }
 
   render() {
-    const { items, itemClickHandler, itemIconGetter, t } = this.props;
+    const { items, itemClickHandler, itemIconGetter, t, selectMode } = this.props;
     return (
       <div className="table-container">
         <table className="ui striped compact table">
@@ -80,6 +82,7 @@ class FileItemList extends React.Component<FileItemListProps> {
             { items.sort(this.sort).map(item => (
               <FileItem 
                 key={ item.name }
+                selectMode={ selectMode }
                 item={ item }
                 itemClickHandler={ itemClickHandler }
                 itemIconGetter={ itemIconGetter }

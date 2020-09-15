@@ -3,6 +3,7 @@ export const enum SettingTypeEnum {
   BOOLEAN = 'boolean',
   STRING = 'string',
   TEXT = 'text',
+  EXISTING_FILE_PATH = 'existing_file_path',
   FILE_PATH = 'file_path',
   DIRECTORY_PATH = 'directory_path',
   STRUCT = 'struct',

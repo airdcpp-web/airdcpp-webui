@@ -6,6 +6,8 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
@@ -72,6 +74,7 @@ class DownloadFileBrowser extends React.Component<DownloadFileBrowserProps> {
         onDirectoryChanged={ this.onDirectoryChanged }
         historyId={ FilesystemConstants.LOCATION_DOWNLOAD }
         itemIconGetter={ this.itemIconGetter }
+        selectMode={ UI.FileSelectModeEnum.DIRECTORY }
       />
     );
   }

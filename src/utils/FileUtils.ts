@@ -1,5 +1,9 @@
 
 export const getFilePath = (fullPath: string): string => {
+  if (isDirectory(fullPath)) {
+    return fullPath;
+  }
+  
   return fullPath.replace(/[^\\\/]*$/, '');
 };
 

@@ -46,6 +46,7 @@ const typeToComponent = (
     case API.SettingTypeEnum.BOOLEAN: return tcomb.Bool;
     case API.SettingTypeEnum.STRING:
     case API.SettingTypeEnum.TEXT:
+    case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.FILE_PATH:
     case API.SettingTypeEnum.HUB_URL:
     case API.SettingTypeEnum.DIRECTORY_PATH: return tcomb.Str;
@@ -176,6 +177,15 @@ const intTransformer = {
   },
 };
 
+const parseFileSelectMode = (settingType: API.SettingTypeEnum) => {
+  switch (settingType) {
+    case API.SettingTypeEnum.EXISTING_FILE_PATH: return UI.FileSelectModeEnum.EXISTING_FILE;
+    case API.SettingTypeEnum.FILE_PATH: return UI.FileSelectModeEnum.FILE;
+    case API.SettingTypeEnum.DIRECTORY_PATH: return UI.FileSelectModeEnum.DIRECTORY;
+    default: throw new Error(`${settingType} is not a file select mode`);
+  }
+};
+
 const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
   const options: form.TcombOptions = {};
   switch (type) {
@@ -186,15 +196,14 @@ const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
       };
       break;
     } 
-    //case FieldTypes.FILE_PATH:
+    // case API.SettingTypeEnum.FILE_PATH: // TODO
+    case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.DIRECTORY_PATH: {
       options.factory = tcomb.form.Textbox;
       options.template = BrowseField;
 
-      // TODO: file selector dialog
       options.config = {
-        //isFile: type === FieldTypes.FILE_PATH
-        isFile: false
+        fileSelectMode: parseFileSelectMode(type),
       };
       break;
     }

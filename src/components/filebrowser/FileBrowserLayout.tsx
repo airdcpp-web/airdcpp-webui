@@ -53,12 +53,13 @@ CreateDirectorySection.propTypes = {
   handleAction: PropTypes.func.isRequired
 };
 
-
 export interface FileBrowserLayoutProps extends Pick<FileItemListProps, 'itemIconGetter'> {
   historyId?: string;
   initialPath: string;
   onDirectoryChanged: (path: string) => void;
+  onFileSelected?: (path: string) => void;
   selectedNameFormatter?: SelectedNameFormatter;
+  selectMode: UI.FileSelectModeEnum;
 }
 
 interface State {
@@ -68,6 +69,9 @@ interface State {
   error: string | null;
 }
 
+const joinDirectory = (path: string, directoryName: string, separator: string) => {
+  return path + directoryName + separator;
+};
 
 type Props = FileBrowserLayoutProps & WithTranslation;
 class FileBrowserLayout extends React.Component<Props, State> {
@@ -186,14 +190,19 @@ class FileBrowserLayout extends React.Component<Props, State> {
     this.initialFetchCompleted = true;
   }
 
-  _appendDirectoryName = (directoryName: string) => {
-    return this.state.currentDirectory + directoryName + this.pathSeparator;
-  }
-
-  _handleSelect = (directoryName: string) => {
-    const nextPath = this._appendDirectoryName(directoryName);
-
-    this.fetchItems(nextPath);
+  _handleSelect = (item: API.FilesystemItem) => {
+    const { currentDirectory } = this.state;
+    if (item.type.id !== 'file') {
+      // Directory/drive/other
+      const nextPath = joinDirectory(currentDirectory, item.name, this.pathSeparator);
+      this.fetchItems(nextPath);
+    } else {
+      // File
+      const { onFileSelected } = this.props;
+      if (onFileSelected) {
+        onFileSelected(currentDirectory + item.name);
+      }
+    }
   }
 
   _createDirectory = (directoryName: string) => {
@@ -215,7 +224,7 @@ class FileBrowserLayout extends React.Component<Props, State> {
 
   render() {
     const { currentDirectory, error, items, loading } = this.state;
-    const { selectedNameFormatter, itemIconGetter, t } = this.props;
+    const { selectedNameFormatter, itemIconGetter, t, selectMode } = this.props;
 
     if (loading) {
       return <Loader text={ translate('Loading items', t, UI.Modules.COMMON) }/>;
@@ -245,9 +254,10 @@ class FileBrowserLayout extends React.Component<Props, State> {
           items={ items } 
           itemClickHandler={ this._handleSelect }
           itemIconGetter={ itemIconGetter }
+          selectMode={ selectMode }
           t={ t }
         />
-        { !!this.state.currentDirectory && hasEditAccess && (
+        { !!this.state.currentDirectory && hasEditAccess && selectMode !== UI.FileSelectModeEnum.EXISTING_FILE  && (
           <CreateDirectorySection 
             handleAction={ this._createDirectory }
             t={ t }

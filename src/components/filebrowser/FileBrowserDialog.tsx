@@ -4,7 +4,7 @@ import Modal, { ModalProps } from 'components/semantic/Modal';
 
 import FileBrowserLayout, { FileBrowserLayoutProps } from './FileBrowserLayout';
 
-import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import { Translation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
@@ -13,14 +13,14 @@ import IconConstants from 'constants/IconConstants';
 
 
 interface FileBrowserDialogProps 
-  extends Omit<ModalProps, 'title' | keyof ModalRouteDecoratorChildProps>, 
-  Pick<FileBrowserLayoutProps, 'historyId' | 'initialPath'> {
+  extends Omit<ModalProps, 'title'>, 
+  Pick<FileBrowserLayoutProps, 'historyId' | 'initialPath' | 'selectMode'> {
     
   onConfirm: (path: string) => void;
   title?: React.ReactNode;
 }
 
-class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRouteDecoratorChildProps> {
+export class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
   static displayName = 'FileBrowserDialog';
 
   /*static propTypes = {
@@ -48,6 +48,10 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
     });
   }
 
+  onFileSelected = (path: string) => {
+    this.props.onConfirm(path);
+  }
+
   onConfirm = () => {
     this.props.onConfirm(this.state.currentPath);
     return Promise.resolve();
@@ -55,15 +59,17 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
 
   render() {
     const { currentPath } = this.state;
-    const { title, initialPath, historyId } = this.props;
+    const { title, initialPath, historyId, selectMode, ...other } = this.props;
+
+    const showApprove = selectMode === UI.FileSelectModeEnum.DIRECTORY ? true : false;
     return (
       <Translation>
         { t => (
           <Modal
-            { ...this.props }
+            { ...other }
             className="file-browser-dialog"
             title={ title || translate('Browse...', t, UI.Modules.COMMON) } 
-            onApprove={ this.onConfirm }  
+            onApprove={ showApprove ? this.onConfirm : undefined }  
             closable={ true }
             fullHeight={ true }
             approveDisabled={ currentPath.length === 0 }
@@ -73,7 +79,9 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
             <FileBrowserLayout
               initialPath={ initialPath }
               onDirectoryChanged={ this.onDirectoryChanged }
+              onFileSelected={ this.onFileSelected }
               historyId={ historyId }
+              selectMode={ selectMode }
             />
           </Modal>
         ) }
@@ -82,7 +90,11 @@ class FileBrowserDialog extends React.Component<FileBrowserDialogProps & ModalRo
   }
 }
 
-export default ModalRouteDecorator<FileBrowserDialogProps>(
-  FileBrowserDialog,
+export const FileBrowserRouteDialog = ModalRouteDecorator<FileBrowserDialogProps>(
+  (props) => (
+    <FileBrowserDialog
+      {...props}
+    />
+  ),
   'browse'
 );

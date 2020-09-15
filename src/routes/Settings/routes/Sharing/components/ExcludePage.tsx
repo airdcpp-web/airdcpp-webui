@@ -9,14 +9,15 @@ import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/menu';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import FileBrowserDialog from 'components/filebrowser/FileBrowserDialog';
+import { FileBrowserRouteDialog } from 'components/filebrowser';
 import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
-//import * as UI from 'types/ui';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+
+import * as UI from 'types/ui';
 
 
 const Row: React.FC<{ path: string; }> = ({ path }) => (
@@ -94,7 +95,7 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
           </table>
         ) }
 
-        <FileBrowserDialog
+        <FileBrowserRouteDialog
           onConfirm={ path => runBackgroundSocketAction(
             () => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }), 
             moduleT.plainT
@@ -102,6 +103,7 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
           initialPath=""
           historyId={ FilesystemConstants.LOCATION_GENERIC }
           subHeader={ translate('Add excluded path') }
+          selectMode={ UI.FileSelectModeEnum.DIRECTORY }
         />
       </div>
     );
