@@ -23,6 +23,7 @@ export interface ModalProps {
   closable?: boolean;
   onApprove?: () => Promise<void>;
   onReject?: () => void;
+  onClose?: () => void;
   approveCaption?: React.ReactNode;
   approveDisabled?: boolean;
   fullHeight?: boolean;
@@ -139,6 +140,10 @@ class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChil
     }
     
     this.returnOnClose = true;
+
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   }
 
   onApprove = () => {

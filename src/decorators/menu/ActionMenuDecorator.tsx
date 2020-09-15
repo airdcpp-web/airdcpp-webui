@@ -16,6 +16,7 @@ import { Trans } from 'react-i18next';
 import { parseTranslationModules, toI18nKey } from 'utils/TranslationUtils';
 import RemoteMenuDecorator from './RemoteMenuDecorator';
 import Loader from 'components/semantic/Loader';
+import { MenuFormDialog, MenuFormDialogProps } from 'components/menu/MenuFormDialog';
 
 export type OnClickActionHandler = (actionId: string) => void;
 
@@ -209,12 +210,15 @@ const notError = <ItemDataT extends UI.ActionItemDataValueType>(
   id: string | MenuType<ItemDataT>
 ) => typeof id !== 'string';
 
+interface State {
+  formHandler: MenuFormDialogProps | null;
+}
 
 export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionItemDataValueType>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
   type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT;
-  class ActionMenuDecorator extends React.PureComponent<Props> {
+  class ActionMenuDecorator extends React.PureComponent<Props, State> {
     /*static propTypes = {
 
       // Item to be passed to the actions
@@ -274,6 +278,10 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
           [] as ReturnType<typeof parseMenu>[]
         );
     }
+
+    state: State = {
+      formHandler: null
+    };
 
     getPropsArray = () => {
       let { children } = this.props;
@@ -338,58 +346,80 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       return children;
     }
 
+    onShowForm = (formHandler: MenuFormDialogProps) => {
+      this.setState({
+        formHandler
+      });
+    }
+
+    onCloseForm = () => {
+      this.setState({
+        formHandler: null
+      });
+    }
+
     render() {
+      const { formHandler } = this.state;
       return (
-        <ActionHandlerDecorator<ItemDataT>>
-          { ({ onClickAction }) => {
-            let { actions, children, itemData, remoteMenuId, entityId, ...other } = this.props;
+        <>
+          <ActionHandlerDecorator<ItemDataT>>
+            { ({ onClickAction }) => {
+              let { actions, children, itemData, remoteMenuId, entityId, ...other } = this.props;
 
-            /*const menus = this.getMenus();
+              /*const menus = this.getMenus();
 
-            // Are there any items to show?
-            if (!menus.some(notError)) {
-              if (this.props.button) {
-                return null;
-              }
+              // Are there any items to show?
+              if (!menus.some(notError)) {
+                if (this.props.button) {
+                  return null;
+                }
 
-              const dropdownClassName = classNames(
-                { 'no-access': menus.indexOf('no-access') !== -1 },
-                { 'filtered': menus.indexOf('filtered') !== -1 },
-                this.props.className,
-              );
+                const dropdownClassName = classNames(
+                  { 'no-access': menus.indexOf('no-access') !== -1 },
+                  { 'filtered': menus.indexOf('filtered') !== -1 },
+                  this.props.className,
+                );
+
+                return (
+                  <EmptyDropdown
+                    caption={ this.props.caption }
+                    className={ dropdownClassName }
+                  />
+                );
+              }*/
 
               return (
-                <EmptyDropdown
-                  caption={ this.props.caption }
-                  className={ dropdownClassName }
-                />
+                <Component 
+                  { ...other as ActionMenuDecoratorChildProps & DropdownComponentPropsT }
+                >
+                  { (onClickMenuItem?: MenuItemClickHandler) => (
+                    <RemoteMenuDecorator
+                      selectedIds={ this.getPropsArray()
+                        .map(props => props.itemData)
+                        .map(data => parseItemIds(data)) }
+                      remoteMenuIds={ this.getPropsArray() 
+                        .map(props => props.remoteMenuId)
+                      }
+                      onClickMenuItem={ onClickMenuItem }
+                      entityId={ this.getPropsArray().find(p => p.entityId) ? 
+                        this.getPropsArray().find(p => p.entityId)?.entityId : undefined 
+                      }
+                      onShowForm={ this.onShowForm }
+                    >
+                      { remoteMenus => this.getChildren(onClickAction, remoteMenus, onClickMenuItem) }
+                    </RemoteMenuDecorator> 
+                  ) }
+                </Component>
               );
-            }*/
-
-            return (
-              <Component 
-                { ...other as ActionMenuDecoratorChildProps & DropdownComponentPropsT }
-              >
-                { (onClickMenuItem?: MenuItemClickHandler) => (
-                  <RemoteMenuDecorator
-                    selectedIds={ this.getPropsArray()
-                      .map(props => props.itemData)
-                      .map(data => parseItemIds(data)) }
-                    remoteMenuIds={ this.getPropsArray() 
-                      .map(props => props.remoteMenuId)
-                    }
-                    onClickMenuItem={ onClickMenuItem }
-                    entityId={ this.getPropsArray().find(p => p.entityId) ? 
-                      this.getPropsArray().find(p => p.entityId)?.entityId : undefined 
-                    }
-                  >
-                    { remoteMenus => this.getChildren(onClickAction, remoteMenus, onClickMenuItem) }
-                  </RemoteMenuDecorator> 
-                ) }
-              </Component>
-            );
-          } }
-        </ActionHandlerDecorator>
+            } }
+          </ActionHandlerDecorator>
+          { !!formHandler && !!formHandler.fieldDefinitions && (
+            <MenuFormDialog
+              { ...formHandler }
+              onClose={ this.onCloseForm }
+            />
+          ) }
+        </>
       );
     }
   }

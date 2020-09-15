@@ -1,3 +1,5 @@
+import { FormFieldDefinition } from 'types/ui/form';
+
 export type ContextMenuItemIconInfo = { [key in string]: string };
 
 export interface ContextMenuItem {
@@ -6,4 +8,5 @@ export interface ContextMenuItem {
   icon: ContextMenuItemIconInfo;
   hook_id: string;
   urls: string[];
+  form_definitions?: FormFieldDefinition[];
 }
