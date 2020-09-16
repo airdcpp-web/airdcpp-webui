@@ -954,6 +954,7 @@
     "opened": "Opened",
     "downloaded": "Downloaded",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Download failed",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {

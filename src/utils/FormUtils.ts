@@ -196,7 +196,7 @@ const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
       };
       break;
     } 
-    // case API.SettingTypeEnum.FILE_PATH: // TODO
+    case API.SettingTypeEnum.FILE_PATH:
     case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.DIRECTORY_PATH: {
       options.factory = tcomb.form.Textbox;

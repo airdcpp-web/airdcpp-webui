@@ -1,63 +1,34 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
 
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
+import { translate } from 'utils/TranslationUtils';
 
 import BrowserBar, { SelectedNameFormatter } from 'components/browserbar';
 import Message from 'components/semantic/Message';
-import Accordion from 'components/semantic/Accordion';
-import ActionInput, { ActionInputProps } from 'components/semantic/ActionInput';
-
 import Loader from 'components/semantic/Loader';
+
 import FileItemList, { FileItemListProps } from './FileItemList';
+import { CreateDirectorySection } from './CreateDirectorySection';
+import { FileNameSection } from './FileNameSection';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import './style.css';
-import { TFunction } from 'i18next';
-import { translate } from 'utils/TranslationUtils';
-import { withTranslation, WithTranslation } from 'react-i18next';
-import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
 
-
-interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
-  t: TFunction;
-}
-
-const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction, t }) => (
-  <Accordion>
-    <div className="title create-section">
-      <Icon icon={ IconConstants.DROPDOWN }/>
-      { translate('Create directory', t, UI.Modules.COMMON) }
-    </div>
-
-    <div className="content create-section">
-      <ActionInput 
-        caption={ translate('Create', t, UI.Modules.COMMON) } 
-        icon={ IconConstants.CREATE }
-        handleAction={ handleAction } 
-        placeholder={ translate('Directory name', t, UI.Modules.COMMON) }
-      />
-    </div>
-  </Accordion>
-);
-
-CreateDirectorySection.propTypes = {
-  // Function to call with the value
-  handleAction: PropTypes.func.isRequired
-};
 
 export interface FileBrowserLayoutProps extends Pick<FileItemListProps, 'itemIconGetter'> {
   historyId?: string;
   initialPath: string;
+  currentFileName?: string;
   onDirectoryChanged: (path: string) => void;
-  onFileSelected?: (path: string) => void;
+  onFileSelected?: (fileName: string) => void;
   selectedNameFormatter?: SelectedNameFormatter;
   selectMode: UI.FileSelectModeEnum;
 }
@@ -198,9 +169,9 @@ class FileBrowserLayout extends React.Component<Props, State> {
       this.fetchItems(nextPath);
     } else {
       // File
-      const { onFileSelected } = this.props;
+      const { onFileSelected } = this.props;        
       if (onFileSelected) {
-        onFileSelected(currentDirectory + item.name);
+        onFileSelected(item.name);
       }
     }
   }
@@ -224,7 +195,7 @@ class FileBrowserLayout extends React.Component<Props, State> {
 
   render() {
     const { currentDirectory, error, items, loading } = this.state;
-    const { selectedNameFormatter, itemIconGetter, t, selectMode } = this.props;
+    const { selectedNameFormatter, itemIconGetter, t, selectMode, currentFileName, onFileSelected } = this.props;
 
     if (loading) {
       return <Loader text={ translate('Loading items', t, UI.Modules.COMMON) }/>;
@@ -255,6 +226,7 @@ class FileBrowserLayout extends React.Component<Props, State> {
           itemClickHandler={ this._handleSelect }
           itemIconGetter={ itemIconGetter }
           selectMode={ selectMode }
+          currentFileName={ currentFileName }
           t={ t }
         />
         { !!this.state.currentDirectory && hasEditAccess && selectMode !== UI.FileSelectModeEnum.EXISTING_FILE  && (
@@ -263,6 +235,13 @@ class FileBrowserLayout extends React.Component<Props, State> {
             t={ t }
           />
         ) }
+        { selectMode === UI.FileSelectModeEnum.FILE && !!onFileSelected && currentFileName !== undefined && (
+          <FileNameSection
+            currentFileName={ currentFileName }
+            onChange={ onFileSelected }
+            t={ t }
+          />
+        )}
       </div>
     );
   }

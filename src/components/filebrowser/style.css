@@ -15,6 +15,10 @@
   max-width: calc(100% - 25px);
 }
 
+.file-browser .table td:first-child .file-name.selected {
+  font-weight: bold;
+}
+
 .file-browser .table td:first-child > i {
   float: right;
 }

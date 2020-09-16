@@ -20,9 +20,10 @@ export interface FileItemProps {
   itemIconGetter?: FileItemIconGetter;
   t: TFunction;
   selectMode: UI.FileSelectModeEnum;
+  selected?: boolean;
 }
 
-const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter, t, selectMode }) => {
+const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGetter, t, selectMode, selected }) => {
   const isFile = item.type.id === 'file';
   return (
     <tr>
@@ -31,6 +32,7 @@ const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGet
           typeInfo={ item.type } 
           onClick={ isFile && selectMode === UI.FileSelectModeEnum.DIRECTORY ? null : () => itemClickHandler(item) }
           caption={ item.name }
+          selected={ selected }
         />
         { !!itemIconGetter && itemIconGetter(item) }
       </td>
@@ -45,6 +47,7 @@ export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler
   items: API.FilesystemItem[];
   t: TFunction;
   selectMode: UI.FileSelectModeEnum;
+  currentFileName?: string;
 }
 
 class FileItemList extends React.Component<FileItemListProps> {
@@ -68,7 +71,7 @@ class FileItemList extends React.Component<FileItemListProps> {
   }
 
   render() {
-    const { items, itemClickHandler, itemIconGetter, t, selectMode } = this.props;
+    const { items, itemClickHandler, itemIconGetter, t, selectMode, currentFileName } = this.props;
     return (
       <div className="table-container">
         <table className="ui striped compact table">
@@ -86,6 +89,7 @@ class FileItemList extends React.Component<FileItemListProps> {
                 item={ item }
                 itemClickHandler={ itemClickHandler }
                 itemIconGetter={ itemIconGetter }
+                selected={ item.name === currentFileName }
                 t={ t }
               />
             )) }

@@ -10,6 +10,7 @@ import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 import IconConstants from 'constants/IconConstants';
+import { getFileName, getFilePath } from 'utils/FileUtils';
 
 
 interface FileBrowserDialogProps 
@@ -20,7 +21,12 @@ interface FileBrowserDialogProps
   title?: React.ReactNode;
 }
 
-export class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
+interface State {
+  currentPath: string;
+  currentFileName: string;
+}
+
+export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, State> {
   static displayName = 'FileBrowserDialog';
 
   /*static propTypes = {
@@ -38,8 +44,9 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
     initialPath: '',
   };
 
-  state = {
-    currentPath: this.props.initialPath,
+  state: State = {
+    currentPath: getFilePath(this.props.initialPath),
+    currentFileName: getFileName(this.props.initialPath),
   };
 
   onDirectoryChanged = (path: string) => {
@@ -48,20 +55,48 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
     });
   }
 
-  onFileSelected = (path: string) => {
-    this.props.onConfirm(path);
+  onFileSelected = (fileName: string) => {
+    const { selectMode, onConfirm } = this.props;
+    if (selectMode === UI.FileSelectModeEnum.EXISTING_FILE) {
+      onConfirm(this.state.currentPath + fileName);
+    } else {
+      this.setState({
+        currentFileName: fileName,
+      });
+    }
   }
 
   onConfirm = () => {
-    this.props.onConfirm(this.state.currentPath);
+    const { selectMode, onConfirm } = this.props;
+    if (selectMode === UI.FileSelectModeEnum.DIRECTORY) {
+      onConfirm(this.state.currentPath);
+    } else {
+      onConfirm(this.state.currentPath + this.state.currentFileName);
+    }
+
     return Promise.resolve();
   }
 
+  approveDisabled = () => {
+    const { currentPath, currentFileName } = this.state;
+    if (currentPath.length === 0) {
+      return true;
+    }
+
+    const { selectMode } = this.props;
+    if (selectMode === UI.FileSelectModeEnum.FILE && currentFileName.length === 0) {
+      return true;
+    }
+    
+    return false;
+  }
+
   render() {
-    const { currentPath } = this.state;
+    const { currentFileName } = this.state;
     const { title, initialPath, historyId, selectMode, ...other } = this.props;
 
-    const showApprove = selectMode === UI.FileSelectModeEnum.DIRECTORY ? true : false;
+    const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
+    const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE ? true : false;
     return (
       <Translation>
         { t => (
@@ -72,9 +107,9 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
             onApprove={ showApprove ? this.onConfirm : undefined }  
             closable={ true }
             fullHeight={ true }
-            approveDisabled={ currentPath.length === 0 }
+            approveDisabled={ this.approveDisabled() }
             approveCaption={ translate('Select', t, UI.Modules.COMMON) }
-            icon={ IconConstants.BROWSE }
+            icon={ selectDirectory ? IconConstants.BROWSE : IconConstants.FILE }
           >
             <FileBrowserLayout
               initialPath={ initialPath }
@@ -82,6 +117,7 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps> {
               onFileSelected={ this.onFileSelected }
               historyId={ historyId }
               selectMode={ selectMode }
+              currentFileName={ currentFileName }
             />
           </Modal>
         ) }

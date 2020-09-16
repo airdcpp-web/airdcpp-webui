@@ -10,7 +10,6 @@ import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { getFilePath } from 'utils/FileUtils';
 
 
 interface BrowseFieldConfig {
@@ -72,7 +71,7 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
         <FileBrowserDialog
           onConfirm={ onConfirm }
           subHeader={ locals.label }
-          initialPath={ getFilePath(locals.value ? locals.value : '') }
+          initialPath={ locals.value ? locals.value : '' }
           selectMode={ locals.config.fileSelectMode }
           historyId={ parseHistoryId() }
           onClose={ () => setDialogOpen(false) }
