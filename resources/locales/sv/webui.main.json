@@ -217,9 +217,9 @@
       "connectionModeV6Option0": "Aktivt läge",
       "connectionModeV6Option2": "Passivt läge",
       "connectionIpV6Name": "IP-adress",
-      "miscName": "Miscellaneous overrides",
+      "miscName": "Diverse åsidosättningar",
       "useMainChatNotifyName": "Använd chattavisering",
-      "awayMessageName": "Away message",
+      "awayMessageName": "\"Tillfälligt borta\"-meddelande",
       "showJoinsName": "Visa ansluter/kopplar från"
     }
   },
@@ -273,7 +273,7 @@
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
         "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare",
         "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Texten har kopierats till urklippet"
       },
       "prompts": {
         "restartWebSystemApprove": "Fortsätt och starta om",
@@ -876,7 +876,7 @@
           "notifyMentionMyNickName": "När mitt användarnamn nämns",
           "notifyPmUserName": "Privatmeddelanden (användare)",
           "notifyPmBotName": "Privatmeddelanden (botar)",
-          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
+          "notifyHubMessageName": "Hubbchattmeddelanden (endast i hubbar där chattaviseringar är aktiverade)",
           "notifyBundleStatusName": "Filsamlingsstatus ändrad",
           "notifyEventsInfoName": "Infohändelser",
           "notifyEventsWarningName": "Varningshändelser",
