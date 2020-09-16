@@ -1,20 +1,17 @@
 import React from 'react';
 
-import DownloadFileBrowser from './DownloadFileBrowser';
 import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';
 
-import LoginStore from 'stores/LoginStore';
-
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import { TFunction } from 'i18next';
+import { PathDownloadHandler } from '../../types';
 
 
 export interface DownloadSectionChildProps {
   t: TFunction;
-  downloadHandler: UI.PathDownloadHandler;
+  downloadHandler: PathDownloadHandler;
 }
 
 export interface DownloadSection {
@@ -81,19 +78,6 @@ export const getDownloadSections = (pathInfo: PathInfo) => {
       )
     }
   ];
-
-  if (LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW)) {
-    sections.push({
-      name: 'Browse',
-      key: 'browse',
-      component: ({ downloadHandler }) => (
-        <DownloadFileBrowser 
-          history={ historyPaths } 
-          downloadHandler={ downloadHandler }
-        />
-      )
-    });
-  }
 
   return sections;
 };

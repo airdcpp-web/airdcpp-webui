@@ -1,22 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { TFunction } from 'i18next';
+
+import IconConstants from 'constants/IconConstants';
 
 import Accordion from 'components/semantic/Accordion';
+import Icon from 'components/semantic/Icon';
 import Message from 'components/semantic/Message';
-import PathList from './PathList';
+
+import { translate } from 'utils/TranslationUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { PathDownloadHandler } from '../../types';
 
-import { TFunction } from 'i18next';
-import { translate } from 'utils/TranslationUtils';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import PathList from './PathList';
 
 
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];
-  downloadHandler: UI.PathDownloadHandler;
+  downloadHandler: PathDownloadHandler;
   t: TFunction;
 }
 

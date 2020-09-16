@@ -1,59 +1,23 @@
 //import PropTypes from 'prop-types';
 import React from 'react';
+import { TFunction } from 'i18next';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
-import { formatSize } from 'utils/ValueFormat';
+
 import Message from 'components/semantic/Message';
+
+import { translate } from 'utils/TranslationUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { PathDownloadHandler } from '../../types';
+import { PathListItem } from './PathListItem';
 
-import { TFunction } from 'i18next';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
-
-
-interface PathItemProps {
-  pathInfo: API.DiskSpaceInfo;
-  downloadHandler: UI.PathDownloadHandler;
-  t: TFunction;
-}
-
-const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: TFunction) => {
-  if (pathInfo.free_space <= 0) {
-    return pathInfo.path;
-  }
-
-  return ` (${t(
-    toI18nKey('spaceFree', UI.Modules.COMMON),
-    {
-      defaultValue: '{{freeSpace}} free',
-      replace: {
-        freeSpace: formatSize(pathInfo.free_space, t)
-      }
-    }
-  )})`;
-};
-
-const PathItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => (
-  <div className="item">
-    <Icon icon={ IconConstants.FOLDER }/>
-    <div className="content">
-      <a onClick={ evt => downloadHandler(pathInfo.path) }>
-        { pathInfo.path }
-        <span className="disk-info">
-          { formatFreeSpace(pathInfo, t) }
-        </span>
-      </a>
-    </div>
-  </div>
-);
 
 interface PathListProps {
-  downloadHandler: UI.PathDownloadHandler;
+  downloadHandler: PathDownloadHandler;
   paths: string[];
   t: TFunction;
 }
@@ -66,7 +30,7 @@ const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(
   ({ downloadHandler, pathInfos, t }) => (
     <div className="ui relaxed list">
       { pathInfos.map(pathInfo => (
-        <PathItem 
+        <PathListItem 
           key={ pathInfo.path } 
           pathInfo={ pathInfo } 
           downloadHandler={ downloadHandler }

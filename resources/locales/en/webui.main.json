@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Filename",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",

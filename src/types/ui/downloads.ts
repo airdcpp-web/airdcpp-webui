@@ -33,8 +33,6 @@ export interface DownloadableItemData<ItemT extends DownloadableItemInfo = Downl
   session: UI.SessionItemBase | undefined;
 }
 
-export type PathDownloadHandler = (path: string) => Promise<any>;
-
 type DownloadItemIdType = string;
 
 export type DownloadUserGetter<PropsT extends object> = (

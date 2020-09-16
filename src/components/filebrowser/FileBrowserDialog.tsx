@@ -17,7 +17,7 @@ interface FileBrowserDialogProps
   extends Omit<ModalProps, 'title'>, 
   Pick<FileBrowserLayoutProps, 'historyId' | 'initialPath' | 'selectMode'> {
     
-  onConfirm: (path: string) => void;
+  onConfirm: (path: string, directoryPath: string, fileName: string) => void;
   title?: React.ReactNode;
 }
 
@@ -58,7 +58,8 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
   onFileSelected = (fileName: string) => {
     const { selectMode, onConfirm } = this.props;
     if (selectMode === UI.FileSelectModeEnum.EXISTING_FILE) {
-      onConfirm(this.state.currentPath + fileName);
+      const { currentPath, currentFileName } = this.state;
+      onConfirm(currentPath + currentFileName, currentPath, currentFileName);
     } else {
       this.setState({
         currentFileName: fileName,
@@ -68,10 +69,11 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
 
   onConfirm = () => {
     const { selectMode, onConfirm } = this.props;
+    const { currentPath, currentFileName } = this.state;
     if (selectMode === UI.FileSelectModeEnum.DIRECTORY) {
-      onConfirm(this.state.currentPath);
+      onConfirm(currentPath, currentPath, currentFileName);
     } else {
-      onConfirm(this.state.currentPath + this.state.currentFileName);
+      onConfirm(currentPath + currentFileName, currentPath, currentFileName);
     }
 
     return Promise.resolve();
@@ -93,7 +95,7 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
 
   render() {
     const { currentFileName } = this.state;
-    const { title, initialPath, historyId, selectMode, ...other } = this.props;
+    const { title, initialPath, historyId, selectMode, icon, approveCaption, ...other } = this.props;
 
     const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
     const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE ? true : false;
@@ -108,8 +110,8 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
             closable={ true }
             fullHeight={ true }
             approveDisabled={ this.approveDisabled() }
-            approveCaption={ translate('Select', t, UI.Modules.COMMON) }
-            icon={ selectDirectory ? IconConstants.BROWSE : IconConstants.FILE }
+            approveCaption={ approveCaption || translate('Select', t, UI.Modules.COMMON) }
+            icon={ icon || (selectDirectory ? IconConstants.BROWSE : IconConstants.FILE) }
           >
             <FileBrowserLayout
               initialPath={ initialPath }

@@ -12,7 +12,6 @@ import IconConstants from 'constants/IconConstants';
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 import Icon, { IconType } from 'components/semantic/Icon';
-import { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
@@ -29,6 +28,7 @@ export interface ModalProps {
   fullHeight?: boolean;
   className?: string;
   dynamicHeight?: boolean;
+  returnTo?: string;
 
   // Header
   icon?: IconType;
@@ -38,7 +38,7 @@ export interface ModalProps {
 
 const NODE_ID = 'modals-node';
 
-class Modal extends React.Component<ModalProps & Partial<ModalRouteDecoratorChildProps>> {
+class Modal extends React.Component<ModalProps> {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,

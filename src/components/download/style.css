@@ -28,3 +28,9 @@
   font-size: 90%;
   font-style: italic;
 }
+
+.download-dialog .normal.layout .four.wide.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

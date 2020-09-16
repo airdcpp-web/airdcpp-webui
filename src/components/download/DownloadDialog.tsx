@@ -1,69 +1,35 @@
 //import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { Route, Switch } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import ShareConstants from 'constants/ShareConstants';
 import { default as HistoryConstants, HistoryStringEnum } from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
+import FilesystemConstants from 'constants/FilesystemConstants';
 import IconConstants from 'constants/IconConstants';
 
-import { getParentPath } from 'utils/FileUtils';
-import { useMobileLayout } from 'utils/BrowserUtils';
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import NotificationActions from 'actions/NotificationActions';
+import LoginStore from 'stores/LoginStore';
 
+import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
-import Dropdown from 'components/semantic/Dropdown';
-import MenuItemLink from 'components/semantic/MenuItemLink';
-import Modal from 'components/semantic/Modal';
+import Modal, { ModalProps } from 'components/semantic/Modal';
+import { FileBrowserDialog } from 'components/filebrowser';
+
+import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { toI18nKey, translate } from 'utils/TranslationUtils';
+import { addHistory } from 'services/api/HistoryApi';
+
+import { DownloadLayout, DownloadDataProps } from './layout';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { PathDownloadHandler } from './types';
 
 import './style.css';
 
-import { TFunction } from 'i18next';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
-import { useTranslation } from 'react-i18next';
-import { getDownloadSections, DownloadSection } from './sections';
-import { addHistory } from 'services/api/HistoryApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import NotificationActions from 'actions/NotificationActions';
-import { Grid } from 'components/semantic/Grid';
-
-
-interface LayoutProps {
-  menuItems: React.ReactNode[];
-  title: string;
-}
-
-const NormalLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
-  <Grid className="normal layout">
-    <div className="four wide column">
-      <div className="ui vertical fluid tabular menu">
-        { menuItems }
-      </div>
-    </div>
-    <div className="twelve wide stretched column">
-      <div className="ui segment main-content">
-        { children }
-      </div>
-    </div>
-  </Grid>
-);
-
-const MobileLayout: React.FC<LayoutProps> = ({ menuItems, title, children }) => (
-  <div className="mobile layout">
-    <Dropdown  
-      selection={ true }
-      caption={ title }
-    >
-      { menuItems }
-    </Dropdown>
-    <div className="ui segment main-content">
-      { children }
-    </div>
-  </div>
-);
 
 type DownloadItemIdType = string;
 
@@ -77,12 +43,9 @@ interface RouteProps {
 type DownloadDialogRouteProps = ModalRouteDecoratorChildProps<RouteProps>;
 
 interface DownloadDialogDataProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> 
-  extends DataProviderDecoratorChildProps {
+  extends DataProviderDecoratorChildProps, DownloadDataProps<ItemT> {
 
-  sharePaths: API.GroupedPath[];
-  favoritePaths: API.GroupedPath[];
-  historyPaths: string[];
-  itemInfo: ItemT;
+
 }
 
 
@@ -91,54 +54,24 @@ type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> = Do
   DownloadDialogRouteProps;
 
 
-
-
-const getMenuItem = (
-  section: DownloadSection, 
-  activeSection: string, 
-  onClick: (key: string) => void, 
-  t: TFunction
-) => (
-  <MenuItemLink 
-    key={ section.key }
-    onClick={ () => onClick(section.key) } 
-    active={ activeSection === section.key }
-  >
-    { t(toI18nKey(section.key, UI.Modules.COMMON), section.name) }
-    { !!section.list && (
-      <div className="ui small right label"> 
-        { section.list.length }
-      </div>
-    ) }
-  </MenuItemLink>
-);
-
 const DownloadDialog: React.FC<Props> = props => {
   const { t } = useTranslation();
   const modalRef = useRef<Modal>(null);
-  const [ activeSectionKey, setActiveSectionKey ] = useState('history');
 
-  const sections = React.useMemo(
-    () => {
-      const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-      const dupePaths = itemInfo.dupe ? itemInfo.dupe.paths.map(path => getParentPath(path)) : [];
-  
-      return getDownloadSections({
-        historyPaths, sharePaths, favoritePaths, dupePaths
-      });
-    },
-    []
-  );
+  const { 
+    downloadHandler, itemInfo, userGetter, match, 
+    session, historyPaths, favoritePaths, sharePaths, 
+    ...other 
+  } = props;
 
-  const handleDownload = async (path: string) => {
-    const { downloadHandler, itemInfo, userGetter, match, session } = props;
+  const handleDownload: PathDownloadHandler = async (targetPath, targetFilename) => {
     try {
       await downloadHandler(
         itemInfo, 
         !!userGetter ? userGetter(match.params.downloadItemId, props) : undefined, 
         {
-          target_name: itemInfo.name, // possibly allow changing this later...
-          target_directory: path,
+          target_name: !!targetFilename ? targetFilename : itemInfo.name,
+          target_directory: targetPath,
           priority: API.QueuePriorityEnum.DEFAULT,
         },
         session
@@ -159,7 +92,7 @@ const DownloadDialog: React.FC<Props> = props => {
     }
 
     runBackgroundSocketAction(
-      () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, path),
+      () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, targetPath),
       t
     );
 
@@ -168,35 +101,58 @@ const DownloadDialog: React.FC<Props> = props => {
     }
   };
 
-  const activeSection = sections.find(s => s.key === activeSectionKey);
-  if (!activeSection) {
-    return null;
-  }
+  const getInitialBrowsePath = () => {
+    const path = historyPaths.length > 0 ? historyPaths[historyPaths.length - 1] : '';
+    return itemInfo.type.id === 'directory' ? path : path + itemInfo.name;
+  };
 
-  const menuItems = sections.map(s => getMenuItem(s, activeSectionKey, setActiveSectionKey, t));
+  const handleBrowse = () => {
+    const { history } = props;
+    history.replace(`${match.url}/browse`);
+  };
 
-  const Component = useMobileLayout() ? MobileLayout : NormalLayout;
+  const commonDialogProps: ModalProps = {
+    subHeader: itemInfo.name,
+    title: translate('Download', t, UI.Modules.COMMON),
+    icon: IconConstants.DOWNLOAD,
+    closable: false,
+    returnTo: props.returnTo,
+  };
+
+  const hasFileBrowserAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
   return (
-    <Modal 
-      ref={ modalRef }
-      className="download-dialog" 
-      title={ translate('Download', t, UI.Modules.COMMON) }
-      closable={ true } 
-      icon={ IconConstants.DOWNLOAD }
-      fullHeight={ true }
-      { ...props }
-    >
-      <Component
-        key={ activeSection.key } // Ensure that section-specific data is refetched
-        menuItems={ menuItems }
-        title={ activeSection.name }
-      >
-        <activeSection.component
-          t={ t }
-          downloadHandler={ handleDownload }
+    <Switch>
+      <Route path={ `${match.path}/browse` }>
+        <FileBrowserDialog
+          onConfirm={ (path, directoryPath, fileName) => handleDownload(directoryPath, fileName) }
+          initialPath={ getInitialBrowsePath() }
+          selectMode={ 
+            itemInfo.type.id === 'directory' ? UI.FileSelectModeEnum.DIRECTORY : UI.FileSelectModeEnum.FILE 
+          }
+          historyId={ FilesystemConstants.LOCATION_DOWNLOAD }
+          approveCaption={ translate('Download', t, UI.Modules.COMMON) }
+          { ...commonDialogProps }
         />
-      </Component>
-    </Modal>
+      </Route>
+      <Route path={ match.path } exact>
+        <Modal 
+          ref={ modalRef }
+          className="download-dialog" 
+          fullHeight={ true }
+          { ...commonDialogProps }
+          { ...other }
+        >
+          <DownloadLayout
+            downloadHandler={ handleDownload }
+            handleBrowse={ hasFileBrowserAccess ? handleBrowse : undefined }
+            historyPaths={ historyPaths }
+            favoritePaths={ favoritePaths }
+            sharePaths={ sharePaths }
+            itemInfo={ itemInfo }
+          />
+        </Modal>
+      </Route>
+    </Switch>
   );
 };
 
