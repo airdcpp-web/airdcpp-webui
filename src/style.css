@@ -92,13 +92,13 @@ section#container-main,
   justify-content: space-between;
 }
 
-.layout.header .left {
+.layout.header .ui.header {
   max-width: 100%;
   padding: 5px 5px;
   display: inline-flex;
 }
 
-.layout.header.icon .left .content {
+.layout.header.icon .ui.header .content {
   /* "overflow: hidden" can't be used because of possible dropdowns */
   width: 90%;
   flex: 1 1;

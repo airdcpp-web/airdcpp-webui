@@ -94,7 +94,7 @@
   font-size: 1.5em;
 }
 
-.session-container.horizontal .session-header .header.left {
+.session-container.horizontal .session-header .ui.header {
   align-items: center;
 }
 

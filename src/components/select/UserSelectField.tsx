@@ -80,7 +80,7 @@ export interface UserSelectFieldProps extends
     
 }
 
-export const UserSelectField: React.FC<UserSelectFieldProps> = ({ offlineMessage, ...other }) => {
+export const UserSelectField: React.FC<UserSelectFieldProps> = ({ offlineMessage, styles, ...other }) => {
   const { t } = useTranslation();
   const formT = getModuleT(t, [UI.Modules.COMMON, UI.SubNamespaces.FORM]);
 
@@ -105,15 +105,23 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({ offlineMessage
         placeholder={ translate('Enter nick...', t, UI.Modules.COMMON) }
         valueField="nick"
         descriptionField="hub_name"
-        loadOptions={loadOptions}
+        loadOptions={ loadOptions }
         formatOptionLabel={(option) => (
           <HintedUserFormatter
-            option={option}
+            option={ option }
           />
         )}
-        formT={formT}
-        isClearable={true}
-        {...other}
+        formT={ formT }
+        isClearable={ true }
+        openMenuOnClick={ false }
+        openMenuOnFocus={ false }
+        { ...other }
+        styles={{
+          indicatorsContainer: () => ({
+            display: 'none',
+          }),
+          ...styles,
+        }}
       />
     </OfflineHubMessageDecorator>
   );
