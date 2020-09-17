@@ -58,8 +58,8 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
   onFileSelected = (fileName: string) => {
     const { selectMode, onConfirm } = this.props;
     if (selectMode === UI.FileSelectModeEnum.EXISTING_FILE) {
-      const { currentPath, currentFileName } = this.state;
-      onConfirm(currentPath + currentFileName, currentPath, currentFileName);
+      const { currentPath } = this.state;
+      onConfirm(currentPath + fileName, currentPath, fileName);
     } else {
       this.setState({
         currentFileName: fileName,
@@ -114,7 +114,7 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
             icon={ icon || (selectDirectory ? IconConstants.BROWSE : IconConstants.FILE) }
           >
             <FileBrowserLayout
-              initialPath={ initialPath }
+              initialPath={ getFilePath(initialPath) }
               onDirectoryChanged={ this.onDirectoryChanged }
               onFileSelected={ this.onFileSelected }
               historyId={ historyId }

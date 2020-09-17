@@ -297,6 +297,7 @@
       "mbits": "Hashing",
       "gbits": "Gbit/s"
     },
+    "filename": "Fichier",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
@@ -954,6 +955,7 @@
     "opened": "Opened",
     "downloaded": "Téléchargé",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Téléchargement échoué",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {

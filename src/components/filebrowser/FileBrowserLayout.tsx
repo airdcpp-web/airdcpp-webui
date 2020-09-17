@@ -75,7 +75,7 @@ class FileBrowserLayout extends React.Component<Props, State> {
     return LoginStore.systemInfo.platform === API.PlatformEnum.WINDOWS;
   }
 
-  initialFetchCompleted: boolean = false;
+  fetchRootOnError: boolean = true;
 
   constructor(props: Props) {
     super(props);
@@ -139,8 +139,10 @@ class FileBrowserLayout extends React.Component<Props, State> {
   }
 
   onFetchFailed = (error: Error) => {
-    if (!this.initialFetchCompleted) {
-      // The path doesn't exists, go to root
+    if (this.fetchRootOnError) {
+      this.fetchRootOnError = false;
+
+      // Initial path doesn't exists, go to root
       this.fetchItems(this.getRootPath());
       return;
     }
@@ -158,7 +160,7 @@ class FileBrowserLayout extends React.Component<Props, State> {
       loading: false
     });
 
-    this.initialFetchCompleted = true;
+    this.fetchRootOnError = false;
   }
 
   _handleSelect = (item: API.FilesystemItem) => {

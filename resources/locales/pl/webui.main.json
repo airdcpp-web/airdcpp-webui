@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Nazwa pliku",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
@@ -954,6 +955,7 @@
     "opened": "Opened",
     "downloaded": "Pobrane",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Download failed",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {

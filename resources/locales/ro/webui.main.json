@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Nume fisier",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Azi",
@@ -954,6 +955,7 @@
     "opened": "Deschis",
     "downloaded": "Descarcat",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Descarcare nereusita",
     "notifications": {
       "fileHasFinishedDownloading": "Fisierul sa terminat de descarcat",
       "actions": {

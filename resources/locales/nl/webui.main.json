@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Bestandsnaam",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Vandaag",
@@ -954,6 +955,7 @@
     "opened": "Geopend",
     "downloaded": "Gedownload",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Download mislukt",
     "notifications": {
       "fileHasFinishedDownloading": "Bestand is gedownload",
       "actions": {

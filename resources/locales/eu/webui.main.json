@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Fitxategi izena",
     "xBytes": "{{bytes}} byteak",
     "unitsPerSecond": "{{units}}/s",
     "today": "Gaur",
@@ -954,6 +955,7 @@
     "opened": "Irekita",
     "downloaded": "Jaitsita",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Deskargak huts egin du",
     "notifications": {
       "fileHasFinishedDownloading": "Artxiboaa deskargatzen amaitu da",
       "actions": {

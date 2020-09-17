@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Dateiname",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Heute",
@@ -954,6 +955,7 @@
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Download fehlgeschlagen",
     "notifications": {
       "fileHasFinishedDownloading": "Datei Download wurde beendet",
       "actions": {

@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Tiedostonimi",
     "xBytes": "{{bytes}} tavua",
     "unitsPerSecond": "{{units}}/s",
     "today": "Tänään",
@@ -954,6 +955,7 @@
     "opened": "Avattu",
     "downloaded": "Ladattu",
     "unsupportedFormat": "Muotoa ei tueta",
+    "downloadFailed": "Lataus epäonnistui",
     "notifications": {
       "fileHasFinishedDownloading": "Tiedoston lataus on valmis",
       "actions": {

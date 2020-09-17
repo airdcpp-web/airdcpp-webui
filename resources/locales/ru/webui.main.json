@@ -297,6 +297,7 @@
       "mbits": "Мбит/с",
       "gbits": "Гбит/с"
     },
+    "filename": "Имя файла",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
@@ -954,6 +955,7 @@
     "opened": "Opened",
     "downloaded": "Скачано",
     "unsupportedFormat": "Unsupported format",
+    "downloadFailed": "Ошибка загрузки",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
       "actions": {

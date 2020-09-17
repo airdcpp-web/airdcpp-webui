@@ -297,6 +297,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
+    "filename": "Filnamn",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "I dag",
@@ -954,6 +955,7 @@
     "opened": "Öppnad",
     "downloaded": "Nedladdat",
     "unsupportedFormat": "Formatet stöds inte",
+    "downloadFailed": "Nedladdning misslyckades",
     "notifications": {
       "fileHasFinishedDownloading": "Filen är nedladdad",
       "actions": {
