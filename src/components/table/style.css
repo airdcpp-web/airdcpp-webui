@@ -79,7 +79,7 @@
   margin-left: 10px;
 }
 
-.table-footer .filter .dropdown.button {
+.table-footer .filter .filter-method.dropdown.button {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
