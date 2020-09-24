@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Novos arquivos aparecerão no compartilhamento apenas depois de terem terminado o hashing (o cliente tem calculado para eles). Informações sobre hashing de progresso será enviado para o registro de eventos.</0>",
     "addShareDirectory": "Adicionar diretório ao compartilhamento",
     "editShareDirectory": "Editar diretórios de compartilhamento",
+    "unknown": "Desconhecido",
     "form": {
       "pathName": "Caminho",
       "virtualNameName": "Nome Virtual",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Nenhum resultado de NFO foi recebido",
     "networkClientError": "Erro de rede/cliente",
     "failedToFetchData": "Falha ao buscar dados",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Carregando itens",
     "root": "Raiz",
     "name": "Nome",

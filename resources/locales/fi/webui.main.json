@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Uudet tiedostot ilmestyvät jakoon vasta kun ne on indeksoitu (ohjelma on laskenut niille tarkistussummat). Indeksointiprosessin edistymisestä ilmoitetaan tapahtumalokissa.</0>",
     "addShareDirectory": "Lisää jakokansio",
     "editShareDirectory": "Muokkaa jakokansiota",
+    "unknown": "Tuntematon",
     "form": {
       "pathName": "Polku",
       "virtualNameName": "Virtuaalinen nimi",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Yhtään NFO-tulosta ei vastaanotettu",
     "networkClientError": "Verkko-/selainvirhe",
     "failedToFetchData": "Tiedon hakeminen epäonnistui",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Ladataan kohteita",
     "root": "Juuri",
     "name": "Nimi",

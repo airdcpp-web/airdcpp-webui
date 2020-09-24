@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Nieuwe bestanden komen alleen in share nadat het hashen voltoid is (de client heeft checksums ervoor berekend). Informatie betreffende hash vooruitgang is te zien in het event log.</0>",
     "addShareDirectory": "Voeg deelmap toe",
     "editShareDirectory": "Pas deel map aan",
+    "unknown": "Onbekend",
     "form": {
       "pathName": "Pad",
       "virtualNameName": "Virtuele naam",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Geen NFO was ontvangen",
     "networkClientError": "Netwerk/client fout",
     "failedToFetchData": "Ophalen van data mislukt",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Laad items",
     "root": "Root",
     "name": "Naam",

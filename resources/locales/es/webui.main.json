@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Los nuevos archivos aparecerán en tu compartido solo después de que haya finalizado el indexado (el cliente haya calculado las sumas de comprobación para ellos). La información sobre el progreso de indexado se publicará en el registro de eventos.</0>",
     "addShareDirectory": "Añadir directorio para compartir",
     "editShareDirectory": "Editar directorio para compartir",
+    "unknown": "Desconocido",
     "form": {
       "pathName": "Ruta",
       "virtualNameName": "Nombre virtual",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "No se han recibido resultados NFO",
     "networkClientError": "Error de red/cliente",
     "failedToFetchData": "Error al buscar los datos",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Cargando elementos",
     "root": "Raíz",
     "name": "Nombre",

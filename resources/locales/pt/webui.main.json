@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Os novos ficheiros aparecem na partilha apenas após terminar o hashing (o cliente calculou as somas de verificação para eles). A informação sobre o progresso do hashing será colocada no registo de eventos.</0>",
     "addShareDirectory": "Adicionar pasta partilhada",
     "editShareDirectory": "Editar pasta partilhada",
+    "unknown": "Desconhecido",
     "form": {
       "pathName": "Caminho",
       "virtualNameName": "Nome virtual",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Não foram recebidos resultados NFO",
     "networkClientError": "Erro de rede / cliente",
     "failedToFetchData": "Não foi possível buscar os dados",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "A carregar itens",
     "root": "Raiz",
     "name": "Nome",

@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
     "addShareDirectory": "Добавить папку шары",
     "editShareDirectory": "Изменить папку шары",
+    "unknown": "Неизвестно",
     "form": {
       "pathName": "Путь",
       "virtualNameName": "Виртуальное название",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Loading items",
     "root": "Root",
     "name": "Имя",

@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Neue Dateien werden erst nach dem hashen ( der Client berechnet Checksummen für diese) in der Freigabe erscheinen. Informationen über den Hashfortschritt wird im Eventlog geschrieben.",
     "addShareDirectory": "Freigabe Verzeichnis hinzufügen",
     "editShareDirectory": "Freigabe Verzeichnis editieren",
+    "unknown": "Unbekannt",
     "form": {
       "pathName": "Pfad",
       "virtualNameName": "Virtueller Name",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Keine NFO Ergebnisse wurden empfangen",
     "networkClientError": "Netzwerk/Client Fehler",
     "failedToFetchData": "Datenempfang fehlgeschlagen",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Elemente werden geladen",
     "root": "Hauptverzeichnis",
     "name": "Name",

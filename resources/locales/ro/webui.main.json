@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Fisierele noi vor aparea in distribuire doar dupa ce va fi terminata indexarea lor(imediat dupa ce clientul a calculat suma) -checksum-pentru ele.Informatia in legatura cu progresul indexarii va fi depusa in inregistrarea evenimentelor -log",
     "addShareDirectory": "Aduce directorul de distribuire",
     "editShareDirectory": "Editeaza directorul de distribuire",
+    "unknown": "Necunoscut",
     "form": {
       "pathName": "Cale",
       "virtualNameName": "Nume virtual",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Nici-un rezultat NFO a fost primit",
     "networkClientError": "Eroare retea/client",
     "failedToFetchData": "Eroare de memorare data",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Incarcare obiect",
     "root": "Radacina",
     "name": "Nume",

@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Fitxategi berriak partekatzeko agertzen indexaketa bukatu ondoren bakarrik (bezeroak checksum kalkulatu behar du beraientzat). Indexatzeko aurrerapenei buruzko informazioa gertaera erregistroan argitaratuko da.</0>",
     "addShareDirectory": "Partekatzeko direktorioa gehitu",
     "editShareDirectory": "Partekatzeko direktorioa editatu",
+    "unknown": "Unknown",
     "form": {
       "pathName": "Bidea",
       "virtualNameName": "Izen birtuala",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Sarea/bezeroaren errorea",
     "failedToFetchData": "Failed to fetch data",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Elementuak kargatzen",
     "root": "Erroa",
     "name": "Izena",

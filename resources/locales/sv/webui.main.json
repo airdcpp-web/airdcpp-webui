@@ -148,6 +148,7 @@
     "hashingInformationDesc": "<0>Nya filer kommer att synas i utdelningen när de har indexerats (klienten har beräknat kontrollsumman på dem). Information om indexeringen kommer att finnas i händelseloggen.</0>",
     "addShareDirectory": "Lägg till utdelningskatalog",
     "editShareDirectory": "Redigera utdelningskatalog",
+    "unknown": "Okänt",
     "form": {
       "pathName": "Sökväg",
       "virtualNameName": "Virtuellt namn",
@@ -312,6 +313,7 @@
     "noNfoResultsWereReceived": "Ingen NFO-text mottogs",
     "networkClientError": "Nätverk-/klientfel",
     "failedToFetchData": "Misslyckades med att hämta data",
+    "failedToLoadContent": "Failed to load content",
     "loadingItems": "Laddar objekt",
     "root": "Root",
     "name": "Namn",
