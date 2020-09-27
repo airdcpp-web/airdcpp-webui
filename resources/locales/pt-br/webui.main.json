@@ -313,7 +313,7 @@
     "noNfoResultsWereReceived": "Nenhum resultado de NFO foi recebido",
     "networkClientError": "Erro de rede/cliente",
     "failedToFetchData": "Falha ao buscar dados",
-    "failedToLoadContent": "Failed to load content",
+    "failedToLoadContent": "Falha ao carregar conteúdo",
     "loadingItems": "Carregando itens",
     "root": "Raiz",
     "name": "Nome",

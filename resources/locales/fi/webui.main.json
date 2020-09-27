@@ -313,7 +313,7 @@
     "noNfoResultsWereReceived": "Yhtään NFO-tulosta ei vastaanotettu",
     "networkClientError": "Verkko-/selainvirhe",
     "failedToFetchData": "Tiedon hakeminen epäonnistui",
-    "failedToLoadContent": "Failed to load content",
+    "failedToLoadContent": "Sisällön lataaminen epäonnistui",
     "loadingItems": "Ladataan kohteita",
     "root": "Juuri",
     "name": "Nimi",

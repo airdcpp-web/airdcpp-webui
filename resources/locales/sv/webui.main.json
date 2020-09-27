@@ -313,7 +313,7 @@
     "noNfoResultsWereReceived": "Ingen NFO-text mottogs",
     "networkClientError": "Nätverk-/klientfel",
     "failedToFetchData": "Misslyckades med att hämta data",
-    "failedToLoadContent": "Failed to load content",
+    "failedToLoadContent": "Misslyckades med att hämta innehållet",
     "loadingItems": "Laddar objekt",
     "root": "Root",
     "name": "Namn",
