@@ -3,11 +3,6 @@
   overflow-y: auto;
 }
 
-.message-list .item .text {
-  overflow: hidden;
-  white-space: pre-wrap;
-}
-
 .message-list .date.divider i {
   margin-right: 5px;
 }
@@ -18,4 +13,13 @@
 
 .message-list .item .text .highlight.bold {
   font-weight: bold;
+}
+
+.message-list .item .text .table.dropdown,
+.message-list .item .text .table.dropdown .popup.trigger {
+  max-width: 100%;
+}
+
+.message-list .item .text .table.dropdown .caption {
+  overflow: hidden;
 }
