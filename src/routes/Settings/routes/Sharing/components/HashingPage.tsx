@@ -8,6 +8,7 @@ const Entry = [
   'max_hash_speed',
   'max_total_hashers',
   'max_volume_hashers',
+  'max_hash_queue',
 ];
 
 const HashingPage: React.FC<SettingSectionChildProps> = props => (
