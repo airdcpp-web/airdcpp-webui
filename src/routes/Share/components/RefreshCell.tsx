@@ -9,7 +9,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
-import { refreshPaths } from 'services/api/ShareApi';
+import { abortRefreshTask, refreshPaths } from 'services/api/ShareApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
@@ -22,7 +22,29 @@ const RefreshCell: React.FC<RefreshCellProps> = (
 ) => {
   const state = rowDataGetter!().status;
   if (state.id !== API.ShareRootStatusEnum.NORMAL) {
-    return <Loader size="small" inline={ true } text={ state.str }/>;
+    return (
+      <div style={{ display: 'flex' }}>
+        <Icon
+          icon={ IconConstants.CANCEL }
+          color="red"
+          size="large"
+          onClick={ () => {
+            const refreshId = rowDataGetter!().status.refresh_id;
+            if (!!refreshId) {
+              runBackgroundSocketAction(
+                () => abortRefreshTask(refreshId),
+                t!
+              );
+            }
+          }}
+        />
+        <Loader 
+          size="small" 
+          inline={ true } 
+          text={ state.str }
+        />
+      </div>
+    );
   }
 
   return (

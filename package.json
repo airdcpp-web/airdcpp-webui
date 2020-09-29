@@ -119,7 +119,7 @@
     "react-grid-layout": "^1.1.1",
     "react-hot-loader": "^4.13.0",
     "react-i18next": "^11.7.3",
-    "react-intersection-observer": "^8.28.6",
+    "react-intersection-observer": "^8.29.0",
     "react-linkify": "^1.0.0-alpha",
     "react-measure": "^2.5.2",
     "react-mentions": "^4.0.2",

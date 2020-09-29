@@ -7,9 +7,17 @@ export const enum ShareRootStatusEnum {
   REFRESH_RUNNING = 'refresh_running',
 }
 
+export const enum RefreshPriorityTypeEnum {
+  NORMAL = 'normal',
+  MANUAL = 'manual',
+  SCHEDULED = 'scheduled',
+  BLOCKING = 'blocking',
+}
+
 export interface ShareRootStatus {
   id: ShareRootStatusEnum;
   str: string;
+  refresh_id: number | null;
 }
 
 export interface ShareRootEntryBase {

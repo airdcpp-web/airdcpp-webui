@@ -4,6 +4,8 @@ import SocketService from 'services/SocketService';
 
 import { uploadTempFile } from '../HttpService';
 
+import * as API from 'types/api';
+
 
 export interface AddTempShareResponse { 
   magnet: string; 
@@ -29,12 +31,16 @@ export const shareTempFile = async (
 
 
 export const refresh = (incoming: boolean) => {
-  return SocketService.post(ShareConstants.REFRESH_URL);
+  return SocketService.post(ShareConstants.REFRESH_URL, {
+    incoming,
+    priority: API.RefreshPriorityTypeEnum.MANUAL,
+  });
 };
 
 export const refreshPaths = (paths: string[]) => {
   return SocketService.post(ShareConstants.REFRESH_PATHS_URL, { 
-    paths 
+    paths,
+    priority: API.RefreshPriorityTypeEnum.MANUAL,
   });
 };
 
@@ -42,4 +48,8 @@ export const refreshVirtual = (path: string) => {
   return SocketService.post(ShareConstants.REFRESH_VIRTUAL_URL, { 
     path,
   });
+};
+
+export const abortRefreshTask = (id: number) => {
+  return SocketService.delete(`${ShareConstants.REFRESH_TASKS_URL}/${id}`);
 };
