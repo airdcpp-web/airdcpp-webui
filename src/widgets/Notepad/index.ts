@@ -15,7 +15,7 @@ export const Notepad = {
   //  },
   //],
   size: {
-    w: 5,
+    w: 3,
     h: 5,
     minW: 2,
     minH: 4,

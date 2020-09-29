@@ -7,8 +7,9 @@ import reject from 'lodash/reject';
 import { loadLocalProperty, removeLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 
 import { Application } from 'widgets/Application';
-import { RSS } from 'widgets/RSS';
+import { Extensions } from 'widgets/Extensions';
 import { Notepad } from 'widgets/Notepad';
+import { RSS } from 'widgets/RSS';
 import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
@@ -26,10 +27,11 @@ const widgets = [
   RSS,
   Notepad,
   Transfers,
+  Extensions
 ];
 
 const LAYOUT_STORAGE_KEY = 'home_layout';
-const LAYOUT_VERSION = 3;
+const LAYOUT_VERSION = 4;
 
 export const EmptyWidgetSettings = {
   name: '',
@@ -119,6 +121,8 @@ const Store = {
     if (layoutInfo && layoutInfo.items) {
       if (layoutInfo.version === LAYOUT_VERSION) {
         this.layouts = layoutInfo.items;
+      } else if (layoutInfo.version === 3) {
+        this.layouts = createDefaultWidget(layoutInfo.items, Extensions, Application.size.w + RSS.size.w, 0);
       }
     }
 
@@ -135,7 +139,7 @@ const Store = {
     this.layouts = createDefaultWidget(
       this.layouts, 
       RSS, 
-      2, 
+      Application.size.w, 
       0, 
       'News', 
       {
@@ -144,7 +148,8 @@ const Store = {
       '_releases'
     );
 
-    this.layouts = createDefaultWidget(this.layouts, Transfers, 5, 0);
+    this.layouts = createDefaultWidget(this.layouts, Extensions, Application.size.w + RSS.size.w, 0);
+    this.layouts = createDefaultWidget(this.layouts, Transfers, Application.size.w + RSS.size.w + Extensions.size.w, 0);
     this.layouts = createDefaultWidget(this.layouts, Notepad, 0, 5);
   },
 

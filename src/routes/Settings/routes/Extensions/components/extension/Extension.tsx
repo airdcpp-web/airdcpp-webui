@@ -25,7 +25,7 @@ interface VersionProps {
   title: string;
   className?: string;
   packageInfo?: {
-    date?: number;
+    date?: string;
     version: string;
   };
   moduleT: UI.ModuleTranslator;

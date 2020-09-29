@@ -30,7 +30,8 @@ const convertNpmPackage = ({ name, description, version, _npmUser }: NpmPackageD
     version,
     publisher: {
       username: _npmUser.name,
-    }
+    },
+    date: '',
   };
 };
 

@@ -1,0 +1,20 @@
+.extensions.widget .extension-layout {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.extensions.widget .extension-layout .item .content {
+	padding-right: 5px;
+}
+
+.extensions.widget .extension-layout .item .content > span {
+	font-size: 95%;
+}
+
+.extensions.widget .extension-layout .item .content .description {
+	margin-top: 2px;
+}
+
+.extensions.widget .extension-layout .item .header {
+	width: fit-content;
+}

@@ -6,4 +6,11 @@ export interface NpmPackage {
   publisher: {
     username: string;
   };
+  date: string;
+  links?: {
+    npm: string;
+    bugs?: string;
+    homepage?: string;
+    repository?: string;
+  };
 }

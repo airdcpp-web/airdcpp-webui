@@ -25,13 +25,14 @@ const getCornerIcon = (installedPackage: API.Extension | undefined, hasUpdate: b
 interface ExtensionIconProps {
   installedPackage?: API.Extension;
   hasUpdate: boolean;
+  size?: string;
 }
 
-const ExtensionIcon: React.FC<ExtensionIconProps> = ({ installedPackage, hasUpdate }) => (
+const ExtensionIcon: React.FC<ExtensionIconProps> = ({ installedPackage, hasUpdate, size = 'huge' }) => (
   <div className="ui image">
     <Icon 
       icon={ IconConstants.EXTENSION }
-      size="huge" 
+      size={ size } 
       cornerIcon={ getCornerIcon(installedPackage, hasUpdate) }
     />
   </div>
