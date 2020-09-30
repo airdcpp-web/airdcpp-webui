@@ -37,6 +37,10 @@
     "notepad": {
       "widgetName": "Notes"
     },
+    "extensions": {
+      "widgetName": "Extension releases",
+      "updatedAgo": "Updated {{date}}"
+    },
     "actions": {
       "editWidget": "Редактировать виджет",
       "removeWidget": "Удалить виджет",

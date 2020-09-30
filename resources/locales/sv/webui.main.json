@@ -37,6 +37,10 @@
     "notepad": {
       "widgetName": "Anteckningar"
     },
+    "extensions": {
+      "widgetName": "Tilläggsnyheter",
+      "updatedAgo": "Uppdaterad {{date}}"
+    },
     "actions": {
       "editWidget": "Redigera widget",
       "removeWidget": "Ta bort widget",

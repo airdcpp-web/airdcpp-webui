@@ -37,6 +37,10 @@
     "notepad": {
       "widgetName": "Muistio"
     },
+    "extensions": {
+      "widgetName": "Extension releases",
+      "updatedAgo": "Updated {{date}}"
+    },
     "actions": {
       "editWidget": "Muokkaa widgettiä",
       "removeWidget": "Poista widgetti",
