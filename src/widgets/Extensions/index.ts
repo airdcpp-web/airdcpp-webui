@@ -7,6 +7,7 @@ export const Extensions = {
   name: 'Extension releases',
   nameKey: 'extensions',
   icon: 'green puzzle',
+  access: require('constants/AccessConstants').default.SETTINGS_VIEW,
   size: {
     w: 4,
     h: 5,

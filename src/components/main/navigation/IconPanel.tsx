@@ -1,8 +1,11 @@
 'use strict';
 import React from 'react';
 
+import * as API from 'types/api';
+
 import StatisticsIcons from 'components/main/navigation/icon/StatisticsIcons';
-//import PerformanceTools from './icon/PerformanceTools';
+import LoginStore from 'stores/LoginStore';
+
 import AwayIcon from 'components/main/navigation/icon/AwayIcon';
 import RefreshProgress from './icon/RefreshProgress';
 import HashProgress from './icon/HashProgress';
@@ -13,8 +16,12 @@ const IconPanel: React.FC = () => (
     <StatisticsIcons/>
     <div className="touch-icons">
       <AwayIcon/>
-      <HashProgress/>
-      <RefreshProgress/>
+      { LoginStore.hasAccess(API.AccessEnum.SETTINGS_VIEW) && (
+        <>
+          <HashProgress/>
+          <RefreshProgress/>
+        </>
+      ) }
     </div>
   </div>
 );
