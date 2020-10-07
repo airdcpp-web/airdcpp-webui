@@ -5,6 +5,7 @@ export default {
   DUPE_PATHS_URL: MODULE_URL + '/find_dupe_paths',
   GROUPED_ROOTS_GET_URL: MODULE_URL + '/grouped_root_paths',
   STATS_URL: MODULE_URL + '/stats',
+  TEMP_SHARES_URL: MODULE_URL + '/temp_shares',
 
   REFRESH_URL: MODULE_URL + '/refresh',
   REFRESH_PATHS_URL: MODULE_URL + '/refresh/paths',
@@ -20,6 +21,8 @@ export default {
 
   TEMP_ITEM_ADDED: 'share_temp_item_added',
   TEMP_ITEM_REMOVED: 'share_temp_item_removed',
-  
-  TEMP_SHARES_URL: MODULE_URL + '/temp_shares',
+
+  REFRESH_QUEUED: 'share_refresh_queued',
+  REFRESH_STARTED: 'share_refresh_started',
+  REFRESH_COMPLETED: 'share_refresh_completed',
 };

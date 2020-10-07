@@ -7,6 +7,7 @@ export const enum Modules {
   SHARE = 'share',
   HOME = 'home',
   LOGIN = 'login',
+  HASH = 'hash',
   FAVORITE_HUBS = 'favoriteHubs',
   SETTINGS = 'settings',
   EXTENSIONS = 'extensions',

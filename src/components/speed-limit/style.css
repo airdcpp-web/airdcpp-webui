@@ -1,0 +1,8 @@
+.adjustable-speed-limit.popup.trigger {
+  border-bottom: 1px dotted;
+  width: fit-content;
+}
+
+.limiter.popup .remove.button {
+	margin-top: 5px;
+}

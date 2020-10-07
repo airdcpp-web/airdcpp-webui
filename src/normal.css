@@ -52,12 +52,20 @@
   margin-top: 10px;
 }
 
-#side-menu .icon-panel .touch-icons .item {
-  padding: 10px 8px;
+/*#side-menu .icon-panel .touch-icons > div.icon {
+  margin: 10px 8px;
 }
 
+#side-menu .icon-panel .touch-icons > i.icon {
+  padding: 10px 8px;
+}*/
+
 /* Allows up to 3 touch icons to be displayed */
-#side-menu .icon-panel .touch-icons > i {
+#side-menu .icon-panel .touch-icons > .icon {
+  margin: 0px 2px !important;
+}
+
+#side-menu .icon-panel .ui.progress:last-child {
   margin: 0px !important;
 }
 

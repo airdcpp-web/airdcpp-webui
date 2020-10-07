@@ -2,14 +2,12 @@
 
 import React from 'react';
 
-import Moment from 'moment';
-
 import { Row, Header, Grid } from 'components/semantic/Grid';
 
 import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator, { StatisticsDecoratorChildProps } from 'decorators/StatisticsDecorator';
 import SystemConstants from 'constants/SystemConstants';
-import { formatRelativeTime } from 'utils/ValueFormat';
+import { formatDateTime, formatRelativeTime } from 'utils/ValueFormat';
 import InstallPrompt from 'components/InstallPrompt';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import LinkConstants from 'constants/LinkConstants';
@@ -24,8 +22,7 @@ const ApplicationPage: React.FC<ApplicationPageProps & StatisticsDecoratorChildP
   const { translate } = moduleT;
   const systemInfo = LoginStore.systemInfo;
 
-  const buildDate = Moment(new Date(JSON.parse(UI_BUILD_DATE))).format('LLL');
-
+  const buildDate = formatDateTime(UI_BUILD_DATE / 1000);
   return (
     <>
       <Grid columns="two" stackable={ true }>

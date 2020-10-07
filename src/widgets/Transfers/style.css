@@ -16,11 +16,3 @@
 	margin-top: 0px;
 	flex: 0 0 auto;
 }
-
-.transfers.widget .main.content .stats .popup.trigger {
-	border-bottom: 1px dotted;
-}
-
-.limiter.popup .remove.button {
-	margin-top: 5px;
-}

@@ -29,10 +29,10 @@ const RefreshCell: React.FC<RefreshCellProps> = (
           color="red"
           size="large"
           onClick={ () => {
-            const refreshId = rowDataGetter!().status.refresh_id;
-            if (!!refreshId) {
+            const refreshTaskId = rowDataGetter!().status.refresh_task_id;
+            if (!!refreshTaskId) {
               runBackgroundSocketAction(
-                () => abortRefreshTask(refreshId),
+                () => abortRefreshTask(refreshTaskId),
                 t!
               );
             }

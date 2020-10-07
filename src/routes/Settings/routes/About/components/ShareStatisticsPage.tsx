@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-import Moment from 'moment';
-import { formatAverage, formatPercentage, formatSize } from 'utils/ValueFormat';
+import { formatAverage, formatPercentage, formatSeconds, formatSize } from 'utils/ValueFormat';
 
 import ShareConstants from 'constants/ShareConstants';
 
@@ -22,7 +21,6 @@ interface ShareStatisticsPageProps extends SettingSectionChildProps {
 const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>> = (
   { stats, moduleT }
 ) => {
-  const averageFileAge = Moment.duration(stats.average_file_age * 1000).humanize();
   const { translate, t } = moduleT;
   return (
     <Grid columns="two" stackable={ true }>
@@ -50,7 +48,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
       />
       <Row 
         title={ translate('Average file age') } 
-        text={ averageFileAge }
+        text={ formatSeconds(stats.average_file_age) }
       />
       <Row 
         title={ translate('Average files per directory') } 

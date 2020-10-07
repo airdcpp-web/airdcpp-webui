@@ -171,6 +171,10 @@ export const formatTimestamp = (time: number) => {
   return Moment.unix(time).format('HH:mm:ss');
 };
 
+export const formatSeconds = (seconds: number) => {
+  return Moment.duration(seconds, 'seconds').humanize();
+};
+
 export const formatDecimal = (value: number) => {
   return parseFloat(Math.round(value * 100) / 100 as any).toFixed(2);
 };

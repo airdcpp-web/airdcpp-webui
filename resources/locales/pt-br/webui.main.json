@@ -38,8 +38,8 @@
       "widgetName": "Notas"
     },
     "extensions": {
-      "widgetName": "Extension releases",
-      "updatedAgo": "Updated {{date}}"
+      "widgetName": "Extensão de lançamentos",
+      "updatedAgo": "Atualizado {{date}}"
     },
     "actions": {
       "editWidget": "Editar widget",

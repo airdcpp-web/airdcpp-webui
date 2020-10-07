@@ -14,10 +14,24 @@ export const enum RefreshPriorityTypeEnum {
   BLOCKING = 'blocking',
 }
 
+export const enum RefreshTypeEnum {
+  ADD_BUNDLE = 'add_bundle',
+  ADD_DIRECTORY = 'add_directory',
+  REFRESH_ALL = 'refresh_all',
+  REFRESH_INCOMING = 'refresh_incoming',
+  REFRESH_DIRECTORIES = 'refresh_directories',
+}
+
+export const enum RefreshQueueResultEnum {
+  STARTED = 'started',
+  QUEUED = 'queued',
+  EXISTS = 'exists',
+}
+
 export interface ShareRootStatus {
   id: ShareRootStatusEnum;
   str: string;
-  refresh_id: number | null;
+  refresh_task_id: number | null;
 }
 
 export interface ShareRootEntryBase {
@@ -44,4 +58,18 @@ export interface TempShareItem {
   time_added: number;
   type: FileType;
   user: User | null;
+}
+
+export interface ShareRefreshTask {
+  id: number;
+  type: RefreshTypeEnum;
+  priority_type: RefreshPriorityTypeEnum;
+  real_paths: string[];
+  running: boolean;
+  canceled: boolean;
+}
+
+export interface ShareRefreshQueueResult {
+  task: { id: number; } | null;
+  result: RefreshQueueResultEnum;
 }

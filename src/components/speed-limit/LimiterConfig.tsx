@@ -8,20 +8,24 @@ import SettingConstants from 'constants/SettingConstants';
 import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
-import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import { TFunction } from 'i18next';
+
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { formatUnit } from 'utils/ValueFormat';
 
 
 interface LimiterConfigProps {
   limit: number;
   settingKey: string;
   hide: () => void;
+  unit: string;
+  t: TFunction;
 }
 
-const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: currentLimit }) => {
+const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: currentLimit, unit, t }) => {
   /*static propTypes = {
     limit: PropTypes.number.isRequired,
 
@@ -30,8 +34,6 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
 
     hide: PropTypes.func.isRequired,
   };*/
-
-  const { t } = useTranslation();
 
   const save = (newLimit = 0) => {
     runBackgroundSocketAction(
@@ -47,7 +49,15 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
   return (
     <div className="limiter-config">
       <div className="ui header">
-        { translate('Enter limit (kB/s)', t, UI.Modules.COMMON) }
+        { t(
+            toI18nKey('enterLimitUnit', UI.Modules.COMMON),
+            {
+              defaultValue: 'Enter limit ({{unit}}/s)',
+              replace: {
+                unit: formatUnit(unit, t),
+              }
+            }
+          ) }
       </div>
       <ActionInput 
         placeholder={ translate('Enter limit...', t, UI.Modules.COMMON) } 

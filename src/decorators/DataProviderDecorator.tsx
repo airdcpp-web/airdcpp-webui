@@ -16,6 +16,7 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import { merge } from 'lodash';
 
 
 export type SocketConnectHandler<DataT, PropsT> = (
@@ -23,6 +24,7 @@ export type SocketConnectHandler<DataT, PropsT> = (
   data: {
     refetchData: (keys?: string[]) => void;
     mergeData: (data: Partial<DataT>) => void;
+    assignData: (data: Partial<DataT>) => void;
     props: PropsT;
   }
 ) => void;
@@ -122,6 +124,7 @@ export default function <PropsT extends object, DataT extends object>(
           {
             refetchData: this.refetchData,
             mergeData: this.mergeData,
+            assignData: this.assignData,
             props: this.props,
           }
         );
@@ -132,12 +135,19 @@ export default function <PropsT extends object, DataT extends object>(
       this.mounted = false;
     }
 
-    // Merge data object into existing data
-    mergeData = (data: any) => {
+    // Recursively merge data object into existing data
+    mergeData = (partialData: Partial<DataT>) => {
+      this.setState({
+        data: merge({}, this.state.data, partialData)
+      });
+    }
+
+    // Replace existing data properties with new data
+    assignData = (partialData: any) => {
       this.setState({
         data: {
           ...this.state.data, 
-          ...data,
+          ...partialData,
         }
       });
     }
@@ -191,7 +201,7 @@ export default function <PropsT extends object, DataT extends object>(
 
       const data = values.reduce(this.reduceData.bind(this, keys), {});
 
-      this.mergeData(data);
+      this.assignData(data);
     }
 
     onDataFetchFailed = (error: ErrorResponse | Error) => {

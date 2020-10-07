@@ -4,28 +4,35 @@ import classNames from 'classnames';
 
 
 export interface ProgressProps {
-  caption: React.ReactNode;
+  caption?: React.ReactNode;
   className?: string | null;
-  percent: number;
+  percent?: number;
 }
 
 const Progress: React.FC<ProgressProps> = ({ className, percent, caption }) => (
   <div 
-    className={ classNames('ui progress', className) } 
+    className={ classNames(
+      'ui progress', 
+      className, 
+      { 'indeterminate': percent === undefined },
+    ) } 
     data-percent={ percent }
   >
     <div 
       className="bar" 
       style={{ 
         transitionDuration: 300 + 'ms',
-        width: percent + '%',
+        width: percent === undefined ? undefined : percent + '%',
+        minWidth: '0px'
       }}
     >
       <div className="progress"/>
     </div>
-    <div className="label">
-      { caption }
-    </div>
+    { !!caption && (
+      <div className="label">
+        { caption }
+      </div>
+    )}
   </div>
 );
 

@@ -67,9 +67,6 @@ export const ExtensionInfoEntry: React.FC<ExtensionProps> = ({
         >
           { npmPackage.name }
         </Link>
-        <span>
-          { npmPackage.description }
-        </span>
         <div className="description">
           <Version
             packageInfo={ npmPackage }

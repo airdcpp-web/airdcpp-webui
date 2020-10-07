@@ -19,6 +19,7 @@ export interface PopupProps {
   className?: string;
   children: ChildType | ((hide: () => void) => ChildType);
   contentUpdateTrigger?: any; // Changes to this value will trigger re-render for the popup content
+  triggerProps?: React.HTMLAttributes<HTMLSpanElement>;
 }
 
 
@@ -154,8 +155,12 @@ class Popup extends React.PureComponent<PopupProps, State> {
   }
 
   render() {
-    const { triggerClassName, onHover, trigger, children, contentUpdateTrigger } = this.props;
+    const { 
+      triggerClassName, onHover, trigger, children, contentUpdateTrigger, triggerProps: customTriggerProps 
+    } = this.props;
+
     const triggerProps = {
+      ...customTriggerProps,
       ref: (c: any) => this.triggerNode = c,
       className: classNames(triggerClassName, 'popup trigger'),
     };
