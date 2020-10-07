@@ -42,9 +42,6 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
 
   return (
     <div className="hash-layout">
-      {/*<div className="ui header">
-        Hashing
-      </div>*/}
       <div className="ui list">
         <ListItem
           header={ moduleT.translate('Status') }
@@ -75,7 +72,6 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
               limit={ stats.max_hash_speed }
               settingKey={ 'max_hash_speed' }
               unit="MiB"
-              // hide={ hide }
             />
           )}
         />

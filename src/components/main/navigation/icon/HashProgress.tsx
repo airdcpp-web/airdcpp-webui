@@ -8,9 +8,6 @@ import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
 import * as API from 'types/api';
 
-// import Popup from 'components/semantic/Popup';
-// import { HashInfoLayout } from './HashInfoLayout';
-
 import { useState } from 'react';
 import { HashInfoDialog } from './HashInfoDialog';
 
@@ -37,53 +34,6 @@ const getHashPercent = (stats: API.HashStats) => {
 };
 
 const HashProgress = memo<HashProgressProps & HashProgressDataProps>(({ stats }) => {
-  /*if (stats.hash_files_left === 0 && stats.hashers === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <Popup
-        triggerClassName="icon" 
-        triggerProps={{
-          style: {
-            width: '25px',
-            height: '25px',
-            display: 'inline-flex'
-          },
-        }}
-        trigger={(
-          <CircularProgressbarWithChildren
-            value={ getPercent(stats) }
-            strokeWidth={ 7 }
-            styles={buildStyles({
-              pathColor: '#2185d0',
-            })}
-          >
-            <Icon
-              icon={ IconConstants.HASH }
-              style={{
-                maxHeight: '13px',
-                maxWidth: '13px',
-                margin: '0px'
-              }}
-              cornerIcon={ stats.pause_forced ? IconConstants.PAUSE : IconConstants.PLAY }
-            />
-          </CircularProgressbarWithChildren>
-        )}
-        position="top right"
-        contentUpdateTrigger={ stats }
-      >
-        { hide => (
-          <HashInfoLayout
-            stats={ stats }
-            // hide={ hide }
-          />
-        ) }
-      </Popup>
-    </>
-  );*/
-
   const hasData = stats.hash_files_left > 0 || stats.hashers > 0;
   const [ dialogOpen, setDialogOpen ] = useState(false);
 
