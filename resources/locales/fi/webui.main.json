@@ -31,15 +31,14 @@
       "downloaded": "Ladattu",
       "uploaded": "Lähetetty",
       "downloadLimit": "Latausraja",
-      "uploadLimit": "Lähetysraja",
-      "disabled": "Ei käytössä"
+      "uploadLimit": "Lähetysraja"
     },
     "notepad": {
       "widgetName": "Muistio"
     },
     "extensions": {
-      "widgetName": "Extension releases",
-      "updatedAgo": "Updated {{date}}"
+      "widgetName": "Lisäosien julkaisut",
+      "updatedAgo": "Päivitetty {{date}}"
     },
     "actions": {
       "editWidget": "Muokkaa widgettiä",
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Tilastot eivät ole käytettävissä",
     "save": "Tallenna",
     "enterNick": "Syötä nimimerkki...",
-    "enterLimitKBS": "Syötä raja (kt/s)",
+    "disabled": "Ei käytössä",
+    "enterLimitUnit": "Syötä raja ({{unit}}/s)",
     "enterLimit": "Syötä raja...",
     "removeLimit": "Poista raja",
     "tlsOk": "Sertifikaatin aitous on vahvistettu",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Tietoa uudelle käyttäjälle",
     "newUserIntroDesc": "<0><0>Lisää <1>Jaot</1>-sivulta muutama kansio, jotka jaetaan muille käyttäjille.</0><1>Käy <1>ohjelman asetuksista</1> läpi vähintään osioiden pääsivut ennen aloittamista.  <3>On tärkeää, että <1>määrität yhteytesi nopeuden</1> oikein, sillä ohjelma ei pysty muutoin hyödyntämään kaistaasi täysimääräisesti.</3></1><2>Ohjelmassa ei ole tällä hetkellä listausta julkisista hubeista, joten sinulla on oltava tiedossa osoitteet, joihin haluat yhdistää.</2></0><1>Saat lisätietoja ohjelmasta sekä sen toiminnoista vierailemalla ohjelman <1>kotisivuilla</1>.</1><2>Mikäli sinulla herää kysymyksiä, voit lähettää ne <1>GitHubiin</1> tai liittyä ohjelman kehitys-/tukihubiin: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pysäytä",
+      "resume": "Jatka",
+      "stop": "Lopeta"
+    },
+    "status": "Tila",
+    "paused": "Pysäytetty",
+    "filesLeft": "Tiedostoja jäljellä",
+    "maximumSpeedPerHasher": "Suurin indeksoijakohtainen nopeus",
+    "runningThreads": "Käynnissä ({{threadCount}} säiettä)",
+    "speed": "Nopeus",
+    "timeLeft": "Aikaa jäljellä",
+    "idle": "Toimeton",
+    "hashProgress": "Indeksoinnin tila"
   }
 }

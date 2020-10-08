@@ -31,8 +31,7 @@
       "downloaded": "Descarcat",
       "uploaded": "Incarcat",
       "downloadLimit": "Limita de descarcare",
-      "uploadLimit": "Limita de incarcare",
-      "disabled": "Dezactivat"
+      "uploadLimit": "Limita de incarcare"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Statisticile nu sunt disponibile",
     "save": "Salveaza",
     "enterNick": "Introduce nume ...",
-    "enterLimitKBS": "Introduce limita (kB.s)",
+    "disabled": "Dezactivat",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Introduce limita...",
     "removeLimit": "Elimina limita",
     "tlsOk": "Autentificarea certificatului este validat",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Informatii despre un nou utilizator",
     "newUserIntroDesc": "<0><0>Aduce cateva directoare care sa fie distribuite catre alti utilizatori de la <1>pagina de distribuire.</0><1>Poate vei dori sa treci cel putin prin fiecare pagina mai importanta a<1>setarilor clientului</1>inainte sa pornesti <3>Este important ca tu <1>sa configurezi viteza de  conexiune a ta </1>corect ,daca nu clientul tau nu o sa foloseasca la maxim viteza ta reala .</3></1><2>Aici nu ai inca o lista publica a huburilor ,asa ca va trebuii sa introduci manual adresele de hub dorite.</2></0><1>Viziteaza<1> pagina acasa pentru mai multe informatii in legatura cu clientul si cu toate optiunile .</1><2>Daca ai intrebari ,le poti posta pe <1>GitHub tracker</1>sau intra pe dev/support hub:<3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pauza",
+      "resume": "Reincepe",
+      "stop": "Stop"
+    },
+    "status": "Status",
+    "paused": "Pauza",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Viteza",
+    "timeLeft": "Timp ramas",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

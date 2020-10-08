@@ -31,8 +31,7 @@
       "downloaded": "Jaitsita",
       "uploaded": "Igota",
       "downloadLimit": "Deskarga muga",
-      "uploadLimit": "Igo muga",
-      "disabled": "Ezgaitu"
+      "uploadLimit": "Igo muga"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Estatistikak ez daude eskuragarri",
     "save": "Gorde",
     "enterNick": "Ezizena sartu...",
-    "enterLimitKBS": "Sartu muga (kB/s)",
+    "disabled": "Ezgaitu",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Sartu muga...",
     "removeLimit": "Ezabatu muga",
     "tlsOk": "Authenticity of the certificate is validated",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Informazioa erabiltzaile berrientzat",
     "newUserIntroDesc": "<0><0>Gehitu beste erabiltzaile batzuekin partekatuko diren direktorioak <1>Partekatze</1> orrira.</0><1>Baliteke <1> bezeroaren ezarpenen </1> orri nagusira pasatu nahi izatea hasi aurretik.  <3>Garrantzitsua da <1>konexioaren abiadura</1> modu egokian konfiguratzea bezeroak bestelako banda-zabalera modu eraginkorrean erabiltzeko gai ez delako.</3></1><2>Oraindik ez dago hub publikoen zerrendarik, beraz, konektatu nahi duzun hub-en helbideak ezagutu behar dituzu.</2></0><1>Bisitatu <1>hasiera orria</1> bezeroari eta haren ezaugarriei buruzko informazio gehiago lortzeko.</1><2>Galderarik izanez gero, <1>GitHub-en</1> jarraipena egin dezakezu edo dev/support hub-ean sartu: <3></3></2>\n       "
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pause",
+      "resume": "Laburpen",
+      "stop": "Gelditu"
+    },
+    "status": "Egoera",
+    "paused": "Etenduta",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Abiadura",
+    "timeLeft": "Falta den denbora",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

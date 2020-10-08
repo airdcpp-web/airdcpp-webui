@@ -31,8 +31,7 @@
       "downloaded": "Heruntergeladen",
       "uploaded": "Hochgeladen",
       "downloadLimit": "Download Grenze",
-      "uploadLimit": "Upload Limit",
-      "disabled": "Deaktiviert"
+      "uploadLimit": "Upload Limit"
     },
     "notepad": {
       "widgetName": "Notizen"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Statistik nicht verfügbar",
     "save": "Speichern",
     "enterNick": "Benutzername eingeben...",
-    "enterLimitKBS": "Limit eingeben (kB/s)",
+    "disabled": "Deaktiviert",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Limit eingeben...",
     "removeLimit": "Limit entfernen",
     "tlsOk": "Authentizität dieses Zertifikats ist validiert",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Information für neue Benutzer",
     "newUserIntroDesc": "<0><0>Fügen Sie ein paar Verzeichnisse, die mit anderen Benutzern geteilt werden auf der <1>Freigabe</1> Seite hinzu.</0><1>Sie sollten vermutlich durch jede Hauptseite der <1>Einstellungen</1>gehen, bevor Sie los legen. <3>Es ist wichtig, dass Sie <1>ihre Verbindungsgeschwindigkeit korrekt einstellen</1>, weil der Client sonst nicht in der Lage ist Ihre Bandbreite effizient zu nutzen.</3></1><2>Derzeit gibt es keine Auflistung von öffentlichen Hubs, daher müssen Sie die Hub Adresse kennen, zu der Sie verbinden möchten.</2></0><1>Besuchen Sie die<1>Webseite</1> für mehr Informationen über den Client und seine Funktionalitäten.</1><2>Wenn Sie Fragen haben, können Sie diese auf dem <1>GitHub tracker</1> stellen, oder Sie verbinden sich zu dem Entwicklungs/Hilfe Hub: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pause",
+      "resume": "Fortsetzen",
+      "stop": "Stopp"
+    },
+    "status": "Status",
+    "paused": "Pause",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Geschwindigkeit",
+    "timeLeft": "Verbleibende Zeit",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

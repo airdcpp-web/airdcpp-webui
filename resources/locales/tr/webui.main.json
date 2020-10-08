@@ -31,8 +31,7 @@
       "downloaded": "İndirildi",
       "uploaded": "Uploaded",
       "downloadLimit": "Download limit",
-      "uploadLimit": "Yükleme sınırı",
-      "disabled": "Devre dışı"
+      "uploadLimit": "Yükleme sınırı"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Statistics not available",
     "save": "Save",
     "enterNick": "Enter nick...",
-    "enterLimitKBS": "Enter limit (kB/s)",
+    "disabled": "Devre dışı",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
     "tlsOk": "Authenticity of the certificate is validated",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Information for new user",
     "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pause",
+      "resume": "Resume",
+      "stop": "Stop"
+    },
+    "status": "Status",
+    "paused": "Paused",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Speed",
+    "timeLeft": "Time left",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

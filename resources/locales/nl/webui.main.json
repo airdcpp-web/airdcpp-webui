@@ -31,8 +31,7 @@
       "downloaded": "Gedownload",
       "uploaded": "Geüpload",
       "downloadLimit": "Download limiet",
-      "uploadLimit": "Upload limiet",
-      "disabled": "Uitgeschakeld"
+      "uploadLimit": "Upload limiet"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Statistiek niet beschikbaar",
     "save": "Opslaan",
     "enterNick": "Geef nickname op...",
-    "enterLimitKBS": "Geef limiet op (kB/s)",
+    "disabled": "Uitgeschakeld",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Geef limiet op...",
     "removeLimit": "Verwijder limiet",
     "tlsOk": "Authenticiteit van het certificaat wordt gevalideerd",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Informatie voor nieuwe gebruikers",
     "newUserIntroDesc": "<0><0>Voeg een paar mappen toe die met andere gebruikers gedeeld kunnen worden vanuit je<1>Delen</1> pagina.</0><1>Je kan eens door alle<1>instellingen</1> kunnen lopen voordat je begint.  <3>Het is belangrijk dat je je <1>snelheid</1> correct insteld omdat de client anders je bandbreedte niet volledig kan benutten.</3></1><2>Er is geen lijst met publieke hus dus je moet al een adres hebben om mee te verbinden.</2></0><1>Bezoek de <1>home page</1> voor meer info over de client en de opties.</1><2>Als je vragen heb, kan je ze stellen op de <1>GitHub tracker</1> of ga bij de dev/support hub: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pauze",
+      "resume": "Doorgaan",
+      "stop": "Stop"
+    },
+    "status": "Status",
+    "paused": "Pauze",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Snelheid",
+    "timeLeft": "Te gaan",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

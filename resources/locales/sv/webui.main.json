@@ -31,8 +31,7 @@
       "downloaded": "Nedladdat",
       "uploaded": "Uppladdat",
       "downloadLimit": "Nedladdningsbeg",
-      "uploadLimit": "Uppladdningsbeg",
-      "disabled": "Inaktiverad"
+      "uploadLimit": "Uppladdningsbeg"
     },
     "notepad": {
       "widgetName": "Anteckningar"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Statistik inte tillgänglig",
     "save": "Spara",
     "enterNick": "Ange användarnamn...",
-    "enterLimitKBS": "Ange begränsning (kB/s)",
+    "disabled": "Inaktiverad",
+    "enterLimitUnit": "Ange begränsning ({{unit}}/s)",
     "enterLimit": "Ange begränsning...",
     "removeLimit": "Ta bort begränsning",
     "tlsOk": "Certifikatets äkthet är validerat",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Information till nya användare",
     "newUserIntroDesc": "<0><0>Lägg till några kataloger som delas med andra användare från sidan <1>Utdelning</1>.</0><1>You might want to go through at least each main page of <1>klientinställningar</1> innan du startar.  <3>Det är viktigt att du <1>konfigurerar din anslutningshastighet</1> korrekt eftersom annars kommer inte klienten att kunna utnyttja din bandbredd effektivt.</3></1><2>Det finns än så länge inga listor över publika hubbar så du måste kunna hubbadressen där du vill ansluta till.</2></0><1>Besök <1>hemsidan</1> för mer information om klienten dess funktioner.</1><2>Om du har några frågor, kan du ställa dem på <1>GitHub</1> eller så kan du ansluta till dev-/supporthubben: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Paus",
+      "resume": "Återuppta",
+      "stop": "Stopp"
+    },
+    "status": "Status",
+    "paused": "Pausad",
+    "filesLeft": "Filer kvar",
+    "maximumSpeedPerHasher": "Maximal hastighet per indexerare",
+    "runningThreads": "Körs ({{threadCount}} indexerare)",
+    "speed": "Hastighet",
+    "timeLeft": "Tid kvar",
+    "idle": "Väntar",
+    "hashProgress": "Indexeringsförlopp"
   }
 }

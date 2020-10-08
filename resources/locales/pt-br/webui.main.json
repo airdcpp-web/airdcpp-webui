@@ -31,8 +31,7 @@
       "downloaded": "Baixado",
       "uploaded": "Enviado",
       "downloadLimit": "Limite de download",
-      "uploadLimit": "Limite de Upload",
-      "disabled": "Desabilitado"
+      "uploadLimit": "Limite de Upload"
     },
     "notepad": {
       "widgetName": "Notas"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Estatísticas não disponíveis",
     "save": "Salvar",
     "enterNick": "Digitar apelido...",
-    "enterLimitKBS": "Digite o limite (kB/s)",
+    "disabled": "Desabilitado",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Digitar limite...",
     "removeLimit": "Remover limite",
     "tlsOk": "Autenticidade do certificado foi validado",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Informação do novo usuário",
     "newUserIntroDesc": "<0><0>Adicione alguns diretórios que são compartilhados com outros usuários do <1>Share</1> page.</0><1>Yvocê pode querer passar por pelo menos cada página principal do<1>as configurações do cliente</1> antes que você comece.  <3>É importante que você <1>configure sua velocidade de conexão</1> corretamente porque o cliente não poderá utilizar sua largura de banda de maneira eficiente.</3></1><2>Não há listagem de hubs públicos, portanto você precisa conhecer os endereços dos hubs aos quais deseja se conectar.</2></0><1>Visite a <1>home page</1> para mais informações sobre o cliente e seus recursos.</1><2>Se você tiver dúvidas, você pode publicá-las no <1>GitHub tracker</1> ou entre no hub de desenvolvimento / suporte: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pausa",
+      "resume": "Resumo",
+      "stop": "Parar"
+    },
+    "status": "Status",
+    "paused": "Pausado",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Velocidade",
+    "timeLeft": "Tempo Restante",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

@@ -31,8 +31,7 @@
       "downloaded": "Descarregado",
       "uploaded": "Enviado",
       "downloadLimit": "Limite de descarregamento",
-      "uploadLimit": "Limite de envio",
-      "disabled": "Desativado"
+      "uploadLimit": "Limite de envio"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Estatísticas não disponíveis",
     "save": "Guardar",
     "enterNick": "Introduzir alcunha...",
-    "enterLimitKBS": "Introduzir limite (kB/s)",
+    "disabled": "Desativado",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Introduzir limite...",
     "removeLimit": "Remover limite",
     "tlsOk": "Autenticidade do certificado foi validada",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Informação para o novo utilizador",
     "newUserIntroDesc": "<0><0>Adicione algumas pastas que sejam partilhadas com outros utilizadores na página <1>Partilha</1>.</0><1>Pode querer ver cada uma das páginas das <1>configurações do cliente</1> antes de começar.  <3>É importante que <1>configure a velocidade da ligação</1> corretamente caso contrário não poderá utilizar a sua largura de banda de forma eficiente..</3></1><2>Ainda não existe uma lista de concentradores públicos por isso tem de saber os endereços dos concentradores com os quais se quer conectar.</2></0><1>Visite a <1>página inicial</1> para mais informações sobre os clientes e as suas funcionalidades.</1><2>Se tiver dúvidas, pode colocá-las no <1>rastreador do GitHub</1> ou junte-se ao concentrador dev/support: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pausa",
+      "resume": "Continuar",
+      "stop": "Parar"
+    },
+    "status": "Estado",
+    "paused": "Pausado",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Velocidade",
+    "timeLeft": "Tempo restante",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }

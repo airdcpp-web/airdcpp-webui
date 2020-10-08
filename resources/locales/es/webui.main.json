@@ -31,8 +31,7 @@
       "downloaded": "Descargado",
       "uploaded": "Subido",
       "downloadLimit": "Límite de descarga",
-      "uploadLimit": "Límite de subida",
-      "disabled": "Desactivado"
+      "uploadLimit": "Límite de subida"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -358,7 +357,8 @@
     "statisticsNotAvailable": "Estadísticas no disponibles",
     "save": "Guardar",
     "enterNick": "Introduzca el nick...",
-    "enterLimitKBS": "Introducir límite (kB/s)",
+    "disabled": "Desactivado",
+    "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Introducir límite...",
     "removeLimit": "Eliminar límite",
     "tlsOk": "Se ha validado la autenticidad del certificado",
@@ -991,5 +991,21 @@
   "home": {
     "newUserIntro": "Información para un usuario nuevo",
     "newUserIntroDesc": "<0><0>Añade algunos directorios para compartirlos con los demás en la <1>página</1> Compartir.</0><1>Seguramente quieras echar un vistazo a cada página principal en  <1>los ajustes del cliente</1> antes de empezar.  <3>Es importante que <1>configures tu velocidad de conexión </1> correctamente para que el cliente pueda utilizar tu ancho de banda eficientemente.</3></1><2>Todavía no hay un listado de hubs públicos, por lo que necesitas saber la dirección de los hubs a los que te quieres conectar.</2></0><1>Visita la <1>página de inicio</1> para obtener más información sobre el cliente y sus funciones.</1><2>Si tienes preguntas, puedes plantearlas en el  <1>tracker de GitHubr</1> o unirte al hub de desarrollo y soporte: <3></3></2>"
+  },
+  "hash": {
+    "actions": {
+      "pause": "Pausa",
+      "resume": "Reanudar",
+      "stop": "Parar"
+    },
+    "status": "Estado",
+    "paused": "Parado",
+    "filesLeft": "Files left",
+    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "runningThreads": "Running ({{threadCount}} threads)",
+    "speed": "Velocidad",
+    "timeLeft": "Tiempo restante",
+    "idle": "Idle",
+    "hashProgress": "Hash progress"
   }
 }
