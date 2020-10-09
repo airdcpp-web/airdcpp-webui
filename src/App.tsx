@@ -32,7 +32,7 @@ import Loader from 'components/semantic/Loader';
 import { useInstallPrompt } from 'components/main/effects/InstallPromptEffect';
 import { InstallPromptContext } from 'context/InstallPromptContext';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
-
+import { ErrorBoundary } from 'components/ErrorBoundary';
 
 global.Promise = Promise as any;
 
@@ -61,6 +61,7 @@ const getBackgroundImageStyle = () => {
 const App = () => {
   const prompt = useInstallPrompt();
   return (
+    <ErrorBoundary>
     <Suspense fallback={ <Loader fullPage={ true } text=""/> }>
       <I18nextProvider i18n={ i18n }>
         <InstallPromptContext.Provider value={ prompt }>
@@ -93,6 +94,7 @@ const App = () => {
         </InstallPromptContext.Provider>
       </I18nextProvider>
     </Suspense>
+    </ErrorBoundary>
   );
 };
 
