@@ -54,7 +54,7 @@ const reduceMessageListItem = (
         addDownload,
         entityId,
         remoteMenuId: highlightRemoteMenuId,
-        boundary: '.message-view',
+        boundary: '.message-section',
         // Determining the position is somewhat complex since the number of remote menu items isn't known at this point
         // Only use the boundary for now, could be improved later...
         // position: index < 4 ? 'bottom left' : 'top left',
