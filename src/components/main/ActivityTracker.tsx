@@ -48,7 +48,7 @@ class ActivityTracker extends React.Component {
       );
 
       // Woke up, disconnect the socket (it will be reconnected automatically)
-      LoginActions.disconnect('Wake up detected');
+      LoginActions.disconnect('Connection closed because of inactivity');
     }
 
     this.lastAlive = currentTime;
