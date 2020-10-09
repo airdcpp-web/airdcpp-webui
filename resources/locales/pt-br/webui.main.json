@@ -358,7 +358,7 @@
     "save": "Salvar",
     "enterNick": "Digitar apelido...",
     "disabled": "Desabilitado",
-    "enterLimitUnit": "Enter limit ({{unit}}/s)",
+    "enterLimitUnit": "Digitar limite ({{unit}}/s)",
     "enterLimit": "Digitar limite...",
     "removeLimit": "Remover limite",
     "tlsOk": "Autenticidade do certificado foi validado",
@@ -1000,12 +1000,12 @@
     },
     "status": "Status",
     "paused": "Pausado",
-    "filesLeft": "Files left",
-    "maximumSpeedPerHasher": "Maximum speed per hasher",
-    "runningThreads": "Running ({{threadCount}} threads)",
+    "filesLeft": "Arquivos restantes",
+    "maximumSpeedPerHasher": "Velocidade máxima por hasher",
+    "runningThreads": "Executando ({{threadCount}} processos)",
     "speed": "Velocidade",
     "timeLeft": "Tempo Restante",
-    "idle": "Idle",
-    "hashProgress": "Hash progress"
+    "idle": "Ocioso",
+    "hashProgress": "Progresso do hash"
   }
 }

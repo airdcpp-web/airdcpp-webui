@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.9.0-beta.13",
+  "version": "2.9.0-beta.14",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -55,7 +55,7 @@
     "@types/jquery": "^3.5.2",
     "@types/linkify-it": "^2.1.0",
     "@types/lodash": "^4.14.161",
-    "@types/node": "^14.11.7",
+    "@types/node": "^14.11.8",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.51",
     "@types/react-autosuggest": "^10.0.0",
