@@ -10,8 +10,9 @@ import { formatSize } from 'utils/ValueFormat';
 import { TFunction } from 'i18next';
 import { createFileBundle } from 'services/api/QueueApi';
 import { dupeToStringType } from 'utils/TypeConvert';
-import { parseMagnetLink } from 'utils/MagnetUtils';
+import { Magnet, parseMagnetLink } from 'utils/MagnetUtils';
 import { TableDownloadMenu } from 'components/menu';
+import { TableDropdownProps } from 'components/semantic/TableDropdown';
 
 
 const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (itemInfo, user, downloadData) => {
@@ -23,20 +24,29 @@ const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (item
 };
 
 
-export interface HighlightMagnetProps {
+export interface HighlightMagnetProps extends Pick<TableDropdownProps, 'position'> {
   highlightId: number;
   text: string;
   contentType: API.FileContentType;
   dupe: API.Dupe | null;
-  user: UI.DownloadSource | undefined; 
-  addDownload: UI.AddItemDownload;
-  highlightRemoteMenuId?: string;
-  entityId: API.IdType | undefined;
+  user: UI.DownloadSource | undefined;
   t: TFunction;
+  menuProps: UI.MessageActionMenuData;
 }
 
+const formatMagnetCaption = (magnet: Magnet, t: TFunction) => {
+  const { name, size } = magnet;
+
+  let caption = name;
+  if (!!size) {
+    caption += ` (${formatSize(size, t)})`;
+  }
+
+  return caption;
+};
+
 export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
-  text, dupe, user, contentType, addDownload, t, highlightRemoteMenuId, highlightId, entityId
+  text, dupe, user, contentType, menuProps, t, highlightId
 }) => {
   const magnet = parseMagnetLink(text);
   if (!magnet) {
@@ -45,13 +55,6 @@ export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
         { text }
       </>
     );
-  }
-
-  const { name, size } = magnet;
-
-  let caption = name;
-  if (!!size) {
-    caption += ` (${formatSize(size, t)})`;
   }
 
   const downloadUser = !!user && 
@@ -73,6 +76,7 @@ export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
     time: undefined,
   };
 
+  const { addDownload, boundary, ...other } = menuProps;
   useEffect(
     () => {    
       addDownload(highlightId, {
@@ -89,14 +93,16 @@ export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
   return (
     <TableDownloadMenu
       className={ cx('highlight magnet url link', dupeToStringType(dupe)) }
-      caption={ caption }
+      caption={ formatMagnetCaption(magnet, t) }
       user={ downloadUser }
       itemInfoGetter={ () => downloadData }
       downloadHandler={ magnetDownloadHandler }
       triggerIcon={ null }
       session={ undefined }
-      remoteMenuId={ highlightRemoteMenuId }
-      entityId={ entityId }
+      popupSettings={{
+        boundary
+      }}
+      { ...other }
     />
   );
 };

@@ -7,6 +7,7 @@ import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
+
 import { CommonMessageProps } from '../types';
 import { MessageText } from './MessageText';
 import { TimeStamp } from './Timestamp';
@@ -35,20 +36,18 @@ class StatusMessage extends React.Component<StatusMessageProps> {
   }
 
   render() {
-    const { message, addDownload, highlightRemoteMenuId, entityId, ...other } = this.props;
+    const { message, menuProps, ...other } = this.props;
     return (
       <InView
         className={ 'ui item status ' + message.severity }
-        {...other}
+        { ...other }
       >
         <Icon icon={ getSeverityIcon(message.severity) }/>
         { message.time > 0 && <TimeStamp message={ message }/> }
         <MessageText
           message={ message }
           emojify={ false }
-          addDownload={ addDownload }
-          highlightRemoteMenuId={ highlightRemoteMenuId }
-          entityId={ entityId }
+          menuProps={ menuProps }
         />
       </InView>
     );

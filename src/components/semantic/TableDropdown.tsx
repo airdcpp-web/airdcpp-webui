@@ -22,6 +22,7 @@ export interface TableDropdownProps {
   triggerIcon?: IconType;
   children: (onClose: DropdownCloseHandler) => React.ReactNode;
   popupSettings?: SemanticUI.PopupSettings;
+  position?: string;
 }
 
 class TableDropdown extends React.Component<TableDropdownProps> {
@@ -35,9 +36,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     children: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Pick<TableDropdownProps, 'linkCaption' | 'triggerIcon'> = {
+  static defaultProps: Pick<TableDropdownProps, 'linkCaption' | 'triggerIcon' | 'position'> = {
     linkCaption: true,
     triggerIcon: IconConstants.EXPAND,
+    position: 'bottom left',
   };
 
   popupNode: Popup;
@@ -54,7 +56,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
   }
 
   render() {
-    const { caption, className, linkCaption, triggerIcon, popupSettings } = this.props;
+    const { caption, className, linkCaption, triggerIcon, popupSettings, position } = this.props;
     let captionNode = (
       <DropdownCaption>
         { caption }
@@ -85,7 +87,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
           className="basic dropdown-content" 
           trigger={ trigger } 
           settings={ settings } 
-          position="bottom left"
+          position={ position }
         >
           { this.getChildren }
         </Popup>

@@ -55,11 +55,15 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 
   render() {
-    const { message, dropdownContext, entityId, addDownload, highlightRemoteMenuId, ...other } = this.props;
+    const { 
+      message, dropdownContext, menuProps,
+      ...other 
+    } = this.props;
+
     return (
       <InView 
         className={ 'ui item chat ' + message.from.flags.join(' ')}
-        {...other}
+        { ...other }
       >
         <TimeStamp
           message={ message }
@@ -73,9 +77,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
             message={ message }
             emojify={ true }
             user={ message.from }
-            addDownload={ addDownload }
-            highlightRemoteMenuId={ highlightRemoteMenuId }
-            entityId={ entityId }
+            menuProps={ menuProps }
           />
         </div>
       </InView>

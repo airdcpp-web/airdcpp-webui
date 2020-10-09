@@ -16,17 +16,15 @@ import { HighlightBold, HighlightMagnet, HighlightUrlLink, HighlightTextLink } f
 
 
 interface HighlightProps {
-  user: UI.DownloadSource | undefined; 
-  addDownload: UI.AddItemDownload;
-  highlightRemoteMenuId?: string;
-  entityId?: API.IdType;
+  user: UI.DownloadSource | undefined;
+  menuProps: UI.MessageActionMenuData;
 }
 
 const getHighlightNode = (
   highlight: API.MessageHighlight, 
   location: Location, 
   t: TFunction,
-  { addDownload, user, highlightRemoteMenuId, entityId }: HighlightProps
+  { user, menuProps }: HighlightProps
 ): React.ReactNode => {
   const { start, end } = highlight.position;
   const key = `${start}-${end}`;
@@ -45,9 +43,7 @@ const getHighlightNode = (
           key={ key }
           highlightId={ highlight.id }
           text={ highlight.text }
-          location={ location }
-          highlightRemoteMenuId={ highlightRemoteMenuId }
-          entityId={ entityId }
+          menuProps={ menuProps }
         />
       );
     case API.MessageHighlightTypeEnum.LINK_URL: {
@@ -59,11 +55,9 @@ const getHighlightNode = (
             dupe={ highlight.dupe }
             contentType={ highlight.content_type }
             user={ user }
-            addDownload={ addDownload }
-            highlightRemoteMenuId={ highlightRemoteMenuId }
             highlightId={ highlight.id }
             t={ t }
-            entityId={ entityId }
+            menuProps={ menuProps }
           />
         );
       }
@@ -82,14 +76,10 @@ const getHighlightNode = (
   }
 };
 
-interface HighlightedTextProps {
+interface HighlightedTextProps extends HighlightProps {
   text: string;
   highlights: API.MessageHighlight[];
-  user: UI.DownloadSource | undefined;
   emojify?: boolean;
-  addDownload: UI.AddItemDownload;
-  highlightRemoteMenuId?: string;
-  entityId?: API.IdType;
 }
 
 const formatPlainText = (text: string, emojify: boolean | undefined) => {

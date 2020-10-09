@@ -8,9 +8,9 @@ import SearchActions from 'actions/reflux/SearchActions';
 import { hasCopySupport } from 'utils/BrowserUtils';
 
 
-type ItemInfo = Pick<API.MessageHighlight, 'text'>;
+export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & { id: number; };
 
-const handleSearch: UI.ActionHandler<ItemInfo> = ({ data, location }) => {
+const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({ data, location }) => {
   return SearchActions.search(
     {
       name: data.text,
@@ -19,11 +19,11 @@ const handleSearch: UI.ActionHandler<ItemInfo> = ({ data, location }) => {
   );
 };
 
-const handleCopy: UI.ActionHandler<ItemInfo> = ({ data }) => {
+const handleCopy: UI.ActionHandler<HighlightItemInfo> = ({ data }) => {
   return navigator.clipboard.writeText(data.text);
 };
 
-const MessageHighlightActions: UI.ActionListType<ItemInfo> = {
+const MessageHighlightActions: UI.ActionListType<HighlightItemInfo> = {
   search: {
     access: API.AccessEnum.SEARCH, 
     displayName: 'Search', 
@@ -45,4 +45,4 @@ const MessageHighlightActions: UI.ActionListType<ItemInfo> = {
 export default {
   moduleId: UI.Modules.COMMON,
   actions: MessageHighlightActions,
-} as UI.ModuleActions<ItemInfo>;
+} as UI.ModuleActions<HighlightItemInfo>;

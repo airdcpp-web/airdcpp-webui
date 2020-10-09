@@ -1,37 +1,35 @@
 import MessageHighlightActions from 'actions/ui/MessageHighlightActions';
 import { TableActionMenu } from 'components/menu';
-import { Location } from 'history';
 
-import * as API from 'types/api';
-// import * as UI from 'types/ui';
+import * as UI from 'types/ui';
 
 import React from 'react';
 
 
-export interface HighlightTextLinkProps {
+export interface HighlightTextLinkProps /*extends Pick<TableDropdownProps, 'position'>*/ {
   text: string;
-  location: Location;
-  highlightRemoteMenuId?: string;
-  entityId: API.IdType | undefined;
   highlightId: number;
+  menuProps: UI.MessageActionMenuData;
 }
 
 export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({ 
-  text, highlightRemoteMenuId, highlightId, entityId 
-}) => (
-  <TableActionMenu
-    className="highlight text link"
-    actions={ MessageHighlightActions }
-    itemData={{
-      id: highlightId,
-      text
-    }}
-    remoteMenuId={ highlightRemoteMenuId }
-    entityId={ entityId }
-    caption={ text }
-    triggerIcon={ null }
-    popupSettings={{
-      boundary: '.message-list'
-    }}
-  />
-);
+  text, highlightId, menuProps
+}) => {
+  const { boundary, ...other } = menuProps;
+  return (
+    <TableActionMenu
+      className="highlight text link"
+      actions={ MessageHighlightActions }
+      itemData={{
+        id: highlightId,
+        text
+      }}
+      caption={ text }
+      triggerIcon={ null }
+      popupSettings={{
+        boundary
+      }}
+      { ...other }
+    />
+  );
+};

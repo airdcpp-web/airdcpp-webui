@@ -1,15 +1,16 @@
 import React from 'react';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { HighlightedText } from '../../text/HighlightedText';
-import { CommonMessageTextProps } from '../types';
 
 
-interface MessageTextProps extends CommonMessageTextProps {
+interface MessageTextProps {
   message: API.Message; 
   emojify: boolean;
   user?: API.HubUser;
+  menuProps: UI.MessageActionMenuData;
 }
 
 export const MessageText: React.FC<MessageTextProps> = ({ emojify, message, user, ...other }) => (

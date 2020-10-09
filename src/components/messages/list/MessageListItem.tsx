@@ -3,7 +3,6 @@ import React from 'react';
 
 import { ChatMessage, StatusMessage } from '../message';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { CommonMessageProps } from '../types';
 
@@ -11,7 +10,6 @@ import { CommonMessageProps } from '../types';
 interface MessageListItemProps extends CommonMessageProps {
   id: string;
   message: UI.MessageListItem;
-  entityId: API.IdType | undefined;
 }
 
 export const MessageListItem: React.FC<MessageListItemProps> = ({
