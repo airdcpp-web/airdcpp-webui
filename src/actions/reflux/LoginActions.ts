@@ -5,7 +5,6 @@ import SocketService from 'services/SocketService';
 
 import LoginConstants from 'constants/LoginConstants';
 
-//import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
@@ -14,6 +13,7 @@ const LoginActionConfig: UI.RefluxActionConfigList<any> = [
   { 'login': { asyncResult: true } },
   { 'loginRefreshToken': { asyncResult: true } },
   { 'connect': { asyncResult: true } },
+  'disconnect',
   { 'logout': { asyncResult: true } },
   { 'activity': { asyncResult: true } },
 ];
@@ -61,6 +61,9 @@ LoginActions.login.failed.listen(function (error: ErrorResponse) {
   console.log('Logging in failed', error);
 });
 
+LoginActions.disconnect.listen(function (reason: string) {
+  SocketService.disconnect(false, reason);
+});
 
 LoginActions.connect.listen(async function (this: UI.AsyncActionType<any>, token: string) {
   try {

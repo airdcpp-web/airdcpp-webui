@@ -2,10 +2,8 @@
 import React from 'react';
 
 import LoginActions from 'actions/reflux/LoginActions';
-import SocketService from 'services/SocketService';
-
-import ActivityStore from 'stores/ActivityStore';
 import { AwayEnum } from 'constants/SystemConstants';
+import ActivityStore from 'stores/ActivityStore';
 
 
 // Don't change this if the component is re-mounted
@@ -25,7 +23,7 @@ class ActivityTracker extends React.Component {
 
     // Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
     this.aliveInterval = window.setInterval(this.checkAlive, 2000);
-    this.lastAlive = (new Date()).getTime();
+    this.lastAlive = Date.now();
 
     LoginActions.activity();
   }
@@ -43,12 +41,14 @@ class ActivityTracker extends React.Component {
   }
 
   checkAlive = () => {
-    const currentTime = (new Date()).getTime();
+    const currentTime = Date.now();
     if (currentTime > (this.lastAlive + 30000)) { // Require 30 seconds of downtime
-      console.log('Wake up detected');
+      console.log(
+        `Wake up detected (last successful activity check was ${(currentTime - this.lastAlive) / 60 / 1000} minutes ago)`
+      );
 
       // Woke up, disconnect the socket (it will be reconnected automatically)
-      SocketService.disconnect();
+      LoginActions.disconnect('Wake up detected');
     }
 
     this.lastAlive = currentTime;

@@ -161,7 +161,24 @@ const LoginStore = {
     return permissions.indexOf(access) !== -1 || permissions.indexOf(AccessConstants.ADMIN) !== -1;
   },
 
-  onSocketDisconnected(error: string, code: number) {
+  onDisconnect(reason: string) {
+    // Manual disconnect 
+    // Set as disconnected to prevent components from making requests (as those would throw)
+    this.handleDisconnect(reason);
+  },
+
+  onSocketDisconnected(error: string) {
+    if (!this._socketAuthenticated) {
+      // Manually disconnected, handled earlier
+      return;
+    }
+
+    // Connection failed or it was closed by the server
+    this.handleDisconnect(error);
+  },
+
+  
+  handleDisconnect(error: string) {
     this._socketAuthenticated = false;
     if (this.user) {
       if (error === '') {
