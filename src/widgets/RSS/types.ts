@@ -15,6 +15,13 @@ export interface FeedItem {
   }>;
 }
 
-export const parseNodeContent = (node: FeedNode) => {
-  return typeof node === 'string' ? node : node.text;
-};
+export interface RawFeedData {
+  rss?: {
+    channel?: {
+      item?: FeedItem[];
+    }
+  };
+  feed?: {
+    entry?: FeedItem[];
+  };
+}

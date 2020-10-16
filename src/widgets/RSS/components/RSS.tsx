@@ -1,13 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { parse as parseXML } from 'fast-xml-parser';
-import { decode } from 'he';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
-import { fetchCorsSafeData } from 'services/HttpService';
 
 import Entry from 'widgets/RSS/components/Entry';
 import Footer from 'widgets/RSS/components/Footer';
@@ -17,43 +14,19 @@ import '../style.css';
 
 import * as UI from 'types/ui';
 
-import { FeedItem, parseNodeContent } from '../types';
+import { FeedItem, RawFeedData } from '../types';
+import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from './utils';
 
 
-const getEntryKey = (entry: FeedItem): string => {
-  if (!!entry.guid) {
-    return parseNodeContent(entry.guid);
-  }
-
-  if (!!entry.id) {
-    return parseNodeContent(entry.id);
-  }
-
-  return 'DUMMY';
-};
-
-
-const idToCacheKey = (id: string) => 'rss_feed_cache_' + id;
-
-
-export interface Feed {
-  rss?: {
-    channel?: {
-      item?: FeedItem[];
-    }
-  };
-  feed?: {
-    entry?: FeedItem[];
-  };
-}
-
-export type RSSProps = UI.WidgetProps<Settings>;
-
+const idToCacheKey = (id: string) => `rss_feed_cache_${id}`;
 
 interface StorageFeed {
   entries: FeedItem[] | null;
   date: number;
 }
+
+export type RSSProps = UI.WidgetProps<Settings>;
+
 interface State extends Partial<StorageFeed> {
   error: string | null;
 }
@@ -99,20 +72,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
     }
 
     try {
-      const data = await fetchCorsSafeData(feedUrl, false);
-
-      console.log('RSS feed received', feedUrl);
-
-      const jsonFeed = parseXML(data, {
-        attrNodeName: 'attr',
-        textNodeName : 'text',
-        parseAttributeValue : true,
-        ignoreAttributes : false,
-        attributeNamePrefix: '',
-        attrValueProcessor: a => decode(a, { isAttributeValue: true }),
-        tagValueProcessor : a => decode(a),
-      });
-
+      const jsonFeed = await fetchRSSFeed(feedUrl);
       this.onFeedFetched(jsonFeed);
     } catch (e) {
       console.log('RSS feed download failed', feedUrl, e);
@@ -156,46 +116,11 @@ class RSS extends React.PureComponent<RSSProps, State> {
     });
   }
 
-  onFeedFetched = (data: Feed) => {
-    let entries = [];
+  onFeedFetched = (data: RawFeedData) => {
+    const { widgetT, componentId } = this.props;
+    const entries = parseRSSFeed(data, widgetT);
 
-    const invalidFeed = (error: string) => {
-      const { widgetT } = this.props;
-      console.log(`Invalid feed: ${error}`);
-      this.setError(widgetT.t('invalidFeed', { error }/*'Invalid/unsupported feed'*/));
-    };
-
-    const { rss, feed } = data;
-    if (rss) {
-      if (!rss.channel || !rss.channel.item) {
-        invalidFeed('No channel/item');
-        return;
-      }
-
-      entries = rss.channel.item;
-    } else if (feed) {
-      if (!feed.entry) {
-        invalidFeed('No feed entry');
-        return;
-      }
-
-      entries = feed.entry;
-    } else {
-      invalidFeed('No "rss" or "feed" tag was found');
-      return;
-    }
-
-    if (!Array.isArray(entries)) {
-      if (typeof entries !== 'object') {
-        invalidFeed('Entries is not an array or an object');
-        return;
-      }
-
-      // Single entry, convert to an array
-      entries = [ entries ];
-    }
-
-    saveSessionProperty(idToCacheKey(this.props.componentId), {
+    saveSessionProperty(idToCacheKey(componentId), {
       entries,
       date: Date.now(),
     });
@@ -219,7 +144,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
 
     const { settings, componentId, widgetT } = this.props;
     if (!entries) {
-      return <Loader text={ widgetT.translate('Loading feed') } inline={true}/>;
+      return <Loader text={ widgetT.translate('Loading feed') } inline={ true }/>;
     }
 
     return (
@@ -228,7 +153,7 @@ class RSS extends React.PureComponent<RSSProps, State> {
           { 
             entries.map(entry => (
               <Entry 
-                key={ getEntryKey(entry) } 
+                key={ getUniqueEntryKey(entry) } 
                 entry={ entry }
                 componentId={ componentId }
                 feedUrl={ settings.feed_url }
