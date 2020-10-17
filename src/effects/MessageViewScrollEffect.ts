@@ -6,10 +6,12 @@ import * as UI from 'types/ui';
 import { getListMessageIdString } from 'utils/MessageUtils';
 
 
+const MAX_IS_BOTTOM_OFFSET_PX = 30;
+
 const isScrolledToBottom = (element: HTMLElement) => {
   const { scrollHeight, scrollTop, offsetHeight } = element;
   const offSetFromBottom = scrollHeight - (scrollTop + offsetHeight);
-  return Math.abs(offSetFromBottom) < 10;
+  return Math.abs(offSetFromBottom) < MAX_IS_BOTTOM_OFFSET_PX;
 };
 
 const DEBUG = false;
