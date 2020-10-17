@@ -7,6 +7,8 @@ import Form, { FormSaveHandler } from 'components/form/Form';
 import * as UI from 'types/ui';
 
 import { IconType } from 'components/semantic/Icon';
+import { useTranslation } from 'react-i18next';
+import { translate } from 'utils/TranslationUtils';
 
 
 export interface MenuFormDialogProps extends ModalProps {
@@ -21,11 +23,13 @@ export const MenuFormDialog: React.FC<MenuFormDialogProps> = (
 ) => {
   const formRef = useRef<Form | null>(null);
   const location = useLocation();
+  const { t } = useTranslation();
   return (
     <Modal 
       { ...other } 
       title={ title } 
       onApprove={ () => formRef.current!.save() } 
+      approveCaption={ translate('Continue', t, UI.Modules.COMMON) }
       closable={ false } 
       icon={ icon }
       dynamicHeight={ true }
