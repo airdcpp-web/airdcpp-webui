@@ -9,13 +9,12 @@ import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Entry from 'widgets/RSS/components/Entry';
 import Footer from 'widgets/RSS/components/Footer';
 import { Settings } from 'widgets/RSS';
-
-import '../style.css';
+import { FeedItem, RawFeedData } from 'widgets/RSS/types';
+import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from 'widgets/RSS/utils';
 
 import * as UI from 'types/ui';
 
-import { FeedItem, RawFeedData } from '../types';
-import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from './utils';
+import '../style.css';
 
 
 const idToCacheKey = (id: string) => `rss_feed_cache_${id}`;

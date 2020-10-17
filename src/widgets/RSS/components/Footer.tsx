@@ -1,13 +1,13 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
 
+import Icon from 'components/semantic/Icon';
+
+import IconConstants from 'constants/IconConstants';
 import RedrawDecorator from 'decorators/RedrawDecorator';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import * as UI from 'types/ui';
-import '../style.css';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
 
 
 export interface FooterProps {

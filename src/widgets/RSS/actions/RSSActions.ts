@@ -1,12 +1,14 @@
 'use strict';
 
+import { SearchActions } from 'actions/reflux/SearchActions';
+
 import IconConstants from 'constants/IconConstants';
 import AccessConstants from 'constants/AccessConstants';
 
-import { FeedItem, parseNodeContent } from '../types';
+import { FeedItem } from '../types';
+import { parseNodeContent } from '../utils';
 
 import * as UI from 'types/ui';
-import { SearchActions } from 'actions/reflux/SearchActions';
 
 
 interface RSSItemData {

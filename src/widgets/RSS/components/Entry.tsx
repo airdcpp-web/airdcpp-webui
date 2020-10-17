@@ -2,13 +2,13 @@
 import React from 'react';
 
 import { ActionMenu } from 'components/menu';
-import RSSActions from '../actions/RSSActions';
-
 import { formatRelativeTime } from 'utils/ValueFormat';
 
-import '../style.css';
+import RSSActions from '../actions/RSSActions';
+import { FeedItem } from '../types';
+import { parseNodeContent } from '../utils';
+
 import * as UI from 'types/ui';
-import { FeedItem, parseNodeContent } from '../types';
 
 
 const parseTitle = (entry: FeedItem) => {

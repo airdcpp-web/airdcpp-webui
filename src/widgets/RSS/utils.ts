@@ -3,11 +3,9 @@ import { decode } from 'he';
 
 import { fetchCorsSafeData } from 'services/HttpService';
 
-import '../style.css';
-
 import * as UI from 'types/ui';
 
-import { FeedItem, FeedNode, RawFeedData } from '../types';
+import { FeedItem, FeedNode, RawFeedData } from './types';
 
 
 export const parseNodeContent = (node: FeedNode) => {
