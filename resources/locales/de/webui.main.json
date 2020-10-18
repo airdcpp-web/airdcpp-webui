@@ -390,6 +390,7 @@
     "tth": "TTH",
     "na": "Nicht verfügbar",
     "noActionsAvailable": "Keine Aktion verfügbar",
+    "continue": "Continue",
     "form": {
       "browse": "Durchsuchen",
       "noOptions": "Keine Optionen",
@@ -483,6 +484,8 @@
       "searchForAlternates": "Suche nach Alternativen",
       "remove": "Entfernen",
       "removeSource": "Quelle entfernen",
+      "rescanForErrors": "Rescan for errors",
+      "forceInShare": "Freigabe erzwingen",
       "prompts": {
         "removeBundleApprove": "Paket entfernen",
         "removeBundleReject": "Nicht entfernen",

@@ -390,6 +390,7 @@
     "tth": "TTH",
     "na": "N/A",
     "noActionsAvailable": "No actions available",
+    "continue": "Continue",
     "form": {
       "browse": "Browse",
       "noOptions": "No options",
@@ -483,6 +484,8 @@
       "searchForAlternates": "Søg efter alternativer",
       "remove": "Fjern",
       "removeSource": "Fjern kilde",
+      "rescanForErrors": "Rescan for errors",
+      "forceInShare": "Tvungen i share",
       "prompts": {
         "removeBundleApprove": "Remove bundle",
         "removeBundleReject": "Don't remove",

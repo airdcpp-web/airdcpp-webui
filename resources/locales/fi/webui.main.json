@@ -390,6 +390,7 @@
     "tth": "TTH",
     "na": "Ei saatavilla",
     "noActionsAvailable": "Toimintoja ei käytettävissä",
+    "continue": "Jatka",
     "form": {
       "browse": "Selaa",
       "noOptions": "Ei vaihtoehtoja",
@@ -483,6 +484,8 @@
       "searchForAlternates": "Etsi vaihtoehtoisia lähteitä",
       "remove": "Poista",
       "removeSource": "Poista lähde",
+      "rescanForErrors": "Skannaa uudestaan",
+      "forceInShare": "Pakota jakoon",
       "prompts": {
         "removeBundleApprove": "Poista bundle",
         "removeBundleReject": "Älä poista",

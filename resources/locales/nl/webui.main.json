@@ -390,6 +390,7 @@
     "tth": "TTH",
     "na": "N/A",
     "noActionsAvailable": "No actions available",
+    "continue": "Continue",
     "form": {
       "browse": "Bladeren",
       "noOptions": "Geen opties",
@@ -483,6 +484,8 @@
       "searchForAlternates": "Zoeken naar alternatieve downloadlocaties",
       "remove": "Verwijder",
       "removeSource": "Verwijder bron",
+      "rescanForErrors": "Rescan for errors",
+      "forceInShare": "Forceer in share",
       "prompts": {
         "removeBundleApprove": "Verwijder bundel",
         "removeBundleReject": "Niet verwijderen",
