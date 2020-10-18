@@ -37,8 +37,8 @@
       "widgetName": "Notizen"
     },
     "extensions": {
-      "widgetName": "Extension releases",
-      "updatedAgo": "Updated {{date}}"
+      "widgetName": "Veröffentlichte Erweiterungen",
+      "updatedAgo": "Aktualisiert {{date}}"
     },
     "actions": {
       "editWidget": "Widget editieren",
@@ -222,9 +222,9 @@
       "connectionModeV6Option2": "Passiver Modus",
       "connectionIpV6Name": "IP-Adresse",
       "miscName": "Miscellaneous overrides",
-      "useMainChatNotifyName": "Use chat notification",
-      "awayMessageName": "Away message",
-      "showJoinsName": "Show joins/parts"
+      "useMainChatNotifyName": "Benutze Chat Benachrichtigungen",
+      "awayMessageName": "Abwesenheitsnachricht",
+      "showJoinsName": "Betreten/Verlassen anzeigen"
     }
   },
   "filelists": {
@@ -277,7 +277,7 @@
         "ignoreUserSuccess": "Benutzer {{item.nicks}} wurde zu ignorierte Benutzer hinzugefügt",
         "unignoreUserSuccess": "Benutzer {{item.nicks}} wurde von ignorierte Benutzer entfernt",
         "copyMagnetSuccess": "Magnet Link wurde in die Zwischenablage kopiert",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Text wurde in die Zwischenablage kopiert"
       },
       "prompts": {
         "restartWebSystemApprove": "Fortfahren und neustarten",
@@ -316,7 +316,7 @@
     "noNfoResultsWereReceived": "Keine NFO Ergebnisse wurden empfangen",
     "networkClientError": "Netzwerk/Client Fehler",
     "failedToFetchData": "Datenempfang fehlgeschlagen",
-    "failedToLoadContent": "Failed to load content",
+    "failedToLoadContent": "Laden der Inhalte fehlgeschlagen",
     "loadingItems": "Elemente werden geladen",
     "root": "Hauptverzeichnis",
     "name": "Name",
@@ -358,7 +358,7 @@
     "save": "Speichern",
     "enterNick": "Benutzername eingeben...",
     "disabled": "Deaktiviert",
-    "enterLimitUnit": "Enter limit ({{unit}}/s)",
+    "enterLimitUnit": "Limit eingeben ({{unit}}/s)",
     "enterLimit": "Limit eingeben...",
     "removeLimit": "Limit entfernen",
     "tlsOk": "Authentizität dieses Zertifikats ist validiert",
@@ -390,7 +390,7 @@
     "tth": "TTH",
     "na": "Nicht verfügbar",
     "noActionsAvailable": "Keine Aktion verfügbar",
-    "continue": "Continue",
+    "continue": "Weiter",
     "form": {
       "browse": "Durchsuchen",
       "noOptions": "Keine Optionen",
@@ -404,7 +404,7 @@
       "down": "Abwärts",
       "remove": "Entfernen",
       "up": "Aufwärts",
-      "offlineMessage": "No connected hubs",
+      "offlineMessage": "Keine verbundenen Hubs",
       "loading": "Wird geladen"
     }
   },
@@ -425,18 +425,18 @@
       "clearChat": "Chat löschen",
       "close": "Schließen",
       "addToFavorites": "Zu Bevorzugten hinzufügen",
-      "useChatNotification": "Use chat notification",
-      "showJoinsParts": "Show joins/parts",
+      "useChatNotification": "Benutze Chat Benachrichtigungen",
+      "showJoinsParts": "Betreten/Verlassen anzeigen",
       "notifications": {
         "favoriteSuccess": "Der Hub {{item.identity.name}} wurde zu den Favoriten hinzugefügt"
       }
     },
     "notifications": {
       "actions": {
-        "viewChat": "View chat"
+        "viewChat": "Chat anzeigen"
       }
     },
-    "notificationSettings": "Notification settings",
+    "notificationSettings": "Benachrichtigungseinstellungen",
     "enterHubAddress": "Hub Adresse eingeben...",
     "connect": "Verbinden",
     "notConnectedToTheHub": "Nicht verbunden zum Hub",
@@ -883,10 +883,10 @@
       "notifications": {
         "popupNotifications": "Pop-up Benachrichtigungen",
         "form": {
-          "notifyMentionMyNickName": "Mentions of my nick",
+          "notifyMentionMyNickName": "Erwähnungen meines Nicks",
           "notifyPmUserName": "Private Nachrichten (Benutzer)",
           "notifyPmBotName": "Private Nachrichten (Bots)",
-          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
+          "notifyHubMessageName": "Hub Chat Nachrichten (Nur in Hubs wo Chat Benachrichtungen eingeschaltet sind)",
           "notifyBundleStatusName": "Paket Status Änderungen",
           "notifyEventsInfoName": "Info Ereignisse",
           "notifyEventsWarningName": "Warn Ereignisse",
@@ -1003,12 +1003,12 @@
     },
     "status": "Status",
     "paused": "Pause",
-    "filesLeft": "Files left",
-    "maximumSpeedPerHasher": "Maximum speed per hasher",
+    "filesLeft": "Dateien übrig",
+    "maximumSpeedPerHasher": "Max. Geschwindigkeit pro Hasher",
     "runningThreads": "Running ({{threadCount}} threads)",
     "speed": "Geschwindigkeit",
     "timeLeft": "Verbleibende Zeit",
     "idle": "Idle",
-    "hashProgress": "Hash progress"
+    "hashProgress": "Hash Fortschritt"
   }
 }
