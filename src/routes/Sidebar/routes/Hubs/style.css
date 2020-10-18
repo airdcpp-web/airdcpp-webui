@@ -7,8 +7,13 @@
   margin: 0 0 1rem !important;
 }
 
-.hub-action-prompt .help {
+.hub-action-prompt .password.prompt .help {
   margin-top: 10px;
+}
+
+.hub-action-prompt .redirect.prompt {
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .hub.session .virtual-table,

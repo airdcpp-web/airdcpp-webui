@@ -55,7 +55,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
     const { session, sessionT } = this.props;
     const connectState = session.connect_state.id;
 
-    if (connectState === API.HubConnectStateEnum.DISCONNECTED) {
+    if (connectState === API.HubConnectStateEnum.DISCONNECTED || connectState === API.HubConnectStateEnum.REDIRECT) {
       return (
         <div className="offline-message">
           <Message 

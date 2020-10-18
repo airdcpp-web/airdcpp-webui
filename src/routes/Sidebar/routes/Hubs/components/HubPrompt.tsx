@@ -58,7 +58,7 @@ interface PasswordPromptProps {
 
 // Sub prompts
 const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT }) => (
-  <div>
+  <div className="password prompt">
     <ActionInput 
       placeholder={ sessionT.translate('Password') } 
       caption={ sessionT.translate('Submit') }
@@ -87,6 +87,7 @@ interface RedirectPromptProps {
 
 const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub, sessionT }) => (
   <Button
+    className="redirect prompt"
     icon={ IconConstants.CONNECT }
     onClick={ _ => 
       runBackgroundSocketAction(
