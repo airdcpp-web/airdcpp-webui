@@ -80,7 +80,10 @@ export interface UserSelectFieldProps extends
     
 }
 
-export const UserSelectField: React.FC<UserSelectFieldProps> = ({ offlineMessage, styles, ...other }) => {
+export const UserSelectField: React.FC<UserSelectFieldProps> = ({ 
+  offlineMessage, styles, isClearable = true, 
+  ...other 
+}) => {
   const { t } = useTranslation();
   const formT = getModuleT(t, [UI.Modules.COMMON, UI.SubNamespaces.FORM]);
 
@@ -112,7 +115,7 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({ offlineMessage
           />
         )}
         formT={ formT }
-        isClearable={ true }
+        isClearable={ isClearable }
         openMenuOnClick={ false }
         openMenuOnFocus={ false }
         { ...other }

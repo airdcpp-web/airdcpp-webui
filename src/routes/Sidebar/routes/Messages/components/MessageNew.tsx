@@ -41,6 +41,7 @@ class MessageNew extends React.Component<NewSessionLayoutProps> {
             'offlineMessage',
             'You must to be connected to at least one hub in order to send private messages'
           ) }
+          isClearable={ false }
         />
         <RecentLayout
           entryType={ HistoryEntryEnum.PRIVATE_CHAT }

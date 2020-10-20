@@ -46,6 +46,7 @@ class FilelistNew extends React.Component<NewSessionLayoutProps> {
             'offlineMessage',
             'You must to be connected to at least one hub in order to download filelists from other users') 
           }
+          isClearable={ false }
         />
          <ShareProfileSelector 
            onProfileChanged={ this.onProfileChanged }
