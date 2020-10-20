@@ -83,11 +83,10 @@
 
 .chat.session .chat.item .left {
   display: flex;
-  flex-direction: column;
 }
 
-.chat.session .chat.item .left.third-person {
-  display: flex;
+.chat.session .chat.item .left:not(.third-person) {
+  flex-direction: column;
 }
 
 .chat.session .chat.item .left.third-person > .text {
