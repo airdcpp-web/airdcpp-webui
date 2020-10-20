@@ -484,7 +484,7 @@
       "searchForAlternates": "Sök efter nya källor",
       "remove": "Ta bort",
       "removeSource": "Ta bort källa",
-      "rescanForErrors": "Rescan for errors",
+      "rescanForErrors": "Kontrollera igen om det finns fel",
       "forceInShare": "Tvinga till utdelning",
       "prompts": {
         "removeBundleApprove": "Ta bort filsamling",
