@@ -47,3 +47,8 @@
 .system-log .status.item .time {
   color: gray;
 }
+
+.system-log .status.item .label {
+  color: gray;
+  margin-right: 3px;
+}

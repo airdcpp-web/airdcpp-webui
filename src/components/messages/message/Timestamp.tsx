@@ -2,15 +2,13 @@ import React from 'react';
 
 import { formatTimestamp } from 'utils/ValueFormat';
 
-import * as API from 'types/api';
-
 
 interface TimeStampProps {
-  message: API.Message;
+  time: number;
 }
 
-export const TimeStamp: React.FC<TimeStampProps> = ({ message }) => (
+export const TimeStamp: React.FC<TimeStampProps> = ({ time }) => (
   <div className="time">
-    { formatTimestamp(message.time) }
+    { formatTimestamp(time) }
   </div>
 );

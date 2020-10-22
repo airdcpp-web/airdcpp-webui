@@ -43,8 +43,13 @@ class StatusMessage extends React.Component<StatusMessageProps> {
         { ...other }
       >
         <Icon icon={ getSeverityIcon(message.severity) }/>
-        { message.time > 0 && <TimeStamp message={ message }/> }
+        { message.time > 0 && (
+          <TimeStamp 
+            time={ message.time }
+          />
+        ) }
         <MessageText
+          label={ message.label }
           message={ message }
           emojify={ false }
           menuProps={ menuProps }

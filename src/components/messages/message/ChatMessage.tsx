@@ -66,7 +66,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
         { ...other }
       >
         <TimeStamp
-          message={ message }
+          time={ message.time }
         />
         <div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
           <Author 

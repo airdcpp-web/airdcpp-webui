@@ -121,6 +121,7 @@ export interface ChatMessage extends MessageBase {
 export interface StatusMessage extends MessageBase {
   severity: SeverityEnum;
   is_read: boolean;
+  label?: string;
 }
 
 

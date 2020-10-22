@@ -10,11 +10,17 @@ interface MessageTextProps {
   message: API.Message; 
   emojify: boolean;
   user?: API.HubUser;
+  label?: string;
   menuProps: UI.MessageActionMenuData;
 }
 
-export const MessageText: React.FC<MessageTextProps> = ({ emojify, message, user, ...other }) => (
+export const MessageText: React.FC<MessageTextProps> = ({ emojify, message, user, label, ...other }) => (
   <div className="text">
+    { !!label && (
+      <span className="label">
+        { `${label}: ` }
+      </span>
+    ) }
     <HighlightedText
       emojify={ emojify }
       text={ message.text }
