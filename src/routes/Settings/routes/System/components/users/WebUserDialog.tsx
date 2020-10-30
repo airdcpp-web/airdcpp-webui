@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
@@ -193,7 +193,7 @@ interface RouteProps {
 type Props = WebUserDialogProps & DataProps & 
   ModalRouteDecoratorChildProps<RouteProps>;
 
-class WebUserDialog extends React.Component<Props> {
+class WebUserDialog extends Component<Props> {
   static displayName = 'WebUserDialog';
 
 

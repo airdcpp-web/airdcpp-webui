@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import Modal from 'components/semantic/Modal';
 import Form, { FormSaveHandler } from 'components/form/Form';
@@ -36,7 +36,7 @@ interface RouteProps {
 type Props = ExtensionsConfigureDialogProps & DataProps & 
   ModalRouteDecoratorChildProps<RouteProps>;
 
-class ExtensionsConfigureDialog extends React.Component<Props> {
+class ExtensionsConfigureDialog extends Component<Props> {
   static displayName = 'ExtensionsConfigureDialog';
 
   form: Form;

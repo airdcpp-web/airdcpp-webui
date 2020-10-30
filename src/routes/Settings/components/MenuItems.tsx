@@ -1,5 +1,3 @@
-import React from 'react';
-
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 import { Location } from 'history';
 import LoginStore from 'stores/LoginStore';

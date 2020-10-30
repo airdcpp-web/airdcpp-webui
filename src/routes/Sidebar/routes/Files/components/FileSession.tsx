@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import { Component } from 'react';
 import cx from 'classnames';
 
 import IconConstants from 'constants/IconConstants';
@@ -22,7 +22,7 @@ export interface FileSessionProps extends SessionChildProps<API.ViewFile> {
   sessionT: UI.ModuleTranslator;
 }
 
-class FileSession extends React.Component<FileSessionProps> {
+class FileSession extends Component<FileSessionProps> {
   render() {
     const { session, sessionT } = this.props;
     if (!session.content_ready) {

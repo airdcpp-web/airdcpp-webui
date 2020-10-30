@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import '../style.css';
@@ -10,7 +10,7 @@ export interface LogSectionProps extends SettingSectionChildProps {
   section: string;
 }
 
-class LogSection extends React.Component<LogSectionProps> {
+class LogSection extends Component<LogSectionProps> {
   state = {
     enabled: false,
   };

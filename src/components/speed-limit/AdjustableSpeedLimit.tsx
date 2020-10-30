@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import LimiterConfig from 'components/speed-limit/LimiterConfig';
 import Popup from 'components/semantic/Popup';

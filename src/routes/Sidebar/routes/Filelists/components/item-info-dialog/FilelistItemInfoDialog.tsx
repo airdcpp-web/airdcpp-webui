@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import FileIcon from 'components/icon/FileIcon';
@@ -38,7 +38,7 @@ export const FilelistItemGetter = (session: API.FilelistSession) => {
   return ret;
 };
 
-class FilelistItemInfoDialog extends React.Component<Props & DataProps> {
+class FilelistItemInfoDialog extends Component<Props & DataProps> {
   static displayName = 'FilelistItemInfoDialog';
 
   render() {

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { PureComponent } from 'react';
 import classNames from 'classnames';
 
 import './style.css';
@@ -20,7 +20,7 @@ interface BrowserBarProps {
   entityId?: string; // Used just for re-rendering
 }
 
-class BrowserBar extends React.PureComponent<BrowserBarProps> {
+class BrowserBar extends PureComponent<BrowserBarProps> {
   static propTypes = {
     /**
      * Function handling the path selection. Receives the selected path as argument.

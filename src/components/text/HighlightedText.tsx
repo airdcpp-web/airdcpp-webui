@@ -1,6 +1,6 @@
-'use strict';
-
-import React, { memo } from 'react';
+'use strict';;
+import { memo } from 'react';
+import * as React from 'react';
 
 import { useLocation } from 'react-router-dom';
 import { Location } from 'history';

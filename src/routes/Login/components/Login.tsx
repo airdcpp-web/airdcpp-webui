@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
+import * as React from 'react';
 
 import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore from 'stores/LoginStore';

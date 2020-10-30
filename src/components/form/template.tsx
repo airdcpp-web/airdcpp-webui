@@ -1,5 +1,3 @@
-import React from 'react';
-
 //@ts-ignore
 import template from 'tcomb-form-templates-semantic';
 

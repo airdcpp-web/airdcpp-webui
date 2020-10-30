@@ -1,4 +1,4 @@
-import React from 'react';
+import { PureComponent } from 'react';
 
 //@ts-ignore
 import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler } from 'react-timeseries-charts';
@@ -25,7 +25,7 @@ export interface SpeedChartProps extends Pick<UI.WidgetProps, 'widgetT'> {
 }
 
 const SpeedChart = withContentRect('bounds')(
-  class extends React.PureComponent<SpeedChartProps & MeasuredComponentProps> {
+  class extends PureComponent<SpeedChartProps & MeasuredComponentProps> {
     render() {
       const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect, widgetT } = this.props;
       const { bounds } = contentRect;

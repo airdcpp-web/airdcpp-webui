@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
@@ -203,7 +203,7 @@ interface RouteProps {
 type Props = FavoriteHubDialogProps & DataProps & ShareProfileDecoratorChildProps & 
   ModalRouteDecoratorChildProps<RouteProps>;
 
-class FavoriteHubDialog extends React.Component<Props> {
+class FavoriteHubDialog extends Component<Props> {
   static displayName = 'FavoriteHubDialog';
 
   formValue: Entry | undefined;

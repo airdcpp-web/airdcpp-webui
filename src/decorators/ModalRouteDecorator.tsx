@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Route, match as RouteMatch, withRouter, RouteComponentProps } from 'react-router-dom';
 
 

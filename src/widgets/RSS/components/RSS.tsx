@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { PureComponent } from 'react';
 
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
@@ -30,7 +30,7 @@ interface State extends Partial<StorageFeed> {
   error: string | null;
 }
 
-class RSS extends React.PureComponent<RSSProps, State> {
+class RSS extends PureComponent<RSSProps, State> {
   static propTypes = {
     // Current widget settings
     settings: PropTypes.object.isRequired,

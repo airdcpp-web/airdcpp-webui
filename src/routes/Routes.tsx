@@ -1,4 +1,4 @@
-import React /*, { lazy }*/ from 'react';
+import * as React from 'react';
 import { Route, matchPath } from 'react-router-dom';
 
 import { default as lazy } from 'decorators/AsyncComponentDecorator';

@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
 import FileBrowserLayout, { FileBrowserLayoutProps } from './FileBrowserLayout';

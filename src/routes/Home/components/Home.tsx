@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import DemoIntro from 'routes/Home/components/DemoIntro';
 import InstallPrompt from 'components/InstallPrompt';
@@ -8,7 +8,7 @@ import WidgetLayout from 'routes/Home/components/WidgetLayout';
 import '../style.css';
 
 
-class Home extends React.Component {
+class Home extends Component {
   static displayName = 'Home';
 
   render() {

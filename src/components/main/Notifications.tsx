@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 //@ts-ignore
@@ -23,7 +23,7 @@ interface NotificationsProps {
   location: Location;
 }
 
-class Notifications extends React.Component<NotificationsProps> {
+class Notifications extends Component<NotificationsProps> {
   notifications: System | null;
   limiter = new RateLimiter(3, 3000, true);
   unsubscribe: () => void;

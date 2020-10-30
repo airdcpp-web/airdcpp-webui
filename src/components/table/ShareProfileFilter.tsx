@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
@@ -46,7 +46,7 @@ const getDropdownItem = (
   );
 };
 
-const ShareProfileFilter = React.memo<Props>(props => {
+const ShareProfileFilter = memo<Props>(props => {
   const { t } = useTranslation();
 
   const defaultItem: ShareProfileItem = { 

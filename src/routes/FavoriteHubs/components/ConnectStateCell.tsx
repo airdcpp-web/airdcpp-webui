@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import classNames from 'classnames';
 
 import HubActions from 'actions/reflux/HubActions';
@@ -30,7 +30,7 @@ const getIcon = (state: API.FavoriteHubConnectState) => {
   return '';
 };
 
-class ConnectStateCell extends React.Component<ConnectStateCellProps & RouteComponentProps> {
+class ConnectStateCell extends Component<ConnectStateCellProps & RouteComponentProps> {
   handleCreateSession = () => {
     const { location, rowDataGetter } = this.props;
     HubActions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);

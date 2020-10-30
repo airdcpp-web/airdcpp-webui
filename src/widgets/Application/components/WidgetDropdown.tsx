@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';

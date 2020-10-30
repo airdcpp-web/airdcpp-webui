@@ -1,6 +1,4 @@
-'use strict';
-
-import React from 'react';
+'use strict';;
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 

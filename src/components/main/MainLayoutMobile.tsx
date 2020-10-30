@@ -1,4 +1,5 @@
-import React, { useState, memo } from 'react';
+import { useState, memo } from 'react';
+import * as React from 'react';
 
 import SiteHeader from 'components/main/SiteHeader';
 import MainNavigation from 'components/main/navigation/MainNavigationMobile';

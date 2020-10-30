@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import { Component } from 'react';
 
 import HubMessageStore from 'stores/HubMessageStore';
 
@@ -34,7 +34,7 @@ interface HubSessionProps extends SessionChildProps<API.Hub, {}, ChatActionList>
 
 }
 
-class HubSession extends React.Component<HubSessionProps> {
+class HubSession extends Component<HubSessionProps> {
   static displayName = 'HubSession';
 
   state = {

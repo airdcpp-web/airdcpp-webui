@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import { TFunction } from 'i18next';
 
 import IconConstants from 'constants/IconConstants';

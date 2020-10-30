@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
@@ -48,7 +48,7 @@ interface RouteProps {
 
 type Props = SearchTypeDialogProps & DataProps & ModalRouteDecoratorChildProps<RouteProps>;
 
-class SearchTypeDialog extends React.Component<Props> {
+class SearchTypeDialog extends Component<Props> {
   static displayName = 'SearchTypeDialog';
 
   form: Form<Entry>;

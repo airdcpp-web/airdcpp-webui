@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingForm from 'routes/Settings/components/LocalSettingForm';

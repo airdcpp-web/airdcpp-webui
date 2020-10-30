@@ -1,5 +1,6 @@
-'use strict';
-import React, { useEffect, useState } from 'react';
+'use strict';;
+import { useEffect, useState } from 'react';
+import * as React from 'react';
 
 import { TextDecorator } from 'components/text';
 import Message from 'components/semantic/Message';

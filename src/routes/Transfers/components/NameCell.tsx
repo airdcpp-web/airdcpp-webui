@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import FormattedFile from 'components/format/FormattedFile';
 import Popup from 'components/semantic/Popup';

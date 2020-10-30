@@ -3,7 +3,7 @@ import ActionButton from 'components/ActionButton';
 import { AdjustableSpeedLimit } from 'components/speed-limit';
 import { ListItem } from 'components/semantic/List';
 
-import React from 'react';
+import * as React from 'react';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

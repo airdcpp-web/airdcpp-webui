@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import { Component } from 'react';
 
 import LoginActions from 'actions/reflux/LoginActions';
 import { AwayEnum } from 'constants/SystemConstants';
@@ -9,7 +9,7 @@ import ActivityStore from 'stores/ActivityStore';
 // Don't change this if the component is re-mounted
 let userActive = true;
 
-class ActivityTracker extends React.Component {
+class ActivityTracker extends Component {
   aliveInterval: number | undefined;
   activityInteval: number | undefined;
   lastAlive: number;

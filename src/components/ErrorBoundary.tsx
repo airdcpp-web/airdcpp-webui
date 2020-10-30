@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
@@ -8,7 +8,7 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
   constructor(props: any) {
     super(props);
     this.state = { 

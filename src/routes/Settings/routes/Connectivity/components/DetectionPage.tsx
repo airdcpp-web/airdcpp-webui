@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import DetectPanel from 'routes/Settings/routes/Connectivity/components/DetectPanel';
 

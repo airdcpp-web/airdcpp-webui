@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import { Component } from 'react';
 
 import ListBrowser, { FilelistLocationState } from 'routes/Sidebar/routes/Filelists/components/ListBrowser';
 import FilelistFooter from 'routes/Sidebar/routes/Filelists/components/FilelistFooter';
@@ -18,7 +18,7 @@ interface FilelistSessionProps extends SessionChildProps<API.FilelistSession> {
 
 }
 
-class FilelistSession extends React.Component<FilelistSessionProps> {
+class FilelistSession extends Component<FilelistSessionProps> {
   static displayName = 'FilelistSession';
 
   render() {

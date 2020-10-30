@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import isEqual from 'lodash/isEqual';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
@@ -25,7 +25,7 @@ interface PriorityMenuProps {
   t: TFunction;
 }
 
-class PriorityMenu extends React.Component<PriorityMenuProps> {
+class PriorityMenu extends Component<PriorityMenuProps> {
   static propTypes = {
     /**
      * Priority object

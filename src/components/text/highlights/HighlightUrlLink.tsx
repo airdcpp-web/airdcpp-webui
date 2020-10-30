@@ -2,7 +2,7 @@ import * as API from 'types/api';
 import { Location } from 'history';
 
 import HubActions from 'actions/reflux/HubActions';
-import React from 'react';
+import * as React from 'react';
 import HubSessionStore from 'stores/HubSessionStore';
 import LoginStore from 'stores/LoginStore';
 import { doSearch } from 'utils/SearchUtils';

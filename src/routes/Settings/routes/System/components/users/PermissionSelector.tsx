@@ -1,6 +1,4 @@
-'use strict';
-
-import React from 'react';
+'use strict';;
 import t from 'utils/tcomb-form';
 
 import Checkbox from 'components/semantic/Checkbox';

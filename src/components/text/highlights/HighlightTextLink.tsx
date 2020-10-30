@@ -3,7 +3,7 @@ import { TableActionMenu } from 'components/menu';
 
 import * as UI from 'types/ui';
 
-import React from 'react';
+import * as React from 'react';
 
 
 export interface HighlightTextLinkProps /*extends Pick<TableDropdownProps, 'position'>*/ {

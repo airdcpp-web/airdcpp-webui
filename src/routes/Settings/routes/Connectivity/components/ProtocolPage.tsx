@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import RemoteSettingForm, { RemoteSettingFormProps } from 'routes/Settings/components/RemoteSettingForm';
 import Message from 'components/semantic/Message';
 import IconConstants from 'constants/IconConstants';
@@ -14,7 +14,7 @@ interface ProtocolPageProps extends SettingSectionChildProps, RemoteSettingFormP
   protocol: string;
 }
 
-class ProtocolPage extends React.Component<ProtocolPageProps> {
+class ProtocolPage extends Component<ProtocolPageProps> {
   state = {
     autoDetectEnabled: false,
   };

@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import * as React from 'react';
 
 import { formatSize } from 'utils/ValueFormat';
 import { Row, Header, Grid } from 'components/semantic/Grid';

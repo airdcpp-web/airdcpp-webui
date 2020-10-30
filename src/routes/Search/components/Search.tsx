@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import SocketService from 'services/SocketService';
 
@@ -38,7 +38,7 @@ interface SearchDataProps extends DataProviderDecoratorChildProps, WithTranslati
   instance: API.SearchInstance;
 }
 
-class Search extends React.Component<SearchProps & SearchDataProps> {
+class Search extends Component<SearchProps & SearchDataProps> {
   state = {
     searchString: '',
     running: false

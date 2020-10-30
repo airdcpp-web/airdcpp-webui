@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import SettingConstants from 'constants/SettingConstants';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
@@ -26,7 +26,7 @@ interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
 
 type Props = RemoteSettingFormProps & RemoteSettingFormDataProps & SaveContextProps & RouteComponentProps;
 
-class RemoteSettingForm extends React.Component<Props> {
+class RemoteSettingForm extends Component<Props> {
   onSave: FormSaveHandler<UI.FormValueMap> = (changedValues) => {
     if (Object.keys(changedValues).length === 0) {
       return Promise.resolve();

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Button, { ButtonProps } from 'components/semantic/Button';
 import { showAction, toActionI18nKey } from 'utils/ActionUtils';
 import { IconType } from 'components/semantic/Icon';

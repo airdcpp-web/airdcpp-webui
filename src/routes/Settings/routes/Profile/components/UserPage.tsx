@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { SettingProfileEnum } from 'constants/SettingConstants';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';

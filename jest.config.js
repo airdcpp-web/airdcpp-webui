@@ -1,24 +1,10 @@
 module.exports = {
   preset: 'ts-jest',
-  //testEnvironment: 'node',
   moduleDirectories: [
     'src',
     'node_modules',
   ],
-  //tsConfig: 'tsconfig.jest.json',
-  globals: {
-    'ts-jest': {
-      //tsConfig: 'tsconfig.json',
-      //tsConfig: './tsconfig.test.json'
-      //tsConfig: false
-      //tsConfig: {
-      //  module: 'commonjs',
-      //  importHelpers: true
-      //}
-    }
-  },
   transform: {
-    //'^.+\\.jsx?$': 'babel-jest',
     '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.tsx?$': 'ts-jest'
   },

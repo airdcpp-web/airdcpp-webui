@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
@@ -77,7 +77,7 @@ interface SocketNotificationListenerProps {
 
 type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildProps & WithTranslation;
 
-class SocketNotificationListener extends React.Component<Props> {
+class SocketNotificationListener extends Component<Props> {
   //notifications: System | null;
   //limiter = new RateLimiter(3, 3000, true);
   //unsubscribe: () => void;

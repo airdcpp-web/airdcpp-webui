@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
+import * as React from 'react';
 
 import { RouteComponentProps, useLocation } from 'react-router-dom';
 

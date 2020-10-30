@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
@@ -15,7 +15,7 @@ interface ShareProfileSelectorProps {
   sessionT: UI.ModuleTranslator;
 }
 
-class ShareProfileSelector extends React.Component<ShareProfileSelectorProps & ShareProfileDecoratorChildProps> {
+class ShareProfileSelector extends Component<ShareProfileSelectorProps & ShareProfileDecoratorChildProps> {
   /*static propTypes = {
     // Callback after selecting a profile
     onProfileChanged: PropTypes.func.isRequired,

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';

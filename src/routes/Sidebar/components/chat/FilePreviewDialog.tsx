@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as React from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';

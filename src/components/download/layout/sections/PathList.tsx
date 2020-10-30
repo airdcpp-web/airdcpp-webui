@@ -1,5 +1,4 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
 import { TFunction } from 'i18next';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -47,11 +46,11 @@ const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(
 );
 
 //PathList.PropTypes = {
-  // Function handling the path selection. Receives the selected path as argument.
-  //downloadHandler: PropTypes.func.isRequired,
+// Function handling the path selection. Receives the selected path as argument.
+//downloadHandler: PropTypes.func.isRequired,
 
-  // Array of paths to list
-  //paths: PropTypes.array.isRequired,
+// Array of paths to list
+//paths: PropTypes.array.isRequired,
 //};
 
 export default (props: PathListProps) => {

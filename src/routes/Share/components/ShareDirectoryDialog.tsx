@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -76,7 +76,7 @@ interface RouteProps {
 type Props = ShareDirectoryDialogProps & DataProps & 
   ModalRouteDecoratorChildProps<RouteProps>;
 
-class ShareDirectoryDialog extends React.Component<Props> {
+class ShareDirectoryDialog extends Component<Props> {
   static displayName = 'ShareDirectoryDialog';
 
   fieldDefinitions: UI.FormFieldDefinition[];

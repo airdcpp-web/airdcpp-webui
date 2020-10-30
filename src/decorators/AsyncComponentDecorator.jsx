@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 // getComponent is a function that returns a promise for a component
 // It will not be called until the first mount

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import '../style.css';
 import * as UI from 'types/ui';

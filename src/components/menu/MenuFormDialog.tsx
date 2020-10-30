@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import * as React from 'react';
 import { useLocation } from 'react-router';
 
 import Modal, { ModalProps } from 'components/semantic/Modal';

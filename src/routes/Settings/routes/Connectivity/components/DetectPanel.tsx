@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import ActionButton from 'components/ActionButton';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';

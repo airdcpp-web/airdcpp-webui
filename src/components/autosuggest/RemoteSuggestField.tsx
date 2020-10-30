@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 
 import SocketService from 'services/SocketService';
 
@@ -21,7 +21,7 @@ export interface RemoteSuggestFieldProps<SuggestionT> extends ForwardedSuggestFi
   url: string;
 }
 
-class RemoteSuggestField<SuggestionT> extends React.Component<RemoteSuggestFieldProps<SuggestionT>> {
+class RemoteSuggestField<SuggestionT> extends Component<RemoteSuggestFieldProps<SuggestionT>> {
   static propTypes = {
     valueField: PropTypes.string.isRequired,
 

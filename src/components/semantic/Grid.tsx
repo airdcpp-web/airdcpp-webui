@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 
 import { Trans } from 'react-i18next';

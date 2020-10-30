@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import SectionedDropdown, { SectionedDropdownProps } from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';

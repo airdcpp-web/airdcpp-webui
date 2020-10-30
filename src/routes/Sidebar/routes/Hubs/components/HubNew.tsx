@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import HubSearchInput from 'components/autosuggest/HubSearchInput';
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
@@ -19,7 +19,7 @@ import IconConstants from 'constants/IconConstants';
 import Button from 'components/semantic/Button';
 
 
-class HubNew extends React.Component<NewSessionLayoutProps> {
+class HubNew extends Component<NewSessionLayoutProps> {
   handleConnect = (hubUrl: string) => {
     HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
   }

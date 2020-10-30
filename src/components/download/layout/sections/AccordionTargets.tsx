@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import { TFunction } from 'i18next';
 
 import IconConstants from 'constants/IconConstants';
@@ -23,7 +23,7 @@ interface AccordionTargetsProps {
   t: TFunction;
 }
 
-class AccordionTargets extends React.Component<AccordionTargetsProps> {
+class AccordionTargets extends Component<AccordionTargetsProps> {
   static propTypes = {
     // Function handling the path selection. Receives the selected path as argument.
     downloadHandler: PropTypes.func.isRequired,

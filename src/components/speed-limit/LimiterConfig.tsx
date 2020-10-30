@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 
 import Button from 'components/semantic/Button';
 import ActionInput from 'components/semantic/ActionInput';

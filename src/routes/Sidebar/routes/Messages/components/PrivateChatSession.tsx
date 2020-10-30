@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import { Component } from 'react';
 
 import ChatLayout, { ChatAPI, ChatActionList } from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFooter';
@@ -19,7 +19,7 @@ interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, {},
 
 }
 
-class PrivateChatSession extends React.Component<PrivateChatSessionProps> {
+class PrivateChatSession extends Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';
 
   handleFileUpload = (file: File) => {

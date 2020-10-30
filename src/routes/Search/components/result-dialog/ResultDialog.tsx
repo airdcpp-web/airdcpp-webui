@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import FileIcon from 'components/icon/FileIcon';
@@ -33,7 +33,7 @@ interface RouteProps {
 type Props = ResultDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 
-class ResultDialog extends React.Component<Props & DataProps> {
+class ResultDialog extends Component<Props & DataProps> {
   static displayName = 'ResultDialog';
 
   itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (itemId, socket) => {

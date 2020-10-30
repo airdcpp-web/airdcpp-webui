@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';

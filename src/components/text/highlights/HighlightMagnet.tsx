@@ -1,6 +1,6 @@
-'use strict';
-
-import React, { useEffect } from 'react';
+'use strict';;
+import { useEffect } from 'react';
+import * as React from 'react';
 import cx from 'classnames';
 
 import * as API from 'types/api';

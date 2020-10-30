@@ -1,4 +1,4 @@
-import React from 'react';
+import { PureComponent } from 'react';
 
 //@ts-ignore
 import { TimeSeries } from 'pondjs';
@@ -58,7 +58,7 @@ const hasEllapsedSinceLastUpdate = (points: State['points'], ms: number) => {
   return points[points.length - 1][0] + ms <= Date.now();
 };
 
-class Transfers extends React.PureComponent<TransferProps & SocketSubscriptionDecoratorChildProps, State> {
+class Transfers extends PureComponent<TransferProps & SocketSubscriptionDecoratorChildProps, State> {
   //displayName: 'Transfers',
 
   idleInterval: number | undefined;

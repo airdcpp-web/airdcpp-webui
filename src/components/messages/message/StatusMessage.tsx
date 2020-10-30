@@ -1,6 +1,6 @@
 'use strict';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import { InView } from 'react-intersection-observer';
 
 import Icon from 'components/semantic/Icon';
@@ -26,7 +26,7 @@ interface StatusMessageProps extends CommonMessageProps {
   message: API.StatusMessage;
 }
 
-class StatusMessage extends React.Component<StatusMessageProps> {
+class StatusMessage extends Component<StatusMessageProps> {
   static propTypes = {
     message: PropTypes.object.isRequired,
   };

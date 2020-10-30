@@ -1,0 +1,7 @@
+// ./src/tsconfig.dev.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+      "jsx": "react-jsxdev"
+  }
+}

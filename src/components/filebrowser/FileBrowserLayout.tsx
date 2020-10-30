@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
@@ -45,7 +45,7 @@ const joinDirectory = (path: string, directoryName: string, separator: string) =
 };
 
 type Props = FileBrowserLayoutProps & WithTranslation;
-class FileBrowserLayout extends React.Component<Props, State> {
+class FileBrowserLayout extends Component<Props, State> {
   static propTypes = {
     // Local storage ID used for saving/loading the last path
     // This will have priority over initialPath

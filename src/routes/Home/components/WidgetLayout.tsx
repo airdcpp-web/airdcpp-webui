@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import * as React from 'react';
 import invariant from 'invariant';
 
 import Widget from 'routes/Home/components/Widget';

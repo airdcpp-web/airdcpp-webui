@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { TableActionMenu, TableDownloadMenu, TableActionMenuProps, TableDownloadMenuProps } from 'components/menu';
 import { 

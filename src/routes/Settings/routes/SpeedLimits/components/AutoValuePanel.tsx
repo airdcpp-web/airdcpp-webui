@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import SocketService from 'services/SocketService';
@@ -15,7 +15,7 @@ interface AutoValuePanelProps extends SettingSectionChildProps {
   keys: string[];
 }
 
-class AutoValuePanel extends React.Component<AutoValuePanelProps> {
+class AutoValuePanel extends Component<AutoValuePanelProps> {
   static propTypes = {
     // Form items to list
     keys: PropTypes.array.isRequired,

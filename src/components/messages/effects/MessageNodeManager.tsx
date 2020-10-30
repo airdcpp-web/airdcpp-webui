@@ -1,5 +1,6 @@
-'use strict';
-import React, { useMemo } from 'react';
+'use strict';;
+import { useMemo } from 'react';
+import * as React from 'react';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

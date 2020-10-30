@@ -1,5 +1,3 @@
-import React from 'react';
-
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 
 import ExtensionConstants from 'constants/ExtensionConstants';

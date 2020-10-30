@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import Button from 'components/semantic/Button';
 
 import LoginStore from 'stores/LoginStore';
@@ -17,7 +17,7 @@ export interface SaveButtonProps {
   settingsT: UI.ModuleTranslator;
 }
 
-class SaveButton extends React.Component<SaveButtonProps> {
+class SaveButton extends Component<SaveButtonProps> {
   static propTypes = {
     /**
      * Message title

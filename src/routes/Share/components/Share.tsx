@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import ShareActions from 'actions/ui/ShareActions';
 import ShareRootActions from 'actions/ui/ShareRootActions';
@@ -24,7 +24,7 @@ import { getModuleT } from 'utils/TranslationUtils';
 import MenuConstants from 'constants/MenuConstants';
 
 
-class Share extends React.Component<WithTranslation> {
+class Share extends Component<WithTranslation> {
   static displayName = 'Share';
 
   shareT = getModuleT(this.props.t, UI.Modules.SHARE);

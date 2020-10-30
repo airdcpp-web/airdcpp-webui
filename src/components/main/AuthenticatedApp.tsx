@@ -1,5 +1,6 @@
-'use strict';
-import React, { memo } from 'react';
+'use strict';;
+import { memo } from 'react';
+import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import ActivityTracker from 'components/main/ActivityTracker';

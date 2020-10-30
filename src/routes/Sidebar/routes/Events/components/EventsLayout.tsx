@@ -1,4 +1,5 @@
-import React, { useEffect, memo } from 'react';
+import { useEffect, memo } from 'react';
+import * as React from 'react';
 
 import EventAPIActions from 'actions/reflux/EventActions';
 import EventUIActions from 'actions/ui/EventActions';

@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import * as React from 'react';
 
 import { formatAverage, formatConnection, formatPercentage, formatSize } from 'utils/ValueFormat';
 

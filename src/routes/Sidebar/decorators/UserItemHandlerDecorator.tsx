@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { userOnlineStatusToColor } from 'utils/TypeConvert';
 import { UserMenu } from 'components/menu';
 import UserIcon from 'components/icon/UserIcon';

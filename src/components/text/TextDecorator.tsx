@@ -1,9 +1,8 @@
 'use strict';
 
-import React, { memo } from 'react';
+import { memo } from 'react';
 
 import ReactLinkify from 'react-linkify';
-import { LinkifyIt as linkify } from 'linkify-it';
 
 import { useLocation } from 'react-router-dom';
 import { formatEmojis } from 'utils/EmojiFormat';

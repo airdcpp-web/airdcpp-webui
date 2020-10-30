@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import { Component } from 'react';
 import { matchPath } from 'react-router-dom';
 import { 
   configRoutes, mainRoutes, secondaryRoutes, logoutItem, 
@@ -25,7 +25,7 @@ interface MainNavigationMobileProps {
   visible: boolean;
 }
 
-class MainNavigationMobile extends React.Component<MainNavigationMobileProps> {
+class MainNavigationMobile extends Component<MainNavigationMobileProps> {
   c: HTMLDivElement;
   componentDidMount() {
     const settings = {

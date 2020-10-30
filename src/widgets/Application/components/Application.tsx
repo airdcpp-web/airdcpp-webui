@@ -1,4 +1,4 @@
-import React from 'react';
+import { PureComponent } from 'react';
 
 import StatisticsDecorator from 'decorators/StatisticsDecorator';
 
@@ -42,7 +42,7 @@ const Statistics = StatisticsDecorator<any, StatisticsProps>(
 
 export type ApplicationProps = UI.WidgetProps;
 
-class Application extends React.PureComponent<ApplicationProps> {
+class Application extends PureComponent<ApplicationProps> {
   static propTypes = {
 
   };

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 
 import 'fomantic-ui-css/components/accordion';
 import 'fomantic-ui-css/components/accordion.min.css';
@@ -12,7 +12,7 @@ interface AccordionProps {
   className?: string;
 }
 
-class Accordion extends React.Component<AccordionProps> {
+class Accordion extends Component<AccordionProps> {
   static propTypes = {
     controlled: PropTypes.bool,
   };

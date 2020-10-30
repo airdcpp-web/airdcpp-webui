@@ -1,7 +1,3 @@
-import React from 'react';
-
-// import SocketService from 'services/SocketService';
-
 import Select, { Props as SelectProps } from 'react-select/async';
 import { OptionTypeBase } from 'react-select';
 

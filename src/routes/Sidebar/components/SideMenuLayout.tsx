@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SessionMainLayoutProps } from './SessionLayout';

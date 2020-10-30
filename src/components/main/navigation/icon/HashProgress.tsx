@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 
 import HashConstants from 'constants/HashConstants';
 import IconConstants from 'constants/IconConstants';

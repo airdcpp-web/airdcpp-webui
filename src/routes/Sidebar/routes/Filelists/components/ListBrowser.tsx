@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
 import FilelistItemActions from 'actions/ui/FilelistItemActions';

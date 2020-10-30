@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import WebUserConstants from 'constants/WebUserConstants';
 import WebUserActions from 'actions/ui/WebUserActions';

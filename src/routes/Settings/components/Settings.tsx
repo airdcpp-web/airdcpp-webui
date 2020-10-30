@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
@@ -37,7 +37,7 @@ export interface SettingsProps extends RouteComponentProps, WithTranslation {
 }
 
 // Only to pass menu items to the decorated component
-class Settings extends React.Component<SettingsProps> {
+class Settings extends Component<SettingsProps> {
   settingsT = getModuleT(this.props.t, UI.Modules.SETTINGS);
   render() {
     return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
@@ -27,7 +27,7 @@ interface RouteProps {
 
 type Props = BundleSourceDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
 
-class SourceDialog extends React.Component<Props & DataProps> {
+class SourceDialog extends Component<Props & DataProps> {
   static displayName = 'SourceDialog';
 
   render() {

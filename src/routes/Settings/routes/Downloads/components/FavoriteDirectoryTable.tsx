@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import FavoriteDirectoryActions from 'actions/ui/FavoriteDirectoryActions';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';

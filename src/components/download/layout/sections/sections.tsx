@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';

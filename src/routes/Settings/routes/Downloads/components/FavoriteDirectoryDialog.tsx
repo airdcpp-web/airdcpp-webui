@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
@@ -56,7 +56,7 @@ interface RouteProps {
 
 type Props = FavoriteDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps<RouteProps>;
 
-class FavoriteDirectoryDialog extends React.Component<Props> {
+class FavoriteDirectoryDialog extends Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
 
   form: Form<Entry>;

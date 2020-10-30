@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 
 import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
@@ -43,7 +43,7 @@ const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslato
         key: 'name',
         title: 'Name',
         type: API.SettingTypeEnum.STRING,
-        default_value: name,
+        default_value: widgetInfo.name,
         optional: true,
       },
     ], 
@@ -69,7 +69,7 @@ interface RouteProps {
 
 type Props = WidgetDialogProps & ModalRouteDecoratorChildProps<RouteProps> & WithTranslation;
 
-class WidgetDialog extends React.Component<Props> {
+class WidgetDialog extends Component<Props> {
   static displayName = 'WidgetDialog';
 
   /*static propTypes = {

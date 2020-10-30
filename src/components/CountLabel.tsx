@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 
 import { maxUrgency } from 'utils/UrgencyUtils';
 import { urgencyToColor } from 'utils/TypeConvert';

@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 import classNames from 'classnames';
 
 import NotificationActions from 'actions/NotificationActions';
@@ -147,7 +147,7 @@ interface State<ValueType> {
 }
 
 type Props<ValueType> = FormProps<ValueType>;
-class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends React.Component<Props<ValueType>> {
+class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends Component<Props<ValueType>> {
   /*static propTypes = {
     // Form items to list
     fieldDefinitions: PropTypes.array.isRequired,

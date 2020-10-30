@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { TFunction } from 'i18next';
 
 import { translate } from 'utils/TranslationUtils';

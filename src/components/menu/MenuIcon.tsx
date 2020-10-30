@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import CountLabel, { CountLabelProps } from 'components/CountLabel';
 import classNames from 'classnames';
 import Icon from 'components/semantic/Icon';

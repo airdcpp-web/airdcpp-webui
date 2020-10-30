@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import * as React from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';

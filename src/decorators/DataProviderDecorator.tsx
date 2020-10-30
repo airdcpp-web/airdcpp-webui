@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import invariant from 'invariant';
 
 import SocketService from 'services/SocketService';
@@ -19,7 +19,7 @@ import * as UI from 'types/ui';
 import { merge } from 'lodash';
 
 
-export type SocketConnectHandler<DataT, PropsT> = (
+export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
   addSocketListener: AddSocketListener, 
   data: {
     refetchData: (keys?: string[]) => void;
@@ -249,7 +249,7 @@ export default function <PropsT extends object, DataT extends object>(
           refetchData={ this.refetchData }
           dataError={ error }
           socket={ SocketService }
-          { ...this.props }
+          { ...this.props as any }
           { ...data }
         />
       );

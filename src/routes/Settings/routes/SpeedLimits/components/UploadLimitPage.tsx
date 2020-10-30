@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';

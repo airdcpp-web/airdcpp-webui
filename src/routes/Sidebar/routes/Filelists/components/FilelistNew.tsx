@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
@@ -15,7 +15,7 @@ import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
 
 
-class FilelistNew extends React.Component<NewSessionLayoutProps> {
+class FilelistNew extends Component<NewSessionLayoutProps> {
   handleSubmit = (user: API.HintedUser) => {
     FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
   }

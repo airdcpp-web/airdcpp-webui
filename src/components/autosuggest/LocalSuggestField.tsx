@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 
 import SuggestionRenderer from './SuggestionRenderer';
 import SuggestField, { SuggestFieldProps } from './SuggestField';
@@ -18,7 +18,7 @@ export interface LocalSuggestFieldProps extends ForwardedSuggestFieldProps {
   data: string[];
 }
 
-class LocalSuggestField extends React.Component<LocalSuggestFieldProps> {
+class LocalSuggestField extends Component<LocalSuggestFieldProps> {
   static propTypes = {
     data: PropTypes.array.isRequired,
 

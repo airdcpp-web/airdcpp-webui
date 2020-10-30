@@ -1,5 +1,7 @@
 //import PropTypes from 'prop-types';
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
+
+import * as React from 'react';
 
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';

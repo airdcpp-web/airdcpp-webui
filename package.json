@@ -143,7 +143,7 @@
     "ts-loader": "^8.0.7",
     "tslint": "^6.1.3",
     "tslint-react": "^5.0.0",
-    "typescript": "^4.0.5",
+    "typescript": "^4.1.0-beta",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",

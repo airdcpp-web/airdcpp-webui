@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import FavoriteHubActions from 'actions/ui/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/ui/FavoriteHubPasswordActions';

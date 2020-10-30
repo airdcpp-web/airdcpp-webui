@@ -1,4 +1,4 @@
-import React from 'react';
+import { PureComponent } from 'react';
 import t from 'utils/tcomb-form';
 
 import * as API from 'types/api';
@@ -80,7 +80,7 @@ const removeEmptyProperties = (value: Entry) => {
   return ret;
 };
 
-class SearchOptionsForm extends React.PureComponent<SearchOptionsFormProps> {
+class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
   static displayName = 'SearchOptionForm';
 
   constructor(props: SearchOptionsFormProps) {

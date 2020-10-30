@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import TransferActions from 'actions/ui/TransferActions';
 import { UserFileActions } from 'actions/ui/UserActions';

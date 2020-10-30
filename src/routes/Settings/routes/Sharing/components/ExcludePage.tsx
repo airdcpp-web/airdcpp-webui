@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import SocketService from 'services/SocketService';
 
 import ShareActions from 'actions/ui/ShareActions';

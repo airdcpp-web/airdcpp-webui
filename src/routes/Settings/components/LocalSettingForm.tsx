@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
 
@@ -21,7 +21,7 @@ export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'field
 
 type Props = LocalSettingFormProps & SaveContextProps & RouteComponentProps;
 
-class LocalSettingForm extends React.Component<Props> {
+class LocalSettingForm extends Component<Props> {
   /*static propTypes = {
     // Form items to list
     keys: PropTypes.array.isRequired,

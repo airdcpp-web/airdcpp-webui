@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import * as React from 'react';
 
 // Convert :D, :P etc. to unicode
 // Increases the compressed bundle size by ~20 kilobytes so a simplified custom

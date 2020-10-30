@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import Extension from 'routes/Settings/routes/Extensions/components/extension/Extension';
 import ExtensionConstants from 'constants/ExtensionConstants';

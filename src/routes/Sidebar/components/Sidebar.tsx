@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
@@ -29,7 +29,7 @@ interface State {
   width: number;
 }
 
-class Sidebar extends React.Component<SidebarProps, State> {
+class Sidebar extends Component<SidebarProps, State> {
   c: Resizable;
 
   constructor(props: SidebarProps) {

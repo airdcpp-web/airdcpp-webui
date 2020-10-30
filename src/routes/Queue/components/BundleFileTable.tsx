@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Column } from 'fixed-data-table-2';
 
 import QueueFileUIActions from 'actions/ui/QueueFileActions';

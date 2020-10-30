@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react';
+import { Component } from 'react';
 
 import History from 'utils/History';
 
@@ -14,7 +14,7 @@ interface SideMenuProps {
   previousLocation?: Location;
 }
 
-class SideMenu extends React.Component<SideMenuProps> {
+class SideMenu extends Component<SideMenuProps> {
   onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 

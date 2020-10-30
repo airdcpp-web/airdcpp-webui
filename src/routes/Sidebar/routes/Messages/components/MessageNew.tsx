@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
@@ -18,7 +18,7 @@ const hasSession = (entry: API.HistoryItem) => {
   return PrivateChatSessionStore.getSession(entry.user!.cid);
 };
 
-class MessageNew extends React.Component<NewSessionLayoutProps> {
+class MessageNew extends Component<NewSessionLayoutProps> {
   handleSubmit = (user: API.HintedUser) => {
     PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
   }
