@@ -1,4 +1,3 @@
-'use strict';
 import { Component } from 'react';
 
 import ListBrowser, { FilelistLocationState } from 'routes/Sidebar/routes/Filelists/components/ListBrowser';

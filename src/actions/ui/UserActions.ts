@@ -1,4 +1,3 @@
-'use strict';
 
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';

@@ -1,4 +1,3 @@
-'use strict';
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 import History from 'utils/History';

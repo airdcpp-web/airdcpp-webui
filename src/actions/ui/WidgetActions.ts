@@ -1,4 +1,3 @@
-'use strict';
 
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';

@@ -1,4 +1,3 @@
-'use strict';
 
 import { Component } from 'react';
 import { matchPath } from 'react-router-dom';

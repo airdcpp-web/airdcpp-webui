@@ -1,4 +1,3 @@
-'use strict';
 import SystemConstants from 'constants/SystemConstants';
 import SocketService from 'services/SocketService';
 

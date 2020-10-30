@@ -1,4 +1,3 @@
-'use strict';
 import { useEffect } from 'react';
 
 import LoginStore, { LoginState } from 'stores/LoginStore';

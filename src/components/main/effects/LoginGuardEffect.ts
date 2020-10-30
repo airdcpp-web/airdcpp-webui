@@ -1,4 +1,3 @@
-'use strict';
 import { useEffect, useState } from 'react';
 import History from 'utils/History';
 

@@ -1,4 +1,3 @@
-'use strict';
 import SearchConstants from 'constants/SearchConstants';
 import SocketService from 'services/SocketService';
 

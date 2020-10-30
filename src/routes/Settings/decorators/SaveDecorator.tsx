@@ -1,4 +1,3 @@
-'use strict';
 import * as React from 'react';
 import { Prompt, RouteComponentProps } from 'react-router-dom';
 import invariant from 'invariant';

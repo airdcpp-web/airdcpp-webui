@@ -1,4 +1,3 @@
-'use strict';
 import { Component } from 'react';
 
 import ChatLayout, { ChatAPI, ChatActionList } from 'routes/Sidebar/components/chat/ChatLayout';

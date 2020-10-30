@@ -1,4 +1,3 @@
-'use strict';
 import * as React from 'react';
 
 import PrivateChatActions from 'actions/ui/PrivateChatActions';

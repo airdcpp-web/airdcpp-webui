@@ -1,4 +1,3 @@
-'use strict';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import SocketService from 'services/SocketService';
 

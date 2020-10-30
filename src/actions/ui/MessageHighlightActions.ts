@@ -1,4 +1,3 @@
-'use strict';
 
 import IconConstants from 'constants/IconConstants';
 

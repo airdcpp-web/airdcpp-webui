@@ -1,4 +1,3 @@
-'use strict';
 import HashConstants from 'constants/HashConstants';
 import SocketService from 'services/SocketService';
 import AccessConstants from 'constants/AccessConstants';

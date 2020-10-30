@@ -1,4 +1,3 @@
-'use strict';
 import ViewFileConstants from 'constants/ViewFileConstants';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';

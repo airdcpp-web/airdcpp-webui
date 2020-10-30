@@ -1,4 +1,3 @@
-'use strict';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { InView } from 'react-intersection-observer';

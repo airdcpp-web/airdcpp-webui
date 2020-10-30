@@ -1,4 +1,3 @@
-'use strict';
 
 import SocketService from 'services/SocketService';
 import History from 'utils/History';

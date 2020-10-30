@@ -1,4 +1,3 @@
-'use strict';
 //@ts-ignore
 import Reflux from 'reflux';
 import PrivateChatConstants from 'constants/PrivateChatConstants';

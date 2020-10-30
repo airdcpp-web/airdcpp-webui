@@ -1,4 +1,3 @@
-'use strict';
 
 import { SearchActions } from 'actions/reflux/SearchActions';
 

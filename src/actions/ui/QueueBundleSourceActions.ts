@@ -1,4 +1,3 @@
-'use strict';
 import { default as QueueConstants } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
 

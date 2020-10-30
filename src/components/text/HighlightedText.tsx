@@ -1,4 +1,3 @@
-'use strict';;
 import { memo } from 'react';
 import * as React from 'react';
 

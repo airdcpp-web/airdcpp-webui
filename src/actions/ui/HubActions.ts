@@ -1,4 +1,3 @@
-'use strict';
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 
