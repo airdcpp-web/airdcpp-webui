@@ -34,8 +34,6 @@ export const fetchCorsSafeData = async (url: string, isJSON: boolean, options?: 
       toCorsSafeUrl(url), 
       {
         headers: {
-          'Authorization': LoginStore.authToken,
-
           // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
           'X-Authorization': LoginStore.authToken,
 
