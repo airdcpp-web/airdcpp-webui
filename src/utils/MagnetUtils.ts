@@ -26,12 +26,17 @@ export const parseMagnetLink = (text: string): Magnet | null => {
     const hashes = {};
     for (const idx of tokens) {
       const pos = idx.indexOf('=');
-      if (pos !== -1) {
-        type = decodeURIComponent(idx.substr(0, pos));
-        param = decodeURIComponent(idx.substr(pos + 1));
-      } else {
-        type = decodeURIComponent(idx);
-        param = '';
+      try {
+        if (pos !== -1) {
+          type = decodeURIComponent(idx.substr(0, pos));
+          param = decodeURIComponent(idx.substr(pos + 1));
+        } else {
+          type = decodeURIComponent(idx);
+          param = '';
+        }
+      } catch (e) {
+        console.warn(`Failed to parse magnet URL parameter ${idx}`, e);
+        continue;
       }
 
       if (param.length === 85 && param.startsWith('urn:bitprint:')) {
