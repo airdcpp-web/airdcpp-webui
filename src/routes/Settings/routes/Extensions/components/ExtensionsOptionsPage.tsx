@@ -4,6 +4,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 const Entry = [
   'extensions_debug_mode',
+  'extensions_init_timeout',
 ];
 
 const ExtensionOptionsPage: React.FC<SettingSectionChildProps> = props => (
