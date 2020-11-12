@@ -4,6 +4,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 const Entry = [
   'extensions_debug_mode',
+  'extensions_auto_update',
   'extensions_init_timeout',
 ];
 
