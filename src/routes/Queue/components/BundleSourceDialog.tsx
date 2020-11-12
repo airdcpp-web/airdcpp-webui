@@ -36,6 +36,7 @@ class SourceDialog extends Component<Props & DataProps> {
       <Modal 
         className="source" 
         title={ bundle.name }
+        subHeader={ bundle.target }
         closable={ true } 
         icon={ <FileIcon typeInfo={ bundle.type }/> } 
         fullHeight={ true }
