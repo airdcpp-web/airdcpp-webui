@@ -13,6 +13,7 @@ import Icon from 'components/semantic/Icon';
 import { RouteComponentProps } from 'react-router';
 import HubConstants from 'constants/HubConstants';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import { isValueSet } from 'utils/FormUtils';
 
 
 interface SearchOptionsButtonProps extends 
@@ -80,15 +81,7 @@ const SearchOptionsButton: React.FC<Props> = ({
   const filterCount = !value ? null : Object.keys(value)
     .filter(key => {
       const curValue = value[key];
-      if (curValue === null) {
-        return false;
-      }
-
-      if (Array.isArray(curValue) && !curValue.length) {
-        return false;
-      }
-      
-      return true;
+      return isValueSet(curValue);
     })
     .length;
 

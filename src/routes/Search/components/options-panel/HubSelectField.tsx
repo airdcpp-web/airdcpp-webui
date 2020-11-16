@@ -7,6 +7,7 @@ import * as UI from 'types/ui';
 import Checkbox from 'components/semantic/Checkbox';
 import { updateMultiselectValues } from 'utils/FormUtils';
 import HubIcon from 'components/icon/HubIcon';
+import { FormAccordion } from './AccordionField';
 
 
 interface HubSelectFieldProps {
@@ -63,20 +64,24 @@ const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
 
 type TCombTemplate = { 
   renderSelect: (locals: UI.FormLocals<API.Hub, string[]>) => React.ReactNode; 
+  renderLabel: (locals: UI.FormLocals<API.Hub, string[]>) => React.ReactNode;
 };
 
 const HubsSelectField: TCombTemplate = {
   renderSelect(locals) {
     return (
-      <HubSelectField 
-        onChange={ locals.onChange }
-        value={ locals.value }
-        hubs={ locals.options }
-      />
+      <FormAccordion locals={ locals }>
+        <HubSelectField 
+          onChange={ locals.onChange }
+          value={ locals.value }
+          hubs={ locals.options }
+        />
+      </FormAccordion>
     );
+  },
+  renderLabel(locals) {
+    return null;
   }
 };
 
 export default t.form.Form.templates.select.clone(HubsSelectField);
-
-// export { HubSelectFieldDecorated as HubSelectField };

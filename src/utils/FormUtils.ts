@@ -449,6 +449,22 @@ const updateMultiselectValues = <ValueT>(values: ValueT[], value: ValueT, checke
   return values;
 };
 
+const isValueSet = (value: UI.FormValue): boolean => {
+  if (!value) {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return !!value.length;
+  }
+
+  if (typeof value === 'object') {
+    const setValue = Object.keys(value).find(childKey => isValueSet(value[childKey]));
+    return !!setValue;
+  }
+
+  return true;
+};
 
 export {
   translateForm,
@@ -477,5 +493,6 @@ export {
 
   updateMultiselectValues,
   formValuesEqual,
+  isValueSet,
 }
 ;

@@ -16,3 +16,19 @@ export const searchDownloadHandler: UI.DownloadHandler<API.GroupedSearchResult> 
     downloadData
   );
 };
+
+interface SearchData {
+  query: Pick<API.SearchQuery, 'pattern'> & Partial<Omit<API.SearchQuery, 'pattern'>>;
+  hub_urls: string[] | undefined | null;
+  priority: API.PriorityEnum;
+}
+
+export const search = (
+  instance: API.SearchInstance, 
+  data: SearchData
+) => {
+  return SocketService.post<API.SearchResponse>(
+    `${SearchConstants.INSTANCES_URL}/${instance.id}/hub_search`, 
+    data
+  );
+};

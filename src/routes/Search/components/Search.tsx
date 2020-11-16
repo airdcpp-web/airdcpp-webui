@@ -1,7 +1,5 @@
 import { Component } from 'react';
 
-import SocketService from 'services/SocketService';
-
 import SearchConstants from 'constants/SearchConstants';
 
 import History from 'utils/History';
@@ -22,6 +20,7 @@ import { SearchOptions } from './options-panel';
 import NotificationActions from 'actions/NotificationActions';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import LoginStore from 'stores/LoginStore';
+import { search } from 'services/api/SearchApi';
 
 
 const RESULT_WAIT_PERIOD = 4000;
@@ -78,16 +77,20 @@ class Search extends Component<SearchProps & SearchDataProps> {
 
     clearTimeout(this.searchTimeout);
 
-    const { hub_urls, ...queryOptions } = options || {};
+    const { hub_urls, size_limits, ...queryOptions } = options || {};
     try {
-      const res = await SocketService.post<API.SearchResponse>(`${SearchConstants.INSTANCES_URL}/${this.props.instance.id}/hub_search`, {
-        query: {
-          pattern: searchString,
-          ...queryOptions,
-        },
-        priority: API.PriorityEnum.HIGH,
-        hub_urls
-      });
+      const res = await search(
+        this.props.instance,
+        {
+          query: {
+            pattern: searchString,
+            ...size_limits,
+            ...queryOptions,
+          },
+          priority: API.PriorityEnum.HIGH,
+          hub_urls
+        }
+      );
 
       this.onSearchPosted(res);
       this.setState({
@@ -110,7 +113,7 @@ class Search extends Component<SearchProps & SearchDataProps> {
     );
   }
 
-  parseOptions = () => {
+  parseOptions = (): SearchOptions | null => {
     const { query } = this.props.instance;
     if (!query) {
       return null;
@@ -118,8 +121,10 @@ class Search extends Component<SearchProps & SearchDataProps> {
 
     return {
       excluded: query.excluded,
-      min_size: query.min_size,
-      max_size: query.max_size,
+      size_limits: {
+        min_size: query.min_size,
+        max_size: query.max_size,
+      },
       file_type: query.file_type === SearchConstants.DEFAULT_SEARCH_TYPE || query.file_type === 'tth' ? 
         null : query.file_type,
       hub_urls: []

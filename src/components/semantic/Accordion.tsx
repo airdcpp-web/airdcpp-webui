@@ -4,12 +4,13 @@ import { Component } from 'react';
 import 'fomantic-ui-css/components/accordion';
 import 'fomantic-ui-css/components/accordion.min.css';
 
-import classNames from 'classnames';
+import cx from 'classnames';
 
 
 interface AccordionProps {
   controlled?: boolean;
   className?: string;
+  defaultActiveIndexes?: number[];
 }
 
 class Accordion extends Component<AccordionProps> {
@@ -32,10 +33,24 @@ class Accordion extends Component<AccordionProps> {
     }
 
     $(this.c).accordion(settings);
+
+    if (this.props.defaultActiveIndexes) {
+      for (const index of this.props.defaultActiveIndexes) {
+        $(this.c).accordion('open', index);
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps: AccordionProps) {
+    if (!prevProps.defaultActiveIndexes && !!this.props.defaultActiveIndexes) {
+      for (const index of this.props.defaultActiveIndexes) {
+        $(this.c).accordion('open', index);
+      }
+    }
   }
 
   render() {
-    const accordionStyle = classNames(
+    const classNames = cx(
       'ui accordion',
       this.props.className,
     );
@@ -44,12 +59,47 @@ class Accordion extends Component<AccordionProps> {
     return (
       <div 
         ref={ c => this.c = c! } 
-        className={ accordionStyle }
+        className={ classNames }
       >
         { children }
       </div>
     );
   }
 }
+
+interface AccordionTitleProps {
+  className?: string;
+  active?: boolean;
+  style?: React.CSSProperties;
+}
+
+export const AccordionTitle: React.FC<AccordionTitleProps> = ({ active, className, children, style }) => {
+  const classNames = cx(
+    'title',
+    { active },
+    className,
+  ); 
+
+  return (
+    <div className={ classNames } style={ style }>
+      { children }
+    </div>
+  );
+};
+
+export const AccordionContent: React.FC<AccordionTitleProps> = ({ active, className, children, style }) => {
+  const classNames = cx(
+    'content',
+    { active },
+    className,
+  ); 
+
+  return (
+    <div className={ classNames } style={ style }>
+      { children }
+    </div>
+  );
+};
+
 
 export default Accordion;

@@ -58,3 +58,12 @@
     max-width: 250px;
   }
 }
+
+.search-options {
+  min-width: 300px;
+}
+
+.search-options .field-hub_urls {
+  max-height: 180px;
+  overflow-y: auto;
+}

@@ -9,17 +9,21 @@ import SizeField from './SizeField';
 import FileTypeField from './FileTypeField';
 
 import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
-import { translateForm } from 'utils/FormUtils';
+import { isValueSet, translateForm } from 'utils/FormUtils';
 import { RouteComponentProps } from 'react-router';
 import Button from 'components/semantic/Button';
-import { SearchQuery } from 'types/api';
+import AccordionStructField from './AccordionStructField';
 
 
 
 
-interface Entry extends Pick<SearchQuery, 'file_type' | 'min_size' | 'max_size' | 'excluded'>, UI.FormValueMap {
+interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {
   hub_urls: string[] | null;
   // file_type: string | null;
+  size_limits: null | {
+    min_size: number | null;
+    max_size: number | null;
+  };
   // min_size: number | null;
   // max_size: number | null;
   // excluded: string[] | null;
@@ -45,16 +49,24 @@ const Fields: UI.FormFieldDefinition[] = [
     type: API.SettingTypeEnum.LIST,
     item_type: API.SettingTypeEnum.STRING,
   }, {
-    key: 'min_size',
-    title: 'Minimum size',
-    type: API.SettingTypeEnum.NUMBER,
+    key: 'size_limits',
+    title: 'Size limits',
+    type: API.SettingTypeEnum.STRUCT,
     optional: true,
-  }, {
-    key: 'max_size',
-    title: 'Maximum size',
-    type: API.SettingTypeEnum.NUMBER,
-    optional: true,
-  },  /*, {
+    definitions: [
+      {
+        key: 'min_size',
+        title: 'Minimum size',
+        type: API.SettingTypeEnum.NUMBER,
+        optional: true,
+      }, {
+        key: 'max_size',
+        title: 'Maximum size',
+        type: API.SettingTypeEnum.NUMBER,
+        optional: true,
+      }
+    ]
+  }, /*, {
     key: 'excluded',
     title: 'Excluded words',
     type: API.SettingTypeEnum.LIST,
@@ -63,13 +75,14 @@ const Fields: UI.FormFieldDefinition[] = [
   }*/
 ];
 
-const removeEmptyProperties = (value: Entry) => {
+const removeEmptyProperties = (formValue: Entry) => {
   const ret = Object
-    .keys(value)
+    .keys(formValue)
     .reduce(
       (reduced, key) => {
-        if (Array.isArray(value[key]) ? !!(value[key] as Array<any>).length : !!value[key]) {
-          reduced[key] = value[key] as any;
+        const value = formValue[key];
+        if (isValueSet(value)) {
+          reduced[key] = value;
         }
 
         return reduced;
@@ -126,6 +139,10 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
       Object.assign(fieldOptions, {
         template: FileTypeField,
       });
+    } else if (id === 'size_limits') {
+      Object.assign(fieldOptions, {
+        template: AccordionStructField,
+      });
     }
   }
 
@@ -142,6 +159,7 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
           value={ value }
           location={ location }
           optionTitleFormatter={ def => def.title }
+          className="search-options"
         />
         <Button
           caption={ moduleT.translate('Reset all') }
