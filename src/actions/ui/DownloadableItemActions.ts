@@ -83,20 +83,30 @@ const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({ data, loc
   History.push(`${pathname}/download/${data.itemInfo.id}`);
 };
 
-const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
-  return ViewFileActions.createSession(data, true, location, ViewFileStore);
+const handleViewFile = ({ data, location }: UI.ActionHandlerData<UI.DownloadableItemData>, isText: boolean) => {
+  if (notSelf(data)) {
+    // Remote file
+    return ViewFileActions.createSession(data, isText, location, ViewFileStore);
+  }
+
+  // Local file
+  return ViewFileActions.openLocalFile(data.itemInfo.tth, isText, location, ViewFileStore);
 };
 
-const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
-  return ViewFileActions.createSession(data, false, location, ViewFileStore);
+const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = data => {
+  return handleViewFile(data, true);
 };
 
-const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
-  return ViewFileActions.createSession(data, false, location, ViewFileStore);
+const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = data => {
+  return handleViewFile(data, false);
 };
 
-const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
-  return ViewFileActions.createSession(data, false, location, ViewFileStore);
+const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = data => {
+  return handleViewFile(data, false);
+};
+
+const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = data => {
+  return handleViewFile(data, false);
 };
 
 const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({ data, ...other }) => {

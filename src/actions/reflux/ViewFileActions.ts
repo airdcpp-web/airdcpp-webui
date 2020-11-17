@@ -17,26 +17,28 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 
 const ViewFileActionConfig: UI.RefluxActionConfigList<void> = [
   { 'createSession': { asyncResult: true } },
+  { 'openLocalFile': { asyncResult: true } },
   { 'setRead': { asyncResult: true } },
 ];
 
 const ViewFileActions = Reflux.createActions(ViewFileActionConfig);
 
-interface ViewFileData {
-  itemInfo: API.ViewFile;
+interface RemoteViewFileData {
+  itemInfo: UI.DownloadableItemInfo;
   user: API.HintedUserBase;
 }
 
+// Remote file
 ViewFileActions.createSession.listen(function (
   this: UI.AsyncActionType<API.ViewFile>, 
-  { itemInfo, user }: ViewFileData, 
+  { itemInfo, user }: RemoteViewFileData, 
   isText: boolean, 
   location: Location, 
   sessionStore: any
 ) {
-  let session = sessionStore.getSession(itemInfo.id);
+  let session = sessionStore.getSession(itemInfo.tth);
   if (session) {
-    this.completed(location, itemInfo, session);
+    this.completed(location, session);
     return;
   }
 
@@ -55,19 +57,57 @@ ViewFileActions.createSession.listen(function (
     .catch(that.failed);
 });
 
-ViewFileActions.createSession.completed.listen(function (
+// Local file
+ViewFileActions.openLocalFile.listen(function (
+  this: UI.AsyncActionType<API.ViewFile>, 
+  tth: string, 
+  isText: boolean, 
   location: Location, 
-  file: API.ViewFile
+  sessionStore: any
 ) {
+  let session = sessionStore.getSession(tth);
+  if (session) {
+    this.completed(location, session);
+    return;
+  }
+
+  let that = this;
+  SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${tth}`, {
+    text: isText,
+  })
+    .then((data: API.ViewFile) => that.completed(location, data))
+    .catch(that.failed);
+});
+
+const onSessionCreated = (file: API.ViewFile) => {
   History.push({
     pathname: `/files/session/${file.id}`, 
     state: {
       pending: true
     },
   });
+};
+
+ViewFileActions.createSession.completed.listen(function (
+  location: Location, 
+  file: API.ViewFile
+) {
+  onSessionCreated(file);
 });
 
 ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
+  NotificationActions.apiError('Failed to create viewed file', error);
+});
+
+
+ViewFileActions.openLocalFile.completed.listen(function (
+  location: Location, 
+  file: API.ViewFile
+) {
+  onSessionCreated(file);
+});
+
+ViewFileActions.openLocalFile.failed.listen(function (error: ErrorResponse) {
   NotificationActions.apiError('Failed to create viewed file', error);
 });
 
