@@ -2,8 +2,6 @@
 import Reflux from 'reflux';
 import SocketService from 'services/SocketService';
 
-import LoginConstants from 'constants/LoginConstants';
-
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
@@ -14,19 +12,9 @@ const LoginActionConfig: UI.RefluxActionConfigList<any> = [
   { 'connect': { asyncResult: true } },
   'disconnect',
   { 'logout': { asyncResult: true } },
-  { 'activity': { asyncResult: true } },
 ];
 
 const LoginActions = Reflux.createActions(LoginActionConfig);
-
-LoginActions.activity.listen(function (this: UI.AsyncActionType<any>) {
-  let that = this;
-  return SocketService.post(LoginConstants.ACTIVITY_URL, {
-    user_active: true,
-  })
-    .then(that.completed)
-    .catch(that.failed);
-});
 
 LoginActions.login.listen(function (
   this: UI.AsyncActionType<any>,

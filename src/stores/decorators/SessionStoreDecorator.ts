@@ -5,6 +5,9 @@ import { getSessionUrgencies, messageSessionMapper, simpleSessionMapper } from '
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+// import { AwayEnum } from 'constants/SystemConstants';
+import ActivityStore, { ActivityState } from 'stores/ActivityStore';
+import { IdType } from 'types/api';
 
 
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
@@ -27,6 +30,22 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
     sessions = data;
     store.trigger(sessions);
   });
+
+  const isUnreadUpdate = (updatedProperties: Partial<SessionType>) => {
+    return updatedProperties.message_counts || updatedProperties.hasOwnProperty('read');
+  };
+
+  const checkReadState = (id: IdType, updatedProperties: Partial<SessionType>) => {
+      // Active tab? Mark as read
+      if (id === activeSessionId && ActivityStore.userActive && isUnreadUpdate(updatedProperties)) {
+        return checkUnreadSessionInfo(
+          updatedProperties as UI.UnreadInfo, 
+          () => actions.setRead({ id })
+        );
+      }
+
+      return updatedProperties;
+  };
 
   const Decorator = {
     getItemUrgencies: (item: SessionT) => {
@@ -70,13 +89,7 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
         return;
       }
 
-      // Active tab?
-      if (id === activeSessionId && (updatedProperties.message_counts || updatedProperties.hasOwnProperty('read'))) {
-        updatedProperties = checkUnreadSessionInfo(
-          updatedProperties as UI.UnreadInfo, 
-          () => actions.setRead({ id })
-        );
-      }
+      updatedProperties = checkReadState(id, updatedProperties);
 
       const index = sessions.indexOf(session);
       sessions = update(sessions, {
@@ -108,6 +121,18 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
       isInitialized = false;
     },
   };
+  
+
+  const _activityStoreListener = (awayState: ActivityState) => {
+    if (!!activeSessionId) {
+      checkReadState(activeSessionId, store.getSession(activeSessionId));
+    }
+  };
+
+  if ('listenTo' in store) {
+    // Listen to authentication status changes (stores only)
+    store.listenTo(ActivityStore, _activityStoreListener);
+  }
 
   return Object.assign(store, Decorator);
 };

@@ -1,12 +1,11 @@
 import { Component } from 'react';
 
+import ActivityActions from 'actions/reflux/ActivityActions';
 import LoginActions from 'actions/reflux/LoginActions';
+
 import { AwayEnum } from 'constants/SystemConstants';
 import ActivityStore from 'stores/ActivityStore';
 
-
-// Don't change this if the component is re-mounted
-let userActive = true;
 
 class ActivityTracker extends Component {
   aliveInterval: number | undefined;
@@ -14,8 +13,10 @@ class ActivityTracker extends Component {
   lastAlive: number;
 
   componentDidMount() {
-    document.onmousemove = this.onUserActivity;
-    document.onkeypress = this.onUserActivity;
+    window.addEventListener('mousemove', this.onUserInputActivity);
+    window.addEventListener('keypress', this.onUserInputActivity);
+    window.addEventListener('focus', this.onFocusChanged);
+    window.addEventListener('blur', this.onFocusChanged);
 
     // Notify the API regurarly if the user is active due to idle away tracking
     this.activityInteval = window.setInterval(this.checkActivity, 60 * 1000);
@@ -24,12 +25,14 @@ class ActivityTracker extends Component {
     this.aliveInterval = window.setInterval(this.checkAlive, 2000);
     this.lastAlive = Date.now();
 
-    LoginActions.activity();
+    ActivityActions.sessionActivity();
   }
 
   componentWillUnmount() {
-    document.onmousemove = null;
-    document.onkeypress = null;
+    window.removeEventListener('mousemove', this.onUserInputActivity);
+    window.removeEventListener('keypress', this.onUserInputActivity);
+    window.removeEventListener('focus', this.onFocusChanged);
+    window.removeEventListener('blur', this.onFocusChanged);
 
     clearTimeout(this.activityInteval);
     clearInterval(this.aliveInterval);
@@ -54,23 +57,35 @@ class ActivityTracker extends Component {
   }
 
   checkActivity = () => {
-    if (!userActive) {
+    if (!ActivityStore.userActive) {
       return;
     }
 
-    LoginActions.activity();
-    userActive = false;
+    ActivityActions.sessionActivity();
+
+    ActivityActions.userActiveChanged(false);
   }
 
-  onUserActivity = () => {
-    if (userActive) {
+  onFocusChanged = () => {
+    const hasFocus = document.hasFocus();
+    if (hasFocus !== ActivityStore.userActive) {
+      ActivityActions.userActiveChanged(hasFocus);
+    }
+  }
+
+  onUserInputActivity = () => {
+    if (ActivityStore.userActive) {
       return;
     }
 
     // Change the state instantly when the user came back
-    userActive = true;
     if (ActivityStore.away === AwayEnum.IDLE) {
-      LoginActions.activity();
+      ActivityActions.sessionActivity();
+    }
+
+    // Mouse over a background window?
+    if (document.hasFocus()) {
+      ActivityActions.userActiveChanged(true);
     }
   }
 

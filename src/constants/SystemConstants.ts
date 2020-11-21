@@ -1,6 +1,6 @@
 const MODULE_URL = 'system';
 
-export const enum AwayEnum {
+export enum AwayEnum {
   OFF = 'off',
   IDLE = 'idle',
   MANUAL = 'manual',

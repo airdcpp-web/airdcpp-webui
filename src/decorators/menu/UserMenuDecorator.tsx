@@ -62,19 +62,7 @@ export default function <DropdownPropsT extends object>(
       this.itemData = {} as ActionUserData;
       Object.defineProperty(this.itemData, 'id', {
         get: () => {
-          const { user } = this.props;
-          if (!!user.id) {
-            return user.id;
-          }
-
-          if (!!user.hub_url) {
-            return {
-              cid: user.cid,
-              hub_url: user.hub_url,
-            };
-          }
-
-          invariant(false, 'Invalid user object in UserMenuDecorator: id and hub_url missing');
+          return this.getUserId();
         }
       });
       Object.defineProperty(this.itemData, 'user', {
@@ -88,6 +76,25 @@ export default function <DropdownPropsT extends object>(
           return getFilePath(directory as any as string);
         }
       });
+    }
+
+    getUserId = () => {
+      const { user } = this.props;
+
+      // User/online user
+      if (!!user.id) {
+        return user.id;
+      }
+
+      // Hinted user
+      if (!!user.hub_url) {
+        return {
+          cid: user.cid,
+          hub_url: user.hub_url,
+        };
+      }
+
+      invariant(false, 'Invalid user object in UserMenuDecorator: id and hub_url missing');
     }
 
     itemDataGetter = () => {
