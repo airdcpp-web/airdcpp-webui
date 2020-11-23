@@ -19,7 +19,6 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 
 import Measure from 'react-measure';
 
-import 'array.prototype.find';
 import 'utils/semantic';
 
 import 'style.css';
