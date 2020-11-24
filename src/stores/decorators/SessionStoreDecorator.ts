@@ -123,7 +123,7 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
   };
   
 
-  const _activityStoreListener = (awayState: ActivityState) => {
+  const _activityStoreListener = (activityState: ActivityState) => {
     if (!!activeSessionId) {
       checkReadState(activeSessionId, store.getSession(activeSessionId));
     }

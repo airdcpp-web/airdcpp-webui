@@ -7,35 +7,40 @@ import { AwayEnum } from 'constants/SystemConstants';
 import ActivityStore from 'stores/ActivityStore';
 
 
+const SYSTEM_ALIVE_TIMEOUT = 30000;
+const USER_ACTIVE_TIMEOUT = 30000;
+
 class ActivityTracker extends Component {
-  aliveInterval: number | undefined;
-  activityInteval: number | undefined;
-  lastAlive: number;
+  systemAliveInterval: number | undefined;
+  userActivityInteval: number | undefined;
+  lastSystemAlive: number;
+  lastUserActive: number;
 
   componentDidMount() {
-    window.addEventListener('mousemove', this.onUserInputActivity);
-    window.addEventListener('keypress', this.onUserInputActivity);
-    window.addEventListener('focus', this.onFocusChanged);
-    window.addEventListener('blur', this.onFocusChanged);
+    window.addEventListener('mousemove', this.setActive);
+    window.addEventListener('keypress', this.setActive);
+    window.addEventListener('focus', this.setActive);
+    window.addEventListener('blur', this.setUserInactive);
 
     // Notify the API regurarly if the user is active due to idle away tracking
-    this.activityInteval = window.setInterval(this.checkActivity, 60 * 1000);
+    this.userActivityInteval = window.setInterval(this.checkActivity, 60 * 1000);
+    this.lastUserActive = Date.now();
 
     // Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
-    this.aliveInterval = window.setInterval(this.checkAlive, 2000);
-    this.lastAlive = Date.now();
+    this.systemAliveInterval = window.setInterval(this.checkAlive, 2000);
+    this.lastSystemAlive = Date.now();
 
     ActivityActions.sessionActivity();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mousemove', this.onUserInputActivity);
-    window.removeEventListener('keypress', this.onUserInputActivity);
-    window.removeEventListener('focus', this.onFocusChanged);
-    window.removeEventListener('blur', this.onFocusChanged);
+    window.removeEventListener('mousemove', this.setActive);
+    window.removeEventListener('keypress', this.setActive);
+    window.removeEventListener('focus', this.setActive);
+    window.removeEventListener('blur', this.setUserInactive);
 
-    clearTimeout(this.activityInteval);
-    clearInterval(this.aliveInterval);
+    clearInterval(this.userActivityInteval);
+    clearInterval(this.systemAliveInterval);
   }
 
   shouldComponentUpdate() {
@@ -44,16 +49,16 @@ class ActivityTracker extends Component {
 
   checkAlive = () => {
     const currentTime = Date.now();
-    if (currentTime > (this.lastAlive + 30000)) { // Require 30 seconds of downtime
+    if (currentTime > (this.lastSystemAlive + SYSTEM_ALIVE_TIMEOUT)) { // Require 30 seconds of downtime
       console.log(
-        `Wake up detected (last successful activity check was ${(currentTime - this.lastAlive) / 60 / 1000} minutes ago)`
+        `Wake up detected (last successful activity check was ${(currentTime - this.lastSystemAlive) / 60 / 1000} minutes ago)`
       );
 
       // Woke up, disconnect the socket (it will be reconnected automatically)
       LoginActions.disconnect('Connection closed because of inactivity');
     }
 
-    this.lastAlive = currentTime;
+    this.lastSystemAlive = currentTime;
   }
 
   checkActivity = () => {
@@ -61,32 +66,40 @@ class ActivityTracker extends Component {
       return;
     }
 
-    ActivityActions.sessionActivity();
-
-    ActivityActions.userActiveChanged(false);
-  }
-
-  onFocusChanged = () => {
-    const hasFocus = document.hasFocus();
-    if (hasFocus !== ActivityStore.userActive) {
-      ActivityActions.userActiveChanged(hasFocus);
+    const currentTime = Date.now();
+    if (currentTime > (this.lastUserActive + USER_ACTIVE_TIMEOUT)) {
+      // Mark as inactive
+      this.setUserInactive();
+    } else {
+      // Notify API that the user is still active
+      ActivityActions.sessionActivity();
     }
   }
 
-  onUserInputActivity = () => {
+  setActive = () => {
+    this.lastUserActive = Date.now();
     if (ActivityStore.userActive) {
       return;
     }
 
-    // Change the state instantly when the user came back
+    // Change the away state instantly when the user is known to be active again on the system
+    // (window focus isn't relevant for this)
     if (ActivityStore.away === AwayEnum.IDLE) {
       ActivityActions.sessionActivity();
     }
 
-    // Mouse over a background window?
+    // Mouse over a background window? Don't mark sessions as read
     if (document.hasFocus()) {
       ActivityActions.userActiveChanged(true);
     }
+  }
+
+  setUserInactive = () => {
+    if (!ActivityStore.userActive) {
+      return;
+    }
+
+    ActivityActions.userActiveChanged(false);
   }
 
   render() {

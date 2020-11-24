@@ -14,6 +14,7 @@ import { mergeCacheMessages, pushMessage, checkUnreadCacheInfo, checkSplice } fr
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { AddListener } from 'airdcpp-apisocket';
+import ActivityStore, { ActivityState } from './ActivityStore';
 
 
 type MessageCache = UI.MessageListItem[];
@@ -33,7 +34,7 @@ const Store = {
   scrollPosition: undefined as number | undefined,
   listenables: EventActions,
   init: function () {
-    // 
+    (this as any).listenTo(ActivityStore, this._activityStoreListener);
   },
 
   isInitialized() {
@@ -80,13 +81,19 @@ const Store = {
     (this as any).trigger(this._logMessages);
   },
 
-  onLogInfoReceived(cacheInfoNew: API.StatusMessageCounts) {
-    if (this._viewActive) {
+  checkReadState(cacheInfoNew: API.StatusMessageCounts) {
+    if (this._viewActive && ActivityStore.userActive) {
       cacheInfoNew = checkUnreadCacheInfo(
         cacheInfoNew, 
         () => EventActions.setRead()
       ) as API.StatusMessageCounts;
     }
+
+    return cacheInfoNew;
+  },
+
+  onLogInfoReceived(cacheInfoNew: API.StatusMessageCounts) {
+    cacheInfoNew = this.checkReadState(cacheInfoNew);
 
     this._logMessages = checkSplice(this._logMessages, cacheInfoNew.total);
     this._messageCacheInfo = cacheInfoNew;
@@ -116,6 +123,12 @@ const Store = {
     this._logMessages = undefined;
     this._initialized = false;
   },
+
+  _activityStoreListener(activityState: ActivityState) {
+    if (this._messageCacheInfo) {
+      this.checkReadState(this._messageCacheInfo);
+    }
+  }
 };
 
 type EventStore = typeof Store;
