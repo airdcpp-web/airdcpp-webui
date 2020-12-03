@@ -4,7 +4,7 @@ import { OptionTypeBase } from 'react-select';
 import * as UI from 'types/ui';
 
 
-export interface RemoteSelectFieldProps<SuggestionT extends OptionTypeBase> extends SelectProps<SuggestionT> {
+export interface RemoteSelectFieldProps<SuggestionT extends OptionTypeBase> extends SelectProps<SuggestionT, false> {
   formT: UI.ModuleTranslator;
 }
 
