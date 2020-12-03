@@ -9,7 +9,7 @@ export interface ViewFile {
   text: boolean;
   time_opened: number;
   read: boolean;
-  download_state: DownloadableItemState;
+  download_state: DownloadableItemState | null;
   content_ready: boolean;
   mime_type: string;
 }

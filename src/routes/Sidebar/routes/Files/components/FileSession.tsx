@@ -25,19 +25,19 @@ class FileSession extends Component<FileSessionProps> {
   render() {
     const { session, sessionT } = this.props;
     if (!session.content_ready) {
-      if (session.download_state.id === 'download_failed') {
+      if (session.download_state!.id === 'download_failed') {
         return (
           <div className="file session">
             <Message 
               icon={ IconConstants.ERROR }
               title={ sessionT.translate('Download failed') }
-              description={ session.download_state.str }
+              description={ session.download_state!.str }
             />
           </div>
         );
       }
 
-      return <Loader text={ session.download_state.str }/>;
+      return <Loader text={ session.download_state!.str }/>;
     }
 
     return (

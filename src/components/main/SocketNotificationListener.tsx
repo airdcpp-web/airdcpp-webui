@@ -145,9 +145,10 @@ class SocketNotificationListener extends Component<Props> {
       return;
     }
 
+    const message = file.download_state ? 'File has finished downloading' : 'File was loaded';
     NotificationActions.info({
       title: file.name,
-      message: this.translate('File has finished downloading', UI.Modules.VIEWED_FILES),
+      message: this.translate(message, UI.Modules.VIEWED_FILES),
       uid: file.id,
       action: {
         label: this.translate('View file', UI.Modules.VIEWED_FILES, true),
