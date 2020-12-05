@@ -76,7 +76,7 @@
   "table": {
     "filter": {
       "filter": "Suodata",
-      "matchType": "Täsmäystyyppi",
+      "matchType": "Osuman tyyppi",
       "partial": "Osittainen",
       "regex": "Regex",
       "wildcard": "Jokerimerkki",
@@ -111,7 +111,7 @@
     "hubs": "Hubit",
     "connection": "Yhteys",
     "slots": "Latauspaikat",
-    "ip": "Ip",
+    "ip": "IP",
     "path": "Polku",
     "searchOffline": "Sinun on oltava vähintään yhdessä hubissa, jotta voit tehdä hakua",
     "enterSearchString": "Syötä hakusana...",
@@ -257,7 +257,7 @@
   "common": {    
     "actions": {
       "copy": "Kopioi",
-      "download": "Lataus",
+      "download": "Lataa",
       "downloadTo": "Lataa kohteeseen...",
       "findNfo": "Hae NFO",
       "search": "Etsi",
@@ -331,7 +331,7 @@
     "favorites": "Suosikit",
     "dupes": "Kaksoiskappaleet",
     "browse": "Selaa",
-    "download": "Lataus",
+    "download": "Lataa",
     "close": "Sulje",
     "noPathsToDisplay": "Ei näytettäviä polkuja",
     "spaceFree": "{{freeSpace}} vapaana",
@@ -502,7 +502,7 @@
         "searchBundleAlternatesSuccess": "Bundlelle {{item.name}} haettiin vaihtoehtoisia lähteitä"
       }
     },
-    "paused": "Keskeytetty",
+    "paused": "Pysäytetty",
     "lowest": "Matalin",
     "low": "Matala",
     "normal": "Normaali",
@@ -531,12 +531,12 @@
     "table": {
       "user": "Käyttäjä",
       "name": "Nimi",
-      "size": "Segmentti",
+      "size": "Osa",
       "status": "Tila",
       "secondsLeft": "Aikaa jäljellä",
       "speed": "Nopeus",
       "flags": "Arvot",
-      "ip": "Ip"
+      "ip": "IP"
     },
     "actions": {
       "forceConnect": "Pakota yhteys",
@@ -635,7 +635,7 @@
       "events": "Tapahtumat",
       "appearance": "Ulkoasu"
     },
-    "advanced": "Edistynyt",
+    "advanced": "Lisäasetukset",
     "noUnsavedChanges": "Ei tallentamattomia muutoksia",
     "noSavePermission": "Ei tallennusoikeuksia",
     "saveChanges": "Tallenna muutokset",
@@ -773,7 +773,7 @@
       },
       "serverSettings": {
         "defaultCertNote": "Mikäli sertifikaattien polut ovat tyhjiä, käytetään ohjelman oletussertifikaattia",
-        "advanced": "Edistynyt"
+        "advanced": "Lisäasetukset"
       },
       "users": {
         "username": "Käyttäjänimi",
@@ -789,7 +789,7 @@
         "permissionSelector": {
           "administrator": "Ylläpitäjä",
           "search": "Etsi",
-          "download": "Lataus",
+          "download": "Lataa",
           "transfers": "Siirrot",
           "events": "Tapahtumat",
           "view": "Näytä",
@@ -913,7 +913,7 @@
       "installFromUrl": "Asenna osoitteesta",
       "install": "Asenna",
       "update": "Päivitä",
-      "stop": "Seis",
+      "stop": "Lopeta",
       "configure": "Määritä",
       "prompts": {
         "installUrlPlaceholder": "Syötä URL-osoite",
@@ -967,6 +967,7 @@
     "downloadFailed": "Lataus epäonnistui",
     "notifications": {
       "fileHasFinishedDownloading": "Tiedoston lataus on valmis",
+      "fileWasLoaded": "Tiedosto ladattiin",
       "actions": {
         "viewFile": "Näytä tiedosto"
       }

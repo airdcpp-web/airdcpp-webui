@@ -718,7 +718,7 @@
         "apiVersion": "API version",
         "apiFeatureLevel": "API feature level",
         "started": "Started",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Etkin oturumlar",
         "serverThreads": "Server threads",
         "resources": "Resources",
         "homePage": "Home page",
@@ -778,7 +778,7 @@
       "users": {
         "username": "Username",
         "permissions": "Permissions",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Etkin oturumlar",
         "lastLoggedIn": "Last logged in",
         "administrator": "Administrator",
         "form": {
@@ -967,6 +967,7 @@
     "downloadFailed": "Download failed",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "View file"
       }

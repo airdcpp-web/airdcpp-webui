@@ -92,7 +92,7 @@
       "relevance": "Relevanta",
       "type": "Tip",
       "connection": "Conexiune",
-      "users": "Useri",
+      "users": "Utilizatori",
       "time": "Ultimul modificat",
       "slots": "Sloturi"
     },
@@ -107,12 +107,12 @@
       "minSizeName": "Minimum size"
     },
     "resetAll": "Reset all",
-    "user": "User",
+    "user": "Utilizator",
     "hubs": "Huburi",
     "connection": "Conexiune",
     "slots": "Sloturi",
     "ip": "Ip",
-    "path": "cale",
+    "path": "Cale",
     "searchOffline": "Trebuie sa fii conectat cel putin pe un  hub ca sa poti cauta ",
     "enterSearchString": "Introduce caracterul de cautare ",
     "search": "Cauta",
@@ -137,7 +137,7 @@
     "actions": {
       "editDirectory": "Editeaza directorul",
       "removeDirectory": "Sterge directorul",
-      "addDirectory": "Aduce directorul",
+      "addDirectory": "Introduce director",
       "refreshAll": "Reimprospateaza toate",
       "prompts": {
         "removeRootApprove": "Sterge directorul",
@@ -257,7 +257,7 @@
   "common": {    
     "actions": {
       "copy": "Copiaza",
-      "download": "Descarcare",
+      "download": "Descarca",
       "downloadTo": "Descarca in...",
       "findNfo": "Gaseste NFO",
       "search": "Cauta",
@@ -510,7 +510,7 @@
     "highest": "Cea mai Mare",
     "auto": "Auto",
     "sources": "Sursa",
-    "user": "User",
+    "user": "Utilizator",
     "hubs": "Huburi",
     "lastKnownSpeed": "Ultima viteza cunoscuta",
     "files": "Fisiere",
@@ -529,7 +529,7 @@
   },
   "transfers": {
     "table": {
-      "user": "User",
+      "user": "Utilizator",
       "name": "Nume",
       "size": "Segment",
       "status": "Status",
@@ -789,11 +789,11 @@
         "permissionSelector": {
           "administrator": "Administrator",
           "search": "Cauta",
-          "download": "Download",
-          "transfers": "&amp;Transferuri",
+          "download": "Descarca",
+          "transfers": "Transferuri",
           "events": "Evenimente",
-          "view": "&amp;Vezi",
-          "edit": "&amp;Editare",
+          "view": "Vezi",
+          "edit": "Editare",
           "queue": "Lista de asteptare",
           "favoriteHubs": "Huburi Favorite",
           "settings": "Setari",
@@ -929,7 +929,7 @@
     "home": "Acasa",
     "queue": "Lista de asteptare",
     "search": "Cauta",
-    "transfers": "&amp;Transferuri",
+    "transfers": "Transferuri",
     "hubs": "Huburi",
     "messages": "Mesaje",
     "filelists": "Lista de fisiere",
@@ -967,6 +967,7 @@
     "downloadFailed": "Descarcare nereusita",
     "notifications": {
       "fileHasFinishedDownloading": "Fisierul sa terminat de descarcat",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Vezi fisier"
       }

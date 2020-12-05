@@ -111,7 +111,7 @@
     "hubs": "Hubs",
     "connection": "Conexión",
     "slots": "Slots",
-    "ip": "País / IP",
+    "ip": "IP",
     "path": "Ruta",
     "searchOffline": "Debe estar conectado a al menos un hub para realizar búsquedas",
     "enterSearchString": "Introducir texto de búsqueda...",
@@ -136,11 +136,11 @@
     },
     "actions": {
       "editDirectory": "Editar directorio",
-      "removeDirectory": "Eliminar directorio",
+      "removeDirectory": "Eliminar carpeta",
       "addDirectory": "Añadir directorio",
       "refreshAll": "Actualizar todo",
       "prompts": {
-        "removeRootApprove": "Eliminar directorio",
+        "removeRootApprove": "Eliminar carpeta",
         "removeRootReject": "No eliminar",
         "removeRootContent": "¿Estás seguro de que quieres eliminar el directorio {{item.virtual_name}} de tu compartido? Se eliminará de todos los perfiles compartidos."
       }
@@ -502,7 +502,7 @@
         "searchBundleAlternatesSuccess": "Se han buscado alternativas para el paquete {{item.name}}"
       }
     },
-    "paused": "Parado",
+    "paused": "Pausado",
     "lowest": "Mínima",
     "low": "Baja",
     "normal": "Normal",
@@ -557,7 +557,7 @@
       "addUser": "Añadir usuario",
       "editUser": "Editar usuario",
       "editDirectory": "Editar directorio",
-      "removeDirectory": "Eliminar directorio",
+      "removeDirectory": "Eliminar carpeta",
       "addProfile": "Añadir perfil",
       "browseFiles": "Navegar por archivos",
       "renameProfile": "Renombrar perfil",
@@ -927,7 +927,7 @@
   },
   "navigation": {
     "home": "Inicio",
-    "queue": "Cola de descargas",
+    "queue": "Cola",
     "search": "Buscar",
     "transfers": "Transferencias",
     "hubs": "Hubs",
@@ -967,6 +967,7 @@
     "downloadFailed": "Descarga fallida",
     "notifications": {
       "fileHasFinishedDownloading": "El archivo ha terminado de descargarse",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Ver archivo"
       }

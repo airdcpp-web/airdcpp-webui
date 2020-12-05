@@ -967,6 +967,7 @@
     "downloadFailed": "Deskargak huts egin du",
     "notifications": {
       "fileHasFinishedDownloading": "Artxiboaa deskargatzen amaitu da",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Ikusi artxiboa"
       }

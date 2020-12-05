@@ -967,6 +967,7 @@
     "downloadFailed": "Falha no Download",
     "notifications": {
       "fileHasFinishedDownloading": "O arquivo terminou de baixar",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Mostrar arquivo"
       }

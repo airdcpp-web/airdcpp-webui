@@ -205,7 +205,7 @@
       "hubDescriptionName": "Hubbeskrivning",
       "shareProfileName": "Utdelningsprofil",
       "shareProfileHelp": "Egen utdelningsprofiler kan bara väljas efter att du har angett en ADC-hubbadress (börjar med adc:// eller adcs://)",
-      "autoConnectName": "Anslut automatiskt",
+      "autoConnectName": "Auto-anslut",
       "userName": "Användarinställning överrider",
       "nickName": "Användarnamn",
       "userDescriptionName": "Användarbeskrivning",
@@ -967,6 +967,7 @@
     "downloadFailed": "Nedladdning misslyckades",
     "notifications": {
       "fileHasFinishedDownloading": "Filen är nedladdad",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Visa fil"
       }

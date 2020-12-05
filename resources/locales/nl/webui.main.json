@@ -497,7 +497,7 @@
         "removeFileCheckbox": "Verwijder van schijf"
       },
       "notifications": {
-        "removeFileSuccess": "Bestand {{item.name}} was werd verwijderd uit de queue",
+        "removeFileSuccess": "File {{item.name}} werd verwijderd ui de queue",
         "removeCompletedSuccess": "{{result.count}} voltooide bundels werden verwijderd",
         "searchBundleAlternatesSuccess": "De bundel {{item.name}} werd doorzocht op alternatieven"
       }
@@ -967,6 +967,7 @@
     "downloadFailed": "Download mislukt",
     "notifications": {
       "fileHasFinishedDownloading": "Bestand is gedownload",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Bekijk bestand"
       }

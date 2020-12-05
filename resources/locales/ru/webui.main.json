@@ -536,7 +536,7 @@
       "secondsLeft": "Осталось",
       "speed": "Скорость",
       "flags": "Flags",
-      "ip": "Ip"
+      "ip": "IP"
     },
     "actions": {
       "forceConnect": "Force connect",
@@ -967,6 +967,7 @@
     "downloadFailed": "Ошибка загрузки",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "View file"
       }

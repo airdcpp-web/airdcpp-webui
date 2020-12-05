@@ -235,7 +235,7 @@
     "totalListSize": "Tamanho total da lista",
     "browseOwnShare": "Navegar pela própria partilha...",
     "root": "Raiz",
-    "userOffline": "Usuário offline",
+    "userOffline": "Utilizador desligado",
     "userOfflineDesc": "Você poderá continuar a navegar quando o utilizador voltar a ligar-se",
     "noContentToDisplay": "Sem conteúdo para mostrar",
     "theDirectoryIsEmpty": "A pasta está vazia",
@@ -264,7 +264,7 @@
       "sendMessage": "Enviar mensagem",
       "browseShare": "Navegar partilhado",
       "ignoreMessages": "Ignorar mensagens",
-      "viewAsText": "Visualizar como texto",
+      "viewAsText": "Ver como texto",
       "playVideo": "Reproduzir vídeo",
       "viewImage": "Ver imagem",
       "playAudio": "Reproduzir áudio",
@@ -327,7 +327,7 @@
     "directoryName": "Nome da pasta",
     "computer": "Computador",
     "history": "Anterior",
-    "shared": "Compartilhado",
+    "shared": "Partilhado",
     "favorites": "Favoritos",
     "dupes": "Duplicados",
     "browse": "Navegar",
@@ -628,7 +628,7 @@
       "skippingOptions": "Opções de ignorar",
       "searchMatching": "Correspondência nas pesquisas",
       "searchTypes": "Tipos de pesquisa",
-      "downloadOptions": "AirDownloads",
+      "downloadOptions": "Opções de descarregamento",
       "priorities": "Prioridades",
       "notificationsCaption": "Notificações",
       "histories": "Históricos",
@@ -825,7 +825,7 @@
         "skiplist": "Lista de ignorados"
       },
       "hashing": {
-        "hashDatabase": "Base de Dados de Índice",
+        "hashDatabase": "Base de dados de hash",
         "fileIndexSize": "Tamanho do índice de ficheiros",
         "hashStoreSize": "Tamanho do armazenamento das hash",
         "maintenance": "Manutenção",
@@ -967,6 +967,7 @@
     "downloadFailed": "O descarregamento falhou",
     "notifications": {
       "fileHasFinishedDownloading": "O descarregamento do ficheiro terminou",
+      "fileWasLoaded": "File was loaded",
       "actions": {
         "viewFile": "Ver ficheiro"
       }
