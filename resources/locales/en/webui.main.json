@@ -570,6 +570,12 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
+        "createProfilePlaceholder": "Enter name",
+        "createProfileApprove": "Create",
+        "createProfileContent": "Enter name for the profile",
+        "editProfilePlaceholder": "Enter name",
+        "editProfileApprove": "Rename",
+        "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Don't remove",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
@@ -773,8 +779,10 @@
         "variableHelp": "Variable information for Filename and Format fields"
       },
       "serverSettings": {
-        "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
-        "advanced": "Advanced"
+        "defaultCertNote": "The default client certificate is used if the certificate paths are empty"
+      },
+      "advancedServerSettings": {
+        "hookTimeouts": "Hook timeouts"
       },
       "users": {
         "username": "Username",

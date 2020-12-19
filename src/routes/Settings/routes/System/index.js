@@ -22,5 +22,12 @@ module.exports = {
       component: require('./components/ServerSettingsPage').default,
     },
   ],
+  advancedMenuItems: [
+    { 
+      title: 'Advanced server settings', 
+      url: 'advanced-server-settings',
+      component: require('./components/AdvancedServerSettingsPage').default, 
+    }
+  ],
 };
 

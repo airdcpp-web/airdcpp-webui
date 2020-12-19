@@ -21,15 +21,8 @@ const TlsEntry = [
   'web_tls_certificate_key_path',
 ];
 
-const Generic = [
-  'web_server_threads',
-  'default_idle_timeout',
-  'ping_interval',
-  'ping_timeout',
-];
-
 const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
-  const { t, translate } = props.moduleT;
+  const { t } = props.moduleT;
   return (
     <div>
       {/*<Message 
@@ -76,16 +69,6 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
             'The default client certificate is used if the certificate paths are empty') 
           }
           icon={ IconConstants.INFO }
-        />
-      </div>
-
-      <div className="ui header">
-        { translate('Advanced') }
-      </div>
-      <div className="ui segment">
-        <RemoteSettingForm
-          { ...props }
-          keys={ Generic }
         />
       </div>
     </div>
