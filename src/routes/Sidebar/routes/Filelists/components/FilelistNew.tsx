@@ -47,6 +47,7 @@ class FilelistNew extends Component<NewSessionLayoutProps> {
             'You must to be connected to at least one hub in order to download filelists from other users') 
           }
           isClearable={ false }
+          autoFocus={ true }
         />
          <ShareProfileSelector 
            onProfileChanged={ this.onProfileChanged }
