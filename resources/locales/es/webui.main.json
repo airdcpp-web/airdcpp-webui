@@ -570,6 +570,12 @@
       "editType": "Editar tipo",
       "removeType": "Eliminar tipo",
       "prompts": {
+        "createProfilePlaceholder": "Enter name",
+        "createProfileApprove": "Crear",
+        "createProfileContent": "Enter name for the profile",
+        "editProfilePlaceholder": "Enter name",
+        "editProfileApprove": "Renombrar",
+        "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Eliminar ruta",
         "removeShareExcludeReject": "No eliminar",
         "removeShareExcludeContent": "¿Estás seguro de querer eliminar la ruta excluida {{item}}?",
@@ -768,12 +774,15 @@
     },
     "system": {
       "logging": {
-        "sections": "Secciones",
+        "messages": "Mensajes",
+        "transfers": "Transferencias",
         "variableHelp": "Información variable para los campos Nombre de archivo y Formato"
       },
       "serverSettings": {
-        "defaultCertNote": "El certificado de cliente por defecto se usa si las rutas de certificado están vacías",
-        "advanced": "Avanzado"
+        "defaultCertNote": "El certificado de cliente por defecto se usa si las rutas de certificado están vacías"
+      },
+      "advancedServerSettings": {
+        "hookTimeouts": "Hook timeouts"
       },
       "users": {
         "username": "Nombre de usuario",

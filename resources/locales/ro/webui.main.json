@@ -570,6 +570,12 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
+        "createProfilePlaceholder": "Enter name",
+        "createProfileApprove": "Creaza",
+        "createProfileContent": "Enter name for the profile",
+        "editProfilePlaceholder": "Enter name",
+        "editProfileApprove": "Redenumeste",
+        "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Elimina calea",
         "removeShareExcludeReject": "Nu sterge",
         "removeShareExcludeContent": "Esti sigur/a ca doresti sa elimini calea exclusa {{item}}?",
@@ -768,12 +774,15 @@
     },
     "system": {
       "logging": {
-        "sections": "Sectiuni",
+        "messages": "Mesaje",
+        "transfers": "Transferuri",
         "variableHelp": "Informatii variabile pentru nume fisiere si campuri de formate"
       },
       "serverSettings": {
-        "defaultCertNote": "Certificatul de client initial este folosit daca caile sunt goale",
-        "advanced": "Avansat"
+        "defaultCertNote": "Certificatul de client initial este folosit daca caile sunt goale"
+      },
+      "advancedServerSettings": {
+        "hookTimeouts": "Hook timeouts"
       },
       "users": {
         "username": "Nume utilizator",

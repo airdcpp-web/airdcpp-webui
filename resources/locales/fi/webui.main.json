@@ -570,6 +570,12 @@
       "editType": "Muokkaa tyyppiä",
       "removeType": "Poista tyyppi",
       "prompts": {
+        "createProfilePlaceholder": "Syötä nimi",
+        "createProfileApprove": "Luo",
+        "createProfileContent": "Syötä profiilin nimi",
+        "editProfilePlaceholder": "Syötä nimi",
+        "editProfileApprove": "Nimeä uudestaan",
+        "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Poista polku",
         "removeShareExcludeReject": "Älä poista",
         "removeShareExcludeContent": "Haluatko varmasti poistaa piilotetun polun {{item}}?",
@@ -768,12 +774,15 @@
     },
     "system": {
       "logging": {
-        "sections": "Osiot",
+        "messages": "Viestit",
+        "transfers": "Siirrot",
         "variableHelp": "Muuttujien tiedot tiedostonimi- ja muotokentille"
       },
       "serverSettings": {
-        "defaultCertNote": "Mikäli sertifikaattien polut ovat tyhjiä, käytetään ohjelman oletussertifikaattia",
-        "advanced": "Lisäasetukset"
+        "defaultCertNote": "Mikäli sertifikaattien polut ovat tyhjiä, käytetään ohjelman oletussertifikaattia"
+      },
+      "advancedServerSettings": {
+        "hookTimeouts": "Hook timeouts"
       },
       "users": {
         "username": "Käyttäjänimi",

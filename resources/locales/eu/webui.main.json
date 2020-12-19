@@ -570,6 +570,12 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
+        "createProfilePlaceholder": "Enter name",
+        "createProfileApprove": "Sortu",
+        "createProfileContent": "Enter name for the profile",
+        "editProfilePlaceholder": "Enter name",
+        "editProfileApprove": "Izena aldatu",
+        "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Kendu bidea",
         "removeShareExcludeReject": "Ez ezabatu",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
@@ -768,12 +774,15 @@
     },
     "system": {
       "logging": {
-        "sections": "Atalak",
+        "messages": "Mezuak",
+        "transfers": "Transferentziak",
         "variableHelp": "Variable information for Filename and Format fields"
       },
       "serverSettings": {
-        "defaultCertNote": "The default client certificate is used if the certificate paths are empty",
-        "advanced": "Aurreratua"
+        "defaultCertNote": "The default client certificate is used if the certificate paths are empty"
+      },
+      "advancedServerSettings": {
+        "hookTimeouts": "Hook timeouts"
       },
       "users": {
         "username": "Erabiltzaile izena",

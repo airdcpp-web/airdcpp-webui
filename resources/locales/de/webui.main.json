@@ -570,6 +570,12 @@
       "editType": "Typ editieren",
       "removeType": "Typ entfernen",
       "prompts": {
+        "createProfilePlaceholder": "Enter name",
+        "createProfileApprove": "Erstellen",
+        "createProfileContent": "Enter name for the profile",
+        "editProfilePlaceholder": "Enter name",
+        "editProfileApprove": "Umbennen",
+        "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Pfad entfernen",
         "removeShareExcludeReject": "Nicht entfernen",
         "removeShareExcludeContent": "Sind sie sicher, dass Sie den ausgenommenen Pfad {{item}} entfernen möchten?",
@@ -768,12 +774,15 @@
     },
     "system": {
       "logging": {
-        "sections": "Sektionen",
+        "messages": "Nachrichten",
+        "transfers": "Übertragungen",
         "variableHelp": "Variable Information für Dateinamen und Formatfelder"
       },
       "serverSettings": {
-        "defaultCertNote": "Das Standard-Client-Zertifikat wird verwendet, falls die Zertifikatverzeichnisse leer sind.",
-        "advanced": "Fortgeschritten"
+        "defaultCertNote": "Das Standard-Client-Zertifikat wird verwendet, falls die Zertifikatverzeichnisse leer sind."
+      },
+      "advancedServerSettings": {
+        "hookTimeouts": "Hook timeouts"
       },
       "users": {
         "username": "Benutzername",
