@@ -37,14 +37,14 @@ class ShareProfileSelector extends Component<ShareProfileSelectorProps & SharePr
   }
 
   render() {
-    const { sessionT } = this.props;
+    const { sessionT, profiles } = this.props;
     return (
       <Dropdown 
         className="profile top right pointing" 
         caption={ sessionT.translate('Browse own share...') }
         triggerIcon=""
       >
-        { this.props.profiles.map(this.getDropdownItem) }
+        { profiles.map(this.getDropdownItem) }
       </Dropdown>
     );
   }

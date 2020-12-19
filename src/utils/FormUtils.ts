@@ -90,6 +90,7 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]): Type<any> => {
 type IdItemValue = { id: API.SettingValueBase };
 type FormSettingValue = API.SettingValue<UI.FormValueBase> | IdItemValue[];
 
+// Normalize API form value to a form value
 const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
   if (value) {
     // Convert { id, ... } objects used in the UI to plain IDs
@@ -116,13 +117,15 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
   return value as API.SettingValue;
 };
 
-const normalizeEnumValue = (rawItem: API.SettingEnumOption) => {
+// Normalize definition enum value to a tcomb form option
+const normalizeEnumValue = <ValueT>(rawItem: API.SettingEnumOption): UI.FormOption => {
   return {
     value: rawItem.id,
     text: rawItem.name
   };
 };
 
+// Normalize form values received from the API to a form value
 const normalizeSettingValueMap = (
   value: Partial<API.SettingValueMap<UI.FormValueBase>> | undefined, 
   valueDefinitions: UI.FormFieldDefinition[]

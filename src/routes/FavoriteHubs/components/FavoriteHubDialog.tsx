@@ -8,7 +8,7 @@ import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 
 import SocketService from 'services/SocketService';
 
-import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
+import ShareProfileDecorator, { profileToEnumValue, ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 import IconConstants from 'constants/IconConstants';
 
 import t from 'utils/tcomb-form';
@@ -181,9 +181,10 @@ const toFavoriteHub = (entry: RecursivePartial<Entry>): RecursivePartial<API.Fav
 const isAdcHub = (hubUrl?: string) => !!hubUrl && (hubUrl.indexOf('adc://') === 0 || hubUrl.indexOf('adcs://') === 0);
 
 // Get selection values for the profiles field
-const getFieldProfiles = (profiles: API.SettingEnumOption[], url?: string) => {
+const getFieldProfiles = (profiles: API.SettingEnumOption[], url?: string): UI.FormOption[] => {
   return profiles
     .filter(p => isAdcHub(url) || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
+    .map(profileToEnumValue)
     .map(normalizeEnumValue);
 };
 
@@ -223,7 +224,7 @@ class FavoriteHubDialog extends Component<Props> {
     return !this.props.hubEntry;
   }
 
-  nullOption: any;
+  nullOption: UI.FormOption<string>;
   definitions: UI.FormFieldDefinition[];
 
   form: Form<Entry>;
@@ -256,10 +257,14 @@ class FavoriteHubDialog extends Component<Props> {
 
   onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'share_profile') {
+      const hubUrl = formValue.generic ? formValue.generic.hub_url : undefined;
+
+      // Since the options are added dynamically based on the URL protocol, they must be 
+      // normalized to use the tcomb format
       Object.assign(fieldOptions, {
         nullOption: this.nullOption,
         factory: t.form.Select,
-        options: getFieldProfiles(this.props.profiles, formValue.generic ? formValue.generic.hub_url : undefined),
+        options: getFieldProfiles(this.props.profiles, hubUrl),
         transformer: intTransformer,
       });
     } else if (id === 'connection_mode_v4' || id === 'connection_mode_v6') {

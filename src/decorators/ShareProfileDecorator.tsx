@@ -17,6 +17,13 @@ interface ShareProfileDecoratorDataProps {
   profiles: API.ShareProfile[];
 }
 
+export const profileToEnumValue = (profile: API.ShareProfile) => {
+  return {
+    id: profile.id,
+    name: profile.str,
+  };
+};
+
 export type ShareProfileDecoratorChildProps = DataProviderDecoratorChildProps & ShareProfileDecoratorDataProps;
 
 const ShareProfileDecorator = function <PropsT extends object>(
@@ -26,14 +33,14 @@ const ShareProfileDecorator = function <PropsT extends object>(
   addSize: boolean = true
 ) {
   const convertProfile = (profile: API.ShareProfile, t: TFunction): API.ShareProfile => {
-    let name = profile.str;
+    let str = profile.str;
     if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
-      name += ` (${formatSize(profile.size, t)})`;
+      str += ` (${formatSize(profile.size, t)})`;
     }
 
     return {
       ...profile,
-      name,
+      str,
     };
   };
 

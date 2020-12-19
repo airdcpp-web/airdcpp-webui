@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { MentionsInput, Mention, OnChangeHandlerFunc } from 'react-mentions';
+import { MentionsInput, Mention, OnChangeHandlerFunc, DataFunc } from 'react-mentions';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
@@ -182,7 +182,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     this.setState({ text: '' });
   }
 
-  findUsers = (value: string, callback: (data: any) => void) => {
+  findUsers: DataFunc = (value, callback) => {
     const { session } = this.props;
     SocketService.post(UserConstants.SEARCH_NICKS_URL, { 
       pattern: value, 

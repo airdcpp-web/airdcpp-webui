@@ -16,7 +16,7 @@ export interface FormFieldDefinition<ValueType = FormValueBase> extends
   definitions?: FormFieldDefinition[];
 }
 
-export interface FormOption<OptionValueT = any> {
+export interface FormOption<OptionValueT = string | number> {
   value: OptionValueT;
   text: string;
 }

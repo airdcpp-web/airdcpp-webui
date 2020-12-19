@@ -7,7 +7,7 @@ import IconConstants from 'constants/IconConstants';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
-import ShareProfileDecorator, { ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
+import ShareProfileDecorator, { profileToEnumValue, ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
 
 import Message from 'components/semantic/Message';
@@ -88,9 +88,9 @@ class ShareDirectoryDialog extends Component<Props> {
     this.fieldDefinitions = translateForm(Fields, props.shareT);
 
     // Share profiles shouldn't be translated...
-    const shareProfile = this.fieldDefinitions.find(def => def.key === 'profiles')!;
-    Object.assign(shareProfile, {
-      options: props.profiles,
+    const shareProfileDefinitions = this.fieldDefinitions.find(def => def.key === 'profiles')!;
+    Object.assign(shareProfileDefinitions, {
+      options: props.profiles.map(profileToEnumValue),
       default_value: [ props.profiles.find(profile => profile.default)!.id ],
     });
   }
