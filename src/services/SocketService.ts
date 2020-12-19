@@ -1,11 +1,23 @@
 import { Socket } from 'airdcpp-apisocket';
 
 
+const getLogLevel = () => {
+  if (process.env.NODE_ENV !== 'production') {
+    return 'verbose';
+  }
+
+  if (!!window.localStorage.getItem('debug')) {
+    return 'verbose';
+  }
+
+  return 'info';
+};
+
 const options = {
   url: (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + getBasePath() + 'api/v1/',
   autoReconnect: false,
   reconnectInterval: 5,
-  logLevel: process.env.NODE_ENV === 'production' ? 'info' : 'verbose',
+  logLevel: getLogLevel(),
   ignoredListenerEvents: [
     'transfer_statistics',
     'hash_statistics',
