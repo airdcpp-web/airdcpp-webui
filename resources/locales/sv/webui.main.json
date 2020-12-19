@@ -967,7 +967,7 @@
     "downloadFailed": "Nedladdning misslyckades",
     "notifications": {
       "fileHasFinishedDownloading": "Filen är nedladdad",
-      "fileWasLoaded": "File was loaded",
+      "fileWasLoaded": "Filen laddades",
       "actions": {
         "viewFile": "Visa fil"
       }

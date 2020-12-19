@@ -484,7 +484,7 @@
       "searchForAlternates": "Suche nach Alternativen",
       "remove": "Entfernen",
       "removeSource": "Quelle entfernen",
-      "rescanForErrors": "Rescan for errors",
+      "rescanForErrors": "Erneut nach Fehlern suchen",
       "forceInShare": "Freigabe erzwingen",
       "prompts": {
         "removeBundleApprove": "Paket entfernen",
@@ -535,7 +535,7 @@
       "status": "Status",
       "secondsLeft": "Verbleibende Zeit",
       "speed": "Geschwindigkeit",
-      "flags": "Flags",
+      "flags": "Flaggen",
       "ip": "IP"
     },
     "actions": {
@@ -737,7 +737,7 @@
         "noFilesShared": "Keine Dateien freigegeben",
         "totalShareSize": "Gesamte Freigabegröße",
         "totalFiles": "Alle Dateien",
-        "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
+        "totalFilesValue": "{{totalCount}} ({{uniqueCount}} einzigartig)",
         "totalDirectories": "Gesamte Verzeichnisse",
         "averageFileAge": "Durchschnittliches Dateialter",
         "averageFilesPerDirectory": "Durchschnittliche Dateien pro Verzeichnis",
@@ -963,11 +963,11 @@
     "preparingView": "Bereite Ansicht vor",
     "opened": "Geöffnet",
     "downloaded": "Heruntergeladen",
-    "unsupportedFormat": "Unsupported format",
+    "unsupportedFormat": "Format nicht unterstützt",
     "downloadFailed": "Download fehlgeschlagen",
     "notifications": {
       "fileHasFinishedDownloading": "Datei Download wurde beendet",
-      "fileWasLoaded": "File was loaded",
+      "fileWasLoaded": "Datei wurde geladen",
       "actions": {
         "viewFile": "Datei ansehen"
       }

@@ -2,27 +2,36 @@ import * as React from 'react';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
-import Accordion from 'components/semantic/Accordion';
-
 import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 
-import LogSection from 'routes/Settings/routes/System/components/LogSection';
 import Message from 'components/semantic/Message';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import IconConstants from 'constants/IconConstants';
+import LogSectionGroup from './LogSectionGroup';
 
+
+// Generic options
 const Entry = [
   'log_directory',
 ];
 
-const sections = [
+// Sections
+const MessageSectionKeys = [
   'main',
   'pm',
-  'downloads',
-  'uploads',
   'syslog',
   'status',
+];
+
+const TransferSectionKeys = [
+  'downloads',
+  'uploads',
+  'list_transfers',
+];
+
+const SimpleSectionKeys = [
+  'list_transfers',
 ];
 
 const LoggingPage: React.FC<SettingSectionChildProps> = props => {
@@ -34,9 +43,6 @@ const LoggingPage: React.FC<SettingSectionChildProps> = props => {
         keys={ Entry }
       />
       <div className="sections">
-        <div className="ui header">
-          { translate('Sections') }
-        </div>
         <Message
           icon={ IconConstants.INFO }
           description={
@@ -45,15 +51,17 @@ const LoggingPage: React.FC<SettingSectionChildProps> = props => {
             </ExternalLink>
           }
         />
-        <Accordion className="styled" controlled={ true }>
-          { sections.map(section => (
-            <LogSection 
-              { ...props }
-              key={ section } 
-              section={ section }
-            />
-          )) }
-        </Accordion>
+        <LogSectionGroup
+          { ...props }
+          sectionKeys={ MessageSectionKeys }
+          title={ translate('Messages') }
+        />
+        <LogSectionGroup
+          { ...props }
+          sectionKeys={ TransferSectionKeys }
+          title={ translate('Transfers') }
+          simpleKeys={ SimpleSectionKeys }
+        />
       </div>
     </div>
   );

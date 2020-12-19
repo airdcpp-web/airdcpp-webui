@@ -8,6 +8,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 
 export interface LogSectionProps extends SettingSectionChildProps {
   section: string;
+  simple?: boolean;
 }
 
 class LogSection extends Component<LogSectionProps> {
@@ -53,24 +54,27 @@ class LogSection extends Component<LogSectionProps> {
       this.convertKey('format'),
     ];
 
+    const { simple, ...other } = this.props;
     return (
       <div className={ this.getChildClass('log-section') }>
         <div className={ this.getChildClass('title') }>
           <RemoteSettingForm
-            { ...this.props }
+            { ...other }
             keys={ Title }
             onFieldChanged={ this.onEnableStateChanged }
             onSourceValueUpdated={ this.onSettingsReceived }
           />
         </div>
 
-        <div className={ this.getChildClass('content') }>
-          <RemoteSettingForm
-            { ...this.props }
-            keys={ Content }
-            onFieldSetting={ this.onContentSetting }
-          />
-        </div>
+        { !simple && (
+          <div className={ this.getChildClass('content') }>
+            <RemoteSettingForm
+              { ...this.props }
+              keys={ Content }
+              onFieldSetting={ this.onContentSetting }
+            />
+          </div>
+        ) }
       </div>
     );
   }

@@ -967,7 +967,7 @@
     "downloadFailed": "Download mislukt",
     "notifications": {
       "fileHasFinishedDownloading": "Bestand is gedownload",
-      "fileWasLoaded": "File was loaded",
+      "fileWasLoaded": "Bestand was geladen",
       "actions": {
         "viewFile": "Bekijk bestand"
       }

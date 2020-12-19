@@ -12,6 +12,6 @@
   background-color: whitesmoke;
 }
 
-.settings-layout .system.logging .field-log_directory {
-  margin-bottom: 25px !important;
+.settings-layout .system.logging .sections {
+  margin-top: 25px !important;
 }
