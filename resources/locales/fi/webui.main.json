@@ -575,7 +575,7 @@
         "createProfileContent": "Syötä profiilin nimi",
         "editProfilePlaceholder": "Syötä nimi",
         "editProfileApprove": "Nimeä uudestaan",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "editProfileContent": "Syötä uusi nimi profiilille {{item.name}}",
         "removeShareExcludeApprove": "Poista polku",
         "removeShareExcludeReject": "Älä poista",
         "removeShareExcludeContent": "Haluatko varmasti poistaa piilotetun polun {{item}}?",
@@ -782,7 +782,7 @@
         "defaultCertNote": "Mikäli sertifikaattien polut ovat tyhjiä, käytetään ohjelman oletussertifikaattia"
       },
       "advancedServerSettings": {
-        "hookTimeouts": "Hook timeouts"
+        "hookTimeouts": "Hookkien aikakatkaisut"
       },
       "users": {
         "username": "Käyttäjänimi",

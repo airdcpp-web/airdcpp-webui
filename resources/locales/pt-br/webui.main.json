@@ -570,12 +570,12 @@
       "editType": "Editar tipo",
       "removeType": "Remover tipo",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
+        "createProfilePlaceholder": "Digite nome",
         "createProfileApprove": "Criar",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "createProfileContent": "Digite nome para o perfil",
+        "editProfilePlaceholder": "Digite nome",
         "editProfileApprove": "Renomear",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "editProfileContent": "Digite novo nome para o perfil {{item.name}}",
         "removeShareExcludeApprove": "Remover caminho",
         "removeShareExcludeReject": "Não remover",
         "removeShareExcludeContent": "Tem certeza de que deseja remover o caminho excluído {{item}}?",
@@ -782,7 +782,7 @@
         "defaultCertNote": "O certificado de cliente padrão é usado se os caminhos do certificado estiverem vazios"
       },
       "advancedServerSettings": {
-        "hookTimeouts": "Hook timeouts"
+        "hookTimeouts": "Gancho dos esgotamentos"
       },
       "users": {
         "username": "Nome de usuário",

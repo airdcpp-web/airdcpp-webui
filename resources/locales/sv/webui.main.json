@@ -570,12 +570,12 @@
       "editType": "Redigera typ",
       "removeType": "Ta bort typ",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
+        "createProfilePlaceholder": "Ange namn",
         "createProfileApprove": "Skapa",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "createProfileContent": "Ange profilens namn",
+        "editProfilePlaceholder": "Ange namn",
         "editProfileApprove": "Döp om",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "editProfileContent": "Ange ett nytt namn för profilen {{item.name}}",
         "removeShareExcludeApprove": "Ta bort sökväg",
         "removeShareExcludeReject": "Ta inte bort",
         "removeShareExcludeContent": "Är du säker på att du vill ta bort den uteslutna sökvägen {{item}}?",
@@ -782,7 +782,7 @@
         "defaultCertNote": "Om certifikatsökvägarna lämnat tomma kommer klientens standardcertifikat att användas"
       },
       "advancedServerSettings": {
-        "hookTimeouts": "Hook timeouts"
+        "hookTimeouts": "Hook-fördröjning"
       },
       "users": {
         "username": "Användarnamn",
