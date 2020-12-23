@@ -220,12 +220,35 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     return mergedValue;
   }
 
-  onFieldChanged = (value: Partial<ValueType>, valueKeyPath: string[], kind: string) => {
-    const rootKey = valueKeyPath[0];
+  onFieldValueChanged = (value: Partial<ValueType>, valueKeyPath: string[]) => {
+    if (!this.props.onFieldChanged) {
+      return;
+    }
+    
     const fieldKey = valueKeyPath[valueKeyPath.length - 1];
+
+    // Check if the current value differs from the original one
+    const equal = formValuesEqual(
+      findFieldValueByPath(this.sourceValue, valueKeyPath), 
+      findFieldValueByPath(value, valueKeyPath)
+    );
+
+    const promise = this.props.onFieldChanged(fieldKey, value, !equal);
+    if (!!promise) {
+      promise
+        .then(
+          updatedFields => this.mergeFields(value, updatedFields), 
+          error => NotificationActions.apiError('Failed to update values', error)
+        );
+    }
+  }
+
+  onChange = (value: Partial<ValueType>, valueKeyPath: string[], kind: string) => {
     if (kind) {
       // List action
       if (kind === 'add') {
+        const rootKey = valueKeyPath[0];
+
         // Set default fields for the newly added value
         const fieldDef = this.props.fieldDefinitions.find(def => def.key === rootKey);
         if (!!fieldDef && !!fieldDef.definitions) {
@@ -235,6 +258,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
             list[listItemPos] = normalizeSettingValueMap(list[listItemPos], fieldDef.definitions);
           }
         }
+      } else if (kind === 'remove') {
+        this.onFieldValueChanged(value, valueKeyPath);
       }
     } else {
       // Make sure that we have the converted value for the custom 
@@ -242,22 +267,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       const result = this.form.getComponent(valueKeyPath).validate();
       setFieldValueByPath(value, (result as any).value, valueKeyPath);
 
-      const equal = formValuesEqual(
-        findFieldValueByPath(this.sourceValue, valueKeyPath), 
-        findFieldValueByPath(value, valueKeyPath)
-      );
-
-      if (this.props.onFieldChanged) {
-        const promise = this.props.onFieldChanged(fieldKey, value, !equal);
-
-        if (!!promise) {
-          promise
-            .then(
-              updatedFields => this.mergeFields(value, updatedFields), 
-              error => NotificationActions.apiError('Failed to update values', error)
-            );
-        }
-      }
+      this.onFieldValueChanged(value, valueKeyPath);
     }
 
     this.setState({ 
@@ -328,7 +338,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
                 type={ type }
                 options={ options }
                 value={ formValue }
-                onChange={ this.onFieldChanged }
+                onChange={ this.onChange }
                 context={ context }
               />
             </div>
