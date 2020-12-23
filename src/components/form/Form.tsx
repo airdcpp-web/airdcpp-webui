@@ -224,7 +224,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     if (!this.props.onFieldChanged) {
       return;
     }
-    
+
     const fieldKey = valueKeyPath[valueKeyPath.length - 1];
 
     // Check if the current value differs from the original one
@@ -258,7 +258,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
             list[listItemPos] = normalizeSettingValueMap(list[listItemPos], fieldDef.definitions);
           }
         }
-      } else if (kind === 'remove') {
+      } else {
+        // Remove/sort
         this.onFieldValueChanged(value, valueKeyPath);
       }
     } else {

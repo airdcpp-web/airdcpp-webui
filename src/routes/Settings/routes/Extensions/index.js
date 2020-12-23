@@ -21,6 +21,10 @@ module.exports = {
       title: 'Extension options', 
       url: 'extension-options',
       component: require('./components/ExtensionsOptionsPage').default,
+    }, { 
+      title: 'Extension engines', 
+      url: 'extension-engines',
+      component: require('./components/ExtensionEnginesPage').default,
     },
   ],
 };
