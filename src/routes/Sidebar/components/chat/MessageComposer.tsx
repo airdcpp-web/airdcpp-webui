@@ -28,8 +28,6 @@ import Icon from 'components/semantic/Icon';
 import Button from 'components/semantic/Button';
 import IconConstants from 'constants/IconConstants';
 
-const ENTER_KEY_CODE = 13;
-
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
@@ -159,7 +157,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   }
 
   onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.keyCode === ENTER_KEY_CODE && !event.shiftKey) {
+    if (event.code === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.sendText();
     }

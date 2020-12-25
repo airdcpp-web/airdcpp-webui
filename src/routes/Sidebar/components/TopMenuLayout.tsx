@@ -72,7 +72,11 @@ const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({ itemHeaderIcon, i
 const TopMenuLayout = <SessionT extends UI.SessionItemBase>(
   { children, onKeyDown, ...props }: SessionMainLayoutProps<SessionT>
 ) => (
-  <div className="session-container vertical" onKeyDown={ onKeyDown }>
+  <div 
+    className="session-container vertical" 
+    onKeyDown={ onKeyDown } 
+    tabIndex={ 0 }
+  >
     <div className="ui main menu menu-bar">
       <div className="content-left">
         <SessionDropdown { ...props }/>

@@ -22,6 +22,7 @@ const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({
     <Grid 
       className="session-container horizontal" 
       onKeyDown={ onKeyDown }
+      tabIndex={ 0 }
     >
       <div className="four wide column menu-column">
         { newButton }

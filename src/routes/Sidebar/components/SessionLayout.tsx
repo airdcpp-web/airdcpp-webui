@@ -300,9 +300,9 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   }
 
   onKeyDown = (event: React.KeyboardEvent) => {
-    const { keyCode, altKey } = event;
+    const { code, altKey } = event;
 
-    if (altKey && (keyCode === 38 || keyCode === 40)) {
+    if (altKey && (code === 'ArrowUp' || code === 'ArrowDown')) {
       // Arrow up/down
       event.preventDefault();
 
@@ -317,16 +317,16 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
         return;
       }
 
-      const newSession = items[keyCode === 38 ? currentIndex - 1 : currentIndex + 1];
+      const newSession = items[code === 'ArrowUp' ? currentIndex - 1 : currentIndex + 1];
       if (newSession) {
         this.pushSession(newSession.id);
       }
-    } else if (altKey && keyCode === 45) {
+    } else if (altKey && code === 'Insert') {
       // Insert
       event.preventDefault();
 
       History.replace(this.getNewUrl());
-    } else if (altKey && keyCode === 46) {
+    } else if (altKey && code === 'Delete') {
       // Delete
       event.preventDefault();
 

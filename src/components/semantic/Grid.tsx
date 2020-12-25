@@ -66,7 +66,7 @@ export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   stackable?: boolean;
 }
 
-export const Grid: React.FC<GridProps> = ({ className, children, columns, stackable }) => (
+export const Grid: React.FC<GridProps> = ({ className, children, columns, stackable, ...other }) => (
   <div 
     className={ classNames(
       'ui grid', 
@@ -75,6 +75,7 @@ export const Grid: React.FC<GridProps> = ({ className, children, columns, stacka
       { stackable: stackable },
       className
     ) }
+    { ...other }
   >
     { children }
   </div>

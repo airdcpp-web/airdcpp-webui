@@ -19,8 +19,6 @@ import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
 
-const ENTER_KEY_CODE = 13;
-
 interface LoginProps extends RouteComponentProps<{}, any, LoginLocationState> {
 
 }
@@ -54,17 +52,14 @@ const Login: React.FC<LoginProps> = props => {
     setLoading(true);
   };
 
-
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.keyCode === ENTER_KEY_CODE) {
-      onSubmit(event);
-    }
-  };
-
   return (
     <div className="ui middle aligned center aligned grid login-grid">
       <div className="column">
-        <form className="ui large form" onKeyDown={ onKeyDown } autoComplete="on">
+        <form 
+          className="ui large form"
+          autoComplete="on"
+          onSubmit={ onSubmit }
+        >
           <div className="ui stacked segment">
             <div className="field">
               <div className="ui left icon input">
