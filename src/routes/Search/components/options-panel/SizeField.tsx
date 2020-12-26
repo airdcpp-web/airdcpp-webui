@@ -84,7 +84,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
         { ByteUnits.map((unit, index) => (
           <option 
             key={ unit }
-            defaultValue={ unit }
+            value={ unit }
           >
             { formatUnit(unit, moduleT.plainT) }
           </option>

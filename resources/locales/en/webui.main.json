@@ -104,7 +104,8 @@
       "fileTypeName": "File type",
       "hubUrlsName": "Hubs",
       "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "minSizeName": "Minimum size",
+      "sizeLimitsName": "Size limits"
     },
     "resetAll": "Reset all",
     "user": "User",
