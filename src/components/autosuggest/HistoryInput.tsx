@@ -24,7 +24,8 @@ const HistoryInput: React.FC<HistoryInputProps & HistoryInputDataProps> = (
   { submitHandler, historyId, history, refetchData, ...other }
 ) => {
   const { t } = useTranslation();
-  const handleSubmit = async (text: string) => {
+  const handleSubmit = async (value: string) => {
+    const text = value.trim();
     await runBackgroundSocketAction(
       () => addHistory(historyId, text),
       t
