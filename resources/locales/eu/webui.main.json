@@ -104,7 +104,8 @@
       "fileTypeName": "Fitxategi mota",
       "hubUrlsName": "Hub-ak",
       "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "minSizeName": "Minimum size",
+      "sizeLimitsName": "Size limits"
     },
     "resetAll": "Reset all",
     "user": "Erabiltzailea",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
+      },
+      "downloadOptions": {
+        "segments": "Segmentuak",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",

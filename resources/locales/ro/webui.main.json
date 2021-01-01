@@ -104,7 +104,8 @@
       "fileTypeName": "Tipul Fisierului",
       "hubUrlsName": "Huburi",
       "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "minSizeName": "Minimum size",
+      "sizeLimitsName": "Size limits"
     },
     "resetAll": "Reset all",
     "user": "Utilizator",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
+      },
+      "downloadOptions": {
+        "segments": "Segmente",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Setarile aratate pe aceasta pagina sunt specific-cautarii",

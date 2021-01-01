@@ -104,7 +104,8 @@
       "fileTypeName": "type de fichier",
       "hubUrlsName": "Hubs",
       "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "minSizeName": "Minimum size",
+      "sizeLimitsName": "Size limits"
     },
     "resetAll": "Reset all",
     "user": "Utilisateur",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
+      },
+      "downloadOptions": {
+        "segments": "Segments",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",

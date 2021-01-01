@@ -104,7 +104,8 @@
       "fileTypeName": "Tiedostotyyppi",
       "hubUrlsName": "Hubit",
       "maxSizeName": "Maksimikoko",
-      "minSizeName": "Minimikoko"
+      "minSizeName": "Minimikoko",
+      "sizeLimitsName": "Kokorajat"
     },
     "resetAll": "Nollaa kaikki",
     "user": "Käyttäjä",
@@ -599,7 +600,7 @@
       "view": "Näytä",
       "about": "Tietoja",
       "extensions": "Lisäosat",
-      "extensionEngines": "Extension engines",
+      "extensionEngines": "Lisäosien moottorit",
       "system": "Järjestelmä",
       "autoDetection": "Automaattinen tunnistaminen",
       "iPv4ConnectivityManual": "IPv4-yhteys (manuaalinen)",
@@ -621,7 +622,7 @@
       "users": "Käyttäjät",
       "logging": "Lokit",
       "webServer": "Web-palvelin",
-      "advancedServerSettings": "Advanced server settings",
+      "advancedServerSettings": "Palvelimen lisäasetukset",
       "refreshOptions": "Päivitysasetukset",
       "shareProfiles": "Jakoprofiilit",
       "sharingOptions": "Jakamisasetukset",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Lisää hakutyyppi",
         "editSearchType": "Muokkaa hakutyyppiä"
+      },
+      "downloadOptions": {
+        "segments": "Osat",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Tällä sivulla listatut asetukset ovat selainkohtaisia",

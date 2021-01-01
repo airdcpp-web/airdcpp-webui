@@ -104,7 +104,8 @@
       "fileTypeName": "Bestands type",
       "hubUrlsName": "Hubs",
       "maxSizeName": "Maximum grootte",
-      "minSizeName": "Minimale grootte"
+      "minSizeName": "Minimale grootte",
+      "sizeLimitsName": "Size limits"
     },
     "resetAll": "Reset alles",
     "user": "Gebruiker",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Voeg zoek type toe",
         "editSearchType": "Wijzig zoek type"
+      },
+      "downloadOptions": {
+        "segments": "Segmenten",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Instellingen uit deze pagina zijn browser-specifiek",

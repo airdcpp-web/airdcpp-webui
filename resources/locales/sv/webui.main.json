@@ -104,7 +104,8 @@
       "fileTypeName": "Filtyp",
       "hubUrlsName": "Hubbar",
       "maxSizeName": "Maximal storlek",
-      "minSizeName": "Minsta storlek"
+      "minSizeName": "Minsta storlek",
+      "sizeLimitsName": "Storleksbegränsning"
     },
     "resetAll": "Återställ alla",
     "user": "Användare",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Lägg till söktyp",
         "editSearchType": "Redigera söktyp"
+      },
+      "downloadOptions": {
+        "segments": "Segment",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Inställningar som är listade på den här sidan är webbläsarspecifika",

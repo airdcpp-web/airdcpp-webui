@@ -104,7 +104,8 @@
       "fileTypeName": "Filtype",
       "hubUrlsName": "Hubber",
       "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size"
+      "minSizeName": "Minimum size",
+      "sizeLimitsName": "Size limits"
     },
     "resetAll": "Reset all",
     "user": "Bruker",
@@ -887,6 +888,11 @@
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
+      },
+      "downloadOptions": {
+        "segments": "Segmenter",
+        "compression": "Compression",
+        "buffers": "Buffers"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",
