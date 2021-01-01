@@ -13,11 +13,11 @@ export const Positive = t.refinement(t.Number, (n: number) => {
 
 export const Range = function (min: number | undefined, max: number | undefined) {
   const ret = t.refinement(t.Number, (n: number) => {
-    if (min && n < min) {
+    if (min !== undefined && n < min) {
       return false;
     }
 
-    if (max && n > max) {
+    if (max !== undefined && n > max) {
       return false;
     }
 
@@ -25,14 +25,14 @@ export const Range = function (min: number | undefined, max: number | undefined)
   });
 
   ret.getValidationErrorMessage = (value: number, path: string, context: FormContext) => {
-    if (!!min && value < min) {
+    if (min !== undefined && value < min) {
       return context.formT.t('minimumValueError', {
         defaultValue: 'Minimum allowed value is {{value}}',
         value: min
       });
     }
 
-    if (!!max && value > max) {
+    if (max !== undefined && value > max) {
       return context.formT.t('maximumValueError', {
         defaultValue: 'Maximum allowed value is {{value}}',
         value: max
