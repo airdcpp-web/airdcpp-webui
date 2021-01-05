@@ -891,8 +891,8 @@
       },
       "downloadOptions": {
         "segments": "Segment",
-        "compression": "Compression",
-        "buffers": "Buffers"
+        "compression": "Kompression",
+        "buffers": "Buffert"
       }
     },
     "browserSpecificNote": "Inställningar som är listade på den här sidan är webbläsarspecifika",

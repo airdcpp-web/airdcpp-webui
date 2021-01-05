@@ -891,7 +891,7 @@
       },
       "downloadOptions": {
         "segments": "Segments",
-        "compression": "Compression",
+        "compression": "Compressão",
         "buffers": "Buffers"
       }
     },

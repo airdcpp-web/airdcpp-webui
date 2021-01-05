@@ -24,21 +24,21 @@
       "invalidFeed": "Invalid/unsupported feed: {{error}}"
     },
     "transfers": {
-      "widgetName": "Transfers",
+      "widgetName": "Transferències",
       "trafficBps": "Traffic (bps)",
       "downloads": "Downloads",
       "uploads": "Uploads",
-      "downloaded": "Downloaded",
+      "downloaded": "Baixat",
       "uploaded": "Uploaded",
       "downloadLimit": "Download limit",
-      "uploadLimit": "Upload limit"
+      "uploadLimit": "Límit de pujada"
     },
     "notepad": {
       "widgetName": "Notes"
     },
     "extensions": {
-      "widgetName": "Extension releases",
-      "updatedAgo": "Updated {{date}}"
+      "widgetName": "Llançaments d'extensions",
+      "updatedAgo": "Actualitzat {{date}}"
     },
     "actions": {
       "editWidget": "Edit widget",
@@ -50,7 +50,7 @@
       }
     },
     "form": {
-      "nameName": "Name"
+      "nameName": "Nom"
     },
     "widgetPositionHint": "Widgets and their positions are browser-specific",
     "accessDenied": "You aren't allowed to access this widget",
@@ -75,7 +75,7 @@
   },
   "table": {
     "filter": {
-      "filter": "Filter",
+      "filter": "Filtre",
       "matchType": "Match type",
       "partial": "Partial",
       "regex": "Regex",
@@ -87,11 +87,11 @@
   },
   "search": {
     "table": {
-      "name": "Name",
+      "name": "Nom",
       "size": "Size",
       "relevance": "Relevance",
       "type": "Type",
-      "connection": "Connection",
+      "connection": "Connexió",
       "users": "Users",
       "time": "Last modified",
       "slots": "Slots"
@@ -101,16 +101,16 @@
       "browseContent": "Browse content"
     },
     "form": {
-      "fileTypeName": "File type",
-      "hubUrlsName": "Hubs",
-      "maxSizeName": "Maximum size",
+      "fileTypeName": "Tipus de fitxer",
+      "hubUrlsName": "Centres",
+      "maxSizeName": "Mida màxima",
       "minSizeName": "Minimum size",
-      "sizeLimitsName": "Size limits"
+      "sizeLimitsName": "Límits de la mida"
     },
     "resetAll": "Reset all",
     "user": "User",
-    "hubs": "Hubs",
-    "connection": "Connection",
+    "hubs": "Centres",
+    "connection": "Connexió",
     "slots": "Slots",
     "ip": "IP",
     "path": "Path",
@@ -152,7 +152,7 @@
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
     "addShareDirectory": "Add share directory",
     "editShareDirectory": "Edit share directory",
-    "unknown": "Unknown",
+    "unknown": "Desconegut",
     "form": {
       "pathName": "Path",
       "virtualNameName": "Virtual name",
@@ -166,8 +166,8 @@
     "actions": {
       "addNew": "Add new",
       "setPassword": "Set password",
-      "edit": "Edit",
-      "remove": "Remove",
+      "edit": "Edita",
+      "remove": "Elimina",
       "changePassword": "Change password",
       "removePassword": "Remove password",
       "prompts": {
@@ -187,12 +187,12 @@
     },
     "table": {
       "connectState": "State",
-      "name": "Name",
+      "name": "Nom",
       "autoConnect": "Auto connect",
-      "nick": "Nick",
-      "hasPassword": "Password",
-      "hubUrl": "Address",
-      "shareProfile": "Share profile"
+      "nick": "Sobrenom",
+      "hasPassword": "Contrasenya",
+      "hubUrl": "Adreça",
+      "shareProfile": "Comparteix un perfil"
     },
     "notSet": "Not set",
     "set": "Set",
@@ -201,26 +201,26 @@
     "editFavoriteHub": "Edit favorite hub",
     "form": {
       "genericName": "Hub properties",
-      "nameName": "Name",
+      "nameName": "Nom",
       "hubUrlName": "Hub URL",
       "hubDescriptionName": "Hub description",
-      "shareProfileName": "Share profile",
+      "shareProfileName": "Comparteix un perfil",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
       "autoConnectName": "Auto connect",
       "userName": "User setting overrides",
-      "nickName": "Nick",
-      "userDescriptionName": "User description",
+      "nickName": "Sobrenom",
+      "userDescriptionName": "Descripció d'usuari",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
-      "connectionModeV4Option-1": "Disabled",
+      "connectionModeV4Option-1": "Desactivat",
       "connectionModeV4Option0": "Mode Actiu",
-      "connectionModeV4Option2": "Passive mode",
+      "connectionModeV4Option2": "Mode Passiu",
       "connectionIpV4Name": "IP address",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
-      "connectionModeV6Option-1": "Disabled",
+      "connectionModeV6Option-1": "Desactivat",
       "connectionModeV6Option0": "Mode Actiu",
-      "connectionModeV6Option2": "Passive mode",
+      "connectionModeV6Option2": "Mode Passiu",
       "connectionIpV6Name": "IP address",
       "miscName": "Miscellaneous overrides",
       "useMainChatNotifyName": "Use chat notification",
@@ -243,7 +243,7 @@
     "updatingView": "Updating view",
     "downloadFailed": "Download failed",
     "table": {
-      "name": "Name",
+      "name": "Nom",
       "size": "Size",
       "time": "Last modified",
       "type": "Type"
@@ -251,15 +251,15 @@
     "actions": {
       "reload": "Reload",
       "refreshInShare": "Refresh in share",
-      "close": "Close",
+      "close": "Tanca",
       "details": "Details"
     }
   },
   "common": {    
     "actions": {
-      "copy": "Copy",
-      "download": "Download",
-      "downloadTo": "Download to...",
+      "copy": "Còpia",
+      "download": "Baixada",
+      "downloadTo": "Descarrega a…",
       "findNfo": "Find NFO",
       "search": "Search",
       "sendMessage": "Send message",
@@ -285,7 +285,7 @@
         "restartWebSystemReject": "Don't restart",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
         "shutdownSystemApprove": "Continue and shut down",
-        "shutdownSystemReject": "Cancel",
+        "shutdownSystemReject": "Cancel·la",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
     },
@@ -302,12 +302,12 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
-    "filename": "Filename",
+    "filename": "Nom de fitxer",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
+    "today": "Avui",
+    "yesterday": "Ahir",
+    "tomorrow": "Demà",
     "lastWeek": "[Last] {{weekDay}}",
     "awayModeWasEnabled": "Away mode was enabled",
     "awayModeWasDisabled": "Away mode was disabled",
@@ -317,14 +317,14 @@
     "noNfoResultsWereReceived": "No NFO results were received",
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
-    "failedToLoadContent": "Failed to load content",
+    "failedToLoadContent": "No s'ha pogut carregar el contingut",
     "loadingItems": "Loading items",
     "root": "Root",
-    "name": "Name",
+    "name": "Nom",
     "size": "Size",
     "path": "Path",
     "createDirectory": "Create directory",
-    "create": "Create",
+    "create": "Crea",
     "directoryName": "Directory name",
     "computer": "Computer",
     "history": "Previous",
@@ -332,8 +332,8 @@
     "favorites": "Favorites",
     "dupes": "Dupes",
     "browse": "Browse",
-    "download": "Download",
-    "close": "Close",
+    "download": "Baixada",
+    "close": "Tanca",
     "noPathsToDisplay": "No paths to display",
     "spaceFree": "{{freeSpace}} free",
     "select": "Select",
@@ -345,10 +345,10 @@
     "waitingForServerResponse": "Waiting for server response",
     "loadingMessages": "Loading messages",
     "loadingSession": "Loading session",
-    "yes": "Yes",
+    "yes": "Sí",
     "no": "No",
-    "cancel": "Cancel",
-    "loading": "Loading",
+    "cancel": "Cancel·la",
+    "loading": "S'està carregant",
     "loadingData": "Loading data...",
     "noOnlineHubs": "No online hubs",
     "installAsLocalApplication": "Install as local application",
@@ -358,8 +358,8 @@
     "statisticsNotAvailable": "Statistics not available",
     "save": "Save",
     "enterNick": "Enter nick...",
-    "disabled": "Disabled",
-    "enterLimitUnit": "Enter limit ({{unit}}/s)",
+    "disabled": "Desactivat",
+    "enterLimitUnit": "Escriviu el límit ({{unit}}/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
     "tlsOk": "Authenticity of the certificate is validated",
@@ -391,7 +391,7 @@
     "tth": "TTH",
     "na": "N/A",
     "noActionsAvailable": "No actions available",
-    "continue": "Continue",
+    "continue": "Continua",
     "form": {
       "browse": "Browse",
       "noOptions": "No options",
@@ -399,32 +399,32 @@
       "minimumValueError": "Minimum allowed value is {{value}}",
       "maximumValueError": "Maximum allowed value is {{value}}",
       "any": "Qualsevol",
-      "directory": "Directory",
-      "file": "File",
+      "directory": "Directori",
+      "file": "Fitxer",
       "add": "Afegeix",
-      "down": "Down",
-      "remove": "Remove",
-      "up": "Up",
+      "down": "Baixa",
+      "remove": "Elimina",
+      "up": "Baixa",
       "offlineMessage": "No connected hubs",
-      "loading": "Loading"
+      "loading": "S'està carregant"
     }
   },
   "hubs": {
     "table": {
-      "nick": "Nick",
+      "nick": "Sobrenom",
       "shareSize": "Share size",
-      "description": "Description",
+      "description": "Descripció",
       "tag": "Tag",
-      "uploadSpeed": "Upload speed",
-      "downloadSpeed": "Download speed",
+      "uploadSpeed": "Velocitat de pujada",
+      "downloadSpeed": "Velocitat de baixada",
       "ip4": "IP (v4)",
       "ip6": "IP (v6)",
-      "fileCount": "Files"
+      "fileCount": "Fitxers"
     },
     "actions": {
       "reconnect": "Reconnect",
       "clearChat": "Clear chat",
-      "close": "Close",
+      "close": "Tanca",
       "addToFavorites": "Afegeix als preferits",
       "useChatNotification": "Use chat notification",
       "showJoinsParts": "Show joins/parts",
@@ -439,12 +439,12 @@
     },
     "notificationSettings": "Notification settings",
     "enterHubAddress": "Enter hub address...",
-    "connect": "Connect",
+    "connect": "Connecta",
     "notConnectedToTheHub": "Not connected to the hub",
     "connecting": "Connecting",
     "loadingUserlist": "Loading userlist",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
-    "new": "Connect",
+    "new": "Connecta",
     "newDesc": "Connect to a new hub",
     "userList": "User list",
     "sharePerUser": "{{total}} ({{average}}/user)",
@@ -453,18 +453,18 @@
     "redirectRequested": "Redirect requested",
     "acceptRedirect": "Accept redirect to {{url}}",
     "passwordRequired": "Password required",
-    "password": "Password",
+    "password": "Contrasenya",
     "submit": "Submit",
     "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
   },
   "queue": {
     "table": {
-      "name": "Name",
+      "name": "Nom",
       "size": "Size",
-      "status": "Status",
+      "status": "Estat",
       "sources": "Sources",
-      "secondsLeft": "Time left",
-      "speed": "Speed",
+      "secondsLeft": "Temps restant",
+      "speed": "Velocitat",
       "priority": "Priority",
       "type": "Type/content",
       "timeAdded": "Afegit",
@@ -483,9 +483,9 @@
       "manageSources": "Manage sources...",
       "searchForeground": "Search (foreground)",
       "searchForAlternates": "Search for alternates",
-      "remove": "Remove",
+      "remove": "Elimina",
       "removeSource": "Remove source",
-      "rescanForErrors": "Rescan for errors",
+      "rescanForErrors": "Torna a explorar i cerca errades",
       "forceInShare": "Force in share",
       "prompts": {
         "removeBundleApprove": "Remove bundle",
@@ -503,18 +503,18 @@
         "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
-    "paused": "Paused",
-    "lowest": "Lowest",
-    "low": "Low",
+    "paused": "En pausa",
+    "lowest": "Més baixa",
+    "low": "Baixa",
     "normal": "Normal",
-    "high": "High",
-    "highest": "Highest",
+    "high": "Alta",
+    "highest": "Més alta",
     "auto": "Automàtic",
     "sources": "Sources",
     "user": "User",
-    "hubs": "Hubs",
+    "hubs": "Centres",
     "lastKnownSpeed": "Last known speed",
-    "files": "Files",
+    "files": "Fitxers",
     "size": "Size",
     "notifications": {
       "bundleWasAddedInQueue": "Bundle was added in queue",
@@ -531,11 +531,11 @@
   "transfers": {
     "table": {
       "user": "User",
-      "name": "Name",
+      "name": "Nom",
       "size": "Segment",
-      "status": "Status",
-      "secondsLeft": "Time left",
-      "speed": "Speed",
+      "status": "Estat",
+      "secondsLeft": "Temps restant",
+      "speed": "Velocitat",
       "flags": "Flags",
       "ip": "IP"
     },
@@ -571,12 +571,12 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
-        "createProfileApprove": "Create",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
-        "editProfileApprove": "Rename",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "createProfilePlaceholder": "Escriviu el nom",
+        "createProfileApprove": "Crea",
+        "createProfileContent": "Escriviu el nom del perfil",
+        "editProfilePlaceholder": "Escriviu el nom",
+        "editProfileApprove": "Canvia el nom",
+        "editProfileContent": "Escriviu el nou nom del perfil {{item.name}}",
         "removeShareExcludeApprove": "Remove path",
         "removeShareExcludeReject": "Don't remove",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
@@ -597,10 +597,10 @@
       "speedAndLimits": "Speed and limits",
       "downloads": "Downloads",
       "sharing": "Sharing",
-      "view": "View",
+      "view": "Vista",
       "about": "About",
       "extensions": "Extensions",
-      "extensionEngines": "Extension engines",
+      "extensionEngines": "Motor d'extensions",
       "system": "System",
       "autoDetection": "Auto detection",
       "iPv4ConnectivityManual": "IPv4 connectivity (manual)",
@@ -609,7 +609,7 @@
       "proxies": "Proxies",
       "encryption": "Encryption",
       "user": "User",
-      "awayMode": "Away mode",
+      "awayMode": "Mode absent",
       "ignoredUsers": "Ignored users",
       "miscellaneous": "Miscellaneous",
       "manageInstalled": "Manage installed",
@@ -622,7 +622,7 @@
       "users": "Users",
       "logging": "Logging",
       "webServer": "Web server",
-      "advancedServerSettings": "Advanced server settings",
+      "advancedServerSettings": "Parámetres avançats del servidor",
       "refreshOptions": "Refresh options",
       "shareProfiles": "Share profiles",
       "sharingOptions": "Sharing options",
@@ -630,8 +630,8 @@
       "excludedPaths": "Excluded paths",
       "connectionSpeed": "Connection speed",
       "bandwidthLimiting": "Bandwidth limiting",
-      "downloadLimits": "Download limits",
-      "uploadLimits": "Upload limits",
+      "downloadLimits": "Límits de baixada",
+      "uploadLimits": "Límits de pujada",
       "perUserLimits": "Per-user limits",
       "locations": "Locations",
       "skippingOptions": "Skipping options",
@@ -699,16 +699,16 @@
     "extensions": {
       "packages": {
         "byAuthor": "by {{author}}",
-        "latestVersion": "Latest version",
+        "latestVersion": "Darrera versió",
         "installedVersion": "Installed version",
         "datePublished": "{{version}} (published {{date}})",
         "readMore": "Read more",
         "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
-        "manage": "Manage..."
+        "manage": "Gestiona..."
       },
       "manage": {
         "byAuthor": "by {{author}}",
-        "latestVersion": "Latest version",
+        "latestVersion": "Darrera versió",
         "installedVersion": "Installed version",
         "nonListedExtension": "Non-listed extension",
         "readMore": "Read more",
@@ -716,7 +716,7 @@
         "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}",
         "unmanagedExtension": "Unmanaged extension",
-        "manage": "Manage..."
+        "manage": "Gestiona..."
       }
     },
     "about": {
@@ -754,7 +754,7 @@
         "totalSearches": "Total searches",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
         "tthSearches": "TTH searches",
-        "textSearches": "Text searches",
+        "textSearches": "Cerques de text",
         "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
         "filteredTextSearches": "Filtered text searches",
         "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
@@ -777,8 +777,8 @@
     },
     "system": {
       "logging": {
-        "messages": "Messages",
-        "transfers": "Transfers",
+        "messages": "Missatges",
+        "transfers": "Transferències",
         "variableHelp": "Variable information for Filename and Format fields"
       },
       "serverSettings": {
@@ -795,22 +795,22 @@
         "administrator": "Administrator",
         "form": {
           "usernameName": "User name",
-          "passwordName": "Password",
+          "passwordName": "Contrasenya",
           "permissionsName": "Permissions"
         },
         "permissionSelector": {
           "administrator": "Administrator",
           "search": "Search",
-          "download": "Download",
-          "transfers": "Transfers",
+          "download": "Baixada",
+          "transfers": "Transferències",
           "events": "Events",
-          "view": "View",
-          "edit": "Edit",
+          "view": "Vista",
+          "edit": "Edita",
           "queue": "Queue",
-          "favoriteHubs": "Favorite hubs",
+          "favoriteHubs": "Centres favorits",
           "settings": "Settings",
           "localFilesystem": "Local filesystem",
-          "hubs": "Hubs",
+          "hubs": "Centres",
           "sendMessages": "Send messages",
           "privateChat": "Private chat",
           "filelists": "Filelists",
@@ -828,7 +828,7 @@
         "path": "Path"
       },
       "profiles": {
-        "name": "Name",
+        "name": "Nom",
         "totalSize": "Total size",
         "totalFiles": "Total files",
         "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
@@ -837,7 +837,7 @@
         "skiplist": "Skiplist"
       },
       "hashing": {
-        "hashDatabase": "Hash database",
+        "hashDatabase": "Base de dades de l'algorisme Hash",
         "fileIndexSize": "File index size",
         "hashStoreSize": "Hash store size",
         "maintenance": "Maintenance",
@@ -861,11 +861,11 @@
       "locations": {
         "availablePathVariables": "Available path variables",
         "favoriteDownloadDirectories": "Favorite download directories",
-        "name": "Name",
+        "name": "Nom",
         "path": "Path",
         "form": {
           "pathName": "Path",
-          "nameName": "Name"
+          "nameName": "Nom"
         },
         "addFavoriteDirectory": "Add favorite directory",
         "editFavoriteDirectory": "Edit favorite directory"
@@ -878,21 +878,21 @@
         "highPriorityFiles": "High priority files"
       },
       "searchTypes": {
-        "name": "Name",
-        "fileExtensions": "File extensions",
-        "default": "Default",
+        "name": "Nom",
+        "fileExtensions": "Fitxer d'extensions",
+        "default": "Per defecte",
         "searchTypesNote": "Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.",
         "form": {
-          "nameName": "Name",
-          "extensionsName": "File extensions"
+          "nameName": "Nom",
+          "extensionsName": "Fitxer d'extensions"
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
       },
       "downloadOptions": {
         "segments": "Segments",
-        "compression": "Compression",
-        "buffers": "Buffers"
+        "compression": "Compressió",
+        "buffers": "Memòria intermèdia"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",
@@ -930,8 +930,8 @@
       "installFromUrl": "Install from URL",
       "install": "Install",
       "update": "Update",
-      "stop": "Stop",
-      "configure": "Configure",
+      "stop": "Atura",
+      "configure": "Configura",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Install",
@@ -946,13 +946,13 @@
     "home": "Home",
     "queue": "Queue",
     "search": "Search",
-    "transfers": "Transfers",
-    "hubs": "Hubs",
-    "messages": "Messages",
+    "transfers": "Transferències",
+    "hubs": "Centres",
+    "messages": "Missatges",
     "filelists": "Filelists",
-    "files": "Files",
+    "files": "Fitxers",
     "events": "Events",
-    "favoriteHubs": "Favorite hubs",
+    "favoriteHubs": "Centres favorits",
     "share": "Share",
     "settings": "Settings",
     "logout": "Logout",
@@ -960,31 +960,31 @@
   },
   "login": {
     "username": "Username",
-    "password": "Password",
+    "password": "Contrasenya",
     "keepMeLoggedIn": "Keep me logged in",
     "login": "Login",
     "authenticationFailed": "Authentication failed: {{lastError}}",
     "connectingToTheServer": "Connecting to the server...",
     "reestablishConnection": "Attempting to re-establish connection...",
     "sessionLost": "Session lost",
-    "connectionClosed": "Connection closed",
+    "connectionClosed": "S'ha tancat la connexió",
     "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
     "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
   },
   "viewedFiles": {
     "actions": {
-      "close": "Close"
+      "close": "Tanca"
     },
     "noFiles": "No files to view",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
     "preparingView": "Preparing view",
     "opened": "Opened",
-    "downloaded": "Downloaded",
+    "downloaded": "Baixat",
     "unsupportedFormat": "Unsupported format",
     "downloadFailed": "Download failed",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
-      "fileWasLoaded": "File was loaded",
+      "fileWasLoaded": "S'ha carregat el fitxer",
       "actions": {
         "viewFile": "View file"
       }
@@ -993,8 +993,8 @@
   "messages": {
     "actions": {
       "clearChat": "Clear chat",
-      "close": "Close",
-      "connect": "Connect",
+      "close": "Tanca",
+      "connect": "Connecta",
       "disconnect": "Disconnect"
     },
     "new": "New session",
@@ -1015,18 +1015,18 @@
   },
   "hash": {
     "actions": {
-      "pause": "Pause",
-      "resume": "Resume",
-      "stop": "Stop"
+      "pause": "Pausa",
+      "resume": "Reprèn",
+      "stop": "Atura"
     },
-    "status": "Status",
-    "paused": "Paused",
-    "filesLeft": "Files left",
-    "maximumSpeedPerHasher": "Maximum speed per hasher",
-    "runningThreads": "Running ({{threadCount}} threads)",
-    "speed": "Speed",
-    "timeLeft": "Time left",
-    "idle": "Idle",
-    "hashProgress": "Hash progress"
+    "status": "Estat",
+    "paused": "En pausa",
+    "filesLeft": "Fitxers pendents",
+    "maximumSpeedPerHasher": "Velocitat máxima per \"hasher\"",
+    "runningThreads": "S'està executant ({{threadCount}} fils)",
+    "speed": "Velocitat",
+    "timeLeft": "Temps restant",
+    "idle": "Inactiu",
+    "hashProgress": "Progrés de l'algorisme hash"
   }
 }
