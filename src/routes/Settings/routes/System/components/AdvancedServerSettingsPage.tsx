@@ -23,8 +23,8 @@ const Hooks = [
   'outgoing_chat_message_hook_timeout',
   'incoming_chat_message_hook_timeout',
 
+  'queue_add_bundle_hook_timeout',
   'queue_add_bundle_file_hook_timeout',
-  'queue_add_directory_bundle_hook_timeout',
   'queue_add_source_hook_timeout',
   'queue_bundle_finished_hook_timeout',
   'queue_file_finished_hook_timeout',
