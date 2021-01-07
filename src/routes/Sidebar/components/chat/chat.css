@@ -126,7 +126,7 @@
   flex-direction: row-reverse;
 }
 
-.chat.session .status.item .text {
+.chat.session .status.item > .text {
   font-size: small;
   color: rgba(0,0,0,.50);
   float: left;
@@ -136,10 +136,10 @@
   display: none !important;
 }
 
-.chat.session .status.item.warning .text {
+.chat.session .status.item.warning > .text {
   color: orange;
 }
 
-.chat.session .status.item.error .text {
+.chat.session .status.item.error > .text {
   color: red;
 }
