@@ -157,7 +157,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   }
 
   onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.code === 'Enter' && !event.shiftKey) {
+    if ((event.code === 'Enter' || event.code === 'NumpadEnter') && !event.shiftKey) {
       event.preventDefault();
       this.sendText();
     }
