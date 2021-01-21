@@ -118,7 +118,7 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
       return;
     }
 
-    if (event.code === 'Enter' && !event.isDefaultPrevented()) {
+    if (event.key === 'Enter' && !event.isDefaultPrevented()) {
       // Hide the suggestion menu
       this.props.onSuggestionsClearRequested();
 
