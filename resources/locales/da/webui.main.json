@@ -2,17 +2,17 @@
   "widgets": {
     "application": {
       "widgetName": "Application",
-      "addWidget": "Add widget...",
-      "loggedInAs": "Logged in as",
-      "clientStarted": "Client started",
-      "activeSessions": "Active sessions"
+      "addWidget": "Tilføj widget ...",
+      "loggedInAs": "Logget ind som",
+      "clientStarted": "Klient startede",
+      "activeSessions": "Aktive sessioner"
     },
     "rss": {
-      "widgetName": "RSS feed",
-      "invalidUrl": "Invalid URL",
-      "lastUpdated": "Last updated: {{time}}",
+      "widgetName": "RSS-feed ",
+      "invalidUrl": "Ugyldig URL",
+      "lastUpdated": "Sidst opdateret: {{time}}",
       "actions": {
-        "openLink": "Open link",
+        "openLink": "Åben link",
         "search": "Søg"
       },
       "loadingFeed": "Loading feed",
@@ -25,7 +25,7 @@
     },
     "transfers": {
       "widgetName": "Overførelser",
-      "trafficBps": "Traffic (bps)",
+      "trafficBps": "Trafik (bps)",
       "downloads": "Downloads",
       "uploads": "Uploads",
       "downloaded": "Downloadet",
@@ -34,18 +34,18 @@
       "uploadLimit": "Uploadgrænse"
     },
     "notepad": {
-      "widgetName": "Notes"
+      "widgetName": "Noter"
     },
     "extensions": {
-      "widgetName": "Extension releases",
-      "updatedAgo": "Updated {{date}}"
+      "widgetName": "Udvidelsesudgivelser",
+      "updatedAgo": "Opdateret {{date}}"
     },
     "actions": {
       "editWidget": "Edit widget",
-      "removeWidget": "Remove widget",
+      "removeWidget": "Fjern widget",
       "prompts": {
-        "removeApprove": "Remove widget",
-        "removeReject": "Don't remove",
+        "removeApprove": "Fjern widget",
+        "removeReject": "Fjern ikke",
         "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
       }
     },
@@ -66,8 +66,8 @@
     "notifications": {
       "information": "Information",
       "info": "INFO",
-      "warning": "WARNING",
-      "error": "ERROR",
+      "warning": "ADVARSEL",
+      "error": "FEJL",
       "actions": {
         "viewEvents": "View events"
       }
@@ -77,12 +77,12 @@
     "filter": {
       "filter": "Filter",
       "matchType": "Sammenlign typer",
-      "partial": "Partial",
+      "partial": "Delvis",
       "regex": "Regex",
       "wildcard": "Jokertegn",
-      "exact": "Exact",
+      "exact": "Præcis",
       "filterByProfile": "Filter by profile",
-      "allProfiles": "All profiles"
+      "allProfiles": "Alle profiler"
     }
   },
   "search": {
@@ -93,7 +93,7 @@
       "type": "Type",
       "connection": "Forbindelse",
       "users": "Brugere",
-      "time": "Last modified",
+      "time": "Sidst ændret",
       "slots": "Slots"
     },
     "actions": {
@@ -105,9 +105,9 @@
       "hubUrlsName": "Hubs",
       "maxSizeName": "Maximum size",
       "minSizeName": "Minimum size",
-      "sizeLimitsName": "Size limits"
+      "sizeLimitsName": "Størrelsesgrænser"
     },
-    "resetAll": "Reset all",
+    "resetAll": "Nulstil alle",
     "user": "Bruger",
     "hubs": "Hubs",
     "connection": "Forbindelse",
@@ -137,16 +137,16 @@
     },
     "actions": {
       "editDirectory": "Edit directory",
-      "removeDirectory": "Remove directory",
-      "addDirectory": "Add directory",
+      "removeDirectory": "Fjern bibliotek",
+      "addDirectory": "Tilføj bibliotek",
       "refreshAll": "Refresh all",
       "prompts": {
-        "removeRootApprove": "Remove directory",
-        "removeRootReject": "Don't remove",
+        "removeRootApprove": "Fjern bibliotek",
+        "removeRootReject": "Fjern ikke",
         "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
       }
     },
-    "actionsCaption": "Actions...",
+    "actionsCaption": "Handlinger...",
     "shareActions": "Share actions",
     "hashingInformation": "Hashing information",
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
@@ -171,24 +171,24 @@
       "changePassword": "Skift adgangskode",
       "removePassword": "Remove password",
       "prompts": {
-        "changePasswordPlaceholder": "Enter password",
-        "changePasswordApprove": "Update password",
+        "changePasswordPlaceholder": "Skriv kodeord",
+        "changePasswordApprove": "Opdater kodeord",
         "changePasswordContent": "Enter new password for the hub {{item.name}}",
         "removePasswordApprove": "Remove password",
-        "removePasswordReject": "Don't remove",
+        "removePasswordReject": "Fjern ikke",
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
-        "createPasswordPlaceholder": "Enter password",
+        "createPasswordPlaceholder": "Skriv kodeord",
         "createPasswordApprove": "Set password",
         "createPasswordContent": "Set password for the hub {{item.name}}",
         "removeApprove": "Remove favorite hub",
-        "removeReject": "Don't remove",
+        "removeReject": "Fjern ikke",
         "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
     "table": {
       "connectState": "State",
       "name": "Navn",
-      "autoConnect": "Auto connect",
+      "autoConnect": "Auto forbind",
       "nick": "Brugernavn",
       "hasPassword": "Password",
       "hubUrl": "Adresse",
@@ -196,7 +196,7 @@
     },
     "notSet": "Not set",
     "set": "Set",
-    "globalDefault": "Global default",
+    "globalDefault": "Global standard",
     "addFavoriteHub": "Add favorite hub",
     "editFavoriteHub": "Edit favorite hub",
     "form": {
@@ -206,7 +206,7 @@
       "hubDescriptionName": "Hub description",
       "shareProfileName": "Shareprofil",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
-      "autoConnectName": "Auto connect",
+      "autoConnectName": "Auto forbind",
       "userName": "User setting overrides",
       "nickName": "Brugernavn",
       "userDescriptionName": "Brugerbeskrivelse",
@@ -221,7 +221,7 @@
       "connectionModeV6Option-1": "Deaktiver",
       "connectionModeV6Option0": "Aktiv tilstand",
       "connectionModeV6Option2": "Passiv tilstand",
-      "connectionIpV6Name": "IP address",
+      "connectionIpV6Name": "IP adresse",
       "miscName": "Miscellaneous overrides",
       "useMainChatNotifyName": "Use chat notification",
       "awayMessageName": "Away message",
@@ -234,25 +234,25 @@
     "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
     "directorySize": "Directory size",
     "totalListSize": "Total list size",
-    "browseOwnShare": "Browse own share...",
-    "root": "Root",
+    "browseOwnShare": "Gennemse egen share",
+    "root": "Rod",
     "userOffline": "Bruger er offline",
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "No content to display",
-    "theDirectoryIsEmpty": "The directory is empty",
+    "theDirectoryIsEmpty": "Mappen er tom",
     "updatingView": "Updating view",
     "downloadFailed": "Download failed",
     "table": {
       "name": "Navn",
       "size": "Størrelse",
-      "time": "Last modified",
+      "time": "Sidst ændret",
       "type": "Type"
     },
     "actions": {
       "reload": "Opdater",
       "refreshInShare": "Opdater i share",
       "close": "Luk",
-      "details": "Details"
+      "details": "Detaljer"
     }
   },
   "common": {    
@@ -262,18 +262,18 @@
       "downloadTo": "Download til...",
       "findNfo": "Find NFO",
       "search": "Søg",
-      "sendMessage": "Send message",
-      "browseShare": "Browse share",
-      "ignoreMessages": "Ignore messages",
+      "sendMessage": "Send besked",
+      "browseShare": "Gennemse share",
+      "ignoreMessages": "Ignorer beskeder",
       "viewAsText": "Vis som tekst",
-      "playVideo": "Play video",
+      "playVideo": "Afspil video",
       "viewImage": "View image",
       "playAudio": "Play audio",
       "copyMagnetLink": "Copy magnet link",
       "shutDownApplication": "Shut down application",
       "restartWebServer": "Restart web server",
       "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again",
+      "closeAndDontShowAgain": "v",
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
@@ -309,8 +309,8 @@
     "yesterday": "Yesterday",
     "tomorrow": "Tomorrow",
     "lastWeek": "[Last] {{weekDay}}",
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
+    "awayModeWasEnabled": "Ikke-tilstede tilstand blev aktiveret",
+    "awayModeWasDisabled": "Ikke-tilstede tilstand blev deaktiveret",
     "actionSucceed": "Action succeed",
     "actionFailed": "Action failed",
     "queueingFailed": "Failed to queue the item {{item.name}}",
@@ -319,12 +319,12 @@
     "failedToFetchData": "Failed to fetch data",
     "failedToLoadContent": "Failed to load content",
     "loadingItems": "Loading items",
-    "root": "Root",
+    "root": "Rod",
     "name": "Navn",
     "size": "Størrelse",
     "path": "Sti",
-    "createDirectory": "Create directory",
-    "create": "Create",
+    "createDirectory": "Opret mappe",
+    "create": "Opret",
     "directoryName": "Directory name",
     "computer": "Computer",
     "history": "Previous",
@@ -350,10 +350,10 @@
     "cancel": "Annullér",
     "loading": "Loading",
     "loadingData": "Loading data...",
-    "noOnlineHubs": "No online hubs",
+    "noOnlineHubs": "Ingen hubs online",
     "installAsLocalApplication": "Install as local application",
     "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
-    "install": "Install",
+    "install": "Installer",
     "dontInstall": "Don't install",
     "statisticsNotAvailable": "Statistics not available",
     "save": "Save",
@@ -376,8 +376,8 @@
     "noSessionEditAccess": "You aren't allowed to open new sessions",
     "noChatAccess": "You aren't allowed to send new messages",
     "loadingSessions": "Loading sessions",
-    "typeContent": "Type/content",
-    "lastModified": "Last modified",
+    "typeContent": "Type / indhold",
+    "lastModified": "Sidst ændret",
     "dupeType": "Dupe type",
     "shareFull": "Share (full)",
     "sharePartial": "Share (partial)",
@@ -387,14 +387,14 @@
     "finishedPartial": "Finished (partial)",
     "shareAndQueue": "Share and queue",
     "dupePaths": "Dupe paths",
-    "actionsCaption": "Actions...",
+    "actionsCaption": "Handlinger...",
     "tth": "TTH",
     "na": "N/A",
     "noActionsAvailable": "No actions available",
     "continue": "Continue",
     "form": {
       "browse": "Browse",
-      "noOptions": "No options",
+      "noOptions": "Ingen indstillinger",
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
       "maximumValueError": "Maximum allowed value is {{value}}",
@@ -438,7 +438,7 @@
       }
     },
     "notificationSettings": "Notification settings",
-    "enterHubAddress": "Enter hub address...",
+    "enterHubAddress": "Skriv hubadresse",
     "connect": "Tilslut",
     "notConnectedToTheHub": "Not connected to the hub",
     "connecting": "Connecting",
@@ -451,7 +451,7 @@
     "xUsers": "{{count}} users",
     "xUsers_plural": "{{count}} users",
     "redirectRequested": "Redirect requested",
-    "acceptRedirect": "Accept redirect to {{url}}",
+    "acceptRedirect": "Accepter omdirigering til {{url}}",
     "passwordRequired": "Password required",
     "password": "Password",
     "submit": "Submit",
@@ -466,11 +466,11 @@
       "secondsLeft": "Tid tilbage",
       "speed": "Hastighed",
       "priority": "Prioritet",
-      "type": "Type/content",
+      "type": "Type / indhold",
       "timeAdded": "Tilføjet",
       "timeFinished": "Færdige"
     },
-    "actionsCaption": "Actions...",
+    "actionsCaption": "Handlinger...",
     "queueActions": "Queue actions",
     "pausedForced": "Pause (tvungen)",
     "queueEmpty": "The queue is empty",
@@ -489,11 +489,11 @@
       "forceInShare": "Tvungen i share",
       "prompts": {
         "removeBundleApprove": "Remove bundle",
-        "removeBundleReject": "Don't remove",
+        "removeBundleReject": "Fjern ikke",
         "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
         "removeBundleCheckbox": "Remove finished files",
         "removeFileApprove": "Remove file",
-        "removeFileReject": "Don't remove",
+        "removeFileReject": "Fjern ikke",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Remove on disk"
       },
@@ -536,7 +536,7 @@
       "status": "Status",
       "secondsLeft": "Tid tilbage",
       "speed": "Hastighed",
-      "flags": "Flags",
+      "flags": "Flag",
       "ip": "IP"
     },
     "actions": {
@@ -554,11 +554,11 @@
   "settings": {
     "actions": {
       "detectNow": "Registrerer nu",
-      "addDirectory": "Add directory",
+      "addDirectory": "Tilføj bibliotek",
       "addUser": "Add user",
       "editUser": "Edit user",
       "editDirectory": "Edit directory",
-      "removeDirectory": "Remove directory",
+      "removeDirectory": "Fjern bibliotek",
       "addProfile": "Add profile",
       "browseFiles": "Browse files",
       "renameProfile": "Rename profile",
@@ -571,23 +571,23 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
-        "createProfileApprove": "Create",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "createProfilePlaceholder": "Skriv navn",
+        "createProfileApprove": "Opret",
+        "createProfileContent": "Skriv navn på profilen",
+        "editProfilePlaceholder": "Skriv navn",
         "editProfileApprove": "Omdøb",
         "editProfileContent": "Enter new name for the profile {{item.name}}",
         "removeShareExcludeApprove": "Remove path",
-        "removeShareExcludeReject": "Don't remove",
+        "removeShareExcludeReject": "Fjern ikke",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
         "removeWebUserApprove": "Remove user",
-        "removeWebUserReject": "Don't remove",
+        "removeWebUserReject": "Fjern ikke",
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
-        "removeFavoriteDirectoryApprove": "Remove directory",
-        "removeFavoriteDirectoryReject": "Don't remove",
+        "removeFavoriteDirectoryApprove": "Fjern bibliotek",
+        "removeFavoriteDirectoryReject": "Fjern ikke",
         "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
         "removeSearchTypeApprove": "Remove type",
-        "removeSearchTypeReject": "Don't remove",
+        "removeSearchTypeReject": "Fjern ikke",
         "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
@@ -598,11 +598,11 @@
       "downloads": "Downloads",
       "sharing": "Deling",
       "view": "Vis",
-      "about": "About",
+      "about": "Om",
       "extensions": "Filtyper",
       "extensionEngines": "Extension engines",
       "system": "System",
-      "autoDetection": "Auto detection",
+      "autoDetection": "Automatisk detektion ",
       "iPv4ConnectivityManual": "IPv4 connectivity (manual)",
       "iPv6ConnectivityManual": "IPv6 connectivity (manual)",
       "portsManual": "Ports (manual)",
@@ -613,21 +613,21 @@
       "ignoredUsers": "Ignorer brugere",
       "miscellaneous": "Diverse",
       "manageInstalled": "Manage installed",
-      "extensionCatalog": "Extension catalog",
+      "extensionCatalog": "Udvidelseskatalog",
       "extensionOptions": "Extension options",
       "application": "Application",
       "transferStatistics": "Transfer statistics",
-      "shareStatistics": "Share statistics",
-      "hubStatistics": "Hub statistics",
+      "shareStatistics": "Del statistikker",
+      "hubStatistics": "Hub statistikker",
       "users": "Brugere",
       "logging": "Logning",
       "webServer": "Web server",
-      "advancedServerSettings": "Advanced server settings",
-      "refreshOptions": "Refresh options",
+      "advancedServerSettings": "Avanceret server indstillinger",
+      "refreshOptions": "Opdater indstillinger",
       "shareProfiles": "Shareprofiler",
       "sharingOptions": "Delingsindstillinger",
       "hashing": "Hashing",
-      "excludedPaths": "Excluded paths",
+      "excludedPaths": "Udelukkede stier",
       "connectionSpeed": "Forbindelsens hastighed",
       "bandwidthLimiting": "Bandwidth limiting",
       "downloadLimits": "Downloadgrænser",
@@ -647,7 +647,7 @@
     "advanced": "Avanceret",
     "noUnsavedChanges": "No unsaved changes",
     "noSavePermission": "No save permission",
-    "saveChanges": "Save changes",
+    "saveChanges": "Gem ændringer",
     "savingCompleted": "Saving completed",
     "settingsWereSavedSuccessfully": "Settings were saved successfully",
     "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
@@ -688,7 +688,7 @@
       "ignoredUsers": {
         "user": "Bruger",
         "messagesIgnored": "Messages ignored",
-        "noIgnoredUsers": "No ignored users"
+        "noIgnoredUsers": "Ingen ignoreret brugere"
       },
       "miscellaneous": {
         "form": {
@@ -723,11 +723,11 @@
       "application": {
         "applicationVersion": "Application version",
         "webUiVersion": "Web UI version",
-        "webUiBuildDate": "Web UI build date",
+        "webUiBuildDate": "Web UI build dato",
         "apiVersion": "API version",
         "apiFeatureLevel": "API feature level",
         "started": "Startet",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Aktive sessioner",
         "serverThreads": "Server threads",
         "resources": "Resources",
         "homePage": "Home page",
@@ -748,10 +748,10 @@
         "totalFiles": "Total files",
         "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
         "totalDirectories": "Total directories",
-        "averageFileAge": "Average file age",
+        "averageFileAge": "Gennemsnitlig filalder",
         "averageFilesPerDirectory": "Average files per directory",
         "incomingSearches": "Incoming searches",
-        "totalSearches": "Total searches",
+        "totalSearches": "Total søgninger",
         "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
         "tthSearches": "TTH searches",
         "textSearches": "Text searches",
@@ -777,7 +777,7 @@
     },
     "system": {
       "logging": {
-        "messages": "Messages",
+        "messages": "Beskeder",
         "transfers": "Overførelser",
         "variableHelp": "Variable information for Filename and Format fields"
       },
@@ -790,7 +790,7 @@
       "users": {
         "username": "Username",
         "permissions": "Permissions",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Aktive sessioner",
         "lastLoggedIn": "Last logged in",
         "administrator": "Administrator",
         "form": {
@@ -813,10 +813,10 @@
           "hubs": "Hubs",
           "sendMessages": "Send messages",
           "privateChat": "Privat chat",
-          "filelists": "Filelists",
+          "filelists": "Filliste",
           "viewedFiles": "Viewed files"
         },
-        "addWebUser": "Add web user",
+        "addWebUser": "Tilføj webbruger",
         "editUser": "Edit user",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
@@ -859,7 +859,7 @@
     },
     "downloads": {
       "locations": {
-        "availablePathVariables": "Available path variables",
+        "availablePathVariables": "Tilgængelige sti variabler",
         "favoriteDownloadDirectories": "Standardmappe til download",
         "name": "Navn",
         "path": "Sti",
@@ -879,20 +879,20 @@
       },
       "searchTypes": {
         "name": "Navn",
-        "fileExtensions": "File extensions",
+        "fileExtensions": "Filudvidelser",
         "default": "Standard",
         "searchTypesNote": "Bemærk, Brugerdefinerede søgetyper vil kun blive anvendt til ADC hubs! På NMDC hubs, vil der ved hjælp af en foruddefineret søgetype kun søges efter et sæt af ikke-konfigurerbar foruddefinerede udvidelser; ved hjælp af en brugerdefineret type, vil der som standard søges efter alle udvidelser.",
         "form": {
           "nameName": "Navn",
-          "extensionsName": "File extensions"
+          "extensionsName": "Filudvidelser"
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
       },
       "downloadOptions": {
         "segments": "Segmenter",
-        "compression": "Compression",
-        "buffers": "Buffers"
+        "compression": "Kompression",
+        "buffers": "Buffere"
       }
     },
     "browserSpecificNote": "Settings listed on this page are browser-specific",
@@ -928,16 +928,16 @@
       "uninstall": "Afinstaller",
       "start": "Start",
       "installFromUrl": "Install from URL",
-      "install": "Install",
+      "install": "Installer",
       "update": "Opdater",
       "stop": "Stop",
       "configure": "&amp;Konfigurer",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
-        "installUrlApprove": "Install",
+        "installUrlApprove": "Installer",
         "installUrlContent": "Enter download URL",
         "removeApprove": "Remove extension",
-        "removeReject": "Don't remove",
+        "removeReject": "Fjern ikke",
         "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
@@ -948,8 +948,8 @@
     "search": "Søg",
     "transfers": "Overførelser",
     "hubs": "Hubs",
-    "messages": "Messages",
-    "filelists": "Filelists",
+    "messages": "Beskeder",
+    "filelists": "Filliste",
     "files": "Filer",
     "events": "Events",
     "favoriteHubs": "Favorithubs",
@@ -977,14 +977,14 @@
     },
     "noFiles": "No files to view",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
-    "preparingView": "Preparing view",
+    "preparingView": "Forbereder visning",
     "opened": "Opened",
     "downloaded": "Downloadet",
     "unsupportedFormat": "Unsupported format",
     "downloadFailed": "Download failed",
     "notifications": {
       "fileHasFinishedDownloading": "File has finished downloading",
-      "fileWasLoaded": "File was loaded",
+      "fileWasLoaded": "Fil blev indlæst",
       "actions": {
         "viewFile": "View file"
       }
@@ -1021,7 +1021,7 @@
     },
     "status": "Status",
     "paused": "Pause",
-    "filesLeft": "Files left",
+    "filesLeft": "Filer tilbage",
     "maximumSpeedPerHasher": "Maximum speed per hasher",
     "runningThreads": "Running ({{threadCount}} threads)",
     "speed": "Hastighed",

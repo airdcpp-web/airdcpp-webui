@@ -9,10 +9,10 @@
     },
     "rss": {
       "widgetName": "RSS besleme",
-      "invalidUrl": "Invalid URL",
-      "lastUpdated": "Last updated: {{time}}",
+      "invalidUrl": "Geçersiz URL",
+      "lastUpdated": "Son güncelleme: {{time}}",
       "actions": {
-        "openLink": "Open link",
+        "openLink": "Bağlantıyı aç",
         "search": "Ara"
       },
       "loadingFeed": "Loading feed",
