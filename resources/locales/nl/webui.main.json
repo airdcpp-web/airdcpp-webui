@@ -105,7 +105,7 @@
       "hubUrlsName": "Hubs",
       "maxSizeName": "Maximum grootte",
       "minSizeName": "Minimale grootte",
-      "sizeLimitsName": "Size limits"
+      "sizeLimitsName": "Grootte limiet"
     },
     "resetAll": "Reset alles",
     "user": "Gebruiker",
@@ -571,12 +571,12 @@
       "editType": "Pas type aan",
       "removeType": "Verwijder type",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
+        "createProfilePlaceholder": "Geef naam in",
         "createProfileApprove": "Maak",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "createProfileContent": "Geef naam in voor het profiel",
+        "editProfilePlaceholder": "Geef naam in",
         "editProfileApprove": "Hernoemen",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "editProfileContent": "Geef naam in voor het profiel {{item.name}}",
         "removeShareExcludeApprove": "Verwijder path",
         "removeShareExcludeReject": "Niet verwijderen",
         "removeShareExcludeContent": "Weet je zeker dat je het volgende path wilt verwijderen {{item}}?",
@@ -600,7 +600,7 @@
       "view": "Beeld",
       "about": "Over",
       "extensions": "Uitbreidingen",
-      "extensionEngines": "Extension engines",
+      "extensionEngines": "Extensie hulpmiddelen",
       "system": "Systeem",
       "autoDetection": "Auto detectie",
       "iPv4ConnectivityManual": "IPv4 connectiviteit (manual)",
@@ -622,7 +622,7 @@
       "users": "Gebruikers",
       "logging": "Loggen",
       "webServer": "Web server",
-      "advancedServerSettings": "Advanced server settings",
+      "advancedServerSettings": "Geavanceerde server instellingen",
       "refreshOptions": "Ververs opties",
       "shareProfiles": "Share profielen",
       "sharingOptions": "Deel opties",
@@ -891,7 +891,7 @@
       },
       "downloadOptions": {
         "segments": "Segmenten",
-        "compression": "Compression",
+        "compression": "Compressie",
         "buffers": "Buffers"
       }
     },
