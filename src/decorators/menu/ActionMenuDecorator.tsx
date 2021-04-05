@@ -10,7 +10,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { 
-  ActionHandlerDecorator, ActionClickHandler
+  ActionHandlerDecorator, ActionClickHandler, ActionData
 } from 'decorators/ActionHandlerDecorator';
 import { Trans } from 'react-i18next';
 import { parseTranslationModules, toI18nKey } from 'utils/TranslationUtils';
@@ -206,7 +206,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
 };
 
 // This should be used only for constructed menus, not for id arrays
-const notError = <ItemDataT extends UI.ActionItemDataValueType>(
+const hasLocalItems = <ItemDataT extends UI.ActionItemDataValueType>(
   id: string | MenuType<ItemDataT>
 ) => typeof id !== 'string';
 
@@ -239,31 +239,15 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     };*/
 
     // Reduce menus to an array of DropdownItems
-    reduceMenuItems = (
+    reduceLocalMenuItems = (
       onClickAction: ActionClickHandler,
-      remoteMenuItems: React.ReactChild[],
       items: React.ReactChild[], 
-      menu: string | MenuType<ItemDataT>, 
+      menu: MenuType<ItemDataT>, 
       menuIndex: number,
     ) => {
-      if (notError(menu)) {
-        items.push(...(menu as MenuType<ItemDataT>).actionIds.map((actionId, actionIndex) => {
-          return getMenuItem(menu as MenuType<ItemDataT>, menuIndex, actionId, actionIndex, onClickAction);
-        }));
-      }
-
-      if (!!remoteMenuItems.length) {
-        if (!!items.length) {
-          items.push(
-            <div 
-              key="remote_divider" 
-              className="ui divider"
-            />
-          );
-        }
-
-        items.push(...remoteMenuItems);
-      }
+      items.push(...menu.actionIds.map((actionId, actionIndex) => {
+        return getMenuItem(menu as MenuType<ItemDataT>, menuIndex, actionId, actionIndex, onClickAction);
+      }));
 
       return items;
     }
@@ -297,35 +281,57 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     }
 
     getChildren = (
-      onClickAction: ActionClickHandler,
+      onClickAction: ActionClickHandler<ItemDataT>,
       remoteMenus: Array<React.ReactChild[]> | null,
       onClickMenuItem: MenuItemClickHandler | undefined
     ): React.ReactNode => {
       const menus = this.getMenus();
+
+      // Local items
       const children = menus
-        // .filter((menu, menuIndex) => !!remoteMenus[menuIndex] || notError(menu))
+        .filter(hasLocalItems)
         .reduce(
           (reduced, menu, menuIndex) => {
-            if (!notError(menu) && (!remoteMenus || !remoteMenus[menuIndex])) {
-              return reduced;
-            }
+            const onClickHandler = (action: ActionData<ItemDataT>) => {
+              if (!!onClickMenuItem) {
+                onClickMenuItem();
+              }
+              
+              onClickAction(action);
+            };
 
-            return this.reduceMenuItems(
-              action => {
-                if (!!onClickMenuItem) {
-                  onClickMenuItem();
-                }
-                
-                onClickAction(action);
-              },
-              !!remoteMenus ? remoteMenus[menuIndex] : [], 
+            return this.reduceLocalMenuItems(
+              onClickHandler,
               reduced, 
               menu as MenuType<ItemDataT>, 
               menuIndex
             );
           }, 
-          []
+          [] as React.ReactChild[]
         );
+
+      // Remote items (insert after all local items so that the previous menu item positions won't change)
+      if (remoteMenus) {
+        remoteMenus.reduce(
+          (reduced, remoteMenuItems) => {
+            if (!!remoteMenuItems.length) {
+              if (!!reduced.length) {
+                reduced.push(
+                  <div 
+                    key="remote_divider" 
+                    className="ui divider"
+                  />
+                );
+              }
+    
+              reduced.push(...remoteMenuItems);
+            }
+
+            return reduced;
+          }, 
+          children
+        );
+      }
 
       if (!children.length) {
         return (
