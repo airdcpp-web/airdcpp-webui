@@ -1,12 +1,8 @@
 import * as React from 'react';
-import invariant from 'invariant';
-// import classNames from 'classnames';
 
-import { actionFilter, actionAccess, toActionI18nKey } from 'utils/ActionUtils';
+import { toActionI18nKey } from 'utils/ActionUtils';
 import MenuItemLink from 'components/semantic/MenuItemLink';
-// import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { 
@@ -17,157 +13,17 @@ import { parseTranslationModules, toI18nKey } from 'utils/TranslationUtils';
 import RemoteMenuDecorator from './RemoteMenuDecorator';
 import Loader from 'components/semantic/Loader';
 import { MenuFormDialog, MenuFormDialogProps } from 'components/menu/MenuFormDialog';
+import { parseActionMenu, parseActionMenuItemIds } from 'utils/MenuUtils';
 
-export type OnClickActionHandler = (actionId: string) => void;
-
-
-export interface ActionMenuDecoratorProps<ItemDataT extends UI.ActionItemDataValueType> {
-  remoteMenuId?: string;
-  className?: string;
-  caption?: React.ReactNode;
-  button?: boolean;
-  ids?: string[];
-  actions: UI.ModuleActions<ItemDataT>;
-  
-  itemData?: UI.ActionItemDataType<ItemDataT>;
-  entityId?: API.IdType;
-}
-
-type MenuItemClickHandler = () => void;
-
-export interface ActionMenuDecoratorChildProps {
-  children: (onClick?: MenuItemClickHandler) => React.ReactNode;
-}
-
-type FilterType<ItemDataT extends UI.ActionItemDataValueType> = (
-  action: UI.ActionType<ItemDataT>, 
-  itemData: ItemDataT
-) => boolean;
-
-
-const parseItemData = <ItemDataT extends UI.ActionItemDataValueType>(
-  itemData: UI.ActionItemDataType<ItemDataT> | undefined
-): ItemDataT | undefined => {
-  return itemData instanceof Function ? itemData() : itemData;
-};
-
-
-const parseItemIds = <ItemDataT extends UI.ActionItemDataValueType>(
-  itemData: UI.ActionItemDataType<ItemDataT> | undefined
-): Array<UI.ActionIdType> => {
-  const parsedItemData = parseItemData<ItemDataT>(itemData);
-  return !!parsedItemData && (parsedItemData as UI.ActionObjectItemData).id ? 
-    [ (parsedItemData as UI.ActionObjectItemData).id ] : 
-    [];
-};
-
-// Returns true if the provided ID matches the specified filter
-const filterItem = <ItemDataT extends UI.ActionItemDataValueType>(
-  props: ActionMenuDecoratorProps<ItemDataT>, 
-  filter: FilterType<ItemDataT>, 
-  actionId: string
-) => {
-  const action = props.actions.actions[actionId];
-  if (!action) {
-    invariant(actionId === 'divider', 'No action for action ID: ' + actionId);
-    return true;
-  }
-
-  return filter(action, parseItemData<ItemDataT>(props.itemData) as ItemDataT);
-};
-
-const isDivider = (id: string) => id.startsWith('divider');
-
-// Get IDs matching the provided filter
-const filterItems = <ItemDataT extends UI.ActionItemDataValueType>(
-  props: ActionMenuDecoratorProps<ItemDataT>, 
-  filter: FilterType<ItemDataT>, 
-  actionIds: string[]
-) => {
-  let ids = actionIds.filter(id =>  filterItem(props, filter, id));
-  if (!ids.length || ids.every(isDivider)) {
-    return null;
-  }
-
-  return ids;
-};
-
-const filterExtraDividers = (ids: string[]) => {
-  return ids.filter((item, pos) => {
-    if (!isDivider(item)) {
-      return true;
-    }
-
-    // The first or last element can't be a divider
-    if (pos === 0 || pos === ids.length - 1) {
-      return false;
-    }
-
-    // Check if the next element is also a divider 
-    // (the last one would always be removed in the previous check)
-    return !isDivider(ids[pos + 1]);
-  });
-};
-
-interface MenuType<ItemDataT> {
-  actionIds: string[];
-  itemDataGetter: (() => ItemDataT);
-  actions: UI.ModuleActions<ItemDataT>;
-}
-
-// Get IDs to display from the specified menu
-const parseMenu = <ItemDataT extends UI.ActionItemDataValueType>(
-  props: ActionMenuDecoratorProps<ItemDataT>, 
-  hasPreviousMenuItems: boolean
-): MenuType<ItemDataT> | string => {
-  let ids: string[] | null;
-  ids = props.ids || Object.keys(props.actions.actions).filter(id => {
-    const action = props.actions.actions[id];
-    return !action || action.displayName;
-  });
-
-  // Only return a single error for each menu
-  // Note the filtering order (no-access will be preferred over filtered)
-  ids = filterItems(props, actionAccess, ids);
-  if (!ids) {
-    return 'no-access';
-  }
-
-  ids = filterItems(props, actionFilter, ids);
-  if (!ids) {
-    return 'filtered';
-  }
-
-  // Remove unwanted dividers
-  ids = filterExtraDividers(ids);
-
-  // Always add a divider before submenus
-  if (hasPreviousMenuItems) {
-    ids = [ 'divider', ...ids ];
-  }
-
-  const ret: MenuType<ItemDataT> = {
-    actionIds: ids,
-    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT,
-    actions: props.actions,
-  };
-
-  return ret;
-};
 
 // Convert ID to menu link element
 const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
-  menu: MenuType<ItemDataT>, 
+  menu: UI.ActionMenuType<ItemDataT>, 
   menuIndex: number, 
   actionId: string, 
   itemIndex: number,
   onClickAction: ActionClickHandler<ItemDataT>,
 ) => {
-  // A custom element
-  if (typeof actionId !== 'string') {
-    return actionId;
-  }
-
   const action = menu.actions.actions[actionId];
   if (!action) {
     return (
@@ -207,11 +63,25 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <ItemDataT extends UI.ActionItemDataValueType>(
-  id: string | MenuType<ItemDataT>
+  id: string | UI.ActionMenuType<ItemDataT>
 ) => typeof id !== 'string';
 
 interface State {
   formHandler: MenuFormDialogProps | null;
+}
+
+
+export interface ActionMenuDecoratorProps<ItemDataT extends UI.ActionItemDataValueType> extends 
+  UI.ActionMenuData<ItemDataT> {
+  remoteMenuId?: string;
+  className?: string;
+  caption?: React.ReactNode;
+  button?: boolean;
+}
+
+
+export interface ActionMenuDecoratorChildProps {
+  children: (onClick?: UI.MenuItemClickHandler) => React.ReactNode;
 }
 
 export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionItemDataValueType>(
@@ -242,11 +112,11 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     reduceLocalMenuItems = (
       onClickAction: ActionClickHandler,
       items: React.ReactChild[], 
-      menu: MenuType<ItemDataT>, 
+      menu: UI.ActionMenuType<ItemDataT>, 
       menuIndex: number,
     ) => {
       items.push(...menu.actionIds.map((actionId, actionIndex) => {
-        return getMenuItem(menu as MenuType<ItemDataT>, menuIndex, actionId, actionIndex, onClickAction);
+        return getMenuItem(menu as UI.ActionMenuType<ItemDataT>, menuIndex, actionId, actionIndex, onClickAction);
       }));
 
       return items;
@@ -256,10 +126,10 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
       return this.getPropsArray()
         .reduce(
           (reduced, cur) => {
-            reduced.push(parseMenu(cur, !!reduced.length));
+            reduced.push(parseActionMenu(cur, !!reduced.length));
             return reduced;
           },
-          [] as ReturnType<typeof parseMenu>[]
+          [] as ReturnType<typeof parseActionMenu>[]
         );
     }
 
@@ -283,7 +153,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     getChildren = (
       onClickAction: ActionClickHandler<ItemDataT>,
       remoteMenus: Array<React.ReactChild[]> | null,
-      onClickMenuItem: MenuItemClickHandler | undefined
+      onClickMenuItem: UI.MenuItemClickHandler | undefined
     ): React.ReactNode => {
       const menus = this.getMenus();
 
@@ -303,7 +173,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
             return this.reduceLocalMenuItems(
               onClickHandler,
               reduced, 
-              menu as MenuType<ItemDataT>, 
+              menu as UI.ActionMenuType<ItemDataT>, 
               menuIndex
             );
           }, 
@@ -333,6 +203,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
         );
       }
 
+      // Anything to show?
       if (!children.length) {
         return (
           <div className="item">
@@ -370,39 +241,16 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
         <>
           <ActionHandlerDecorator<ItemDataT>>
             { ({ onClickAction }) => {
-              let { actions, children, itemData, remoteMenuId, entityId, ...other } = this.props;
-
-              /*const menus = this.getMenus();
-
-              // Are there any items to show?
-              if (!menus.some(notError)) {
-                if (this.props.button) {
-                  return null;
-                }
-
-                const dropdownClassName = classNames(
-                  { 'no-access': menus.indexOf('no-access') !== -1 },
-                  { 'filtered': menus.indexOf('filtered') !== -1 },
-                  this.props.className,
-                );
-
-                return (
-                  <EmptyDropdown
-                    caption={ this.props.caption }
-                    className={ dropdownClassName }
-                  />
-                );
-              }*/
-
+              const { actions, children, itemData, remoteMenuId, entityId, ...other } = this.props;
               return (
                 <Component 
                   { ...other as ActionMenuDecoratorChildProps & DropdownComponentPropsT }
                 >
-                  { (onClickMenuItem?: MenuItemClickHandler) => (
+                  { (onClickMenuItem) => (
                     <RemoteMenuDecorator
                       selectedIds={ this.getPropsArray()
                         .map(props => props.itemData)
-                        .map(data => parseItemIds(data)) }
+                        .map(data => parseActionMenuItemIds(data)) }
                       remoteMenuIds={ this.getPropsArray() 
                         .map(props => props.remoteMenuId)
                       }

@@ -3,9 +3,9 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import DownloadableItemActions from 'actions/ui/DownloadableItemActions';
-import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 import * as UI from 'types/ui';
+import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
 
 
 export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo> 

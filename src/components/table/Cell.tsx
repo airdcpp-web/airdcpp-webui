@@ -89,7 +89,7 @@ export const FileActionCell = <CellDataT, ItemDataT extends UI.ActionItemDataVal
 export const ActionMenuCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
   { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
 ) => (
-  <TableActionMenu 
+  <TableActionMenu
     caption={ cellData }
     itemData={ rowDataGetter! }
     { ...props }

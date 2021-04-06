@@ -9,7 +9,7 @@ export interface ActionMenuProps extends SectionedDropdownProps {
   header?: React.ReactNode;
 }
 
-const ActionMenu = (
+const ActionDropdownMenu = (
   { header, children, ...other }: ActionMenuProps & ActionMenuDecoratorChildProps
 ) => (
   <SectionedDropdown { ...other }>
@@ -19,6 +19,6 @@ const ActionMenu = (
   </SectionedDropdown>
 );
 
-const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any>(ActionMenu);
+const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any>(ActionDropdownMenu);
 
 export { ActionMenuDecorated as ActionMenu }; 

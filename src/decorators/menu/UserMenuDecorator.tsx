@@ -7,10 +7,10 @@ import UserActions, { ActionUserType, ActionUserData } from 'actions/ui/UserActi
 import { getFilePath } from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
-import { ActionMenuDecoratorProps } from 'decorators/menu/ActionMenuDecorator';
 
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
+import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
 
 
 export interface UserMenuDecoratorProps extends 
