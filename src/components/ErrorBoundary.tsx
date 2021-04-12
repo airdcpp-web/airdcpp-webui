@@ -23,21 +23,27 @@ export class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
   render() {
     if (this.state.error) {
       return (
-        <h1>
-          Web UI has crashed with the following error: 
-          { ' ' }
-          { `"${this.state.error}"` }
-          <br/>
-          <br/>
-          Please submit a bug report with the requested information (and the error message above) at the
-          { ' ' }
-          <ExternalLink
-            url={ LinkConstants.ISSUE_TRACKER_URL }
-          >
-            issue tracker
-          </ExternalLink>
-          .
-        </h1>
+        <div style={{ margin: '10px' }}>
+          <h1>
+            Web UI has crashed 
+          </h1>
+          <p>
+            Please submit a bug report with the requested information (and the crash details below) at the
+            { ' ' }
+            <ExternalLink
+              url={ LinkConstants.ISSUE_TRACKER_URL }
+            >
+              issue tracker
+            </ExternalLink>
+            .
+          </p>
+          <h2>
+            Crash details
+          </h2>
+          <pre>
+            { this.state.error.stack }
+          </pre>
+        </div>
       );
     }
 
