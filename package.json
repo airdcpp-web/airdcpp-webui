@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.11.1-beta.1",
+  "version": "2.11.1-beta.2",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -118,7 +118,7 @@
     "react-emojione": "^5.0.1",
     "react-grid-layout": "^1.2.4",
     "react-hot-loader": "^4.13.0",
-    "react-i18next": "^11.8.12",
+    "react-i18next": "^11.8.13",
     "react-intersection-observer": "^8.31.0",
     "react-linkify": "^1.0.0-alpha",
     "react-measure": "^2.5.2",
