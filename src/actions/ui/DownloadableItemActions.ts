@@ -15,7 +15,7 @@ import * as UI from 'types/ui';
 import { toErrorResponse } from 'utils/TypeConvert';
 import SearchActions from 'actions/reflux/SearchActions';
 import { translate } from 'utils/TranslationUtils';
-import { makeMagnetLink } from 'utils/MagnetUtils';
+import { makeHashMagnetLink, makeTextMagnetLink } from 'utils/MagnetUtils';
 import { hasCopySupport } from 'utils/BrowserUtils';
 import { DupeEnum } from 'types/api';
 
@@ -62,7 +62,7 @@ const viewVideo = (data: UI.DownloadableItemData) => hasValidViewUser(data) && i
 const viewAudio = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isAudio(data) && sizeValid(data);
 const viewImage = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isPicture(data) && sizeValid(data);
 
-const copyMagnet = (data: UI.DownloadableItemData) => hasCopySupport() && !isDirectory(data);
+const copyMagnet = (data: UI.DownloadableItemData) => hasCopySupport();
 
 
 
@@ -166,7 +166,7 @@ export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({ data, 
 };
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  const link = makeMagnetLink(data.itemInfo);
+  const link = isDirectory(data) ? makeTextMagnetLink(data.itemInfo) : makeHashMagnetLink(data.itemInfo);
   return navigator.clipboard.writeText(link);
 };
 

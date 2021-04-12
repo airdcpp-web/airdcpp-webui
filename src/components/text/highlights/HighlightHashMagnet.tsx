@@ -5,11 +5,10 @@ import cx from 'classnames';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { formatSize } from 'utils/ValueFormat';
 import { TFunction } from 'i18next';
 import { createFileBundle } from 'services/api/QueueApi';
 import { dupeToStringType } from 'utils/TypeConvert';
-import { Magnet, parseMagnetLink } from 'utils/MagnetUtils';
+import { formatMagnetCaption } from 'utils/MagnetUtils';
 import { TableDownloadMenu } from 'components/menu';
 import { TableDropdownProps } from 'components/semantic/TableDropdown';
 
@@ -23,39 +22,20 @@ const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (item
 };
 
 
-export interface HighlightMagnetProps extends Pick<TableDropdownProps, 'position'> {
+export interface HighlightHashMagnetProps extends Pick<TableDropdownProps, 'position'> {
   highlightId: number;
-  text: string;
-  contentType: API.FileContentType;
+  contentType: API.FileContentType | null;
   dupe: API.Dupe | null;
   user: UI.DownloadSource | undefined;
   t: TFunction;
   menuProps: UI.MessageActionMenuData;
+  magnet: UI.HashMagnet;
 }
 
-const formatMagnetCaption = (magnet: Magnet, t: TFunction) => {
-  const { name, size } = magnet;
-
-  let caption = name;
-  if (!!size) {
-    caption += ` (${formatSize(size, t)})`;
-  }
-
-  return caption;
-};
-
-export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
-  text, dupe, user, contentType, menuProps, t, highlightId
+export const HighlightHashMagnet: React.FC<HighlightHashMagnetProps> = ({
+  dupe, user, contentType, menuProps, t, highlightId, magnet
 }) => {
-  const magnet = parseMagnetLink(text);
-  if (!magnet) {
-    return (
-      <>
-        { text }
-      </>
-    );
-  }
-
+  const { addDownload, boundary, ...other } = menuProps;
   const downloadUser = !!user && 
     user.flags.indexOf('bot') === -1 && 
     user.flags.indexOf('hidden') === -1 ? user : undefined;
@@ -63,19 +43,19 @@ export const HighlightMagnet: React.FC<HighlightMagnetProps> = ({
 
   const downloadData: UI.DownloadableItemInfo = {
     id: highlightId,
-    ...magnet,
     type: {
       id: 'file',
       str: '',
-      content_type: contentType,
+      content_type: contentType!,
     },
     dupe,
-    tth: magnet.tth,
+    name: magnet.name,
+    tth: magnet.tth!,
+    size: magnet.size!,
     path: undefined,
     time: undefined,
   };
 
-  const { addDownload, boundary, ...other } = menuProps;
   useEffect(
     () => {    
       addDownload(highlightId, {

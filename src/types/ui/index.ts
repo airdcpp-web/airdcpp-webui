@@ -3,6 +3,7 @@ export * from './common';
 export * from './downloads';
 export * from './extensions';
 export * from './form';
+export * from './magnet';
 export * from './menu';
 export * from './messages';
 export * from './modules';

@@ -10,10 +10,11 @@ export interface HighlightTextLinkProps /*extends Pick<TableDropdownProps, 'posi
   text: string;
   highlightId: number;
   menuProps: UI.MessageActionMenuData;
+  magnet?: UI.TextMagnet;
 }
 
 export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({ 
-  text, highlightId, menuProps
+  text, highlightId, menuProps, magnet
 }) => {
   const { boundary, ...other } = menuProps;
   return (
@@ -22,7 +23,8 @@ export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({
       actions={ MessageHighlightActions }
       itemData={{
         id: highlightId,
-        text
+        text,
+        magnet
       }}
       caption={ text }
       triggerIcon={ null }

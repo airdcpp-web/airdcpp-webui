@@ -11,7 +11,8 @@ import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { formatEmojis } from 'utils/EmojiFormat';
 
-import { HighlightBold, HighlightMagnet, HighlightUrlLink, HighlightTextLink } from './highlights';
+import { HighlightBold, HighlightHashMagnet, HighlightUrlLink, HighlightTextLink } from './highlights';
+import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
 
 
 interface HighlightProps {
@@ -46,19 +47,33 @@ const getHighlightNode = (
         />
       );
     case API.MessageHighlightTypeEnum.LINK_URL: {
-      if (highlight.text.startsWith('magnet:?') && highlight.content_type !== null) {
-        return (
-          <HighlightMagnet
-            key={ key }
-            text={ highlight.text }
-            dupe={ highlight.dupe }
-            contentType={ highlight.content_type }
-            user={ user }
-            highlightId={ highlight.id }
-            t={ t }
-            menuProps={ menuProps }
-          />
-        );
+      const magnet = parseMagnetLink(highlight.text);
+      if (!!magnet) {
+        if (magnet.tth) {
+          return (
+            <HighlightHashMagnet
+              key={ key }
+              dupe={ highlight.dupe }
+              contentType={ highlight.content_type }
+              user={ user }
+              highlightId={ highlight.id }
+              t={ t }
+              menuProps={ menuProps }
+              magnet={ magnet }
+            />
+          );
+        } else if (magnet.searchString) {
+          // Text magnet
+          return (
+            <HighlightTextLink
+              key={ key }
+              highlightId={ highlight.id }
+              text={ formatMagnetCaption(magnet, t) }
+              menuProps={ menuProps }
+              magnet={ magnet }
+            />
+          );
+        }
       }
 
       return (

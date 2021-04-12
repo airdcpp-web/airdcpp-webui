@@ -3,23 +3,27 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import SearchActions from 'actions/reflux/SearchActions';
+
 import { hasCopySupport } from 'utils/BrowserUtils';
+import { makeTextMagnetLink } from 'utils/MagnetUtils';
 
 
-export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & { id: number; };
+export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & { id: number; magnet?: UI.TextMagnet };
 
 const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({ data, location }) => {
   return SearchActions.search(
     {
-      name: data.text,
+      name: data.magnet ? data.magnet.searchString : data.text,
     }, 
     location
   );
 };
 
 const handleCopy: UI.ActionHandler<HighlightItemInfo> = ({ data }) => {
-  return navigator.clipboard.writeText(data.text);
+  const text = data.magnet ? makeTextMagnetLink(data.magnet) : data.text;
+  return navigator.clipboard.writeText(text);
 };
 
 const MessageHighlightActions: UI.ActionListType<HighlightItemInfo> = {
