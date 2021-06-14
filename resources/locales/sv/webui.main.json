@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "Katalogen är tom",
     "updatingView": "Uppdaterar vyn",
     "downloadFailed": "Nedladdning misslyckades",
+    "confirmLeave": "Bekräfta åtgärd",
+    "confirmLeaveDesc": "Tryck igen på bakåtknappen för att lämna fillistan",
     "table": {
       "name": "Namn",
       "size": "Storlek",

@@ -25,40 +25,45 @@ interface NotificationsProps {
 
 class Notifications extends Component<NotificationsProps> {
   notifications: System | null;
-  limiter = new RateLimiter(3, 3000, true);
+  limiter = new RateLimiter({
+    tokensPerInterval: 3,
+    interval: 3000,
+    fireImmediately: true,
+  });
+  
   unsubscribe: () => void;
 
   static propTypes = {
     location: PropTypes.object.isRequired,
   };
 
-  addNotification = (level: NotificationLevel, notification: UI.Notification) => {
-    (this.limiter as RateLimiter).removeTokens(1, (err, remainingTokens) => {
-      // Don't spam too many notifications as that would freeze the UI
-      // Always let the errors through as there shouldn't be too many of them
-      if (remainingTokens < 0 && level !== 'error') {
-        console.log('Notification ignored (rate limit reached)', notification);
-        return;
-      }
+  addNotification = async (level: NotificationLevel, notification: UI.Notification) => {
+    const remainingTokens = await this.limiter.removeTokens(1);
 
-      if ('Notification' in window && Notification.permission === 'granted' && !document.hasFocus()) {
-        this.showNativeNotification(level, notification);
-        return;
-      }
-      
-      // Embedded notification
+    // Don't spam too many notifications as that would freeze the UI
+    // Always let the errors through as there shouldn't be too many of them
+    if (remainingTokens < 0 && level !== 'error') {
+      console.log('Notification ignored (rate limit reached)', notification);
+      return;
+    }
 
-      // Rate limiter uses timeouts internally so the ref may not exist anymore...
-      if (!this.notifications) {
-        return;
-      }
+    if ('Notification' in window && Notification.permission === 'granted' && !document.hasFocus()) {
+      this.showNativeNotification(level, notification);
+      return;
+    }
+    
+    // Embedded notification
 
-      this.notifications.addNotification({
-        ...notification,
-        level,
-        position: 'tl',
-        autoDismiss: 5,
-      });
+    // Rate limiter uses timeouts internally so the ref may not exist anymore...
+    if (!this.notifications) {
+      return;
+    }
+
+    this.notifications.addNotification({
+      ...notification,
+      level,
+      position: 'tl',
+      autoDismiss: 5,
     });
   }
 

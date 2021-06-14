@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "Le dossier est vide",
     "updatingView": "Updating view",
     "downloadFailed": "Téléchargement échoué",
+    "confirmLeave": "Confirm action",
+    "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
       "name": "Nom",
       "size": "Taille",

@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "Папка пуста",
     "updatingView": "Updating view",
     "downloadFailed": "Ошибка загрузки",
+    "confirmLeave": "Confirm action",
+    "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
       "name": "Имя",
       "size": "Размер",

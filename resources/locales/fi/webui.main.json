@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "Kansio on tyhjä",
     "updatingView": "Päivitetään näkymää",
     "downloadFailed": "Lataus epäonnistui",
+    "confirmLeave": "Vahvista toiminto",
+    "confirmLeaveDesc": "Poistu tiedostolistasta napsauttamalla paluupainiketta uudestaan",
     "table": {
       "name": "Nimi",
       "size": "Koko",
@@ -891,8 +893,8 @@
       },
       "downloadOptions": {
         "segments": "Osat",
-        "compression": "Compression",
-        "buffers": "Buffers"
+        "compression": "Pakkaus",
+        "buffers": "Puskurit"
       }
     },
     "browserSpecificNote": "Tällä sivulla listatut asetukset ovat selainkohtaisia",

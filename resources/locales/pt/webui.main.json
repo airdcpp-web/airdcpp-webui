@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "A pasta está vazia",
     "updatingView": "A atualizar a visualização",
     "downloadFailed": "O descarregamento falhou",
+    "confirmLeave": "Confirm action",
+    "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
       "name": "Nome",
       "size": "Tamanho",

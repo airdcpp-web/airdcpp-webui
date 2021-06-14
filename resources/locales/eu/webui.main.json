@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "Direktorioa hutsik dago",
     "updatingView": "Ikuspegia eguneratzen",
     "downloadFailed": "Deskargak huts egin du",
+    "confirmLeave": "Confirm action",
+    "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
       "name": "Izena",
       "size": "Tamaina",

@@ -6,7 +6,7 @@ module.exports = {
   ],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: [
     'js',
@@ -21,5 +21,9 @@ module.exports = {
   setupFiles: [
     './jest/setup.js'
   ],
-  cacheDirectory: './jest/cache/'
+  cacheDirectory: './jest/cache/',
+  testEnvironment: 'jsdom',
+  transformIgnorePatterns: [
+    'node_modules/(?!escape-string-regexp).+\\.(js|jsx)$',
+  ]
 };

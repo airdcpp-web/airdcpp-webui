@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "O diretório está vazio",
     "updatingView": "Atualizando a visualização",
     "downloadFailed": "Falha no Download",
+    "confirmLeave": "Confirmar ação",
+    "confirmLeaveDesc": "Clique no botão voltar novamente para deixar esta lista de arquivos",
     "table": {
       "name": "Nome",
       "size": "Tamanho",

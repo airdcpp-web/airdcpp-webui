@@ -242,6 +242,8 @@
     "theDirectoryIsEmpty": "The directory is empty",
     "updatingView": "Updating view",
     "downloadFailed": "Download failed",
+    "confirmLeave": "Confirm action",
+    "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
       "name": "Nazwa",
       "size": "Rozmiar",
