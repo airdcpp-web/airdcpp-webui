@@ -242,8 +242,8 @@
     "theDirectoryIsEmpty": "De map is leeg",
     "updatingView": "Update weergave",
     "downloadFailed": "Download mislukt",
-    "confirmLeave": "Confirm action",
-    "confirmLeaveDesc": "Click the back button again to leave this filelist",
+    "confirmLeave": "Bevestig actie",
+    "confirmLeaveDesc": "Klik nogmaals de terug knop om de bestandslijst te verlaten",
     "table": {
       "name": "Naam",
       "size": "Grootte",

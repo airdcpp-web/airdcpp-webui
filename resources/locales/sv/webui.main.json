@@ -850,7 +850,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Försök att vara så noggrann som möjligt och ställ in FAKTISKA hastighet för din anslutning. Du kan använda en testsida så som <1>Speedtest.net</1> för att mäta din hastighet."
+        "connectionSpeedNote": "Försök att vara så noggrann som möjligt och ställ in FAKTISK hastighet för din anslutning. Du kan använda en testsida så som <1>Speedtest.net</1> för att mäta din hastighet."
       },
       "uploadLimits": {
         "manuallySet": "Manuellt inställd"
