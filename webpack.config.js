@@ -6,7 +6,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const zopfli = require('@gfx/zopfli');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Visualizer = require('webpack-visualizer-plugin');
+const Visualizer = require('webpack-visualizer-plugin2');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
@@ -87,9 +87,9 @@ const releasePlugins = [
       return zopfli.gzip(input, compressionOptions, callback);
     }
   }),
-  /*new Visualizer({
+  new Visualizer({
     filename: '../stats.html'
-  })*/
+  })
 ];
 
 const debugPlugins = [

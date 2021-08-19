@@ -34,17 +34,17 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
   // Load localization file
   let waitForLocale;
   try {
-    waitForLocale = require(`../../resources/locales/${url}`);
+    waitForLocale = import(`../../resources/locales/${url}`);
   } catch (e) {
     callback(null, { status: 404 });
     return;
   }
 
-  waitForLocale(
-    (locale: string) => {
+  waitForLocale
+    .then((locale: string) => {
       callback(locale, { status: 200 });
-    },
-    (e: any) => {
+    })
+    .catch((e: any) => {
       console.warn(`Failed to load resource ${url} (webpack)`, e);
 
       const fullUrl = e.request;
@@ -106,15 +106,8 @@ i18n
   ​
       // react i18next special options (optional)
       react: {
-        wait: false,
-        //bindI18n: 'languageChanged loaded',
-        //bindStore: 'added removed',
+        useSuspense: true,
         nsMode: 'default',
-        /*hashTransKey: (defaultValue: string) => {
-          return camelCase(defaultValue);
-          // return a key based on defaultValue or if you prefer to just 
-          // remind you should set a key return false and throw an error
-        },*/
       }
     }, 
     undefined
