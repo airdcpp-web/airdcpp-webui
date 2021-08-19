@@ -36,7 +36,7 @@
 		{
 			// We must inject the main chunk dynamically as well because the final path is not known on compile time
 			var script = document.createElement('script');
-			script.src = getBasePath() + "<%= htmlWebpackPlugin.files.chunks.main.entry%>";
+			script.src = getBasePath() + "<%= htmlWebpackPlugin.files.js%>";
 			document.body.appendChild(script);
 		}
 

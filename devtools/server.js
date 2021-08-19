@@ -85,12 +85,7 @@ console.log(chalk.bold('Building webpack...'));
 
 const compiler = webpack(Object.assign(config, { mode: 'development' }));
 app.use(require('webpack-dev-middleware')(compiler, {
-  historyApiFallback: true,
-  logLevel: 'warn',
   publicPath: config.output.publicPath,
-  watchOptions: {
-    ignored: /resources\/locales\/[a-z]{2}\/.*\.missing\.json/,
-  }
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));

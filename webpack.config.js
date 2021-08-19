@@ -8,7 +8,7 @@ const zopfli = require('@gfx/zopfli');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+// const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
@@ -60,18 +60,17 @@ let plugins = [
     chunksSortMode: 'none',
   }),
   new ForkTsCheckerWebpackPlugin(),
-  new ServiceWorkerWebpackPlugin({
-    entry: path.join(__dirname, 'src/sw.js'),
-    filename: process.env.SERVICEWORKER,
-    includes: [ 
-      '**/*.js', 
-      '**/*.html' 
-    ],
-  }),
+  //new ServiceWorkerWebpackPlugin({
+  //  entry: path.join(__dirname, 'src/sw.js'),
+  //  filename: process.env.SERVICEWORKER,
+  //  includes: [ 
+  //    '**/*.js', 
+  //    '**/*.html' 
+  //  ],
+  //}),
 ];
 
 const releasePlugins = [
-  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.LoaderOptionsPlugin({
     minimize: true,
     debug: false
@@ -88,9 +87,9 @@ const releasePlugins = [
       return zopfli.gzip(input, compressionOptions, callback);
     }
   }),
-  new Visualizer({
+  /*new Visualizer({
     filename: '../stats.html'
-  })
+  })*/
 ];
 
 const debugPlugins = [
@@ -119,15 +118,21 @@ module.exports = {
   performance: { // The following asset(s) exceed the recommended size limit (250 kB)
     hints: false 
   },
-
+  devServer: {
+    historyApiFallback: true,
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/[name].[hash].entry.js',
+    filename: 'js/[name].[chunkhash].entry.js',
     chunkFilename: chunkFilename,
+    assetModuleFilename: 'assets/[name].[hash][ext]',
+  },
+  watchOptions: {
+    ignored: /resources\/locales\/[a-z]{2}\/.*\.missing\.json/,
   },
 
   // cheap-module-source-map doesn't seem to work with Uglify
-  devtool: release ? 'module-source-map' : 'module-source-map',
+  devtool: release ? 'source-map' : 'cheap-module-source-map',
   module: {
     rules: [
       {
@@ -175,34 +180,15 @@ module.exports = {
             },
           }
         ]
-      }, { 
-        test: /\.(jpg|png|ico)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              limit: 100000,
-              name: 'images/[name].[hash].[ext]',
-              esModule: false
-            },
+      },{
+        test: /\.(woff|woff2|eot|ttf|svg|jpg|png|ico)$/i,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024
           }
-        ]
-      }, { 
-        test: /\.(woff|woff2|eot|ttf|svg)$/, 
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules/fomantic-ui-css') 
-        ], 
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 100000,
-              name: 'assets/[hash].[ext]'
-            }
-          }
-        ]
-      },
+        }
+      }
     ]
   },
   
@@ -225,6 +211,7 @@ module.exports = {
       }
     },
     minimize: release,
+    concatenateModules: true,
   },
   watchOptions: {
     ignored: /locales/
