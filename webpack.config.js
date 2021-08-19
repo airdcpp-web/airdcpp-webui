@@ -8,7 +8,7 @@ const zopfli = require('@gfx/zopfli');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin2');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-// const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
@@ -60,14 +60,14 @@ let plugins = [
     chunksSortMode: 'none',
   }),
   new ForkTsCheckerWebpackPlugin(),
-  //new ServiceWorkerWebpackPlugin({
-  //  entry: path.join(__dirname, 'src/sw.js'),
-  //  filename: process.env.SERVICEWORKER,
-  //  includes: [ 
-  //    '**/*.js', 
-  //    '**/*.html' 
-  //  ],
-  //}),
+  new InjectManifest({
+    swSrc: path.join(__dirname, 'src/sw.js'),
+    swDest: process.env.SERVICEWORKER,
+    include: [
+      /\.(js|html)$/,
+    ],
+    maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // Size of the uncompressed entry chunk exceeds the default limit
+  })
 ];
 
 const releasePlugins = [

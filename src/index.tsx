@@ -16,13 +16,13 @@ import App from './App';
 
 ReactDOM.render(<App/>, document.getElementById('container-main'));
 
-/*if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register(`${getBasePath()}${process.env.SERVICEWORKER}`)
     .then(sw => { 
       console.log('Service Worker Registered'); 
     });
-}*/
+}
 
 /*const render = (Component: React.ComponentType) => {
   ReactDOM.render(<Component/>, document.getElementById('container-main'));

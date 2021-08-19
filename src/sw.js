@@ -1,10 +1,15 @@
 const basePath = self.location.origin + self.location.pathname.replace(process.env.SERVICEWORKER, '');
 
-function mapAsset(path) {
-  return basePath + path.substr(1);
+function mapAsset(asset) {
+  return basePath + asset.url;
 }
 
-const assets = global.serviceWorkerOption.assets
+// Asset format:
+// {
+//   "revision": null,
+//   "url": "js/1532.7fc8e4ac5701a8feac67.chunk.js"
+// }
+const assets = self.__WB_MANIFEST
   .map(mapAsset);
 
 const DEBUG = true;
