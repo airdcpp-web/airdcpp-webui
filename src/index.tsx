@@ -16,7 +16,8 @@ import App from './App';
 
 ReactDOM.render(<App/>, document.getElementById('container-main'));
 
-if ('serviceWorker' in navigator) {
+// https://github.com/GoogleChrome/workbox/issues/1790
+if (process.env.NODE_ENV !== 'development' && 'serviceWorker' in navigator) {
   navigator.serviceWorker
     .register(`${getBasePath()}${process.env.SERVICEWORKER}`)
     .then(sw => { 

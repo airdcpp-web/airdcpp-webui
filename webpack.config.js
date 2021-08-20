@@ -60,14 +60,6 @@ let plugins = [
     chunksSortMode: 'none',
   }),
   new ForkTsCheckerWebpackPlugin(),
-  new InjectManifest({
-    swSrc: path.join(__dirname, 'src/sw.js'),
-    swDest: process.env.SERVICEWORKER,
-    include: [
-      /\.(js|html)$/,
-    ],
-    maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // Size of the uncompressed entry chunk exceeds the default limit
-  })
 ];
 
 const releasePlugins = [
@@ -89,6 +81,14 @@ const releasePlugins = [
   }),
   new Visualizer({
     filename: '../stats.html'
+  }),
+  new InjectManifest({
+    swSrc: path.join(__dirname, 'src/sw.js'),
+    swDest: process.env.SERVICEWORKER,
+    include: [
+      /\.(js|html)$/,
+    ],
+    maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // Size of the uncompressed entry chunk exceeds the default limit
   })
 ];
 
