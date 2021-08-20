@@ -23,16 +23,5 @@ module.exports = {
         "fomantic-ui": "fomantic-ui-css"
       }
     }]
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "react-hot-loader/babel"
-      ]
-    },
-    "test": {
-      // https://facebook.github.io/jest/docs/tutorial-webpack.html
-      //"plugins": ["transform-es2015-modules-commonjs"]
-    }
-  }
+  ]
 }

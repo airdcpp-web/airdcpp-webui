@@ -10,6 +10,8 @@ const Visualizer = require('webpack-visualizer-plugin2');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
 if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
@@ -33,7 +35,7 @@ const parseLocaleRegex = () => {
 
   const ret = `${locales.join('|')}`;
   return new RegExp(ret);
-}
+};
 
 // PLUGINS
 let plugins = [
@@ -93,7 +95,8 @@ const releasePlugins = [
 ];
 
 const debugPlugins = [
-  //new webpack.HotModuleReplacementPlugin()
+  new webpack.HotModuleReplacementPlugin(),
+  new ReactRefreshWebpackPlugin()
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
@@ -142,18 +145,16 @@ module.exports = {
           {
             loader: require.resolve('ts-loader'),
             options: {
-              // disable type checker - we will use it in fork plugin
-              transpileOnly: true,
+              getCustomTransformers: () => ({
+                before: !release ? [ReactRefreshTypeScript()] : [],
+              }),
+              // `ts-loader` does not work with HMR unless `transpileOnly` is used.
+              // If you need type checking, `ForkTsCheckerWebpackPlugin` is an alternative.
+              transpileOnly: !release,
             },
           },
         ],
-      },
-      /*{
-        test: /locales/,
-        loader: '@alienfast/i18next-loader',
-        // options here
-        //query: { overrides: [ '../node_modules/lib/locales' ] }
-      },*/ { 
+      }, { 
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
       }, {
@@ -213,8 +214,5 @@ module.exports = {
     },
     minimize: release,
     concatenateModules: true,
-  },
-  watchOptions: {
-    ignored: /locales/
   }
 };
