@@ -34,17 +34,17 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
   // Load localization file
   let waitForLocale;
   try {
-    waitForLocale = import(`../../resources/locales/${url}`);
+    waitForLocale = require(`../../resources/locales/${url}`);
   } catch (e) {
     callback(null, { status: 404 });
     return;
   }
 
-  waitForLocale
-    .then((locale: string) => {
+  waitForLocale(
+    (locale: string) => {
       callback(locale, { status: 200 });
-    })
-    .catch((e: any) => {
+    },
+    (e: any) => {
       console.warn(`Failed to load resource ${url} (webpack)`, e);
 
       const fullUrl = e.request;

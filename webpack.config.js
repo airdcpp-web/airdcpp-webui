@@ -148,11 +148,6 @@ module.exports = {
           },
         ],
       },
-      /*{ 
-        test: /\.(js|jsx|tsx|ts)$/, 
-        include: /src/, 
-        use: 'babel-loader' 
-      },*/ 
       /*{
         test: /locales/,
         loader: '@alienfast/i18next-loader',
@@ -180,8 +175,14 @@ module.exports = {
             },
           }
         ]
-      },{
-        test: /\.(woff|woff2|eot|ttf|svg|jpg|png|ico)$/i,
+      }, {
+        test: /\.(jpg|png|ico)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name].[hash][ext]'
+        }
+      }, {
+        test: /\.(woff|woff2|eot|ttf|svg)$/i,
         type: 'asset',
         parser: {
           dataUrlCondition: {
