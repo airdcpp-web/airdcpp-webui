@@ -2,35 +2,35 @@
   "widgets": {
     "application": {
       "widgetName": "Aplicació",
-      "addWidget": "Add widget...",
-      "loggedInAs": "Logged in as",
-      "clientStarted": "Client started",
-      "activeSessions": "Active sessions"
+      "addWidget": "Afegeix un giny...",
+      "loggedInAs": "Sessió iniciada per",
+      "clientStarted": "Client engegat fa",
+      "activeSessions": "Sessions actives"
     },
     "rss": {
-      "widgetName": "RSS feed",
-      "invalidUrl": "Invalid URL",
-      "lastUpdated": "Last updated: {{time}}",
+      "widgetName": "Canal RRS",
+      "invalidUrl": "URL no vàlida",
+      "lastUpdated": "Darrera actualització: {{time}}",
       "actions": {
-        "openLink": "Open link",
-        "search": "Search"
+        "openLink": "Obre l'enllaç",
+        "search": "Cerca"
       },
-      "loadingFeed": "Loading feed",
+      "loadingFeed": "S'està obrint el canal",
       "form": {
-        "feedUrlName": "Feed URL",
-        "feedUrlHelp": "RSS and Atom feeds are supported",
-        "feedCacheMinutesName": "Minimum refetch interval (minutes)"
+        "feedUrlName": "URL del canal",
+        "feedUrlHelp": "S'admeten canals RRS i Atom",
+        "feedCacheMinutesName": "Interval mínim entre descàrregues dels recursos (minuts)"
       },
-      "invalidFeed": "Invalid/unsupported feed: {{error}}"
+      "invalidFeed": "El canal no és vàlid/admès: {{error}}"
     },
     "transfers": {
       "widgetName": "Transferències",
-      "trafficBps": "Traffic (bps)",
-      "downloads": "Downloads",
-      "uploads": "Uploads",
+      "trafficBps": "Trànsit (bps)",
+      "downloads": "Baixades",
+      "uploads": "Pujades",
       "downloaded": "Baixat",
-      "uploaded": "Uploaded",
-      "downloadLimit": "Download limit",
+      "uploaded": "Pujat",
+      "downloadLimit": "Límit de baixada",
       "uploadLimit": "Límit de pujada"
     },
     "notepad": {
@@ -41,58 +41,58 @@
       "updatedAgo": "Actualitzat {{date}}"
     },
     "actions": {
-      "editWidget": "Edit widget",
-      "removeWidget": "Remove widget",
+      "editWidget": "Edita el giny",
+      "removeWidget": "Suprimeix el giny",
       "prompts": {
-        "removeApprove": "Remove widget",
-        "removeReject": "Don't remove",
-        "removeContent": "Are you sure that you want to remove the widget {{item.settings.name}}?"
+        "removeApprove": "Suprimeix el giny",
+        "removeReject": "No el suprimeixis",
+        "removeContent": "Voleu eliminar aquest giny {{item.settings.name}}?"
       }
     },
     "form": {
       "nameName": "Nom"
     },
-    "widgetPositionHint": "Widgets and their positions are browser-specific",
-    "accessDenied": "You aren't allowed to access this widget",
-    "settingsMissing": "Widget settings missing"
+    "widgetPositionHint": "Els ginys i les seves posicions són específiques de cada navegador",
+    "accessDenied": "No podeu accedir a aquest giny",
+    "settingsMissing": "La configuració d'aquest giny no està disponible"
   },
   "events": {
-    "events": "Events",
-    "loadingMessages": "Loading messages",
-    "noMessagesToShow": "No messages to show",
+    "events": "Esdeveniments",
+    "loadingMessages": "S'està carregant els missatges",
+    "noMessagesToShow": "No hi ha missatges disponibles",
     "actions": {
-      "clear": "Clear"
+      "clear": "Neteja"
     },
     "notifications": {
-      "information": "Information",
+      "information": "Informació",
       "info": "INFO",
-      "warning": "WARNING",
+      "warning": "ADVENTÈNCIA",
       "error": "ERROR",
       "actions": {
-        "viewEvents": "View events"
+        "viewEvents": "Visualitza els esdeveniments"
       }
     }
   },
   "table": {
     "filter": {
       "filter": "Filtre",
-      "matchType": "Match type",
-      "partial": "Partial",
+      "matchType": "Tipus de coincidència",
+      "partial": "Parcial",
       "regex": "Regex",
-      "wildcard": "Wildcard",
-      "exact": "Exact",
-      "filterByProfile": "Filter by profile",
-      "allProfiles": "All profiles"
+      "wildcard": "Comodí",
+      "exact": "Exacte",
+      "filterByProfile": "Filtra per perfil",
+      "allProfiles": "Tots els perfils"
     }
   },
   "search": {
     "table": {
       "name": "Nom",
-      "size": "Size",
+      "size": "Mida",
       "relevance": "Relevance",
       "type": "Type",
       "connection": "Connexió",
-      "users": "Users",
+      "users": "Usuaris",
       "time": "Last modified",
       "slots": "Slots"
     },
@@ -116,18 +116,18 @@
     "path": "Path",
     "searchOffline": "You must to be connected to at least one hub in order to perform searches",
     "enterSearchString": "Enter search string...",
-    "search": "Search",
+    "search": "Cerca",
     "usersCount": "User ({{count}})",
-    "usersCount_plural": "Users ({{count}})",
+    "usersCount_plural": "Usuaris ({{count}})",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
-    "xUsersNicks_plural": "{{count}} users ({{user.nicks}})",
+    "xUsersNicks_plural": "{{count}} useris ({{user.nicks}})",
     "noResults": "No results found for \"{{searchString}}\"",
     "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
   },
   "share": {
     "table": {
       "path": "Path",
-      "size": "Size",
+      "size": "Mida",
       "virtual_name": "Virtual name",
       "profiles": "Profiles",
       "last_refresh_time": "Last refreshed",
@@ -142,7 +142,7 @@
       "refreshAll": "Refresh all",
       "prompts": {
         "removeRootApprove": "Remove directory",
-        "removeRootReject": "Don't remove",
+        "removeRootReject": "No ho suprimeixis",
         "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
       }
     },
@@ -175,13 +175,13 @@
         "changePasswordApprove": "Update password",
         "changePasswordContent": "Enter new password for the hub {{item.name}}",
         "removePasswordApprove": "Remove password",
-        "removePasswordReject": "Don't remove",
+        "removePasswordReject": "No ho suprimeixis",
         "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
         "createPasswordPlaceholder": "Enter password",
         "createPasswordApprove": "Set password",
         "createPasswordContent": "Set password for the hub {{item.name}}",
         "removeApprove": "Remove favorite hub",
-        "removeReject": "Don't remove",
+        "removeReject": "No ho suprimeixis",
         "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
       }
     },
@@ -231,7 +231,7 @@
   "filelists": {
     "new": "Open filelist",
     "newDesc": "Start browsing a new filelist",
-    "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
+    "offlineMessage": "Heu d'estar connectats a almenys un centre per poder baixar llistes de fitxers d'altres usuaris",
     "directorySize": "Directory size",
     "totalListSize": "Total list size",
     "browseOwnShare": "Browse own share...",
@@ -246,7 +246,7 @@
     "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
       "name": "Nom",
-      "size": "Size",
+      "size": "Mida",
       "time": "Last modified",
       "type": "Type"
     },
@@ -263,7 +263,7 @@
       "download": "Baixada",
       "downloadTo": "Descarrega a…",
       "findNfo": "Find NFO",
-      "search": "Search",
+      "search": "Cerca",
       "sendMessage": "Send message",
       "browseShare": "Browse share",
       "ignoreMessages": "Ignore messages",
@@ -277,8 +277,8 @@
       "unignoreMessages": "Unignore messages",
       "closeAndDontShowAgain": "Close and don't show again",
       "notifications": {
-        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "ignoreUserSuccess": "S'ha afegit l'usuari {{item.nicks}}  a la llista d'usuaris ignorats",
+        "unignoreUserSuccess": "S'ha eliminat l'usuari {{item.nicks}} de la llista d'usuaris ignorats",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
         "copySuccess": "Text was copied to clipboard"
       },
@@ -323,7 +323,7 @@
     "loadingItems": "Loading items",
     "root": "Root",
     "name": "Nom",
-    "size": "Size",
+    "size": "Mida",
     "path": "Path",
     "createDirectory": "Create directory",
     "create": "Crea",
@@ -345,7 +345,7 @@
     "recentSessions": "Recent sessions",
     "openedAgo": "Opened {{timeAgo}}",
     "waitingForServerResponse": "Waiting for server response",
-    "loadingMessages": "Loading messages",
+    "loadingMessages": "S'està carregant els missatges",
     "loadingSession": "Loading session",
     "yes": "Sí",
     "no": "No",
@@ -450,8 +450,8 @@
     "newDesc": "Connect to a new hub",
     "userList": "User list",
     "sharePerUser": "{{total}} ({{average}}/user)",
-    "xUsers": "{{count}} users",
-    "xUsers_plural": "{{count}} users",
+    "xUsers": "{{count}} usuaris",
+    "xUsers_plural": "{{count}} usuaris",
     "redirectRequested": "Redirect requested",
     "acceptRedirect": "Accept redirect to {{url}}",
     "passwordRequired": "Password required",
@@ -462,7 +462,7 @@
   "queue": {
     "table": {
       "name": "Nom",
-      "size": "Size",
+      "size": "Mida",
       "status": "Estat",
       "sources": "Sources",
       "secondsLeft": "Temps restant",
@@ -491,11 +491,11 @@
       "forceInShare": "Force in share",
       "prompts": {
         "removeBundleApprove": "Remove bundle",
-        "removeBundleReject": "Don't remove",
+        "removeBundleReject": "No ho suprimeixis",
         "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
         "removeBundleCheckbox": "Remove finished files",
         "removeFileApprove": "Remove file",
-        "removeFileReject": "Don't remove",
+        "removeFileReject": "No ho suprimeixis",
         "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
         "removeFileCheckbox": "Remove on disk"
       },
@@ -517,7 +517,7 @@
     "hubs": "Centres",
     "lastKnownSpeed": "Last known speed",
     "files": "Fitxers",
-    "size": "Size",
+    "size": "Mida",
     "notifications": {
       "bundleWasAddedInQueue": "Bundle was added in queue",
       "bundleDownloadError": "Download error: {{error}}",
@@ -557,7 +557,7 @@
     "actions": {
       "detectNow": "Detect now",
       "addDirectory": "Add directory",
-      "addUser": "Add user",
+      "addUser": "Afegeix un usuari",
       "editUser": "Edit user",
       "editDirectory": "Edit directory",
       "removeDirectory": "Remove directory",
@@ -580,16 +580,16 @@
         "editProfileApprove": "Canvia el nom",
         "editProfileContent": "Escriviu el nou nom del perfil {{item.name}}",
         "removeShareExcludeApprove": "Remove path",
-        "removeShareExcludeReject": "Don't remove",
+        "removeShareExcludeReject": "No ho suprimeixis",
         "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
         "removeWebUserApprove": "Remove user",
-        "removeWebUserReject": "Don't remove",
+        "removeWebUserReject": "No ho suprimeixis",
         "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
         "removeFavoriteDirectoryApprove": "Remove directory",
-        "removeFavoriteDirectoryReject": "Don't remove",
+        "removeFavoriteDirectoryReject": "No ho suprimeixis",
         "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
         "removeSearchTypeApprove": "Remove type",
-        "removeSearchTypeReject": "Don't remove",
+        "removeSearchTypeReject": "No ho suprimeixis",
         "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
       }
     },
@@ -597,7 +597,7 @@
       "profile": "Profile",
       "connectivity": "Connectivity",
       "speedAndLimits": "Speed and limits",
-      "downloads": "Downloads",
+      "downloads": "Baixades",
       "sharing": "Sharing",
       "view": "Vista",
       "about": "About",
@@ -612,7 +612,7 @@
       "encryption": "Encryption",
       "user": "User",
       "awayMode": "Mode absent",
-      "ignoredUsers": "Ignored users",
+      "ignoredUsers": "Usuaris ignorats",
       "miscellaneous": "Miscellaneous",
       "manageInstalled": "Manage installed",
       "extensionCatalog": "Extension catalog",
@@ -621,7 +621,7 @@
       "transferStatistics": "Transfer statistics",
       "shareStatistics": "Share statistics",
       "hubStatistics": "Hub statistics",
-      "users": "Users",
+      "users": "Usuaris",
       "logging": "Logging",
       "webServer": "Web server",
       "advancedServerSettings": "Parámetres avançats del servidor",
@@ -643,7 +643,7 @@
       "priorities": "Priorities",
       "notificationsCaption": "Notifications",
       "histories": "Histories",
-      "events": "Events",
+      "events": "Esdeveniments",
       "appearance": "Appearance"
     },
     "advanced": "Advanced",
@@ -690,7 +690,7 @@
       "ignoredUsers": {
         "user": "User",
         "messagesIgnored": "Messages ignored",
-        "noIgnoredUsers": "No ignored users"
+        "noIgnoredUsers": "No hi ha cap usuari ignorat"
       },
       "miscellaneous": {
         "form": {
@@ -729,7 +729,7 @@
         "apiVersion": "API version",
         "apiFeatureLevel": "API feature level",
         "started": "Started",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Sessions actives",
         "serverThreads": "Server threads",
         "resources": "Resources",
         "homePage": "Home page",
@@ -767,9 +767,9 @@
       },
       "hubs": {
         "noHubsOnline": "No hubs online",
-        "totalUsers": "Total users",
-        "uniqueUsers": "Unique users",
-        "activeUsers": "Active users",
+        "totalUsers": "Usuaris totals",
+        "uniqueUsers": "Usuaris únics",
+        "activeUsers": "Usuaris actius",
         "totalShare": "Total share",
         "averageSharePerUser": "Average share per user",
         "averageAdcDownloadSpeed": "Average ADC download speed",
@@ -792,7 +792,7 @@
       "users": {
         "username": "Username",
         "permissions": "Permissions",
-        "activeSessions": "Active sessions",
+        "activeSessions": "Sessions actives",
         "lastLoggedIn": "Last logged in",
         "administrator": "Administrator",
         "form": {
@@ -802,10 +802,10 @@
         },
         "permissionSelector": {
           "administrator": "Administrator",
-          "search": "Search",
+          "search": "Cerca",
           "download": "Baixada",
           "transfers": "Transferències",
-          "events": "Events",
+          "events": "Esdeveniments",
           "view": "Vista",
           "edit": "Edita",
           "queue": "Queue",
@@ -818,7 +818,7 @@
           "filelists": "Filelists",
           "viewedFiles": "Viewed files"
         },
-        "addWebUser": "Add web user",
+        "addWebUser": "Afegeix un usuari web",
         "editUser": "Edit user",
         "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
       }
@@ -903,7 +903,7 @@
         "popupNotifications": "Popup notifications",
         "form": {
           "notifyMentionMyNickName": "Mentions of my nick",
-          "notifyPmUserName": "Private messages (users)",
+          "notifyPmUserName": "Missatges privats (usuaris)",
           "notifyPmBotName": "Private messages (bots)",
           "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
           "notifyBundleStatusName": "Bundle status changes",
@@ -927,7 +927,7 @@
   },
   "extensions": {
     "actions": {
-      "uninstall": "Uninstall",
+      "uninstall": "Desinstal·la",
       "start": "Start",
       "installFromUrl": "Install from URL",
       "install": "Install",
@@ -939,7 +939,7 @@
         "installUrlApprove": "Install",
         "installUrlContent": "Enter download URL",
         "removeApprove": "Remove extension",
-        "removeReject": "Don't remove",
+        "removeReject": "No ho suprimeixis",
         "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
       }
     }
@@ -947,13 +947,13 @@
   "navigation": {
     "home": "Home",
     "queue": "Queue",
-    "search": "Search",
+    "search": "Cerca",
     "transfers": "Transferències",
     "hubs": "Centres",
     "messages": "Missatges",
     "filelists": "Filelists",
     "files": "Fitxers",
-    "events": "Events",
+    "events": "Esdeveniments",
     "favoriteHubs": "Centres favorits",
     "share": "Share",
     "settings": "Settings",
