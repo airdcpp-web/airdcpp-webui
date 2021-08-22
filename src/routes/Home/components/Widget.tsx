@@ -32,9 +32,10 @@ export interface WidgetProps {
   rootWidgetT: UI.ModuleTranslator;
 }
 
-const Widget: React.FC<WidgetProps> = ({ 
-  widgetInfo, settings, componentId, children, className, rootWidgetT, ...other 
-}) => {
+const Widget = React.forwardRef<HTMLDivElement, WidgetProps>((
+  { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other }, 
+  ref
+) => {
   const error = getError(widgetInfo, settings, rootWidgetT);
   const Component = widgetInfo.component;
   
@@ -42,8 +43,9 @@ const Widget: React.FC<WidgetProps> = ({
   const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
   return (
     <div 
-      className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
       { ...other }
+      ref={ ref }
+      className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
     >
       <div className="content header-row">
         <div className="header">
@@ -82,7 +84,7 @@ const Widget: React.FC<WidgetProps> = ({
       { children }
     </div>
   );
-};
+});
 
 /*Widget.propTypes = {
   widgetInfo: PropTypes.object.isRequired,
