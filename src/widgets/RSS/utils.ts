@@ -1,4 +1,4 @@
-import { parse as parseXML, X2jOptions } from 'fast-xml-parser';
+import { XMLParser, X2jOptions } from 'fast-xml-parser';
 import { decode } from 'he';
 
 import { fetchCorsSafeData } from 'services/HttpService';
@@ -25,12 +25,12 @@ export const getUniqueEntryKey = (entry: FeedItem): string => {
 };
 
 const XMLParserOptions: Partial<X2jOptions> = {
-  attrNodeName: 'attr',
+  attributesGroupName: 'attr',
   textNodeName : 'text',
   parseAttributeValue : true,
   ignoreAttributes : false,
   attributeNamePrefix: '',
-  attrValueProcessor: a => decode(a, { isAttributeValue: true }),
+  attributeValueProcessor: a => decode(a, { isAttributeValue: true }),
   tagValueProcessor : a => decode(a),
 };
 
@@ -39,7 +39,8 @@ export const fetchRSSFeed = async (feedUrl: string) => {
 
   console.log('RSS feed received', feedUrl);
 
-  const jsonFeed = parseXML(data, XMLParserOptions);
+  const parser = new XMLParser();
+  const jsonFeed = parser.parse(data, XMLParserOptions);
   return jsonFeed;
 };
 
