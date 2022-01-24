@@ -180,13 +180,24 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     title: PropTypes.node,
   };*/
 
-  state: State<ValueType> = {
-    error: null,
-    formValue: {},
-  };
+  state: State<ValueType>;
 
   sourceValue: Partial<ValueType>;
   form: form.Form;
+
+  constructor(props: Props<ValueType>) {
+    super(props);
+
+    this.sourceValue = normalizeSettingValueMap(
+      props.value || undefined, 
+      this.props.fieldDefinitions
+    ) as Partial<ValueType>;
+
+    this.state = {
+      formValue: this.sourceValue,
+      error: null,
+    };
+  }
 
   setSourceValue = (value?: Partial<ValueType> | null) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value || undefined);
@@ -194,10 +205,6 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     if (this.props.onSourceValueUpdated) {
       this.props.onSourceValueUpdated(this.sourceValue);
     }
-  }
-
-  componentDidMount() {
-    this.setSourceValue(this.props.value);
   }
 
   componentDidUpdate(prevProps: FormProps<ValueType>) {

@@ -16,3 +16,7 @@ export enum FileSelectModeEnum {
   DIRECTORY,
   EXISTING_FILE,
 }
+
+export interface IdItemType {
+  id: API.IdType;
+}

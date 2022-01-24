@@ -19,6 +19,7 @@ export * from './settings';
 export * from './share';
 export * from './shareprofiles';
 export * from './system';
+export * from './table';
 export * from './transfers';
 export * from './viewed-files';
 export * from './web-users';

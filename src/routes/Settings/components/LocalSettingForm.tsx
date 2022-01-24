@@ -42,7 +42,7 @@ class LocalSettingForm extends Component<Props> {
     };
   }
 
-  onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray) => {
+  onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray, allFields) => {
     LocalSettingStore.setValues(changedSettingArray);
 
     this.setState({

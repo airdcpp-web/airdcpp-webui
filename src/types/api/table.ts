@@ -21,13 +21,13 @@ export interface TableFilter {
 }
 
 
-export type TableItem = {
+export type TableItemUpdateData<DataT> = {
   id: IdType;
-  properties: object;
+  properties: Partial<DataT>;
 };
 
-export type TableData = {
-  items: TableItem[];
+export type TableUpdateData<DataT> = {
+  items: TableItemUpdateData<DataT>[];
   range_start: number;
   total_items: number;
   matching_items: number;

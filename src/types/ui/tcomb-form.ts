@@ -109,7 +109,7 @@ export declare namespace form {
 
     type SelectOption = { 
         value: string;
-        text: string;
+        text: React.ReactNode;
         disabled?: boolean;
         options?: Array<SelectOption>;
     };
