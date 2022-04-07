@@ -1,7 +1,7 @@
 {
   "widgets": {
     "application": {
-      "widgetName": "Application",
+      "widgetName": "Додаток",
       "addWidget": "Add widget...",
       "loggedInAs": "Logged in as",
       "clientStarted": "Client started",
@@ -13,7 +13,7 @@
       "lastUpdated": "Last updated: {{time}}",
       "actions": {
         "openLink": "Open link",
-        "search": "Search"
+        "search": "Шукати"
       },
       "loadingFeed": "Loading feed",
       "form": {
@@ -26,12 +26,12 @@
     "transfers": {
       "widgetName": "Transfers",
       "trafficBps": "Traffic (bps)",
-      "downloads": "Downloads",
+      "downloads": "Завантаження",
       "uploads": "Uploads",
-      "downloaded": "Downloaded",
-      "uploaded": "Uploaded",
+      "downloaded": "Завантажено",
+      "uploaded": "Вивантажено",
       "downloadLimit": "Download limit",
-      "uploadLimit": "Upload limit"
+      "uploadLimit": "Ліміт вивантажень(up)"
     },
     "notepad": {
       "widgetName": "Notes"
@@ -50,7 +50,7 @@
       }
     },
     "form": {
-      "nameName": "Name"
+      "nameName": "Ім'я"
     },
     "widgetPositionHint": "Widgets and their positions are browser-specific",
     "accessDenied": "You aren't allowed to access this widget",
@@ -61,7 +61,7 @@
     "loadingMessages": "Loading messages",
     "noMessagesToShow": "No messages to show",
     "actions": {
-      "clear": "Clear"
+      "clear": "Очистити"
     },
     "notifications": {
       "information": "Information",
@@ -87,12 +87,12 @@
   },
   "search": {
     "table": {
-      "name": "Name",
-      "size": "Size",
+      "name": "Ім'я",
+      "size": "Розмір",
       "relevance": "Relevance",
       "type": "Type",
-      "connection": "Connection",
-      "users": "Users",
+      "connection": "З'єднання",
+      "users": "Користувачі",
       "time": "Last modified",
       "slots": "Slots"
     },
@@ -110,13 +110,13 @@
     "resetAll": "Reset all",
     "user": "User",
     "hubs": "Hubs",
-    "connection": "Connection",
+    "connection": "З'єднання",
     "slots": "Slots",
     "ip": "IP",
-    "path": "Path",
+    "path": "Шлях",
     "searchOffline": "You must to be connected to at least one hub in order to perform searches",
     "enterSearchString": "Enter search string...",
-    "search": "Search",
+    "search": "Шукати",
     "usersCount": "User ({{count}})",
     "usersCount_plural": "Users ({{count}})",
     "xUsersNicks": "{{count}} user ({{user.nicks}})",
@@ -126,8 +126,8 @@
   },
   "share": {
     "table": {
-      "path": "Path",
-      "size": "Size",
+      "path": "Шлях",
+      "size": "Розмір",
       "virtual_name": "Virtual name",
       "profiles": "Profiles",
       "last_refresh_time": "Last refreshed",
@@ -152,12 +152,12 @@
     "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
     "addShareDirectory": "Add share directory",
     "editShareDirectory": "Edit share directory",
-    "unknown": "Unknown",
+    "unknown": "Невідомий",
     "form": {
-      "pathName": "Path",
+      "pathName": "Шлях",
       "virtualNameName": "Virtual name",
       "virtualNameHelp": "Directories with identical virtual names will be merged in filelist",
-      "profilesName": "Share profiles",
+      "profilesName": "Профілі роздачі",
       "profilesHelp": "New share profiles can be created from application settings",
       "incomingName": "Incoming"
     }
@@ -167,8 +167,8 @@
       "addNew": "Add new",
       "setPassword": "Set password",
       "edit": "Edit",
-      "remove": "Remove",
-      "changePassword": "Change password",
+      "remove": "Вилучити",
+      "changePassword": "Змінити пароль",
       "removePassword": "Remove password",
       "prompts": {
         "changePasswordPlaceholder": "Enter password",
@@ -187,12 +187,12 @@
     },
     "table": {
       "connectState": "State",
-      "name": "Name",
+      "name": "Ім'я",
       "autoConnect": "Auto connect",
-      "nick": "Nick",
+      "nick": "Прізвисько",
       "hasPassword": "Password",
       "hubUrl": "Address",
-      "shareProfile": "Share profile"
+      "shareProfile": "Профіль роздачі"
     },
     "notSet": "Not set",
     "set": "Set",
@@ -201,24 +201,24 @@
     "editFavoriteHub": "Edit favorite hub",
     "form": {
       "genericName": "Hub properties",
-      "nameName": "Name",
+      "nameName": "Ім'я",
       "hubUrlName": "Hub URL",
       "hubDescriptionName": "Hub description",
-      "shareProfileName": "Share profile",
+      "shareProfileName": "Профіль роздачі",
       "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
       "autoConnectName": "Auto connect",
       "userName": "User setting overrides",
-      "nickName": "Nick",
+      "nickName": "Прізвисько",
       "userDescriptionName": "User description",
       "connectivityV4Name": "Connectivity setting overrides (IPv4)",
       "connectionModeV4Name": "Connectivity mode",
-      "connectionModeV4Option-1": "Disabled",
+      "connectionModeV4Option-1": "Вимкнено",
       "connectionModeV4Option0": "Активний режим",
       "connectionModeV4Option2": "Passive mode",
       "connectionIpV4Name": "IP address",
       "connectivityV6Name": "Connectivity setting overrides (IPv6)",
       "connectionModeV6Name": "Connectivity mode",
-      "connectionModeV6Option-1": "Disabled",
+      "connectionModeV6Option-1": "Вимкнено",
       "connectionModeV6Option0": "Активний режим",
       "connectionModeV6Option2": "Passive mode",
       "connectionIpV6Name": "IP address",
@@ -239,35 +239,35 @@
     "userOffline": "User offline",
     "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
     "noContentToDisplay": "No content to display",
-    "theDirectoryIsEmpty": "The directory is empty",
+    "theDirectoryIsEmpty": "Тека порожня",
     "updatingView": "Updating view",
     "downloadFailed": "Download failed",
     "confirmLeave": "Confirm action",
     "confirmLeaveDesc": "Click the back button again to leave this filelist",
     "table": {
-      "name": "Name",
-      "size": "Size",
+      "name": "Ім'я",
+      "size": "Розмір",
       "time": "Last modified",
       "type": "Type"
     },
     "actions": {
       "reload": "Reload",
-      "refreshInShare": "Refresh in share",
-      "close": "Close",
+      "refreshInShare": "Оновити в роздачі",
+      "close": "Закрити",
       "details": "Details"
     }
   },
   "common": {    
     "actions": {
-      "copy": "Copy",
-      "download": "Download",
+      "copy": "Копіювати",
+      "download": "Завантажити",
       "downloadTo": "Download to...",
       "findNfo": "Find NFO",
-      "search": "Search",
-      "sendMessage": "Send message",
+      "search": "Шукати",
+      "sendMessage": "Надіслати повідомлення",
       "browseShare": "Browse share",
       "ignoreMessages": "Ignore messages",
-      "viewAsText": "View as text",
+      "viewAsText": "Дивитись як текст",
       "playVideo": "Play video",
       "viewImage": "View image",
       "playAudio": "Play audio",
@@ -287,12 +287,12 @@
         "restartWebSystemReject": "Don't restart",
         "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
         "shutdownSystemApprove": "Continue and shut down",
-        "shutdownSystemReject": "Cancel",
+        "shutdownSystemReject": "Скасувати",
         "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
       }
     },
     "units": {
-      "b": "B",
+      "b": "Б",
       "kib": "KiB",
       "mib": "MiB",
       "gib": "GiB",
@@ -304,7 +304,7 @@
       "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
-    "filename": "Filename",
+    "filename": "Ім'я файла",
     "xBytes": "{{bytes}} bytes",
     "unitsPerSecond": "{{units}}/s",
     "today": "Today",
@@ -322,24 +322,24 @@
     "failedToLoadContent": "Failed to load content",
     "loadingItems": "Loading items",
     "root": "Root",
-    "name": "Name",
-    "size": "Size",
-    "path": "Path",
+    "name": "Ім'я",
+    "size": "Розмір",
+    "path": "Шлях",
     "createDirectory": "Create directory",
     "create": "Create",
     "directoryName": "Directory name",
     "computer": "Computer",
     "history": "Previous",
-    "shared": "Shared",
-    "favorites": "Favorites",
+    "shared": "Роздано",
+    "favorites": "Обране",
     "dupes": "Dupes",
     "browse": "Browse",
-    "download": "Download",
-    "close": "Close",
+    "download": "Завантажити",
+    "close": "Закрити",
     "noPathsToDisplay": "No paths to display",
     "spaceFree": "{{freeSpace}} free",
-    "select": "Select",
-    "new": "New",
+    "select": "Вибрати",
+    "new": "Новий",
     "currentSessions": "Current sessions",
     "closeAll": "Close all",
     "recentSessions": "Recent sessions",
@@ -348,8 +348,8 @@
     "loadingMessages": "Loading messages",
     "loadingSession": "Loading session",
     "yes": "Yes",
-    "no": "No",
-    "cancel": "Cancel",
+    "no": "Ні",
+    "cancel": "Скасувати",
     "loading": "Loading",
     "loadingData": "Loading data...",
     "noOnlineHubs": "No online hubs",
@@ -360,14 +360,14 @@
     "statisticsNotAvailable": "Statistics not available",
     "save": "Save",
     "enterNick": "Enter nick...",
-    "disabled": "Disabled",
+    "disabled": "Вимкнено",
     "enterLimitUnit": "Enter limit ({{unit}}/s)",
     "enterLimit": "Enter limit...",
     "removeLimit": "Remove limit",
     "tlsOk": "Authenticity of the certificate is validated",
     "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
     "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
-    "upload": "Upload",
+    "upload": "Вивантаження(up)",
     "sendFiles": "Send files",
     "removeSharedFile": "Remove shared file",
     "fileNoLongerShared": "File {{file.name}} is no longer shared",
@@ -400,12 +400,12 @@
       "fieldOptional": "{{definition.title}} (optional)",
       "minimumValueError": "Minimum allowed value is {{value}}",
       "maximumValueError": "Maximum allowed value is {{value}}",
-      "any": "Any",
-      "directory": "Directory",
-      "file": "File",
+      "any": "Будь-які",
+      "directory": "Тека",
+      "file": "Файл",
       "add": "Додати",
-      "down": "Down",
-      "remove": "Remove",
+      "down": "Вниз",
+      "remove": "Вилучити",
       "up": "Up",
       "offlineMessage": "No connected hubs",
       "loading": "Loading"
@@ -413,20 +413,20 @@
   },
   "hubs": {
     "table": {
-      "nick": "Nick",
+      "nick": "Прізвисько",
       "shareSize": "Share size",
-      "description": "Description",
+      "description": "Опис",
       "tag": "Tag",
-      "uploadSpeed": "Upload speed",
-      "downloadSpeed": "Download speed",
+      "uploadSpeed": "Швидкість вивантаження(up)",
+      "downloadSpeed": "Швидкість завантаження",
       "ip4": "IP (v4)",
       "ip6": "IP (v6)",
-      "fileCount": "Files"
+      "fileCount": "Файли"
     },
     "actions": {
       "reconnect": "Reconnect",
-      "clearChat": "Clear chat",
-      "close": "Close",
+      "clearChat": "Очистити чат",
+      "close": "Закрити",
       "addToFavorites": "Додати до обраного",
       "useChatNotification": "Use chat notification",
       "showJoinsParts": "Show joins/parts",
@@ -441,12 +441,12 @@
     },
     "notificationSettings": "Notification settings",
     "enterHubAddress": "Enter hub address...",
-    "connect": "Connect",
+    "connect": "З'єднатись",
     "notConnectedToTheHub": "Not connected to the hub",
     "connecting": "Connecting",
     "loadingUserlist": "Loading userlist",
     "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
-    "new": "Connect",
+    "new": "З'єднатись",
     "newDesc": "Connect to a new hub",
     "userList": "User list",
     "sharePerUser": "{{total}} ({{average}}/user)",
@@ -461,10 +461,10 @@
   },
   "queue": {
     "table": {
-      "name": "Name",
-      "size": "Size",
+      "name": "Ім'я",
+      "size": "Розмір",
       "status": "Status",
-      "sources": "Sources",
+      "sources": "Джерела",
       "secondsLeft": "Time left",
       "speed": "Speed",
       "priority": "Priority",
@@ -474,7 +474,7 @@
     },
     "actionsCaption": "Дії...",
     "queueActions": "Queue actions",
-    "pausedForced": "Paused (forced)",
+    "pausedForced": "Призупинено (примусово)",
     "queueEmpty": "The queue is empty",
     "queueEmptyDesc": "New items can be queued from search or filelists",
     "actions": {
@@ -484,11 +484,11 @@
       "manageFiles": "Manage files...",
       "manageSources": "Manage sources...",
       "searchForeground": "Search (foreground)",
-      "searchForAlternates": "Search for alternates",
-      "remove": "Remove",
-      "removeSource": "Remove source",
+      "searchForAlternates": "Шукати альтернативи",
+      "remove": "Вилучити",
+      "removeSource": "Видалити джерело",
       "rescanForErrors": "Rescan for errors",
-      "forceInShare": "Force in share",
+      "forceInShare": "Примусово в роздачі",
       "prompts": {
         "removeBundleApprove": "Remove bundle",
         "removeBundleReject": "Don't remove",
@@ -505,19 +505,19 @@
         "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
-    "paused": "Paused",
+    "paused": "Призупинено",
     "lowest": "Lowest",
     "low": "Low",
-    "normal": "Normal",
+    "normal": "Нормальний",
     "high": "High",
     "highest": "Highest",
-    "auto": "Auto",
-    "sources": "Sources",
+    "auto": "Авто",
+    "sources": "Джерела",
     "user": "User",
     "hubs": "Hubs",
     "lastKnownSpeed": "Last known speed",
-    "files": "Files",
-    "size": "Size",
+    "files": "Файли",
+    "size": "Розмір",
     "notifications": {
       "bundleWasAddedInQueue": "Bundle was added in queue",
       "bundleDownloadError": "Download error: {{error}}",
@@ -533,8 +533,8 @@
   "transfers": {
     "table": {
       "user": "User",
-      "name": "Name",
-      "size": "Segment",
+      "name": "Ім'я",
+      "size": "Сегмент",
       "status": "Status",
       "secondsLeft": "Time left",
       "speed": "Speed",
@@ -544,8 +544,8 @@
     "actions": {
       "forceConnect": "Force connect",
       "disconnect": "Disconnect",
-      "removeFileFromQueue": "Remove file from queue",
-      "removeUserFromQueue": "Remove user from queue",
+      "removeFileFromQueue": "Вилучити файл з черги",
+      "removeUserFromQueue": "Вилучити користувача з черги",
       "notifications": {
         "removeFileSuccess": "File {{item.name}} was removed from queue",
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
@@ -555,7 +555,7 @@
   },
   "settings": {
     "actions": {
-      "detectNow": "Detect now",
+      "detectNow": "Визначити зараз",
       "addDirectory": "Add directory",
       "addUser": "Add user",
       "editUser": "Edit user",
@@ -568,7 +568,7 @@
       "removePath": "Remove path",
       "removeUser": "Remove user",
       "setAsDefault": "Set as default",
-      "removeProfile": "Remove profile",
+      "removeProfile": "Вилучити профіль",
       "addType": "Add type",
       "editType": "Edit type",
       "removeType": "Remove type",
@@ -597,11 +597,11 @@
       "profile": "Profile",
       "connectivity": "Connectivity",
       "speedAndLimits": "Speed and limits",
-      "downloads": "Downloads",
-      "sharing": "Sharing",
-      "view": "View",
+      "downloads": "Завантаження",
+      "sharing": "Роздавання",
+      "view": "Дивитись",
       "about": "About",
-      "extensions": "Extensions",
+      "extensions": "Розширення",
       "extensionEngines": "Extension engines",
       "system": "System",
       "autoDetection": "Auto detection",
@@ -609,44 +609,44 @@
       "iPv6ConnectivityManual": "IPv6 connectivity (manual)",
       "portsManual": "Ports (manual)",
       "proxies": "Proxies",
-      "encryption": "Encryption",
+      "encryption": "Шифрування",
       "user": "User",
-      "awayMode": "Away mode",
+      "awayMode": "Режим \"відійшов\"",
       "ignoredUsers": "Ignored users",
-      "miscellaneous": "Miscellaneous",
+      "miscellaneous": "Різне",
       "manageInstalled": "Manage installed",
-      "extensionCatalog": "Extension catalog",
+      "extensionCatalog": "Тека розширень",
       "extensionOptions": "Extension options",
-      "application": "Application",
+      "application": "Додаток",
       "transferStatistics": "Transfer statistics",
       "shareStatistics": "Share statistics",
       "hubStatistics": "Hub statistics",
-      "users": "Users",
-      "logging": "Logging",
+      "users": "Користувачі",
+      "logging": "Протоколюю",
       "webServer": "Web server",
       "advancedServerSettings": "Advanced server settings",
       "refreshOptions": "Refresh options",
-      "shareProfiles": "Share profiles",
-      "sharingOptions": "Sharing options",
+      "shareProfiles": "Профілі роздачі",
+      "sharingOptions": "Опції роздавання",
       "hashing": "Hashing",
       "excludedPaths": "Excluded paths",
-      "connectionSpeed": "Connection speed",
+      "connectionSpeed": "Швидкість з'єднання",
       "bandwidthLimiting": "Bandwidth limiting",
       "downloadLimits": "Download limits",
-      "uploadLimits": "Upload limits",
+      "uploadLimits": "Ліміти вивантажень",
       "perUserLimits": "Per-user limits",
       "locations": "Locations",
-      "skippingOptions": "Skipping options",
+      "skippingOptions": "Опції пропуску",
       "searchMatching": "Search matching",
-      "searchTypes": "Search types",
-      "downloadOptions": "Download options",
+      "searchTypes": "Типи пошуку",
+      "downloadOptions": "Опції завантаження",
       "priorities": "Priorities",
       "notificationsCaption": "Notifications",
       "histories": "Histories",
       "events": "Events",
       "appearance": "Appearance"
     },
-    "advanced": "Advanced",
+    "advanced": "Розширені",
     "noUnsavedChanges": "No unsaved changes",
     "noSavePermission": "No save permission",
     "saveChanges": "Save changes",
@@ -802,19 +802,19 @@
         },
         "permissionSelector": {
           "administrator": "Administrator",
-          "search": "Search",
-          "download": "Download",
+          "search": "Шукати",
+          "download": "Завантажити",
           "transfers": "Transfers",
           "events": "Events",
-          "view": "View",
+          "view": "Дивитись",
           "edit": "Edit",
           "queue": "Queue",
           "favoriteHubs": "Favorite hubs",
-          "settings": "Settings",
+          "settings": "Налаштування",
           "localFilesystem": "Local filesystem",
           "hubs": "Hubs",
           "sendMessages": "Send messages",
-          "privateChat": "Private chat",
+          "privateChat": "Приватний чат",
           "filelists": "Filelists",
           "viewedFiles": "Viewed files"
         },
@@ -827,10 +827,10 @@
       "excludes": {
         "shareRefreshNote": "Share must be refreshed for the changes to take effect",
         "addExcludedPath": "Add excluded path",
-        "path": "Path"
+        "path": "Шлях"
       },
       "profiles": {
-        "name": "Name",
+        "name": "Ім'я",
         "totalSize": "Total size",
         "totalFiles": "Total files",
         "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
@@ -862,12 +862,12 @@
     "downloads": {
       "locations": {
         "availablePathVariables": "Available path variables",
-        "favoriteDownloadDirectories": "Favorite download directories",
-        "name": "Name",
-        "path": "Path",
+        "favoriteDownloadDirectories": "Обрані папки завантажень",
+        "name": "Ім'я",
+        "path": "Шлях",
         "form": {
-          "pathName": "Path",
-          "nameName": "Name"
+          "pathName": "Шлях",
+          "nameName": "Ім'я"
         },
         "addFavoriteDirectory": "Add favorite directory",
         "editFavoriteDirectory": "Edit favorite directory"
@@ -880,19 +880,19 @@
         "highPriorityFiles": "High priority files"
       },
       "searchTypes": {
-        "name": "Name",
-        "fileExtensions": "File extensions",
+        "name": "Ім'я",
+        "fileExtensions": "Розширення файлів",
         "default": "Default",
         "searchTypesNote": "Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.",
         "form": {
-          "nameName": "Name",
-          "extensionsName": "File extensions"
+          "nameName": "Ім'я",
+          "extensionsName": "Розширення файлів"
         },
         "addSearchType": "Add search type",
         "editSearchType": "Edit search type"
       },
       "downloadOptions": {
-        "segments": "Segments",
+        "segments": "Сегменти",
         "compression": "Compression",
         "buffers": "Buffers"
       }
@@ -931,8 +931,8 @@
       "start": "Start",
       "installFromUrl": "Install from URL",
       "install": "Install",
-      "update": "Update",
-      "stop": "Stop",
+      "update": "Оновити",
+      "stop": "Зупинити",
       "configure": "Configure",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
@@ -947,16 +947,16 @@
   "navigation": {
     "home": "Home",
     "queue": "Queue",
-    "search": "Search",
+    "search": "Шукати",
     "transfers": "Transfers",
     "hubs": "Hubs",
     "messages": "Messages",
     "filelists": "Filelists",
-    "files": "Files",
+    "files": "Файли",
     "events": "Events",
     "favoriteHubs": "Favorite hubs",
-    "share": "Share",
-    "settings": "Settings",
+    "share": "Роздати",
+    "settings": "Налаштування",
     "logout": "Logout",
     "more": "More..."
   },
@@ -964,24 +964,24 @@
     "username": "Username",
     "password": "Password",
     "keepMeLoggedIn": "Keep me logged in",
-    "login": "Login",
+    "login": "Логін",
     "authenticationFailed": "Authentication failed: {{lastError}}",
     "connectingToTheServer": "Connecting to the server...",
     "reestablishConnection": "Attempting to re-establish connection...",
     "sessionLost": "Session lost",
-    "connectionClosed": "Connection closed",
+    "connectionClosed": "З'єднання закрите",
     "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
     "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
   },
   "viewedFiles": {
     "actions": {
-      "close": "Close"
+      "close": "Закрити"
     },
     "noFiles": "No files to view",
     "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
     "preparingView": "Preparing view",
     "opened": "Opened",
-    "downloaded": "Downloaded",
+    "downloaded": "Завантажено",
     "unsupportedFormat": "Unsupported format",
     "downloadFailed": "Download failed",
     "notifications": {
@@ -994,9 +994,9 @@
   },
   "messages": {
     "actions": {
-      "clearChat": "Clear chat",
-      "close": "Close",
-      "connect": "Connect",
+      "clearChat": "Очистити чат",
+      "close": "Закрити",
+      "connect": "З'єднатись",
       "disconnect": "Disconnect"
     },
     "new": "New session",
@@ -1017,12 +1017,12 @@
   },
   "hash": {
     "actions": {
-      "pause": "Pause",
+      "pause": "Пауза",
       "resume": "Resume",
-      "stop": "Stop"
+      "stop": "Зупинити"
     },
     "status": "Status",
-    "paused": "Paused",
+    "paused": "Призупинено",
     "filesLeft": "Files left",
     "maximumSpeedPerHasher": "Maximum speed per hasher",
     "runningThreads": "Running ({{threadCount}} threads)",

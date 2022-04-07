@@ -53,7 +53,7 @@
       "nameName": "Nombre"
     },
     "widgetPositionHint": "Los widgets y su posición son específicos del navegador.",
-    "accessDenied": "No se le permite acceder a este widget",
+    "accessDenied": "No tienes permiso para acceder a este widget",
     "settingsMissing": "Faltan los ajustes del widget"
   },
   "events": {
@@ -105,7 +105,7 @@
       "hubUrlsName": "Hubs",
       "maxSizeName": "Tamaño máximo",
       "minSizeName": "Tamaño mínimo",
-      "sizeLimitsName": "Size limits"
+      "sizeLimitsName": "Limites de tamaño"
     },
     "resetAll": "Reiniciar todo",
     "user": "Usuario",
@@ -117,8 +117,8 @@
     "searchOffline": "Debe estar conectado a al menos un hub para realizar búsquedas",
     "enterSearchString": "Introducir texto de búsqueda...",
     "search": "Buscar",
-    "usersCount": "Usuario ({count}}",
-    "usersCount_plural": "Usuarios ({count}}",
+    "usersCount": "Usuario ({{count}})",
+    "usersCount_plural": "Usuarios ({{count}})",
     "xUsersNicks": "{{count}} usuario ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} usuarios ({{user.nicks}})",
     "noResults": "No se han encontrado resultados para \"{{searchString}}\"",
@@ -156,7 +156,7 @@
     "form": {
       "pathName": "Ruta",
       "virtualNameName": "Nombre virtual",
-      "virtualNameHelp": "Los directorios con nombres virtuales idénticos se fusionarán en la lista de archivos.",
+      "virtualNameHelp": "Los directorios con los mismos nombres virtuales se fusionarán en la lista de archivos.",
       "profilesName": "Perfiles de compartido",
       "profilesHelp": "Se pueden crear nuevos perfiles de compartido desde la configuración de la aplicación",
       "incomingName": "Entrante"
@@ -242,8 +242,8 @@
     "theDirectoryIsEmpty": "El directorio está vacío",
     "updatingView": "Actualizando vista",
     "downloadFailed": "Descarga fallida",
-    "confirmLeave": "Confirm action",
-    "confirmLeaveDesc": "Click the back button again to leave this filelist",
+    "confirmLeave": "Confirmar acción",
+    "confirmLeaveDesc": "Vuelve a pinchar en el botón de atrás para abandonar esta lista de archivos",
     "table": {
       "name": "Nombre",
       "size": "Tamaño",
@@ -391,7 +391,7 @@
     "dupePaths": "Rutas de duplicados",
     "actionsCaption": "Acciones...",
     "tth": "TTH",
-    "na": "N/D",
+    "na": "N/A",
     "noActionsAvailable": "No hay acciones disponibles",
     "continue": "Continuar",
     "form": {
@@ -402,7 +402,7 @@
       "maximumValueError": "El valor máximo permitido es {{value}}",
       "any": "Cualquiera",
       "directory": "Carpeta",
-      "file": "&amp;Archivo",
+      "file": "Archivo",
       "add": "Añadir",
       "down": "Bajar",
       "remove": "Eliminar",
@@ -416,9 +416,9 @@
       "nick": "Nick",
       "shareSize": "Tamaño compartido",
       "description": "Descripción",
-      "tag": "Tag",
-      "uploadSpeed": " Subida",
-      "downloadSpeed": "Bajada",
+      "tag": "Etiqueta",
+      "uploadSpeed": "Velocidad de Subida",
+      "downloadSpeed": "Velocidad de Bajada",
       "ip4": "IP (v4)",
       "ip6": "IP (v6)",
       "fileCount": "Archivos"
@@ -427,7 +427,7 @@
       "reconnect": "Reconectar",
       "clearChat": "Limpiar chat",
       "close": "Cerrar",
-      "addToFavorites": "Añadir a usuarios favoritos",
+      "addToFavorites": "Añadir a favoritos",
       "useChatNotification": "Usar notificación de chat",
       "showJoinsParts": "Mostrar uniones/partes",
       "notifications": {
@@ -440,7 +440,7 @@
       }
     },
     "notificationSettings": "Ajustes de notificaciones",
-    "enterHubAddress": "Introduce la dirección del hub...",
+    "enterHubAddress": "Introduzca la dirección del hub...",
     "connect": "Conectar",
     "notConnectedToTheHub": "No conectado al hub",
     "connecting": "Conectando",
@@ -486,9 +486,9 @@
       "searchForeground": "Búsqueda (en primer plano)",
       "searchForAlternates": "Buscar alternativas",
       "remove": "Eliminar",
-      "removeSource": "Eliminar fuente de descarga",
+      "removeSource": "Eliminar fuente",
       "rescanForErrors": "Reescaneo de errores",
-      "forceInShare": "Forzar el compartido",
+      "forceInShare": "Forzar en el compartido",
       "prompts": {
         "removeBundleApprove": "Eliminar paquete",
         "removeBundleReject": "No eliminar",
@@ -567,18 +567,18 @@
       "addPath": "Añadir ruta",
       "removePath": "Eliminar ruta",
       "removeUser": "Eliminar usuario",
-      "setAsDefault": "Usar por defecto",
+      "setAsDefault": "Establecer como por defecto",
       "removeProfile": "Eliminar perfil",
       "addType": "Añadir tipo",
       "editType": "Editar tipo",
       "removeType": "Eliminar tipo",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
+        "createProfilePlaceholder": "Introducir nombre",
         "createProfileApprove": "Crear",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "createProfileContent": "Introducir nombre para el perfil",
+        "editProfilePlaceholder": "Introducir nombre",
         "editProfileApprove": "Renombrar",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "editProfileContent": "Introducir nuevo nombre para el perfil {{item.name}}",
         "removeShareExcludeApprove": "Eliminar ruta",
         "removeShareExcludeReject": "No eliminar",
         "removeShareExcludeContent": "¿Estás seguro de querer eliminar la ruta excluida {{item}}?",
@@ -602,9 +602,9 @@
       "view": "Ver",
       "about": "Acerca de",
       "extensions": "Extensiones",
-      "extensionEngines": "Extension engines",
+      "extensionEngines": "Motores de extensiones",
       "system": "Sistema",
-      "autoDetection": "Auto-detección",
+      "autoDetection": "Auto detección",
       "iPv4ConnectivityManual": "Conectividad IPv4 (manual)",
       "iPv6ConnectivityManual": "Conectividad IPv6 (manual)",
       "portsManual": "Puertos (manual)",
@@ -612,7 +612,7 @@
       "encryption": "Cifrado",
       "user": "Usuario",
       "awayMode": "Modo ausente",
-      "ignoredUsers": "Usuario(s) ignorado(s)",
+      "ignoredUsers": "Usuarios ignorados",
       "miscellaneous": "Misceláneas",
       "manageInstalled": "Administrar instaladas",
       "extensionCatalog": "Catálogo de extensiones",
@@ -624,8 +624,8 @@
       "users": "Usuarios",
       "logging": "Registros",
       "webServer": "Servidor web",
-      "advancedServerSettings": "Advanced server settings",
-      "refreshOptions": "Actualizar opciones",
+      "advancedServerSettings": "Ajustes avanzados del servidor",
+      "refreshOptions": "Opciones de actualización",
       "shareProfiles": "Perfiles de compartido",
       "sharingOptions": "Opciones de compartir",
       "hashing": "Hasheando",
@@ -655,7 +655,7 @@
     "unsavedChangesPrompt": "Tienes cambios sin guardar. ¿Seguro que quieres salir?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "En caso de que haya problemas de conectividad en la transferencia de archivos, por favor confirma que tus puertos TCP están abiertos usando <1>un comprobador de puertos online</1>. Ten en cuenta que los puertos UDP no se pueden comprobar online. Para más información sobre los distintos modos de conectividad, por favor visita <4>el FAQ de conectividad de DC++</4>.",
+        "connectivityDetectionNote": "En caso de que haya problemas de conectividad en la transferencia de archivos, por favor confirma que tus puertos TCP están abiertos usando <1>un comprobador de puertos online</1>. Ten en cuenta que el puerto UDP de búsqueda no se puede comprobar online. Para más información sobre los distintos modos de conectividad, por favor visita <4>el FAQ de conectividad de DC++</4>.",
         "currentAutoDetectionStatus": "Estado actual de la auto-detección",
         "iPv4Connectivity": "Conectividad IPv4",
         "iPv6Connectivity": "Conectividad IPv6",
@@ -664,7 +664,7 @@
         "detecting": "Detectando..."
       },
       "ports": {
-        "portsAutoValuesNote": "Los números de puertos, listados en esta página, se pueden anular por los mapeadores de puertos (si está habilitado)",
+        "portsAutoValuesNote": "Los números de puertos, listados en esta página, se pueden anular por los mapeadores de puertos (si están habilitados)",
         "form": {
           "tcpPortHelp": "El puerto TCP se usa para transferencias sin cifrar",
           "udpPortHelp": "El puerto UDP se usa para las búsquedas",
@@ -672,10 +672,10 @@
         }
       },
       "v6": {
-        "protocolAutoValuesNote": "La detección automática de conectividad está activada actualmente; los valores de los ajustes listados en esta página no se usan."
+        "protocolAutoValuesNote": "La detección automática de conectividad está habilitada actualmente; los valores de los ajustes listados en esta página no se usan."
       },
       "v4": {
-        "protocolAutoValuesNote": "La detección automática de conectividad está activada actualmente; los valores de los ajustes listados en esta página no se usan."
+        "protocolAutoValuesNote": "La detección automática de conectividad está habilitada actualmente; los valores de los ajustes listados en esta página no se usan."
       }
     },
     "profile": {
@@ -787,7 +787,7 @@
         "defaultCertNote": "El certificado de cliente por defecto se usa si las rutas de certificado están vacías"
       },
       "advancedServerSettings": {
-        "hookTimeouts": "Hook timeouts"
+        "hookTimeouts": "Tiempo límite para el hook"
       },
       "users": {
         "username": "Nombre de usuario",
@@ -843,7 +843,7 @@
         "fileIndexSize": "Tamaño del índice de archivos",
         "hashStoreSize": "Tamaño del almacén hash",
         "maintenance": "Mantenimiento",
-        "verifyIntegrityOfHashData": "Verificar integridad de los datos hash",
+        "verifyIntegrityOfHashData": "Verificar integridad de los datos de hash",
         "optimizeNow": "Optimizar ahora",
         "hashDBOptimizeNote": "Esta operación borrará toda la información de hash de los archivos que no estén compartidos actualmente. Si compartes archivos desde discos en red o desde un medio de almacenamiento extraíble, asegúrate de que los archivos se muestran en tu compartido (si no es así tendrás que volver a hashearlos)"
       }
@@ -893,7 +893,7 @@
       },
       "downloadOptions": {
         "segments": "Segmentos",
-        "compression": "Compression",
+        "compression": "Compresión",
         "buffers": "Buffers"
       }
     },
@@ -928,7 +928,7 @@
   "extensions": {
     "actions": {
       "uninstall": "Desinstalar",
-      "start": "Comenzar",
+      "start": "Iniciar",
       "installFromUrl": "Instalar desde URL",
       "install": "Instalar",
       "update": "Actualizar",
@@ -971,7 +971,7 @@
     "sessionLost": "Sesión perdida",
     "connectionClosed": "Conexión cerrada",
     "privateBrowsingNotSupported": "Este sitio no se puede usar con su navegador si el modo de navegación privada está habilitado",
-    "dataStorageNotSupported": "Este sitio no se puede usar con su navegador porque no admite el almacenamiento de datos"
+    "dataStorageNotSupported": "Este sitio no se puede usar con su navegador porque no soporta el almacenamiento de datos"
   },
   "viewedFiles": {
     "actions": {
@@ -986,7 +986,7 @@
     "downloadFailed": "Descarga fallida",
     "notifications": {
       "fileHasFinishedDownloading": "El archivo ha terminado de descargarse",
-      "fileWasLoaded": "File was loaded",
+      "fileWasLoaded": "Se ha cargado el fichero",
       "actions": {
         "viewFile": "Ver archivo"
       }
@@ -1013,7 +1013,7 @@
   },
   "home": {
     "newUserIntro": "Información para un usuario nuevo",
-    "newUserIntroDesc": "<0><0>Añade algunos directorios para compartirlos con los demás en la <1>página</1> Compartir.</0><1>Seguramente quieras echar un vistazo a cada página principal en  <1>los ajustes del cliente</1> antes de empezar.  <3>Es importante que <1>configures tu velocidad de conexión </1> correctamente para que el cliente pueda utilizar tu ancho de banda eficientemente.</3></1><2>Todavía no hay un listado de hubs públicos, por lo que necesitas saber la dirección de los hubs a los que te quieres conectar.</2></0><1>Visita la <1>página de inicio</1> para obtener más información sobre el cliente y sus funciones.</1><2>Si tienes preguntas, puedes plantearlas en el  <1>tracker de GitHubr</1> o unirte al hub de desarrollo y soporte: <3></3></2>"
+    "newUserIntroDesc": "<0><0>Añade algunos directorios para compartirlos con los demás en la <1>página</1> Compartir.</0><1>Seguramente quieras echar un vistazo a cada página principal en  <1>los ajustes del cliente</1> antes de empezar.  <3>Es importante que <1>configures tu velocidad de conexión </1> correctamente para que el cliente pueda utilizar tu ancho de banda eficientemente.</3></1><2>Todavía no hay un listado de hubs públicos, por lo que necesitas saber la dirección de los hubs a los que te quieres conectar.</2></0><1>Visita la <1>página de inicio</1> para obtener más información sobre el cliente y sus funciones.</1><2>Si tienes preguntas, puedes plantearlas en el  <1>tracker de GitHub</1> o unirte al hub de desarrollo y soporte: <3></3></2>"
   },
   "hash": {
     "actions": {

@@ -76,7 +76,7 @@ const HintedUserFormatter = DataProviderDecorator<HintedUserFormatterProps, Hint
 
 
 export interface UserSelectFieldProps extends 
-  Omit<RemoteSelectFieldProps<API.HubUser>, 'valueField' | 'url' | 'placeholder'>, 
+  Omit<RemoteSelectFieldProps<API.OfflineHintedUser>, 'valueField' | 'url' | 'placeholder' | 'formT'>, 
   Pick<OfflineHubMessageDecoratorProps, 'offlineMessage'> {
     
 }
@@ -107,8 +107,6 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({
     >
       <RemoteSelectField<API.OfflineHintedUser>
         placeholder={ translate('Enter nick...', t, UI.Modules.COMMON) }
-        valueField="nick"
-        descriptionField="hub_name"
         loadOptions={ loadOptions }
         formatOptionLabel={(option) => (
           <HintedUserFormatter

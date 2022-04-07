@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 //@ts-ignore
 import Reflux from 'reflux';
-import { default as NotificationSystem, System } from 'react-notification-system';
+import { default as NotificationSystem } from 'react-notification-system';
 import { RateLimiter } from 'limiter';
 
 import NotificationStore from 'stores/NotificationStore';
@@ -24,7 +24,7 @@ interface NotificationsProps {
 }
 
 class Notifications extends Component<NotificationsProps> {
-  notifications: System | null;
+  notifications: NotificationSystem | null;
   limiter = new RateLimiter({
     tokensPerInterval: 3,
     interval: 3000,
@@ -107,7 +107,7 @@ class Notifications extends Component<NotificationsProps> {
       (
         <>
           <NotificationSystem 
-            ref={ (c: any) => this.notifications = c }
+            ref={ (c) => this.notifications = c }
           />
           <SocketNotificationListener location={ location }/>
         </>

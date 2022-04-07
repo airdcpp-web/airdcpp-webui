@@ -1,15 +1,16 @@
-import Select, { Props as SelectProps } from 'react-select/async';
-import { OptionTypeBase } from 'react-select';
+import { GroupBase } from 'react-select';
+import Select, { AsyncProps as SelectProps } from 'react-select/async';
 
 import * as UI from 'types/ui';
 
 
-export interface RemoteSelectFieldProps<SuggestionT extends OptionTypeBase> extends SelectProps<SuggestionT, false> {
+export interface RemoteSelectFieldProps<SuggestionT extends object> 
+  extends SelectProps<SuggestionT, false, GroupBase<SuggestionT>> {
   formT: UI.ModuleTranslator;
 }
 
-export const RemoteSelectField = <SuggestionT extends OptionTypeBase>(
-  { url, formT, ...other }: RemoteSelectFieldProps<SuggestionT>
+export const RemoteSelectField = <SuggestionT extends object>(
+  { formT, ...other }: RemoteSelectFieldProps<SuggestionT>
 ) => {
   return (
     <Select<SuggestionT>
