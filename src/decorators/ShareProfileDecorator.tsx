@@ -10,7 +10,7 @@ import DataProviderDecorator, {
 import { formatSize } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
-import { TFunction } from 'i18next';
+import * as UI from 'types/ui';
 
 
 interface ShareProfileDecoratorDataProps {
@@ -32,7 +32,7 @@ const ShareProfileDecorator = function <PropsT extends object>(
   dataProviderDecoratorSettings?: DataProviderDecoratorSettings<PropsT, ShareProfileDecoratorDataProps>,
   addSize: boolean = true
 ) {
-  const convertProfile = (profile: API.ShareProfile, t: TFunction): API.ShareProfile => {
+  const convertProfile = (profile: API.ShareProfile, t: UI.TranslateF): API.ShareProfile => {
     let str = profile.str;
     if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
       str += ` (${formatSize(profile.size, t)})`;

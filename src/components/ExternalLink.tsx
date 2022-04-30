@@ -2,10 +2,10 @@
 import * as React from 'react';
 
 
-interface ExternalLinkProps {
+type ExternalLinkProps = React.PropsWithChildren<{
   url: string;
   className?: string;
-}
+}>;
 
 const ExternalLink: React.FC<ExternalLinkProps> = ({ url, children, className = '' }) => (
   <a 

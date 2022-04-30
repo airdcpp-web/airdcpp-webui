@@ -7,14 +7,13 @@ import WidgetActions from 'actions/ui/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 
 import * as UI from 'types/ui';
-import { TFunction } from 'i18next';
 import { translateWidgetName } from 'utils/WidgetUtils';
 import { ActionHandlerDecorator, ActionClickHandler } from 'decorators/ActionHandlerDecorator';
 
 
 const getWidgetItem = (
   widgetInfo: UI.Widget,
-  t: TFunction, 
+  t: UI.TranslateF, 
   onClickAction: ActionClickHandler<UI.Widget>
 ) => {
   return (

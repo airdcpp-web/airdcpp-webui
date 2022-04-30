@@ -5,7 +5,7 @@ import SocketService from 'services/SocketService';
 
 import SuggestField, { SuggestFieldProps } from './SuggestField';
 import SuggestionRenderer from './SuggestionRenderer';
-import { RenderSuggestion, SuggestionsFetchRequested, Omit } from 'react-autosuggest';
+import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 
@@ -14,7 +14,6 @@ type ForwardedSuggestFieldProps<SuggestionT> = Omit<
   'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 
   'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
 >;
-
 export interface RemoteSuggestFieldProps<SuggestionT> extends ForwardedSuggestFieldProps<SuggestionT> {
   valueField: string;
   descriptionField: string;

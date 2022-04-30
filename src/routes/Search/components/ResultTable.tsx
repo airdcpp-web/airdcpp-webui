@@ -22,7 +22,6 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import { searchDownloadHandler } from 'services/api/SearchApi';
@@ -31,7 +30,7 @@ import MenuConstants from 'constants/MenuConstants';
 import SearchConstants from 'constants/SearchConstants';
 
 
-const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: TFunction) => {
+const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: UI.TranslateF) => {
   if (count > 1) {
     return t(toI18nKey('xUsersNicks', UI.Modules.SEARCH), {
       defaultValue: `{{count}} user ({{user.nicks}})`,

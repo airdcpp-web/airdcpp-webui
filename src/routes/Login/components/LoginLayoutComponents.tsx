@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import Button from 'components/semantic/Button';
 import Message from 'components/semantic/Message';
-import { TFunction } from 'i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
@@ -10,7 +9,7 @@ import * as UI from 'types/ui';
 
 interface ErrorBoxProps {
   lastError: string | null;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 export const ErrorBox: React.FC<ErrorBoxProps> = ({ lastError, t }) => {
@@ -35,7 +34,7 @@ interface SubmitButtonProps {
   onSubmit: (evt: React.SyntheticEvent) => void;
   loading: boolean;
   allowLogin: boolean;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin, t }) => {

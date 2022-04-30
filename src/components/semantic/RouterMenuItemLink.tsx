@@ -12,14 +12,14 @@ import * as UI from 'types/ui';
 import { useStore } from 'effects/StoreListenerEffect';
 
 
-interface RouterMenuItemLinkProps {
+type RouterMenuItemLinkProps = React.PropsWithChildren<{
   url: string;
   icon?: IconType;
   className?: string;
   onClick?: (evt: React.SyntheticEvent<any>) => void;
   unreadInfoStore?: any;
   session?: UI.SessionItemBase;
-}
+}>;
 
 
 const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null => {

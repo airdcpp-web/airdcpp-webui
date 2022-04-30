@@ -8,14 +8,13 @@ import MessageView from 'components/messages/MessageView';
 import '../style.css';
 
 import * as UI from 'types/ui';
-import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import EventStore from 'stores/EventStore';
 
 
 interface EventMessagesProps {
   messages: UI.MessageListItem[];
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {

@@ -189,7 +189,6 @@ const getFieldProfiles = (profiles: API.SettingEnumOption[], url?: string): UI.F
 };
 
 interface FavoriteHubDialogProps {
-  //t: TFunction;
   favT: UI.ModuleTranslator;
 }
 

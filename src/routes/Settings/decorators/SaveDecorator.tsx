@@ -57,7 +57,7 @@ export default function <PropsT extends object>(
 ) {
   type Props = SaveDecoratorProps & RouteComponentProps & PropsT;
   
-  class SaveDecorator extends React.Component<Props> {
+  class SaveDecorator extends React.Component<React.PropsWithChildren<Props>> {
     static displayName = 'SaveDecorator';
 
     forms: SaveableRef[] = [];

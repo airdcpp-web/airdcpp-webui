@@ -8,7 +8,7 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-export class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<React.PropsWithChildren<{}>, ErrorBoundaryState> {
   constructor(props: any) {
     super(props);
     this.state = { 

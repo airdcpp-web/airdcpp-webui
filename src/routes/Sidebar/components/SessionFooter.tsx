@@ -14,7 +14,7 @@ export const FooterItem: React.FC<FooterItemProps> = ({ label, text }) => (
   </div>
 );
 
-export const SessionFooter: React.FC = ({ children }) => (
+export const SessionFooter: React.FC<React.PropsWithChildren<{}>> = ({ children }) => (
   <div className="session-footer">
     <div className="ui footer divider"/>
     <div className="info-grid ui">

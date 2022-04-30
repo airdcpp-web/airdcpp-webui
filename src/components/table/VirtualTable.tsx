@@ -22,15 +22,16 @@ declare module 'fixed-data-table-2' {
   }
 }
 
-export interface VirtualTableProps extends 
-  Omit<TableFooterProps, 't'>, 
-  Omit<TableContainerProps, 'store' | 'dataLoader' | 't'> {
+export type VirtualTableProps = 
+  Omit<TableFooterProps, 't'> &
+  Omit<TableContainerProps, 'store' | 'dataLoader' | 't'> & 
+  React.PropsWithChildren<{
     
   store: any;
   sessionStore?: any;
   sourceFilter?: API.TableFilter;
   emptyRowsNodeGetter?: () => React.ReactNode;
-}
+}>;
 
 class VirtualTable extends React.PureComponent<VirtualTableProps> {
   static propTypes = {

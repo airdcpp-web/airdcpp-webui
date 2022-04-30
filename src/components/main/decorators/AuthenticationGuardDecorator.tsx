@@ -8,7 +8,6 @@ import { useStore } from 'effects/StoreListenerEffect';
 import { useLoginGuard } from '../effects/LoginGuardEffect';
 import { useAuthPageTitle } from '../effects/PageTitleEffect';
 import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
-import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
@@ -21,7 +20,7 @@ interface AuthenticationGuardDecoratorProps {
 
 
 
-const getConnectStatusMessage = (lastError: string | null, t: TFunction) => {
+const getConnectStatusMessage = (lastError: string | null, t: UI.TranslateF) => {
   if (!!lastError) {
     const msg = t(toI18nKey('reestablishConnection', UI.Modules.LOGIN), 'Attempting to re-establish connection...');
     return `${lastError}. ${msg}`;

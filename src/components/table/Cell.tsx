@@ -71,7 +71,10 @@ interface FileItemBase {
   type: API.FileItemType;
 }
 
-export const FileActionCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType & FileItemBase>(
+export const FileActionCell = <
+  CellDataT extends React.ReactNode, 
+  ItemDataT extends UI.ActionItemDataValueType & FileItemBase
+>(
   { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
 ) => (
   <TableActionMenu 
@@ -86,7 +89,7 @@ export const FileActionCell = <CellDataT, ItemDataT extends UI.ActionItemDataVal
   />
 );
 
-export const ActionMenuCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
+export const ActionMenuCell = <CellDataT extends React.ReactNode, ItemDataT extends UI.ActionItemDataValueType>(
   { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
 ) => (
   <TableActionMenu
@@ -222,7 +225,10 @@ export interface FileDownloadCellProps<CellDataT, ItemDataT extends UI.Downloada
   clickHandlerGetter?: FileDownloadCellClickHandler;
 }
 
-export const FileDownloadCell = <CellDataT, ItemDataT extends UI.DownloadableItemInfo & FileItemBase>(
+export const FileDownloadCell = <
+  CellDataT extends React.ReactNode, 
+  ItemDataT extends UI.DownloadableItemInfo & FileItemBase
+>(
   { cellData, rowDataGetter, clickHandlerGetter, 
     userGetter, downloadHandler, ...props 
   }: FileDownloadCellProps<CellDataT, ItemDataT>

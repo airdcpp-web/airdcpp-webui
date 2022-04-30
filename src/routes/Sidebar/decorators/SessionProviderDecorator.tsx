@@ -7,14 +7,13 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
-import { TFunction } from 'i18next';
 
 
 export type SessionProviderDecoratorProps = UI.SessionRouteProps;
 
 export interface SessionProviderDecoratorChildProps<SessionT extends object> extends UI.SessionRouteProps {
   items: SessionT[];
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 const SessionProviderDecorator = <SessionT extends object, PropsT extends object>(

@@ -18,6 +18,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 import * as UI from 'types/ui';
+import { Trans } from 'react-i18next';
 
 
 const Row: React.FC<{ path: string; }> = ({ path }) => (
@@ -57,14 +58,16 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
 
   render() {
     const { excludes, moduleT } = this.props;
-    const { translate, t } = moduleT;
+    const { translate, toI18nKey } = moduleT;
     return (
       <div>
         <Message
           title={
             <div>
               <div>
-                { t('shareRefreshNote', 'Share must be refreshed for the changes to take effect') }
+                <Trans i18nKey={ toI18nKey('shareRefreshNote') }>
+                  Share must be refreshed for the changes to take effect
+                </Trans>
               </div>
               <br/>
               <ActionButton

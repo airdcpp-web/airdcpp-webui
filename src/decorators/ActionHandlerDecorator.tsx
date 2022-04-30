@@ -8,7 +8,6 @@ import * as UI from 'types/ui';
 import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
 import { ModalCloseContext, ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 import { InputDialog } from 'components/semantic/InputDialog';
-import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 
@@ -51,7 +50,7 @@ const toFieldI18nKey = (fieldName: string, actionData: ActionData, subNameSpace:
 const translateInput = (
   input: UI.ActionConfirmation,
   actionData: ActionData,
-  t: TFunction
+  t: UI.TranslateF
 ): UI.ActionConfirmation => {
   const { approveCaption, rejectCaption, checkboxCaption, content } = input;
 
@@ -79,7 +78,7 @@ const getCommonConfirmDialogProps = <ItemDataT extends any>(
   actionData: ActionData<ItemDataT>,
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
-  t: TFunction,
+  t: UI.TranslateF,
 ): Omit<ConfirmDialogProps, 'onApproved'> => {
   const { icon, displayName } = actionData.action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(confirmation!, actionData, t);
@@ -145,7 +144,7 @@ const handleAction = async <ItemDataT extends any>(
   actionData: ActionData<ItemDataT>, 
   confirmData: boolean | string | undefined,
   location: Location,
-  t: TFunction,
+  t: UI.TranslateF,
   closeModal: ModalCloseContext | undefined
 ) => {
   const { actionId, action, itemData } = actionData;

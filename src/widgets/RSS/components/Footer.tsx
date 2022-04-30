@@ -24,7 +24,9 @@ const Footer = RedrawDecorator(
       />
       { !!lastUpdated && (
         <Trans i18nKey={ widgetT.toI18nKey('lastUpdated') }>
-          Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}
+          <>
+            Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}
+          </>
         </Trans>
       ) }
     </div>

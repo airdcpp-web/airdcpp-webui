@@ -14,16 +14,16 @@ import { formatSize } from 'utils/ValueFormat';
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { Trans } from 'react-i18next';
-import { TFunction } from 'i18next';
 import IconConstants from 'constants/IconConstants';
 
 
 interface ShareProfileRowProps { 
   profile: API.ShareProfile;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (

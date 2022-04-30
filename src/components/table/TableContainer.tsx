@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
 
-import { TFunction } from 'i18next';
-
 import { Table, ColumnProps } from 'fixed-data-table-2';
 
 import TableActions from 'actions/TableActions';
@@ -28,15 +26,15 @@ function convertEndToRows(pixels: number) {
   return Math.ceil(pixels / TABLE_ROW_HEIGHT);
 }
 
-export interface TableContainerProps {
+export type TableContainerProps = React.PropsWithChildren<{
   entityId?: API.IdType;
   rowClassNameGetter?: (rowData: any) => string;
   store: any;
   dataLoader: any;
-  t: TFunction;
+  t: UI.TranslateF;
   moduleId: string | string[];
   viewId?: number | string;
-}
+}>;
 
 interface State {
   width: number;
@@ -49,7 +47,7 @@ const formatColumnName = (
   column: React.ReactElement<ColumnProps>, 
   store: any, 
   moduleId: string | string[], 
-  t: TFunction
+  t: UI.TranslateF
 ) => {
   const { name, columnKey } = column.props;
   let displayName = t(

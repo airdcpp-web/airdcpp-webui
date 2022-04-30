@@ -28,10 +28,10 @@ interface ConfirmDialogOptions {
   checkboxCaption?: React.ReactNode;
 }
 
-export interface ConfirmDialogProps extends ConfirmDialogOptions {
+export type ConfirmDialogProps = ConfirmDialogOptions & React.PropsWithChildren<{
   onApproved: ApproveHandler;
   onRejected?: RejectHandler;
-}
+}>;
 
 const NODE_ID = 'modals-node';
 //const NODE_ID = 'confirms-node';

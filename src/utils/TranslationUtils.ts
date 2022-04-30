@@ -1,6 +1,6 @@
 import { camelCase } from 'lodash';
 import invariant from 'invariant';
-import { TFunction, TOptions } from 'i18next';
+import { TOptions } from 'i18next';
 
 import * as UI from 'types/ui';
 
@@ -38,7 +38,7 @@ export const textToI18nKey = (text: string, moduleIds: string | string[], reserv
 
 export const translate = (
   text: string, 
-  t: TFunction, 
+  t: UI.TranslateF, 
   moduleId: string | string[], 
   reservedSubNamespaces?: string[]
 ) => {
@@ -58,7 +58,7 @@ const concatModules = (toMerge: string | string[] | undefined, moduleId: string 
 };
 
 export const getModuleT = (
-  t: TFunction, 
+  t: UI.TranslateF, 
   moduleId: string | string[], 
   reservedSubNamespaces?: string[]
 ): UI.ModuleTranslator => {

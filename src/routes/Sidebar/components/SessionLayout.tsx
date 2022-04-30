@@ -27,7 +27,6 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { getModuleT, translate, toI18nKey } from 'utils/TranslationUtils';
-import { TFunction } from 'i18next';
 import { LayoutWidthContext, LayoutWidthContextType } from 'context/LayoutWidthContext';
 
 
@@ -84,7 +83,7 @@ export interface SessionLayoutProps<
 
   unreadInfoStore: any;
   
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 export interface SessionLocationState {
@@ -108,7 +107,7 @@ export interface SessionMainLayoutProps<SessionT extends SessionBaseType, Action
 
   //moduleId: string;
   actions: SessionLayoutProps<SessionT>['uiActions'];
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 interface State<SessionT extends SessionBaseType> {

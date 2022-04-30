@@ -20,19 +20,20 @@ const theme: Theme = {
 
 type SubmitHandlerType<SuggestionT> = (value: string, suggestion?: SuggestionT) => void;
 
-export interface SuggestFieldProps<SuggestionT> 
-  extends Omit<Autosuggest.AutosuggestPropsSingleSection<SuggestionT>, 'inputProps'> {
-  defaultValue?: string;
-  disabled?: boolean;
-  button?: React.ReactElement<ButtonProps>;
-  autoFocus?: boolean;
-  placeholder?: string;
-  className?: string;
-  onSuggestionsClearRequested: () => void;
-  onChange?: (text: string) => void;
+export type SuggestFieldProps<SuggestionT> = 
+  Omit<Autosuggest.AutosuggestPropsSingleSection<SuggestionT>, 'inputProps'> & 
+  React.PropsWithChildren<{
+    defaultValue?: string;
+    disabled?: boolean;
+    button?: React.ReactElement<ButtonProps>;
+    autoFocus?: boolean;
+    placeholder?: string;
+    className?: string;
+    onSuggestionsClearRequested: () => void;
+    onChange?: (text: string) => void;
 
-  submitHandler?: SubmitHandlerType<SuggestionT>;
-}
+    submitHandler?: SubmitHandlerType<SuggestionT>;
+  }>;
 
 class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<SuggestionT>> {
   static propTypes = {

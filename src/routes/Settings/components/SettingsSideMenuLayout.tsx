@@ -38,7 +38,7 @@ const TopRootSectionMenu: React.FC<TopMenuProps> = ({ parentMenuItems }) => (
 );
 
 // tslint:disable-next-line:max-line-length
-type ContentProps = Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message' | 'settingsT'>;
+type ContentProps = React.PropsWithChildren<Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message' | 'settingsT'>>;
 
 const Content: React.FC<ContentProps> = (
   { contentClassname, currentMenuItem, parent, saveButton, children, message, settingsT }

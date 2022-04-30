@@ -42,10 +42,10 @@ export interface SettingsMenuDecoratorProps extends RouteComponentProps<{}> {
   moduleT?: UI.ModuleTranslator;
 }
 
-export interface SettingsMenuDecoratorChildProps extends SettingsMenuDecoratorProps {
+export type SettingsMenuDecoratorChildProps = SettingsMenuDecoratorProps & React.PropsWithChildren<{
   currentMenuItem: SectionType;
   parent?: RootSectionType;
-}
+}>;
 
 export default function <PropsT>(Component: React.ComponentType<SettingsMenuDecoratorChildProps & PropsT>) {
   class SettingsMenuDecorator extends React.Component<SettingsMenuDecoratorProps & PropsT> {

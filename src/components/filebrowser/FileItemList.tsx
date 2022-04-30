@@ -7,7 +7,6 @@ import { formatSize } from 'utils/ValueFormat';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 
 
@@ -18,7 +17,7 @@ export interface FileItemProps {
   item: API.FilesystemItem;
   itemClickHandler: FileItemClickHandler;
   itemIconGetter?: FileItemIconGetter;
-  t: TFunction;
+  t: UI.TranslateF;
   selectMode: UI.FileSelectModeEnum;
   selected?: boolean;
 }
@@ -45,7 +44,7 @@ const FileItem: React.FC<FileItemProps> = ({ item, itemClickHandler, itemIconGet
 
 export interface FileItemListProps extends Pick<FileItemProps, 'itemClickHandler' | 'itemIconGetter'> {
   items: API.FilesystemItem[];
-  t: TFunction;
+  t: UI.TranslateF;
   selectMode: UI.FileSelectModeEnum;
   currentFileName?: string;
 }

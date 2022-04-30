@@ -13,15 +13,15 @@ import IconConstants from 'constants/IconConstants';
 import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
 
 
-export interface UserMenuDecoratorProps extends 
-  Omit<ActionMenuDecoratorProps<ActionUserData>, 'actions' | 'caption' | 'itemData'> {
+export type UserMenuDecoratorProps = 
+  Omit<ActionMenuDecoratorProps<ActionUserData>, 'actions' | 'caption' | 'itemData'> & React.PropsWithChildren<{
 
   user: ActionUserType;
   directory?: string;
   userIcon?: string | boolean | null;
   text?: React.ReactNode;
   className?: string;
-}
+}>;
 
 type UserMenuDecoratorChildProps = ActionMenuDecoratorProps<ActionUserData>;
 

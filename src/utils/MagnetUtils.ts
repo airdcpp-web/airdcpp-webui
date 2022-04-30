@@ -1,6 +1,5 @@
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { formatSize } from './ValueFormat';
 
 
@@ -31,16 +30,16 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
   {
     const hashes = {};
     try {
-      const params = new URLSearchParams(text.substr(8));
+      const params = new URLSearchParams(text.substring(8));
       for (const [type, param] of params.entries()) {
         if (param.length === 85 && param.startsWith('urn:bitprint:')) {
-          hashes[type] = param.substr(46);
+          hashes[type] = param.substring(46);
         } else if (param.length === 54 && param.startsWith('urn:tree:tiger:')) {
-          hashes[type] = param.substr(15);
+          hashes[type] = param.substring(15);
         } else if (param.length === 55 && param.startsWith('urn:tree:tiger/:')) {
-          hashes[type] = param.substr(16);
+          hashes[type] = param.substring(16);
         } else if (param.length === 59 && param.startsWith('urn:tree:tiger/1024:')) {
-          hashes[type] = param.substr(20);
+          hashes[type] = param.substring(20);
         } else if (type.length === 2 && type.startsWith('dn')) {
           fname = param;
         } else if (type.length === 2 && type.startsWith('xl')) {
@@ -86,7 +85,7 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
   return null;
 };
 
-export const formatMagnetCaption = (magnet: UI.Magnet, t: TFunction) => {
+export const formatMagnetCaption = (magnet: UI.Magnet, t: UI.TranslateF) => {
   const { name, size } = magnet;
   
   let description = '';

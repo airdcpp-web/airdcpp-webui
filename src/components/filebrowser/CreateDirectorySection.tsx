@@ -6,14 +6,13 @@ import ActionInput, { ActionInputProps } from 'components/semantic/ActionInput';
 
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
 
 
 export interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction, t }) => (

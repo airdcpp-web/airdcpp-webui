@@ -11,10 +11,10 @@ import IconConstants from 'constants/IconConstants';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
-import { TFunction } from 'i18next';
 
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { formatUnit } from 'utils/ValueFormat';
+import { Trans } from 'react-i18next';
 
 
 interface LimiterConfigProps {
@@ -22,7 +22,7 @@ interface LimiterConfigProps {
   settingKey: string;
   hide: () => void;
   unit: string;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: currentLimit, unit, t }) => {
@@ -49,15 +49,13 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
   return (
     <div className="limiter-config">
       <div className="ui header">
-        { t(
-            toI18nKey('enterLimitUnit', UI.Modules.COMMON),
-            {
-              defaultValue: 'Enter limit ({{unit}}/s)',
-              replace: {
-                unit: formatUnit(unit, t),
-              }
-            }
-          ) }
+        <Trans
+          i18nKey={toI18nKey('enterLimitUnit', UI.Modules.COMMON)}
+          defaultValue={'Enter limit ({{unit}}/s)'}
+          values={{
+            unit: formatUnit(unit, t),
+          }}
+        />
       </div>
       <ActionInput 
         placeholder={ translate('Enter limit...', t, UI.Modules.COMMON) } 

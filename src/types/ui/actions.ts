@@ -1,9 +1,9 @@
 import { Location } from 'history';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { TFunction } from 'i18next';
 
 import * as API from 'types/api';
+import { TranslateF } from './common';
 
 export type ActionIdType = API.IdType | object;
 export type ActionObjectItemData = { id: ActionIdType };
@@ -25,7 +25,7 @@ interface ActionInput<ItemDataT> extends ActionConfirmation {
 export interface ActionHandlerData<ItemDataT> {
   data: ItemDataT;
   location: Location;
-  t: TFunction;
+  t: TranslateF;
   //chain: (action: ActionType)
 }
 

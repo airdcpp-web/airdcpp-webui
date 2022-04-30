@@ -4,13 +4,13 @@ import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { PathDownloadHandler } from '../../types';
 
 
 export interface DownloadSectionChildProps {
-  t: TFunction;
+  t: UI.TranslateF;
   downloadHandler: PathDownloadHandler;
 }
 

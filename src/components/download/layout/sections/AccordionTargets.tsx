@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { TFunction } from 'i18next';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -20,7 +19,7 @@ import PathList from './PathList';
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];
   downloadHandler: PathDownloadHandler;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 class AccordionTargets extends Component<AccordionTargetsProps> {

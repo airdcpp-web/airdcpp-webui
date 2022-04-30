@@ -3,12 +3,12 @@ import classNames from 'classnames';
 import Icon, { IconType } from 'components/semantic/Icon';
 
 
-export interface ListItemProps {
+export type ListItemProps = React.PropsWithChildren<{
   header: React.ReactNode;
   description: React.ReactNode;
   icon?: IconType;
   className?: string;
-}
+}>;
 
 export const ListItem: React.FC<ListItemProps> = ({ header, description, icon, className, children }) => (
   <div className={ classNames('item', className) }>

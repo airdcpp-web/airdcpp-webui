@@ -11,13 +11,13 @@ import classNames from 'classnames';
 export type MessageDescriptionType = React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | 
   string | null | undefined;
 
-interface MessageProps {
+type MessageProps = React.PropsWithChildren<{
   className?: string;
   title?: React.ReactNode;
   description?: MessageDescriptionType;
   icon?: IconType;
   isError?: boolean;
-}
+}>;
 
 const Message: React.FC<MessageProps> = ({ className, title, description, icon, isError, children }) => {
   const style = classNames(

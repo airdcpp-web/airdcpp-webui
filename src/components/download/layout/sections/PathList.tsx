@@ -1,5 +1,4 @@
 //import PropTypes from 'prop-types';
-import { TFunction } from 'i18next';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
 
@@ -18,7 +17,7 @@ import { PathListItem } from './PathListItem';
 interface PathListProps {
   downloadHandler: PathDownloadHandler;
   paths: string[];
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 interface PathListDataProps {

@@ -13,7 +13,7 @@ import 'fomantic-ui-css/components/dropdown.min.css';
 import IconConstants from 'constants/IconConstants';
 
 
-export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>*/ {
+export type DropdownProps = React.PropsWithChildren<{
   triggerIcon?: IconType;
   direction?: 'auto' | 'upward' | 'downward';
   settings?: SemanticUI.DropdownSettings;
@@ -27,7 +27,7 @@ export interface DropdownProps /*extends React.HTMLAttributes<HTMLButtonElement>
   dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
   size?: string;
   menuElementClassName?: string;
-}
+}>;
 
 interface State {
   visible: boolean;

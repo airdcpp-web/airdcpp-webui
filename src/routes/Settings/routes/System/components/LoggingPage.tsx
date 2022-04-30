@@ -9,6 +9,7 @@ import Message from 'components/semantic/Message';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import IconConstants from 'constants/IconConstants';
 import LogSectionGroup from './LogSectionGroup';
+import { Trans } from 'react-i18next';
 
 
 // Generic options
@@ -35,7 +36,7 @@ const SimpleSectionKeys = [
 ];
 
 const LoggingPage: React.FC<SettingSectionChildProps> = props => {
-  const { t, translate } = props.moduleT;
+  const { translate, toI18nKey } = props.moduleT;
   return (
     <div>
       <RemoteSettingForm
@@ -47,7 +48,9 @@ const LoggingPage: React.FC<SettingSectionChildProps> = props => {
           icon={ IconConstants.INFO }
           description={
             <ExternalLink url={ LinkConstants.VARIABLE_HELP_URL }>
-              { t('variableHelp', 'Variable information for Filename and Format fields') }
+              <Trans i18nKey={ toI18nKey('variableHelp') }>
+                Variable information for Filename and Format fields
+              </Trans>
             </ExternalLink>
           }
         />

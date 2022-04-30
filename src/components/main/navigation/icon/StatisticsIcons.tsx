@@ -12,11 +12,12 @@ import IconConstants from 'constants/IconConstants';
 import TransferConstants from 'constants/TransferConstants';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { 
   SocketSubscriptionDecoratorChildProps, SocketSubscriptionDecorator
 } from 'decorators/SocketSubscriptionDecorator';
-import { TFunction } from 'i18next';
 import { Translation } from 'react-i18next';
 
 
@@ -24,8 +25,8 @@ interface StatisticsIconProps {
   icon: IconType;
   cornerIcon?: CornerIconType; 
   bytes: number;
-  formatter: (bytes: number, t: TFunction) => React.ReactNode;
-  t: TFunction;
+  formatter: (bytes: number, t: UI.TranslateF) => React.ReactNode;
+  t: UI.TranslateF;
 }
 
 const StatisticsIcon: React.FC<StatisticsIconProps> = (

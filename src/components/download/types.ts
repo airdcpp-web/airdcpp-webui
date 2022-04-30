@@ -1,15 +1,13 @@
-// import * as API from 'types/api';
-
-import { TFunction } from 'i18next';
+import * as UI from 'types/ui';
 
 
 export type BrowseHandler = (() => void) | undefined;
 
 export type PathDownloadHandler = (targetPath: string, targetFilename?: string) => Promise<any>;
 
-export interface LayoutProps {
+export type LayoutProps = React.PropsWithChildren<{
   menuItems: React.ReactNode[];
   title: string;
   handleBrowse: BrowseHandler;
-  t: TFunction;
-}
+  t: UI.TranslateF;
+}>;

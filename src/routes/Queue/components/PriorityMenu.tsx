@@ -13,7 +13,6 @@ import LoginStore from 'stores/LoginStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
@@ -22,7 +21,7 @@ interface PriorityMenuProps {
   itemPrio: API.QueuePriority;
   item: API.QueueItemBase;
   prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => Promise<any>;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 class PriorityMenu extends Component<PriorityMenuProps> {
@@ -56,7 +55,7 @@ class PriorityMenu extends Component<PriorityMenuProps> {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
   }
 
-  getPriorityListItem = (priority: API.QueuePriority, t: TFunction, onClose: DropdownCloseHandler) => {
+  getPriorityListItem = (priority: API.QueuePriority, t: UI.TranslateF, onClose: DropdownCloseHandler) => {
     const currentPrio = this.props.item.priority.id;
     return (
       <MenuItemLink 

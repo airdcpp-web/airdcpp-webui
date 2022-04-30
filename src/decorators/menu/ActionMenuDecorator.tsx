@@ -88,7 +88,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
   type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT;
-  class ActionMenuDecorator extends React.PureComponent<Props, State> {
+  class ActionMenuDecorator extends React.PureComponent<React.PropsWithChildren<Props>, State> {
     /*static propTypes = {
 
       // Item to be passed to the actions

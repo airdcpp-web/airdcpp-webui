@@ -7,11 +7,11 @@ import 'fomantic-ui-css/components/accordion.min.css';
 import cx from 'classnames';
 
 
-interface AccordionProps {
+type AccordionProps = React.PropsWithChildren<{
   controlled?: boolean;
   className?: string;
   defaultActiveIndexes?: number[];
-}
+}>;
 
 class Accordion extends Component<AccordionProps> {
   static propTypes = {
@@ -67,11 +67,11 @@ class Accordion extends Component<AccordionProps> {
   }
 }
 
-interface AccordionTitleProps {
+type AccordionTitleProps = React.PropsWithChildren<{
   className?: string;
   active?: boolean;
   style?: React.CSSProperties;
-}
+}>;
 
 export const AccordionTitle: React.FC<AccordionTitleProps> = ({ active, className, children, style }) => {
   const classNames = cx(

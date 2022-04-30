@@ -18,7 +18,7 @@ import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 
 
-export interface ModalProps {
+export type ModalProps = React.PropsWithChildren<{
   closable?: boolean;
   onApprove?: () => Promise<void>;
   onReject?: () => void;
@@ -34,7 +34,7 @@ export interface ModalProps {
   icon?: IconType;
   title: React.ReactNode;
   subHeader?: React.ReactNode;
-}
+}>;
 
 const NODE_ID = 'modals-node';
 

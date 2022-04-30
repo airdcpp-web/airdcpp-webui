@@ -24,13 +24,13 @@ const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, rootWidget
   return null;
 };
 
-export interface WidgetProps {
+export type WidgetProps = React.PropsWithChildren<{
   widgetInfo: UI.Widget;
   className?: string;
   settings: UI.WidgetSettings;
   componentId: string;
   rootWidgetT: UI.ModuleTranslator;
-}
+}>;
 
 const Widget = React.forwardRef<HTMLDivElement, WidgetProps>((
   { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other }, 

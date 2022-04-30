@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TFunction } from 'i18next';
 
 import { translate } from 'utils/TranslationUtils';
 
@@ -12,7 +11,7 @@ import Icon from 'components/semantic/Icon';
 import { BrowseHandler, LayoutProps } from '../types';
 
 
-const appendBrowseItem = (menuItems: React.ReactNode[], handleBrowse: BrowseHandler, t: TFunction) => {
+const appendBrowseItem = (menuItems: React.ReactNode[], handleBrowse: BrowseHandler, t: UI.TranslateF) => {
   if (!handleBrowse) {
     return menuItems;
   }

@@ -5,7 +5,6 @@ import cx from 'classnames';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { createFileBundle } from 'services/api/QueueApi';
 import { dupeToStringType } from 'utils/TypeConvert';
 import { formatMagnetCaption } from 'utils/MagnetUtils';
@@ -27,7 +26,7 @@ export interface HighlightHashMagnetProps extends Pick<TableDropdownProps, 'posi
   contentType: API.FileContentType | null;
   dupe: API.Dupe | null;
   user: UI.DownloadSource | undefined;
-  t: TFunction;
+  t: UI.TranslateF;
   menuProps: UI.MessageActionMenuData;
   magnet: UI.HashMagnet;
 }

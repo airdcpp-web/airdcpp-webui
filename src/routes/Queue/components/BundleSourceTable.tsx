@@ -12,14 +12,13 @@ import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { TFunction } from 'i18next';
 import MenuConstants from 'constants/MenuConstants';
 
 
 interface SourceProps {
   bundle: API.QueueBundle;
   source: API.QueueBundleSource;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (

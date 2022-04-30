@@ -5,7 +5,7 @@ import SuggestionRenderer from './SuggestionRenderer';
 import SuggestField, { SuggestFieldProps } from './SuggestField';
 
 import escapeStringRegexp from 'escape-string-regexp';
-import { Omit, RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
+import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 
 
 type ForwardedSuggestFieldProps = Omit<

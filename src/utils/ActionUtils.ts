@@ -2,8 +2,8 @@ import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
 
 import * as UI from 'types/ui';
+
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
-import { TFunction } from 'i18next';
 import NotificationActions from 'actions/NotificationActions';
 
 
@@ -34,7 +34,7 @@ type SocketActionHandler = () => Promise<any>;
 
 export const runBackgroundSocketAction = (
   handler: SocketActionHandler, 
-  t: TFunction
+  t: UI.TranslateF
 ): Promise<any> => {
   return handler().catch(e => {
     NotificationActions.apiError(

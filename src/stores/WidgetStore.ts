@@ -15,7 +15,6 @@ import { Transfers } from 'widgets/Transfers';
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
 import { widgetIdToSettingKey, widgetIdToType, widgetIdToLocalStateKey } from 'utils/WidgetUtils';
-//import { TFunction } from 'i18next';
 
 
 // CONSTANTS
@@ -129,7 +128,7 @@ const Store = {
     this.ensureDefaultWidgets();
   },
 
-  ensureDefaultWidgets: function (/*t: TFunction*/) {
+  ensureDefaultWidgets: function () {
     if (Object.keys(this.layouts).length !== 0) {
       return;
     }

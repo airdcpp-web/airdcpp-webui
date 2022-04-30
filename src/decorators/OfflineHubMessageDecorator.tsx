@@ -15,9 +15,9 @@ import IconConstants from 'constants/IconConstants';
 import { useStore } from 'effects/StoreListenerEffect';
 
 
-export interface OfflineHubMessageDecoratorProps {
+export type OfflineHubMessageDecoratorProps = React.PropsWithChildren<{
   offlineMessage: MessageDescriptionType;
-}
+}>;
 
 // Disables the component if there are no online hubs
 const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = memo(props => {

@@ -10,8 +10,8 @@ const Visualizer = require('webpack-visualizer-plugin2');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const ReactRefreshTypeScript = require('react-refresh-typescript');
+//const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+//const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
 if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
@@ -96,7 +96,7 @@ const releasePlugins = [
 
 const debugPlugins = [
   new webpack.HotModuleReplacementPlugin(),
-  new ReactRefreshWebpackPlugin()
+  // new ReactRefreshWebpackPlugin()
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
@@ -145,9 +145,9 @@ module.exports = {
           {
             loader: require.resolve('ts-loader'),
             options: {
-              getCustomTransformers: () => ({
-                before: !release ? [ReactRefreshTypeScript()] : [],
-              }),
+              //getCustomTransformers: () => ({
+              //  before: !release ? [ReactRefreshTypeScript()] : [],
+              //}),
               // disable type checker - we will use it in fork plugin
               transpileOnly: true,
             },

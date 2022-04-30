@@ -1,7 +1,6 @@
 //import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
-import { TFunction } from 'i18next';
 
 import Loader from 'components/semantic/Loader';
 
@@ -23,7 +22,7 @@ interface MessageViewProps {
   className?: string;
   scrollPositionHandler: UI.ScrollPositionHandler;
   highlightRemoteMenuId?: string;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(

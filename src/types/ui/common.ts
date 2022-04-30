@@ -1,4 +1,5 @@
 
+import { TFunction } from 'react-i18next';
 import * as API from 'types/api';
 
 export interface SearchTypeItem {
@@ -20,3 +21,5 @@ export enum FileSelectModeEnum {
 export interface IdItemType {
   id: API.IdType;
 }
+
+export type TranslateF = TFunction;

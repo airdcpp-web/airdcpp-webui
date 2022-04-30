@@ -8,9 +8,9 @@ import Icon from 'components/semantic/Icon';
 import { isValueSet } from 'utils/FormUtils';
 
 
-interface FormAccordionProps {
+type FormAccordionProps = React.PropsWithChildren<{
   locals: UI.FormLocals;
-}
+}>;
 
 export const FormAccordion: React.FC<FormAccordionProps> = ({ locals, children }) => {
   const { label } = locals;

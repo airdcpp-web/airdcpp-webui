@@ -12,7 +12,6 @@ import HistoryConstants from 'constants/HistoryConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { TFunction } from 'i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 
 
@@ -21,7 +20,7 @@ interface RecentLayoutProps {
   entryType: string;
   entryTitleRenderer: (entry: API.HistoryItem) => React.ReactNode;
   hasSession: (entry: API.HistoryItem) => boolean;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
 interface DataProps {

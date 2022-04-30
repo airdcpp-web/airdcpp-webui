@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
 
 import { getParentPath } from 'utils/FileUtils';
 import { useMobileLayout } from 'utils/BrowserUtils';
@@ -38,19 +37,21 @@ const getMenuItem = (
   section: DownloadSection, 
   activeSection: string, 
   onClick: (key: string) => void, 
-  t: TFunction
+  t: UI.TranslateF
 ) => (
   <MenuItemLink 
     key={ section.key }
     onClick={ () => onClick(section.key) } 
     active={ activeSection === section.key }
   >
-    { t(toI18nKey(section.key, UI.Modules.COMMON), section.name) }
-    { !!section.list && (
-      <div className="ui small right label"> 
-        { section.list.length }
-      </div>
-    ) }
+    <>
+      { t(toI18nKey(section.key, UI.Modules.COMMON), section.name) }
+      { !!section.list && (
+        <div className="ui small right label"> 
+          { section.list.length }
+        </div>
+      ) }
+    </>
   </MenuItemLink>
 );
 

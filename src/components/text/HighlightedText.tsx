@@ -7,7 +7,6 @@ import { Location } from 'history';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { formatEmojis } from 'utils/EmojiFormat';
 
@@ -23,7 +22,7 @@ interface HighlightProps {
 const getHighlightNode = (
   highlight: API.MessageHighlight, 
   location: Location, 
-  t: TFunction,
+  t: UI.TranslateF,
   { user, menuProps }: HighlightProps
 ): React.ReactNode => {
   const { start, end } = highlight.position;
@@ -106,7 +105,7 @@ const decoder = new TextDecoder();
 const formatHighlights = (
   { text: text16, highlights, emojify, ...other }: HighlightedTextProps, 
   location: Location, 
-  t: TFunction
+  t: UI.TranslateF
 ) => {
   if (!highlights.length) {
     return formatPlainText(text16, emojify);

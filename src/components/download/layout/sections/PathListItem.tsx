@@ -1,6 +1,5 @@
 //import PropTypes from 'prop-types';
 import * as React from 'react';
-import { TFunction } from 'i18next';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -17,10 +16,10 @@ import { PathDownloadHandler } from '../../types';
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
   downloadHandler: PathDownloadHandler;
-  t: TFunction;
+  t: UI.TranslateF;
 }
 
-const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: TFunction) => {
+const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: UI.TranslateF) => {
   if (pathInfo.free_space <= 0) {
     return pathInfo.path;
   }
