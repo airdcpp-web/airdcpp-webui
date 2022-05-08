@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import NotificationActions from 'actions/NotificationActions';
 
 // The webpack path must be set before loading any styles

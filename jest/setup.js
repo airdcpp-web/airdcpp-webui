@@ -1,6 +1,4 @@
-const { string } = require('prop-types');
-
-var storageMock = (function() {
+const storageMock = (function() {
   var store = {};
   return {
     getItem: function(key) {

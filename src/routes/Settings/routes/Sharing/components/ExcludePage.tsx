@@ -45,9 +45,7 @@ const getRow = (path: string) => {
 };
 
 
-interface ExcludePageProps extends SettingSectionChildProps {
-
-}
+type ExcludePageProps = SettingSectionChildProps;
 
 interface ExcludePageDataProps extends DataProviderDecoratorChildProps {
   excludes: string[];

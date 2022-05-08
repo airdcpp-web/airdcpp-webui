@@ -135,7 +135,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
   }
 
   show = () => {
-    let settings: SemanticUI.PopupSettings = {
+    const settings: SemanticUI.PopupSettings = {
       on: this.props.onHover ? 'hover' : 'click',
       movePopup: false,
       popup: this.node as any as JQuery<HTMLElement>,
@@ -180,13 +180,14 @@ class Popup extends React.PureComponent<PopupProps, State> {
         </span>
         { visible && !!this.node && (
           <PopupContent
-            children={ children }
             node={ this.node }
             onShow={ this.show }
             onHide={ this.destroyPortal }
             hide={ this.hide }
             contentUpdateTrigger={ contentUpdateTrigger }
-          />
+          >
+            { children }
+          </PopupContent>
         ) }
       </>
     );

@@ -20,12 +20,8 @@ import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 
 
-interface SystemLogProps {
-
-}
-
-const SystemLog: React.FC<SystemLogProps> = memo(
-  () => {
+const SystemLog: React.FC = memo(
+  function SystemLog() {
     useEffect(
       () => {
         EventAPIActions.setActive(true);

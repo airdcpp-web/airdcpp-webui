@@ -97,20 +97,20 @@ class SocketNotificationListener extends Component<Props> {
   onSocketConnected() {
     const { addSocketListener } = this.props;
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, undefined, API.AccessEnum.PRIVATE_CHAT_VIEW);
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_MESSAGE, this.onHubMessage, undefined, API.AccessEnum.HUBS_VIEW);
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, undefined, API.AccessEnum.EVENTS_VIEW);
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, undefined, API.AccessEnum.VIEW_FILE_VIEW);
   }
 
@@ -205,7 +205,7 @@ class SocketNotificationListener extends Component<Props> {
     } as UI.Notification);
   }
 
-  translate = (text: string, moduleId: UI.Modules, isAction: boolean = false) => {
+  translate = (text: string, moduleId: UI.Modules, isAction = false) => {
     const moduleIds = [ moduleId, UI.SubNamespaces.NOTIFICATIONS ];
     if (isAction) {
       moduleIds.push(UI.SubNamespaces.ACTIONS);

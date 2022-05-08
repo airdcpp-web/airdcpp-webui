@@ -1,22 +1,21 @@
 //import PropTypes from 'prop-types';
 import * as React from 'react';
 import invariant from 'invariant';
+import { merge } from 'lodash';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
+import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
 import SocketService from 'services/SocketService';
 
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
-import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
 import { ModalRouteCloseContext } from './ModalRouteDecorator';
 import { 
   SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps, AddSocketListener 
 } from './SocketSubscriptionDecorator';
-//import { toApiError } from 'utils/HttpUtils';
-import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
-import { merge } from 'lodash';
 
 
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
@@ -69,14 +68,17 @@ interface State<DataT extends object> {
   error: DataFetchError | null;
 }
 
-type DataProps<PropsT = {}> = WithTranslation & SocketSubscriptionDecoratorChildProps<PropsT>;
+type DataProps<PropsT = UI.EmptyObject> = WithTranslation & SocketSubscriptionDecoratorChildProps<PropsT>;
 
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
   settings: DataProviderDecoratorSettings<PropsT, DataT>
 ) {
-  class DataProviderDecorator extends React.Component<DataProviderDecoratorProps & DataProps & PropsT, State<DataT>> {
+  class DataProviderDecorator extends React.Component<
+    DataProviderDecoratorProps & DataProps<PropsT> & PropsT, 
+    State<DataT>
+  > {
     //displayName: 'DataProviderDecorator',
 
     /*propTypes: {
@@ -107,7 +109,7 @@ export default function <PropsT extends object, DataT extends object>(
       renderOnError: PropTypes.bool,
     },*/
 
-    mounted: boolean = false;
+    mounted = false;
 
     state: State<DataT> = {
       data: null,
@@ -167,7 +169,7 @@ export default function <PropsT extends object, DataT extends object>(
       }
 
       const promises = keys.map(key => {
-        let url = urls[key];
+        const url = urls[key];
         if (typeof url === 'function') {
           try {
             const ret = url(this.props, SocketService);

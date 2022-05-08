@@ -6,7 +6,7 @@ import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFoot
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
 import * as API from 'types/api';
-//import * as UI from 'types/ui';
+import * as UI from 'types/ui';
 
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
@@ -14,9 +14,7 @@ import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import MenuConstants from 'constants/MenuConstants';
 
 
-interface PrivateChatSessionProps extends SessionChildProps<API.PrivateChat, {}, ChatActionList> {
-
-}
+type PrivateChatSessionProps = SessionChildProps<API.PrivateChat, UI.EmptyObject, ChatActionList>
 
 class PrivateChatSession extends Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';

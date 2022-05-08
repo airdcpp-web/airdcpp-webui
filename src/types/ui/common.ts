@@ -23,3 +23,9 @@ export interface IdItemType {
 }
 
 export type TranslateF = TFunction;
+
+export type EmptyObject = Record<string, never>;
+
+export type PropsWithChildren = {
+  children: React.ReactNode;
+}

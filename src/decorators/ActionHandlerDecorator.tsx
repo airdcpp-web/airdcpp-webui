@@ -74,7 +74,7 @@ const translateInput = (
 
 const isSidebarAction = (actionId: string) => actionId === 'browse' || actionId === 'message';
 
-const getCommonConfirmDialogProps = <ItemDataT extends any>(
+const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueType>(
   actionData: ActionData<ItemDataT>,
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
@@ -92,13 +92,13 @@ const getCommonConfirmDialogProps = <ItemDataT extends any>(
   };
 };
 
-interface ConfirmHandlerProps<ItemDataT extends any> {
+interface ConfirmHandlerProps<ItemDataT> {
   onApproved: (data: boolean | string) => void;
   onRejected: () => void;
   actionData: ActionData<ItemDataT> | null;
 }
 
-const ConfirmHandler = <ItemDataT extends any>(
+const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>(
   { actionData, onApproved, onRejected }: ConfirmHandlerProps<ItemDataT>
 ) => {
   const { t } = useTranslation();
@@ -140,7 +140,7 @@ const ConfirmHandler = <ItemDataT extends any>(
   return null;
 };
 
-const handleAction = async <ItemDataT extends any>(
+const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
   actionData: ActionData<ItemDataT>, 
   confirmData: boolean | string | undefined,
   location: Location,
@@ -190,7 +190,7 @@ const handleAction = async <ItemDataT extends any>(
 
 type Props<ItemDataT> = ActionHandlerDecoratorProps<ItemDataT>;
 
-const ActionHandlerDecorator = <ItemDataT extends any>(
+const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
   props: Props<ItemDataT>
 ) => {
   const [ confirmActionData, setConfirmActionData ] = useState<ActionData<ItemDataT> | null>(null);

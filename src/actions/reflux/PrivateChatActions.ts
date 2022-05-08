@@ -31,7 +31,7 @@ PrivateChatActions.createSession.listen(function (
   user: API.HintedUser, 
   sessionStore: any
 ) {
-  let session = sessionStore.getSession(user.cid);
+  const session = sessionStore.getSession(user.cid);
   if (session) {
     if (session.user.hub_url !== user.hub_url) {
       // TODO: error handling
@@ -42,7 +42,7 @@ PrivateChatActions.createSession.listen(function (
     return;
   }
 
-  let that = this;
+  const that = this;
   SocketService.post(PrivateChatConstants.SESSIONS_URL, {
     user: {
       cid: user.cid,

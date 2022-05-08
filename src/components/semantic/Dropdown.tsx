@@ -90,7 +90,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       showOnFocus: false, // It can become focused when opening a modal
       onShow: () => {
         this.setState({
-            visible: true
+          visible: true
         });
       },
       onHide: () => {
@@ -134,7 +134,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       { 'selection fluid': selection },
     );
 
-    let icon = (
+    const icon = (
       <Icon 
         icon={ triggerIcon !== undefined ? triggerIcon : (selection ? 'dropdown' : IconConstants.EXPAND) } 
         className="trigger"

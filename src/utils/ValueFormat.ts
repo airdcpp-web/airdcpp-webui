@@ -73,7 +73,7 @@ const formatUnits = (initialValue: number, units: string[], threshold: number, t
 
 export const ByteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
 
-export const formatSize = (bytes: number, t: UI.TranslateF, addExact: boolean = false) => {
+export const formatSize = (bytes: number, t: UI.TranslateF, addExact = false) => {
   let ret = formatUnits(bytes, ByteUnits, 1024, t);
   if (addExact && bytes > 1024) {
     ret += ` (${t(

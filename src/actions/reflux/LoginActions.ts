@@ -22,7 +22,7 @@ LoginActions.login.listen(function (
   password: string, 
   rememberMe: boolean
 ) {
-  let that = this;
+  const that = this;
 
   SocketService.connect(username, password, false)
     .then(data => that.completed(data, rememberMe))
@@ -64,7 +64,7 @@ LoginActions.connect.listen(async function (this: UI.AsyncActionType<any>, token
 });
 
 LoginActions.logout.listen(function (this: UI.AsyncActionType<any>) {
-  let that = this;
+  const that = this;
   return SocketService.logout()
     .then(that.completed)
     .catch(this.failed);

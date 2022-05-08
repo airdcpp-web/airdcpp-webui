@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import LoginActions from 'actions/reflux/LoginActions';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 
 
@@ -11,7 +12,7 @@ export interface LoginLocationState {
   nextPath?: string;
 }
 
-const useLoginState = (props: RouteComponentProps<{}, any, LoginLocationState>) => {
+const useLoginState = (props: RouteComponentProps<UI.EmptyObject, any, LoginLocationState>) => {
   const loadingState = useState(false);
   const setLoading = loadingState[1];
   const { i18n } = useTranslation();

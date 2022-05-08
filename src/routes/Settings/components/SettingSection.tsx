@@ -19,15 +19,19 @@ export interface SettingSectionProps {
 }
 
 type Props = SaveDecoratorChildProps & SettingsMenuDecoratorChildProps;
-// tslint:disable-next-line:max-line-length
-export type SettingSectionChildProps = SaveDecoratorChildProps & Pick<Props, 'parent' | 'currentMenuItem'> & RouteComponentProps & React.PropsWithChildren<{
-  contentClassname: string;
-  parentMenuItems: React.ReactNode[];
-  menuItems: React.ReactNode[];
-  advancedMenuItems?: React.ReactNode[];
-  settingsT: UI.ModuleTranslator;
-  moduleT: UI.ModuleTranslator;
-}>;
+
+export type SettingSectionChildProps<RouteParams = UI.EmptyObject> = 
+  SaveDecoratorChildProps & 
+  Pick<Props, 'parent' | 'currentMenuItem'> & 
+  RouteComponentProps<RouteParams> & 
+  React.PropsWithChildren<{
+    contentClassname: string;
+    parentMenuItems: React.ReactNode[];
+    menuItems: React.ReactNode[];
+    advancedMenuItems?: React.ReactNode[];
+    settingsT: UI.ModuleTranslator;
+    moduleT: UI.ModuleTranslator;
+  }>;
 
 
 

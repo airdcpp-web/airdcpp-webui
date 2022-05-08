@@ -9,7 +9,7 @@ import * as UI from 'types/ui';
 import SearchConstants from 'constants/SearchConstants';
 
 
-const handleCreate: UI.ActionHandler<{}> = ({ location }) => {
+const handleCreate: UI.ActionHandler<API.SearchType> = ({ location }) => {
   History.push(`${location.pathname}/types`);
 };
 

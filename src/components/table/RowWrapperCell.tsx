@@ -7,7 +7,7 @@ import * as UI from 'types/ui';
 
 export interface RowWrapperCellChildProps<
   CellDataT, 
-  RowDataT extends UI.ActionItemDataValueType
+  RowDataT extends UI.ActionMenuItemDataValueType
 > extends CellProps {
   cellData?: CellDataT;
   rowDataGetter?: () => RowDataT;

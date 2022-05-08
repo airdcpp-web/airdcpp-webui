@@ -38,11 +38,11 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
 );
 
 
-type CloseButtonProps<SessionT extends UI.SessionItemBase> = 
-  Pick<SessionMainLayoutProps<SessionT>, 'actions' | 'activeItem'>;
+type CloseButtonProps<SessionT extends UI.SessionItemBase, UIActionsT extends UI.ActionListType<UI.SessionItemBase>> = 
+  Pick<SessionMainLayoutProps<SessionT, UI.EmptyObject, UIActionsT>, 'actions' | 'activeItem'>;
 
-const CloseButton = <SessionT extends UI.SessionItemBase>(
-  { actions, activeItem }: CloseButtonProps<SessionT>
+const CloseButton = <SessionT extends UI.SessionItemBase, UIActionsT extends UI.ActionListType<UI.SessionItemBase>>(
+  { actions, activeItem }: CloseButtonProps<SessionT, UIActionsT>
 ) => {
   if (!activeItem || useMobileLayout()) {
     return null;
@@ -69,8 +69,12 @@ const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({ itemHeaderIcon, i
   </div>
 );
 
-const TopMenuLayout = <SessionT extends UI.SessionItemBase>(
-  { children, onKeyDown, ...props }: SessionMainLayoutProps<SessionT>
+const TopMenuLayout = <
+  SessionT extends UI.SessionItemBase, 
+  SessionApiT extends object,
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+>(
+  { children, onKeyDown, ...props }: SessionMainLayoutProps<SessionT, SessionApiT, UIActionsT>
 ) => (
   <div 
     className="session-container vertical" 

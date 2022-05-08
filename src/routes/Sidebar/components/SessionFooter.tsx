@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import * as UI from 'types/ui';
+
 
 interface FooterItemProps {
   label?: string;
@@ -14,7 +16,7 @@ export const FooterItem: React.FC<FooterItemProps> = ({ label, text }) => (
   </div>
 );
 
-export const SessionFooter: React.FC<React.PropsWithChildren<{}>> = ({ children }) => (
+export const SessionFooter: React.FC<UI.PropsWithChildren> = ({ children }) => (
   <div className="session-footer">
     <div className="ui footer divider"/>
     <div className="info-grid ui">

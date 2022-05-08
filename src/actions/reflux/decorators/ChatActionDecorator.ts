@@ -30,7 +30,7 @@ export default function (
     this: UI.AsyncActionType<SessionType>, 
     session: SessionType
   ) {
-    let that = this;
+    const that = this;
     SocketService.get(`${sessionUrl}/${session.id}/messages/0`)
       .then(that.completed.bind(that, session))
       .catch(that.failed.bind(that, session));
@@ -44,7 +44,7 @@ export default function (
     this: UI.AsyncActionType<API.IdType>, 
     session: SessionType
   ) {
-    let that = this;
+    const that = this;
     SocketService.post(`${sessionUrl}/${session.id}/messages/read`)
       .then(that.completed)
       .catch(that.failed);
@@ -54,9 +54,9 @@ export default function (
     this: UI.AsyncActionType<SessionType>, 
     session: SessionType, 
     text: string, 
-    thirdPerson: boolean = false
+    thirdPerson = false
   ) {
-    let that = this;
+    const that = this;
     SocketService.post(`${sessionUrl}/${session.id}/chat_message`, { 
       text,
       third_person: thirdPerson,
@@ -76,7 +76,7 @@ export default function (
     text: string, 
     severity: API.SeverityEnum
   ) {
-    let that = this;
+    const that = this;
     SocketService.post(`${sessionUrl}/${session.id}/status_message`, { 
       text,
       severity,

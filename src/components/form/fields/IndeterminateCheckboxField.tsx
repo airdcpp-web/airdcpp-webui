@@ -6,7 +6,7 @@ import t from 'utils/tcomb-form';
 
 
 interface IndeterminateCheckboxProps {
-  locals: UI.FormLocals<any, boolean | null, {}>;
+  locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>;
 }
 
 const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = ({ locals }) => {
@@ -45,7 +45,7 @@ const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = ({ locals })
 };
 
 type TCombTemplate = { 
-  renderCheckbox: (locals: UI.FormLocals<any, boolean | null, {}>) => React.ReactNode; 
+  renderCheckbox: (locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>) => React.ReactNode; 
 };
 
 const IndeterminateCheckboxTemplate: TCombTemplate = {

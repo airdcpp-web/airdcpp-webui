@@ -77,7 +77,8 @@ const Decorated = ModalRouteDecorator<ResultDialogProps, RouteProps>(
   DataProviderDecorator<Props, DataProps>(
     ResultDialog, {
       urls: {
-        parentResult: ({ match, instance }, socket) => socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${match.params.resultId}`),
+        parentResult: ({ match, instance }, socket) => 
+          socket.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/${match.params.resultId}`),
       }
     }
   ), 

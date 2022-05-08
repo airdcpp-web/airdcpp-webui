@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import SocketService from 'services/SocketService';
 import LoginStore from 'stores/LoginStore';
+
 import { SubscriptionRemoveHandler, SubscriptionCallback, EntityId } from 'airdcpp-apisocket';
 import { AccessEnum } from 'types/api';
 import { SessionBaseType } from 'routes/Sidebar/components/SessionLayout';
@@ -20,12 +21,12 @@ export type AddSocketListener = <DataT extends object | void, EntityIdT extends 
   access?: AccessEnum
 ) => void;
 
-export interface SocketSubscriptionDecoratorChildProps<PropsT = {}> {
+export interface SocketSubscriptionDecoratorChildProps<PropsT = unknown> {
   addSocketListener: AddSocketListener;
   removeSocketListeners: (props?: PropsT) => void;
 }
 
-const SocketSubscriptionDecorator = function <PropsT>(
+const SocketSubscriptionDecorator = function <PropsT extends object>(
   Component: React.ComponentType<SocketSubscriptionDecoratorChildProps<PropsT> & PropsT>,
 
   // An optional function that will skip removal of listeners from the API in case "false" is being returned

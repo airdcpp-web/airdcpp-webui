@@ -19,11 +19,11 @@ export interface StatisticsDecoratorChildProps<DataT> {
 }
 
 // Decorator for statistics pages that fetch the content from API
-const StatisticsDecorator = function <DataT, PropsT = {}>(
+const StatisticsDecorator = function <DataT, PropsT>(
   Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>, 
   fetchUrl: string, 
   unavailableMessage: ((t: UI.TranslateF, props: PropsT) => string) | null, 
-  fetchIntervalSeconds: number = 0
+  fetchIntervalSeconds = 0
 ) {
   class Decorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
     state = {

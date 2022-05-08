@@ -21,7 +21,7 @@ const postSettings = (settings, viewUrl, action) => {
 
 TableActions.close.listen(function (viewUrl, sessionExists) {
   if (sessionExists && LoginStore.socketAuthenticated) {
-    let that = this;
+    const that = this;
     return SocketService.delete(viewUrl)
       .then(data => that.completed(viewUrl, data))
       .catch(error => this.failed(viewUrl, error));

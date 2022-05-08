@@ -33,65 +33,67 @@ const getHashPercent = (stats: API.HashStats) => {
   return percent;
 };
 
-const HashProgress = memo<HashProgressProps & HashProgressDataProps>(({ stats }) => {
-  const hasData = stats.hash_files_left > 0 || stats.hashers > 0;
-  const [ dialogOpen, setDialogOpen ] = useState(false);
+const HashProgress = memo<HashProgressProps & HashProgressDataProps>(
+  function HashProgress({ stats }) {
+    const hasData = stats.hash_files_left > 0 || stats.hashers > 0;
+    const [ dialogOpen, setDialogOpen ] = useState(false);
 
-  useEffect(
-    () => {
-      if (!hasData && dialogOpen) {
-        setDialogOpen(false);
-      }
-    },
-    [ stats ]
-  );
+    useEffect(
+      () => {
+        if (!hasData && dialogOpen) {
+          setDialogOpen(false);
+        }
+      },
+      [ stats ]
+    );
 
-  return (
-    <>
-      { hasData && (
-        <div 
-          className="progress icon"
-          style={{
-            width: '25px',
-            height: '25px',
-            display: 'inline-flex'
-          }}
-        >
-          <CircularProgressbarWithChildren
-            value={ getHashPercent(stats) }
-            strokeWidth={ 7 }
-            styles={ buildStyles({
-              pathColor: '#2185d0',
-            }) }
+    return (
+      <>
+        { hasData && (
+          <div 
+            className="progress icon"
+            style={{
+              width: '25px',
+              height: '25px',
+              display: 'inline-flex'
+            }}
           >
-            <Icon
-              icon={ IconConstants.HASH }
-              style={{
-                maxHeight: '13px',
-                maxWidth: '13px',
-                margin: '0px'
-              }}
-              cornerIcon={ stats.pause_forced ? IconConstants.PAUSE : IconConstants.PLAY }
-              onClick={ () => setDialogOpen(true) }
-            />
-          </CircularProgressbarWithChildren>
-        </div>
-      )}
-      { dialogOpen && (
-        <HashInfoDialog
-          stats={ stats }
-          onClose={ () => setDialogOpen(false) }
-        />
-      ) }
-    </>
-  );
-});
+            <CircularProgressbarWithChildren
+              value={ getHashPercent(stats) }
+              strokeWidth={ 7 }
+              styles={ buildStyles({
+                pathColor: '#2185d0',
+              }) }
+            >
+              <Icon
+                icon={ IconConstants.HASH }
+                style={{
+                  maxHeight: '13px',
+                  maxWidth: '13px',
+                  margin: '0px'
+                }}
+                cornerIcon={ stats.pause_forced ? IconConstants.PAUSE : IconConstants.PLAY }
+                onClick={ () => setDialogOpen(true) }
+              />
+            </CircularProgressbarWithChildren>
+          </div>
+        )}
+        { dialogOpen && (
+          <HashInfoDialog
+            stats={ stats }
+            onClose={ () => setDialogOpen(false) }
+          />
+        ) }
+      </>
+    );
+  }
+);
 
 export default DataProviderDecorator<HashProgressProps, HashProgressDataProps>(HashProgress, {
   urls: {
     stats: HashConstants.STATS_URL,
   },
-  onSocketConnected: (addSocketListener, { refetchData, mergeData }) => {
+  onSocketConnected: (addSocketListener, { mergeData }) => {
     addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, (data: API.HashStats) => {
       mergeData({
         stats: data

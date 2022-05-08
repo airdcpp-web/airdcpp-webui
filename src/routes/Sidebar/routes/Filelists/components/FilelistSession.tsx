@@ -9,13 +9,13 @@ import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { Location } from 'history';
 
 
-interface FilelistSessionProps extends SessionChildProps<API.FilelistSession> {
-
-}
+type FilelistSessionProps = SessionChildProps<API.FilelistSession, UI.EmptyObject, UI.EmptyObject>
 
 class FilelistSession extends Component<FilelistSessionProps> {
   static displayName = 'FilelistSession';
@@ -63,4 +63,4 @@ class FilelistSession extends Component<FilelistSessionProps> {
   }
 }
 
-export default ActiveSessionDecorator(FilelistSession);
+export default ActiveSessionDecorator<FilelistSessionProps, API.FilelistSession>(FilelistSession);

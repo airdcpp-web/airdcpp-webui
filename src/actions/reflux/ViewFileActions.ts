@@ -36,7 +36,7 @@ ViewFileActions.createSession.listen(function (
   location: Location, 
   sessionStore: any
 ) {
-  let session = sessionStore.getSession(itemInfo.tth);
+  const session = sessionStore.getSession(itemInfo.tth);
   if (session) {
     this.completed(location, session);
     return;
@@ -51,7 +51,7 @@ ViewFileActions.createSession.listen(function (
     text: isText,
   };
 
-  let that = this;
+  const that = this;
   SocketService.post(ViewFileConstants.SESSIONS_URL, fileData)
     .then((data: API.ViewFile) => that.completed(location, data))
     .catch(that.failed);
@@ -65,13 +65,13 @@ ViewFileActions.openLocalFile.listen(function (
   location: Location, 
   sessionStore: any
 ) {
-  let session = sessionStore.getSession(tth);
+  const session = sessionStore.getSession(tth);
   if (session) {
     this.completed(location, session);
     return;
   }
 
-  let that = this;
+  const that = this;
   SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${tth}`, {
     text: isText,
   })
@@ -112,7 +112,7 @@ ViewFileActions.openLocalFile.failed.listen(function (error: ErrorResponse) {
 });
 
 ViewFileActions.setRead.listen(function (this: UI.AsyncActionType<API.ViewFile>, session: API.ViewFile) {
-  let that = this;
+  const that = this;
   SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${session.id}/read`)
     .then(that.completed)
     .catch(that.failed);

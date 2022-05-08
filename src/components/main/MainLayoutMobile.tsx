@@ -11,37 +11,39 @@ import { MainLayoutProps } from './AuthenticatedApp';
 import { MenuIcon } from 'components/menu';
 
 
-const MainLayoutMobile: React.FC<MainLayoutProps> = memo(props => {
-  const [ menuVisible, setMenuVisible ] = useState(false);
+const MainLayoutMobile: React.FC<MainLayoutProps> = memo(
+  function MainLayoutMobile(props) {
+    const [ menuVisible, setMenuVisible ] = useState(false);
 
-  const { className, location, urgencies } = props;
-  return (
-    <div className={ className } id="mobile-layout">
-      <MainNavigation
-        location={ location }
-        onClose={ () => {
-          setMenuVisible(false);
-        } }
-        visible={ menuVisible }
-      />
-      <div className="pusher" id="mobile-layout-inner">
-        <SiteHeader>
-          <div className="right">
-            <MenuIcon
-              urgencies={ urgencies }
-              onClick={ () => {
-                setMenuVisible(true);
-              } }
-              className="item"
-            />
+    const { className, location, urgencies } = props;
+    return (
+      <div className={ className } id="mobile-layout">
+        <MainNavigation
+          location={ location }
+          onClose={ () => {
+            setMenuVisible(false);
+          } }
+          visible={ menuVisible }
+        />
+        <div className="pusher" id="mobile-layout-inner">
+          <SiteHeader>
+            <div className="right">
+              <MenuIcon
+                urgencies={ urgencies }
+                onClick={ () => {
+                  setMenuVisible(true);
+                } }
+                className="item"
+              />
+            </div>
+          </SiteHeader>
+          <div className="site-content">
+            { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
           </div>
-        </SiteHeader>
-        <div className="site-content">
-          { parseRoutes([ ...mainRoutes, ...secondaryRoutes, ...configRoutes ]) }
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default MainLayoutMobile;

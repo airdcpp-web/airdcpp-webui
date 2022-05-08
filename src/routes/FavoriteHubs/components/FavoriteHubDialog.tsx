@@ -8,7 +8,9 @@ import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 
 import SocketService from 'services/SocketService';
 
-import ShareProfileDecorator, { profileToEnumValue, ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
+import ShareProfileDecorator, { 
+  profileToEnumValue, ShareProfileDecoratorChildProps 
+} from 'decorators/ShareProfileDecorator';
 import IconConstants from 'constants/IconConstants';
 
 import t from 'utils/tcomb-form';
@@ -59,7 +61,7 @@ const Fields: UI.FormFieldDefinition[] = [
         key: 'share_profile',
         title: 'Share profile',
         type: API.SettingTypeEnum.NUMBER,
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         help: 'Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)',
         optional: true,
       }, {

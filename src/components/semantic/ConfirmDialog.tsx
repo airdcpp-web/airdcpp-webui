@@ -96,7 +96,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
       //debug: true,
       //verbose: true,
       //selector: {
-        //dimmer: 
+      //  dimmer: 
       //},
       //name: 'Confirm',
     };

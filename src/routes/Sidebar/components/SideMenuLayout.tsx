@@ -5,12 +5,18 @@ import LayoutHeader from 'components/semantic/LayoutHeader';
 import { SessionMainLayoutProps } from './SessionLayout';
 import { Grid } from 'components/semantic/Grid';
 
+import * as UI from 'types/ui';
 
-const SideMenuLayout: React.FC<SessionMainLayoutProps<any /*SessionT*/>> = ({ 
-  sessionMenuItems, newButton,
-  itemHeaderIcon, itemHeaderTitle, children,
-  itemHeaderDescription, onKeyDown,
-}) => {
+
+const SideMenuLayout = <
+  SessionT extends UI.SessionItemBase, 
+  SessionApiT extends object,
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+>({ 
+    sessionMenuItems, newButton,
+    itemHeaderIcon, itemHeaderTitle, children,
+    itemHeaderDescription, onKeyDown,
+  }: SessionMainLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
 
   if (newButton) {
     newButton = React.cloneElement(newButton, { 

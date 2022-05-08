@@ -31,7 +31,7 @@ interface ListBrowserProps {
 }
 
 class ListBrowser extends React.Component<ListBrowserProps> {
-  hasClickedDirectory: boolean = false;
+  hasClickedDirectory = false;
 
   routerWillLeave = (nextLocation: Location, action: string) => {
     if (action === 'POP' && this.hasClickedDirectory && nextLocation.pathname !== this.props.location.pathname) {

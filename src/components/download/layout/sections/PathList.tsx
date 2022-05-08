@@ -10,6 +10,7 @@ import { translate } from 'utils/TranslationUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { PathDownloadHandler } from '../../types';
 import { PathListItem } from './PathListItem';
 
@@ -24,20 +25,21 @@ interface PathListDataProps {
   pathInfos: API.DiskSpaceInfo[];
 }
 
-const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(
-  ({ downloadHandler, pathInfos, t }) => (
-    <div className="ui relaxed list">
-      { pathInfos.map(pathInfo => (
-        <PathListItem 
-          key={ pathInfo.path } 
-          pathInfo={ pathInfo } 
-          downloadHandler={ downloadHandler }
-          t={ t }
-        />
-      )) }
-    </div>
-  ), 
-  {
+const PathListWithData = DataProviderDecorator<PathListProps, PathListDataProps>(
+  function PathList({ downloadHandler, pathInfos, t }) {
+    return (
+      <div className="ui relaxed list">
+        { pathInfos.map(pathInfo => (
+          <PathListItem 
+            key={ pathInfo.path } 
+            pathInfo={ pathInfo } 
+            downloadHandler={ downloadHandler }
+            t={ t }
+          />
+        )) }
+      </div>
+    );
+  }, {
     urls: {
       pathInfos: ({ paths }, socket) => socket.post(FilesystemConstants.DISK_INFO_URL, { paths }),
     },
@@ -52,7 +54,7 @@ const PathList = DataProviderDecorator<PathListProps, PathListDataProps>(
 //paths: PropTypes.array.isRequired,
 //};
 
-export default (props: PathListProps) => {
+const PathList: React.FC<PathListProps> = props => {
   if (props.paths.length === 0) {
     return (
       <Message
@@ -61,5 +63,7 @@ export default (props: PathListProps) => {
     );
   }
 
-  return <PathList { ...props }/>;
+  return <PathListWithData { ...props }/>;
 };
+
+export default PathList;

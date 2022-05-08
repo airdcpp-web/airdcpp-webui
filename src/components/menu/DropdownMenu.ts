@@ -12,7 +12,7 @@ import { ActionMenuProps, ActionMenu } from './ActionDropdownMenu';
 
 type TableActionMenuDropdownProps = Omit<TableDropdownProps, 'children' | 'caption'>;
 
-export type TableActionMenuProps<ItemDataT extends UI.ActionItemDataValueType> = 
+export type TableActionMenuProps<ItemDataT extends UI.ActionMenuItemDataValueType> = 
   TableActionMenuDropdownProps & ActionMenuDecoratorProps<ItemDataT>;
 export const TableActionMenu = ActionMenuDecorator<TableActionMenuDropdownProps, any>(TableDropdown);
 

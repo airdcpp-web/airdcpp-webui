@@ -43,7 +43,7 @@ export interface SaveContextProps {
 }
 
 export function withSaveContext<PropsT>(Component: React.ComponentType<PropsT & SaveContextProps>) {
-  return (props: PropsT) => {
+  return function withSaveContext(props: PropsT) {
     return (
       <SaveDecoratorContext.Consumer>
         { context => <Component {...props} saveContext={ context! } /> }
@@ -55,7 +55,7 @@ export function withSaveContext<PropsT>(Component: React.ComponentType<PropsT & 
 export default function <PropsT extends object>(
   Component: React.ComponentType<SaveDecoratorChildProps & PropsT>
 ) {
-  type Props = SaveDecoratorProps & RouteComponentProps & PropsT;
+  type Props = SaveDecoratorProps & Pick<RouteComponentProps, 'location'> & PropsT;
   
   class SaveDecorator extends React.Component<React.PropsWithChildren<Props>> {
     static displayName = 'SaveDecorator';

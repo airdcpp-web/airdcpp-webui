@@ -13,9 +13,7 @@ import { Row, Header, Grid } from 'components/semantic/Grid';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 
-interface ShareStatisticsPageProps extends SettingSectionChildProps {
-
-}
+type ShareStatisticsPageProps = SettingSectionChildProps
 
 const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>> = (
   { stats, moduleT }
@@ -29,7 +27,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
       />
       <Row 
         title={ translate('Total files') } 
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         text={ t(
           'totalFilesValue',
           {
@@ -74,7 +72,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
       />
       <Row 
         title={ translate('Text searches') } 
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         text={ t(
           'searchesPerSecondValue',
           {
@@ -104,7 +102,7 @@ const ShareStatisticsPage: React.FC<ShareStatisticsPageProps & StatisticsDecorat
       />
       <Row 
         title={ translate('Average text search tokens (non-filtered)') }
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         text={ t(
           'searchesAverageTokensValue',
           {

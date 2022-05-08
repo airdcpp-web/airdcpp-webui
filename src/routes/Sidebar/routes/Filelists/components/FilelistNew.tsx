@@ -49,10 +49,10 @@ class FilelistNew extends Component<NewSessionLayoutProps> {
           isClearable={ false }
           autoFocus={ true }
         />
-         <ShareProfileSelector 
-           onProfileChanged={ this.onProfileChanged }
-           sessionT={ sessionT }
-         />
+        <ShareProfileSelector 
+          onProfileChanged={ this.onProfileChanged }
+          sessionT={ sessionT }
+        />
         <RecentLayout
           entryType={ HistoryEntryEnum.FILELIST }
           hasSession={ this.hasSession }

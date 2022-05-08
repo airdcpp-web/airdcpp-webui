@@ -26,6 +26,7 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { getModuleT, translate, toI18nKey } from 'utils/TranslationUtils';
 import { LayoutWidthContext, LayoutWidthContextType } from 'context/LayoutWidthContext';
 
@@ -38,9 +39,9 @@ const findItem = <SessionT extends SessionBaseType>(items: SessionT[], id: API.I
 };
 
 export interface SessionLayoutProps<
-  SessionT extends SessionBaseType = SessionBaseType,
-  SessionApiT extends object = {},
-  UIActionT extends UI.ActionListType<UI.SessionItemBase> = {}
+  SessionT extends SessionBaseType,
+  SessionApiT extends object = UI.EmptyObject,
+  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > extends UI.SessionInfoGetter<SessionT>, Omit<RouteComponentProps, 'match'> {
   // Unique ID of the section (used for storing and loading the previously open tab)
   baseUrl: string;
@@ -77,7 +78,7 @@ export interface SessionLayoutProps<
   // AccessConstant defining whether the user has edit permission 
   editAccess: API.AccessEnum;
 
-  sessionItemLayout: React.ComponentType<SessionChildProps<SessionT>>;
+  sessionItemLayout: React.ComponentType<SessionChildProps<SessionT, SessionApiT, UIActionT>>;
 
   newLayout?: React.ComponentType<NewSessionLayoutProps>;
 
@@ -90,8 +91,11 @@ export interface SessionLocationState {
   pending?: boolean;
 }
 
-export interface SessionMainLayoutProps<SessionT extends SessionBaseType, ActionT extends object = {}> extends 
-  Pick<SessionLayoutProps<SessionT>, 'unreadInfoStore'> {
+export interface SessionMainLayoutProps<
+  SessionT extends SessionBaseType, 
+  SessionApiT extends object = UI.EmptyObject, 
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
+> extends Pick<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, 'unreadInfoStore'> {
 
   newButton: React.ReactElement<any> | null;
   listActionMenuGetter: () => React.ReactNode;
@@ -106,7 +110,7 @@ export interface SessionMainLayoutProps<SessionT extends SessionBaseType, Action
   children: React.ReactNode;
 
   //moduleId: string;
-  actions: SessionLayoutProps<SessionT>['uiActions'];
+  actions: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>['uiActions'];
   t: UI.TranslateF;
 }
 
@@ -116,8 +120,8 @@ interface State<SessionT extends SessionBaseType> {
 
 export type SessionChildProps<
   SessionT extends SessionBaseType, 
-  SessionApiT extends object = {}, 
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = {}
+  SessionApiT extends object = UI.EmptyObject, 
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > = Pick<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, 'location' | 'sessionApi' | 'uiActions'> & 
   { 
     session: SessionT;
@@ -128,8 +132,11 @@ export interface NewSessionLayoutProps extends RouteComponentProps {
   sessionT: UI.ModuleTranslator;
 }
 
-class SessionLayout<SessionT extends SessionBaseType, ActionT extends object> 
-  extends React.Component<SessionLayoutProps<SessionT, ActionT>, State<SessionT>> {
+class SessionLayout<
+  SessionT extends SessionBaseType, 
+  SessionApiT extends object,
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+>  extends React.Component<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, State<SessionT>> {
 
   static displayName = 'SessionLayout';
 
@@ -207,7 +214,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     return `/${this.props.baseUrl}/new`;
   }
 
-  getStorageKey = (props: SessionLayoutProps<SessionT>) => {
+  getStorageKey = (props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
     return `${props.baseUrl}_last_active`;
   }
 
@@ -228,7 +235,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   }
 
   // LIFECYCLE/REACT
-  UNSAFE_componentWillReceiveProps(nextProps: SessionLayoutProps<SessionT>) {
+  UNSAFE_componentWillReceiveProps(nextProps: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) {
     if (nextProps.location.pathname === this.getNewUrl()) {
       // Don't redirect to it if the "new session" layout is open
       if (this.state.activeItem) {
@@ -262,7 +269,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
   // Common logic for selecting the item to display (after mounting or session updates)
   // Returns true active item selection was handled
   // Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
-  checkActiveItem = (props: SessionLayoutProps<SessionT>) => {
+  checkActiveItem = (props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
     // Did we just create this session?
     const routerLocation = props.location;
     const pending = routerLocation.state && (routerLocation.state as SessionLocationState).pending;
@@ -344,7 +351,7 @@ class SessionLayout<SessionT extends SessionBaseType, ActionT extends object>
     }
 
     // See if we have something stored
-    let lastId = loadLocalProperty<API.IdType>(this.getStorageKey(this.props));
+    const lastId = loadLocalProperty<API.IdType>(this.getStorageKey(this.props));
     if (lastId && findItem(this.props.items, lastId)) {
       // Previous session exists
       this.replaceSession(lastId);

@@ -5,8 +5,6 @@ import { errorResponseToString } from 'utils/TypeConvert';
 
 const NotificationStore = Reflux.createStore({
   listenables: NotificationActions,
-  init: function () {
-  },
 
   onSuccess(...props) {
     this.trigger('success', ...props);

@@ -1,5 +1,7 @@
 
-export type FeedNode<Attributes extends object = {}> = string | {
+import * as UI from 'types/ui';
+
+export type FeedNode<Attributes extends object = UI.EmptyObject> = string | {
   text: string;
   attr: Attributes;
 };

@@ -19,23 +19,25 @@ interface RefreshProgressDataProps {
   tasks: API.ShareRefreshTask[];
 }
 
-const RefreshProgress = memo<RefreshProgressProps & RefreshProgressDataProps>(({ tasks }) => {
-  if (!tasks.length || tasks.every(t => t.canceled)) {
-    return null;
-  }
+const RefreshProgress = memo<RefreshProgressProps & RefreshProgressDataProps>(
+  function RefreshProgress({ tasks }) {
+    if (!tasks.length || tasks.every(t => t.canceled)) {
+      return null;
+    }
 
-  // TODO: add progress?
-  return (
-    <Icon
-      icon={ IconConstants.REFRESH_COLORED }
-      className="loading"
-      size="large"
-      style={{
-        margin: '5px 0px'
-      }}
-    />
-  );
-});
+    // TODO: add progress?
+    return (
+      <Icon
+        icon={ IconConstants.REFRESH_COLORED }
+        className="loading"
+        size="large"
+        style={{
+          margin: '5px 0px'
+        }}
+      />
+    );
+  }
+);
 
 export default DataProviderDecorator<RefreshProgressProps, RefreshProgressDataProps>(RefreshProgress, {
   urls: {

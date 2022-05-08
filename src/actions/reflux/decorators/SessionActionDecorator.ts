@@ -23,7 +23,7 @@ export default function (
   const SessionActions = Reflux.createActions(SessionActionConfig);
 
   SessionActions.fetchSessions.listen(function (this: UI.AsyncActionType<SessionType>) {
-    let that = this;
+    const that = this;
     SocketService.get(sessionsUrl)
       .then(that.completed)
       .catch(that.failed);
@@ -37,7 +37,7 @@ export default function (
     this: UI.AsyncActionType<SessionType>, 
     session: SessionType
   ) {
-    let that = this;
+    const that = this;
     SocketService.delete(`${sessionsUrl}/${session.id}`)
       .then(that.completed.bind(this, session))
       .catch(that.failed.bind(this, session));

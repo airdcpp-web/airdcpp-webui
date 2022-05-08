@@ -122,7 +122,7 @@ const ExtensionManageActions: UI.ActionListType<API.Extension> = {
     filter: isManaged,
     access: API.AccessEnum.ADMIN,
     confirmation: {
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       content: 'Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings.',
       approveCaption: 'Remove extension',
       rejectCaption: `Don't remove`,

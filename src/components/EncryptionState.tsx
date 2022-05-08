@@ -5,6 +5,7 @@ import Popup from 'components/semantic/Popup';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import Icon from './semantic/Icon';
@@ -20,7 +21,7 @@ interface Info {
 }
 
 const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
-  const tlsVersion = encryption.str.match(/TLSv([\d\.]+)/);
+  const tlsVersion = encryption.str.match(/TLSv([\d.]+)/);
   if (tlsVersion && tlsVersion.length === 2 && parseFloat(tlsVersion[1]) < 1.2) {
     return {
       iconColor: 'orange',

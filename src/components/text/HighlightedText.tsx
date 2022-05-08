@@ -118,7 +118,7 @@ const formatHighlights = (
   let prevReplace = 0;
   const elements: React.ReactNode[] = [];
   const pushText = (newStart: number) => {
-    let textElement: React.ReactNode = formatPlainText(
+    const textElement: React.ReactNode = formatPlainText(
       decoder.decode(text8.subarray(prevReplace, newStart)),
       emojify
     );
@@ -142,14 +142,14 @@ const formatHighlights = (
   return elements;
 };
 
-export const HighlightedText: React.FC<HighlightedTextProps> = memo((
-  props
-) => {
-  const location = useLocation();
-  const { t } = useTranslation();
-  return (
-    <>
-      { formatHighlights(props, location, t) }
-    </>
-  );
-});
+export const HighlightedText: React.FC<HighlightedTextProps> = memo(
+  function HighlightedText(props) {
+    const location = useLocation();
+    const { t } = useTranslation();
+    return (
+      <>
+        { formatHighlights(props, location, t) }
+      </>
+    );
+  }
+);

@@ -14,16 +14,16 @@ import * as UI from 'types/ui';
 const getCaption = (state: API.CCPMStateEnum, sessionT: UI.ModuleTranslator) => {
   const { translate } = sessionT;
   switch (state) {
-  case API.CCPMStateEnum.CONNECTED: return translate('Direct encrypted channel established');
-  case API.CCPMStateEnum.CONNECTING: return (
-    <Loader 
-      size="mini" 
-      inline={ true } 
-      text={ translate('Establishing connection...') }
-    />
-  );
-  case API.CCPMStateEnum.DISCONNECTED: return translate('Direct encrypted channel available');
-  default: return null;
+    case API.CCPMStateEnum.CONNECTED: return translate('Direct encrypted channel established');
+    case API.CCPMStateEnum.CONNECTING: return (
+      <Loader 
+        size="mini" 
+        inline={ true } 
+        text={ translate('Establishing connection...') }
+      />
+    );
+    case API.CCPMStateEnum.DISCONNECTED: return translate('Direct encrypted channel available');
+    default: return null;
   }
 };
 

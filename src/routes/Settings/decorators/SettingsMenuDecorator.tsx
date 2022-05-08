@@ -33,7 +33,9 @@ export interface ChildSectionType extends SectionType {
 
 }
 
-export interface SettingsMenuDecoratorProps extends RouteComponentProps<{}> {
+export interface SettingsMenuDecoratorProps 
+  extends RouteComponentProps<UI.EmptyObject>
+{
   parent?: RootSectionType;
   menuItems?: ChildSectionType[] | RootSectionType[];
   advancedMenuItems?: ChildSectionType[];
@@ -42,10 +44,12 @@ export interface SettingsMenuDecoratorProps extends RouteComponentProps<{}> {
   moduleT?: UI.ModuleTranslator;
 }
 
-export type SettingsMenuDecoratorChildProps = SettingsMenuDecoratorProps & React.PropsWithChildren<{
-  currentMenuItem: SectionType;
-  parent?: RootSectionType;
-}>;
+export type SettingsMenuDecoratorChildProps = 
+  SettingsMenuDecoratorProps & 
+  React.PropsWithChildren<{
+    currentMenuItem: SectionType;
+    parent?: RootSectionType;
+  }>;
 
 export default function <PropsT>(Component: React.ComponentType<SettingsMenuDecoratorChildProps & PropsT>) {
   class SettingsMenuDecorator extends React.Component<SettingsMenuDecoratorProps & PropsT> {

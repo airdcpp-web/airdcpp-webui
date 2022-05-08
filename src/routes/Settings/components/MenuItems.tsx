@@ -1,7 +1,7 @@
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 import { Location } from 'history';
 import LoginStore from 'stores/LoginStore';
-import { Route } from 'react-router-dom';
+import { Route, RouteComponentProps } from 'react-router-dom';
 import { SectionType, RootSectionType } from '../decorators/SettingsMenuDecorator';
 
 import * as UI from 'types/ui';
@@ -69,7 +69,7 @@ export const menuItemsToRouteComponentArray = (
     <Route
       key={ item.url }
       path={ sectionToUrl(item, parent) }
-      render={ props => (
+      render={ (props: RouteComponentProps<UI.EmptyObject>) => (
         <item.component
           { ...props }
           menuItems={ currentMenuItem.menuItems }

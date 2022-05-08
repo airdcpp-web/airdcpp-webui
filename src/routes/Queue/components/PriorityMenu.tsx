@@ -74,7 +74,7 @@ class PriorityMenu extends Component<PriorityMenuProps> {
   getChildren = (onClose: DropdownCloseHandler) => {
     const { t } = this.props;
 
-    let children = Object.keys(PriorityEnum)
+    const children = Object.keys(PriorityEnum)
       .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey], t, onClose));
 
     children.push(<div key="divider" className="ui divider"/>);

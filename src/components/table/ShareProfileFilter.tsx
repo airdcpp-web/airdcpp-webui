@@ -46,37 +46,39 @@ const getDropdownItem = (
   );
 };
 
-const ShareProfileFilter = memo<Props>(props => {
-  const { t } = useTranslation();
+const ShareProfileFilter = memo<Props>(
+  function ShareProfileFilter(props) {
+    const { t } = useTranslation();
 
-  const defaultItem: ShareProfileItem = { 
-    str: translate('All profiles', t, 'table.filter'), 
-    id: null 
-  };
+    const defaultItem: ShareProfileItem = { 
+      str: translate('All profiles', t, 'table.filter'), 
+      id: null 
+    };
 
-  const [ selectedProfile, setSelectedProfile ] = useState<ShareProfileItem>(defaultItem);
+    const [ selectedProfile, setSelectedProfile ] = useState<ShareProfileItem>(defaultItem);
 
-  const onClick = (profile: API.ShareProfile) => {
-    props.onFilterUpdated(profile.id);
-    setSelectedProfile(profile);
-  };
+    const onClick = (profile: API.ShareProfile) => {
+      props.onFilterUpdated(profile.id);
+      setSelectedProfile(profile);
+    };
 
-  return (
-    <SectionedDropdown 
-      className="top right pointing" 
-      caption={ selectedProfile.str } 
-      triggerIcon="filter" 
-      button={ true }
-    >
-      <MenuSection 
-        caption={ translate('Filter by profile', t, 'table.filter') } 
-        icon={ IconConstants.FILTER }
+    return (
+      <SectionedDropdown 
+        className="top right pointing" 
+        caption={ selectedProfile.str } 
+        triggerIcon="filter" 
+        button={ true }
       >
-        { [ defaultItem, ...props.profiles ].map(p => getDropdownItem(p, onClick, selectedProfile)) }
-      </MenuSection>
-    </SectionedDropdown>
-  );
-});
+        <MenuSection 
+          caption={ translate('Filter by profile', t, 'table.filter') } 
+          icon={ IconConstants.FILTER }
+        >
+          { [ defaultItem, ...props.profiles ].map(p => getDropdownItem(p, onClick, selectedProfile)) }
+        </MenuSection>
+      </SectionedDropdown>
+    );
+  }
+);
 
 export default ShareProfileDecorator<ShareProfileFilterProps & TableFilterDecoratorProps>(
   TableFilterDecorator<ShareProfileFilterProps & ShareProfileDecoratorChildProps>(

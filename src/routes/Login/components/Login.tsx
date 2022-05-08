@@ -19,7 +19,7 @@ import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
 
-interface LoginProps extends RouteComponentProps<{}, any, LoginLocationState> {
+interface LoginProps extends RouteComponentProps<UI.EmptyObject, any, LoginLocationState> {
 
 }
 

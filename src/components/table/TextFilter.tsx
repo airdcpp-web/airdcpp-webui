@@ -6,30 +6,31 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
 
-import { FilterMethod } from 'types/api';
+import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { useMobileLayout } from 'utils/BrowserUtils';
-import { TFunction } from 'i18next';
 import { translate } from 'utils/TranslationUtils';
 import { Translation } from 'react-i18next';
 
 
-const getFilterMethodCaption = (method: FilterMethod) => {
+const getFilterMethodCaption = (method: API.FilterMethod) => {
   switch (method) {
-  case FilterMethod.REGEX: return 'Regex';
-  case FilterMethod.WILDCARD: return 'Wildcard';
-  case FilterMethod.EXACT: return 'Exact';
-  default: return 'Partial';
+    case API.FilterMethod.REGEX: return 'Regex';
+    case API.FilterMethod.WILDCARD: return 'Wildcard';
+    case API.FilterMethod.EXACT: return 'Exact';
+    default: return 'Partial';
   }
 };
 
-const filterMethodToString = (method: FilterMethod, t: TFunction) => {
+const filterMethodToString = (method: API.FilterMethod, t: UI.TranslateF) => {
   const methodTitle = getFilterMethodCaption(method);
   return translate(methodTitle, t, 'table.filter');
 };
 
-const getPlaceholder = (method: FilterMethod, t: TFunction) => {
+const getPlaceholder = (method: API.FilterMethod, t: UI.TranslateF) => {
   let ret = t('table.filter.filter', 'Filter');
-  if (method !== FilterMethod.PARTIAL) {
+  if (method !== API.FilterMethod.PARTIAL) {
     ret += ` (${filterMethodToString(method, t).toLowerCase()})`;
   }
 
@@ -43,7 +44,7 @@ export interface TextFilterProps {
 class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecoratorChildProps> {
   state = { 
     value: '',
-    method: FilterMethod.PARTIAL,
+    method: API.FilterMethod.PARTIAL,
   };
 
   timer: number | undefined;
@@ -77,7 +78,7 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
     );
   }
 
-  onMethodChanged = (method: FilterMethod) => {
+  onMethodChanged = (method: API.FilterMethod) => {
     this.setState({ 
       method,
     });
@@ -86,7 +87,7 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
     this.input.focus();
   }
 
-  getFilterMethod = (method: FilterMethod, t: TFunction) => {
+  getFilterMethod = (method: API.FilterMethod, t: UI.TranslateF) => {
     const isCurrent = method === this.state.method;
     return (
       <MenuItemLink 
@@ -123,9 +124,9 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
                 direction="upward"
               >
                 <MenuSection caption={ translate('Match type', t, 'table.filter') }>
-                  { Object.keys(FilterMethod)
+                  { Object.keys(API.FilterMethod)
                     .filter(key => isNaN(Number(key)))
-                    .map(key => this.getFilterMethod(FilterMethod[key], t)) }
+                    .map(key => this.getFilterMethod(API.FilterMethod[key], t)) }
                 </MenuSection>
               </SectionedDropdown>
             </div>

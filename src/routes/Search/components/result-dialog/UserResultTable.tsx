@@ -75,7 +75,7 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
           defaultValue_plural: 'Users ({{count}})',
           count: results.length
         }) }
-       </h2>
+      </h2>
       <table className="ui striped table">
         <thead>
           <tr>
@@ -103,6 +103,7 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
 
 export default DataProviderDecorator<UserResultTableProps, UserResultTableDataProps>(UserResultTable, {
   urls: {
-    results: ({ parentResult, instanceId }, socket) => socket.get(`${SearchConstants.INSTANCES_URL}/${instanceId}/results/${parentResult.id}/children`),
+    results: ({ parentResult, instanceId }, socket) => 
+      socket.get(`${SearchConstants.INSTANCES_URL}/${instanceId}/results/${parentResult.id}/children`),
   }
 });

@@ -57,7 +57,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
 
   render() {
     const { caption, className, linkCaption, triggerIcon, popupSettings, position } = this.props;
-    let captionNode = (
+    const captionNode = (
       <DropdownCaption>
         { caption }
       </DropdownCaption>

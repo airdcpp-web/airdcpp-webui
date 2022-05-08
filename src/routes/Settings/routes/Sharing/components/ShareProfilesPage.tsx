@@ -45,9 +45,7 @@ const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
   </tr>
 );
 
-interface ShareProfilesPageProps extends SettingSectionChildProps {
-  
-}
+type ShareProfilesPageProps = SettingSectionChildProps
 
 const ShareProfilesPage: React.FC<ShareProfilesPageProps & ShareProfileDecoratorChildProps> = (
   { moduleT, profiles }

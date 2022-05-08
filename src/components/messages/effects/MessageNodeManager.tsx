@@ -73,7 +73,7 @@ interface Props {
 
 export const useMessagesNode = (
   { highlightRemoteMenuId, messages, session }: Props, 
-  downloadManager: ItemDownloadManager,
+  downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
 ) => {
   const visibleItems = useMemo(() => new Set<number>(), [session]);
 

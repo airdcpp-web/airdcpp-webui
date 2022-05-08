@@ -15,7 +15,7 @@ const ActivityActionConfig: UI.RefluxActionConfigList<any> = [
 const ActivityActions = Reflux.createActions(ActivityActionConfig);
 
 ActivityActions.sessionActivity.listen(function (this: UI.AsyncActionType<any>) {
-  let that = this;
+  const that = this;
   return SocketService.post(SessionConstants.ACTIVITY_URL, {
     user_active: true,
   })

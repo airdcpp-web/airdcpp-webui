@@ -32,59 +32,57 @@ export type WidgetProps = React.PropsWithChildren<{
   rootWidgetT: UI.ModuleTranslator;
 }>;
 
-const Widget = React.forwardRef<HTMLDivElement, WidgetProps>((
-  { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other }, 
-  ref
-) => {
-  const error = getError(widgetInfo, settings, rootWidgetT);
-  const Component = widgetInfo.component;
-  
+const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(
+  function Widget({ widgetInfo, settings, componentId, children, className, rootWidgetT, ...other }, ref) {
+    const error = getError(widgetInfo, settings, rootWidgetT);
+    const Component = widgetInfo.component;
+    
+    const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
+    return (
+      <div 
+        { ...other }
+        ref={ ref }
+        className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
+      >
+        <div className="content header-row">
+          <div className="header">
+            <i className={ classNames('left floated large icon', widgetInfo.icon) }/>
+            { !!settings.name ? settings.name : translateWidgetName(widgetInfo, rootWidgetT.plainT) }
+          </div>
 
-  const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
-  return (
-    <div 
-      { ...other }
-      ref={ ref }
-      className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
-    >
-      <div className="content header-row">
-        <div className="header">
-          <i className={ classNames('left floated large icon', widgetInfo.icon) }/>
-          { !!settings.name ? settings.name : translateWidgetName(widgetInfo, rootWidgetT.plainT) }
+          <ActionMenu 
+            className="widget-menu right top pointing"
+            actions={ WidgetActions.edit }
+            itemData={{
+              id: componentId,
+              widgetInfo,
+              settings,
+            }}
+          >
+            { !!widgetInfo.actionMenu && (
+              <ActionMenu 
+                actions={ widgetInfo.actionMenu.actions }
+                ids={ widgetInfo.actionMenu.ids } 
+              /> 
+            ) }
+          </ActionMenu>
         </div>
-
-        <ActionMenu 
-          className="widget-menu right top pointing"
-          actions={ WidgetActions.edit }
-          itemData={{
-            id: componentId,
-            widgetInfo,
-            settings,
-          }}
-        >
-          { !!widgetInfo.actionMenu && (
-            <ActionMenu 
-              actions={ widgetInfo.actionMenu.actions }
-              ids={ widgetInfo.actionMenu.ids } 
-            /> 
+        <div className="main content">
+          { !!error ? error : (
+            <Component
+              componentId={ componentId }
+              settings={ settings.widget }
+              widgetT={ widgetT }
+              rootWidgetT={ rootWidgetT }
+            />
           ) }
-        </ActionMenu>
+        </div>
+        {/* "children" contains the resize handle */}
+        { children }
       </div>
-      <div className="main content">
-        { !!error ? error : (
-          <Component
-            componentId={ componentId }
-            settings={ settings.widget }
-            widgetT={ widgetT }
-            rootWidgetT={ rootWidgetT }
-          />
-        ) }
-      </div>
-      {/* "children" contains the resize handle */}
-      { children }
-    </div>
-  );
-});
+    );
+  }
+);
 
 /*Widget.propTypes = {
   widgetInfo: PropTypes.object.isRequired,

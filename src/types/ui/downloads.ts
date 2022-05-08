@@ -47,7 +47,7 @@ export type DownloadItemDataGetter<ItemT extends UI.DownloadableItemInfo> = (
 
 export interface ItemDownloadHandler<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo, 
-  PropsT extends object = {}
+  PropsT extends object = UI.EmptyObject
 > {
   downloadHandler: UI.DownloadHandler<ItemT>;
   session: UI.SessionItemBase | undefined;
@@ -55,4 +55,10 @@ export interface ItemDownloadHandler<
   userGetter?: DownloadUserGetter<PropsT>;
 }
 
-export type AddItemDownload = (itemId: string | number, handler: ItemDownloadHandler) => void;
+export type AddItemDownload<
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo, 
+  PropsT extends object = UI.EmptyObject
+> = (
+  itemId: string | number, 
+  handler: ItemDownloadHandler<ItemT, PropsT>
+) => void;

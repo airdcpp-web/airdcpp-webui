@@ -27,7 +27,7 @@ const appendBrowseItem = (menuItems: React.ReactNode[], handleBrowse: BrowseHand
         <Icon icon="external"/>
       </MenuItemLink>
     )
-   ];
+  ];
 };
 
 export const MobileDownloadLayout: React.FC<LayoutProps> = (

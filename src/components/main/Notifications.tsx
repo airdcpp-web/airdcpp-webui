@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-//@ts-ignore
-import Reflux from 'reflux';
 import { default as NotificationSystem } from 'react-notification-system';
 import { RateLimiter } from 'limiter';
 

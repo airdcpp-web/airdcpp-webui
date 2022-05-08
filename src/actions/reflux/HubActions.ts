@@ -36,7 +36,7 @@ HubActions.createSession.listen(function (
     return;
   }
 
-  let that = this;
+  const that = this;
   SocketService.post(HubConstants.SESSIONS_URL, {
     hub_url: hubUrl,
   })

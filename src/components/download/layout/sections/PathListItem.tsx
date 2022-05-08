@@ -39,7 +39,7 @@ export const PathListItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandle
   <div className="item">
     <Icon icon={ IconConstants.FOLDER }/>
     <div className="content">
-      <a onClick={ evt => downloadHandler(pathInfo.path) }>
+      <a onClick={ () => downloadHandler(pathInfo.path) }>
         { pathInfo.path }
         <span className="disk-info">
           { formatFreeSpace(pathInfo, t) }

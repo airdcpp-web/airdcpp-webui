@@ -43,43 +43,41 @@ const mapWidget = (layoutItem: Layout, rootWidgetT: UI.ModuleTranslator): React.
   );
 };
 
-interface HomeLayoutProps {
+const WidgetLayout = React.memo(
+  function WidgetLayout() {
+    const [ breakpoint, setBreakpoint ] = useState('lg');
 
-}
+    const { t } = useTranslation();
+    const rootWidgetT = getModuleT(t, UI.Modules.WIDGETS, WidgetStore.widgets.map(w => w.typeId));
+    const layouts = useStore<Layouts>(WidgetStore /*, () => {
+      WidgetStore.ensureDefaultWidgets(t);
+    }*/);
 
-const WidgetLayout = React.memo<HomeLayoutProps>(() => {
-  const [ breakpoint, setBreakpoint ] = useState('lg');
+    return (
+      <>
+        <ResponsiveReactGridLayout 
+          className="ui cards layout"
+          rowHeight={ 50 } 
+          // width={ 1200 }
+          onLayoutChange={ WidgetStore.onLayoutChange }
+          onBreakpointChange={ bp => setBreakpoint(bp) }
 
-  const { t } = useTranslation();
-  const rootWidgetT = getModuleT(t, UI.Modules.WIDGETS, WidgetStore.widgets.map(w => w.typeId));
-  const layouts = useStore<Layouts>(WidgetStore /*, () => {
-    WidgetStore.ensureDefaultWidgets(t);
-  }*/);
+          breakpoints={ WidgetStore.breakpoints }
+          cols={ WidgetStore.cols }
 
-  return (
-    <>
-      <ResponsiveReactGridLayout 
-        className="ui cards layout"
-        rowHeight={ 50 } 
-        // width={ 1200 }
-        onLayoutChange={ WidgetStore.onLayoutChange }
-        onBreakpointChange={ bp => setBreakpoint(bp) }
-
-        breakpoints={ WidgetStore.breakpoints }
-        cols={ WidgetStore.cols }
-
-        draggableHandle=".react-grid-item .header-row .header"
-        layouts={ layouts }
-      >
-        { layouts[breakpoint]
-          .map(w => mapWidget(w, rootWidgetT))
-          .filter((widget) => widget) }
-      </ResponsiveReactGridLayout>
-      <WidgetDialog
-        rootWidgetT={ rootWidgetT }
-      />
-    </>
-  );
-});
+          draggableHandle=".react-grid-item .header-row .header"
+          layouts={ layouts }
+        >
+          { layouts[breakpoint]
+            .map(w => mapWidget(w, rootWidgetT))
+            .filter((widget) => widget) }
+        </ResponsiveReactGridLayout>
+        <WidgetDialog
+          rootWidgetT={ rootWidgetT }
+        />
+      </>
+    );
+  }
+);
 
 export default WidgetLayout;

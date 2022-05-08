@@ -19,7 +19,7 @@ export interface LocalSettingFormProps extends Omit<FormProps, 'onSave' | 'field
 }
 
 
-type Props = LocalSettingFormProps & SaveContextProps & RouteComponentProps;
+type Props = LocalSettingFormProps & SaveContextProps & RouteComponentProps<UI.EmptyObject>;
 
 class LocalSettingForm extends Component<Props> {
   /*static propTypes = {

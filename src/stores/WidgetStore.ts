@@ -87,7 +87,7 @@ const createDefaultWidget = <SettingsT>(
   y: number, 
   name?: string, 
   settings?: SettingsT, 
-  suffix: string = '_default'
+  suffix = '_default'
 ) => {
   const id = widgetInfo.typeId + suffix;
   const newLayout = createWidget(layouts, widgetInfo, id, x, y);
@@ -116,7 +116,7 @@ const Store = {
   listenables: WidgetActions,
   init: function () {
     // Try to load saved ones
-    let layoutInfo = loadLocalProperty<StorageLayouts>(LAYOUT_STORAGE_KEY);
+    const layoutInfo = loadLocalProperty<StorageLayouts>(LAYOUT_STORAGE_KEY);
     if (layoutInfo && layoutInfo.items) {
       if (layoutInfo.version === LAYOUT_VERSION) {
         this.layouts = layoutInfo.items;

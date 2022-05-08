@@ -60,23 +60,23 @@ interface TextDecoratorProps {
 }
 
 // Parses links from plain text and optionally emoticons as well
-export const TextDecorator: React.FC<TextDecoratorProps> = memo((
-  { emojify = false, text }
-) => {
-  const location = useLocation();
-  return (
-    <ReactLinkify 
-      matchDecorator={ matchDecorator }
-      componentDecorator={ (decoratedHref, decoratedText, key) => (
-        <HighlightUrlLink
-          key={ key }
-          text={ decoratedText }
-          href={ decoratedHref }
-          location={ location }
-        />
-      ) }
-    >
-      { !emojify ? text : formatEmojis(text) }
-    </ReactLinkify>
-  );
-});
+export const TextDecorator: React.FC<TextDecoratorProps> = memo(
+  function TextDecorator({ emojify = false, text }) {
+    const location = useLocation();
+    return (
+      <ReactLinkify 
+        matchDecorator={ matchDecorator }
+        componentDecorator={ (decoratedHref, decoratedText, key) => (
+          <HighlightUrlLink
+            key={ key }
+            text={ decoratedText }
+            href={ decoratedHref }
+            location={ location }
+          />
+        ) }
+      >
+        { !emojify ? text : formatEmojis(text) }
+      </ReactLinkify>
+    );
+  }
+);

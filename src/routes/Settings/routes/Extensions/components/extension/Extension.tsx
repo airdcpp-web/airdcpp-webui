@@ -164,11 +164,11 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
     const { addSocketListener, npmPackage } = this.props;
 
     if (!!npmPackage) {
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.INSTALLATION_STARTED, this.onInstallationStarted);
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.INSTALLATION_SUCCEEDED, this.onInstallationCompleted);
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.INSTALLATION_FAILED, this.onInstallationCompleted);
     }
   }

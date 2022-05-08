@@ -128,7 +128,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     const maxRows = convertEndToRows(height);
 
     if (store.DEBUG) {
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       console.log(`Settings changed, start: ${startRows}, end: ${maxRows}, height: ${height}`, store.viewName);
     }
 
@@ -196,7 +196,8 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       return null;
     }
 
-    let { flexGrow, width, cell, columnKey, renderCondition } = column.props;
+    let { flexGrow, width } = column.props;
+    const { cell, columnKey, renderCondition } = column.props;
     const { store, rowClassNameGetter, moduleId, t } = this.props;
 
     const mobileView = useMobileLayout();

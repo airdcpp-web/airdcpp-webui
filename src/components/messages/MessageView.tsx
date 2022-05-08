@@ -26,7 +26,7 @@ interface MessageViewProps {
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
-  ({ className, t, ...other }) => {
+  function MessageView({ className, t, ...other }) {
     const downloadManager = useItemDownloadManager(other.session);
     const { messageNodes, visibleItems } = useMessagesNode(other, downloadManager);
 

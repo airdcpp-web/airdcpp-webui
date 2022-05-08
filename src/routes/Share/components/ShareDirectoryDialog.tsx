@@ -7,7 +7,9 @@ import IconConstants from 'constants/IconConstants';
 
 import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
 
-import ShareProfileDecorator, { profileToEnumValue, ShareProfileDecoratorChildProps } from 'decorators/ShareProfileDecorator';
+import ShareProfileDecorator, { 
+  profileToEnumValue, ShareProfileDecoratorChildProps 
+} from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
 
 import Message from 'components/semantic/Message';

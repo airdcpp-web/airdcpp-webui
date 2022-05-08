@@ -9,10 +9,10 @@ const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
     case error.MEDIA_ERR_NETWORK:
       return 'A network error caused the media download to fail';
     case error.MEDIA_ERR_DECODE:
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       return 'The media playback was aborted due to a corruption problem or because the media used features your browser did not support';
     case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       return 'The media could not be loaded, either because the file was not found, network failed or because the format is not supported by your browser';
     default:
       return 'An unknown media error occurred';

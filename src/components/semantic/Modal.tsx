@@ -147,7 +147,7 @@ class Modal extends React.Component<ModalProps> {
   }
 
   onApprove = () => {
-    let { onApprove } = this.props;
+    const { onApprove } = this.props;
     if (onApprove) {
       this.setState({ saving: true });
       

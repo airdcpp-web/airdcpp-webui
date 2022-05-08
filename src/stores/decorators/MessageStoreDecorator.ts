@@ -11,10 +11,10 @@ type MessageCache = UI.MessageListItem[];
 
 const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionListType<ChatSession>, access: string) {
   // Message arrays mapped by session IDs 
-  let messages = new Map();
+  const messages = new Map();
 
   // Keep track of session IDs for which message fetching has been initialized
-  let initializedSession = new Set<API.IdType>();
+  const initializedSession = new Set<API.IdType>();
 
 
   const onFetchMessagesCompleted = (session: UI.SessionItemBase, cacheMessages: MessageCache) => {

@@ -11,10 +11,7 @@ import * as API from 'types/api';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 
-export interface ConnectStateCellProps extends 
-  RowWrapperCellChildProps<API.FavoriteHubConnectState, API.FavoriteHubEntry> {
-
-}
+export type ConnectStateCellProps = RowWrapperCellChildProps<API.FavoriteHubConnectState, API.FavoriteHubEntry>
 
 const getIcon = (state: API.FavoriteHubConnectState) => {
   switch (state.id) {

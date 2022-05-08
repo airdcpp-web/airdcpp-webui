@@ -59,57 +59,59 @@ const getDropdownItem = (
   );
 };
 
-const TempShareDropdown = React.memo<Props>(({ files, handleUpload, style, className, overrideContent }) => {
-  const { t } = useTranslation();
+const TempShareDropdown = React.memo<Props>(
+  function TempShareDropdown({ files, handleUpload, style, className, overrideContent }) {
+    const { t } = useTranslation();
 
-  if (!!overrideContent) {
-    return overrideContent;
-  }
+    if (!!overrideContent) {
+      return overrideContent;
+    }
 
-  const onClickFile = (file: API.TempShareItem) => {
-    SocketService.delete(`${ShareConstants.TEMP_SHARES_URL}/${file.id}`)
-      .then(res => {
-        NotificationActions.success({
-          title: t(toI18nKey('fileNoLongerShared', UI.Modules.COMMON), {
-            defaultValue: 'File {{file.name}} is no longer shared',
-            replace: {
-              file
-            }
-          })
+    const onClickFile = (file: API.TempShareItem) => {
+      SocketService.delete(`${ShareConstants.TEMP_SHARES_URL}/${file.id}`)
+        .then(res => {
+          NotificationActions.success({
+            title: t(toI18nKey('fileNoLongerShared', UI.Modules.COMMON), {
+              defaultValue: 'File {{file.name}} is no longer shared',
+              replace: {
+                file
+              }
+            })
+          });
+        })
+        .catch(e => {
+          NotificationActions.apiError('Failed to remove shared item', e);
         });
-      })
-      .catch(e => {
-        NotificationActions.apiError('Failed to remove shared item', e);
-      });
-  };
+    };
 
-  const classNames = cx(
-    'top left pointing actions',
-    className
-  );
+    const classNames = cx(
+      'top left pointing actions',
+      className
+    );
 
-  return (
-    <SectionedDropdown 
-      className={ classNames }
-      triggerIcon="plus" 
-      button={ true }
-      contextElement=".message-view"
-    >
-      <MenuItemLink 
-        onClick={ handleUpload }
-        icon={ IconConstants.UPLOAD }
+    return (
+      <SectionedDropdown 
+        className={ classNames }
+        triggerIcon="plus" 
+        button={ true }
+        contextElement=".message-view"
       >
-        { translate('Send files', t, UI.Modules.COMMON) }
-      </MenuItemLink>
-      <MenuSection 
-        caption={ translate('Remove shared file', t, UI.Modules.COMMON) } 
-        icon={ IconConstants.FILE }
-      >
-        { files.map(p => getDropdownItem(p, onClickFile)) }
-      </MenuSection>
-    </SectionedDropdown>
-  );
-});
+        <MenuItemLink 
+          onClick={ handleUpload }
+          icon={ IconConstants.UPLOAD }
+        >
+          { translate('Send files', t, UI.Modules.COMMON) }
+        </MenuItemLink>
+        <MenuSection 
+          caption={ translate('Remove shared file', t, UI.Modules.COMMON) } 
+          icon={ IconConstants.FILE }
+        >
+          { files.map(p => getDropdownItem(p, onClickFile)) }
+        </MenuSection>
+      </SectionedDropdown>
+    );
+  }
+);
 
 export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
   TempShareDropdown,

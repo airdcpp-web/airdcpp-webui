@@ -9,7 +9,7 @@ import { UrgencyEnum } from 'types/ui';
 import { maxUrgency } from 'utils/UrgencyUtils';
 
 
-const updateTitle = (systemInfo: API.SystemInfo | null, prefix: string = '') => {
+const updateTitle = (systemInfo: API.SystemInfo | null, prefix = '') => {
   let title = 'AirDC++ Web Client';
   if (!!systemInfo) {
     title = systemInfo.hostname + ' - ' + title;

@@ -6,9 +6,11 @@ import * as API from 'types/api';
 import { TranslateF } from './common';
 
 export type ActionIdType = API.IdType | object;
-export type ActionObjectItemData = { id: ActionIdType };
-export type ActionItemDataValueType = ActionObjectItemData | string | number | undefined;
-export type ActionItemDataType<ItemDataT extends ActionItemDataValueType> = (() => ItemDataT) | ItemDataT;
+export type ActionMenuObjectItemData = { id: ActionIdType };
+export type ActionMenuItemDataValueType = ActionMenuObjectItemData | string | number | undefined;
+export type ActionMenuItemDataType<ItemDataT extends ActionMenuItemDataValueType> = (() => ItemDataT) | ItemDataT;
+
+export type ActionItemDataValueType = object | string | number | undefined;
 
 
 export interface ActionConfirmation {
@@ -76,7 +78,9 @@ export type AsyncActionType<ItemDataT> = RefluxActionType<ItemDataT> & {
 
 export type RefluxActionConfigList<ItemDataT> = Array<string | { [actionKey: string]: RefluxActionConfig<ItemDataT> }>;
 
-export type ActionListType<ItemDataT> = { [actionKey: string]: ActionType<ItemDataT> | null };
+export type ActionListType<ItemDataT> = { 
+  [actionKey: string]: ActionType<ItemDataT> | null 
+};
 
 export type RefluxActionListType<ItemDataT = any> = { 
   [actionKey: string]: RefluxActionType<ItemDataT> | AsyncActionType<ItemDataT>

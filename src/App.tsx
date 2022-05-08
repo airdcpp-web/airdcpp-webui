@@ -61,38 +61,38 @@ const App = () => {
   const prompt = useInstallPrompt();
   return (
     <ErrorBoundary>
-    <Suspense fallback={ <Loader fullPage={ true } text=""/> }>
-      <I18nextProvider i18n={ i18n }>
-        <InstallPromptContext.Provider value={ prompt }>
-          <Router history={ History }>
-            <Measure
-              bounds={ true }
-            >
-              { ({ measureRef, contentRect }) => (
-                <LayoutWidthContext.Provider 
-                  value={ !!contentRect.bounds ? contentRect.bounds.width : null }
-                >
-                  <div 
-                    ref={ measureRef } 
-                    id="background-wrapper" 
-                    style={{
-                      backgroundImage: getBackgroundImageStyle(),
-                      height: '100%',
-                    }}
+      <Suspense fallback={ <Loader fullPage={ true } text=""/> }>
+        <I18nextProvider i18n={ i18n }>
+          <InstallPromptContext.Provider value={ prompt }>
+            <Router history={ History }>
+              <Measure
+                bounds={ true }
+              >
+                { ({ measureRef, contentRect }) => (
+                  <LayoutWidthContext.Provider 
+                    value={ !!contentRect.bounds ? contentRect.bounds.width : null }
                   >
-                    <Switch>
-                      <Route path="/login" component={ Login }/>
-                      <Route exact path="/" component={ () => <Redirect to="/home"/> }/>
-                      <Route path="/" component={ AuthenticatedApp }/>
-                    </Switch>
-                  </div>
-                </LayoutWidthContext.Provider>
-              ) }
-            </Measure>
-          </Router>
-        </InstallPromptContext.Provider>
-      </I18nextProvider>
-    </Suspense>
+                    <div 
+                      ref={ measureRef } 
+                      id="background-wrapper" 
+                      style={{
+                        backgroundImage: getBackgroundImageStyle(),
+                        height: '100%',
+                      }}
+                    >
+                      <Switch>
+                        <Route path="/login" component={ Login }/>
+                        <Route exact path="/" component={ () => <Redirect to="/home"/> }/>
+                        <Route path="/" component={ AuthenticatedApp }/>
+                      </Switch>
+                    </div>
+                  </LayoutWidthContext.Provider>
+                ) }
+              </Measure>
+            </Router>
+          </InstallPromptContext.Provider>
+        </I18nextProvider>
+      </Suspense>
     </ErrorBoundary>
   );
 };

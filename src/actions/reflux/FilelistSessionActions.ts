@@ -21,11 +21,13 @@ import { changeFilelistHubUrl, changeFilelistShareProfile, changeFilelistDirecto
 import { FilelistSession } from 'types/api';
 
 
-const FilelistSessionActions = Reflux.createActions([
+const FilelistActionConfig: UI.RefluxActionConfigList<API.FilelistSession> = [
   { 'createSession': { asyncResult: true } },
   { 'ownList': { asyncResult: true } },
   { 'setRead': { asyncResult: true } },
-] as UI.RefluxActionConfigList<API.FilelistSession>);
+];
+
+const FilelistSessionActions = Reflux.createActions(FilelistActionConfig);
 
 
 // SESSION CREATION
@@ -43,7 +45,7 @@ FilelistSessionActions.createSession.listen(function (
   location: Location, 
   user: API.HintedUser, 
   sessionStore: any, 
-  path: string = '/'
+  path = '/'
 ) {
   const directory = getFilePath(path);
   const session: FilelistSession | null = sessionStore.getSession(user.cid);
@@ -60,7 +62,7 @@ FilelistSessionActions.createSession.listen(function (
     return;
   }
 
-  let that = this;
+  const that = this;
   SocketService.post(FilelistConstants.SESSIONS_URL, {
     user: {
       cid: user.cid,
@@ -89,7 +91,7 @@ FilelistSessionActions.ownList.listen(function (
   shareProfileId: number, 
   sessionStore: any
 ) {
-  let session = sessionStore.getSession(LoginStore.systemInfo.cid);
+  const session = sessionStore.getSession(LoginStore.systemInfo.cid);
   if (session) {
     if (session.share_profile.id !== shareProfileId) {
       changeFilelistShareProfile(session, shareProfileId);
@@ -99,7 +101,7 @@ FilelistSessionActions.ownList.listen(function (
     return;
   }
 
-  let that = this;
+  const that = this;
   SocketService.post(`${FilelistConstants.SESSIONS_URL}/self`, {
     share_profile: shareProfileId,
   })
@@ -118,7 +120,7 @@ FilelistSessionActions.setRead.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>, 
   session: API.FilelistSession
 ) {
-  let that = this;
+  const that = this;
   SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/read`)
     .then(that.completed)
     .catch(that.failed);

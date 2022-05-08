@@ -27,17 +27,17 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
       const profileId = formValue[id] as number;
       switch (profileId) {
         case SettingProfileEnum.NORMAL: {
-          // tslint:disable-next-line:max-line-length
+          // eslint-disable-next-line max-len
           message = 'The client is used in normal private/public hubs for transferring files via internet. Use this profile if unsure.';
           break;
         }
         case SettingProfileEnum.RAR: {
-          // tslint:disable-next-line:max-line-length
+          // eslint-disable-next-line max-len
           message = 'The client is used for transferring files that are split in RAR archives (or in other small-sized formats)';
           break;
         }
         case SettingProfileEnum.LAN: {
-          // tslint:disable-next-line:max-line-length
+          // eslint-disable-next-line max-len
           message = 'The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)';
           break;
         }

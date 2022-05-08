@@ -48,7 +48,7 @@ const ShareRootEditActions: UI.ActionListType<API.ShareRootEntry> = {
     access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.REMOVE,
     confirmation: {
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       content: 'Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles.',
       approveCaption: 'Remove directory',
       rejectCaption: `Don't remove`,

@@ -57,7 +57,7 @@ const toMenuItem = (
 
 
 interface RemoteMenuDecoratorProps {
-  children: (menuItems: Array<React.ReactChild[]> | null) => React.ReactNode;
+  children: (menuItems: Array<JSX.Element[]> | null) => React.ReactNode;
   remoteMenuIds: Array<string | undefined>;
   onClickMenuItem?: OnClickHandler;
   selectedIds: Array<UI.ActionIdType>[];

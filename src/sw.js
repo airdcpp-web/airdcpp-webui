@@ -38,7 +38,7 @@ const deleteUnusedAssets = (cache) => {
   return cache.keys()
     .then(keys => {
       return Promise.all(
-        keys.map((request, index, array) => {
+        keys.map((request) => {
           if (assets.indexOf(request.url) !== -1) {
             if (DEBUG) {
               console.log(`[SW] Cached asset ${request.url} still exists, skip delete`);
@@ -76,7 +76,7 @@ self.addEventListener('activate', event => {
 
 function respondCache(e, cacheUrl) {
   return caches.match(new URL(cacheUrl)).then(function(response) {
-    if (!!response) {
+    if (response) {
       if (DEBUG) {
         console.log('[SW] Return cached', e.request.url);
       }
@@ -96,7 +96,8 @@ function respondCache(e, cacheUrl) {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
 
-  if (e.request.mode === 'navigate' || (
+  if (
+    e.request.mode === 'navigate' || (
       e.request.url.startsWith(basePath) &&
       e.request.url.indexOf('.', basePath.length) === -1 && // no file extension?
       !e.request.url.replace(basePath, '').match(/^(view)\//)
@@ -107,15 +108,16 @@ self.addEventListener('fetch', e => {
 
     // Try to fetch index from the server, fall back to using a cached version if it fails
     return e.respondWith(
-      new Promise((resolve, reject) => {
-        fetch(cacheUrl).then(res => {
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(new Request(cacheUrl), res.clone()).then(() => {
-                console.log('[SW] Index file cached', e.request.url);
-                resolve(res);
+      new Promise((resolve) => {
+        fetch(cacheUrl)
+          .then(res => {
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(new Request(cacheUrl), res.clone()).then(() => {
+                  console.log('[SW] Index file cached', e.request.url);
+                  resolve(res);
+                });
               });
-            });
           })
           .catch(err => {
             console.log('[SW] Navigate action, failed to fetch index', e.request.url, err);

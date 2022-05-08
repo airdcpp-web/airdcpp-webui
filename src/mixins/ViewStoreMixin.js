@@ -14,7 +14,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let entityId = null;
   let paused = false;
   let scrollPosition = 0;
-  const DEBUG = false;
+  // const DEBUG = false;
 
   let sortProperty = defaultSortProperty;
   let sortAscending = defaultSortAscending;
@@ -147,7 +147,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
     },
 
     get viewName() {
-      return viewName;
+      return this._viewName;
     },
 
     get rowCount() {

@@ -8,7 +8,7 @@ import { UserSelectField } from 'components/select';
 
 
 type TCombTemplate = { 
-  renderInput: (locals: UI.FormLocals<any, API.OfflineHintedUser | null, {}>) => React.ReactNode; 
+  renderInput: (locals: UI.FormLocals<any, API.OfflineHintedUser | null, UI.EmptyObject>) => React.ReactNode; 
 };
 
 const HintedUserTemplate: TCombTemplate = {

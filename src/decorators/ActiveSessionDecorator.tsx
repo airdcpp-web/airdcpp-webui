@@ -20,9 +20,9 @@ interface ActiveSessionDecoratorProps<SessionT extends SessionType, ActionT exte
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function <PropsT, SessionT extends SessionType, ActionT extends object = {}>(
+export default function <PropsT, SessionT extends SessionType, ActionT extends object = UI.EmptyObject>(
   Component: React.ComponentType<PropsT>, 
-  useReadDelay: boolean = false
+  useReadDelay = false
 ) {
   class ActiveSessionDecorator extends React.Component<PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>> {
     /*static propTypes = {

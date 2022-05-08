@@ -7,7 +7,7 @@ import Moment from 'moment';
 
 import { getFilePath } from 'utils/FileUtils';
 import { fetchData } from 'utils/HttpUtils';
-​
+
 
 const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) => {
   if (!!data) {
@@ -103,7 +103,7 @@ i18n
         escapeValue: false, // not needed for react!!
       },
       saveMissing: process.env.NODE_ENV !== 'production',
-  ​
+
       // react i18next special options (optional)
       react: {
         useSuspense: true,
@@ -115,7 +115,7 @@ i18n
   .then(() => {
     Moment.locale(i18n.language);
   });
-​
+
 i18n.on('languageChanged', lng => {
   Moment.locale(lng);
 });

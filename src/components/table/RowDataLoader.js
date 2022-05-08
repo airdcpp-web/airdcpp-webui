@@ -106,7 +106,7 @@ class RowDataLoader {
     return true;
   }
 
-  removePendingRequests(rowIndex, onDataLoaded) {
+  removePendingRequests(rowIndex) {
     delete this._pendingRequest[rowIndex];
   }
 

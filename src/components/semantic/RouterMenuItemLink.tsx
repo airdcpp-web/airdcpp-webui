@@ -40,7 +40,7 @@ const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null
 
 // Route link with support for urgencies
 const RouterMenuItemLink = withRouter(memo<RouterMenuItemLinkProps & RouteComponentProps>(
-  (props) => {
+  function RouterMenuItemLink(props) {
     const urgencies = useStore<UI.UrgencyCountMap | null>(props.unreadInfoStore, () => getUrgencies(props));
     const { onClick, className, icon, url, children, unreadInfoStore } = props;
     return (

@@ -131,7 +131,6 @@ export interface EncryptionInfo {
   trusted: boolean;
 }
 
-// tslint:disable-next-line:interface-name
 export interface IP {
   country: string;
   ip: string;

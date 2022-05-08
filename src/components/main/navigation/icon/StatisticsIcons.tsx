@@ -31,7 +31,7 @@ interface StatisticsIconProps {
 
 const StatisticsIcon: React.FC<StatisticsIconProps> = (
   { icon, cornerIcon, bytes, formatter, t }
-  ) => {
+) => {
   if (bytes === 0) {
     return null;
   }
@@ -102,9 +102,9 @@ class StatisticsIcons extends React.PureComponent<StatisticsIconsProps & SocketS
 
     const { addSocketListener } = this.props;
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(TransferConstants.MODULE_URL, TransferConstants.STATISTICS, this.onStatsReceived, undefined, API.AccessEnum.TRANSFERS);
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     addSocketListener(HashConstants.MODULE_URL, HashConstants.STATISTICS, this.onStatsReceived, undefined, API.AccessEnum.SETTINGS_VIEW);
   }
 

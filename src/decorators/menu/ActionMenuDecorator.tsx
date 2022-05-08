@@ -17,7 +17,7 @@ import { parseActionMenu, parseActionMenuItemIds } from 'utils/MenuUtils';
 
 
 // Convert ID to menu link element
-const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
+const getMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   menu: UI.ActionMenuType<ItemDataT>, 
   menuIndex: number, 
   actionId: string, 
@@ -62,7 +62,7 @@ const getMenuItem = <ItemDataT extends UI.ActionItemDataValueType>(
 };
 
 // This should be used only for constructed menus, not for id arrays
-const hasLocalItems = <ItemDataT extends UI.ActionItemDataValueType>(
+const hasLocalItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   id: string | UI.ActionMenuType<ItemDataT>
 ) => typeof id !== 'string';
 
@@ -71,7 +71,7 @@ interface State {
 }
 
 
-export interface ActionMenuDecoratorProps<ItemDataT extends UI.ActionItemDataValueType> extends 
+export interface ActionMenuDecoratorProps<ItemDataT extends UI.ActionMenuItemDataValueType> extends 
   UI.ActionMenuData<ItemDataT> {
   remoteMenuId?: string;
   className?: string;
@@ -84,7 +84,7 @@ export interface ActionMenuDecoratorChildProps {
   children: (onClick?: UI.MenuItemClickHandler) => React.ReactNode;
 }
 
-export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionItemDataValueType>(
+export default function <DropdownComponentPropsT extends object, ItemDataT extends UI.ActionMenuItemDataValueType>(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>
 ) {
   type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT;
@@ -111,7 +111,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     // Reduce menus to an array of DropdownItems
     reduceLocalMenuItems = (
       onClickAction: ActionClickHandler,
-      items: React.ReactChild[], 
+      items: JSX.Element[], 
       menu: UI.ActionMenuType<ItemDataT>, 
       menuIndex: number,
     ) => {
@@ -138,7 +138,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
     };
 
     getPropsArray = () => {
-      let { children } = this.props;
+      const { children } = this.props;
       const ret: Array<ActionMenuDecoratorProps<ItemDataT>> = [ this.props ];
       if (children) {
         React.Children.map(children, child => {
@@ -152,7 +152,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
 
     getChildren = (
       onClickAction: ActionClickHandler<ItemDataT>,
-      remoteMenus: Array<React.ReactChild[]> | null,
+      remoteMenus: Array<JSX.Element[]> | null,
       onClickMenuItem: UI.MenuItemClickHandler | undefined
     ): React.ReactNode => {
       const menus = this.getMenus();
@@ -177,7 +177,7 @@ export default function <DropdownComponentPropsT extends object, ItemDataT exten
               menuIndex
             );
           }, 
-          [] as React.ReactChild[]
+          []
         );
 
       // Remote items (insert after all local items so that the previous menu item positions won't change)

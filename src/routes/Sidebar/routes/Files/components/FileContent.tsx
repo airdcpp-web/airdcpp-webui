@@ -36,6 +36,7 @@ const useAutoPlay = (item: API.ViewFile) => {
 
 const getViewerElement = (item: API.ViewFile): React.ComponentType<ViewerElementProps> | null => {
   if (item.text) {
+    // eslint-disable-next-line react/display-name
     return (props: ViewerElementProps) => (
       <TextFile
         {...props}
@@ -53,17 +54,20 @@ const getViewerElement = (item: API.ViewFile): React.ComponentType<ViewerElement
   }
 
   switch (item.type.content_type) {
+    // eslint-disable-next-line react/display-name
     case 'audio': return (props: ViewerElementProps) => (
       <AudioFile 
         autoPlay={ useAutoPlay(item) }
         { ...props }
       />
     );
+    // eslint-disable-next-line react/display-name
     case 'picture': return (props: ViewerElementProps) => (
       <ImageFile
         { ...props }
       />
     );
+    // eslint-disable-next-line react/display-name
     case 'video': return (props: ViewerElementProps) => (
       <VideoFile
         autoPlay={ useAutoPlay(item) }
@@ -80,35 +84,37 @@ const getUrl = (tth: string) => {
   return `${getBasePath()}view/${tth}?auth_token=${LoginStore.authToken}`; 
 };
 
-const FileContent: React.FC<FileContentProps> = memo(({ session, sessionT, scrollPositionHandler }) => {
-  const { scrollable, restoreScrollPosition } = useRestoreScroll(scrollPositionHandler, session);
+const FileContent: React.FC<FileContentProps> = memo(
+  function FileContent({ session, sessionT, scrollPositionHandler }) {
+    const { scrollable, restoreScrollPosition } = useRestoreScroll(scrollPositionHandler, session);
 
-  const ViewerElement = getViewerElement(session);
+    const ViewerElement = getViewerElement(session);
 
-  let child;
-  if (!ViewerElement) {
-    child = sessionT.translate('Unsupported format');
-  } else {
-    child = (
-      <ViewerElement 
-        item={ session }
-        url={ getUrl(session.tth) }
-        type={ session.mime_type }
-        extension={ session.type.str }
-        sessionT={ sessionT }
-        onReady={restoreScrollPosition}
-      />
+    let child;
+    if (!ViewerElement) {
+      child = sessionT.translate('Unsupported format');
+    } else {
+      child = (
+        <ViewerElement 
+          item={ session }
+          url={ getUrl(session.tth) }
+          type={ session.mime_type }
+          extension={ session.type.str }
+          sessionT={ sessionT }
+          onReady={restoreScrollPosition}
+        />
+      );
+    }
+
+    return (
+      <div 
+        ref={ scrollable } 
+        className="content"
+      >
+        { child }
+      </div>
     );
   }
-
-  return (
-    <div 
-      ref={ scrollable } 
-      className="content"
-    >
-      { child }
-    </div>
-  );
-});
+);
 
 export default FileContent;

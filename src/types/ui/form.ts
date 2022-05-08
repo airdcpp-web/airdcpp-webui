@@ -2,14 +2,15 @@ import * as API from 'types/api';
 import { RouteComponentProps } from 'react-router';
 import { ModuleTranslator } from './modules';
 import { form } from './tcomb-form';
+import { EmptyObject } from './common';
 
 
 export type FormValueBase = API.SettingValueBase | object;
 export type FormValue = API.SettingValue<FormValueBase>;
-export type FormValueMap = API.SettingValueMap<FormValueBase | {}>;
+export type FormValueMap = API.SettingValueMap<FormValueBase | EmptyObject>;
 
 
-export interface FormFieldDefinition<ValueType = FormValueBase> extends 
+export interface FormFieldDefinition extends 
   Omit<API.SettingDefinition, 'default_value' | 'definitions'> {
     
   default_value?: FormValueBase;

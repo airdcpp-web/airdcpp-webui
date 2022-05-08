@@ -9,7 +9,7 @@ import { translateSettingSectionTitle } from './MenuItems';
 
 
 
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 type TopSectionSelectionMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'currentMenuItem' | 'parent' | 'advancedMenuItems' | 'parentMenuItems' | 'settingsT'>;
 
 const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = (

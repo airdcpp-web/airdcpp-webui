@@ -30,7 +30,7 @@ const ShareProfileDecorator = function <PropsT extends object>(
   Component: React.ComponentType<PropsT & ShareProfileDecoratorChildProps>, 
   listHidden: boolean, 
   dataProviderDecoratorSettings?: DataProviderDecoratorSettings<PropsT, ShareProfileDecoratorDataProps>,
-  addSize: boolean = true
+  addSize = true
 ) {
   const convertProfile = (profile: API.ShareProfile, t: UI.TranslateF): API.ShareProfile => {
     let str = profile.str;
@@ -46,8 +46,8 @@ const ShareProfileDecorator = function <PropsT extends object>(
 
   const convertProfiles: DataConverter<PropsT> = (data: API.ShareProfile[], { t }) => {
     const profiles = data
-        .filter(p => listHidden || p.id !== ShareProfileConstants.HIDDEN_PROFILE_ID)
-        .map(p => convertProfile(p, t));
+      .filter(p => listHidden || p.id !== ShareProfileConstants.HIDDEN_PROFILE_ID)
+      .map(p => convertProfile(p, t));
 
     return profiles;
   };

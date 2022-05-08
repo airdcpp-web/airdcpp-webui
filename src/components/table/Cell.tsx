@@ -61,7 +61,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
   </Cell>
 );
 
-export interface ActionCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> extends 
+export interface ActionCellProps<CellDataT, ItemDataT extends UI.ActionMenuItemDataValueType> extends 
   Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 't'>, 
   Omit<TableActionMenuProps<ItemDataT>, 'caption' | 'itemData'> {
 
@@ -73,7 +73,7 @@ interface FileItemBase {
 
 export const FileActionCell = <
   CellDataT extends React.ReactNode, 
-  ItemDataT extends UI.ActionItemDataValueType & FileItemBase
+  ItemDataT extends UI.ActionMenuItemDataValueType & FileItemBase
 >(
   { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
 ) => (
@@ -89,7 +89,7 @@ export const FileActionCell = <
   />
 );
 
-export const ActionMenuCell = <CellDataT extends React.ReactNode, ItemDataT extends UI.ActionItemDataValueType>(
+export const ActionMenuCell = <CellDataT extends React.ReactNode, ItemDataT extends UI.ActionMenuItemDataValueType>(
   { cellData, rowDataGetter, ...props }: ActionCellProps<CellDataT, ItemDataT>
 ) => (
   <TableActionMenu
@@ -99,7 +99,7 @@ export const ActionMenuCell = <CellDataT extends React.ReactNode, ItemDataT exte
   />
 );
 
-export interface ActionLinkCellProps<CellDataT, ItemDataT extends UI.ActionItemDataValueType> 
+export interface ActionLinkCellProps<CellDataT, ItemDataT extends UI.ActionMenuItemDataValueType> 
   extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
   /*Pick<ActionButtonProps<ItemDataT>, 'actions' | 'actionId'>*/
 
@@ -109,7 +109,7 @@ export interface ActionLinkCellProps<CellDataT, ItemDataT extends UI.ActionItemD
   actionId: string;
 }
 
-export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionItemDataValueType>(
+export const ActionLinkCell = <CellDataT, ItemDataT extends UI.ActionMenuItemDataValueType>(
   { 
     cellData, 
     rowDataGetter, 
@@ -257,7 +257,7 @@ export const FileDownloadCell = <
   downloadHandler: PropTypes.func.isRequired,
 };*/
 
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 export interface CheckboxCellProps extends 
   Omit<RowWrapperCellChildProps<boolean, any>, 'onChange'>, 
   Omit<CheckboxProps, 'onChange' | 'checked'> {

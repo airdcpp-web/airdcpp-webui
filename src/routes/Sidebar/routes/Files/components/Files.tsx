@@ -26,11 +26,11 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
     return session.name;
   },
 
-  itemLabelGetter(session) {
+  itemLabelGetter() {
     return null;
   },
 
-  itemHeaderDescriptionGetter(session) {
+  itemHeaderDescriptionGetter() {
     return null;
   },
 

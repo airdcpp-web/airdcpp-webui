@@ -1,6 +1,8 @@
 import { Location } from 'history';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { IconType } from 'components/semantic/Icon';
 import { RouteComponentProps } from 'react-router-dom';
 import { /*ActionListType,*/ RefluxActionListType } from './actions';
@@ -17,7 +19,7 @@ export interface SessionInfoGetter<SessionT> {
 
 export type SessionActions<
   SessionT extends SessionItemBase, 
-  ActionT = {}
+  ActionT = UI.EmptyObject
 > = RefluxActionListType<SessionItemBase> & ActionT & {
   removeSession: (session: SessionT) => void;  
   setRead: (session: SessionT) => void;

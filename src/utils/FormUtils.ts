@@ -118,7 +118,7 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
 };
 
 // Normalize definition enum value to a tcomb form option
-const normalizeEnumValue = <ValueT>(rawItem: API.SettingEnumOption): UI.FormOption => {
+const normalizeEnumValue = (rawItem: API.SettingEnumOption): UI.FormOption => {
   return {
     value: rawItem.id,
     text: rawItem.name
@@ -253,7 +253,6 @@ const parseFieldOptions = (
   // List item options
   if (definition.type === API.SettingTypeEnum.LIST) {
     let itemOptions: form.TcombStructOptions = {};
-    // (options as form.TcombListOptions).item = {};
     if (definition.definitions) {
       // Struct item fields
       itemOptions.fields = definition.definitions.reduce(

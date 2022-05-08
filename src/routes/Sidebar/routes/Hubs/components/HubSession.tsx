@@ -14,6 +14,8 @@ import { RedirectPrompt, PasswordPrompt, HubActionPrompt } from 'routes/Sidebar/
 import '../style.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import HubActions from 'actions/reflux/HubActions';
@@ -29,9 +31,7 @@ const checkList = (props: HubSessionProps) => {
   return loadSessionProperty(getStorageKey(props), false);
 };
 
-interface HubSessionProps extends SessionChildProps<API.Hub, {}, ChatActionList> {
-
-}
+type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject, ChatActionList>
 
 class HubSession extends Component<HubSessionProps> {
   static displayName = 'HubSession';

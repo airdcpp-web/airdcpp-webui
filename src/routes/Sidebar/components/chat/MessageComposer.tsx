@@ -63,7 +63,7 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
       margin: 0,
 
       // Disable weird hack from react-mentions which breaks styling on iOS
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       // https://github.com/signavio/react-mentions/blob/e2b0273d4a629af8107ba1738f0a5846ada790f1/src/MentionsInput.js#L1033
       marginLeft: 0,
       marginTop: 0,
@@ -243,7 +243,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     });
 
     const { handleFileUpload } = this.props;
-    for (let file of files) {
+    for (const file of files) {
       try {
         const res = await handleFileUpload(file);
         this.appendText(res.magnet);
@@ -259,7 +259,7 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
 
   onPaste = (evt: React.ClipboardEvent<HTMLTextAreaElement>) => {
     if (evt.clipboardData && evt.clipboardData.files && (evt.clipboardData as any).files.length) {
-      let files: File[] = [];
+      const files: File[] = [];
 
       {
         // DataTransferItemList isn't a normal array, convert it first

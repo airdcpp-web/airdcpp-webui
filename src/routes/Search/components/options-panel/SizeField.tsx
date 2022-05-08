@@ -65,7 +65,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
         min={ 0 }
         value={ displayValue || '' }
         onChange={ evt => {
-          let newValue = !!evt.target.value ? parseInt(evt.target.value) : null;
+          const newValue = !!evt.target.value ? parseInt(evt.target.value) : null;
           if (!!newValue) {
             setDisplayValue(newValue);
           } else {

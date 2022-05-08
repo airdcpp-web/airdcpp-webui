@@ -29,9 +29,7 @@ interface SearchLocationState {
   searchString?: string;
 }
 
-interface SearchProps extends RouteComponentProps<{}, any, SearchLocationState> {
-
-}
+type SearchProps = RouteComponentProps<UI.EmptyObject, any, SearchLocationState>
 
 interface SearchDataProps extends DataProviderDecoratorChildProps, WithTranslation {
   instance: API.SearchInstance;

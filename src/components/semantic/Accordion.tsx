@@ -55,7 +55,7 @@ class Accordion extends Component<AccordionProps> {
       this.props.className,
     );
 
-    let { children } = this.props;
+    const { children } = this.props;
     return (
       <div 
         ref={ c => this.c = c! } 

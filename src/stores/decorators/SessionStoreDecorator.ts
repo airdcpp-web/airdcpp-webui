@@ -36,15 +36,15 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
   };
 
   const checkReadState = (id: IdType, updatedProperties: Partial<SessionType>) => {
-      // Active tab? Mark as read
-      if (id === activeSessionId && ActivityStore.userActive && isUnreadUpdate(updatedProperties)) {
-        return checkUnreadSessionInfo(
-          updatedProperties as UI.UnreadInfo, 
-          () => actions.setRead({ id })
-        );
-      }
+    // Active tab? Mark as read
+    if (id === activeSessionId && ActivityStore.userActive && isUnreadUpdate(updatedProperties)) {
+      return checkUnreadSessionInfo(
+        updatedProperties as UI.UnreadInfo, 
+        () => actions.setRead({ id })
+      );
+    }
 
-      return updatedProperties;
+    return updatedProperties;
   };
 
   const Decorator = {

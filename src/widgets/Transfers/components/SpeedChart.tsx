@@ -25,6 +25,7 @@ export interface SpeedChartProps extends Pick<UI.WidgetProps, 'widgetT'> {
 }
 
 const SpeedChart = withContentRect('bounds')(
+  // eslint-disable-next-line react/display-name
   class extends PureComponent<SpeedChartProps & MeasuredComponentProps> {
     render() {
       const { trafficSeries, maxDownload, maxUpload, measureRef, contentRect, widgetT } = this.props;

@@ -4,15 +4,21 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 
-export interface ItemDownloadManager {
-  addDownloadItem: UI.AddItemDownload;
-  downloadDialogProps: UI.ItemDownloadHandler;
+export interface ItemDownloadManager<
+  ItemT extends UI.DownloadableItemInfo, 
+  PropsT extends object
+> {
+  addDownloadItem: UI.AddItemDownload<ItemT, PropsT>;
+  downloadDialogProps: UI.ItemDownloadHandler<ItemT, PropsT>;
 }
 
-export const useItemDownloadManager = (session: UI.SessionItemBase | undefined) => {
-  const downloadManager = useMemo<ItemDownloadManager>(
+export const useItemDownloadManager = <
+  ItemT extends UI.DownloadableItemInfo, 
+  PropsT extends object
+>(session: UI.SessionItemBase | undefined) => {
+  const downloadManager = useMemo<ItemDownloadManager<ItemT, PropsT>>(
     () => {
-      const downloads: { [key in string]: UI.ItemDownloadHandler } = {};
+      const downloads: { [key in string]: UI.ItemDownloadHandler<ItemT, PropsT> } = {};
 
       const getDownloadItem = (itemId: API.IdType) => {
         const item = downloads[itemId];
@@ -23,7 +29,7 @@ export const useItemDownloadManager = (session: UI.SessionItemBase | undefined) 
         return item;
       };
 
-      const ret: ItemDownloadManager = {
+      const ret: ItemDownloadManager<ItemT, PropsT> = {
         downloadDialogProps: {
           downloadHandler: (itemInfo, user, downloadData, downloadSession) => {
             return getDownloadItem(itemInfo.id).downloadHandler(itemInfo, user, downloadData, downloadSession);
@@ -37,7 +43,7 @@ export const useItemDownloadManager = (session: UI.SessionItemBase | undefined) 
           },
           session
         },
-        addDownloadItem: (itemId: string, itemDownloadHandler: UI.ItemDownloadHandler) => {
+        addDownloadItem: (itemId, itemDownloadHandler) => {
           downloads[itemId] = itemDownloadHandler;
         },
       };

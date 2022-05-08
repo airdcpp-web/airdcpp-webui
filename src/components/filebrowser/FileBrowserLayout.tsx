@@ -75,7 +75,7 @@ class FileBrowserLayout extends Component<Props, State> {
     return LoginStore.systemInfo.platform === API.PlatformEnum.WINDOWS;
   }
 
-  fetchRootOnError: boolean = true;
+  fetchRootOnError = true;
 
   constructor(props: Props) {
     super(props);

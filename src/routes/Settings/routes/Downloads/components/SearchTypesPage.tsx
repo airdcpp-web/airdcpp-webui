@@ -82,7 +82,11 @@ const SearchTypesPage: React.FC<Props> = (
     <Message
       icon={ IconConstants.NOTE }
       description={ 
-        moduleT.t('searchTypesNote', 'Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.')
+        moduleT.t(
+          'searchTypesNote', 
+          // eslint-disable-next-line max-len
+          'Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.'
+        )
       }
     />
     <SearchTypeDialog

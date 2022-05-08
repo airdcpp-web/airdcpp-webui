@@ -16,7 +16,7 @@ import FileContent from './FileContent';
 import ViewFileStore from 'stores/ViewFileStore';
 
 
-export interface FileSessionProps extends SessionChildProps<API.ViewFile> {
+export interface FileSessionProps extends SessionChildProps<API.ViewFile, UI.EmptyObject, UI.EmptyObject> {
   session: API.ViewFile;
   sessionT: UI.ModuleTranslator;
 }

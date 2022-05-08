@@ -10,9 +10,7 @@ import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
-export interface HubSearchInputProps extends Omit<RemoteSuggestFieldProps<API.Hub>, 'valueField' | 'url' | 'descriptionField'> {
-
-}
+export type HubSearchInputProps = Omit<RemoteSuggestFieldProps<API.Hub>, 'valueField' | 'url' | 'descriptionField'>
 
 const HubSearchInput: React.FC<HubSearchInputProps> = ({ submitHandler, ...other }) => {
   const { t } = useTranslation();

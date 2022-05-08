@@ -22,7 +22,7 @@ function pending() {
 
 export function sleep(ms) {
   return new AppPromise(resolve => setTimeout(resolve, ms));
-};
+}
 
 export default Object.assign(AppPromise, {
   pending

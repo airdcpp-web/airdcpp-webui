@@ -168,7 +168,7 @@ module.exports = {
             loader: path.resolve('webpack/bundle-loader.js'),
             options: {
               name: (resourcePath) => {
-                const match = resourcePath.match(/locales[\\\/](.*)[\\\/]webui/);
+                const match = resourcePath.match(/locales[\\/](.*)[\\/]webui/);
                 const languageCode = match[1];
                 return `locales/${languageCode}`;
               }

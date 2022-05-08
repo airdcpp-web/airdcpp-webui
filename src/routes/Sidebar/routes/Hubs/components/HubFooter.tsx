@@ -71,7 +71,8 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
         text={(
           <>
             <EncryptionState encryption={ session.encryption }/>
-            { sessionT.t('xUsers', {
+            { sessionT.t(
+              'xUsers', {
                 defaultValue: '{{count}} user',
                 defaultValue_plural: '{{count}} users',
                 count: users,
