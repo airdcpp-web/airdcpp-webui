@@ -135,7 +135,7 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
 };
 
 
-const reducePermissions = (options: API.SettingEnumOption[], key: string, moduleT: UI.ModuleTranslator) => {
+const reducePermissionToOption = (options: API.SettingEnumOption[], key: string, moduleT: UI.ModuleTranslator) => {
   const captionEntry = AccessCaptions[key];
   if (typeof captionEntry === 'string') {
     options.push({
@@ -204,12 +204,12 @@ class WebUserDialog extends Component<Props> {
     super(props);
 
     this.entry = translateForm(getEntry(this.isNew()), props.moduleT);
-    const permissions = this.entry.find(def => def.key === 'permissions');
-
+  
     const permissionT = getSubModuleT(props.moduleT, 'permissionSelector');
+    const permissions = this.entry.find(def => def.key === 'permissions')!;
     Object.assign(permissions, {
       options: Object.keys(AccessConstants).reduce(
-        (reduced, cur) => reducePermissions(reduced, cur, permissionT), 
+        (reduced, cur) => reducePermissionToOption(reduced, cur, permissionT), 
         []
       )
     });
