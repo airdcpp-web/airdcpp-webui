@@ -146,7 +146,7 @@ interface State<ValueType> {
   formValue: Partial<ValueType>;
 }
 
-type Props<ValueType> = FormProps<ValueType>;
+type Props<ValueType extends Partial<UI.FormValueMap>> = FormProps<ValueType>;
 class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends Component<Props<ValueType>> {
   /*static propTypes = {
     // Form items to list

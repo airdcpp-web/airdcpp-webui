@@ -4,7 +4,7 @@ import Moment from 'moment';
 
 import ExtensionIcon from 'routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 
-import versionCompare from 'compare-versions';
+import { compareVersions } from 'compare-versions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -51,7 +51,7 @@ export const ExtensionInfoEntry: React.FC<ExtensionProps> = ({
   npmPackage, installedPackage, moduleT
 }) => {
   const hasUpdate = !!installedPackage && 
-    versionCompare(installedPackage.version, npmPackage.version) < 0;
+    compareVersions(installedPackage.version, npmPackage.version) < 0;
 
   return (
     <div className="item extension">

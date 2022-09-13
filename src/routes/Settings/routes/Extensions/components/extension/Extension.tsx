@@ -7,7 +7,7 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import ExtensionIcon from 'routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 import ExtensionActionButtons from 'routes/Settings/routes/Extensions/components/extension/ExtensionActionButtons';
 
-import versionCompare from 'compare-versions';
+import { compareVersions } from 'compare-versions';
 
 import 'fomantic-ui-css/components/item.min.css';
 
@@ -179,7 +179,7 @@ class Extension extends React.PureComponent<ExtensionProps & SocketSubscriptionD
     const { translate } = moduleT;
 
     const hasUpdate = !!installedPackage && !!npmPackage && 
-      versionCompare(installedPackage.version, npmPackage.version) < 0;
+      compareVersions(installedPackage.version, npmPackage.version) < 0;
 
     return (
       <div className="item extension">

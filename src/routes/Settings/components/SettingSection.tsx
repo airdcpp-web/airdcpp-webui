@@ -20,7 +20,7 @@ export interface SettingSectionProps {
 
 type Props = SaveDecoratorChildProps & SettingsMenuDecoratorChildProps;
 
-export type SettingSectionChildProps<RouteParams = UI.EmptyObject> = 
+export type SettingSectionChildProps<RouteParams extends object = UI.EmptyObject> = 
   SaveDecoratorChildProps & 
   Pick<Props, 'parent' | 'currentMenuItem'> & 
   RouteComponentProps<RouteParams> & 
