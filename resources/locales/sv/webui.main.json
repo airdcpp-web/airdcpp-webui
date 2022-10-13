@@ -1002,7 +1002,7 @@
     "new": "Ny session",
     "newDesc": "Öppna en ny privat chattsession",
     "offlineMessage": "Du måste vara ansluten till minst en hubb för att kunna skicka privatmeddelanden",
-    "directEncryptedChannelAvailable": "Direktkrypterad förbindelse tillgänglig",
+    "directEncryptedChannelAvailable": "Krypterad förbindelse tillgänglig",
     "establishingConnection": "Etablerar förbindelse...",
     "directEncryptedChannelEstablished": "Krypterad förbindelse har etablerats",
     "notifications": {
