@@ -19,9 +19,18 @@ type Props = SizeFieldProps;
 
 const DEFAULT_UNIT_INDEX = 2;
 
+const toFieldValues = (initialValue: number) => {
+  const { value, unitIndex } = parseUnit(initialValue, ByteUnits, 1024);
+  return {
+    value,
+    unitIndex: !!initialValue ? unitIndex : DEFAULT_UNIT_INDEX,
+  }
+}
+
 const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) => {
-  const [ displayValue, setDisplayValue ] = useState<number | undefined>(undefined);
-  const [ unitIndex, setUnitIndex ] = useState<number>(DEFAULT_UNIT_INDEX);
+  const initialData = toFieldValues(value)
+  const [ displayValue, setDisplayValue ] = useState<number | undefined>(initialData.value);
+  const [ unitIndex, setUnitIndex ] = useState<number>(initialData.unitIndex);
 
   const valueToBytes = () => {
     let ret = displayValue || 0;
@@ -34,6 +43,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
     return ret;
   };
 
+  // Fire internal changes
   useEffect(
     () => {
       const newValue = valueToBytes();
@@ -44,13 +54,14 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
     [ unitIndex, displayValue ]
   );
 
+  // Update fields on external changes
   useEffect(
     () => {
       const curBytes = valueToBytes();
       if (value !== curBytes) {
-        const { value: parsedValue, unitIndex: parsedUnitIndex } = parseUnit(value, ByteUnits, 1024);
-        setDisplayValue(parsedValue);
-        setUnitIndex(!!value ? parsedUnitIndex : DEFAULT_UNIT_INDEX);
+        const newData = toFieldValues(value);
+        setDisplayValue(newData.value);
+        setUnitIndex(newData.unitIndex);
       }
     },
     [ value ]
@@ -112,5 +123,3 @@ const FileTypeField: TCombTemplate = {
 };
 
 export default t.form.Form.templates.textbox.clone(FileTypeField);
-
-// export { SizeField };
