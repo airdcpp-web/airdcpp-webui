@@ -172,7 +172,7 @@ class ShareDirectoryDialog extends Component<Props> {
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ rootEntry as Entry }
+          sourceValue={ rootEntry as Entry }
           location={ this.props.location }
         />
       </Modal>

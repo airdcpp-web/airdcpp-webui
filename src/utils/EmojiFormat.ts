@@ -7,7 +7,6 @@ import * as React from 'react';
 //@ts-ignore
 import { emojify as emojisToUnicode } from 'react-emojione';
 
-//@ts-ignore
 import emoji from 'react-easy-emoji';
 //@ts-ignore
 import makeTwemojiRenderer from 'react-easy-emoji/lib/makeTwemojiRenderer';

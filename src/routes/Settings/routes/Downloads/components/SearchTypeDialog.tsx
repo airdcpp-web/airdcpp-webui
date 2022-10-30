@@ -97,7 +97,7 @@ class SearchTypeDialog extends Component<Props> {
           fieldDefinitions={ this.fieldDefinitions }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ searchTypeEntry as Entry }
+          sourceValue={ searchTypeEntry as Entry }
           location={ this.props.location }
         />
       </Modal>

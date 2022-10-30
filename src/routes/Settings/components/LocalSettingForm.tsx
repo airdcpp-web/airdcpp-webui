@@ -62,15 +62,15 @@ class LocalSettingForm extends Component<Props> {
 
   render() {
     const { settings } = this.state;
-    const { saveContext } = this.props;
+    const { saveContext, keys, ...other } = this.props;
     return (
       <div className="local setting-form">
         <Form
-          { ...this.props }
-          ref={ saveContext.addFormRef }
+          { ...other }
+          ref={ f => saveContext.addFormRef(keys, f) }
           onSave={ this.onSave }
           fieldDefinitions={ this.definitions }
-          value={ settings }
+          sourceValue={ settings }
           onFieldChanged={ this.onFieldChanged }
         />
       </div>

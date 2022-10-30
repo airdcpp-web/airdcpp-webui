@@ -21,7 +21,6 @@ import { Translation } from 'react-i18next';
 import { FormContext } from 'types/ui';
 import { getModuleT } from 'utils/TranslationUtils';
 
-import { form } from 'types/ui/tcomb-form';
 import { TextDecorator } from 'components/text';
 
 const TcombForm = tcomb.form.Form;
@@ -36,13 +35,13 @@ const optionHelpFormatter = (text: string) => (
 
 // Reduces an array of field setting objects by calling props.onFieldSetting
 const fieldOptionReducer = (
-  reducedOptions: form.TcombOptions, 
+  reducedOptions: tcomb.form.TcombOptions, 
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
   formT: UI.ModuleTranslator,
   formValue: Partial<UI.FormValueMap>,
   optionTitleFormatter: UI.OptionTitleParser | undefined
-): form.TcombOptions => {
+): tcomb.form.TcombOptions => {
   reducedOptions[fieldDefinitions.key] = parseFieldOptions(
     fieldDefinitions, 
     formT, 
@@ -76,8 +75,8 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   error: FieldError | null,
   optionTitleFormatter: UI.OptionTitleParser | undefined,
   moduleT: UI.ModuleTranslator
-): form.TcombStructOptions => {
-  const options: form.TcombStructOptions = {
+): tcomb.form.TcombStructOptions => {
+  const options: tcomb.form.TcombStructOptions = {
     // Parent handlers
     fields: fieldDefinitions.reduce(
       (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter), 
@@ -110,7 +109,7 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
 
 export type FormFieldSettingHandler<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> = (
   key: string, 
-  definitions: form.TcombOptions, 
+  definitions: tcomb.form.TcombOptions, 
   formValue: Partial<ValueType>
 ) => void;
 
@@ -125,15 +124,12 @@ export type FormFieldChangeHandler<ValueType = UI.FormValueMap> = (
   valueChanged: boolean
 ) => null | void | Promise<Partial<ValueType>>;
 
-export type FormSourceValueUpdateHandler<ValueType = UI.FormValueMap> = (sourceValue: Partial<ValueType>) => void;
-
 export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> 
   extends Pick<FormContext, 'location'> {
 
   fieldDefinitions: UI.FormFieldDefinition[];
-  value?: ValueType | null;
+  sourceValue?: ValueType | null;
   onSave: FormSaveHandler<ValueType>;
-  onSourceValueUpdated?: FormSourceValueUpdateHandler<ValueType>;
   onFieldSetting?: FormFieldSettingHandler<ValueType>;
   onFieldChanged?: FormFieldChangeHandler<ValueType>;
   title?: string;
@@ -183,13 +179,13 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   state: State<ValueType>;
 
   sourceValue: Partial<ValueType>;
-  form: form.Form;
+  form: tcomb.form.Form | null;
 
   constructor(props: Props<ValueType>) {
     super(props);
 
     this.sourceValue = normalizeSettingValueMap(
-      props.value || undefined, 
+      props.sourceValue || undefined, 
       this.props.fieldDefinitions
     ) as Partial<ValueType>;
 
@@ -201,15 +197,11 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
 
   setSourceValue = (value?: Partial<ValueType> | null) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value || undefined);
-
-    if (this.props.onSourceValueUpdated) {
-      this.props.onSourceValueUpdated(this.sourceValue);
-    }
   }
 
   componentDidUpdate(prevProps: FormProps<ValueType>) {
-    if (prevProps.value !== this.props.value) {
-      this.setSourceValue(this.props.value);
+    if (prevProps.sourceValue !== this.props.sourceValue) {
+      this.setSourceValue(this.props.sourceValue);
     }
   }
 
@@ -250,7 +242,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
   }
 
-  onChange = (value: Partial<ValueType>, valueKeyPath: string[], kind: string) => {
+  onChange: tcomb.form.TCombFormProps['onChange'] = (value: Partial<ValueType>, valueKeyPath: string[], kind) => {
     if (kind) {
       // List action
       if (kind === 'add') {
@@ -269,13 +261,14 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
         // Remove/sort
         this.onFieldValueChanged(value, valueKeyPath);
       }
-    } else {
+    } else if (this.form) {
       // Make sure that we have the converted value for the custom 
       // change handler (in case there are transforms for this field) 
-      const result = this.form.getComponent(valueKeyPath).validate();
-      setFieldValueByPath(value, (result as any).value, valueKeyPath);
-
-      this.onFieldValueChanged(value, valueKeyPath);
+      const result = this.form.getComponent(valueKeyPath).validate() as any;
+      if (result.value !== findFieldValueByPath(this.state.formValue, valueKeyPath)) {
+        setFieldValueByPath(value, result.value, valueKeyPath);
+        this.onFieldValueChanged(value, valueKeyPath);
+      }
     }
 
     this.setState({ 
@@ -299,7 +292,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
 
   // Calls props.onSave with changed form values
   save = () => {
-    const validatedFormValue: Partial<ValueType> = this.form.getValue();
+    const validatedFormValue: Partial<ValueType> = this.form!.getValue();
     if (validatedFormValue) {
       // Get the changed fields
       const settingKeys = Object.keys(validatedFormValue);
@@ -342,7 +335,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
                 </div>
               ) }
               <TcombForm
-                ref={ (c: any) => this.form = c }
+                ref={ c => this.form = c }
                 type={ type }
                 options={ options }
                 value={ formValue }

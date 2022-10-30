@@ -28,3 +28,9 @@
 .Select--multi .Select-input {
   margin-left: 7px !important;
 }
+
+.form fieldset {
+  border: 0;
+  margin: 0;
+  border: 0;
+}

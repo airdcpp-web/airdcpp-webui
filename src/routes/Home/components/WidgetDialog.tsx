@@ -145,7 +145,7 @@ class WidgetDialog extends Component<Props> {
       >
         <Form<FormValue>
           ref={ c => this.form = c! }
-          value={ value }
+          sourceValue={ value }
           fieldDefinitions={ definitions }
           onSave={ this.onSave }
           location={ location }

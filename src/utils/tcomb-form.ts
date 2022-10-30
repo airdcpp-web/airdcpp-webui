@@ -1,10 +1,5 @@
-//@ts-ignore
-import t from 'tcomb-form';
+import t from '../components/form/tcomb/main';
 import { FormContext } from 'types/ui';
-
-import template from 'components/form/template';
-
-t.form.Form.templates = template;
 
 export const Positive = t.refinement(t.Number, (n: number) => {
   return n >= 0 && n % 1 === 0;
@@ -24,7 +19,7 @@ export const Range = function (min: number | undefined, max: number | undefined)
     return true;
   });
 
-  ret.getValidationErrorMessage = (value: number, path: string, context: FormContext) => {
+  ret.getValidationErrorMessage = (value, path, context: FormContext) => {
     if (min !== undefined && value < min) {
       return context.formT.t('minimumValueError', {
         defaultValue: 'Minimum allowed value is {{value}}',
@@ -39,11 +34,11 @@ export const Range = function (min: number | undefined, max: number | undefined)
       });
     }
 
-    return null;
+    return '';
   };
 
   return ret;
 };
 
-export default t as any;
+export default t;
 

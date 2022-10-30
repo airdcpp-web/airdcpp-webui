@@ -126,7 +126,7 @@ const SearchOptionsButton: React.FC<Props> = ({
 };
 
 
-const SearchOptionButtonDecorated = DataProviderDecorator<SearchOptionsButtonProps, DataProps>(
+const SearchOptionsButtonDecorated = DataProviderDecorator<SearchOptionsButtonProps, DataProps>(
   SearchOptionsButton,
   {
     urls: {
@@ -151,4 +151,4 @@ const SearchOptionButtonDecorated = DataProviderDecorator<SearchOptionsButtonPro
   }
 );
 
-export { SearchOptionButtonDecorated as SearchOptionButton };
+export { SearchOptionsButtonDecorated as SearchOptionsButton };

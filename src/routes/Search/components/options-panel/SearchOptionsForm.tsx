@@ -19,13 +19,10 @@ import AccordionStructField from './AccordionStructField';
 
 interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {
   hub_urls: string[] | null;
-  // file_type: string | null;
   size_limits: null | {
     min_size: number | null;
     max_size: number | null;
   };
-  // min_size: number | null;
-  // max_size: number | null;
   // excluded: string[] | null;
 }
 
@@ -156,7 +153,7 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           fieldDefinitions={ this.definitions }
-          value={ value }
+          sourceValue={ value } // This gets updated on every change at the moment...
           location={ location }
           optionTitleFormatter={ def => def.title }
           className="search-options"

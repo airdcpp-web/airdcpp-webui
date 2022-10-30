@@ -16,7 +16,7 @@ const AccordionStruct: TCombTemplate = {
     const { label, ...childLocals } = locals;
     return (
       <FormAccordion locals={ locals }>
-        { t.form.Form.templates.struct.renderFieldset(children, childLocals) }
+        { (t.form.Form.templates.struct as any).renderFieldset(children, childLocals) }
       </FormAccordion>
     );
   },

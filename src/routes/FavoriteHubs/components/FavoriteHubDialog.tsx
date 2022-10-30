@@ -302,7 +302,7 @@ class FavoriteHubDialog extends Component<Props> {
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
           fieldDefinitions={ this.definitions }
-          value={ this.formValue }
+          sourceValue={ this.formValue }
           location={ this.props.location }
         />
       </Modal>

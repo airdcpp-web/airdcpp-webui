@@ -1,7 +1,7 @@
 import * as API from 'types/api';
 import { RouteComponentProps } from 'react-router';
 import { ModuleTranslator } from './modules';
-import { form } from './tcomb-form';
+import tcomb from 'utils/tcomb-form';
 import { EmptyObject } from './common';
 
 
@@ -44,7 +44,7 @@ export type FormContext = Pick<RouteComponentProps, 'location'> & {
 };*/
 
 export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = 
-  form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
+  tcomb.form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
 
 export type OptionTitleParser = (
   definition: FormFieldDefinition,

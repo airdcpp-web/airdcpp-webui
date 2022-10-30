@@ -27,12 +27,13 @@ export interface SaveDecoratorChildProps {
   message: React.ReactNode;
 }
 
-type SaveableRef = Form;
+type SaveableRef = Pick<Form, 'save'>;
 
 
 export interface SaveDecoratorContext {
   onFieldChanged: FormFieldChangeHandler;
-  addFormRef: (c: SaveableRef) => void;
+  addFormRef: (keys: string[], c: SaveableRef | null) => void;
+  getFormRef: (keys: string[]) => SaveableRef;
 }
 
 export const SaveDecoratorContext = React.createContext<SaveDecoratorContext | undefined>(undefined);
@@ -52,6 +53,10 @@ export function withSaveContext<PropsT>(Component: React.ComponentType<PropsT & 
   };
 }
 
+const getFormId = (keys: string[]) => {
+  return keys.join('_');
+}
+
 export default function <PropsT extends object>(
   Component: React.ComponentType<SaveDecoratorChildProps & PropsT>
 ) {
@@ -60,7 +65,7 @@ export default function <PropsT extends object>(
   class SaveDecorator extends React.Component<React.PropsWithChildren<Props>> {
     static displayName = 'SaveDecorator';
 
-    forms: SaveableRef[] = [];
+    forms: { [key: string]: SaveableRef }  = {};
     changedProperties = new Set<string>();
 
     componentDidUpdate(prevProps: SaveDecoratorProps) {
@@ -90,8 +95,8 @@ export default function <PropsT extends object>(
     }
 
     handleSave = () => {
-      invariant(this.forms.length > 0, 'No forms exist in SaveDecorator');
-      const promises = this.forms.map(c => c.save());
+      invariant(Object.keys(this.forms).length > 0, 'No forms exist in SaveDecorator');
+      const promises = Object.values(this.forms).map(c => c.save());
       this.changedProperties.clear();
 
       return Promise.all(promises)
@@ -120,23 +125,28 @@ export default function <PropsT extends object>(
         settingsT.t('unsavedChangesPrompt', 'You have unsaved changes. Are you sure you want to leave?');
     }
 
-    saveFormRef = (c: SaveableRef) => {
+    addFormRef = (keys: string[], c: SaveableRef | null) => {
       if (c) {
         invariant(
           c.hasOwnProperty('save'), 
           'Invalid setting form component supplied for SaveDecorator (save property missing)'
         );
-        this.forms.push(c);
+        this.forms[getFormId(keys)] = c;
       } else {
         // Switching to another page 
         // Single forms shouldn't be unmounted otherwise, but using identifiers would still be safer...
-        this.forms = [];
+        this.forms = {};
       }
+    }
+
+    getFormRef = (keys: string[]) => {
+      return this.forms[getFormId(keys)]
     }
 
     saveContext: SaveDecoratorContext = {
       onFieldChanged: this.onSettingsChanged,
-      addFormRef: this.saveFormRef,
+      addFormRef: this.addFormRef,
+      getFormRef: this.getFormRef,
     };
 
     render() {

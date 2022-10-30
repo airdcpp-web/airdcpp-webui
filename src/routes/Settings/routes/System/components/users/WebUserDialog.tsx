@@ -262,7 +262,7 @@ class WebUserDialog extends Component<Props> {
           fieldDefinitions={ this.entry }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ this.props.user as Entry }
+          sourceValue={ this.props.user as Entry }
           location={ this.props.location }
         />
       </Modal>

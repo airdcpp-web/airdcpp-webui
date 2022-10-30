@@ -64,7 +64,7 @@ class ExtensionsConfigureDialog extends Component<Props> {
           ref={ (c: any) => this.form = c! }
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
-          value={ settings }
+          sourceValue={ settings }
           location={ this.props.location }
         />
       </Modal>

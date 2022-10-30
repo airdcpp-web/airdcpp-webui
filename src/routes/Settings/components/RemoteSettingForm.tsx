@@ -49,15 +49,15 @@ class RemoteSettingForm extends Component<Props> {
   }
 
   render() {
-    const { settings, fieldDefinitions, saveContext, ...otherProps } = this.props;
+    const { settings, fieldDefinitions, saveContext, keys, ...otherProps } = this.props;
     return (
       <div className="remote setting-form">
         <Form
           { ...otherProps }
-          ref={ saveContext.addFormRef }
+          ref={ f => saveContext.addFormRef(keys, f) }
           onSave={ this.onSave }
           fieldDefinitions={ fieldDefinitions }
-          value={ settings }
+          sourceValue={ settings }
           onFieldChanged={ this.onFieldChanged }
         />
       </div>

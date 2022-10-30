@@ -2,9 +2,10 @@ import { Component } from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import '../style.css';
-import { FormSourceValueUpdateHandler, FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
+import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
+import * as API from 'types/api';
 
 export interface LogSectionProps extends SettingSectionChildProps {
   section: string;
@@ -20,9 +21,9 @@ class LogSection extends Component<LogSectionProps> {
     return `log_${this.props.section}${suffix ? `_${suffix}` : ''}`;
   }
 
-  onSettingsReceived: FormSourceValueUpdateHandler = (data) => {
+  onSettingsReceived = (settings: API.SettingValueMap) => {
     this.setState({
-      enabled: data[this.convertKey()],
+      enabled: settings[this.convertKey()],
     });
   }
 
@@ -62,7 +63,7 @@ class LogSection extends Component<LogSectionProps> {
             { ...other }
             keys={ Title }
             onFieldChanged={ this.onEnableStateChanged }
-            onSourceValueUpdated={ this.onSettingsReceived }
+            onSettingValuesReceived={ this.onSettingsReceived }
           />
         </div>
 

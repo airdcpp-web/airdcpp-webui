@@ -10,7 +10,7 @@ import * as UI from 'types/ui';
 import IconConstants from 'constants/IconConstants';
 import { RouteComponentProps } from 'react-router';
 import { useMobileLayout } from 'utils/BrowserUtils';
-import { SearchOptionButton, SearchOptions } from './options-panel';
+import { SearchOptionsButton, SearchOptions } from './options-panel';
 
 
 interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
@@ -20,6 +20,7 @@ interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
   handleSubmit: (text: string, options?: SearchOptions) => void;
   defaultOptions: SearchOptions | null;
 }
+
 
 const SearchInput: React.FC<SearchInputProps> = ({ 
   moduleT, defaultValue, running, handleSubmit, location, defaultOptions 
@@ -45,7 +46,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             />
           }
         />
-        <SearchOptionButton
+        <SearchOptionsButton
           moduleT={ moduleT }
           location={ location }
           onChange={ setOptions }

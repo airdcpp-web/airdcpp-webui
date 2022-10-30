@@ -11,7 +11,6 @@ import update from 'immutability-helper';
 
 import { textToI18nKey } from './TranslationUtils';
 
-import { Type, form } from 'types/ui/tcomb-form';
 import { isEqualWith, isObject } from 'lodash';
 
 
@@ -43,17 +42,17 @@ const typeToComponent = (
       }
       return isEnum ? tcomb.Number : Positive;
     }
-    case API.SettingTypeEnum.BOOLEAN: return tcomb.Bool;
+    case API.SettingTypeEnum.BOOLEAN: return tcomb.Boolean;
     case API.SettingTypeEnum.STRING:
     case API.SettingTypeEnum.TEXT:
     case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.FILE_PATH:
     case API.SettingTypeEnum.HUB_URL:
-    case API.SettingTypeEnum.DIRECTORY_PATH: return tcomb.Str;
+    case API.SettingTypeEnum.DIRECTORY_PATH: return tcomb.String;
     case API.SettingTypeEnum.HINTED_USER: return tcomb.struct({
-      nicks: tcomb.Str,
-      cid: tcomb.Str,
-      hub_url: tcomb.Str,
+      nicks: tcomb.String,
+      cid: tcomb.String,
+      hub_url: tcomb.String,
     });
     default: 
   }
@@ -61,7 +60,7 @@ const typeToComponent = (
   throw `Field type ${type} is not supported`;
 };
 
-const parseDefinitions = (definitions: UI.FormFieldDefinition[]): Type<any> => {
+const parseDefinitions = (definitions: UI.FormFieldDefinition[]): tcomb.Type<any> => {
   const ret = definitions.reduce(
     (reduced, def) => {
       if (def.type === API.SettingTypeEnum.LIST) {
@@ -189,8 +188,8 @@ const parseFileSelectMode = (settingType: API.SettingTypeEnum) => {
   }
 };
 
-const parseTypeOptions = (type: API.SettingTypeEnum): form.TcombOptions => {
-  const options: form.TcombOptions = {};
+const parseTypeOptions = (type: API.SettingTypeEnum): tcomb.form.TcombOptions => {
+  const options: tcomb.form.TcombOptions = {};
   switch (type) {
     case API.SettingTypeEnum.TEXT: {
       options.type = 'textarea';
@@ -247,12 +246,12 @@ const parseFieldOptions = (
   formT: UI.ModuleTranslator,
   titleFormatter: UI.OptionTitleParser = parseTitle,
   helpFormatter: (text: string) => React.ReactNode = text => text,
-): form.TcombFieldOptions => {
+): tcomb.form.TcombFieldOptions => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
   if (definition.type === API.SettingTypeEnum.LIST) {
-    let itemOptions: form.TcombStructOptions = {};
+    let itemOptions: tcomb.form.TcombStructOptions = {};
     if (definition.definitions) {
       // Struct item fields
       itemOptions.fields = definition.definitions.reduce(
@@ -301,7 +300,7 @@ const parseFieldOptions = (
 };
 
 
-const findFieldByKey = (options: form.TcombStructOptions, wantedKey: string): form.TcombOptions | null => {
+const findFieldByKey = (options: tcomb.form.TcombStructOptions, wantedKey: string): tcomb.form.TcombOptions | null => {
   if (options.fields) {
     for (const key of Object.keys(options.fields)) {
       const field = options.fields[key];

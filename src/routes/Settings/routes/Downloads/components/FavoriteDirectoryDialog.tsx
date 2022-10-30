@@ -124,7 +124,7 @@ class FavoriteDirectoryDialog extends Component<Props> {
           onFieldChanged={ this.onFieldChanged }
           onFieldSetting={ this.onFieldSetting }
           onSave={ this.onSave }
-          value={ directoryEntry as Entry }
+          sourceValue={ directoryEntry as Entry }
           location={ this.props.location }
         />
       </Modal>
