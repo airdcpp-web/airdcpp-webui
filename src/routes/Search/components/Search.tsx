@@ -21,6 +21,7 @@ import NotificationActions from 'actions/NotificationActions';
 import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
 import LoginStore from 'stores/LoginStore';
 import { search } from 'services/api/SearchApi';
+import { loadSessionProperty, removeSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 
 
 const RESULT_WAIT_PERIOD = 4000;
@@ -33,6 +34,22 @@ type SearchProps = RouteComponentProps<UI.EmptyObject, any, SearchLocationState>
 
 interface SearchDataProps extends DataProviderDecoratorChildProps, WithTranslation {
   instance: API.SearchInstance;
+}
+
+
+const SEARCH_HUBS_KEY = 'search_hubs';
+
+const loadHubOptions = () => {
+  const options = loadSessionProperty<string[] | null>(SEARCH_HUBS_KEY, null);
+  return options;
+}
+
+const saveHubOptions = (hubs: string[] | null) => {
+  if (!hubs || !hubs.length) {
+    removeSessionProperty(SEARCH_HUBS_KEY)
+  } else {
+    saveSessionProperty(SEARCH_HUBS_KEY, hubs);
+  }
 }
 
 class Search extends Component<SearchProps & SearchDataProps> {
@@ -74,6 +91,7 @@ class Search extends Component<SearchProps & SearchDataProps> {
     console.log('Searching');
 
     clearTimeout(this.searchTimeout);
+    saveHubOptions(options?.hub_urls || null)
 
     const { hub_urls, size_limits, ...queryOptions } = options || {};
     try {
@@ -125,7 +143,7 @@ class Search extends Component<SearchProps & SearchDataProps> {
       },
       file_type: query.file_type === SearchConstants.DEFAULT_SEARCH_TYPE || query.file_type === 'tth' ? 
         null : query.file_type,
-      hub_urls: []
+      hub_urls: loadHubOptions()
     };
   }
 
