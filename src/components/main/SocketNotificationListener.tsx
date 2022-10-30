@@ -78,14 +78,6 @@ interface SocketNotificationListenerProps {
 type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildProps & WithTranslation;
 
 class SocketNotificationListener extends Component<Props> {
-  //notifications: System | null;
-  //limiter = new RateLimiter(3, 3000, true);
-  //unsubscribe: () => void;
-
-  //static propTypes = {
-  //  location: PropTypes.object.isRequired,
-  //};
-
   shouldComponentUpdate() {
     return false;
   }
@@ -115,12 +107,11 @@ class SocketNotificationListener extends Component<Props> {
   }
 
   onLogMessage = (message: API.StatusMessage) => {
-    const { text, id, severity } = message;
+    const { text, severity } = message;
 
     const notification: UI.Notification = {
       title: this.translate(getSeverityStr(severity), UI.Modules.EVENTS),
       message: text,
-      uid: id,
       action: severity === Severity.NOTIFY ? undefined : {
         label: this.translate('View events', UI.Modules.EVENTS, true),
         callback: () => { 
@@ -149,7 +140,7 @@ class SocketNotificationListener extends Component<Props> {
     NotificationActions.info({
       title: file.name,
       message: this.translate(message, UI.Modules.VIEWED_FILES),
-      uid: file.id,
+      uid: `view_file_${file.id}`,
       action: {
         label: this.translate('View file', UI.Modules.VIEWED_FILES, true),
         callback: () => {
@@ -280,6 +271,7 @@ class SocketNotificationListener extends Component<Props> {
       action({
         title: bundle.name,
         message: text,
+        uid: `queue_bundle_${bundle.id}`,
         action: {
           label: this.translate('View queue', UI.Modules.QUEUE, true),
           callback: () => { 

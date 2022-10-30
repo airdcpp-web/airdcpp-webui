@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { default as NotificationSystem } from 'react-notification-system';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { RateLimiter } from 'limiter';
 
 import NotificationStore from 'stores/NotificationStore';
@@ -13,6 +14,9 @@ import * as UI from 'types/ui';
 
 import Logo from 'images/AirDCPlusPlus.png';
 import SocketNotificationListener from './SocketNotificationListener';
+import Button from 'components/semantic/Button';
+import Icon from 'components/semantic/Icon';
+import IconConstants from 'constants/IconConstants';
 
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
@@ -21,8 +25,48 @@ interface NotificationsProps {
   location: Location;
 }
 
+
+export const getSeverityIcon = (severity: NotificationLevel) => {
+  switch (severity) {
+    case 'info': return IconConstants.INFO + ' circle';
+    case 'warning': return IconConstants.WARNING;
+    case 'error': return IconConstants.ERROR;
+    case 'success': return IconConstants.SUCCESS;
+    default: return '';
+  }
+};
+
+interface NotificationMessageProps {
+  notification: UI.Notification;
+}
+
+const NotificationMessage = ({ notification }: NotificationMessageProps) => {
+  const { title, message, action } = notification;
+  return (
+    <>
+      <div className="content">
+        <div className="ui small header" style={{margin: '0px'}}>
+          {title}
+        </div>
+        <div>
+          {message}
+        </div>
+      </div>
+      {!!action && (
+        <Button
+          caption={action.label}
+          onClick={action.callback}
+          className="primary"
+          style={{
+            marginTop: '10px'
+          }}
+        />
+      )}
+    </>
+  )
+}
+
 class Notifications extends Component<NotificationsProps> {
-  notifications: NotificationSystem | null;
   limiter = new RateLimiter({
     tokensPerInterval: 3,
     interval: 3000,
@@ -51,18 +95,14 @@ class Notifications extends Component<NotificationsProps> {
     }
     
     // Embedded notification
-
-    // Rate limiter uses timeouts internally so the ref may not exist anymore...
-    if (!this.notifications) {
-      return;
-    }
-
-    this.notifications.addNotification({
-      ...notification,
-      level,
-      position: 'tl',
-      autoDismiss: 5,
-    });
+    toast(<NotificationMessage notification={notification}/>, {
+      // Disable for now as old notifications won't be replaced with newer one
+      // toastId: notification.uid,
+      type: level,
+      position: 'top-left',
+      autoClose: 5000,
+      icon: <Icon icon={getSeverityIcon(level)} size="large"/>
+    })
   }
 
   shouldComponentUpdate() {
@@ -104,9 +144,7 @@ class Notifications extends Component<NotificationsProps> {
     return ReactDOM.createPortal(
       (
         <>
-          <NotificationSystem 
-            ref={ (c) => this.notifications = c }
-          />
+          <ToastContainer limit={3}/>
           <SocketNotificationListener location={ location }/>
         </>
       ),

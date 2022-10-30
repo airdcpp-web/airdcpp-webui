@@ -1,7 +1,9 @@
-import { Notification as ReactNotification } from 'react-notification-system';
-
-
-export interface Notification extends Omit<ReactNotification, 'body' | 'title'> {
+export interface Notification {
   title: string;
   message?: string;
+  action?: {
+    label: string;
+    callback: () => any
+  }
+  uid?: string;
 }

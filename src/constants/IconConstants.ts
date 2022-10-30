@@ -70,6 +70,7 @@ export default {
   INFO: 'blue info',
   WARNING: 'yellow warning sign',
   ERROR: 'red warning circle',
+  SUCCESS: 'green check circle',
 
   TIP: 'idea',
   NOTE: 'blue warning',
