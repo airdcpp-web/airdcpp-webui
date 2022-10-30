@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import XHR from 'i18next-xhr-backend';
+import XHR from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
@@ -9,26 +9,28 @@ import { getFilePath } from 'utils/FileUtils';
 import { fetchData } from 'utils/HttpUtils';
 
 
-const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) => {
+const loadLocales: XHR['options']['request'] = async (options, url, data, callback) => {
   if (!!data) {
     // Post missing translations (can't be handled by webpack)
-    fetchData(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: Object.keys(data).map((key) => {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-      }).join('&')
-    })
-      .then(res => {
-        callback(res);
-      })
-      .catch(e => {
-        callback(null, e);
+    try {
+      const res = await fetchData(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: Object.keys(data).map((key) => {
+          return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+        }).join('&')
       });
 
-    return;
+      const responseData = await res.json();
+      callback(null, {
+        status: 200,
+        data: responseData
+      });
+    } catch (e) {
+      callback(`Failed to post translation`, e);
+    }
   }
 
   // Load localization file
@@ -36,21 +38,23 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
   try {
     waitForLocale = require(`../../resources/locales/${url}`);
   } catch (e) {
-    callback(null, { status: 404 });
+    callback('Translation file was not found', e);
     return;
   }
 
   waitForLocale(
     (locale: string) => {
-      callback(locale, { status: 200 });
+      callback(null, {
+        status: 200,
+        data: locale
+      });
     },
     (e: any) => {
       console.warn(`Failed to load resource ${url} (webpack)`, e);
 
       const fullUrl = e.request;
       if (!fullUrl) {
-        console.error(`Can't execute translation resource loading fallback for ${url} (request URL missing)`, e);
-        callback(null, { status: 404 });
+        callback(`Can't execute translation resource loading fallback for ${url} (request URL missing)`, e);
         return;
       }
 
@@ -66,17 +70,18 @@ const loadLocales: XHR['options']['ajax'] = (url, options, callback: any, data) 
           try {
             json = await response.json();
           } catch (e) {
-            console.error(`Failed to parse custom translation file as JSON ${url}`, e);
-            callback(null, { status: 404 });
+            callback(`Failed to parse custom translation file as JSON ${url}`, e);
             return;
           }
 
           console.log(`Custom translation file ${url} was loaded successfully`);
-          callback(json, { status: 200 });
+          callback(null, {
+            data: json,
+            status: 200 
+          });
         })
         .catch(fetchError => {
-          console.error(`Failed to download translation resource ${url} (fallback)`, fetchError);
-          callback(null, fetchError);
+          callback(`Failed to download translation resource ${url} (fallback)`, fetchError);
         });
     }
   );
@@ -91,7 +96,7 @@ i18n
       backend: {
         loadPath: '{{lng}}/webui.{{ns}}.json',
         parse: (data: any) => data,
-        ajax: loadLocales
+        request: loadLocales
       },
       //resources,
       ns: [ 'main' ],

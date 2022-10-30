@@ -6,8 +6,8 @@ const chalk = require('chalk');
 const minimist  = require('minimist');
 
 const i18next = require('i18next');
-const FsBackend = require('i18next-node-fs-backend');
-const i18nextMiddleware = require('i18next-express-middleware');
+const FsBackend = require('i18next-fs-backend');
+const i18nextMiddleware = require('i18next-http-middleware');
 const bodyParser = require('body-parser');
 
 
