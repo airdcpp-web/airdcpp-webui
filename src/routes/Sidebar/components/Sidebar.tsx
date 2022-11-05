@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 
 import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
@@ -24,12 +24,18 @@ export interface SidebarProps {
   routes: RouteItem[];
 }
 
+const enum Visibility {
+  HIDDEN = 'hidden',
+  LOADING = 'loading',
+  VISIBLE = 'visible',
+}
 interface State {
-  contentActive: boolean;
+  visibility: Visibility;
   width: number;
 }
 
-class Sidebar extends Component<SidebarProps, State> {
+
+class Sidebar extends PureComponent<SidebarProps, State> {
   c: Resizable;
 
   constructor(props: SidebarProps) {
@@ -40,7 +46,7 @@ class Sidebar extends Component<SidebarProps, State> {
       // Don't render the content while sidebar is animating
       // Avoids issues if there are router transitions while the sidebar is 
       // animating (e.g. the content is placed in the middle of the window)
-      contentActive: false,
+      visibility: Visibility.HIDDEN,
       width: Math.max(MIN_WIDTH, width),
     };
   }
@@ -63,7 +69,8 @@ class Sidebar extends Component<SidebarProps, State> {
       transition: 'overlay',
       mobileTransition: 'overlay',
       closable: !useMobileLayout(),
-      onShow: this.onVisible,
+      onVisible: this.onVisible,
+      onShow: this.onShow,
       onHidden: this.onHidden,
       onHide: this.onHide,
     } as SemanticUI.SidebarSettings);
@@ -75,6 +82,10 @@ class Sidebar extends Component<SidebarProps, State> {
   }
 
   onHide = () => {
+    this.setState({
+      visibility: Visibility.LOADING,
+    });
+
     const { previousLocation } = this.props;
     if (!previousLocation) {
       return;
@@ -87,14 +98,21 @@ class Sidebar extends Component<SidebarProps, State> {
   }
 
   onHidden = () => {
-    this.setState({ 
-      contentActive: false
+    this.setState({
+      visibility: Visibility.HIDDEN,
+    });
+  }
+
+  onShow = () => {
+    this.setState({
+      visibility: Visibility.LOADING,
     });
   }
 
   onVisible = () => {
     this.setState({ 
-      contentActive: true
+      
+      visibility: Visibility.VISIBLE,
     });
   }
 
@@ -108,13 +126,30 @@ class Sidebar extends Component<SidebarProps, State> {
     this.setState({ width });
   }
 
+  getChildren = () => {
+    const { visibility, width } = this.state;
+    if (visibility === Visibility.HIDDEN) {
+      return null
+    }
+
+    return (
+      <LayoutWidthContext.Provider value={ width }>
+        <div id="sidebar-container">
+          { visibility === Visibility.LOADING ? 
+            <Loader text=""/> : 
+            parseRoutes(this.props.routes, this.props.location)  
+          }
+        </div>
+      </LayoutWidthContext.Provider>
+    )
+  }
+
   render() {
-    const { width, contentActive } = this.state;
+    const { width } = this.state;
 
     const otherProps = {
       id: 'sidebar'
     };
-
     return (
       <Resizable
         ref={ (c: any) => this.c = c }
@@ -132,11 +167,7 @@ class Sidebar extends Component<SidebarProps, State> {
         }}
         onResizeStop={ this.onResizeStop }
       >
-        <LayoutWidthContext.Provider value={ width }>
-          <div id="sidebar-container">
-            { !contentActive ? <Loader text=""/> : parseRoutes(this.props.routes, this.props.location)  }
-          </div>
-        </LayoutWidthContext.Provider>
+        { this.getChildren() }
       </Resizable>
     );
   }
