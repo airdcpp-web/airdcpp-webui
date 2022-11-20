@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -34,7 +34,7 @@ class AccordionTargets extends Component<AccordionTargetsProps> {
   formatParent = (parent: API.GroupedPath) => {
     const { downloadHandler, t } = this.props;
     return (
-      <div key={ parent.name }>
+      <React.Fragment key={ parent.name }>
         <div className="title">
           <Icon icon={ IconConstants.DROPDOWN }/>
           { parent.name }
@@ -47,7 +47,7 @@ class AccordionTargets extends Component<AccordionTargetsProps> {
             t={ t }
           />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 
