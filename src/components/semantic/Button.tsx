@@ -15,13 +15,14 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const Button: React.FC<ButtonProps> = ({ 
-  className, loading, icon, caption, disabled, 
+  className, loading, icon, caption, disabled, color,
   ...other 
 }) => {
   const buttonStyle = classNames(
     'ui button',
     { 'disabled': !!disabled || !!loading },
     { 'loading': !!loading },
+    color,
     className,
   );
 

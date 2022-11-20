@@ -15,8 +15,7 @@ import * as UI from 'types/ui';
 import Logo from 'images/AirDCPlusPlus.png';
 import SocketNotificationListener from './SocketNotificationListener';
 import Button from 'components/semantic/Button';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import classNames from 'classnames';
 
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
@@ -25,27 +24,28 @@ interface NotificationsProps {
   location: Location;
 }
 
-
-export const getSeverityIcon = (severity: NotificationLevel) => {
+const getSeverityColor = (severity: NotificationLevel) => {
   switch (severity) {
-    case 'info': return IconConstants.INFO + ' circle';
-    case 'warning': return IconConstants.WARNING;
-    case 'error': return IconConstants.ERROR;
-    case 'success': return IconConstants.SUCCESS;
+    case 'info': return 'blue';
+    case 'warning': return 'yellow';
+    case 'error': return 'red';
+    case 'success': return 'green';
     default: return '';
   }
-};
+}
 
 interface NotificationMessageProps {
   notification: UI.Notification;
+  level: NotificationLevel;
 }
 
-const NotificationMessage = ({ notification }: NotificationMessageProps) => {
+const NotificationMessage = ({ notification, level }: NotificationMessageProps) => {
   const { title, message, action } = notification;
+  const color = getSeverityColor(level);
   return (
     <>
       <div className="content">
-        <div className="ui small header" style={{margin: '0px'}}>
+        <div className={ classNames('ui tiny header', color) } style={{margin: '0px'}}>
           {title}
         </div>
         <div>
@@ -60,6 +60,7 @@ const NotificationMessage = ({ notification }: NotificationMessageProps) => {
           style={{
             marginTop: '10px'
           }}
+          color={color}
         />
       )}
     </>
@@ -95,13 +96,13 @@ class Notifications extends Component<NotificationsProps> {
     }
     
     // Embedded notification
-    toast(<NotificationMessage notification={notification}/>, {
+    toast(<NotificationMessage notification={notification} level={level}/>, {
       // Disable for now as old notifications won't be replaced with newer one
       // toastId: notification.uid,
       type: level,
       position: 'top-left',
       autoClose: 5000,
-      icon: <Icon icon={getSeverityIcon(level)} size="large"/>
+      icon: false,
     })
   }
 
@@ -144,7 +145,7 @@ class Notifications extends Component<NotificationsProps> {
     return ReactDOM.createPortal(
       (
         <>
-          <ToastContainer limit={3}/>
+          <ToastContainer limit={3} hideProgressBar={true} pauseOnFocusLoss={false}/>
           <SocketNotificationListener location={ location }/>
         </>
       ),
