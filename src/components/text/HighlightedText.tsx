@@ -43,6 +43,7 @@ const getHighlightNode = (
           highlightId={ highlight.id }
           text={ highlight.text }
           menuProps={ menuProps }
+          dupe={ highlight.dupe }
         />
       );
     case API.MessageHighlightTypeEnum.LINK_URL: {
@@ -70,6 +71,7 @@ const getHighlightNode = (
               text={ formatMagnetCaption(magnet, t) }
               menuProps={ menuProps }
               magnet={ magnet }
+              dupe={ highlight.dupe }
             />
           );
         }

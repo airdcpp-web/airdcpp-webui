@@ -303,10 +303,11 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
 
     const sendButton = (
       <Button 
-        className="blue large icon send" 
+        className="large icon send" 
         onClick={ this.sendText }
         caption={ <Icon icon={ IconConstants.SEND }/> }
         loading={ uploading }
+        color="blue"
       />
     );
 
