@@ -88,8 +88,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath,
 }));
 
-app.use(require('webpack-hot-middleware')(compiler));
-
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded

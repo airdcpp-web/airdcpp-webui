@@ -10,7 +10,7 @@ const Visualizer = require('webpack-visualizer-plugin2');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
-//const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 //const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
@@ -96,18 +96,15 @@ const releasePlugins = [
 
 const debugPlugins = [
   new webpack.HotModuleReplacementPlugin(),
-  // new ReactRefreshWebpackPlugin()
+  new ReactRefreshWebpackPlugin()
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-const mainEntries = [];
-if (!release) {
-  //mainEntries.push('webpack-hot-middleware/client?reload=true');
-  //mainEntries.push('react-hot-loader/patch');
-}
-mainEntries.push('./src/index.tsx'); 
+const mainEntries = [
+  './src/index.tsx'
+];
 
 console.log(chalk.bold('[webpack] Release: ' + release));
 console.log(chalk.bold('[webpack] Demo mode: ' + demo));
@@ -123,6 +120,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    hot: true,
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -189,7 +187,11 @@ module.exports = {
             maxSize: 4 * 1024
           }
         }
-      }
+      }, /*{
+        test: /\.locales$/,
+        exclude: /node_modules/,
+        loader: 'i18next-ts-loader',
+      },*/
     ]
   },
   

@@ -110,54 +110,50 @@ const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = data => {
 };
 
 const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({ data, ...other }) => {
-  try {
-    // Get a new instance
-    let instance = await SocketService.post<API.SearchInstance>(SearchConstants.INSTANCES_URL, {
-      expiration_minutes: 1,
-    });
+  // Get a new instance
+  let instance = await SocketService.post<API.SearchInstance>(SearchConstants.INSTANCES_URL, {
+    expiration_minutes: 1,
+  });
 
-    // Post the search
-    await SocketService.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
-      user: data.user,
-      query: {
-        extensions: [ 'nfo' ],
-        max_size: 256 * 1024,
-      },
-      options: {
-        path: data.itemInfo.path,
-        max_results: 1,
-      }
-    });
-
-    // Wait for the results to arrive
-    for (let i = 0; i < 5; i++) {
-      await sleep(500);
-
-      instance = await SocketService.get<API.SearchInstance>(`${SearchConstants.INSTANCES_URL}/${instance.id}`);
-      if (instance.result_count > 0) {
-        break;
-      }
+  // Post the search
+  await SocketService.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
+    user: data.user,
+    query: {
+      extensions: [ 'nfo' ],
+      max_size: 256 * 1024,
+    },
+    options: {
+      path: data.itemInfo.path,
+      max_results: 1,
     }
+  });
 
+  // Wait for the results to arrive
+  for (let i = 0; i < 5; i++) {
+    await sleep(500);
+
+    instance = await SocketService.get<API.SearchInstance>(`${SearchConstants.INSTANCES_URL}/${instance.id}`);
     if (instance.result_count > 0) {
-      // Open the first result for viewing
-      const results = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`);
-
-      handleViewText({
-        data: {
-          id: results[0].id,
-          itemInfo: results[0],
-          user: data.user,
-          handler: data.handler,
-          session: instance
-        },
-        ...other
-      });
-    } else {
-      throw toErrorResponse(404, translate('No NFO results were received', other.t, UI.Modules.COMMON));
+      break;
     }
-  } catch (error) {
-    throw error;
+  }
+
+  if (instance.result_count > 0) {
+    // Open the first result for viewing
+    const results = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`);
+
+    handleViewText({
+      data: {
+        id: results[0].id,
+        itemInfo: results[0],
+        user: data.user,
+        handler: data.handler,
+        session: instance
+      },
+      ...other
+    });
+  } else {
+    throw toErrorResponse(404, translate('No NFO results were received', other.t, UI.Modules.COMMON));
   }
 };
 
