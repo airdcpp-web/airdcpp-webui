@@ -4,7 +4,7 @@ import { memo } from 'react';
 import ReactLinkify from 'react-linkify';
 
 import { useLocation } from 'react-router-dom';
-import { Emojify } from 'components/text/Emojify';
+import { formatEmojis } from 'utils/EmojiFormat';
 
 
 import LinkifyIt from 'linkify-it';
@@ -56,7 +56,7 @@ const matchDecorator = (text: string) => {
 
 interface TextDecoratorProps {
   emojify?: boolean;
-  text: string;
+  text: React.ReactNode;
 }
 
 // Parses links from plain text and optionally emoticons as well
@@ -75,7 +75,7 @@ export const TextDecorator: React.FC<TextDecoratorProps> = memo(
           />
         ) }
       >
-        { !emojify ? text : <Emojify text={text}/> }
+        { !emojify ? text : formatEmojis(text) }
       </ReactLinkify>
     );
   }

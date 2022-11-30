@@ -8,7 +8,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { Emojify } from 'components/text/Emojify';
+import { formatEmojis } from 'utils/EmojiFormat';
 
 import { HighlightBold, HighlightHashMagnet, HighlightUrlLink, HighlightTextLink } from './highlights';
 import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
@@ -98,7 +98,7 @@ interface HighlightedTextProps extends HighlightProps {
 }
 
 const formatPlainText = (text: string, emojify: boolean | undefined) => {
-  return emojify ? <Emojify text={text}/> : text; 
+  return emojify ? formatEmojis(text) : text; 
 };
 
 const encoder = new TextEncoder();
