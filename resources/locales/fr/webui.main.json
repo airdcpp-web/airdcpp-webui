@@ -101,7 +101,7 @@
       "browseContent": "Parcourir le contenu"
     },
     "form": {
-      "fileTypeName": "type de fichier",
+      "fileTypeName": "Type de fichier",
       "hubUrlsName": "Hubs",
       "maxSizeName": "Taille maximum",
       "minSizeName": "Taille minimum",
@@ -169,12 +169,12 @@
       "edit": "Modif.",
       "remove": "Retirer",
       "changePassword": "Changer de mot de passe",
-      "removePassword": "Retirer le mot de passe",
+      "removePassword": "Supprimer le mot de passe",
       "prompts": {
         "changePasswordPlaceholder": "Entrer le mot de passe",
         "changePasswordApprove": "Mettre à jour le mot de passe",
         "changePasswordContent": "Entrez le nouveau mot de passe pour le hub {{item.name}}",
-        "removePasswordApprove": "Retirer le mot de passe",
+        "removePasswordApprove": "Supprimer le mot de passe",
         "removePasswordReject": "Ne pas retirer",
         "removePasswordContent": "Êtes-vous sûr de vouloir réinitialiser le mot de passe du hub {{item.name}}?",
         "createPasswordPlaceholder": "Entrer le mot de passe",
