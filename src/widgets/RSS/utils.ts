@@ -30,8 +30,8 @@ const XMLParserOptions: Partial<X2jOptions> = {
   parseAttributeValue : true,
   ignoreAttributes : false,
   attributeNamePrefix: '',
-  attributeValueProcessor: a => decode(a, { isAttributeValue: true }),
-  tagValueProcessor : a => decode(a),
+  attributeValueProcessor: (name, value) => decode(value, { isAttributeValue: true }),
+  tagValueProcessor : (name, value) => decode(value),
 };
 
 export const fetchRSSFeed = async (feedUrl: string) => {
@@ -39,8 +39,8 @@ export const fetchRSSFeed = async (feedUrl: string) => {
 
   console.log('RSS feed received', feedUrl);
 
-  const parser = new XMLParser();
-  const jsonFeed = parser.parse(data, XMLParserOptions);
+  const parser = new XMLParser(XMLParserOptions);
+  const jsonFeed = parser.parse(data);
   return jsonFeed;
 };
 
