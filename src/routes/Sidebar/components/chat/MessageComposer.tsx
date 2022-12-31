@@ -167,9 +167,9 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     // sent to other users
     // This will also prevent sending empty messages
     const text = this.state.text;
-    const test = text.trim();
+    const test = text.trim() !== '';
 
-    if ('' !== test && text) {
+    if (test) {
       if (text[0] === '/') {
         this.handleCommand(text);
       }
