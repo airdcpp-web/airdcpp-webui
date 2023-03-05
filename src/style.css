@@ -218,6 +218,10 @@ th {
   z-index: 1000;
 }
 
+.ui.dropdown:not(.button) > .caption {
+  user-select: auto !important;
+}
+
 td .ui.dropdown {
   max-width: 100%;
 }
