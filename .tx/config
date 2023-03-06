@@ -1,8 +1,10 @@
 [main]
-host = https://www.transifex.com
-lang_map = da_DK: da, de_DE: de, el_GR: el, es_ES: es, eu: eu, fi_FI: fi, fr_FR: fr, hu_HU: hu, it_IT: it, nl_NL: nl, no_NO: no, pl_PL: pl, pt_PT: pt, pt_BR: pt-br, ro_RO: ro, ru_RU: ru, sv_SE: sv, tr_TR: tr
+host     = https://www.transifex.com
+lang_map = el_GR: el, es_ES: es, eu: eu, it_IT: it, pt_BR: pt-br, ro_RO: ro, sv_SE: sv, da_DK: da, hu_HU: hu, pt_PT: pt, tr_TR: tr, fi_FI: fi, fr_FR: fr, nl_NL: nl, no_NO: no, ru_RU: ru, de_DE: de, pl_PL: pl
 
-[airdcpp.webuimainjson]
+[o:airdcpp:p:airdcpp:r:webuimainjson]
 file_filter = resources/locales/<lang>/webui.main.json
+source_file = resources/locales/en/webui.main.json
 source_lang = en
-type = KEYVALUEJSON
+type        = KEYVALUEJSON
+
