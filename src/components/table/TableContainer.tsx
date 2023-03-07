@@ -40,6 +40,7 @@ interface State {
   width: number;
   height: number;
   columnWidths: object;
+  isColumnResizing: boolean | undefined
 }
 
 
@@ -89,6 +90,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     width: 0,
     height: 0,
     columnWidths: {},
+    isColumnResizing: undefined,
   };
 
   getInitialProps = () => {
@@ -187,8 +189,19 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       columnWidths: {
         ...columnWidths,
         [columnKey]: newColumnWidth,
-      }
-    }));
+      },
+
+      // In order to disable the resizing mode, the table needs to be rendered with "isColumnResizing: false"
+      // Put it right back to undefined after that in order to avoid resizing issues 
+      // while the table is being re-rendered
+      // https://github.com/schrodinger/fixed-data-table-2/issues/268
+      // https://github.com/airdcpp-web/airdcpp-webclient/issues/444
+      isColumnResizing: false,
+    }), () => {
+      this.setState({
+        isColumnResizing: undefined,
+      })
+    });
   }
 
   childToColumn = (column: React.ReactElement<ColumnProps>) => {
@@ -250,6 +263,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     // Update and insert generic columns props
     const children = React.Children.map(this.props.children, this.childToColumn);
 
+    const { width, height, isColumnResizing } = this.state
     const { store, viewId } = this.props;
     return (
       <Measure 
@@ -262,13 +276,13 @@ class TableContainer extends React.Component<TableContainerProps, State> {
             className="table-container-wrapper"
           >
             <Table
-              width={ this.state.width }
-              height={ this.state.height } 
+              width={ width }
+              height={ height } 
 
               rowHeight={ 50 }
               rowsCount={ store.rowCount }
               headerHeight={ 50 }
-              isColumnResizing={ false }
+              isColumnResizing={ isColumnResizing }
               onColumnResizeEndCallback={ this.onColumnResizeEndCallback }
 
               touchScrollEnabled={ true }
