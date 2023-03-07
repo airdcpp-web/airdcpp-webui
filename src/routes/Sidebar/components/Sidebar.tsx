@@ -38,6 +38,8 @@ interface State {
 class Sidebar extends PureComponent<SidebarProps, State> {
   c: Resizable;
 
+  static contextType = LayoutWidthContext // Update the minimum width when the window is being resized
+
   constructor(props: SidebarProps) {
     super(props);
     const width = loadLocalProperty<number>('sidebar_width', 1000);
@@ -150,6 +152,7 @@ class Sidebar extends PureComponent<SidebarProps, State> {
     const otherProps = {
       id: 'sidebar'
     };
+
     return (
       <Resizable
         ref={ (c: any) => this.c = c }
