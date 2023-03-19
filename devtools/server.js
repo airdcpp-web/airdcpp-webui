@@ -9,6 +9,7 @@ const i18next = require('i18next');
 const FsBackend = require('i18next-fs-backend');
 const i18nextMiddleware = require('i18next-http-middleware');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 
 i18next
@@ -50,11 +51,11 @@ const app = express();
 
 
 // Set proxy
-const proxy = new httpProxy.createProxyServer({
+const apiProxy = new httpProxy.createProxyServer({
   target: (argv.apiSecure ? 'https://' : 'http://') + argv.apiHost
 });
 
-proxy.on('error', (err, req, res) => {
+apiProxy.on('error', (err, req, res) => {
   try {
     res.end(err);
   } catch (e) { 
@@ -66,15 +67,19 @@ console.log('');
 
 // Proxying of viewed files must be defined before the generic static file handling
 app.get('/view/*', (req, res) => {
-  proxy.web(req, res);
+  apiProxy.web(req, res);
 });
 
 app.post('/temp', (req, res) => {
-  proxy.web(req, res);
+  apiProxy.web(req, res);
+});
+
+app.post('/js/locales', (req, res) => {
+  apiProxy.web(req, res);
 });
 
 app.get('/proxy', (req, res) => {
-  proxy.web(req, res);
+  apiProxy.web(req, res);
 });
 
 // Set up Webpack
@@ -106,6 +111,23 @@ app.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18next));
 // Setup static file handling
 // https://github.com/ampedandwired/html-webpack-plugin/issues/145#issuecomment-170554832
 app.use('*', (req, res, next) => {
+  // Can be used for testing custom translation files
+  if (req.baseUrl.indexOf('/js/locales') === 0) {
+    const filename = path.join(compiler.context, 'resources', req.baseUrl.replace('/js', ''));
+    fs.readFile(filename, (err, result) => {
+      if (err) {
+        return next(err);
+      }
+      
+      res.set('content-type','application/json');
+      res.send(result);
+      res.end();
+      return undefined;
+    });
+
+    return
+  }
+
   const filename = path.join(compiler.outputPath, 'index.html');
   compiler.outputFileSystem.readFile(filename, (err, result) => {
     if (err) {
@@ -133,8 +155,8 @@ const listener = app.listen(argv.port, argv.bindAddress, err => {
 
 listener.on('upgrade', (req, socket, head) => {
   console.log('Upgrade to websocket', req.headers['x-forwarded-for'] || req.connection.remoteAddress);
-  proxy.ws(req, socket, head);
+  apiProxy.ws(req, socket, head);
 });
 
-console.log(`API address: ${proxy.options.target}`);
+console.log(`API address: ${apiProxy.options.target}`);
 console.log('');

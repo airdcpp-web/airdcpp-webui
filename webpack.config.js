@@ -155,25 +155,6 @@ module.exports = {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
       }, {
-        test: /webui\.main\.json$/,
-        use: [
-          {
-            // Use a modified bundle-loader until the following issues have been solved:
-            // https://github.com/webpack-contrib/bundle-loader/issues/45
-            // https://github.com/webpack-contrib/bundle-loader/issues/74
-            // 
-            //loader: 'bundle-loader',
-            loader: path.resolve('webpack/bundle-loader.js'),
-            options: {
-              name: (resourcePath) => {
-                const match = resourcePath.match(/locales[\\/](.*)[\\/]webui/);
-                const languageCode = match[1];
-                return `locales/${languageCode}`;
-              }
-            },
-          }
-        ]
-      }, {
         test: /\.(jpg|png|ico)$/i,
         type: 'asset/resource',
         generator: {
@@ -187,11 +168,7 @@ module.exports = {
             maxSize: 4 * 1024
           }
         }
-      }, /*{
-        test: /\.locales$/,
-        exclude: /node_modules/,
-        loader: 'i18next-ts-loader',
-      },*/
+      }
     ]
   },
   

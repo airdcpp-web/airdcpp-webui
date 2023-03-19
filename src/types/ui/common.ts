@@ -1,7 +1,6 @@
-
-import { TFunction } from 'react-i18next';
 import * as API from 'types/api';
 
+export type { TFunction as TranslateF } from 'i18next';
 export interface SearchTypeItem {
   id: string | null;
   str: string;
@@ -21,8 +20,6 @@ export enum FileSelectModeEnum {
 export interface IdItemType {
   id: API.IdType;
 }
-
-export type TranslateF = TFunction;
 
 export type EmptyObject = Record<string, never>;
 

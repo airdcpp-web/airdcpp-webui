@@ -24,10 +24,18 @@ module.exports = {
     'node': true
   },
   'parserOptions': {
-    'sourceType': 'module'
+    'sourceType': 'module',
   },
   'rules': {
-    'indent': ['error', 2, { "SwitchCase": 1 }],
+    'indent': 'off',
+    '@typescript-eslint/indent': [
+      'error',
+      2,
+      {
+        'SwitchCase': 1,
+        ignoredNodes: ['TSTypeParameterInstantiation']
+      }
+    ],
     "max-len": [
       "error",
       {
@@ -44,6 +52,7 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-unused-vars": ["error", { "args": "none", "ignoreRestSiblings": true }]
   },
   "plugins": [
