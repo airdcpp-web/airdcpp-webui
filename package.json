@@ -30,7 +30,8 @@
     "build": "npm run clean && npm run build-webpack",
     "build-debug": "npm run clean && webpack --progress",
     "test": "jest",
-    "prepublishOnly": "tx pull -a && npm run build"
+    "prepublishOnly": "tx pull -a && npm run build",
+    "prettier": "prettier --write src"
   },
   "pre-commit": [
     "test"
@@ -110,6 +111,7 @@
     "moment": "^2.29.4",
     "pondjs": "^0.9.0",
     "pre-commit": "^1.2.2",
+    "prettier": "^2.8.4",
     "promise": "^8.3.0",
     "prop-types": "^15.8.1",
     "re-resizable": "^6.9.9",
