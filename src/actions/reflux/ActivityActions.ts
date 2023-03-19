@@ -6,9 +6,8 @@ import SessionConstants from 'constants/SessionConstants';
 
 import * as UI from 'types/ui';
 
-
 const ActivityActionConfig: UI.RefluxActionConfigList<any> = [
-  { 'sessionActivity': { asyncResult: true } },
+  { sessionActivity: { asyncResult: true } },
   'userActiveChanged',
 ];
 

@@ -4,15 +4,12 @@ import { ModuleTranslator } from './modules';
 import tcomb from 'utils/tcomb-form';
 import { EmptyObject } from './common';
 
-
 export type FormValueBase = API.SettingValueBase | object;
 export type FormValue = API.SettingValue<FormValueBase>;
 export type FormValueMap = API.SettingValueMap<FormValueBase | EmptyObject>;
 
-
-export interface FormFieldDefinition extends 
-  Omit<API.SettingDefinition, 'default_value' | 'definitions'> {
-    
+export interface FormFieldDefinition
+  extends Omit<API.SettingDefinition, 'default_value' | 'definitions'> {
   default_value?: FormValueBase;
   definitions?: FormFieldDefinition[];
 }
@@ -21,7 +18,6 @@ export interface FormOption<OptionValueT = string | number> {
   value: OptionValueT;
   text: string;
 }
-
 
 export const enum TranslatableFormDefinitionProperties {
   HELP = 'Help',
@@ -43,8 +39,11 @@ export type FormContext = Pick<RouteComponentProps, 'location'> & {
   attrs: any;
 };*/
 
-export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = 
-  tcomb.form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
+export type FormLocals<
+  OptionValueT = any,
+  ValueT = any,
+  ConfigT = undefined
+> = tcomb.form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
 
 export type OptionTitleParser = (
   definition: FormFieldDefinition,

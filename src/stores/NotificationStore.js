@@ -23,10 +23,10 @@ const NotificationStore = Reflux.createStore({
   },
 
   onApiError(title, error, uid) {
-    this.trigger('error', { 
+    this.trigger('error', {
       title: title,
       message: errorResponseToString(error),
-      uid: uid
+      uid: uid,
     });
   },
 });

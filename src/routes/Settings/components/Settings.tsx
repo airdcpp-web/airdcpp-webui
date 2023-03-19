@@ -1,4 +1,3 @@
-
 import { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withTranslation, WithTranslation } from 'react-i18next';
@@ -9,7 +8,6 @@ import { getModuleT } from 'utils/TranslationUtils';
 import * as UI from 'types/ui';
 
 import '../style.css';
-
 
 const menu = [
   require('../routes/Profile'),
@@ -24,28 +22,16 @@ const menu = [
 ];
 
 const MainLayout = SettingsMenuDecorator(({ children }) => {
-  return (
-    <div className="ui segment settings-layout">
-      { children }
-    </div>
-  );
+  return <div className="ui segment settings-layout">{children}</div>;
 });
 
-export interface SettingsProps extends RouteComponentProps, WithTranslation {
-
-}
+export interface SettingsProps extends RouteComponentProps, WithTranslation {}
 
 // Only to pass menu items to the decorated component
 class Settings extends Component<SettingsProps> {
   settingsT = getModuleT(this.props.t, UI.Modules.SETTINGS);
   render() {
-    return (
-      <MainLayout 
-        { ...this.props } 
-        menuItems={ menu }
-        settingsT={ this.settingsT }
-      />
-    );
+    return <MainLayout {...this.props} menuItems={menu} settingsT={this.settingsT} />;
   }
 }
 

@@ -1,13 +1,13 @@
 .notepad.widget .main.content {
-	display: flex;
+  display: flex;
 }
 
 .notepad.widget .main.content > div {
-	flex-direction: column;
+  flex-direction: column;
 }
 
 .notepad.widget .main.content .notepad-container textarea {
-	height: 100vh;
-	display: block;
-	resize: none;
+  height: 100vh;
+  display: block;
+  resize: none;
 }

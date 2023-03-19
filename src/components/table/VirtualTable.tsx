@@ -13,7 +13,6 @@ import 'fixed-data-table-2/dist/fixed-data-table.css';
 import * as API from 'types/api';
 import { Translation } from 'react-i18next';
 
-
 declare module 'fixed-data-table-2' {
   export interface ColumnProps {
     name: string;
@@ -22,16 +21,14 @@ declare module 'fixed-data-table-2' {
   }
 }
 
-export type VirtualTableProps = 
-  Omit<TableFooterProps, 't'> &
-  Omit<TableContainerProps, 'store' | 'dataLoader' | 't'> & 
+export type VirtualTableProps = Omit<TableFooterProps, 't'> &
+  Omit<TableContainerProps, 'store' | 'dataLoader' | 't'> &
   React.PropsWithChildren<{
-    
-  store: any;
-  sessionStore?: any;
-  sourceFilter?: API.TableFilter;
-  emptyRowsNodeGetter?: () => React.ReactNode;
-}>;
+    store: any;
+    sessionStore?: any;
+    sourceFilter?: API.TableFilter;
+    emptyRowsNodeGetter?: () => React.ReactNode;
+  }>;
 
 class VirtualTable extends React.PureComponent<VirtualTableProps> {
   static propTypes = {
@@ -55,7 +52,9 @@ class VirtualTable extends React.PureComponent<VirtualTableProps> {
   };
 
   dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate());
-  unsubscribe = this.props.store.listen(this.dataLoader.onItemsUpdated.bind(this.dataLoader));
+  unsubscribe = this.props.store.listen(
+    this.dataLoader.onItemsUpdated.bind(this.dataLoader)
+  );
 
   componentDidMount() {
     //this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
@@ -93,26 +92,33 @@ class VirtualTable extends React.PureComponent<VirtualTableProps> {
     }
 
     return this.props.sessionStore.getSession(entityId);
-  }
+  };
 
   start = (entityId: API.IdType | undefined) => {
     const { store, sourceFilter } = this.props;
 
     TableActions.init(store.viewUrl, entityId, sourceFilter);
     TableActions.setSort(store.viewUrl, store.sortProperty, store.sortAscending);
-  }
+  };
 
   close = (entityId: API.IdType | undefined) => {
     // Don't send the close command if the session was removed
     TableActions.close(this.props.store.viewUrl, this.moduleExists(entityId));
-  }
+  };
 
   render() {
-    const { store, footerData, emptyRowsNodeGetter, customFilter, textFilterProps, ...other } = this.props;
+    const {
+      store,
+      footerData,
+      emptyRowsNodeGetter,
+      customFilter,
+      textFilterProps,
+      ...other
+    } = this.props;
 
     if (emptyRowsNodeGetter && store.totalCount === -1) {
       // Row count is unknown, don't flash the table
-      return <div className="virtual-table"/>;
+      return <div className="virtual-table" />;
     }
 
     if (emptyRowsNodeGetter && store.totalCount === 0) {
@@ -123,23 +129,23 @@ class VirtualTable extends React.PureComponent<VirtualTableProps> {
     return (
       <div className="virtual-table">
         <Translation>
-          { t => (
+          {(t) => (
             <>
-              <TableContainer 
-                { ...other }
-                dataLoader={ this.dataLoader }
-                store={ store }
-                t={ t }
+              <TableContainer
+                {...other}
+                dataLoader={this.dataLoader}
+                store={store}
+                t={t}
               />
 
               <TableFooter
-                store={ store }
-                customFilter={ customFilter }
-                footerData={ footerData }
-                textFilterProps={ textFilterProps }
+                store={store}
+                customFilter={customFilter}
+                footerData={footerData}
+                textFilterProps={textFilterProps}
               />
             </>
-          ) }
+          )}
         </Translation>
       </div>
     );

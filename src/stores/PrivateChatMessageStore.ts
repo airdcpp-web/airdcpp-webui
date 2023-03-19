@@ -11,13 +11,18 @@ import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
-
 const PrivateChatMessageStore = Reflux.createStore({
   scroll: SessionScrollPositionKeeper(),
 
   onSocketConnected(addSocketListener: AddSocketListener) {
-    invariant(!this.hasMessages(), 'No existing private messages should exist on socket connect');
-    invariant(!this.hasInitializedSessions(), 'No initialized private message sessions should exist on socket connect');
+    invariant(
+      !this.hasMessages(),
+      'No existing private messages should exist on socket connect'
+    );
+    invariant(
+      !this.hasInitializedSessions(),
+      'No initialized private message sessions should exist on socket connect'
+    );
 
     const url = PrivateChatConstants.MODULE_URL;
     addSocketListener(url, PrivateChatConstants.MESSAGE, this._onChatMessage);
@@ -28,5 +33,8 @@ const PrivateChatMessageStore = Reflux.createStore({
   },
 });
 
-export default MessageStoreDecorator(PrivateChatMessageStore, PrivateChatActions, AccessConstants.PRIVATE_CHAT_VIEW)
-;
+export default MessageStoreDecorator(
+  PrivateChatMessageStore,
+  PrivateChatActions,
+  AccessConstants.PRIVATE_CHAT_VIEW
+);

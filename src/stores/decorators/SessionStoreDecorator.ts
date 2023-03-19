@@ -1,7 +1,11 @@
 import update from 'immutability-helper';
 
 import { checkUnreadSessionInfo } from 'utils/MessageUtils';
-import { getSessionUrgencies, messageSessionMapper, simpleSessionMapper } from 'utils/UrgencyUtils';
+import {
+  getSessionUrgencies,
+  messageSessionMapper,
+  simpleSessionMapper,
+} from 'utils/UrgencyUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -9,13 +13,14 @@ import * as UI from 'types/ui';
 import ActivityStore, { ActivityState } from 'stores/ActivityStore';
 import { IdType } from 'types/api';
 
-
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
 const SessionStoreDecorator = function <SessionT extends SessionType>(
-  store: any, 
-  actions: UI.RefluxActionListType<SessionT>, 
-  messageUrgencyMappings: ((session: SessionT) => UI.UrgencyCountMap) | undefined = undefined
+  store: any,
+  actions: UI.RefluxActionListType<SessionT>,
+  messageUrgencyMappings:
+    | ((session: SessionT) => UI.UrgencyCountMap)
+    | undefined = undefined
 ) {
   let sessions: Array<SessionType> = [];
   let activeSessionId: API.IdType | null = null;
@@ -37,10 +42,13 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
 
   const checkReadState = (id: IdType, updatedProperties: Partial<SessionType>) => {
     // Active tab? Mark as read
-    if (id === activeSessionId && ActivityStore.userActive && isUnreadUpdate(updatedProperties)) {
-      return checkUnreadSessionInfo(
-        updatedProperties as UI.UnreadInfo, 
-        () => actions.setRead({ id })
+    if (
+      id === activeSessionId &&
+      ActivityStore.userActive &&
+      isUnreadUpdate(updatedProperties)
+    ) {
+      return checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () =>
+        actions.setRead({ id })
       );
     }
 
@@ -50,7 +58,10 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
   const Decorator = {
     getItemUrgencies: (item: SessionT) => {
       if (messageUrgencyMappings) {
-        return messageSessionMapper(item as UI.MessageCounts, messageUrgencyMappings(item));
+        return messageSessionMapper(
+          item as UI.MessageCounts,
+          messageUrgencyMappings(item)
+        );
       }
 
       return simpleSessionMapper(item as UI.ReadStatus);
@@ -61,7 +72,7 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
     },
 
     getSession: (id: API.IdType) => {
-      return sessions.find(session => session.id === id);
+      return sessions.find((session) => session.id === id);
     },
 
     getSessions: () => {
@@ -74,12 +85,15 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
 
     getActiveSessionId: () => activeSessionId,
 
-    _onSessionCreated: (data: SessionType) =>	{
-      sessions = update(sessions, { $push: [ data ] });
+    _onSessionCreated: (data: SessionType) => {
+      sessions = update(sessions, { $push: [data] });
       store.trigger(sessions);
     },
 
-    _onSessionUpdated: (updatedProperties: Partial<SessionType>, sessionId: API.IdType | undefined) => {
+    _onSessionUpdated: (
+      updatedProperties: Partial<SessionType>,
+      sessionId: API.IdType | undefined
+    ) => {
       const id = updatedProperties.id ? updatedProperties.id : sessionId!;
 
       const session: SessionType = store.getSession(id);
@@ -94,8 +108,8 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
       const index = sessions.indexOf(session);
       sessions = update(sessions, {
         [index]: {
-          $merge: updatedProperties as any
-        }
+          $merge: updatedProperties as any,
+        },
       });
 
       store.trigger(sessions);
@@ -107,7 +121,7 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
       }
 
       const index = sessions.indexOf(store.getSession(data.id));
-      sessions = update(sessions, { $splice: [ [ index, 1 ] ] });
+      sessions = update(sessions, { $splice: [[index, 1]] });
       store.trigger(sessions);
     },
 
@@ -121,7 +135,6 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
       isInitialized = false;
     },
   };
-  
 
   const _activityStoreListener = (activityState: ActivityState) => {
     if (!!activeSessionId) {

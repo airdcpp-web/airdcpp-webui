@@ -12,11 +12,9 @@ import NotificationActions from 'actions/NotificationActions';
 import { FormSaveHandler } from 'components/form';
 import { MenuFormDialogProps } from 'components/menu/MenuFormDialog';
 
-
 type OnClickHandler = () => void;
 
-const SUPPORTS = [ 'urls', 'form' ];
-
+const SUPPORTS = ['urls', 'form'];
 
 interface SelectionData {
   menuItem: API.ContextMenuItem;
@@ -29,13 +27,13 @@ type SelectHandler = (selection: SelectionData) => void;
 const toMenuItem = (
   selection: SelectionData,
   onClick: OnClickHandler | undefined,
-  handleSelect: SelectHandler,
+  handleSelect: SelectHandler
 ) => {
   const { menuItem } = selection;
   return (
     <MenuItemLink
-      key={ menuItem.id } 
-      onClick={ () => {
+      key={menuItem.id}
+      onClick={() => {
         if (onClick) {
           onClick();
         }
@@ -47,14 +45,13 @@ const toMenuItem = (
         } else {
           handleSelect(selection);
         }
-      } }
-      icon={ menuItem.icon[MenuConstants.ICON_TYPE_ID] }
+      }}
+      icon={menuItem.icon[MenuConstants.ICON_TYPE_ID]}
     >
-      { menuItem.title }
+      {menuItem.title}
     </MenuItemLink>
   );
 };
-
 
 interface RemoteMenuDecoratorProps {
   children: (menuItems: Array<JSX.Element[]> | null) => React.ReactNode;
@@ -68,58 +65,70 @@ interface RemoteMenuDecoratorProps {
 type Props = RemoteMenuDecoratorProps;
 
 const RemoteMenuDecorator: React.FC<Props> = ({
-  remoteMenuIds, selectedIds: selectedIdsByMenu, children, onClickMenuItem, entityId, onShowForm
+  remoteMenuIds,
+  selectedIds: selectedIdsByMenu,
+  children,
+  onClickMenuItem,
+  entityId,
+  onShowForm,
 }) => {
-  const [ menus, setMenus ] = useState<(Array<API.ContextMenuItem>)[] | undefined>(undefined);
+  const [menus, setMenus] = useState<Array<API.ContextMenuItem>[] | undefined>(undefined);
 
-  useEffect(
-    () => {
-      const fetchMenus = async () => {
-        const menuPromises = remoteMenuIds
-          .map((remoteMenuId, menuIndex) => !remoteMenuId ? [] : 
-            SocketService.post<API.ContextMenuItem[]>(`${MenuConstants.MODULE_URL}/${remoteMenuId}/list`, {
-              selected_ids: selectedIdsByMenu[menuIndex],
-              entity_id: entityId,
-              supports: SUPPORTS,
-            })
-          );
+  useEffect(() => {
+    const fetchMenus = async () => {
+      const menuPromises = remoteMenuIds.map((remoteMenuId, menuIndex) =>
+        !remoteMenuId
+          ? []
+          : SocketService.post<API.ContextMenuItem[]>(
+              `${MenuConstants.MODULE_URL}/${remoteMenuId}/list`,
+              {
+                selected_ids: selectedIdsByMenu[menuIndex],
+                entity_id: entityId,
+                supports: SUPPORTS,
+              }
+            )
+      );
 
-        let fetchedMenus: API.ContextMenuItem[][];
-        try {
-          fetchedMenus = await Promise.all(menuPromises);
-        } catch (e) {
-          NotificationActions.apiError('Failed fetch menu items', e);
-          return;
-        }
+      let fetchedMenus: API.ContextMenuItem[][];
+      try {
+        fetchedMenus = await Promise.all(menuPromises);
+      } catch (e) {
+        NotificationActions.apiError('Failed fetch menu items', e);
+        return;
+      }
 
-        setMenus(fetchedMenus);
-      };
+      setMenus(fetchedMenus);
+    };
 
-      fetchMenus();
-    },
-    []
-  );
+    fetchMenus();
+  }, []);
 
   const onPostSelect = (selection: SelectionData, values?: UI.FormValueMap) => {
     const { menuItem, remoteMenuId, selectedIds } = selection;
     const { id, hook_id } = menuItem;
-    return SocketService.post<void>(`${MenuConstants.MODULE_URL}/${remoteMenuId}/select`, {
-      selected_ids: selectedIds,
-      hook_id: hook_id,
-      menuitem_id: id,
-      entity_id: entityId,
-      supports: SUPPORTS,
-      form_definitions: menuItem.form_definitions,
-      form_value: values,
-    });
+    return SocketService.post<void>(
+      `${MenuConstants.MODULE_URL}/${remoteMenuId}/select`,
+      {
+        selected_ids: selectedIds,
+        hook_id: hook_id,
+        menuitem_id: id,
+        entity_id: entityId,
+        supports: SUPPORTS,
+        form_definitions: menuItem.form_definitions,
+        form_value: values,
+      }
+    );
   };
-  
+
   const onItemSelected = (selection: SelectionData) => {
     const formFieldDefinitions = selection.menuItem.form_definitions;
     if (!!formFieldDefinitions && !!formFieldDefinitions.length) {
       const { title, icon } = selection.menuItem;
 
-      const onSave: FormSaveHandler<UI.FormValueMap> = (changedFields: UI.FormValueMap, allFields: UI.FormValueMap) => {
+      const onSave: FormSaveHandler<UI.FormValueMap> = (
+        changedFields: UI.FormValueMap,
+        allFields: UI.FormValueMap
+      ) => {
         return onPostSelect(selection, allFields);
       };
 
@@ -135,32 +144,28 @@ const RemoteMenuDecorator: React.FC<Props> = ({
   };
 
   // Render the normal menu items for menu height estimation even when the remote items aren't available yet
-  const ret = !menus ? null : menus
-    .map((menu, menuIndex) => {
-      const remoteMenuId = remoteMenuIds[menuIndex];
-      if (!remoteMenuId) {
-        return [];
-      }
+  const ret = !menus
+    ? null
+    : menus.map((menu, menuIndex) => {
+        const remoteMenuId = remoteMenuIds[menuIndex];
+        if (!remoteMenuId) {
+          return [];
+        }
 
-      return menu
-        .map(menuItem => 
+        return menu.map((menuItem) =>
           toMenuItem(
-            { 
-              menuItem, 
-              remoteMenuId, 
-              selectedIds: selectedIdsByMenu[menuIndex], 
+            {
+              menuItem,
+              remoteMenuId,
+              selectedIds: selectedIdsByMenu[menuIndex],
             },
-            onClickMenuItem, 
+            onClickMenuItem,
             onItemSelected
           )
         );
-    });
+      });
 
-  return (
-    <>
-      { children(ret) }
-    </>
-  );
+  return <>{children(ret)}</>;
 };
 
 export default RemoteMenuDecorator;

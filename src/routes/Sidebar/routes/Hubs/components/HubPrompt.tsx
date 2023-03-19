@@ -14,7 +14,6 @@ import { sendHubPassword, acceptHubRedirect } from 'services/api/HubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import IconConstants from 'constants/IconConstants';
 
-
 interface HubActionPromptProps {
   icon: IconType;
   title: React.ReactNode;
@@ -22,9 +21,7 @@ interface HubActionPromptProps {
 }
 
 // Main prompt (HUBS_EDIT permission is required for the content to be rendered)
-const HubActionPrompt: React.FC<HubActionPromptProps> = (
-  { icon, title, content }
-) => {
+const HubActionPrompt: React.FC<HubActionPromptProps> = ({ icon, title, content }) => {
   if (!LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT)) {
     return null;
   }
@@ -32,12 +29,10 @@ const HubActionPrompt: React.FC<HubActionPromptProps> = (
   return (
     <div className="ui icon message hub-action-prompt">
       <h3 className="ui header">
-        <Icon icon={ icon }/>
-        <div className="content">
-          { title }
-        </div>
+        <Icon icon={icon} />
+        <div className="content">{title}</div>
       </h3>
-      { content }
+      {content}
     </div>
   );
 };
@@ -50,7 +45,6 @@ const HubActionPrompt: React.FC<HubActionPromptProps> = (
   content: PropTypes.node.isRequired,
 };*/
 
-
 interface PasswordPromptProps {
   hub: API.Hub;
   sessionT: UI.ModuleTranslator;
@@ -59,22 +53,19 @@ interface PasswordPromptProps {
 // Sub prompts
 const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT }) => (
   <div className="password prompt">
-    <ActionInput 
-      placeholder={ sessionT.translate('Password') } 
-      caption={ sessionT.translate('Submit') }
-      icon={ IconConstants.CONNECT }
-      handleAction={ text => 
-        runBackgroundSocketAction(
-          () => sendHubPassword(hub, text),
-          sessionT.plainT
-        )
+    <ActionInput
+      placeholder={sessionT.translate('Password')}
+      caption={sessionT.translate('Submit')}
+      icon={IconConstants.CONNECT}
+      handleAction={(text) =>
+        runBackgroundSocketAction(() => sendHubPassword(hub, text), sessionT.plainT)
       }
     />
     <div className="help">
-      <Trans i18nKey={ sessionT.toI18nKey('passwordPromptHelp') }>
-        This usually means that there's a registered account associated with your nick. 
-        If you don't remember having a registered account in this hub, 
-        there may be someone else using the same nick.
+      <Trans i18nKey={sessionT.toI18nKey('passwordPromptHelp')}>
+        This usually means that there's a registered account associated with your nick. If
+        you don't remember having a registered account in this hub, there may be someone
+        else using the same nick.
       </Trans>
     </div>
   </div>
@@ -88,19 +79,16 @@ interface RedirectPromptProps {
 const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub, sessionT }) => (
   <Button
     className="redirect prompt"
-    icon={ IconConstants.CONNECT }
-    onClick={ _ => 
-      runBackgroundSocketAction(
-        () => acceptHubRedirect(hub),
-        sessionT.plainT
-      )
+    icon={IconConstants.CONNECT}
+    onClick={(_) =>
+      runBackgroundSocketAction(() => acceptHubRedirect(hub), sessionT.plainT)
     }
-    caption={ sessionT.t('acceptRedirect', {
+    caption={sessionT.t('acceptRedirect', {
       defaultValue: 'Accept redirect to {{url}}',
       replace: {
-        url: hub.connect_state.data!.hub_url
-      }
-    }) }
+        url: hub.connect_state.data!.hub_url,
+      },
+    })}
   />
 );
 

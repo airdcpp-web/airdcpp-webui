@@ -43,7 +43,6 @@ export interface SlotCount {
   str: string;
 }
 
-
 export interface SearchQuery {
   pattern: string;
   file_type: string | null;

@@ -14,7 +14,6 @@ export const Transfers = {
   },
   actionMenu: {
     actions: require('actions/ui/QueueActions').default,
-    ids: [ 'resume', 'pause' ],
+    ids: ['resume', 'pause'],
   },
 } as UI.Widget;
-

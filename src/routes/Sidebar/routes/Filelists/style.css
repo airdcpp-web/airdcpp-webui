@@ -2,7 +2,7 @@
   flex: 1 100 100%;
 }
 
-.filelist.session .browser, 
+.filelist.session .browser,
 .filelist.session .browser .virtual-table {
   height: calc(100% - 35px);
 }
@@ -15,7 +15,7 @@
   height: calc(100% - 10px);
 }
 
-@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) {
+@media screen and (min-color-index: 0) and(-webkit-min-device-pixel-ratio:0) {
   /* Safari specific CSS */
   .filelist.session .browser {
     height: calc(100% - 95px);

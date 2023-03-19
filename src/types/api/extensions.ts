@@ -1,6 +1,5 @@
 import { FilesystemItemType } from './common';
 
-
 export interface Extension {
   id: string;
   name: string;

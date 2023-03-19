@@ -4,9 +4,8 @@ import { CellProps } from 'fixed-data-table-2';
 
 import * as UI from 'types/ui';
 
-
 export interface RowWrapperCellChildProps<
-  CellDataT, 
+  CellDataT,
   RowDataT extends UI.ActionMenuItemDataValueType
 > extends CellProps {
   cellData?: CellDataT;
@@ -66,23 +65,25 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
 
   loadData = (rowIndex: number) => {
     return this.props.dataLoader.updateRowData(rowIndex, this.onDataLoaded);
-  }
+  };
 
   shouldComponentUpdate(nextProps: RowWrapperCellProps, nextState: State) {
-    return nextState.rowData !== this.state.rowData || 
-      nextProps.width !== this.props.width;
+    return (
+      nextState.rowData !== this.state.rowData || nextProps.width !== this.props.width
+    );
   }
 
   rowDataGetter = () => {
     return this.state.rowData;
-  }
+  };
 
   onDataLoaded = (data: any) => {
     this.setState({ rowData: data });
-  }
+  };
 
   render() {
-    const { columnKey, children, renderCondition, rowClassNameGetter, ...other } = this.props;
+    const { columnKey, children, renderCondition, rowClassNameGetter, ...other } =
+      this.props;
     const { rowData } = this.state;
 
     if (!rowData) {
@@ -99,16 +100,16 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
     }
 
     return (
-      <div className={ 'cell-wrapper ' + className }>
-        { React.cloneElement(children, {
+      <div className={'cell-wrapper ' + className}>
+        {React.cloneElement(children, {
           cellData: rowData[columnKey!],
 
-          // Don't pass the actual row data to allow cells to skip 
-          // re-rendering using shallow equality checks when the row data is 
+          // Don't pass the actual row data to allow cells to skip
+          // re-rendering using shallow equality checks when the row data is
           // updated without leaving them with an outdated item data
           rowDataGetter: this.rowDataGetter,
           ...other,
-        }) }
+        })}
       </div>
     );
   }

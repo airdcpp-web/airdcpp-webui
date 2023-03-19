@@ -4,28 +4,31 @@ module.exports = {
   icon: 'tasks',
   component: require('../../components/SettingSection').default,
   menuItems: [
-    { 
-      title: 'Refresh options', 
+    {
+      title: 'Refresh options',
       url: 'refresh-options',
-      component: require('./components/RefreshOptionsPage').default, 
-    }, { 
-      title: 'Share profiles', 
-      url: 'profiles', 
+      component: require('./components/RefreshOptionsPage').default,
+    },
+    {
+      title: 'Share profiles',
+      url: 'profiles',
       noSave: true,
       component: require('./components/ShareProfilesPage').default,
-    }
+    },
   ],
   advancedMenuItems: [
-    { 
-      title: 'Sharing options', 
+    {
+      title: 'Sharing options',
       url: 'sharing-options',
-      component: require('./components/SharingOptionsPage').default, 
-    }, { 
-      title: 'Hashing', 
+      component: require('./components/SharingOptionsPage').default,
+    },
+    {
+      title: 'Hashing',
       url: 'hashing',
-      component: require('./components/HashingPage').default, 
-    }, { 
-      title: 'Excluded paths', 
+      component: require('./components/HashingPage').default,
+    },
+    {
+      title: 'Excluded paths',
       url: 'excludes',
       noSave: true,
       component: require('./components/ExcludePage').default,

@@ -13,7 +13,6 @@ import * as UI from 'types/ui';
 import { fetchData } from 'utils/HttpUtils';
 import { useRestoreScroll } from 'effects';
 
-
 export interface FileContentProps {
   session: API.ViewFile;
   sessionT: UI.ModuleTranslator;
@@ -34,46 +33,41 @@ const useAutoPlay = (item: API.ViewFile) => {
   return diff.asMinutes() <= 1;
 };
 
-const getViewerElement = (item: API.ViewFile): React.ComponentType<ViewerElementProps> | null => {
+const getViewerElement = (
+  item: API.ViewFile
+): React.ComponentType<ViewerElementProps> | null => {
   if (item.text) {
     // eslint-disable-next-line react/display-name
     return (props: ViewerElementProps) => (
       <TextFile
         {...props}
-        textGetter={ () => {
+        textGetter={() => {
           return fetchData(props.url)
-            .then(data => data.text())
-            .then(text => {
+            .then((data) => data.text())
+            .then((text) => {
               props.onReady();
               return text;
             });
         }}
-        url={ props.url }
+        url={props.url}
       />
     );
   }
 
   switch (item.type.content_type) {
-    // eslint-disable-next-line react/display-name
-    case 'audio': return (props: ViewerElementProps) => (
-      <AudioFile 
-        autoPlay={ useAutoPlay(item) }
-        { ...props }
-      />
-    );
-    // eslint-disable-next-line react/display-name
-    case 'picture': return (props: ViewerElementProps) => (
-      <ImageFile
-        { ...props }
-      />
-    );
-    // eslint-disable-next-line react/display-name
-    case 'video': return (props: ViewerElementProps) => (
-      <VideoFile
-        autoPlay={ useAutoPlay(item) }
-        { ...props }
-      />
-    );
+    case 'audio':
+      // eslint-disable-next-line react/display-name
+      return (props: ViewerElementProps) => (
+        <AudioFile autoPlay={useAutoPlay(item)} {...props} />
+      );
+    case 'picture':
+      // eslint-disable-next-line react/display-name
+      return (props: ViewerElementProps) => <ImageFile {...props} />;
+    case 'video':
+      // eslint-disable-next-line react/display-name
+      return (props: ViewerElementProps) => (
+        <VideoFile autoPlay={useAutoPlay(item)} {...props} />
+      );
     default:
   }
 
@@ -81,40 +75,42 @@ const getViewerElement = (item: API.ViewFile): React.ComponentType<ViewerElement
 };
 
 const getUrl = (tth: string) => {
-  return `${getBasePath()}view/${tth}?auth_token=${LoginStore.authToken}`; 
+  return `${getBasePath()}view/${tth}?auth_token=${LoginStore.authToken}`;
 };
 
-const FileContent: React.FC<FileContentProps> = memo(
-  function FileContent({ session, sessionT, scrollPositionHandler }) {
-    const { scrollable, restoreScrollPosition } = useRestoreScroll(scrollPositionHandler, session);
+const FileContent: React.FC<FileContentProps> = memo(function FileContent({
+  session,
+  sessionT,
+  scrollPositionHandler,
+}) {
+  const { scrollable, restoreScrollPosition } = useRestoreScroll(
+    scrollPositionHandler,
+    session
+  );
 
-    const ViewerElement = getViewerElement(session);
+  const ViewerElement = getViewerElement(session);
 
-    let child;
-    if (!ViewerElement) {
-      child = sessionT.translate('Unsupported format');
-    } else {
-      child = (
-        <ViewerElement 
-          item={ session }
-          url={ getUrl(session.tth) }
-          type={ session.mime_type }
-          extension={ session.type.str }
-          sessionT={ sessionT }
-          onReady={restoreScrollPosition}
-        />
-      );
-    }
-
-    return (
-      <div 
-        ref={ scrollable } 
-        className="content"
-      >
-        { child }
-      </div>
+  let child;
+  if (!ViewerElement) {
+    child = sessionT.translate('Unsupported format');
+  } else {
+    child = (
+      <ViewerElement
+        item={session}
+        url={getUrl(session.tth)}
+        type={session.mime_type}
+        extension={session.type.str}
+        sessionT={sessionT}
+        onReady={restoreScrollPosition}
+      />
     );
   }
-);
+
+  return (
+    <div ref={scrollable} className="content">
+      {child}
+    </div>
+  );
+});
 
 export default FileContent;

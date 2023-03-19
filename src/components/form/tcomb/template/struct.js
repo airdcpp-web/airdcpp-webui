@@ -1,38 +1,42 @@
-import getAlert from './getAlert'
-import renderFieldset from './renderFieldset'
+import getAlert from './getAlert';
+import renderFieldset from './renderFieldset';
 
 function create(overrides = {}) {
   function struct(locals) {
-    let children = []
+    let children = [];
 
     if (locals.help) {
-      children.push(struct.renderHelp(locals))
+      children.push(struct.renderHelp(locals));
     }
 
     if (locals.error && locals.hasError) {
-      children.push(struct.renderError(locals))
+      children.push(struct.renderError(locals));
     }
 
-    children = children.concat(locals.order.map(name => locals.inputs[name]))
+    children = children.concat(locals.order.map((name) => locals.inputs[name]));
 
-    return struct.renderFieldset(children, locals)
+    return struct.renderFieldset(children, locals);
   }
 
-  struct.renderHelp = overrides.renderHelp || function renderHelp(locals) {
-    return getAlert('info', locals.help)
-  }
+  struct.renderHelp =
+    overrides.renderHelp ||
+    function renderHelp(locals) {
+      return getAlert('info', locals.help);
+    };
 
-  struct.renderError = overrides.renderError || function renderError(locals) {
-    return getAlert('error', locals.error)
-  }
+  struct.renderError =
+    overrides.renderError ||
+    function renderError(locals) {
+      return getAlert('error', locals.error);
+    };
 
-  struct.renderFieldset = overrides.renderFieldset || renderFieldset
+  struct.renderFieldset = overrides.renderFieldset || renderFieldset;
 
   struct.clone = function clone(newOverrides = {}) {
-    return create({...overrides, ...newOverrides})
-  }
+    return create({ ...overrides, ...newOverrides });
+  };
 
-  return struct
+  return struct;
 }
 
-export default create()
+export default create();

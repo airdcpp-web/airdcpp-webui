@@ -5,24 +5,19 @@ import { RSS } from 'widgets/RSS';
 import { Layouts, Layout } from 'react-grid-layout';
 import { createWidgetId } from 'utils/WidgetUtils';
 
-
 const countWidgetIds = (id: string, layouts: Layouts) => {
-  return Object.keys(layouts).reduce(
-    (sum, key) => {
-      if (layouts[key].find((layoutItem: Layout) => layoutItem.i === id)) {
-        return sum + 1;
-      }
+  return Object.keys(layouts).reduce((sum, key) => {
+    if (layouts[key].find((layoutItem: Layout) => layoutItem.i === id)) {
+      return sum + 1;
+    }
 
-      return sum;
-    }, 
-    0
-  );
+    return sum;
+  }, 0);
 };
 
 const hasLayoutItems = (id: string) => {
   return countWidgetIds(id, WidgetStore.layouts) === Object.keys(WidgetStore.cols).length;
 };
-
 
 describe('widget store', () => {
   test('should initialize default widgets', () => {
@@ -42,10 +37,9 @@ describe('widget store', () => {
       widget: {
         feed_url: 'https://airdcpp-web.github.io/feed.xml',
         feed_cache_minutes: 60,
-      }
+      },
     });
   });
-
 
   const widgetId = createWidgetId(RSS.typeId);
   const settings = {
@@ -53,7 +47,7 @@ describe('widget store', () => {
     widget: {
       feed_url: 'http://test.com',
       feed_cache_minutes: 60,
-    }
+    },
   };
 
   test('should handle widget actions', () => {

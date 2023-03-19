@@ -12,86 +12,99 @@ import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 
+type SessionDropdownProps<SessionT extends UI.SessionItemBase> = Pick<
+  SessionMainLayoutProps<SessionT>,
+  'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter' | 't'
+>;
 
-type SessionDropdownProps<SessionT extends UI.SessionItemBase> = 
-  Pick<
-    SessionMainLayoutProps<SessionT>, 
-    'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter' | 't'
-  >;
-
-const SessionDropdown = <SessionT extends UI.SessionItemBase>({ 
-  sessionMenuItems, newButton, unreadInfoStore, listActionMenuGetter, t
+const SessionDropdown = <SessionT extends UI.SessionItemBase>({
+  sessionMenuItems,
+  newButton,
+  unreadInfoStore,
+  listActionMenuGetter,
+  t,
 }: SessionDropdownProps<SessionT>) => (
-  <SectionedDropdown 
-    triggerIcon={ <MenuIcon urgencies={ unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null } />}
+  <SectionedDropdown
+    triggerIcon={
+      <MenuIcon
+        urgencies={unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null}
+      />
+    }
   >
-    <MenuSection caption={ translate('New', t, UI.Modules.COMMON) }>
-      { newButton }
+    <MenuSection caption={translate('New', t, UI.Modules.COMMON)}>
+      {newButton}
     </MenuSection>
-    <MenuSection caption={ translate('Current sessions', t, UI.Modules.COMMON) }>
-      { sessionMenuItems }
+    <MenuSection caption={translate('Current sessions', t, UI.Modules.COMMON)}>
+      {sessionMenuItems}
     </MenuSection>
-    <MenuSection>
-      { listActionMenuGetter() }
-    </MenuSection>
+    <MenuSection>{listActionMenuGetter()}</MenuSection>
   </SectionedDropdown>
 );
 
+type CloseButtonProps<
+  SessionT extends UI.SessionItemBase,
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+> = Pick<
+  SessionMainLayoutProps<SessionT, UI.EmptyObject, UIActionsT>,
+  'actions' | 'activeItem'
+>;
 
-type CloseButtonProps<SessionT extends UI.SessionItemBase, UIActionsT extends UI.ActionListType<UI.SessionItemBase>> = 
-  Pick<SessionMainLayoutProps<SessionT, UI.EmptyObject, UIActionsT>, 'actions' | 'activeItem'>;
-
-const CloseButton = <SessionT extends UI.SessionItemBase, UIActionsT extends UI.ActionListType<UI.SessionItemBase>>(
-  { actions, activeItem }: CloseButtonProps<SessionT, UIActionsT>
-) => {
+const CloseButton = <
+  SessionT extends UI.SessionItemBase,
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+>({
+  actions,
+  activeItem,
+}: CloseButtonProps<SessionT, UIActionsT>) => {
   if (!activeItem || useMobileLayout()) {
     return null;
   }
 
   return (
-    <ActionButton 
+    <ActionButton
       className="basic small item close-button"
-      actions={ actions } 
+      actions={actions}
       actionId="removeSession"
-      itemData={ activeItem }
-      icon={ IconConstants.CLOSE }
-      //moduleId={ moduleId }
+      itemData={activeItem}
+      icon={IconConstants.CLOSE}
     />
   );
 };
 
-type SessionItemHeaderProps = Pick<SessionMainLayoutProps<any>, 'itemHeaderIcon' | 'itemHeaderTitle'>;
+type SessionItemHeaderProps = Pick<
+  SessionMainLayoutProps<any>,
+  'itemHeaderIcon' | 'itemHeaderTitle'
+>;
 
-const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({ itemHeaderIcon, itemHeaderTitle }) => (
+const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({
+  itemHeaderIcon,
+  itemHeaderTitle,
+}) => (
   <div className="session-header">
-    { itemHeaderIcon }
-    { itemHeaderTitle }
+    {itemHeaderIcon}
+    {itemHeaderTitle}
   </div>
 );
 
 const TopMenuLayout = <
-  SessionT extends UI.SessionItemBase, 
+  SessionT extends UI.SessionItemBase,
   SessionApiT extends object,
   UIActionsT extends UI.ActionListType<UI.SessionItemBase>
->(
-  { children, onKeyDown, ...props }: SessionMainLayoutProps<SessionT, SessionApiT, UIActionsT>
-) => (
-  <div 
-    className="session-container vertical" 
-    onKeyDown={ onKeyDown } 
-    tabIndex={ 0 }
-  >
+>({
+  children,
+  onKeyDown,
+  ...props
+}: SessionMainLayoutProps<SessionT, SessionApiT, UIActionsT>) => (
+  <div className="session-container vertical" onKeyDown={onKeyDown} tabIndex={0}>
     <div className="ui main menu menu-bar">
       <div className="content-left">
-        <SessionDropdown { ...props }/>
-        <SessionItemHeader { ...props }/>
+        <SessionDropdown {...props} />
+        <SessionItemHeader {...props} />
       </div>
-      <CloseButton { ...props }/>
+      <CloseButton {...props} />
     </div>
 
-    <div className="session-layout">
-      { children }
-    </div>
+    <div className="session-layout">{children}</div>
   </div>
 );
 

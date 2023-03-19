@@ -35,9 +35,7 @@ import { ErrorBoundary } from 'components/ErrorBoundary';
 
 global.Promise = Promise as any;
 
-
 Reflux.use(RefluxPromise(Promise));
-
 
 const getBackgroundImage = () => {
   const url = LocalSettingStore.getValue(LocalSettings.BACKGROUND_IMAGE_URL);
@@ -61,33 +59,31 @@ const App = () => {
   const prompt = useInstallPrompt();
   return (
     <ErrorBoundary>
-      <Suspense fallback={ <Loader fullPage={ true } text=""/> }>
-        <I18nextProvider i18n={ i18n }>
-          <InstallPromptContext.Provider value={ prompt }>
-            <Router history={ History }>
-              <Measure
-                bounds={ true }
-              >
-                { ({ measureRef, contentRect }) => (
-                  <LayoutWidthContext.Provider 
-                    value={ !!contentRect.bounds ? contentRect.bounds.width : null }
+      <Suspense fallback={<Loader fullPage={true} text="" />}>
+        <I18nextProvider i18n={i18n}>
+          <InstallPromptContext.Provider value={prompt}>
+            <Router history={History}>
+              <Measure bounds={true}>
+                {({ measureRef, contentRect }) => (
+                  <LayoutWidthContext.Provider
+                    value={!!contentRect.bounds ? contentRect.bounds.width : null}
                   >
-                    <div 
-                      ref={ measureRef } 
-                      id="background-wrapper" 
+                    <div
+                      ref={measureRef}
+                      id="background-wrapper"
                       style={{
                         backgroundImage: getBackgroundImageStyle(),
                         height: '100%',
                       }}
                     >
                       <Switch>
-                        <Route path="/login" component={ Login }/>
-                        <Route exact path="/" component={ () => <Redirect to="/home"/> }/>
-                        <Route path="/" component={ AuthenticatedApp }/>
+                        <Route path="/login" component={Login} />
+                        <Route exact path="/" component={() => <Redirect to="/home" />} />
+                        <Route path="/" component={AuthenticatedApp} />
                       </Switch>
                     </div>
                   </LayoutWidthContext.Provider>
-                ) }
+                )}
               </Measure>
             </Router>
           </InstallPromptContext.Provider>

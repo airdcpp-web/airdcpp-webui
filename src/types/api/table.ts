@@ -20,7 +20,6 @@ export interface TableFilter {
   pattern: string | number;
 }
 
-
 export type TableItemUpdateData<DataT> = {
   id: IdType;
   properties: Partial<DataT>;

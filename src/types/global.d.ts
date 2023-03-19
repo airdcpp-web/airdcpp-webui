@@ -7,7 +7,7 @@ declare type RecursivePartial<T> = {
 declare const UI_BUILD_DATE: number;
 declare const UI_VERSION: string;
 
-declare module '*.png'
-declare module '*.jpg'
-declare module '*.ico'
-declare module '*.svg'
+declare module '*.png';
+declare module '*.jpg';
+declare module '*.ico';
+declare module '*.svg';

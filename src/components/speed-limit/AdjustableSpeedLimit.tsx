@@ -13,36 +13,37 @@ import { translate } from 'utils/TranslationUtils';
 import './style.css';
 import { useTranslation } from 'react-i18next';
 
-
 export interface AdjustableSpeedLimitProps {
   limit: number;
   unit: string;
   settingKey: string;
 }
 
-export const AdjustableSpeedLimit: React.FC<AdjustableSpeedLimitProps> = ({ limit, settingKey, unit }) => {
+export const AdjustableSpeedLimit: React.FC<AdjustableSpeedLimitProps> = ({
+  limit,
+  settingKey,
+  unit,
+}) => {
   const { t } = useTranslation();
 
-  const value = limit ? `${limit} ${unit}/s` : translate('Disabled', t, UI.Modules.COMMON);
+  const value = limit
+    ? `${limit} ${unit}/s`
+    : translate('Disabled', t, UI.Modules.COMMON);
   if (!LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT)) {
-    return <span>{ value }</span>;
+    return <span>{value}</span>;
   }
 
   return (
-    <Popup 
-      triggerClassName="adjustable-speed-limit" 
-      className="limiter" 
-      trigger={ value }
-    >
-      { hide => (
+    <Popup triggerClassName="adjustable-speed-limit" className="limiter" trigger={value}>
+      {(hide) => (
         <LimiterConfig
-          limit={ limit }
-          settingKey={ settingKey }
-          hide={ hide }
-          unit={ unit }
-          t={ t }
+          limit={limit}
+          settingKey={settingKey}
+          hide={hide}
+          unit={unit}
+          t={t}
         />
-      ) }
+      )}
     </Popup>
   );
 };

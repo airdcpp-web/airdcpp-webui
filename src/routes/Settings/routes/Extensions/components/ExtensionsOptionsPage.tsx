@@ -8,12 +8,9 @@ const Entry = [
   'extensions_init_timeout',
 ];
 
-const ExtensionOptionsPage: React.FC<SettingSectionChildProps> = props => (
+const ExtensionOptionsPage: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-    />
+    <RemoteSettingForm {...props} keys={Entry} />
   </div>
 );
 

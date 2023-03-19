@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 import { fetchCorsSafeData } from 'services/HttpService';
 
@@ -10,54 +9,58 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const isManaged = (extension: API.Extension) => extension.managed;
 const isRunning = (extension: API.Extension) => extension.running;
 const hasSettings = (extension: API.Extension) => extension.has_settings;
 
-
-const handleConfigure: UI.ActionHandler<API.Extension> = ({ data: extension, location }) => {
+const handleConfigure: UI.ActionHandler<API.Extension> = ({
+  data: extension,
+  location,
+}) => {
   History.push(`${location.pathname}/extensions/${extension.id}`);
 };
 
 const handleStart: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
-  return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`);
+  return SocketService.post(
+    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`
+  );
 };
 
 const handleStop: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
-  return SocketService.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`);
+  return SocketService.post(
+    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`
+  );
 };
 
 const downloadExtension = (url: string, installId?: string, shasum?: string) => {
   return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
     install_id: installId ? installId : url,
     url,
-    shasum
+    shasum,
   });
 };
 
-const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async (
-  { data: npmPackage, ...other }
-) => {
-  const data = await fetchCorsSafeData(ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest', true);
+const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
+  data: npmPackage,
+  ...other
+}) => {
+  const data = await fetchCorsSafeData(
+    ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest',
+    true
+  );
 
   const { tarball, shasum } = data.dist;
 
   return downloadExtension(tarball, npmPackage.name, shasum);
 };
 
-const handleInstallUrl: UI.ActionHandler<undefined> = (
-  { data }, url: string
-) => {
+const handleInstallUrl: UI.ActionHandler<undefined> = ({ data }, url: string) => {
   return downloadExtension(url);
 };
 
-const handleRemove: UI.ActionHandler<API.Extension> = (
-  { data }
-) => {
+const handleRemove: UI.ActionHandler<API.Extension> = ({ data }) => {
   return SocketService.delete(ExtensionConstants.EXTENSIONS_URL + '/' + data.name);
 };
-
 
 const ExtensionInstallActions: UI.ActionListType<undefined> = {
   installUrl: {
@@ -71,12 +74,11 @@ const ExtensionInstallActions: UI.ActionListType<undefined> = {
         placeholder: 'Enter URL',
         type: 'url',
         required: true,
-      }
+      },
     },
-    handler: handleInstallUrl
+    handler: handleInstallUrl,
   },
 };
-
 
 const ExtensionNpmActions: UI.ActionListType<UI.NpmPackage> = {
   installNpm: {
@@ -97,14 +99,14 @@ const ExtensionManageActions: UI.ActionListType<API.Extension> = {
   start: {
     displayName: 'Start',
     icon: IconConstants.PLAY,
-    filter: ext => isManaged(ext) && !isRunning(ext),
+    filter: (ext) => isManaged(ext) && !isRunning(ext),
     access: API.AccessEnum.ADMIN,
     handler: handleStart,
   },
   stop: {
     displayName: 'Stop',
     icon: IconConstants.STOP,
-    filter: ext => isManaged(ext) && isRunning(ext),
+    filter: (ext) => isManaged(ext) && isRunning(ext),
     access: API.AccessEnum.ADMIN,
     handler: handleStop,
   },
@@ -122,15 +124,15 @@ const ExtensionManageActions: UI.ActionListType<API.Extension> = {
     filter: isManaged,
     access: API.AccessEnum.ADMIN,
     confirmation: {
-      // eslint-disable-next-line max-len
-      content: 'Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings.',
+      content:
+        // eslint-disable-next-line max-len
+        'Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings.',
       approveCaption: 'Remove extension',
       rejectCaption: `Don't remove`,
     },
     handler: handleRemove,
   },
 };
-
 
 export default {
   install: {
@@ -144,5 +146,5 @@ export default {
   manage: {
     moduleId: UI.Modules.EXTENSIONS,
     actions: ExtensionManageActions,
-  }
+  },
 };

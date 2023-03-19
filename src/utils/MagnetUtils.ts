@@ -2,11 +2,12 @@ import * as UI from 'types/ui';
 
 import { formatSize } from './ValueFormat';
 
-
 export const makeHashMagnetLink = (data: UI.HashMagnet) => {
   const { size, tth, name } = data;
   const sizeParam = !!size && size > 0 ? `&xl=${size}` : '';
-  const link = `magnet:?xt=urn:tree:tiger:${tth}${sizeParam}&dn=${encodeURIComponent(name)}`;
+  const link = `magnet:?xt=urn:tree:tiger:${tth}${sizeParam}&dn=${encodeURIComponent(
+    name
+  )}`;
 
   return link;
 };
@@ -25,7 +26,10 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
     return null;
   }
 
-  let fname: string | undefined, fsize: number | undefined, hash: string | undefined, searchString: string | undefined;
+  let fname: string | undefined,
+    fsize: number | undefined,
+    hash: string | undefined,
+    searchString: string | undefined;
 
   {
     const hashes = {};
@@ -61,7 +65,7 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
       hash = hashes['as'];
     }
   }
-  
+
   if (!!hash) {
     // Hash
     if (!!fname && !!fsize) {
@@ -80,14 +84,14 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
         searchString,
       };
     }
-  } 
-  
+  }
+
   return null;
 };
 
 export const formatMagnetCaption = (magnet: UI.Magnet, t: UI.TranslateF) => {
   const { name, size } = magnet;
-  
+
   let description = '';
   if (!!size) {
     description += formatSize(size, t);

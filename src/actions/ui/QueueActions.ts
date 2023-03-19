@@ -6,10 +6,9 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const setBundlePriorities = (prio: API.QueuePriorityEnum) => {
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/priority', { 
-    priority: prio 
+  return SocketService.post(QueueConstants.BUNDLES_URL + '/priority', {
+    priority: prio,
   });
 };
 
@@ -25,16 +24,15 @@ const handleRemoveCompleted = () => {
   return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_completed');
 };
 
-
 const QueueActions: UI.ActionListType<null> = {
   removeCompleted: {
-    access: API.AccessEnum.QUEUE_EDIT, 
-    displayName: 'Remove completed bundles', 
+    access: API.AccessEnum.QUEUE_EDIT,
+    displayName: 'Remove completed bundles',
     icon: IconConstants.REMOVE,
     handler: handleRemoveCompleted,
     notifications: {
-      onSuccess: '{{result.count}} completed bundles were removed'
-    }
+      onSuccess: '{{result.count}} completed bundles were removed',
+    },
   },
   divider: null,
   pause: {
@@ -43,16 +41,15 @@ const QueueActions: UI.ActionListType<null> = {
     icon: IconConstants.PAUSE,
     handler: handlePause,
   },
-  resume: { 
+  resume: {
     displayName: 'Resume all bundles',
     access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.PLAY,
     handler: handleResume,
-  }
+  },
 };
 
 export default {
   moduleId: UI.Modules.QUEUE,
   actions: QueueActions,
 };
-

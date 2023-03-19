@@ -3,7 +3,9 @@ import * as React from 'react';
 import { ExtensionInfoEntry } from './ExtensionInfoEntry';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
 import { fetchCorsSafeData } from 'services/HttpService';
 
 import * as API from 'types/api';
@@ -11,7 +13,6 @@ import * as UI from 'types/ui';
 
 import 'fomantic-ui-css/components/list.min.css';
 import '../style.css';
-
 
 type NpmPackageLayoutProps = UI.WidgetProps;
 
@@ -24,14 +25,18 @@ interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
   packageCatalog: NpmCatalogItem[];
 }
 
-const getItem = (npmPackage: UI.NpmPackage, moduleT: UI.ModuleTranslator, installedPackages: API.Extension[]) => {
-  const installedPackage = installedPackages.find(p => p.name === npmPackage.name);
+const getItem = (
+  npmPackage: UI.NpmPackage,
+  moduleT: UI.ModuleTranslator,
+  installedPackages: API.Extension[]
+) => {
+  const installedPackage = installedPackages.find((p) => p.name === npmPackage.name);
   return (
-    <ExtensionInfoEntry 
-      key={ npmPackage.name } 
-      npmPackage={ npmPackage } 
-      installedPackage={ installedPackage }
-      moduleT={ moduleT }
+    <ExtensionInfoEntry
+      key={npmPackage.name}
+      npmPackage={npmPackage}
+      installedPackage={installedPackage}
+      moduleT={moduleT}
     />
   );
 };
@@ -46,33 +51,37 @@ const packageDateSort = (a: NpmCatalogItem, b: NpmCatalogItem) => {
 };
 
 const NpmPackageLayout: React.FC<NpmPackageLayoutProps & NpmPackageLayoutDataProps> = ({
-  packageCatalog, widgetT, installedPackages
+  packageCatalog,
+  widgetT,
+  installedPackages,
 }) => (
   <div className="extension-layout">
-    { packageCatalog.length > 0 && (
+    {packageCatalog.length > 0 && (
       <div className="ui divided list">
-        { packageCatalog
+        {packageCatalog
           .sort(packageDateSort)
-          .map(data => getItem(data.package, widgetT, installedPackages)) 
-        }
+          .map((data) => getItem(data.package, widgetT, installedPackages))}
       </div>
-    ) }
+    )}
   </div>
 );
 
-export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutDataProps>(NpmPackageLayout, {
-  urls: {
-    installedPackages: ExtensionConstants.EXTENSIONS_URL,
-    packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
-  },
-  dataConverters: {
-    packageCatalog: ({ objects }) => objects,
-  },
-  /*onSocketConnected: (addSocketListener, { refetchData }) => {
+export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutDataProps>(
+  NpmPackageLayout,
+  {
+    urls: {
+      installedPackages: ExtensionConstants.EXTENSIONS_URL,
+      packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
+    },
+    dataConverters: {
+      packageCatalog: ({ objects }) => objects,
+    },
+    /*onSocketConnected: (addSocketListener, { refetchData }) => {
     const refetchInstalled = () => refetchData([ 'installedPackages' ]);
 
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchInstalled);
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchInstalled);
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchInstalled);
   },*/
-});
+  }
+);

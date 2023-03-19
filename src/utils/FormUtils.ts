@@ -1,7 +1,12 @@
 import invariant from 'invariant';
 import tcomb, { Range, Positive } from 'utils/tcomb-form';
 
-import { BrowseField, HintedUserSelectField, HubUrlField, SelectField } from 'components/form/fields';
+import {
+  BrowseField,
+  HintedUserSelectField,
+  HubUrlField,
+  SelectField,
+} from 'components/form/fields';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -13,26 +18,26 @@ import { textToI18nKey } from './TranslationUtils';
 
 import { isEqualWith, isObject } from 'lodash';
 
-
 const formValuesEqual = (parent1: any, parent2: any) => {
   return isEqualWith(parent1, parent2, (v1, v2) => {
     // Constructors may differ for object array values, causing incorrect results with isEqual
     if (
-      isObject(v1) && 
-      isObject(v2) && 
-      Object.getPrototypeOf(v1).constructor.name !== Object.getPrototypeOf(v2).constructor.name
+      isObject(v1) &&
+      isObject(v2) &&
+      Object.getPrototypeOf(v1).constructor.name !==
+        Object.getPrototypeOf(v2).constructor.name
     ) {
-      return isEqualWith({...v1}, {...v2}, formValuesEqual);
+      return isEqualWith({ ...v1 }, { ...v2 }, formValuesEqual);
     }
-  
+
     return undefined;
   });
 };
 
 const typeToComponent = (
-  type: API.SettingTypeEnum, 
-  min: number | undefined, 
-  max: number | undefined, 
+  type: API.SettingTypeEnum,
+  min: number | undefined,
+  max: number | undefined,
   isEnum: boolean
 ) => {
   switch (type) {
@@ -42,46 +47,48 @@ const typeToComponent = (
       }
       return isEnum ? tcomb.Number : Positive;
     }
-    case API.SettingTypeEnum.BOOLEAN: return tcomb.Boolean;
+    case API.SettingTypeEnum.BOOLEAN:
+      return tcomb.Boolean;
     case API.SettingTypeEnum.STRING:
     case API.SettingTypeEnum.TEXT:
     case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.FILE_PATH:
     case API.SettingTypeEnum.HUB_URL:
-    case API.SettingTypeEnum.DIRECTORY_PATH: return tcomb.String;
-    case API.SettingTypeEnum.HINTED_USER: return tcomb.struct({
-      nicks: tcomb.String,
-      cid: tcomb.String,
-      hub_url: tcomb.String,
-    });
-    default: 
+    case API.SettingTypeEnum.DIRECTORY_PATH:
+      return tcomb.String;
+    case API.SettingTypeEnum.HINTED_USER:
+      return tcomb.struct({
+        nicks: tcomb.String,
+        cid: tcomb.String,
+        hub_url: tcomb.String,
+      });
+    default:
   }
 
   throw `Field type ${type} is not supported`;
 };
 
 const parseDefinitions = (definitions: UI.FormFieldDefinition[]): tcomb.Type<any> => {
-  const ret = definitions.reduce(
-    (reduced, def) => {
-      if (def.type === API.SettingTypeEnum.LIST) {
-        if (def.item_type === API.SettingTypeEnum.STRUCT) {
-          reduced[def.key] = tcomb.list(parseDefinitions(def.definitions!));
-        } else {
-          reduced[def.key] = tcomb.list(typeToComponent(def.item_type!, def.min, def.max, !!def.options));
-        }
+  const ret = definitions.reduce((reduced, def) => {
+    if (def.type === API.SettingTypeEnum.LIST) {
+      if (def.item_type === API.SettingTypeEnum.STRUCT) {
+        reduced[def.key] = tcomb.list(parseDefinitions(def.definitions!));
       } else {
-        if (def.type === API.SettingTypeEnum.STRUCT) {
-          reduced[def.key] = parseDefinitions(def.definitions!);
-        } else {
-          const fieldComponent = typeToComponent(def.type, def.min, def.max, !!def.options);
-          reduced[def.key] = def.optional ? tcomb.maybe(fieldComponent) : fieldComponent;
-        }
+        reduced[def.key] = tcomb.list(
+          typeToComponent(def.item_type!, def.min, def.max, !!def.options)
+        );
       }
+    } else {
+      if (def.type === API.SettingTypeEnum.STRUCT) {
+        reduced[def.key] = parseDefinitions(def.definitions!);
+      } else {
+        const fieldComponent = typeToComponent(def.type, def.min, def.max, !!def.options);
+        reduced[def.key] = def.optional ? tcomb.maybe(fieldComponent) : fieldComponent;
+      }
+    }
 
-      return reduced;
-    }, 
-    {}
-  );
+    return reduced;
+  }, {});
 
   return tcomb.struct(ret);
 };
@@ -95,13 +102,16 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
     // Convert { id, ... } objects used in the UI to plain IDs
     // Not used by the API
     if (typeof value === 'object' && !Array.isArray(value)) {
-      // Normalize object properties with value.id to plain id 
-      invariant(value.hasOwnProperty('id'), 'Invalid object supplied for normalizeField (id property is required)');
+      // Normalize object properties with value.id to plain id
+      invariant(
+        value.hasOwnProperty('id'),
+        'Invalid object supplied for normalizeField (id property is required)'
+      );
       return (value as IdItemValue).id;
     } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
       // Normalize each array item
       invariant(
-        value[0]!.hasOwnProperty('id'), 
+        value[0]!.hasOwnProperty('id'),
         'Invalid array supplied for form property (id property is required for values)'
       );
 
@@ -109,7 +119,7 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
       return ret as API.SettingValueBase[];
     }
   } else if (value === '') {
-    // Normalize empty strings to null, which is used by tcomb 
+    // Normalize empty strings to null, which is used by tcomb
     return null;
   }
 
@@ -120,13 +130,13 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
 const normalizeEnumValue = (rawItem: API.SettingEnumOption): UI.FormOption => {
   return {
     value: rawItem.id,
-    text: rawItem.name
+    text: rawItem.name,
   };
 };
 
 // Normalize form values received from the API to a form value
 const normalizeSettingValueMap = (
-  value: Partial<API.SettingValueMap<UI.FormValueBase>> | undefined, 
+  value: Partial<API.SettingValueMap<UI.FormValueBase>> | undefined,
   valueDefinitions: UI.FormFieldDefinition[]
 ): UI.FormValueMap => {
   return valueDefinitions.reduce(
@@ -149,7 +159,11 @@ const normalizeSettingValueMap = (
             reducedValue[key] = fieldValue.map(normalizeField);
           }
         } else if (type === API.SettingTypeEnum.STRUCT) {
-          if (!!fieldValue && typeof fieldValue === 'object' && !Array.isArray(fieldValue)) {
+          if (
+            !!fieldValue &&
+            typeof fieldValue === 'object' &&
+            !Array.isArray(fieldValue)
+          ) {
             reducedValue[key] = normalizeSettingValueMap(fieldValue, definitions!);
           } else {
             throw `Invalid value for a struct ${key}`;
@@ -165,26 +179,32 @@ const normalizeSettingValueMap = (
       }
 
       return reducedValue;
-    }, 
+    },
     {}
   );
 };
 
 const intTransformer = {
   parse: (v: string | null | undefined) => {
-    return v === 'null' || v === 'undefined' || v === undefined || v === null ? null : parseInt(v, 10);
+    return v === 'null' || v === 'undefined' || v === undefined || v === null
+      ? null
+      : parseInt(v, 10);
   },
-  format: (v: number| null | undefined) => {
+  format: (v: number | null | undefined) => {
     return String(v);
   },
 };
 
 const parseFileSelectMode = (settingType: API.SettingTypeEnum) => {
   switch (settingType) {
-    case API.SettingTypeEnum.EXISTING_FILE_PATH: return UI.FileSelectModeEnum.EXISTING_FILE;
-    case API.SettingTypeEnum.FILE_PATH: return UI.FileSelectModeEnum.FILE;
-    case API.SettingTypeEnum.DIRECTORY_PATH: return UI.FileSelectModeEnum.DIRECTORY;
-    default: throw new Error(`${settingType} is not a file select mode`);
+    case API.SettingTypeEnum.EXISTING_FILE_PATH:
+      return UI.FileSelectModeEnum.EXISTING_FILE;
+    case API.SettingTypeEnum.FILE_PATH:
+      return UI.FileSelectModeEnum.FILE;
+    case API.SettingTypeEnum.DIRECTORY_PATH:
+      return UI.FileSelectModeEnum.DIRECTORY;
+    default:
+      throw new Error(`${settingType} is not a file select mode`);
   }
 };
 
@@ -194,10 +214,10 @@ const parseTypeOptions = (type: API.SettingTypeEnum): tcomb.form.TcombOptions =>
     case API.SettingTypeEnum.TEXT: {
       options.type = 'textarea';
       options.attrs = {
-        rows: 3
+        rows: 3,
       };
       break;
-    } 
+    }
     case API.SettingTypeEnum.FILE_PATH:
     case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.DIRECTORY_PATH: {
@@ -225,16 +245,13 @@ const parseTypeOptions = (type: API.SettingTypeEnum): tcomb.form.TcombOptions =>
   return options;
 };
 
-const parseTitle = (
-  definition: UI.FormFieldDefinition,
-  formT: UI.ModuleTranslator
-) => {
+const parseTitle = (definition: UI.FormFieldDefinition, formT: UI.ModuleTranslator) => {
   if (definition.title && definition.optional) {
     return formT.t('fieldOptional', {
       defaultValue: '{{definition.title}} (optional)',
       replace: {
-        definition
-      }
+        definition,
+      },
     });
   }
 
@@ -245,7 +262,7 @@ const parseFieldOptions = (
   definition: UI.FormFieldDefinition,
   formT: UI.ModuleTranslator,
   titleFormatter: UI.OptionTitleParser = parseTitle,
-  helpFormatter: (text: string) => React.ReactNode = text => text,
+  helpFormatter: (text: string) => React.ReactNode = (text) => text
 ): tcomb.form.TcombFieldOptions => {
   const options = parseTypeOptions(definition.type);
 
@@ -254,13 +271,15 @@ const parseFieldOptions = (
     let itemOptions: tcomb.form.TcombStructOptions = {};
     if (definition.definitions) {
       // Struct item fields
-      itemOptions.fields = definition.definitions.reduce(
-        (reduced, itemDefinition) => {
-          reduced[itemDefinition.key] = parseFieldOptions(itemDefinition, formT, titleFormatter, helpFormatter);
-          return reduced;
-        }, 
-        {}
-      );
+      itemOptions.fields = definition.definitions.reduce((reduced, itemDefinition) => {
+        reduced[itemDefinition.key] = parseFieldOptions(
+          itemDefinition,
+          formT,
+          titleFormatter,
+          helpFormatter
+        );
+        return reduced;
+      }, {});
     } else {
       // Plain items
       itemOptions = parseTypeOptions(definition.item_type!);
@@ -278,7 +297,7 @@ const parseFieldOptions = (
   // Enum select field?
   if (definition.options) {
     invariant(
-      Array.isArray(definition.options) && definition.options.length > 0, 
+      Array.isArray(definition.options) && definition.options.length > 0,
       'Incorrect enum options supplied: ' + JSON.stringify(definition.options)
     );
 
@@ -290,7 +309,9 @@ const parseFieldOptions = (
 
     if (definition.type === API.SettingTypeEnum.LIST) {
       options.template = SelectField;
-    } else if (definition.options[0].id === parseInt(definition.options[0].id as string, 10)) {
+    } else if (
+      definition.options[0].id === parseInt(definition.options[0].id as string, 10)
+    ) {
       // Integer keys won't work with the default template, do string conversion
       options.transformer = intTransformer;
     }
@@ -299,8 +320,10 @@ const parseFieldOptions = (
   return options;
 };
 
-
-const findFieldByKey = (options: tcomb.form.TcombStructOptions, wantedKey: string): tcomb.form.TcombOptions | null => {
+const findFieldByKey = (
+  options: tcomb.form.TcombStructOptions,
+  wantedKey: string
+): tcomb.form.TcombOptions | null => {
   if (options.fields) {
     for (const key of Object.keys(options.fields)) {
       const field = options.fields[key];
@@ -323,8 +346,7 @@ const findFieldByKey = (options: tcomb.form.TcombStructOptions, wantedKey: strin
 const findFieldValueByPath = (obj: object, path: string[]): any => {
   const value = obj[path[0]];
   if (value && typeof value === 'object' && path.length > 1) {
-
-    const subPath = [ ...path ];
+    const subPath = [...path];
     subPath.shift();
     return findFieldValueByPath(value, subPath);
   }
@@ -337,7 +359,7 @@ const setFieldValueByPath = (obj: object, newValue: any, path: string[]): any =>
   if (path.length > 1) {
     obj[curKey] = obj[curKey] || {};
 
-    const subPath = [ ...path ];
+    const subPath = [...path];
     subPath.shift();
     setFieldValueByPath(obj[curKey], newValue, subPath);
   } else {
@@ -347,19 +369,23 @@ const setFieldValueByPath = (obj: object, newValue: any, path: string[]): any =>
 
 const reduceChangedFieldValues = (
   sourceValue: UI.FormValueMap | null,
-  currentFormValue: Partial<UI.FormValueMap>, 
+  currentFormValue: Partial<UI.FormValueMap>,
   changedValues: Partial<UI.FormValueMap>,
   valueKey: string
 ) => {
-  if (!!sourceValue && currentFormValue[valueKey] instanceof Object && !Array.isArray(currentFormValue[valueKey])) {
+  if (
+    !!sourceValue &&
+    currentFormValue[valueKey] instanceof Object &&
+    !Array.isArray(currentFormValue[valueKey])
+  ) {
     // Object values (structs, hinted users...)
     const settingKeys = Object.keys(currentFormValue[valueKey]!);
     const changedObjectValue = settingKeys.reduce(
       reduceChangedFieldValues.bind(
         null,
-        sourceValue[valueKey], 
+        sourceValue[valueKey],
         currentFormValue[valueKey]
-      ), 
+      ),
       {}
     );
 
@@ -368,7 +394,10 @@ const reduceChangedFieldValues = (
     }
   } else {
     // Lists and simple values
-    if (!sourceValue || !formValuesEqual(sourceValue[valueKey], currentFormValue[valueKey])) {
+    if (
+      !sourceValue ||
+      !formValuesEqual(sourceValue[valueKey], currentFormValue[valueKey])
+    ) {
       changedValues[valueKey] = currentFormValue[valueKey];
     }
   }
@@ -377,7 +406,7 @@ const reduceChangedFieldValues = (
 };
 
 const toFormI18nKey = (
-  propName: UI.TranslatableFormDefinitionProperties, 
+  propName: UI.TranslatableFormDefinitionProperties,
   definitionKey: string,
   extraKeyPostfix: string | undefined
 ) => {
@@ -391,12 +420,12 @@ const toFormI18nKey = (
 };
 
 const translateDefinition = (
-  def: UI.FormFieldDefinition, 
+  def: UI.FormFieldDefinition,
   moduleT: UI.ModuleTranslator
 ): UI.FormFieldDefinition => {
   const translateProp = (
-    propName: UI.TranslatableFormDefinitionProperties, 
-    value: string | undefined, 
+    propName: UI.TranslatableFormDefinitionProperties,
+    value: string | undefined,
     extraKeyPostfix?: string
   ) => {
     if (!value) {
@@ -411,40 +440,47 @@ const translateDefinition = (
     ...def,
     title: translateProp(UI.TranslatableFormDefinitionProperties.NAME, def.title)!,
     help: translateProp(UI.TranslatableFormDefinitionProperties.HELP, def.help),
-    options: def.options ? def.options.map(opt => ({
-      ...opt,
-      name: translateProp(
-        UI.TranslatableFormDefinitionProperties.OPTION, 
-        opt.name,
-        opt.id.toString()
-      )!
-    })) : undefined,
-    definitions: !!def.definitions ? def.definitions.map(subDef => {
-      return translateDefinition(subDef, moduleT);
-    }) : undefined,
+    options: def.options
+      ? def.options.map((opt) => ({
+          ...opt,
+          name: translateProp(
+            UI.TranslatableFormDefinitionProperties.OPTION,
+            opt.name,
+            opt.id.toString()
+          )!,
+        }))
+      : undefined,
+    definitions: !!def.definitions
+      ? def.definitions.map((subDef) => {
+          return translateDefinition(subDef, moduleT);
+        })
+      : undefined,
   };
 
   return ret;
 };
 
 const translateForm = (
-  definitions: UI.FormFieldDefinition[], 
-  moduleT: UI.ModuleTranslator,
+  definitions: UI.FormFieldDefinition[],
+  moduleT: UI.ModuleTranslator
 ): UI.FormFieldDefinition[] => {
-  const ret = definitions
-    .map(def => {
-      return translateDefinition(def, moduleT);
-    });
+  const ret = definitions.map((def) => {
+    return translateDefinition(def, moduleT);
+  });
 
   return ret;
 };
 
-const updateMultiselectValues = <ValueT>(values: ValueT[], value: ValueT, checked: boolean) => {
+const updateMultiselectValues = <ValueT>(
+  values: ValueT[],
+  value: ValueT,
+  checked: boolean
+) => {
   if (checked) {
-    values = [ ...values, value ];
+    values = [...values, value];
   } else {
     const index = values.indexOf(value);
-    values = update(values, { $splice: [ [ index, 1 ] ] });
+    values = update(values, { $splice: [[index, 1]] });
   }
 
   return values;
@@ -460,7 +496,7 @@ const isValueSet = (value: UI.FormValue): boolean => {
   }
 
   if (typeof value === 'object') {
-    const setValue = Object.keys(value).find(childKey => isValueSet(value[childKey]));
+    const setValue = Object.keys(value).find((childKey) => isValueSet(value[childKey]));
     return !!setValue;
   }
 
@@ -474,26 +510,20 @@ export {
   // Migrates simple key -> value fields to an array that is compatible with the form
   // undefined values will also be initialized with nulled property fields
   normalizeSettingValueMap,
-
   intTransformer,
-
   normalizeEnumValue,
 
   // Convert field definitions to tcomb type object
   // Note that there are additional field options that need to be handled separately
   parseDefinitions,
-
   parseFieldOptions,
 
   // Reduces an object of current form values that don't match the source data
   reduceChangedFieldValues,
-
   findFieldByKey,
   findFieldValueByPath,
   setFieldValueByPath,
-
   updateMultiselectValues,
   formValuesEqual,
   isValueSet,
-}
-;
+};

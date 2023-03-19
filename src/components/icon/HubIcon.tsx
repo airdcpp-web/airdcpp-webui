@@ -6,16 +6,12 @@ import { hubOnlineStatusToColor } from 'utils/TypeConvert';
 
 import * as API from 'types/api';
 
-
 interface HubIconProps extends IconProps {
   hub: API.Hub;
 }
 
 const HubIcon: React.FC<HubIconProps> = ({ hub, ...other }) => (
-  <Icon
-    { ...other }
-    icon={ hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap' }
-  />
+  <Icon {...other} icon={hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap'} />
 );
 
 /*HubIcon.propTypes = {

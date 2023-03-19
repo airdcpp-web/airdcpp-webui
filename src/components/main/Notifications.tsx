@@ -17,7 +17,6 @@ import SocketNotificationListener from './SocketNotificationListener';
 import Button from 'components/semantic/Button';
 import classNames from 'classnames';
 
-
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
 
 interface NotificationsProps {
@@ -26,13 +25,18 @@ interface NotificationsProps {
 
 const getSeverityColor = (severity: NotificationLevel) => {
   switch (severity) {
-    case 'info': return 'blue';
-    case 'warning': return 'yellow';
-    case 'error': return 'red';
-    case 'success': return 'green';
-    default: return '';
+    case 'info':
+      return 'blue';
+    case 'warning':
+      return 'yellow';
+    case 'error':
+      return 'red';
+    case 'success':
+      return 'green';
+    default:
+      return '';
   }
-}
+};
 
 interface NotificationMessageProps {
   notification: UI.Notification;
@@ -45,12 +49,10 @@ const NotificationMessage = ({ notification, level }: NotificationMessageProps) 
   return (
     <>
       <div className="content">
-        <div className={ classNames('ui tiny header', color) } style={{margin: '0px'}}>
+        <div className={classNames('ui tiny header', color)} style={{ margin: '0px' }}>
           {title}
         </div>
-        <div>
-          {message}
-        </div>
+        <div>{message}</div>
       </div>
       {!!action && (
         <Button
@@ -58,14 +60,14 @@ const NotificationMessage = ({ notification, level }: NotificationMessageProps) 
           onClick={action.callback}
           className="primary"
           style={{
-            marginTop: '10px'
+            marginTop: '10px',
           }}
           color={color}
         />
       )}
     </>
-  )
-}
+  );
+};
 
 class Notifications extends Component<NotificationsProps> {
   limiter = new RateLimiter({
@@ -73,7 +75,7 @@ class Notifications extends Component<NotificationsProps> {
     interval: 3000,
     fireImmediately: true,
   });
-  
+
   unsubscribe: () => void;
 
   static propTypes = {
@@ -90,21 +92,25 @@ class Notifications extends Component<NotificationsProps> {
       return;
     }
 
-    if ('Notification' in window && Notification.permission === 'granted' && !document.hasFocus()) {
+    if (
+      'Notification' in window &&
+      Notification.permission === 'granted' &&
+      !document.hasFocus()
+    ) {
       this.showNativeNotification(level, notification);
       return;
     }
-    
+
     // Embedded notification
-    toast(<NotificationMessage notification={notification} level={level}/>, {
+    toast(<NotificationMessage notification={notification} level={level} />, {
       // Disable for now as old notifications won't be replaced with newer one
       // toastId: notification.uid,
       type: level,
       position: 'top-left',
       autoClose: 5000,
       icon: false,
-    })
-  }
+    });
+  };
 
   shouldComponentUpdate() {
     return false;
@@ -143,12 +149,10 @@ class Notifications extends Component<NotificationsProps> {
   render() {
     const { location } = this.props;
     return ReactDOM.createPortal(
-      (
-        <>
-          <ToastContainer limit={3} hideProgressBar={true} pauseOnFocusLoss={false}/>
-          <SocketNotificationListener location={ location }/>
-        </>
-      ),
+      <>
+        <ToastContainer limit={3} hideProgressBar={true} pauseOnFocusLoss={false} />
+        <SocketNotificationListener location={location} />
+      </>,
       document.getElementById('notifications-node')!
     );
   }

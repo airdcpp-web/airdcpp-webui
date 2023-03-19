@@ -16,7 +16,6 @@
   margin: 10px 0px 0px 0px;
 }
 
-
 /* Composer */
 .chat.session .composer {
   display: flex;
@@ -26,15 +25,15 @@
   outline: none;
 }
 
-.chat.session .composer textarea, 
+.chat.session .composer textarea,
 .chat.session .composer textarea:focus {
   resize: none;
-  border-radius: .28571429rem 0 0 .28571429rem;
+  border-radius: 0.28571429rem 0 0 0.28571429rem;
   margin-left: 1px;
 }
 
 .chat.session .composer .button {
-  border-radius: 0 .28571429rem .28571429rem 0;
+  border-radius: 0 0.28571429rem 0.28571429rem 0;
   width: 45px;
   margin: 0px;
 }
@@ -54,10 +53,9 @@
   width: calc(100% - 60px);
 }
 
-
 /* Messages common */
 .chat.session .item .time {
-  float:right;
+  float: right;
   color: lightgray;
   font-size: small;
 }
@@ -66,7 +64,7 @@
 .chat.session .chat.item .left > .text {
   /* Avoid cutting text from the bottom with certain browser because of "overflow: hidden" */
   line-height: initial !important;
-  
+
   overflow: hidden;
   white-space: pre-wrap;
   flex: 1;
@@ -115,9 +113,8 @@
 }
 
 .chat.session .chat.item.bot .author .caption {
-  color: rgba(0,0,0,.40) !important;
+  color: rgba(0, 0, 0, 0.4) !important;
 }
-
 
 /* Status messages */
 .chat.session .status.item {
@@ -128,7 +125,7 @@
 
 .chat.session .status.item > .text {
   font-size: small;
-  color: rgba(0,0,0,.50);
+  color: rgba(0, 0, 0, 0.5);
   float: left;
 }
 

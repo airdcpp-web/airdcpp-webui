@@ -1,6 +1,9 @@
 import { Component } from 'react';
 
-import ChatLayout, { ChatAPI, ChatActionList } from 'routes/Sidebar/components/chat/ChatLayout';
+import ChatLayout, {
+  ChatAPI,
+  ChatActionList,
+} from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFooter';
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
@@ -13,8 +16,11 @@ import { shareTempFile } from 'services/api/ShareApi';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import MenuConstants from 'constants/MenuConstants';
 
-
-type PrivateChatSessionProps = SessionChildProps<API.PrivateChat, UI.EmptyObject, ChatActionList>
+type PrivateChatSessionProps = SessionChildProps<
+  API.PrivateChat,
+  UI.EmptyObject,
+  ChatActionList
+>;
 
 class PrivateChatSession extends Component<PrivateChatSessionProps> {
   static displayName = 'PrivateChatSession';
@@ -24,27 +30,24 @@ class PrivateChatSession extends Component<PrivateChatSessionProps> {
 
     const isPrivate = flags.indexOf('nmdc') === -1 && flags.indexOf('bot') === -1;
     return shareTempFile(file, hub_url, isPrivate ? cid : undefined);
-  }
+  };
 
   render() {
     const { session, sessionApi, sessionT, uiActions } = this.props;
     return (
       <div className="private chat session">
         <ChatLayout
-          chatAccess={ API.AccessEnum.PRIVATE_CHAT_SEND }
-          chatActions={ uiActions }
-          chatApi={ PrivateChatActions as ChatAPI }
-          sessionApi={ sessionApi }
-          messageStore={ PrivateChatMessageStore }
-          session={ session }
-          handleFileUpload={ this.handleFileUpload }
-          highlightRemoteMenuId={ MenuConstants.PRIVATE_CHAT_MESSAGE_HIGHLIGHT }
+          chatAccess={API.AccessEnum.PRIVATE_CHAT_SEND}
+          chatActions={uiActions}
+          chatApi={PrivateChatActions as ChatAPI}
+          sessionApi={sessionApi}
+          messageStore={PrivateChatMessageStore}
+          session={session}
+          handleFileUpload={this.handleFileUpload}
+          highlightRemoteMenuId={MenuConstants.PRIVATE_CHAT_MESSAGE_HIGHLIGHT}
         />
 
-        <MessageFooter
-          session={ session }
-          sessionT={ sessionT }
-        />
+        <MessageFooter session={session} sessionT={sessionT} />
       </div>
     );
   }

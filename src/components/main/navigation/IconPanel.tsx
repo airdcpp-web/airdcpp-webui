@@ -9,18 +9,17 @@ import AwayIcon from 'components/main/navigation/icon/AwayIcon';
 import RefreshProgress from './icon/RefreshProgress';
 import HashProgress from './icon/HashProgress';
 
-
 const IconPanel: React.FC = () => (
   <div className="icon-panel">
-    <StatisticsIcons/>
+    <StatisticsIcons />
     <div className="touch-icons">
-      <AwayIcon/>
-      { LoginStore.hasAccess(API.AccessEnum.SETTINGS_VIEW) && (
+      <AwayIcon />
+      {LoginStore.hasAccess(API.AccessEnum.SETTINGS_VIEW) && (
         <>
-          <HashProgress/>
-          <RefreshProgress/>
+          <HashProgress />
+          <RefreshProgress />
         </>
-      ) }
+      )}
     </div>
   </div>
 );

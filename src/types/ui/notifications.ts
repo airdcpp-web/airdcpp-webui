@@ -3,7 +3,7 @@ export interface Notification {
   message?: string;
   action?: {
     label: string;
-    callback: () => any
-  }
+    callback: () => any;
+  };
   uid?: string;
 }

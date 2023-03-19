@@ -12,13 +12,9 @@ const Entry = [
   'connection_ip_override_v4',
 ];
 
-const IPv4: React.FC<SettingSectionChildProps> = props => (
+const IPv4: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <ProtocolPage
-      { ...props }
-      keys={ Entry }
-      protocol="v4"
-    />
+    <ProtocolPage {...props} keys={Entry} protocol="v4" />
   </div>
 );
 

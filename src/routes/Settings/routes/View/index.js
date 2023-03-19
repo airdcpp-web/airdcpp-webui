@@ -2,33 +2,36 @@ module.exports = {
   url: 'view',
   title: 'View',
   icon: 'browser',
-  component: require('../../components/SettingSection').default, 
+  component: require('../../components/SettingSection').default,
   menuItems: [
-    { 
-      title: 'Notifications', 
+    {
+      title: 'Notifications',
       url: 'notifications',
       local: true,
-      component: require('./components/NotificationPage').default, 
-    }, { 
-      title: 'Histories', 
+      component: require('./components/NotificationPage').default,
+    },
+    {
+      title: 'Histories',
       url: 'histories',
-      component: require('./components/HistoryPage').default, 
-    }, { 
-      title: 'Events', 
+      component: require('./components/HistoryPage').default,
+    },
+    {
+      title: 'Events',
       url: 'events',
-      component: require('./components/EventPage').default, 
-    }, { 
-      title: 'Appearance', 
+      component: require('./components/EventPage').default,
+    },
+    {
+      title: 'Appearance',
       url: 'appearance',
-      component: require('./components/AppearancePage').default, 
+      component: require('./components/AppearancePage').default,
     },
   ],
   advancedMenuItems: [
-    { 
-      title: 'Miscellaneous', 
+    {
+      title: 'Miscellaneous',
       url: 'miscellaneous',
       local: true,
-      component: require('./components/MiscellaneousPage').default, 
+      component: require('./components/MiscellaneousPage').default,
     },
   ],
 };

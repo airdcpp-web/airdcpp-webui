@@ -10,17 +10,22 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import MenuConstants from 'constants/MenuConstants';
 
-
-const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({ cellData, rowData }) => (
+const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({
+  cellData,
+  rowData,
+}) => (
   <div className="transfer-user">
-    <i className={ (rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD) + ' large icon' }/>
-    { cellData!.nicks }
+    <i
+      className={
+        (rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD) +
+        ' large icon'
+      }
+    />
+    {cellData!.nicks}
   </div>
 );
 
-interface UserCellProps extends RowWrapperCellChildProps<API.HintedUser, API.Transfer> {
-
-}
+interface UserCellProps extends RowWrapperCellChildProps<API.HintedUser, API.Transfer> {}
 
 class UserCell extends React.Component<UserCellProps> {
   shouldComponentUpdate(nextProps: UserCellProps) {
@@ -30,17 +35,17 @@ class UserCell extends React.Component<UserCellProps> {
   render() {
     const { cellData, rowDataGetter } = this.props;
     return (
-      <TableUserMenu 
-        user={ cellData! }
-        userIcon={ null }
-        ids={ UserFileActions }
-        text={ <UserCaption rowData={ rowDataGetter!() } cellData={ cellData }/> }
-        remoteMenuId={ MenuConstants.HINTED_USER }
+      <TableUserMenu
+        user={cellData!}
+        userIcon={null}
+        ids={UserFileActions}
+        text={<UserCaption rowData={rowDataGetter!()} cellData={cellData} />}
+        remoteMenuId={MenuConstants.HINTED_USER}
       >
-        <TableActionMenu 
-          itemData={ rowDataGetter }
-          actions={ TransferActions }
-          remoteMenuId={ MenuConstants.TRANSFER }
+        <TableActionMenu
+          itemData={rowDataGetter}
+          actions={TransferActions}
+          remoteMenuId={MenuConstants.TRANSFER}
         />
       </TableUserMenu>
     );

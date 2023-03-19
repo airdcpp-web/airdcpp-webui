@@ -1,9 +1,13 @@
-
 import { Component } from 'react';
 import { matchPath } from 'react-router-dom';
-import { 
-  configRoutes, mainRoutes, secondaryRoutes, logoutItem, 
-  parseMenuItems, parseMenuItem, RouteItemClickHandler 
+import {
+  configRoutes,
+  mainRoutes,
+  secondaryRoutes,
+  logoutItem,
+  parseMenuItems,
+  parseMenuItem,
+  RouteItemClickHandler,
 } from 'routes/Routes';
 
 import DropdownCaption from 'components/semantic/DropdownCaption';
@@ -16,7 +20,6 @@ import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 import Popup from 'components/semantic/Popup';
-
 
 interface MainNavigationMobileProps {
   onClose: () => void;
@@ -60,60 +63,56 @@ class MainNavigationMobile extends Component<MainNavigationMobileProps> {
     }
 
     this.onClick(url, evt);
-  }
+  };
 
   onClick: RouteItemClickHandler = (url, evt) => {
     $(this.c).sidebar('hide');
-  }
+  };
 
   render() {
     return (
       <Translation>
-        { t => (
-          <div 
-            ref={ c => this.c = c! }
-            id="mobile-menu" 
+        {(t) => (
+          <div
+            ref={(c) => (this.c = c!)}
+            id="mobile-menu"
             className="ui right vertical inverted sidebar menu"
           >
-            { parseMenuItems(mainRoutes, this.onClick) }
+            {parseMenuItems(mainRoutes, this.onClick)}
             <Popup
               // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
               // https://github.com/Semantic-Org/Semantic-UI/issues/1410
-              trigger={(
-                <DropdownCaption 
-                  icon="ellipsis horizontal caption"
-                >
-                  { translate('More...', t, UI.SubNamespaces.NAVIGATION) }
-                </DropdownCaption> 
-              )}
+              trigger={
+                <DropdownCaption icon="ellipsis horizontal caption">
+                  {translate('More...', t, UI.SubNamespaces.NAVIGATION)}
+                </DropdownCaption>
+              }
               triggerClassName="item"
               className="inverted"
               position="bottom left"
               settings={{
-                distanceAway: -20
+                distanceAway: -20,
               }}
             >
-              { hide => (
+              {(hide) => (
                 <div className="ui dropdown item right fluid active visible">
                   <div className="ui menu transition visible">
-                    { parseMenuItems(
-                      configRoutes, (path, event) => {
-                        hide();
-                        this.onClick(path, event);
-                      }
-                    ) }
-                    <div className="ui divider"/>
-                    { parseMenuItem(logoutItem) }
+                    {parseMenuItems(configRoutes, (path, event) => {
+                      hide();
+                      this.onClick(path, event);
+                    })}
+                    <div className="ui divider" />
+                    {parseMenuItem(logoutItem)}
                   </div>
                 </div>
-              ) }
+              )}
             </Popup>
-            <div className="separator"/>
+            <div className="separator" />
 
-            { parseMenuItems(secondaryRoutes, this.onClickSecondary) }
-            <IconPanel/>
+            {parseMenuItems(secondaryRoutes, this.onClickSecondary)}
+            <IconPanel />
           </div>
-        ) }
+        )}
       </Translation>
     );
   }

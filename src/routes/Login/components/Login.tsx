@@ -18,23 +18,20 @@ import * as UI from 'types/ui';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
+interface LoginProps
+  extends RouteComponentProps<UI.EmptyObject, any, LoginLocationState> {}
 
-interface LoginProps extends RouteComponentProps<UI.EmptyObject, any, LoginLocationState> {
-
-}
-
-
-const Login: React.FC<LoginProps> = props => {
+const Login: React.FC<LoginProps> = (props) => {
   const { t } = useTranslation();
-  const [ rememberMe, setRememberMe ] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const [ loading, setLoading ] = useLoginState(props);
+  const [loading, setLoading] = useLoginState(props);
   if (!!LoginStore.refreshToken) {
     return (
       <SocketConnectStatus
-        message={ translate('Connecting to the server...', t, UI.Modules.LOGIN) }
+        message={translate('Connecting to the server...', t, UI.Modules.LOGIN)}
       />
     );
   }
@@ -55,66 +52,59 @@ const Login: React.FC<LoginProps> = props => {
   return (
     <div className="ui middle aligned center aligned grid login-grid">
       <div className="column">
-        <form 
-          className="ui large form"
-          autoComplete="on"
-          onSubmit={ onSubmit }
-        >
+        <form className="ui large form" autoComplete="on" onSubmit={onSubmit}>
           <div className="ui stacked segment">
             <div className="field">
               <div className="ui left icon input">
-                <Icon icon={ IconConstants.USER }/>
-                <input 
-                  ref={ usernameRef } 
-                  type="text" 
-                  name="username" 
-                  placeholder={ translate('Username', t, UI.Modules.LOGIN) }
-                  required={ true }
-                  autoFocus={ true }
+                <Icon icon={IconConstants.USER} />
+                <input
+                  ref={usernameRef}
+                  type="text"
+                  name="username"
+                  placeholder={translate('Username', t, UI.Modules.LOGIN)}
+                  required={true}
+                  autoFocus={true}
                 />
               </div>
             </div>
             <div className="field">
               <div className="ui left icon input">
-                <Icon icon={ IconConstants.LOCK }/>
-                <input 
-                  ref={ passwordRef }
-                  className="password" 
-                  name="password" 
-                  placeholder={ translate('Password', t, UI.Modules.LOGIN) } 
-                  required={ true }
+                <Icon icon={IconConstants.LOCK} />
+                <input
+                  ref={passwordRef}
+                  className="password"
+                  name="password"
+                  placeholder={translate('Password', t, UI.Modules.LOGIN)}
+                  required={true}
                   type="password"
                 />
               </div>
             </div>
             <SubmitButton
-              onSubmit={ onSubmit }
-              loading={ loading }
-              allowLogin={ LoginStore.allowLogin }
-              t={ t }
+              onSubmit={onSubmit}
+              loading={loading}
+              allowLogin={LoginStore.allowLogin}
+              t={t}
             />
-            <div 
-              className="field" 
+            <div
+              className="field"
               style={{
                 marginTop: '10px',
-                marginBottom: '3px'
+                marginBottom: '3px',
               }}
             >
               <Checkbox
-                caption={ translate('Keep me logged in', t, UI.Modules.LOGIN) }
-                onChange={ setRememberMe }
-                checked={ rememberMe }
+                caption={translate('Keep me logged in', t, UI.Modules.LOGIN)}
+                onChange={setRememberMe}
+                checked={rememberMe}
               />
             </div>
           </div>
 
-          <BottomMessage/>
+          <BottomMessage />
         </form>
 
-        <ErrorBox 
-          lastError={ LoginStore.lastError }
-          t={ t }
-        />
+        <ErrorBox lastError={LoginStore.lastError} t={t} />
       </div>
     </div>
   );

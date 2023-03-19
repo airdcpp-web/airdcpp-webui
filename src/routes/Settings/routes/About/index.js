@@ -4,30 +4,33 @@ module.exports = {
   url: 'about',
   title: 'About',
   icon: 'info',
-  component: require('../../components/SettingSection').default, 
+  component: require('../../components/SettingSection').default,
   menuItems: [
-    { 
-      title: 'Application', 
+    {
+      title: 'Application',
       noSave: true,
       url: 'application',
-      component: require('./components/ApplicationPage').default, 
-    }, { 
-      title: 'Transfer statistics', 
+      component: require('./components/ApplicationPage').default,
+    },
+    {
+      title: 'Transfer statistics',
       noSave: true,
       url: 'transfers',
       access: AccessConstants.TRANSFERS,
-      component: require('./components/TransferStatisticsPage').default, 
-    }, { 
-      title: 'Share statistics', 
+      component: require('./components/TransferStatisticsPage').default,
+    },
+    {
+      title: 'Share statistics',
       noSave: true,
       url: 'share',
-      component: require('./components/ShareStatisticsPage').default, 
-    }, { 
-      title: 'Hub statistics', 
+      component: require('./components/ShareStatisticsPage').default,
+    },
+    {
+      title: 'Hub statistics',
       noSave: true,
       url: 'hubs',
       access: AccessConstants.HUBS_VIEW,
-      component: require('./components/HubStatisticsPage').default, 
+      component: require('./components/HubStatisticsPage').default,
     },
   ],
 };

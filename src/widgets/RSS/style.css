@@ -1,22 +1,22 @@
 .rss.widget .main.content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .rss.widget .main.content > div {
-	flex-direction: column;
+  flex-direction: column;
 }
 
 .rss.widget .divided.list {
-	overflow-y: auto;
-	overflow-x: hidden;
-	flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
 }
 
 .rss.widget .divided.list .item {
-	flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .rss.widget .divided.list .item .description {
-	margin-left: 20px;
+  margin-left: 20px;
 }

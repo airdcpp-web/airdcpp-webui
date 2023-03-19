@@ -5,29 +5,24 @@ import SocketService from 'services/SocketService';
 
 import * as UI from 'types/ui';
 
-
 export const EventActionConfig: UI.RefluxActionConfigList<UI.EmptyObject> = [
-  { 'fetchMessages': { asyncResult: true } },
-  { 'fetchInfo': { asyncResult: true } },
+  { fetchMessages: { asyncResult: true } },
+  { fetchInfo: { asyncResult: true } },
   'setRead',
   'setActive',
-  'resetLogCounters'
+  'resetLogCounters',
 ];
 
 const EventActions = Reflux.createActions(EventActionConfig);
 
-EventActions.fetchInfo.listen(function (
-  this: UI.AsyncActionType<UI.EmptyObject>
-) {
+EventActions.fetchInfo.listen(function (this: UI.AsyncActionType<UI.EmptyObject>) {
   const that = this;
   return SocketService.get(EventConstants.INFO_URL)
     .then(that.completed)
     .catch(that.failed);
 });
 
-EventActions.fetchMessages.listen(function (
-  this: UI.AsyncActionType<UI.EmptyObject>
-) {
+EventActions.fetchMessages.listen(function (this: UI.AsyncActionType<UI.EmptyObject>) {
   const that = this;
   return SocketService.get(`${EventConstants.MESSAGES_URL}/0`)
     .then(that.completed)

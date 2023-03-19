@@ -8,7 +8,9 @@ import IconConstants from 'constants/IconConstants';
 
 import Form, { FormSaveHandler } from 'components/form/Form';
 
-import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, {
+  ModalRouteDecoratorChildProps,
+} from 'decorators/ModalRouteDecorator';
 
 import WidgetActions from 'actions/reflux/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
@@ -20,10 +22,12 @@ import * as UI from 'types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { translateForm } from 'utils/FormUtils';
 
-
 type FormValue = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
 
-const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget): FormValue | undefined => {
+const settingsToFormValue = (
+  widgetId: string | undefined,
+  widgetInfo: UI.Widget
+): FormValue | undefined => {
   if (!widgetId) {
     return undefined;
   }
@@ -35,7 +39,6 @@ const settingsToFormValue = (widgetId: string | undefined, widgetInfo: UI.Widget
   };
 };
 
-
 const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslator) => {
   const Entry: UI.FormFieldDefinition[] = translateForm(
     [
@@ -46,7 +49,7 @@ const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslato
         default_value: widgetInfo.name,
         optional: true,
       },
-    ], 
+    ],
     rootWidgetT
   );
 
@@ -62,12 +65,14 @@ interface WidgetDialogProps {
   rootWidgetT: UI.ModuleTranslator;
 }
 
-interface RouteProps { 
-  widgetId?: string; 
-  typeId: string; 
+interface RouteProps {
+  widgetId?: string;
+  typeId: string;
 }
 
-type Props = WidgetDialogProps & ModalRouteDecoratorChildProps<RouteProps> & WithTranslation;
+type Props = WidgetDialogProps &
+  ModalRouteDecoratorChildProps<RouteProps> &
+  WithTranslation;
 
 class WidgetDialog extends Component<Props> {
   static displayName = 'WidgetDialog';
@@ -81,9 +86,9 @@ class WidgetDialog extends Component<Props> {
   };*/
 
   formData: null | {
-    value: FormValue | undefined,
-    definitions: UI.FormFieldDefinition[],
-    widgetInfo: UI.Widget,
+    value: FormValue | undefined;
+    definitions: UI.FormFieldDefinition[];
+    widgetInfo: UI.Widget;
   } = null;
   form: Form<FormValue>;
 
@@ -98,20 +103,20 @@ class WidgetDialog extends Component<Props> {
       this.formData = {
         value: settingsToFormValue(widgetId, widgetInfo),
         definitions: buildDefinitions(widgetInfo, rootWidgetT),
-        widgetInfo
+        widgetInfo,
       };
     }
   }
 
   save = () => {
     return this.form.save();
-  }
+  };
 
   onSave: FormSaveHandler<FormValue> = (changedFields, value) => {
     const { name, ...other } = value;
     const settings: UI.WidgetSettings = {
       name: name!,
-      widget: other
+      widget: other,
     };
 
     const { typeId, widgetId } = this.props.match.params;
@@ -124,7 +129,7 @@ class WidgetDialog extends Component<Props> {
     }
 
     return Promise.resolve();
-  }
+  };
 
   render() {
     if (!this.formData) {
@@ -136,27 +141,27 @@ class WidgetDialog extends Component<Props> {
     const { icon } = widgetInfo;
     const { t } = rootWidgetT;
     return (
-      <Modal 
-        className="home-widget" 
-        title={ translateWidgetName(widgetInfo, rootWidgetT.plainT) } 
-        onApprove={ this.save }
-        icon={ icon }
-        { ...this.props }
+      <Modal
+        className="home-widget"
+        title={translateWidgetName(widgetInfo, rootWidgetT.plainT)}
+        onApprove={this.save}
+        icon={icon}
+        {...this.props}
       >
         <Form<FormValue>
-          ref={ c => this.form = c! }
-          sourceValue={ value }
-          fieldDefinitions={ definitions }
-          onSave={ this.onSave }
-          location={ location }
+          ref={(c) => (this.form = c!)}
+          sourceValue={value}
+          fieldDefinitions={definitions}
+          onSave={this.onSave}
+          location={location}
         />
 
         <Message
-          description={ t<string>(
-            'widgetPositionHint', 
+          description={t<string>(
+            'widgetPositionHint',
             'Widgets and their positions are browser-specific'
-          ) }
-          icon={ IconConstants.INFO }
+          )}
+          icon={IconConstants.INFO}
         />
       </Modal>
     );

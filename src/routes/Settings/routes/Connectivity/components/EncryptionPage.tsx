@@ -2,7 +2,6 @@ import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-
 const Entry = [
   'always_ccpm',
   'tls_mode',
@@ -10,12 +9,9 @@ const Entry = [
   'tls_allow_untrusted_hubs',
 ];
 
-const Encryption: React.FC<SettingSectionChildProps> = props => (
+const Encryption: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-    />
+    <RemoteSettingForm {...props} keys={Entry} />
   </div>
 );
 

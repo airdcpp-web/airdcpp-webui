@@ -1,5 +1,5 @@
 .search-container {
-  width:100%;
+  width: 100%;
   height: 50px;
 }
 
@@ -29,13 +29,14 @@
   flex: 1;
 }
 
-.search-area, 
+.search-area,
 .search-area .react-autosuggest__container,
 .search-container .search-area .ui.input.action {
   flex: 1;
 }
 
-.search-area, .search-area input {
+.search-area,
+.search-area input {
   width: 100%;
 }
 

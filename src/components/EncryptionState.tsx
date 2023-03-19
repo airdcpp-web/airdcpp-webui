@@ -11,7 +11,6 @@ import { toI18nKey } from 'utils/TranslationUtils';
 import Icon from './semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
-
 interface Info {
   iconColor: string;
   messageColor: string;
@@ -51,7 +50,6 @@ const encryptionToInfo = (encryption: API.EncryptionInfo): Info => {
   };
 };
 
-
 interface InfoMessageProps {
   info: Info;
   encryption: API.EncryptionInfo;
@@ -59,18 +57,17 @@ interface InfoMessageProps {
 
 const InfoMessage: React.FC<InfoMessageProps> = ({ info, encryption }) => (
   <div>
-    <p>
-      { encryption.str }
-    </p>
-    <p style={ { color: info.messageColor } }>
-      <Trans i18nKey={ toI18nKey(info.translationKey, UI.Modules.COMMON) }>
-        { info.message }
+    <p>{encryption.str}</p>
+    <p style={{ color: info.messageColor }}>
+      <Trans i18nKey={toI18nKey(info.translationKey, UI.Modules.COMMON)}>
+        {info.message}
       </Trans>
     </p>
   </div>
 );
 
-interface EncryptionStateProps extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
+interface EncryptionStateProps
+  extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
   encryption?: API.EncryptionInfo;
   alwaysVisible?: boolean;
 }
@@ -88,32 +85,34 @@ class EncryptionState extends React.PureComponent<EncryptionStateProps> {
     const { encryption } = this.props;
 
     const info = encryptionToInfo(encryption!);
-    return <InfoMessage info={ info } encryption={ encryption! }/>;
-  }
+    return <InfoMessage info={info} encryption={encryption!} />;
+  };
 
   render() {
     const { encryption, alwaysVisible, boundary } = this.props;
     if (!encryption) {
-      return !!alwaysVisible && <Icon color="grey" icon={ IconConstants.LOCK }/>;
+      return !!alwaysVisible && <Icon color="grey" icon={IconConstants.LOCK} />;
     }
 
     const info = encryptionToInfo(encryption);
     return (
-      <Popup 
-        triggerClassName="encryption" 
-        className="basic encryption content" 
+      <Popup
+        triggerClassName="encryption"
+        className="basic encryption content"
         trigger={
           <Icon
-            color={ info.iconColor }
-            icon={ IconConstants.LOCK }
-            cornerIcon={ info.cornerIcon }
+            color={info.iconColor}
+            icon={IconConstants.LOCK}
+            cornerIcon={info.cornerIcon}
           />
         }
-        settings={ {
-          boundary,
-        } as SemanticUI.PopupSettings }
+        settings={
+          {
+            boundary,
+          } as SemanticUI.PopupSettings
+        }
       >
-        { this.getChildren }
+        {this.getChildren}
       </Popup>
     );
   }

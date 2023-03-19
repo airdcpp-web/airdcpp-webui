@@ -1,4 +1,3 @@
-
 class HTTPError extends Error {
   constructor(code: number, status: string) {
     super(`${status} (code ${code})`);

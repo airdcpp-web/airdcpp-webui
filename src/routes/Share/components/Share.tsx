@@ -23,7 +23,6 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import MenuConstants from 'constants/MenuConstants';
 
-
 class Share extends Component<WithTranslation> {
   static displayName = 'Share';
 
@@ -34,35 +33,32 @@ class Share extends Component<WithTranslation> {
     return (
       <>
         <VirtualTable
-          store={ ShareRootStore }
-          customFilter={ ShareProfileFilter }
-          footerData={ 
-            <ActionMenu 
+          store={ShareRootStore}
+          customFilter={ShareProfileFilter}
+          footerData={
+            <ActionMenu
               className="top left pointing"
-              caption={ translate('Actions...') }
-              actions={ ShareRootActions.create }
-              header={ translate('Share actions') }
+              caption={translate('Actions...')}
+              actions={ShareRootActions.create}
+              header={translate('Share actions')}
               triggerIcon="chevron up"
-              ids={ [ 'create' ]}
-              button={ true }
+              ids={['create']}
+              button={true}
             >
-              <ActionMenu 
-                actions={ ShareActions }
-                ids={ [ 'refresh' ]}
-              />
+              <ActionMenu actions={ShareActions} ids={['refresh']} />
             </ActionMenu>
           }
-          moduleId={ ShareActions.moduleId }
+          moduleId={ShareActions.moduleId}
         >
           <Column
             name="Path"
             width={200}
             columnKey="path"
             cell={
-              <FileActionCell 
-                actions={ ShareRootActions.edit }
-                remoteMenuId={ MenuConstants.SHARE_ROOT }
-              /> 
+              <FileActionCell
+                actions={ShareRootActions.edit}
+                remoteMenuId={MenuConstants.SHARE_ROOT}
+              />
             }
             flexGrow={10}
           />
@@ -70,15 +66,10 @@ class Share extends Component<WithTranslation> {
             name="Size"
             width={60}
             columnKey="size"
-            cell={ <SizeCell/> }
+            cell={<SizeCell />}
             flexGrow={2}
           />
-          <Column
-            name="Content"
-            width={150}
-            columnKey="type"
-            hideWidth={1000}
-          />
+          <Column name="Content" width={150} columnKey="type" hideWidth={1000} />
           <Column
             name="Virtual name"
             width={120}
@@ -86,22 +77,16 @@ class Share extends Component<WithTranslation> {
             flexGrow={5}
             //hideWidth={600}
           />
-          <Column
-            name="Profiles"
-            width={65}
-            columnKey="profiles"
-          />
+          <Column name="Profiles" width={65} columnKey="profiles" />
           <Column
             name="Last refreshed"
             width={80}
             flexGrow={3}
             columnKey="last_refresh_time"
-            cell={ editAccess ? <RefreshCell/> : <DurationCell/> }
+            cell={editAccess ? <RefreshCell /> : <DurationCell />}
           />
         </VirtualTable>
-        <ShareDirectoryDialog
-          shareT={ this.shareT }
-        />
+        <ShareDirectoryDialog shareT={this.shareT} />
       </>
     );
   }

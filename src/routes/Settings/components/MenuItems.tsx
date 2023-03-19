@@ -8,7 +8,6 @@ import * as UI from 'types/ui';
 import { getSubModuleT } from 'utils/TranslationUtils';
 import { camelCase } from 'lodash';
 
-
 export const sectionToUrl = (section: SectionType, parent?: SectionType) => {
   if (typeof parent === 'object') {
     return `/settings/${parent.url}/${section.url}`;
@@ -17,13 +16,16 @@ export const sectionToUrl = (section: SectionType, parent?: SectionType) => {
   return `/settings/${section.url}`;
 };
 
-export const translateSettingSectionTitle = (title: string, settingsT: UI.ModuleTranslator) => {
-  return settingsT.translate(title, [ UI.SubNamespaces.NAVIGATION ]);
+export const translateSettingSectionTitle = (
+  title: string,
+  settingsT: UI.ModuleTranslator
+) => {
+  return settingsT.translate(title, [UI.SubNamespaces.NAVIGATION]);
 };
 
 export const menuItemToLinkComponent = (
-  menuItemInfo: SectionType, 
-  parent: RootSectionType | undefined, 
+  menuItemInfo: SectionType,
+  parent: RootSectionType | undefined,
   settingsT: UI.ModuleTranslator,
   location: Location
 ) => {
@@ -44,18 +46,18 @@ export const menuItemToLinkComponent = (
   }
 
   return (
-    <RouterMenuItemLink 
-      key={ url } 
-      url={ url } 
-      icon={ !!menuItemInfo.icon ? `green ${menuItemInfo.icon}` : null }
+    <RouterMenuItemLink
+      key={url}
+      url={url}
+      icon={!!menuItemInfo.icon ? `green ${menuItemInfo.icon}` : null}
     >
-      { translateSettingSectionTitle(menuItemInfo.title, settingsT) }
+      {translateSettingSectionTitle(menuItemInfo.title, settingsT)}
     </RouterMenuItemLink>
   );
 };
 
 export const menuItemsToRouteComponentArray = (
-  currentMenuItem: SectionType, 
+  currentMenuItem: SectionType,
   menuItems: SectionType[] | undefined,
   settingsT: UI.ModuleTranslator,
   moduleT: UI.ModuleTranslator | undefined,
@@ -65,42 +67,41 @@ export const menuItemsToRouteComponentArray = (
     return null;
   }
 
-  return menuItems.map(item => (
+  return menuItems.map((item) => (
     <Route
-      key={ item.url }
-      path={ sectionToUrl(item, parent) }
-      render={ (props: RouteComponentProps<UI.EmptyObject>) => (
+      key={item.url}
+      path={sectionToUrl(item, parent)}
+      render={(props: RouteComponentProps<UI.EmptyObject>) => (
         <item.component
-          { ...props }
-          menuItems={ currentMenuItem.menuItems }
-          advancedMenuItems={ currentMenuItem.advancedMenuItems }
-          parent={ currentMenuItem }
-          parentMenuItems={ menuItems }
-          settingsT={ settingsT }
-          moduleT={ getSubModuleT(moduleT || settingsT, camelCase(item.url)) }
+          {...props}
+          menuItems={currentMenuItem.menuItems}
+          advancedMenuItems={currentMenuItem.advancedMenuItems}
+          parent={currentMenuItem}
+          parentMenuItems={menuItems}
+          settingsT={settingsT}
+          moduleT={getSubModuleT(moduleT || settingsT, camelCase(item.url))}
         />
-      ) }
+      )}
     />
   ));
 };
 
-
 export const isItemActive = (
-  item: SectionType, 
-  parent: RootSectionType | undefined, 
+  item: SectionType,
+  parent: RootSectionType | undefined,
   location: Location
 ) => {
   return location.pathname.indexOf(sectionToUrl(item, parent)) === 0;
 };
 
 export const findMenuItem = (
-  menuItems: SectionType[] | undefined, 
-  parent: RootSectionType | undefined, 
+  menuItems: SectionType[] | undefined,
+  parent: RootSectionType | undefined,
   location: Location
 ) => {
   if (!menuItems) {
     return null;
   }
 
-  return menuItems.find(item => isItemActive(item, parent, location));
+  return menuItems.find((item) => isItemActive(item, parent, location));
 };

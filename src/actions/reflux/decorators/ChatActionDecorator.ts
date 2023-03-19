@@ -8,26 +8,25 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-
 type SessionType = UI.SessionItemBase;
 
 export default function (
-  actions: UI.RefluxActionConfigList<SessionType>[], 
+  actions: UI.RefluxActionConfigList<SessionType>[],
   sessionUrl: string
 ) {
   const ChatActionConfig: UI.RefluxActionConfigList<SessionType> = [
-    { 'fetchMessages': { asyncResult: true } },
-    { 'sendChatMessage': { asyncResult: true } },
-    { 'sendStatusMessage': { asyncResult: true } },
-    { 'setRead': { asyncResult: true } },
+    { fetchMessages: { asyncResult: true } },
+    { sendChatMessage: { asyncResult: true } },
+    { sendStatusMessage: { asyncResult: true } },
+    { setRead: { asyncResult: true } },
     'activeChatChanged',
-    'divider'
+    'divider',
   ];
 
   const ChatActions = Reflux.createActions(ChatActionConfig);
 
   ChatActions.fetchMessages.listen(function (
-    this: UI.AsyncActionType<SessionType>, 
+    this: UI.AsyncActionType<SessionType>,
     session: SessionType
   ) {
     const that = this;
@@ -36,12 +35,15 @@ export default function (
       .catch(that.failed.bind(that, session));
   });
 
-  ChatActions.fetchMessages.failed.listen(function (session: SessionType, error: ErrorResponse) {
+  ChatActions.fetchMessages.failed.listen(function (
+    session: SessionType,
+    error: ErrorResponse
+  ) {
     NotificationActions.apiError('Failed to fetch chat messages', error, session.id);
   });
 
   ChatActions.setRead.listen(function (
-    this: UI.AsyncActionType<API.IdType>, 
+    this: UI.AsyncActionType<API.IdType>,
     session: SessionType
   ) {
     const that = this;
@@ -51,13 +53,13 @@ export default function (
   });
 
   ChatActions.sendChatMessage.listen(function (
-    this: UI.AsyncActionType<SessionType>, 
-    session: SessionType, 
-    text: string, 
+    this: UI.AsyncActionType<SessionType>,
+    session: SessionType,
+    text: string,
     thirdPerson = false
   ) {
     const that = this;
-    SocketService.post(`${sessionUrl}/${session.id}/chat_message`, { 
+    SocketService.post(`${sessionUrl}/${session.id}/chat_message`, {
       text,
       third_person: thirdPerson,
     })
@@ -65,19 +67,21 @@ export default function (
       .catch(that.failed.bind(that, session));
   });
 
-  ChatActions.sendChatMessage.failed.listen(function (session: SessionType, error: ErrorResponse) {
+  ChatActions.sendChatMessage.failed.listen(function (
+    session: SessionType,
+    error: ErrorResponse
+  ) {
     NotificationActions.apiError('Failed to send chat message', error, session.id);
   });
 
-
   ChatActions.sendStatusMessage.listen(function (
-    this: UI.AsyncActionType<SessionType>, 
-    session: SessionType, 
-    text: string, 
+    this: UI.AsyncActionType<SessionType>,
+    session: SessionType,
+    text: string,
     severity: API.SeverityEnum
   ) {
     const that = this;
-    SocketService.post(`${sessionUrl}/${session.id}/status_message`, { 
+    SocketService.post(`${sessionUrl}/${session.id}/status_message`, {
       text,
       severity,
     })
@@ -85,7 +89,10 @@ export default function (
       .catch(that.failed.bind(that, session));
   });
 
-  ChatActions.sendStatusMessage.failed.listen(function (session: SessionType, error: ErrorResponse) {
+  ChatActions.sendStatusMessage.failed.listen(function (
+    session: SessionType,
+    error: ErrorResponse
+  ) {
     NotificationActions.apiError('Failed to send status message', error, session.id);
   });
 

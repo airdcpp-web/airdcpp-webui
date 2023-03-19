@@ -4,7 +4,9 @@ import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import TableFilterDecorator, { TableFilterDecoratorChildProps } from 'decorators/TableFilterDecorator';
+import TableFilterDecorator, {
+  TableFilterDecoratorChildProps,
+} from 'decorators/TableFilterDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -13,13 +15,16 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 import { translate } from 'utils/TranslationUtils';
 import { Translation } from 'react-i18next';
 
-
 const getFilterMethodCaption = (method: API.FilterMethod) => {
   switch (method) {
-    case API.FilterMethod.REGEX: return 'Regex';
-    case API.FilterMethod.WILDCARD: return 'Wildcard';
-    case API.FilterMethod.EXACT: return 'Exact';
-    default: return 'Partial';
+    case API.FilterMethod.REGEX:
+      return 'Regex';
+    case API.FilterMethod.WILDCARD:
+      return 'Wildcard';
+    case API.FilterMethod.EXACT:
+      return 'Exact';
+    default:
+      return 'Partial';
   }
 };
 
@@ -41,8 +46,10 @@ export interface TextFilterProps {
   autoFocus?: boolean;
 }
 
-class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecoratorChildProps> {
-  state = { 
+class TextFilter extends React.PureComponent<
+  TextFilterProps & TableFilterDecoratorChildProps
+> {
+  state = {
     value: '',
     method: API.FilterMethod.PARTIAL,
   };
@@ -61,77 +68,72 @@ class TextFilter extends React.PureComponent<TextFilterProps & TableFilterDecora
   onFilterUpdated = () => {
     const { value, method } = this.state;
     this.props.onFilterUpdated(value, method);
-  }
+  };
 
   onTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ 
-      value: event.target.value 
+    this.setState({
+      value: event.target.value,
     });
 
     clearTimeout(this.timer);
 
-    this.timer = window.setTimeout(
-      () => {
-        this.onFilterUpdated();
-      }, 
-      200
-    );
-  }
+    this.timer = window.setTimeout(() => {
+      this.onFilterUpdated();
+    }, 200);
+  };
 
   onMethodChanged = (method: API.FilterMethod) => {
-    this.setState({ 
+    this.setState({
       method,
     });
 
     setTimeout(() => this.onFilterUpdated());
     this.input.focus();
-  }
+  };
 
   getFilterMethod = (method: API.FilterMethod, t: UI.TranslateF) => {
     const isCurrent = method === this.state.method;
     return (
-      <MenuItemLink 
-        key={ method }
-        onClick={ () => this.onMethodChanged(method) }
-        active={ isCurrent }
+      <MenuItemLink
+        key={method}
+        onClick={() => this.onMethodChanged(method)}
+        active={isCurrent}
       >
-        { filterMethodToString(method, t) }
+        {filterMethodToString(method, t)}
       </MenuItemLink>
     );
-  }
+  };
 
   render() {
     const { value, method } = this.state;
     const { autoFocus } = this.props;
     return (
       <Translation>
-        { t => (
+        {(t) => (
           <div className="text-filter">
-            <div 
-              className="ui action input" 
-            >
-              <input 
-                ref={ (c: any) => this.input = c }
-                placeholder={ getPlaceholder(method, t) } 
-                onChange={ this.onTextChanged } 
-                value={ value }
+            <div className="ui action input">
+              <input
+                ref={(c: any) => (this.input = c)}
+                placeholder={getPlaceholder(method, t)}
+                onChange={this.onTextChanged}
+                value={value}
                 type="text"
-                autoFocus={ !useMobileLayout() && autoFocus }
+                autoFocus={!useMobileLayout() && autoFocus}
               />
-              <SectionedDropdown 
+              <SectionedDropdown
                 className="filter-method right top pointing"
-                button={ true }
+                button={true}
                 direction="upward"
               >
-                <MenuSection caption={ translate('Match type', t, 'table.filter') }>
-                  { Object.keys(API.FilterMethod)
-                    .filter(key => isNaN(Number(key)))
-                    .map(key => this.getFilterMethod(API.FilterMethod[key], t)) }
+                <MenuSection caption={translate('Match type', t, 'table.filter')}>
+                  {Object.keys(API.FilterMethod)
+                    .filter((key) => isNaN(Number(key)))
+                    .map((key) => this.getFilterMethod(API.FilterMethod[key], t))}
                 </MenuSection>
               </SectionedDropdown>
             </div>
           </div>
-        ) }
+        )}
       </Translation>
     );
   }

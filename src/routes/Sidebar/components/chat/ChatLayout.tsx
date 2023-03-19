@@ -17,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 import { AddTempShareResponse } from 'services/api/ShareApi';
 import { toI18nKey } from 'utils/TranslationUtils';
 
-
 export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
 }
@@ -44,77 +43,80 @@ export interface ChatLayoutProps {
   highlightRemoteMenuId: string;
 }
 
+const useChatMessagesEffect = (
+  session: ChatSession,
+  messageStore: any,
+  chatAPI: ChatAPI
+) => {
+  const [messages, setMessages] = useState<UI.MessageListItem[] | null>([]);
 
-const useChatMessagesEffect = (session: ChatSession, messageStore: any, chatAPI: ChatAPI) => {
-  const [ messages, setMessages ] = useState<UI.MessageListItem[] | null>([]);
+  useEffect(() => {
+    // Session changed, update the messages
+    if (!messageStore.isSessionInitialized(session.id)) {
+      setMessages(null);
+      chatAPI.fetchMessages(session);
+    } else {
+      setMessages(messageStore.getSessionMessages(session.id));
+    }
+  }, [session.id]);
 
-  useEffect(
-    () => {
-      // Session changed, update the messages
-      if (!messageStore.isSessionInitialized(session.id)) {
-        setMessages(null);
-        chatAPI.fetchMessages(session);
-      } else {
-        setMessages(messageStore.getSessionMessages(session.id));
-      }
-    },
-    [ session.id ]
-  );
-
-
-  useEffect(
-    () => {
-      // Subscribe for new messages
-      const unsubscribe = messageStore.listen((newMessages: UI.MessageListItem[], id: API.IdType) => {
+  useEffect(() => {
+    // Subscribe for new messages
+    const unsubscribe = messageStore.listen(
+      (newMessages: UI.MessageListItem[], id: API.IdType) => {
         if (id !== session.id) {
           return;
         }
-    
-        setMessages(newMessages);
-      });
 
-      return unsubscribe;
-    },
-    [ session.id ]
-  );
+        setMessages(newMessages);
+      }
+    );
+
+    return unsubscribe;
+  }, [session.id]);
 
   return messages;
 };
 
-
-const ChatLayout: React.FC<ChatLayoutProps> = (
-  { session, chatAccess, chatApi, chatActions, messageStore, handleFileUpload, highlightRemoteMenuId }
-) => {
+const ChatLayout: React.FC<ChatLayoutProps> = ({
+  session,
+  chatAccess,
+  chatApi,
+  chatActions,
+  messageStore,
+  handleFileUpload,
+  highlightRemoteMenuId,
+}) => {
   const { t } = useTranslation();
   const messages = useChatMessagesEffect(session, messageStore, chatApi);
   const hasChatAccess = LoginStore.hasAccess(chatAccess);
   return (
     <div className="message-view">
-      { !hasChatAccess && (
-        <Message 
-          description={ t<string>(
-            toI18nKey('noChatAccess', UI.Modules.COMMON), 
+      {!hasChatAccess && (
+        <Message
+          description={t<string>(
+            toI18nKey('noChatAccess', UI.Modules.COMMON),
             `You aren't allowed to send new messages`
-          ) }
+          )}
         />
-      ) }
-      <MessageView 
+      )}
+      <MessageView
         className="chat"
-        messages={ messages }
-        session={ session }
-        scrollPositionHandler={ messageStore.scroll }
-        t={ t }
-        highlightRemoteMenuId={ highlightRemoteMenuId }
+        messages={messages}
+        session={session}
+        scrollPositionHandler={messageStore.scroll}
+        t={t}
+        highlightRemoteMenuId={highlightRemoteMenuId}
       />
-      { hasChatAccess && (
-        <MessageComposer 
-          session={ session }
-          chatApi={ chatApi }
-          chatActions={ chatActions }
-          t={ t }
-          handleFileUpload={ handleFileUpload }
+      {hasChatAccess && (
+        <MessageComposer
+          session={session}
+          chatApi={chatApi}
+          chatActions={chatActions}
+          t={t}
+          handleFileUpload={handleFileUpload}
         />
-      ) }
+      )}
     </div>
   );
 };

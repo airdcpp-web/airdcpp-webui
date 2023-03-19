@@ -1,7 +1,9 @@
 //import PropTypes from 'prop-types';
 import * as React from 'react';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
 //import RedrawDecorator from 'decorators/RedrawDecorator';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
@@ -13,7 +15,6 @@ import HistoryConstants from 'constants/HistoryConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
-
 
 interface RecentLayoutProps {
   entryIcon: string;
@@ -29,31 +30,37 @@ interface DataProps {
 
 type Props = RecentLayoutProps & DataProps & DataProviderDecoratorChildProps;
 
-const RecentLayout: React.FC<Props> = ({ entries, entryTitleRenderer, hasSession, entryIcon, t }) => {
+const RecentLayout: React.FC<Props> = ({
+  entries,
+  entryTitleRenderer,
+  hasSession,
+  entryIcon,
+  t,
+}) => {
   if (entries.length === 0) {
     return null;
   }
 
   return (
     <div className="recents">
-      <LayoutHeader
-        title={ translate('Recent sessions', t, UI.Modules.COMMON) }
-        size=""
-      />
+      <LayoutHeader title={translate('Recent sessions', t, UI.Modules.COMMON)} size="" />
       <div className="ui relaxed divided list">
-        { entries.map((entry, index) => (
-          <ListItem 
-            key={ index }
-            header={ entryTitleRenderer(entry) }
-            description={ !!entry.last_opened && t(toI18nKey('openedAgo', UI.Modules.COMMON), {
-              defaultValue: 'Opened {{timeAgo}}',
-              replace: {
-                timeAgo: formatRelativeTime(entry.last_opened)
-              }
-            }) }
-            icon={ (hasSession(entry) ? 'green ' : '') + entryIcon }
+        {entries.map((entry, index) => (
+          <ListItem
+            key={index}
+            header={entryTitleRenderer(entry)}
+            description={
+              !!entry.last_opened &&
+              t(toI18nKey('openedAgo', UI.Modules.COMMON), {
+                defaultValue: 'Opened {{timeAgo}}',
+                replace: {
+                  timeAgo: formatRelativeTime(entry.last_opened),
+                },
+              })
+            }
+            icon={(hasSession(entry) ? 'green ' : '') + entryIcon}
           />
-        )) }
+        ))}
       </div>
     </div>
   );
@@ -78,7 +85,8 @@ export default DataProviderDecorator<RecentLayoutProps, DataProps>(
   RecentLayout,
   {
     urls: {
-      entries: ({ entryType }, socket) => socket.get(`${HistoryConstants.SESSIONS_URL}/${entryType}/0`),
+      entries: ({ entryType }, socket) =>
+        socket.get(`${HistoryConstants.SESSIONS_URL}/${entryType}/0`),
     },
   }
 );

@@ -6,7 +6,6 @@ import FileIcon from 'components/icon/FileIcon';
 
 import * as API from 'types/api';
 
-
 interface FormattedFileProps {
   onClick?: (() => void) | null;
   typeInfo: API.FilesystemItemType;
@@ -14,24 +13,22 @@ interface FormattedFileProps {
   selected?: boolean;
 }
 
-const FormattedFile: React.FC<FormattedFileProps> = ({ onClick, typeInfo, caption, selected }) => {
+const FormattedFile: React.FC<FormattedFileProps> = ({
+  onClick,
+  typeInfo,
+  caption,
+  selected,
+}) => {
   if (onClick) {
-    caption = (
-      <a onClick={ onClick }>
-        { caption }
-      </a>
-    );
+    caption = <a onClick={onClick}>{caption}</a>;
   }
 
-  const className = cx(
-    'file-name', 
-    { 'selected': selected }
-  );
+  const className = cx('file-name', { selected: selected });
 
   return (
-    <div className={ className }>
-      <FileIcon typeInfo={ typeInfo }/>
-      { caption }
+    <div className={className}>
+      <FileIcon typeInfo={typeInfo} />
+      {caption}
     </div>
   );
 };

@@ -15,63 +15,53 @@ import Message from 'components/semantic/Message';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { fileToText } from 'utils/FileUtils';
 
-
 interface FilePreviewDialogProps extends ModalProps {
   files: File[];
   onConfirm: (files: File[]) => Promise<void>;
-
 }
 
 const getViewerElement = (file: File, previewUrl: string, t: UI.TranslateF) => {
   if (file.type.indexOf('text') !== -1 && file.size <= 1 * 1024 * 1024) {
-    return (
-      <TextFile
-        textGetter={ () => fileToText(file) }
-      />
-    );
+    return <TextFile textGetter={() => fileToText(file)} />;
   }
 
   if (file.type.indexOf('audio') !== -1) {
-    return <AudioFile url={ previewUrl } autoPlay={ false }/>;
+    return <AudioFile url={previewUrl} autoPlay={false} />;
   }
 
   if (file.type.indexOf('image') !== -1) {
-    return <ImageFile url={ previewUrl } alt={ file.name }/>;
+    return <ImageFile url={previewUrl} alt={file.name} />;
   }
 
   if (file.type.indexOf('video') !== -1) {
-    return <VideoFile url={ previewUrl } autoPlay={ false }/>;
+    return <VideoFile url={previewUrl} autoPlay={false} />;
   }
 
-  return (
-    <Message
-      title={ translate('Preview is not available', t, UI.Modules.COMMON) }
-    />
-  );
+  return <Message title={translate('Preview is not available', t, UI.Modules.COMMON)} />;
 };
-
 
 interface PreviewFile {
   file: File;
   url: string;
 }
 
-const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ files, onConfirm, ...other }) => {
-  const [ previewFiles, setPreviewFiles ] = useState<PreviewFile[] | null>(null);
+const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({
+  files,
+  onConfirm,
+  ...other
+}) => {
+  const [previewFiles, setPreviewFiles] = useState<PreviewFile[] | null>(null);
   const { t } = useTranslation();
 
-  useEffect(
-    () => {
-      const previews = files.map(file => ({
-        url: URL.createObjectURL(file),
-        file
-      }));
+  useEffect(() => {
+    const previews = files.map((file) => ({
+      url: URL.createObjectURL(file),
+      file,
+    }));
 
-      setPreviewFiles(previews);
-      return () => previews.forEach(p => URL.revokeObjectURL(p.url));
-    },
-    []
-  );
+    setPreviewFiles(previews);
+    return () => previews.forEach((p) => URL.revokeObjectURL(p.url));
+  }, []);
 
   if (!previewFiles) {
     return null;
@@ -83,29 +73,26 @@ const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({ files, onConfirm,
 
   return (
     <Modal
-      { ...other }
+      {...other}
       className="file-preview-dialog"
-      onApprove={ handleConfirm }
-      closable={ true }
-      fullHeight={ true }
-      approveCaption={ translate('Upload', t, UI.Modules.COMMON) }
-      icon={ IconConstants.UPLOAD }
+      onApprove={handleConfirm}
+      closable={true}
+      fullHeight={true}
+      approveCaption={translate('Upload', t, UI.Modules.COMMON)}
+      icon={IconConstants.UPLOAD}
     >
-      { previewFiles.map(({ file, url }) => (
-        <div 
-          key={ url } 
-          className="ui segment" 
-          style={{ 
-            overflowX: 'auto'
+      {previewFiles.map(({ file, url }) => (
+        <div
+          key={url}
+          className="ui segment"
+          style={{
+            overflowX: 'auto',
           }}
         >
-          <LayoutHeader
-            title={ file.name }
-            subHeader={ formatSize(file.size, t) }
-          />
-          { getViewerElement(file, url, t) }
+          <LayoutHeader title={file.name} subHeader={formatSize(file.size, t)} />
+          {getViewerElement(file, url, t)}
         </div>
-      )) }
+      ))}
     </Modal>
   );
 };

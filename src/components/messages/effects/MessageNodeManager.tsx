@@ -11,7 +11,6 @@ import { MessageListDateDivider, showDateDivider } from '../list/MessageListDate
 
 import { ItemDownloadManager } from '../../../effects/ItemDownloadManager';
 
-
 interface MessageItemData {
   entityId: API.IdType | undefined;
   onMessageVisibilityChanged: (id: number, inView: boolean) => void;
@@ -20,21 +19,25 @@ interface MessageItemData {
 }
 
 const reduceMessageListItem = (
-  { entityId, onMessageVisibilityChanged, addDownload, highlightRemoteMenuId }: MessageItemData,
-  reduced: React.ReactNode[], 
-  message: UI.MessageListItem, 
-  index: number, 
-  messageList: UI.MessageListItem[],
+  {
+    entityId,
+    onMessageVisibilityChanged,
+    addDownload,
+    highlightRemoteMenuId,
+  }: MessageItemData,
+  reduced: React.ReactNode[],
+  message: UI.MessageListItem,
+  index: number,
+  messageList: UI.MessageListItem[]
 ) => {
   // Push a divider when the date was changed
   if (showDateDivider(index, messageList)) {
-    const messageObj = !!message.chat_message ? message.chat_message : message.log_message;
+    const messageObj = !!message.chat_message
+      ? message.chat_message
+      : message.log_message;
     if (!!messageObj) {
       reduced.push(
-        <MessageListDateDivider
-          key={ `divider${messageObj.id}` }
-          time={ messageObj.time }
-        />
+        <MessageListDateDivider key={`divider${messageObj.id}`} time={messageObj.time} />
       );
     }
   }
@@ -43,13 +46,13 @@ const reduceMessageListItem = (
   const id = getListMessageId(message)!;
   reduced.push(
     <MessageListItem
-      key={ id }
-      id={ getListMessageIdString(id) }
+      key={id}
+      id={getListMessageIdString(id)}
       onChange={(inView) => {
         onMessageVisibilityChanged(id, inView);
       }}
-      threshold={ 0.4 }
-      message={ message }
+      threshold={0.4}
+      message={message}
       menuProps={{
         addDownload,
         entityId,
@@ -72,8 +75,8 @@ interface Props {
 }
 
 export const useMessagesNode = (
-  { highlightRemoteMenuId, messages, session }: Props, 
-  downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
+  { highlightRemoteMenuId, messages, session }: Props,
+  downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>
 ) => {
   const visibleItems = useMemo(() => new Set<number>(), [session]);
 
@@ -89,27 +92,21 @@ export const useMessagesNode = (
     // console.log(`Visible items ${Array.from(visibleItems)}`);
   };
 
-  const messageNodes = useMemo(
-    () => {
-      if (!messages) {
-        return null;
-      }
+  const messageNodes = useMemo(() => {
+    if (!messages) {
+      return null;
+    }
 
-      return messages.reduce(
-        reduceMessageListItem.bind(
-          null, 
-          {
-            highlightRemoteMenuId,
-            entityId: session ? session.id : undefined, 
-            onMessageVisibilityChanged,
-            addDownload: downloadManager.addDownloadItem,
-          }
-        ), 
-        []
-      );
-    },
-    [ messages ]
-  );
+    return messages.reduce(
+      reduceMessageListItem.bind(null, {
+        highlightRemoteMenuId,
+        entityId: session ? session.id : undefined,
+        onMessageVisibilityChanged,
+        addDownload: downloadManager.addDownloadItem,
+      }),
+      []
+    );
+  }, [messages]);
 
   return {
     messageNodes,

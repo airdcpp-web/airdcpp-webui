@@ -7,15 +7,12 @@ import Moment from 'moment';
 
 import { fetchData } from 'utils/HttpUtils';
 
-
 const loadLocalFile = (callback: RequestCallback, url: string) => {
   const fullUrl = `/js/locales/${url}`;
 
-  // Attempt to download local plain JSON 
+  // Attempt to download local plain JSON
   // Useful for testing custom translation files, such as unpublished translations from Transifex
-  fetchData(
-    fullUrl
-  )
+  fetchData(fullUrl)
     .then(async (response) => {
       let json;
 
@@ -29,13 +26,16 @@ const loadLocalFile = (callback: RequestCallback, url: string) => {
       console.log(`Custom translation file ${fullUrl} was loaded successfully`);
       callback(null, {
         data: json,
-        status: 200 
+        status: 200,
       });
     })
-    .catch(fetchError => {
-      callback(`Failed to download translation resource ${fullUrl} (fallback)`, fetchError);
+    .catch((fetchError) => {
+      callback(
+        `Failed to download translation resource ${fullUrl} (fallback)`,
+        fetchError
+      );
     });
-}
+};
 
 const loadLocales: XHR['options']['request'] = async (options, url, data, callback) => {
   if (!!data) {
@@ -44,17 +44,19 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
       const res = await fetchData(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: Object.keys(data).map((key) => {
-          return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-        }).join('&')
+        body: Object.keys(data)
+          .map((key) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+          })
+          .join('&'),
       });
 
       const responseData = await res.json();
       callback(null, {
         status: 200,
-        data: responseData
+        data: responseData,
       });
     } catch (e) {
       callback(`Failed to post translation`, e);
@@ -65,14 +67,17 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
   try {
     const { default: locale } = await import(
       /* webpackChunkName: "/locales/[request]" */ `../../resources/locales/${url}`
-    )
+    );
 
     callback(null, {
       status: 200,
-      data: locale
+      data: locale,
     });
   } catch (e) {
-    console.warn('Default translation file was not found, attempting to load a custom file', e);
+    console.warn(
+      'Default translation file was not found, attempting to load a custom file',
+      e
+    );
     loadLocalFile(callback, url);
     return;
   }
@@ -87,9 +92,9 @@ i18n
       backend: {
         loadPath: '{{lng}}/webui.{{ns}}.json',
         parse: (data: any) => data,
-        request: loadLocales
+        request: loadLocales,
       },
-      ns: [ 'main' ],
+      ns: ['main'],
       fallbackLng: 'en',
       debug: true,
       load: 'languageOnly',
@@ -103,15 +108,15 @@ i18n
       react: {
         useSuspense: true,
         nsMode: 'default',
-      }
-    }, 
+      },
+    },
     undefined
   )
   .then(() => {
     Moment.locale(i18n.language);
   });
 
-i18n.on('languageChanged', lng => {
+i18n.on('languageChanged', (lng) => {
   Moment.locale(lng);
 });
 

@@ -5,8 +5,10 @@ import Icon from 'components/semantic/Icon';
 import * as API from 'types/api';
 import IconConstants from 'constants/IconConstants';
 
-
-const getCornerIcon = (installedPackage: API.Extension | undefined, hasUpdate: boolean) => {
+const getCornerIcon = (
+  installedPackage: API.Extension | undefined,
+  hasUpdate: boolean
+) => {
   if (!installedPackage) {
     return null;
   }
@@ -28,12 +30,16 @@ interface ExtensionIconProps {
   size?: string;
 }
 
-const ExtensionIcon: React.FC<ExtensionIconProps> = ({ installedPackage, hasUpdate, size = 'huge' }) => (
+const ExtensionIcon: React.FC<ExtensionIconProps> = ({
+  installedPackage,
+  hasUpdate,
+  size = 'huge',
+}) => (
   <div className="ui image">
-    <Icon 
-      icon={ IconConstants.EXTENSION }
-      size={ size } 
-      cornerIcon={ getCornerIcon(installedPackage, hasUpdate) }
+    <Icon
+      icon={IconConstants.EXTENSION}
+      size={size}
+      cornerIcon={getCornerIcon(installedPackage, hasUpdate)}
     />
   </div>
 );

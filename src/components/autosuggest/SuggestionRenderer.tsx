@@ -4,8 +4,11 @@ import escapeStringRegexp from 'escape-string-regexp';
 
 import './style.css';
 
-
-const SuggestionRenderer = (searchText: string, suggestionText: string, description?: string) => {
+const SuggestionRenderer = (
+  searchText: string,
+  suggestionText: string,
+  description?: string
+) => {
   const matchRegex = new RegExp('\\b' + escapeStringRegexp(searchText), 'i');
 
   const firstMatchIndex = suggestionText.search(matchRegex);
@@ -13,16 +16,17 @@ const SuggestionRenderer = (searchText: string, suggestionText: string, descript
   let title: React.ReactNode = suggestionText;
   if (firstMatchIndex !== -1) {
     const beforeMatch = suggestionText.slice(0, firstMatchIndex);
-    const match = suggestionText.slice(firstMatchIndex, firstMatchIndex + searchText.length);
+    const match = suggestionText.slice(
+      firstMatchIndex,
+      firstMatchIndex + searchText.length
+    );
     const afterMatch = suggestionText.slice(firstMatchIndex + searchText.length);
 
     title = (
       <span>
-        { beforeMatch }
-        <strong>
-          { match }
-        </strong>
-        { afterMatch }
+        {beforeMatch}
+        <strong>{match}</strong>
+        {afterMatch}
         <br />
       </span>
     );
@@ -30,14 +34,8 @@ const SuggestionRenderer = (searchText: string, suggestionText: string, descript
 
   return (
     <div className="content">
-      <div className="header">
-        { title }
-      </div>
-      { !!description && (
-        <div className="description">
-          { description }
-        </div>
-      ) }
+      <div className="header">{title}</div>
+      {!!description && <div className="description">{description}</div>}
     </div>
   );
 };

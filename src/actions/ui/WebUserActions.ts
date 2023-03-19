@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 
 import WebUserConstants from 'constants/WebUserConstants';
@@ -11,9 +10,7 @@ import LoginStore from 'stores/LoginStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const isOther = (user: API.WebUser) => user.id !== LoginStore.user.id;
-
 
 const handleCreate: UI.ActionHandler<void> = ({ location }) => {
   History.push(`${location.pathname}/users`);
@@ -27,24 +24,22 @@ const handleRemove: UI.ActionHandler<API.WebUser> = ({ data: user }) => {
   return SocketService.delete(`${WebUserConstants.USERS_URL}/${user.id}`);
 };
 
-
-
 const WebUserCreateActions: UI.ActionListType<undefined> = {
-  create: { 
+  create: {
     displayName: 'Add user',
     icon: IconConstants.CREATE,
-    handler: handleCreate
+    handler: handleCreate,
   },
 };
 
 const WebUserEditActions: UI.ActionListType<API.WebUser> = {
-  edit: { 
+  edit: {
     displayName: 'Edit user',
     icon: IconConstants.EDIT,
     handler: handleEdit,
   },
   remove: {
-    displayName: 'Remove user', 
+    displayName: 'Remove user',
     filter: isOther,
     icon: IconConstants.REMOVE,
     confirmation: {
@@ -65,6 +60,6 @@ export default {
   edit: {
     moduleId: UI.Modules.SETTINGS,
     subId: 'webUser',
-    actions: WebUserEditActions
-  }
+    actions: WebUserEditActions,
+  },
 };

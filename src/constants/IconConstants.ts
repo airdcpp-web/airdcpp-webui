@@ -82,5 +82,5 @@ export default {
   COPY: 'copy',
   MAGNET: 'magnet',
   IGNORE: 'red ban',
-  UNIGNORE: 'ban'
+  UNIGNORE: 'ban',
 };

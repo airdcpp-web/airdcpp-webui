@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 import History from 'utils/History';
 
@@ -8,7 +7,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import SearchConstants from 'constants/SearchConstants';
 
-
 const handleCreate: UI.ActionHandler<API.SearchType> = ({ location }) => {
   History.push(`${location.pathname}/types`);
 };
@@ -17,16 +15,14 @@ const handleEdit: UI.ActionHandler<API.SearchType> = ({ data: type, location }) 
   History.push(`${location.pathname}/types/${type.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.SearchType> = (
-  { data: type }
-) => {
+const handleRemove: UI.ActionHandler<API.SearchType> = ({ data: type }) => {
   return SocketService.delete(`${SearchConstants.SEARCH_TYPES_URL}/${type.id}`);
 };
 
 const SearchTypeCreateActions: UI.ActionListType<API.SearchType> = {
-  create: { 
+  create: {
     displayName: 'Add type',
-    access: API.AccessEnum.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.CREATE,
     handler: handleCreate,
   },
@@ -35,7 +31,7 @@ const SearchTypeCreateActions: UI.ActionListType<API.SearchType> = {
 const SearchTypeEditActions: UI.ActionListType<API.SearchType> = {
   edit: {
     displayName: 'Edit type',
-    access: API.AccessEnum.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.EDIT,
     handler: handleEdit,
   },
@@ -48,8 +44,8 @@ const SearchTypeEditActions: UI.ActionListType<API.SearchType> = {
       approveCaption: 'Remove type',
       rejectCaption: `Don't remove`,
     },
-    filter: type => !type.default_type,
-    handler: handleRemove
+    filter: (type) => !type.default_type,
+    handler: handleRemove,
   },
 };
 
@@ -63,5 +59,5 @@ export default {
     moduleId: UI.Modules.SETTINGS,
     subId: 'searchType',
     actions: SearchTypeEditActions,
-  }
+  },
 };

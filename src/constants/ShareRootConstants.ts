@@ -7,5 +7,4 @@ export default {
   CREATED: 'share_root_created',
   UPDATED: 'share_root_updated',
   REMOVED: 'share_root_removed',
-}
-;
+};

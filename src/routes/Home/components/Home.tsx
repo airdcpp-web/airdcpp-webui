@@ -7,17 +7,16 @@ import WidgetLayout from 'routes/Home/components/WidgetLayout';
 
 import '../style.css';
 
-
 class Home extends Component {
   static displayName = 'Home';
 
   render() {
     return (
       <div id="home">
-        <DemoIntro/>
-        <NewUserIntro/>
-        <InstallPrompt/>
-        <WidgetLayout { ...this.props }/>
+        <DemoIntro />
+        <NewUserIntro />
+        <InstallPrompt />
+        <WidgetLayout {...this.props} />
       </div>
     );
   }

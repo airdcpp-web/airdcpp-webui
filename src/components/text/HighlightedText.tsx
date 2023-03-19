@@ -10,9 +10,13 @@ import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 import { formatEmojis } from 'utils/emojify/EmojiFormat';
 
-import { HighlightBold, HighlightHashMagnet, HighlightUrlLink, HighlightTextLink } from './highlights';
+import {
+  HighlightBold,
+  HighlightHashMagnet,
+  HighlightUrlLink,
+  HighlightTextLink,
+} from './highlights';
 import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
-
 
 interface HighlightProps {
   user: UI.DownloadSource | undefined;
@@ -20,8 +24,8 @@ interface HighlightProps {
 }
 
 const getHighlightNode = (
-  highlight: API.MessageHighlight, 
-  location: Location, 
+  highlight: API.MessageHighlight,
+  location: Location,
   t: UI.TranslateF,
   { user, menuProps }: HighlightProps
 ): React.ReactNode => {
@@ -30,20 +34,15 @@ const getHighlightNode = (
   switch (highlight.type) {
     case API.MessageHighlightTypeEnum.BOLD:
     case API.MessageHighlightTypeEnum.USER:
-      return (
-        <HighlightBold
-          key={ key }
-          text={ highlight.text }
-        />
-      );
+      return <HighlightBold key={key} text={highlight.text} />;
     case API.MessageHighlightTypeEnum.LINK_TEXT:
       return (
         <HighlightTextLink
-          key={ key }
-          highlightId={ highlight.id }
-          text={ highlight.text }
-          menuProps={ menuProps }
-          dupe={ highlight.dupe }
+          key={key}
+          highlightId={highlight.id}
+          text={highlight.text}
+          menuProps={menuProps}
+          dupe={highlight.dupe}
         />
       );
     case API.MessageHighlightTypeEnum.LINK_URL: {
@@ -52,38 +51,32 @@ const getHighlightNode = (
         if (magnet.tth) {
           return (
             <HighlightHashMagnet
-              key={ key }
-              dupe={ highlight.dupe }
-              contentType={ highlight.content_type }
-              user={ user }
-              highlightId={ highlight.id }
-              t={ t }
-              menuProps={ menuProps }
-              magnet={ magnet }
+              key={key}
+              dupe={highlight.dupe}
+              contentType={highlight.content_type}
+              user={user}
+              highlightId={highlight.id}
+              t={t}
+              menuProps={menuProps}
+              magnet={magnet}
             />
           );
         } else if (magnet.searchString) {
           // Text magnet
           return (
             <HighlightTextLink
-              key={ key }
-              highlightId={ highlight.id }
-              text={ formatMagnetCaption(magnet, t) }
-              menuProps={ menuProps }
-              magnet={ magnet }
-              dupe={ highlight.dupe }
+              key={key}
+              highlightId={highlight.id}
+              text={formatMagnetCaption(magnet, t)}
+              menuProps={menuProps}
+              magnet={magnet}
+              dupe={highlight.dupe}
             />
           );
         }
       }
 
-      return (
-        <HighlightUrlLink
-          key={ key }
-          text={ highlight.text }
-          location={ location }
-        />
-      );
+      return <HighlightUrlLink key={key} text={highlight.text} location={location} />;
     }
     default: {
       return highlight.text;
@@ -98,15 +91,15 @@ interface HighlightedTextProps extends HighlightProps {
 }
 
 const formatPlainText = (text: string, emojify: boolean | undefined) => {
-  return emojify ? formatEmojis(text) : text; 
+  return emojify ? formatEmojis(text) : text;
 };
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 const formatHighlights = (
-  { text: text16, highlights, emojify, ...other }: HighlightedTextProps, 
-  location: Location, 
+  { text: text16, highlights, emojify, ...other }: HighlightedTextProps,
+  location: Location,
   t: UI.TranslateF
 ) => {
   if (!highlights.length) {
@@ -148,10 +141,6 @@ export const HighlightedText: React.FC<HighlightedTextProps> = memo(
   function HighlightedText(props) {
     const location = useLocation();
     const { t } = useTranslation();
-    return (
-      <>
-        { formatHighlights(props, location, t) }
-      </>
-    );
+    return <>{formatHighlights(props, location, t)}</>;
   }
 );

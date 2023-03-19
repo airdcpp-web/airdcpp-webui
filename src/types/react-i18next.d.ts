@@ -16,7 +16,7 @@ declare module 'i18next' {
     // eslint-disable-next-line @typescript-eslint/prefer-function-type
     <TKeys extends TFuncKey = string, TInterpolationMap extends StringMap = StringMap>(
       key: TKeys,
-      options?: TOptions<TInterpolationMap> | string,
+      options?: TOptions<TInterpolationMap> | string
     ): string;
   }
 }

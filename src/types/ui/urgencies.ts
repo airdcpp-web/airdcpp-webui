@@ -4,7 +4,7 @@ export const enum UrgencyEnum {
   NORMAL = 3,
   LOW = 1,
   STATUS = 0,
-  
+
   ERROR = 6,
   WARNING = 4,
   INFO = 1,

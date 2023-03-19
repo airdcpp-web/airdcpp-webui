@@ -1,7 +1,6 @@
 import SocketService from 'services/SocketService';
 import LoginStore from 'stores/LoginStore';
 
-
 const SocketSubscriptionDecorator = (store, access) => {
   let socketSubscriptions = [];
   let hasSocket = false;
@@ -11,12 +10,13 @@ const SocketSubscriptionDecorator = (store, access) => {
       return;
     }
 
-    SocketService.addListener(apiModuleUrl, event, callback, entityId)
-      .then(removeHandler => socketSubscriptions.push(removeHandler));
+    SocketService.addListener(apiModuleUrl, event, callback, entityId).then(
+      (removeHandler) => socketSubscriptions.push(removeHandler)
+    );
   };
 
-  const removeSocketListeners = (entityExists) => { 
-    socketSubscriptions.forEach(f => f(entityExists));
+  const removeSocketListeners = (entityExists) => {
+    socketSubscriptions.forEach((f) => f(entityExists));
     socketSubscriptions = [];
   };
 
@@ -67,7 +67,7 @@ const SocketSubscriptionDecorator = (store, access) => {
     _onSocketConnected();
   }
 
-  return Object.assign(store,	{
+  return Object.assign(store, {
     addSocketListener,
     removeSocketListeners,
   });

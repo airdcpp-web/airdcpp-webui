@@ -5,7 +5,6 @@ import { OutgoingConnectionModeEnum } from 'constants/SettingConstants';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { FormFieldSettingHandler } from 'components/form/Form';
 
-
 const Entry = [
   'outgoing_mode',
   'socks_server',
@@ -17,20 +16,17 @@ const Entry = [
 ];
 
 const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
-  const socksEnabled = formValue.outgoing_mode === OutgoingConnectionModeEnum.OUTGOING_SOCKS;
+  const socksEnabled =
+    formValue.outgoing_mode === OutgoingConnectionModeEnum.OUTGOING_SOCKS;
 
   if (!socksEnabled && id.indexOf('socks_') === 0) {
     fieldOptions.disabled = true;
   }
 };
 
-const Encryption: React.FC<SettingSectionChildProps> = props => (
+const Encryption: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-      onFieldSetting={ onFieldSetting }
-    />
+    <RemoteSettingForm {...props} keys={Entry} onFieldSetting={onFieldSetting} />
   </div>
 );
 

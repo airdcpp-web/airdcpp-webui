@@ -12,7 +12,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { PathDownloadHandler } from '../../types';
 
-
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
   downloadHandler: PathDownloadHandler;
@@ -24,26 +23,25 @@ const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: UI.TranslateF) => {
     return pathInfo.path;
   }
 
-  return ` (${t(
-    toI18nKey('spaceFree', UI.Modules.COMMON),
-    {
-      defaultValue: '{{freeSpace}} free',
-      replace: {
-        freeSpace: formatSize(pathInfo.free_space, t)
-      }
-    }
-  )})`;
+  return ` (${t(toI18nKey('spaceFree', UI.Modules.COMMON), {
+    defaultValue: '{{freeSpace}} free',
+    replace: {
+      freeSpace: formatSize(pathInfo.free_space, t),
+    },
+  })})`;
 };
 
-export const PathListItem: React.FC<PathItemProps> = ({ pathInfo, downloadHandler, t }) => (
+export const PathListItem: React.FC<PathItemProps> = ({
+  pathInfo,
+  downloadHandler,
+  t,
+}) => (
   <div className="item">
-    <Icon icon={ IconConstants.FOLDER }/>
+    <Icon icon={IconConstants.FOLDER} />
     <div className="content">
-      <a onClick={ () => downloadHandler(pathInfo.path) }>
-        { pathInfo.path }
-        <span className="disk-info">
-          { formatFreeSpace(pathInfo, t) }
-        </span>
+      <a onClick={() => downloadHandler(pathInfo.path)}>
+        {pathInfo.path}
+        <span className="disk-info">{formatFreeSpace(pathInfo, t)}</span>
       </a>
     </div>
   </div>

@@ -4,20 +4,25 @@ import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorat
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 type ChatSession = UI.SessionItemBase;
 
 type MessageCache = UI.MessageListItem[];
 
-const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionListType<ChatSession>, access: string) {
-  // Message arrays mapped by session IDs 
+const MessageStoreDecorator = function (
+  store: any,
+  actions: UI.RefluxActionListType<ChatSession>,
+  access: string
+) {
+  // Message arrays mapped by session IDs
   const messages = new Map();
 
   // Keep track of session IDs for which message fetching has been initialized
   const initializedSession = new Set<API.IdType>();
 
-
-  const onFetchMessagesCompleted = (session: UI.SessionItemBase, cacheMessages: MessageCache) => {
+  const onFetchMessagesCompleted = (
+    session: UI.SessionItemBase,
+    cacheMessages: MessageCache
+  ) => {
     messages.set(session.id, mergeCacheMessages(cacheMessages, messages.get(session.id)));
     store.trigger(messages.get(session.id), session.id);
   };
@@ -26,13 +31,17 @@ const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionList
     initializedSession.add(session.id);
   };
 
-  const onMessageReceived = (sessionId: API.IdType, message: API.Message, type: UI.MessageType) => {
+  const onMessageReceived = (
+    sessionId: API.IdType,
+    message: API.Message,
+    type: UI.MessageType
+  ) => {
     messages.set(
-      sessionId, 
+      sessionId,
       pushMessage(
-        { 
-          [type]: message
-        } as UI.MessageListItem, 
+        {
+          [type]: message,
+        } as UI.MessageListItem,
         messages.get(sessionId)
       )
     );
@@ -54,10 +63,13 @@ const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionList
       }
 
       // Message limit exceed or messages were cleared?
-      const splicedMessages = checkSplice(messages.get(sessionId), session.message_counts.total);
+      const splicedMessages = checkSplice(
+        messages.get(sessionId),
+        session.message_counts.total
+      );
 
       // Don't update the messages if nothing has changed
-      // Session is updated when it's marked as read, which may happen simultaneously with the initial fetch. 
+      // Session is updated when it's marked as read, which may happen simultaneously with the initial fetch.
       // Triggering an update would cause an incomplete message log being flashed to the user
       if (splicedMessages !== messages.get(sessionId)) {
         messages.set(sessionId, splicedMessages);
@@ -78,20 +90,23 @@ const MessageStoreDecorator = function (store: any, actions: UI.RefluxActionList
       if (store.scroll) {
         store.scroll.onSocketDisconnected();
       }
-      
+
       messages.clear();
       initializedSession.clear();
     },
 
     hasMessages: () => messages.size > 0,
     hasInitializedSessions: () => initializedSession.size > 0,
-  
+
     getSessionMessages: (sessionId: API.IdType) => messages.get(sessionId),
     isSessionInitialized: (sessionId: API.IdType) => initializedSession.has(sessionId),
   };
 
   store.listenTo(actions.fetchMessages, onFetchMessages);
-  store.listenTo((actions.fetchMessages as UI.AsyncActionType<ChatSession>).completed, onFetchMessagesCompleted);
+  store.listenTo(
+    (actions.fetchMessages as UI.AsyncActionType<ChatSession>).completed,
+    onFetchMessagesCompleted
+  );
 
   return SocketSubscriptionDecorator(Object.assign(store, Decorator), access);
 };

@@ -15,19 +15,15 @@ const HighPrioEntry = [
   'prio_high_files_regex',
 ];
 
-const PrioritiesPage: React.FC<SettingSectionChildProps> = props => {
+const PrioritiesPage: React.FC<SettingSectionChildProps> = (props) => {
   const { translate } = props.moduleT;
   return (
     <div>
+      <RemoteSettingForm title={translate('File priorities')} {...props} keys={Entry} />
       <RemoteSettingForm
-        title={ translate('File priorities') }
-        { ...props }
-        keys={ Entry }
-      />
-      <RemoteSettingForm
-        title={ translate('High priority files') }
-        { ...props }
-        keys={ HighPrioEntry }
+        title={translate('High priority files')}
+        {...props}
+        keys={HighPrioEntry}
       />
     </div>
   );

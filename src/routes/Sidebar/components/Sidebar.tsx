@@ -1,6 +1,10 @@
 import { PureComponent } from 'react';
 
-import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
+import {
+  loadLocalProperty,
+  saveLocalProperty,
+  useMobileLayout,
+} from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
 import History from 'utils/History';
@@ -10,9 +14,7 @@ import { Location } from 'history';
 import { RouteItem, parseRoutes } from 'routes/Routes';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
 
-
 const MIN_WIDTH = 500;
-
 
 const showSidebar = (props: SidebarProps) => {
   return !!props.previousLocation;
@@ -34,11 +36,10 @@ interface State {
   width: number;
 }
 
-
 class Sidebar extends PureComponent<SidebarProps, State> {
   c: Resizable;
 
-  static contextType = LayoutWidthContext // Update the minimum width when the window is being resized
+  static contextType = LayoutWidthContext; // Update the minimum width when the window is being resized
 
   constructor(props: SidebarProps) {
     super(props);
@@ -46,7 +47,7 @@ class Sidebar extends PureComponent<SidebarProps, State> {
 
     this.state = {
       // Don't render the content while sidebar is animating
-      // Avoids issues if there are router transitions while the sidebar is 
+      // Avoids issues if there are router transitions while the sidebar is
       // animating (e.g. the content is placed in the middle of the window)
       visibility: Visibility.HIDDEN,
       width: Math.max(MIN_WIDTH, width),
@@ -76,7 +77,7 @@ class Sidebar extends PureComponent<SidebarProps, State> {
       onHidden: this.onHidden,
       onHide: this.onHide,
     } as SemanticUI.SidebarSettings);
-    
+
     const active = showSidebar(this.props);
     if (active) {
       $(this.c.resizable!).sidebar('show');
@@ -97,26 +98,25 @@ class Sidebar extends PureComponent<SidebarProps, State> {
       pathname: previousLocation.pathname,
       state: previousLocation.state,
     });
-  }
+  };
 
   onHidden = () => {
     this.setState({
       visibility: Visibility.HIDDEN,
     });
-  }
+  };
 
   onShow = () => {
     this.setState({
       visibility: Visibility.LOADING,
     });
-  }
+  };
 
   onVisible = () => {
-    this.setState({ 
-      
+    this.setState({
       visibility: Visibility.VISIBLE,
     });
-  }
+  };
 
   onResizeStop: ResizeCallback = (event, direction, element, delta) => {
     if (!delta.width) {
@@ -126,51 +126,58 @@ class Sidebar extends PureComponent<SidebarProps, State> {
     const width = element.clientWidth;
     saveLocalProperty('sidebar_width', width);
     this.setState({ width });
-  }
+  };
 
   getChildren = () => {
     const { visibility, width } = this.state;
     if (visibility === Visibility.HIDDEN) {
-      return null
+      return null;
     }
 
     return (
-      <LayoutWidthContext.Provider value={ width }>
+      <LayoutWidthContext.Provider value={width}>
         <div id="sidebar-container">
-          { visibility === Visibility.LOADING ? 
-            <Loader text=""/> : 
-            parseRoutes(this.props.routes, this.props.location)  
-          }
+          {visibility === Visibility.LOADING ? (
+            <Loader text="" />
+          ) : (
+            parseRoutes(this.props.routes, this.props.location)
+          )}
         </div>
       </LayoutWidthContext.Provider>
-    )
-  }
+    );
+  };
 
   render() {
     const { width } = this.state;
 
     const otherProps = {
-      id: 'sidebar'
+      id: 'sidebar',
     };
 
     return (
       <Resizable
-        ref={ (c: any) => this.c = c }
-        size={ {
+        ref={(c: any) => (this.c = c)}
+        size={{
           width: Math.min(width, window.innerWidth),
           height: window.innerHeight,
-        } }
-        minWidth={ Math.min(MIN_WIDTH, window.innerWidth) }
-        maxWidth={ window.innerWidth }
-        className="ui right vertical sidebar"
-        { ...otherProps }
-        enable={{ 
-          top: false, right: false, bottom: false, left: !useMobileLayout(), 
-          topRight: false, bottomRight: false, bottomLeft: false, topLeft: false 
         }}
-        onResizeStop={ this.onResizeStop }
+        minWidth={Math.min(MIN_WIDTH, window.innerWidth)}
+        maxWidth={window.innerWidth}
+        className="ui right vertical sidebar"
+        {...otherProps}
+        enable={{
+          top: false,
+          right: false,
+          bottom: false,
+          left: !useMobileLayout(),
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
+        onResizeStop={this.onResizeStop}
       >
-        { this.getChildren() }
+        {this.getChildren()}
       </Resizable>
     );
   }

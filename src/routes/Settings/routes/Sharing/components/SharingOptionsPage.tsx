@@ -10,21 +10,15 @@ const Entry = [
   'share_max_size',
 ];
 
-const Skiplist = [
-  'share_skiplist',
-  'share_skiplist_regex',
-];
+const Skiplist = ['share_skiplist', 'share_skiplist_regex'];
 
-const SharingOptionsPage: React.FC<SettingSectionChildProps> = props => (
+const SharingOptionsPage: React.FC<SettingSectionChildProps> = (props) => (
   <div>
+    <RemoteSettingForm {...props} keys={Entry} />
     <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-    />
-    <RemoteSettingForm
-      title={ props.moduleT.translate('Skiplist') }
-      { ...props }
-      keys={ Skiplist }
+      title={props.moduleT.translate('Skiplist')}
+      {...props}
+      keys={Skiplist}
     />
   </div>
 );

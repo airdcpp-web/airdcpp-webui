@@ -9,14 +9,13 @@ import SystemActions from 'actions/reflux/SystemActions';
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import { AddListener } from 'airdcpp-apisocket';
 
-
 export interface ActivityState {
   away: AwayEnum;
   userActive: boolean;
 }
 
 const ActivityStore = Reflux.createStore({
-  listenables: [ ActivityActions, SystemActions ],
+  listenables: [ActivityActions, SystemActions],
   _away: AwayEnum.OFF,
   _userActive: false,
 
@@ -53,7 +52,7 @@ const ActivityStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddListener) {
     const url = SystemConstants.MODULE_URL;
     addSocketListener(url, SystemConstants.AWAY_STATE, this.onFetchAwayCompleted);
-  }
+  },
 });
 
 export default SocketSubscriptionDecorator(ActivityStore);

@@ -7,12 +7,13 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 
-
 export interface LoginLocationState {
   nextPath?: string;
 }
 
-const useLoginState = (props: RouteComponentProps<UI.EmptyObject, any, LoginLocationState>) => {
+const useLoginState = (
+  props: RouteComponentProps<UI.EmptyObject, any, LoginLocationState>
+) => {
   const loadingState = useState(false);
   const setLoading = loadingState[1];
   const { i18n } = useTranslation();
@@ -42,24 +43,18 @@ const useLoginState = (props: RouteComponentProps<UI.EmptyObject, any, LoginLoca
     }
   };
 
-  useEffect(
-    () => {
-      checkLoginState(LoginStore.getState());
-      return LoginStore.listen(checkLoginState);
-    },
-    []
-  );
+  useEffect(() => {
+    checkLoginState(LoginStore.getState());
+    return LoginStore.listen(checkLoginState);
+  }, []);
 
-  useEffect(
-    () => {
-      const refreshToken: string | null = LoginStore.refreshToken;
-      if (!!refreshToken) {
-        LoginActions.loginRefreshToken(refreshToken);
-        setLoading(true);
-      }
-    },
-    []
-  );
+  useEffect(() => {
+    const refreshToken: string | null = LoginStore.refreshToken;
+    if (!!refreshToken) {
+      LoginActions.loginRefreshToken(refreshToken);
+      setLoading(true);
+    }
+  }, []);
 
   return loadingState;
 };

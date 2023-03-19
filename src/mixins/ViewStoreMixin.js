@@ -3,7 +3,6 @@ import TableActions from 'actions/TableActions';
 
 import invariant from 'invariant';
 
-
 // TODO: this should be handled on component level (instead of using global stores)
 export default (defaultSortProperty, defaultSortAscending = true) => {
   let active = false;
@@ -20,7 +19,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let sortAscending = defaultSortAscending;
 
   const findItem = (id) => {
-    return items.find(item => !item ? false : item.id === id );
+    return items.find((item) => (!item ? false : item.id === id));
   };
 
   const clear = () => {
@@ -129,7 +128,11 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
     },
 
     addMessageListener() {
-      this._removeMessageListener = SocketService.addViewUpdateListener(this._viewName, this._handleUpdate, entityId);
+      this._removeMessageListener = SocketService.addViewUpdateListener(
+        this._viewName,
+        this._handleUpdate,
+        entityId
+      );
     },
 
     get items() {
@@ -181,7 +184,9 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       }
 
       if (this.DEBUG) {
-        console.log(`Setting scroll position ${data} for view ${this.viewUrl} (view ID ${viewId})`);
+        console.log(
+          `Setting scroll position ${data} for view ${this.viewUrl} (view ID ${viewId})`
+        );
       }
 
       scrollPosition = data;
@@ -193,7 +198,9 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       }
 
       if (this.DEBUG) {
-        console.log(`Getting scroll position ${scrollPosition} for view ${this.viewUrl} (view ID ${viewId})`);
+        console.log(
+          `Getting scroll position ${scrollPosition} for view ${this.viewUrl} (view ID ${viewId})`
+        );
       }
 
       return scrollPosition;
@@ -202,7 +209,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
     _handleUpdate(data) {
       parseDataProperties(data);
       this.trigger(items, data.range_offset, matchingCount);
-    }
+    },
   };
 
   return ViewStoreMixin;

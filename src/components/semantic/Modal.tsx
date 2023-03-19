@@ -17,7 +17,6 @@ import { Translation } from 'react-i18next';
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 
-
 export type ModalProps = React.PropsWithChildren<{
   closable?: boolean;
   onApprove?: () => Promise<void>;
@@ -64,7 +63,10 @@ class Modal extends React.Component<ModalProps> {
     hide: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Pick<ModalProps, 'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'> = {
+  static defaultProps: Pick<
+    ModalProps,
+    'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'
+  > = {
     closable: true,
     //approveCaption: 'Save',
     fullHeight: false,
@@ -109,8 +111,7 @@ class Modal extends React.Component<ModalProps> {
       //name: 'Modal',
     };
 
-    $(this.c)
-      .modal(settings);
+    $(this.c).modal(settings);
 
     this.show();
   }
@@ -124,103 +125,95 @@ class Modal extends React.Component<ModalProps> {
 
   show = () => {
     setTimeout(() => $(this.c).modal('show'));
-  }
+  };
 
   hide = () => {
     $(this.c).modal('hide');
-  }
+  };
 
   onHide = () => {
     this.closing = true;
-  }
+  };
 
   onHidden = () => {
     if (this.returnOnClose && this.props.returnTo) {
       History.replace(this.props.returnTo);
     }
-    
+
     this.returnOnClose = true;
 
     if (this.props.onClose) {
       this.props.onClose();
     }
-  }
+  };
 
   onApprove = () => {
     const { onApprove } = this.props;
     if (onApprove) {
       this.setState({ saving: true });
-      
+
       onApprove()
         .then(this.hide)
         .catch(() => this.setState({ saving: false }));
-  
+
       return false;
     }
 
     return;
-  }
+  };
 
   render() {
     const { saving } = this.state;
-    const { approveDisabled, fullHeight, approveCaption, onApprove, className, children } = this.props;
+    const {
+      approveDisabled,
+      fullHeight,
+      approveCaption,
+      onApprove,
+      className,
+      children,
+    } = this.props;
     const { icon, subHeader, title } = this.props;
 
     const approveStyle = classNames(
       'ui ok green basic button',
-      { 'disabled': approveDisabled },
-      { 'loading': saving },
+      { disabled: approveDisabled },
+      { loading: saving }
     );
 
-    const mainClass = classNames(
-      'ui modal',
-      { 'full': fullHeight },
-      className,
-    );
+    const mainClass = classNames('ui modal', { full: fullHeight }, className);
 
     return ReactDOM.createPortal(
-      (
-        <div 
-          ref={ c => this.c = c }
-          className={ mainClass }
-        >
-          <LayoutHeader
-            title={ title }
-            icon={ icon }
-            subHeader={ subHeader }
-            size=""
-          />
-          <div className="content">
-            { children }
-          </div>
+      <div ref={(c) => (this.c = c)} className={mainClass}>
+        <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
+        <div className="content">{children}</div>
 
-          <Translation>
-            { t => onApprove ? (
+        <Translation>
+          {(t) =>
+            onApprove ? (
               <div className="actions">
-                <div className={ approveStyle }>
-                  <Icon icon={ IconConstants.SAVE_COLORED }/>
-                  { approveCaption || translate('Save', t, UI.Modules.COMMON) }
+                <div className={approveStyle}>
+                  <Icon icon={IconConstants.SAVE_COLORED} />
+                  {approveCaption || translate('Save', t, UI.Modules.COMMON)}
                 </div>
                 <div className="ui cancel red basic button">
-                  <Icon icon={ IconConstants.CANCEL }/>
-                  { translate('Cancel', t, UI.Modules.COMMON) }
+                  <Icon icon={IconConstants.CANCEL} />
+                  {translate('Cancel', t, UI.Modules.COMMON)}
                 </div>
               </div>
             ) : (
               <div className="actions">
                 <div className="ui cancel button">
-                  <Icon icon={ IconConstants.CLOSE }/>
-                  { translate('Close', t, UI.Modules.COMMON) }
+                  <Icon icon={IconConstants.CLOSE} />
+                  {translate('Close', t, UI.Modules.COMMON)}
                 </div>
               </div>
-            ) }
-          </Translation>
-        </div>
-      ), 
+            )
+          }
+        </Translation>
+      </div>,
       document.getElementById(NODE_ID)!
     );
   }
 }
-
 
 export default Modal;

@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
 
-
 export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
   handleAction: (value: string) => void;
   placeholder: string;
@@ -22,39 +21,35 @@ class ActionInput extends React.PureComponent<ActionInputProps> {
     placeholder: PropTypes.string.isRequired,
 
     // Function to call with the value
-    handleAction: PropTypes.func.isRequired
+    handleAction: PropTypes.func.isRequired,
   };
 
   static defaultProps: Pick<ActionInputProps, 'type'> = {
     type: 'text',
   };
 
-  state = { 
-    value: '' 
+  state = {
+    value: '',
   };
 
   handleClick = () => {
     this.props.handleAction(this.state.value);
-  }
+  };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: event.target.value });
-  }
+  };
 
   render() {
     const { type, placeholder, handleAction, ...other /*icon, caption*/ } = this.props;
     return (
       <div className="ui action input">
-        <input 
-          type={ type }
-          placeholder={ placeholder } 
-          onChange={ this.handleChange }
-        />
+        <input type={type} placeholder={placeholder} onChange={this.handleChange} />
         <Button
-          { ...other }
-          icon={ this.props.icon }
-          caption={ this.props.caption }
-          onClick={ this.handleClick }
+          {...other}
+          icon={this.props.icon}
+          caption={this.props.caption}
+          onClick={this.handleClick}
           disabled={this.state.value.length === 0}
         />
       </div>

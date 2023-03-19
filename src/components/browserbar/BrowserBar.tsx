@@ -8,8 +8,6 @@ import 'fomantic-ui-css/components/breadcrumb.min.css';
 
 import { Section, SelectedSection, SelectedNameFormatter } from './Section';
 
-
-
 interface BrowserBarProps {
   itemClickHandler: (name: string) => void;
   rootName: string;
@@ -78,7 +76,7 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
     if (newOverflow !== this.state.overflow) {
       this.setState({ overflow: newOverflow });
     }
-  }
+  };
 
   onClick = (token: string, index: number) => {
     const tokens = this.tokenizePath();
@@ -89,31 +87,31 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
     }
 
     this.props.itemClickHandler(path);
-  }
+  };
 
   formatName = (token: string) => {
     return (
       <div className="section-caption">
-        { this.props.rootPath === token ? this.props.rootName : token }
+        {this.props.rootPath === token ? this.props.rootName : token}
       </div>
     );
-  }
+  };
 
   formatSection = (token: string, index: number) => {
     return (
-      <Section 
-        key={ token + index } 
-        onClick={ () => this.onClick(token, index) }
-        caption={ this.formatName(token) }
+      <Section
+        key={token + index}
+        onClick={() => this.onClick(token, index)}
+        caption={this.formatName(token)}
       />
     );
-  }
+  };
 
   tokenizePath = () => {
     const { path, separator, rootPath } = this.props;
 
-    return [ rootPath, ...path.split(separator).filter(t => t.length !== 0) ];
-  }
+    return [rootPath, ...path.split(separator).filter((t) => t.length !== 0)];
+  };
 
   parsePath = () => {
     const tokens = this.tokenizePath();
@@ -121,29 +119,28 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
       current: tokens[tokens.length - 1],
       tokens: tokens.slice(0, tokens.length - 1),
     };
-  }
+  };
 
   render() {
     const { current, tokens } = this.parsePath();
 
-    const className = classNames(
-      'ui segment browserbar',
-      { overflow: this.state.overflow }
-    );
-    
+    const className = classNames('ui segment browserbar', {
+      overflow: this.state.overflow,
+    });
+
     return (
-      <div className={ className }>
-        <div className="path-navigation" ref={ c => this.wrapper = c! }>
-          <div className="ui breadcrumb" ref={ c => this.breadcrumb = c! }>
-            { tokens.map(this.formatSection) }
+      <div className={className}>
+        <div className="path-navigation" ref={(c) => (this.wrapper = c!)}>
+          <div className="ui breadcrumb" ref={(c) => (this.breadcrumb = c!)}>
+            {tokens.map(this.formatSection)}
           </div>
         </div>
 
         <SelectedSection
-          key={ current }
-          selectedNameFormatter={ this.props.selectedNameFormatter }
-          caption={ this.formatName(current) }
-          token={ current }
+          key={current}
+          selectedNameFormatter={this.props.selectedNameFormatter}
+          caption={this.formatName(current)}
+          token={current}
         />
       </div>
     );

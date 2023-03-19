@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import Modal from 'components/semantic/Modal';
 
-import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator, {
+  ModalRouteDecoratorChildProps,
+} from 'decorators/ModalRouteDecorator';
 
 import WebUserConstants from 'constants/WebUserConstants';
 import AccessConstants from 'constants/AccessConstants';
@@ -16,7 +18,9 @@ import Form, { FormSaveHandler, FormFieldSettingHandler } from 'components/form/
 import LoginStore from 'stores/LoginStore';
 
 import '../../style.css';
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -24,18 +28,18 @@ import { translateForm } from 'utils/FormUtils';
 import { getSubModuleT } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 
-
 const enum PermissionAction {
   EDIT = 'Edit',
   VIEW = 'View',
-  SEND_MESSAGES = 'Send messages'
+  SEND_MESSAGES = 'Send messages',
 }
 
-type CaptionEntry = string | {
-  title: string;
-  action: PermissionAction;
-};
-
+type CaptionEntry =
+  | string
+  | {
+      title: string;
+      action: PermissionAction;
+    };
 
 const AccessCaptions: { [key in string]: CaptionEntry } = {
   ADMIN: 'Administrator',
@@ -79,7 +83,7 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
     title: 'Settings',
     action: PermissionAction.EDIT,
   },
-  
+
   FILESYSTEM_VIEW: {
     title: 'Local filesystem',
     action: PermissionAction.VIEW,
@@ -123,7 +127,7 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
     title: 'Filelists',
     action: PermissionAction.EDIT,
   },
-  
+
   VIEW_FILE_VIEW: {
     title: 'Viewed files',
     action: PermissionAction.VIEW,
@@ -134,8 +138,11 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
   },
 };
 
-
-const reducePermissionToOption = (options: API.SettingEnumOption[], key: string, moduleT: UI.ModuleTranslator) => {
+const reducePermissionToOption = (
+  options: API.SettingEnumOption[],
+  key: string,
+  moduleT: UI.ModuleTranslator
+) => {
   const captionEntry = AccessCaptions[key];
   if (typeof captionEntry === 'string') {
     options.push({
@@ -145,14 +152,18 @@ const reducePermissionToOption = (options: API.SettingEnumOption[], key: string,
   } else {
     options.push({
       id: AccessConstants[key],
-      name: `${moduleT.translate(captionEntry.title)} (${moduleT.translate(captionEntry.action)})`,
-    }); 
+      name: `${moduleT.translate(captionEntry.title)} (${moduleT.translate(
+        captionEntry.action
+      )})`,
+    });
   }
 
   return options;
 };
 
-const getEntry = (isNew: boolean /*, moduleT: UI.ModuleTranslator*/): UI.FormFieldDefinition[] => {
+const getEntry = (
+  isNew: boolean /*, moduleT: UI.ModuleTranslator*/
+): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
@@ -178,9 +189,7 @@ interface WebUserDialogProps {
   moduleT: UI.ModuleTranslator;
 }
 
-interface Entry extends API.WebUserInput, UI.FormValueMap {
-
-}
+interface Entry extends API.WebUserInput, UI.FormValueMap {}
 
 interface DataProps extends DataProviderDecoratorChildProps {
   user: API.WebUserInput;
@@ -190,12 +199,10 @@ interface RouteProps {
   userId: string;
 }
 
-type Props = WebUserDialogProps & DataProps & 
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = WebUserDialogProps & DataProps & ModalRouteDecoratorChildProps<RouteProps>;
 
 class WebUserDialog extends Component<Props> {
   static displayName = 'WebUserDialog';
-
 
   entry: UI.FormFieldDefinition[];
   form: Form<Entry>;
@@ -204,32 +211,35 @@ class WebUserDialog extends Component<Props> {
     super(props);
 
     this.entry = translateForm(getEntry(this.isNew()), props.moduleT);
-  
+
     const permissionT = getSubModuleT(props.moduleT, 'permissionSelector');
-    const permissions = this.entry.find(def => def.key === 'permissions')!;
+    const permissions = this.entry.find((def) => def.key === 'permissions')!;
     Object.assign(permissions, {
       options: Object.keys(AccessConstants).reduce(
-        (reduced, cur) => reducePermissionToOption(reduced, cur, permissionT), 
+        (reduced, cur) => reducePermissionToOption(reduced, cur, permissionT),
         []
-      )
+      ),
     });
   }
 
   isNew = () => {
     return !this.props.user;
-  }
+  };
 
   save = () => {
     return this.form.save();
-  }
+  };
 
   onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (this.isNew()) {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
 
-    return SocketService.patch(`${WebUserConstants.USERS_URL}/${this.props.user.id}`, changedFields);
-  }
+    return SocketService.patch(
+      `${WebUserConstants.USERS_URL}/${this.props.user.id}`,
+      changedFields
+    );
+  };
 
   onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'permissions') {
@@ -242,28 +252,28 @@ class WebUserDialog extends Component<Props> {
     } else if (id === 'username') {
       fieldOptions.disabled = !this.isNew();
     }
-  }
+  };
 
   render() {
     const { user, moduleT, ...other } = this.props;
     const title = moduleT.translate(this.isNew() ? 'Add web user' : 'Edit user');
 
     return (
-      <Modal 
-        className="web-user" 
-        title={ title } 
-        onApprove={ this.save } 
-        closable={ false } 
-        icon={ IconConstants.USER }
-        { ...other }
+      <Modal
+        className="web-user"
+        title={title}
+        onApprove={this.save}
+        closable={false}
+        icon={IconConstants.USER}
+        {...other}
       >
         <Form<Entry>
-          ref={ (c: any) => this.form = c! }
-          fieldDefinitions={ this.entry }
-          onFieldSetting={ this.onFieldSetting }
-          onSave={ this.onSave }
-          sourceValue={ this.props.user as Entry }
-          location={ this.props.location }
+          ref={(c: any) => (this.form = c!)}
+          fieldDefinitions={this.entry}
+          onFieldSetting={this.onFieldSetting}
+          onSave={this.onSave}
+          sourceValue={this.props.user as Entry}
+          location={this.props.location}
         />
       </Modal>
     );

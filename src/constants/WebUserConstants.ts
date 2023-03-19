@@ -7,5 +7,4 @@ export default {
   ADDED: 'web_user_added',
   UPDATED: 'web_user_updated',
   REMOVED: 'web_user_removed',
-}
-;
+};

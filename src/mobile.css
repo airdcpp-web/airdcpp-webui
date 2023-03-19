@@ -25,7 +25,7 @@
 
 #mobile-menu i.navigation.icon {
   float: none !important;
-  margin: 0 .5em 0 0 !important;
+  margin: 0 0.5em 0 0 !important;
 }
 
 #mobile-menu .separator {
@@ -35,7 +35,7 @@
 /* Semantic has issues with right vertical menu */
 #mobile-menu .ui.dropdown.right .menu {
   right: 100%;
-  border-radius: .28571429rem 0 .28571429rem .28571429rem;
+  border-radius: 0.28571429rem 0 0.28571429rem 0.28571429rem;
   left: auto !important;
 }
 

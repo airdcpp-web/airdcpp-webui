@@ -6,7 +6,6 @@ import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 
-
 interface ErrorBoxProps {
   lastError: string | null;
   t: UI.TranslateF;
@@ -18,14 +17,14 @@ export const ErrorBox: React.FC<ErrorBoxProps> = ({ lastError, t }) => {
   }
 
   return (
-    <Message 
-      isError={ true } 
-      description={ t<string>(toI18nKey('authenticationFailed', UI.Modules.LOGIN), {
+    <Message
+      isError={true}
+      description={t<string>(toI18nKey('authenticationFailed', UI.Modules.LOGIN), {
         defaultValue: 'Authentication failed: {{lastError}}',
         replace: {
-          lastError
-        } 
-      }) }
+          lastError,
+        },
+      })}
     />
   );
 };
@@ -37,7 +36,12 @@ interface SubmitButtonProps {
   t: UI.TranslateF;
 }
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, allowLogin, t }) => {
+export const SubmitButton: React.FC<SubmitButtonProps> = ({
+  onSubmit,
+  loading,
+  allowLogin,
+  t,
+}) => {
   if (!allowLogin) {
     return null;
   }
@@ -45,10 +49,10 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({ onSubmit, loading, a
   return (
     <Button
       className="fluid large submit"
-      caption={ translate('Login', t, UI.Modules.LOGIN) }
+      caption={translate('Login', t, UI.Modules.LOGIN)}
       type="submit"
-      loading={ loading }
-      onClick={ onSubmit }
+      loading={loading}
+      onClick={onSubmit}
     />
   );
 };
@@ -60,14 +64,14 @@ export const BottomMessage = () => {
 
   return (
     <div className="ui stacked segment">
-      <Message 
-        description={ (
+      <Message
+        description={
           <div>
             Username: <strong>demo</strong>
-            <br/>
+            <br />
             Password: <strong>demo</strong>
-          </div> 
-        )}
+          </div>
+        }
       />
     </div>
   );

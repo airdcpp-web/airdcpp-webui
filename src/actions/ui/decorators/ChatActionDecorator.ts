@@ -5,17 +5,14 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 type SessionType = UI.SessionItemBase;
 
 export default function (
-  actions: UI.ActionListType<SessionType>, 
-  sessionUrl: string, 
+  actions: UI.ActionListType<SessionType>,
+  sessionUrl: string,
   editAccess: API.AccessEnum
 ) {
-  const handleClear: UI.ActionHandler<SessionType> = (
-    { data: session }
-  ) => {
+  const handleClear: UI.ActionHandler<SessionType> = ({ data: session }) => {
     return SocketService.delete(`${sessionUrl}/${session.id}/messages`);
   };
 
@@ -25,7 +22,7 @@ export default function (
       access: editAccess,
       icon: IconConstants.CLEAR,
       handler: handleClear,
-    }
+    },
   };
 
   return Object.assign(actions, ChatActions);

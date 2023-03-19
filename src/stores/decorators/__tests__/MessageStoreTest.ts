@@ -5,7 +5,6 @@ import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const SESSION_ID = 0;
 const SESSION_BASE = {
   id: SESSION_ID,
@@ -22,10 +21,10 @@ const StatusMessage1 = {
 const messages = [
   {
     chat_message: ChatMessage0,
-  }, 
+  },
   {
     log_message: StatusMessage1,
-  }
+  },
 ];
 
 const clearMessages = () => {
@@ -37,13 +36,12 @@ const clearMessages = () => {
           bot: 0,
           user: 0,
           status: 0,
-        }
-      }
+        },
+      },
     } as UI.UnreadInfo,
-    SESSION_ID,
+    SESSION_ID
   );
 };
-
 
 describe('message store', () => {
   jest.useFakeTimers();
@@ -74,7 +72,7 @@ describe('message store', () => {
           user: 1,
           bot: 1,
           status: 1,
-        }
+        },
       },
     };
 
@@ -90,7 +88,7 @@ describe('message store', () => {
           user: 0,
           bot: 0,
           status: 0,
-        }
+        },
       },
     });
   });
@@ -103,7 +101,10 @@ describe('message store', () => {
     PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
     PrivateChatMessageStore._onChatMessage(ChatMessage2, SESSION_ID);
 
-    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(SESSION_BASE, messages);
+    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(
+      SESSION_BASE,
+      messages
+    );
     jest.runAllTimers();
 
     // All three messages should have been stored
@@ -111,12 +112,15 @@ describe('message store', () => {
       ...messages,
       {
         chat_message: ChatMessage2,
-      }
+      },
     ]);
   });
 
   test('should remove duplicates arriving after fetching', () => {
-    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(SESSION_BASE, messages);
+    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(
+      SESSION_BASE,
+      messages
+    );
     jest.runAllTimers();
 
     PrivateChatMessageStore._onStatusMessage(StatusMessage1, SESSION_ID);
@@ -125,7 +129,10 @@ describe('message store', () => {
   });
 
   test('should remove session data', () => {
-    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(SESSION_BASE, messages);
+    (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(
+      SESSION_BASE,
+      messages
+    );
     jest.runAllTimers();
 
     expect(PrivateChatMessageStore.isSessionInitialized(SESSION_ID));

@@ -2,7 +2,6 @@ import * as React from 'react';
 import classNames from 'classnames';
 import Icon, { IconType } from 'components/semantic/Icon';
 
-
 export type ListItemProps = React.PropsWithChildren<{
   header: React.ReactNode;
   description: React.ReactNode;
@@ -10,19 +9,21 @@ export type ListItemProps = React.PropsWithChildren<{
   className?: string;
 }>;
 
-export const ListItem: React.FC<ListItemProps> = ({ header, description, icon, className, children }) => (
-  <div className={ classNames('item', className) }>
-    <Icon icon={ icon }/>
+export const ListItem: React.FC<ListItemProps> = ({
+  header,
+  description,
+  icon,
+  className,
+  children,
+}) => (
+  <div className={classNames('item', className)}>
+    <Icon icon={icon} />
     <div className="content">
-      <div className="header">
-        { header }
-      </div>
-      { (description !== null && description !== undefined) && (
-        <div className="description">
-          { description }
-        </div> 
-      ) }
-      { children }
+      <div className="header">{header}</div>
+      {description !== null && description !== undefined && (
+        <div className="description">{description}</div>
+      )}
+      {children}
     </div>
   </div>
 );

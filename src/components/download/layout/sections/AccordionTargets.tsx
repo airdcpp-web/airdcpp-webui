@@ -15,7 +15,6 @@ import { PathDownloadHandler } from '../../types';
 
 import PathList from './PathList';
 
-
 interface AccordionTargetsProps {
   groupedPaths: API.GroupedPath[];
   downloadHandler: PathDownloadHandler;
@@ -34,36 +33,28 @@ class AccordionTargets extends Component<AccordionTargetsProps> {
   formatParent = (parent: API.GroupedPath) => {
     const { downloadHandler, t } = this.props;
     return (
-      <React.Fragment key={ parent.name }>
+      <React.Fragment key={parent.name}>
         <div className="title">
-          <Icon icon={ IconConstants.DROPDOWN }/>
-          { parent.name }
+          <Icon icon={IconConstants.DROPDOWN} />
+          {parent.name}
         </div>
 
         <div className="content">
-          <PathList 
-            paths={ parent.paths } 
-            downloadHandler={ downloadHandler }
-            t={ t }
-          />
+          <PathList paths={parent.paths} downloadHandler={downloadHandler} t={t} />
         </div>
       </React.Fragment>
     );
-  }
+  };
 
   render() {
     const { groupedPaths, t } = this.props;
     if (groupedPaths.length === 0) {
-      return (
-        <Message
-          title={ translate('No paths to display', t, UI.Modules.COMMON) }
-        />
-      );
+      return <Message title={translate('No paths to display', t, UI.Modules.COMMON)} />;
     }
 
     return (
       <Accordion className="styled download-targets">
-        { groupedPaths.map(this.formatParent) }
+        {groupedPaths.map(this.formatParent)}
       </Accordion>
     );
   }

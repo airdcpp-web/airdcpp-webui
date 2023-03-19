@@ -35,7 +35,7 @@ export interface Transfer {
   bytes_transferred: number;
   time_started: number;
   speed: number;
-  seconds_left: number; 
+  seconds_left: number;
   encryption: EncryptionInfo | null;
   ip: IP;
   user: HintedUser;

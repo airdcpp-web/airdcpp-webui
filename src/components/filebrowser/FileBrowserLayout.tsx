@@ -22,8 +22,8 @@ import * as UI from 'types/ui';
 
 import './style.css';
 
-
-export interface FileBrowserLayoutProps extends Pick<FileItemListProps, 'itemIconGetter'> {
+export interface FileBrowserLayoutProps
+  extends Pick<FileItemListProps, 'itemIconGetter'> {
   historyId?: string;
   initialPath: string;
   currentFileName?: string;
@@ -82,14 +82,15 @@ class FileBrowserLayout extends Component<Props, State> {
 
     let currentDirectory = loadLocalProperty<string | undefined>(this.getStorageKey());
     if (!currentDirectory) {
-      currentDirectory = props.initialPath.length === 0 ? this.getRootPath() : props.initialPath;
+      currentDirectory =
+        props.initialPath.length === 0 ? this.getRootPath() : props.initialPath;
     }
 
     this.state = {
       currentDirectory,
       items: [],
       loading: true,
-      error: null
+      error: null,
     };
   }
 
@@ -100,7 +101,7 @@ class FileBrowserLayout extends Component<Props, State> {
     }
 
     return `browse_${historyId}`;
-  }
+  };
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.currentDirectory !== this.state.currentDirectory) {
@@ -122,21 +123,21 @@ class FileBrowserLayout extends Component<Props, State> {
     if (this.props.onDirectoryChanged) {
       this.props.onDirectoryChanged(this.state.currentDirectory);
     }
-  }
+  };
 
   fetchItems = (path: string) => {
-    this.setState({ 
+    this.setState({
       error: null,
-      loading: true
+      loading: true,
     });
 
-    SocketService.post(FilesystemConstants.LIST_URL, { 
-      path: path, 
-      directories_only: false 
+    SocketService.post(FilesystemConstants.LIST_URL, {
+      path: path,
+      directories_only: false,
     })
       .then(this.onFetchSucceed.bind(this, path))
       .catch(this.onFetchFailed);
-  }
+  };
 
   onFetchFailed = (error: Error) => {
     if (this.fetchRootOnError) {
@@ -147,21 +148,21 @@ class FileBrowserLayout extends Component<Props, State> {
       return;
     }
 
-    this.setState({ 
+    this.setState({
       error: error.message,
-      loading: false
+      loading: false,
     });
-  }
+  };
 
   onFetchSucceed = (path: string, data: API.FilesystemItem[]) => {
-    this.setState({ 
+    this.setState({
       currentDirectory: path,
       items: data,
-      loading: false
+      loading: false,
     });
 
     this.fetchRootOnError = false;
-  }
+  };
 
   _handleSelect = (item: API.FilesystemItem) => {
     const { currentDirectory } = this.state;
@@ -171,79 +172,92 @@ class FileBrowserLayout extends Component<Props, State> {
       this.fetchItems(nextPath);
     } else {
       // File
-      const { onFileSelected } = this.props;        
+      const { onFileSelected } = this.props;
       if (onFileSelected) {
         onFileSelected(item.name);
       }
     }
-  }
+  };
 
   _createDirectory = (directoryName: string) => {
-    this.setState({ 
-      error: null
+    this.setState({
+      error: null,
     });
 
     const newPath = this.state.currentDirectory + directoryName + this.pathSeparator;
     SocketService.post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
       .then(() => this.fetchItems(this.state.currentDirectory))
-      .catch((error: Error) => this.setState({ 
-        error: error.message
-      }));
-  }
+      .catch((error: Error) =>
+        this.setState({
+          error: error.message,
+        })
+      );
+  };
 
   getRootPath = () => {
     return this.isWindows ? '' : '/';
-  }
+  };
 
   render() {
     const { currentDirectory, error, items, loading } = this.state;
-    const { selectedNameFormatter, itemIconGetter, t, selectMode, currentFileName, onFileSelected } = this.props;
+    const {
+      selectedNameFormatter,
+      itemIconGetter,
+      t,
+      selectMode,
+      currentFileName,
+      onFileSelected,
+    } = this.props;
 
     if (loading) {
-      return <Loader text={ translate('Loading items', t, UI.Modules.COMMON) }/>;
+      return <Loader text={translate('Loading items', t, UI.Modules.COMMON)} />;
     }
 
-
     const hasEditAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_EDIT);
-    const rootName = translate(this.isWindows ? 'Computer' : 'Root', t, UI.Modules.COMMON);
+    const rootName = translate(
+      this.isWindows ? 'Computer' : 'Root',
+      t,
+      UI.Modules.COMMON
+    );
     return (
       <div className="file-browser">
-        { !!error && (
-          <Message 
-            isError={ true } 
-            title={ translate('Failed to load content', t, UI.Modules.COMMON) } 
-            description={ error }
-          /> 
-        ) }
-        <BrowserBar 
-          path={ currentDirectory }
-          separator={ this.pathSeparator } 
-          rootPath={ this.getRootPath() } 
-          rootName={ rootName } 
-          itemClickHandler={ this.fetchItems }
-          selectedNameFormatter={ selectedNameFormatter }
-        />
-        <FileItemList 
-          items={ items } 
-          itemClickHandler={ this._handleSelect }
-          itemIconGetter={ itemIconGetter }
-          selectMode={ selectMode }
-          currentFileName={ currentFileName }
-          t={ t }
-        />
-        { !!this.state.currentDirectory && hasEditAccess && selectMode !== UI.FileSelectModeEnum.EXISTING_FILE  && (
-          <CreateDirectorySection 
-            handleAction={ this._createDirectory }
-            t={ t }
-          />
-        ) }
-        { selectMode === UI.FileSelectModeEnum.FILE && !!onFileSelected && currentFileName !== undefined && (
-          <FileNameSection
-            currentFileName={ currentFileName }
-            onChange={ onFileSelected }
-            t={ t }
+        {!!error && (
+          <Message
+            isError={true}
+            title={translate('Failed to load content', t, UI.Modules.COMMON)}
+            description={error}
           />
         )}
+        <BrowserBar
+          path={currentDirectory}
+          separator={this.pathSeparator}
+          rootPath={this.getRootPath()}
+          rootName={rootName}
+          itemClickHandler={this.fetchItems}
+          selectedNameFormatter={selectedNameFormatter}
+        />
+        <FileItemList
+          items={items}
+          itemClickHandler={this._handleSelect}
+          itemIconGetter={itemIconGetter}
+          selectMode={selectMode}
+          currentFileName={currentFileName}
+          t={t}
+        />
+        {!!this.state.currentDirectory &&
+          hasEditAccess &&
+          selectMode !== UI.FileSelectModeEnum.EXISTING_FILE && (
+            <CreateDirectorySection handleAction={this._createDirectory} t={t} />
+          )}
+        {selectMode === UI.FileSelectModeEnum.FILE &&
+          !!onFileSelected &&
+          currentFileName !== undefined && (
+            <FileNameSection
+              currentFileName={currentFileName}
+              onChange={onFileSelected}
+              t={t}
+            />
+          )}
       </div>
     );
   }

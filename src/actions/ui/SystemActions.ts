@@ -6,7 +6,6 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const handleRestartWeb = () => {
   return SocketService.post(SystemConstants.MODULE_URL + '/restart_web');
 };
@@ -14,8 +13,6 @@ const handleRestartWeb = () => {
 const handleShutdown = () => {
   return SocketService.post(SystemConstants.MODULE_URL + '/shutdown');
 };
-
-
 
 const SystemActions: UI.ActionListType<undefined> = {
   restartWeb: {
@@ -31,7 +28,7 @@ const SystemActions: UI.ActionListType<undefined> = {
       approveCaption: 'Continue and restart',
       rejectCaption: `Don't restart`,
     },
-    handler: handleRestartWeb
+    handler: handleRestartWeb,
   },
   shutdown: {
     displayName: 'Shut down application',
@@ -42,10 +39,9 @@ const SystemActions: UI.ActionListType<undefined> = {
       approveCaption: 'Continue and shut down',
       rejectCaption: 'Cancel',
     },
-    handler: handleShutdown
+    handler: handleShutdown,
   },
 };
-
 
 export default {
   moduleId: UI.Modules.COMMON,

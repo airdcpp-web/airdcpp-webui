@@ -1,4 +1,3 @@
-
 export interface FavoriteDirectoryEntryBase {
   id: string;
   name: string;

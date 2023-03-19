@@ -5,7 +5,6 @@ import Icon, { IconType } from 'components/semantic/Icon';
 
 import classNames from 'classnames';
 
-
 interface LayoutHeaderProps {
   className?: string;
   size?: string;
@@ -15,34 +14,33 @@ interface LayoutHeaderProps {
   subHeader?: React.ReactNode;
 }
 
-const LayoutHeader: React.FC<LayoutHeaderProps> = ({ className, icon, rightComponent, size, title, subHeader }) => {
+const LayoutHeader: React.FC<LayoutHeaderProps> = ({
+  className,
+  icon,
+  rightComponent,
+  size,
+  title,
+  subHeader,
+}) => {
   const mainClassName = classNames(
     'header layout',
-    { 'icon': !!icon },
-    { 'sectioned': !!rightComponent },
-    className,
+    { icon: !!icon },
+    { sectioned: !!rightComponent },
+    className
   );
 
-  const headerClassName = classNames(
-    'ui header',
-    { 'left': !!rightComponent },
-    size,
-  );
+  const headerClassName = classNames('ui header', { left: !!rightComponent }, size);
 
   return (
-    <div className={ mainClassName }>
-      <div className={ headerClassName }>
-        <Icon size={ size } icon={ icon }/>
+    <div className={mainClassName}>
+      <div className={headerClassName}>
+        <Icon size={size} icon={icon} />
         <div className="content">
-          { title }
-          { !!subHeader && (
-            <div className="sub header">
-              { subHeader }
-            </div>
-          ) }
+          {title}
+          {!!subHeader && <div className="sub header">{subHeader}</div>}
         </div>
       </div>
-      { rightComponent }
+      {rightComponent}
     </div>
   );
 };

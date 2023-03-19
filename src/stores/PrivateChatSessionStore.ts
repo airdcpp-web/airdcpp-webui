@@ -14,14 +14,16 @@ import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import * as API from 'types/api';
 
-
 const PrivateChatSessionStore = Reflux.createStore({
   getInitialState: function () {
     return this.getSessions();
   },
 
   onSocketConnected(addSocketListener: AddSocketListener) {
-    invariant(this.getSessions().length === 0, 'No existing private chat sessions should exist on socket connect');
+    invariant(
+      this.getSessions().length === 0,
+      'No existing private chat sessions should exist on socket connect'
+    );
 
     const url = PrivateChatConstants.MODULE_URL;
     addSocketListener(url, PrivateChatConstants.SESSION_CREATED, this._onSessionCreated);
@@ -31,10 +33,8 @@ const PrivateChatSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator<API.PrivateChat>(
-  SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW), 
-  PrivateChatActions, 
-  session => 
-    session.user.flags.indexOf('bot') !== -1 ? 
-      ChatroomUrgencies : 
-      PrivateMessageUrgencies
+  SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW),
+  PrivateChatActions,
+  (session) =>
+    session.user.flags.indexOf('bot') !== -1 ? ChatroomUrgencies : PrivateMessageUrgencies
 );

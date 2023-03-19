@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
@@ -7,16 +6,11 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
-const sendPassword = (
-  hub: API.FavoriteHubEntry,
-  password: string | null
-) => {
-  return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, { 
-    password 
+const sendPassword = (hub: API.FavoriteHubEntry, password: string | null) => {
+  return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, {
+    password,
   });
 };
-
 
 const handleSetPassword: UI.ActionHandler<API.FavoriteHubEntry> = (
   { data: hub },
@@ -32,11 +26,10 @@ const handleRemovePassword: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hu
 const hasPassword = (data: API.FavoriteHubEntry) => data.has_password;
 const noPassword = (data: API.FavoriteHubEntry) => !hasPassword(data);
 
-
 const FavoriteHubPasswordActions: UI.ActionListType<API.FavoriteHubEntry> = {
   create: {
     displayName: 'Set password',
-    access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.LOCK,
     filter: noPassword,
     input: {
@@ -45,13 +38,13 @@ const FavoriteHubPasswordActions: UI.ActionListType<API.FavoriteHubEntry> = {
       inputProps: {
         placeholder: 'Enter password',
         type: 'password',
-      }
+      },
     },
     handler: handleSetPassword,
   },
   change: {
     displayName: 'Change password',
-    access: API.AccessEnum.FAVORITE_HUBS_EDIT, 
+    access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.EDIT,
     filter: hasPassword,
     input: {
@@ -60,7 +53,7 @@ const FavoriteHubPasswordActions: UI.ActionListType<API.FavoriteHubEntry> = {
       inputProps: {
         placeholder: 'Enter password',
         type: 'password',
-      }
+      },
     },
     handler: handleSetPassword,
   },
@@ -70,7 +63,8 @@ const FavoriteHubPasswordActions: UI.ActionListType<API.FavoriteHubEntry> = {
     icon: IconConstants.REMOVE,
     filter: hasPassword,
     confirmation: {
-      content: 'Are you sure that you want to reset the password of the hub {{item.name}}?',
+      content:
+        'Are you sure that you want to reset the password of the hub {{item.name}}?',
       approveCaption: 'Remove password',
       rejectCaption: `Don't remove`,
     },

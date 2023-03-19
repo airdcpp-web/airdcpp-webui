@@ -3,11 +3,11 @@
 }
 
 .session-container.horizontal .menu-column .item.new {
-  padding: .78571429em 1.1em !important;
+  padding: 0.78571429em 1.1em !important;
 }
 
-.session-container.horizontal .ui.vertical.menu .item>i.icon {
-  margin: 0 .35714286em 0 0 !important;
+.session-container.horizontal .ui.vertical.menu .item > i.icon {
+  margin: 0 0.35714286em 0 0 !important;
 }
 
 .session-container.horizontal .session-layout > .ui.divider {
@@ -71,7 +71,7 @@
 
 .session-container.vertical .session-header > div {
   max-width: 90%; /* Hack, auto width won't work without "overflow: hidden", but that would prevent viewing the menu items  */
-  padding: .82857143em 0.4285714em;
+  padding: 0.82857143em 0.4285714em;
   line-height: 1.2;
 }
 
@@ -103,8 +103,8 @@
   padding-bottom: 0px;
 }
 
-.session-container, 
-.session-layout, 
+.session-container,
+.session-layout,
 .session-container.horizontal .column {
   height: 100%;
 }
@@ -117,13 +117,13 @@
   overflow: hidden;
   display: flex !important;
   align-items: center;
-  padding: .68571429em .92857143em !important;
+  padding: 0.68571429em 0.92857143em !important;
   height: 35px;
 }
 
 .session-container .session-item .session-status {
   float: none !important;
-  margin: 0 .5em 0 0 !important;
+  margin: 0 0.5em 0 0 !important;
 }
 
 .session-container .session-item .session-name {

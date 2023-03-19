@@ -14,35 +14,25 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
-
 interface RefreshCellProps extends RowWrapperCellChildProps<number, API.ShareRootEntry> {}
 
-const RefreshCell: React.FC<RefreshCellProps> = (
-  { rowDataGetter, cellData, t }
-) => {
+const RefreshCell: React.FC<RefreshCellProps> = ({ rowDataGetter, cellData, t }) => {
   const state = rowDataGetter!().status;
   if (state.id !== API.ShareRootStatusEnum.NORMAL) {
     return (
       <div style={{ display: 'flex' }}>
         <Icon
-          icon={ IconConstants.CANCEL }
+          icon={IconConstants.CANCEL}
           color="red"
           size="large"
-          onClick={ () => {
+          onClick={() => {
             const refreshTaskId = rowDataGetter!().status.refresh_task_id;
             if (!!refreshTaskId) {
-              runBackgroundSocketAction(
-                () => abortRefreshTask(refreshTaskId),
-                t!
-              );
+              runBackgroundSocketAction(() => abortRefreshTask(refreshTaskId), t!);
             }
           }}
         />
-        <Loader 
-          size="small" 
-          inline={ true } 
-          text={ state.str }
-        />
+        <Loader size="small" inline={true} text={state.str} />
       </div>
     );
   }
@@ -50,16 +40,15 @@ const RefreshCell: React.FC<RefreshCellProps> = (
   return (
     <div>
       <Icon
-        icon={ IconConstants.REFRESH_COLORED }
+        icon={IconConstants.REFRESH_COLORED}
         size="large"
-        onClick={ () => 
-          runBackgroundSocketAction(
-            () => refreshPaths([ rowDataGetter!().path ]),
-            t!
-          )
+        onClick={() =>
+          runBackgroundSocketAction(() => refreshPaths([rowDataGetter!().path]), t!)
         }
       />
-      { cellData === 0 ? translate('Unknown', t!, UI.Modules.SHARE) : formatRelativeTime(cellData!) }
+      {cellData === 0
+        ? translate('Unknown', t!, UI.Modules.SHARE)
+        : formatRelativeTime(cellData!)}
     </div>
   );
 };

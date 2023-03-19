@@ -10,6 +10,5 @@ export default {
   STOP_URL: MODULE_URL + '/stop',
 
   DATABASE_STATUS: 'hash_database_status',
-  STATISTICS: 'hash_statistics'
-}
-;
+  STATISTICS: 'hash_statistics',
+};

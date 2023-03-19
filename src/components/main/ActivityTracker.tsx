@@ -6,7 +6,6 @@ import LoginActions from 'actions/reflux/LoginActions';
 import { AwayEnum } from 'constants/SystemConstants';
 import ActivityStore from 'stores/ActivityStore';
 
-
 const SYSTEM_ALIVE_TIMEOUT = 30000;
 const USER_ACTIVE_TIMEOUT = 30000;
 
@@ -49,7 +48,8 @@ class ActivityTracker extends Component {
 
   checkAlive = () => {
     const currentTime = Date.now();
-    if (currentTime > (this.lastSystemAlive + SYSTEM_ALIVE_TIMEOUT)) { // Require 30 seconds of downtime
+    if (currentTime > this.lastSystemAlive + SYSTEM_ALIVE_TIMEOUT) {
+      // Require 30 seconds of downtime
       const minutesAgo = (currentTime - this.lastSystemAlive) / 60 / 1000;
       console.log(
         `Wake up detected (last successful activity check was ${minutesAgo} minutes ago)`
@@ -60,7 +60,7 @@ class ActivityTracker extends Component {
     }
 
     this.lastSystemAlive = currentTime;
-  }
+  };
 
   checkActivity = () => {
     if (!ActivityStore.userActive) {
@@ -68,14 +68,14 @@ class ActivityTracker extends Component {
     }
 
     const currentTime = Date.now();
-    if (currentTime > (this.lastUserActive + USER_ACTIVE_TIMEOUT)) {
+    if (currentTime > this.lastUserActive + USER_ACTIVE_TIMEOUT) {
       // Mark as inactive
       this.setUserInactive();
     } else {
       // Notify API that the user is still active
       ActivityActions.sessionActivity();
     }
-  }
+  };
 
   setActive = () => {
     this.lastUserActive = Date.now();
@@ -93,7 +93,7 @@ class ActivityTracker extends Component {
     if (document.hasFocus()) {
       ActivityActions.userActiveChanged(true);
     }
-  }
+  };
 
   setUserInactive = () => {
     if (!ActivityStore.userActive) {
@@ -101,7 +101,7 @@ class ActivityTracker extends Component {
     }
 
     ActivityActions.userActiveChanged(false);
-  }
+  };
 
   render() {
     return null;

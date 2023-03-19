@@ -1,4 +1,3 @@
-
 import History from 'utils/History';
 import SocketService from 'services/SocketService';
 import { sleep } from 'utils/Promise';
@@ -19,20 +18,26 @@ import { makeHashMagnetLink, makeTextMagnetLink } from 'utils/MagnetUtils';
 import { hasCopySupport } from 'utils/BrowserUtils';
 import { DupeEnum } from 'types/api';
 
+const isShareDupe = (dupe: API.Dupe | null) =>
+  !!dupe &&
+  (dupe.id === DupeEnum.SHARE_FULL ||
+    dupe.id === DupeEnum.SHARE_PARTIAL ||
+    dupe.id === DupeEnum.SHARE_QUEUE);
 
-const isShareDupe = (dupe: API.Dupe | null) => !!dupe && (
-  dupe.id === DupeEnum.SHARE_FULL || 
-  dupe.id === DupeEnum.SHARE_PARTIAL || 
-  dupe.id === DupeEnum.SHARE_QUEUE
-);
-
-const isAsch = ({ user }: UI.DownloadableItemData) => !user ? false : user.flags.indexOf('asch') !== -1;
-const isSearchable = ({ itemInfo }: UI.DownloadableItemData) => !!itemInfo.name || !!itemInfo.tth;
-const notSelf = ({ user }: UI.DownloadableItemData) => !user ? true : user.flags.indexOf('self') === -1;
-const isDirectory = ({ itemInfo }: UI.DownloadableItemData) => itemInfo.type.id === 'directory';
-const isPicture = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'picture';
-const isVideo = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'video';
-const isAudio = ({ itemInfo }: UI.DownloadableItemData) => (itemInfo.type as API.FileType).content_type === 'audio';
+const isAsch = ({ user }: UI.DownloadableItemData) =>
+  !user ? false : user.flags.indexOf('asch') !== -1;
+const isSearchable = ({ itemInfo }: UI.DownloadableItemData) =>
+  !!itemInfo.name || !!itemInfo.tth;
+const notSelf = ({ user }: UI.DownloadableItemData) =>
+  !user ? true : user.flags.indexOf('self') === -1;
+const isDirectory = ({ itemInfo }: UI.DownloadableItemData) =>
+  itemInfo.type.id === 'directory';
+const isPicture = ({ itemInfo }: UI.DownloadableItemData) =>
+  (itemInfo.type as API.FileType).content_type === 'picture';
+const isVideo = ({ itemInfo }: UI.DownloadableItemData) =>
+  (itemInfo.type as API.FileType).content_type === 'video';
+const isAudio = ({ itemInfo }: UI.DownloadableItemData) =>
+  (itemInfo.type as API.FileType).content_type === 'audio';
 
 const hasValidViewUser = (data: UI.DownloadableItemData) => {
   const { itemInfo, user } = data;
@@ -51,88 +56,117 @@ const hasValidViewUser = (data: UI.DownloadableItemData) => {
 };
 
 // 200 MB, the web server isn't suitable for sending large files
-const sizeValid = ({ itemInfo }: UI.DownloadableItemData) => itemInfo.size < 200 * 1024 * 1024;
+const sizeValid = ({ itemInfo }: UI.DownloadableItemData) =>
+  itemInfo.size < 200 * 1024 * 1024;
 
-const viewText = (data: UI.DownloadableItemData) => hasValidViewUser(data) && !isDirectory(data) && !isPicture(data) && 
-  !isVideo(data) && !isAudio(data) && data.itemInfo.size < 256 * 1024;
-const findNfo = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isDirectory(data) && 
-  notSelf(data) && isAsch(data);
+const viewText = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) &&
+  !isDirectory(data) &&
+  !isPicture(data) &&
+  !isVideo(data) &&
+  !isAudio(data) &&
+  data.itemInfo.size < 256 * 1024;
+const findNfo = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isDirectory(data) && notSelf(data) && isAsch(data);
 
-const viewVideo = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isVideo(data) && sizeValid(data);
-const viewAudio = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isAudio(data) && sizeValid(data);
-const viewImage = (data: UI.DownloadableItemData) => hasValidViewUser(data) && isPicture(data) && sizeValid(data);
+const viewVideo = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isVideo(data) && sizeValid(data);
+const viewAudio = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isAudio(data) && sizeValid(data);
+const viewImage = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isPicture(data) && sizeValid(data);
 
 const copyMagnet = (data: UI.DownloadableItemData) => hasCopySupport();
-
-
 
 const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
   const { handler, itemInfo, user, session } = data;
   return handler(
-    itemInfo, 
-    user, 
-    { 
-      target_name: itemInfo.name 
+    itemInfo,
+    user,
+    {
+      target_name: itemInfo.name,
     },
     session
   );
 };
 
-const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
+const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
+  data,
+  location,
+}) => {
   const { pathname } = location;
   History.push(`${pathname}/download/${data.itemInfo.id}`);
 };
 
-const handleViewFile = ({ data, location }: UI.ActionHandlerData<UI.DownloadableItemData>, isText: boolean) => {
+const handleViewFile = (
+  { data, location }: UI.ActionHandlerData<UI.DownloadableItemData>,
+  isText: boolean
+) => {
   if (notSelf(data)) {
     // Remote file
     return ViewFileActions.createSession(data, isText, location, ViewFileStore);
   }
 
   // Local file
-  return ViewFileActions.openLocalFile(data.itemInfo.tth, isText, location, ViewFileStore);
+  return ViewFileActions.openLocalFile(
+    data.itemInfo.tth,
+    isText,
+    location,
+    ViewFileStore
+  );
 };
 
-const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = data => {
+const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
   return handleViewFile(data, true);
 };
 
-const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = data => {
+const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = data => {
+const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = data => {
+const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({ data, ...other }) => {
+const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
+  data,
+  ...other
+}) => {
   // Get a new instance
-  let instance = await SocketService.post<API.SearchInstance>(SearchConstants.INSTANCES_URL, {
-    expiration_minutes: 1,
-  });
+  let instance = await SocketService.post<API.SearchInstance>(
+    SearchConstants.INSTANCES_URL,
+    {
+      expiration_minutes: 1,
+    }
+  );
 
   // Post the search
-  await SocketService.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
-    user: data.user,
-    query: {
-      extensions: [ 'nfo' ],
-      max_size: 256 * 1024,
-    },
-    options: {
-      path: data.itemInfo.path,
-      max_results: 1,
+  await SocketService.post(
+    `${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`,
+    {
+      user: data.user,
+      query: {
+        extensions: ['nfo'],
+        max_size: 256 * 1024,
+      },
+      options: {
+        path: data.itemInfo.path,
+        max_results: 1,
+      },
     }
-  });
+  );
 
   // Wait for the results to arrive
   for (let i = 0; i < 5; i++) {
     await sleep(500);
 
-    instance = await SocketService.get<API.SearchInstance>(`${SearchConstants.INSTANCES_URL}/${instance.id}`);
+    instance = await SocketService.get<API.SearchInstance>(
+      `${SearchConstants.INSTANCES_URL}/${instance.id}`
+    );
     if (instance.result_count > 0) {
       break;
     }
@@ -140,7 +174,9 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({ data, 
 
   if (instance.result_count > 0) {
     // Open the first result for viewing
-    const results = await SocketService.get(`${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`);
+    const results = await SocketService.get(
+      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`
+    );
 
     handleViewText({
       data: {
@@ -148,52 +184,59 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({ data, 
         itemInfo: results[0],
         user: data.user,
         handler: data.handler,
-        session: instance
+        session: instance,
       },
-      ...other
+      ...other,
     });
   } else {
-    throw toErrorResponse(404, translate('No NFO results were received', other.t, UI.Modules.COMMON));
+    throw toErrorResponse(
+      404,
+      translate('No NFO results were received', other.t, UI.Modules.COMMON)
+    );
   }
 };
 
-export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({ data, location }) => {
+export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({
+  data,
+  location,
+}) => {
   return SearchActions.search(data.itemInfo, location);
 };
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  const link = isDirectory(data) ? makeTextMagnetLink(data.itemInfo) : makeHashMagnetLink(data.itemInfo);
+  const link = isDirectory(data)
+    ? makeTextMagnetLink(data.itemInfo)
+    : makeHashMagnetLink(data.itemInfo);
   return navigator.clipboard.writeText(link);
 };
 
-
 const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
-  download: { 
-    displayName: 'Download', 
-    access: API.AccessEnum.DOWNLOAD, 
+  download: {
+    displayName: 'Download',
+    access: API.AccessEnum.DOWNLOAD,
     icon: IconConstants.DOWNLOAD,
     filter: notSelf,
     handler: handleDownload,
   },
-  downloadTo: { 
+  downloadTo: {
     displayName: 'Download to...',
-    access: API.AccessEnum.DOWNLOAD, 
+    access: API.AccessEnum.DOWNLOAD,
     icon: IconConstants.DOWNLOAD_TO,
     filter: notSelf,
     handler: handleDownloadTo,
-  }, 
+  },
   divider: null,
   viewText: {
     displayName: 'View as text',
-    access: API.AccessEnum.VIEW_FILE_EDIT, 
-    icon: IconConstants.OPEN, 
+    access: API.AccessEnum.VIEW_FILE_EDIT,
+    icon: IconConstants.OPEN,
     filter: viewText,
     handler: handleViewText,
   },
   viewImage: {
     displayName: 'View image',
-    access: API.AccessEnum.VIEW_FILE_EDIT, 
-    icon: IconConstants.OPEN, 
+    access: API.AccessEnum.VIEW_FILE_EDIT,
+    icon: IconConstants.OPEN,
     filter: viewImage,
     handler: handleViewImage,
   },
@@ -204,8 +247,8 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
     filter: findNfo,
     handler: handleFindNfo,
     notifications: {
-      errorTitleGetter: data => data.itemInfo.name
-    }
+      errorTitleGetter: (data) => data.itemInfo.name,
+    },
   },
   viewVideo: {
     displayName: 'Play video',
@@ -235,10 +278,9 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
     handler: handleCopyMagnet,
     notifications: {
       onSuccess: 'Magnet link was copied to clipboard',
-    }
-  }
+    },
+  },
 };
-
 
 export default {
   moduleId: UI.Modules.COMMON,

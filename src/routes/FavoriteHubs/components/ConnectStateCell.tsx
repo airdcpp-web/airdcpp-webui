@@ -10,8 +10,10 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-
-export type ConnectStateCellProps = RowWrapperCellChildProps<API.FavoriteHubConnectState, API.FavoriteHubEntry>
+export type ConnectStateCellProps = RowWrapperCellChildProps<
+  API.FavoriteHubConnectState,
+  API.FavoriteHubEntry
+>;
 
 const getIcon = (state: API.FavoriteHubConnectState) => {
   switch (state.id) {
@@ -31,31 +33,33 @@ class ConnectStateCell extends Component<ConnectStateCellProps & RouteComponentP
   handleCreateSession = () => {
     const { location, rowDataGetter } = this.props;
     HubActions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
-  }
+  };
 
   handleRemoveSession = () => {
     const { cellData } = this.props;
     HubActions.removeSession({ id: cellData!.current_hub_id });
-  }
+  };
 
   getClickAction = () => {
     switch (this.props.cellData!.id) {
       case API.FavoriteHubConnectStateEnum.CONNECTING:
-      case API.FavoriteHubConnectStateEnum.CONNECTED: return this.handleRemoveSession;
+      case API.FavoriteHubConnectStateEnum.CONNECTED:
+        return this.handleRemoveSession;
       case API.FavoriteHubConnectStateEnum.DISCONNECTED:
-      default: return this.handleCreateSession;
+      default:
+        return this.handleCreateSession;
     }
-  }
+  };
 
   render() {
     const { cellData, width } = this.props;
     return (
       <div className="connect-state">
-        <Icon 
-          icon={ classNames('icon large link', getIcon(cellData!)) } 
-          onClick={ this.getClickAction() }
+        <Icon
+          icon={classNames('icon large link', getIcon(cellData!))}
+          onClick={this.getClickAction()}
         />
-        { width! > 120 && cellData!.str }
+        {width! > 120 && cellData!.str}
       </div>
     );
   }

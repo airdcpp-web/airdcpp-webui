@@ -1,4 +1,3 @@
-
 import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
@@ -6,14 +5,13 @@ import WidgetActions from 'actions/reflux/WidgetActions';
 
 import * as UI from 'types/ui';
 
-export interface WidgetItemInfo { 
+export interface WidgetItemInfo {
   widgetInfo: UI.Widget;
   id: string;
   settings: UI.WidgetSettings;
 }
 
 const notAlwaysShow = ({ widgetInfo }: WidgetItemInfo) => !widgetInfo.alwaysShow;
-
 
 const handleCreate: UI.ActionHandler<UI.Widget> = ({ data: widgetInfo }) => {
   History.push(`/home/widget/${widgetInfo.typeId}`);
@@ -23,22 +21,20 @@ const handleEdit: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo }) => {
   History.push(`/home/widget/${widgetInfo.widgetInfo.typeId}/${widgetInfo.id}`);
 };
 
-
 const handleRemove: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo }) => {
   WidgetActions.remove(widgetInfo.id);
 };
 
 const WidgetCreateActions: UI.ActionListType<UI.Widget> = {
-  create: { 
+  create: {
     displayName: 'Add widget',
     icon: IconConstants.CREATE,
     handler: handleCreate,
   },
 };
 
-
 const WidgetEditActions: UI.ActionListType<WidgetItemInfo> = {
-  edit: { 
+  edit: {
     displayName: 'Edit widget',
     icon: IconConstants.EDIT,
     handler: handleEdit,

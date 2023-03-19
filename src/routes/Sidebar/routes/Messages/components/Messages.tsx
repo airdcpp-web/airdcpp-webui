@@ -14,34 +14,39 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import '../style.css';
-import { 
-  SessionProviderDecoratorChildProps, SessionProviderDecorator
+import {
+  SessionProviderDecoratorChildProps,
+  SessionProviderDecorator,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import { toI18nKey } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 
+const sessionActions = ['clear'];
 
-const sessionActions = [ 'clear' ];
-
-const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = props => {
+const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = (
+  props
+) => {
   const { match, t, ...other } = props;
   return (
-    <SessionLayout 
-      activeId={ match.params.id }
+    <SessionLayout
+      activeId={match.params.id}
       baseUrl="messages"
-      newCaption={ t(toI18nKey('new', UI.Modules.MESSAGES), 'New session') }
-      newDescription={ t(toI18nKey('newDesc', UI.Modules.MESSAGES), 'Open a new private chat session') } 
-      newIcon={ IconConstants.MESSAGES_PLAIN }
-      unreadInfoStore={ PrivateChatSessionStore }
-      editAccess={ API.AccessEnum.PRIVATE_CHAT_EDIT }
-      uiActions={ PrivateChatUIActions }
-      sessionApi={ PrivateChatAPIActions as UI.SessionActions<API.PrivateChat> }
-      actionIds={ sessionActions }
-      sessionItemLayout={ PrivateChatSession }
-      newLayout={ MessageNew }
-      t={ t }
-      { ...UserItemHandlerDecorator([ 'browse', 'ignore', 'unignore' ]) }
-      { ...other }
+      newCaption={t(toI18nKey('new', UI.Modules.MESSAGES), 'New session')}
+      newDescription={t(
+        toI18nKey('newDesc', UI.Modules.MESSAGES),
+        'Open a new private chat session'
+      )}
+      newIcon={IconConstants.MESSAGES_PLAIN}
+      unreadInfoStore={PrivateChatSessionStore}
+      editAccess={API.AccessEnum.PRIVATE_CHAT_EDIT}
+      uiActions={PrivateChatUIActions}
+      sessionApi={PrivateChatAPIActions as UI.SessionActions<API.PrivateChat>}
+      actionIds={sessionActions}
+      sessionItemLayout={PrivateChatSession}
+      newLayout={MessageNew}
+      t={t}
+      {...UserItemHandlerDecorator(['browse', 'ignore', 'unignore'])}
+      {...other}
     />
   );
 };

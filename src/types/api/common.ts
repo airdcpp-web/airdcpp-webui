@@ -1,8 +1,15 @@
 export type IdType = number | string;
 
 // FILES
-export type FileContentType = 'audio' | 'compressed' | 'document' | 
-  'executable' | 'picture' | 'video' | 'other' | 'filelist';
+export type FileContentType =
+  | 'audio'
+  | 'compressed'
+  | 'document'
+  | 'executable'
+  | 'picture'
+  | 'video'
+  | 'other'
+  | 'filelist';
 
 export interface DirectoryType {
   id: 'directory';
@@ -19,7 +26,6 @@ export interface FileType {
 
 export type FileItemType = FileType | DirectoryType;
 
-
 // LOCAL FILES
 export interface DriveType {
   id: 'drive_fixed' | 'drive_remote' | 'removable';
@@ -31,7 +37,6 @@ export interface GroupedPath {
   name: string;
   paths: string[];
 }
-
 
 // PROTOCOL FILES
 export const enum DupeEnum {
@@ -48,7 +53,6 @@ export interface Dupe {
   id: DupeEnum;
   paths: string[];
 }
-
 
 // MESSAGES
 export interface ChatMessageCounts {
@@ -124,7 +128,6 @@ export interface StatusMessage extends MessageBase {
   label?: string;
 }
 
-
 // ENCRYPTION
 export interface EncryptionInfo {
   str: string;
@@ -137,9 +140,17 @@ export interface IP {
   str: string;
 }
 
-
 // USERS
-export type UserFlag = 'self' | 'bot' | 'asch' | 'ccpm' | 'ignored' | 'favorite' | 'nmdc' | 'offline' | 'op';
+export type UserFlag =
+  | 'self'
+  | 'bot'
+  | 'asch'
+  | 'ccpm'
+  | 'ignored'
+  | 'favorite'
+  | 'nmdc'
+  | 'offline'
+  | 'op';
 
 export type HubUserFlag = UserFlag | 'away' | 'op' | 'hidden' | 'noconnect' | 'passive';
 

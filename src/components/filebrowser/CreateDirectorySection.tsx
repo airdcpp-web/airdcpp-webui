@@ -10,24 +10,27 @@ import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
 
-
-export interface CreateDirectorySectionProps extends Pick<ActionInputProps, 'handleAction'> {
+export interface CreateDirectorySectionProps
+  extends Pick<ActionInputProps, 'handleAction'> {
   t: UI.TranslateF;
 }
 
-export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ handleAction, t }) => (
+export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({
+  handleAction,
+  t,
+}) => (
   <Accordion>
     <div className="title create-section">
-      <Icon icon={ IconConstants.DROPDOWN }/>
-      { translate('Create directory', t, UI.Modules.COMMON) }
+      <Icon icon={IconConstants.DROPDOWN} />
+      {translate('Create directory', t, UI.Modules.COMMON)}
     </div>
 
     <div className="content create-section">
-      <ActionInput 
-        caption={ translate('Create', t, UI.Modules.COMMON) } 
-        icon={ IconConstants.CREATE }
-        handleAction={ handleAction } 
-        placeholder={ translate('Directory name', t, UI.Modules.COMMON) }
+      <ActionInput
+        caption={translate('Create', t, UI.Modules.COMMON)}
+        icon={IconConstants.CREATE}
+        handleAction={handleAction}
+        placeholder={translate('Directory name', t, UI.Modules.COMMON)}
       />
     </div>
   </Accordion>
@@ -35,5 +38,5 @@ export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({ 
 
 CreateDirectorySection.propTypes = {
   // Function to call with the value
-  handleAction: PropTypes.func.isRequired
+  handleAction: PropTypes.func.isRequired,
 };

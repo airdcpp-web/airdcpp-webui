@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 
 import QueueSourceActions from 'actions/ui/QueueSourceActions';
@@ -11,47 +10,53 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
-const isFilelist = (transfer: API.Transfer) => !!transfer.type && 
-  (transfer.type as API.FileType).content_type === 'filelist';
+const isFilelist = (transfer: API.Transfer) =>
+  !!transfer.type && (transfer.type as API.FileType).content_type === 'filelist';
 const isDownload = (transfer: API.Transfer) => transfer.download;
 const isFinished = (transfer: API.Transfer) => transfer.status.id === StatusEnum.FINISHED;
-const removeFile = (transfer: API.Transfer) => isDownload(transfer) && isFilelist(transfer) && !isFinished(transfer);
-const removeSource = (transfer: API.Transfer) => isDownload(transfer) && !isFinished(transfer);
-
+const removeFile = (transfer: API.Transfer) =>
+  isDownload(transfer) && isFilelist(transfer) && !isFinished(transfer);
+const removeSource = (transfer: API.Transfer) =>
+  isDownload(transfer) && !isFinished(transfer);
 
 const handleForce: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
   return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/force`);
 };
 
 const handleDisconnect: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
-  return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`);
+  return SocketService.post(
+    `${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`
+  );
 };
 
-const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({ data: transfer, ...other }) => {
+const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({
+  data: transfer,
+  ...other
+}) => {
   return QueueFileActions.actions.removeFile!.handler({
     data: {
       id: transfer.queue_file_id,
       target: transfer.target,
-      name: transfer.name
+      name: transfer.name,
     } as API.QueueFile,
-    ...other
+    ...other,
   });
 };
 
-const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({ data: transfer, ...other }) => {
+const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({
+  data: transfer,
+  ...other
+}) => {
   return QueueSourceActions.actions.removeSource!.handler({
     data: {
       ...transfer.user,
       id: transfer.user.cid,
-      hub_urls: [ transfer.user.hub_url ],
-      flags: transfer.user.flags as API.UserFlag[]
+      hub_urls: [transfer.user.hub_url],
+      flags: transfer.user.flags as API.UserFlag[],
     },
-    ...other
+    ...other,
   });
 };
-
-
 
 const TransferActions: UI.ActionListType<API.Transfer> = {
   force: {
@@ -63,30 +68,30 @@ const TransferActions: UI.ActionListType<API.Transfer> = {
   },
   disconnect: {
     displayName: 'Disconnect',
-    access: API.AccessEnum.TRANSFERS, 
+    access: API.AccessEnum.TRANSFERS,
     icon: IconConstants.DISCONNECT,
     handler: handleDisconnect,
   },
   divider: null,
-  removeFile: { 
+  removeFile: {
     displayName: 'Remove file from queue',
-    access: API.AccessEnum.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
     filter: removeFile,
     handler: handleRemoveFile,
     notifications: {
       onSuccess: 'File {{item.name}} was removed from queue',
-    }
+    },
   },
   removeSource: {
     displayName: 'Remove user from queue',
-    access: API.AccessEnum.QUEUE_EDIT, 
+    access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
     filter: removeSource,
     handler: handleRemoveSource,
     notifications: {
       onSuccess: 'The user {{item.user.nicks}} was removed from {{result.count}} files',
-    }
+    },
   },
 };
 

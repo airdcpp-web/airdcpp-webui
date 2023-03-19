@@ -2,7 +2,6 @@ import * as React from 'react';
 
 //import Moment from 'moment';
 
-
 const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
   const error: MediaError = (event.target as any).error;
   switch (error.code) {
@@ -19,8 +18,8 @@ const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
   }
 };
 
-
-export interface MediaFileDecoratorChildProps extends Pick<MediaFileDecoratorProps, 'url'> {
+export interface MediaFileDecoratorChildProps
+  extends Pick<MediaFileDecoratorProps, 'url'> {
   mediaRef: (c: HTMLMediaElement) => void;
   mediaProps: {
     onError: (event: React.SyntheticEvent<HTMLMediaElement>) => void;
@@ -35,9 +34,7 @@ export interface MediaFileDecoratorProps {
   autoPlay: boolean;
 }
 
-export default function (
-  Component: React.ComponentType<MediaFileDecoratorChildProps>
-) {
+export default function (Component: React.ComponentType<MediaFileDecoratorChildProps>) {
   class MediaFileDecorator extends React.Component<MediaFileDecoratorProps> {
     state = {
       error: null,
@@ -57,22 +54,18 @@ export default function (
     }
 
     onMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
-      this.setState({ 
-        error: formatMediaError(event) 
+      this.setState({
+        error: formatMediaError(event),
       });
-    }
+    };
 
     setMediaRef = (c: HTMLMediaElement) => {
       this.media = c;
-    }
+    };
 
     render() {
       if (this.state.error) {
-        return (
-          <div>
-            { this.state.error }
-          </div>
-        );	
+        return <div>{this.state.error}</div>;
       }
 
       const { url, autoPlay } = this.props;
@@ -84,11 +77,7 @@ export default function (
       };
 
       return (
-        <Component 
-          { ...this.props } 
-          mediaRef={ this.setMediaRef }
-          mediaProps={ mediaProps }
-        />
+        <Component {...this.props} mediaRef={this.setMediaRef} mediaProps={mediaProps} />
       );
     }
   }

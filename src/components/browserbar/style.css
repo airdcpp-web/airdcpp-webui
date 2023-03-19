@@ -1,5 +1,5 @@
 .path-navigation .breadcrumb {
-  display:flex !important;
+  display: flex !important;
 }
 
 .path-navigation {
@@ -35,7 +35,7 @@
 }
 
 .browserbar .path-token {
-  display:flex;
+  display: flex;
   align-items: baseline;
 }
 

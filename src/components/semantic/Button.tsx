@@ -6,7 +6,6 @@ import Icon, { IconType } from 'components/semantic/Icon';
 
 import 'fomantic-ui-css/components/button.min.css';
 
-
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconType;
   loading?: boolean;
@@ -14,25 +13,27 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   caption: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  className, loading, icon, caption, disabled, color,
-  ...other 
+const Button: React.FC<ButtonProps> = ({
+  className,
+  loading,
+  icon,
+  caption,
+  disabled,
+  color,
+  ...other
 }) => {
   const buttonStyle = classNames(
     'ui button',
-    { 'disabled': !!disabled || !!loading },
-    { 'loading': !!loading },
+    { disabled: !!disabled || !!loading },
+    { loading: !!loading },
     color,
-    className,
+    className
   );
 
   return (
-    <button 
-      className={ buttonStyle } 
-      { ...other }
-    >
-      <Icon icon={ icon }/>
-      { caption }
+    <button className={buttonStyle} {...other}>
+      <Icon icon={icon} />
+      {caption}
     </button>
   );
 };

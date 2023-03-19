@@ -10,14 +10,7 @@ import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 import { Trans } from 'react-i18next';
 
-
-const Entry = [
-  'nick',
-  'description',
-  'email',
-  'setting_profile',
-  'language_file'
-];
+const Entry = ['nick', 'description', 'email', 'setting_profile', 'language_file'];
 
 const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
@@ -27,18 +20,21 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
       const profileId = formValue[id] as number;
       switch (profileId) {
         case SettingProfileEnum.NORMAL: {
-          // eslint-disable-next-line max-len
-          message = 'The client is used in normal private/public hubs for transferring files via internet. Use this profile if unsure.';
+          message =
+            // eslint-disable-next-line max-len
+            'The client is used in normal private/public hubs for transferring files via internet. Use this profile if unsure.';
           break;
         }
         case SettingProfileEnum.RAR: {
-          // eslint-disable-next-line max-len
-          message = 'The client is used for transferring files that are split in RAR archives (or in other small-sized formats)';
+          message =
+            // eslint-disable-next-line max-len
+            'The client is used for transferring files that are split in RAR archives (or in other small-sized formats)';
           break;
         }
         case SettingProfileEnum.LAN: {
-          // eslint-disable-next-line max-len
-          message = 'The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)';
+          message =
+            // eslint-disable-next-line max-len
+            'The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)';
           break;
         }
         default:
@@ -46,22 +42,29 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
 
       if (message) {
         fieldOptions.help = moduleT.t(
-          toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, profileId.toString()),
+          toFormI18nKey(
+            UI.TranslatableFormDefinitionProperties.HELP,
+            id,
+            profileId.toString()
+          ),
           message
         );
       }
     } else if (id === 'language_file') {
       fieldOptions.help = (
         <Trans
-          i18nKey={ moduleT.toI18nKey(toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)) }
+          i18nKey={moduleT.toI18nKey(
+            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
+          )}
         >
+          <p>The application must be restarted for the new language to take effect.</p>
           <p>
-            The application must be restarted for the new language to take effect.
-          </p>
-          <p>
-            If you want to help with improving the existing translations 
-            or translate the application into a new language, please see 
-            the <ExternalLink url={ LinkConstants.TRANSLATOR_HELP }>instructions for translators</ExternalLink>.
+            If you want to help with improving the existing translations or translate the
+            application into a new language, please see the{' '}
+            <ExternalLink url={LinkConstants.TRANSLATOR_HELP}>
+              instructions for translators
+            </ExternalLink>
+            .
           </p>
         </Trans>
       );
@@ -71,12 +74,12 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   return onFieldSetting;
 };
 
-const UserPage: React.FC<SettingSectionChildProps> = props => (
+const UserPage: React.FC<SettingSectionChildProps> = (props) => (
   <div>
     <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-      onFieldSetting={ FieldOptionGetter(props.moduleT) }
+      {...props}
+      keys={Entry}
+      onFieldSetting={FieldOptionGetter(props.moduleT)}
     />
   </div>
 );

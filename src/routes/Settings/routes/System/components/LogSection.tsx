@@ -19,23 +19,23 @@ class LogSection extends Component<LogSectionProps> {
 
   convertKey = (suffix?: string) => {
     return `log_${this.props.section}${suffix ? `_${suffix}` : ''}`;
-  }
+  };
 
   onSettingsReceived = (settings: API.SettingValueMap) => {
     this.setState({
       enabled: settings[this.convertKey()],
     });
-  }
+  };
 
   onEnableStateChanged: FormFieldChangeHandler = (id, formValue, hasChanges) => {
-    this.setState({ 
-      enabled: formValue[id]
+    this.setState({
+      enabled: formValue[id],
     });
-  }
+  };
 
   onContentSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     fieldOptions.disabled = !this.state.enabled;
-  }
+  };
 
   getChildClass = (className: string) => {
     if (this.state.enabled) {
@@ -43,39 +43,34 @@ class LogSection extends Component<LogSectionProps> {
     }
 
     return className;
-  }
+  };
 
   render() {
-    const Title = [
-      this.convertKey(),
-    ];
+    const Title = [this.convertKey()];
 
-    const Content = [
-      this.convertKey('file'),
-      this.convertKey('format'),
-    ];
+    const Content = [this.convertKey('file'), this.convertKey('format')];
 
     const { simple, ...other } = this.props;
     return (
-      <div className={ this.getChildClass('log-section') }>
-        <div className={ this.getChildClass('title') }>
+      <div className={this.getChildClass('log-section')}>
+        <div className={this.getChildClass('title')}>
           <RemoteSettingForm
-            { ...other }
-            keys={ Title }
-            onFieldChanged={ this.onEnableStateChanged }
-            onSettingValuesReceived={ this.onSettingsReceived }
+            {...other}
+            keys={Title}
+            onFieldChanged={this.onEnableStateChanged}
+            onSettingValuesReceived={this.onSettingsReceived}
           />
         </div>
 
-        { !simple && (
-          <div className={ this.getChildClass('content') }>
+        {!simple && (
+          <div className={this.getChildClass('content')}>
             <RemoteSettingForm
-              { ...this.props }
-              keys={ Content }
-              onFieldSetting={ this.onContentSetting }
+              {...this.props}
+              keys={Content}
+              onFieldSetting={this.onContentSetting}
             />
           </div>
-        ) }
+        )}
       </div>
     );
   }

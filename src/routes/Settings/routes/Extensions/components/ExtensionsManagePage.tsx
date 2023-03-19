@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 
@@ -18,10 +20,7 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 import { Trans } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
 
-
-interface ExtensionsManagePageProps extends SettingSectionChildProps {
-
-}
+interface ExtensionsManagePageProps extends SettingSectionChildProps {}
 
 interface ExtensionsManagePageDataProps extends DataProviderDecoratorChildProps {
   installedPackages: API.Extension[];
@@ -29,52 +28,55 @@ interface ExtensionsManagePageDataProps extends DataProviderDecoratorChildProps 
 
 const getItem = (extension: API.Extension, moduleT: UI.ModuleTranslator) => {
   return (
-    <LocalExtension 
-      key={ extension.name } 
-      installedPackage={ extension } 
-      moduleT={ moduleT }
-    />
+    <LocalExtension key={extension.name} installedPackage={extension} moduleT={moduleT} />
   );
 };
 
-const ExtensionsManagePage: React.FC<ExtensionsManagePageProps & ExtensionsManagePageDataProps> = ({ 
-  installedPackages, moduleT 
-}) => {
+const ExtensionsManagePage: React.FC<
+  ExtensionsManagePageProps & ExtensionsManagePageDataProps
+> = ({ installedPackages, moduleT }) => {
   if (installedPackages.length === 0) {
     return (
-      <Message 
+      <Message
         description={
-          <Trans i18nKey={ moduleT.toI18nKey('noInstalledExtensions') }>
-            No installed extensions were found. New extensions 
-            can be installed from the <Link to="/settings/extensions/packages">Extension catalog</Link> page.
+          <Trans i18nKey={moduleT.toI18nKey('noInstalledExtensions')}>
+            No installed extensions were found. New extensions can be installed from the{' '}
+            <Link to="/settings/extensions/packages">Extension catalog</Link> page.
           </Trans>
         }
-        icon={ IconConstants.INFO }
+        icon={IconConstants.INFO}
       />
     );
-  } 
+  }
 
   return (
     <div className="extension-layout">
-      <EngineStatusMessage 
-        moduleT={ moduleT }
-      />
-      <div className="ui divider"/>
+      <EngineStatusMessage moduleT={moduleT} />
+      <div className="ui divider" />
       <div className="ui divided items">
-        { installedPackages.map(p => getItem(p, moduleT)) }
+        {installedPackages.map((p) => getItem(p, moduleT))}
       </div>
-      <ExtensionsConfigureDialog/>
+      <ExtensionsConfigureDialog />
     </div>
   );
 };
 
-export default DataProviderDecorator<ExtensionsManagePageProps, ExtensionsManagePageDataProps>(ExtensionsManagePage, {
+export default DataProviderDecorator<
+  ExtensionsManagePageProps,
+  ExtensionsManagePageDataProps
+>(ExtensionsManagePage, {
   urls: {
     installedPackages: ExtensionConstants.EXTENSIONS_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, () => refetchData());
-    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, () => refetchData());
-    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, () => refetchData());
+    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, () =>
+      refetchData()
+    );
+    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, () =>
+      refetchData()
+    );
+    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, () =>
+      refetchData()
+    );
   },
 });

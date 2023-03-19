@@ -7,7 +7,6 @@ import FileIcon from 'components/icon/FileIcon';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
-
 const searchTypeToFileItem = (searchType: UI.SearchTypeItem): API.FileItemType => {
   if (searchType.id === 'directory') {
     return {
@@ -25,26 +24,18 @@ const searchTypeToFileItem = (searchType: UI.SearchTypeItem): API.FileItemType =
   };
 };
 
-
 interface SearchTypeIconProps {
   type: UI.SearchTypeItem;
   size?: string;
 }
 
-export const SearchTypeIcon: React.FC<SearchTypeIconProps> = ({ type, size = 'large' }) => {
+export const SearchTypeIcon: React.FC<SearchTypeIconProps> = ({
+  type,
+  size = 'large',
+}) => {
   if (!type.id) {
-    return (
-      <Icon 
-        icon={ IconConstants.ANY } 
-        size={ size }
-      />
-    );
+    return <Icon icon={IconConstants.ANY} size={size} />;
   }
 
-  return (
-    <FileIcon 
-      typeInfo={ searchTypeToFileItem(type) } 
-      size={ size }
-    />
-  );
+  return <FileIcon typeInfo={searchTypeToFileItem(type)} size={size} />;
 };

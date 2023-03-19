@@ -6,12 +6,11 @@ import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 type PushSessionHandler = (id: API.IdType) => void;
 
 const onClickItem = (
-  evt: React.SyntheticEvent, 
-  sessionItem: UI.SessionItemBase, 
+  evt: React.SyntheticEvent,
+  sessionItem: UI.SessionItemBase,
   pushSession: PushSessionHandler
 ) => {
   evt.preventDefault();
@@ -29,20 +28,23 @@ interface SessionMenuItemProps {
   pushSession: PushSessionHandler;
 }
 
-const SessionMenuItem: React.FC<SessionMenuItemProps> = (
-  { sessionItem, status, name, unreadInfoStore, url, pushSession }
-) => (
-  <RouterMenuItemLink 
-    url={ url } 
-    className="session-item" 
-    onClick={ (evt: React.SyntheticEvent) => onClickItem(evt, sessionItem, pushSession) }
-    icon={ status }
-    session={ sessionItem }
-    unreadInfoStore={ unreadInfoStore }
+const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
+  sessionItem,
+  status,
+  name,
+  unreadInfoStore,
+  url,
+  pushSession,
+}) => (
+  <RouterMenuItemLink
+    url={url}
+    className="session-item"
+    onClick={(evt: React.SyntheticEvent) => onClickItem(evt, sessionItem, pushSession)}
+    icon={status}
+    session={sessionItem}
+    unreadInfoStore={unreadInfoStore}
   >
-    <span className="session-name">
-      { name }
-    </span>
+    <span className="session-name">{name}</span>
   </RouterMenuItemLink>
 );
 

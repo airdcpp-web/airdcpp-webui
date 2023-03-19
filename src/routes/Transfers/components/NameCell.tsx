@@ -6,20 +6,16 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
 
-
-const NameCaption: React.FC<RowWrapperCellChildProps<string, API.Transfer>> = ({ cellData, rowData }) => (
-  <Popup 
-    triggerClassName="name" 
-    className="basic target" 
-    trigger={ cellData }
-  >
-    <div>{ rowData!.target }</div>
+const NameCaption: React.FC<RowWrapperCellChildProps<string, API.Transfer>> = ({
+  cellData,
+  rowData,
+}) => (
+  <Popup triggerClassName="name" className="basic target" trigger={cellData}>
+    <div>{rowData!.target}</div>
   </Popup>
 );
 
-interface NameCellProps extends RowWrapperCellChildProps<string, API.Transfer> {
-
-}
+interface NameCellProps extends RowWrapperCellChildProps<string, API.Transfer> {}
 
 class NameCell extends React.Component<NameCellProps> {
   shouldComponentUpdate(nextProps: NameCellProps) {
@@ -38,9 +34,9 @@ class NameCell extends React.Component<NameCellProps> {
     }
 
     return (
-      <FormattedFile 
-        typeInfo={ rowData.type }
-        caption={ <NameCaption cellData={ cellData } rowData={ rowData }/> }
+      <FormattedFile
+        typeInfo={rowData.type}
+        caption={<NameCaption cellData={cellData} rowData={rowData} />}
       />
     );
   }

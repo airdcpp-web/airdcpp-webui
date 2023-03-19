@@ -13,7 +13,6 @@ import { translate } from 'utils/TranslationUtils';
 import './style.css';
 import { Row, Grid } from 'components/semantic/Grid';
 
-
 const DupeStrings = {
   //[API.DupeEnum.NONE]: 'None',
   [API.DupeEnum.SHARE_PARTIAL]: 'Share (partial)',
@@ -27,11 +26,11 @@ const DupeStrings = {
 
 const DupePaths: React.FC<{ paths: string[] }> = ({ paths }) => (
   <div className="dupe-paths">
-    { paths.map(path => (
-      <div key={ path } className="path">
-        { path }
+    {paths.map((path) => (
+      <div key={path} className="path">
+        {path}
       </div>
-    )) }
+    ))}
   </div>
 );
 
@@ -43,8 +42,12 @@ interface FileItemInfoGridProps {
   session: UI.SessionItemBase;
 }
 
-const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({ 
-  session, fileItem, user, downloadHandler, showPath = true 
+const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
+  session,
+  fileItem,
+  user,
+  downloadHandler,
+  showPath = true,
 }) => {
   const { t } = useTranslation();
   const gridT = (text: string) => {
@@ -53,60 +56,35 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
 
   return (
     <div className="ui fileitem info segment">
-      <Grid 
-        columns="two"
-        stackable={ true }
-      >
-        <Row 
-          title={ gridT('Name') }
-          text={ fileItem.name }
+      <Grid columns="two" stackable={true}>
+        <Row title={gridT('Name')} text={fileItem.name} />
+        <Row title={gridT('Type/content')} text={fileItem.type.str} />
+        <Row title={gridT('Size')} text={formatSize(fileItem.size, t, true)} />
+        <Row
+          title={gridT('Last modified')}
+          text={formatRelativeTime(fileItem.time || 0)}
         />
-        <Row 
-          title={ gridT('Type/content') } 
-          text={ fileItem.type.str }
-        />
-        <Row 
-          title={ gridT('Size') } 
-          text={ formatSize(fileItem.size, t, true) }
-        />
-        <Row 
-          title={ gridT('Last modified') }
-          text={ formatRelativeTime(fileItem.time || 0) }
-        />
-        { fileItem.type.id === 'file' && (
-          <Row 
-            title={ gridT('TTH') } 
-            text={ fileItem.tth }
-          /> 
+        {fileItem.type.id === 'file' && <Row title={gridT('TTH')} text={fileItem.tth} />}
+        {!!fileItem.dupe && (
+          <Row title={gridT('Dupe type')} text={gridT(DupeStrings[fileItem.dupe.id])} />
         )}
-        { !!fileItem.dupe && (
-          <Row 
-            title={ gridT('Dupe type') }
-            text={ gridT(DupeStrings[fileItem.dupe.id]) }
-          /> 
+        {!!fileItem.dupe && (
+          <Row
+            title={gridT('Dupe paths')}
+            text={<DupePaths paths={fileItem.dupe.paths} />}
+          />
         )}
-        { !!fileItem.dupe && (
-          <Row 
-            title={ gridT('Dupe paths') }
-            text={ <DupePaths paths={ fileItem.dupe.paths }/> }
-          /> 
-        )}
-        { showPath && (
-          <Row 
-            title={ gridT('Path') }
-            text={ fileItem.path }
-          /> 
-        )}
+        {showPath && <Row title={gridT('Path')} text={fileItem.path} />}
       </Grid>
 
-      <DownloadMenu 
-        caption={ gridT('Actions...') }
-        button={ true }
-        user={ user }
-        itemInfoGetter={ () => fileItem }
-        downloadHandler={ downloadHandler }
+      <DownloadMenu
+        caption={gridT('Actions...')}
+        button={true}
+        user={user}
+        itemInfoGetter={() => fileItem}
+        downloadHandler={downloadHandler}
         contextElement=".ui.modal > .content"
-        session={ session }
+        session={session}
       />
     </div>
   );

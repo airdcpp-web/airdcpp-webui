@@ -20,8 +20,8 @@
   width: 80px !important;
   height: auto;
   padding-bottom: 10px;
-  border-top-left-radius: .28571429rem;
-  border-bottom-left-radius: .28571429rem;
+  border-top-left-radius: 0.28571429rem;
+  border-bottom-left-radius: 0.28571429rem;
   background-color: #1b1c1d;
   z-index: 1000;
 }
@@ -33,14 +33,14 @@
 }
 
 #side-menu .navigation .item {
-  padding: .92857143em 0.34285714em !important;
+  padding: 0.92857143em 0.34285714em !important;
 }
 
 #side-menu .navigation .item > .label {
   position: absolute;
   top: 7px;
   right: 7px;
-  font-size: .64285714rem;
+  font-size: 0.64285714rem;
 }
 
 #side-menu .ui.divider {

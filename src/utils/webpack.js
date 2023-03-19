@@ -11,12 +11,11 @@ __webpack_require__.oe = (err) => {
   // Notification actions may not work if the error happens during the initalization phase
   console.error(err);
 
-  NotificationActions.error({ 
+  NotificationActions.error({
     title: err,
     message: 'Try reloading the page if you have updated the UI recently',
   });
 };
-
 
 // We must export something or this module gets stripped
 export default __webpack_public_path__;

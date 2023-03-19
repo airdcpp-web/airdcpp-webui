@@ -3,7 +3,6 @@ import classNames from 'classnames';
 
 import DropdownCaption from './DropdownCaption';
 
-
 interface EmptyDropdownProps {
   caption: React.ReactNode;
   className?: string;
@@ -14,17 +13,14 @@ const EmptyDropdown: React.FC<EmptyDropdownProps> = ({ caption, className }) => 
   const titleClassName = classNames(
     //'caption',
     'ui empty dropdown',
-    className,
+    className
   );
 
   return (
-    <div className={ titleClassName }>
-      <DropdownCaption>
-        { caption }
-      </DropdownCaption>
+    <div className={titleClassName}>
+      <DropdownCaption>{caption}</DropdownCaption>
     </div>
   );
 };
 
-export default EmptyDropdown
-;
+export default EmptyDropdown;

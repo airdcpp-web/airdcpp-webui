@@ -13,28 +13,32 @@ export interface HighlightTextLinkProps /*extends Pick<TableDropdownProps, 'posi
   highlightId: number;
   menuProps: UI.MessageActionMenuData;
   magnet?: UI.TextMagnet;
-  dupe: API.Dupe | null
+  dupe: API.Dupe | null;
 }
 
-export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({ 
-  text, highlightId, menuProps, magnet, dupe
+export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({
+  text,
+  highlightId,
+  menuProps,
+  magnet,
+  dupe,
 }) => {
   const { boundary, ...other } = menuProps;
   return (
     <TableActionMenu
-      className={ cx('highlight text link', dupeToStringType(dupe)) }
-      actions={ MessageHighlightActions }
+      className={cx('highlight text link', dupeToStringType(dupe))}
+      actions={MessageHighlightActions}
       itemData={{
         id: highlightId,
         text,
-        magnet
+        magnet,
       }}
-      caption={ text }
-      triggerIcon={ null }
+      caption={text}
+      triggerIcon={null}
       popupSettings={{
-        boundary
+        boundary,
       }}
-      { ...other }
+      {...other}
     />
   );
 };

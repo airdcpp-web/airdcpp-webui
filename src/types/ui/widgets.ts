@@ -2,7 +2,6 @@ import { FormFieldDefinition } from './form';
 import { ModuleActions } from './actions';
 import { ModuleTranslator } from './modules';
 
-
 export interface WidgetSettings<SettingsT = object> {
   widget: SettingsT;
   name?: string;
@@ -35,4 +34,3 @@ export interface Widget {
   };
   formSettings?: FormFieldDefinition[];
 }
-  

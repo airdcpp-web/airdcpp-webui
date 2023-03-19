@@ -23,15 +23,15 @@ if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
 // Service worker must be in the root because of scopes
 process.env.SERVICEWORKER = 'sw.js';
 
-const release = (process.env.NODE_ENV === 'production');
-const demo = (process.env.DEMO_MODE === '1');
+const release = process.env.NODE_ENV === 'production';
+const demo = process.env.DEMO_MODE === '1';
 const chalk = require('chalk');
 
-
 const parseLocaleRegex = () => {
-  const locales = fs.readdirSync(path.join(__dirname, 'resources/locales'))
-    .filter(f => !f.endsWith('.js'))
-    .map(loc => `${loc}$`);
+  const locales = fs
+    .readdirSync(path.join(__dirname, 'resources/locales'))
+    .filter((f) => !f.endsWith('.js'))
+    .map((loc) => `${loc}$`);
 
   const ret = `${locales.join('|')}`;
   return new RegExp(ret);
@@ -46,15 +46,15 @@ let plugins = [
     jQuery: 'jquery',
     'window.jQuery': 'jquery',
   }),
-  
+
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     'process.env.DEMO_MODE': JSON.stringify(process.env.DEMO_MODE),
     'process.env.SERVICEWORKER': JSON.stringify(process.env.SERVICEWORKER),
-    'UI_VERSION': JSON.stringify(require('./package.json').version),
-    'UI_BUILD_DATE': JSON.stringify((new Date).getTime()),
+    UI_VERSION: JSON.stringify(require('./package.json').version),
+    UI_BUILD_DATE: JSON.stringify(new Date().getTime()),
   }),
-  
+
   new HtmlWebpackPlugin({
     template: 'resources/index.ejs',
     inject: false,
@@ -67,7 +67,7 @@ let plugins = [
 const releasePlugins = [
   new webpack.LoaderOptionsPlugin({
     minimize: true,
-    debug: false
+    debug: false,
   }),
   new CompressionPlugin({
     filename: '[file].gz',
@@ -75,36 +75,32 @@ const releasePlugins = [
     threshold: 0,
     minRatio: 1,
     compressionOptions: {
-      numiterations: 15
+      numiterations: 15,
     },
     algorithm(input, compressionOptions, callback) {
       return zopfli.gzip(input, compressionOptions, callback);
-    }
+    },
   }),
   new Visualizer({
-    filename: '../stats.html'
+    filename: '../stats.html',
   }),
   new InjectManifest({
     swSrc: path.join(__dirname, 'src/sw.js'),
     swDest: process.env.SERVICEWORKER,
-    include: [
-      /\.(js|html)$/,
-    ],
+    include: [/\.(js|html)$/],
     maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // Size of the uncompressed entry chunk exceeds the default limit
-  })
+  }),
 ];
 
 const debugPlugins = [
   new webpack.HotModuleReplacementPlugin(),
-  new ReactRefreshWebpackPlugin()
+  new ReactRefreshWebpackPlugin(),
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 
 // ENTRY
-const mainEntries = [
-  './src/index.tsx'
-];
+const mainEntries = ['./src/index.tsx'];
 
 console.log(chalk.bold('[webpack] Release: ' + release));
 console.log(chalk.bold('[webpack] Demo mode: ' + demo));
@@ -113,10 +109,11 @@ const chunkFilename = release ? 'js/[name].[chunkhash].chunk.js' : 'js/[name].ch
 
 module.exports = {
   entry: {
-    main: mainEntries
+    main: mainEntries,
   },
-  performance: { // The following asset(s) exceed the recommended size limit (250 kB)
-    hints: false 
+  performance: {
+    // The following asset(s) exceed the recommended size limit (250 kB)
+    hints: false,
   },
   devServer: {
     historyApiFallback: true,
@@ -151,46 +148,47 @@ module.exports = {
             },
           },
         ],
-      }, { 
+      },
+      {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
-      }, {
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.(jpg|png|ico)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[name].[hash][ext]'
-        }
-      }, {
+          filename: 'images/[name].[hash][ext]',
+        },
+      },
+      {
         test: /\.(woff|woff2|eot|ttf|svg)$/i,
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 4 * 1024
-          }
-        }
-      }
-    ]
-  },
-  
-  resolve: {
-    modules: [
-      path.resolve('./src'),
-      path.resolve('./resources'),
-      'node_modules'
+            maxSize: 4 * 1024,
+          },
+        },
+      },
     ],
-    extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
-    enforceExtension: false
+  },
+
+  resolve: {
+    modules: [path.resolve('./src'), path.resolve('./resources'), 'node_modules'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    enforceExtension: false,
   },
 
   plugins: plugins,
   optimization: {
-    splitChunks: !release ? false : {
-      minChunks: 3,
-      cacheGroups: {
-        vendors: false
-      }
-    },
+    splitChunks: !release
+      ? false
+      : {
+          minChunks: 3,
+          cacheGroups: {
+            vendors: false,
+          },
+        },
     minimize: release,
     concatenateModules: true,
-  }
+  },
 };

@@ -14,7 +14,6 @@ import * as UI from 'types/ui';
 import { PathDownloadHandler } from '../../types';
 import { PathListItem } from './PathListItem';
 
-
 interface PathListProps {
   downloadHandler: PathDownloadHandler;
   paths: string[];
@@ -29,19 +28,21 @@ const PathListWithData = DataProviderDecorator<PathListProps, PathListDataProps>
   function PathList({ downloadHandler, pathInfos, t }) {
     return (
       <div className="ui relaxed list">
-        { pathInfos.map(pathInfo => (
-          <PathListItem 
-            key={ pathInfo.path } 
-            pathInfo={ pathInfo } 
-            downloadHandler={ downloadHandler }
-            t={ t }
+        {pathInfos.map((pathInfo) => (
+          <PathListItem
+            key={pathInfo.path}
+            pathInfo={pathInfo}
+            downloadHandler={downloadHandler}
+            t={t}
           />
-        )) }
+        ))}
       </div>
     );
-  }, {
+  },
+  {
     urls: {
-      pathInfos: ({ paths }, socket) => socket.post(FilesystemConstants.DISK_INFO_URL, { paths }),
+      pathInfos: ({ paths }, socket) =>
+        socket.post(FilesystemConstants.DISK_INFO_URL, { paths }),
     },
   }
 );
@@ -54,16 +55,14 @@ const PathListWithData = DataProviderDecorator<PathListProps, PathListDataProps>
 //paths: PropTypes.array.isRequired,
 //};
 
-const PathList: React.FC<PathListProps> = props => {
+const PathList: React.FC<PathListProps> = (props) => {
   if (props.paths.length === 0) {
     return (
-      <Message
-        title={ translate('No paths to display', props.t, UI.Modules.COMMON) }
-      />
+      <Message title={translate('No paths to display', props.t, UI.Modules.COMMON)} />
     );
   }
 
-  return <PathListWithData { ...props }/>;
+  return <PathListWithData {...props} />;
 };
 
 export default PathList;

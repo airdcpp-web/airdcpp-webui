@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 export interface SaveButtonProps {
   saveHandler: () => Promise<void>;
   hasChanges: boolean;
@@ -33,24 +32,23 @@ class SaveButton extends Component<SaveButtonProps> {
   };
 
   state = {
-    saving: false
+    saving: false,
   };
 
   toggleSaveState = () => {
     this.setState({ saving: !this.state.saving });
-  }
+  };
 
   onClick = () => {
     this.toggleSaveState();
-    this.props.saveHandler()
-      .then(this.toggleSaveState)
-      .catch(this.toggleSaveState);
-  }
+    this.props.saveHandler().then(this.toggleSaveState).catch(this.toggleSaveState);
+  };
 
   render() {
     const { local, hasChanges, className, settingsT } = this.props;
 
-    const hasAccess: boolean = local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
+    const hasAccess: boolean =
+      local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
 
     let title;
     if (!hasAccess) {
@@ -60,13 +58,13 @@ class SaveButton extends Component<SaveButtonProps> {
     }
 
     return (
-      <Button 
-        className={ classNames('save', className) }
-        caption={ title }
-        icon={ (hasAccess && hasChanges ? 'green checkmark' : null) } 
-        loading={ this.state.saving } 
-        disabled={ !hasChanges || !hasAccess }
-        onClick={ this.onClick }
+      <Button
+        className={classNames('save', className)}
+        caption={title}
+        icon={hasAccess && hasChanges ? 'green checkmark' : null}
+        loading={this.state.saving}
+        disabled={!hasChanges || !hasAccess}
+        onClick={this.onClick}
       />
     );
   }

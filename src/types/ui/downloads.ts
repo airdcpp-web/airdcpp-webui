@@ -2,16 +2,15 @@ import { APISocket } from 'services/SocketService';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 export interface DownloadSource extends API.HintedUserBase {
   flags: API.HubUserFlag[];
 }
 
 export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
-  itemInfo: ItemT, 
-  user: DownloadSource | undefined, 
+  itemInfo: ItemT,
+  user: DownloadSource | undefined,
   downloadData: API.DownloadData,
-  session: UI.SessionItemBase | undefined,
+  session: UI.SessionItemBase | undefined
 ) => Promise<any>;
 
 export interface DownloadableItemInfo {
@@ -25,7 +24,9 @@ export interface DownloadableItemInfo {
   time: number | undefined;
 }
 
-export interface DownloadableItemData<ItemT extends DownloadableItemInfo = DownloadableItemInfo> {
+export interface DownloadableItemData<
+  ItemT extends DownloadableItemInfo = DownloadableItemInfo
+> {
   id: API.IdType;
   itemInfo: ItemT;
   user: DownloadSource | undefined;
@@ -36,17 +37,17 @@ export interface DownloadableItemData<ItemT extends DownloadableItemInfo = Downl
 type DownloadItemIdType = string;
 
 export type DownloadUserGetter<PropsT extends object> = (
-  itemId: DownloadItemIdType, 
+  itemId: DownloadItemIdType,
   props: PropsT
 ) => UI.DownloadSource | undefined;
 
 export type DownloadItemDataGetter<ItemT extends UI.DownloadableItemInfo> = (
-  itemId: DownloadItemIdType, 
+  itemId: DownloadItemIdType,
   socket: APISocket
 ) => Promise<ItemT>;
 
 export interface ItemDownloadHandler<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo, 
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
   PropsT extends object = UI.EmptyObject
 > {
   downloadHandler: UI.DownloadHandler<ItemT>;
@@ -56,9 +57,6 @@ export interface ItemDownloadHandler<
 }
 
 export type AddItemDownload<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo, 
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
   PropsT extends object = UI.EmptyObject
-> = (
-  itemId: string | number, 
-  handler: ItemDownloadHandler<ItemT, PropsT>
-) => void;
+> = (itemId: string | number, handler: ItemDownloadHandler<ItemT, PropsT>) => void;

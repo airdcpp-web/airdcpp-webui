@@ -11,13 +11,16 @@ import { CommonMessageProps } from '../types';
 import { MessageText } from './MessageText';
 import { TimeStamp } from './Timestamp';
 
-
 const getSeverityIcon = (severity: API.SeverityEnum) => {
   switch (severity) {
-    case API.SeverityEnum.INFO: return IconConstants.INFO + ' circle';
-    case API.SeverityEnum.WARNING: return IconConstants.WARNING;
-    case API.SeverityEnum.ERROR: return IconConstants.ERROR;
-    default: return '';
+    case API.SeverityEnum.INFO:
+      return IconConstants.INFO + ' circle';
+    case API.SeverityEnum.WARNING:
+      return IconConstants.WARNING;
+    case API.SeverityEnum.ERROR:
+      return IconConstants.ERROR;
+    default:
+      return '';
   }
 };
 
@@ -37,21 +40,14 @@ class StatusMessage extends Component<StatusMessageProps> {
   render() {
     const { message, menuProps, ...other } = this.props;
     return (
-      <InView
-        className={ 'ui item status ' + message.severity }
-        { ...other }
-      >
-        <Icon icon={ getSeverityIcon(message.severity) }/>
-        { message.time > 0 && (
-          <TimeStamp 
-            time={ message.time }
-          />
-        ) }
+      <InView className={'ui item status ' + message.severity} {...other}>
+        <Icon icon={getSeverityIcon(message.severity)} />
+        {message.time > 0 && <TimeStamp time={message.time} />}
         <MessageText
-          label={ message.label }
-          message={ message }
-          emojify={ false }
-          menuProps={ menuProps }
+          label={message.label}
+          message={message}
+          emojify={false}
+          menuProps={menuProps}
         />
       </InView>
     );

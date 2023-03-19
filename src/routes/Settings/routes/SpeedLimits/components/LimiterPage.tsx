@@ -8,12 +8,9 @@ const Entry = [
   //limit_use_with_auto_values: t.Bool,
 ];
 
-const LimiterPage: React.FC<SettingSectionChildProps> = props => (
+const LimiterPage: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-    />
+    <RemoteSettingForm {...props} keys={Entry} />
   </div>
 );
 

@@ -6,7 +6,9 @@ import WebUserActions from 'actions/ui/WebUserActions';
 import ActionButton from 'components/ActionButton';
 import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUserDialog';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
 
 import { ActionMenu } from 'components/menu';
 import { formatRelativeTime } from 'utils/ValueFormat';
@@ -16,7 +18,6 @@ import * as UI from 'types/ui';
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-
 interface WebUserRowProps {
   user: API.WebUser;
   moduleT: UI.ModuleTranslator;
@@ -25,31 +26,24 @@ interface WebUserRowProps {
 const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
   <tr>
     <td className="name dropdown">
-      <ActionMenu 
-        caption={ <strong>{ user.username }</strong> }
-        actions={ WebUserActions.edit } 
-        itemData={ user }
+      <ActionMenu
+        caption={<strong>{user.username}</strong>}
+        actions={WebUserActions.edit}
+        itemData={user}
         contextElement="#setting-scroll-context"
       />
     </td>
     <td className="permissions">
-      { user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1 ? 
-          moduleT.translate('Administrator') : 
-          user.permissions.length
-      }
+      {user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1
+        ? moduleT.translate('Administrator')
+        : user.permissions.length}
     </td>
-    <td className="sessions">
-      { user.active_sessions }
-    </td>
-    <td className="last-login">
-      { formatRelativeTime(user.last_login) }
-    </td>
+    <td className="sessions">{user.active_sessions}</td>
+    <td className="last-login">{formatRelativeTime(user.last_login)}</td>
   </tr>
 );
 
-interface WebUsersPageProps extends SettingSectionChildProps {
-
-}
+interface WebUsersPageProps extends SettingSectionChildProps {}
 
 interface WebUsersPageDataProps extends DataProviderDecoratorChildProps {
   users: API.WebUser[];
@@ -63,32 +57,23 @@ class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataP
     const { translate } = moduleT;
     return (
       <div>
-        <ActionButton 
-          actions={ WebUserActions.create }
-          actionId="create"
-        />
+        <ActionButton actions={WebUserActions.create} actionId="create" />
         <table className="ui striped table">
           <thead>
             <tr>
-              <th>{ translate('Username') }</th>
-              <th>{ translate('Permissions') }</th>
-              <th>{ translate('Active sessions') }</th>
-              <th>{ translate('Last logged in') }</th>
+              <th>{translate('Username')}</th>
+              <th>{translate('Permissions')}</th>
+              <th>{translate('Active sessions')}</th>
+              <th>{translate('Last logged in')}</th>
             </tr>
           </thead>
           <tbody>
-            { users.map(user => (
-              <WebUserRow 
-                key={ user.username }
-                user={ user }
-                moduleT={ moduleT }
-              />
-            )) }
+            {users.map((user) => (
+              <WebUserRow key={user.username} user={user} moduleT={moduleT} />
+            ))}
           </tbody>
         </table>
-        <WebUserDialog
-          moduleT={ moduleT }
-        />
+        <WebUserDialog moduleT={moduleT} />
       </div>
     );
   }
@@ -99,8 +84,14 @@ export default DataProviderDecorator(WebUsersPage, {
     users: WebUserConstants.USERS_URL,
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () => refetchData());
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () => refetchData());
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () => refetchData());
+    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () =>
+      refetchData()
+    );
+    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () =>
+      refetchData()
+    );
+    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () =>
+      refetchData()
+    );
   },
 });

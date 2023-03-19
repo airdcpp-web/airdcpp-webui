@@ -3,13 +3,15 @@ import update from 'immutability-helper';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 // Remove the oldest messages to match the maximum cache count
-const checkSplice = (messages: UI.MessageListItem[] | undefined, maxCacheMessageCount: number) => {
+const checkSplice = (
+  messages: UI.MessageListItem[] | undefined,
+  maxCacheMessageCount: number
+) => {
   if (messages) {
     const toRemove = messages.length - maxCacheMessageCount;
     if (toRemove > 0) {
-      return update(messages, { $splice: [ [ 0, toRemove ] ] });
+      return update(messages, { $splice: [[0, toRemove]] });
     }
   }
 
@@ -18,7 +20,7 @@ const checkSplice = (messages: UI.MessageListItem[] | undefined, maxCacheMessage
 
 const filterListed = (messageList: UI.MessageListItem[], message: UI.MessageListItem) => {
   const id = getListMessageId(message);
-  return !messageList.find(existingMessage => getListMessageId(existingMessage) === id);
+  return !messageList.find((existingMessage) => getListMessageId(existingMessage) === id);
 };
 
 const getListMessageId = (listItem: UI.MessageListItem) => {
@@ -36,27 +38,24 @@ const getListMessageTime = (listItem: UI.MessageListItem) => {
 };
 
 const checkUnreadCacheInfo = (
-  counts: API.ChatMessageCounts | API.StatusMessageCounts, 
+  counts: API.ChatMessageCounts | API.StatusMessageCounts,
   setRead: () => void
 ): API.ChatMessageCounts | API.StatusMessageCounts => {
   // Any unread messages?
-  if (!Object.keys(counts.unread).every(key => counts.unread[key] === 0)) {
+  if (!Object.keys(counts.unread).every((key) => counts.unread[key] === 0)) {
     // Reset unread counts
     setRead();
 
     // Don't flash unread counts in the UI
-    const unreadCounts = Object.keys(counts.unread).reduce(
-      (reduced, messageType) => {
-        reduced[messageType] = 0;
-        return reduced;
-      }, 
-      {} as API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts
-    );
-    
+    const unreadCounts = Object.keys(counts.unread).reduce((reduced, messageType) => {
+      reduced[messageType] = 0;
+      return reduced;
+    }, {} as API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts);
+
     return {
       ...counts,
       unread: {
-        ...unreadCounts
+        ...unreadCounts,
       },
     } as API.ChatMessageCounts | API.StatusMessageCounts;
   }
@@ -67,7 +66,7 @@ const checkUnreadCacheInfo = (
 // Update the data with unread info that is marked as read
 // Marks the session as read also in the backend
 const checkUnreadSessionInfo = (
-  unreadInfoItem: UI.UnreadInfo, 
+  unreadInfoItem: UI.UnreadInfo,
   setRead: () => void
 ): UI.UnreadInfo => {
   if (!unreadInfoItem.message_counts && unreadInfoItem.hasOwnProperty('read')) {
@@ -98,18 +97,21 @@ const checkUnreadSessionInfo = (
 // Messages may have been received via listener while fetching cached ones
 // Append the received non-dupe messages to fetched list
 const mergeCacheMessages = (
-  cacheMessages: UI.MessageListItem[], 
+  cacheMessages: UI.MessageListItem[],
   existingMessages: UI.MessageListItem[] | undefined = []
 ) => {
   return [
     ...cacheMessages,
-    ...existingMessages.filter(message => filterListed(cacheMessages, message)),
+    ...existingMessages.filter((message) => filterListed(cacheMessages, message)),
   ];
 };
 
 // Push the message to the existing list of messages (if it's not there yet)
 // Returns the updated message list
-const pushMessage = (message: UI.MessageListItem, messages: UI.MessageListItem[] = []) => {
+const pushMessage = (
+  message: UI.MessageListItem,
+  messages: UI.MessageListItem[] = []
+) => {
   if (messages.length > 0) {
     // Messages can arrive simultaneously when the cached messages are fetched, don't add duplicates
     const lastMessage = messages[messages.length - 1];
@@ -119,7 +121,7 @@ const pushMessage = (message: UI.MessageListItem, messages: UI.MessageListItem[]
     }
   }
 
-  return [ ...messages, message ];
+  return [...messages, message];
 };
 
 export {
@@ -127,7 +129,6 @@ export {
   checkUnreadSessionInfo,
   mergeCacheMessages,
   pushMessage,
-
   getListMessageId,
   getListMessageTime,
   checkSplice,

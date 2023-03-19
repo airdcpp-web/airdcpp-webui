@@ -12,7 +12,6 @@ import 'fomantic-ui-css/components/dropdown';
 import 'fomantic-ui-css/components/dropdown.min.css';
 import IconConstants from 'constants/IconConstants';
 
-
 export type DropdownProps = React.PropsWithChildren<{
   triggerIcon?: IconType;
   direction?: 'auto' | 'upward' | 'downward';
@@ -41,10 +40,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
     caption: PropTypes.node,
 
     // If caption isn't specified, the icon will be used as main trigger
-    triggerIcon: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-    ]),
+    triggerIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
     // Show trigger icon on the left side of the caption instead of after it
     leftIcon: PropTypes.bool,
@@ -78,9 +74,9 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       $(this.c).dropdown('destroy');
     }
   }
-  
+
   state: State = {
-    visible: false
+    visible: false,
   };
 
   init = () => {
@@ -90,14 +86,15 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       showOnFocus: false, // It can become focused when opening a modal
       onShow: () => {
         this.setState({
-          visible: true
+          visible: true,
         });
       },
       onHide: () => {
-        setTimeout( // Handle possible item click events before removing the items...
+        setTimeout(
+          // Handle possible item click events before removing the items...
           () => {
             this.setState({
-              visible: false
+              visible: false,
             });
           },
           ANIMATION_DURATION
@@ -115,11 +112,19 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
     }
 
     $(this.c).dropdown(settings);
-  }
+  };
 
   render() {
-    const { 
-      leftIcon, caption, button, triggerIcon, captionIcon, dropDownElementProps, selection, size, menuElementClassName 
+    const {
+      leftIcon,
+      caption,
+      button,
+      triggerIcon,
+      captionIcon,
+      dropDownElementProps,
+      selection,
+      size,
+      menuElementClassName,
     } = this.props;
 
     const className = classNames(
@@ -129,34 +134,32 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       size,
       this.props.className,
       { 'icon button': button },
-      { 'labeled': !!button && !!caption },
+      { labeled: !!button && !!caption },
       { 'left-icon': leftIcon },
-      { 'selection fluid': selection },
+      { 'selection fluid': selection }
     );
 
     const icon = (
-      <Icon 
-        icon={ triggerIcon !== undefined ? triggerIcon : (selection ? 'dropdown' : IconConstants.EXPAND) } 
+      <Icon
+        icon={
+          triggerIcon !== undefined
+            ? triggerIcon
+            : selection
+            ? 'dropdown'
+            : IconConstants.EXPAND
+        }
         className="trigger"
       />
     );
 
     return (
-      <div 
-        ref={ c => this.c = c! } 
-        { ...dropDownElementProps }
-        className={ className }
-      >
-        { (leftIcon && !!caption) && icon }
-        <DropdownCaption 
-          icon={ captionIcon }
-        >
-          { !!caption ? caption : icon }
-        </DropdownCaption>
-        { leftIcon || !caption ? null : icon }
+      <div ref={(c) => (this.c = c!)} {...dropDownElementProps} className={className}>
+        {leftIcon && !!caption && icon}
+        <DropdownCaption icon={captionIcon}>{!!caption ? caption : icon}</DropdownCaption>
+        {leftIcon || !caption ? null : icon}
 
-        <div className={ classNames('menu', menuElementClassName) }>
-          { this.state.visible ? this.props.children : <div className="item"/> }
+        <div className={classNames('menu', menuElementClassName)}>
+          {this.state.visible ? this.props.children : <div className="item" />}
         </div>
       </div>
     );

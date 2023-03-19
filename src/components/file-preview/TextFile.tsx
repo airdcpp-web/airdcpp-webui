@@ -9,49 +9,41 @@ import { translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import Loader from 'components/semantic/Loader';
 
-
 interface TextFileProps {
   textGetter: () => Promise<string>;
   url?: string;
 }
 
 const TextFile: React.FC<TextFileProps> = ({ textGetter, url }) => {
-  const [ text, setText ] = useState<string | null>(null);
-  const [ error, setError ] = useState<Error | null>(null);
+  const [text, setText] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const { t } = useTranslation();
-  useEffect(
-    () => {
-      textGetter()
-        .then(setText)
-        .catch(setError);
+  useEffect(() => {
+    textGetter().then(setText).catch(setError);
 
-      return () => {
-        setText(null);
-        setError(null);
-      };
-    },
-    [ url ]
-  );
+    return () => {
+      setText(null);
+      setError(null);
+    };
+  }, [url]);
 
   if (!text) {
     if (error) {
       return (
         <Message
-          title={ translate('Failed to fetch content', t, UI.Modules.COMMON) }
-          description={ error.message }
+          title={translate('Failed to fetch content', t, UI.Modules.COMMON)}
+          description={error.message}
         />
       );
     }
 
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (
     <pre>
-      <TextDecorator
-        text={ text }
-      />
+      <TextDecorator text={text} />
     </pre>
   );
 };

@@ -17,34 +17,36 @@ import * as UI from 'types/ui';
 import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-import { changeFilelistHubUrl, changeFilelistShareProfile, changeFilelistDirectory } from 'services/api/FilelistApi';
+import {
+  changeFilelistHubUrl,
+  changeFilelistShareProfile,
+  changeFilelistDirectory,
+} from 'services/api/FilelistApi';
 import { FilelistSession } from 'types/api';
 
-
 const FilelistActionConfig: UI.RefluxActionConfigList<API.FilelistSession> = [
-  { 'createSession': { asyncResult: true } },
-  { 'ownList': { asyncResult: true } },
-  { 'setRead': { asyncResult: true } },
+  { createSession: { asyncResult: true } },
+  { ownList: { asyncResult: true } },
+  { setRead: { asyncResult: true } },
 ];
 
 const FilelistSessionActions = Reflux.createActions(FilelistActionConfig);
 
-
 // SESSION CREATION
 const openSession = (location: Location, cid: string) => {
   History.push({
-    pathname: `/filelists/session/${cid}`, 
+    pathname: `/filelists/session/${cid}`,
     state: {
-      pending: true
+      pending: true,
     },
   });
 };
 
 FilelistSessionActions.createSession.listen(function (
-  this: UI.AsyncActionType<API.FilelistSession>, 
-  location: Location, 
-  user: API.HintedUser, 
-  sessionStore: any, 
+  this: UI.AsyncActionType<API.FilelistSession>,
+  location: Location,
+  user: API.HintedUser,
+  sessionStore: any,
   path = '/'
 ) {
   const directory = getFilePath(path);
@@ -75,8 +77,8 @@ FilelistSessionActions.createSession.listen(function (
 });
 
 FilelistSessionActions.createSession.completed.listen(function (
-  location: Location, 
-  user: API.HintedUser,
+  location: Location,
+  user: API.HintedUser
 ) {
   openSession(location, user.cid);
 });
@@ -86,9 +88,9 @@ FilelistSessionActions.createSession.failed.listen(function (error: ErrorRespons
 });
 
 FilelistSessionActions.ownList.listen(function (
-  this: UI.AsyncActionType<API.FilelistSession>, 
-  location: Location, 
-  shareProfileId: number, 
+  this: UI.AsyncActionType<API.FilelistSession>,
+  location: Location,
+  shareProfileId: number,
   sessionStore: any
 ) {
   const session = sessionStore.getSession(LoginStore.systemInfo.cid);
@@ -113,11 +115,10 @@ FilelistSessionActions.ownList.completed.listen(function (location: Location) {
   openSession(location, LoginStore.systemInfo.cid);
 });
 
-
 // SESSION UPDATES
 
 FilelistSessionActions.setRead.listen(function (
-  this: UI.AsyncActionType<API.FilelistSession>, 
+  this: UI.AsyncActionType<API.FilelistSession>,
   session: API.FilelistSession
 ) {
   const that = this;
@@ -127,7 +128,7 @@ FilelistSessionActions.setRead.listen(function (
 });
 
 const FilelistSessionActionsDecorated = SessionActionDecorator(
-  FilelistSessionActions, 
+  FilelistSessionActions,
   FilelistConstants.SESSIONS_URL
 );
 

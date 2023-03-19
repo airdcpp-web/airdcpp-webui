@@ -10,13 +10,7 @@ import * as UI from 'types/ui';
 import Message from 'components/semantic/Message';
 import IconConstants from 'constants/IconConstants';
 
-
-const Entry = [
-  'tcp_port',
-  'udp_port',
-  'tls_port',
-  'preferred_port_mapper',
-];
+const Entry = ['tcp_port', 'udp_port', 'tls_port', 'preferred_port_mapper'];
 
 const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
@@ -39,20 +33,20 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   return onFieldSetting;
 };
 
-const PortsPage: React.FC<SettingSectionChildProps> = props => (
+const PortsPage: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <Message 
-      description={ props.moduleT.t<string>(
-        'portsAutoValuesNote', 
+    <Message
+      description={props.moduleT.t<string>(
+        'portsAutoValuesNote',
         'Port numbers listed on this page can be overridden by port mappers (if enabled)'
-      ) }
-      icon={ IconConstants.INFO }
+      )}
+      icon={IconConstants.INFO}
     />
     <RemoteSettingForm
-      { ...props }
-      keys={ Entry }
-      onFieldSetting={ FieldOptionGetter(props.moduleT) }
-      valueMode={ API.SettingValueMode.FORCE_MANUAL }
+      {...props}
+      keys={Entry}
+      onFieldSetting={FieldOptionGetter(props.moduleT)}
+      valueMode={API.SettingValueMode.FORCE_MANUAL}
     />
   </div>
 );

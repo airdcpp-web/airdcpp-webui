@@ -11,23 +11,22 @@ import { CommonMessageProps } from '../types';
 import { TimeStamp } from './Timestamp';
 import { MessageText } from './MessageText';
 
-
 interface AuthorProps {
-  message: API.ChatMessage; 
+  message: API.ChatMessage;
   dropdownContext: string;
 }
 
 // Message sections
 const Author: React.FC<AuthorProps> = ({ message, dropdownContext }) => (
   <div className="header author">
-    { message.third_person && <span>*</span> }
-    <UserMenu 
-      contextElement={ dropdownContext } 
-      triggerIcon={ null }
-      user={ message.from }
+    {message.third_person && <span>*</span>}
+    <UserMenu
+      contextElement={dropdownContext}
+      triggerIcon={null}
+      user={message.from}
       direction="downward"
-      remoteMenuId={ MenuConstants.HUB_USER }
-      entityId={ message.from.hub_session_id }
+      remoteMenuId={MenuConstants.HUB_USER}
+      entityId={message.from.hub_session_id}
     />
   </div>
 );
@@ -54,29 +53,18 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 
   render() {
-    const { 
-      message, dropdownContext, menuProps,
-      ...other 
-    } = this.props;
+    const { message, dropdownContext, menuProps, ...other } = this.props;
 
     return (
-      <InView 
-        className={ 'ui item chat ' + message.from.flags.join(' ')}
-        { ...other }
-      >
-        <TimeStamp
-          time={ message.time }
-        />
-        <div className={ 'left ' + (message.third_person ? 'third-person' : 'normal') }>
-          <Author 
-            message={ message } 
-            dropdownContext={ dropdownContext }
-          />
-          <MessageText 
-            message={ message }
-            emojify={ true }
-            user={ message.from }
-            menuProps={ menuProps }
+      <InView className={'ui item chat ' + message.from.flags.join(' ')} {...other}>
+        <TimeStamp time={message.time} />
+        <div className={'left ' + (message.third_person ? 'third-person' : 'normal')}>
+          <Author message={message} dropdownContext={dropdownContext} />
+          <MessageText
+            message={message}
+            emojify={true}
+            user={message.from}
+            menuProps={menuProps}
           />
         </div>
       </InView>

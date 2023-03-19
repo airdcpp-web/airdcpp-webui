@@ -5,11 +5,13 @@ import Icon, { IconType } from 'components/semantic/Icon';
 
 import classNames from 'classnames';
 
-
-//export type MessageDescriptionType = React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | 
+//export type MessageDescriptionType = React.ReactElement<React.HTMLAttributes<HTMLDivElement>> |
 //  string | null | undefined;
-export type MessageDescriptionType = React.ReactElement<React.HTMLAttributes<HTMLDivElement>> | 
-  string | null | undefined;
+export type MessageDescriptionType =
+  | React.ReactElement<React.HTMLAttributes<HTMLDivElement>>
+  | string
+  | null
+  | undefined;
 
 type MessageProps = React.PropsWithChildren<{
   className?: string;
@@ -19,12 +21,19 @@ type MessageProps = React.PropsWithChildren<{
   isError?: boolean;
 }>;
 
-const Message: React.FC<MessageProps> = ({ className, title, description, icon, isError, children }) => {
+const Message: React.FC<MessageProps> = ({
+  className,
+  title,
+  description,
+  icon,
+  isError,
+  children,
+}) => {
   const style = classNames(
     'ui message',
-    { 'negative': isError },
-    { 'icon': !!icon },
-    className,
+    { negative: isError },
+    { icon: !!icon },
+    className
   );
 
   if (description && typeof description !== 'string') {
@@ -34,14 +43,12 @@ const Message: React.FC<MessageProps> = ({ className, title, description, icon, 
   }
 
   return (
-    <div className={ style }>
-      <Icon icon={ icon }/>
+    <div className={style}>
+      <Icon icon={icon} />
       <div className="content">
-        <div className="header">
-          { title }
-        </div>
-        { description } 
-        { children } 
+        <div className="header">{title}</div>
+        {description}
+        {children}
       </div>
     </div>
   );
@@ -59,5 +66,4 @@ const Message: React.FC<MessageProps> = ({ className, title, description, icon, 
   icon: PropTypes.string,
 };*/
 
-export default Message
-;
+export default Message;

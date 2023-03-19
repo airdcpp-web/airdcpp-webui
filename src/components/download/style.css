@@ -13,7 +13,8 @@
   overflow-x: hidden;
 }
 
-.download-dialog .content > div, .download-dialog .ui.grid .column, 
+.download-dialog .content > div,
+.download-dialog .ui.grid .column,
 .download-dialog .main-content {
   height: 100%;
 }

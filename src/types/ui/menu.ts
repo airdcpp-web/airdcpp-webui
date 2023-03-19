@@ -11,12 +11,12 @@ export interface ActionMenuData<ItemDataT extends UI.ActionMenuItemDataValueType
 export type MenuItemClickHandler = () => void;
 
 export type ActionMenuFilterType<ItemDataT extends UI.ActionMenuItemDataValueType> = (
-  action: UI.ActionType<ItemDataT>, 
+  action: UI.ActionType<ItemDataT>,
   itemData: ItemDataT
 ) => boolean;
 
 export interface ActionMenuType<ItemDataT> {
   actionIds: string[];
-  itemDataGetter: (() => ItemDataT);
+  itemDataGetter: () => ItemDataT;
   actions: UI.ModuleActions<ItemDataT>;
 }

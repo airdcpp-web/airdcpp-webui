@@ -7,6 +7,5 @@ export default {
   PROFILE_UPDATED: 'share_profile_updated',
   PROFILE_REMOVED: 'share_profile_removed',
 
-  HIDDEN_PROFILE_ID: 1
-}
-;
+  HIDDEN_PROFILE_ID: 1,
+};

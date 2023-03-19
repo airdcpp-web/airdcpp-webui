@@ -4,24 +4,26 @@ module.exports = {
   icon: 'user',
   component: require('../../components/SettingSection').default,
   menuItems: [
-    { 
-      title: 'User', 
+    {
+      title: 'User',
       url: 'user',
       component: require('./components/UserPage').default,
-    }, { 
-      title: 'Away mode', 
+    },
+    {
+      title: 'Away mode',
       url: 'away',
       component: require('./components/AwayPage').default,
-    }, 
+    },
   ],
   advancedMenuItems: [
-    { 
-      title: 'Ignored users', 
+    {
+      title: 'Ignored users',
       url: 'ignored-users',
       noSave: true,
       component: require('./components/IgnorePage').default,
-    }, { 
-      title: 'Miscellaneous', 
+    },
+    {
+      title: 'Miscellaneous',
       url: 'miscellaneous',
       component: require('./components/MiscPage').default,
     },

@@ -1,4 +1,3 @@
-
 export interface ConnectivityProtocolStatus {
   auto_detect: boolean;
   enabled: boolean;
@@ -32,5 +31,5 @@ export const enum ConnectivityModeEnum {
   DISABLED = -1,
   ACTIVE_MODE = 0,
   ACTIVE_MODE_UPNP = 1,
-  PASSIVE_MODE = 2
+  PASSIVE_MODE = 2,
 }

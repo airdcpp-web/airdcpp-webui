@@ -25,4 +25,4 @@ export type EmptyObject = Record<string, never>;
 
 export type PropsWithChildren = {
   children: React.ReactNode;
-}
+};

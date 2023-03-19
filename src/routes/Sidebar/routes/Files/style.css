@@ -17,14 +17,14 @@
 }
 
 .file.session.nfo .file-content pre {
-  font-family: "Courier New", "DejaVu Sans Mono", monospace;
+  font-family: 'Courier New', 'DejaVu Sans Mono', monospace;
   font-size: 11px;
   line-height: 12px;
   padding: 3px;
   margin: 0px;
 }
 
-.file.session img, 
+.file.session img,
 .file.session video {
   max-width: 100%;
   max-height: 99%;

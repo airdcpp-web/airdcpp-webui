@@ -5,14 +5,13 @@ import * as UI from 'types/ui';
 
 import Logo from 'images/AirDCPlusPlus.png';
 
-
 const SiteHeader: React.FC<UI.PropsWithChildren> = ({ children }) => (
   <div className="ui fixed inverted menu site-header">
     <div className="ui header-content">
       <Link to="/" className="item">
-        <img className="logo" src={ Logo }/>
+        <img className="logo" src={Logo} />
       </Link>
-      { children }
+      {children}
     </div>
   </div>
 );

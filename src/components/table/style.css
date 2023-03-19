@@ -16,7 +16,7 @@
 }
 
 .virtual-table .public_fixedDataTable_bodyRow a i:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .virtual-table .fixedDataTableLayout_main {
@@ -27,11 +27,10 @@
   outline: inherit;
 }
 
-.virtual-table .public_fixedDataTable_header a, .public_fixedDataTableCell_main a {
+.virtual-table .public_fixedDataTable_header a,
+.public_fixedDataTableCell_main a {
   color: black;
 }
-
-
 
 /* Common cell content styles */
 
@@ -52,7 +51,6 @@
   height: 5px;
 }
 
-
 /* Footer */
 
 .table-footer {
@@ -61,7 +59,7 @@
   background-color: #f6f7f8;
   background-image: -webkit-linear-gradient(#fff, #efefef);
   background-image: linear-gradient(#fff, #efefef);
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
@@ -92,8 +90,6 @@
   width: 90%;
 }
 
-
-
 /* Table dropdowns */
 .table-container-wrapper .dropdown .trigger {
   line-height: 21px;
@@ -101,12 +97,14 @@
   align-items: flex-start;
 }
 
-.table-container-wrapper .dropdown .trigger:hover, .public_fixedDataTableCell_main a:hover {
-  cursor:pointer;
+.table-container-wrapper .dropdown .trigger:hover,
+.public_fixedDataTableCell_main a:hover {
+  cursor: pointer;
 }
 
-.table-container-wrapper .dropdown .trigger:hover span, .public_fixedDataTableCell_main a:hover {
-  text-decoration:underline;
+.table-container-wrapper .dropdown .trigger:hover span,
+.public_fixedDataTableCell_main a:hover {
+  text-decoration: underline;
 }
 
 .table-container-wrapper .dropdown .trigger i.angle.icon {
@@ -128,8 +126,6 @@
 .table-container-wrapper .dropdown .trigger span {
   flex: 1;
 }
-
-
 
 /* Table dropdown popup content */
 .popup.dropdown-content {

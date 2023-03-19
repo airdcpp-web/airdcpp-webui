@@ -7,5 +7,5 @@ export default Reflux.createStore({
   _viewName: 'filelist_view',
   _apiUrl: FilelistConstants.SESSIONS_URL,
   _sessionStore: FilelistSessionStore,
-  mixins: [ ViewStoreMixin('name') ],
+  mixins: [ViewStoreMixin('name')],
 });

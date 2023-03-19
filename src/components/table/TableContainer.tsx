@@ -14,8 +14,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { textToI18nKey, toArray } from 'utils/TranslationUtils';
 
-
-
 const TABLE_ROW_HEIGHT = 50;
 
 function convertStartToRows(pixels: number) {
@@ -40,25 +38,24 @@ interface State {
   width: number;
   height: number;
   columnWidths: object;
-  isColumnResizing: boolean | undefined
+  isColumnResizing: boolean | undefined;
 }
 
-
 const formatColumnName = (
-  column: React.ReactElement<ColumnProps>, 
-  store: any, 
-  moduleId: string | string[], 
+  column: React.ReactElement<ColumnProps>,
+  store: any,
+  moduleId: string | string[],
   t: UI.TranslateF
 ) => {
   const { name, columnKey } = column.props;
   let displayName = t(
-    textToI18nKey(columnKey as string, [ ...toArray(moduleId), UI.SubNamespaces.TABLE ]),
+    textToI18nKey(columnKey as string, [...toArray(moduleId), UI.SubNamespaces.TABLE]),
     name
   );
 
   {
     const sortDirArrow = store.sortAscending ? ' ↑' : ' ↓';
-    displayName += ((store.sortProperty === columnKey) ? sortDirArrow : '');
+    displayName += store.sortProperty === columnKey ? sortDirArrow : '';
   }
 
   return displayName;
@@ -66,7 +63,6 @@ const formatColumnName = (
 
 class TableContainer extends React.Component<TableContainerProps, State> {
   static propTypes = {
-
     /**
      * Store implementing ViewStoreMixin that contains the items
      */
@@ -82,7 +78,6 @@ class TableContainer extends React.Component<TableContainerProps, State> {
      */
     entityId: PropTypes.any,
 
-    
     dataLoader: PropTypes.any.isRequired,
   };
 
@@ -96,9 +91,9 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   getInitialProps = () => {
     return {
       rowClassNameGetter: null,
-      entityId: null
+      entityId: null,
     };
-  }
+  };
 
   scrollTimer: number | undefined;
   scrollPosition = 0;
@@ -108,9 +103,14 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   componentDidUpdate(prevProps: TableContainerProps, prevState: State) {
     if (prevState.height !== this.state.height) {
       this.updateRowRange();
-    } else if (prevProps.entityId !== this.props.entityId || prevProps.viewId !== this.props.viewId) {
+    } else if (
+      prevProps.entityId !== this.props.entityId ||
+      prevProps.viewId !== this.props.viewId
+    ) {
       if (this.props.store.DEBUG) {
-        console.log(`Enabling initial scroll, entity/viewId changed (view ${this.props.viewId})`);
+        console.log(
+          `Enabling initial scroll, entity/viewId changed (view ${this.props.viewId})`
+        );
       }
 
       this.setInitialScrollRow = true;
@@ -131,12 +131,15 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
     if (store.DEBUG) {
       // eslint-disable-next-line max-len
-      console.log(`Settings changed, start: ${startRows}, end: ${maxRows}, height: ${height}`, store.viewName);
+      console.log(
+        `Settings changed, start: ${startRows}, end: ${maxRows}, height: ${height}`,
+        store.viewName
+      );
     }
 
     console.assert(store.active, 'Posting data for an inactive view');
     TableActions.setRange(store.viewUrl, startRows, maxRows);
-  }
+  };
 
   onScrollStart = (horizontal: number, vertical: number) => {
     const { store } = this.props;
@@ -147,7 +150,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
     console.assert(store.active, 'Sending pause for an inactive view');
     TableActions.pause(store.viewUrl, true);
-  }
+  };
 
   onScrollEnd = (horizontal: number, vertical: number) => {
     const { store, viewId } = this.props;
@@ -171,7 +174,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     if (store.DEBUG) {
       console.log(`Scrolling ended: ${vertical}`, store.viewUrl);
     }
-  }
+  };
 
   onColumnClicked = (sortProperty: string) => {
     const { store } = this.props;
@@ -182,27 +185,30 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     }
 
     TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
-  }
+  };
 
   onColumnResizeEndCallback = (newColumnWidth: number, columnKey: string) => {
-    this.setState(({ columnWidths }) => ({
-      columnWidths: {
-        ...columnWidths,
-        [columnKey]: newColumnWidth,
-      },
+    this.setState(
+      ({ columnWidths }) => ({
+        columnWidths: {
+          ...columnWidths,
+          [columnKey]: newColumnWidth,
+        },
 
-      // In order to disable the resizing mode, the table needs to be rendered with "isColumnResizing: false"
-      // Put it right back to undefined after that in order to avoid resizing issues 
-      // while the table is being re-rendered
-      // https://github.com/schrodinger/fixed-data-table-2/issues/268
-      // https://github.com/airdcpp-web/airdcpp-webclient/issues/444
-      isColumnResizing: false,
-    }), () => {
-      this.setState({
-        isColumnResizing: undefined,
-      })
-    });
-  }
+        // In order to disable the resizing mode, the table needs to be rendered with "isColumnResizing: false"
+        // Put it right back to undefined after that in order to avoid resizing issues
+        // while the table is being re-rendered
+        // https://github.com/schrodinger/fixed-data-table-2/issues/268
+        // https://github.com/airdcpp-web/airdcpp-webclient/issues/444
+        isColumnResizing: false,
+      }),
+      () => {
+        this.setState({
+          isColumnResizing: undefined,
+        });
+      }
+    );
+  };
 
   childToColumn = (column: React.ReactElement<ColumnProps>) => {
     if (!!column.props.hideWidth && column.props.hideWidth > this.state.width) {
@@ -224,27 +230,27 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
     return React.cloneElement(column, {
       header: (
-        <HeaderCell 
-          onClick={ this.onColumnClicked.bind(null, columnKey) } 
-          label={ formatColumnName(column, store, moduleId, t) }
+        <HeaderCell
+          onClick={this.onColumnClicked.bind(null, columnKey)}
+          label={formatColumnName(column, store, moduleId, t)}
         />
       ),
       flexGrow,
       width,
       isResizable: !mobileView,
       allowCellsRecycling: true,
-      cell: (			
-        <RowWrapperCell 
-          dataLoader={ this.props.dataLoader } 
-          renderCondition={ renderCondition } 
-          rowClassNameGetter={ rowClassNameGetter }
-          t={ t }
+      cell: (
+        <RowWrapperCell
+          dataLoader={this.props.dataLoader}
+          renderCondition={renderCondition}
+          rowClassNameGetter={rowClassNameGetter}
+          t={t}
         >
-          { cell ? cell as React.ReactElement<any> : <TextCell/> }
+          {cell ? (cell as React.ReactElement<any>) : <TextCell />}
         </RowWrapperCell>
       ),
     });
-  }
+  };
 
   onResizeView = (contentRect: ContentRect) => {
     if (!contentRect.bounds) {
@@ -252,49 +258,44 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     }
 
     // Bounds may contain incorrect (or outdated) dimensions with animations (such as when opening a modal)
-    const { width, height } = !!contentRect.entry ? contentRect.entry : contentRect.bounds;
+    const { width, height } = !!contentRect.entry
+      ? contentRect.entry
+      : contentRect.bounds;
     this.setState({
       width,
       height,
     });
-  }
+  };
 
   render() {
     // Update and insert generic columns props
     const children = React.Children.map(this.props.children, this.childToColumn);
 
-    const { width, height, isColumnResizing } = this.state
+    const { width, height, isColumnResizing } = this.state;
     const { store, viewId } = this.props;
     return (
-      <Measure 
-        bounds={ true }
-        onResize={ this.onResizeView }
-      >
-        { ({ measureRef }) => (
-          <div 
-            ref={ measureRef } 
-            className="table-container-wrapper"
-          >
+      <Measure bounds={true} onResize={this.onResizeView}>
+        {({ measureRef }) => (
+          <div ref={measureRef} className="table-container-wrapper">
             <Table
-              width={ width }
-              height={ height } 
-
-              rowHeight={ 50 }
-              rowsCount={ store.rowCount }
-              headerHeight={ 50 }
-              isColumnResizing={ isColumnResizing }
-              onColumnResizeEndCallback={ this.onColumnResizeEndCallback }
-
-              touchScrollEnabled={ true }
-
-              onScrollStart={ this.onScrollStart }
-              onScrollEnd={ this.onScrollEnd }
-              scrollTop={ this.setInitialScrollRow ? store.getScrollData(viewId) : undefined }
+              width={width}
+              height={height}
+              rowHeight={50}
+              rowsCount={store.rowCount}
+              headerHeight={50}
+              isColumnResizing={isColumnResizing}
+              onColumnResizeEndCallback={this.onColumnResizeEndCallback}
+              touchScrollEnabled={true}
+              onScrollStart={this.onScrollStart}
+              onScrollEnd={this.onScrollEnd}
+              scrollTop={
+                this.setInitialScrollRow ? store.getScrollData(viewId) : undefined
+              }
             >
-              { children }
+              {children}
             </Table>
           </div>
-        ) }
+        )}
       </Measure>
     );
   }

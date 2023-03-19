@@ -1,6 +1,5 @@
 import { SystemInfo } from './system';
 
-
 export interface LoginInfo {
   session_id: number;
   auth_token: string;

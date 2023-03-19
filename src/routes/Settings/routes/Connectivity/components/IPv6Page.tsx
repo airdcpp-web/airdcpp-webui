@@ -3,7 +3,6 @@ import ProtocolPage from 'routes/Settings/routes/Connectivity/components/Protoco
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-
 const Entry = [
   'connection_auto_v6',
   'connection_bind_v6',
@@ -13,13 +12,9 @@ const Entry = [
   'connection_ip_override_v6',
 ];
 
-const IPv6: React.FC<SettingSectionChildProps> = props => (
+const IPv6: React.FC<SettingSectionChildProps> = (props) => (
   <div>
-    <ProtocolPage
-      { ...props }
-      keys={ Entry }
-      protocol="v6"
-    />
+    <ProtocolPage {...props} keys={Entry} protocol="v6" />
   </div>
 );
 

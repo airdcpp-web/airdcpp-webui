@@ -1,9 +1,9 @@
 /* Add a few semantic styles manually because of different layout */
 
 .ui.action.input .react-autosuggest__container input {
-  border-top-right-radius: 0!important;
-  border-bottom-right-radius: 0!important;
-  border-right-color: transparent!important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-right-color: transparent !important;
 }
 
 .ui.input.fluid .react-autosuggest__container,
@@ -14,7 +14,7 @@
 
 .ui.input.fluid .react-autosuggest__container input:focus {
   border-color: #85b7d9;
-  border-right-color: #85b7d9!important;
+  border-right-color: #85b7d9 !important;
 }
 
 .react-autosuggest__container ul {
@@ -25,6 +25,6 @@
 
 .react-autosuggest__container ul .description {
   padding-top: 2px;
-  color: rgba(0,0,0,.7);
+  color: rgba(0, 0, 0, 0.7);
   font-size: small;
 }

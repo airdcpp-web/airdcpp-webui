@@ -6,7 +6,6 @@ import 'fomantic-ui-css/components/accordion.min.css';
 
 import cx from 'classnames';
 
-
 type AccordionProps = React.PropsWithChildren<{
   controlled?: boolean;
   className?: string;
@@ -25,7 +24,7 @@ class Accordion extends Component<AccordionProps> {
   c: HTMLDivElement;
   componentDidMount() {
     let settings: SemanticUI.AccordionSettings | undefined;
-    
+
     if (this.props.controlled) {
       settings = {
         on: 'disabled',
@@ -50,18 +49,12 @@ class Accordion extends Component<AccordionProps> {
   }
 
   render() {
-    const classNames = cx(
-      'ui accordion',
-      this.props.className,
-    );
+    const classNames = cx('ui accordion', this.props.className);
 
     const { children } = this.props;
     return (
-      <div 
-        ref={ c => this.c = c! } 
-        className={ classNames }
-      >
-        { children }
+      <div ref={(c) => (this.c = c!)} className={classNames}>
+        {children}
       </div>
     );
   }
@@ -73,33 +66,34 @@ type AccordionTitleProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
 }>;
 
-export const AccordionTitle: React.FC<AccordionTitleProps> = ({ active, className, children, style }) => {
-  const classNames = cx(
-    'title',
-    { active },
-    className,
-  ); 
+export const AccordionTitle: React.FC<AccordionTitleProps> = ({
+  active,
+  className,
+  children,
+  style,
+}) => {
+  const classNames = cx('title', { active }, className);
 
   return (
-    <div className={ classNames } style={ style }>
-      { children }
+    <div className={classNames} style={style}>
+      {children}
     </div>
   );
 };
 
-export const AccordionContent: React.FC<AccordionTitleProps> = ({ active, className, children, style }) => {
-  const classNames = cx(
-    'content',
-    { active },
-    className,
-  ); 
+export const AccordionContent: React.FC<AccordionTitleProps> = ({
+  active,
+  className,
+  children,
+  style,
+}) => {
+  const classNames = cx('content', { active }, className);
 
   return (
-    <div className={ classNames } style={ style }>
-      { children }
+    <div className={classNames} style={style}>
+      {children}
     </div>
   );
 };
-
 
 export default Accordion;

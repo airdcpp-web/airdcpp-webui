@@ -1,4 +1,3 @@
-
 import { SearchActions } from 'actions/reflux/SearchActions';
 
 import IconConstants from 'constants/IconConstants';
@@ -9,7 +8,6 @@ import { parseNodeContent } from '../utils';
 
 import * as UI from 'types/ui';
 
-
 interface RSSItemData {
   entry: FeedItem;
   feedUrl: string;
@@ -19,18 +17,21 @@ const hasLink = ({ entry }: RSSItemData) => !!entry.link;
 const hasTitle = ({ entry }: RSSItemData) => !!entry.title;
 
 const getLocation = (href: string) => {
-  const match = href.match(/^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/);
-  return match && {
-    protocol: match[1],
-    host: match[2],
-    hostname: match[3],
-    port: match[4],
-    pathname: match[5],
-    search: match[6],
-    hash: match[7]
-  };
+  const match = href.match(
+    /^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/
+  );
+  return (
+    match && {
+      protocol: match[1],
+      host: match[2],
+      hostname: match[3],
+      port: match[4],
+      pathname: match[5],
+      search: match[6],
+      hash: match[7],
+    }
+  );
 };
-
 
 const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
   const { entry, feedUrl } = data;
@@ -65,7 +66,6 @@ const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
   return SearchActions.search(itemInfo, location);
 };
 
-
 export const RSSActions: UI.ActionListType<RSSItemData> = {
   openLink: {
     displayName: 'Open link',
@@ -79,7 +79,7 @@ export const RSSActions: UI.ActionListType<RSSItemData> = {
     icon: IconConstants.SEARCH,
     handler: handleSearch,
     filter: hasTitle,
-  }
+  },
 };
 
 export default RSSActions;

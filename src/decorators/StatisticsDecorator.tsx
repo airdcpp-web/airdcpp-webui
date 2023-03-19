@@ -9,7 +9,6 @@ import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 
-
 export interface StatisticsDecoratorProps<DataT> {
   stats?: DataT;
 }
@@ -20,14 +19,14 @@ export interface StatisticsDecoratorChildProps<DataT> {
 
 // Decorator for statistics pages that fetch the content from API
 const StatisticsDecorator = function <DataT, PropsT>(
-  Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>, 
-  fetchUrl: string, 
-  unavailableMessage: ((t: UI.TranslateF, props: PropsT) => string) | null, 
+  Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>,
+  fetchUrl: string,
+  unavailableMessage: ((t: UI.TranslateF, props: PropsT) => string) | null,
   fetchIntervalSeconds = 0
 ) {
   class Decorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
     state = {
-      stats: null
+      stats: null,
     };
 
     fetchTimeout: number | undefined;
@@ -43,18 +42,23 @@ const StatisticsDecorator = function <DataT, PropsT>(
     fetchStats = () => {
       SocketService.get(fetchUrl)
         .then(this.onStatsReceived)
-        .catch((error: ErrorResponse) => console.error('Failed to fetch stats', error.message));
+        .catch((error: ErrorResponse) =>
+          console.error('Failed to fetch stats', error.message)
+        );
 
       if (fetchIntervalSeconds > 0) {
-        this.fetchTimeout = window.setTimeout(this.fetchStats, fetchIntervalSeconds * 1000);
+        this.fetchTimeout = window.setTimeout(
+          this.fetchStats,
+          fetchIntervalSeconds * 1000
+        );
       }
-    }
+    };
 
     onStatsReceived = (data: object) => {
-      this.setState({ 
-        stats: data 
+      this.setState({
+        stats: data,
       });
-    }
+    };
 
     render() {
       const { stats } = this.state;
@@ -69,22 +73,19 @@ const StatisticsDecorator = function <DataT, PropsT>(
       if (stats === undefined) {
         return (
           <Translation>
-            { t => (
+            {(t) => (
               <Message
-                title={ translate('Statistics not available', t, UI.Modules.COMMON) }
-                description={ !unavailableMessage ? undefined : unavailableMessage(t, this.props) }
+                title={translate('Statistics not available', t, UI.Modules.COMMON)}
+                description={
+                  !unavailableMessage ? undefined : unavailableMessage(t, this.props)
+                }
               />
-            ) }
+            )}
           </Translation>
         );
       }
 
-      return (
-        <Component 
-          { ...this.props } 
-          stats={ stats }
-        />
-      );
+      return <Component {...this.props} stats={stats} />;
     }
   }
 

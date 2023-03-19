@@ -8,5 +8,4 @@ export default {
 
   IGNORE_ADDED: 'ignored_user_added',
   IGNORE_REMOVED: 'ignored_user_removed',
-}
-;
+};

@@ -4,7 +4,11 @@ import Reflux from 'reflux';
 import WidgetActions /*, { WidgetItemInfo }*/ from 'actions/reflux/WidgetActions';
 
 import reject from 'lodash/reject';
-import { loadLocalProperty, removeLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
+import {
+  loadLocalProperty,
+  removeLocalProperty,
+  saveLocalProperty,
+} from 'utils/BrowserUtils';
 
 import { Application } from 'widgets/Application';
 import { Extensions } from 'widgets/Extensions';
@@ -14,44 +18,46 @@ import { Transfers } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
-import { widgetIdToSettingKey, widgetIdToType, widgetIdToLocalStateKey } from 'utils/WidgetUtils';
-
+import {
+  widgetIdToSettingKey,
+  widgetIdToType,
+  widgetIdToLocalStateKey,
+} from 'utils/WidgetUtils';
 
 // CONSTANTS
-const cols: {[P in string]: number } = { lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 };
-const breakpoints: {[P in string]: number } = { lg: 1600, md: 1100, sm: 768, xs: 480, xxs: 0 };
+const cols: { [P in string]: number } = { lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 };
+const breakpoints: { [P in string]: number } = {
+  lg: 1600,
+  md: 1100,
+  sm: 768,
+  xs: 480,
+  xxs: 0,
+};
 
-const widgets = [
-  Application,
-  RSS,
-  Notepad,
-  Transfers,
-  Extensions
-];
+const widgets = [Application, RSS, Notepad, Transfers, Extensions];
 
 const LAYOUT_STORAGE_KEY = 'home_layout';
 const LAYOUT_VERSION = 4;
 
 export const EmptyWidgetSettings = {
   name: '',
-  widget: {} 
+  widget: {},
 };
 
 // HELPERS
 const getWidgetSettings = (id: string, widgetInfo?: UI.Widget): UI.WidgetSettings => {
   const settings = loadLocalProperty<UI.WidgetSettings>(
-    widgetIdToSettingKey(id), 
+    widgetIdToSettingKey(id),
     EmptyWidgetSettings
   );
 
   // Add new default settings
   if (widgetInfo && widgetInfo.formSettings) {
-    widgetInfo.formSettings
-      .forEach(definition => {
-        if (!settings.widget.hasOwnProperty(definition.key)) {
-          settings.widget[definition.key] = definition.default_value;
-        }
-      });
+    widgetInfo.formSettings.forEach((definition) => {
+      if (!settings.widget.hasOwnProperty(definition.key)) {
+        settings.widget[definition.key] = definition.default_value;
+      }
+    });
   }
 
   return settings;
@@ -61,32 +67,34 @@ const saveSettings = <SettingsT>(id: string, settings: UI.WidgetSettings<Setting
   saveLocalProperty(widgetIdToSettingKey(id), settings);
 };
 
-const createWidget = (layouts: Layouts, widgetInfo: UI.Widget, id: string, x?: number, y?: number) => {
+const createWidget = (
+  layouts: Layouts,
+  widgetInfo: UI.Widget,
+  id: string,
+  x?: number,
+  y?: number
+) => {
   // Add the same widget for all layouts (we are lazy and use the same size for all layouts)
-  return Object.keys(cols)
-    .reduce(
-      (reducedLayouts, key) => {
-        reducedLayouts[key] = layouts[key] || [];
-        reducedLayouts[key] = reducedLayouts[key].concat({ 
-          i: id, 
-          x: x || reducedLayouts[key].length * 2 % (cols[key] || 12), 
-          y: y || 0, 
-          ...widgetInfo.size
-        });
+  return Object.keys(cols).reduce((reducedLayouts, key) => {
+    reducedLayouts[key] = layouts[key] || [];
+    reducedLayouts[key] = reducedLayouts[key].concat({
+      i: id,
+      x: x || (reducedLayouts[key].length * 2) % (cols[key] || 12),
+      y: y || 0,
+      ...widgetInfo.size,
+    });
 
-        return reducedLayouts;
-      }, 
-      {}
-    );
+    return reducedLayouts;
+  }, {});
 };
 
 const createDefaultWidget = <SettingsT>(
-  layouts: Layouts, 
-  widgetInfo: UI.Widget, 
-  x: number, 
-  y: number, 
-  name?: string, 
-  settings?: SettingsT, 
+  layouts: Layouts,
+  widgetInfo: UI.Widget,
+  x: number,
+  y: number,
+  name?: string,
+  settings?: SettingsT,
   suffix = '_default'
 ) => {
   const id = widgetInfo.typeId + suffix;
@@ -102,9 +110,8 @@ const createDefaultWidget = <SettingsT>(
 
 const getWidgetInfoById = (id: string) => {
   const widgetType = widgetIdToType(id);
-  return widgets.find(item => item.typeId === widgetType);
+  return widgets.find((item) => item.typeId === widgetType);
 };
-
 
 interface StorageLayouts {
   version: number;
@@ -121,7 +128,12 @@ const Store = {
       if (layoutInfo.version === LAYOUT_VERSION) {
         this.layouts = layoutInfo.items;
       } else if (layoutInfo.version === 3) {
-        this.layouts = createDefaultWidget(layoutInfo.items, Extensions, Application.size.w + RSS.size.w, 0);
+        this.layouts = createDefaultWidget(
+          layoutInfo.items,
+          Extensions,
+          Application.size.w + RSS.size.w,
+          0
+        );
       }
     }
 
@@ -136,19 +148,29 @@ const Store = {
     // Initialize the default layout
     this.layouts = createDefaultWidget(this.layouts, Application, 0, 0);
     this.layouts = createDefaultWidget(
-      this.layouts, 
-      RSS, 
-      Application.size.w, 
-      0, 
-      'News', 
+      this.layouts,
+      RSS,
+      Application.size.w,
+      0,
+      'News',
       {
         feed_url: 'https://airdcpp-web.github.io/feed.xml',
-      }, 
+      },
       '_releases'
     );
 
-    this.layouts = createDefaultWidget(this.layouts, Extensions, Application.size.w + RSS.size.w, 0);
-    this.layouts = createDefaultWidget(this.layouts, Transfers, Application.size.w + RSS.size.w + Extensions.size.w, 0);
+    this.layouts = createDefaultWidget(
+      this.layouts,
+      Extensions,
+      Application.size.w + RSS.size.w,
+      0
+    );
+    this.layouts = createDefaultWidget(
+      this.layouts,
+      Transfers,
+      Application.size.w + RSS.size.w + Extensions.size.w,
+      0
+    );
     this.layouts = createDefaultWidget(this.layouts, Notepad, 0, 5);
   },
 
@@ -159,7 +181,6 @@ const Store = {
   onCreate(id: string, settings: UI.WidgetSettings, typeId: string) {
     saveSettings(id, settings);
 
-
     this.layouts = createWidget(this.layouts, this.getWidgetInfoById(typeId)!, id);
 
     (this as any).trigger(this.layouts);
@@ -168,8 +189,8 @@ const Store = {
   onEdit(id: string, settings: UI.WidgetSettings) {
     saveSettings(id, settings);
 
-    this.layouts = { 
-      ...this.layouts
+    this.layouts = {
+      ...this.layouts,
     };
 
     (this as any).trigger(this.layouts);
@@ -179,17 +200,13 @@ const Store = {
     removeLocalProperty(widgetIdToSettingKey(id));
     removeLocalProperty(widgetIdToLocalStateKey(id));
 
-    this.layouts = Object.keys(cols)
-      .reduce(
-        (layouts, key) => {
-          if (this.layouts[key]) {
-            layouts[key] = reject(this.layouts[key], { i: id });
-          }
+    this.layouts = Object.keys(cols).reduce((layouts, key) => {
+      if (this.layouts[key]) {
+        layouts[key] = reject(this.layouts[key], { i: id });
+      }
 
-          return layouts;
-        }, 
-        {}
-      );
+      return layouts;
+    }, {});
 
     (this as any).trigger(this.layouts);
   },
@@ -216,7 +233,7 @@ const Store = {
     });
 
     this.layouts = {
-      ...layouts
+      ...layouts,
     };
 
     (this as any).trigger(this.layouts);

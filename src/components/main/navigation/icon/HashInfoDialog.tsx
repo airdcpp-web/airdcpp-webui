@@ -10,31 +10,29 @@ import IconConstants from 'constants/IconConstants';
 import { getModuleT } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
-
 interface HashInfoDialogProps extends Omit<ModalProps, 'title'> {
   stats: API.HashStats;
   onClose: () => void;
 }
 
-export const HashInfoDialog: React.FC<HashInfoDialogProps> = (
-  { onClose, stats, ...other }
-) => {
+export const HashInfoDialog: React.FC<HashInfoDialogProps> = ({
+  onClose,
+  stats,
+  ...other
+}) => {
   const { t } = useTranslation();
   const moduleT = getModuleT(t, UI.Modules.HASH);
   return (
-    <Modal 
-      { ...other } 
-      title={ moduleT.translate('Hash progress') } 
-      onClose={ onClose }
-      closable={ true } 
-      icon={ IconConstants.HASH }
-      dynamicHeight={ true }
+    <Modal
+      {...other}
+      title={moduleT.translate('Hash progress')}
+      onClose={onClose}
+      closable={true}
+      icon={IconConstants.HASH}
+      dynamicHeight={true}
       className="tiny"
     >
-      <HashInfoLayout
-        stats={ stats }
-        moduleT={ moduleT }
-      />
+      <HashInfoLayout stats={stats} moduleT={moduleT} />
     </Modal>
   );
 };

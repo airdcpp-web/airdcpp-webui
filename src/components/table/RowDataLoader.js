@@ -57,7 +57,7 @@ class RowDataLoader {
       this._initialDataReceived = true;
 
       // Remove rows outside the range
-      // Leave the current range in case all old items can be reused 
+      // Leave the current range in case all old items can be reused
       // (avoids flickering because there is no need to re-render)
       for (let i = 0; i < this._data.length; i++) {
         if (!items[i]) {
@@ -69,7 +69,11 @@ class RowDataLoader {
       const updatedCount = items.reduce(this.updateItem.bind(this), 0);
       if (updatedCount > 0 || rangeOffset !== 0) {
         if (DEBUG) {
-          console.log('onItemsUpdated, changed (updatedCount, rangeOffset)', updatedCount, rangeOffset);
+          console.log(
+            'onItemsUpdated, changed (updatedCount, rangeOffset)',
+            updatedCount,
+            rangeOffset
+          );
         }
 
         hasChanges = true;
@@ -86,7 +90,7 @@ class RowDataLoader {
     this._rangeOffset = 0;
     return ret;
   }
-	
+
   getRowData(rowIndex) {
     return this._data[rowIndex];
   }
@@ -98,7 +102,7 @@ class RowDataLoader {
       if (this._initialDataReceived) {
         this._queueRequestFor(rowIndex, onDataLoaded);
       }
-			
+
       return false;
     }
 
@@ -119,21 +123,21 @@ class RowDataLoader {
       return;
     }
 
-    this._pendingRequest[rowIndex] = [ onDataLoaded ];
+    this._pendingRequest[rowIndex] = [onDataLoaded];
     if (rowIndex !== rowBase) {
       if (this._pendingRequest[rowBase]) {
         return;
       }
 
-      this._pendingRequest[rowBase] = [ ];
+      this._pendingRequest[rowBase] = [];
     }
 
     const endRow = Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._store.rowCount);
     SocketService.get(this._store.viewUrl + '/items/' + rowBase + '/' + endRow)
       .then(this.onRowsReceived.bind(this, rowBase))
-      .catch(error => {
+      .catch((error) => {
         console.error('Failed to load data', error);
-        for (let i=rowBase; i < endRow; i++) {
+        for (let i = rowBase; i < endRow; i++) {
           if (this._pendingRequest[i]) {
             delete this._pendingRequest[i];
           }
@@ -147,13 +151,13 @@ class RowDataLoader {
       return;
     }
 
-    for (let i=0; i < rows.length; i++) {
-      const rowIndex = start+i;
+    for (let i = 0; i < rows.length; i++) {
+      const rowIndex = start + i;
       if (!isEqual(this._data[rowIndex], rows[i])) {
         this._data[rowIndex] = rows[i];
 
         if (this._pendingRequest[rowIndex]) {
-          this._pendingRequest[rowIndex].forEach(f => f(rows[i]));
+          this._pendingRequest[rowIndex].forEach((f) => f(rows[i]));
         }
       } else if (DEBUG) {
         console.log('onRowsReceived, row data equals', rowIndex);

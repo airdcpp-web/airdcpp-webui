@@ -1,4 +1,3 @@
-
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -9,14 +8,16 @@ import SearchActions from 'actions/reflux/SearchActions';
 import { hasCopySupport } from 'utils/BrowserUtils';
 import { makeTextMagnetLink } from 'utils/MagnetUtils';
 
-
-export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & { id: number; magnet?: UI.TextMagnet };
+export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & {
+  id: number;
+  magnet?: UI.TextMagnet;
+};
 
 const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({ data, location }) => {
   return SearchActions.search(
     {
       name: data.magnet ? data.magnet.searchString : data.text,
-    }, 
+    },
     location
   );
 };
@@ -28,8 +29,8 @@ const handleCopy: UI.ActionHandler<HighlightItemInfo> = ({ data }) => {
 
 const MessageHighlightActions: UI.ActionListType<HighlightItemInfo> = {
   search: {
-    access: API.AccessEnum.SEARCH, 
-    displayName: 'Search', 
+    access: API.AccessEnum.SEARCH,
+    displayName: 'Search',
     icon: IconConstants.SEARCH,
     handler: handleSearch,
   },
@@ -40,10 +41,9 @@ const MessageHighlightActions: UI.ActionListType<HighlightItemInfo> = {
     handler: handleCopy,
     notifications: {
       onSuccess: 'Text was copied to clipboard',
-    }
-  }
+    },
+  },
 };
-
 
 export default {
   moduleId: UI.Modules.COMMON,

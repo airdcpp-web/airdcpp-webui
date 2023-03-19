@@ -10,16 +10,17 @@ import SocketService from 'services/SocketService';
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
 import { ModalRouteCloseContext } from './ModalRouteDecorator';
-import { 
-  SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps, AddSocketListener 
+import {
+  SocketSubscriptionDecorator,
+  SocketSubscriptionDecoratorChildProps,
+  AddSocketListener,
 } from './SocketSubscriptionDecorator';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 
-
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
-  addSocketListener: AddSocketListener, 
+  addSocketListener: AddSocketListener,
   data: {
     refetchData: (keys?: string[]) => void;
     mergeData: (data: Partial<DataT>) => void;
@@ -28,9 +29,7 @@ export type SocketConnectHandler<DataT extends object, PropsT extends object> = 
   }
 ) => void;
 
-export interface DataProviderDecoratorProps {
-
-}
+export interface DataProviderDecoratorProps {}
 
 export interface DataFetchError /*extends Omit<ErrorResponse, 'code'>*/ {
   code?: number;
@@ -39,19 +38,27 @@ export interface DataFetchError /*extends Omit<ErrorResponse, 'code'>*/ {
   json?: ErrorResponse['json'];
 }
 
-export type DataConverter<PropsT extends object> = (data: any, props: PropsT & WithTranslation) => any;
+export type DataConverter<PropsT extends object> = (
+  data: any,
+  props: PropsT & WithTranslation
+) => any;
 
-export interface DataProviderDecoratorSettings<PropsT extends object, DataT extends object> {
+export interface DataProviderDecoratorSettings<
+  PropsT extends object,
+  DataT extends object
+> {
   urls: {
-    [key: string]: ((props: PropsT, socket: APISocket) => Promise<object | undefined>) | string
+    [key: string]:
+      | ((props: PropsT, socket: APISocket) => Promise<object | undefined>)
+      | string;
   };
 
   onSocketConnected?: SocketConnectHandler<DataT, PropsT>;
 
   dataConverters?: {
-    [key: string]: DataConverter<PropsT>
+    [key: string]: DataConverter<PropsT>;
   };
-  
+
   loaderText?: React.ReactNode;
   renderOnError?: boolean;
 }
@@ -68,15 +75,16 @@ interface State<DataT extends object> {
   error: DataFetchError | null;
 }
 
-type DataProps<PropsT = UI.EmptyObject> = WithTranslation & SocketSubscriptionDecoratorChildProps<PropsT>;
+type DataProps<PropsT = UI.EmptyObject> = WithTranslation &
+  SocketSubscriptionDecoratorChildProps<PropsT>;
 
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
-  Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>, 
+  Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>,
   settings: DataProviderDecoratorSettings<PropsT, DataT>
 ) {
   class DataProviderDecorator extends React.Component<
-    DataProviderDecoratorProps & DataProps<PropsT> & PropsT, 
+    DataProviderDecoratorProps & DataProps<PropsT> & PropsT,
     State<DataT>
   > {
     //displayName: 'DataProviderDecorator',
@@ -121,15 +129,12 @@ export default function <PropsT extends object, DataT extends object>(
       this.fetchData();
 
       if (settings.onSocketConnected && SocketService.isConnected()) {
-        settings.onSocketConnected(
-          this.props.addSocketListener, 
-          {
-            refetchData: this.refetchData,
-            mergeData: this.mergeData,
-            assignData: this.assignData,
-            props: this.props,
-          }
-        );
+        settings.onSocketConnected(this.props.addSocketListener, {
+          refetchData: this.refetchData,
+          mergeData: this.mergeData,
+          assignData: this.assignData,
+          props: this.props,
+        });
       }
     }
 
@@ -140,27 +145,27 @@ export default function <PropsT extends object, DataT extends object>(
     // Recursively merge data object into existing data
     mergeData = (partialData: Partial<DataT>) => {
       this.setState({
-        data: merge({}, this.state.data, partialData)
+        data: merge({}, this.state.data, partialData),
       });
-    }
+    };
 
     // Replace existing data properties with new data
     assignData = (partialData: any) => {
       this.setState({
         data: {
-          ...this.state.data, 
+          ...this.state.data,
           ...partialData,
-        }
+        },
       });
-    }
+    };
 
     refetchData = (keys?: string[]) => {
       invariant(
-        !keys || (Array.isArray(keys) && keys.every(key => !!settings.urls[key])), 
+        !keys || (Array.isArray(keys) && keys.every((key) => !!settings.urls[key])),
         'Invalid keys supplied to refetchData'
       );
       this.fetchData(keys);
-    }
+    };
 
     fetchData = (keys?: string[]) => {
       const { urls } = settings;
@@ -168,7 +173,7 @@ export default function <PropsT extends object, DataT extends object>(
         keys = Object.keys(urls);
       }
 
-      const promises = keys.map(key => {
+      const promises = keys.map((key) => {
         const url = urls[key];
         if (typeof url === 'function') {
           try {
@@ -186,15 +191,18 @@ export default function <PropsT extends object, DataT extends object>(
       Promise.all(promises)
         .then(this.onDataFetched.bind(this, keys))
         .catch(this.onDataFetchFailed);
-    }
+    };
 
     // Convert the data array to key-value props
     reduceData = (keys: string[], reducedData: any[], data: any, index: number) => {
       const { dataConverters } = settings;
       const url = keys[index];
-      reducedData[url] = dataConverters && dataConverters[url] ? dataConverters[url](data, this.props) : data;
+      reducedData[url] =
+        dataConverters && dataConverters[url]
+          ? dataConverters[url](data, this.props)
+          : data;
       return reducedData;
-    }
+    };
 
     onDataFetched = (keys: string[], values: any[]) => {
       if (!this.mounted) {
@@ -204,7 +212,7 @@ export default function <PropsT extends object, DataT extends object>(
       const data = values.reduce(this.reduceData.bind(this, keys), {});
 
       this.assignData(data);
-    }
+    };
 
     onDataFetchFailed = (error: ErrorResponse | Error) => {
       if (!this.mounted) {
@@ -212,12 +220,15 @@ export default function <PropsT extends object, DataT extends object>(
       }
 
       const { t } = this.props;
-      
-      NotificationActions.apiError(translate('Failed to fetch data', t, UI.Modules.COMMON), error);
+
+      NotificationActions.apiError(
+        translate('Failed to fetch data', t, UI.Modules.COMMON),
+        error
+      );
       this.setState({
         error,
       });
-    }
+    };
 
     render() {
       const { loaderText, renderOnError } = settings;
@@ -225,21 +236,23 @@ export default function <PropsT extends object, DataT extends object>(
       const { t } = this.props;
 
       if (!data && !error) {
-        return loaderText !== null && (
-          <Loader 
-            text={ loaderText || translate('Loading data...', t, UI.Modules.COMMON) }
-          />
+        return (
+          loaderText !== null && (
+            <Loader
+              text={loaderText || translate('Loading data...', t, UI.Modules.COMMON)}
+            />
+          )
         );
       }
 
       if (!!error && !renderOnError) {
         return (
           <ModalRouteCloseContext.Consumer>
-            { close => {
+            {(close) => {
               if (!!close) {
                 close();
               }
-              
+
               return null;
             }}
           </ModalRouteCloseContext.Consumer>
@@ -248,17 +261,19 @@ export default function <PropsT extends object, DataT extends object>(
 
       return (
         <Component
-          refetchData={ this.refetchData }
-          dataError={ error }
-          socket={ SocketService }
-          { ...this.props as any }
-          { ...data }
+          refetchData={this.refetchData}
+          dataError={error}
+          socket={SocketService}
+          {...(this.props as any)}
+          {...data}
         />
       );
     }
   }
 
-  return withTranslation()(SocketSubscriptionDecorator<WithTranslation & PropsT & DataProviderDecoratorProps>(
-    DataProviderDecorator
-  ));
+  return withTranslation()(
+    SocketSubscriptionDecorator<WithTranslation & PropsT & DataProviderDecoratorProps>(
+      DataProviderDecorator
+    )
+  );
 }

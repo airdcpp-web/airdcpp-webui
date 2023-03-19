@@ -7,9 +7,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import SearchActions from 'actions/reflux/SearchActions';
 
-
 const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
-
 
 const handleSearch: UI.ActionHandler<API.QueueFile> = ({ data: itemInfo, location }) => {
   return SearchActions.search(itemInfo, location);
@@ -28,26 +26,24 @@ const handleSearchFileAlternates: UI.ActionHandler<API.QueueFile> = ({ data: fil
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/search`);
 };
 
-
-
 const QueueFileActions: UI.ActionListType<API.QueueFile> = {
   search: {
-    access: API.AccessEnum.SEARCH, 
-    displayName: 'Search (foreground)', 
+    access: API.AccessEnum.SEARCH,
+    displayName: 'Search (foreground)',
     icon: IconConstants.SEARCH,
     handler: handleSearch,
   },
   searchFileAlternates: {
-    access: API.AccessEnum.QUEUE_EDIT, 
-    displayName: 'Search for alternates', 
+    access: API.AccessEnum.QUEUE_EDIT,
+    displayName: 'Search for alternates',
     icon: IconConstants.SEARCH_ALTERNATES,
     filter: itemNotFinished,
     handler: handleSearchFileAlternates,
     notifications: {
       onSuccess: 'File {{item.name}} was searched for alternates',
-    }
+    },
   },
-  removeFile: { 
+  removeFile: {
     displayName: 'Remove',
     access: API.AccessEnum.QUEUE_EDIT,
     icon: IconConstants.REMOVE,
@@ -60,10 +56,9 @@ const QueueFileActions: UI.ActionListType<API.QueueFile> = {
     handler: handleRemoveFile,
     notifications: {
       onSuccess: 'File {{item.name}} was removed from queue',
-    }
+    },
   },
 };
-
 
 export default {
   moduleId: UI.Modules.QUEUE,

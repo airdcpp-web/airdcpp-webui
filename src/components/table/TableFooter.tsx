@@ -6,7 +6,6 @@ import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 import { TableFilterDecoratorProps } from 'decorators/TableFilterDecorator';
 
-
 const CountInfo: React.FC<{ store: any }> = ({ store }) => {
   if (store.totalCount < 0) {
     // Not initialized yet
@@ -20,8 +19,8 @@ const CountInfo: React.FC<{ store: any }> = ({ store }) => {
 
   return (
     <div className="count-info">
-      <Icon icon={ IconConstants.FILTER }/>
-      { ret }
+      <Icon icon={IconConstants.FILTER} />
+      {ret}
     </div>
   );
 };
@@ -36,23 +35,22 @@ export interface TableFooterProps {
   // viewId?: string | number;
 }
 
-const TableFooter: React.FC<TableFooterProps> = (
-  { store, customFilter: CustomFilter, footerData, textFilterProps }
-) => (
+const TableFooter: React.FC<TableFooterProps> = ({
+  store,
+  customFilter: CustomFilter,
+  footerData,
+  textFilterProps,
+}) => (
   <div className="table-footer">
-    { footerData }
+    {footerData}
     <div className="filter item">
-      { !CustomFilter ? null : (
-        <CustomFilter
-          viewUrl={ store.viewUrl }
-        />
-      ) }
-      <TextFilter 
-        viewUrl={ store.viewUrl }
+      {!CustomFilter ? null : <CustomFilter viewUrl={store.viewUrl} />}
+      <TextFilter
+        viewUrl={store.viewUrl}
         //viewId={ viewId }
-        { ...textFilterProps }
+        {...textFilterProps}
       />
-      <CountInfo store={ store }/>
+      <CountInfo store={store} />
     </div>
   </div>
 );

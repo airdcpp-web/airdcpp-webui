@@ -16,14 +16,14 @@ function pending() {
   return {
     resolve,
     reject,
-    promise
+    promise,
   };
 }
 
 export function sleep(ms) {
-  return new AppPromise(resolve => setTimeout(resolve, ms));
+  return new AppPromise((resolve) => setTimeout(resolve, ms));
 }
 
 export default Object.assign(AppPromise, {
-  pending
+  pending,
 });

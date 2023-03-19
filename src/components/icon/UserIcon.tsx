@@ -6,7 +6,6 @@ import { userOnlineStatusToColor } from 'utils/TypeConvert';
 
 import * as API from 'types/api';
 
-
 const getUserIcon = (flags: API.HubUserFlag[]) => {
   if (flags.indexOf('ignored') > -1) {
     return 'red ban';
@@ -15,7 +14,7 @@ const getUserIcon = (flags: API.HubUserFlag[]) => {
   return userOnlineStatusToColor(flags) + ' user';
 };
 
-const flagTitles: Partial<{ [K in API.HubUserFlag]: string; }> = {
+const flagTitles: Partial<{ [K in API.HubUserFlag]: string }> = {
   bot: 'Bot',
   op: 'Operator',
   self: 'Me',
@@ -51,17 +50,14 @@ const getCornerIcon = (flags: API.HubUserFlag[]) => {
 };
 
 const getTitle = (flags: API.HubUserFlag[]) => {
-  const titles = flags.reduce(
-    (reduced, flag) => {
-      const title = flagTitles[flag];
-      if (!!title) {
-        reduced.push(title);
-      }
+  const titles = flags.reduce((reduced, flag) => {
+    const title = flagTitles[flag];
+    if (!!title) {
+      reduced.push(title);
+    }
 
-      return reduced;
-    }, 
-    [] as string[]
-  );
+    return reduced;
+  }, [] as string[]);
 
   return titles.toString();
 };
@@ -72,10 +68,10 @@ interface UserIconProps extends IconProps {
 
 const UserIcon: React.FC<UserIconProps> = ({ flags, ...other }) => (
   <Icon
-    { ...other }
-    icon={ getUserIcon(flags) }
-    cornerIcon={ getCornerIcon(flags) }
-    title={ getTitle(flags) }
+    {...other}
+    icon={getUserIcon(flags)}
+    cornerIcon={getCornerIcon(flags)}
+    title={getTitle(flags)}
   />
 );
 

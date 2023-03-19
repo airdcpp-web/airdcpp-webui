@@ -14,20 +14,20 @@ import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { Location } from 'history';
 
-
 const HubActionConfig: UI.RefluxActionConfigList<API.Hub> = [
-  { 'createSession': { 
-    asyncResult: true
-  } },
+  {
+    createSession: {
+      asyncResult: true,
+    },
+  },
 ];
 
 const HubActions = Reflux.createActions(HubActionConfig);
 
-
 HubActions.createSession.listen(function (
   this: UI.AsyncActionType<API.Hub>,
-  location: Location, 
-  hubUrl: string, 
+  location: Location,
+  hubUrl: string,
   sessionStore: any
 ) {
   const session = sessionStore.getSessionByUrl(hubUrl);
@@ -44,11 +44,14 @@ HubActions.createSession.listen(function (
     .catch(that.failed);
 });
 
-HubActions.createSession.completed.listen(function (location: Location, session: API.Hub) {
+HubActions.createSession.completed.listen(function (
+  location: Location,
+  session: API.Hub
+) {
   History.push({
-    pathname: `/hubs/session/${session.id}`, 
+    pathname: `/hubs/session/${session.id}`,
     state: {
-      pending: true
+      pending: true,
     },
   });
 });
@@ -58,10 +61,7 @@ HubActions.createSession.failed.listen(function (error: ErrorResponse) {
 });
 
 const HubActionsDecorated = SessionActionDecorator(
-  ChatActionDecorator(
-    HubActions, 
-    HubConstants.SESSIONS_URL
-  ), 
+  ChatActionDecorator(HubActions, HubConstants.SESSIONS_URL),
   HubConstants.SESSIONS_URL
 );
 

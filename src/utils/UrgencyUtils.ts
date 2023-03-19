@@ -3,10 +3,9 @@ import { SimpleSessionUnreadUrgency } from 'constants/UrgencyConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 // Get an array of urgencies that are larger than 0
 const getValidUrgencyArray = (urgencies: UI.UrgencyCountMap): string[] => {
-  return Object.keys(urgencies).filter(urgency => urgencies[urgency] > 0);
+  return Object.keys(urgencies).filter((urgency) => urgencies[urgency] > 0);
 };
 
 // Always convert empty objects to null
@@ -31,17 +30,14 @@ const appendToMap = (counts: UI.UrgencyCountMap, urgency: UI.UrgencyEnum) => {
 
 // Convert regular type -> count mapping to urgency -> count map
 const toUrgencyMap = (
-  source: API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts, 
+  source: API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts,
   urgencies: UI.UrgencyCountMap
 ) => {
   return validateUrgencies(
-    Object.keys(source).reduce(
-      (map, key) => {
-        map[urgencies[key]] = source[key];
-        return map;
-      }, 
-      {}
-    )
+    Object.keys(source).reduce((map, key) => {
+      map[urgencies[key]] = source[key];
+      return map;
+    }, {})
   );
 };
 
@@ -50,7 +46,7 @@ type UrgencyGetter = (session: UI.SessionItem) => UI.UrgencyCountMap | null;
 
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (
-  item: UI.MessageCounts, 
+  item: UI.MessageCounts,
   urgencyMappings: UI.UrgencyCountMap
 ): UI.UrgencyCountMap | null => {
   return toUrgencyMap(item.message_counts.unread, urgencyMappings);
@@ -69,20 +65,17 @@ const simpleSessionMapper = (item: UI.ReadStatus): UI.UrgencyCountMap | null => 
 
 // Get urgencyMap [urgency: numberOfSessions] for a list of sessions
 const getSessionUrgencies = (sessions: SessionList, urgencyGetter: UrgencyGetter) => {
-  const urgencies = sessions.reduce(
-    (reduced, session) => {
-      const urgencyMap = urgencyGetter(session);
-      if (urgencyMap) {
-        const max = maxUrgency(urgencyMap);
-        if (max) {
-          appendToMap(reduced, max);
-        }
+  const urgencies = sessions.reduce((reduced, session) => {
+    const urgencyMap = urgencyGetter(session);
+    if (urgencyMap) {
+      const max = maxUrgency(urgencyMap);
+      if (max) {
+        appendToMap(reduced, max);
       }
+    }
 
-      return reduced;
-    }, 
-    {}
-  );
+    return reduced;
+  }, {});
 
   return validateUrgencies(urgencies);
 };

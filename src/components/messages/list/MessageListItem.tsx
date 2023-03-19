@@ -5,7 +5,6 @@ import { ChatMessage, StatusMessage } from '../message';
 import * as UI from 'types/ui';
 import { CommonMessageProps } from '../types';
 
-
 interface MessageListItemProps extends CommonMessageProps {
   id: string;
   message: UI.MessageListItem;
@@ -18,18 +17,13 @@ export const MessageListItem: React.FC<MessageListItemProps> = ({
   if (message.chat_message) {
     return (
       <ChatMessage
-        message={ message.chat_message }
+        message={message.chat_message}
         dropdownContext=".chat.session"
-        { ...other }
+        {...other}
       />
     );
   } else if (message.log_message) {
-    return (
-      <StatusMessage
-        message={ message.log_message }
-        { ...other }
-      />
-    );
+    return <StatusMessage message={message.log_message} {...other} />;
   }
 
   return null;

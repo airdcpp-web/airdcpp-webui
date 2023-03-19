@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import 'fomantic-ui-css/components/popup';
 import 'fomantic-ui-css/components/popup.min.css';
 
-
 type ChildType = React.ReactElement<any>;
 
 export interface PopupProps {
@@ -23,7 +22,6 @@ export interface PopupProps {
   triggerProps?: React.HTMLAttributes<HTMLSpanElement>;
 }
 
-
 interface PopupContentProps extends Pick<PopupProps, 'children'> {
   node: Element;
   onHide: () => void;
@@ -32,38 +30,29 @@ interface PopupContentProps extends Pick<PopupProps, 'children'> {
   contentUpdateTrigger?: any;
 }
 
-const PopupContent: React.FC<PopupContentProps> = props => {
-  const content = useMemo<ChildType>(
-    () => {
-      const { children } = props;
-      return typeof children === 'function' ? children(props.hide) : children as ChildType;
-    }, 
-    [ props.contentUpdateTrigger ]
-  );
+const PopupContent: React.FC<PopupContentProps> = (props) => {
+  const content = useMemo<ChildType>(() => {
+    const { children } = props;
+    return typeof children === 'function'
+      ? children(props.hide)
+      : (children as ChildType);
+  }, [props.contentUpdateTrigger]);
 
-  useEffect(
-    () => {
-      props.onShow();
-      return () => {
-        props.onHide();
-      };
-    },
-    []
-  );
+  useEffect(() => {
+    props.onShow();
+    return () => {
+      props.onHide();
+    };
+  }, []);
 
-  return ReactDOM.createPortal(
-    content,
-    props.node
-  );
+  return ReactDOM.createPortal(content, props.node);
 };
-
 
 interface State {
   visible: boolean;
 }
 class Popup extends React.PureComponent<PopupProps, State> {
   static propTypes = {
-
     // Additional settings for the Semantic UI popup
     settings: PropTypes.object,
 
@@ -106,11 +95,11 @@ class Popup extends React.PureComponent<PopupProps, State> {
 
     this.node.className = className;
     document.body.appendChild(this.node);
-    
+
     this.setState({
-      visible: true
+      visible: true,
     });
-  }
+  };
 
   destroyPortal = () => {
     if (!this.node) {
@@ -122,17 +111,17 @@ class Popup extends React.PureComponent<PopupProps, State> {
 
     document.body.removeChild(this.node);
     this.node = null;
-  }
+  };
 
   hide = () => {
     $(this.triggerNode).popup('hide');
-  }
+  };
 
   onHidden = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
-  }
+  };
 
   show = () => {
     const settings: SemanticUI.PopupSettings = {
@@ -145,7 +134,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
     };
 
     $(this.triggerNode).popup(settings).popup('show');
-  }
+  };
 
   handleClick = () => {
     if (this.node) {
@@ -153,16 +142,14 @@ class Popup extends React.PureComponent<PopupProps, State> {
     }
 
     this.createPortalNode();
-  }
+  };
 
-  render() {
-    const { 
-      triggerClassName, onHover, trigger, children, contentUpdateTrigger, triggerProps: customTriggerProps 
-    } = this.props;
+  getTriggerProps = () => {
+    const { triggerClassName, onHover, triggerProps: customTriggerProps } = this.props;
 
     const triggerProps = {
       ...customTriggerProps,
-      ref: (c: any) => this.triggerNode = c,
+      ref: (c: any) => (this.triggerNode = c),
       className: classNames(triggerClassName, 'popup trigger'),
     };
 
@@ -172,23 +159,27 @@ class Popup extends React.PureComponent<PopupProps, State> {
       triggerProps['onClick'] = this.handleClick;
     }
 
+    return triggerProps;
+  };
+
+  render() {
+    const { trigger, children, contentUpdateTrigger } = this.props;
+
     const { visible } = this.state;
     return (
       <>
-        <span { ...triggerProps }>
-          { trigger }
-        </span>
-        { visible && !!this.node && (
+        <span {...this.getTriggerProps()}>{trigger}</span>
+        {visible && !!this.node && (
           <PopupContent
-            node={ this.node }
-            onShow={ this.show }
-            onHide={ this.destroyPortal }
-            hide={ this.hide }
-            contentUpdateTrigger={ contentUpdateTrigger }
+            node={this.node}
+            onShow={this.show}
+            onHide={this.destroyPortal}
+            hide={this.hide}
+            contentUpdateTrigger={contentUpdateTrigger}
           >
-            { children }
+            {children}
           </PopupContent>
-        ) }
+        )}
       </>
     );
   }

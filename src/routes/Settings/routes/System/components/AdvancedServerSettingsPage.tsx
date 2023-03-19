@@ -6,7 +6,6 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-
 const Generic = [
   'web_server_threads',
   'default_idle_timeout',
@@ -19,7 +18,7 @@ const Hooks = [
   'share_directory_validation_hook_timeout',
   'new_share_file_validation_hook_timeout',
   'new_share_directory_validation_hook_timeout',
-  
+
   'outgoing_chat_message_hook_timeout',
   'incoming_chat_message_hook_timeout',
 
@@ -32,26 +31,15 @@ const Hooks = [
   'list_menuitems_hook_timeout',
 ];
 
-const ServerSettingsPage: React.FC<SettingSectionChildProps> = props => {
+const ServerSettingsPage: React.FC<SettingSectionChildProps> = (props) => {
   const { translate } = props.moduleT;
   return (
     <div>
-      <ActionButton
-        actions={ SystemActions }
-        actionId="restartWeb"
-      />
-      <RemoteSettingForm
-        { ...props }
-        keys={ Generic }
-      />
-      <div className="ui header">
-        { translate('Hook timeouts') }
-      </div>
+      <ActionButton actions={SystemActions} actionId="restartWeb" />
+      <RemoteSettingForm {...props} keys={Generic} />
+      <div className="ui header">{translate('Hook timeouts')}</div>
       <div className="ui segment">
-        <RemoteSettingForm
-          { ...props }
-          keys={ Hooks }
-        />
+        <RemoteSettingForm {...props} keys={Hooks} />
       </div>
     </div>
   );

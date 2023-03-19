@@ -6,9 +6,10 @@ import t from 'utils/tcomb-form';
 
 import { UserSelectField } from 'components/select';
 
-
-type TCombTemplate = { 
-  renderInput: (locals: UI.FormLocals<any, API.OfflineHintedUser | null, UI.EmptyObject>) => React.ReactNode; 
+type TCombTemplate = {
+  renderInput: (
+    locals: UI.FormLocals<any, API.OfflineHintedUser | null, UI.EmptyObject>
+  ) => React.ReactNode;
 };
 
 const HintedUserTemplate: TCombTemplate = {
@@ -22,27 +23,29 @@ const HintedUserTemplate: TCombTemplate = {
     return (
       <UserSelectField
         onChange={handleSubmit}
-        offlineMessage={ formT.t(
-          'offlineMessage',
-          'No connected hubs') 
+        offlineMessage={formT.t('offlineMessage', 'No connected hubs')}
+        styles={
+          !locals.hasError
+            ? undefined
+            : {
+                control: (props: any) => ({
+                  ...props,
+                  color: '#9f3a38',
+                  background: '#fff6f6',
+                  borderColor: '#e0b4b4',
+                  boxShadow: 'none',
+                }),
+                container: (props: any) => ({
+                  ...props,
+                  borderColor: '#9f3a38',
+                }),
+              }
         }
-        styles={ !locals.hasError ? undefined : {
-          control: (props: any) => ({
-            ...props,
-            color: '#9f3a38',
-            background: '#fff6f6',
-            borderColor: '#e0b4b4',
-            boxShadow: 'none',
-          }),
-          container: (props: any) => ({
-            ...props,
-            borderColor: '#9f3a38',
-          }),
-        } }
         value={locals.value}
       />
     );
-  }
+  },
 };
 
-export const HintedUserSelectField = t.form.Form.templates.textbox.clone(HintedUserTemplate);
+export const HintedUserSelectField =
+  t.form.Form.templates.textbox.clone(HintedUserTemplate);

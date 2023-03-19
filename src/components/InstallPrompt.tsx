@@ -17,7 +17,6 @@ import * as UI from 'types/ui';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
-
 interface InstallPromptProps {
   alwaysShow?: boolean;
 }
@@ -35,30 +34,32 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ alwaysShow }) => {
   }
 
   return (
-    <Message 
-      title={ translate('Install as local application', t, UI.Modules.COMMON) }
-      description={ (
+    <Message
+      title={translate('Install as local application', t, UI.Modules.COMMON)}
+      description={
         <div className="install-prompt">
           <p>
-            { t(
-              toI18nKey('pwaInstallDesc', UI.Modules.COMMON), 
+            {t(
+              toI18nKey('pwaInstallDesc', UI.Modules.COMMON),
               'This web application can be installed locally, providing a better user experience'
-            ) }
+            )}
           </p>
           <Button
             className="primary"
-            caption={ translate('Install', t, UI.Modules.COMMON) }
-            onClick={ () => prompt!() }
-            icon={ IconConstants.CREATE }
+            caption={translate('Install', t, UI.Modules.COMMON)}
+            onClick={() => prompt!()}
+            icon={IconConstants.CREATE}
           />
-          { !alwaysShow && (
+          {!alwaysShow && (
             <Button
-              caption={ translate(`Don't install`, t, UI.Modules.COMMON) }
-              onClick={ () => LocalSettingStore.setValue(LocalSettings.NO_INSTALL_PROMPT, true) }
+              caption={translate(`Don't install`, t, UI.Modules.COMMON)}
+              onClick={() =>
+                LocalSettingStore.setValue(LocalSettings.NO_INSTALL_PROMPT, true)
+              }
             />
-          ) }
+          )}
         </div>
-      ) }
+      }
     />
   );
 };

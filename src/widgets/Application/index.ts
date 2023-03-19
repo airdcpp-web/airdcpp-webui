@@ -14,7 +14,6 @@ export const Application = {
   },
   actionMenu: {
     actions: require('actions/ui/SystemActions').default,
-    ids: [ 'shutdown' ],
+    ids: ['shutdown'],
   },
 } as UI.Widget;
-

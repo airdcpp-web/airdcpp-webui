@@ -11,7 +11,6 @@ import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 import EventStore from 'stores/EventStore';
 
-
 interface EventMessagesProps {
   messages: UI.MessageListItem[];
   t: UI.TranslateF;
@@ -19,23 +18,21 @@ interface EventMessagesProps {
 
 const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
   if (!messages) {
-    return <Loader text={ translate('Loading messages', t, UI.Modules.EVENTS) }/>;
+    return <Loader text={translate('Loading messages', t, UI.Modules.EVENTS)} />;
   }
 
   if (messages.length === 0) {
     return (
-      <Message 
-        description={ translate('No messages to show', t, UI.Modules.EVENTS) }
-      />
+      <Message description={translate('No messages to show', t, UI.Modules.EVENTS)} />
     );
   }
 
   return (
-    <MessageView 
+    <MessageView
       className="events"
-      messages={ messages }
-      scrollPositionHandler={ EventStore }
-      t={ t }
+      messages={messages}
+      scrollPositionHandler={EventStore}
+      t={t}
     />
   );
 };

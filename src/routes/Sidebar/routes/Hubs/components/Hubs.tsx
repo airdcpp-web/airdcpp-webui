@@ -14,15 +14,14 @@ import HubSession from 'routes/Sidebar/routes/Hubs/components/HubSession';
 import HubNew from 'routes/Sidebar/routes/Hubs/components/HubNew';
 import HubIcon from 'components/icon/HubIcon';
 
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { 
-  SessionProviderDecorator, SessionProviderDecoratorChildProps 
+import {
+  SessionProviderDecorator,
+  SessionProviderDecoratorChildProps,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import { toI18nKey } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
-
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {
@@ -34,16 +33,11 @@ const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   },
 
   itemHeaderDescriptionGetter(session) {
-    return (
-      <TextDecorator
-        text={ session.identity.description }
-        emojify={ true }
-      />
-    );
+    return <TextDecorator text={session.identity.description} emojify={true} />;
   },
 
   itemHeaderIconGetter(session) {
-    return <HubIcon hub={ session } />;
+    return <HubIcon hub={session} />;
   },
 };
 
@@ -57,25 +51,25 @@ const parseNumericId = (params: UI.SessionRouteParams) => {
 
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
-const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = props => {
+const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
   const { match, t, ...other } = props;
   return (
-    <SessionLayout 
-      activeId={ parseNumericId(match.params) }
+    <SessionLayout
+      activeId={parseNumericId(match.params)}
       baseUrl="hubs"
-      newCaption={ t(toI18nKey('new', UI.Modules.HUBS), 'Connect') }
-      newDescription={ t(toI18nKey('newDesc', UI.Modules.HUBS), 'Connect to a new hub') } 
-      newIcon={ IconConstants.HUBS_PLAIN }
-      editAccess={ API.AccessEnum.HUBS_EDIT }
-      uiActions={ HubUIActions }
-      actionIds={[ 'reconnect', 'clear', 'favorite' ]}
-      sessionApi={ HubAPIActions as UI.SessionActions<API.Hub> }
-      sessionItemLayout={ HubSession }
-      newLayout={ HubNew }
-      t={ t }
-      unreadInfoStore={ HubSessionStore }
-      { ...ItemHandler }
-      { ...other }
+      newCaption={t(toI18nKey('new', UI.Modules.HUBS), 'Connect')}
+      newDescription={t(toI18nKey('newDesc', UI.Modules.HUBS), 'Connect to a new hub')}
+      newIcon={IconConstants.HUBS_PLAIN}
+      editAccess={API.AccessEnum.HUBS_EDIT}
+      uiActions={HubUIActions}
+      actionIds={['reconnect', 'clear', 'favorite']}
+      sessionApi={HubAPIActions as UI.SessionActions<API.Hub>}
+      sessionItemLayout={HubSession}
+      newLayout={HubNew}
+      t={t}
+      unreadInfoStore={HubSessionStore}
+      {...ItemHandler}
+      {...other}
     />
   );
 };

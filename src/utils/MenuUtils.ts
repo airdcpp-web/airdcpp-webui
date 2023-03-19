@@ -4,7 +4,6 @@ import { actionFilter, actionAccess } from 'utils/ActionUtils';
 
 import * as UI from 'types/ui';
 
-
 const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined
 ): ItemDataT | undefined => {
@@ -13,8 +12,8 @@ const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
 
 // Returns true if the provided ID matches the specified filter
 const filterItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  props: UI.ActionMenuData<ItemDataT>, 
-  filter: UI.ActionMenuFilterType<ItemDataT>, 
+  props: UI.ActionMenuData<ItemDataT>,
+  filter: UI.ActionMenuFilterType<ItemDataT>,
   actionId: string
 ) => {
   const action = props.actions.actions[actionId];
@@ -30,11 +29,11 @@ const isDivider = (id: string) => id.startsWith('divider');
 
 // Get IDs matching the provided filter
 const filterItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  props: UI.ActionMenuData<ItemDataT>, 
-  filter: UI.ActionMenuFilterType<ItemDataT>, 
+  props: UI.ActionMenuData<ItemDataT>,
+  filter: UI.ActionMenuFilterType<ItemDataT>,
   actionIds: string[]
 ) => {
-  const ids = actionIds.filter(id =>  filterItem(props, filter, id));
+  const ids = actionIds.filter((id) => filterItem(props, filter, id));
   if (!ids.length || ids.every(isDivider)) {
     return null;
   }
@@ -53,24 +52,25 @@ const filterExtraDividers = (ids: string[]) => {
       return false;
     }
 
-    // Check if the next element is also a divider 
+    // Check if the next element is also a divider
     // (the last one would always be removed in the previous check)
     return !isDivider(ids[pos + 1]);
   });
 };
 
-
 // PUBLIC
 // Get IDs to display from the specified menu
 export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  props: UI.ActionMenuData<ItemDataT>, 
+  props: UI.ActionMenuData<ItemDataT>,
   hasPreviousMenuItems: boolean
 ): UI.ActionMenuType<ItemDataT> | string => {
   let ids: string[] | null;
-  ids = props.ids || Object.keys(props.actions.actions).filter(id => {
-    const action = props.actions.actions[id];
-    return !action || action.displayName;
-  });
+  ids =
+    props.ids ||
+    Object.keys(props.actions.actions).filter((id) => {
+      const action = props.actions.actions[id];
+      return !action || action.displayName;
+    });
 
   // Only return a single error for each menu
   // Note the filtering order (no-access will be preferred over filtered)
@@ -89,25 +89,27 @@ export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType
 
   // Always add a divider before submenus
   if (hasPreviousMenuItems) {
-    ids = [ 'divider', ...ids ];
+    ids = ['divider', ...ids];
   }
 
   const ret: UI.ActionMenuType<ItemDataT> = {
     actionIds: ids,
-    itemDataGetter: props.itemData instanceof Function ? props.itemData : () => props.itemData as ItemDataT,
+    itemDataGetter:
+      props.itemData instanceof Function
+        ? props.itemData
+        : () => props.itemData as ItemDataT,
     actions: props.actions,
   };
 
   return ret;
 };
 
-
 // Determine unique ID from item data
 export const parseActionMenuItemIds = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined
 ): Array<UI.ActionIdType> => {
   const parsedItemData = parseItemData<ItemDataT>(itemData);
-  return !!parsedItemData && (parsedItemData as UI.ActionMenuObjectItemData).id ? 
-    [ (parsedItemData as UI.ActionMenuObjectItemData).id ] : 
-    [];
+  return !!parsedItemData && (parsedItemData as UI.ActionMenuObjectItemData).id
+    ? [(parsedItemData as UI.ActionMenuObjectItemData).id]
+    : [];
 };

@@ -7,5 +7,4 @@ export default {
   CONNECTIVITY_MESSAGE: 'connectivity_detection_message',
   CONNECTIVITY_STARTED: 'connectivity_detection_started',
   CONNECTIVITY_FINISHED: 'connectivity_detection_finished',
-}
-;
+};

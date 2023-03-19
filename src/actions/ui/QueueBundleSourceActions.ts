@@ -6,8 +6,6 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
-
 interface ActionBundleSourceData {
   source: API.QueueBundleSource;
   bundle: API.QueueBundle;
@@ -15,18 +13,19 @@ interface ActionBundleSourceData {
 
 const handleRemoveBundleSource: UI.ActionHandler<ActionBundleSourceData> = ({ data }) => {
   const { source, bundle } = data;
-  return SocketService.delete(`${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`);
+  return SocketService.delete(
+    `${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`
+  );
 };
 
 const BundleSourceActions: UI.ActionListType<ActionBundleSourceData> = {
   removeBundleSource: {
-    access: API.AccessEnum.QUEUE_EDIT, 
-    displayName: 'Remove source', 
+    access: API.AccessEnum.QUEUE_EDIT,
+    displayName: 'Remove source',
     icon: IconConstants.REMOVE,
     handler: handleRemoveBundleSource,
   },
 };
-
 
 export default {
   moduleId: UI.Modules.QUEUE,

@@ -7,10 +7,8 @@ import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import CountLabel from 'components/CountLabel';
 import Icon, { IconType } from 'components/semantic/Icon';
 
-
 import * as UI from 'types/ui';
 import { useStore } from 'effects/StoreListenerEffect';
-
 
 type RouterMenuItemLinkProps = React.PropsWithChildren<{
   url: string;
@@ -20,7 +18,6 @@ type RouterMenuItemLinkProps = React.PropsWithChildren<{
   unreadInfoStore?: any;
   session?: UI.SessionItemBase;
 }>;
-
 
 const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null => {
   const { unreadInfoStore, session } = props;
@@ -39,27 +36,34 @@ const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null
 };
 
 // Route link with support for urgencies
-const RouterMenuItemLink = withRouter(memo<RouterMenuItemLinkProps & RouteComponentProps>(
-  function RouterMenuItemLink(props) {
-    const urgencies = useStore<UI.UrgencyCountMap | null>(props.unreadInfoStore, () => getUrgencies(props));
-    const { onClick, className, icon, url, children, unreadInfoStore } = props;
-    return (
-      <NavLink 
-        exact={ url === '/' }
-        to={ url } 
-        className={ classNames('item', className) } 
-        activeClassName="active" 
-        onClick={ onClick }
-      >
-        <Icon icon={ icon }/>
-        { children }
-        { !!unreadInfoStore && <CountLabel urgencies={ urgencies }/> }
-      </NavLink>
-    );
-  },
-  (prevProps, nextProps) => {
-    return nextProps.location.key === prevProps.location.key && nextProps.session === prevProps.session;
-  }
-));
+const RouterMenuItemLink = withRouter(
+  memo<RouterMenuItemLinkProps & RouteComponentProps>(
+    function RouterMenuItemLink(props) {
+      const urgencies = useStore<UI.UrgencyCountMap | null>(props.unreadInfoStore, () =>
+        getUrgencies(props)
+      );
+      const { onClick, className, icon, url, children, unreadInfoStore } = props;
+      return (
+        <NavLink
+          exact={url === '/'}
+          to={url}
+          className={classNames('item', className)}
+          activeClassName="active"
+          onClick={onClick}
+        >
+          <Icon icon={icon} />
+          {children}
+          {!!unreadInfoStore && <CountLabel urgencies={urgencies} />}
+        </NavLink>
+      );
+    },
+    (prevProps, nextProps) => {
+      return (
+        nextProps.location.key === prevProps.location.key &&
+        nextProps.session === prevProps.session
+      );
+    }
+  )
+);
 
 export default RouterMenuItemLink;

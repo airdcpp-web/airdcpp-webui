@@ -5,7 +5,9 @@ import ASCII_DATA from './asciiToUnicodeData';
 const asciiToUnicodeCache = new Map();
 const asciiRegExpToUnicode = new Map();
 
-ASCII_DATA.forEach(([reStr, unicode]) => asciiRegExpToUnicode.set(RegExp(reStr), unicode));
+ASCII_DATA.forEach(([reStr, unicode]) =>
+  asciiRegExpToUnicode.set(RegExp(reStr), unicode)
+);
 
 const convertAsciiToUnicodeOrNull = (text: string) => {
   if (!text) {

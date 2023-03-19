@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
@@ -8,7 +7,6 @@ import History from 'utils/History';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-
 
 const handleCreate = () => {
   History.push('/favorite-hubs/entries');
@@ -22,7 +20,6 @@ const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => 
   return SocketService.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id);
 };
 
-
 const FavoriteHubCreateActions: UI.ActionListType<undefined> = {
   create: {
     displayName: 'Add new',
@@ -33,7 +30,7 @@ const FavoriteHubCreateActions: UI.ActionListType<undefined> = {
 };
 
 const FavoriteHubEditActions: UI.ActionListType<API.FavoriteHubEntry> = {
-  edit: { 
+  edit: {
     displayName: 'Edit',
     access: API.AccessEnum.FAVORITE_HUBS_EDIT,
     icon: IconConstants.EDIT,
@@ -52,9 +49,8 @@ const FavoriteHubEditActions: UI.ActionListType<API.FavoriteHubEntry> = {
     //notifications: {
     //  onSuccess: 'The hub {{item.name}} was removed successfully',
     //}
-  }
+  },
 };
-
 
 export default {
   create: {
@@ -64,5 +60,5 @@ export default {
   edit: {
     moduleId: UI.Modules.FAVORITE_HUBS,
     actions: FavoriteHubEditActions,
-  }
+  },
 };

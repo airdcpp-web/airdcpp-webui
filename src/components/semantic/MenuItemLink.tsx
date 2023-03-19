@@ -13,24 +13,27 @@ export interface MenuItemLinkProps extends React.AnchorHTMLAttributes<HTMLAnchor
   disabled?: boolean;
 }
 
-const MenuItemLink: React.FC<MenuItemLinkProps> = (
-  { className = undefined, icon, children, onClick, active = false, disabled = false, style, ...other }
-) => {
+const MenuItemLink: React.FC<MenuItemLinkProps> = ({
+  className = undefined,
+  icon,
+  children,
+  onClick,
+  active = false,
+  disabled = false,
+  style,
+  ...other
+}) => {
   const itemClass = classNames(
     'item',
     className,
-    { 'active': active },
-    { 'disabled': disabled },
+    { active: active },
+    { disabled: disabled }
   );
 
   return (
-    <a 
-      { ...other }
-      className={ itemClass } 
-      onClick={ onClick }
-    >
-      <Icon icon={ icon }/>
-      { children }
+    <a {...other} className={itemClass} onClick={onClick}>
+      <Icon icon={icon} />
+      {children}
     </a>
   );
 };

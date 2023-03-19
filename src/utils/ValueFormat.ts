@@ -4,45 +4,44 @@ import { toI18nKey, translate } from './TranslationUtils';
 import * as UI from 'types/ui';
 import { i18n } from 'services/LocalizationService';
 
-
 const abbreviatedRelativeUnits = {
   relativeTime: {
     future: '%s',
-    past:   '%s',
-    s:  '%d s',
+    past: '%s',
+    s: '%d s',
     ss: '%d s',
-    m:  '%d m',
+    m: '%d m',
     mm: '%d m',
-    h:  '%d h',
+    h: '%d h',
     hh: '%d h',
-    d:  '%d d',
+    d: '%d d',
     dd: '%d d',
-    M:  '%d M',
+    M: '%d M',
     MM: '%d M',
-    y:  '%d y',
+    y: '%d y',
     yy: '%d y',
-  }
+  },
 };
 
 const getNormalRelativeUnits = () => ({
-  relativeTime:	(Moment.localeData(Moment.locale()) as any)._relativeTime
+  relativeTime: (Moment.localeData(Moment.locale()) as any)._relativeTime,
 });
 
 const formatUnitsPerSecond = (units: string, t: UI.TranslateF) => {
-  return t(
-    toI18nKey('unitsPerSecond', UI.Modules.COMMON),
-    {
-      defaultValue: '{{units}}/s',
-      replace: {
-        units,
-      }
-    }
-  );
+  return t(toI18nKey('unitsPerSecond', UI.Modules.COMMON), {
+    defaultValue: '{{units}}/s',
+    replace: {
+      units,
+    },
+  });
 };
 
 export const formatUnit = (unit: string, t: UI.TranslateF) => {
   return t(
-    toI18nKey(unit.toLowerCase().replace('/', ''), [ UI.Modules.COMMON, UI.SubNamespaces.UNITS ]),
+    toI18nKey(unit.toLowerCase().replace('/', ''), [
+      UI.Modules.COMMON,
+      UI.SubNamespaces.UNITS,
+    ]),
     unit
   );
 };
@@ -62,7 +61,12 @@ export const parseUnit = (value: number, units: string[], threshold: number) => 
   };
 };
 
-const formatUnits = (initialValue: number, units: string[], threshold: number, t: UI.TranslateF) => {
+const formatUnits = (
+  initialValue: number,
+  units: string[],
+  threshold: number,
+  t: UI.TranslateF
+) => {
   const { unitIndex, value } = parseUnit(initialValue, units, threshold);
 
   const formattedValue = value > 0 ? value.toFixed(2) : '0';
@@ -70,28 +74,23 @@ const formatUnits = (initialValue: number, units: string[], threshold: number, t
   return `${formattedValue} ${localizedUnit}`;
 };
 
-
-export const ByteUnits = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB' ];
+export const ByteUnits = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 
 export const formatSize = (bytes: number, t: UI.TranslateF, addExact = false) => {
   let ret = formatUnits(bytes, ByteUnits, 1024, t);
   if (addExact && bytes > 1024) {
-    ret += ` (${t(
-      toI18nKey('xBytes', UI.Modules.COMMON),
-      {
-        defaultValue: '{{bytes}} bytes',
-        replace: {
-          bytes: bytes.toLocaleString(i18n.language),
-        }
-      }
-    )})`;
+    ret += ` (${t(toI18nKey('xBytes', UI.Modules.COMMON), {
+      defaultValue: '{{bytes}} bytes',
+      replace: {
+        bytes: bytes.toLocaleString(i18n.language),
+      },
+    })})`;
   }
 
   return ret;
 };
 
-
-const bitUnits = [ 'bit/s', 'Kbit/s', 'Mbit/s', 'Gbit/s' ];
+const bitUnits = ['bit/s', 'Kbit/s', 'Mbit/s', 'Gbit/s'];
 
 export const formatConnection = (bytes: number, t: UI.TranslateF) => {
   if (bytes === 0) {
@@ -125,7 +124,7 @@ export const formatCalendarTime = (time: number, t: UI.TranslateF) => {
       defaultValue: '[Last] {{weekDay}}',
       replace: {
         weekDay: 'dddd',
-      }
+      },
     }),
     sameElse: Moment.locale() === 'en' ? 'DD/MM/YYYY' : 'L',
   });
@@ -175,7 +174,7 @@ export const formatSeconds = (seconds: number) => {
 };
 
 export const formatDecimal = (value: number) => {
-  return parseFloat(Math.round(value * 100) / 100 as any).toFixed(2);
+  return parseFloat((Math.round(value * 100) / 100) as any).toFixed(2);
 };
 
 export const formatSpeed = (bytesPerSecond: number, t: UI.TranslateF) => {
@@ -183,7 +182,7 @@ export const formatSpeed = (bytesPerSecond: number, t: UI.TranslateF) => {
 };
 
 export const formatAverage = (countFrom: number, total: number) => {
-  return (total === 0 ? 0 : (countFrom / total)).toFixed(2);
+  return (total === 0 ? 0 : countFrom / total).toFixed(2);
 };
 
 export const formatPercentage = (countFrom: number, total: number) => {
@@ -191,5 +190,7 @@ export const formatPercentage = (countFrom: number, total: number) => {
 };
 
 export const formatBoolean = (value: boolean, t: UI.TranslateF) => {
-  return value ? translate('Yes', t, UI.Modules.COMMON) : translate('No', t, UI.Modules.COMMON);
+  return value
+    ? translate('Yes', t, UI.Modules.COMMON)
+    : translate('No', t, UI.Modules.COMMON);
 };

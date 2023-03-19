@@ -1,4 +1,3 @@
-
 export interface Magnet {
   name: string;
   size: number | undefined;

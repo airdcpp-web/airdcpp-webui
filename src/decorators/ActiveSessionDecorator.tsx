@@ -7,24 +7,27 @@ import { LocalSettings } from 'constants/SettingConstants';
 import * as UI from 'types/ui';
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 
-
 type SessionType = UI.SessionItemBase;
 
-interface ActiveSessionDecoratorProps<SessionT extends SessionType, ActionT extends object> 
-  extends Pick<SessionChildProps<SessionT, ActionT>, 'session'> {
-
+interface ActiveSessionDecoratorProps<
+  SessionT extends SessionType,
+  ActionT extends object
+> extends Pick<SessionChildProps<SessionT, ActionT>, 'session'> {
   sessionApi: UI.SessionActions<SessionT> & ActionT;
-  //uiActions: 
+  //uiActions:
   //session: SessionT;
 }
 
 // This decorator will fire updates for currently active session
 // and set them as read
-export default function <PropsT, SessionT extends SessionType, ActionT extends object = UI.EmptyObject>(
-  Component: React.ComponentType<PropsT>, 
-  useReadDelay = false
-) {
-  class ActiveSessionDecorator extends React.Component<PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>> {
+export default function <
+  PropsT,
+  SessionT extends SessionType,
+  ActionT extends object = UI.EmptyObject
+>(Component: React.ComponentType<PropsT>, useReadDelay = false) {
+  class ActiveSessionDecorator extends React.Component<
+    PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>
+  > {
     /*static propTypes = {
       session: PropTypes.any, // Required (cloned)
       actions: PropTypes.object, // Required (cloned)
@@ -35,7 +38,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
     setRead = (session: SessionT) => {
       this.props.sessionApi.setRead(session);
       this.readTimeout = undefined;
-    }
+    };
 
     setSession = (session: SessionT | null) => {
       if (this.readTimeout) {
@@ -49,9 +52,11 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
         return;
       }
 
-      const timeout = !useReadDelay ? 0 : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
+      const timeout = !useReadDelay
+        ? 0
+        : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
       this.readTimeout = window.setTimeout(() => this.setRead(session), timeout);
-    }
+    };
 
     componentDidMount() {
       this.setSession(this.props.session);
@@ -68,7 +73,7 @@ export default function <PropsT, SessionT extends SessionType, ActionT extends o
     }
 
     render() {
-      return <Component { ...this.props }/>;
+      return <Component {...this.props} />;
     }
   }
 

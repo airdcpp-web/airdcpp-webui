@@ -15,7 +15,6 @@ import * as UI from 'types/ui';
 
 import './messages.css';
 
-
 interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
   session?: UI.SessionItemBase;
@@ -30,28 +29,18 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
     const downloadManager = useItemDownloadManager(other.session);
     const { messageNodes, visibleItems } = useMessagesNode(other, downloadManager);
 
-    const scrollableRef = useMessageViewScrollEffect(
-      other,
-      visibleItems
-    );
+    const scrollableRef = useMessageViewScrollEffect(other, visibleItems);
 
     return (
-      <div 
-        ref={ scrollableRef }
-        className={ classNames('message-section', className) }
-      >
-        { !!messageNodes ? (
+      <div ref={scrollableRef} className={classNames('message-section', className)}>
+        {!!messageNodes ? (
           <>
-            <div className="ui list message-list">
-              { messageNodes }
-            </div>
-            <DownloadDialog
-              { ...downloadManager.downloadDialogProps }
-            />
+            <div className="ui list message-list">{messageNodes}</div>
+            <DownloadDialog {...downloadManager.downloadDialogProps} />
           </>
         ) : (
-          <Loader text={ translate('Loading messages', t, UI.Modules.COMMON) }/>
-        ) }
+          <Loader text={translate('Loading messages', t, UI.Modules.COMMON)} />
+        )}
       </div>
     );
   },

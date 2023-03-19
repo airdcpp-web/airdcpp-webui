@@ -6,7 +6,6 @@ import LocalSettingForm from 'routes/Settings/components/LocalSettingForm';
 import '../style.css';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-
 const PopupEntry = [
   LocalSettings.NOTIFY_MENTION,
   LocalSettings.NOTIFY_PM_USER,
@@ -20,14 +19,14 @@ const PopupEntry = [
   LocalSettings.NOTIFY_EVENTS_ERROR,
 ];
 
-const NotificationPage: React.FC<SettingSectionChildProps> = props => {
+const NotificationPage: React.FC<SettingSectionChildProps> = (props) => {
   const { translate } = props.moduleT;
   return (
     <div>
       <LocalSettingForm
-        title={ translate('Popup notifications') }
-        { ...props }
-        keys={ PopupEntry }
+        title={translate('Popup notifications')}
+        {...props}
+        keys={PopupEntry}
       />
     </div>
   );

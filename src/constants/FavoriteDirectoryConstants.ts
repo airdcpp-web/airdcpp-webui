@@ -6,5 +6,4 @@ export default {
   DIRECTORIES_URL: MODULE_URL,
 
   DIRECTORIES_UPDATED: 'favorite_directories_updated',
-}
-;
+};

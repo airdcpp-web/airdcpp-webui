@@ -1,4 +1,3 @@
-
 export interface SystemInfo {
   api_version: number;
   api_feature_level: number;

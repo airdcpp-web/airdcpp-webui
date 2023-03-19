@@ -5,7 +5,11 @@ import { MentionsInput, Mention, OnChangeHandlerFunc, DataFunc } from 'react-men
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { loadSessionProperty, saveSessionProperty, useMobileLayout } from 'utils/BrowserUtils';
+import {
+  loadSessionProperty,
+  saveSessionProperty,
+  useMobileLayout,
+} from 'utils/BrowserUtils';
 import ChatCommandHandler from './ChatCommandHandler';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -26,7 +30,6 @@ import AccessConstants from 'constants/AccessConstants';
 import Icon from 'components/semantic/Icon';
 import Button from 'components/semantic/Button';
 import IconConstants from 'constants/IconConstants';
-
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
@@ -71,9 +74,11 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
   };
 };
 
-export interface MessageComposerProps extends 
-  Pick<ChatLayoutProps, 'chatApi' | 'session' | 'chatActions' | 'handleFileUpload'> {
-
+export interface MessageComposerProps
+  extends Pick<
+    ChatLayoutProps,
+    'chatApi' | 'session' | 'chatActions' | 'handleFileUpload'
+  > {
   t: UI.TranslateF;
 }
 
@@ -86,7 +91,6 @@ const loadState = (props: RouteComponentProps) => {
     text: loadSessionProperty(getStorageKey(props), ''),
   };
 };
-
 
 const saveState = (state: State, props: RouteComponentProps) => {
   saveSessionProperty(getStorageKey(props), state.text);
@@ -105,7 +109,9 @@ interface State {
   uploading: boolean;
 }
 
-class MessageComposer extends React.Component<MessageComposerProps & RouteComponentProps> {
+class MessageComposer extends React.Component<
+  MessageComposerProps & RouteComponentProps
+> {
   /*static propTypes = {
     // Actions for this chat session type
     actions: PropTypes.object.isRequired,
@@ -131,12 +137,12 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
 
     ChatCommandHandler(this.props).handle(command, params, location);
-  }
+  };
 
   handleSend = (text: string) => {
     const { chatApi, session } = this.props;
     chatApi.sendChatMessage(session, text);
-  }
+  };
 
   componentWillUnmount() {
     saveState(this.state, this.props);
@@ -150,17 +156,17 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
   }
 
   handleChange: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
-    this.setState({ 
-      text: plainValue 
+    this.setState({
+      text: plainValue,
     });
-  }
+  };
 
   onKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.sendText();
     }
-  }
+  };
 
   sendText = () => {
     // Trim only from end to allow chat messages such as " +help" to be
@@ -177,21 +183,21 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
 
     this.setState({ text: '' });
-  }
+  };
 
   findUsers: DataFunc = (value, callback) => {
     const { session } = this.props;
-    SocketService.post(UserConstants.SEARCH_NICKS_URL, { 
-      pattern: value, 
+    SocketService.post(UserConstants.SEARCH_NICKS_URL, {
+      pattern: value,
       max_results: 5,
-      hub_urls: session.hub_url ? [ session.hub_url ] : undefined,
+      hub_urls: session.hub_url ? [session.hub_url] : undefined,
     })
       .then((users: API.HubUser[]) => callback(users.map(userToMention)))
-      .catch((error: ErrorResponse) => 
+      .catch((error: ErrorResponse) =>
         console.log(`Failed to fetch suggestions: ${error}`)
       );
-  }
-  
+  };
+
   appendText = (text: string) => {
     let newText = this.state.text;
     if (newText) {
@@ -200,46 +206,45 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     newText += text;
 
     this.setState({
-      text: newText
+      text: newText,
     });
-  }
+  };
 
   onDropFile = (acceptedFiles: File[]) => {
     const { t } = this.props;
     const maxSize = 100 * 1024 * 1024;
 
-    const files = acceptedFiles
-      .filter(file => {
-        if (file.size > maxSize) {
-          NotificationActions.error({
-            title: file.name,
-            message: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
-              defaultValue: 'File is too large (maximum size is {{maxSize}})',
-              replace: {
-                maxSize: formatSize(maxSize, t)
-              }
-            })
-          });
-    
-          return false;
-        }
+    const files = acceptedFiles.filter((file) => {
+      if (file.size > maxSize) {
+        NotificationActions.error({
+          title: file.name,
+          message: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
+            defaultValue: 'File is too large (maximum size is {{maxSize}})',
+            replace: {
+              maxSize: formatSize(maxSize, t),
+            },
+          }),
+        });
 
-        return true;
-      });
+        return false;
+      }
+
+      return true;
+    });
 
     if (!files.length) {
       return;
     }
 
     this.setState({
-      files
+      files,
     });
-  }
+  };
 
   onUploadFiles = async (files: File[]) => {
     this.resetFiles();
     this.setState({
-      uploading: true
+      uploading: true,
     });
 
     const { handleFileUpload } = this.props;
@@ -253,12 +258,16 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     }
 
     this.setState({
-      uploading: false
+      uploading: false,
     });
-  }
+  };
 
   onPaste = (evt: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    if (evt.clipboardData && evt.clipboardData.files && (evt.clipboardData as any).files.length) {
+    if (
+      evt.clipboardData &&
+      evt.clipboardData.files &&
+      (evt.clipboardData as any).files.length
+    ) {
       const files: File[] = [];
 
       {
@@ -273,13 +282,13 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
       evt.preventDefault();
       this.onDropFile(files);
     }
-  }
+  };
 
   resetFiles = () => {
     this.setState({
       files: null,
     });
-  }
+  };
 
   state: State = {
     ...loadState(this.props),
@@ -292,76 +301,70 @@ class MessageComposer extends React.Component<MessageComposerProps & RouteCompon
     const className = classNames(
       'ui form composer',
       { small: mobile },
-      { large: !mobile },
+      { large: !mobile }
     );
 
-    const hasFileUploadAccess = LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) && 
+    const hasFileUploadAccess =
+      LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) &&
       LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
 
     const { files, text, uploading } = this.state;
     const { t } = this.props;
 
     const sendButton = (
-      <Button 
-        className="large icon send" 
-        onClick={ this.sendText }
-        caption={ <Icon icon={ IconConstants.SEND }/> }
-        loading={ uploading }
+      <Button
+        className="large icon send"
+        onClick={this.sendText}
+        caption={<Icon icon={IconConstants.SEND} />}
+        loading={uploading}
         color="blue"
       />
     );
 
     return (
       <>
-        { !!files && (
+        {!!files && (
           <FilePreviewDialog
-            files={ files }
-            onConfirm={ this.onUploadFiles }
-            onReject={ this.resetFiles }
-            title={ translate('Send files', t, UI.Modules.COMMON) }
+            files={files}
+            onConfirm={this.onUploadFiles}
+            onReject={this.resetFiles}
+            title={translate('Send files', t, UI.Modules.COMMON)}
           />
-        ) }
+        )}
         <Dropzone
-          onDrop={ this.onDropFile }
-          ref={ this.dropzoneRef }
-          disabled={ !hasFileUploadAccess }
-          multiple={ true }
-          minSize={ 1 }
-          noClick={ true }
+          onDrop={this.onDropFile}
+          ref={this.dropzoneRef}
+          disabled={!hasFileUploadAccess}
+          multiple={true}
+          minSize={1}
+          noClick={true}
           // Handle max size check elsewhere (report errors)
         >
           {({ getRootProps, getInputProps, open }) => (
-            <div 
-              className={ className }
-              { ...getRootProps() }
-            >
-              <input 
-                { ...getInputProps() }
-              />
-              <MentionsInput 
+            <div className={className} {...getRootProps()}>
+              <input {...getInputProps()} />
+              <MentionsInput
                 className="input"
-                value={ text } 
-                onChange={ this.handleChange }
-                onKeyDown={ this.onKeyDown }
-                style={ getMentionFieldStyle(mobile) }
-                autoFocus={ !mobile }
-                onPaste={ this.onPaste }
+                value={text}
+                onChange={this.handleChange}
+                onKeyDown={this.onKeyDown}
+                style={getMentionFieldStyle(mobile)}
+                autoFocus={!mobile}
+                onPaste={this.onPaste}
               >
-                <Mention 
-                  trigger="@"
-                  data={ this.findUsers }
-                  appendSpaceOnAdd={ false }
-                />
+                <Mention trigger="@" data={this.findUsers} appendSpaceOnAdd={false} />
               </MentionsInput>
-              { !hasFileUploadAccess || uploading ? sendButton : (
+              {!hasFileUploadAccess || uploading ? (
+                sendButton
+              ) : (
                 <TempShareDropdown
-                  className="blue large" 
-                  handleUpload={ open }
-                  overrideContent={ !text ? null : sendButton }
+                  className="blue large"
+                  handleUpload={open}
+                  overrideContent={!text ? null : sendButton}
                 />
-              ) }
+              )}
             </div>
-          ) }
+          )}
         </Dropzone>
       </>
     );

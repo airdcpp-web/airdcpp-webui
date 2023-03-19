@@ -16,7 +16,6 @@ import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
-
 interface PriorityMenuProps {
   itemPrio: API.QueuePriority;
   item: API.QueueItemBase;
@@ -41,58 +40,60 @@ class PriorityMenu extends Component<PriorityMenuProps> {
 
   setPriority = (priorityId: API.QueuePriorityEnum) => {
     const { item, prioAction, t } = this.props;
-    return runBackgroundSocketAction(
-      () => prioAction(item, priorityId),
-      t
-    );
-  }
+    return runBackgroundSocketAction(() => prioAction(item, priorityId), t);
+  };
 
   setAutoPriority = () => {
     this.setPriority(API.QueuePriorityEnum.DEFAULT);
-  }
+  };
 
   shouldComponentUpdate(nextProps: PriorityMenuProps) {
     return !isEqual(nextProps.item.priority, this.props.item.priority);
   }
 
-  getPriorityListItem = (priority: API.QueuePriority, t: UI.TranslateF, onClose: DropdownCloseHandler) => {
+  getPriorityListItem = (
+    priority: API.QueuePriority,
+    t: UI.TranslateF,
+    onClose: DropdownCloseHandler
+  ) => {
     const currentPrio = this.props.item.priority.id;
     return (
-      <MenuItemLink 
-        key={ priority.id }
-        active={ currentPrio === priority.id } 
-        onClick={ () => {
+      <MenuItemLink
+        key={priority.id}
+        active={currentPrio === priority.id}
+        onClick={() => {
           this.setPriority(priority.id);
           onClose();
         }}
       >
-        { translate(priority.str, t, UI.Modules.QUEUE) }
+        {translate(priority.str, t, UI.Modules.QUEUE)}
       </MenuItemLink>
     );
-  }
+  };
 
   getChildren = (onClose: DropdownCloseHandler) => {
     const { t } = this.props;
 
-    const children = Object.keys(PriorityEnum)
-      .map(prioKey => this.getPriorityListItem(PriorityEnum[prioKey], t, onClose));
+    const children = Object.keys(PriorityEnum).map((prioKey) =>
+      this.getPriorityListItem(PriorityEnum[prioKey], t, onClose)
+    );
 
-    children.push(<div key="divider" className="ui divider"/>);
+    children.push(<div key="divider" className="ui divider" />);
     children.push(
-      <MenuItemLink 
+      <MenuItemLink
         key="auto"
-        active={ this.props.itemPrio.auto } 
-        onClick={ () => {
+        active={this.props.itemPrio.auto}
+        onClick={() => {
           this.setPriority(API.QueuePriorityEnum.DEFAULT);
           onClose();
-        } }
+        }}
       >
-        { translate('Auto', t, UI.Modules.QUEUE) }
+        {translate('Auto', t, UI.Modules.QUEUE)}
       </MenuItemLink>
     );
 
     return children;
-  }
+  };
 
   render() {
     const { itemPrio, t } = this.props;
@@ -102,19 +103,12 @@ class PriorityMenu extends Component<PriorityMenuProps> {
     }
 
     if (!LoginStore.hasAccess(API.AccessEnum.QUEUE_EDIT)) {
-      return (
-        <EmptyDropdown
-          caption={ caption }
-        />
-      );
+      return <EmptyDropdown caption={caption} />;
     }
 
     return (
-      <TableDropdown 
-        caption={ caption } 
-        className="priority-menu"
-      >
-        { this.getChildren }
+      <TableDropdown caption={caption} className="priority-menu">
+        {this.getChildren}
       </TableDropdown>
     );
   }

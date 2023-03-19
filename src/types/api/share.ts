@@ -70,6 +70,6 @@ export interface ShareRefreshTask {
 }
 
 export interface ShareRefreshQueueResult {
-  task: { id: number; } | null;
+  task: { id: number } | null;
   result: RefreshQueueResultEnum;
 }

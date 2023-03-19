@@ -1,66 +1,85 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import SettingsMenuDecorator, { SettingsMenuDecoratorChildProps } from '../decorators/SettingsMenuDecorator';
+import SettingsMenuDecorator, {
+  SettingsMenuDecoratorChildProps,
+} from '../decorators/SettingsMenuDecorator';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import SettingsSideMenuLayout from './SettingsSideMenuLayout';
 import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 
-import SaveDecorator, { SaveDecoratorChildProps, SaveDecoratorProps } from '../decorators/SaveDecorator';
+import SaveDecorator, {
+  SaveDecoratorChildProps,
+  SaveDecoratorProps,
+} from '../decorators/SaveDecorator';
 import { RouteComponentProps } from 'react-router';
 
 import * as UI from 'types/ui';
 import { menuItemToLinkComponent } from './MenuItems';
 
-
-export interface SettingSectionProps {
-
-}
+export interface SettingSectionProps {}
 
 type Props = SaveDecoratorChildProps & SettingsMenuDecoratorChildProps;
 
-export type SettingSectionChildProps<RouteParams extends object = UI.EmptyObject> = 
-  SaveDecoratorChildProps & 
-  Pick<Props, 'parent' | 'currentMenuItem'> & 
-  RouteComponentProps<RouteParams> & 
-  React.PropsWithChildren<{
-    contentClassname: string;
-    parentMenuItems: React.ReactNode[];
-    menuItems: React.ReactNode[];
-    advancedMenuItems?: React.ReactNode[];
-    settingsT: UI.ModuleTranslator;
-    moduleT: UI.ModuleTranslator;
-  }>;
-
-
+export type SettingSectionChildProps<RouteParams extends object = UI.EmptyObject> =
+  SaveDecoratorChildProps &
+    Pick<Props, 'parent' | 'currentMenuItem'> &
+    RouteComponentProps<RouteParams> &
+    React.PropsWithChildren<{
+      contentClassname: string;
+      parentMenuItems: React.ReactNode[];
+      menuItems: React.ReactNode[];
+      advancedMenuItems?: React.ReactNode[];
+      settingsT: UI.ModuleTranslator;
+      moduleT: UI.ModuleTranslator;
+    }>;
 
 const SettingSection: React.FC<Props> = (props) => {
-  const Component = useMobileLayout() || window.innerWidth < 1000 ? SettingsTopMenuLayout : SettingsSideMenuLayout;
+  const Component =
+    useMobileLayout() || window.innerWidth < 1000
+      ? SettingsTopMenuLayout
+      : SettingsSideMenuLayout;
 
-  const { moduleT, settingsT, parentMenuItems, menuItems, advancedMenuItems, location, ...childProps } = props;
+  const {
+    moduleT,
+    settingsT,
+    parentMenuItems,
+    menuItems,
+    advancedMenuItems,
+    location,
+    ...childProps
+  } = props;
   const { parent, currentMenuItem } = props;
 
   const contentClassname = classNames(
     'section-content',
-    `${parent!.url} ${currentMenuItem.url}`,
+    `${parent!.url} ${currentMenuItem.url}`
   );
 
   return (
-    <Component 
-      { ...childProps }
-      settingsT={ settingsT }
-      moduleT={ moduleT! }
-      location={ location }
-      contentClassname={ contentClassname }
-      parentMenuItems={ 
-        props.parentMenuItems!.map(item => menuItemToLinkComponent(item, undefined, settingsT, location)) 
+    <Component
+      {...childProps}
+      settingsT={settingsT}
+      moduleT={moduleT!}
+      location={location}
+      contentClassname={contentClassname}
+      parentMenuItems={props.parentMenuItems!.map((item) =>
+        menuItemToLinkComponent(item, undefined, settingsT, location)
+      )}
+      menuItems={
+        !props.menuItems
+          ? []
+          : props.menuItems.map((item) =>
+              menuItemToLinkComponent(item, parent, settingsT, location)
+            )
       }
-      menuItems={ !props.menuItems ? [] : 
-        props.menuItems.map(item => menuItemToLinkComponent(item, parent, settingsT, location)) 
-      }
-      advancedMenuItems={ !advancedMenuItems ? undefined : 
-        advancedMenuItems.map(item => menuItemToLinkComponent(item, parent, settingsT, location)) 
+      advancedMenuItems={
+        !advancedMenuItems
+          ? undefined
+          : advancedMenuItems.map((item) =>
+              menuItemToLinkComponent(item, parent, settingsT, location)
+            )
       }
     />
   );

@@ -1,9 +1,13 @@
 //@ts-ignore
 import Reflux from 'reflux';
 
-import { 
-  loadLocalProperty, saveLocalProperty, removeLocalProperty,
-  loadSessionProperty, saveSessionProperty, removeSessionProperty 
+import {
+  loadLocalProperty,
+  saveLocalProperty,
+  removeLocalProperty,
+  loadSessionProperty,
+  saveSessionProperty,
+  removeSessionProperty,
 } from 'utils/BrowserUtils';
 
 import LoginActions from 'actions/reflux/LoginActions';
@@ -19,7 +23,6 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import { i18n } from 'services/LocalizationService';
 import { translate } from 'utils/TranslationUtils';
 
-
 export interface LoginState {
   socketAuthenticated: boolean;
   lastError: string | null;
@@ -28,9 +31,10 @@ export interface LoginState {
   showNewUserIntro: boolean;
 }
 
-
 const errorToString = (error: ErrorResponse | string) => {
-  return (error as ErrorResponse).message ? (error as ErrorResponse).message : error as string;
+  return (error as ErrorResponse).message
+    ? (error as ErrorResponse).message
+    : (error as string);
 };
 
 const LOGIN_PROPS_KEY = 'login_properties';
@@ -45,7 +49,6 @@ const LoginStore = {
   _socketAuthenticated: false,
 
   init: function () {
-
     // The login would silently fail if data storage isn't available
     try {
       sessionStorage.setItem('storage_test', 'test');
@@ -54,7 +57,7 @@ const LoginStore = {
       if (e.code === DOMException.QUOTA_EXCEEDED_ERR && sessionStorage.length === 0) {
         // Safari and private mode
         this._lastError = i18n.t<string>(
-          'privateBrowsingNotSupported', 
+          'privateBrowsingNotSupported',
           `This site can't be used with your browser if private browsing mode is enabled`
         );
         this._allowLogin = false;
@@ -118,7 +121,7 @@ const LoginStore = {
   setLoginError(error: ErrorResponse | string) {
     if ((error as ErrorResponse).code === 400) {
       this._lastError = translate('Session lost', i18n.t.bind(i18n), UI.Modules.LOGIN);
-    } else { 
+    } else {
       this._lastError = errorToString(error);
     }
   },
@@ -158,11 +161,14 @@ const LoginStore = {
 
   hasAccess(access: AccessEnum) {
     const { permissions } = this.loginProperties!.user;
-    return permissions.indexOf(access) !== -1 || permissions.indexOf(AccessConstants.ADMIN) !== -1;
+    return (
+      permissions.indexOf(access) !== -1 ||
+      permissions.indexOf(AccessConstants.ADMIN) !== -1
+    );
   },
 
   onDisconnect(reason: string) {
-    // Manual disconnect 
+    // Manual disconnect
     // Set as disconnected to prevent components from making requests (as those would throw)
     this.handleDisconnect(reason);
   },
@@ -177,12 +183,15 @@ const LoginStore = {
     this.handleDisconnect(error);
   },
 
-  
   handleDisconnect(error: string) {
     this._socketAuthenticated = false;
     if (this.user) {
       if (error === '') {
-        this._lastError = translate('Connection closed', i18n.t.bind(i18n), UI.Modules.LOGIN);
+        this._lastError = translate(
+          'Connection closed',
+          i18n.t.bind(i18n),
+          UI.Modules.LOGIN
+        );
       } else {
         this._lastError = error;
       }

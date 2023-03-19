@@ -6,24 +6,26 @@ import { SettingSectionChildProps } from 'routes/Settings/components/SettingSect
 import { translateSettingSectionTitle } from './MenuItems';
 import Icon from 'components/semantic/Icon';
 
+type SideMenuProps = Pick<
+  SettingSectionChildProps,
+  'menuItems' | 'advancedMenuItems' | 'settingsT'
+>;
 
-type SideMenuProps = Pick<SettingSectionChildProps, 'menuItems' | 'advancedMenuItems' | 'settingsT'>;
-
-const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menuItems, advancedMenuItems, settingsT }) => {
+const SideChildSectionMenu: React.FC<SideMenuProps> = ({
+  menuItems,
+  advancedMenuItems,
+  settingsT,
+}) => {
   return (
     <div className="three wide column menu-column">
       <div className="ui vertical secondary menu">
-        { menuItems }
-        { !!advancedMenuItems && (
+        {menuItems}
+        {!!advancedMenuItems && (
           <div>
-            <div className="item header">
-              { settingsT.translate('Advanced') }
-            </div>
-            <div className="menu">
-              { advancedMenuItems }
-            </div> 
+            <div className="item header">{settingsT.translate('Advanced')}</div>
+            <div className="menu">{advancedMenuItems}</div>
           </div>
-        ) }
+        )}
       </div>
     </div>
   );
@@ -32,27 +34,41 @@ const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menuItems, advancedMenu
 type TopMenuProps = Pick<SettingSectionChildProps, 'parentMenuItems'>;
 
 const TopRootSectionMenu: React.FC<TopMenuProps> = ({ parentMenuItems }) => (
-  <div className="ui secondary pointing menu settings top-menu">
-    { parentMenuItems }
-  </div>
+  <div className="ui secondary pointing menu settings top-menu">{parentMenuItems}</div>
 );
 
 // eslint-disable-next-line max-len
-type ContentProps = React.PropsWithChildren<Pick<SettingSectionChildProps, 'contentClassname' | 'currentMenuItem' | 'parent' | 'saveButton' | 'message' | 'settingsT'>>;
+type ContentProps = React.PropsWithChildren<
+  Pick<
+    SettingSectionChildProps,
+    | 'contentClassname'
+    | 'currentMenuItem'
+    | 'parent'
+    | 'saveButton'
+    | 'message'
+    | 'settingsT'
+  >
+>;
 
-const Content: React.FC<ContentProps> = (
-  { contentClassname, currentMenuItem, parent, saveButton, children, message, settingsT }
-) => (
-  <div className={ classNames('thirteen wide column', contentClassname) }>
+const Content: React.FC<ContentProps> = ({
+  contentClassname,
+  currentMenuItem,
+  parent,
+  saveButton,
+  children,
+  message,
+  settingsT,
+}) => (
+  <div className={classNames('thirteen wide column', contentClassname)}>
     <div className="ui segment">
       <LayoutHeader
-        title={ translateSettingSectionTitle(currentMenuItem.title, settingsT) }
-        icon={ <Icon color="green" icon={ parent!.icon }/> }
-        rightComponent={ saveButton }
+        title={translateSettingSectionTitle(currentMenuItem.title, settingsT)}
+        icon={<Icon color="green" icon={parent!.icon} />}
+        rightComponent={saveButton}
       />
       <div className="options">
-        { message }
-        { children }
+        {message}
+        {children}
       </div>
     </div>
   </div>
@@ -60,15 +76,10 @@ const Content: React.FC<ContentProps> = (
 
 const SideMenuLayout: React.FC<SettingSectionChildProps> = ({ children, ...other }) => (
   <div className="full">
-    <TopRootSectionMenu { ...other }/>
-    <div 
-      id="setting-scroll-context" 
-      className="ui segment grid main"
-    >
-      <SideChildSectionMenu { ...other }/>
-      <Content { ...other }>
-        { children }
-      </Content>
+    <TopRootSectionMenu {...other} />
+    <div id="setting-scroll-context" className="ui segment grid main">
+      <SideChildSectionMenu {...other} />
+      <Content {...other}>{children}</Content>
     </div>
   </div>
 );

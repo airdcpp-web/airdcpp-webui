@@ -1,7 +1,12 @@
-const loadProperty = (storage: Storage, storageKey: string | undefined, defaultData?: any) => {
+const loadProperty = (
+  storage: Storage,
+  storageKey: string | undefined,
+  defaultData?: any
+) => {
   if (storageKey) {
     const savedItem = storage.getItem(storageKey);
-    if (savedItem !== undefined && savedItem !== null) { // 'false' should be loaded
+    if (savedItem !== undefined && savedItem !== null) {
+      // 'false' should be loaded
       try {
         return JSON.parse(savedItem);
       } catch (e) {
@@ -23,7 +28,7 @@ const saveProperty = (storage: Storage, storageKey: string | undefined, data: an
 };
 
 export const loadLocalProperty = <ValueType>(
-  storageKey: string | undefined, 
+  storageKey: string | undefined,
   defaultData?: ValueType
 ): ValueType => {
   return loadProperty(localStorage, storageKey, defaultData);
@@ -38,7 +43,7 @@ export const removeLocalProperty = (storageKey: string) => {
 };
 
 export const loadSessionProperty = <ValueType>(
-  storageKey: string | undefined, 
+  storageKey: string | undefined,
   defaultData?: ValueType
 ): ValueType => {
   return loadProperty(sessionStorage, storageKey, defaultData);
@@ -53,14 +58,15 @@ export const removeSessionProperty = (storageKey: string) => {
 };
 
 export const hasTouchSupport = () => {
-  return 'ontouchstart' in document.documentElement // works on most browsers
-    || 'onmsgesturechange' in window; // works on ie10
+  return (
+    'ontouchstart' in document.documentElement || // works on most browsers
+    'onmsgesturechange' in window
+  ); // works on ie10
   //return false;
 };
-
 
 export const hasCopySupport = () => !!(navigator as any).clipboard;
 
 export const useMobileLayout = (width?: number | null) => {
-  return (width || window.innerWidth) < 700 || (window.innerHeight < 500);
+  return (width || window.innerWidth) < 700 || window.innerHeight < 500;
 };

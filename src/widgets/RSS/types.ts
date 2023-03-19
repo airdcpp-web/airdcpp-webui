@@ -1,10 +1,11 @@
-
 import * as UI from 'types/ui';
 
-export type FeedNode<Attributes extends object = UI.EmptyObject> = string | {
-  text: string;
-  attr: Attributes;
-};
+export type FeedNode<Attributes extends object = UI.EmptyObject> =
+  | string
+  | {
+      text: string;
+      attr: Attributes;
+    };
 
 export interface FeedItem {
   title?: FeedNode;
@@ -21,7 +22,7 @@ export interface RawFeedData {
   rss?: {
     channel?: {
       item?: FeedItem[];
-    }
+    };
   };
   feed?: {
     entry?: FeedItem[];

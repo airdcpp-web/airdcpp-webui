@@ -4,7 +4,6 @@ import * as t from 'tcomb-validation';
 
 export * from 'tcomb-validation';
 
-
 // Definitions copied from https://github.com/gcanti/tcomb-form/pull/394
 
 type Path = Array<string | number>;
@@ -18,10 +17,11 @@ type Path = Array<string | number>;
 type ChangeKind = 'add' | 'remove' | 'moveUp' | 'moveDown';
 
 export declare namespace form {
-
   type PlaceholderOptions = 'auto' | 'none';
 
-  type ErrorMessage = JSX.Element | ((value: any, path: Path, context: any) => JSX.Element);
+  type ErrorMessage =
+    | JSX.Element
+    | ((value: any, path: Path, context: any) => JSX.Element);
 
   type TcombI18NOptions = {
     add: string;
@@ -69,8 +69,12 @@ export declare namespace form {
   type TemplateFunction<OptionValueT = any, ValueT = any, ConfigT = undefined> = (
     locals: TemplateLocals<OptionValueT, ValueT, ConfigT>
   ) => React.ReactNode;
-  
-  type ErrorMessageFunction = (value: any, path: Path, context: any) => React.ReactNode | null;
+
+  type ErrorMessageFunction = (
+    value: any,
+    path: Path,
+    context: any
+  ) => React.ReactNode | null;
 
   type TcombRenderingOptions = {
     label?: React.ReactNode;
@@ -87,7 +91,6 @@ export declare namespace form {
     config?: any;
   };
 
-  
   type TcombListOptions = TcombRenderingOptions & {
     item?: TcombStructOptions;
     disableOrder?: boolean;
@@ -108,7 +111,7 @@ export declare namespace form {
     [attr: string]: any;
   };
 
-  type SelectOption = { 
+  type SelectOption = {
     value: string;
     text: React.ReactNode;
     disabled?: boolean;
@@ -144,14 +147,14 @@ export declare namespace form {
     options?: TcombStructOptions;
     /**
      * Called when the raw value of the form changes.
-     * 
+     *
      * @param raw Current raw value (may be invalid)
      * @param path Path to the field that triggered the change
-     * @param kind The type of change on a list (may be undefined). 
+     * @param kind The type of change on a list (may be undefined).
      */
     onChange?: (raw: any, path: Path, kind?: ChangeKind) => void;
 
-    context?: any
+    context?: any;
   }
 
   export class Component extends React.Component {
@@ -165,7 +168,7 @@ export declare namespace form {
   export class Datetime extends Component {}
   export class Struct extends Component {}
   export class List extends Component {}
-  
+
   interface TcombTemplate {
     getTemplate(): TemplateFunction;
     clone(spec: any): TcombTemplate;

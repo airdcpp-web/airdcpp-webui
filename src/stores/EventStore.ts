@@ -9,13 +9,17 @@ import { toUrgencyMap } from 'utils/UrgencyUtils';
 
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import AccessConstants from 'constants/AccessConstants';
-import { mergeCacheMessages, pushMessage, checkUnreadCacheInfo, checkSplice } from 'utils/MessageUtils';
+import {
+  mergeCacheMessages,
+  pushMessage,
+  checkUnreadCacheInfo,
+  checkSplice,
+} from 'utils/MessageUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { AddListener } from 'airdcpp-apisocket';
 import ActivityStore, { ActivityState } from './ActivityStore';
-
 
 type MessageCache = UI.MessageListItem[];
 
@@ -64,7 +68,10 @@ const Store = {
   },
 
   onFetchMessagesCompleted(messages: API.StatusMessage[]) {
-    this._logMessages = mergeCacheMessages(messages.map(toCacheMessage), this._logMessages);
+    this._logMessages = mergeCacheMessages(
+      messages.map(toCacheMessage),
+      this._logMessages
+    );
     (this as any).trigger(this._logMessages);
   },
 
@@ -83,9 +90,8 @@ const Store = {
 
   checkReadState(cacheInfoNew: API.StatusMessageCounts) {
     if (this._viewActive && ActivityStore.userActive) {
-      cacheInfoNew = checkUnreadCacheInfo(
-        cacheInfoNew, 
-        () => EventActions.setRead()
+      cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () =>
+        EventActions.setRead()
       ) as API.StatusMessageCounts;
     }
 
@@ -128,11 +134,14 @@ const Store = {
     if (this._messageCacheInfo) {
       this.checkReadState(this._messageCacheInfo);
     }
-  }
+  },
 };
 
 type EventStore = typeof Store;
 
-const EventStore: EventStore = SocketSubscriptionDecorator(Reflux.createStore(Store), AccessConstants.EVENTS_VIEW);
+const EventStore: EventStore = SocketSubscriptionDecorator(
+  Reflux.createStore(Store),
+  AccessConstants.EVENTS_VIEW
+);
 
 export default EventStore;

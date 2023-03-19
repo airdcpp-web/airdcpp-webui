@@ -1,6 +1,5 @@
 import { TranslateF } from './common';
 
-
 export const enum Modules {
   QUEUE = 'queue',
   SEARCH = 'search',

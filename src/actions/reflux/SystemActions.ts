@@ -8,14 +8,12 @@ import NotificationActions from 'actions/NotificationActions';
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 
-
 const SystemActionConfig: UI.RefluxActionConfigList<void> = [
-  { 'fetchAway': { asyncResult: true } },
-  { 'setAway': { asyncResult: true } },
+  { fetchAway: { asyncResult: true } },
+  { setAway: { asyncResult: true } },
 ];
 
 export const SystemActions = Reflux.createActions(SystemActionConfig);
-
 
 SystemActions.fetchAway.listen(function (this: UI.AsyncActionType<void>) {
   SocketService.get(SystemConstants.MODULE_URL + '/away')
@@ -23,8 +21,12 @@ SystemActions.fetchAway.listen(function (this: UI.AsyncActionType<void>) {
     .catch(this.failed);
 });
 
-SystemActions.setAway.listen(function (this: UI.AsyncActionType<void>, away: boolean, t: UI.TranslateF) {
-  SocketService.post(SystemConstants.MODULE_URL + '/away', { 
+SystemActions.setAway.listen(function (
+  this: UI.AsyncActionType<void>,
+  away: boolean,
+  t: UI.TranslateF
+) {
+  SocketService.post(SystemConstants.MODULE_URL + '/away', {
     away,
   })
     .then(this.completed.bind(this, away, t))
@@ -32,8 +34,12 @@ SystemActions.setAway.listen(function (this: UI.AsyncActionType<void>, away: boo
 });
 
 SystemActions.setAway.completed.listen(function (away: boolean, t: UI.TranslateF) {
-  NotificationActions.info({ 
-    title: translate(away ? 'Away mode was enabled' : 'Away mode was disabled', t, UI.Modules.COMMON),
+  NotificationActions.info({
+    title: translate(
+      away ? 'Away mode was enabled' : 'Away mode was disabled',
+      t,
+      UI.Modules.COMMON
+    ),
     //uid: 'away',
   });
 });

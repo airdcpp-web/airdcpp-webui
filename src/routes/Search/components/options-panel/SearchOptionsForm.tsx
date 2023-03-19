@@ -8,14 +8,15 @@ import HubSelectField from './HubSelectField';
 import SizeField from './SizeField';
 import FileTypeField from './FileTypeField';
 
-import Form, { FormFieldChangeHandler, FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
+import Form, {
+  FormFieldChangeHandler,
+  FormSaveHandler,
+  FormFieldSettingHandler,
+} from 'components/form/Form';
 import { isValueSet, translateForm } from 'utils/FormUtils';
 import { RouteComponentProps } from 'react-router';
 import Button from 'components/semantic/Button';
 import AccordionStructField from './AccordionStructField';
-
-
-
 
 interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {
   hub_urls: string[] | null;
@@ -33,19 +34,20 @@ export interface SearchOptionsFormProps extends Pick<RouteComponentProps, 'locat
   hubs: API.Hub[];
 }
 
-
 const Fields: UI.FormFieldDefinition[] = [
   {
     key: 'file_type',
     title: 'File type',
     type: API.SettingTypeEnum.STRING,
     optional: true,
-  }, {
+  },
+  {
     key: 'hub_urls',
     title: 'Hubs',
     type: API.SettingTypeEnum.LIST,
     item_type: API.SettingTypeEnum.STRING,
-  }, {
+  },
+  {
     key: 'size_limits',
     title: 'Size limits',
     type: API.SettingTypeEnum.STRUCT,
@@ -56,36 +58,32 @@ const Fields: UI.FormFieldDefinition[] = [
         title: 'Minimum size',
         type: API.SettingTypeEnum.NUMBER,
         optional: true,
-      }, {
+      },
+      {
         key: 'max_size',
         title: 'Maximum size',
         type: API.SettingTypeEnum.NUMBER,
         optional: true,
-      }
-    ]
-  }, /*, {
+      },
+    ],
+  } /*, {
     key: 'excluded',
     title: 'Excluded words',
     type: API.SettingTypeEnum.LIST,
     item_type: API.SettingTypeEnum.STRING,
     optional: true,
-  }*/
+  }*/,
 ];
 
 const removeEmptyProperties = (formValue: Entry) => {
-  const ret = Object
-    .keys(formValue)
-    .reduce(
-      (reduced, key) => {
-        const value = formValue[key];
-        if (isValueSet(value)) {
-          reduced[key] = value;
-        }
+  const ret = Object.keys(formValue).reduce((reduced, key) => {
+    const value = formValue[key];
+    if (isValueSet(value)) {
+      reduced[key] = value;
+    }
 
-        return reduced;
-      },
-      {} as Entry
-    );
+    return reduced;
+  }, {} as Entry);
 
   return ret;
 };
@@ -106,15 +104,15 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
     const ret = removeEmptyProperties(value as Entry);
     this.props.onChange(!!Object.keys(ret).length ? ret : null);
     return null;
-  }
+  };
 
   save = () => {
     return this.form.save();
-  }
+  };
 
   onSave: FormSaveHandler<Entry> = (changedFields) => {
     return Promise.resolve();
-  }
+  };
 
   onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'hub_urls') {
@@ -141,29 +139,29 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
         template: AccordionStructField,
       });
     }
-  }
+  };
 
   render() {
     const { value, onChange, location, moduleT } = this.props;
     return (
       <div>
         <Form<Entry>
-          ref={ c => this.form = c! }
-          onFieldChanged={ this.onFieldChanged }
-          onFieldSetting={ this.onFieldSetting }
-          onSave={ this.onSave }
-          fieldDefinitions={ this.definitions }
-          sourceValue={ value } // This gets updated on every change at the moment...
-          location={ location }
-          optionTitleFormatter={ def => def.title }
+          ref={(c) => (this.form = c!)}
+          onFieldChanged={this.onFieldChanged}
+          onFieldSetting={this.onFieldSetting}
+          onSave={this.onSave}
+          fieldDefinitions={this.definitions}
+          sourceValue={value} // This gets updated on every change at the moment...
+          location={location}
+          optionTitleFormatter={(def) => def.title}
           className="search-options"
         />
         <Button
-          caption={ moduleT.translate('Reset all') }
-          onClick={ () => onChange(null) }
-          disabled={ !value }
+          caption={moduleT.translate('Reset all')}
+          onClick={() => onChange(null)}
+          disabled={!value}
           style={{
-            marginTop: '10px'
+            marginTop: '10px',
           }}
         />
       </div>

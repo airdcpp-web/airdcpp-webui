@@ -8,11 +8,11 @@ import SettingConstants from 'constants/SettingConstants';
 import * as UI from 'types/ui';
 import LoginStore from 'stores/LoginStore';
 
-
-
 const handleNewUserIntroSeen = () => {
   LoginStore.onNewUserIntroSeen();
-  return SocketService.post(SettingConstants.ITEMS_SET_URL, { [SessionConstants.WIZARD_PENDING]: false });
+  return SocketService.post(SettingConstants.ITEMS_SET_URL, {
+    [SessionConstants.WIZARD_PENDING]: false,
+  });
 };
 
 const LoginActions: UI.ActionListType<undefined> = {

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import IconConstants from 'constants/IconConstants';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
-
 type PushHandler = () => void;
 
 const onClick = (evt: React.SyntheticEvent, pushNew: PushHandler) => {
@@ -14,7 +13,6 @@ const onClick = (evt: React.SyntheticEvent, pushNew: PushHandler) => {
   pushNew();
 };
 
-
 interface SessionNewButtonProps {
   url: string;
   title: React.ReactNode;
@@ -22,15 +20,20 @@ interface SessionNewButtonProps {
   pushNew: PushHandler;
 }
 
-const SessionNewButton: React.FC<SessionNewButtonProps> = ({ url, title, pushNew, className }) => (
-  <RouterMenuItemLink 
-    key="button-new" 
-    className={ classNames('new', className) }
-    icon={ IconConstants.CREATE }
-    url={ url } 
-    onClick={ (evt: React.SyntheticEvent) => onClick(evt, pushNew) }
+const SessionNewButton: React.FC<SessionNewButtonProps> = ({
+  url,
+  title,
+  pushNew,
+  className,
+}) => (
+  <RouterMenuItemLink
+    key="button-new"
+    className={classNames('new', className)}
+    icon={IconConstants.CREATE}
+    url={url}
+    onClick={(evt: React.SyntheticEvent) => onClick(evt, pushNew)}
   >
-    { title }
+    {title}
   </RouterMenuItemLink>
 );
 

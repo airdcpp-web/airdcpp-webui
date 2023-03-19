@@ -11,26 +11,15 @@ const Auto = [
   'upload_max_granted',
 ];
 
-const Manual = [
-  'upload_minislot_size',
-  'upload_minislot_ext',
-];
+const Manual = ['upload_minislot_size', 'upload_minislot_ext'];
 
-const UploadLimitPage: React.FC<SettingSectionChildProps> = props => {
+const UploadLimitPage: React.FC<SettingSectionChildProps> = (props) => {
   const { translate } = props.moduleT;
   return (
     <div>
-      <AutoValuePanel
-        { ...props }
-        keys={ Auto }
-        type="upload"
-      />
+      <AutoValuePanel {...props} keys={Auto} type="upload" />
 
-      <RemoteSettingForm
-        { ...props }
-        title={ translate('Manually set') }
-        keys={ Manual }
-      />
+      <RemoteSettingForm {...props} title={translate('Manually set')} keys={Manual} />
     </div>
   );
 };

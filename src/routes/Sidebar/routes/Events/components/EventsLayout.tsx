@@ -19,22 +19,18 @@ import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 
-
 const SystemLog: React.FC = memo(
   function SystemLog() {
-    useEffect(
-      () => {
-        EventAPIActions.setActive(true);
-        EventAPIActions.setRead();
-    
-        if (!EventStore.isInitialized()) {
-          EventAPIActions.fetchMessages();
-        }
+    useEffect(() => {
+      EventAPIActions.setActive(true);
+      EventAPIActions.setRead();
 
-        return () => EventAPIActions.setActive(false);
-      },
-      []
-    );
+      if (!EventStore.isInitialized()) {
+        EventAPIActions.fetchMessages();
+      }
+
+      return () => EventAPIActions.setActive(false);
+    }, []);
 
     const { t } = useTranslation();
     const messages = useStore<UI.MessageListItem[]>(EventStore);
@@ -42,27 +38,20 @@ const SystemLog: React.FC = memo(
       <div className="simple-layout">
         <div className="wrapper">
           <LayoutHeader
-            icon={ IconConstants.EVENTS_COLORED }
-            title={ translate('Events', t, UI.Modules.EVENTS) }
+            icon={IconConstants.EVENTS_COLORED}
+            title={translate('Events', t, UI.Modules.EVENTS)}
             rightComponent={
-              <ActionButton 
-                actions={ EventUIActions }
-                actionId="clear"
-                icon={ null }
-              />
+              <ActionButton actions={EventUIActions} actionId="clear" icon={null} />
             }
           />
-          <div className="ui divider top"/>
+          <div className="ui divider top" />
           <div className="layout-content system-log">
-            <EventMessageView 
-              messages={ messages }
-              t={ t }
-            />
+            <EventMessageView messages={messages} t={t} />
           </div>
         </div>
       </div>
     );
-  }, 
+  },
   () => true
 );
 

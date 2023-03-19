@@ -4,10 +4,15 @@ import classNames from 'classnames';
 
 import NotificationActions from 'actions/NotificationActions';
 
-import { 
-  normalizeSettingValueMap, parseDefinitions, parseFieldOptions, 
-  setFieldValueByPath, findFieldValueByPath, reduceChangedFieldValues, 
-  findFieldByKey, formValuesEqual
+import {
+  normalizeSettingValueMap,
+  parseDefinitions,
+  parseFieldOptions,
+  setFieldValueByPath,
+  findFieldValueByPath,
+  reduceChangedFieldValues,
+  findFieldByKey,
+  formValuesEqual,
 } from 'utils/FormUtils';
 import tcomb from 'utils/tcomb-form';
 
@@ -25,17 +30,13 @@ import { TextDecorator } from 'components/text';
 
 const TcombForm = tcomb.form.Form;
 
-
 const optionHelpFormatter = (text: string) => (
-  <TextDecorator
-    text={ text }
-    emojify={ false }
-  />
+  <TextDecorator text={text} emojify={false} />
 );
 
 // Reduces an array of field setting objects by calling props.onFieldSetting
 const fieldOptionReducer = (
-  reducedOptions: tcomb.form.TcombOptions, 
+  reducedOptions: tcomb.form.TcombOptions,
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
   formT: UI.ModuleTranslator,
@@ -43,9 +44,9 @@ const fieldOptionReducer = (
   optionTitleFormatter: UI.OptionTitleParser | undefined
 ): tcomb.form.TcombOptions => {
   reducedOptions[fieldDefinitions.key] = parseFieldOptions(
-    fieldDefinitions, 
-    formT, 
-    optionTitleFormatter, 
+    fieldDefinitions,
+    formT,
+    optionTitleFormatter,
     optionHelpFormatter
   );
 
@@ -55,12 +56,16 @@ const fieldOptionReducer = (
 
   if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
     reducedOptions[fieldDefinitions.key].fields = {};
-    fieldDefinitions.definitions!.reduce(
-      (reduced, cur) => {
-        return fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter);
-      }, 
-      reducedOptions[fieldDefinitions.key].fields
-    );
+    fieldDefinitions.definitions!.reduce((reduced, cur) => {
+      return fieldOptionReducer(
+        reduced,
+        cur,
+        onFieldSetting,
+        formT,
+        formValue,
+        optionTitleFormatter
+      );
+    }, reducedOptions[fieldDefinitions.key].fields);
   }
 
   return reducedOptions;
@@ -79,7 +84,15 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   const options: tcomb.form.TcombStructOptions = {
     // Parent handlers
     fields: fieldDefinitions.reduce(
-      (reduced, cur) => fieldOptionReducer(reduced, cur, onFieldSetting, formT, formValue, optionTitleFormatter), 
+      (reduced, cur) =>
+        fieldOptionReducer(
+          reduced,
+          cur,
+          onFieldSetting,
+          formT,
+          formValue,
+          optionTitleFormatter
+        ),
       {}
     ),
     i18n: {
@@ -88,7 +101,7 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
       optional: '', // Not being used
       required: '', // Not being used
       remove: moduleT.translate('Remove'),
-      up: moduleT.translate('Up')
+      up: moduleT.translate('Up'),
     },
   };
 
@@ -106,27 +119,27 @@ const getFieldOptions = <ValueMapT extends UI.FormValueMap>(
   return options;
 };
 
-
-export type FormFieldSettingHandler<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> = (
-  key: string, 
-  definitions: tcomb.form.TcombOptions, 
+export type FormFieldSettingHandler<
+  ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap
+> = (
+  key: string,
+  definitions: tcomb.form.TcombOptions,
   formValue: Partial<ValueType>
 ) => void;
 
 export type FormSaveHandler<ValueType> = (
-  changedFields: Partial<ValueType>, 
+  changedFields: Partial<ValueType>,
   allFields: Partial<ValueType>
 ) => Promise<void>;
 
 export type FormFieldChangeHandler<ValueType = UI.FormValueMap> = (
-  key: string, 
-  formValue: Partial<ValueType>, 
+  key: string,
+  formValue: Partial<ValueType>,
   valueChanged: boolean
 ) => null | void | Promise<Partial<ValueType>>;
 
-export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> 
+export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap>
   extends Pick<FormContext, 'location'> {
-
   fieldDefinitions: UI.FormFieldDefinition[];
   sourceValue?: ValueType | null;
   onSave: FormSaveHandler<ValueType>;
@@ -143,7 +156,9 @@ interface State<ValueType> {
 }
 
 type Props<ValueType extends Partial<UI.FormValueMap>> = FormProps<ValueType>;
-class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends Component<Props<ValueType>> {
+class Form<
+  ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap
+> extends Component<Props<ValueType>> {
   /*static propTypes = {
     // Form items to list
     fieldDefinitions: PropTypes.array.isRequired,
@@ -185,7 +200,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     super(props);
 
     this.sourceValue = normalizeSettingValueMap(
-      props.sourceValue || undefined, 
+      props.sourceValue || undefined,
       this.props.fieldDefinitions
     ) as Partial<ValueType>;
 
@@ -197,7 +212,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
 
   setSourceValue = (value?: Partial<ValueType> | null) => {
     this.sourceValue = this.mergeFields(this.state.formValue, value || undefined);
-  }
+  };
 
   componentDidUpdate(prevProps: FormProps<ValueType>) {
     if (prevProps.sourceValue !== this.props.sourceValue) {
@@ -206,18 +221,21 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
   }
 
   // Merge new fields into current current form value
-  mergeFields = (formValue: Partial<ValueType>, updatedFields?: Partial<ValueType>): Partial<ValueType> => {
+  mergeFields = (
+    formValue: Partial<ValueType>,
+    updatedFields?: Partial<ValueType>
+  ): Partial<ValueType> => {
     const mergedValue: ValueType = {
-      ...formValue as any, 
-      ...normalizeSettingValueMap(updatedFields, this.props.fieldDefinitions)
+      ...(formValue as any),
+      ...normalizeSettingValueMap(updatedFields, this.props.fieldDefinitions),
     };
 
-    this.setState({ 
-      formValue: mergedValue 
+    this.setState({
+      formValue: mergedValue,
     });
 
     return mergedValue;
-  }
+  };
 
   onFieldValueChanged = (value: Partial<ValueType>, valueKeyPath: string[]) => {
     if (!this.props.onFieldChanged) {
@@ -228,33 +246,39 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
 
     // Check if the current value differs from the original one
     const equal = formValuesEqual(
-      findFieldValueByPath(this.sourceValue, valueKeyPath), 
+      findFieldValueByPath(this.sourceValue, valueKeyPath),
       findFieldValueByPath(value, valueKeyPath)
     );
 
     const promise = this.props.onFieldChanged(fieldKey, value, !equal);
     if (!!promise) {
-      promise
-        .then(
-          updatedFields => this.mergeFields(value, updatedFields), 
-          error => NotificationActions.apiError('Failed to update values', error)
-        );
+      promise.then(
+        (updatedFields) => this.mergeFields(value, updatedFields),
+        (error) => NotificationActions.apiError('Failed to update values', error)
+      );
     }
-  }
+  };
 
-  onChange: tcomb.form.TCombFormProps['onChange'] = (value: Partial<ValueType>, valueKeyPath: string[], kind) => {
+  onChange: tcomb.form.TCombFormProps['onChange'] = (
+    value: Partial<ValueType>,
+    valueKeyPath: string[],
+    kind
+  ) => {
     if (kind) {
       // List action
       if (kind === 'add') {
         const rootKey = valueKeyPath[0];
 
         // Set default fields for the newly added value
-        const fieldDef = this.props.fieldDefinitions.find(def => def.key === rootKey);
+        const fieldDef = this.props.fieldDefinitions.find((def) => def.key === rootKey);
         if (!!fieldDef && !!fieldDef.definitions) {
           const list = value[rootKey];
           if (!!list) {
             const listItemPos = valueKeyPath[1];
-            list[listItemPos] = normalizeSettingValueMap(list[listItemPos], fieldDef.definitions);
+            list[listItemPos] = normalizeSettingValueMap(
+              list[listItemPos],
+              fieldDef.definitions
+            );
           }
         }
       } else {
@@ -262,8 +286,8 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
         this.onFieldValueChanged(value, valueKeyPath);
       }
     } else if (this.form) {
-      // Make sure that we have the converted value for the custom 
-      // change handler (in case there are transforms for this field) 
+      // Make sure that we have the converted value for the custom
+      // change handler (in case there are transforms for this field)
       const result = this.form.getComponent(valueKeyPath).validate() as any;
       if (result.value !== findFieldValueByPath(this.state.formValue, valueKeyPath)) {
         setFieldValueByPath(value, result.value, valueKeyPath);
@@ -271,15 +295,15 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       }
     }
 
-    this.setState({ 
-      formValue: value 
+    this.setState({
+      formValue: value,
     });
-  }
+  };
 
   // Handle an API error
   onSaveFailed = (error: ErrorResponse) => {
     if (error.code === 422) {
-      this.setState({ 
+      this.setState({
         error: error.json,
       });
     } else {
@@ -287,8 +311,7 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
     }
 
     throw error;
-  }
-
+  };
 
   // Calls props.onSave with changed form values
   save = () => {
@@ -297,54 +320,64 @@ class Form<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> extends
       // Get the changed fields
       const settingKeys = Object.keys(validatedFormValue);
       const changedFields = settingKeys.reduce(
-        reduceChangedFieldValues.bind(this, this.sourceValue, validatedFormValue), 
+        reduceChangedFieldValues.bind(this, this.sourceValue, validatedFormValue),
         {}
       );
 
-      return this.props.onSave(changedFields, validatedFormValue)
+      return this.props
+        .onSave(changedFields, validatedFormValue)
         .catch(this.onSaveFailed);
     }
 
     return Promise.reject(new Error('Validation failed'));
-  }
+  };
 
   render() {
     return (
       <Translation>
-        { t => {
+        {(t) => {
           //const { location } = useRouter(); // TODO
-          const { title, fieldDefinitions, className, onFieldSetting, location, optionTitleFormatter } = this.props;
+          const {
+            title,
+            fieldDefinitions,
+            className,
+            onFieldSetting,
+            location,
+            optionTitleFormatter,
+          } = this.props;
           const { formValue, error } = this.state;
 
-          const formT = getModuleT(t, [ UI.Modules.COMMON, UI.SubNamespaces.FORM ]);
+          const formT = getModuleT(t, [UI.Modules.COMMON, UI.SubNamespaces.FORM]);
           const type = parseDefinitions(fieldDefinitions);
           const options = getFieldOptions(
-            fieldDefinitions, onFieldSetting, formT, formValue, error, optionTitleFormatter, formT
+            fieldDefinitions,
+            onFieldSetting,
+            formT,
+            formValue,
+            error,
+            optionTitleFormatter,
+            formT
           );
 
           const context: FormContext = {
             location,
-            formT
+            formT,
           };
 
           return (
-            <div className={ classNames('form', className) }>
-              { !!title && (
-                <div className="ui form header">
-                  { title } 
-                </div>
-              ) }
+            <div className={classNames('form', className)}>
+              {!!title && <div className="ui form header">{title}</div>}
               <TcombForm
-                ref={ c => this.form = c }
-                type={ type }
-                options={ options }
-                value={ formValue }
-                onChange={ this.onChange }
-                context={ context }
+                ref={(c) => (this.form = c)}
+                type={type}
+                options={options}
+                value={formValue}
+                onChange={this.onChange}
+                context={context}
               />
             </div>
           );
-        } }
+        }}
       </Translation>
     );
   }

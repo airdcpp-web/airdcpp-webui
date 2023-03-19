@@ -7,11 +7,9 @@ import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
 import IconConstants from 'constants/IconConstants';
 
-
 // A popup-based class for handling dropdowns in Fixed Data Table
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
-
 
 export type DropdownCloseHandler = () => void;
 
@@ -36,7 +34,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     children: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Pick<TableDropdownProps, 'linkCaption' | 'triggerIcon' | 'position'> = {
+  static defaultProps: Pick<
+    TableDropdownProps,
+    'linkCaption' | 'triggerIcon' | 'position'
+  > = {
     linkCaption: true,
     triggerIcon: IconConstants.EXPAND,
     position: 'bottom left',
@@ -50,27 +51,21 @@ class TableDropdown extends React.Component<TableDropdownProps> {
   getChildren = () => {
     return (
       <div className="ui text menu vertical table-items">
-        { this.props.children(this.popupNode.hide) }
+        {this.props.children(this.popupNode.hide)}
       </div>
     );
-  }
+  };
 
   render() {
-    const { caption, className, linkCaption, triggerIcon, popupSettings, position } = this.props;
-    const captionNode = (
-      <DropdownCaption>
-        { caption }
-      </DropdownCaption>
-    );
+    const { caption, className, linkCaption, triggerIcon, popupSettings, position } =
+      this.props;
+    const captionNode = <DropdownCaption>{caption}</DropdownCaption>;
 
     // Caption
     const trigger = (
       <div className="trigger">
-        <Icon 
-          size="large"
-          icon={ triggerIcon }
-        />
-        { !!linkCaption && captionNode }
+        <Icon size="large" icon={triggerIcon} />
+        {!!linkCaption && captionNode}
       </div>
     );
 
@@ -81,17 +76,17 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     };
 
     return (
-      <div className={ classNames('table', 'dropdown', className) }>
-        <Popup 
-          ref={ c => this.popupNode = c! }
-          className="basic dropdown-content" 
-          trigger={ trigger } 
-          settings={ settings } 
-          position={ position }
+      <div className={classNames('table', 'dropdown', className)}>
+        <Popup
+          ref={(c) => (this.popupNode = c!)}
+          className="basic dropdown-content"
+          trigger={trigger}
+          settings={settings}
+          position={position}
         >
-          { this.getChildren }
+          {this.getChildren}
         </Popup>
-        { !linkCaption && captionNode }
+        {!linkCaption && captionNode}
       </div>
     );
   }

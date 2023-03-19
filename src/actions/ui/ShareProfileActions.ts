@@ -1,4 +1,3 @@
-
 import SocketService from 'services/SocketService';
 
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
@@ -10,44 +9,42 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const notDefault = (item: API.ShareProfile) => !item.default;
-
 
 const handleCreate: UI.ActionHandler<void> = (data, name: string) => {
   return SocketService.post(ShareProfileConstants.PROFILES_URL, { name: name });
 };
 
 const handleDefault: UI.ActionHandler<API.ShareProfile> = ({ data: profile }) => {
-  return SocketService.post(`${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`);
+  return SocketService.post(
+    `${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`
+  );
 };
 
 const handleEdit: UI.ActionHandler<API.ShareProfile> = (
   { data: profile },
   name: string
 ) => {
-  return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, { name: name });
+  return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, {
+    name: name,
+  });
 };
 
-const handleRemove: UI.ActionHandler<API.ShareProfile> = (
-  { data: profile }
-) => {
+const handleRemove: UI.ActionHandler<API.ShareProfile> = ({ data: profile }) => {
   return SocketService.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id);
 };
 
-const handleBrowse: UI.ActionHandler<API.ShareProfile> = (
-  { data: profile, location }
-) => {
+const handleBrowse: UI.ActionHandler<API.ShareProfile> = ({
+  data: profile,
+  location,
+}) => {
   return FilelistSessionActions.ownList(location, profile.id, FilelistSessionStore);
 };
-
-
-
 
 const ShareProfileCreateActions: UI.ActionListType<undefined> = {
   create: {
     displayName: 'Add profile',
-    access: API.AccessEnum.SETTINGS_EDIT, 
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.CREATE,
     input: {
       approveCaption: 'Create',
@@ -55,7 +52,7 @@ const ShareProfileCreateActions: UI.ActionListType<undefined> = {
       inputProps: {
         placeholder: 'Enter name',
         required: true,
-      }
+      },
     },
     handler: handleCreate,
   },
@@ -69,18 +66,18 @@ const ShareProfileEditActions: UI.ActionListType<API.ShareProfile> = {
     handler: handleBrowse,
   },
   divider: null,
-  edit: { 
+  edit: {
     displayName: 'Rename profile',
-    access: API.AccessEnum.SETTINGS_EDIT,  
+    access: API.AccessEnum.SETTINGS_EDIT,
     icon: IconConstants.EDIT,
-    input: profile => ({
+    input: (profile) => ({
       approveCaption: 'Rename',
       content: 'Enter new name for the profile {{item.name}}',
       inputProps: {
         placeholder: 'Enter name',
         defaultValue: profile.name,
         required: true,
-      }
+      },
     }),
     handler: handleEdit,
   },
@@ -105,7 +102,6 @@ const ShareProfileEditActions: UI.ActionListType<API.ShareProfile> = {
   },
 };
 
-
 export default {
   create: {
     moduleId: UI.Modules.SETTINGS,
@@ -116,5 +112,5 @@ export default {
     moduleId: UI.Modules.SETTINGS,
     subId: 'profile',
     actions: ShareProfileEditActions,
-  }
+  },
 };

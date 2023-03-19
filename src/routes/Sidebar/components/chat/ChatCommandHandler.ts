@@ -5,10 +5,12 @@ import { Location } from 'history';
 //import * as UI from 'types/ui';
 import * as API from 'types/api';
 
-
 type ParamsType = string | undefined;
-type ChatCommandHandler = (params: ParamsType, props: MessageComposerProps, location: Location) => void;
-
+type ChatCommandHandler = (
+  params: ParamsType,
+  props: MessageComposerProps,
+  location: Location
+) => void;
 
 interface ChatCommand {
   help: string;
@@ -24,21 +26,26 @@ const handleMe: ChatCommandHandler = (params, { chatApi, session }) => {
   }
 };
 
-const handleClear: ChatCommandHandler = (params, { chatActions, session, t }, location) => { 
+const handleClear: ChatCommandHandler = (
+  params,
+  { chatActions, session, t },
+  location
+) => {
   runBackgroundSocketAction(
-    () => chatActions.actions.clear.handler({
-      data: session,
-      location,
-      t
-    }) as Promise<any>,
+    () =>
+      chatActions.actions.clear.handler({
+        data: session,
+        location,
+        t,
+      }) as Promise<any>,
     t
   );
 };
 
 const getHelpString = (commands: ChatCommandList) => {
   const commandHelp = Object.keys(commands)
-    .filter(command => actionAccess(commands[command]))
-    .map(command => `\t/${command} - ${commands[command].help}`)
+    .filter((command) => actionAccess(commands[command]))
+    .map((command) => `\t/${command} - ${commands[command].help}`)
     .join('\n');
 
   return `
@@ -70,7 +77,7 @@ const CommandHandler = (sessionProps: MessageComposerProps) => {
         const text = getHelpString(commands);
         chatApi.sendStatusMessage(session, text, API.SeverityEnum.INFO);
       }
-    }
+    },
   };
 };
 

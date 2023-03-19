@@ -7,27 +7,28 @@ module.exports = {
   access: AccessConstants.ADMIN,
   component: require('../../components/SettingSection').default,
   menuItems: [
-    { 
-      title: 'Users', 
-      url: 'users', 
+    {
+      title: 'Users',
+      url: 'users',
       noSave: true,
       component: require('./components/WebUsersPage').default,
-    }, { 
-      title: 'Logging', 
+    },
+    {
+      title: 'Logging',
       url: 'logging',
       component: require('./components/LoggingPage').default,
-    }, { 
-      title: 'Web server', 
+    },
+    {
+      title: 'Web server',
       url: 'server-settings',
       component: require('./components/ServerSettingsPage').default,
     },
   ],
   advancedMenuItems: [
-    { 
-      title: 'Advanced server settings', 
+    {
+      title: 'Advanced server settings',
       url: 'advanced-server-settings',
-      component: require('./components/AdvancedServerSettingsPage').default, 
-    }
+      component: require('./components/AdvancedServerSettingsPage').default,
+    },
   ],
 };
-

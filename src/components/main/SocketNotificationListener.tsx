@@ -20,22 +20,27 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import Severity = API.SeverityEnum;
-import { 
-  SocketSubscriptionDecorator, SocketSubscriptionDecoratorChildProps
+import {
+  SocketSubscriptionDecorator,
+  SocketSubscriptionDecoratorChildProps,
 } from 'decorators/SocketSubscriptionDecorator';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import HubConstants from 'constants/HubConstants';
 import HubSessionStore from 'stores/HubSessionStore';
 
-
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
-    case Severity.NOTIFY: return 'Information';
-    case Severity.INFO: return 'INFO';
-    case Severity.ERROR: return 'ERROR';
-    case Severity.WARNING: return 'WARNING';
-    default: return '';
+    case Severity.NOTIFY:
+      return 'Information';
+    case Severity.INFO:
+      return 'INFO';
+    case Severity.ERROR:
+      return 'ERROR';
+    case Severity.WARNING:
+      return 'WARNING';
+    default:
+      return '';
   }
 };
 
@@ -75,7 +80,9 @@ interface SocketNotificationListenerProps {
   location: Location;
 }
 
-type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildProps & WithTranslation;
+type Props = SocketNotificationListenerProps &
+  SocketSubscriptionDecoratorChildProps &
+  WithTranslation;
 
 class SocketNotificationListener extends Component<Props> {
   shouldComponentUpdate() {
@@ -90,20 +97,56 @@ class SocketNotificationListener extends Component<Props> {
     const { addSocketListener } = this.props;
 
     // eslint-disable-next-line max-len
-    addSocketListener(PrivateChatConstants.MODULE_URL, PrivateChatConstants.MESSAGE, this.onPrivateMessage, undefined, API.AccessEnum.PRIVATE_CHAT_VIEW);
+    addSocketListener(
+      PrivateChatConstants.MODULE_URL,
+      PrivateChatConstants.MESSAGE,
+      this.onPrivateMessage,
+      undefined,
+      API.AccessEnum.PRIVATE_CHAT_VIEW
+    );
 
     // eslint-disable-next-line max-len
-    addSocketListener(HubConstants.MODULE_URL, HubConstants.HUB_MESSAGE, this.onHubMessage, undefined, API.AccessEnum.HUBS_VIEW);
+    addSocketListener(
+      HubConstants.MODULE_URL,
+      HubConstants.HUB_MESSAGE,
+      this.onHubMessage,
+      undefined,
+      API.AccessEnum.HUBS_VIEW
+    );
 
     // eslint-disable-next-line max-len
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_ADDED, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
+    addSocketListener(
+      QueueConstants.MODULE_URL,
+      QueueConstants.BUNDLE_ADDED,
+      this.onBundleStatus,
+      undefined,
+      API.AccessEnum.QUEUE_VIEW
+    );
     // eslint-disable-next-line max-len
-    addSocketListener(QueueConstants.MODULE_URL, QueueConstants.BUNDLE_STATUS, this.onBundleStatus, undefined, API.AccessEnum.QUEUE_VIEW);
+    addSocketListener(
+      QueueConstants.MODULE_URL,
+      QueueConstants.BUNDLE_STATUS,
+      this.onBundleStatus,
+      undefined,
+      API.AccessEnum.QUEUE_VIEW
+    );
 
     // eslint-disable-next-line max-len
-    addSocketListener(EventConstants.MODULE_URL, EventConstants.MESSAGE, this.onLogMessage, undefined, API.AccessEnum.EVENTS_VIEW);
+    addSocketListener(
+      EventConstants.MODULE_URL,
+      EventConstants.MESSAGE,
+      this.onLogMessage,
+      undefined,
+      API.AccessEnum.EVENTS_VIEW
+    );
     // eslint-disable-next-line max-len
-    addSocketListener(ViewFileConstants.MODULE_URL, ViewFileConstants.FILE_DOWNLOADED, this.onViewFileDownloaded, undefined, API.AccessEnum.VIEW_FILE_VIEW);
+    addSocketListener(
+      ViewFileConstants.MODULE_URL,
+      ViewFileConstants.FILE_DOWNLOADED,
+      this.onViewFileDownloaded,
+      undefined,
+      API.AccessEnum.VIEW_FILE_VIEW
+    );
   }
 
   onLogMessage = (message: API.StatusMessage) => {
@@ -112,31 +155,45 @@ class SocketNotificationListener extends Component<Props> {
     const notification: UI.Notification = {
       title: this.translate(getSeverityStr(severity), UI.Modules.EVENTS),
       message: text,
-      action: severity === Severity.NOTIFY ? undefined : {
-        label: this.translate('View events', UI.Modules.EVENTS, true),
-        callback: () => { 
-          History.push('/events'); 
-        }
-      }
+      action:
+        severity === Severity.NOTIFY
+          ? undefined
+          : {
+              label: this.translate('View events', UI.Modules.EVENTS, true),
+              callback: () => {
+                History.push('/events');
+              },
+            },
     };
 
     if (severity === Severity.NOTIFY) {
       NotificationActions.info(notification);
-    } else if (severity === Severity.INFO && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)) {
+    } else if (
+      severity === Severity.INFO &&
+      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)
+    ) {
       NotificationActions.info(notification);
-    } else if (severity === Severity.WARNING && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)) {
+    } else if (
+      severity === Severity.WARNING &&
+      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)
+    ) {
       NotificationActions.warning(notification);
-    } else if (severity === Severity.ERROR && LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)) {
+    } else if (
+      severity === Severity.ERROR &&
+      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)
+    ) {
       NotificationActions.error(notification);
     }
-  }
+  };
 
   onViewFileDownloaded = (file: API.ViewFile) => {
     if (!file.content_ready) {
       return;
     }
 
-    const message = file.download_state ? 'File has finished downloading' : 'File was loaded';
+    const message = file.download_state
+      ? 'File has finished downloading'
+      : 'File was loaded';
     NotificationActions.info({
       title: file.name,
       message: this.translate(message, UI.Modules.VIEWED_FILES),
@@ -145,14 +202,17 @@ class SocketNotificationListener extends Component<Props> {
         label: this.translate('View file', UI.Modules.VIEWED_FILES, true),
         callback: () => {
           History.push(`/files/session/${file.id}`);
-        }
-      }
+        },
+      },
     } as UI.Notification);
-  }
-  
+  };
+
   onHubMessage = (message: API.ChatMessage) => {
     const hubId = message.from.hub_session_id;
-    if (message.is_read || (HubSessionStore.getActiveSessionId() === hubId && document.hasFocus())) {
+    if (
+      message.is_read ||
+      (HubSessionStore.getActiveSessionId() === hubId && document.hasFocus())
+    ) {
       return;
     }
 
@@ -166,16 +226,19 @@ class SocketNotificationListener extends Component<Props> {
       uid: undefined,
       action: {
         label: this.translate('View chat', UI.Modules.HUBS, true),
-        callback: () => { 
-          History.push(`/hubs/session/${hubId}`); 
-        }
-      }
+        callback: () => {
+          History.push(`/hubs/session/${hubId}`);
+        },
+      },
     } as UI.Notification);
-  }
+  };
 
   onPrivateMessage = (message: API.ChatMessage) => {
     const cid = message.reply_to!.cid;
-    if (message.is_read || (PrivateChatSessionStore.getActiveSessionId() === cid && document.hasFocus())) {
+    if (
+      message.is_read ||
+      (PrivateChatSessionStore.getActiveSessionId() === cid && document.hasFocus())
+    ) {
       return;
     }
 
@@ -189,22 +252,22 @@ class SocketNotificationListener extends Component<Props> {
       uid: cid,
       action: {
         label: this.translate('View message', UI.Modules.MESSAGES, true),
-        callback: () => { 
-          History.push(`/messages/session/${cid}`); 
-        }
-      }
+        callback: () => {
+          History.push(`/messages/session/${cid}`);
+        },
+      },
     } as UI.Notification);
-  }
+  };
 
   translate = (text: string, moduleId: UI.Modules, isAction = false) => {
-    const moduleIds = [ moduleId, UI.SubNamespaces.NOTIFICATIONS ];
+    const moduleIds = [moduleId, UI.SubNamespaces.NOTIFICATIONS];
     if (isAction) {
       moduleIds.push(UI.SubNamespaces.ACTIONS);
     }
 
     const { t } = this.props;
     return translate(text, t, moduleIds);
-  }
+  };
 
   onBundleStatus = (bundle: API.QueueBundle) => {
     if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
@@ -222,12 +285,15 @@ class SocketNotificationListener extends Component<Props> {
       }
       case API.QueueBundleStatusEnum.DOWNLOAD_ERROR: {
         text = t(
-          toI18nKey('bundleDownloadError', [ UI.Modules.QUEUE, UI.SubNamespaces.NOTIFICATIONS ]),
+          toI18nKey('bundleDownloadError', [
+            UI.Modules.QUEUE,
+            UI.SubNamespaces.NOTIFICATIONS,
+          ]),
           {
             defaultValue: 'Download error: {{error}}',
             replace: {
               error: bundle.status.str,
-            }
+            },
           }
         );
         level = 'error';
@@ -241,13 +307,16 @@ class SocketNotificationListener extends Component<Props> {
       case API.QueueBundleStatusEnum.COMPLETION_VALIDATION_ERROR: {
         const { hook_name, str } = bundle.status.hook_error;
         text = t(
-          toI18nKey('bundleContentValidationError', [ UI.Modules.QUEUE, UI.SubNamespaces.NOTIFICATIONS ]),
+          toI18nKey('bundleContentValidationError', [
+            UI.Modules.QUEUE,
+            UI.SubNamespaces.NOTIFICATIONS,
+          ]),
           {
             defaultValue: 'Bundle content validation failed: {{error}} ({{hook}})',
             replace: {
               error: str,
               hook: hook_name,
-            }
+            },
           }
         );
         level = 'error';
@@ -267,20 +336,21 @@ class SocketNotificationListener extends Component<Props> {
     }
 
     if (level) {
-      const action = level === 'info' ? NotificationActions.info : NotificationActions.error;
+      const action =
+        level === 'info' ? NotificationActions.info : NotificationActions.error;
       action({
         title: bundle.name,
         message: text,
         uid: `queue_bundle_${bundle.id}`,
         action: {
           label: this.translate('View queue', UI.Modules.QUEUE, true),
-          callback: () => { 
-            History.push('/queue'); 
-          }
-        }
+          callback: () => {
+            History.push('/queue');
+          },
+        },
       } as UI.Notification);
     }
-  }
+  };
 
   render() {
     return null;

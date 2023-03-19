@@ -10,7 +10,6 @@ import ExtensionsConfigureDialog from 'routes/Settings/routes/Extensions/compone
 
 import * as UI from 'types/ui';
 
-
 interface ExtensionBrowsePageProps {
   moduleT: UI.ModuleTranslator;
 }
@@ -18,20 +17,16 @@ interface ExtensionBrowsePageProps {
 const ExtensionBrowsePage: React.FC<ExtensionBrowsePageProps> = ({ moduleT }) => {
   return (
     <>
-      <EngineStatusMessage
-        moduleT={ moduleT }
-      />
+      <EngineStatusMessage moduleT={moduleT} />
       <div className="table-actions">
         <ActionButton
-          actions={ ExtensionActions.install }
+          actions={ExtensionActions.install}
           actionId="installUrl"
           className="add"
         />
       </div>
-      <NpmPackageLayout
-        moduleT={ moduleT }
-      />
-      <ExtensionsConfigureDialog/>
+      <NpmPackageLayout moduleT={moduleT} />
+      <ExtensionsConfigureDialog />
     </>
   );
 };

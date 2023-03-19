@@ -1,7 +1,6 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 export const RSS = {
   typeId: 'rss',
   component: require('./components/RSS').default,
@@ -34,4 +33,3 @@ export interface Settings {
   feed_url: string;
   feed_cache_minutes: number;
 }
-

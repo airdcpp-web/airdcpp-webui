@@ -12,16 +12,18 @@ import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
-
 const ViewFileSessionStore = Reflux.createStore({
   scroll: SessionScrollPositionKeeper(),
-  
+
   getInitialState() {
     return this.getSessions();
   },
 
   onSocketConnected(addSocketListener: AddSocketListener) {
-    invariant(this.getSessions().length === 0, 'No viewed files should exist on socket connect');
+    invariant(
+      this.getSessions().length === 0,
+      'No viewed files should exist on socket connect'
+    );
 
     const url = ViewFileConstants.MODULE_URL;
     addSocketListener(url, ViewFileConstants.SESSION_CREATED, this._onSessionCreated);
@@ -31,6 +33,6 @@ const ViewFileSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator(
-  SocketSubscriptionDecorator(ViewFileSessionStore, AccessConstants.VIEW_FILE_VIEW), 
+  SocketSubscriptionDecorator(ViewFileSessionStore, AccessConstants.VIEW_FILE_VIEW),
   ViewFileActions
 );

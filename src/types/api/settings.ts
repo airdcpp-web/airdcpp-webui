@@ -15,7 +15,7 @@ export const enum SettingTypeEnum {
 export enum SettingValueMode {
   CURRENT = 'current',
   FORCE_AUTO = 'force_auto',
-  FORCE_MANUAL = 'force_manual'
+  FORCE_MANUAL = 'force_manual',
 }
 
 export interface SettingEnumOption {
@@ -31,7 +31,10 @@ export interface SettingValueMap<ValueType = SettingValueBase> {
 //export type SettingValueBaseNullable = SettingValueBase | null;
 export type SettingValueBase = number | string | boolean | null;
 
-export type SettingValue<ValueType = SettingValueBase> = ValueType[] | ValueType | SettingValueMap<ValueType>;
+export type SettingValue<ValueType = SettingValueBase> =
+  | ValueType[]
+  | ValueType
+  | SettingValueMap<ValueType>;
 
 export interface SettingDefinition {
   key: string;

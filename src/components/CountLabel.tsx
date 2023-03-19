@@ -9,7 +9,6 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import * as UI from 'types/ui';
 
-
 export interface CountLabelProps {
   urgencies: UI.UrgencyCountMap | null;
   empty?: boolean; // Don't show the number of urgency items
@@ -19,7 +18,14 @@ export interface CountLabelProps {
   onClick?: (evt: React.SyntheticEvent<any>) => void;
 }
 
-const CountLabel: React.FC<CountLabelProps> = ({ urgencies, empty, size, className, circular, onClick }) => {
+const CountLabel: React.FC<CountLabelProps> = ({
+  urgencies,
+  empty,
+  size,
+  className,
+  circular,
+  onClick,
+}) => {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
   if (!urgencies) {
     return null;
@@ -32,16 +38,16 @@ const CountLabel: React.FC<CountLabelProps> = ({ urgencies, empty, size, classNa
 
   const labelClassName = classNames(
     'ui count label',
-    { 'empty': empty },
-    { 'circular': circular },
+    { empty: empty },
+    { circular: circular },
     size,
     className,
-    urgencyToColor(max),
+    urgencyToColor(max)
   );
 
   return (
-    <div className={ labelClassName } onClick={ onClick }> 
-      { empty ? null : urgencies[max] } 
+    <div className={labelClassName} onClick={onClick}>
+      {empty ? null : urgencies[max]}
     </div>
   );
 };
@@ -65,20 +71,12 @@ CountLabel.defaultProps = {
 
 // Fade out the label when there are no counts
 const AnimatedCountLabel: React.FC<CountLabelProps> = (props) => (
-  <TransitionGroup
-    component={ null }
-  >
-    { !!props.urgencies && (
-      <CSSTransition
-        classNames="label-transition"
-        timeout={{ enter: 100, exit: 1500 }}
-      >
-        <CountLabel 
-          key="label" 
-          { ...props }
-        /> 
+  <TransitionGroup component={null}>
+    {!!props.urgencies && (
+      <CSSTransition classNames="label-transition" timeout={{ enter: 100, exit: 1500 }}>
+        <CountLabel key="label" {...props} />
       </CSSTransition>
-    ) }
+    )}
   </TransitionGroup>
 );
 

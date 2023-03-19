@@ -15,35 +15,29 @@ import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
 import * as UI from 'types/ui';
 
-
-interface AuthenticatedAppProps extends RouteComponentProps<UI.EmptyObject> {
-
-}
+interface AuthenticatedAppProps extends RouteComponentProps<UI.EmptyObject> {}
 
 export interface MainLayoutProps extends RouteComponentProps {
   className?: string;
   urgencies: UI.UrgencyCountMap | null;
 }
 
-const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
-  function AuthenticatedApp(props) {
-    const { location } = props;
+const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(function AuthenticatedApp(
+  props
+) {
+  const { location } = props;
 
-    const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
-    useUrgencyPageTitle(urgencies);
+  const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
+  useUrgencyPageTitle(urgencies);
 
-    const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
-    return (
-      <div id="authenticated-app">
-        <ActivityTracker/>
-        <Notifications location={ location }/>
-        <MainLayout 
-          className="main-layout" 
-          urgencies={urgencies}
-          { ...props } 
-        />
-      </div>
-    );
-  });
+  const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
+  return (
+    <div id="authenticated-app">
+      <ActivityTracker />
+      <Notifications location={location} />
+      <MainLayout className="main-layout" urgencies={urgencies} {...props} />
+    </div>
+  );
+});
 
 export default AuthenticationGuardDecorator(AuthenticatedApp);

@@ -10,23 +10,25 @@ import EncryptionState from 'components/EncryptionState';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 const getCaption = (state: API.CCPMStateEnum, sessionT: UI.ModuleTranslator) => {
   const { translate } = sessionT;
   switch (state) {
-    case API.CCPMStateEnum.CONNECTED: return translate('Direct encrypted channel established');
-    case API.CCPMStateEnum.CONNECTING: return (
-      <Loader 
-        size="mini" 
-        inline={ true } 
-        text={ translate('Establishing connection...') }
-      />
-    );
-    case API.CCPMStateEnum.DISCONNECTED: return translate('Direct encrypted channel available');
-    default: return null;
+    case API.CCPMStateEnum.CONNECTED:
+      return translate('Direct encrypted channel established');
+    case API.CCPMStateEnum.CONNECTING:
+      return (
+        <Loader
+          size="mini"
+          inline={true}
+          text={translate('Establishing connection...')}
+        />
+      );
+    case API.CCPMStateEnum.DISCONNECTED:
+      return translate('Direct encrypted channel available');
+    default:
+      return null;
   }
 };
-
 
 interface CCPMStateProps {
   session: API.PrivateChat;
@@ -47,16 +49,16 @@ const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
   return (
     <SessionFooter>
       <div className="ccpm-state">
-        <EncryptionState 
-          encryption={ session.ccpm_state.encryption } 
-          alwaysVisible={ true }
+        <EncryptionState
+          encryption={session.ccpm_state.encryption}
+          alwaysVisible={true}
           boundary=".session-container"
         />
         <ActionMenu
-          caption={ getCaption(state, sessionT) }
-          actions={ PrivateChatActions }
-          ids={[ 'disconnectCCPM', 'connectCCPM' ]}
-          itemData={ session }
+          caption={getCaption(state, sessionT)}
+          actions={PrivateChatActions}
+          ids={['disconnectCCPM', 'connectCCPM']}
+          itemData={session}
         />
       </div>
     </SessionFooter>

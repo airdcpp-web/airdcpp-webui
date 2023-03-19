@@ -12,21 +12,21 @@ import { FormFieldSettingHandler } from 'components/form/Form';
 import { Trans } from 'react-i18next';
 import { toFormI18nKey } from 'utils/FormUtils';
 
-
 const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
     //const { toI18nKey } = this.props.moduleT;
     if (id === 'nmdc_encoding') {
       fieldOptions.help = (
-        <Trans 
-          i18nKey={ moduleT.toI18nKey(
+        <Trans
+          i18nKey={moduleT.toI18nKey(
             toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
-          ) }
+          )}
         >
           <div>
-            Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.
-            <br/>
-            <br/>
+            Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8
+            encoding.
+            <br />
+            <br />
             <div>
               Commonly used values:
               <ul>
@@ -47,7 +47,6 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   return onFieldSetting;
 };
 
-
 const Entry = [
   'auto_follow_redirects',
   'disconnect_offline_users',
@@ -55,7 +54,7 @@ const Entry = [
   'min_search_interval',
 ];
 
-const MiscPage: React.FC<SettingSectionChildProps> = props => {
+const MiscPage: React.FC<SettingSectionChildProps> = (props) => {
   // The locale-specific system encoding is used on Windows by default
   // while other system use UTF-8
   if (LoginStore.systemInfo.platform !== API.PlatformEnum.WINDOWS) {
@@ -65,9 +64,9 @@ const MiscPage: React.FC<SettingSectionChildProps> = props => {
   return (
     <div>
       <RemoteSettingForm
-        { ...props }
-        keys={ Entry }
-        onFieldSetting={ FieldOptionGetter(props.moduleT) }
+        {...props}
+        keys={Entry}
+        onFieldSetting={FieldOptionGetter(props.moduleT)}
       />
     </div>
   );

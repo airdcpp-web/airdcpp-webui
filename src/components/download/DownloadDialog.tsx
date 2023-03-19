@@ -6,7 +6,10 @@ import { Route, Switch } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import ShareConstants from 'constants/ShareConstants';
-import { default as HistoryConstants, HistoryStringEnum } from 'constants/HistoryConstants';
+import {
+  default as HistoryConstants,
+  HistoryStringEnum,
+} from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import IconConstants from 'constants/IconConstants';
@@ -14,8 +17,12 @@ import IconConstants from 'constants/IconConstants';
 import NotificationActions from 'actions/NotificationActions';
 import LoginStore from 'stores/LoginStore';
 
-import DataProviderDecorator, { DataProviderDecoratorChildProps } from 'decorators/DataProviderDecorator';
-import ModalRouteDecorator, { ModalRouteDecoratorChildProps } from 'decorators/ModalRouteDecorator';
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
+import ModalRouteDecorator, {
+  ModalRouteDecoratorChildProps,
+} from 'decorators/ModalRouteDecorator';
 
 import Modal, { ModalProps } from 'components/semantic/Modal';
 import { FileBrowserDialog } from 'components/filebrowser';
@@ -32,45 +39,47 @@ import { PathDownloadHandler } from './types';
 
 import './style.css';
 
-
 type DownloadItemIdType = string;
 
-export type DownloadDialogProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> = 
-  UI.ItemDownloadHandler<ItemT, Props<ItemT>>;
+export type DownloadDialogProps<
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+> = UI.ItemDownloadHandler<ItemT, Props<ItemT>>;
 
-interface RouteProps { 
-  downloadItemId: DownloadItemIdType; 
+interface RouteProps {
+  downloadItemId: DownloadItemIdType;
 }
 
 type DownloadDialogRouteProps = ModalRouteDecoratorChildProps<RouteProps>;
 
-interface DownloadDialogDataProps<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> 
-  extends DataProviderDecoratorChildProps, DownloadDataProps<ItemT> {
+interface DownloadDialogDataProps<
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+> extends DataProviderDecoratorChildProps,
+    DownloadDataProps<ItemT> {}
 
+type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
+  DownloadDialogProps<ItemT> & DownloadDialogDataProps<ItemT> & DownloadDialogRouteProps;
 
-}
-
-
-type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> = DownloadDialogProps<ItemT> & 
-  DownloadDialogDataProps<ItemT> & 
-  DownloadDialogRouteProps;
-
-
-const DownloadDialog: React.FC<Props> = props => {
+const DownloadDialog: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const modalRef = useRef<Modal>(null);
 
-  const { 
-    downloadHandler, itemInfo, userGetter, match, 
-    session, historyPaths, favoritePaths, sharePaths, 
-    ...other 
+  const {
+    downloadHandler,
+    itemInfo,
+    userGetter,
+    match,
+    session,
+    historyPaths,
+    favoritePaths,
+    sharePaths,
+    ...other
   } = props;
 
   const handleDownload: PathDownloadHandler = async (targetPath, targetFilename) => {
     try {
       await downloadHandler(
-        itemInfo, 
-        !!userGetter ? userGetter(match.params.downloadItemId, props) : undefined, 
+        itemInfo,
+        !!userGetter ? userGetter(match.params.downloadItemId, props) : undefined,
         {
           target_name: !!targetFilename ? targetFilename : itemInfo.name,
           target_directory: targetPath,
@@ -80,16 +89,13 @@ const DownloadDialog: React.FC<Props> = props => {
       );
     } catch (e) {
       NotificationActions.error({
-        title: t(
-          toI18nKey('queueingFailed', UI.Modules.COMMON),
-          {
-            defaultValue: 'Failed to queue the item {{item.name}}',
-            replace: {
-              item: itemInfo
-            }
-          }
-        ),
-        message: e.message
+        title: t(toI18nKey('queueingFailed', UI.Modules.COMMON), {
+          defaultValue: 'Failed to queue the item {{item.name}}',
+          replace: {
+            item: itemInfo,
+          },
+        }),
+        message: e.message,
       });
     }
 
@@ -124,33 +130,37 @@ const DownloadDialog: React.FC<Props> = props => {
   const hasFileBrowserAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
   return (
     <Switch>
-      <Route path={ `${match.path}/browse` }>
+      <Route path={`${match.path}/browse`}>
         <FileBrowserDialog
-          onConfirm={ (path, directoryPath, fileName) => handleDownload(directoryPath, fileName) }
-          initialPath={ getInitialBrowsePath() }
-          selectMode={ 
-            itemInfo.type.id === 'directory' ? UI.FileSelectModeEnum.DIRECTORY : UI.FileSelectModeEnum.FILE 
+          onConfirm={(path, directoryPath, fileName) =>
+            handleDownload(directoryPath, fileName)
           }
-          historyId={ FilesystemConstants.LOCATION_DOWNLOAD }
-          approveCaption={ translate('Download', t, UI.Modules.COMMON) }
-          { ...commonDialogProps }
+          initialPath={getInitialBrowsePath()}
+          selectMode={
+            itemInfo.type.id === 'directory'
+              ? UI.FileSelectModeEnum.DIRECTORY
+              : UI.FileSelectModeEnum.FILE
+          }
+          historyId={FilesystemConstants.LOCATION_DOWNLOAD}
+          approveCaption={translate('Download', t, UI.Modules.COMMON)}
+          {...commonDialogProps}
         />
       </Route>
-      <Route path={ match.path } exact>
-        <Modal 
-          ref={ modalRef }
-          className="download-dialog" 
-          fullHeight={ true }
-          { ...commonDialogProps }
-          { ...other }
+      <Route path={match.path} exact>
+        <Modal
+          ref={modalRef}
+          className="download-dialog"
+          fullHeight={true}
+          {...commonDialogProps}
+          {...other}
         >
           <DownloadLayout
-            downloadHandler={ handleDownload }
-            handleBrowse={ hasFileBrowserAccess ? handleBrowse : undefined }
-            historyPaths={ historyPaths }
-            favoritePaths={ favoritePaths }
-            sharePaths={ sharePaths }
-            itemInfo={ itemInfo }
+            downloadHandler={handleDownload}
+            handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
+            historyPaths={historyPaths}
+            favoritePaths={favoritePaths}
+            sharePaths={sharePaths}
+            itemInfo={itemInfo}
           />
         </Modal>
       </Route>
@@ -159,18 +169,18 @@ const DownloadDialog: React.FC<Props> = props => {
 };
 
 export default ModalRouteDecorator<DownloadDialogProps, RouteProps>(
-  DataProviderDecorator<DownloadDialogProps & DownloadDialogRouteProps, DownloadDialogDataProps>(
-    DownloadDialog, 
-    {
-      urls: {
-        sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
-        favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-        historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
-        itemInfo: ({ match, itemDataGetter }, socket) => {
-          return itemDataGetter(match.params.downloadItemId, socket);
-        }
+  DataProviderDecorator<
+    DownloadDialogProps & DownloadDialogRouteProps,
+    DownloadDialogDataProps
+  >(DownloadDialog, {
+    urls: {
+      sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+      favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+      historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+      itemInfo: ({ match, itemDataGetter }, socket) => {
+        return itemDataGetter(match.params.downloadItemId, socket);
       },
-    }
-  ),
+    },
+  }),
   'download/:downloadItemId'
 );

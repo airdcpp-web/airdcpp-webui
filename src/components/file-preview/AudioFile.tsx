@@ -1,18 +1,17 @@
 import * as React from 'react';
 
-import MediaFileDecorator, { 
-  MediaFileDecoratorChildProps 
+import MediaFileDecorator, {
+  MediaFileDecoratorChildProps,
 } from './decorators/MediaFileDecorator';
 
-
 const AudioFile: React.FC<MediaFileDecoratorChildProps> = ({ mediaRef, mediaProps }) => (
-  <audio 
-    ref={ mediaRef } 
+  <audio
+    ref={mediaRef}
     style={{
       maxWidth: '100%',
       maxHeight: '100%',
     }}
-    { ...mediaProps }
+    {...mediaProps}
   />
 );
 

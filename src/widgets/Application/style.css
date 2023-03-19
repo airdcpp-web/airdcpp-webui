@@ -1,15 +1,15 @@
 .application.widget .main.content {
-	display: flex;
+  display: flex;
 }
 
 .application.widget .main.content > div {
-	flex-direction: column;
+  flex-direction: column;
 }
 
 .application.widget .ui.list {
-	flex-grow: 100;
+  flex-grow: 100;
 }
 
 .application.widget .button.create-widget {
-	max-width: 200px;
+  max-width: 200px;
 }

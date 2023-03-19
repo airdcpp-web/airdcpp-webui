@@ -12,7 +12,6 @@ import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import { BrowserSessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
-
 const FilelistSessionStore = Reflux.createStore({
   scroll: BrowserSessionScrollPositionKeeper(),
 
@@ -21,7 +20,10 @@ const FilelistSessionStore = Reflux.createStore({
   },
 
   onSocketConnected(addSocketListener: AddSocketListener) {
-    invariant(this.getSessions().length === 0, 'No existing filelist sessions should exist on socket connect');
+    invariant(
+      this.getSessions().length === 0,
+      'No existing filelist sessions should exist on socket connect'
+    );
 
     const url = FilelistConstants.MODULE_URL;
     addSocketListener(url, FilelistConstants.SESSION_CREATED, this._onSessionCreated);
@@ -31,9 +33,6 @@ const FilelistSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator(
-  SocketSubscriptionDecorator(
-    FilelistSessionStore, 
-    AccessConstants.FILELISTS_VIEW
-  ), 
+  SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW),
   FilelistSessionActions
 );

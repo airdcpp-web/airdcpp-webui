@@ -1,6 +1,5 @@
 import * as UI from 'types/ui';
 
-
 export const Extensions = {
   typeId: 'extensions',
   component: require('./components/Extensions').default,
@@ -15,4 +14,3 @@ export const Extensions = {
     minH: 3,
   },
 } as UI.Widget;
-

@@ -4,7 +4,6 @@ import * as React from 'react';
 import * as UI from 'types/ui';
 import t from 'utils/tcomb-form';
 
-
 interface IndeterminateCheckboxProps {
   locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>;
 }
@@ -12,24 +11,21 @@ interface IndeterminateCheckboxProps {
 const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = ({ locals }) => {
   const inputRef = useRef<HTMLInputElement>();
 
-  useEffect(
-    () => {
-      if (!inputRef.current) {
-        return;
-      }
+  useEffect(() => {
+    if (!inputRef.current) {
+      return;
+    }
 
-      if (typeof locals.value === 'boolean') {
-        inputRef.current.indeterminate = false;
-      } else {
-        inputRef.current.indeterminate = true;
-      }
-    },
-    [ locals.value ]
-  );
+    if (typeof locals.value === 'boolean') {
+      inputRef.current.indeterminate = false;
+    } else {
+      inputRef.current.indeterminate = true;
+    }
+  }, [locals.value]);
 
   return (
-    <input 
-      ref={ inputRef }
+    <input
+      ref={inputRef}
       type="checkbox"
       {...locals.attrs}
       onChange={(evt) => {
@@ -44,18 +40,18 @@ const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = ({ locals })
   );
 };
 
-type TCombTemplate = { 
-  renderCheckbox: (locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>) => React.ReactNode; 
+type TCombTemplate = {
+  renderCheckbox: (
+    locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>
+  ) => React.ReactNode;
 };
 
 const IndeterminateCheckboxTemplate: TCombTemplate = {
   renderCheckbox(locals) {
-    return (
-      <IndeterminateCheckbox
-        locals={ locals }
-      />
-    );
-  }
+    return <IndeterminateCheckbox locals={locals} />;
+  },
 };
 
-export const IndeterminateCheckboxField = t.form.Form.templates.checkbox.clone(IndeterminateCheckboxTemplate);
+export const IndeterminateCheckboxField = t.form.Form.templates.checkbox.clone(
+  IndeterminateCheckboxTemplate
+);

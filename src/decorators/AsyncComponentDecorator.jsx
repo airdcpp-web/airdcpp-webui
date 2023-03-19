@@ -14,8 +14,8 @@ export default function asyncComponent(getComponent, props) {
 
       if (!this.state.Component) {
         getComponent()
-          .then(Component => Component.default)
-          .then(Component => {
+          .then((Component) => Component.default)
+          .then((Component) => {
             if (!this.mounted) {
               return;
             }
@@ -29,13 +29,11 @@ export default function asyncComponent(getComponent, props) {
     componentWillUnmount() {
       this.mounted = false;
     }
-    
+
     render() {
       const { Component } = this.state;
       if (Component) {
-        return (
-          <Component { ...this.props } { ...props }/>
-        );
+        return <Component {...this.props} {...props} />;
       }
       return null;
     }

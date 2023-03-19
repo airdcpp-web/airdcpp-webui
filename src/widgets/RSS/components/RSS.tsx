@@ -16,7 +16,6 @@ import * as UI from 'types/ui';
 
 import '../style.css';
 
-
 const idToCacheKey = (id: string) => `rss_feed_cache_${id}`;
 
 interface StorageFeed {
@@ -56,7 +55,7 @@ class RSS extends PureComponent<RSSProps, State> {
 
   handleUpdate = () => {
     this.fetchFeed(this.props.settings.feed_url);
-  }
+  };
 
   fetchFeed = async (feedUrl: string) => {
     const { widgetT } = this.props;
@@ -64,7 +63,6 @@ class RSS extends PureComponent<RSSProps, State> {
       this.setError(widgetT.translate('Invalid URL'));
       return;
     }
-
 
     if (this.state.entries) {
       this.setState({ entries: null });
@@ -77,7 +75,7 @@ class RSS extends PureComponent<RSSProps, State> {
       console.log('RSS feed download failed', feedUrl, e);
       this.setError(e.message);
     }
-  }
+  };
 
   componentDidUpdate(prevProps: RSSProps) {
     if (prevProps.settings.feed_url !== this.props.settings.feed_url) {
@@ -86,34 +84,43 @@ class RSS extends PureComponent<RSSProps, State> {
   }
 
   getCachedFeedInfo = (): StorageFeed | null => {
-    const feedInfo = loadSessionProperty<StorageFeed>(idToCacheKey(this.props.componentId));
+    const feedInfo = loadSessionProperty<StorageFeed>(
+      idToCacheKey(this.props.componentId)
+    );
     const { feed_url, feed_cache_minutes } = this.props.settings;
     if (feedInfo) {
       const feedDate = new Date(feedInfo.date).getTime();
-      const lastValidDate = feedDate + (feed_cache_minutes * 60 * 1000);
+      const lastValidDate = feedDate + feed_cache_minutes * 60 * 1000;
 
       if (lastValidDate >= Date.now()) {
         console.log(
-          `RSS: cached feed will be used (expires in ${(lastValidDate - Date.now()) / 60 / 1000} minutes)`, 
+          `RSS: cached feed will be used (expires in ${
+            (lastValidDate - Date.now()) / 60 / 1000
+          } minutes)`,
           feed_url
         );
 
         return feedInfo;
       } else {
-        console.log(`RSS: cached feed had expired ${(Date.now() - lastValidDate) / 60 / 1000} minutes ago`, feed_url);
+        console.log(
+          `RSS: cached feed had expired ${
+            (Date.now() - lastValidDate) / 60 / 1000
+          } minutes ago`,
+          feed_url
+        );
       }
     } else {
       console.log('RSS: no cached feed', feed_url);
     }
 
     return null;
-  }
+  };
 
   setError = (error: string) => {
     this.setState({
-      error
+      error,
     });
-  }
+  };
 
   onFeedFetched = (data: RawFeedData) => {
     const { widgetT, componentId } = this.props;
@@ -129,43 +136,33 @@ class RSS extends PureComponent<RSSProps, State> {
       entries,
       date: Date.now(),
     });
-  }
+  };
 
   render() {
     const { error, entries, date } = this.state;
     if (!!error) {
-      return (
-        <Message
-          description={ error }
-        />
-      );
+      return <Message description={error} />;
     }
 
     const { settings, componentId, widgetT } = this.props;
     if (!entries) {
-      return <Loader text={ widgetT.translate('Loading feed') } inline={ true }/>;
+      return <Loader text={widgetT.translate('Loading feed')} inline={true} />;
     }
 
     return (
       <div className="rss-container">
         <div className="ui divided list rss">
-          { 
-            entries.map(entry => (
-              <Entry 
-                key={ getUniqueEntryKey(entry) } 
-                entry={ entry }
-                componentId={ componentId }
-                feedUrl={ settings.feed_url }
-                widgetT={ widgetT }
-              />
-            ))
-          }
+          {entries.map((entry) => (
+            <Entry
+              key={getUniqueEntryKey(entry)}
+              entry={entry}
+              componentId={componentId}
+              feedUrl={settings.feed_url}
+              widgetT={widgetT}
+            />
+          ))}
         </div>
-        <Footer
-          lastUpdated={ date }
-          handleUpdate={ this.handleUpdate }
-          widgetT={ widgetT }
-        />
+        <Footer lastUpdated={date} handleUpdate={this.handleUpdate} widgetT={widgetT} />
       </div>
     );
   }

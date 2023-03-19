@@ -7,5 +7,4 @@ export default {
 
   LOCATION_DOWNLOAD: 'download',
   LOCATION_GENERIC: 'settings',
-}
-;
+};

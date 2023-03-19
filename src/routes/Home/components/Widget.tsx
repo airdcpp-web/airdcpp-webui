@@ -11,8 +11,11 @@ import * as UI from 'types/ui';
 
 import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
 
-
-const getError = (widgetInfo: UI.Widget, settings: UI.WidgetSettings, rootWidgetT: UI.ModuleTranslator) => {
+const getError = (
+  widgetInfo: UI.Widget,
+  settings: UI.WidgetSettings,
+  rootWidgetT: UI.ModuleTranslator
+) => {
   if (widgetInfo.formSettings && !settings.widget) {
     return rootWidgetT.t('settingsMissing', 'Widget settings missing');
   }
@@ -32,57 +35,62 @@ export type WidgetProps = React.PropsWithChildren<{
   rootWidgetT: UI.ModuleTranslator;
 }>;
 
-const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(
-  function Widget({ widgetInfo, settings, componentId, children, className, rootWidgetT, ...other }, ref) {
-    const error = getError(widgetInfo, settings, rootWidgetT);
-    const Component = widgetInfo.component;
-    
-    const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
-    return (
-      <div 
-        { ...other }
-        ref={ ref }
-        className={ classNames('card', 'widget', className, componentId, widgetInfo.typeId) } 
-      >
-        <div className="content header-row">
-          <div className="header">
-            <i className={ classNames('left floated large icon', widgetInfo.icon) }/>
-            { !!settings.name ? settings.name : translateWidgetName(widgetInfo, rootWidgetT.plainT) }
-          </div>
+const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
+  { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other },
+  ref
+) {
+  const error = getError(widgetInfo, settings, rootWidgetT);
+  const Component = widgetInfo.component;
 
-          <ActionMenu 
-            className="widget-menu right top pointing"
-            actions={ WidgetActions.edit }
-            itemData={{
-              id: componentId,
-              widgetInfo,
-              settings,
-            }}
-          >
-            { !!widgetInfo.actionMenu && (
-              <ActionMenu 
-                actions={ widgetInfo.actionMenu.actions }
-                ids={ widgetInfo.actionMenu.ids } 
-              /> 
-            ) }
-          </ActionMenu>
+  const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);
+  return (
+    <div
+      {...other}
+      ref={ref}
+      className={classNames('card', 'widget', className, componentId, widgetInfo.typeId)}
+    >
+      <div className="content header-row">
+        <div className="header">
+          <i className={classNames('left floated large icon', widgetInfo.icon)} />
+          {!!settings.name
+            ? settings.name
+            : translateWidgetName(widgetInfo, rootWidgetT.plainT)}
         </div>
-        <div className="main content">
-          { !!error ? error : (
-            <Component
-              componentId={ componentId }
-              settings={ settings.widget }
-              widgetT={ widgetT }
-              rootWidgetT={ rootWidgetT }
+
+        <ActionMenu
+          className="widget-menu right top pointing"
+          actions={WidgetActions.edit}
+          itemData={{
+            id: componentId,
+            widgetInfo,
+            settings,
+          }}
+        >
+          {!!widgetInfo.actionMenu && (
+            <ActionMenu
+              actions={widgetInfo.actionMenu.actions}
+              ids={widgetInfo.actionMenu.ids}
             />
-          ) }
-        </div>
-        {/* "children" contains the resize handle */}
-        { children }
+          )}
+        </ActionMenu>
       </div>
-    );
-  }
-);
+      <div className="main content">
+        {!!error ? (
+          error
+        ) : (
+          <Component
+            componentId={componentId}
+            settings={settings.widget}
+            widgetT={widgetT}
+            rootWidgetT={rootWidgetT}
+          />
+        )}
+      </div>
+      {/* "children" contains the resize handle */}
+      {children}
+    </div>
+  );
+});
 
 /*Widget.propTypes = {
   widgetInfo: PropTypes.object.isRequired,

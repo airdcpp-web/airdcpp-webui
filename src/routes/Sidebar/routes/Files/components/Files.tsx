@@ -15,11 +15,11 @@ import '../style.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { 
-  SessionProviderDecoratorChildProps, SessionProviderDecorator 
+import {
+  SessionProviderDecoratorChildProps,
+  SessionProviderDecorator,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import { toI18nKey } from 'utils/TranslationUtils';
-
 
 const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
   itemNameGetter(session) {
@@ -35,38 +35,37 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
   },
 
   itemHeaderIconGetter(session) {
-    return <FileIcon typeInfo={ session.type }/>;
+    return <FileIcon typeInfo={session.type} />;
   },
 };
 
-
-const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = props => {
+const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props) => {
   const { match, t, ...other } = props;
   if (props.items.length === 0) {
     return (
       <Message
-        title={ t(toI18nKey('noFiles', UI.Modules.VIEWED_FILES), 'No files to view') }
-        description={ t<string>(
-          toI18nKey('noFilesDesc', UI.Modules.VIEWED_FILES), 
+        title={t(toI18nKey('noFiles', UI.Modules.VIEWED_FILES), 'No files to view')}
+        description={t<string>(
+          toI18nKey('noFilesDesc', UI.Modules.VIEWED_FILES),
           'You may open text or media files to be viewed here from search or filelists'
-        ) }
+        )}
       />
     );
   }
 
   return (
     <SessionLayout
-      activeId={ match.params.id }
+      activeId={match.params.id}
       baseUrl="files"
-      disableSideMenu={ true }
-      editAccess={ API.AccessEnum.VIEW_FILE_EDIT }
-      uiActions={ ViewFileUIActions }
-      sessionApi={ ViewFileAPIActions as UI.SessionActions<API.ViewFile> }
-      unreadInfoStore={ ViewFileStore }
-      sessionItemLayout={ FileSession }
-      t={ t }
-      { ...ItemHandler }
-      { ...other }
+      disableSideMenu={true}
+      editAccess={API.AccessEnum.VIEW_FILE_EDIT}
+      uiActions={ViewFileUIActions}
+      sessionApi={ViewFileAPIActions as UI.SessionActions<API.ViewFile>}
+      unreadInfoStore={ViewFileStore}
+      sessionItemLayout={FileSession}
+      t={t}
+      {...ItemHandler}
+      {...other}
     />
   );
 };

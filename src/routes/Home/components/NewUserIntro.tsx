@@ -14,7 +14,6 @@ import { toI18nKey } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 
-
 const NewUserIntro = () => {
   const { showNewUserIntro } = useStore<LoginState>(LoginStore);
   if (!showNewUserIntro) {
@@ -22,50 +21,54 @@ const NewUserIntro = () => {
   }
 
   return (
-    <Message 
-      title={ (
-        <Trans i18nKey={ toI18nKey('newUserIntro', UI.Modules.HOME) }>
+    <Message
+      title={
+        <Trans i18nKey={toI18nKey('newUserIntro', UI.Modules.HOME)}>
           Information for new user
         </Trans>
-      ) }
-      description={ (
+      }
+      description={
         <div className="new-user-message">
-          <Trans i18nKey={ toI18nKey('newUserIntroDesc', UI.Modules.HOME) }>
+          <Trans i18nKey={toI18nKey('newUserIntroDesc', UI.Modules.HOME)}>
             <ul>
               <li>
-                Add a few directories that are shared to other users from the <Link to="/share">Share</Link> page.
+                Add a few directories that are shared to other users from the{' '}
+                <Link to="/share">Share</Link> page.
               </li>
               <li>
-                You might want to go through at least each main page 
-                of <Link to="/settings">the client settings</Link> before you start.
-                &nbsp;
+                You might want to go through at least each main page of{' '}
+                <Link to="/settings">the client settings</Link> before you start. &nbsp;
                 <strong>
-                  It's important that 
-                  you <Link to="/settings/speed-limits/speed">configure your connection speed</Link> correctly 
-                  because the client won't be able to utilize your bandwidth efficiently otherwise.
+                  It's important that you{' '}
+                  <Link to="/settings/speed-limits/speed">
+                    configure your connection speed
+                  </Link>{' '}
+                  correctly because the client won't be able to utilize your bandwidth
+                  efficiently otherwise.
                 </strong>
               </li>
               <li>
-                There is no listing of public hubs yet so you need to know 
-                the hub addresses where you wish to connect to.
+                There is no listing of public hubs yet so you need to know the hub
+                addresses where you wish to connect to.
               </li>
             </ul>
             <p>
-              Visit the <ExternalLink url={ LinkConstants.HOME_PAGE_URL }>home page</ExternalLink> for more information 
-              about the client and its features.
+              Visit the{' '}
+              <ExternalLink url={LinkConstants.HOME_PAGE_URL}>home page</ExternalLink> for
+              more information about the client and its features.
             </p>
             <p>
-              If you have questions, you may post them on 
-              the <ExternalLink url={ LinkConstants.ISSUE_TRACKER_URL }>GitHub tracker</ExternalLink> or 
-              join the dev/support hub: <TextDecorator text={ LinkConstants.DEV_HUB_URL }/>
+              If you have questions, you may post them on the{' '}
+              <ExternalLink url={LinkConstants.ISSUE_TRACKER_URL}>
+                GitHub tracker
+              </ExternalLink>{' '}
+              or join the dev/support hub:{' '}
+              <TextDecorator text={LinkConstants.DEV_HUB_URL} />
             </p>
           </Trans>
-          <ActionButton 
-            actions={ LoginActions }
-            actionId="newUserIntroSeen"
-          />
+          <ActionButton actions={LoginActions} actionId="newUserIntroSeen" />
         </div>
-      ) }
+      }
     />
   );
 };

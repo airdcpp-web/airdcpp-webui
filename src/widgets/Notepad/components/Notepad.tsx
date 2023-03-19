@@ -23,29 +23,26 @@ class Notepad extends React.PureComponent<NotepadProps, State> {
 
   handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const data = {
-      content: event.target.value
+      content: event.target.value,
     };
 
     saveLocalProperty(this.storageKey, data);
     this.setState(data);
-  }
+  };
 
   getStoredState = (): State => {
     const defaultData = {
-      content : ''
+      content: '',
     };
 
     return loadLocalProperty(this.storageKey, defaultData);
-  }
+  };
 
   render() {
     const { content } = this.state;
     return (
       <div className="notepad-container ui input fluid">
-        <textarea
-          onChange={this.handleChange}
-          value={content}
-        />
+        <textarea onChange={this.handleChange} value={content} />
       </div>
     );
   }

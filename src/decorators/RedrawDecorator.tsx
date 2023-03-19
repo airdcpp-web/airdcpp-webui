@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-
 export default function <PropsT>(
-  Component: React.ComponentType<PropsT>, 
+  Component: React.ComponentType<PropsT>,
   redrawIntervalSeconds = 60
 ) {
   class RedrawDecorator extends React.Component<PropsT> {
@@ -17,17 +16,14 @@ export default function <PropsT>(
     }
 
     scheduleComponentRefresh = () => {
-      this.redrawTimeout = window.setTimeout(
-        () => { 
-          this.forceUpdate();
-          this.scheduleComponentRefresh();
-        }, 
-        redrawIntervalSeconds * 1000
-      );
-    }
+      this.redrawTimeout = window.setTimeout(() => {
+        this.forceUpdate();
+        this.scheduleComponentRefresh();
+      }, redrawIntervalSeconds * 1000);
+    };
 
     render() {
-      return <Component {...this.props}/>;
+      return <Component {...this.props} />;
     }
   }
 

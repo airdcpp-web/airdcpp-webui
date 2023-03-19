@@ -3,12 +3,10 @@ import * as React from 'react';
 
 import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
 
-
 export interface InputFieldProps extends Omit<ConfirmDialogProps, 'onApproved'> {
   onApproved: (inputValue: string) => void | false;
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
 }
-
 
 interface State {
   value: string;
@@ -25,7 +23,7 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
 
     const { inputProps } = props;
     this.state = {
-      value: !!inputProps.defaultValue ? inputProps.defaultValue as string : '',
+      value: !!inputProps.defaultValue ? (inputProps.defaultValue as string) : '',
     };
   }
 
@@ -33,12 +31,12 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
   state: State = {
     value: '',
   };
-  
+
   onChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       value: event.target.value,
     });
-  }
+  };
 
   onApproved = () => {
     if (!this.c.reportValidity()) {
@@ -47,33 +45,26 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
 
     const success = this.props.onApproved(this.state.value);
     return success;
-  }
+  };
 
   render() {
     const { onApproved, inputProps, ...other } = this.props;
     return (
-      <ConfirmDialog
-        onApproved={ this.onApproved }
-        { ...other }
-      >
+      <ConfirmDialog onApproved={this.onApproved} {...other}>
         <form className="ui input dialog">
-          <input 
-            ref={ c => this.c = c! }
-            onChange={ this.onChanged } 
-            { ...inputProps}
-          />
+          <input ref={(c) => (this.c = c!)} onChange={this.onChanged} {...inputProps} />
 
           {/* 
           // A hack to cheat browser not to use autofill for the real password field
           // (some browsers can be really desperate with finding login forms...)
           // https://github.com/airdcpp-web/airdcpp-webclient/issues/100
           */}
-          { inputProps.type === 'password' && (
+          {inputProps.type === 'password' && (
             <div>
-              <input style={{ display: 'none' }}/>
-              <input type="password" style={{ display: 'none' }}/>
+              <input style={{ display: 'none' }} />
+              <input type="password" style={{ display: 'none' }} />
             </div>
-          ) }
+          )}
         </form>
       </ConfirmDialog>
     );

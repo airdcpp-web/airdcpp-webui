@@ -1,7 +1,6 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
 export const SessionScrollPositionKeeper = function () {

@@ -13,26 +13,24 @@ import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 
-
 interface AuthenticationGuardDecoratorProps {
   location: Location;
 }
 
-
-
 const getConnectStatusMessage = (lastError: string | null, t: UI.TranslateF) => {
   if (!!lastError) {
-    const msg = t(toI18nKey('reestablishConnection', UI.Modules.LOGIN), 'Attempting to re-establish connection...');
+    const msg = t(
+      toI18nKey('reestablishConnection', UI.Modules.LOGIN),
+      'Attempting to re-establish connection...'
+    );
     return `${lastError}. ${msg}`;
   }
 
   return translate('Connecting to the server...', t, UI.Modules.LOGIN);
 };
 
-function AuthenticationGuardDecorator<PropsT>(
-  Component: React.ComponentType<PropsT>
-) {
-  const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = props => {
+function AuthenticationGuardDecorator<PropsT>(Component: React.ComponentType<PropsT>) {
+  const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = (props) => {
     const login = useStore<LoginState>(LoginStore);
     useLoginGuard(login, props.location);
     useAuthPageTitle(login);
@@ -42,17 +40,11 @@ function AuthenticationGuardDecorator<PropsT>(
     if (!login.socketAuthenticated) {
       // Dim the screen until the server can be reached (we can't do anything without the socket)
       return (
-        <SocketConnectStatus 
-          message={ getConnectStatusMessage(login.lastError, t) }
-        />
+        <SocketConnectStatus message={getConnectStatusMessage(login.lastError, t)} />
       );
     }
 
-    return (
-      <Component 
-        { ...props }
-      />
-    );
+    return <Component {...props} />;
   };
 
   return Decorator;

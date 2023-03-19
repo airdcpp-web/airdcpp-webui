@@ -16,7 +16,6 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { formatUnit } from 'utils/ValueFormat';
 import { Trans } from 'react-i18next';
 
-
 interface LimiterConfigProps {
   limit: number;
   settingKey: string;
@@ -25,7 +24,13 @@ interface LimiterConfigProps {
   t: UI.TranslateF;
 }
 
-const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: currentLimit, unit, t }) => {
+const LimiterConfig: React.FC<LimiterConfigProps> = ({
+  hide,
+  settingKey,
+  limit: currentLimit,
+  unit,
+  t,
+}) => {
   /*static propTypes = {
     limit: PropTypes.number.isRequired,
 
@@ -37,9 +42,10 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
 
   const save = (newLimit = 0) => {
     runBackgroundSocketAction(
-      () => SocketService.post(SettingConstants.ITEMS_SET_URL, {
-        [settingKey]: newLimit,
-      }),
+      () =>
+        SocketService.post(SettingConstants.ITEMS_SET_URL, {
+          [settingKey]: newLimit,
+        }),
       t
     );
 
@@ -57,21 +63,21 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({ hide, settingKey, limit: 
           }}
         />
       </div>
-      <ActionInput 
-        placeholder={ translate('Enter limit...', t, UI.Modules.COMMON) } 
-        type="number" 
-        caption={ translate('Save', t, UI.Modules.COMMON) } 
-        icon={ IconConstants.SAVE_COLORED }
-        handleAction={ text => save(parseInt(text)) }
+      <ActionInput
+        placeholder={translate('Enter limit...', t, UI.Modules.COMMON)}
+        type="number"
+        caption={translate('Save', t, UI.Modules.COMMON)}
+        icon={IconConstants.SAVE_COLORED}
+        handleAction={(text) => save(parseInt(text))}
       />
-      { !!currentLimit && (
+      {!!currentLimit && (
         <Button
           className="fluid remove"
-          caption={ translate('Remove limit', t, UI.Modules.COMMON) }
-          icon={ IconConstants.REMOVE }
-          onClick={ () => save(0) }
+          caption={translate('Remove limit', t, UI.Modules.COMMON)}
+          icon={IconConstants.REMOVE}
+          onClick={() => save(0)}
         />
-      ) }
+      )}
     </div>
   );
 };

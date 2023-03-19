@@ -12,7 +12,6 @@ import * as UI from 'types/ui';
 import { DataFetchError } from 'decorators/DataProviderDecorator';
 import { Link } from 'react-router-dom';
 
-
 interface VersionProps {
   packageInfo: {
     date: string;
@@ -22,22 +21,15 @@ interface VersionProps {
 }
 
 const Version: React.FC<VersionProps> = ({ packageInfo, moduleT }) => {
-  const versionDesc = moduleT.t(
-    'updatedAgo',
-    {
-      defaultValue: 'Updated {{date}}',
-      replace: {
-        version: packageInfo.version,
-        date: Moment(packageInfo.date).from(Moment())
-      }
-    }
-  );
+  const versionDesc = moduleT.t('updatedAgo', {
+    defaultValue: 'Updated {{date}}',
+    replace: {
+      version: packageInfo.version,
+      date: Moment(packageInfo.date).from(Moment()),
+    },
+  });
 
-  return (
-    <> 
-      { versionDesc }
-    </>
-  );
+  return <>{versionDesc}</>;
 };
 
 export interface ExtensionProps {
@@ -47,31 +39,35 @@ export interface ExtensionProps {
   moduleT: UI.ModuleTranslator;
 }
 
-export const ExtensionInfoEntry: React.FC<ExtensionProps> = ({ 
-  npmPackage, installedPackage, moduleT
+export const ExtensionInfoEntry: React.FC<ExtensionProps> = ({
+  npmPackage,
+  installedPackage,
+  moduleT,
 }) => {
-  const hasUpdate = !!installedPackage && 
+  const hasUpdate =
+    !!installedPackage &&
     compareVersions(installedPackage.version, npmPackage.version) < 0;
 
   return (
     <div className="item extension">
       <ExtensionIcon
-        installedPackage={ installedPackage }
-        hasUpdate={ hasUpdate }
+        installedPackage={installedPackage}
+        hasUpdate={hasUpdate}
         size="big"
       />
       <div className="content">
         <Link
           className="header"
-          to={ !!installedPackage ? '/settings/extensions/manage' : '/settings/extensions/packages' }
+          to={
+            !!installedPackage
+              ? '/settings/extensions/manage'
+              : '/settings/extensions/packages'
+          }
         >
-          { npmPackage.name }
+          {npmPackage.name}
         </Link>
         <div className="description">
-          <Version
-            packageInfo={ npmPackage }
-            moduleT={ moduleT }
-          />
+          <Version packageInfo={npmPackage} moduleT={moduleT} />
         </div>
       </div>
     </div>

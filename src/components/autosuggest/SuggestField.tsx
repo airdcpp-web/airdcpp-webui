@@ -9,7 +9,6 @@ import { defaultTheme } from 'react-autosuggest/dist/theme';
 
 import { ButtonProps } from 'components/semantic/Button';
 
-
 const theme: Theme = {
   ...defaultTheme,
   container: 'react-autosuggest__container ui input',
@@ -20,8 +19,10 @@ const theme: Theme = {
 
 type SubmitHandlerType<SuggestionT> = (value: string, suggestion?: SuggestionT) => void;
 
-export type SuggestFieldProps<SuggestionT> = 
-  Omit<Autosuggest.AutosuggestPropsSingleSection<SuggestionT>, 'inputProps'> & 
+export type SuggestFieldProps<SuggestionT> = Omit<
+  Autosuggest.AutosuggestPropsSingleSection<SuggestionT>,
+  'inputProps'
+> &
   React.PropsWithChildren<{
     defaultValue?: string;
     disabled?: boolean;
@@ -35,9 +36,10 @@ export type SuggestFieldProps<SuggestionT> =
     submitHandler?: SubmitHandlerType<SuggestionT>;
   }>;
 
-class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<SuggestionT>> {
+class SuggestField<SuggestionT = any> extends React.Component<
+  SuggestFieldProps<SuggestionT>
+> {
   static propTypes = {
-
     /**
      * Function to call when selecting suggestions
      * Receives the suggestion value and the suggestion object (only if selecting a suggestion)
@@ -82,36 +84,38 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
     // The received default value has changed?
     // Always update the field value in that case
     if (prevProps.defaultValue !== this.props.defaultValue) {
-      this.setState({ 
-        text: this.props.defaultValue 
+      this.setState({
+        text: this.props.defaultValue,
       });
     }
   }
 
   handleSubmit = (event: React.FormEvent, suggestion?: SuggestionT) => {
     if (this.props.submitHandler) {
-      const value = suggestion ? this.props.getSuggestionValue(suggestion) : this.state.text;
+      const value = suggestion
+        ? this.props.getSuggestionValue(suggestion)
+        : this.state.text;
       this.props.submitHandler(value, suggestion);
     }
-  }
+  };
 
   onTextChange = (evt: React.FormEvent, { newValue }: Autosuggest.ChangeEvent) => {
-    this.setState({ 
-      text: newValue 
+    this.setState({
+      text: newValue,
     });
 
     if (this.props.onChange) {
       this.props.onChange(newValue);
     }
-  }
+  };
 
   isSubmitDisabled = () => {
     return this.state.text.length === 0;
-  }
+  };
 
   getSuggestionValue = (suggestion: SuggestionT) => {
     return suggestion;
-  }
+  };
 
   onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     // Accept custom inputs only when there's a submit button
@@ -125,20 +129,28 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
 
       this.handleSubmit(event);
     }
-  }
+  };
 
   onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionT> = (
-    event, 
+    event,
     { suggestion, suggestionValue, method }
   ) => {
     // No second 'Enter' event if the suggestion was selected
     event.preventDefault();
 
     this.handleSubmit(event, suggestion);
-  }
+  };
 
   render() {
-    const { className, autoFocus, placeholder, defaultValue, button, children, ...other } = this.props;
+    const {
+      className,
+      autoFocus,
+      placeholder,
+      defaultValue,
+      button,
+      children,
+      ...other
+    } = this.props;
     const { text } = this.state;
 
     const inputAttributes: Autosuggest.InputProps<SuggestionT> = {
@@ -150,38 +162,34 @@ class SuggestField<SuggestionT = any> extends React.Component<SuggestFieldProps<
     };
 
     const suggestField = (
-      <Autosuggest 
-        { ...other }
-        theme={ theme }
+      <Autosuggest
+        {...other}
+        theme={theme}
         //initialValue={ defaultValue }
-        inputProps={ inputAttributes } 
-        onSuggestionSelected={ this.onSuggestionSelected }
+        inputProps={inputAttributes}
+        onSuggestionSelected={this.onSuggestionSelected}
       />
     );
 
-    const fieldStyle = classNames(
-      'ui fluid input',
-      { 'action': !!button },
-      className,
-    );
+    const fieldStyle = classNames('ui fluid input', { action: !!button }, className);
 
     if (button) {
       return (
-        <div className={ fieldStyle }>
-          { suggestField }
-          { React.cloneElement(button, {
+        <div className={fieldStyle}>
+          {suggestField}
+          {React.cloneElement(button, {
             onClick: (evt: any) => this.handleSubmit(evt),
             disabled: this.isSubmitDisabled() || this.props.disabled,
-          }) }
-          { children }
+          })}
+          {children}
         </div>
       );
     }
 
     return (
-      <div className={ fieldStyle }>
-        { suggestField }
-        { children }
+      <div className={fieldStyle}>
+        {suggestField}
+        {children}
       </div>
     );
   }

@@ -7,11 +7,13 @@ import SuggestField, { SuggestFieldProps } from './SuggestField';
 import escapeStringRegexp from 'escape-string-regexp';
 import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 
-
 type ForwardedSuggestFieldProps = Omit<
-  SuggestFieldProps<string>, 
-  'onSuggestionsClearRequested' | 'onSuggestionsFetchRequested' | 
-  'getSuggestionValue' | 'renderSuggestion' | 'suggestions'
+  SuggestFieldProps<string>,
+  | 'onSuggestionsClearRequested'
+  | 'onSuggestionsFetchRequested'
+  | 'getSuggestionValue'
+  | 'renderSuggestion'
+  | 'suggestions'
 >;
 
 export interface LocalSuggestFieldProps extends ForwardedSuggestFieldProps {
@@ -31,39 +33,39 @@ class LocalSuggestField extends Component<LocalSuggestFieldProps> {
 
   filterSuggestions = (text: string) => {
     const regex = new RegExp('^' + escapeStringRegexp(text), 'i');
-    return this.props.data.filter(str => regex.test(str));
-  }
+    return this.props.data.filter((str) => regex.test(str));
+  };
 
   onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
-    this.setState({ 
+    this.setState({
       suggestions: this.filterSuggestions(value),
     });
-  }
+  };
 
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
-  }
+  };
 
   renderSuggestion: RenderSuggestion<string> = (dataItem, { query }) => {
     return SuggestionRenderer(query, dataItem);
-  }
+  };
 
   getSuggestionValue = (suggestion: string) => {
     return suggestion;
-  }
+  };
 
   render() {
     return (
-      <SuggestField 
-        { ...this.props }
-        renderSuggestion={ this.renderSuggestion }
-        getSuggestionValue={ this.getSuggestionValue }
-        suggestions={ this.state.suggestions }
-        onChange={ this.props.onChange }
-        onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
-        onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
+      <SuggestField
+        {...this.props}
+        renderSuggestion={this.renderSuggestion}
+        getSuggestionValue={this.getSuggestionValue}
+        suggestions={this.state.suggestions}
+        onChange={this.props.onChange}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
       />
     );
   }

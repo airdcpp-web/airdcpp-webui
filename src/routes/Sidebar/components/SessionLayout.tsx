@@ -19,7 +19,11 @@ import Icon, { IconType } from 'components/semantic/Icon';
 import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
-import { loadLocalProperty, saveLocalProperty, useMobileLayout } from 'utils/BrowserUtils';
+import {
+  loadLocalProperty,
+  saveLocalProperty,
+  useMobileLayout,
+} from 'utils/BrowserUtils';
 
 import IconConstants from 'constants/IconConstants';
 import MenuItemLink from 'components/semantic/MenuItemLink';
@@ -30,19 +34,21 @@ import * as UI from 'types/ui';
 import { getModuleT, translate, toI18nKey } from 'utils/TranslationUtils';
 import { LayoutWidthContext, LayoutWidthContextType } from 'context/LayoutWidthContext';
 
-
-
 export type SessionBaseType = UI.SessionItemBase;
 
-const findItem = <SessionT extends SessionBaseType>(items: SessionT[], id: API.IdType | null): SessionT | undefined => {
-  return items.find(item => item.id === id);
+const findItem = <SessionT extends SessionBaseType>(
+  items: SessionT[],
+  id: API.IdType | null
+): SessionT | undefined => {
+  return items.find((item) => item.id === id);
 };
 
 export interface SessionLayoutProps<
   SessionT extends SessionBaseType,
   SessionApiT extends object = UI.EmptyObject,
   UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
-> extends UI.SessionInfoGetter<SessionT>, Omit<RouteComponentProps, 'match'> {
+> extends UI.SessionInfoGetter<SessionT>,
+    Omit<RouteComponentProps, 'match'> {
   // Unique ID of the section (used for storing and loading the previously open tab)
   baseUrl: string;
 
@@ -75,15 +81,17 @@ export interface SessionLayoutProps<
   // Set to false if the side menu should never be shown (the session will use all width that is available)
   disableSideMenu?: boolean;
 
-  // AccessConstant defining whether the user has edit permission 
+  // AccessConstant defining whether the user has edit permission
   editAccess: API.AccessEnum;
 
-  sessionItemLayout: React.ComponentType<SessionChildProps<SessionT, SessionApiT, UIActionT>>;
+  sessionItemLayout: React.ComponentType<
+    SessionChildProps<SessionT, SessionApiT, UIActionT>
+  >;
 
   newLayout?: React.ComponentType<NewSessionLayoutProps>;
 
   unreadInfoStore: any;
-  
+
   t: UI.TranslateF;
 }
 
@@ -92,11 +100,10 @@ export interface SessionLocationState {
 }
 
 export interface SessionMainLayoutProps<
-  SessionT extends SessionBaseType, 
-  SessionApiT extends object = UI.EmptyObject, 
+  SessionT extends SessionBaseType,
+  SessionApiT extends object = UI.EmptyObject,
   UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > extends Pick<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, 'unreadInfoStore'> {
-
   newButton: React.ReactElement<any> | null;
   listActionMenuGetter: () => React.ReactNode;
   sessionMenuItems: React.ReactNode[];
@@ -119,25 +126,29 @@ interface State<SessionT extends SessionBaseType> {
 }
 
 export type SessionChildProps<
-  SessionT extends SessionBaseType, 
-  SessionApiT extends object = UI.EmptyObject, 
+  SessionT extends SessionBaseType,
+  SessionApiT extends object = UI.EmptyObject,
   UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
-> = Pick<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, 'location' | 'sessionApi' | 'uiActions'> & 
-  { 
-    session: SessionT;
-    sessionT: UI.ModuleTranslator;
-  };
+> = Pick<
+  SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
+  'location' | 'sessionApi' | 'uiActions'
+> & {
+  session: SessionT;
+  sessionT: UI.ModuleTranslator;
+};
 
 export interface NewSessionLayoutProps extends RouteComponentProps {
   sessionT: UI.ModuleTranslator;
 }
 
 class SessionLayout<
-  SessionT extends SessionBaseType, 
+  SessionT extends SessionBaseType,
   SessionApiT extends object,
   UIActionsT extends UI.ActionListType<UI.SessionItemBase>
->  extends React.Component<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, State<SessionT>> {
-
+> extends React.Component<
+  SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
+  State<SessionT>
+> {
   static displayName = 'SessionLayout';
 
   static propTypes = {
@@ -189,7 +200,7 @@ class SessionLayout<
     // Set to false if the side menu should never be shown (the session will use all width that is available)
     disableSideMenu: PropTypes.bool,
 
-    // AccessConstant defining whether the user has edit permission 
+    // AccessConstant defining whether the user has edit permission
     editAccess: PropTypes.string.isRequired,
 
     sessionItemLayout: PropTypes.any.isRequired,
@@ -198,7 +209,7 @@ class SessionLayout<
   };
 
   state: State<SessionT> = {
-    activeItem: null
+    activeItem: null,
   };
 
   static contextType = LayoutWidthContext;
@@ -208,34 +219,36 @@ class SessionLayout<
   getSessionUrl = (id: API.IdType) => {
     invariant(!!id, 'Trying to get session URL without a session');
     return `/${this.props.baseUrl}/session/${id}`;
-  }
+  };
 
   getNewUrl = () => {
     return `/${this.props.baseUrl}/new`;
-  }
+  };
 
   getStorageKey = (props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
     return `${props.baseUrl}_last_active`;
-  }
+  };
 
   pushSession = (id: API.IdType) => {
     History.push(this.getSessionUrl(id));
-  }
+  };
 
   replaceSession = (id: API.IdType) => {
     History.replace(this.getSessionUrl(id));
-  }
+  };
 
   pushNew = () => {
     History.push(this.getNewUrl());
-  }
+  };
 
   hasEditAccess = () => {
     return LoginStore.hasAccess(this.props.editAccess);
-  }
+  };
 
   // LIFECYCLE/REACT
-  UNSAFE_componentWillReceiveProps(nextProps: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) {
+  UNSAFE_componentWillReceiveProps(
+    nextProps: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>
+  ) {
     if (nextProps.location.pathname === this.getNewUrl()) {
       // Don't redirect to it if the "new session" layout is open
       if (this.state.activeItem) {
@@ -250,7 +263,6 @@ class SessionLayout<
     }
 
     // The old tab was closed or we didn't have any session before
-
 
     let newItemPos = 0;
     const oldItem = findItem(this.props.items, this.props.activeId);
@@ -272,7 +284,8 @@ class SessionLayout<
   checkActiveItem = (props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
     // Did we just create this session?
     const routerLocation = props.location;
-    const pending = routerLocation.state && (routerLocation.state as SessionLocationState).pending;
+    const pending =
+      routerLocation.state && (routerLocation.state as SessionLocationState).pending;
 
     // Update the active item
     const activeItem = findItem(props.items, props.activeId);
@@ -283,7 +296,7 @@ class SessionLayout<
           //path: routerLocation.pathname,
           state: {
             pending: false,
-          }
+          },
         });
 
         return true;
@@ -303,7 +316,7 @@ class SessionLayout<
     }
 
     return false;
-  }
+  };
 
   onKeyDown = (event: React.KeyboardEvent) => {
     const { key, altKey } = event;
@@ -342,7 +355,7 @@ class SessionLayout<
         sessionApi.removeSession(item);
       }
     }
-  }
+  };
 
   componentDidMount() {
     // Opening an item directly? Or no items?
@@ -365,45 +378,52 @@ class SessionLayout<
   getItemStatus = (sessionItem: SessionT) => {
     const { itemStatusGetter, itemHeaderIconGetter } = this.props;
     if (itemStatusGetter) {
-      return <div className={ 'ui session-status empty circular left mini label ' + itemStatusGetter(sessionItem) }/>;
+      return (
+        <div
+          className={
+            'ui session-status empty circular left mini label ' +
+            itemStatusGetter(sessionItem)
+          }
+        />
+      );
     }
 
-    return <Icon icon={ itemHeaderIconGetter(sessionItem) }/>;
-  }
+    return <Icon icon={itemHeaderIconGetter(sessionItem)} />;
+  };
 
   getSessionMenuItem = (sessionItem: SessionT) => {
     return (
-      <SessionMenuItem 
-        key={ sessionItem.id } 
-        url={ this.getSessionUrl(sessionItem.id) }
-        name={ this.props.itemNameGetter(sessionItem) }
-        unreadInfoStore={ this.props.unreadInfoStore }
-        status={ this.getItemStatus(sessionItem) }
-        sessionItem={ sessionItem }
-        pushSession={ this.pushSession }
+      <SessionMenuItem
+        key={sessionItem.id}
+        url={this.getSessionUrl(sessionItem.id)}
+        name={this.props.itemNameGetter(sessionItem)}
+        unreadInfoStore={this.props.unreadInfoStore}
+        status={this.getItemStatus(sessionItem)}
+        sessionItem={sessionItem}
+        pushSession={this.pushSession}
       />
     );
-  }
+  };
 
   getItemHeaderTitle = () => {
     const { uiActions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
 
     const { activeItem } = this.state;
     if (!activeItem) {
-      return <div>{ this.props.newCaption }</div>;
+      return <div>{this.props.newCaption}</div>;
     }
 
     let ids;
     if (actionIds) {
-      ids = [ ...actionIds, 'divider', 'removeSession' ];
+      ids = [...actionIds, 'divider', 'removeSession'];
     }
 
     const actionMenu = (
-      <ActionMenu 
-        caption={ itemNameGetter(activeItem) }
-        actions={ uiActions }
-        itemData={ activeItem }
-        ids={ ids }
+      <ActionMenu
+        caption={itemNameGetter(activeItem)}
+        actions={uiActions}
+        itemData={activeItem}
+        ids={ids}
       />
     );
 
@@ -416,7 +436,7 @@ class SessionLayout<
     }
 
     return actionMenu;
-  }
+  };
 
   getItemHeaderDescription = () => {
     const { activeItem } = this.state;
@@ -426,13 +446,13 @@ class SessionLayout<
     }
 
     return itemHeaderDescriptionGetter(activeItem);
-  }
+  };
 
   getItemHeaderIcon = () => {
     const { activeItem } = this.state;
     const { itemHeaderIconGetter, newIcon } = this.props;
-    return <Icon icon={ activeItem ? itemHeaderIconGetter(activeItem) : newIcon }/>;
-  }
+    return <Icon icon={activeItem ? itemHeaderIconGetter(activeItem) : newIcon} />;
+  };
 
   getNewButton = () => {
     if (!this.hasEditAccess() || !this.props.newCaption) {
@@ -440,19 +460,19 @@ class SessionLayout<
     }
 
     return (
-      <SessionNewButton 
-        key="new-button" 
-        title={ this.props.newCaption } 
-        url={ this.getNewUrl() } 
-        pushNew={ this.pushNew }
+      <SessionNewButton
+        key="new-button"
+        title={this.props.newCaption}
+        url={this.getNewUrl()}
+        pushNew={this.pushNew}
       />
     );
-  }
+  };
 
   handleCloseAll = () => {
     const { sessionApi, items } = this.props;
-    items.forEach(session => sessionApi.removeSession(session));
-  }
+    items.forEach((session) => sessionApi.removeSession(session));
+  };
 
   getListActionMenu = () => {
     const { items, t } = this.props;
@@ -461,32 +481,36 @@ class SessionLayout<
     }
 
     return (
-      <MenuItemLink 
-        key="close"
-        onClick={ this.handleCloseAll }
-        icon={ IconConstants.REMOVE }
-      >
-        { translate('Close all', t, UI.Modules.COMMON) }
+      <MenuItemLink key="close" onClick={this.handleCloseAll} icon={IconConstants.REMOVE}>
+        {translate('Close all', t, UI.Modules.COMMON)}
       </MenuItemLink>
     );
-  }
+  };
 
   sessionT = getModuleT(this.props.t, this.props.uiActions.moduleId);
   render() {
-    const { 
-      disableSideMenu, /*width,*/ items, unreadInfoStore, location, t, sessionApi,
-      uiActions, newLayout: NewLayout, sessionItemLayout: SessionItemLayout, activeId 
+    const {
+      disableSideMenu,
+      /*width,*/ items,
+      unreadInfoStore,
+      location,
+      t,
+      sessionApi,
+      uiActions,
+      newLayout: NewLayout,
+      sessionItemLayout: SessionItemLayout,
+      activeId,
     } = this.props;
-    
+
     if (!this.hasEditAccess() && items.length === 0) {
       // Nothing to show
       return (
-        <Message 
-          title={ translate('No items to show', t, UI.Modules.COMMON) } 
-          description={ t<string>(
-            toI18nKey('noSessionEditAccess', UI.Modules.COMMON), 
+        <Message
+          title={translate('No items to show', t, UI.Modules.COMMON)}
+          description={t<string>(
+            toI18nKey('noSessionEditAccess', UI.Modules.COMMON),
             `You aren't allowed to open new sessions`
-          ) }
+          )}
         />
       );
     }
@@ -496,33 +520,38 @@ class SessionLayout<
 
     const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
     return (
-      <Component 
-        itemHeaderTitle={ this.getItemHeaderTitle() }
-        itemHeaderDescription={ this.getItemHeaderDescription() }
-        itemHeaderIcon={ this.getItemHeaderIcon() }
-
-        activeItem={ activeItem }
-        unreadInfoStore={ unreadInfoStore }
+      <Component
+        itemHeaderTitle={this.getItemHeaderTitle()}
+        itemHeaderDescription={this.getItemHeaderDescription()}
+        itemHeaderIcon={this.getItemHeaderIcon()}
+        activeItem={activeItem}
+        unreadInfoStore={unreadInfoStore}
         //closeAction={ actions.actions.removeSession }
-        newButton={ this.getNewButton() }
-        sessionMenuItems={ items.map(this.getSessionMenuItem) }
-        listActionMenuGetter={ this.getListActionMenu }
-        onKeyDown={ this.onKeyDown }
+        newButton={this.getNewButton()}
+        sessionMenuItems={items.map(this.getSessionMenuItem)}
+        listActionMenuGetter={this.getListActionMenu}
+        onKeyDown={this.onKeyDown}
         //moduleId={ actions.moduleId }
-        actions={ uiActions }
-        t={ t }
+        actions={uiActions}
+        t={t}
       >
         <Route
-          path={ this.getSessionUrl(':id') }
-          render={ props => {
+          path={this.getSessionUrl(':id')}
+          render={(props) => {
             if (!activeItem) {
               const { state } = this.props.location;
               if (!!state && (state as SessionLocationState).pending) {
                 // The session was just created
-                return <Loader text={ translate('Waiting for server response', t, UI.Modules.COMMON) }/>;
+                return (
+                  <Loader
+                    text={translate('Waiting for server response', t, UI.Modules.COMMON)}
+                  />
+                );
               } else if (activeId || items.length !== 0) {
                 // Redirecting to a new page
-                return <Loader text={ translate('Loading session', t, UI.Modules.COMMON) }/>;
+                return (
+                  <Loader text={translate('Loading session', t, UI.Modules.COMMON)} />
+                );
               }
 
               console.error('SessionLayout route: active session missing');
@@ -532,26 +561,21 @@ class SessionLayout<
             // We have a session
             return (
               <SessionItemLayout
-                session={ activeItem }
-                sessionApi={ sessionApi }
-                uiActions={ uiActions }
-                location={ location }
-                sessionT={ this.sessionT }
+                session={activeItem}
+                sessionApi={sessionApi}
+                uiActions={uiActions}
+                location={location}
+                sessionT={this.sessionT}
               />
             );
-          } }
+          }}
         />
-        { !!NewLayout && (
+        {!!NewLayout && (
           <Route
-            path={ this.getNewUrl() }
-            render={ props => (
-              <NewLayout
-                { ...props }
-                sessionT={ this.sessionT }
-              />
-            ) }
-          /> 
-        ) }
+            path={this.getNewUrl()}
+            render={(props) => <NewLayout {...props} sessionT={this.sessionT} />}
+          />
+        )}
       </Component>
     );
   }

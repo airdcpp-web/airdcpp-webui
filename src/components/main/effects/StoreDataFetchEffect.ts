@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import LoginStore, { LoginState } from 'stores/LoginStore';
 
-
 import HubActions from 'actions/reflux/HubActions';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
@@ -11,7 +10,6 @@ import EventActions from 'actions/reflux/EventActions';
 import SystemActions from 'actions/reflux/SystemActions';
 
 import { AccessEnum } from 'types/api';
-
 
 const fetchStoreData = () => {
   if (LoginStore.hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
@@ -38,12 +36,9 @@ const fetchStoreData = () => {
 };
 
 export const useStoreDataFetch = (login: LoginState) => {
-  useEffect(
-    () => {
-      if (login.socketAuthenticated) {
-        fetchStoreData();
-      }
-    },
-    [ login.socketAuthenticated ]
-  );
+  useEffect(() => {
+    if (login.socketAuthenticated) {
+      fetchStoreData();
+    }
+  }, [login.socketAuthenticated]);
 };

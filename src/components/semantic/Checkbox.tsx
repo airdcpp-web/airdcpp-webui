@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import 'fomantic-ui-css/components/checkbox';
 import 'fomantic-ui-css/components/checkbox.min.css';
 
-
 export interface CheckboxProps {
   onChange: (checked: boolean) => void;
   type?: string;
@@ -22,7 +21,6 @@ export interface CheckboxProps {
 
 class Checkbox extends React.PureComponent<CheckboxProps> {
   static propTypes = {
-
     // Selection state
     checked: PropTypes.bool.isRequired,
 
@@ -45,8 +43,9 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
       fireOnInit: false,
       onChecked: () => this.props.onChange(true),
       onUnchecked: () => this.props.onChange(false),
-      beforeUnchecked: () => !!this.props.beforeUnchecked ? this.props.beforeUnchecked() : true as any,
-      ...this.props.settings
+      beforeUnchecked: () =>
+        !!this.props.beforeUnchecked ? this.props.beforeUnchecked() : (true as any),
+      ...this.props.settings,
     };
 
     $(this.c).checkbox(settings);
@@ -67,24 +66,16 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
 
     const checkboxStyle = classNames(
       'ui checkbox',
-      { 'disabled': disabled },
-      { 'floating': floating },
+      { disabled: disabled },
+      { floating: floating },
       className,
-      type,
+      type
     );
 
     return (
-      <div 
-        ref={ c => this.c = c! }
-        className={ checkboxStyle }
-        style={ style }
-      >
-        <input type="checkbox" defaultChecked={ checked }/>
-        { !!caption && (
-          <label>
-            { caption }
-          </label>
-        ) }
+      <div ref={(c) => (this.c = c!)} className={checkboxStyle} style={style}>
+        <input type="checkbox" defaultChecked={checked} />
+        {!!caption && <label>{caption}</label>}
       </div>
     );
   }

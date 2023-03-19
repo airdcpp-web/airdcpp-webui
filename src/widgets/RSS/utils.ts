@@ -7,7 +7,6 @@ import * as UI from 'types/ui';
 
 import { FeedItem, FeedNode, RawFeedData } from './types';
 
-
 export const parseNodeContent = (node: FeedNode) => {
   return typeof node === 'string' ? node : node.text;
 };
@@ -26,12 +25,12 @@ export const getUniqueEntryKey = (entry: FeedItem): string => {
 
 const XMLParserOptions: Partial<X2jOptions> = {
   attributesGroupName: 'attr',
-  textNodeName : 'text',
-  parseAttributeValue : true,
-  ignoreAttributes : false,
+  textNodeName: 'text',
+  parseAttributeValue: true,
+  ignoreAttributes: false,
   attributeNamePrefix: '',
   attributeValueProcessor: (name, value) => decode(value, { isAttributeValue: true }),
-  tagValueProcessor : (name, value) => decode(value),
+  tagValueProcessor: (name, value) => decode(value),
 };
 
 export const fetchRSSFeed = async (feedUrl: string) => {
@@ -44,7 +43,10 @@ export const fetchRSSFeed = async (feedUrl: string) => {
   return jsonFeed;
 };
 
-export const parseRSSFeed = (data: RawFeedData, moduleT: UI.ModuleTranslator): FeedItem[] | undefined => {
+export const parseRSSFeed = (
+  data: RawFeedData,
+  moduleT: UI.ModuleTranslator
+): FeedItem[] | undefined => {
   let entries = [];
 
   const invalidFeed = (error: string) => {
@@ -79,7 +81,7 @@ export const parseRSSFeed = (data: RawFeedData, moduleT: UI.ModuleTranslator): F
     }
 
     // Single entry, convert to an array
-    entries = [ entries ];
+    entries = [entries];
   }
 
   return entries;
