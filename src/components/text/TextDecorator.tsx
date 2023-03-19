@@ -1,10 +1,9 @@
-
 import { memo } from 'react';
 
 import ReactLinkify from 'react-linkify';
 
 import { useLocation } from 'react-router-dom';
-import { formatEmojis } from 'utils/EmojiFormat';
+import { formatEmojis } from 'utils/emojify/EmojiFormat';
 
 
 import LinkifyIt from 'linkify-it';
@@ -29,7 +28,7 @@ linkify.add('magnet:', {
     }
 
     return 0;
-  }
+  },
 });
 
 linkify.add('dchub://', {
@@ -43,7 +42,7 @@ linkify.add('dchub://', {
     }
 
     return 0;
-  }
+  },
 });
 
 // Aliases
@@ -56,7 +55,7 @@ const matchDecorator = (text: string) => {
 
 interface TextDecoratorProps {
   emojify?: boolean;
-  text: React.ReactNode;
+  text: string;
 }
 
 // Parses links from plain text and optionally emoticons as well

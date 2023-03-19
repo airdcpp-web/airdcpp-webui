@@ -8,7 +8,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { formatEmojis } from 'utils/EmojiFormat';
+import { formatEmojis } from 'utils/emojify/EmojiFormat';
 
 import { HighlightBold, HighlightHashMagnet, HighlightUrlLink, HighlightTextLink } from './highlights';
 import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
