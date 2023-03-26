@@ -1,4 +1,4 @@
-# airdcpp-webui [![Travis][build-badge]][build] [![npm package][npm-badge]][npm]
+# airdcpp-webui [![Node.js CI][build-badge]][build] [![npm package][npm-badge]][npm]
 
 >This package should be used directly only for development purposes; end users will get it through other projects, such as [AirDC++ Web Client](https://airdcpp-web.github.io). Normal feature request and bug reports should also be posted on [AirDC++ Web Client's issue tracker](https://github.com/airdcpp-web/airdcpp-webclient).
 
@@ -31,8 +31,9 @@ You may start the server by running
 
 Changes made to the source will be updated instantly to the browser while the server is running (there is no need to run the build command).
 
-[build-badge]: https://img.shields.io/travis/airdcpp-web/airdcpp-webui/master.svg?style=flat-square
-[build]: https://travis-ci.org/airdcpp-web/airdcpp-webui
+
+[build-badge]: https://github.com/airdcpp-web/airdcpp-webui/actions/workflows/node.js.yml/badge.svg
+[build]: https://github.com/airdcpp-web/airdcpp-webui/actions/workflows/node.js.yml
 
 [npm-badge]: https://img.shields.io/npm/v/airdcpp-webui.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/airdcpp-webui
