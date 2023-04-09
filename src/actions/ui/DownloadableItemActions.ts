@@ -229,14 +229,14 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
   viewText: {
     displayName: 'View as text',
     access: API.AccessEnum.VIEW_FILE_EDIT,
-    icon: IconConstants.OPEN,
+    icon: IconConstants.VIEW,
     filter: viewText,
     handler: handleViewText,
   },
   viewImage: {
     displayName: 'View image',
     access: API.AccessEnum.VIEW_FILE_EDIT,
-    icon: IconConstants.OPEN,
+    icon: IconConstants.VIEW,
     filter: viewImage,
     handler: handleViewImage,
   },
@@ -253,14 +253,14 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
   viewVideo: {
     displayName: 'Play video',
     access: API.AccessEnum.VIEW_FILE_EDIT,
-    icon: IconConstants.OPEN,
+    icon: IconConstants.VIEW,
     filter: viewVideo,
     handler: handleViewVideo,
   },
   viewAudio: {
     displayName: 'Play audio',
     access: API.AccessEnum.VIEW_FILE_EDIT,
-    icon: IconConstants.OPEN,
+    icon: IconConstants.VIEW,
     filter: viewAudio,
     handler: handleViewAudio,
   },

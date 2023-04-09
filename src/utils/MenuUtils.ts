@@ -25,7 +25,7 @@ const filterItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   return filter(action, parseItemData<ItemDataT>(props.itemData) as ItemDataT);
 };
 
-const isDivider = (id: string) => id.startsWith('divider');
+export const isDivider = (id: string) => id.startsWith('divider');
 
 // Get IDs matching the provided filter
 const filterItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(

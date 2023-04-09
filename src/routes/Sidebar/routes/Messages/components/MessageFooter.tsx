@@ -4,7 +4,7 @@ import PrivateChatActions from 'actions/ui/PrivateChatActions';
 
 import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import Loader from 'components/semantic/Loader';
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import EncryptionState from 'components/EncryptionState';
 
 import * as API from 'types/api';

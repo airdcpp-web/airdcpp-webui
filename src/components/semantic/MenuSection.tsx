@@ -15,7 +15,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ caption, icon, children }) =>
     <>
       {!!caption && (
         <div className="header">
-          {!!icon ? (
+          {!icon ? (
             caption
           ) : (
             <>

@@ -48,12 +48,8 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     return nextProps.caption !== this.props.caption;
   }
 
-  getChildren = () => {
-    return (
-      <div className="ui text menu vertical table-items">
-        {this.props.children(this.popupNode.hide)}
-      </div>
-    );
+  getChildren = (hide: () => void) => {
+    return <>{this.props.children(this.popupNode.hide)}</>;
   };
 
   render() {

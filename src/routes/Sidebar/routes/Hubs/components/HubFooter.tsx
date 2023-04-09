@@ -21,7 +21,7 @@ import {
 } from 'decorators/SocketSubscriptionDecorator';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import HubActions from 'actions/ui/HubActions';
 
 interface HubFooterProps {

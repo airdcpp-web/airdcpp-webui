@@ -66,6 +66,10 @@ export default {
   OPEN: 'external',
   FIND: 'find',
   OPTIONS: 'list',
+  DETAILS: 'info circle',
+  EXTERNAL: 'external',
+  VIEW: 'external',
+  // BROWSE: 'external',
 
   INFO: 'blue info',
   WARNING: 'yellow warning sign',

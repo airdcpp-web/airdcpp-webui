@@ -1,7 +1,7 @@
 //import PropTypes from 'prop-types';
 import * as React from 'react';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import RSSActions from '../actions/RSSActions';

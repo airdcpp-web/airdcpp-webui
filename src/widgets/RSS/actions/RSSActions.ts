@@ -69,7 +69,7 @@ const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
 export const RSSActions: UI.ActionListType<RSSItemData> = {
   openLink: {
     displayName: 'Open link',
-    icon: IconConstants.OPEN,
+    icon: IconConstants.EXTERNAL,
     filter: hasLink,
     handler: handleOpenLink,
   },

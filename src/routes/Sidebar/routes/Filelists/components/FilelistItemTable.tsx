@@ -4,7 +4,7 @@ import * as React from 'react';
 import FilelistItemActions from 'actions/ui/FilelistItemActions';
 
 import { dupeToStringType } from 'utils/TypeConvert';
-import { TableActionMenu } from 'components/menu';
+import { TableActionMenu } from 'components/action-menu';
 
 import FilelistViewStore from 'stores/FilelistViewStore';
 import FilelistSessionStore from 'stores/FilelistSessionStore';

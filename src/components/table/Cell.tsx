@@ -5,7 +5,7 @@ import {
   TableDownloadMenu,
   TableActionMenuProps,
   TableDownloadMenuProps,
-} from 'components/menu';
+} from 'components/action-menu';
 import {
   formatDecimal,
   formatAbbreviatedDuration,
@@ -70,7 +70,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
 export interface ActionCellProps<
   CellDataT,
   ItemDataT extends UI.ActionMenuItemDataValueType
-> extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 't'>,
+> extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 't' | 'children'>,
     Omit<TableActionMenuProps<ItemDataT>, 'caption' | 'itemData'> {}
 
 interface FileItemBase {
@@ -83,6 +83,7 @@ export const FileActionCell = <
 >({
   cellData,
   rowDataGetter,
+  children,
   ...props
 }: ActionCellProps<CellDataT, ItemDataT>) => (
   <TableActionMenu
@@ -218,7 +219,7 @@ export type FileDownloadCellClickHandler = (
 export interface FileDownloadCellProps<
   CellDataT,
   ItemDataT extends UI.DownloadableItemInfo
-> extends RowWrapperCellChildProps<CellDataT, ItemDataT>,
+> extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 'children'>,
     Omit<TableDownloadMenuProps<ItemDataT>, 'user' | 'itemInfoGetter' | 'caption'> {
   userGetter: (rowData: ItemDataT) => UI.DownloadSource;
   clickHandlerGetter?: FileDownloadCellClickHandler;

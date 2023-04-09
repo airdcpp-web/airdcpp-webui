@@ -4,7 +4,7 @@ import { Prompt } from 'react-router-dom';
 import FilelistItemActions from 'actions/ui/FilelistItemActions';
 
 import BrowserBar from 'components/browserbar/BrowserBar';
-import { ActionMenu, DownloadMenu } from 'components/menu';
+import { ActionMenu, DownloadMenu } from 'components/action-menu';
 
 import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';

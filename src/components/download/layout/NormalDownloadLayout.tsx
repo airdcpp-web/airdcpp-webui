@@ -25,7 +25,7 @@ export const NormalDownloadLayout: React.FC<LayoutProps> = ({
           className="fluid basic"
           caption={translate('Browse', t, UI.Modules.COMMON)}
           onClick={handleBrowse}
-          icon={IconConstants.OPEN}
+          icon={IconConstants.BROWSE}
         />
       )}
     </div>

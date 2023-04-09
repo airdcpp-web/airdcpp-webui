@@ -10,3 +10,10 @@ export interface ContextMenuItem {
   urls: string[];
   form_definitions?: FormFieldDefinition[];
 }
+
+export interface GroupedContextMenuItem {
+  id: string;
+  title: string;
+  icon: ContextMenuItemIconInfo;
+  items: ContextMenuItem[];
+}

@@ -8,7 +8,7 @@ import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/R
 
 import 'mobile.css';
 import { MainLayoutProps } from './AuthenticatedApp';
-import { MenuIcon } from 'components/menu';
+import { MenuIcon } from 'components/action-menu';
 
 const MainLayoutMobile: React.FC<MainLayoutProps> = memo(function MainLayoutMobile(
   props

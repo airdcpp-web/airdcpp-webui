@@ -8,7 +8,7 @@ import ExternalLink from 'components/ExternalLink';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import MenuConstants from 'constants/MenuConstants';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
@@ -65,6 +65,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
         actions={ExtensionActions.manage}
         ids={['configure', 'divider', 'remove']}
         remoteMenuId={MenuConstants.EXTENSION}
+        remoteMenuNestingThreshold={10}
         itemData={installedPackage}
         className="right floated"
         caption={moduleT.translate('Manage...')}
@@ -78,7 +79,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
         className="ui right floated button"
         url={ExtensionConstants.NPM_HOMEPAGE_URL + npmPackage.name}
       >
-        <Icon icon={IconConstants.OPEN} />
+        <Icon icon={IconConstants.EXTERNAL} />
         {moduleT.translate('Read more')}
       </ExternalLink>
     )}

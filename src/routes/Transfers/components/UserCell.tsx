@@ -3,7 +3,7 @@ import * as React from 'react';
 import TransferActions from 'actions/ui/TransferActions';
 import { UserFileActions } from 'actions/ui/UserActions';
 
-import { TableActionMenu, TableUserMenu } from 'components/menu';
+import { TableActionMenu, TableUserMenu } from 'components/action-menu';
 import IconConstants from 'constants/IconConstants';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 

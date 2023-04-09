@@ -1,5 +1,5 @@
 import { userOnlineStatusToColor } from 'utils/TypeConvert';
-import { UserMenu } from 'components/menu';
+import { UserMenu } from 'components/action-menu';
 import UserIcon from 'components/icon/UserIcon';
 
 import * as API from 'types/api';

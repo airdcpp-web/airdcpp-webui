@@ -10,7 +10,7 @@ import { Column } from 'fixed-data-table-2';
 import { CheckboxCell, ActionMenuCell } from 'components/table/Cell';
 import ConnectStateCell from './ConnectStateCell';
 
-import { TableActionMenu } from 'components/menu';
+import { TableActionMenu } from 'components/action-menu';
 import ActionButton from 'components/ActionButton';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 

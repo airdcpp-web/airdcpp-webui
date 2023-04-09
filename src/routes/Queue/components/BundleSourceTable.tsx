@@ -9,7 +9,7 @@ import QueueConstants from 'constants/QueueConstants';
 
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
-import { ActionMenu, UserMenu } from 'components/menu';
+import { ActionMenu, UserMenu } from 'components/action-menu';
 import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';

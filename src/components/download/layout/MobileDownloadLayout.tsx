@@ -9,6 +9,7 @@ import * as UI from 'types/ui';
 
 import Icon from 'components/semantic/Icon';
 import { BrowseHandler, LayoutProps } from '../types';
+import IconConstants from 'constants/IconConstants';
 
 const appendBrowseItem = (
   menuItems: React.ReactNode[],
@@ -23,7 +24,7 @@ const appendBrowseItem = (
     ...menuItems,
     <MenuItemLink key="browse" onClick={handleBrowse}>
       {translate('Browse', t, UI.Modules.COMMON)}
-      <Icon icon="external" />
+      <Icon icon={IconConstants.BROWSE} />
     </MenuItemLink>,
   ];
 };

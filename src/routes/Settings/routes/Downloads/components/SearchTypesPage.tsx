@@ -6,7 +6,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

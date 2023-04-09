@@ -1,0 +1,34 @@
+import classNames from 'classnames';
+
+import * as UI from 'types/ui';
+import MenuItemLink from 'components/semantic/MenuItemLink';
+import Icon from 'components/semantic/Icon';
+
+// Convert action menu items to React components for regular Dropdown component
+
+const buildChildMenu = (items: UI.ActionMenuItem[], className?: string) => {
+  return <div className={classNames('menu', className)}>{items.map(buildMenuItem)}</div>;
+};
+
+const buildMenuItem = (menuItem: UI.ActionMenuItem, index: number) => {
+  const { item, id, children: childMenu } = menuItem;
+  if (!item) {
+    return <div key={`divider-${index}`} className="ui divider" />;
+  }
+
+  if (childMenu) {
+    const { children, ...other } = item;
+    return (
+      <MenuItemLink key={id} className="submenu" {...other}>
+        {children}
+        <Icon icon="dropdown" />
+        {buildChildMenu(childMenu)}
+      </MenuItemLink>
+    );
+  }
+
+  return <MenuItemLink key={id} {...item} />;
+};
+
+export const buildMenu: UI.ActionMenuComponentBuilder = (items) =>
+  items.map(buildMenuItem);

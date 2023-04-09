@@ -11,6 +11,7 @@ export interface MenuItemLinkProps extends React.AnchorHTMLAttributes<HTMLAnchor
   onClick: (evt: React.SyntheticEvent<any>) => void;
   active?: boolean;
   disabled?: boolean;
+  children: React.ReactNode | React.ReactNode[];
 }
 
 const MenuItemLink: React.FC<MenuItemLinkProps> = ({

@@ -51,7 +51,7 @@ section#container-main,
   font-size: inherit;
 }
 
-.ui.dropdown .menu > .item {
+.ui.dropdown .menu > .item:not(.submenu) {
   max-width: 300px;
   overflow-x: hidden;
 }
@@ -202,6 +202,45 @@ section#container-main,
 }
 
 /* Count label transitions end */
+
+
+/* Table dropdown transitions start */
+.mainmenu-transition-enter {
+  transform: translateX(100%);
+}
+
+.mainmenu-transition-enter-active {
+  transform: translateX(0);
+  transition: transform 200ms ease-in-out;
+}
+
+.mainmenu-transition-exit {
+  display: none !important;
+}
+
+.mainmenu-transition-exit-active {
+  display: none !important;
+}
+
+
+.submenu-transition-enter {
+  transform: translateX(-100%);
+}
+
+.submenu-transition-enter-active {
+  transform: translateX(0%);
+  transition: transform 200ms ease-in-out;
+}
+
+.submenu-transition-exit {
+  display: none !important;
+}
+
+.submenu-transition-exit-active {
+  display: none !important;
+}
+
+/* Table dropdown transitions end */
 
 .sidebar .icon-panel .icon.large {
   font-size: 1.3em;

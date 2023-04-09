@@ -15,10 +15,9 @@ import {
   FileDownloadCell,
   DecimalCell,
 } from 'components/table/Cell';
-import { TableActionMenu } from 'components/menu';
+import { TableActionMenu, TableUserMenu } from 'components/action-menu';
 
 import { dupeToStringType } from 'utils/TypeConvert';
-import { TableUserMenu } from 'components/menu';
 import { UserFileActions } from 'actions/ui/UserActions';
 import Message from 'components/semantic/Message';
 

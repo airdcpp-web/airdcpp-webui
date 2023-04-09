@@ -4,6 +4,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 
 import * as API from 'types/api';
 import { TranslateF } from './common';
+import { IconType } from 'components/semantic/Icon';
 
 export type ActionIdType = API.IdType | object;
 export type ActionMenuObjectItemData = { id: ActionIdType };
@@ -108,3 +109,31 @@ export interface ModuleActions<
   subId?: string;
   actions: ActionsT;
 }
+
+interface MenuItemBase {
+  // className?: string;
+  icon?: IconType;
+  disabled?: boolean;
+}
+export interface ActionMenuItemType extends MenuItemBase {
+  onClick: (evt: React.SyntheticEvent<any>) => void;
+  active?: boolean;
+  children: React.ReactNode;
+}
+
+/*export interface RouterMenuItem extends MenuItemBase {
+  url: string;
+}*/
+
+// type MenuItemType = ActionMenuItem | RouterMenuItem;
+
+export interface ActionMenuItem {
+  id: string;
+  item?: ActionMenuItemType;
+  children?: ActionMenuItem[];
+}
+
+export type ActionMenuComponentBuilder = (
+  items: ActionMenuItem[],
+  onClickItem?: () => void
+) => React.ReactNode;

@@ -6,7 +6,6 @@ import { PriorityEnum } from 'constants/PriorityConstants';
 
 import TableDropdown, { DropdownCloseHandler } from 'components/semantic/TableDropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
-import EmptyDropdown from 'components/semantic/EmptyDropdown';
 
 import LoginStore from 'stores/LoginStore';
 
@@ -15,6 +14,7 @@ import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { EmptyDropdownCaption } from 'components/semantic/EmptyDropdown';
 
 interface PriorityMenuProps {
   itemPrio: API.QueuePriority;
@@ -103,7 +103,7 @@ class PriorityMenu extends Component<PriorityMenuProps> {
     }
 
     if (!LoginStore.hasAccess(API.AccessEnum.QUEUE_EDIT)) {
-      return <EmptyDropdown caption={caption} />;
+      return <EmptyDropdownCaption caption={caption} />;
     }
 
     return (

@@ -3,7 +3,7 @@ import * as React from 'react';
 import ShareProfileActions from 'actions/ui/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 
 import { Link } from 'react-router-dom';
 import Message from 'components/semantic/Message';

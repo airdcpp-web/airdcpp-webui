@@ -11,7 +11,7 @@ import { Column } from 'fixed-data-table-2';
 import ShareDirectoryDialog from 'routes/Share/components/ShareDirectoryDialog';
 import ShareProfileFilter from 'components/table/ShareProfileFilter';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import RefreshCell from 'routes/Share/components/RefreshCell';
 
 import LoginStore from 'stores/LoginStore';

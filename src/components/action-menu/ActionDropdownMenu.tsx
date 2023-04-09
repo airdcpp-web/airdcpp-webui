@@ -6,7 +6,8 @@ import SectionedDropdown, {
 import MenuSection from 'components/semantic/MenuSection';
 import ActionMenuDecorator, {
   ActionMenuDecoratorChildProps,
-} from 'decorators/menu/ActionMenuDecorator';
+} from 'components/action-menu/decorators/ActionMenuDecorator';
+import { buildMenu } from './builder/expandMenuBuilder';
 
 export interface ActionMenuProps extends SectionedDropdownProps {
   header?: React.ReactNode;
@@ -22,6 +23,9 @@ const ActionDropdownMenu = ({
   </SectionedDropdown>
 );
 
-const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any>(ActionDropdownMenu);
+const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any>(
+  ActionDropdownMenu,
+  buildMenu
+);
 
 export { ActionMenuDecorated as ActionMenu };

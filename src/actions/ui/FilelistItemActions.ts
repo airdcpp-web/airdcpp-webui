@@ -61,7 +61,7 @@ const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
   },
   details: {
     displayName: 'Details',
-    icon: IconConstants.OPEN,
+    icon: IconConstants.DETAILS,
     handler: handleItemDetails,
     filter: filterDetails,
   },

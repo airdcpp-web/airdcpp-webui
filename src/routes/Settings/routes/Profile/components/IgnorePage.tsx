@@ -7,7 +7,7 @@ import DataProviderDecorator, {
 } from 'decorators/DataProviderDecorator';
 import Message from 'components/semantic/Message';
 
-import { UserMenu } from 'components/menu';
+import { UserMenu } from 'components/action-menu';
 
 import * as API from 'types/api';
 import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';

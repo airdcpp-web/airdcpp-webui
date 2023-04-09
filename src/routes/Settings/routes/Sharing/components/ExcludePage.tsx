@@ -6,7 +6,7 @@ import ShareExcludeActions from 'actions/ui/ShareExcludeActions';
 import ShareConstants from 'constants/ShareConstants';
 
 import ActionButton from 'components/ActionButton';
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,

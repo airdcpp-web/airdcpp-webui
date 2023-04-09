@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { UserMenu } from 'components/menu';
+import { UserMenu } from 'components/action-menu';
 
 import * as API from 'types/api';
 

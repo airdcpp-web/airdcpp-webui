@@ -9,7 +9,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import FavoriteDirectoryDialog from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryDialog';
 
 import * as API from 'types/api';

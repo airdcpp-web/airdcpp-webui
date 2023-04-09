@@ -12,7 +12,7 @@ import QueueBundleViewStore from 'stores/QueueBundleViewStore';
 import BundleFileDialog from 'routes/Queue/components/BundleFileDialog';
 import SourceDialog from 'routes/Queue/components/BundleSourceDialog';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import Message from 'components/semantic/Message';
 
 import {

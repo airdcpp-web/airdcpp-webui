@@ -10,7 +10,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import { formatRelativeTime } from 'utils/ValueFormat';
 
 import * as API from 'types/api';

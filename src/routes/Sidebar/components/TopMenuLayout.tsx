@@ -5,7 +5,7 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 import ActionButton from 'components/ActionButton';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
-import { MenuIcon } from 'components/menu/MenuIcon';
+import { MenuIcon } from 'components/icon/MenuIcon';
 import { SessionMainLayoutProps } from './SessionLayout';
 
 import * as UI from 'types/ui';

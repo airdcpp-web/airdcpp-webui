@@ -27,7 +27,7 @@ const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({ data, locatio
 const SearchActions: UI.ActionListType<API.GroupedSearchResult> = {
   result: {
     displayName: 'Result details',
-    icon: IconConstants.OPEN,
+    icon: IconConstants.DETAILS,
     handler: handleResult,
   },
   browseContent: {

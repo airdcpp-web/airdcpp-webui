@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { formatRelativeTime, formatSize } from 'utils/ValueFormat';
 
-import { DownloadMenu } from 'components/menu';
+import { DownloadMenu } from 'components/action-menu';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

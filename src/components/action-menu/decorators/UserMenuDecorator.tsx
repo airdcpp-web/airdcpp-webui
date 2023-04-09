@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
@@ -33,27 +32,6 @@ export default function <DropdownPropsT extends object>(
     static defaultProps: Pick<UserMenuDecoratorProps, 'directory'> = {
       directory: '/',
     };
-
-    /*static propTypes = {
-      // Filelist directory to use for browsing the list
-      directory: PropTypes.string,
-  
-      // Hinted user
-      user: PropTypes.shape({
-        cid: PropTypes.string,
-        hub_url: PropTypes.string
-      }).isRequired,
-  
-      // No icon is added by default
-      // Set the 'simple' to use a single color icon for all users
-      userIcon: PropTypes.oneOfType([
-        PropTypes.bool,
-        PropTypes.string,
-      ]),
-  
-      // Optional custom caption to use
-      text : PropTypes.node,
-    };*/
 
     itemData: ActionUserData;
 

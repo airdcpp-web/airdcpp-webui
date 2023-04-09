@@ -2,25 +2,27 @@ import TableDropdown, { TableDropdownProps } from 'components/semantic/TableDrop
 
 import ActionMenuDecorator, {
   ActionMenuDecoratorProps,
-} from 'decorators/menu/ActionMenuDecorator';
+} from './decorators/ActionMenuDecorator';
 import DownloadMenuDecorator, {
   DownloadMenuDecoratorProps,
-} from 'decorators/menu/DownloadMenuDecorator';
+} from './decorators/DownloadMenuDecorator';
 import UserMenuDecorator, {
   UserMenuDecoratorProps,
-} from 'decorators/menu/UserMenuDecorator';
+} from './decorators/UserMenuDecorator';
 
 import { DropdownProps } from 'components/semantic/Dropdown';
 
 import * as UI from 'types/ui';
 import { ActionMenuProps, ActionMenu } from './ActionDropdownMenu';
+import { buildMenu } from './builder/slidingMenuBuilder';
 
 type TableActionMenuDropdownProps = Omit<TableDropdownProps, 'children' | 'caption'>;
 
 export type TableActionMenuProps<ItemDataT extends UI.ActionMenuItemDataValueType> =
   TableActionMenuDropdownProps & ActionMenuDecoratorProps<ItemDataT>;
 export const TableActionMenu = ActionMenuDecorator<TableActionMenuDropdownProps, any>(
-  TableDropdown
+  TableDropdown,
+  buildMenu
 );
 
 export type UserMenuProps = UserMenuDecoratorProps & ActionMenuProps;

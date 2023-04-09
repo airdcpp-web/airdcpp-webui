@@ -11,7 +11,7 @@ import SideMenuLayout from './SideMenuLayout';
 
 import '../sessions.css';
 
-import { ActionMenu } from 'components/menu';
+import { ActionMenu } from 'components/action-menu';
 import SessionNewButton from './SessionNewButton';
 import SessionMenuItem from './SessionMenuItem';
 

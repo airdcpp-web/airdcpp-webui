@@ -8,7 +8,7 @@ import { formatConnection } from 'utils/ValueFormat';
 
 import SearchConstants from 'constants/SearchConstants';
 
-import { UserMenu } from 'components/menu';
+import { UserMenu } from 'components/action-menu';
 import { UserFileActions } from 'actions/ui/UserActions';
 
 import * as API from 'types/api';
