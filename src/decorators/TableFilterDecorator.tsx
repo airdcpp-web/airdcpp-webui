@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import DataProviderDecorator, {
@@ -14,7 +13,7 @@ interface FilterType {
 }
 
 export interface TableFilterDecoratorProps {
-  viewUrl: string;
+  store: any;
 }
 
 export interface TableFilterDecoratorDataProps {
@@ -33,13 +32,9 @@ export default function <PropsT>(
     TableFilterDecoratorProps &
     DataProviderDecoratorChildProps &
     TableFilterDecoratorDataProps;
-  class TableFilterDecorator extends React.PureComponent<Props> {
-    //static propTypes = {
-    //  viewUrl: PropTypes.string.isRequired,
-    //  filter: PropTypes.object.isRequired,
-    //};
 
-    onFilterUpdated = (
+  const TableFilterDecorator = (props: Props) => {
+    const onFilterUpdated = (
       pattern: string,
       method: API.FilterMethod = API.FilterMethod.PARTIAL
     ) => {
@@ -49,23 +44,33 @@ export default function <PropsT>(
         property: propertyName,
       } as API.TableFilter;
 
-      const { viewUrl, filter } = this.props;
-      SocketService.put(viewUrl + '/filter/' + filter.id, data).catch(
-        (error: ErrorResponse) => console.error('Failed to add table filter')
+      const { store, filter } = props;
+      SocketService.put(`${store.viewUrl}/filter/${filter.id}`, data).catch(
+        (error: ErrorResponse) => console.error('Failed to add table filter', error)
       );
     };
 
-    render() {
-      return <Component {...this.props} onFilterUpdated={this.onFilterUpdated} />;
-    }
-  }
+    React.useLayoutEffect(() => {
+      return () => {
+        const { store, filter } = props;
+        if (store.active) {
+          SocketService.delete(`${store.viewUrl}/filter/${filter.id}`).catch(
+            (error: ErrorResponse) =>
+              console.error('Failed to delete table filter', error)
+          );
+        }
+      };
+    }, []);
+
+    return <Component {...props} onFilterUpdated={onFilterUpdated} />;
+  };
 
   return DataProviderDecorator<
     PropsT & TableFilterDecoratorProps,
     TableFilterDecoratorDataProps
   >(TableFilterDecorator, {
     urls: {
-      filter: ({ viewUrl }, socket) => socket.post(`${viewUrl}/filter`),
+      filter: ({ store }, socket) => socket.post(`${store.viewUrl}/filter`),
     },
     loaderText: null,
   });

@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import TextFilter, { TextFilterProps } from './TextFilter';
@@ -32,7 +31,6 @@ export interface TableFooterProps {
   customFilter?: CustomTableFilter;
   store: any;
   textFilterProps?: TextFilterProps;
-  // viewId?: string | number;
 }
 
 const TableFooter: React.FC<TableFooterProps> = ({
@@ -44,21 +42,11 @@ const TableFooter: React.FC<TableFooterProps> = ({
   <div className="table-footer">
     {footerData}
     <div className="filter item">
-      {!CustomFilter ? null : <CustomFilter viewUrl={store.viewUrl} />}
-      <TextFilter
-        viewUrl={store.viewUrl}
-        //viewId={ viewId }
-        {...textFilterProps}
-      />
+      {!CustomFilter ? null : <CustomFilter store={store} />}
+      <TextFilter store={store} {...textFilterProps} />
       <CountInfo store={store} />
     </div>
   </div>
 );
-
-/*TableFooter.propTypes = {
-  customFilter: PropTypes.node,
-  footerData: PropTypes.node,
-  store: PropTypes.object.isRequired,
-};*/
 
 export default TableFooter;

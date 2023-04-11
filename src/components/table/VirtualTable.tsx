@@ -45,7 +45,7 @@ class VirtualTable extends React.PureComponent<VirtualTableProps> {
     sessionStore: PropTypes.object,
 
     // Custom filter that will be displayed in addition to regular text filter
-    customFilter: PropTypes.node,
+    customFilter: PropTypes.elementType,
 
     // Filter that is always applied for source items (those will never be displayed or included in the total count)
     sourceFilter: PropTypes.object,
