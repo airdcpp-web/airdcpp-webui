@@ -4,7 +4,8 @@ import { ModuleTranslator } from './modules';
 import tcomb from 'utils/tcomb-form';
 import { EmptyObject } from './common';
 
-export type FormValueBase = API.SettingValueBase | object;
+export type FormObjectValue = Record<string, any>;
+export type FormValueBase = API.SettingValueBase | FormObjectValue;
 export type FormValue = API.SettingValue<FormValueBase>;
 export type FormValueMap = API.SettingValueMap<FormValueBase | EmptyObject>;
 

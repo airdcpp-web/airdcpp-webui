@@ -16,14 +16,14 @@ type ForwardedSuggestFieldProps<SuggestionT> = Omit<
   | 'renderSuggestion'
   | 'suggestions'
 >;
-export interface RemoteSuggestFieldProps<SuggestionT>
+export interface RemoteSuggestFieldProps<SuggestionT extends Record<string, any>>
   extends ForwardedSuggestFieldProps<SuggestionT> {
   valueField: string;
   descriptionField: string;
   url: string;
 }
 
-class RemoteSuggestField<SuggestionT> extends Component<
+class RemoteSuggestField<SuggestionT extends Record<string, any>> extends Component<
   RemoteSuggestFieldProps<SuggestionT>
 > {
   static propTypes = {

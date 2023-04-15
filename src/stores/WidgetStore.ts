@@ -85,7 +85,7 @@ const createWidget = (
     });
 
     return reducedLayouts;
-  }, {});
+  }, {} as Layouts);
 };
 
 const createDefaultWidget = <SettingsT>(
@@ -206,7 +206,7 @@ const Store = {
       }
 
       return layouts;
-    }, {});
+    }, {} as Layouts);
 
     (this as any).trigger(this.layouts);
   },

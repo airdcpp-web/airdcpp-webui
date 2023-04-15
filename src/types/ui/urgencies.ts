@@ -1,3 +1,5 @@
+import * as API from 'types/api';
+
 export const enum UrgencyEnum {
   HIGHEST = 7,
   HIGH = 6,
@@ -14,3 +16,9 @@ export const enum UrgencyEnum {
 export interface UrgencyCountMap {
   [key: number]: number;
 }
+
+export type ChatMessageUrcencies = Record<keyof API.UnreadChatMessageCounts, UrgencyEnum>;
+export type StatusMessageUrcencies = Record<
+  keyof API.UnreadStatusMessageCounts,
+  UrgencyEnum
+>;

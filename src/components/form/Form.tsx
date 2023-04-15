@@ -36,7 +36,7 @@ const optionHelpFormatter = (text: string) => (
 
 // Reduces an array of field setting objects by calling props.onFieldSetting
 const fieldOptionReducer = (
-  reducedOptions: tcomb.form.TcombOptions,
+  reducedOptions: Record<string, tcomb.form.TcombOptions>,
   fieldDefinitions: UI.FormFieldDefinition,
   onFieldSetting: FormFieldSettingHandler<UI.FormValueMap> | undefined,
   formT: UI.ModuleTranslator,
@@ -55,17 +55,20 @@ const fieldOptionReducer = (
   }
 
   if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
-    reducedOptions[fieldDefinitions.key].fields = {};
-    fieldDefinitions.definitions!.reduce((reduced, cur) => {
-      return fieldOptionReducer(
-        reduced,
-        cur,
-        onFieldSetting,
-        formT,
-        formValue,
-        optionTitleFormatter
-      );
-    }, reducedOptions[fieldDefinitions.key].fields);
+    // reducedOptions[fieldDefinitions.key].fields = {};
+    reducedOptions[fieldDefinitions.key].fields = fieldDefinitions.definitions!.reduce(
+      (reduced, cur) => {
+        return fieldOptionReducer(
+          reduced,
+          cur,
+          onFieldSetting,
+          formT,
+          formValue,
+          optionTitleFormatter
+        );
+      },
+      {}
+    );
   }
 
   return reducedOptions;
@@ -237,7 +240,7 @@ class Form<
     return mergedValue;
   };
 
-  onFieldValueChanged = (value: Partial<ValueType>, valueKeyPath: string[]) => {
+  onFieldValueChanged = (value: Partial<ValueType>, valueKeyPath: tcomb.form.Path) => {
     if (!this.props.onFieldChanged) {
       return;
     }
@@ -250,7 +253,7 @@ class Form<
       findFieldValueByPath(value, valueKeyPath)
     );
 
-    const promise = this.props.onFieldChanged(fieldKey, value, !equal);
+    const promise = this.props.onFieldChanged(fieldKey as string, value, !equal);
     if (!!promise) {
       promise.then(
         (updatedFields) => this.mergeFields(value, updatedFields),
@@ -261,7 +264,7 @@ class Form<
 
   onChange: tcomb.form.TCombFormProps['onChange'] = (
     value: Partial<ValueType>,
-    valueKeyPath: string[],
+    valueKeyPath: tcomb.form.Path,
     kind
   ) => {
     if (kind) {
@@ -272,9 +275,9 @@ class Form<
         // Set default fields for the newly added value
         const fieldDef = this.props.fieldDefinitions.find((def) => def.key === rootKey);
         if (!!fieldDef && !!fieldDef.definitions) {
-          const list = value[rootKey];
+          const list = value[rootKey]! as UI.FormValueMap[];
           if (!!list) {
-            const listItemPos = valueKeyPath[1];
+            const listItemPos = valueKeyPath[1] as number;
             list[listItemPos] = normalizeSettingValueMap(
               list[listItemPos],
               fieldDef.definitions

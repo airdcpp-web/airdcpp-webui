@@ -48,7 +48,11 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
         },
         body: Object.keys(data)
           .map((key) => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+            return (
+              encodeURIComponent(key) +
+              '=' +
+              encodeURIComponent((data as Record<string, string>)[key])
+            );
           })
           .join('&'),
       });

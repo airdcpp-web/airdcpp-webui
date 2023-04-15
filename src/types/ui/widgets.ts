@@ -2,7 +2,7 @@ import { FormFieldDefinition } from './form';
 import { ModuleActions } from './actions';
 import { ModuleTranslator } from './modules';
 
-export interface WidgetSettings<SettingsT = object> {
+export interface WidgetSettings<SettingsT = Record<string, any>> {
   widget: SettingsT;
   name?: string;
 }

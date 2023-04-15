@@ -140,7 +140,7 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
 
 const reducePermissionToOption = (
   options: API.SettingEnumOption[],
-  key: string,
+  key: keyof typeof AccessConstants,
   moduleT: UI.ModuleTranslator
 ) => {
   const captionEntry = AccessCaptions[key];
@@ -216,7 +216,12 @@ class WebUserDialog extends Component<Props> {
     const permissions = this.entry.find((def) => def.key === 'permissions')!;
     Object.assign(permissions, {
       options: Object.keys(AccessConstants).reduce(
-        (reduced, cur) => reducePermissionToOption(reduced, cur, permissionT),
+        (reduced, cur) =>
+          reducePermissionToOption(
+            reduced,
+            cur as keyof typeof AccessConstants,
+            permissionT
+          ),
         []
       ),
     });

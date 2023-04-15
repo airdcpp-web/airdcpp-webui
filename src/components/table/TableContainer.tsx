@@ -37,7 +37,7 @@ export type TableContainerProps = React.PropsWithChildren<{
 interface State {
   width: number;
   height: number;
-  columnWidths: object;
+  columnWidths: Record<string, number>;
   isColumnResizing: boolean | undefined;
 }
 

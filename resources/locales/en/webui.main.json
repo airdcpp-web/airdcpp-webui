@@ -68,6 +68,7 @@
       "info": "INFO",
       "warning": "WARNING",
       "error": "ERROR",
+      "verbose": "VERBOSE",
       "actions": {
         "viewEvents": "View events"
       }
@@ -257,7 +258,7 @@
       "details": "Details"
     }
   },
-  "common": {    
+  "common": {
     "actions": {
       "copy": "Copy",
       "download": "Download",
@@ -457,7 +458,7 @@
     "passwordRequired": "Password required",
     "password": "Password",
     "submit": "Submit",
-    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."
   },
   "queue": {
     "table": {

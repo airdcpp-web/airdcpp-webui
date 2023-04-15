@@ -88,7 +88,7 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]): tcomb.Type<any
     }
 
     return reduced;
-  }, {});
+  }, {} as tcomb.StructProps);
 
   return tcomb.struct(ret);
 };
@@ -169,7 +169,7 @@ const normalizeSettingValueMap = (
             throw `Invalid value for a struct ${key}`;
           }
         } else if (type === API.SettingTypeEnum.HINTED_USER) {
-          reducedValue[key] = fieldValue;
+          reducedValue[key] = fieldValue as UI.FormValueBase;
         } else {
           reducedValue[key] = normalizeField(fieldValue);
         }
@@ -180,7 +180,7 @@ const normalizeSettingValueMap = (
 
       return reducedValue;
     },
-    {}
+    {} as UI.FormValueMap
   );
 };
 
@@ -263,7 +263,7 @@ const parseFieldOptions = (
   formT: UI.ModuleTranslator,
   titleFormatter: UI.OptionTitleParser = parseTitle,
   helpFormatter: (text: string) => React.ReactNode = (text) => text
-): tcomb.form.TcombFieldOptions => {
+): tcomb.form.TcombOptions => {
   const options = parseTypeOptions(definition.type);
 
   // List item options
@@ -279,7 +279,7 @@ const parseFieldOptions = (
           helpFormatter
         );
         return reduced;
-      }, {});
+      }, {} as Record<string, tcomb.form.TcombOptions>);
     } else {
       // Plain items
       itemOptions = parseTypeOptions(definition.item_type!);
@@ -343,25 +343,32 @@ const findFieldByKey = (
   return null;
 };
 
-const findFieldValueByPath = (obj: object, path: string[]): any => {
+const findFieldValueByPath = (
+  obj: Partial<UI.FormValueMap>,
+  path: tcomb.form.Path
+): any => {
   const value = obj[path[0]];
   if (value && typeof value === 'object' && path.length > 1) {
     const subPath = [...path];
     subPath.shift();
-    return findFieldValueByPath(value, subPath);
+    return findFieldValueByPath(value as UI.FormObjectValue, subPath);
   }
 
   return value;
 };
 
-const setFieldValueByPath = (obj: object, newValue: any, path: string[]): any => {
+const setFieldValueByPath = (
+  obj: Partial<UI.FormValueMap>,
+  newValue: any,
+  path: tcomb.form.Path
+): any => {
   const curKey = path[0];
   if (path.length > 1) {
     obj[curKey] = obj[curKey] || {};
 
     const subPath = [...path];
     subPath.shift();
-    setFieldValueByPath(obj[curKey], newValue, subPath);
+    setFieldValueByPath(obj[curKey] as UI.FormObjectValue, newValue, subPath);
   } else {
     obj[curKey] = newValue;
   }

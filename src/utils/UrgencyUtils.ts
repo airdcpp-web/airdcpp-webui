@@ -4,8 +4,10 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 // Get an array of urgencies that are larger than 0
-const getValidUrgencyArray = (urgencies: UI.UrgencyCountMap): string[] => {
-  return Object.keys(urgencies).filter((urgency) => urgencies[urgency] > 0);
+const getValidUrgencyArray = (urgencies: UI.UrgencyCountMap): number[] => {
+  return Object.keys(urgencies)
+    .map(Number)
+    .filter((urgency) => urgencies[urgency] > 0);
 };
 
 // Always convert empty objects to null
@@ -28,16 +30,19 @@ const appendToMap = (counts: UI.UrgencyCountMap, urgency: UI.UrgencyEnum) => {
   counts[urgency] += 1;
 };
 
+type UnreadMessageCounts = API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts;
+
 // Convert regular type -> count mapping to urgency -> count map
 const toUrgencyMap = (
   source: API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts,
-  urgencies: UI.UrgencyCountMap
-) => {
+  urgencies: UI.ChatMessageUrcencies | UI.StatusMessageUrcencies
+): UI.UrgencyCountMap | null => {
   return validateUrgencies(
-    Object.keys(source).reduce((map, key) => {
-      map[urgencies[key]] = source[key];
-      return map;
-    }, {})
+    Object.keys(source).reduce((reduced, unreadType) => {
+      reduced[urgencies[unreadType as keyof UnreadMessageCounts]] =
+        source[unreadType as keyof UnreadMessageCounts];
+      return reduced;
+    }, {} as UI.UrgencyCountMap)
   );
 };
 
@@ -47,7 +52,7 @@ type UrgencyGetter = (session: UI.SessionItem) => UI.UrgencyCountMap | null;
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (
   item: UI.MessageCounts,
-  urgencyMappings: UI.UrgencyCountMap
+  urgencyMappings: UI.ChatMessageUrcencies | UI.StatusMessageUrcencies
 ): UI.UrgencyCountMap | null => {
   return toUrgencyMap(item.message_counts.unread, urgencyMappings);
 };

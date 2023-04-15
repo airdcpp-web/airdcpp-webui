@@ -128,7 +128,12 @@ class TextFilter extends React.PureComponent<
                 <MenuSection caption={translate('Match type', t, 'table.filter')}>
                   {Object.keys(API.FilterMethod)
                     .filter((key) => isNaN(Number(key)))
-                    .map((key) => this.getFilterMethod(API.FilterMethod[key], t))}
+                    .map((key) =>
+                      this.getFilterMethod(
+                        API.FilterMethod[key as keyof typeof API.FilterMethod],
+                        t
+                      )
+                    )}
                 </MenuSection>
               </SectionedDropdown>
             </div>

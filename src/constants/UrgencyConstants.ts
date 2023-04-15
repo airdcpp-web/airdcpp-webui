@@ -1,46 +1,39 @@
-import {
-  SeverityEnum,
-  UnreadChatMessageCounts,
-  UnreadStatusMessageCounts,
-} from 'types/api';
-import { UrgencyEnum } from 'types/ui';
+import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-type ChatMessageUrcencies = Record<keyof UnreadChatMessageCounts, UrgencyEnum>;
-type StatusMessageUrcencies = Record<keyof UnreadStatusMessageCounts, UrgencyEnum>;
-
-export const HubMessageUrgencies: ChatMessageUrcencies = {
-  status: UrgencyEnum.STATUS,
-  bot: UrgencyEnum.LOW,
-  user: UrgencyEnum.NORMAL,
-  mention: UrgencyEnum.HIGHEST,
+export const HubMessageUrgencies: UI.ChatMessageUrcencies = {
+  status: UI.UrgencyEnum.STATUS,
+  bot: UI.UrgencyEnum.LOW,
+  user: UI.UrgencyEnum.NORMAL,
+  mention: UI.UrgencyEnum.HIGHEST,
 };
 
-export const HubMessageNotifyUrgencies: ChatMessageUrcencies = {
-  status: UrgencyEnum.STATUS,
-  bot: UrgencyEnum.LOW,
-  user: UrgencyEnum.HIGH,
-  mention: UrgencyEnum.HIGHEST,
+export const HubMessageNotifyUrgencies: UI.ChatMessageUrcencies = {
+  status: UI.UrgencyEnum.STATUS,
+  bot: UI.UrgencyEnum.LOW,
+  user: UI.UrgencyEnum.HIGH,
+  mention: UI.UrgencyEnum.HIGHEST,
 };
 
-export const PrivateMessageUrgencies: ChatMessageUrcencies = {
-  status: UrgencyEnum.STATUS,
-  bot: UrgencyEnum.LOW,
-  user: UrgencyEnum.HIGHEST,
-  mention: UrgencyEnum.HIGHEST,
+export const PrivateMessageUrgencies: UI.ChatMessageUrcencies = {
+  status: UI.UrgencyEnum.STATUS,
+  bot: UI.UrgencyEnum.LOW,
+  user: UI.UrgencyEnum.HIGHEST,
+  mention: UI.UrgencyEnum.HIGHEST,
 };
 
-export const ChatroomUrgencies: ChatMessageUrcencies = {
-  status: UrgencyEnum.STATUS,
-  bot: UrgencyEnum.LOW,
-  user: UrgencyEnum.HIGH,
-  mention: UrgencyEnum.HIGHEST,
+export const ChatroomUrgencies: UI.ChatMessageUrcencies = {
+  status: UI.UrgencyEnum.STATUS,
+  bot: UI.UrgencyEnum.LOW,
+  user: UI.UrgencyEnum.HIGH,
+  mention: UI.UrgencyEnum.HIGHEST,
 };
 
-export const SimpleSessionUnreadUrgency = UrgencyEnum.HIGHEST;
+export const SimpleSessionUnreadUrgency = UI.UrgencyEnum.HIGHEST;
 
-export const LogMessageUrgencies: StatusMessageUrcencies = {
-  [SeverityEnum.INFO]: UrgencyEnum.INFO,
-  [SeverityEnum.WARNING]: UrgencyEnum.WARNING,
-  [SeverityEnum.ERROR]: UrgencyEnum.ERROR,
-  [SeverityEnum.VERBOSE]: UrgencyEnum.VERBOSE,
+export const LogMessageUrgencies: UI.StatusMessageUrcencies = {
+  [API.SeverityEnum.INFO]: UI.UrgencyEnum.INFO,
+  [API.SeverityEnum.WARNING]: UI.UrgencyEnum.WARNING,
+  [API.SeverityEnum.ERROR]: UI.UrgencyEnum.ERROR,
+  [API.SeverityEnum.VERBOSE]: UI.UrgencyEnum.VERBOSE,
 };

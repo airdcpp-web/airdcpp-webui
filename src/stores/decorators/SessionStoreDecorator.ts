@@ -9,18 +9,20 @@ import {
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-// import { AwayEnum } from 'constants/SystemConstants';
+
 import ActivityStore, { ActivityState } from 'stores/ActivityStore';
 import { IdType } from 'types/api';
 
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
+export type SessionUrgencyCountMapper<SessionT extends SessionType> = (
+  session: SessionT
+) => UI.ChatMessageUrcencies | UI.StatusMessageUrcencies;
+
 const SessionStoreDecorator = function <SessionT extends SessionType>(
   store: any,
   actions: UI.RefluxActionListType<SessionT>,
-  messageUrgencyMappings:
-    | ((session: SessionT) => UI.UrgencyCountMap)
-    | undefined = undefined
+  messageUrgencyMappings: SessionUrgencyCountMapper<SessionT> | undefined = undefined
 ) {
   let sessions: Array<SessionType> = [];
   let activeSessionId: API.IdType | null = null;

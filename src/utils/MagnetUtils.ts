@@ -32,7 +32,7 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
     searchString: string | undefined;
 
   {
-    const hashes = {};
+    const hashes: Record<string, string> = {};
     try {
       const params = new URLSearchParams(text.substring(8));
       for (const [type, param] of params.entries()) {

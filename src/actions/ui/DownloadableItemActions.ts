@@ -174,7 +174,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
 
   if (instance.result_count > 0) {
     // Open the first result for viewing
-    const results = await SocketService.get(
+    const results = await SocketService.get<API.GroupedSearchResult[]>(
       `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`
     );
 

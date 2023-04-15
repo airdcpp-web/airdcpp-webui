@@ -6,17 +6,17 @@ export * from 'tcomb-validation';
 
 // Definitions copied from https://github.com/gcanti/tcomb-form/pull/394
 
-type Path = Array<string | number>;
-
-/**
- * - add: List item added.
- * - remove: List item removed.
- * - moveUp: List item moved up.
- * - moveDown: List item moved down.
- */
-type ChangeKind = 'add' | 'remove' | 'moveUp' | 'moveDown';
-
 export declare namespace form {
+  type Path = Array<string | number>;
+
+  /**
+   * - add: List item added.
+   * - remove: List item removed.
+   * - moveUp: List item moved up.
+   * - moveDown: List item moved down.
+   */
+  type ChangeKind = 'add' | 'remove' | 'moveUp' | 'moveDown';
+
   type PlaceholderOptions = 'auto' | 'none';
 
   type ErrorMessage =

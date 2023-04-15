@@ -37,27 +37,33 @@ const getListMessageTime = (listItem: UI.MessageListItem) => {
   return !!message ? message.time : undefined;
 };
 
+type MessageCounts = API.ChatMessageCounts | API.StatusMessageCounts;
+type UnreadMessageCounts = API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts;
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+
 const checkUnreadCacheInfo = (
-  counts: API.ChatMessageCounts | API.StatusMessageCounts,
+  counts: MessageCounts,
   setRead: () => void
-): API.ChatMessageCounts | API.StatusMessageCounts => {
+): MessageCounts => {
   // Any unread messages?
-  if (!Object.keys(counts.unread).every((key) => counts.unread[key] === 0)) {
+  if (!Object.values(counts.unread).every((value) => value === 0)) {
     // Reset unread counts
     setRead();
 
     // Don't flash unread counts in the UI
     const unreadCounts = Object.keys(counts.unread).reduce((reduced, messageType) => {
-      reduced[messageType] = 0;
+      // type tmp = keyof UnreadMessageCounts
+      // type tmp2 = keyof MessageCounts['unread']
+      reduced[messageType as KeysOfUnion<UnreadMessageCounts>] = 0;
       return reduced;
-    }, {} as API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts);
+    }, {} as Record<KeysOfUnion<UnreadMessageCounts>, number>);
 
     return {
       ...counts,
       unread: {
         ...unreadCounts,
       },
-    } as API.ChatMessageCounts | API.StatusMessageCounts;
+    } as MessageCounts;
   }
 
   return counts;

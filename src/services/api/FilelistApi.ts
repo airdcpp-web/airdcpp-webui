@@ -28,8 +28,11 @@ export const filelistDownloadHandler: UI.DownloadHandler<API.FilelistItem> = (
   }
 
   // Directory
-  data['list_path'] = itemInfo.path;
-  return SocketService.post(FilelistConstants.DIRECTORY_DOWNLOADS_URL, data);
+  const directoryData = {
+    ...data,
+    list_path: itemInfo.path,
+  };
+  return SocketService.post(FilelistConstants.DIRECTORY_DOWNLOADS_URL, directoryData);
 };
 
 export const changeFilelistHubUrl = (session: API.FilelistSession, hubUrl: string) => {

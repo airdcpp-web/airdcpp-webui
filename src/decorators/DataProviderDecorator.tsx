@@ -194,7 +194,12 @@ export default function <PropsT extends object, DataT extends object>(
     };
 
     // Convert the data array to key-value props
-    reduceData = (keys: string[], reducedData: any[], data: any, index: number) => {
+    reduceData = (
+      keys: string[],
+      reducedData: Record<string, any>,
+      data: any,
+      index: number
+    ) => {
       const { dataConverters } = settings;
       const url = keys[index];
       reducedData[url] =

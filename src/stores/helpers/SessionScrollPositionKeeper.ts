@@ -4,7 +4,7 @@ import * as UI from 'types/ui';
 type SessionType = UI.SessionItemBase & UI.UnreadInfo;
 
 export const SessionScrollPositionKeeper = function () {
-  let positions = {};
+  let positions: Record<string, number | undefined> = {};
 
   const Decorator = {
     getScrollData: (entityId: API.IdType) => {
@@ -31,7 +31,7 @@ export const SessionScrollPositionKeeper = function () {
 };
 
 export const BrowserSessionScrollPositionKeeper = function () {
-  let positions = {};
+  let positions: Record<string, Record<string, number>> = {};
 
   const Decorator = {
     getScrollData: (entityId: API.IdType, viewId: string | number) => {
@@ -51,7 +51,8 @@ export const BrowserSessionScrollPositionKeeper = function () {
     },
 
     _onSessionRemoved: (data: UI.SessionItemBase) => {
-      positions[data.id] = undefined;
+      const { [data.id]: removedPositions, ...positionsNew } = positions;
+      positions = positionsNew;
     },
 
     onSocketDisconnected: () => {

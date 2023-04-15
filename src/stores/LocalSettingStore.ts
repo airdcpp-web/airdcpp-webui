@@ -8,7 +8,11 @@ import { LocalSettings } from 'constants/SettingConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-export const SettingDefinitions: UI.FormFieldDefinition[] = [
+type LocalFormFieldDefinition = UI.FormFieldDefinition & {
+  default_value: UI.FormValueBase;
+};
+
+export const SettingDefinitions: LocalFormFieldDefinition[] = [
   {
     key: LocalSettings.NOTIFY_MENTION,
     type: API.SettingTypeEnum.BOOLEAN,
@@ -115,7 +119,7 @@ const Store = {
     return SettingDefinitions.reduce((reduced, { key }) => {
       reduced[key] = this.getValue(key);
       return reduced;
-    }, {});
+    }, {} as UI.FormValueMap);
   },
 
   setValue(key: string, value: UI.FormValueMap[keyof UI.FormValueMap]) {

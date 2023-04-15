@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import Icon, { IconType } from 'components/semantic/Icon';
 
-export interface MenuItemLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface MenuItemLinkProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   icon?: IconType;
   onClick: (evt: React.SyntheticEvent<any>) => void;
@@ -32,10 +32,10 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
   );
 
   return (
-    <a {...other} className={itemClass} onClick={onClick}>
+    <div {...other} className={itemClass} onClick={onClick}>
       <Icon icon={icon} />
       {children}
-    </a>
+    </div>
   );
 };
 
