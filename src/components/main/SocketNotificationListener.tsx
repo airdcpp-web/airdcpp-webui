@@ -33,6 +33,8 @@ const getSeverityStr = (severity: Severity) => {
   switch (severity) {
     case Severity.NOTIFY:
       return 'Information';
+    case Severity.VERBOSE:
+      return 'VERBOSE';
     case Severity.INFO:
       return 'INFO';
     case Severity.ERROR:

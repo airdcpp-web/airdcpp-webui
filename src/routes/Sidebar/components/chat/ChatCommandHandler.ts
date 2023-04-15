@@ -2,8 +2,8 @@ import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
 import { MessageComposerProps } from './MessageComposer';
 import { Location } from 'history';
 
-//import * as UI from 'types/ui';
 import * as API from 'types/api';
+import LoginStore from 'stores/LoginStore';
 
 type ParamsType = string | undefined;
 type ChatCommandHandler = (
@@ -75,7 +75,14 @@ const CommandHandler = (sessionProps: MessageComposerProps) => {
       } else if (command === 'help') {
         const { session, chatApi } = sessionProps;
         const text = getHelpString(commands);
-        chatApi.sendStatusMessage(session, text, API.SeverityEnum.INFO);
+        const message: API.OutgoingChatStatusMessage = {
+          text,
+          severity: API.SeverityEnum.INFO,
+          type: API.StatusMessageTypeEnum.PRIVATE,
+          owner: `session:${LoginStore.sessionId}`,
+        };
+
+        chatApi.sendStatusMessage(session, message);
       }
     },
   };

@@ -1,13 +1,14 @@
 export const enum UrgencyEnum {
-  HIGHEST = 6,
-  HIGH = 5,
-  NORMAL = 3,
-  LOW = 1,
-  STATUS = 0,
+  HIGHEST = 7,
+  HIGH = 6,
+  NORMAL = 4,
+  LOW = 2,
+  STATUS = 1,
 
-  ERROR = 6,
-  WARNING = 4,
-  INFO = 1,
+  ERROR = 7,
+  WARNING = 5,
+  INFO = 2,
+  VERBOSE = 0,
 }
 
 export interface UrgencyCountMap {

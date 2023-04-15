@@ -71,6 +71,7 @@ export default {
   VIEW: 'external',
   // BROWSE: 'external',
 
+  VERBOSE: 'bars',
   INFO: 'blue info',
   WARNING: 'yellow warning sign',
   ERROR: 'red warning circle',

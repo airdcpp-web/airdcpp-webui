@@ -133,10 +133,26 @@
   display: none !important;
 }
 
+.chat.session .status.item.verbose > .text {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: x-small;
+}
+
 .chat.session .status.item.warning > .text {
   color: orange;
 }
 
 .chat.session .status.item.error > .text {
   color: red;
+}
+
+.chat.session .status.item.system > .text,
+.chat.session .status.item.history > .text {
+  font-style: italic;
+  font-size: 85%;
+}
+
+.chat.session .status.item.private > .text {
+  color: black;
+  font-size: 85%;
 }

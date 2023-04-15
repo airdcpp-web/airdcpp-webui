@@ -129,10 +129,10 @@ class MessageComposer extends React.Component<
       // Parse the command
       const whitespace = text.indexOf(' ');
       if (whitespace === -1) {
-        command = text.substr(1);
+        command = text.substring(1);
       } else {
-        command = text.substr(1, whitespace - 1);
-        params = text.substr(whitespace + 1);
+        command = text.substring(1, whitespace - 1);
+        params = text.substring(whitespace + 1);
       }
     }
 

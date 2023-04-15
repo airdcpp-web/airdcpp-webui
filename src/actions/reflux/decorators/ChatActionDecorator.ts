@@ -77,14 +77,10 @@ export default function (
   ChatActions.sendStatusMessage.listen(function (
     this: UI.AsyncActionType<SessionType>,
     session: SessionType,
-    text: string,
-    severity: API.SeverityEnum
+    message: API.OutgoingChatStatusMessage
   ) {
     const that = this;
-    SocketService.post(`${sessionUrl}/${session.id}/status_message`, {
-      text,
-      severity,
-    })
+    SocketService.post(`${sessionUrl}/${session.id}/status_message`, message)
       .then(that.completed.bind(that, session))
       .catch(that.failed.bind(that, session));
   });

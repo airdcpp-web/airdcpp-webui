@@ -68,6 +68,7 @@ export interface StatusMessageCounts {
 export interface UnreadChatMessageCounts {
   user: number;
   bot: number;
+  mention: number;
   status: number;
 }
 
@@ -75,10 +76,12 @@ export interface UnreadStatusMessageCounts {
   info: number;
   warning: number;
   error: number;
+  verbose: number;
 }
 
 export const enum SeverityEnum {
   NOTIFY = 'notify',
+  VERBOSE = 'verbose',
   INFO = 'info',
   WARNING = 'warning',
   ERROR = 'error',
@@ -89,6 +92,14 @@ export const enum MessageHighlightTypeEnum {
   LINK_TEXT = 'link_text',
   USER = 'user',
   BOLD = 'bold',
+}
+
+export const enum StatusMessageTypeEnum {
+  PRIVATE = 'private',
+  SERVER = 'server',
+  SYSTEM = 'system',
+  SPAM = 'spam',
+  HISTORY = 'history',
 }
 
 export interface MessageHighlight {
@@ -126,6 +137,14 @@ export interface StatusMessage extends MessageBase {
   severity: SeverityEnum;
   is_read: boolean;
   label?: string;
+  type: StatusMessageTypeEnum;
+}
+
+export interface OutgoingChatStatusMessage {
+  text: string;
+  severity: SeverityEnum;
+  type: StatusMessageTypeEnum;
+  owner?: string;
 }
 
 // ENCRYPTION

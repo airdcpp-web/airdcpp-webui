@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { formatCalendarTime } from 'utils/ValueFormat';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import Icon from 'components/semantic/Icon';
@@ -19,8 +20,11 @@ const isToday = (message: UI.MessageListItem) => {
 };
 
 const isHistoryItem = (listItem: UI.MessageListItem) => {
-  const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
-  return message && message.time === 0;
+  if (listItem.log_message) {
+    return listItem.log_message.type === API.StatusMessageTypeEnum.HISTORY;
+  }
+
+  return false;
 };
 
 export const showDateDivider = (index: number, messageList: UI.MessageListItem[]) => {

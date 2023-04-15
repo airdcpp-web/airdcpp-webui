@@ -72,6 +72,7 @@ describe('message store', () => {
           user: 1,
           bot: 1,
           status: 1,
+          mention: 1,
         },
       },
     };
@@ -88,6 +89,7 @@ describe('message store', () => {
           user: 0,
           bot: 0,
           status: 0,
+          mention: 0,
         },
       },
     });
