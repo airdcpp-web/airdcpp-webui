@@ -76,7 +76,9 @@ interface ListBrowserProps {
 
 class FilelistItemTable extends React.Component<ListBrowserProps> {
   rowClassNameGetter = (rowData: API.FilelistItem) => {
-    return dupeToStringType(rowData.dupe);
+    // Don't highlight dupes in own filelist...
+    const isOwnList = this.props.session.user.flags.includes('self');
+    return isOwnList ? '' : dupeToStringType(rowData.dupe);
   };
 
   emptyRowsNodeGetter = () => {
