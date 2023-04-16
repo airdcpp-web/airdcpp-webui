@@ -26,7 +26,11 @@ export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({
   const { boundary, ...other } = menuProps;
   return (
     <TableActionMenu
-      className={cx('highlight text link', dupeToStringType(dupe))}
+      className={cx(
+        'highlight text link',
+        // Disable partial dupe coloring in messages to make the text more readable
+        dupeToStringType(dupe).replace('partial', 'full')
+      )}
       actions={MessageHighlightActions}
       itemData={{
         id: highlightId,
