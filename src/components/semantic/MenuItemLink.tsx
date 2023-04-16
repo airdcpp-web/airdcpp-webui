@@ -26,6 +26,7 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
 }) => {
   const itemClass = classNames(
     'item',
+    'link',
     className,
     { active: active },
     { disabled: disabled }

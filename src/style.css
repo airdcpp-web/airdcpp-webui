@@ -56,10 +56,6 @@ section#container-main,
   overflow-x: hidden;
 }
 
-.table-items .item:hover {
-  cursor: pointer
-}
-
 .ui.dropdown.fluid {
   display: flex !important;
 }
