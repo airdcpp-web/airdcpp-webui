@@ -88,7 +88,7 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
     <div style={{ display: 'flex' }}>
       <TransitionGroup component={null}>
         <CSSTransition
-          key={!!activeSubmenu ? 'submenu' : 'main'}
+          key={activeSubmenu ? 'submenu' : 'main'}
           classNames={activeSubmenu ? 'submenu-transition' : 'mainmenu-transition'}
           timeout={{ enter: 200, exit: 200 }}
         >
