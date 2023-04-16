@@ -161,10 +161,7 @@ const LoginStore = {
 
   hasAccess(access: AccessEnum) {
     const { permissions } = this.loginProperties!.user;
-    return (
-      permissions.indexOf(access) !== -1 ||
-      permissions.indexOf(AccessConstants.ADMIN) !== -1
-    );
+    return permissions.includes(access) || permissions.includes(AccessConstants.ADMIN);
   },
 
   onDisconnect(reason: string) {

@@ -47,7 +47,7 @@ const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
               </>
             }
             beforeUnchecked={beforeUnchecked}
-            checked={selectedUrls.indexOf(hub.hub_url) !== -1}
+            checked={selectedUrls.includes(hub.hub_url)}
             onChange={(checked) => {
               const newValue = updateMultiselectValues(
                 selectedUrls,

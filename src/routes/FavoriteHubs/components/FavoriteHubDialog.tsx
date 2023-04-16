@@ -263,7 +263,7 @@ class FavoriteHubDialog extends Component<Props> {
   form: Form<Entry>;
 
   onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
-    if (id.indexOf('hub_url') !== -1) {
+    if (id.includes('hub_url')) {
       if (
         !isAdcHub(value.generic!.hub_url) &&
         value.share_profile !== ShareProfileConstants.HIDDEN_PROFILE_ID

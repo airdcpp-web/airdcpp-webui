@@ -38,7 +38,7 @@ const deleteUnusedAssets = (cache) => {
   return cache.keys().then((keys) => {
     return Promise.all(
       keys.map((request) => {
-        if (assets.indexOf(request.url) !== -1) {
+        if (assets.includes(request.url)) {
           if (DEBUG) {
             console.log(`[SW] Cached asset ${request.url} still exists, skip delete`);
           }

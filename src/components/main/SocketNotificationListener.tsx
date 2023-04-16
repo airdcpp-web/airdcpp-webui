@@ -67,7 +67,7 @@ const notifyPrivateMessage = (message: API.ChatMessage) => {
     return true;
   }
 
-  if (message.reply_to!.flags.indexOf('bot') > -1) {
+  if (message.reply_to!.flags.includes('bot')) {
     if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
       return true;
     }

@@ -23,7 +23,7 @@ const LogSectionGroup: React.FC<LogSectionGroupProps> = (props) => {
               {...other}
               key={sectionKey}
               section={sectionKey}
-              simple={!!simpleKeys && simpleKeys.indexOf(sectionKey) !== -1}
+              simple={!!simpleKeys && simpleKeys.includes(sectionKey)}
             />
           ))}
         </Accordion>

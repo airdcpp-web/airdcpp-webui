@@ -21,19 +21,19 @@ interface FilePreviewDialogProps extends ModalProps {
 }
 
 const getViewerElement = (file: File, previewUrl: string, t: UI.TranslateF) => {
-  if (file.type.indexOf('text') !== -1 && file.size <= 1 * 1024 * 1024) {
+  if (file.type.includes('text') && file.size <= 1 * 1024 * 1024) {
     return <TextFile textGetter={() => fileToText(file)} />;
   }
 
-  if (file.type.indexOf('audio') !== -1) {
+  if (file.type.includes('audio')) {
     return <AudioFile url={previewUrl} autoPlay={false} />;
   }
 
-  if (file.type.indexOf('image') !== -1) {
+  if (file.type.includes('image')) {
     return <ImageFile url={previewUrl} alt={file.name} />;
   }
 
-  if (file.type.indexOf('video') !== -1) {
+  if (file.type.includes('video')) {
     return <VideoFile url={previewUrl} autoPlay={false} />;
   }
 

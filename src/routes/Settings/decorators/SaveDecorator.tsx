@@ -115,8 +115,8 @@ export default function <PropsT extends object>(
 
       // Closing/opening a modal?
       if (
-        this.props.location.pathname.indexOf(nextLocation.pathname) !== -1 ||
-        nextLocation.pathname.indexOf(this.props.location.pathname) !== -1
+        this.props.location.pathname.includes(nextLocation.pathname) ||
+        nextLocation.pathname.includes(this.props.location.pathname)
       ) {
         return true;
       }

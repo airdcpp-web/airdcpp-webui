@@ -14,8 +14,7 @@ interface ActionFilelistItemData {
   session: API.FilelistSession;
 }
 
-const isMe = ({ session }: ActionFilelistItemData) =>
-  session.user.flags.indexOf('self') !== -1;
+const isMe = ({ session }: ActionFilelistItemData) => session.user.flags.includes('self');
 const isRoot = ({ item }: ActionFilelistItemData) => item.path === '/';
 const isPartialList = ({ session }: ActionFilelistItemData) => session.partial_list;
 const isDirectory = ({ item }: ActionFilelistItemData) => item.type.id === 'directory';

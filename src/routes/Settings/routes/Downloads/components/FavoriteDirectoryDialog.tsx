@@ -74,7 +74,7 @@ class FavoriteDirectoryDialog extends Component<Props> {
   };
 
   onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
-    if (id.indexOf('path') !== -1) {
+    if (id.includes('path')) {
       return Promise.resolve({
         name: !!value.path ? getLastDirectory(value.path) : undefined,
       });

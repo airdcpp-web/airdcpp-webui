@@ -37,12 +37,12 @@ interface CCPMStateProps {
 
 const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
   const { flags } = session.user;
-  if (flags.indexOf('ccpm') === -1) {
+  if (!flags.includes('ccpm')) {
     return null;
   }
 
   const state = session.ccpm_state.id;
-  if (state === API.CCPMStateEnum.DISCONNECTED && flags.indexOf('offline') !== -1) {
+  if (state === API.CCPMStateEnum.DISCONNECTED && flags.includes('offline')) {
     return null;
   }
 

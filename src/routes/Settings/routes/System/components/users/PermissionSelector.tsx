@@ -23,7 +23,7 @@ const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
         <Checkbox
           key={value}
           className={value}
-          checked={locals.value.indexOf(value) !== -1}
+          checked={locals.value.includes(value)}
           onChange={(checked) => onChange(value, checked)}
           caption={text}
         />
@@ -31,7 +31,7 @@ const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
 
       const filterPermission = ({ value }: UI.FormOption<API.AccessEnum>) => {
         if (
-          locals.value.indexOf(API.AccessEnum.ADMIN) !== -1 &&
+          locals.value.includes(API.AccessEnum.ADMIN) &&
           value !== API.AccessEnum.ADMIN
         ) {
           return false;

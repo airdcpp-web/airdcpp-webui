@@ -28,7 +28,7 @@ class PrivateChatSession extends Component<PrivateChatSessionProps> {
   handleFileUpload = (file: File) => {
     const { cid, hub_url, flags } = this.props.session.user;
 
-    const isPrivate = flags.indexOf('nmdc') === -1 && flags.indexOf('bot') === -1;
+    const isPrivate = !flags.includes('nmdc') && !flags.includes('bot');
     return shareTempFile(file, hub_url, isPrivate ? cid : undefined);
   };
 

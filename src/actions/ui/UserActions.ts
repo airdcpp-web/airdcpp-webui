@@ -26,21 +26,18 @@ export interface ActionUserData {
 }
 
 const checkFlags = ({ user }: ActionUserData) => {
-  return (
-    (user.flags as HubUserFlag[]).indexOf('self') === -1 &&
-    (user.flags as HubUserFlag[]).indexOf('hidden') === -1
-  );
+  const flags = user.flags as HubUserFlag[];
+  return !flags.includes('self') && !flags.includes('hidden');
 };
 
 const checkIgnore = (userData: ActionUserData) => {
-  return (
-    (userData.user.flags as HubUserFlag[]).indexOf('ignored') === -1 &&
-    checkFlags(userData)
-  );
+  const flags = userData.user.flags as HubUserFlag[];
+  return !flags.includes('ignored') && checkFlags(userData);
 };
 
 const checkUnignore = ({ user }: ActionUserData) => {
-  return (user.flags as HubUserFlag[]).indexOf('ignored') !== -1;
+  const flags = user.flags as HubUserFlag[];
+  return flags.includes('ignored');
 };
 
 const handleMessage: UI.ActionHandler<ActionUserData> = ({

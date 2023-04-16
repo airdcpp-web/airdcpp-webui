@@ -44,7 +44,7 @@ export const HighlightHashMagnet: React.FC<HighlightHashMagnetProps> = ({
 }) => {
   const { addDownload, boundary, ...other } = menuProps;
   const downloadUser =
-    !!user && user.flags.indexOf('bot') === -1 && user.flags.indexOf('hidden') === -1
+    !!user && !user.flags.includes('bot') && !user.flags.includes('hidden')
       ? user
       : undefined;
 

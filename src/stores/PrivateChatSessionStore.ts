@@ -36,5 +36,5 @@ export default SessionStoreDecorator<API.PrivateChat>(
   SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW),
   PrivateChatActions,
   (session) =>
-    session.user.flags.indexOf('bot') !== -1 ? ChatroomUrgencies : PrivateMessageUrgencies
+    session.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies
 );

@@ -34,7 +34,7 @@ const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
       />
     </td>
     <td className="permissions">
-      {user.permissions.indexOf(API.AccessEnum.ADMIN) !== -1
+      {user.permissions.includes(API.AccessEnum.ADMIN)
         ? moduleT.translate('Administrator')
         : user.permissions.length}
     </td>

@@ -25,11 +25,11 @@ const isShareDupe = (dupe: API.Dupe | null) =>
     dupe.id === DupeEnum.SHARE_QUEUE);
 
 const isAsch = ({ user }: UI.DownloadableItemData) =>
-  !user ? false : user.flags.indexOf('asch') !== -1;
+  !user ? false : user.flags.includes('asch');
 const isSearchable = ({ itemInfo }: UI.DownloadableItemData) =>
   !!itemInfo.name || !!itemInfo.tth;
 const notSelf = ({ user }: UI.DownloadableItemData) =>
-  !user ? true : user.flags.indexOf('self') === -1;
+  !user ? true : !user.flags.includes('self');
 const isDirectory = ({ itemInfo }: UI.DownloadableItemData) =>
   itemInfo.type.id === 'directory';
 const isPicture = ({ itemInfo }: UI.DownloadableItemData) =>
@@ -46,7 +46,7 @@ const hasValidViewUser = (data: UI.DownloadableItemData) => {
   }
 
   // Can't view files from bots
-  const notBot = user.flags.indexOf('bot') === -1 && user.flags.indexOf('hidden') === -1;
+  const notBot = !user.flags.includes('bot') && !user.flags.includes('hidden');
   if (!notBot) {
     return false;
   }

@@ -23,10 +23,10 @@ export const toI18nKey = (
   moduleIds: string | string[],
   reservedSubNamespaces?: string[]
 ) => {
-  invariant(key.indexOf(' ') === -1, 'Invalid i18key');
+  invariant(!key.includes(' '), 'Invalid i18key');
   if (
     UI.SubNamespaces[key.toUpperCase() as keyof typeof UI.SubNamespaces] ||
-    (reservedSubNamespaces && reservedSubNamespaces.indexOf(key) !== -1)
+    (reservedSubNamespaces && reservedSubNamespaces.includes(key))
   ) {
     key += 'Caption';
   }

@@ -15,6 +15,7 @@ import * as UI from 'types/ui';
 
 import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { Location } from 'history';
+import classNames from 'classnames';
 
 type FilelistSessionProps = SessionChildProps<
   API.FilelistSession,
@@ -29,9 +30,11 @@ class FilelistSession extends Component<FilelistSessionProps> {
     const { session, sessionT } = this.props;
     const { user, location, state } = session;
 
-    if (user.flags.indexOf('offline') !== -1 && user.flags.indexOf('self') === -1) {
+    const isOwnList = user.flags.includes('self');
+    const className = classNames('filelist session', { self: isOwnList });
+    if (user.flags.includes('offline') && !isOwnList) {
       return (
-        <div className="filelist session">
+        <div className={className}>
           <Message
             title={sessionT.t('userOffline', 'User offline')}
             description={sessionT.t<string>(
@@ -45,14 +48,14 @@ class FilelistSession extends Component<FilelistSessionProps> {
 
     if ((state.id !== 'loaded' && state.id !== 'download_failed') || !location) {
       return (
-        <div className="filelist session">
+        <div className={className}>
           <Loader text={state.str} />
         </div>
       );
     }
 
     return (
-      <div className="filelist session">
+      <div className={className}>
         <ListBrowser
           location={this.props.location as Location<FilelistLocationState>}
           session={session}

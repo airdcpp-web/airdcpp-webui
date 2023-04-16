@@ -7,7 +7,7 @@ import { userOnlineStatusToColor } from 'utils/TypeConvert';
 import * as API from 'types/api';
 
 const getUserIcon = (flags: API.HubUserFlag[]) => {
-  if (flags.indexOf('ignored') > -1) {
+  if (flags.includes('ignored')) {
     return 'red ban';
   }
 
@@ -26,23 +26,23 @@ const flagTitles: Partial<{ [K in API.HubUserFlag]: string }> = {
 };
 
 const getCornerIcon = (flags: API.HubUserFlag[]) => {
-  if (flags.indexOf('bot') > -1) {
+  if (flags.includes('bot')) {
     return 'setting';
   }
 
-  if (flags.indexOf('op') > -1) {
+  if (flags.includes('op')) {
     return 'yellow privacy';
   }
 
-  if (flags.indexOf('self') > -1) {
+  if (flags.includes('self')) {
     return 'blue star';
   }
 
-  if (flags.indexOf('noconnect') > -1) {
+  if (flags.includes('noconnect')) {
     return 'red plug';
   }
 
-  if (flags.indexOf('passive') > -1) {
+  if (flags.includes('passive')) {
     return 'orange protect';
   }
 
