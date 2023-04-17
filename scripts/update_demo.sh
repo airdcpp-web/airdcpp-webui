@@ -3,11 +3,13 @@
 # Ensure that we have the latest version
 git pull
 
+# Dependencies
+npm install --legacy-peer-deps
+
 # Build
 export NODE_ENV=production
 export DEMO_MODE=1
 
-npm install
 npm run build
 
 # Copy files
