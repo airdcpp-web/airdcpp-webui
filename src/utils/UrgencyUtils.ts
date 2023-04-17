@@ -39,8 +39,8 @@ const toUrgencyMap = (
 ): UI.UrgencyCountMap | null => {
   return validateUrgencies(
     Object.keys(source).reduce((reduced, unreadType) => {
-      reduced[urgencies[unreadType as keyof UnreadMessageCounts]] =
-        source[unreadType as keyof UnreadMessageCounts];
+      const key = unreadType as keyof UnreadMessageCounts;
+      reduced[urgencies[key]] = (reduced[urgencies[key]] || 0) + source[key];
       return reduced;
     }, {} as UI.UrgencyCountMap)
   );
