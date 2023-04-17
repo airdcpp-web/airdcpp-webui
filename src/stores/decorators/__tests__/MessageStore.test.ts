@@ -4,6 +4,8 @@ import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { messageSessionMapper } from 'utils/UrgencyUtils';
+import { PrivateMessageUrgencies } from 'constants/UrgencyConstants';
 
 const SESSION_ID = 0;
 const SESSION_BASE = {
@@ -27,20 +29,32 @@ const messages = [
   },
 ];
 
+const chatSessionUnread = {
+  message_counts: {
+    total: 5,
+    unread: {
+      user: 1,
+      bot: 1,
+      status: 1,
+      mention: 1,
+    },
+  },
+};
+
 const clearMessages = () => {
-  PrivateChatMessageStore._onSessionUpdated(
-    {
-      message_counts: {
-        total: 0,
-        unread: {
-          bot: 0,
-          user: 0,
-          status: 0,
-        },
+  const emptyCounts: UI.MessageCounts = {
+    message_counts: {
+      total: 0,
+      unread: {
+        bot: 0,
+        user: 0,
+        status: 0,
+        mention: 0,
       },
-    } as UI.UnreadInfo,
-    SESSION_ID
-  );
+    },
+  };
+
+  PrivateChatMessageStore._onSessionUpdated(emptyCounts, SESSION_ID);
 };
 
 describe('message store', () => {
@@ -65,21 +79,9 @@ describe('message store', () => {
   });
 
   test('should reset unread counts for active sessions', () => {
-    const sessionData = {
-      message_counts: {
-        total: 5,
-        unread: {
-          user: 1,
-          bot: 1,
-          status: 1,
-          mention: 1,
-        },
-      },
-    };
-
     const setRead = jest.fn();
 
-    const data = checkUnreadSessionInfo(sessionData, setRead);
+    const data = checkUnreadSessionInfo(chatSessionUnread, setRead);
 
     expect(setRead).toBeCalled();
     expect(data).toEqual({
@@ -92,6 +94,16 @@ describe('message store', () => {
           mention: 0,
         },
       },
+    });
+  });
+
+  test('should map message urgencies', () => {
+    const urgencies = messageSessionMapper(chatSessionUnread, PrivateMessageUrgencies);
+
+    expect(urgencies).toEqual({
+      [UI.UrgencyEnum.HIGHEST]: 2, // Mention + user
+      [UI.UrgencyEnum.LOW]: 1, // Bot
+      [UI.UrgencyEnum.STATUS]: 1, // Status
     });
   });
 
