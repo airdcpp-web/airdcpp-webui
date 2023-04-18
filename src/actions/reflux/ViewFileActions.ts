@@ -33,7 +33,7 @@ ViewFileActions.createSession.listen(function (
   { itemInfo, user }: RemoteViewFileData,
   isText: boolean,
   location: Location,
-  sessionStore: any
+  sessionStore: UI.SessionStore<API.ViewFile>
 ) {
   const session = sessionStore.getSession(itemInfo.tth);
   if (session) {
@@ -62,7 +62,7 @@ ViewFileActions.openLocalFile.listen(function (
   tth: string,
   isText: boolean,
   location: Location,
-  sessionStore: any
+  sessionStore: UI.SessionStore<API.ViewFile>
 ) {
   const session = sessionStore.getSession(tth);
   if (session) {

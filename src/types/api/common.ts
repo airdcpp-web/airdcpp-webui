@@ -70,6 +70,7 @@ export interface UnreadChatMessageCounts {
   bot: number;
   mention: number;
   status: number;
+  verbose: number;
 }
 
 export interface UnreadStatusMessageCounts {

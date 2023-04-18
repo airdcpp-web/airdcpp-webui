@@ -71,10 +71,10 @@ const checkUnreadCacheInfo = (
 
 // Update the data with unread info that is marked as read
 // Marks the session as read also in the backend
-const checkUnreadSessionInfo = (
-  unreadInfoItem: UI.UnreadInfo,
+const checkUnreadSessionInfo = <SessionT extends UI.UnreadInfo>(
+  unreadInfoItem: SessionT,
   setRead: () => void
-): UI.UnreadInfo => {
+): SessionT => {
   if (!unreadInfoItem.message_counts && unreadInfoItem.hasOwnProperty('read')) {
     // Non-message item
 
@@ -105,7 +105,7 @@ const checkUnreadSessionInfo = (
 const mergeCacheMessages = (
   cacheMessages: UI.MessageListItem[],
   existingMessages: UI.MessageListItem[] | undefined = []
-) => {
+): UI.MessageListItem[] => {
   return [
     ...cacheMessages,
     ...existingMessages.filter((message) => filterListed(cacheMessages, message)),

@@ -21,7 +21,7 @@ const onClickItem = (
 interface SessionMenuItemProps {
   url: string;
   name: React.ReactNode;
-  unreadInfoStore: any;
+  unreadInfoStore: UI.UnreadInfoStore;
   status: React.ReactElement<any>;
   sessionItem: UI.SessionItemBase;
 

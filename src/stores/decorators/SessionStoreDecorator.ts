@@ -13,51 +13,54 @@ import * as UI from 'types/ui';
 import ActivityStore, { ActivityState } from 'stores/ActivityStore';
 import { IdType } from 'types/api';
 
-type SessionType = UI.SessionItemBase & UI.UnreadInfo;
-
-export type SessionUrgencyCountMapper<SessionT extends SessionType> = (
+export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (
   session: SessionT
 ) => UI.ChatMessageUrcencies | UI.StatusMessageUrcencies;
 
-const SessionStoreDecorator = function <SessionT extends SessionType>(
+const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
   store: any,
   actions: UI.RefluxActionListType<SessionT>,
   messageUrgencyMappings: SessionUrgencyCountMapper<SessionT> | undefined = undefined
 ) {
-  let sessions: Array<SessionType> = [];
+  let sessions: Array<SessionT> = [];
   let activeSessionId: API.IdType | null = null;
   let isInitialized = false;
 
-  (actions.sessionChanged as any).listen((session: SessionType | null) => {
+  (actions.sessionChanged as any).listen((session: SessionT | null) => {
     activeSessionId = session ? session.id : null;
   });
 
-  (actions.fetchSessions as any).completed.listen((data: SessionType[]) => {
+  (actions.fetchSessions as any).completed.listen((data: SessionT[]) => {
     isInitialized = true;
     sessions = data;
     store.trigger(sessions);
   });
 
-  const isUnreadUpdate = (updatedProperties: Partial<SessionType>) => {
+  const isUnreadUpdate = (updatedProperties: Partial<SessionT>) => {
     return updatedProperties.message_counts || updatedProperties.hasOwnProperty('read');
   };
 
-  const checkReadState = (id: IdType, updatedProperties: Partial<SessionType>) => {
+  const checkReadState = (
+    id: IdType,
+    updatedProperties: Partial<SessionT>
+  ): Partial<SessionT> => {
     // Active tab? Mark as read
     if (
       id === activeSessionId &&
       ActivityStore.userActive &&
       isUnreadUpdate(updatedProperties)
     ) {
-      return checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () =>
+      const ret = checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () =>
         actions.setRead({ id })
       );
+
+      return ret as Partial<SessionT>;
     }
 
     return updatedProperties;
   };
 
-  const Decorator = {
+  const DecoratorPublic: UI.SessionStore<SessionT> = {
     getItemUrgencies: (item: SessionT) => {
       if (messageUrgencyMappings) {
         return messageSessionMapper(
@@ -86,38 +89,45 @@ const SessionStoreDecorator = function <SessionT extends SessionType>(
     },
 
     getActiveSessionId: () => activeSessionId,
+  };
 
-    _onSessionCreated: (data: SessionType) => {
+  const Decorator = {
+    ...DecoratorPublic,
+    _onSessionCreated: (data: SessionT) => {
       sessions = update(sessions, { $push: [data] });
       store.trigger(sessions);
     },
 
     _onSessionUpdated: (
-      updatedProperties: Partial<SessionType>,
+      updatedPropertiesInitial: Partial<SessionT>,
       sessionId: API.IdType | undefined
     ) => {
-      const id = updatedProperties.id ? updatedProperties.id : sessionId!;
+      const id = updatedPropertiesInitial.id ? updatedPropertiesInitial.id : sessionId!;
 
-      const session: SessionType = store.getSession(id);
+      const session: SessionT = store.getSession(id);
       if (!session) {
         // May happen before the sessions have been fetched
-        console.warn('Update received for a non-existing session', updatedProperties);
+        console.warn(
+          'Update received for a non-existing session',
+          updatedPropertiesInitial
+        );
         return;
       }
 
-      updatedProperties = checkReadState(id, updatedProperties);
+      const updatedProperties = checkReadState(id, updatedPropertiesInitial);
 
       const index = sessions.indexOf(session);
+      //@ts-ignore
       sessions = update(sessions, {
         [index]: {
-          $merge: updatedProperties as any,
+          $merge: updatedProperties,
         },
       });
 
       store.trigger(sessions);
     },
 
-    _onSessionRemoved: (data: SessionType) => {
+    _onSessionRemoved: (data: SessionT) => {
       if (store.scroll) {
         store.scroll._onSessionRemoved(data);
       }

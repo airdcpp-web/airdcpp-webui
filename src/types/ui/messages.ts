@@ -21,3 +21,11 @@ export interface MessageActionMenuData {
   position?: string;
   boundary: string;
 }
+
+export interface MessageStore {
+  hasMessages: () => boolean;
+  hasInitializedSessions: () => boolean;
+
+  getSessionMessages: (sessionId: API.IdType) => MessageListItem[] | undefined;
+  isSessionInitialized: (sessionId: API.IdType) => boolean;
+}

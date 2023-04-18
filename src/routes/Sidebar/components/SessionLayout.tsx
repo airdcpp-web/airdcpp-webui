@@ -90,7 +90,7 @@ export interface SessionLayoutProps<
 
   newLayout?: React.ComponentType<NewSessionLayoutProps>;
 
-  unreadInfoStore: any;
+  unreadInfoStore: UI.UnreadInfoStore;
 
   t: UI.TranslateF;
 }

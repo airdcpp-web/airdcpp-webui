@@ -1,6 +1,7 @@
 import { APISocket } from 'services/SocketService';
 import * as API from 'types/api';
-import * as UI from 'types/ui';
+import { SessionItemBase } from './sessions';
+import { EmptyObject } from './common';
 
 export interface DownloadSource extends API.HintedUserBase {
   flags: API.HubUserFlag[];
@@ -10,7 +11,7 @@ export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
   itemInfo: ItemT,
   user: DownloadSource | undefined,
   downloadData: API.DownloadData,
-  session: UI.SessionItemBase | undefined
+  session: SessionItemBase | undefined
 ) => Promise<any>;
 
 export interface DownloadableItemInfo {
@@ -31,7 +32,7 @@ export interface DownloadableItemData<
   itemInfo: ItemT;
   user: DownloadSource | undefined;
   handler: DownloadHandler<ItemT>;
-  session: UI.SessionItemBase | undefined;
+  session: SessionItemBase | undefined;
 }
 
 type DownloadItemIdType = string;
@@ -39,24 +40,24 @@ type DownloadItemIdType = string;
 export type DownloadUserGetter<PropsT extends object> = (
   itemId: DownloadItemIdType,
   props: PropsT
-) => UI.DownloadSource | undefined;
+) => DownloadSource | undefined;
 
-export type DownloadItemDataGetter<ItemT extends UI.DownloadableItemInfo> = (
+export type DownloadItemDataGetter<ItemT extends DownloadableItemInfo> = (
   itemId: DownloadItemIdType,
   socket: APISocket
 ) => Promise<ItemT>;
 
 export interface ItemDownloadHandler<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
-  PropsT extends object = UI.EmptyObject
+  ItemT extends DownloadableItemInfo = DownloadableItemInfo,
+  PropsT extends object = EmptyObject
 > {
-  downloadHandler: UI.DownloadHandler<ItemT>;
-  session: UI.SessionItemBase | undefined;
+  downloadHandler: DownloadHandler<ItemT>;
+  session: SessionItemBase | undefined;
   itemDataGetter: DownloadItemDataGetter<ItemT>;
   userGetter?: DownloadUserGetter<PropsT>;
 }
 
 export type AddItemDownload<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
-  PropsT extends object = UI.EmptyObject
+  ItemT extends DownloadableItemInfo = DownloadableItemInfo,
+  PropsT extends object = EmptyObject
 > = (itemId: string | number, handler: ItemDownloadHandler<ItemT, PropsT>) => void;

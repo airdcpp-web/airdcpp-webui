@@ -1,11 +1,13 @@
 import { Location } from 'history';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import { IconType } from 'components/semantic/Icon';
 import { RouteComponentProps } from 'react-router-dom';
-import { /*ActionListType,*/ RefluxActionListType } from './actions';
+import { RefluxActionListType } from './actions';
+import { EmptyObject, ScrollPositionHandler } from './common';
+import { MessageStore } from './messages';
+import { UnreadInfoStore, UrgencyCountMap } from './urgencies';
 
 export interface SessionInfoGetter<SessionT> {
   itemLabelGetter?: (session: SessionT) => React.ReactNode;
@@ -22,7 +24,7 @@ export interface SessionInfoGetter<SessionT> {
 
 export type SessionActions<
   SessionT extends SessionItemBase,
-  ActionT = UI.EmptyObject
+  ActionT = EmptyObject
 > = RefluxActionListType<SessionItemBase> &
   ActionT & {
     removeSession: (session: SessionT) => void;
@@ -59,4 +61,18 @@ export interface ReadStatus extends SessionItemBase {
 
 export interface MessageCounts {
   message_counts: API.ChatMessageCounts | API.StatusMessageCounts;
+}
+
+export type SessionType = SessionItemBase & UnreadInfo;
+
+export interface SessionMessageStore extends MessageStore {
+  scroll: ScrollPositionHandler;
+}
+
+export interface SessionStore<SessionT extends SessionType = SessionType>
+  extends UnreadInfoStore {
+  getItemUrgencies: (item: SessionT) => UrgencyCountMap | null;
+  getSession: (id: API.IdType) => SessionT | undefined;
+  getSessions: () => SessionT[];
+  getActiveSessionId: () => API.IdType | null;
 }

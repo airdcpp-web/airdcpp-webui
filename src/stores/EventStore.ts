@@ -109,7 +109,7 @@ const Store = {
 
   getTotalUrgencies() {
     if (!this._messageCacheInfo) {
-      return null;
+      return {};
     }
 
     return toUrgencyMap(this._messageCacheInfo.unread, LogMessageUrgencies);

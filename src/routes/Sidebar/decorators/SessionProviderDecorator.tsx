@@ -10,15 +10,15 @@ import { translate } from 'utils/TranslationUtils';
 
 export type SessionProviderDecoratorProps = UI.SessionRouteProps;
 
-export interface SessionProviderDecoratorChildProps<SessionT extends object>
+export interface SessionProviderDecoratorChildProps<SessionT extends UI.SessionType>
   extends UI.SessionRouteProps {
   items: SessionT[];
   t: UI.TranslateF;
 }
 
-const SessionProviderDecorator = <SessionT extends object, PropsT extends object>(
+const SessionProviderDecorator = <SessionT extends UI.SessionType, PropsT extends object>(
   Component: React.ComponentType<PropsT & SessionProviderDecoratorChildProps<SessionT>>,
-  store: any
+  store: UI.SessionStore<SessionT>
 ) => {
   const Decorator = (props: SessionProviderDecoratorProps & PropsT) => {
     const { t } = useTranslation();

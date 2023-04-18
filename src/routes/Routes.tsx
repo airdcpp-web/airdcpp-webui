@@ -31,7 +31,7 @@ export interface RouteItem {
   path: string;
   matchPath?: string;
   icon: string;
-  unreadInfoStore?: any;
+  unreadInfoStore?: UI.UnreadInfoStore;
   access?: string;
   component?: React.ComponentType;
   className?: string;
@@ -96,7 +96,7 @@ export const configRoutes = [
   },
 ];
 
-export const secondaryRoutes = [
+export const secondaryRoutes: RouteItem[] = [
   {
     title: 'Hubs',
     path: '/hubs',

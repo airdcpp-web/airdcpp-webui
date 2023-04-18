@@ -11,7 +11,7 @@ import { maxUrgency } from 'utils/UrgencyUtils';
 const updateTitle = (systemInfo: API.SystemInfo | null, prefix = '') => {
   let title = 'AirDC++ Web Client';
   if (!!systemInfo) {
-    title = systemInfo.hostname + ' - ' + title;
+    title = `${systemInfo.hostname} - ${title}`;
   }
 
   document.title = prefix + title;

@@ -1,22 +1,27 @@
 import * as API from 'types/api';
-import * as UI from 'types/ui';
+import {
+  ActionMenuItemDataType,
+  ActionMenuItemDataValueType,
+  ActionType,
+  ModuleActions,
+} from './actions';
 
-export interface ActionMenuData<ItemDataT extends UI.ActionMenuItemDataValueType> {
+export interface ActionMenuData<ItemDataT extends ActionMenuItemDataValueType> {
   ids?: string[];
-  actions: UI.ModuleActions<ItemDataT>;
-  itemData?: UI.ActionMenuItemDataType<ItemDataT>;
+  actions: ModuleActions<ItemDataT>;
+  itemData?: ActionMenuItemDataType<ItemDataT>;
   entityId?: API.IdType;
 }
 
 export type MenuItemClickHandler = () => void;
 
-export type ActionMenuFilterType<ItemDataT extends UI.ActionMenuItemDataValueType> = (
-  action: UI.ActionType<ItemDataT>,
+export type ActionMenuFilterType<ItemDataT extends ActionMenuItemDataValueType> = (
+  action: ActionType<ItemDataT>,
   itemData: ItemDataT
 ) => boolean;
 
 export interface ActionMenuType<ItemDataT> {
   actionIds: string[];
   itemDataGetter: () => ItemDataT;
-  actions: UI.ModuleActions<ItemDataT>;
+  actions: ModuleActions<ItemDataT>;
 }

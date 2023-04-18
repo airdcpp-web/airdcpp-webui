@@ -14,7 +14,7 @@ const MessageStoreDecorator = function (
   access: string
 ) {
   // Message arrays mapped by session IDs
-  const messages = new Map();
+  const messages = new Map<API.IdType, UI.MessageListItem[]>();
 
   // Keep track of session IDs for which message fetching has been initialized
   const initializedSession = new Set<API.IdType>();
@@ -48,7 +48,16 @@ const MessageStoreDecorator = function (
     store.trigger(messages.get(sessionId), sessionId);
   };
 
+  const DecoratorPublic: UI.MessageStore = {
+    hasMessages: () => messages.size > 0,
+    hasInitializedSessions: () => initializedSession.size > 0,
+
+    getSessionMessages: (sessionId: API.IdType) => messages.get(sessionId),
+    isSessionInitialized: (sessionId: API.IdType) => initializedSession.has(sessionId),
+  };
+
   const Decorator = {
+    ...DecoratorPublic,
     _onChatMessage: (data: API.Message, sessionId: API.IdType) => {
       onMessageReceived(sessionId, data, 'chat_message');
     },
@@ -58,20 +67,22 @@ const MessageStoreDecorator = function (
     },
 
     _onSessionUpdated: (session: Partial<UI.MessageCounts>, sessionId: API.IdType) => {
-      if (!session.message_counts || !messages.get(sessionId)) {
+      if (!session.message_counts) {
+        return;
+      }
+
+      const sessionMessages = messages.get(sessionId);
+      if (!sessionMessages) {
         return;
       }
 
       // Message limit exceed or messages were cleared?
-      const splicedMessages = checkSplice(
-        messages.get(sessionId),
-        session.message_counts.total
-      );
+      const splicedMessages = checkSplice(sessionMessages, session.message_counts.total);
 
       // Don't update the messages if nothing has changed
       // Session is updated when it's marked as read, which may happen simultaneously with the initial fetch.
       // Triggering an update would cause an incomplete message log being flashed to the user
-      if (splicedMessages !== messages.get(sessionId)) {
+      if (splicedMessages && splicedMessages !== sessionMessages) {
         messages.set(sessionId, splicedMessages);
         store.trigger(splicedMessages, sessionId);
       }

@@ -42,7 +42,7 @@ export const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
     const unsubscribe = routes.reduce((reduced, item) => {
       if (!!item.unreadInfoStore) {
         reduced.push(
-          item.unreadInfoStore.listen(() => {
+          (item.unreadInfoStore as any).listen(() => {
             setUrgencies(getTotalUrgencies(routes));
           })
         );

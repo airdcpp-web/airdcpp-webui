@@ -39,13 +39,13 @@ export interface ChatLayoutProps {
   handleFileUpload: (file: File) => Promise<AddTempShareResponse>;
   session: ChatSession;
   chatAccess: string;
-  messageStore: any;
+  messageStore: UI.SessionMessageStore;
   highlightRemoteMenuId: string;
 }
 
 const useChatMessagesEffect = (
   session: ChatSession,
-  messageStore: any,
+  messageStore: UI.SessionMessageStore,
   chatAPI: ChatAPI
 ) => {
   const [messages, setMessages] = useState<UI.MessageListItem[] | null>([]);
@@ -56,13 +56,16 @@ const useChatMessagesEffect = (
       setMessages(null);
       chatAPI.fetchMessages(session);
     } else {
-      setMessages(messageStore.getSessionMessages(session.id));
+      const sessionMessages = messageStore.getSessionMessages(session.id);
+      if (sessionMessages) {
+        setMessages(sessionMessages);
+      }
     }
   }, [session.id]);
 
   useEffect(() => {
     // Subscribe for new messages
-    const unsubscribe = messageStore.listen(
+    const unsubscribe = (messageStore as any).listen(
       (newMessages: UI.MessageListItem[], id: API.IdType) => {
         if (id !== session.id) {
           return;

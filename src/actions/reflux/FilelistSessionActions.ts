@@ -22,7 +22,6 @@ import {
   changeFilelistShareProfile,
   changeFilelistDirectory,
 } from 'services/api/FilelistApi';
-import { FilelistSession } from 'types/api';
 
 const FilelistActionConfig: UI.RefluxActionConfigList<API.FilelistSession> = [
   { createSession: { asyncResult: true } },
@@ -46,11 +45,11 @@ FilelistSessionActions.createSession.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
   location: Location,
   user: API.HintedUser,
-  sessionStore: any,
+  sessionStore: UI.SessionStore<API.FilelistSession>,
   path = '/'
 ) {
   const directory = getFilePath(path);
-  const session: FilelistSession | null = sessionStore.getSession(user.cid);
+  const session = sessionStore.getSession(user.cid);
   if (session) {
     if (session.user.hub_url !== user.hub_url) {
       changeFilelistHubUrl(session, user.hub_url);
@@ -91,11 +90,11 @@ FilelistSessionActions.ownList.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
   location: Location,
   shareProfileId: number,
-  sessionStore: any
+  sessionStore: UI.SessionStore<API.FilelistSession>
 ) {
   const session = sessionStore.getSession(LoginStore.systemInfo.cid);
   if (session) {
-    if (session.share_profile.id !== shareProfileId) {
+    if (session.share_profile!.id !== shareProfileId) {
       changeFilelistShareProfile(session, shareProfileId);
     }
 

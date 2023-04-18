@@ -37,6 +37,7 @@ const chatSessionUnread = {
       bot: 1,
       status: 1,
       mention: 1,
+      verbose: 1,
     },
   },
 };
@@ -50,6 +51,7 @@ const clearMessages = () => {
         user: 0,
         status: 0,
         mention: 0,
+        verbose: 0,
       },
     },
   };
@@ -92,6 +94,7 @@ describe('message store', () => {
           bot: 0,
           status: 0,
           mention: 0,
+          verbose: 0,
         },
       },
     });
@@ -103,7 +106,7 @@ describe('message store', () => {
     expect(urgencies).toEqual({
       [UI.UrgencyEnum.HIGHEST]: 2, // Mention + user
       [UI.UrgencyEnum.LOW]: 1, // Bot
-      [UI.UrgencyEnum.STATUS]: 1, // Status
+      [UI.UrgencyEnum.HIDDEN]: 2, // Status + verbose
     });
   });
 

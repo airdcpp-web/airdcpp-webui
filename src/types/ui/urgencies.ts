@@ -1,16 +1,16 @@
 import * as API from 'types/api';
 
 export const enum UrgencyEnum {
-  HIGHEST = 7,
-  HIGH = 6,
-  NORMAL = 4,
-  LOW = 2,
-  STATUS = 1,
+  HIGHEST = 6,
+  HIGH = 4,
+  NORMAL = 3,
+  LOW = 1,
+  HIDDEN = 0, // 0 = hidden
 
-  ERROR = 7,
-  WARNING = 5,
-  INFO = 2,
-  VERBOSE = 0,
+  ERROR = 6,
+  WARNING = 4,
+  INFO = 1,
+  // VERBOSE = 0, // 0 = hidden
 }
 
 export interface UrgencyCountMap {
@@ -22,3 +22,8 @@ export type StatusMessageUrcencies = Record<
   keyof API.UnreadStatusMessageCounts,
   UrgencyEnum
 >;
+
+export interface UnreadInfoStore {
+  getTotalUrgencies: () => UrgencyCountMap | null;
+  isInitialized: () => boolean;
+}
