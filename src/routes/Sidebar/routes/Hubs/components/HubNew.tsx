@@ -46,10 +46,13 @@ class HubNew extends Component<NewSessionLayoutProps> {
         />
         <Message
           description={
-            <Trans i18nKey={sessionT.toI18nKey('favoriteHubsHint')}>
-              Tip: visit the <Link to="/favorite-hubs">Favorite hubs</Link> page to
-              connect using custom settings
-            </Trans>
+            <Trans
+              i18nKey={sessionT.toI18nKey('favoriteHubsHint')}
+              defaults="Tip: visit the <url>Favorite hubs</url> page to connect using custom settings"
+              components={{
+                url: <Link to="/favorite-hubs" />,
+              }}
+            />
           }
         />
         <RecentLayout

@@ -48,22 +48,48 @@ const ShareProfilesPage: React.FC<
   ShareProfilesPageProps & ShareProfileDecoratorChildProps
 > = ({ moduleT, profiles }) => {
   const { translate, toI18nKey } = moduleT;
+  /*const defaults =
+    '<p>\
+Queued files are shared via the partial file sharing feature in all hubs \
+where the share has not been hidden, regardless of the configured share \
+profiles.\
+</p>\
+<p>\
+Share profiles are assigned for individual directories from the \
+<url>Share</url> page.\
+</p>';*/
+  const shareProfilesPartialNote =
+    'Queued files are shared via the partial file sharing feature in all hubs \
+where the share has not been hidden, regardless of the configured share \
+profiles.';
+
+  const shareProfilesHelp =
+    'Share profiles are assigned for individual directories from the \
+<url>Share</url> page.';
+
   return (
     <div>
       <Message
         description={
           <div>
-            <Trans i18nKey={toI18nKey('shareProfilesNote')}>
-              <p>
-                Queued files are shared via the partial file sharing feature in all hubs
-                where the share has not been hidden, regardless of the configured share
-                profiles.
-              </p>
-              <p>
-                Share profiles are assigned for individual directories from the{' '}
-                <Link to="/share">Share</Link> page.
-              </p>
-            </Trans>
+            <p>
+              <Trans
+                i18nKey={toI18nKey('shareProfilesPartialNote')}
+                defaults={shareProfilesPartialNote}
+                components={{
+                  url: <Link to="/share" />,
+                }}
+              />
+            </p>
+            <p>
+              <Trans
+                i18nKey={toI18nKey('shareProfilesHelp')}
+                defaults={shareProfilesHelp}
+                components={{
+                  url: <Link to="/share" />,
+                }}
+              />
+            </p>
           </div>
         }
         icon={IconConstants.INFO}

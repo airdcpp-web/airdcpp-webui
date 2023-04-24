@@ -31,17 +31,23 @@ const EngineStatusMessage: React.FC<
     return null;
   }
 
+  const defaults =
+    "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. \
+Please visit <url>engine's home page</url> for installation instructions.";
+
   return (
     <Message
       description={
-        <Trans i18nKey={moduleT.toI18nKey('defaultExtensionEngineMissing')}>
-          The default extension engine <b>{ExtensionConstants.DEFAULT_ENGINE}</b> is not
-          installed on your system. Please visit{' '}
-          <ExternalLink url={LinkConstants.DEFAULT_ENGINE_URL}>
-            engine's home page
-          </ExternalLink>{' '}
-          for installation instructions.
-        </Trans>
+        <Trans
+          i18nKey={moduleT.toI18nKey('defaultExtensionEngineMissing')}
+          defaults={defaults}
+          values={{
+            engineName: ExtensionConstants.DEFAULT_ENGINE,
+          }}
+          components={{
+            url: <ExternalLink url={LinkConstants.DEFAULT_ENGINE_URL} />,
+          }}
+        />
       }
       icon={IconConstants.WARNING}
     />

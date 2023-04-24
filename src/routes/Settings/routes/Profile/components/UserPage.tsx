@@ -51,22 +51,37 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
         );
       }
     } else if (id === 'language_file') {
+      const translateHelp =
+        'If you want to help with improving the existing translations or translate the \
+application into a new language, please see the \
+<url>instructions for translators</url>.';
+
       fieldOptions.help = (
-        <Trans
-          i18nKey={moduleT.toI18nKey(
-            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
-          )}
-        >
-          <p>The application must be restarted for the new language to take effect.</p>
+        <>
           <p>
-            If you want to help with improving the existing translations or translate the
-            application into a new language, please see the{' '}
-            <ExternalLink url={LinkConstants.TRANSLATOR_HELP}>
-              instructions for translators
-            </ExternalLink>
-            .
+            <Trans
+              i18nKey={moduleT.toI18nKey(
+                toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, 'Restart')
+              )}
+              defaults="The application must be restarted for the new language to take effect."
+            />
           </p>
-        </Trans>
+          <p>
+            <Trans
+              i18nKey={moduleT.toI18nKey(
+                toFormI18nKey(
+                  UI.TranslatableFormDefinitionProperties.HELP,
+                  id,
+                  'Translate'
+                )
+              )}
+              defaults={translateHelp}
+              components={{
+                url: <ExternalLink url={LinkConstants.TRANSLATOR_HELP} />,
+              }}
+            />
+          </p>
+        </>
       );
     }
   };

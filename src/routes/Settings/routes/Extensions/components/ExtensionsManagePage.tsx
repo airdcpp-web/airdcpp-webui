@@ -36,13 +36,19 @@ const ExtensionsManagePage: React.FC<
   ExtensionsManagePageProps & ExtensionsManagePageDataProps
 > = ({ installedPackages, moduleT }) => {
   if (installedPackages.length === 0) {
+    const defaults =
+      'No installed extensions were found. \
+New extensions can be installed from the <url>Extension catalog</url> page.';
     return (
       <Message
         description={
-          <Trans i18nKey={moduleT.toI18nKey('noInstalledExtensions')}>
-            No installed extensions were found. New extensions can be installed from the{' '}
-            <Link to="/settings/extensions/packages">Extension catalog</Link> page.
-          </Trans>
+          <Trans
+            i18nKey={moduleT.toI18nKey('noInstalledExtensions')}
+            defaults={defaults}
+            components={{
+              url: <Link to="/settings/extensions/packages" />,
+            }}
+          />
         }
         icon={IconConstants.INFO}
       />
