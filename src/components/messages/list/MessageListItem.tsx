@@ -18,7 +18,7 @@ export const MessageListItem: React.FC<MessageListItemProps> = ({
     return (
       <ChatMessage
         message={message.chat_message}
-        dropdownContext=".chat.session"
+        dropdownContext=".message-section"
         {...other}
       />
     );
