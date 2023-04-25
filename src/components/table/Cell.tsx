@@ -87,7 +87,13 @@ export const FileActionCell = <
   ...props
 }: ActionCellProps<CellDataT, ItemDataT>) => (
   <TableActionMenu
-    caption={<FormattedFile typeInfo={rowDataGetter!().type} caption={cellData} />}
+    caption={
+      <FormattedFile
+        typeInfo={rowDataGetter!().type}
+        caption={cellData}
+        className="icon-caption"
+      />
+    }
     itemData={rowDataGetter!}
     {...props}
   />
@@ -242,6 +248,7 @@ export const FileDownloadCell = <
         typeInfo={rowDataGetter!().type}
         onClick={clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : null}
         caption={cellData}
+        className="icon-caption"
       />
     }
     user={userGetter(rowDataGetter!())}

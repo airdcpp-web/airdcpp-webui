@@ -59,10 +59,10 @@ class TableDropdown extends React.Component<TableDropdownProps> {
 
     // Caption
     const trigger = (
-      <div className="trigger">
+      <>
         <Icon size="large" icon={triggerIcon} />
         {!!linkCaption && captionNode}
-      </div>
+      </>
     );
 
     // Settings

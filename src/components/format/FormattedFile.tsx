@@ -11,6 +11,7 @@ interface FormattedFileProps {
   typeInfo: API.FilesystemItemType;
   caption: React.ReactNode;
   selected?: boolean;
+  className?: string;
 }
 
 const FormattedFile: React.FC<FormattedFileProps> = ({
@@ -18,15 +19,14 @@ const FormattedFile: React.FC<FormattedFileProps> = ({
   typeInfo,
   caption,
   selected,
+  className,
 }) => {
   if (onClick) {
     caption = <a onClick={onClick}>{caption}</a>;
   }
 
-  const className = cx('file-name', { selected: selected });
-
   return (
-    <div className={className}>
+    <div className={cx('file-name', className, { selected: selected })}>
       <FileIcon typeInfo={typeInfo} />
       {caption}
     </div>

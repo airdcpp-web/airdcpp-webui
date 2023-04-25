@@ -41,6 +41,7 @@ section#container-main,
 .ui.dropdown:not(.fluid):not(td),
 .table.dropdown {
   display: inline-flex !important;
+  max-width: 100%;
 }
 
 .ui.empty.dropdown {
@@ -257,14 +258,12 @@ th {
 
 .ui.dropdown:not(.button) > .caption {
   user-select: auto !important;
-}
-
-td .ui.dropdown {
+  overflow: hidden;
   max-width: 100%;
 }
 
-td .ui.dropdown > .caption {
-  overflow: hidden;
+.ui.dropdown {
+  max-width: 100%;
 }
 
 td .ui.dropdown > .caption > .icon-caption {

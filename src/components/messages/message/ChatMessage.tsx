@@ -52,7 +52,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
   }
 
   render() {
-    const { message, dropdownContext, menuProps, ...other } = this.props;
+    const { message, dropdownContext, highlightMenuProps, ...other } = this.props;
 
     return (
       <InView className={'ui item chat ' + message.from.flags.join(' ')} {...other}>
@@ -63,7 +63,7 @@ class ChatMessage extends React.Component<ChatMessageProps> {
             message={message}
             emojify={true}
             user={message.from}
-            menuProps={menuProps}
+            highlightMenuProps={highlightMenuProps}
           />
         </div>
       </InView>

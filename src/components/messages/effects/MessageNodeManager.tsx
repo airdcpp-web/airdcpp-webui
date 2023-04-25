@@ -53,7 +53,9 @@ const reduceMessageListItem = (
       }}
       threshold={0.4}
       message={message}
-      menuProps={{
+      // Highlight menus must use table action menu because the text element has overflow: hidden
+      // to allow long words to be cut (author action menu can still use the regular dropdown)
+      highlightMenuProps={{
         addDownload,
         entityId,
         remoteMenuId: highlightRemoteMenuId,
