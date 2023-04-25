@@ -127,7 +127,7 @@ section#container-main,
 }
 
 /* Can't be applied to dropdown cells */
-.ui.modal.full td:not(.ui.dropdown) {
+.ui.modal.full td:not(.dropdown) {
   overflow-x: hidden;
 }
 
