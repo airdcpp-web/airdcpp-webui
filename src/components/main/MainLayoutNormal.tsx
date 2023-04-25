@@ -11,13 +11,14 @@ import 'normal.css';
 import Sidebar from 'routes/Sidebar/components/Sidebar';
 import { useSidebarEffect } from 'effects';
 import { MainLayoutProps } from './AuthenticatedApp';
+import classNames from 'classnames';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className, location } = props;
   const previousLocation = useSidebarEffect(secondaryRoutes, props);
   const mainLocation = !!previousLocation ? previousLocation : location;
   return (
-    <div className={className + ' pushable sidebar-context'} id="normal-layout">
+    <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
       <Sidebar
         location={location}
         routes={secondaryRoutes}

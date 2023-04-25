@@ -9,17 +9,18 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
 import MenuConstants from 'constants/MenuConstants';
+import classNames from 'classnames';
 
 const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({
   cellData,
   rowData,
 }) => (
-  <div className="transfer-user">
+  <div className="transfer-user icon-caption">
     <i
-      className={
-        (rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD) +
-        ' large icon'
-      }
+      className={classNames(
+        rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD,
+        'large icon'
+      )}
     />
     {cellData!.nicks}
   </div>
