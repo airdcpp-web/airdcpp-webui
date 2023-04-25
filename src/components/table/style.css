@@ -63,30 +63,33 @@
   align-items: center;
 }
 
-.table-footer .filter {
+.table-footer > .filter {
   margin-left: auto;
   display: flex;
 }
 
-.table-footer .count-info {
+.table-footer > .filter > .count-info {
   margin-right: 0px;
   color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.table-footer .filter > div:last-child {
+.table-footer > .filter > div:last-child {
   margin-left: 10px;
 }
 
-.table-footer .filter .filter-method.dropdown.button {
+.table-footer > .filter .filter-method.dropdown.button {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
 
-.table-footer .filter .dropdown .trigger.icon {
+.table-footer > .filter .dropdown .trigger.icon {
   margin-right: 0px;
 }
 
-.table-footer .filter input {
+.table-footer > .filter input {
   width: 90%;
 }
 
