@@ -15,7 +15,7 @@ type RouterMenuItemLinkProps = React.PropsWithChildren<{
   icon?: IconType;
   className?: string;
   onClick?: (evt: React.SyntheticEvent<any>) => void;
-  unreadInfoStore?: any;
+  unreadInfoStore?: UI.UnreadInfoStore | UI.SessionStore;
   session?: UI.SessionItemBase;
 }>;
 
@@ -25,7 +25,7 @@ const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null
     return null;
   }
 
-  if (!!session) {
+  if (!!session && 'getSession' in unreadInfoStore) {
     // Session objects are immutable so the one received via props
     // may be outdated already
     const currentSession = unreadInfoStore.getSession(session.id);

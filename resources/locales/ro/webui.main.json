@@ -68,6 +68,7 @@
       "info": "Informatii",
       "warning": "AVERTIZARE",
       "error": "EROARE",
+      "verbose": "VERBOSE",
       "actions": {
         "viewEvents": "Vezi evenimente"
       }
@@ -257,7 +258,7 @@
       "details": "Detalii"
     }
   },
-  "common": {    
+  "common": {
     "actions": {
       "copy": "Copiaza",
       "download": "Descarca",
@@ -445,7 +446,7 @@
     "notConnectedToTheHub": "Neconectat la hub",
     "connecting": "In conectare...",
     "loadingUserlist": "Incarcare lista utilizator",
-    "favoriteHubsHint": "Tip: viziteaza <1>Huburile favorite</1>ca sa te conectezi folosind setarile personalizate",
+    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
     "new": "Conectare",
     "newDesc": "Conectare la hub nou",
     "userList": "Lista utilizator",
@@ -457,7 +458,7 @@
     "passwordRequired": "Necesara parola",
     "password": "Parola",
     "submit": "Trimite",
-    "passwordPromptHelp": "Inseamna ca exista un cont asociat cu numele tau .Daca nu iti mai aduci aminte sa fi inregistrat un cont pe acest hub,poate ca este cineva care foloseste acelasi nume cu al tau."  
+    "passwordPromptHelp": "Inseamna ca exista un cont asociat cu numele tau .Daca nu iti mai aduci aminte sa fi inregistrat un cont pe acest hub,poate ca este cineva care foloseste acelasi nume cu al tau."
   },
   "queue": {
     "table": {
@@ -655,7 +656,7 @@
     "unsavedChangesPrompt": "Ai schimbari nesalvate.Esti sigur/a ca doresti sa iesi?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In caz de probleme la conectare ,te rog sa confirmi ca portul tau TCP este deschis folosind<1>un program online de verificare </1>.Ai grija ca valabilitatea portului UDP (cautare) nu poate fi verificata online.Pentru mai multe informatii despre diferitele moduri de conexiuni ,te rog sa vizitezi <4>DC++'s conexiunile FAQ</4>",
+        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
         "currentAutoDetectionStatus": "Detectarea auto a statusului curent",
         "iPv4Connectivity": "IPv4 conexiune",
         "iPv6Connectivity": "IPv6 conexiune",
@@ -684,7 +685,8 @@
           "settingProfileHelp0": "Clinetul este folosit in normal privat/public hubs pentru trasferarea fisierelor via internet.Foloseste acest profil daca esti nesigur",
           "settingProfileHelp1": "Clientul este folosit pentru trasferrarea fisierelor care sunt impartite in arhive RAR(sau in alte formate de mici-marimi)",
           "settingProfileHelp2": "Clientul este folosit pentru transferarea in reteaua locala (e.g. LAN parties)sau in alta retea inchisa (e.g. university network)",
-          "languageFileHelp": "<0>Aplicatia trebuie restatata pentru ca noua limba sa aiba efect.</0><1>Daca vrei sa ajuti sa imbunatatesti traducerile sau sa traduci aplicatia in o noua limba ,te rog vezi <1>instructiile pentru traducatori.</1>"
+          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
+          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
         }
       },
       "ignoredUsers": {
@@ -705,7 +707,7 @@
         "installedVersion": "Versiune instalata",
         "datePublished": "{{version}} (published {{date}})",
         "readMore": "Citeste mai mult",
-        "defaultExtensionEngineMissing": "Extensia motorului din fabrica<1> nod</1>nu este instalat pe sistemul tau.Te rog viziteaza <3> pagina acasa a motorului </3>pentru instructiuni de instalare.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "manage": "Manage..."
       },
       "manage": {
@@ -714,8 +716,8 @@
         "installedVersion": "Versiune instalata",
         "nonListedExtension": "Extensii ne-listate",
         "readMore": "Citeste mai mult",
-        "noInstalledExtensions": "Nici o extensie instalata a fost gasita.Noi extensii pot fi instalate de la <1>Catalogul paginei  de extensii</1>",
-        "defaultExtensionEngineMissing": "Extensia motorului din fabrica<1> nod</1>nu este instalat pe sistemul tau.Te rog viziteaza <3> pagina acasa a motorului </3>pentru instructiuni de instalare.",
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "extensionDirectoryFetchError": "Esuata afisarea informatiilor din directorul de extensii: {{error}}",
         "unmanagedExtension": "Unmanaged extension",
         "manage": "Manage..."
@@ -833,7 +835,8 @@
         "name": "Nume",
         "totalSize": "Marime totala",
         "totalFiles": "Fisiere totale",
-        "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
+        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
       },
       "sharingOptions": {
         "skiplist": "Lista evitata"
@@ -850,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Te rog fi cat mai precis si seteaza viteza ta ACTUALA a conexiunii tale .Poti folosi un tester de viteza online <1>Speedtest.net</1>,ca sa verifici viteza ta actuala"
+        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
       },
       "uploadLimits": {
         "manuallySet": "Setare manuala "

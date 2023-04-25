@@ -68,6 +68,7 @@
       "info": "INFO",
       "warning": "WAARSCHUWING",
       "error": "ERROR",
+      "verbose": "VERBOSE",
       "actions": {
         "viewEvents": "Bekijk gebeurtenissen"
       }
@@ -257,7 +258,7 @@
       "details": "Details"
     }
   },
-  "common": {    
+  "common": {
     "actions": {
       "copy": "Kopiëren",
       "download": "Download",
@@ -445,7 +446,7 @@
     "notConnectedToTheHub": "Niet verbonden met de hub",
     "connecting": "Verbinding maken",
     "loadingUserlist": "Laadt gebruikerslijst",
-    "favoriteHubsHint": "Tip: ga naar de <1>Favoriete hubs</1> pagina om te verbinden met gebruik van custom settings",
+    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
     "new": "Verbinden",
     "newDesc": "Verbind met een nieuwe hub",
     "userList": "Gebruikers lijst",
@@ -457,7 +458,7 @@
     "passwordRequired": "Wachtwoord vereist",
     "password": "Wachtwoord",
     "submit": "Opgeven",
-    "passwordPromptHelp": "Dit betekend meestal dat er een account geregistreerd is met jouw nick. Mocht je niet weten of je jezelf ooit geregistreerd hebt, dan is er misschien iemand anders met dezelfde nick."  
+    "passwordPromptHelp": "Dit betekend meestal dat er een account geregistreerd is met jouw nick. Mocht je niet weten of je jezelf ooit geregistreerd hebt, dan is er misschien iemand anders met dezelfde nick."
   },
   "queue": {
     "table": {
@@ -655,7 +656,7 @@
     "unsavedChangesPrompt": "Je hebt nog niet alle wijzigingen opgeslagen. Weet je zeker dat je wilt stoppen?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In het geval van bestands overdrachts verbindings problemen, controleer aub of je TCP poorten echt open staan door gebruik van <1>een online poort checker</1>. Let op de de geldigheid van de UDP poort (zoeken) niet online gecontroleerd kan worden. Voor meer info omtrent de verschillende verbindings mogelijkheden, Kijk aub op <4>DC++'s connectiviteits FAQ</4>.",
+        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
         "currentAutoDetectionStatus": "Huidige automatische verbindings status",
         "iPv4Connectivity": "IPv4 connectiviteit",
         "iPv6Connectivity": "IPv6 connectiviteit",
@@ -684,7 +685,8 @@
           "settingProfileHelp0": "AirDC++ word in normale privé en publieke hubs gebruikt om bestanden over het internet uit te wisselen. Gebruik dit profiel bij twijfel",
           "settingProfileHelp1": "De client wordt gebruikt voor overdragen van bestanden die opgedeeld zijn in RAR archieven (of in andere kleinere formaten)",
           "settingProfileHelp2": "De client wordt gebruikt voor het overdragen van bestanden in een lokaal netwerk (bijv. LAN feestjes) of in andere besloten netwerken (bijv. universiteits netwerken)",
-          "languageFileHelp": "<0>AirDC++ moet herstart worden om de nieuwe taal in te stellen.</0><1>Als je wilt helpen met vertalen kijk bij <1>instructies voor vertalers</1>.</1>"
+          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
+          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
         }
       },
       "ignoredUsers": {
@@ -705,7 +707,7 @@
         "installedVersion": "Geïnstalleerd versie",
         "datePublished": "{{version}} (published {{date}})",
         "readMore": "Lees meer",
-        "defaultExtensionEngineMissing": "De standaard javascript node <1>node</1> is niet geïnstalleerd op je systeem. Bezoek <3>de home page</3> voor installatie instructies.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "manage": "Beheren..."
       },
       "manage": {
@@ -714,8 +716,8 @@
         "installedVersion": "Geïnstalleerd versie",
         "nonListedExtension": "Niet-genoemde uitbreidingen",
         "readMore": "Lees meer",
-        "noInstalledExtensions": "Geen geïnstalleerde uitbreidingen gevonden. Nieuwe uitbreidingen kunnen geïnstalleerd worden vanuit de <1>Extensie catalogus </1> pagina.",
-        "defaultExtensionEngineMissing": "De standaard javascript node <1>node</1> is niet geïnstalleerd op je systeem. Bezoek <3>de home page</3> voor installatie instructies.",
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "extensionDirectoryFetchError": "Informatie ophalen van de uitbreidings map mislukt: {{error}}",
         "unmanagedExtension": "Onbeheerde uitbreidingen",
         "manage": "Beheren..."
@@ -833,7 +835,8 @@
         "name": "Naam",
         "totalSize": "Totale omvang",
         "totalFiles": "Totaal aantal bestanden",
-        "shareProfilesNote": "<0>Gequeuede bestanden worden gedeeld via de gedeeltelijke bestands deel optie in alle hubs waar niet hidden is, ongeacht de gekozen deel profielen.</0><1>Deel profielen worden toegewezen aan individuele mappen uit de <1>Share</1> pagina.</1>"
+        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
       },
       "sharingOptions": {
         "skiplist": "Oversla lijst"
@@ -850,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Wees aub zo precies mogelijk met het instellen van de verbindingssnelheid. Je kan een online speedtest gebruiken zoals <1>Speedtest.net</1>, om je snelheid te testen."
+        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
       },
       "uploadLimits": {
         "manuallySet": "Handmatig ingesteld"

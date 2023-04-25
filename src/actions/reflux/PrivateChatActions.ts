@@ -28,7 +28,7 @@ PrivateChatActions.createSession.listen(function (
   this: UI.AsyncActionType<API.PrivateChat>,
   location: Location,
   user: API.HintedUser,
-  sessionStore: any
+  sessionStore: UI.SessionStore<API.PrivateChat>
 ) {
   const session = sessionStore.getSession(user.cid);
   if (session) {

@@ -68,6 +68,7 @@
       "info": "INFO",
       "warning": "ALERTA",
       "error": "ERRO",
+      "verbose": "VERBOSE",
       "actions": {
         "viewEvents": "Exibir eventos"
       }
@@ -257,7 +258,7 @@
       "details": "Detalhes"
     }
   },
-  "common": {    
+  "common": {
     "actions": {
       "copy": "Copiar",
       "download": "Download",
@@ -445,7 +446,7 @@
     "notConnectedToTheHub": "Não conectado ao hub",
     "connecting": "Conectando",
     "loadingUserlist": "Carregando lista de usuários",
-    "favoriteHubsHint": "Dica: visite a página <1>Hubs favoritos</1> para se conectar usando configurações personalizadas",
+    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
     "new": "&amp;Conectar",
     "newDesc": "Conecte-se a um novo hub",
     "userList": "Lista de usuários",
@@ -457,7 +458,7 @@
     "passwordRequired": "Senha requerida",
     "password": "Senha",
     "submit": "Enviar",
-    "passwordPromptHelp": "Isso geralmente significa que há uma conta registrada associada ao seu nick. Se você não se lembra de ter uma conta registrada neste hub, pode haver outra pessoa usando o mesmo nick."  
+    "passwordPromptHelp": "Isso geralmente significa que há uma conta registrada associada ao seu nick. Se você não se lembra de ter uma conta registrada neste hub, pode haver outra pessoa usando o mesmo nick."
   },
   "queue": {
     "table": {
@@ -655,7 +656,7 @@
     "unsavedChangesPrompt": "Você tem alterações não salvas. Você tem certeza de que quer sair?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "Em caso de problemas de conectividade de transferência de arquivos, confirme se as portas TCP estão realmente abertas usando <1>um verificador de porta online</1>. Observe que a validade da porta UDP (pesquisa) não pode ser verificada online. Para mais informações sobre diferentes modos de conectividade, visite <4>FAQ2 conectividade DC++'s .",
+        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
         "currentAutoDetectionStatus": "Status atual da auto detecção",
         "iPv4Connectivity": "Conectividade IPv4",
         "iPv6Connectivity": "Conectividade IPv6",
@@ -684,7 +685,8 @@
           "settingProfileHelp0": "O cliente é usado em hubs públicos/privados normais para transferir arquivos via internet. Use este perfil se não tiver certeza.",
           "settingProfileHelp1": "O cliente é usado para transferir arquivos que são divididos em arquivos RAR (ou em outros formatos pequenos)",
           "settingProfileHelp2": "O cliente é usado para transferir arquivos na rede local (por exemplo, as LAN parties) ou em outra rede fechada (por exemplo, rede universitária)",
-          "languageFileHelp": "<0>O aplicativo deve ser reiniciado para que o novo idioma seja efetivado.</0><1>Se você quiser ajudar a melhorar as traduções existentes ou traduzir o aplicativo para um novo idioma, consulte as <1>instruções para tradutores</1>.</1>"
+          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
+          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
         }
       },
       "ignoredUsers": {
@@ -705,7 +707,7 @@
         "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (publicado {{date}})",
         "readMore": "Ler mais",
-        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "manage": "Gerenciar..."
       },
       "manage": {
@@ -714,8 +716,8 @@
         "installedVersion": "Versão instalada",
         "nonListedExtension": "Extensão não listada",
         "readMore": "Ler mais",
-        "noInstalledExtensions": "Nenhuma extensão instalada foi encontrada. Novas extensões podem ser instaladas a partir do <1>Catálogo de extensão</1> pagina.",
-        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <1>node</1> não está instalado no seu sistema. Por favor visite <3>página inicial do mecanismo</3> para instruções de instalação.",
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "extensionDirectoryFetchError": "Falha ao buscar informações do diretório de extensões: {{error}}",
         "unmanagedExtension": "Extensão não gerenciada",
         "manage": "Gerenciar..."
@@ -833,7 +835,8 @@
         "name": "Nome",
         "totalSize": "Tamanho total",
         "totalFiles": "Arquivos no total",
-        "shareProfilesNote": "<0>Os arquivos na fila são compartilhados por meio do recurso de compartilhamento parcial de arquivos em todos os hubs em que o compartilhamento não foi oculto, independentemente dos perfis de compartilhamento configurados.</0><1>Os perfis de compartilhamento são atribuídos a diretórios individuais do <1>Share</1> page.</1>"
+        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
       },
       "sharingOptions": {
         "skiplist": "Lista de arquivos ignorados"
@@ -850,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Por favor, seja o mais preciso possível e ajuste a velocidade real de sua conexão. Você pode usar um testador online, como <1>Speedtest.net</1>, para testar sua velocidade."
+        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
       },
       "uploadLimits": {
         "manuallySet": "Definir manualmente"
