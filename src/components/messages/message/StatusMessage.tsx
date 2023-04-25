@@ -42,7 +42,7 @@ class StatusMessage extends Component<StatusMessageProps> {
   }
 
   render() {
-    const { message, menuProps, ...other } = this.props;
+    const { message, highlightMenuProps, ...other } = this.props;
     return (
       <InView
         className={classNames('ui item status', message.severity, message.type)}
@@ -54,7 +54,7 @@ class StatusMessage extends Component<StatusMessageProps> {
           label={message.label}
           message={message}
           emojify={false}
-          menuProps={menuProps}
+          highlightMenuProps={highlightMenuProps}
         />
       </InView>
     );
