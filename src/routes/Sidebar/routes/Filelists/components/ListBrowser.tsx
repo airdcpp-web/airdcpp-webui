@@ -6,11 +6,10 @@ import FilelistItemActions from 'actions/ui/FilelistItemActions';
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/action-menu';
 
-import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
 import DownloadDialog from 'components/download/DownloadDialog';
-import { Location } from 'history';
+import { Location, History } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -29,6 +28,7 @@ export type FilelistLocationState = { directory: string } | undefined;
 interface ListBrowserProps {
   session: API.FilelistSession;
   location: Location<FilelistLocationState>;
+  history: History;
   sessionT: UI.ModuleTranslator;
 }
 
@@ -58,9 +58,10 @@ class ListBrowser extends React.Component<ListBrowserProps> {
 
   handleClickDirectory = (path: string) => {
     this.hasClickedDirectory = true;
+    const { history } = this.props;
 
     // Handle it through location state data
-    History.push({
+    history.push({
       state: {
         directory: path,
       },
@@ -68,12 +69,12 @@ class ListBrowser extends React.Component<ListBrowserProps> {
   };
 
   componentDidMount() {
-    const { session, location } = this.props;
+    const { session, location, history } = this.props;
 
     const locationData = location.state;
     if (!locationData || !locationData.directory) {
       // We need an initial path for our history
-      History.replace({
+      history.replace({
         state: {
           directory: session.location!.path,
         } as FilelistLocationState,
@@ -98,7 +99,7 @@ class ListBrowser extends React.Component<ListBrowserProps> {
       this.sendChangeDirectory(newLocationData.directory);
     } else {
       // Change initiated by another session/GUI, update our location
-      History.replace({
+      this.props.history.replace({
         state: {
           directory: this.props.session.location!.path,
         },

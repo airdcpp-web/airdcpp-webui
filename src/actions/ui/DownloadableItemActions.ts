@@ -1,4 +1,3 @@
-import History from 'utils/History';
 import SocketService from 'services/SocketService';
 import { sleep } from 'utils/Promise';
 
@@ -93,27 +92,30 @@ const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => 
 const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
   location,
+  history,
 }) => {
   const { pathname } = location;
-  History.push(`${pathname}/download/${data.itemInfo.id}`);
+  history.push(`${pathname}/download/${data.itemInfo.id}`);
 };
 
 const handleViewFile = (
-  { data, location }: UI.ActionHandlerData<UI.DownloadableItemData>,
+  { data, location, history }: UI.ActionHandlerData<UI.DownloadableItemData>,
   isText: boolean
 ) => {
+  const props = {
+    isText,
+    location,
+    sessionStore: ViewFileStore,
+    history,
+  };
+
   if (notSelf(data)) {
     // Remote file
-    return ViewFileActions.createSession(data, isText, location, ViewFileStore);
+    return ViewFileActions.createSession(data, props);
   }
 
   // Local file
-  return ViewFileActions.openLocalFile(
-    data.itemInfo.tth,
-    isText,
-    location,
-    ViewFileStore
-  );
+  return ViewFileActions.openLocalFile(data.itemInfo.tth, props);
 };
 
 const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
@@ -199,8 +201,9 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
 export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
   location,
+  history,
 }) => {
-  return SearchActions.search(data.itemInfo, location);
+  return SearchActions.search(data.itemInfo, location, history);
 };
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {

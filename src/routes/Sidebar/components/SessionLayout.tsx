@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import invariant from 'invariant';
 
-import History from 'utils/History';
 import Loader from 'components/semantic/Loader';
 
 import TopMenuLayout from './TopMenuLayout';
@@ -55,11 +54,6 @@ export interface SessionLayoutProps<
   // Array of the items to list
   items: SessionT[];
 
-  // Session actions (should contain 'removeSession')
-  /*actions: UI.ModuleActions<SessionT> & {
-    actions: UI.SessionUIActions<SessionT, ActionT>;
-  };*/
-
   uiActions: UI.ModuleActions<SessionT, UIActionT>;
   sessionApi: UI.SessionActions<SessionT> & SessionApiT;
 
@@ -107,7 +101,6 @@ export interface SessionMainLayoutProps<
   newButton: React.ReactElement<any> | null;
   listActionMenuGetter: () => React.ReactNode;
   sessionMenuItems: React.ReactNode[];
-  //closeAction: UI.SessionActions<SessionT, ActionT>['removeSession'];
   activeItem: SessionT | null;
 
   itemHeaderTitle: React.ReactNode;
@@ -116,7 +109,6 @@ export interface SessionMainLayoutProps<
   onKeyDown: (event: React.KeyboardEvent) => void;
   children: React.ReactNode;
 
-  //moduleId: string;
   actions: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>['uiActions'];
   t: UI.TranslateF;
 }
@@ -131,7 +123,7 @@ export type SessionChildProps<
   UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > = Pick<
   SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
-  'location' | 'sessionApi' | 'uiActions'
+  'location' | 'sessionApi' | 'uiActions' | 'history'
 > & {
   session: SessionT;
   sessionT: UI.ModuleTranslator;
@@ -230,15 +222,18 @@ class SessionLayout<
   };
 
   pushSession = (id: API.IdType) => {
-    History.push(this.getSessionUrl(id));
+    const { history } = this.props;
+    history.push(this.getSessionUrl(id));
   };
 
   replaceSession = (id: API.IdType) => {
-    History.replace(this.getSessionUrl(id));
+    const { history } = this.props;
+    history.replace(this.getSessionUrl(id));
   };
 
   pushNew = () => {
-    History.push(this.getNewUrl());
+    const { history } = this.props;
+    history.push(this.getNewUrl());
   };
 
   hasEditAccess = () => {
@@ -292,7 +287,7 @@ class SessionLayout<
     if (activeItem) {
       if (pending) {
         // Disable pending state
-        History.replace({
+        props.history.replace({
           //path: routerLocation.pathname,
           state: {
             pending: false,
@@ -310,7 +305,7 @@ class SessionLayout<
       return true;
     } else if (/*routerLocation.action === 'POP' ||*/ props.items.length === 0) {
       // Browsing from history and item removed (or all items removed)... go to "new session" page
-      History.replace(this.getNewUrl());
+      props.history.replace(this.getNewUrl());
       this.setState({ activeItem: null });
       return true;
     }
@@ -344,7 +339,8 @@ class SessionLayout<
       // Insert
       event.preventDefault();
 
-      History.replace(this.getNewUrl());
+      const { history } = this.props;
+      history.replace(this.getNewUrl());
     } else if (altKey && key === 'Delete') {
       // Delete
       event.preventDefault();
@@ -491,9 +487,10 @@ class SessionLayout<
   render() {
     const {
       disableSideMenu,
-      /*width,*/ items,
+      items,
       unreadInfoStore,
       location,
+      history,
       t,
       sessionApi,
       uiActions,
@@ -565,6 +562,7 @@ class SessionLayout<
                 sessionApi={sessionApi}
                 uiActions={uiActions}
                 location={location}
+                history={history}
                 sessionT={this.sessionT}
               />
             );

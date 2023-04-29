@@ -1,6 +1,5 @@
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
-import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -42,8 +41,9 @@ const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
 const handleSearch: UI.ActionHandler<API.QueueBundle> = ({
   data: itemInfo,
   location,
+  history,
 }) => {
-  return SearchActions.search(itemInfo, location);
+  return SearchActions.search(itemInfo, location, history);
 };
 
 const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
@@ -52,12 +52,20 @@ const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
 };
 
-const handleSources: UI.ActionHandler<API.QueueBundle> = ({ data, location }) => {
-  History.push(`${location.pathname}/sources/${data.id}`);
+const handleSources: UI.ActionHandler<API.QueueBundle> = ({
+  data,
+  location,
+  history,
+}) => {
+  history.push(`${location.pathname}/sources/${data.id}`);
 };
 
-const handleContent: UI.ActionHandler<API.QueueBundle> = ({ data, location }) => {
-  History.push(`${location.pathname}/content/${data.id}`);
+const handleContent: UI.ActionHandler<API.QueueBundle> = ({
+  data,
+  location,
+  history,
+}) => {
+  history.push(`${location.pathname}/content/${data.id}`);
 };
 
 const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {

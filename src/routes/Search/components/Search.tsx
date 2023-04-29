@@ -2,8 +2,6 @@ import { Component } from 'react';
 
 import SearchConstants from 'constants/SearchConstants';
 
-import History from 'utils/History';
-
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
 
 import '../style.css';
@@ -85,7 +83,7 @@ class Search extends Component<SearchProps & SearchDataProps> {
       this.search(state.searchString);
 
       // Avoid searching for it again
-      History.replace({
+      props.history.replace({
         pathname: props.location.pathname,
       });
     }

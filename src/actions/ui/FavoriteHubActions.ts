@@ -3,17 +3,15 @@ import SocketService from 'services/SocketService';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import IconConstants from 'constants/IconConstants';
 
-import History from 'utils/History';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate = () => {
-  History.push('/favorite-hubs/entries');
+const handleCreate: UI.ActionHandler<undefined> = ({ history }) => {
+  history.push('/favorite-hubs/entries');
 };
 
-const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {
-  History.push(`/favorite-hubs/entries/${hub.id}`);
+const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub, history }) => {
+  history.push(`/favorite-hubs/entries/${hub.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {

@@ -2,7 +2,6 @@ import { memo } from 'react';
 
 import ReactLinkify from 'react-linkify';
 
-import { useLocation } from 'react-router-dom';
 import { formatEmojis } from 'utils/emojify/EmojiFormat';
 
 import LinkifyIt from 'linkify-it';
@@ -62,17 +61,11 @@ export const TextDecorator: React.FC<TextDecoratorProps> = memo(function TextDec
   emojify = false,
   text,
 }) {
-  const location = useLocation();
   return (
     <ReactLinkify
       matchDecorator={matchDecorator}
       componentDecorator={(decoratedHref, decoratedText, key) => (
-        <HighlightUrlLink
-          key={key}
-          text={decoratedText}
-          href={decoratedHref}
-          location={location}
-        />
+        <HighlightUrlLink key={key} text={decoratedText} href={decoratedHref} />
       )}
     >
       {!emojify ? text : formatEmojis(text)}

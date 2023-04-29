@@ -1,5 +1,4 @@
 import SocketService from 'services/SocketService';
-import History from 'utils/History';
 
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
@@ -7,15 +6,16 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate: UI.ActionHandler<undefined> = ({ location }) => {
-  History.push(`${location.pathname}/directories`);
+const handleCreate: UI.ActionHandler<undefined> = ({ location, history }) => {
+  history.push(`${location.pathname}/directories`);
 };
 
 const handleEdit: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
   data: directory,
   location,
+  history,
 }) => {
-  History.push(`${location.pathname}/directories/${directory.id}`);
+  history.push(`${location.pathname}/directories/${directory.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({

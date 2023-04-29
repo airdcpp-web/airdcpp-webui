@@ -1,3 +1,6 @@
+import { Location, LocationDescriptorObject, History } from 'history';
+import invariant from 'invariant';
+
 const loadProperty = (
   storage: Storage,
   storageKey: string | undefined,
@@ -69,4 +72,17 @@ export const hasCopySupport = () => !!(navigator as any).clipboard;
 
 export const useMobileLayout = (width?: number | null) => {
   return (width || window.innerWidth) < 700 || window.innerHeight < 500;
+};
+
+export const pushUnique = (
+  nextLocation: LocationDescriptorObject,
+  currentLocation: Location,
+  history: History
+) => {
+  invariant(currentLocation, 'pushUnique: current location was not supplied');
+  if (nextLocation.pathname !== currentLocation.pathname) {
+    history.push(nextLocation);
+  } else {
+    history.replace(nextLocation);
+  }
 };

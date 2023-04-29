@@ -1,4 +1,4 @@
-import { Location } from 'history';
+import { Location, History } from 'history';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 
@@ -35,7 +35,7 @@ export interface ActionHandlerData<ItemDataT> {
   data: ItemDataT;
   location: Location;
   t: TranslateF;
-  //chain: (action: ActionType)
+  history: History;
 }
 
 export type ActionHandler<ItemDataT> = (

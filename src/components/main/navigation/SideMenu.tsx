@@ -1,7 +1,5 @@
 import { Component } from 'react';
 
-import History from 'utils/History';
-
 import IconPanel from 'components/main/navigation/IconPanel';
 import { matchPath } from 'react-router-dom';
 import {
@@ -10,33 +8,34 @@ import {
   RouteItemClickHandler,
   HOME_URL,
 } from 'routes/Routes';
-import { Location } from 'history';
+import { Location, History } from 'history';
 
 interface SideMenuProps {
   location: Location;
   previousLocation?: Location;
+  history: History;
 }
 
 class SideMenu extends Component<SideMenuProps> {
   onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
-    const { location, previousLocation } = this.props;
+    const { location, previousLocation, history } = this.props;
     const isActive = matchPath(location.pathname, {
       path: url,
     });
 
     if (isActive) {
       if (!!previousLocation) {
-        History.replace({
+        history.replace({
           pathname: previousLocation.pathname,
           state: previousLocation.state,
         });
       } else {
-        History.replace(HOME_URL);
+        history.replace(HOME_URL);
       }
     } else {
-      History.push(url);
+      history.push(url);
     }
   };
 

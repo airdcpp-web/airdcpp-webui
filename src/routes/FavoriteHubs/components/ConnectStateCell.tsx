@@ -31,8 +31,12 @@ const getIcon = (state: API.FavoriteHubConnectState) => {
 
 class ConnectStateCell extends Component<ConnectStateCellProps & RouteComponentProps> {
   handleCreateSession = () => {
-    const { location, rowDataGetter } = this.props;
-    HubActions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
+    const { location, history, rowDataGetter } = this.props;
+    HubActions.createSession(rowDataGetter!().hub_url, {
+      location,
+      history,
+      sessionStore: HubSessionStore,
+    });
   };
 
   handleRemoveSession = () => {

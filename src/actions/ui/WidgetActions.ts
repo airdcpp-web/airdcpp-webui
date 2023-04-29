@@ -1,4 +1,3 @@
-import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
 import WidgetActions from 'actions/reflux/WidgetActions';
@@ -13,12 +12,12 @@ export interface WidgetItemInfo {
 
 const notAlwaysShow = ({ widgetInfo }: WidgetItemInfo) => !widgetInfo.alwaysShow;
 
-const handleCreate: UI.ActionHandler<UI.Widget> = ({ data: widgetInfo }) => {
-  History.push(`/home/widget/${widgetInfo.typeId}`);
+const handleCreate: UI.ActionHandler<UI.Widget> = ({ data: widgetInfo, history }) => {
+  history.push(`/home/widget/${widgetInfo.typeId}`);
 };
 
-const handleEdit: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo }) => {
-  History.push(`/home/widget/${widgetInfo.widgetInfo.typeId}/${widgetInfo.id}`);
+const handleEdit: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo, history }) => {
+  history.push(`/home/widget/${widgetInfo.widgetInfo.typeId}/${widgetInfo.id}`);
 };
 
 const handleRemove: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo }) => {

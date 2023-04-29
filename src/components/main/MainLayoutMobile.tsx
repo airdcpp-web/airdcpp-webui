@@ -15,7 +15,7 @@ const MainLayoutMobile: React.FC<MainLayoutProps> = memo(function MainLayoutMobi
 ) {
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const { className, location, urgencies } = props;
+  const { className, location, urgencies, history } = props;
   return (
     <div className={className} id="mobile-layout">
       <MainNavigation
@@ -24,6 +24,7 @@ const MainLayoutMobile: React.FC<MainLayoutProps> = memo(function MainLayoutMobi
           setMenuVisible(false);
         }}
         visible={menuVisible}
+        history={history}
       />
       <div className="pusher" id="mobile-layout-inner">
         <SiteHeader>

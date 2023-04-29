@@ -1,15 +1,15 @@
-import History from 'utils/History';
+import { Location, History } from 'history';
+import { pushUnique } from './BrowserUtils';
 
-import { Location } from 'history';
-
-export const doSearch = (searchString: string, location: Location) => {
-  History.pushUnique(
+export const doSearch = (searchString: string, location: Location, history: History) => {
+  pushUnique(
     {
       pathname: '/search',
       state: {
         searchString,
       },
     },
-    location
+    location,
+    history
   );
 };

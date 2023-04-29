@@ -16,11 +16,24 @@ import { UserSelectField } from 'components/select';
 
 class FilelistNew extends Component<NewSessionLayoutProps> {
   handleSubmit = (user: API.HintedUser) => {
-    FilelistSessionActions.createSession(this.props.location, user, FilelistSessionStore);
+    const { history, location } = this.props;
+    FilelistSessionActions.createSession(
+      { user },
+      {
+        history,
+        location,
+        sessionStore: FilelistSessionStore,
+      }
+    );
   };
 
   onProfileChanged = (profileId: number) => {
-    FilelistSessionActions.ownList(this.props.location, profileId, FilelistSessionStore);
+    const { history, location } = this.props;
+    FilelistSessionActions.ownList(profileId, {
+      history,
+      location,
+      sessionStore: FilelistSessionStore,
+    });
   };
 
   recentUserRender = (entry: API.HistoryItem) => {

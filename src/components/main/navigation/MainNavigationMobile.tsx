@@ -12,9 +12,8 @@ import {
 
 import DropdownCaption from 'components/semantic/DropdownCaption';
 
-import History from 'utils/History';
 import IconPanel from 'components/main/navigation/IconPanel';
-import { Location } from 'history';
+import { Location, History } from 'history';
 import { Translation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
@@ -24,6 +23,7 @@ import Popup from 'components/semantic/Popup';
 interface MainNavigationMobileProps {
   onClose: () => void;
   location: Location;
+  history: History;
   visible: boolean;
 }
 
@@ -53,13 +53,13 @@ class MainNavigationMobile extends Component<MainNavigationMobileProps> {
   onClickSecondary: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
-    const isActive = matchPath(this.props.location.pathname, {
+    const { location, history } = this.props;
+    const isActive = matchPath(location.pathname, {
       path: url,
-      //exact: url !== '/',
     });
 
     if (!isActive) {
-      History.push(url);
+      history.push(url);
     }
 
     this.onClick(url, evt);

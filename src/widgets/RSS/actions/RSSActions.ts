@@ -54,7 +54,7 @@ const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
   window.open(link);
 };
 
-const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
+const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location, history }) => {
   if (!data.entry.title) {
     return;
   }
@@ -63,7 +63,7 @@ const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
     name: parseNodeContent(data.entry.title),
   };
 
-  return SearchActions.search(itemInfo, location);
+  return SearchActions.search(itemInfo, location, history);
 };
 
 export const RSSActions: UI.ActionListType<RSSItemData> = {

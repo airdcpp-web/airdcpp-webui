@@ -20,7 +20,12 @@ import Button from 'components/semantic/Button';
 
 class HubNew extends Component<NewSessionLayoutProps> {
   handleConnect = (hubUrl: string) => {
-    HubActions.createSession(this.props.location, hubUrl, HubSessionStore);
+    const { location, history } = this.props;
+    HubActions.createSession(hubUrl, {
+      sessionStore: HubSessionStore,
+      location,
+      history,
+    });
   };
 
   hasSession = (entry: API.HistoryItem) => {

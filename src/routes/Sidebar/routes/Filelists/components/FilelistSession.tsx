@@ -27,8 +27,8 @@ class FilelistSession extends Component<FilelistSessionProps> {
   static displayName = 'FilelistSession';
 
   render() {
-    const { session, sessionT } = this.props;
-    const { user, location, state } = session;
+    const { session, sessionT, location: routerLocation, history } = this.props;
+    const { user, location: listLocation, state } = session;
 
     const isOwnList = user.flags.includes('self');
     const className = classNames('filelist session', { self: isOwnList });
@@ -46,7 +46,7 @@ class FilelistSession extends Component<FilelistSessionProps> {
       );
     }
 
-    if ((state.id !== 'loaded' && state.id !== 'download_failed') || !location) {
+    if ((state.id !== 'loaded' && state.id !== 'download_failed') || !listLocation) {
       return (
         <div className={className}>
           <Loader text={state.str} />
@@ -57,9 +57,10 @@ class FilelistSession extends Component<FilelistSessionProps> {
     return (
       <div className={className}>
         <ListBrowser
-          location={this.props.location as Location<FilelistLocationState>}
+          location={routerLocation as Location<FilelistLocationState>}
           session={session}
           sessionT={sessionT}
+          history={history}
         />
 
         <FilelistFooter session={session} sessionT={sessionT} />

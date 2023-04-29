@@ -19,7 +19,12 @@ const hasSession = (entry: API.HistoryItem) => {
 
 class MessageNew extends Component<NewSessionLayoutProps> {
   handleSubmit = (user: API.HintedUser) => {
-    PrivateChatActions.createSession(this.props.location, user, PrivateChatSessionStore);
+    const { location, history } = this.props;
+    PrivateChatActions.createSession(user, {
+      sessionStore: PrivateChatSessionStore,
+      location,
+      history,
+    });
   };
 
   recentUserRender = (entry: API.HistoryItem) => {

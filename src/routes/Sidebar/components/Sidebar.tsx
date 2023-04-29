@@ -7,10 +7,9 @@ import {
 } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
-import History from 'utils/History';
 
 import '../style.css';
-import { Location } from 'history';
+import { Location, History } from 'history';
 import { RouteItem, parseRoutes } from 'routes/Routes';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
 
@@ -22,6 +21,7 @@ const showSidebar = (props: SidebarProps) => {
 
 export interface SidebarProps {
   location: Location;
+  history: History;
   previousLocation?: Location;
   routes: RouteItem[];
 }
@@ -89,12 +89,12 @@ class Sidebar extends PureComponent<SidebarProps, State> {
       visibility: Visibility.LOADING,
     });
 
-    const { previousLocation } = this.props;
+    const { previousLocation, history } = this.props;
     if (!previousLocation) {
       return;
     }
 
-    History.replace({
+    history.replace({
       pathname: previousLocation.pathname,
       state: previousLocation.state,
     });

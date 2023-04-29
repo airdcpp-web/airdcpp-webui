@@ -14,7 +14,7 @@ import { MainLayoutProps } from './AuthenticatedApp';
 import classNames from 'classnames';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
-  const { className, location } = props;
+  const { className, location, history } = props;
   const previousLocation = useSidebarEffect(secondaryRoutes, props);
   const mainLocation = !!previousLocation ? previousLocation : location;
   return (
@@ -23,6 +23,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
         location={location}
         routes={secondaryRoutes}
         previousLocation={previousLocation}
+        history={history}
       />
       <div className="pusher">
         <SiteHeader>
@@ -32,7 +33,11 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
           {parseRoutes([...mainRoutes, ...configRoutes], mainLocation)}
         </div>
       </div>
-      <SideMenu location={location} previousLocation={previousLocation} />
+      <SideMenu
+        location={location}
+        previousLocation={previousLocation}
+        history={history}
+      />
     </div>
   );
 };

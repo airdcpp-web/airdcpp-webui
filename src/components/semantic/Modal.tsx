@@ -68,7 +68,6 @@ class Modal extends React.Component<ModalProps> {
     'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'
   > = {
     closable: true,
-    //approveCaption: 'Save',
     fullHeight: false,
     dynamicHeight: false,
   };
@@ -97,15 +96,7 @@ class Modal extends React.Component<ModalProps> {
       observeChanges: this.props.dynamicHeight,
       dimmerSettings: {
         dimmerName: NODE_ID,
-        //namespace: NODE_ID,
-        /*selector: {
-          dimmer: `> .ui.dimmer.${NODE_ID}`
-        }*/
       },
-      //namespace: `${NODE_ID}`,
-      /*className: {
-        active: NODE_ID,
-      },*/
       //debug: true,
       //verbose: true,
       //name: 'Modal',
@@ -136,14 +127,15 @@ class Modal extends React.Component<ModalProps> {
   };
 
   onHidden = () => {
-    if (this.returnOnClose && this.props.returnTo) {
-      History.replace(this.props.returnTo);
+    const { returnTo, onClose } = this.props;
+    if (this.returnOnClose && returnTo) {
+      History.replace(returnTo);
     }
 
     this.returnOnClose = true;
 
-    if (this.props.onClose) {
-      this.props.onClose();
+    if (onClose) {
+      onClose();
     }
   };
 

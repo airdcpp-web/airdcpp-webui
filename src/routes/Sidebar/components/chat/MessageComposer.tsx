@@ -121,7 +121,7 @@ class MessageComposer extends React.Component<
   dropzoneRef = React.createRef<DropzoneRef>();
 
   handleCommand = (text: string) => {
-    const { location } = this.props;
+    const { location, history } = this.props;
 
     let command, params;
 
@@ -136,7 +136,7 @@ class MessageComposer extends React.Component<
       }
     }
 
-    ChatCommandHandler(this.props).handle(command, params, location);
+    ChatCommandHandler(this.props).handle(command, params, { location, history });
   };
 
   handleSend = (text: string) => {

@@ -1,5 +1,4 @@
 import SocketService from 'services/SocketService';
-import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -7,12 +6,16 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import SearchConstants from 'constants/SearchConstants';
 
-const handleCreate: UI.ActionHandler<API.SearchType> = ({ location }) => {
-  History.push(`${location.pathname}/types`);
+const handleCreate: UI.ActionHandler<API.SearchType> = ({ location, history }) => {
+  history.push(`${location.pathname}/types`);
 };
 
-const handleEdit: UI.ActionHandler<API.SearchType> = ({ data: type, location }) => {
-  History.push(`${location.pathname}/types/${type.id}`);
+const handleEdit: UI.ActionHandler<API.SearchType> = ({
+  data: type,
+  location,
+  history,
+}) => {
+  history.push(`${location.pathname}/types/${type.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.SearchType> = ({ data: type }) => {

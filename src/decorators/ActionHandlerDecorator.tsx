@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import * as React from 'react';
 
-import { RouteComponentProps, useLocation } from 'react-router-dom';
+import { RouteComponentProps, useHistory, useLocation } from 'react-router-dom';
 
 import * as UI from 'types/ui';
 
@@ -17,7 +17,7 @@ import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 import { upperFirst } from 'lodash';
 import { toActionI18nKey } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
-import { Location } from 'history';
+import { Location, History } from 'history';
 
 interface ActionHandlerDecoratorProps<ItemDataT> {
   children: (props: ActionHandlerDecoratorChildProps<ItemDataT>) => React.ReactNode;
@@ -166,13 +166,23 @@ const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>({
   return null;
 };
 
-const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
-  actionData: ActionData<ItemDataT>,
-  confirmData: boolean | string | undefined,
-  location: Location,
-  t: UI.TranslateF,
-  closeModal: ModalCloseContext | undefined
-) => {
+interface HandleAction<ItemDataT extends UI.ActionItemDataValueType> {
+  actionData: ActionData<ItemDataT>;
+  confirmData: boolean | string | undefined;
+  location: Location;
+  history: History;
+  t: UI.TranslateF;
+  closeModal: ModalCloseContext | undefined;
+}
+
+const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
+  actionData,
+  confirmData,
+  location,
+  t,
+  history,
+  closeModal,
+}: HandleAction<ItemDataT>) => {
   const { actionId, action, itemData } = actionData;
   if (!!closeModal && isSidebarAction(actionId)) {
     closeModal();
@@ -182,6 +192,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
     const handlerData: UI.ActionHandlerData<ItemDataT> = {
       data: itemData,
       location,
+      history,
       t,
     };
 
@@ -223,17 +234,25 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
   const { t } = useTranslation();
   const closeModal = useContext(ModalRouteCloseContext);
   const location = useLocation();
+  const history = useHistory();
 
   const closeConfirmation = () => {
     setTimeout(() => setConfirmActionData(null));
   };
 
-  const handleConfirm = async (data: boolean | string) => {
+  const handleConfirm = async (confirmData: boolean | string) => {
     if (!confirmActionData) {
       return;
     }
 
-    await handleAction(confirmActionData, data, location, t, closeModal);
+    await handleAction({
+      actionData: confirmActionData,
+      confirmData,
+      location,
+      history,
+      t,
+      closeModal,
+    });
     closeConfirmation();
   };
 
@@ -243,7 +262,14 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
     } else if (actionData.action.input) {
       setConfirmActionData(actionData);
     } else {
-      handleAction(actionData, undefined, location, t, closeModal);
+      handleAction({
+        actionData,
+        confirmData: undefined,
+        location,
+        history,
+        t,
+        closeModal,
+      });
     }
   };
 

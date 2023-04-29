@@ -3,7 +3,6 @@ import { fetchCorsSafeData } from 'services/HttpService';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 
-import History from 'utils/History';
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -16,8 +15,9 @@ const hasSettings = (extension: API.Extension) => extension.has_settings;
 const handleConfigure: UI.ActionHandler<API.Extension> = ({
   data: extension,
   location,
+  history,
 }) => {
-  History.push(`${location.pathname}/extensions/${extension.id}`);
+  history.push(`${location.pathname}/extensions/${extension.id}`);
 };
 
 const handleStart: UI.ActionHandler<API.Extension> = ({ data: extension }) => {

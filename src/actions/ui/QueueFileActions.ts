@@ -9,8 +9,12 @@ import SearchActions from 'actions/reflux/SearchActions';
 
 const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
 
-const handleSearch: UI.ActionHandler<API.QueueFile> = ({ data: itemInfo, location }) => {
-  return SearchActions.search(itemInfo, location);
+const handleSearch: UI.ActionHandler<API.QueueFile> = ({
+  data: itemInfo,
+  location,
+  history,
+}) => {
+  return SearchActions.search(itemInfo, location, history);
 };
 
 const handleRemoveFile: UI.ActionHandler<API.QueueFile> = (
