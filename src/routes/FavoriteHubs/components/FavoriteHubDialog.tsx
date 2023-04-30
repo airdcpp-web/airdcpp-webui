@@ -228,14 +228,14 @@ interface DataProps {
   hubEntry?: API.FavoriteHubEntry;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   entryId: string;
-}
+}*/
 
 type Props = FavoriteHubDialogProps &
   DataProps &
   ShareProfileDecoratorChildProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+  ModalRouteDecoratorChildProps;
 
 class FavoriteHubDialog extends Component<Props> {
   static displayName = 'FavoriteHubDialog';
@@ -348,15 +348,15 @@ class FavoriteHubDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<FavoriteHubDialogProps, RouteProps>(
+export default ModalRouteDecorator<FavoriteHubDialogProps>(
   ShareProfileDecorator(FavoriteHubDialog, true, {
     urls: {
-      hubEntry: ({ match }, socket) => {
-        if (!match.params.entryId) {
+      hubEntry: ({ params }, socket) => {
+        if (!params.entryId) {
           return Promise.resolve(undefined);
         }
 
-        return socket.get(`${FavoriteHubConstants.HUBS_URL}/${match.params.entryId}`);
+        return socket.get(`${FavoriteHubConstants.HUBS_URL}/${params.entryId}`);
       },
     },
   }),

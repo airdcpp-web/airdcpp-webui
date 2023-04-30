@@ -11,7 +11,7 @@ import SessionActionDecorator from './decorators/SessionActionDecorator';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { Location, History } from 'history';
+import { NavigateFunction, Location } from 'react-router-dom';
 
 const HubActionConfig: UI.RefluxActionConfigList<API.Hub> = [
   {
@@ -26,7 +26,7 @@ const HubActions = Reflux.createActions(HubActionConfig);
 interface CreateSessionProps {
   location: Location;
   sessionStore: any;
-  history: History;
+  navigate: NavigateFunction;
 }
 
 HubActions.createSession.listen(function (
@@ -51,10 +51,9 @@ HubActions.createSession.listen(function (
 
 HubActions.createSession.completed.listen(function (
   session: API.Hub,
-  { history }: CreateSessionProps
+  { navigate }: CreateSessionProps
 ) {
-  history.push({
-    pathname: `/hubs/session/${session.id}`,
+  navigate(`/hubs/session/${session.id}`, {
     state: {
       pending: true,
     },

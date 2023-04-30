@@ -1,22 +1,21 @@
 import LoginStore, { LoginState } from 'stores/LoginStore';
 import { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
 import LoginActions from 'actions/reflux/LoginActions';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export interface LoginLocationState {
   nextPath?: string;
 }
 
-const useLoginState = (
-  props: RouteComponentProps<UI.EmptyObject, any, LoginLocationState>
-) => {
+const useLoginState = () => {
   const loadingState = useState(false);
   const setLoading = loadingState[1];
   const { i18n } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const checkLoginState = (loginInfo: LoginState) => {
     if (loginInfo.socketAuthenticated) {
@@ -29,11 +28,9 @@ const useLoginState = (
       }
 
       // Redirect to the main app
-      const { state } = props.location;
+      const state = location.state as LoginLocationState;
       const nextPath = state && state.nextPath ? state.nextPath : '/';
-      props.history.replace({
-        pathname: nextPath,
-      });
+      navigate(nextPath, { replace: true });
     } else if (!!loginInfo.lastError && !LoginStore.refreshToken) {
       // Keep the loading state as true as long as there is socket actions happening
       // Changing the state to false will allow the login page to update

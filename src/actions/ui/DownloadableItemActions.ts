@@ -92,14 +92,14 @@ const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => 
 const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
   const { pathname } = location;
-  history.push(`${pathname}/download/${data.itemInfo.id}`);
+  navigate(`${pathname}/download/${data.itemInfo.id}`);
 };
 
 const handleViewFile = (
-  { data, location, history }: UI.ActionHandlerData<UI.DownloadableItemData>,
+  { data, location, navigate }: UI.ActionHandlerData<UI.DownloadableItemData>,
   isText: boolean
 ) => {
   const props = {
@@ -201,9 +201,9 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
 export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
-  return SearchActions.search(data.itemInfo, location, history);
+  return SearchActions.search(data.itemInfo, location, navigate);
 };
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {

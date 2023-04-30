@@ -1,5 +1,3 @@
-import { Component } from 'react';
-
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
@@ -17,42 +15,40 @@ const hasSession = (entry: API.HistoryItem) => {
   return PrivateChatSessionStore.getSession(entry.user!.cid);
 };
 
-class MessageNew extends Component<NewSessionLayoutProps> {
-  handleSubmit = (user: API.HintedUser) => {
-    const { location, history } = this.props;
+const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
+  const handleSubmit = (user: API.HintedUser) => {
+    const { location, navigate } = props;
     PrivateChatActions.createSession(user, {
       sessionStore: PrivateChatSessionStore,
       location,
-      history,
+      navigate,
     });
   };
 
-  recentUserRender = (entry: API.HistoryItem) => {
-    return <a onClick={(_) => this.handleSubmit(entry.user!)}>{entry.user!.nicks}</a>;
+  const recentUserRender = (entry: API.HistoryItem) => {
+    return <a onClick={(_) => handleSubmit(entry.user!)}>{entry.user!.nicks}</a>;
   };
 
-  render() {
-    const { sessionT } = this.props;
-    return (
-      <div className="private chat session new">
-        <UserSelectField
-          onChange={this.handleSubmit}
-          offlineMessage={sessionT.t<string>(
-            'offlineMessage',
-            'You must to be connected to at least one hub in order to send private messages'
-          )}
-          isClearable={false}
-          autoFocus={true}
-        />
-        <RecentLayout
-          entryType={HistoryEntryEnum.PRIVATE_CHAT}
-          hasSession={hasSession}
-          entryTitleRenderer={this.recentUserRender}
-          entryIcon={IconConstants.MESSAGES_PLAIN}
-        />
-      </div>
-    );
-  }
-}
+  const { sessionT } = props;
+  return (
+    <div className="private chat session new">
+      <UserSelectField
+        onChange={handleSubmit}
+        offlineMessage={sessionT.t<string>(
+          'offlineMessage',
+          'You must to be connected to at least one hub in order to send private messages'
+        )}
+        isClearable={false}
+        autoFocus={true}
+      />
+      <RecentLayout
+        entryType={HistoryEntryEnum.PRIVATE_CHAT}
+        hasSession={hasSession}
+        entryTitleRenderer={recentUserRender}
+        entryIcon={IconConstants.MESSAGES_PLAIN}
+      />
+    </div>
+  );
+};
 
 export default MessageNew;

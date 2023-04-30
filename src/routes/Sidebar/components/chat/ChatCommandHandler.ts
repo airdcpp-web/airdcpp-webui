@@ -1,20 +1,22 @@
 import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
-import { MessageComposerProps } from './MessageComposer';
-import { Location, History } from 'history';
 
 import * as API from 'types/api';
-import LoginStore from 'stores/LoginStore';
+import * as UI from 'types/ui';
 
-interface RouteProps {
+import LoginStore from 'stores/LoginStore';
+import { NavigateFunction, Location } from 'react-router-dom';
+
+interface CommandProps {
   location: Location;
-  history: History;
+  navigate: NavigateFunction;
+  t: UI.TranslateF;
 }
 
 type ParamsType = string | undefined;
 type ChatCommandHandler = (
   params: ParamsType,
-  chatHandler: MessageComposerProps,
-  routeProps: RouteProps
+  chatController: UI.ChatController,
+  props: CommandProps
 ) => void;
 
 interface ChatCommand {
@@ -33,15 +35,15 @@ const handleMe: ChatCommandHandler = (params, { chatApi, session }) => {
 
 const handleClear: ChatCommandHandler = (
   params,
-  { chatActions, session, t },
-  { location, history }
+  { chatActions, session },
+  { t, location, navigate }
 ) => {
   runBackgroundSocketAction(
     () =>
       chatActions.actions.clear.handler({
         data: session,
         location,
-        history,
+        navigate,
         t,
       }) as Promise<any>,
     t
@@ -61,12 +63,12 @@ ${commandHelp}
 `;
 };
 
-const CommandHandler = (sessionProps: MessageComposerProps) => {
+const CommandHandler = (chatController: UI.ChatController) => {
   const commands: ChatCommandList = {
     clear: {
       help: 'Clear message cache',
       handler: handleClear,
-      access: sessionProps.chatActions.actions.clear.access,
+      access: chatController.chatActions.actions.clear.access,
     },
     me: {
       help: 'Send message in third person',
@@ -75,11 +77,11 @@ const CommandHandler = (sessionProps: MessageComposerProps) => {
   };
 
   return {
-    handle: (command: string, params: ParamsType, routeProps: RouteProps) => {
+    handle: (command: string, params: ParamsType, commandProps: CommandProps) => {
       if (commands[command]) {
-        commands[command].handler(params, sessionProps, routeProps);
+        commands[command].handler(params, chatController, commandProps);
       } else if (command === 'help') {
-        const { session, chatApi } = sessionProps;
+        const { session, chatApi } = chatController;
         const text = getHelpString(commands);
         const message: API.OutgoingChatStatusMessage = {
           text,

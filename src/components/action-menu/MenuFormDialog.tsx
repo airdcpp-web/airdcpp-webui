@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import * as React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import Modal, { ModalProps } from 'components/semantic/Modal';
 import Form, { FormSaveHandler } from 'components/form/Form';

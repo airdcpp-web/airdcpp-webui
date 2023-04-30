@@ -6,8 +6,8 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleAdd: UI.ActionHandler<void> = ({ location, history }) => {
-  history.push(`${location.pathname}/browse`);
+const handleAdd: UI.ActionHandler<void> = ({ location, navigate }) => {
+  navigate(`${location.pathname}/browse`);
 };
 
 const handleRemove: UI.ActionHandler<string> = ({ data: path }) => {

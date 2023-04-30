@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Route, matchPath } from 'react-router-dom';
 
 import { default as lazy } from 'decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
@@ -13,13 +12,13 @@ import EventStore from 'stores/EventStore';
 import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import IconConstants from 'constants/IconConstants';
-import { Location } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { textToI18nKey } from 'utils/TranslationUtils';
+import { Route, matchPath, Location } from 'react-router-dom';
 
 export type RouteItemClickHandler = (
   path: string,
@@ -200,15 +199,18 @@ export const parseMenuItem = (
 
 const filterItem = (item: RouteItem) => !item.access || LoginStore.hasAccess(item.access);
 
-export const parseRoutes = (routes: RouteItem[], location?: Location) => {
-  return routes.map((route, i) => (
-    <Route
-      key={route.path}
-      {...route}
-      path={route.matchPath ? route.matchPath : route.path}
-      location={location}
-    />
-  ));
+export const parseRoutes = (routes: RouteItem[]) => {
+  return routes.map((route, i) => {
+    const { component: Component, ...other } = route;
+    return (
+      <Route
+        key={route.path}
+        {...other}
+        path={`${route.matchPath ? route.matchPath : route.path}/*`}
+        element={!!Component && <Component />}
+      />
+    );
+  });
 };
 
 export const parseMenuItems = (
@@ -222,7 +224,5 @@ export const parseMenuItems = (
 };
 
 export const isRouteActive = (route: RouteItem, location: Location): boolean => {
-  return !!matchPath(location.pathname, {
-    path: route.path,
-  });
+  return !!matchPath(route.path, location.pathname);
 };

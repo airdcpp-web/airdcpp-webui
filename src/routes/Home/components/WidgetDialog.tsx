@@ -65,14 +65,12 @@ interface WidgetDialogProps {
   rootWidgetT: UI.ModuleTranslator;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   widgetId?: string;
   typeId: string;
-}
+}*/
 
-type Props = WidgetDialogProps &
-  ModalRouteDecoratorChildProps<RouteProps> &
-  WithTranslation;
+type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & WithTranslation;
 
 class WidgetDialog extends Component<Props> {
   static displayName = 'WidgetDialog';
@@ -97,8 +95,8 @@ class WidgetDialog extends Component<Props> {
 
     const { rootWidgetT } = props;
 
-    const { typeId, widgetId } = props.match.params;
-    const widgetInfo = WidgetStore.getWidgetInfoById(typeId);
+    const { typeId, widgetId } = props.params;
+    const widgetInfo = WidgetStore.getWidgetInfoById(typeId!);
     if (!!widgetInfo) {
       this.formData = {
         value: settingsToFormValue(widgetId, widgetInfo),
@@ -119,7 +117,7 @@ class WidgetDialog extends Component<Props> {
       widget: other,
     };
 
-    const { typeId, widgetId } = this.props.match.params;
+    const { typeId, widgetId } = this.props.params;
     if (!widgetId) {
       // New widget
       WidgetActions.create(createWidgetId(typeId!), settings, typeId);
@@ -168,7 +166,7 @@ class WidgetDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<WidgetDialogProps, RouteProps>(
+export default ModalRouteDecorator<WidgetDialogProps>(
   withTranslation()(WidgetDialog),
   '/home/widget/:typeId/:widgetId?'
 );

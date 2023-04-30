@@ -16,14 +16,14 @@ export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & {
 const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
   return SearchActions.search(
     {
       name: data.magnet ? data.magnet.searchString : data.text,
     },
     location,
-    history
+    navigate
   );
 };
 

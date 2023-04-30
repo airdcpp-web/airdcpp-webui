@@ -29,11 +29,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   parentResult: API.GroupedSearchResult;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   resultId: string;
-}
+}*/
 
-type Props = ResultDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
+type Props = ResultDialogProps & ModalRouteDecoratorChildProps;
 
 class ResultDialog extends Component<Props & DataProps> {
   static displayName = 'ResultDialog';
@@ -77,12 +77,12 @@ class ResultDialog extends Component<Props & DataProps> {
   }
 }
 
-const Decorated = ModalRouteDecorator<ResultDialogProps, RouteProps>(
+const Decorated = ModalRouteDecorator<ResultDialogProps>(
   DataProviderDecorator<Props, DataProps>(ResultDialog, {
     urls: {
-      parentResult: ({ match, instance }, socket) =>
+      parentResult: ({ params, instance }, socket) =>
         socket.get(
-          `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${match.params.resultId}`
+          `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${params.resultId}`
         ),
     },
   }),

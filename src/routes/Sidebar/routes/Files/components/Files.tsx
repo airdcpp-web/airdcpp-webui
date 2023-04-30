@@ -40,7 +40,7 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
 };
 
 const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props) => {
-  const { match, t, ...other } = props;
+  const { params, t, ...other } = props;
   if (props.items.length === 0) {
     return (
       <Message
@@ -55,7 +55,7 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props
 
   return (
     <SessionLayout
-      activeId={match.params.id}
+      activeId={params.id}
       baseUrl="files"
       disableSideMenu={true}
       editAccess={API.AccessEnum.VIEW_FILE_EDIT}

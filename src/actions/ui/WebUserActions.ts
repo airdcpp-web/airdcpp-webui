@@ -11,12 +11,16 @@ import * as UI from 'types/ui';
 
 const isOther = (user: API.WebUser) => user.id !== LoginStore.user.id;
 
-const handleCreate: UI.ActionHandler<void> = ({ location, history }) => {
-  history.push(`${location.pathname}/users`);
+const handleCreate: UI.ActionHandler<void> = ({ location, navigate }) => {
+  navigate(`${location.pathname}/users`);
 };
 
-const handleEdit: UI.ActionHandler<API.WebUser> = ({ data: user, location, history }) => {
-  history.push(`${location.pathname}/users/${user.id}`);
+const handleEdit: UI.ActionHandler<API.WebUser> = ({
+  data: user,
+  location,
+  navigate,
+}) => {
+  navigate(`${location.pathname}/users/${user.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.WebUser> = ({ data: user }) => {

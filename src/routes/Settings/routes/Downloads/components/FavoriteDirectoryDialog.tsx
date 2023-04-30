@@ -55,13 +55,11 @@ export interface DataProps extends DataProviderDecoratorChildProps {
   directoryEntry?: API.FavoriteDirectoryEntryBase;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   directoryId: string;
-}
+}*/
 
-type Props = FavoriteDirectoryDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = FavoriteDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class FavoriteDirectoryDialog extends Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
@@ -144,19 +142,19 @@ class FavoriteDirectoryDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<FavoriteDirectoryDialogProps, RouteProps>(
+export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(
     FavoriteDirectoryDialog,
     {
       urls: {
         virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-        directoryEntry: ({ match }, socket) => {
-          if (!match.params.directoryId) {
+        directoryEntry: ({ params }, socket) => {
+          if (!params.directoryId) {
             return Promise.resolve(undefined);
           }
 
           return socket.get(
-            `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${match.params.directoryId}`
+            `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${params.directoryId}`
           );
         },
       },

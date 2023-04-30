@@ -1,15 +1,19 @@
-import { Location, History } from 'history';
 import { pushUnique } from './BrowserUtils';
+import { NavigateFunction, Location } from 'react-router-dom';
 
-export const doSearch = (searchString: string, location: Location, history: History) => {
+export const doSearch = (
+  searchString: string,
+  location: Location,
+  navigate: NavigateFunction
+) => {
   pushUnique(
+    '/search',
     {
-      pathname: '/search',
       state: {
         searchString,
       },
     },
     location,
-    history
+    navigate
   );
 };

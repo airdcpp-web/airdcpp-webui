@@ -12,9 +12,9 @@ const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
 const handleSearch: UI.ActionHandler<API.QueueFile> = ({
   data: itemInfo,
   location,
-  history,
+  navigate,
 }) => {
-  return SearchActions.search(itemInfo, location, history);
+  return SearchActions.search(itemInfo, location, navigate);
 };
 
 const handleRemoveFile: UI.ActionHandler<API.QueueFile> = (

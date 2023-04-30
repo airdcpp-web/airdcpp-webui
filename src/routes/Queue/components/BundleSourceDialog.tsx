@@ -24,11 +24,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   bundle: API.QueueBundle;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   bundleId: string;
-}
+}*/
 
-type Props = BundleSourceDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
+type Props = BundleSourceDialogProps & ModalRouteDecoratorChildProps;
 
 class SourceDialog extends Component<Props & DataProps> {
   static displayName = 'SourceDialog';
@@ -51,11 +51,11 @@ class SourceDialog extends Component<Props & DataProps> {
   }
 }
 
-export default ModalRouteDecorator<BundleSourceDialogProps, RouteProps>(
+export default ModalRouteDecorator<BundleSourceDialogProps>(
   DataProviderDecorator<Props, DataProps>(SourceDialog, {
     urls: {
-      bundle: ({ match }, socket) =>
-        socket.get(`${QueueConstants.BUNDLES_URL}/${match.params.bundleId}`),
+      bundle: ({ params }, socket) =>
+        socket.get(`${QueueConstants.BUNDLES_URL}/${params.bundleId}`),
     },
   }),
   'sources/:bundleId'

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,8 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { RateLimiter } from 'limiter';
 
 import NotificationStore from 'stores/NotificationStore';
-
-import { Location } from 'history';
 
 import * as UI from 'types/ui';
 
@@ -19,9 +16,7 @@ import classNames from 'classnames';
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';
 
-interface NotificationsProps {
-  location: Location;
-}
+interface NotificationsProps {}
 
 const getSeverityColor = (severity: NotificationLevel) => {
   switch (severity) {
@@ -69,54 +64,21 @@ const NotificationMessage = ({ notification, level }: NotificationMessageProps) 
   );
 };
 
-class Notifications extends Component<NotificationsProps> {
-  limiter = new RateLimiter({
-    tokensPerInterval: 3,
-    interval: 3000,
-    fireImmediately: true,
-  });
+const Notifications: React.FC<NotificationsProps> = (props) => {
+  const limiter = useMemo(
+    () =>
+      new RateLimiter({
+        tokensPerInterval: 3,
+        interval: 3000,
+        fireImmediately: true,
+      }),
+    []
+  );
 
-  unsubscribe: () => void;
-
-  static propTypes = {
-    location: PropTypes.object.isRequired,
-  };
-
-  addNotification = async (level: NotificationLevel, notification: UI.Notification) => {
-    const remainingTokens = await this.limiter.removeTokens(1);
-
-    // Don't spam too many notifications as that would freeze the UI
-    // Always let the errors through as there shouldn't be too many of them
-    if (remainingTokens < 0 && level !== 'error') {
-      console.log('Notification ignored (rate limit reached)', notification);
-      return;
-    }
-
-    if (
-      'Notification' in window &&
-      Notification.permission === 'granted' &&
-      !document.hasFocus()
-    ) {
-      this.showNativeNotification(level, notification);
-      return;
-    }
-
-    // Embedded notification
-    toast(<NotificationMessage notification={notification} level={level} />, {
-      // Disable for now as old notifications won't be replaced with newer one
-      // toastId: notification.uid,
-      type: level,
-      position: 'top-left',
-      autoClose: 5000,
-      icon: false,
-    });
-  };
-
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  showNativeNotification(level: NotificationLevel, notificationInfo: UI.Notification) {
+  const showNativeNotification = (
+    level: NotificationLevel,
+    notificationInfo: UI.Notification
+  ) => {
     const options = {
       body: notificationInfo.message,
       icon: Logo,
@@ -132,30 +94,59 @@ class Notifications extends Component<NotificationsProps> {
     };
 
     setTimeout(n.close.bind(n), 5000);
-  }
+  };
 
-  componentDidMount() {
+  const addNotification = async (
+    level: NotificationLevel,
+    notification: UI.Notification
+  ) => {
+    const remainingTokens = await limiter.removeTokens(1);
+
+    // Don't spam too many notifications as that would freeze the UI
+    // Always let the errors through as there shouldn't be too many of them
+    if (remainingTokens < 0 && level !== 'error') {
+      console.log('Notification ignored (rate limit reached)', notification);
+      return;
+    }
+
+    if (
+      'Notification' in window &&
+      Notification.permission === 'granted' &&
+      !document.hasFocus()
+    ) {
+      showNativeNotification(level, notification);
+      return;
+    }
+
+    // Embedded notification
+    toast(<NotificationMessage notification={notification} level={level} />, {
+      // Disable for now as old notifications won't be replaced with newer one
+      // toastId: notification.uid,
+      type: level,
+      position: 'top-left',
+      autoClose: 5000,
+      icon: false,
+    });
+  };
+
+  useEffect(() => {
     if ('Notification' in window) {
       Notification.requestPermission();
     }
 
-    this.unsubscribe = NotificationStore.listen(this.addNotification);
-  }
+    const unsubscribe = NotificationStore.listen(addNotification);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  render() {
-    const { location } = this.props;
-    return ReactDOM.createPortal(
-      <>
-        <ToastContainer limit={3} hideProgressBar={true} pauseOnFocusLoss={false} />
-        <SocketNotificationListener location={location} />
-      </>,
-      document.getElementById('notifications-node')!
-    );
-  }
-}
+  return ReactDOM.createPortal(
+    <>
+      <ToastContainer limit={3} hideProgressBar={true} pauseOnFocusLoss={false} />
+      <SocketNotificationListener />
+    </>,
+    document.getElementById('notifications-node')!
+  );
+};
 
 export default Notifications;

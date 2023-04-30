@@ -14,7 +14,6 @@ import Form, {
   FormFieldSettingHandler,
 } from 'components/form/Form';
 import { isValueSet, translateForm } from 'utils/FormUtils';
-import { RouteComponentProps } from 'react-router';
 import Button from 'components/semantic/Button';
 import AccordionStructField from './AccordionStructField';
 
@@ -27,7 +26,7 @@ interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {
   // excluded: string[] | null;
 }
 
-export interface SearchOptionsFormProps extends Pick<RouteComponentProps, 'location'> {
+export interface SearchOptionsFormProps extends Pick<UI.RouteComponentProps, 'location'> {
   moduleT: UI.ModuleTranslator;
   onChange: (value: Entry | null) => void;
   value: Entry | null;

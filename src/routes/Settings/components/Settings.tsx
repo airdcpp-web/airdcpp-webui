@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { RouteComponentProps } from 'react-router';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
@@ -25,7 +24,7 @@ const MainLayout = SettingsMenuDecorator(({ children }) => {
   return <div className="ui segment settings-layout">{children}</div>;
 });
 
-export interface SettingsProps extends RouteComponentProps, WithTranslation {}
+export interface SettingsProps extends WithTranslation {}
 
 // Only to pass menu items to the decorated component
 class Settings extends Component<SettingsProps> {

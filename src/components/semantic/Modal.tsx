@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
-import History from 'utils/History';
-
 import IconConstants from 'constants/IconConstants';
 
 import 'fomantic-ui-css/components/modal';
@@ -16,6 +14,7 @@ import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
+import { useNavigate } from 'react-router-dom';
 
 export type ModalProps = React.PropsWithChildren<{
   closable?: boolean;
@@ -37,7 +36,7 @@ export type ModalProps = React.PropsWithChildren<{
 
 const NODE_ID = 'modals-node';
 
-class Modal extends React.Component<ModalProps> {
+const Modal: React.FC<ModalProps> = (props) => {
   /*static propTypes = {
     // Close the modal when clicking outside its boundaries
     closable: PropTypes.bool,
@@ -63,7 +62,7 @@ class Modal extends React.Component<ModalProps> {
     hide: PropTypes.func.isRequired,
   };*/
 
-  static defaultProps: Pick<
+  /*static defaultProps: Pick<
     ModalProps,
     'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'
   > = {
@@ -74,26 +73,74 @@ class Modal extends React.Component<ModalProps> {
 
   state = {
     saving: false,
+  };*/
+
+  // c: any;
+
+  // closing = false;
+  // returnOnClose = true;
+
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [saving, setSaving] = React.useState(false);
+  const [closing, setClosing] = React.useState(false);
+  const [returnOnClose, setReturnOnClose] = React.useState(false);
+  const navigate = useNavigate();
+
+  const show = () => {
+    setTimeout(() => $(ref).modal('show'));
   };
 
-  c: any;
+  const hide = () => {
+    $(ref).modal('hide');
+  };
 
-  closing = false;
-  returnOnClose = true;
+  const onHide = () => {
+    setClosing(true);
+    // this.closing = true;
+  };
 
-  componentDidMount() {
-    this.returnOnClose = true;
+  const onHidden = () => {
+    const { returnTo, onClose } = props;
+    if (returnOnClose && returnTo) {
+      navigate(returnTo);
+    }
+
+    setReturnOnClose(true);
+    // this.returnOnClose = true;
+
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const onApprove = () => {
+    const { onApprove } = props;
+    if (onApprove) {
+      setSaving(true);
+
+      onApprove()
+        .then(hide)
+        .catch(() => setSaving(false));
+
+      return false;
+    }
+
+    return;
+  };
+
+  React.useEffect(() => {
+    // this.returnOnClose = true;
 
     const settings: SemanticUI.ModalSettings = {
-      onHidden: this.onHidden,
-      onHide: this.onHide,
+      onHidden: onHidden,
+      onHide: onHide,
 
-      onApprove: this.onApprove,
-      onDeny: this.props.onReject,
-      closable: this.props.closable,
+      onApprove: onApprove,
+      onDeny: props.onReject,
+      closable: props.closable,
       detachable: false,
       allowMultiple: true,
-      observeChanges: this.props.dynamicHeight,
+      observeChanges: props.dynamicHeight,
       dimmerSettings: {
         dimmerName: NODE_ID,
       },
@@ -102,110 +149,69 @@ class Modal extends React.Component<ModalProps> {
       //name: 'Modal',
     };
 
-    $(this.c).modal(settings);
+    $(ref).modal(settings);
 
-    this.show();
-  }
+    show();
 
-  componentWillUnmount() {
+    return () => {
+      if (!closing) {
+        // this.returnOnClose = false;
+        setReturnOnClose(true);
+        hide();
+      }
+    };
+  }, []);
+
+  /*componentWillUnmount() {
     if (!this.closing) {
       this.returnOnClose = false;
       this.hide();
     }
-  }
+  }*/
 
-  show = () => {
-    setTimeout(() => $(this.c).modal('show'));
-  };
+  // const { saving } = this.state;
+  const { approveDisabled, fullHeight, approveCaption, className, children } = props;
+  const { icon, subHeader, title } = props;
 
-  hide = () => {
-    $(this.c).modal('hide');
-  };
+  const approveStyle = classNames(
+    'ui ok green basic button',
+    { disabled: approveDisabled },
+    { loading: saving }
+  );
 
-  onHide = () => {
-    this.closing = true;
-  };
+  const mainClass = classNames('ui modal', { full: fullHeight }, className);
 
-  onHidden = () => {
-    const { returnTo, onClose } = this.props;
-    if (this.returnOnClose && returnTo) {
-      History.replace(returnTo);
-    }
+  return ReactDOM.createPortal(
+    <div ref={ref} className={mainClass}>
+      <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
+      <div className="content">{children}</div>
 
-    this.returnOnClose = true;
-
-    if (onClose) {
-      onClose();
-    }
-  };
-
-  onApprove = () => {
-    const { onApprove } = this.props;
-    if (onApprove) {
-      this.setState({ saving: true });
-
-      onApprove()
-        .then(this.hide)
-        .catch(() => this.setState({ saving: false }));
-
-      return false;
-    }
-
-    return;
-  };
-
-  render() {
-    const { saving } = this.state;
-    const {
-      approveDisabled,
-      fullHeight,
-      approveCaption,
-      onApprove,
-      className,
-      children,
-    } = this.props;
-    const { icon, subHeader, title } = this.props;
-
-    const approveStyle = classNames(
-      'ui ok green basic button',
-      { disabled: approveDisabled },
-      { loading: saving }
-    );
-
-    const mainClass = classNames('ui modal', { full: fullHeight }, className);
-
-    return ReactDOM.createPortal(
-      <div ref={(c) => (this.c = c)} className={mainClass}>
-        <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
-        <div className="content">{children}</div>
-
-        <Translation>
-          {(t) =>
-            onApprove ? (
-              <div className="actions">
-                <div className={approveStyle}>
-                  <Icon icon={IconConstants.SAVE_COLORED} />
-                  {approveCaption || translate('Save', t, UI.Modules.COMMON)}
-                </div>
-                <div className="ui cancel red basic button">
-                  <Icon icon={IconConstants.CANCEL} />
-                  {translate('Cancel', t, UI.Modules.COMMON)}
-                </div>
+      <Translation>
+        {(t) =>
+          props.onApprove ? (
+            <div className="actions">
+              <div className={approveStyle}>
+                <Icon icon={IconConstants.SAVE_COLORED} />
+                {approveCaption || translate('Save', t, UI.Modules.COMMON)}
               </div>
-            ) : (
-              <div className="actions">
-                <div className="ui cancel button">
-                  <Icon icon={IconConstants.CLOSE} />
-                  {translate('Close', t, UI.Modules.COMMON)}
-                </div>
+              <div className="ui cancel red basic button">
+                <Icon icon={IconConstants.CANCEL} />
+                {translate('Cancel', t, UI.Modules.COMMON)}
               </div>
-            )
-          }
-        </Translation>
-      </div>,
-      document.getElementById(NODE_ID)!
-    );
-  }
-}
+            </div>
+          ) : (
+            <div className="actions">
+              <div className="ui cancel button">
+                <Icon icon={IconConstants.CLOSE} />
+                {translate('Close', t, UI.Modules.COMMON)}
+              </div>
+            </div>
+          )
+        }
+      </Translation>
+    </div>,
+    document.getElementById(NODE_ID)!
+  );
+};
 
 export default Modal;

@@ -20,13 +20,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   bundle: API.QueueBundle;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   bundleId: string;
-}
+}*/
 
-type Props = BundleFileDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = BundleFileDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class BundleFileDialog extends Component<Props> {
   static displayName = 'BundleFileDialog';
@@ -49,11 +47,11 @@ class BundleFileDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<BundleFileDialogProps, RouteProps>(
+export default ModalRouteDecorator<BundleFileDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(BundleFileDialog, {
     urls: {
-      bundle: ({ match }, socket) =>
-        socket.get(`${QueueConstants.BUNDLES_URL}/${match.params.bundleId}`),
+      bundle: ({ params }, socket) =>
+        socket.get(`${QueueConstants.BUNDLES_URL}/${params.bundleId}`),
     },
   }),
   'content/:bundleId'

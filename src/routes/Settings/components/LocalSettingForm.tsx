@@ -13,7 +13,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
-import { RouteComponentProps } from 'react-router';
 import { translateForm } from 'utils/FormUtils';
 
 export interface LocalSettingFormProps
@@ -22,9 +21,7 @@ export interface LocalSettingFormProps
   moduleT: UI.ModuleTranslator;
 }
 
-type Props = LocalSettingFormProps &
-  SaveContextProps &
-  RouteComponentProps<UI.EmptyObject>;
+type Props = LocalSettingFormProps & SaveContextProps;
 
 class LocalSettingForm extends Component<Props> {
   /*static propTypes = {

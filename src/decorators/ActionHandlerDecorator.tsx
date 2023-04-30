@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import * as React from 'react';
 
-import { RouteComponentProps, useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Location, NavigateFunction } from 'react-router-dom';
 
 import * as UI from 'types/ui';
 
@@ -17,7 +17,6 @@ import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 import { upperFirst } from 'lodash';
 import { toActionI18nKey } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
-import { Location, History } from 'history';
 
 interface ActionHandlerDecoratorProps<ItemDataT> {
   children: (props: ActionHandlerDecoratorChildProps<ItemDataT>) => React.ReactNode;
@@ -32,9 +31,9 @@ export interface ActionData<ItemDataT = any>
 
 export type ActionClickHandler<ItemDataT = any> = (action: ActionData<ItemDataT>) => void;
 
-export interface ActionHandlerDecoratorChildProps<ItemDataT = any>
-  extends Pick<RouteComponentProps, 'location'> {
+export interface ActionHandlerDecoratorChildProps<ItemDataT = any> {
   onClickAction: ActionClickHandler<ItemDataT>;
+  location: Location;
 }
 
 const toFieldI18nKey = (
@@ -170,7 +169,7 @@ interface HandleAction<ItemDataT extends UI.ActionItemDataValueType> {
   actionData: ActionData<ItemDataT>;
   confirmData: boolean | string | undefined;
   location: Location;
-  history: History;
+  navigate: NavigateFunction;
   t: UI.TranslateF;
   closeModal: ModalCloseContext | undefined;
 }
@@ -180,7 +179,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
   confirmData,
   location,
   t,
-  history,
+  navigate,
   closeModal,
 }: HandleAction<ItemDataT>) => {
   const { actionId, action, itemData } = actionData;
@@ -192,7 +191,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
     const handlerData: UI.ActionHandlerData<ItemDataT> = {
       data: itemData,
       location,
-      history,
+      navigate,
       t,
     };
 
@@ -234,7 +233,7 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
   const { t } = useTranslation();
   const closeModal = useContext(ModalRouteCloseContext);
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const closeConfirmation = () => {
     setTimeout(() => setConfirmActionData(null));
@@ -249,7 +248,7 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
       actionData: confirmActionData,
       confirmData,
       location,
-      history,
+      navigate,
       t,
       closeModal,
     });
@@ -266,7 +265,7 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
         actionData,
         confirmData: undefined,
         location,
-        history,
+        navigate,
         t,
         closeModal,
       });

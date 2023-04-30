@@ -1,5 +1,3 @@
-import { Component } from 'react';
-
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
@@ -14,66 +12,61 @@ import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
 
-class FilelistNew extends Component<NewSessionLayoutProps> {
-  handleSubmit = (user: API.HintedUser) => {
-    const { history, location } = this.props;
+const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
+  const handleSubmit = (user: API.HintedUser) => {
+    const { navigate, location } = props;
     FilelistSessionActions.createSession(
       { user },
       {
-        history,
+        navigate,
         location,
         sessionStore: FilelistSessionStore,
       }
     );
   };
 
-  onProfileChanged = (profileId: number) => {
-    const { history, location } = this.props;
+  const onProfileChanged = (profileId: number) => {
+    const { navigate, location } = props;
     FilelistSessionActions.ownList(profileId, {
-      history,
+      navigate,
       location,
       sessionStore: FilelistSessionStore,
     });
   };
 
-  recentUserRender = (entry: API.HistoryItem) => {
+  const recentUserRender = (entry: API.HistoryItem) => {
     return (
-      <a onClick={(_) => this.handleSubmit(entry.user!)}>
+      <a onClick={(_) => handleSubmit(entry.user!)}>
         {entry.user!.nicks + (entry.description ? ` (${entry.description})` : '')}
       </a>
     );
   };
 
-  hasSession = (entry: API.HistoryItem) => {
+  const hasSession = (entry: API.HistoryItem) => {
     return FilelistSessionStore.getSession(entry.user!.cid);
   };
 
-  render() {
-    const { sessionT } = this.props;
-    return (
-      <div className="filelist session new">
-        <UserSelectField
-          onChange={this.handleSubmit}
-          offlineMessage={sessionT.t<string>(
-            'offlineMessage',
-            'You must to be connected to at least one hub in order to download filelists from other users'
-          )}
-          isClearable={false}
-          autoFocus={true}
-        />
-        <ShareProfileSelector
-          onProfileChanged={this.onProfileChanged}
-          sessionT={sessionT}
-        />
-        <RecentLayout
-          entryType={HistoryEntryEnum.FILELIST}
-          hasSession={this.hasSession}
-          entryTitleRenderer={this.recentUserRender}
-          entryIcon={IconConstants.FILELISTS_PLAIN}
-        />
-      </div>
-    );
-  }
-}
+  const { sessionT } = props;
+  return (
+    <div className="filelist session new">
+      <UserSelectField
+        onChange={handleSubmit}
+        offlineMessage={sessionT.t<string>(
+          'offlineMessage',
+          'You must to be connected to at least one hub in order to download filelists from other users'
+        )}
+        isClearable={false}
+        autoFocus={true}
+      />
+      <ShareProfileSelector onProfileChanged={onProfileChanged} sessionT={sessionT} />
+      <RecentLayout
+        entryType={HistoryEntryEnum.FILELIST}
+        hasSession={hasSession}
+        entryTitleRenderer={recentUserRender}
+        entryIcon={IconConstants.FILELISTS_PLAIN}
+      />
+    </div>
+  );
+};
 
 export default FilelistNew;

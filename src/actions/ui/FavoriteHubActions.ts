@@ -6,12 +6,12 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate: UI.ActionHandler<undefined> = ({ history }) => {
-  history.push('/favorite-hubs/entries');
+const handleCreate: UI.ActionHandler<undefined> = ({ navigate }) => {
+  navigate('/favorite-hubs/entries');
 };
 
-const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub, history }) => {
-  history.push(`/favorite-hubs/entries/${hub.id}`);
+const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub, navigate }) => {
+  navigate(`/favorite-hubs/entries/${hub.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {

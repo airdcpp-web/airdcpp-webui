@@ -1,5 +1,5 @@
-import { Location, LocationDescriptorObject, History } from 'history';
 import invariant from 'invariant';
+import { NavigateFunction, NavigateOptions, To, Location } from 'react-router-dom';
 
 const loadProperty = (
   storage: Storage,
@@ -75,14 +75,15 @@ export const useMobileLayout = (width?: number | null) => {
 };
 
 export const pushUnique = (
-  nextLocation: LocationDescriptorObject,
+  to: To,
+  options: NavigateOptions,
   currentLocation: Location,
-  history: History
+  navigate: NavigateFunction
 ) => {
   invariant(currentLocation, 'pushUnique: current location was not supplied');
-  if (nextLocation.pathname !== currentLocation.pathname) {
-    history.push(nextLocation);
+  if (to !== currentLocation.pathname) {
+    navigate(to, options);
   } else {
-    history.replace(nextLocation);
+    navigate(to, { ...options, replace: true });
   }
 };

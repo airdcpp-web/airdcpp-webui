@@ -13,29 +13,30 @@ import SaveDecorator, {
   SaveDecoratorChildProps,
   SaveDecoratorProps,
 } from '../decorators/SaveDecorator';
-import { RouteComponentProps } from 'react-router';
 
 import * as UI from 'types/ui';
 import { menuItemToLinkComponent } from './MenuItems';
+import { useLocation } from 'react-router-dom';
 
 export interface SettingSectionProps {}
 
 type Props = SaveDecoratorChildProps & SettingsMenuDecoratorChildProps;
 
-export type SettingSectionChildProps<RouteParams extends object = UI.EmptyObject> =
-  SaveDecoratorChildProps &
-    Pick<Props, 'parent' | 'currentMenuItem'> &
-    RouteComponentProps<RouteParams> &
-    React.PropsWithChildren<{
-      contentClassname: string;
-      parentMenuItems: React.ReactNode[];
-      menuItems: React.ReactNode[];
-      advancedMenuItems?: React.ReactNode[];
-      settingsT: UI.ModuleTranslator;
-      moduleT: UI.ModuleTranslator;
-    }>;
+export type SettingSectionChildProps = SaveDecoratorChildProps &
+  Pick<Props, 'parent' | 'currentMenuItem'> &
+  Pick<UI.RouteComponentProps, 'location'> &
+  React.PropsWithChildren<{
+    contentClassname: string;
+    parentMenuItems: React.ReactNode[];
+    menuItems: React.ReactNode[];
+    advancedMenuItems?: React.ReactNode[];
+    settingsT: UI.ModuleTranslator;
+    moduleT: UI.ModuleTranslator;
+  }>;
 
 const SettingSection: React.FC<Props> = (props) => {
+  const location = useLocation();
+
   const Component =
     useMobileLayout() || window.innerWidth < 1000
       ? SettingsTopMenuLayout
@@ -47,7 +48,6 @@ const SettingSection: React.FC<Props> = (props) => {
     parentMenuItems,
     menuItems,
     advancedMenuItems,
-    location,
     ...childProps
   } = props;
   const { parent, currentMenuItem } = props;

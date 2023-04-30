@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Prompt, RouteComponentProps } from 'react-router-dom';
 import invariant from 'invariant';
 
 import Message from 'components/semantic/Message';
@@ -13,8 +12,8 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { ChildSectionType } from './SettingsMenuDecorator';
-import { Location } from 'history';
 import IconConstants from 'constants/IconConstants';
+import { Location } from 'react-router-dom';
 
 export interface SaveDecoratorProps {
   currentMenuItem: ChildSectionType;
@@ -61,7 +60,7 @@ const getFormId = (keys: string[]) => {
 export default function <PropsT extends object>(
   Component: React.ComponentType<SaveDecoratorChildProps & PropsT>
 ) {
-  type Props = SaveDecoratorProps & Pick<RouteComponentProps, 'location'> & PropsT;
+  type Props = SaveDecoratorProps & Pick<UI.RouteComponentProps, 'location'> & PropsT;
 
   class SaveDecorator extends React.Component<React.PropsWithChildren<Props>> {
     static displayName = 'SaveDecorator';

@@ -1,5 +1,4 @@
-import { Component } from 'react';
-import { matchPath } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import {
   configRoutes,
   mainRoutes,
@@ -13,109 +12,108 @@ import {
 import DropdownCaption from 'components/semantic/DropdownCaption';
 
 import IconPanel from 'components/main/navigation/IconPanel';
-import { Location, History } from 'history';
 import { Translation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 import Popup from 'components/semantic/Popup';
+import { useEffect, useRef } from 'react';
 
 interface MainNavigationMobileProps {
   onClose: () => void;
-  location: Location;
-  history: History;
   visible: boolean;
 }
 
-class MainNavigationMobile extends Component<MainNavigationMobileProps> {
-  c: HTMLDivElement;
-  componentDidMount() {
+const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
+  onClose,
+  visible,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
     const settings = {
       context: '#mobile-layout',
       transition: 'overlay',
       mobileTransition: 'overlay',
-      onHidden: this.props.onClose,
+      onHidden: onClose,
     };
 
-    $(this.c).sidebar(settings);
-  }
+    $(ref.current!).sidebar(settings);
+  }, []);
 
-  componentDidUpdate(prevProps: MainNavigationMobileProps) {
-    if (this.props.visible !== prevProps.visible) {
-      if (this.props.visible) {
-        $(this.c).sidebar('show');
-      } else {
-        $(this.c).sidebar('hide');
-      }
+  useEffect(() => {
+    if (visible) {
+      $(ref.current!).sidebar('show');
+    } else {
+      $(ref.current!).sidebar('hide');
     }
-  }
+  }, [visible]);
 
-  onClickSecondary: RouteItemClickHandler = (url, evt) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const onClick: RouteItemClickHandler = (url, evt) => {
+    $(ref.current!).sidebar('hide');
+  };
+
+  const onClickSecondary: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
-    const { location, history } = this.props;
-    const isActive = matchPath(location.pathname, {
-      path: url,
-    });
+    // const { location, history } = this.props;
+    const isActive = matchPath(url, location.pathname);
 
     if (!isActive) {
-      history.push(url);
+      navigate(url);
     }
 
-    this.onClick(url, evt);
+    onClick(url, evt);
   };
 
-  onClick: RouteItemClickHandler = (url, evt) => {
-    $(this.c).sidebar('hide');
-  };
-
-  render() {
-    return (
-      <Translation>
-        {(t) => (
-          <div
-            ref={(c) => (this.c = c!)}
-            id="mobile-menu"
-            className="ui right vertical inverted sidebar menu"
+  return (
+    <Translation>
+      {(t) => (
+        <div
+          ref={ref}
+          id="mobile-menu"
+          className="ui right vertical inverted sidebar menu"
+        >
+          {parseMenuItems(mainRoutes, onClick)}
+          <Popup
+            // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
+            // https://github.com/Semantic-Org/Semantic-UI/issues/1410
+            trigger={
+              <DropdownCaption icon="ellipsis horizontal caption">
+                {translate('More...', t, UI.SubNamespaces.NAVIGATION)}
+              </DropdownCaption>
+            }
+            triggerClassName="item"
+            className="inverted"
+            position="bottom left"
+            settings={{
+              distanceAway: -20,
+            }}
           >
-            {parseMenuItems(mainRoutes, this.onClick)}
-            <Popup
-              // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
-              // https://github.com/Semantic-Org/Semantic-UI/issues/1410
-              trigger={
-                <DropdownCaption icon="ellipsis horizontal caption">
-                  {translate('More...', t, UI.SubNamespaces.NAVIGATION)}
-                </DropdownCaption>
-              }
-              triggerClassName="item"
-              className="inverted"
-              position="bottom left"
-              settings={{
-                distanceAway: -20,
-              }}
-            >
-              {(hide) => (
-                <div className="ui dropdown item right fluid active visible">
-                  <div className="ui menu transition visible">
-                    {parseMenuItems(configRoutes, (path, event) => {
-                      hide();
-                      this.onClick(path, event);
-                    })}
-                    <div className="ui divider" />
-                    {parseMenuItem(logoutItem)}
-                  </div>
+            {(hide) => (
+              <div className="ui dropdown item right fluid active visible">
+                <div className="ui menu transition visible">
+                  {parseMenuItems(configRoutes, (path, event) => {
+                    hide();
+                    onClick(path, event);
+                  })}
+                  <div className="ui divider" />
+                  {parseMenuItem(logoutItem)}
                 </div>
-              )}
-            </Popup>
-            <div className="separator" />
+              </div>
+            )}
+          </Popup>
+          <div className="separator" />
 
-            {parseMenuItems(secondaryRoutes, this.onClickSecondary)}
-            <IconPanel />
-          </div>
-        )}
-      </Translation>
-    );
-  }
-}
+          {parseMenuItems(secondaryRoutes, onClickSecondary)}
+          <IconPanel />
+        </div>
+      )}
+    </Translation>
+  );
+};
 
 export default MainNavigationMobile;

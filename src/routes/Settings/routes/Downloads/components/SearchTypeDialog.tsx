@@ -43,13 +43,11 @@ export interface DataProps extends DataProviderDecoratorChildProps {
   searchTypeEntry?: API.SearchType;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   searchTypeId: string;
-}
+}*/
 
-type Props = SearchTypeDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = SearchTypeDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class SearchTypeDialog extends Component<Props> {
   static displayName = 'SearchTypeDialog';
@@ -110,17 +108,15 @@ class SearchTypeDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<SearchTypeDialogProps, RouteProps>(
+export default ModalRouteDecorator<SearchTypeDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(SearchTypeDialog, {
     urls: {
-      searchTypeEntry: ({ match }, socket) => {
-        if (!match.params.searchTypeId) {
+      searchTypeEntry: ({ params }, socket) => {
+        if (!params.searchTypeId) {
           return Promise.resolve(undefined);
         }
 
-        return socket.get(
-          `${SearchConstants.SEARCH_TYPES_URL}/${match.params.searchTypeId}`
-        );
+        return socket.get(`${SearchConstants.SEARCH_TYPES_URL}/${params.searchTypeId}`);
       },
     },
   }),

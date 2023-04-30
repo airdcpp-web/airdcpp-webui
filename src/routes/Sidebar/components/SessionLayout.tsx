@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
 import invariant from 'invariant';
 
 import Loader from 'components/semantic/Loader';
@@ -32,12 +31,13 @@ import * as UI from 'types/ui';
 
 import { getModuleT, translate, toI18nKey } from 'utils/TranslationUtils';
 import { LayoutWidthContext, LayoutWidthContextType } from 'context/LayoutWidthContext';
+import { Route, NavigateFunction, Routes } from 'react-router-dom';
 
 export type SessionBaseType = UI.SessionItemBase;
 
 const findItem = <SessionT extends SessionBaseType>(
   items: SessionT[],
-  id: API.IdType | null
+  id: API.IdType | undefined
 ): SessionT | undefined => {
   return items.find((item) => item.id === id);
 };
@@ -47,7 +47,7 @@ export interface SessionLayoutProps<
   SessionApiT extends object = UI.EmptyObject,
   UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > extends UI.SessionInfoGetter<SessionT>,
-    Omit<RouteComponentProps, 'match'> {
+    UI.RouteComponentProps {
   // Unique ID of the section (used for storing and loading the previously open tab)
   baseUrl: string;
 
@@ -61,7 +61,7 @@ export interface SessionLayoutProps<
   actionIds?: string[];
 
   // Item ID that is currently active (if any)
-  activeId: API.IdType | null;
+  activeId: API.IdType | undefined;
 
   // Label for button that opens a new session
   newCaption?: React.ReactNode;
@@ -85,6 +85,8 @@ export interface SessionLayoutProps<
   newLayout?: React.ComponentType<NewSessionLayoutProps>;
 
   unreadInfoStore: UI.UnreadInfoStore;
+
+  navigate: NavigateFunction;
 
   t: UI.TranslateF;
 }
@@ -123,13 +125,13 @@ export type SessionChildProps<
   UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > = Pick<
   SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
-  'location' | 'sessionApi' | 'uiActions' | 'history'
+  'location' | 'sessionApi' | 'uiActions' | 'navigate'
 > & {
   session: SessionT;
   sessionT: UI.ModuleTranslator;
 };
 
-export interface NewSessionLayoutProps extends RouteComponentProps {
+export interface NewSessionLayoutProps extends UI.RouteComponentProps {
   sessionT: UI.ModuleTranslator;
 }
 
@@ -222,18 +224,18 @@ class SessionLayout<
   };
 
   pushSession = (id: API.IdType) => {
-    const { history } = this.props;
-    history.push(this.getSessionUrl(id));
+    const { navigate } = this.props;
+    navigate(this.getSessionUrl(id));
   };
 
   replaceSession = (id: API.IdType) => {
-    const { history } = this.props;
-    history.replace(this.getSessionUrl(id));
+    const { navigate } = this.props;
+    navigate(this.getSessionUrl(id), { replace: true });
   };
 
   pushNew = () => {
-    const { history } = this.props;
-    history.push(this.getNewUrl());
+    const { navigate } = this.props;
+    navigate(this.getNewUrl());
   };
 
   hasEditAccess = () => {
@@ -287,11 +289,11 @@ class SessionLayout<
     if (activeItem) {
       if (pending) {
         // Disable pending state
-        props.history.replace({
-          //path: routerLocation.pathname,
+        props.navigate(routerLocation.pathname, {
           state: {
             pending: false,
           },
+          replace: true,
         });
 
         return true;
@@ -305,7 +307,7 @@ class SessionLayout<
       return true;
     } else if (/*routerLocation.action === 'POP' ||*/ props.items.length === 0) {
       // Browsing from history and item removed (or all items removed)... go to "new session" page
-      props.history.replace(this.getNewUrl());
+      props.navigate(this.getNewUrl(), { replace: true });
       this.setState({ activeItem: null });
       return true;
     }
@@ -339,8 +341,8 @@ class SessionLayout<
       // Insert
       event.preventDefault();
 
-      const { history } = this.props;
-      history.replace(this.getNewUrl());
+      const { navigate } = this.props;
+      navigate(this.getNewUrl(), { replace: true });
     } else if (altKey && key === 'Delete') {
       // Delete
       event.preventDefault();
@@ -483,6 +485,48 @@ class SessionLayout<
     );
   };
 
+  getSessionChildren = () => {
+    const {
+      activeId,
+      items,
+      t,
+      sessionItemLayout: SessionItemLayout,
+      navigate,
+      location,
+      sessionApi,
+      uiActions,
+    } = this.props;
+
+    const { activeItem } = this.state;
+    if (!activeItem) {
+      const { state } = this.props.location;
+      if (!!state && (state as SessionLocationState).pending) {
+        // The session was just created
+        return (
+          <Loader text={translate('Waiting for server response', t, UI.Modules.COMMON)} />
+        );
+      } else if (activeId || items.length !== 0) {
+        // Redirecting to a new page
+        return <Loader text={translate('Loading session', t, UI.Modules.COMMON)} />;
+      }
+
+      console.error('SessionLayout route: active session missing');
+      return;
+    }
+
+    // We have a session
+    return (
+      <SessionItemLayout
+        session={activeItem}
+        sessionApi={sessionApi}
+        uiActions={uiActions}
+        location={location}
+        navigate={navigate}
+        sessionT={this.sessionT}
+      />
+    );
+  };
+
   sessionT = getModuleT(this.props.t, this.props.uiActions.moduleId);
   render() {
     const {
@@ -490,13 +534,10 @@ class SessionLayout<
       items,
       unreadInfoStore,
       location,
-      history,
+      navigate,
       t,
-      sessionApi,
       uiActions,
       newLayout: NewLayout,
-      sessionItemLayout: SessionItemLayout,
-      activeId,
     } = this.props;
 
     if (!this.hasEditAccess() && items.length === 0) {
@@ -515,66 +556,37 @@ class SessionLayout<
     const { activeItem } = this.state;
     const useTopMenu = disableSideMenu || useMobileLayout(this.context);
 
-    const Component = useTopMenu ? TopMenuLayout : SideMenuLayout;
+    const MenuLayout = useTopMenu ? TopMenuLayout : SideMenuLayout;
     return (
-      <Component
+      <MenuLayout
         itemHeaderTitle={this.getItemHeaderTitle()}
         itemHeaderDescription={this.getItemHeaderDescription()}
         itemHeaderIcon={this.getItemHeaderIcon()}
         activeItem={activeItem}
         unreadInfoStore={unreadInfoStore}
-        //closeAction={ actions.actions.removeSession }
         newButton={this.getNewButton()}
         sessionMenuItems={items.map(this.getSessionMenuItem)}
         listActionMenuGetter={this.getListActionMenu}
         onKeyDown={this.onKeyDown}
-        //moduleId={ actions.moduleId }
         actions={uiActions}
         t={t}
       >
-        <Route
-          path={this.getSessionUrl(':id')}
-          render={(props) => {
-            if (!activeItem) {
-              const { state } = this.props.location;
-              if (!!state && (state as SessionLocationState).pending) {
-                // The session was just created
-                return (
-                  <Loader
-                    text={translate('Waiting for server response', t, UI.Modules.COMMON)}
-                  />
-                );
-              } else if (activeId || items.length !== 0) {
-                // Redirecting to a new page
-                return (
-                  <Loader text={translate('Loading session', t, UI.Modules.COMMON)} />
-                );
+        <Routes>
+          <Route path={this.getSessionUrl(':id')} element={this.getSessionChildren()} />
+          {!!NewLayout && (
+            <Route
+              path={this.getNewUrl()}
+              element={
+                <NewLayout
+                  navigate={navigate}
+                  location={location}
+                  sessionT={this.sessionT}
+                />
               }
-
-              console.error('SessionLayout route: active session missing');
-              return;
-            }
-
-            // We have a session
-            return (
-              <SessionItemLayout
-                session={activeItem}
-                sessionApi={sessionApi}
-                uiActions={uiActions}
-                location={location}
-                history={history}
-                sessionT={this.sessionT}
-              />
-            );
-          }}
-        />
-        {!!NewLayout && (
-          <Route
-            path={this.getNewUrl()}
-            render={(props) => <NewLayout {...props} sessionT={this.sessionT} />}
-          />
-        )}
-      </Component>
+            />
+          )}
+        </Routes>
+      </MenuLayout>
     );
   }
 }

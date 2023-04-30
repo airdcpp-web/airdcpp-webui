@@ -1,21 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { MentionsInput, Mention, OnChangeHandlerFunc, DataFunc } from 'react-mentions';
+import { MentionsInput, Mention, DataFunc } from 'react-mentions';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import {
-  loadSessionProperty,
-  saveSessionProperty,
-  useMobileLayout,
-} from 'utils/BrowserUtils';
-import ChatCommandHandler from './ChatCommandHandler';
-import NotificationActions from 'actions/NotificationActions';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 import UserConstants from 'constants/UserConstants';
 import SocketService from 'services/SocketService';
-import { ChatLayoutProps } from 'routes/Sidebar/components/chat/ChatLayout';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -23,13 +15,14 @@ import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import FilePreviewDialog from './FilePreviewDialog';
 import TempShareDropdown from './TempShareDropdown';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
-import { formatSize } from 'utils/ValueFormat';
+import { translate } from 'utils/TranslationUtils';
 import LoginStore from 'stores/LoginStore';
 import AccessConstants from 'constants/AccessConstants';
 import Icon from 'components/semantic/Icon';
 import Button from 'components/semantic/Button';
 import IconConstants from 'constants/IconConstants';
+import { useFileUploader } from './effects/useChatFileUploader';
+import { useMessageComposer } from './effects/useMessageComposer';
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
@@ -74,27 +67,9 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
   };
 };
 
-export interface MessageComposerProps
-  extends Pick<
-    ChatLayoutProps,
-    'chatApi' | 'session' | 'chatActions' | 'handleFileUpload'
-  > {
+export interface MessageComposerProps extends UI.ChatController {
   t: UI.TranslateF;
 }
-
-const getStorageKey = (props: RouteComponentProps) => {
-  return `last_message_${props.location.pathname}`;
-};
-
-const loadState = (props: RouteComponentProps) => {
-  return {
-    text: loadSessionProperty(getStorageKey(props), ''),
-  };
-};
-
-const saveState = (state: State, props: RouteComponentProps) => {
-  saveSessionProperty(getStorageKey(props), state.text);
-};
 
 const userToMention = (user: API.HubUser) => {
   return {
@@ -103,94 +78,25 @@ const userToMention = (user: API.HubUser) => {
   };
 };
 
-interface State {
-  text: string;
-  files: File[] | null;
-  uploading: boolean;
-}
+export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
+  const dropzoneRef = React.useRef<DropzoneRef>(null);
 
-class MessageComposer extends React.Component<
-  MessageComposerProps & RouteComponentProps
-> {
-  /*static propTypes = {
-    // Actions for this chat session type
-    actions: PropTypes.object.isRequired,
-    session: PropTypes.object.isRequired,
-  };*/
+  const { t, handleFileUpload } = props;
 
-  dropzoneRef = React.createRef<DropzoneRef>();
+  const { appendText, sendText, text, onTextChanged, onKeyDown } = useMessageComposer({
+    chatController: props,
+    t,
+  });
 
-  handleCommand = (text: string) => {
-    const { location, history } = this.props;
+  const { uploading, onDropFile, onPaste, onUploadFiles, files, resetFiles } =
+    useFileUploader({ appendText, handleFileUpload: handleFileUpload, t });
 
-    let command, params;
-
-    {
-      // Parse the command
-      const whitespace = text.indexOf(' ');
-      if (whitespace === -1) {
-        command = text.substring(1);
-      } else {
-        command = text.substring(1, whitespace - 1);
-        params = text.substring(whitespace + 1);
-      }
-    }
-
-    ChatCommandHandler(this.props).handle(command, params, { location, history });
-  };
-
-  handleSend = (text: string) => {
-    const { chatApi, session } = this.props;
-    chatApi.sendChatMessage(session, text);
-  };
-
-  componentWillUnmount() {
-    saveState(this.state, this.props);
-  }
-
-  componentDidUpdate(prevProps: RouteComponentProps, prevState: State) {
-    if (prevProps.location.pathname !== this.props.location.pathname) {
-      saveState(prevState, prevProps);
-      this.setState(loadState(this.props));
-    }
-  }
-
-  handleChange: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
-    this.setState({
-      text: plainValue,
-    });
-  };
-
-  onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      this.sendText();
-    }
-  };
-
-  sendText = () => {
-    // Trim only from end to allow chat messages such as " +help" to be
-    // sent to other users
-    // This will also prevent sending empty messages
-    const text = this.state.text.replace(/\s+$/, '');
-
-    if (text) {
-      if (text[0] === '/') {
-        this.handleCommand(text);
-      }
-
-      this.handleSend(text);
-    }
-
-    this.setState({ text: '' });
-  };
-
-  findUsers: DataFunc = (value, callback) => {
-    const { session } = this.props;
+  const findUsers: DataFunc = (value, callback) => {
+    const { hubUrl } = props;
     SocketService.post(UserConstants.SEARCH_NICKS_URL, {
       pattern: value,
       max_results: 5,
-      hub_urls: session.hub_url ? [session.hub_url] : undefined,
+      hub_urls: hubUrl ? [hubUrl] : undefined,
     })
       .then((users: API.HubUser[]) => callback(users.map(userToMention)))
       .catch((error: ErrorResponse) =>
@@ -198,179 +104,68 @@ class MessageComposer extends React.Component<
       );
   };
 
-  appendText = (text: string) => {
-    let newText = this.state.text;
-    if (newText) {
-      newText += ' ';
-    }
-    newText += text;
+  const mobile = useMobileLayout();
+  const className = classNames('ui form composer', { small: mobile }, { large: !mobile });
 
-    this.setState({
-      text: newText,
-    });
-  };
+  const hasFileUploadAccess =
+    LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) &&
+    LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
 
-  onDropFile = (acceptedFiles: File[]) => {
-    const { t } = this.props;
-    const maxSize = 100 * 1024 * 1024;
+  const sendButton = (
+    <Button
+      className="large icon send"
+      onClick={sendText}
+      caption={<Icon icon={IconConstants.SEND} />}
+      loading={uploading}
+      color="blue"
+    />
+  );
 
-    const files = acceptedFiles.filter((file) => {
-      if (file.size > maxSize) {
-        NotificationActions.error({
-          title: file.name,
-          message: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
-            defaultValue: 'File is too large (maximum size is {{maxSize}})',
-            replace: {
-              maxSize: formatSize(maxSize, t),
-            },
-          }),
-        });
-
-        return false;
-      }
-
-      return true;
-    });
-
-    if (!files.length) {
-      return;
-    }
-
-    this.setState({
-      files,
-    });
-  };
-
-  onUploadFiles = async (files: File[]) => {
-    this.resetFiles();
-    this.setState({
-      uploading: true,
-    });
-
-    const { handleFileUpload } = this.props;
-    for (const file of files) {
-      try {
-        const res = await handleFileUpload(file);
-        this.appendText(res.magnet);
-      } catch (e) {
-        NotificationActions.apiError('Failed to upload the file', e);
-      }
-    }
-
-    this.setState({
-      uploading: false,
-    });
-  };
-
-  onPaste = (evt: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    if (
-      evt.clipboardData &&
-      evt.clipboardData.files &&
-      (evt.clipboardData as any).files.length
-    ) {
-      const files: File[] = [];
-
-      {
-        // DataTransferItemList isn't a normal array, convert it first
-        // https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItemList
-        const dataTransferItemList = (evt.clipboardData as any).files as any[];
-        for (let i = 0; i < dataTransferItemList.length; i++) {
-          files.push(dataTransferItemList[i]);
-        }
-      }
-
-      evt.preventDefault();
-      this.onDropFile(files);
-    }
-  };
-
-  resetFiles = () => {
-    this.setState({
-      files: null,
-    });
-  };
-
-  state: State = {
-    ...loadState(this.props),
-    files: null,
-    uploading: false,
-  };
-
-  render() {
-    const mobile = useMobileLayout();
-    const className = classNames(
-      'ui form composer',
-      { small: mobile },
-      { large: !mobile }
-    );
-
-    const hasFileUploadAccess =
-      LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) &&
-      LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
-
-    const { files, text, uploading } = this.state;
-    const { t } = this.props;
-
-    const sendButton = (
-      <Button
-        className="large icon send"
-        onClick={this.sendText}
-        caption={<Icon icon={IconConstants.SEND} />}
-        loading={uploading}
-        color="blue"
-      />
-    );
-
-    return (
-      <>
-        {!!files && (
-          <FilePreviewDialog
-            files={files}
-            onConfirm={this.onUploadFiles}
-            onReject={this.resetFiles}
-            title={translate('Send files', t, UI.Modules.COMMON)}
-          />
+  return (
+    <>
+      {!!files && (
+        <FilePreviewDialog
+          files={files}
+          onConfirm={onUploadFiles}
+          onReject={resetFiles}
+          title={translate('Send files', t, UI.Modules.COMMON)}
+        />
+      )}
+      <Dropzone
+        onDrop={onDropFile}
+        ref={dropzoneRef}
+        disabled={!hasFileUploadAccess}
+        multiple={true}
+        minSize={1}
+        noClick={true}
+        // Handle max size check elsewhere (report errors)
+      >
+        {({ getRootProps, getInputProps, open }) => (
+          <div className={className} {...getRootProps()}>
+            <input {...getInputProps()} />
+            <MentionsInput
+              className="input"
+              value={text}
+              onChange={onTextChanged}
+              onKeyDown={onKeyDown}
+              style={getMentionFieldStyle(mobile)}
+              autoFocus={!mobile}
+              onPaste={onPaste}
+            >
+              <Mention trigger="@" data={findUsers} appendSpaceOnAdd={false} />
+            </MentionsInput>
+            {!hasFileUploadAccess || uploading ? (
+              sendButton
+            ) : (
+              <TempShareDropdown
+                className="blue large"
+                handleUpload={open}
+                overrideContent={!text ? null : sendButton}
+              />
+            )}
+          </div>
         )}
-        <Dropzone
-          onDrop={this.onDropFile}
-          ref={this.dropzoneRef}
-          disabled={!hasFileUploadAccess}
-          multiple={true}
-          minSize={1}
-          noClick={true}
-          // Handle max size check elsewhere (report errors)
-        >
-          {({ getRootProps, getInputProps, open }) => (
-            <div className={className} {...getRootProps()}>
-              <input {...getInputProps()} />
-              <MentionsInput
-                className="input"
-                value={text}
-                onChange={this.handleChange}
-                onKeyDown={this.onKeyDown}
-                style={getMentionFieldStyle(mobile)}
-                autoFocus={!mobile}
-                onPaste={this.onPaste}
-              >
-                <Mention trigger="@" data={this.findUsers} appendSpaceOnAdd={false} />
-              </MentionsInput>
-              {!hasFileUploadAccess || uploading ? (
-                sendButton
-              ) : (
-                <TempShareDropdown
-                  className="blue large"
-                  handleUpload={open}
-                  overrideContent={!text ? null : sendButton}
-                />
-              )}
-            </div>
-          )}
-        </Dropzone>
-      </>
-    );
-  }
-}
-
-const Decorated = withRouter(MessageComposer);
-
-export default Decorated;
+      </Dropzone>
+    </>
+  );
+};

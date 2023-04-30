@@ -15,7 +15,6 @@ import Form, {
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
-import { RouteComponentProps } from 'react-router';
 
 export interface RemoteSettingFormProps
   extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions'> {
@@ -32,7 +31,7 @@ interface RemoteSettingFormDataProps extends DataProviderDecoratorChildProps {
 type Props = RemoteSettingFormProps &
   RemoteSettingFormDataProps &
   SaveContextProps &
-  RouteComponentProps;
+  Pick<UI.RouteComponentProps, 'location'>;
 
 class RemoteSettingForm extends Component<Props> {
   onSave: FormSaveHandler<UI.FormValueMap> = (changedValues) => {

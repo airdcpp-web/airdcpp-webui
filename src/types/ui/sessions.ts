@@ -1,9 +1,8 @@
-import { Location } from 'history';
+import { Location } from 'react-router-dom';
 
 import * as API from 'types/api';
 
 import { IconType } from 'components/semantic/Icon';
-import { RouteComponentProps } from 'react-router-dom';
 import { RefluxActionListType } from './actions';
 import { EmptyObject, ScrollPositionHandler } from './common';
 import { MessageStore } from './messages';
@@ -36,7 +35,7 @@ export interface SessionRouteParams {
   id: string;
 }
 
-export type SessionRouteProps = RouteComponentProps<SessionRouteParams>;
+// export type SessionRouteProps = RouteComponentProps<SessionRouteParams>;
 
 // ENTITIES
 export interface SessionItemBase {

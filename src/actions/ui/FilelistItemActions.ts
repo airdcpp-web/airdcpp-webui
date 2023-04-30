@@ -38,9 +38,9 @@ const handleRefreshShare: UI.ActionHandler<ActionFilelistItemData> = ({ data }) 
 const handleItemDetails: UI.ActionHandler<ActionFilelistItemData> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
-  history.push(`${location.pathname}/item/${data.item.id}`);
+  navigate(`${location.pathname}/item/${data.item.id}`);
 };
 
 const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {

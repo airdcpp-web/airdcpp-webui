@@ -6,16 +6,16 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate: UI.ActionHandler<void> = ({ location, history }) => {
-  history.push(`${location.pathname}/directories`);
+const handleCreate: UI.ActionHandler<void> = ({ location, navigate }) => {
+  navigate(`${location.pathname}/directories`);
 };
 
 const handleEdit: UI.ActionHandler<API.ShareRootEntry> = ({
   data: root,
   location,
-  history,
+  navigate,
 }) => {
-  history.push(`${location.pathname}/directories/${root.id}`);
+  navigate(`${location.pathname}/directories/${root.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.ShareRootEntry> = ({ data: root }) => {

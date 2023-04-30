@@ -14,16 +14,15 @@ import {
 } from './SearchOptionsForm';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
-import { RouteComponentProps } from 'react-router';
 import HubConstants from 'constants/HubConstants';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 import { isValueSet } from 'utils/FormUtils';
+import { useLocation } from 'react-router-dom';
 
 interface SearchOptionsButtonProps
-  extends Pick<RouteComponentProps, 'location'>,
-    Pick<SearchOptionsFormProps, 'onChange' | 'value'> {
+  extends Pick<SearchOptionsFormProps, 'onChange' | 'value'> {
   moduleT: UI.ModuleTranslator;
 }
 
@@ -45,13 +44,8 @@ const removeEmptyProperties = (value: SearchOptions) => {
   return ret;
 };
 
-const SearchOptionsButton: React.FC<Props> = ({
-  moduleT,
-  location,
-  onChange,
-  value,
-  hubs,
-}) => {
+const SearchOptionsButton: React.FC<Props> = ({ moduleT, onChange, value, hubs }) => {
+  const location = useLocation();
   const onValueChanged = (newValue: SearchOptions | null) => {
     if (newValue) {
       const ret = removeEmptyProperties(newValue);
@@ -114,10 +108,10 @@ const SearchOptionsButton: React.FC<Props> = ({
       {(hide) => (
         <SearchOptionsForm
           moduleT={moduleT}
-          location={location}
           onChange={onValueChanged}
           value={value}
           hubs={hubs}
+          location={location}
         />
       )}
     </Popup>

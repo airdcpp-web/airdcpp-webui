@@ -1,10 +1,9 @@
-import { Location, History } from 'history';
-
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 import * as API from 'types/api';
 import { TranslateF } from './common';
 import { IconType } from 'components/semantic/Icon';
+import { Location, NavigateFunction } from 'react-router-dom';
 
 export type ActionIdType = API.IdType | object;
 export type ActionMenuObjectItemData = { id: ActionIdType };
@@ -35,7 +34,7 @@ export interface ActionHandlerData<ItemDataT> {
   data: ItemDataT;
   location: Location;
   t: TranslateF;
-  history: History;
+  navigate: NavigateFunction;
 }
 
 export type ActionHandler<ItemDataT> = (
@@ -111,7 +110,6 @@ export interface ModuleActions<
 }
 
 interface MenuItemBase {
-  // className?: string;
   icon?: IconType;
   disabled?: boolean;
 }
@@ -120,12 +118,6 @@ export interface ActionMenuItemType extends MenuItemBase {
   active?: boolean;
   children: React.ReactNode;
 }
-
-/*export interface RouterMenuItem extends MenuItemBase {
-  url: string;
-}*/
-
-// type MenuItemType = ActionMenuItem | RouterMenuItem;
 
 export interface ActionMenuItem {
   id: string;

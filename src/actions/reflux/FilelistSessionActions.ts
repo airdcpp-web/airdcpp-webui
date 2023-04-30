@@ -13,7 +13,7 @@ import { getFilePath } from 'utils/FileUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { Location, History } from 'history';
+import { Location, NavigateFunction } from 'react-router-dom';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 import {
@@ -31,9 +31,8 @@ const FilelistActionConfig: UI.RefluxActionConfigList<API.FilelistSession> = [
 const FilelistSessionActions = Reflux.createActions(FilelistActionConfig);
 
 // SESSION CREATION
-const openSession = (history: History, session: API.FilelistSession) => {
-  history.push({
-    pathname: `/filelists/session/${session.id}`,
+const openSession = (navigate: NavigateFunction, session: API.FilelistSession) => {
+  navigate(`/filelists/session/${session.id}`, {
     state: {
       pending: true,
     },
@@ -43,7 +42,7 @@ const openSession = (history: History, session: API.FilelistSession) => {
 interface CreateSessionProps {
   sessionStore: UI.SessionStore<API.FilelistSession>;
   location: Location;
-  history: History;
+  navigate: NavigateFunction;
 }
 
 interface CreateSessionData {
@@ -86,9 +85,9 @@ FilelistSessionActions.createSession.listen(function (
 
 FilelistSessionActions.createSession.completed.listen(function (
   session: API.FilelistSession,
-  { history }: CreateSessionProps
+  { navigate }: CreateSessionProps
 ) {
-  openSession(history, session);
+  openSession(navigate, session);
 });
 
 FilelistSessionActions.createSession.failed.listen(function (error: ErrorResponse) {
@@ -121,9 +120,9 @@ FilelistSessionActions.ownList.listen(function (
 
 FilelistSessionActions.ownList.completed.listen(function (
   session: API.FilelistSession,
-  { history }: CreateSessionProps
+  { navigate }: CreateSessionProps
 ) {
-  openSession(history, session);
+  openSession(navigate, session);
 });
 
 // SESSION UPDATES

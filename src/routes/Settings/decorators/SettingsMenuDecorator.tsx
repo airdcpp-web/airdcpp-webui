@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { Navigate, useLocation, useMatch } from 'react-router-dom';
 
 import * as UI from 'types/ui';
 import {
@@ -27,7 +26,7 @@ export interface RootSectionType extends SectionType {}
 
 export interface ChildSectionType extends SectionType {}
 
-export interface SettingsMenuDecoratorProps extends RouteComponentProps<UI.EmptyObject> {
+export interface SettingsMenuDecoratorProps {
   parent?: RootSectionType;
   menuItems?: ChildSectionType[] | RootSectionType[];
   advancedMenuItems?: ChildSectionType[];
@@ -36,73 +35,57 @@ export interface SettingsMenuDecoratorProps extends RouteComponentProps<UI.Empty
   moduleT?: UI.ModuleTranslator;
 }
 
-export type SettingsMenuDecoratorChildProps = SettingsMenuDecoratorProps &
-  React.PropsWithChildren<{
-    currentMenuItem: SectionType;
-    parent?: RootSectionType;
-  }>;
+export type SettingsMenuDecoratorChildProps = SettingsMenuDecoratorProps & {
+  currentMenuItem: SectionType;
+  parent?: RootSectionType;
+  children: React.ReactNode[];
+};
 
 export default function <PropsT>(
   Component: React.ComponentType<SettingsMenuDecoratorChildProps & PropsT>
 ) {
-  class SettingsMenuDecorator extends React.Component<
-    SettingsMenuDecoratorProps & PropsT
-  > {
-    static propTypes = {
-      parent: PropTypes.object,
-      menuItems: PropTypes.array.isRequired,
-      advancedMenuItems: PropTypes.array,
-      location: PropTypes.object.isRequired,
-      match: PropTypes.object.isRequired,
-    };
-
-    render() {
-      const {
-        location,
-        match,
-        parent,
-        menuItems,
-        advancedMenuItems,
-        settingsT,
-        moduleT,
-      } = this.props;
-      if (
-        location.pathname === match.url ||
-        (parent && location.pathname === sectionToUrl(parent as SectionType))
-      ) {
-        if (!!menuItems && menuItems.length) {
-          return <Redirect to={sectionToUrl(menuItems[0], parent)} />;
-        }
+  const SettingsMenuDecorator: React.FC<SettingsMenuDecoratorProps & PropsT> = (
+    props
+  ) => {
+    const location = useLocation();
+    const match = useMatch();
+    const { parent, menuItems, advancedMenuItems, settingsT, moduleT } = props;
+    if (
+      location.pathname === match.url ||
+      (parent && location.pathname === sectionToUrl(parent as SectionType))
+    ) {
+      if (!!menuItems && menuItems.length) {
+        return <Navigate to={sectionToUrl(menuItems[0], parent)} />;
       }
-
-      const currentMenuItem =
-        findMenuItem(menuItems, parent, location) ||
-        findMenuItem(advancedMenuItems, parent, location);
-
-      if (!currentMenuItem) {
-        return null;
-      }
-
-      return (
-        <Component {...this.props} currentMenuItem={currentMenuItem}>
-          {menuItemsToRouteComponentArray(
-            currentMenuItem,
-            menuItems,
-            settingsT,
-            moduleT,
-            parent
-          )}
-          {menuItemsToRouteComponentArray(
-            currentMenuItem,
-            advancedMenuItems,
-            settingsT,
-            moduleT,
-            parent
-          )}
-        </Component>
-      );
     }
-  }
+
+    const currentMenuItem =
+      findMenuItem(menuItems, parent, location) ||
+      findMenuItem(advancedMenuItems, parent, location);
+
+    if (!currentMenuItem) {
+      return null;
+    }
+
+    return (
+      <Component {...props} currentMenuItem={currentMenuItem}>
+        {menuItemsToRouteComponentArray(
+          currentMenuItem,
+          menuItems,
+          settingsT,
+          moduleT,
+          parent
+        )}
+        {menuItemsToRouteComponentArray(
+          currentMenuItem,
+          advancedMenuItems,
+          settingsT,
+          moduleT,
+          parent
+        )}
+      </Component>
+    );
+  };
 
   return SettingsMenuDecorator;
 }

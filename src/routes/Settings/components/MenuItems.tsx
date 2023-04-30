@@ -1,7 +1,6 @@
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
-import { Location } from 'history';
 import LoginStore from 'stores/LoginStore';
-import { Route, RouteComponentProps } from 'react-router-dom';
+import { Route, Location } from 'react-router-dom';
 import { SectionType, RootSectionType } from '../decorators/SettingsMenuDecorator';
 
 import * as UI from 'types/ui';
@@ -71,9 +70,8 @@ export const menuItemsToRouteComponentArray = (
     <Route
       key={item.url}
       path={sectionToUrl(item, parent)}
-      render={(props: RouteComponentProps<UI.EmptyObject>) => (
+      element={
         <item.component
-          {...props}
           menuItems={currentMenuItem.menuItems}
           advancedMenuItems={currentMenuItem.advancedMenuItems}
           parent={currentMenuItem}
@@ -81,7 +79,7 @@ export const menuItemsToRouteComponentArray = (
           settingsT={settingsT}
           moduleT={getSubModuleT(moduleT || settingsT, camelCase(item.url))}
         />
-      )}
+      }
     />
   ));
 };

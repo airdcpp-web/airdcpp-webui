@@ -30,13 +30,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   extension: API.Extension;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   extensionId: string;
-}
+}*/
 
-type Props = ExtensionsConfigureDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = ExtensionsConfigureDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class ExtensionsConfigureDialog extends Component<Props> {
   static displayName = 'ExtensionsConfigureDialog';
@@ -74,22 +72,17 @@ class ExtensionsConfigureDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<ExtensionsConfigureDialogProps, RouteProps>(
+export default ModalRouteDecorator<ExtensionsConfigureDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(
     ExtensionsConfigureDialog,
     {
       urls: {
-        fieldDefinitions: ({ match }) => {
-          return SocketService.get(
-            `${getSettingsUrl(match.params.extensionId)}/definitions`
-          );
+        fieldDefinitions: ({ params }) => {
+          return SocketService.get(`${getSettingsUrl(params.extensionId!)}/definitions`);
         },
-        settings: ({ match }) =>
-          SocketService.get(getSettingsUrl(match.params.extensionId)),
-        extension: ({ match }, socket) => {
-          return socket.get(
-            `${ExtensionConstants.EXTENSIONS_URL}/${match.params.extensionId}`
-          );
+        settings: ({ params }) => SocketService.get(getSettingsUrl(params.extensionId!)),
+        extension: ({ params }, socket) => {
+          return socket.get(`${ExtensionConstants.EXTENSIONS_URL}/${params.extensionId}`);
         },
       },
     }

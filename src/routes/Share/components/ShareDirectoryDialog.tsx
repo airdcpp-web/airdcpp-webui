@@ -75,13 +75,11 @@ export interface DataProps extends ShareProfileDecoratorChildProps {
 
 interface Entry extends ShareRootEntryBase, UI.FormValueMap {}
 
-interface RouteProps {
+/*interface RouteProps {
   directoryId: string;
-}
+}*/
 
-type Props = ShareDirectoryDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = ShareDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class ShareDirectoryDialog extends Component<Props> {
   static displayName = 'ShareDirectoryDialog';
@@ -191,16 +189,16 @@ class ShareDirectoryDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<ShareDirectoryDialogProps, RouteProps>(
+export default ModalRouteDecorator<ShareDirectoryDialogProps>(
   ShareProfileDecorator<Omit<Props, keyof DataProps>>(ShareDirectoryDialog, false, {
     urls: {
       virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
-      rootEntry: ({ match }, socket) => {
-        if (!match.params.directoryId) {
+      rootEntry: ({ params }, socket) => {
+        if (!params.directoryId) {
           return Promise.resolve(undefined);
         }
 
-        return socket.get(`${ShareRootConstants.ROOTS_URL}/${match.params.directoryId}`);
+        return socket.get(`${ShareRootConstants.ROOTS_URL}/${params.directoryId}`);
       },
     },
     dataConverters: {

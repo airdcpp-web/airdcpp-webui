@@ -43,19 +43,19 @@ const checkUnignore = ({ user }: ActionUserData) => {
 const handleMessage: UI.ActionHandler<ActionUserData> = ({
   data: userData,
   location,
-  history,
+  navigate,
 }) => {
   return PrivateChatActions.createSession(userData.user, {
     location,
     sessionStore: PrivateChatSessionStore,
-    history,
+    navigate,
   });
 };
 
 const handleBrowse: UI.ActionHandler<ActionUserData> = ({
   data: userData,
   location,
-  history,
+  navigate,
 }) => {
   const createData = {
     user: userData.user,
@@ -65,7 +65,7 @@ const handleBrowse: UI.ActionHandler<ActionUserData> = ({
   return FilelistSessionActions.createSession(createData, {
     sessionStore: FilelistSessionStore,
     location,
-    history,
+    navigate,
   });
 };
 

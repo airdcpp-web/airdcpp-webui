@@ -27,11 +27,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   fileItem: API.FilelistItem;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   itemId: string;
-}
+}*/
 
-type Props = FilelistItemInfoDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
+type Props = FilelistItemInfoDialogProps & ModalRouteDecoratorChildProps;
 
 export const FilelistItemGetter = (session: API.FilelistSession) => {
   const ret: UI.DownloadItemDataGetter<API.FilelistItem> = (itemId, socket) => {
@@ -72,11 +72,11 @@ class FilelistItemInfoDialog extends Component<Props & DataProps> {
   }
 }
 
-const Decorated = ModalRouteDecorator<FilelistItemInfoDialogProps, RouteProps>(
+const Decorated = ModalRouteDecorator<FilelistItemInfoDialogProps>(
   DataProviderDecorator<Props, DataProps>(FilelistItemInfoDialog, {
     urls: {
-      fileItem: ({ match, session }, socket) =>
-        FilelistItemGetter(session)(match.params.itemId, socket),
+      fileItem: ({ params, session }, socket) =>
+        FilelistItemGetter(session)(params.itemId!, socket),
     },
   }),
   'item/:itemId'

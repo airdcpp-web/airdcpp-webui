@@ -26,10 +26,10 @@ const sessionActions = ['clear'];
 const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = (
   props
 ) => {
-  const { match, t, ...other } = props;
+  const { params, t, ...other } = props;
   return (
     <SessionLayout
-      activeId={match.params.id}
+      activeId={params.id}
       baseUrl="messages"
       newCaption={t(toI18nKey('new', UI.Modules.MESSAGES), 'New session')}
       newDescription={t(

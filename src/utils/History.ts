@@ -1,8 +1,8 @@
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 
-const History = createBrowserHistory({
+/*const History = createBrowserHistory({
   // Remove the trailing slash from base path
   basename: getBasePath().slice(0, -1),
 });
 
-export default History;
+export default History;*/

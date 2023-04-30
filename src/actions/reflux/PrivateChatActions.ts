@@ -11,7 +11,7 @@ import SessionActionDecorator from './decorators/SessionActionDecorator';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { Location, History } from 'history';
+import { Location, NavigateFunction } from 'react-router-dom';
 import { ErrorResponse } from 'airdcpp-apisocket';
 import { changePrivateChatHubUrl } from 'services/api/PrivateChatApi';
 
@@ -23,7 +23,7 @@ const PrivateChatActions = Reflux.createActions(PrivateChatActionConfig);
 
 interface CreateSessionProps {
   location: Location;
-  history: History;
+  navigate: NavigateFunction;
   sessionStore: UI.SessionStore<API.PrivateChat>;
 }
 
@@ -58,10 +58,9 @@ PrivateChatActions.createSession.listen(function (
 
 PrivateChatActions.createSession.completed.listen(function (
   session: API.PrivateChat,
-  { history }: CreateSessionProps
+  { navigate }: CreateSessionProps
 ) {
-  history.push({
-    pathname: `/messages/session/${session.id}`,
+  navigate(`/messages/session/${session.id}`, {
     state: {
       pending: true,
     },

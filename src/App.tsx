@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
-
-import History from 'utils/History';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 //@ts-ignore
 import Reflux from 'reflux';
@@ -62,7 +60,7 @@ const App = () => {
       <Suspense fallback={<Loader fullPage={true} text="" />}>
         <I18nextProvider i18n={i18n}>
           <InstallPromptContext.Provider value={prompt}>
-            <Router history={History}>
+            <BrowserRouter basename={getBasePath()}>
               <Measure bounds={true}>
                 {({ measureRef, contentRect }) => (
                   <LayoutWidthContext.Provider
@@ -76,16 +74,16 @@ const App = () => {
                         height: '100%',
                       }}
                     >
-                      <Switch>
-                        <Route path="/login" component={Login} />
-                        <Route exact path="/" component={() => <Redirect to="/home" />} />
-                        <Route path="/" component={AuthenticatedApp} />
-                      </Switch>
+                      <Routes>
+                        <Route path="/login" element={<Login />} />
+                        {/*<Route path="/" element={<Navigate to="/home" replace />} />*/}
+                        <Route path="*" element={<AuthenticatedApp />} />
+                      </Routes>
                     </div>
                   </LayoutWidthContext.Provider>
                 )}
               </Measure>
-            </Router>
+            </BrowserRouter>
           </InstallPromptContext.Provider>
         </I18nextProvider>
       </Suspense>

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
@@ -7,14 +7,10 @@ import { default as EventConstants } from 'constants/EventConstants';
 
 import NotificationActions from 'actions/NotificationActions';
 
-import History from 'utils/History';
-
 import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-
-import { Location } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -24,10 +20,11 @@ import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
 } from 'decorators/SocketSubscriptionDecorator';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import HubConstants from 'constants/HubConstants';
 import HubSessionStore from 'stores/HubSessionStore';
+import { useNavigate } from 'react-router-dom';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -78,92 +75,40 @@ const notifyPrivateMessage = (message: API.ChatMessage) => {
   return false;
 };
 
-interface SocketNotificationListenerProps {
-  location: Location;
-}
+interface SocketNotificationListenerProps {}
 
-type Props = SocketNotificationListenerProps &
-  SocketSubscriptionDecoratorChildProps &
-  WithTranslation;
+type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildProps;
 
-class SocketNotificationListener extends Component<Props> {
-  shouldComponentUpdate() {
-    return false;
-  }
+const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  componentDidMount() {
-    this.onSocketConnected();
-  }
+  const translateNotification = (
+    text: string,
+    moduleId: UI.Modules,
+    isAction = false
+  ) => {
+    const moduleIds = [moduleId, UI.SubNamespaces.NOTIFICATIONS];
+    if (isAction) {
+      moduleIds.push(UI.SubNamespaces.ACTIONS);
+    }
 
-  onSocketConnected() {
-    const { addSocketListener } = this.props;
+    return translate(text, t, moduleIds);
+  };
 
-    // eslint-disable-next-line max-len
-    addSocketListener(
-      PrivateChatConstants.MODULE_URL,
-      PrivateChatConstants.MESSAGE,
-      this.onPrivateMessage,
-      undefined,
-      API.AccessEnum.PRIVATE_CHAT_VIEW
-    );
-
-    // eslint-disable-next-line max-len
-    addSocketListener(
-      HubConstants.MODULE_URL,
-      HubConstants.HUB_MESSAGE,
-      this.onHubMessage,
-      undefined,
-      API.AccessEnum.HUBS_VIEW
-    );
-
-    // eslint-disable-next-line max-len
-    addSocketListener(
-      QueueConstants.MODULE_URL,
-      QueueConstants.BUNDLE_ADDED,
-      this.onBundleStatus,
-      undefined,
-      API.AccessEnum.QUEUE_VIEW
-    );
-    // eslint-disable-next-line max-len
-    addSocketListener(
-      QueueConstants.MODULE_URL,
-      QueueConstants.BUNDLE_STATUS,
-      this.onBundleStatus,
-      undefined,
-      API.AccessEnum.QUEUE_VIEW
-    );
-
-    // eslint-disable-next-line max-len
-    addSocketListener(
-      EventConstants.MODULE_URL,
-      EventConstants.MESSAGE,
-      this.onLogMessage,
-      undefined,
-      API.AccessEnum.EVENTS_VIEW
-    );
-    // eslint-disable-next-line max-len
-    addSocketListener(
-      ViewFileConstants.MODULE_URL,
-      ViewFileConstants.FILE_DOWNLOADED,
-      this.onViewFileDownloaded,
-      undefined,
-      API.AccessEnum.VIEW_FILE_VIEW
-    );
-  }
-
-  onLogMessage = (message: API.StatusMessage) => {
+  const onLogMessage = (message: API.StatusMessage) => {
     const { text, severity } = message;
 
     const notification: UI.Notification = {
-      title: this.translate(getSeverityStr(severity), UI.Modules.EVENTS),
+      title: translateNotification(getSeverityStr(severity), UI.Modules.EVENTS),
       message: text,
       action:
         severity === Severity.NOTIFY
           ? undefined
           : {
-              label: this.translate('View events', UI.Modules.EVENTS, true),
+              label: translateNotification('View events', UI.Modules.EVENTS, true),
               callback: () => {
-                History.push('/events');
+                navigate('/events');
               },
             },
     };
@@ -188,7 +133,7 @@ class SocketNotificationListener extends Component<Props> {
     }
   };
 
-  onViewFileDownloaded = (file: API.ViewFile) => {
+  const onViewFileDownloaded = (file: API.ViewFile) => {
     if (!file.content_ready) {
       return;
     }
@@ -198,18 +143,18 @@ class SocketNotificationListener extends Component<Props> {
       : 'File was loaded';
     NotificationActions.info({
       title: file.name,
-      message: this.translate(message, UI.Modules.VIEWED_FILES),
+      message: translateNotification(message, UI.Modules.VIEWED_FILES),
       uid: `view_file_${file.id}`,
       action: {
-        label: this.translate('View file', UI.Modules.VIEWED_FILES, true),
+        label: translateNotification('View file', UI.Modules.VIEWED_FILES, true),
         callback: () => {
-          History.push(`/files/session/${file.id}`);
+          navigate(`/files/session/${file.id}`);
         },
       },
     } as UI.Notification);
   };
 
-  onHubMessage = (message: API.ChatMessage) => {
+  const onHubMessage = (message: API.ChatMessage) => {
     const hubId = message.from.hub_session_id;
     if (
       message.is_read ||
@@ -227,15 +172,15 @@ class SocketNotificationListener extends Component<Props> {
       message: message.text,
       uid: undefined,
       action: {
-        label: this.translate('View chat', UI.Modules.HUBS, true),
+        label: translateNotification('View chat', UI.Modules.HUBS, true),
         callback: () => {
-          History.push(`/hubs/session/${hubId}`);
+          navigate(`/hubs/session/${hubId}`);
         },
       },
     } as UI.Notification);
   };
 
-  onPrivateMessage = (message: API.ChatMessage) => {
+  const onPrivateMessage = (message: API.ChatMessage) => {
     const cid = message.reply_to!.cid;
     if (
       message.is_read ||
@@ -253,35 +198,24 @@ class SocketNotificationListener extends Component<Props> {
       message: message.text,
       uid: cid,
       action: {
-        label: this.translate('View message', UI.Modules.MESSAGES, true),
+        label: translateNotification('View message', UI.Modules.MESSAGES, true),
         callback: () => {
-          History.push(`/messages/session/${cid}`);
+          navigate(`/messages/session/${cid}`);
         },
       },
     } as UI.Notification);
   };
 
-  translate = (text: string, moduleId: UI.Modules, isAction = false) => {
-    const moduleIds = [moduleId, UI.SubNamespaces.NOTIFICATIONS];
-    if (isAction) {
-      moduleIds.push(UI.SubNamespaces.ACTIONS);
-    }
-
-    const { t } = this.props;
-    return translate(text, t, moduleIds);
-  };
-
-  onBundleStatus = (bundle: API.QueueBundle) => {
+  const onBundleStatus = (bundle: API.QueueBundle) => {
     if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
       return;
     }
 
     let text;
     let level: 'info' | 'error' | undefined;
-    const { t } = this.props;
     switch (bundle.status.id) {
       case API.QueueBundleStatusEnum.QUEUED: {
-        text = this.translate('Bundle was added in queue', UI.Modules.QUEUE);
+        text = translateNotification('Bundle was added in queue', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
@@ -302,7 +236,7 @@ class SocketNotificationListener extends Component<Props> {
         break;
       }
       case API.QueueBundleStatusEnum.COMPLETION_VALIDATION_RUNNING: {
-        text = this.translate('Validating downloaded bundle', UI.Modules.QUEUE);
+        text = translateNotification('Validating downloaded bundle', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
@@ -325,12 +259,15 @@ class SocketNotificationListener extends Component<Props> {
         break;
       }
       case API.QueueBundleStatusEnum.COMPLETED: {
-        text = this.translate('Bundle was completed successfully', UI.Modules.QUEUE);
+        text = translateNotification(
+          'Bundle was completed successfully',
+          UI.Modules.QUEUE
+        );
         level = 'info';
         break;
       }
       case API.QueueBundleStatusEnum.SHARED: {
-        text = this.translate('Bundle was added in share', UI.Modules.QUEUE);
+        text = translateNotification('Bundle was added in share', UI.Modules.QUEUE);
         level = 'info';
         break;
       }
@@ -345,20 +282,72 @@ class SocketNotificationListener extends Component<Props> {
         message: text,
         uid: `queue_bundle_${bundle.id}`,
         action: {
-          label: this.translate('View queue', UI.Modules.QUEUE, true),
+          label: translateNotification('View queue', UI.Modules.QUEUE, true),
           callback: () => {
-            History.push('/queue');
+            navigate('/queue');
           },
         },
       } as UI.Notification);
     }
   };
 
-  render() {
-    return null;
-  }
-}
+  useEffect(() => {
+    // eslint-disable-next-line max-len
+    addSocketListener(
+      PrivateChatConstants.MODULE_URL,
+      PrivateChatConstants.MESSAGE,
+      onPrivateMessage,
+      undefined,
+      API.AccessEnum.PRIVATE_CHAT_VIEW
+    );
+
+    // eslint-disable-next-line max-len
+    addSocketListener(
+      HubConstants.MODULE_URL,
+      HubConstants.HUB_MESSAGE,
+      onHubMessage,
+      undefined,
+      API.AccessEnum.HUBS_VIEW
+    );
+
+    // eslint-disable-next-line max-len
+    addSocketListener(
+      QueueConstants.MODULE_URL,
+      QueueConstants.BUNDLE_ADDED,
+      onBundleStatus,
+      undefined,
+      API.AccessEnum.QUEUE_VIEW
+    );
+    // eslint-disable-next-line max-len
+    addSocketListener(
+      QueueConstants.MODULE_URL,
+      QueueConstants.BUNDLE_STATUS,
+      onBundleStatus,
+      undefined,
+      API.AccessEnum.QUEUE_VIEW
+    );
+
+    // eslint-disable-next-line max-len
+    addSocketListener(
+      EventConstants.MODULE_URL,
+      EventConstants.MESSAGE,
+      onLogMessage,
+      undefined,
+      API.AccessEnum.EVENTS_VIEW
+    );
+    // eslint-disable-next-line max-len
+    addSocketListener(
+      ViewFileConstants.MODULE_URL,
+      ViewFileConstants.FILE_DOWNLOADED,
+      onViewFileDownloaded,
+      undefined,
+      API.AccessEnum.VIEW_FILE_VIEW
+    );
+  }, []);
+
+  return null;
+};
 
 export default SocketSubscriptionDecorator<SocketNotificationListenerProps>(
-  withTranslation()(SocketNotificationListener)
+  SocketNotificationListener
 );

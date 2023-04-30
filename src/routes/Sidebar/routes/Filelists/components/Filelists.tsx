@@ -59,10 +59,10 @@ const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
 const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession>> = (
   props
 ) => {
-  const { match, t, ...other } = props;
+  const { params, t, ...other } = props;
   return (
     <SessionLayout
-      activeId={match.params.id}
+      activeId={params.id}
       baseUrl="filelists"
       newCaption={t(toI18nKey('new', UI.Modules.FILELISTS), 'Open filelist')}
       newDescription={t(

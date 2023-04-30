@@ -5,10 +5,7 @@ import HubMessageStore from 'stores/HubMessageStore';
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
-import ChatLayout, {
-  ChatAPI,
-  ChatActionList,
-} from 'routes/Sidebar/components/chat/ChatLayout';
+import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import HubUserTable from 'routes/Sidebar/routes/Hubs/components/HubUserTable';
 
 import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
@@ -37,7 +34,7 @@ const checkList = (props: HubSessionProps) => {
   return loadSessionProperty(getStorageKey(props), false);
 };
 
-type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject, ChatActionList>;
+type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject, UI.ChatActionList>;
 
 class HubSession extends Component<HubSessionProps> {
   static displayName = 'HubSession';
@@ -119,13 +116,14 @@ class HubSession extends Component<HubSessionProps> {
         ) : (
           <ChatLayout
             messageStore={HubMessageStore}
-            chatApi={HubActions as ChatAPI}
+            chatApi={HubActions as UI.ChatAPI}
             sessionApi={sessionApi}
             chatActions={uiActions}
             chatAccess={API.AccessEnum.HUBS_SEND}
             session={session}
             handleFileUpload={this.handleFileUpload}
             highlightRemoteMenuId={MenuConstants.HUB_MESSAGE_HIGHLIGHT}
+            hubUrl={session.hub_url}
           />
         )}
         <HubFooter userlistToggle={checkbox} session={session} sessionT={sessionT} />

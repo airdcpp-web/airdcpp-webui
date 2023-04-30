@@ -2,15 +2,17 @@ import * as React from 'react';
 
 import * as API from 'types/api';
 
-import { Location, History } from 'history';
-
 import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import LoginStore from 'stores/LoginStore';
-import { useHistory, useLocation } from 'react-router';
+import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router-dom';
 
-const onClickLink = (evt: React.MouseEvent, location: Location, history: History) => {
+const onClickLink = (
+  evt: React.MouseEvent,
+  location: Location,
+  navigate: NavigateFunction
+) => {
   const uri: string = (evt.target as any).href;
   if (
     uri.indexOf('adc://') === 0 ||
@@ -26,7 +28,7 @@ const onClickLink = (evt: React.MouseEvent, location: Location, history: History
     HubActions.createSession(uri, {
       sessionStore: HubSessionStore,
       location,
-      history,
+      navigate,
     });
   }
 };
@@ -38,14 +40,14 @@ export interface HighlightUrlLinkProps
 
 export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...other }) => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <a
       className="highlight url link"
       href={text}
       target="_blank"
       rel="noreferrer"
-      onClick={(evt) => onClickLink(evt, location, history)}
+      onClick={(evt) => onClickLink(evt, location, navigate)}
       {...other}
     >
       {text}

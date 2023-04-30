@@ -1,39 +1,39 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
+import { WithTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import NotificationActions from 'actions/NotificationActions';
 import SearchConstants from 'constants/SearchConstants';
-
+import DataProviderDecorator, {
+  DataProviderDecoratorChildProps,
+} from 'decorators/DataProviderDecorator';
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
-
-import '../style.css';
-import ResultTable from 'routes/Search/components/ResultTable';
-import { RouteComponentProps } from 'react-router-dom';
+import LoginStore from 'stores/LoginStore';
+import { search as doSearch } from 'services/api/SearchApi';
+import { getModuleT } from 'utils/TranslationUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { WithTranslation } from 'react-i18next';
-import { getModuleT } from 'utils/TranslationUtils';
+import ResultTable from 'routes/Search/components/ResultTable';
+
 import { SearchInput } from './SearchInput';
 import { SearchOptions } from './options-panel';
-import NotificationActions from 'actions/NotificationActions';
-import DataProviderDecorator, {
-  DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import LoginStore from 'stores/LoginStore';
-import { search } from 'services/api/SearchApi';
 import {
   loadSessionProperty,
   removeSessionProperty,
   saveSessionProperty,
 } from 'utils/BrowserUtils';
 
+import '../style.css';
+
 const RESULT_WAIT_PERIOD = 4000;
 
-interface SearchLocationState {
+/*interface SearchLocationState {
   searchString?: string;
-}
+}*/
 
-type SearchProps = RouteComponentProps<UI.EmptyObject, any, SearchLocationState>;
+interface SearchProps {}
 
 interface SearchDataProps extends DataProviderDecoratorChildProps, WithTranslation {
   instance: API.SearchInstance;
@@ -54,79 +54,14 @@ const saveHubOptions = (hubs: string[] | null) => {
   }
 };
 
-class Search extends Component<SearchProps & SearchDataProps> {
-  state = {
-    searchString: '',
-    running: false,
-  };
+const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchString, setSearchString] = useState('');
+  const [running, setRunning] = useState<API.SearchResponse | null>(null);
 
-  searchTimeout: number | undefined;
-
-  componentDidMount() {
-    this.checkLocationState(this.props);
-
-    const { query } = this.props.instance;
-    if (!!query) {
-      this.setState({
-        searchString: query.pattern,
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps: SearchProps) {
-    this.checkLocationState(this.props);
-  }
-
-  checkLocationState = (props: SearchProps) => {
-    const { state } = props.location;
-    if (state && state.searchString && state.searchString !== this.state.searchString) {
-      this.search(state.searchString);
-
-      // Avoid searching for it again
-      props.history.replace({
-        pathname: props.location.pathname,
-      });
-    }
-  };
-
-  search = async (searchString: string, options?: SearchOptions) => {
-    console.log('Searching');
-
-    clearTimeout(this.searchTimeout);
-    saveHubOptions(options?.hub_urls || null);
-
-    const { hub_urls, size_limits, ...queryOptions } = options || {};
-    try {
-      const res = await search(this.props.instance, {
-        query: {
-          pattern: searchString,
-          ...size_limits,
-          ...queryOptions,
-        },
-        priority: API.PriorityEnum.HIGH,
-        hub_urls,
-      });
-
-      this.onSearchPosted(res);
-      this.setState({
-        searchString,
-        running: true,
-      });
-    } catch (error) {
-      NotificationActions.apiError('Search failed', error);
-    }
-  };
-
-  onSearchPosted = (data: API.SearchResponse) => {
-    this.searchTimeout = window.setTimeout(() => {
-      this.setState({
-        running: false,
-      });
-    }, data.queue_time + RESULT_WAIT_PERIOD);
-  };
-
-  parseOptions = (): SearchOptions | null => {
-    const { query } = this.props.instance;
+  const parseOptions = (): SearchOptions | null => {
+    const { query } = instance;
     if (!query) {
       return null;
     }
@@ -146,38 +81,92 @@ class Search extends Component<SearchProps & SearchDataProps> {
     };
   };
 
-  searchT = getModuleT(this.props.t, UI.Modules.SEARCH);
-  render() {
-    const { instance, location } = this.props;
-    const { searchString, running } = this.state;
-    const { t } = this.searchT;
-    return (
-      <OfflineHubMessageDecorator
-        offlineMessage={t<string>(
-          'searchOffline',
-          'You must to be connected to at least one hub in order to perform searches'
-        )}
-      >
-        <div className="search-layout">
-          <SearchInput
-            moduleT={this.searchT}
-            running={running}
-            defaultValue={searchString}
-            handleSubmit={this.search}
-            location={location}
-            defaultOptions={this.parseOptions()}
-          />
-          <ResultTable
-            searchString={searchString}
-            running={running}
-            searchT={this.searchT}
-            instance={instance}
-          />
-        </div>
-      </OfflineHubMessageDecorator>
-    );
-  }
-}
+  const search = async (pattern: string, options?: SearchOptions) => {
+    console.log('Searching');
+    saveHubOptions(options?.hub_urls || null);
+
+    const { hub_urls, size_limits, ...queryOptions } = options || {};
+    try {
+      const res = await doSearch(instance, {
+        query: {
+          pattern,
+          ...size_limits,
+          ...queryOptions,
+        },
+        priority: API.PriorityEnum.HIGH,
+        hub_urls,
+      });
+
+      setSearchString(pattern);
+      setRunning(res);
+    } catch (error) {
+      NotificationActions.apiError('Search failed', error);
+    }
+  };
+
+  const checkLocationState = () => {
+    const { state } = location;
+    if (state && state.searchString /* && state.searchString !== searchString*/) {
+      search(state.searchString);
+
+      // Avoid searching for it again
+      navigate(location.pathname, { replace: true });
+    }
+  };
+
+  useEffect(() => {
+    checkLocationState();
+
+    const { query } = instance;
+    if (!!query) {
+      setSearchString(query.pattern);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkLocationState();
+  }, [location.state && location.state.searchString]);
+
+  useEffect(() => {
+    if (!running) {
+      return;
+    }
+
+    const searchTimeout = window.setTimeout(() => {
+      setRunning(null);
+    }, running.queue_time + RESULT_WAIT_PERIOD);
+
+    return () => {
+      clearTimeout(searchTimeout);
+    };
+  }, [running]);
+
+  const searchT = getModuleT(t, UI.Modules.SEARCH);
+  return (
+    <OfflineHubMessageDecorator
+      offlineMessage={searchT.t<string>(
+        'searchOffline',
+        'You must to be connected to at least one hub in order to perform searches'
+      )}
+    >
+      <div className="search-layout">
+        <SearchInput
+          moduleT={searchT}
+          running={!!running}
+          defaultValue={searchString}
+          handleSubmit={search}
+          defaultOptions={parseOptions()}
+        />
+        <ResultTable
+          searchString={searchString}
+          running={!!running}
+          searchT={searchT}
+          instance={instance}
+        />
+      </div>
+    </OfflineHubMessageDecorator>
+  );
+};
 
 const OWNER_ID_SUFFIX = 'webui';
 

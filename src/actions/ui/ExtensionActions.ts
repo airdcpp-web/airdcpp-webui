@@ -15,9 +15,9 @@ const hasSettings = (extension: API.Extension) => extension.has_settings;
 const handleConfigure: UI.ActionHandler<API.Extension> = ({
   data: extension,
   location,
-  history,
+  navigate,
 }) => {
-  history.push(`${location.pathname}/extensions/${extension.id}`);
+  navigate(`${location.pathname}/extensions/${extension.id}`);
 };
 
 const handleStart: UI.ActionHandler<API.Extension> = ({ data: extension }) => {

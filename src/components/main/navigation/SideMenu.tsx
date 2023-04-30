@@ -1,67 +1,58 @@
-import { Component } from 'react';
+import { memo } from 'react';
 
 import IconPanel from 'components/main/navigation/IconPanel';
-import { matchPath } from 'react-router-dom';
+import { matchPath, Location, useNavigate } from 'react-router-dom';
 import {
   secondaryRoutes,
   parseMenuItems,
   RouteItemClickHandler,
   HOME_URL,
 } from 'routes/Routes';
-import { Location, History } from 'history';
 
 interface SideMenuProps {
   location: Location;
   previousLocation?: Location;
-  history: History;
 }
 
-class SideMenu extends Component<SideMenuProps> {
-  onClick: RouteItemClickHandler = (url, evt) => {
+const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
+  const navigate = useNavigate();
+
+  const onClick: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
-    const { location, previousLocation, history } = this.props;
-    const isActive = matchPath(location.pathname, {
-      path: url,
-    });
+    const isActive = matchPath(url, location.pathname);
 
     if (isActive) {
       if (!!previousLocation) {
-        history.replace({
-          pathname: previousLocation.pathname,
+        navigate(previousLocation.pathname, {
+          replace: true,
           state: previousLocation.state,
         });
       } else {
-        history.replace(HOME_URL);
+        navigate(HOME_URL, { replace: true });
       }
     } else {
-      history.push(url);
+      navigate(url);
     }
   };
 
-  shouldComponentUpdate(prevProps: SideMenuProps) {
-    return (
-      prevProps.location !== this.props.location ||
-      prevProps.previousLocation !== this.props.previousLocation
-    );
-  }
+  const menuItems = parseMenuItems(secondaryRoutes, onClick);
+  return (
+    <div id="side-menu">
+      {menuItems.length > 0 && (
+        <div className="content navigation">
+          <div className="ui labeled icon vertical small inverted menu">{menuItems}</div>
+        </div>
+      )}
+      <div className="ui divider" />
+      <IconPanel />
+    </div>
+  );
+};
 
-  render() {
-    const menuItems = parseMenuItems(secondaryRoutes, this.onClick);
-    return (
-      <div id="side-menu">
-        {menuItems.length > 0 && (
-          <div className="content navigation">
-            <div className="ui labeled icon vertical small inverted menu">
-              {menuItems}
-            </div>
-          </div>
-        )}
-        <div className="ui divider" />
-        <IconPanel />
-      </div>
-    );
-  }
-}
-
-export default SideMenu;
+export default memo(SideMenu, (prevProps, nextProps) => {
+  return (
+    prevProps.location !== nextProps.location ||
+    prevProps.previousLocation !== nextProps.previousLocation
+  );
+});

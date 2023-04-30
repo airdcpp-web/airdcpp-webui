@@ -9,7 +9,7 @@ import * as UI from 'types/ui';
 const handleBrowseContent: UI.ActionHandler<API.GroupedSearchResult> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
   const createData = {
     user: data.users.user,
@@ -19,16 +19,12 @@ const handleBrowseContent: UI.ActionHandler<API.GroupedSearchResult> = ({
   return FilelistSessionActions.createSession(createData, {
     location,
     sessionStore: FilelistSessionStore,
-    history,
+    navigate,
   });
 };
 
-const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({
-  data,
-  location,
-  history,
-}) => {
-  history.push(`${location.pathname}/result/${data.id}`);
+const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({ data, navigate }) => {
+  navigate(`result/${data.id}`);
 };
 
 const SearchActions: UI.ActionListType<API.GroupedSearchResult> = {

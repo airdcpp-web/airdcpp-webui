@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import ActivityTracker from 'components/main/ActivityTracker';
 import Notifications from 'components/main/Notifications';
@@ -15,9 +14,9 @@ import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
 import * as UI from 'types/ui';
 
-interface AuthenticatedAppProps extends RouteComponentProps<UI.EmptyObject> {}
+interface AuthenticatedAppProps {}
 
-export interface MainLayoutProps extends RouteComponentProps {
+export interface MainLayoutProps {
   className?: string;
   urgencies: UI.UrgencyCountMap | null;
 }
@@ -25,8 +24,6 @@ export interface MainLayoutProps extends RouteComponentProps {
 const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(function AuthenticatedApp(
   props
 ) {
-  const { location } = props;
-
   const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
   useUrgencyPageTitle(urgencies);
 
@@ -34,8 +31,8 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(function Authenti
   return (
     <div id="authenticated-app">
       <ActivityTracker />
-      <Notifications location={location} />
-      <MainLayout className="main-layout" urgencies={urgencies} {...props} />
+      <Notifications />
+      <MainLayout className="main-layout" urgencies={urgencies} />
     </div>
   );
 });

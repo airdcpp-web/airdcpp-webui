@@ -41,9 +41,9 @@ const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
 const handleSearch: UI.ActionHandler<API.QueueBundle> = ({
   data: itemInfo,
   location,
-  history,
+  navigate,
 }) => {
-  return SearchActions.search(itemInfo, location, history);
+  return SearchActions.search(itemInfo, location, navigate);
 };
 
 const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
@@ -55,17 +55,17 @@ const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
 const handleSources: UI.ActionHandler<API.QueueBundle> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
-  history.push(`${location.pathname}/sources/${data.id}`);
+  navigate(`${location.pathname}/sources/${data.id}`);
 };
 
 const handleContent: UI.ActionHandler<API.QueueBundle> = ({
   data,
   location,
-  history,
+  navigate,
 }) => {
-  history.push(`${location.pathname}/content/${data.id}`);
+  navigate(`${location.pathname}/content/${data.id}`);
 };
 
 const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {

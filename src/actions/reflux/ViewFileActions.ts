@@ -10,8 +10,8 @@ import SessionActionDecorator from './decorators/SessionActionDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { Location, History } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { NavigateFunction, Location } from 'react-router-dom';
 
 const ViewFileActionConfig: UI.RefluxActionConfigList<void> = [
   { createSession: { asyncResult: true } },
@@ -30,7 +30,7 @@ interface CreateSessionProps {
   isText: boolean;
   location: Location;
   sessionStore: UI.SessionStore<API.ViewFile>;
-  history: History;
+  navigate: NavigateFunction;
 }
 
 // Remote file
@@ -82,9 +82,8 @@ ViewFileActions.openLocalFile.listen(function (
     .catch(that.failed);
 });
 
-const onSessionCreated = (file: API.ViewFile, history: History) => {
-  history.push({
-    pathname: `/files/session/${file.id}`,
+const onSessionCreated = (file: API.ViewFile, navigate: NavigateFunction) => {
+  navigate(`/files/session/${file.id}`, {
     state: {
       pending: true,
     },
@@ -93,9 +92,9 @@ const onSessionCreated = (file: API.ViewFile, history: History) => {
 
 ViewFileActions.createSession.completed.listen(function (
   file: API.ViewFile,
-  { history }: CreateSessionProps
+  { navigate }: CreateSessionProps
 ) {
-  onSessionCreated(file, history);
+  onSessionCreated(file, navigate);
 });
 
 ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
@@ -104,9 +103,9 @@ ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
 
 ViewFileActions.openLocalFile.completed.listen(function (
   file: API.ViewFile,
-  { history }: CreateSessionProps
+  { navigate }: CreateSessionProps
 ) {
-  onSessionCreated(file, history);
+  onSessionCreated(file, navigate);
 });
 
 ViewFileActions.openLocalFile.failed.listen(function (error: ErrorResponse) {
