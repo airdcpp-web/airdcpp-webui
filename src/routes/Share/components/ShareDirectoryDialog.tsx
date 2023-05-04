@@ -205,5 +205,5 @@ export default ModalRouteDecorator<ShareDirectoryDialogProps>(
       virtualNames: (data: API.GroupedPath[]) => data.map((item) => item.name, []),
     },
   }),
-  'directories/:directoryId([0-9A-Z]{39})?'
+  '/directories/:directoryId?'
 );

@@ -91,15 +91,13 @@ const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => 
 
 const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
-  location,
   navigate,
 }) => {
-  const { pathname } = location;
-  navigate(`${pathname}/download/${data.itemInfo.id}`);
+  navigate(`download/${data.itemInfo.id}`);
 };
 
 const handleViewFile = (
-  { data, location, navigate }: UI.ActionHandlerData<UI.DownloadableItemData>,
+  { data, location }: UI.ActionHandlerData<UI.DownloadableItemData>,
   isText: boolean
 ) => {
   const props = {

@@ -30,7 +30,7 @@ class BundleFileDialog extends Component<Props> {
   static displayName = 'BundleFileDialog';
 
   render() {
-    const { bundle, ...other } = this.props;
+    const { bundle } = this.props;
     return (
       <Modal
         className="source"
@@ -39,7 +39,6 @@ class BundleFileDialog extends Component<Props> {
         closable={true}
         icon={<FileIcon typeInfo={bundle.type} />}
         fullHeight={true}
-        {...other}
       >
         <BundleFileTable bundle={bundle} />
       </Modal>

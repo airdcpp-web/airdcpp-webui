@@ -3,20 +3,7 @@ import * as React from 'react';
 
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
-
-type PushSessionHandler = (id: API.IdType) => void;
-
-const onClickItem = (
-  evt: React.SyntheticEvent,
-  sessionItem: UI.SessionItemBase,
-  pushSession: PushSessionHandler
-) => {
-  evt.preventDefault();
-
-  pushSession(sessionItem.id);
-};
 
 interface SessionMenuItemProps {
   url: string;
@@ -24,8 +11,6 @@ interface SessionMenuItemProps {
   unreadInfoStore: UI.UnreadInfoStore;
   status: React.ReactElement<any>;
   sessionItem: UI.SessionItemBase;
-
-  pushSession: PushSessionHandler;
 }
 
 const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
@@ -34,12 +19,10 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
   name,
   unreadInfoStore,
   url,
-  pushSession,
 }) => (
   <RouterMenuItemLink
     url={url}
     className="session-item"
-    onClick={(evt: React.SyntheticEvent) => onClickItem(evt, sessionItem, pushSession)}
     icon={status}
     session={sessionItem}
     unreadInfoStore={unreadInfoStore}

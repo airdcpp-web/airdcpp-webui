@@ -41,7 +41,7 @@ PrivateChatActions.createSession.listen(function (
       changePrivateChatHubUrl(session, user.hub_url);
     }
 
-    this.completed(user, props);
+    this.completed(session, props);
     return;
   }
 

@@ -8,10 +8,10 @@ import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import MenuConstants from 'constants/MenuConstants';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 type PrivateChatSessionProps = SessionChildProps<
   API.PrivateChat,

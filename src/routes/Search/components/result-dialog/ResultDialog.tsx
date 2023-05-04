@@ -57,7 +57,6 @@ class ResultDialog extends Component<Props & DataProps> {
         closable={true}
         icon={<FileIcon typeInfo={parentResult.type} />}
         fullHeight={true}
-        {...this.props}
       >
         <DownloadDialog
           downloadHandler={searchDownloadHandler}
@@ -86,7 +85,7 @@ const Decorated = ModalRouteDecorator<ResultDialogProps>(
         ),
     },
   }),
-  'result/:resultId'
+  '/result/:resultId'
 );
 
 export { Decorated as ResultDialog };

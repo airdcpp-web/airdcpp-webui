@@ -8,10 +8,9 @@ import Message from 'components/semantic/Message';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import classNames from 'classnames';
 import ListBrowser from './ListBrowser';
-import { useNavigate } from 'react-router-dom';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 type FilelistSessionProps = SessionChildProps<
   API.FilelistSession,
@@ -20,7 +19,6 @@ type FilelistSessionProps = SessionChildProps<
 >;
 
 const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
-  const navigate = useNavigate();
   const { session, sessionT, location: routerLocation } = props;
   const { user, location: listLocation, state } = session;
 
@@ -50,12 +48,7 @@ const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
 
   return (
     <div className={className}>
-      <ListBrowser
-        location={routerLocation}
-        session={session}
-        sessionT={sessionT}
-        navigate={navigate}
-      />
+      <ListBrowser location={routerLocation} session={session} sessionT={sessionT} />
 
       <FilelistFooter session={session} sessionT={sessionT} />
     </div>

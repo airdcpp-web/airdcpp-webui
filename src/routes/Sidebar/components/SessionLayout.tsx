@@ -1,82 +1,45 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
-import invariant from 'invariant';
 
 import Loader from 'components/semantic/Loader';
 
 import TopMenuLayout from './TopMenuLayout';
 import SideMenuLayout from './SideMenuLayout';
 
-import '../sessions.css';
-
-import { ActionMenu } from 'components/action-menu';
-import SessionNewButton from './SessionNewButton';
-import SessionMenuItem from './SessionMenuItem';
-
-import Icon, { IconType } from 'components/semantic/Icon';
 import Message from 'components/semantic/Message';
 
 import LoginStore from 'stores/LoginStore';
-import {
-  loadLocalProperty,
-  saveLocalProperty,
-  useMobileLayout,
-} from 'utils/BrowserUtils';
-
-import IconConstants from 'constants/IconConstants';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import { useMobileLayout } from 'utils/BrowserUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { getModuleT, translate, toI18nKey } from 'utils/TranslationUtils';
-import { LayoutWidthContext, LayoutWidthContextType } from 'context/LayoutWidthContext';
-import { Route, NavigateFunction, Routes } from 'react-router-dom';
+import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { LayoutWidthContext } from 'context/LayoutWidthContext';
+import { useSessionManager } from './effects/useSessionManager';
+import { useLocation, useNavigate } from 'react-router';
 
-export type SessionBaseType = UI.SessionItemBase;
-
-const findItem = <SessionT extends SessionBaseType>(
-  items: SessionT[],
-  id: API.IdType | undefined
-): SessionT | undefined => {
-  return items.find((item) => item.id === id);
-};
+import '../sessions.css';
+import {
+  NewSessionLayoutProps,
+  SessionChildProps,
+  SessionLayoutLabels,
+  SessionLayoutManageProps,
+  SessionLocationState,
+} from './types';
+import { useComponents } from './SessionMenuComponents';
 
 export interface SessionLayoutProps<
-  SessionT extends SessionBaseType,
+  SessionT extends UI.SessionItemBase,
   SessionApiT extends object = UI.EmptyObject,
   UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
 > extends UI.SessionInfoGetter<SessionT>,
-    UI.RouteComponentProps {
-  // Unique ID of the section (used for storing and loading the previously open tab)
-  baseUrl: string;
-
-  // Array of the items to list
-  items: SessionT[];
-
-  uiActions: UI.ModuleActions<SessionT, UIActionT>;
-  sessionApi: UI.SessionActions<SessionT> & SessionApiT;
-
-  // Session actions to show in the action menu
-  actionIds?: string[];
-
+    SessionLayoutLabels,
+    SessionLayoutManageProps<SessionT, SessionApiT, UIActionT> {
   // Item ID that is currently active (if any)
   activeId: API.IdType | undefined;
 
-  // Label for button that opens a new session
-  newCaption?: React.ReactNode;
-
-  // Label for button that opens a new session
-  newDescription?: React.ReactNode;
-
-  // Label for button that opens a new session
-  newIcon?: IconType;
-
   // Set to false if the side menu should never be shown (the session will use all width that is available)
   disableSideMenu?: boolean;
-
-  // AccessConstant defining whether the user has edit permission
-  editAccess: API.AccessEnum;
 
   sessionItemLayout: React.ComponentType<
     SessionChildProps<SessionT, SessionApiT, UIActionT>
@@ -84,430 +47,54 @@ export interface SessionLayoutProps<
 
   newLayout?: React.ComponentType<NewSessionLayoutProps>;
 
-  unreadInfoStore: UI.UnreadInfoStore;
-
-  navigate: NavigateFunction;
-
-  t: UI.TranslateF;
-}
-
-export interface SessionLocationState {
-  pending?: boolean;
-}
-
-export interface SessionMainLayoutProps<
-  SessionT extends SessionBaseType,
-  SessionApiT extends object = UI.EmptyObject,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
-> extends Pick<SessionLayoutProps<SessionT, SessionApiT, UIActionsT>, 'unreadInfoStore'> {
-  newButton: React.ReactElement<any> | null;
-  listActionMenuGetter: () => React.ReactNode;
-  sessionMenuItems: React.ReactNode[];
-  activeItem: SessionT | null;
-
-  itemHeaderTitle: React.ReactNode;
-  itemHeaderDescription: React.ReactNode;
-  itemHeaderIcon: IconType;
-  onKeyDown: (event: React.KeyboardEvent) => void;
-  children: React.ReactNode;
-
-  actions: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>['uiActions'];
-  t: UI.TranslateF;
-}
-
-interface State<SessionT extends SessionBaseType> {
-  activeItem: SessionT | null;
-}
-
-export type SessionChildProps<
-  SessionT extends SessionBaseType,
-  SessionApiT extends object = UI.EmptyObject,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
-> = Pick<
-  SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
-  'location' | 'sessionApi' | 'uiActions' | 'navigate'
-> & {
-  session: SessionT;
-  sessionT: UI.ModuleTranslator;
-};
-
-export interface NewSessionLayoutProps extends UI.RouteComponentProps {
   sessionT: UI.ModuleTranslator;
 }
 
-class SessionLayout<
-  SessionT extends SessionBaseType,
+const SessionLayout = <
+  SessionT extends UI.SessionItemBase,
   SessionApiT extends object,
   UIActionsT extends UI.ActionListType<UI.SessionItemBase>
-> extends React.Component<
-  SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
-  State<SessionT>
-> {
-  static displayName = 'SessionLayout';
+>(
+  props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>
+) => {
+  const layoutWidth = React.useContext(LayoutWidthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  static propTypes = {
-    // Unique ID of the section (used for storing and loading the previously open tab)
-    baseUrl: PropTypes.string.isRequired,
+  const { activeItem, onKeyDown } = useSessionManager(props);
 
-    // Location object
-    location: PropTypes.object.isRequired,
+  const hasEditAccess = LoginStore.hasAccess(props.editAccess);
 
-    // Array of the items to list
-    items: PropTypes.array.isRequired,
-
-    // If no function is supplied, the item name will be used
-    itemHeaderTitleGetter: PropTypes.func,
-
-    // Function receiving an item object that returns the description (subheader) of the item
-    itemHeaderDescriptionGetter: PropTypes.func.isRequired,
-
-    // Function receiving an item object that returns icon for a item
-    itemHeaderIconGetter: PropTypes.func.isRequired,
-
-    // Store containing information about unread items
-    unreadInfoStore: PropTypes.object,
-
-    // Function receiving an item object that returns the display name
-    itemNameGetter: PropTypes.func.isRequired,
-
-    // Function receiving the circular color label in front of the item
-    itemStatusGetter: PropTypes.func,
-
-    // Session actions (should contain 'removeSession')
-    uiActions: PropTypes.object.isRequired,
-
-    // Session actions to show in the action menu
-    actionIds: PropTypes.array,
-
-    // Item ID that is currently active (if any)
-    activeId: PropTypes.any,
-
-    // Label for button that opens a new session
-    newCaption: PropTypes.any,
-
-    // Label for button that opens a new session
-    newDescription: PropTypes.any,
-
-    // Label for button that opens a new session
-    newIcon: PropTypes.any,
-
-    // Set to false if the side menu should never be shown (the session will use all width that is available)
-    disableSideMenu: PropTypes.bool,
-
-    // AccessConstant defining whether the user has edit permission
-    editAccess: PropTypes.string.isRequired,
-
-    sessionItemLayout: PropTypes.any.isRequired,
-
-    newLayout: PropTypes.func,
-  };
-
-  state: State<SessionT> = {
-    activeItem: null,
-  };
-
-  static contextType = LayoutWidthContext;
-  context: LayoutWidthContextType;
-
-  // HELPERS
-  getSessionUrl = (id: API.IdType) => {
-    invariant(!!id, 'Trying to get session URL without a session');
-    return `/${this.props.baseUrl}/session/${id}`;
-  };
-
-  getNewUrl = () => {
-    return `/${this.props.baseUrl}/new`;
-  };
-
-  getStorageKey = (props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
-    return `${props.baseUrl}_last_active`;
-  };
-
-  pushSession = (id: API.IdType) => {
-    const { navigate } = this.props;
-    navigate(this.getSessionUrl(id));
-  };
-
-  replaceSession = (id: API.IdType) => {
-    const { navigate } = this.props;
-    navigate(this.getSessionUrl(id), { replace: true });
-  };
-
-  pushNew = () => {
-    const { navigate } = this.props;
-    navigate(this.getNewUrl());
-  };
-
-  hasEditAccess = () => {
-    return LoginStore.hasAccess(this.props.editAccess);
-  };
-
-  // LIFECYCLE/REACT
-  UNSAFE_componentWillReceiveProps(
-    nextProps: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>
-  ) {
-    if (nextProps.location.pathname === this.getNewUrl()) {
-      // Don't redirect to it if the "new session" layout is open
-      if (this.state.activeItem) {
-        this.setState({ activeItem: null });
-      }
-      return;
-    }
-
-    if (this.checkActiveItem(nextProps)) {
-      // We got an item
-      return;
-    }
-
-    // The old tab was closed or we didn't have any session before
-
-    let newItemPos = 0;
-    const oldItem = findItem(this.props.items, this.props.activeId);
-    if (oldItem) {
-      // Find the old position and use the item in that position (if possible)
-      newItemPos = this.props.items.indexOf(oldItem);
-      if (newItemPos === this.props.items.length - 1) {
-        // The last item was removed
-        newItemPos = newItemPos - 1;
-      }
-    }
-
-    this.replaceSession(nextProps.items[newItemPos].id);
-  }
-
-  // Common logic for selecting the item to display (after mounting or session updates)
-  // Returns true active item selection was handled
-  // Returns false if the active item couldn't be selected but there are valid items to choose from by the caller
-  checkActiveItem = (props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
-    // Did we just create this session?
-    const routerLocation = props.location;
-    const pending =
-      routerLocation.state && (routerLocation.state as SessionLocationState).pending;
-
-    // Update the active item
-    const activeItem = findItem(props.items, props.activeId);
-    if (activeItem) {
-      if (pending) {
-        // Disable pending state
-        props.navigate(routerLocation.pathname, {
-          state: {
-            pending: false,
-          },
-          replace: true,
-        });
-
-        return true;
-      }
-
-      this.setState({ activeItem: activeItem });
-      saveLocalProperty(this.getStorageKey(props), props.activeId);
-      return true;
-    } else if (pending) {
-      // We'll just display a loading indicator in 'render', no item needed
-      return true;
-    } else if (/*routerLocation.action === 'POP' ||*/ props.items.length === 0) {
-      // Browsing from history and item removed (or all items removed)... go to "new session" page
-      props.navigate(this.getNewUrl(), { replace: true });
-      this.setState({ activeItem: null });
-      return true;
-    }
-
-    return false;
-  };
-
-  onKeyDown = (event: React.KeyboardEvent) => {
-    const { key, altKey } = event;
-
-    if (altKey && (key === 'ArrowUp' || key === 'ArrowDown')) {
-      // Arrow up/down
-      event.preventDefault();
-
-      const { items, activeId } = this.props;
-      const item = findItem(items, activeId);
-      if (!item) {
-        return;
-      }
-
-      const currentIndex = items.indexOf(item);
-      if (currentIndex === -1) {
-        return;
-      }
-
-      const newSession = items[key === 'ArrowUp' ? currentIndex - 1 : currentIndex + 1];
-      if (newSession) {
-        this.pushSession(newSession.id);
-      }
-    } else if (altKey && key === 'Insert') {
-      // Insert
-      event.preventDefault();
-
-      const { navigate } = this.props;
-      navigate(this.getNewUrl(), { replace: true });
-    } else if (altKey && key === 'Delete') {
-      // Delete
-      event.preventDefault();
-
-      const { items, activeId, sessionApi } = this.props;
-      const item = findItem(items, activeId);
-      if (!!item) {
-        sessionApi.removeSession(item);
-      }
-    }
-  };
-
-  componentDidMount() {
-    // Opening an item directly? Or no items?
-    if (this.checkActiveItem(this.props)) {
-      return;
-    }
-
-    // See if we have something stored
-    const lastId = loadLocalProperty<API.IdType>(this.getStorageKey(this.props));
-    if (lastId && findItem(this.props.items, lastId)) {
-      // Previous session exists
-      this.replaceSession(lastId);
-    } else if (this.props.items.length > 0) {
-      // Load the first session
-      this.replaceSession(this.props.items[0].id);
-    }
-  }
-
-  // COMPONENT GETTERS
-  getItemStatus = (sessionItem: SessionT) => {
-    const { itemStatusGetter, itemHeaderIconGetter } = this.props;
-    if (itemStatusGetter) {
-      return (
-        <div
-          className={
-            'ui session-status empty circular left mini label ' +
-            itemStatusGetter(sessionItem)
-          }
-        />
-      );
-    }
-
-    return <Icon icon={itemHeaderIconGetter(sessionItem)} />;
-  };
-
-  getSessionMenuItem = (sessionItem: SessionT) => {
-    return (
-      <SessionMenuItem
-        key={sessionItem.id}
-        url={this.getSessionUrl(sessionItem.id)}
-        name={this.props.itemNameGetter(sessionItem)}
-        unreadInfoStore={this.props.unreadInfoStore}
-        status={this.getItemStatus(sessionItem)}
-        sessionItem={sessionItem}
-        pushSession={this.pushSession}
-      />
-    );
-  };
-
-  getItemHeaderTitle = () => {
-    const { uiActions, actionIds, itemNameGetter, itemHeaderTitleGetter } = this.props;
-
-    const { activeItem } = this.state;
-    if (!activeItem) {
-      return <div>{this.props.newCaption}</div>;
-    }
-
-    let ids;
-    if (actionIds) {
-      ids = [...actionIds, 'divider', 'removeSession'];
-    }
-
-    const actionMenu = (
-      <ActionMenu
-        caption={itemNameGetter(activeItem)}
-        actions={uiActions}
-        itemData={activeItem}
-        ids={ids}
-      />
-    );
-
-    // Use the header getter only if there is a getter that returns a valid value
-    if (itemHeaderTitleGetter) {
-      const header = itemHeaderTitleGetter(activeItem, this.props.location, actionMenu);
-      if (header) {
-        return header;
-      }
-    }
-
-    return actionMenu;
-  };
-
-  getItemHeaderDescription = () => {
-    const { activeItem } = this.state;
-    const { itemHeaderDescriptionGetter, newDescription } = this.props;
-    if (!activeItem) {
-      return newDescription;
-    }
-
-    return itemHeaderDescriptionGetter(activeItem);
-  };
-
-  getItemHeaderIcon = () => {
-    const { activeItem } = this.state;
-    const { itemHeaderIconGetter, newIcon } = this.props;
-    return <Icon icon={activeItem ? itemHeaderIconGetter(activeItem) : newIcon} />;
-  };
-
-  getNewButton = () => {
-    if (!this.hasEditAccess() || !this.props.newCaption) {
-      return null;
-    }
-
-    return (
-      <SessionNewButton
-        key="new-button"
-        title={this.props.newCaption}
-        url={this.getNewUrl()}
-        pushNew={this.pushNew}
-      />
-    );
-  };
-
-  handleCloseAll = () => {
-    const { sessionApi, items } = this.props;
-    items.forEach((session) => sessionApi.removeSession(session));
-  };
-
-  getListActionMenu = () => {
-    const { items, t } = this.props;
-    if (!this.hasEditAccess() || items.length === 0) {
-      return null;
-    }
-
-    return (
-      <MenuItemLink key="close" onClick={this.handleCloseAll} icon={IconConstants.REMOVE}>
-        {translate('Close all', t, UI.Modules.COMMON)}
-      </MenuItemLink>
-    );
-  };
-
-  getSessionChildren = () => {
+  const getSessionChildren = () => {
     const {
       activeId,
       items,
-      t,
       sessionItemLayout: SessionItemLayout,
-      navigate,
-      location,
       sessionApi,
       uiActions,
-    } = this.props;
+      sessionT,
+    } = props;
 
-    const { activeItem } = this.state;
     if (!activeItem) {
-      const { state } = this.props.location;
+      const { state } = location;
       if (!!state && (state as SessionLocationState).pending) {
         // The session was just created
         return (
-          <Loader text={translate('Waiting for server response', t, UI.Modules.COMMON)} />
+          <Loader
+            text={translate(
+              'Waiting for server response',
+              sessionT.plainT,
+              UI.Modules.COMMON
+            )}
+          />
         );
       } else if (activeId || items.length !== 0) {
         // Redirecting to a new page
-        return <Loader text={translate('Loading session', t, UI.Modules.COMMON)} />;
+        return (
+          <Loader
+            text={translate('Loading session', sessionT.plainT, UI.Modules.COMMON)}
+          />
+        );
       }
 
       console.error('SessionLayout route: active session missing');
@@ -522,73 +109,62 @@ class SessionLayout<
         uiActions={uiActions}
         location={location}
         navigate={navigate}
-        sessionT={this.sessionT}
+        sessionT={sessionT}
       />
     );
   };
 
-  sessionT = getModuleT(this.props.t, this.props.uiActions.moduleId);
-  render() {
-    const {
-      disableSideMenu,
-      items,
-      unreadInfoStore,
-      location,
-      navigate,
-      t,
-      uiActions,
-      newLayout: NewLayout,
-    } = this.props;
-
-    if (!this.hasEditAccess() && items.length === 0) {
-      // Nothing to show
-      return (
-        <Message
-          title={translate('No items to show', t, UI.Modules.COMMON)}
-          description={t<string>(
-            toI18nKey('noSessionEditAccess', UI.Modules.COMMON),
-            `You aren't allowed to open new sessions`
-          )}
-        />
-      );
+  const getChildren = () => {
+    const { newLayout: NewLayout, sessionT } = props;
+    if (!props.activeId && NewLayout) {
+      return <NewLayout navigate={navigate} location={location} sessionT={sessionT} />;
     }
 
-    const { activeItem } = this.state;
-    const useTopMenu = disableSideMenu || useMobileLayout(this.context);
+    return getSessionChildren();
+  };
 
-    const MenuLayout = useTopMenu ? TopMenuLayout : SideMenuLayout;
+  const { disableSideMenu, items, unreadInfoStore, sessionT, uiActions } = props;
+
+  if (!hasEditAccess && items.length === 0) {
+    // Nothing to show
     return (
-      <MenuLayout
-        itemHeaderTitle={this.getItemHeaderTitle()}
-        itemHeaderDescription={this.getItemHeaderDescription()}
-        itemHeaderIcon={this.getItemHeaderIcon()}
-        activeItem={activeItem}
-        unreadInfoStore={unreadInfoStore}
-        newButton={this.getNewButton()}
-        sessionMenuItems={items.map(this.getSessionMenuItem)}
-        listActionMenuGetter={this.getListActionMenu}
-        onKeyDown={this.onKeyDown}
-        actions={uiActions}
-        t={t}
-      >
-        <Routes>
-          <Route path={this.getSessionUrl(':id')} element={this.getSessionChildren()} />
-          {!!NewLayout && (
-            <Route
-              path={this.getNewUrl()}
-              element={
-                <NewLayout
-                  navigate={navigate}
-                  location={location}
-                  sessionT={this.sessionT}
-                />
-              }
-            />
-          )}
-        </Routes>
-      </MenuLayout>
+      <Message
+        title={translate('No items to show', sessionT.plainT, UI.Modules.COMMON)}
+        description={sessionT.plainT<string>(
+          toI18nKey('noSessionEditAccess', UI.Modules.COMMON),
+          `You aren't allowed to open new sessions`
+        )}
+      />
     );
   }
-}
+
+  const useTopMenu = disableSideMenu || useMobileLayout(layoutWidth);
+
+  const MenuLayout = useTopMenu ? TopMenuLayout : SideMenuLayout;
+  const {
+    getItemHeaderTitle,
+    getItemHeaderDescription,
+    getItemHeaderIcon,
+    getNewButton,
+    getSessionMenuItems,
+    getSessionActionMenuItems,
+  } = useComponents({ ...props, activeItem, hasEditAccess });
+  return (
+    <MenuLayout
+      itemHeaderTitle={getItemHeaderTitle()}
+      itemHeaderDescription={getItemHeaderDescription()}
+      itemHeaderIcon={getItemHeaderIcon()}
+      newButton={getNewButton()}
+      sessionMenuItems={getSessionMenuItems()}
+      listActionMenuGetter={getSessionActionMenuItems}
+      activeItem={activeItem}
+      unreadInfoStore={unreadInfoStore}
+      onKeyDown={onKeyDown}
+      actions={uiActions}
+    >
+      {getChildren()}
+    </MenuLayout>
+  );
+};
 
 export default SessionLayout;

@@ -14,9 +14,9 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 import * as API from 'types/api';
 
 import { Trans } from 'react-i18next';
-import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 import IconConstants from 'constants/IconConstants';
 import Button from 'components/semantic/Button';
+import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
 
 class HubNew extends Component<NewSessionLayoutProps> {
   handleConnect = (hubUrl: string) => {

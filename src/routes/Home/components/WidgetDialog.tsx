@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 import Message from 'components/semantic/Message';
 import Modal from 'components/semantic/Modal';
@@ -19,8 +19,8 @@ import { getWidgetT, createWidgetId, translateWidgetName } from 'utils/WidgetUti
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { withTranslation, WithTranslation } from 'react-i18next';
 import { translateForm } from 'utils/FormUtils';
+import { useParams } from 'react-router';
 
 type FormValue = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
 
@@ -70,54 +70,36 @@ interface WidgetDialogProps {
   typeId: string;
 }*/
 
-type Props = WidgetDialogProps & ModalRouteDecoratorChildProps & WithTranslation;
+type Props = WidgetDialogProps & ModalRouteDecoratorChildProps;
 
-class WidgetDialog extends Component<Props> {
-  static displayName = 'WidgetDialog';
+const WidgetDialog: React.FC<Props> = (props) => {
+  const form = useRef<Form<FormValue> | null>(null);
+  const params = useParams();
 
-  /*static propTypes = {
-    // Current widget settings
-    settings: PropTypes.object, // Required
-
-    // Widget info object
-    typeId: PropTypes.string, // Required
-  };*/
-
-  formData: null | {
-    value: FormValue | undefined;
-    definitions: UI.FormFieldDefinition[];
-    widgetInfo: UI.Widget;
-  } = null;
-  form: Form<FormValue>;
-
-  constructor(props: Props) {
-    super(props);
-
+  const formData = useMemo(() => {
     const { rootWidgetT } = props;
 
-    const { typeId, widgetId } = props.params;
+    const { typeId, widgetId } = params;
     const widgetInfo = WidgetStore.getWidgetInfoById(typeId!);
     if (!!widgetInfo) {
-      this.formData = {
+      return {
         value: settingsToFormValue(widgetId, widgetInfo),
         definitions: buildDefinitions(widgetInfo, rootWidgetT),
         widgetInfo,
       };
     }
-  }
 
-  save = () => {
-    return this.form.save();
-  };
+    return null;
+  }, []);
 
-  onSave: FormSaveHandler<FormValue> = (changedFields, value) => {
+  const onSave = useCallback<FormSaveHandler<FormValue>>((changedFields, value) => {
     const { name, ...other } = value;
     const settings: UI.WidgetSettings = {
       name: name!,
       widget: other,
     };
 
-    const { typeId, widgetId } = this.props.params;
+    const { typeId, widgetId } = params;
     if (!widgetId) {
       // New widget
       WidgetActions.create(createWidgetId(typeId!), settings, typeId);
@@ -127,46 +109,43 @@ class WidgetDialog extends Component<Props> {
     }
 
     return Promise.resolve();
-  };
+  }, []);
 
-  render() {
-    if (!this.formData) {
-      return null;
-    }
-
-    const { location, rootWidgetT } = this.props;
-    const { value, widgetInfo, definitions } = this.formData;
-    const { icon } = widgetInfo;
-    const { t } = rootWidgetT;
-    return (
-      <Modal
-        className="home-widget"
-        title={translateWidgetName(widgetInfo, rootWidgetT.plainT)}
-        onApprove={this.save}
-        icon={icon}
-        {...this.props}
-      >
-        <Form<FormValue>
-          ref={(c) => (this.form = c!)}
-          sourceValue={value}
-          fieldDefinitions={definitions}
-          onSave={this.onSave}
-          location={location}
-        />
-
-        <Message
-          description={t<string>(
-            'widgetPositionHint',
-            'Widgets and their positions are browser-specific'
-          )}
-          icon={IconConstants.INFO}
-        />
-      </Modal>
-    );
+  if (!formData) {
+    return null;
   }
-}
+
+  const { location, rootWidgetT } = props;
+  const { value, widgetInfo, definitions } = formData;
+  const { icon } = widgetInfo;
+  const { t } = rootWidgetT;
+  return (
+    <Modal
+      className="home-widget"
+      title={translateWidgetName(widgetInfo, rootWidgetT.plainT)}
+      onApprove={form.current?.save}
+      icon={icon}
+    >
+      <Form<FormValue>
+        ref={form}
+        sourceValue={value}
+        fieldDefinitions={definitions}
+        onSave={onSave}
+        location={location}
+      />
+
+      <Message
+        description={t<string>(
+          'widgetPositionHint',
+          'Widgets and their positions are browser-specific'
+        )}
+        icon={IconConstants.INFO}
+      />
+    </Modal>
+  );
+};
 
 export default ModalRouteDecorator<WidgetDialogProps>(
-  withTranslation()(WidgetDialog),
-  '/home/widget/:typeId/:widgetId?'
+  WidgetDialog,
+  '/widget/:typeId/:widgetId?'
 );

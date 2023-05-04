@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { useCallback } from 'react';
 
 import IconPanel from 'components/main/navigation/IconPanel';
 import { matchPath, Location, useNavigate } from 'react-router-dom';
@@ -17,24 +17,27 @@ interface SideMenuProps {
 const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
   const navigate = useNavigate();
 
-  const onClick: RouteItemClickHandler = (url, evt) => {
-    evt.preventDefault();
+  const onClick: RouteItemClickHandler = useCallback(
+    (url, evt) => {
+      evt.preventDefault();
 
-    const isActive = matchPath(url, location.pathname);
+      const isActive = matchPath(`${url}/*`, location.pathname);
 
-    if (isActive) {
-      if (!!previousLocation) {
-        navigate(previousLocation.pathname, {
-          replace: true,
-          state: previousLocation.state,
-        });
+      if (isActive) {
+        if (!!previousLocation) {
+          navigate(previousLocation.pathname, {
+            replace: true,
+            state: previousLocation.state,
+          });
+        } else {
+          navigate(HOME_URL, { replace: true });
+        }
       } else {
-        navigate(HOME_URL, { replace: true });
+        navigate(url);
       }
-    } else {
-      navigate(url);
-    }
-  };
+    },
+    [location]
+  );
 
   const menuItems = parseMenuItems(secondaryRoutes, onClick);
   return (
@@ -50,9 +53,4 @@ const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
   );
 };
 
-export default memo(SideMenu, (prevProps, nextProps) => {
-  return (
-    prevProps.location !== nextProps.location ||
-    prevProps.previousLocation !== nextProps.previousLocation
-  );
-});
+export default SideMenu;

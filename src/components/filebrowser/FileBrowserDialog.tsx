@@ -13,7 +13,7 @@ import IconConstants from 'constants/IconConstants';
 import { getFileName, getFilePath } from 'utils/FileUtils';
 
 interface FileBrowserDialogProps
-  extends Omit<ModalProps, 'title'>,
+  extends Omit<ModalProps, 'title' | 'location'>,
     Pick<FileBrowserLayoutProps, 'historyId' | 'initialPath' | 'selectMode'> {
   onConfirm: (path: string, directoryPath: string, fileName: string) => void;
   title?: React.ReactNode;
@@ -24,7 +24,10 @@ interface State {
   currentFileName: string;
 }
 
-export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, State> {
+export class FileBrowserDialog extends React.Component<
+  FileBrowserDialogProps /*& Omit<ModalRouteDecoratorChildProps, 'location'>*/,
+  State
+> {
   static displayName = 'FileBrowserDialog';
 
   /*static propTypes = {
@@ -93,7 +96,7 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
 
   render() {
     const { currentFileName } = this.state;
-    const { title, initialPath, historyId, selectMode, icon, approveCaption, ...other } =
+    const { title, initialPath, historyId, selectMode, icon, approveCaption } =
       this.props;
 
     const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
@@ -102,7 +105,6 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
       <Translation>
         {(t) => (
           <Modal
-            {...other}
             className="file-browser-dialog"
             title={title || translate('Browse...', t, UI.Modules.COMMON)}
             onApprove={showApprove ? this.onConfirm : undefined}

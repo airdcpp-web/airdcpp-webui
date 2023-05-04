@@ -21,7 +21,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const mainLocation = !!previousLocation ? previousLocation : location;
   return (
     <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
-      {/*<Sidebar routes={secondaryRoutes} previousLocation={previousLocation} />*/}
+      <Sidebar routes={secondaryRoutes} previousLocation={previousLocation} />
       <div className="pusher">
         <SiteHeader>
           <MainNavigation />
@@ -37,4 +37,4 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
   );
 };
 
-export default memo(MainLayout);
+export default memo(MainLayout, () => true);

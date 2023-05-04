@@ -52,20 +52,12 @@ const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
 };
 
-const handleSources: UI.ActionHandler<API.QueueBundle> = ({
-  data,
-  location,
-  navigate,
-}) => {
-  navigate(`${location.pathname}/sources/${data.id}`);
+const handleSources: UI.ActionHandler<API.QueueBundle> = ({ data, navigate }) => {
+  navigate(`sources/${data.id}`);
 };
 
-const handleContent: UI.ActionHandler<API.QueueBundle> = ({
-  data,
-  location,
-  navigate,
-}) => {
-  navigate(`${location.pathname}/content/${data.id}`);
+const handleContent: UI.ActionHandler<API.QueueBundle> = ({ data, navigate }) => {
+  navigate(`content/${data.id}`);
 };
 
 const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {

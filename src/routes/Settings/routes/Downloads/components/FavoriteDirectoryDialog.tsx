@@ -126,7 +126,6 @@ class FavoriteDirectoryDialog extends Component<Props> {
         onApprove={this.save}
         closable={false}
         icon={IconConstants.FOLDER}
-        {...this.props}
       >
         <Form<Entry>
           ref={(c) => (this.form = c!)}
@@ -163,5 +162,5 @@ export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
       },
     }
   ),
-  'directories/:directoryId([0-9A-Z]{39})?'
+  'directories/:directoryId?'
 );

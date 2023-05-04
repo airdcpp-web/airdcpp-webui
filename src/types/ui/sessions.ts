@@ -3,10 +3,11 @@ import { Location } from 'react-router-dom';
 import * as API from 'types/api';
 
 import { IconType } from 'components/semantic/Icon';
-import { RefluxActionListType } from './actions';
-import { EmptyObject, ScrollPositionHandler } from './common';
+import { ActionListType, ModuleActions, RefluxActionListType } from './actions';
+import { EmptyObject, RouteComponentProps, ScrollPositionHandler } from './common';
 import { MessageStore } from './messages';
 import { UnreadInfoStore, UrgencyCountMap } from './urgencies';
+import { ModuleTranslator } from './modules';
 
 export interface SessionInfoGetter<SessionT> {
   itemLabelGetter?: (session: SessionT) => React.ReactNode;
@@ -35,8 +36,6 @@ export interface SessionRouteParams {
   id: string;
 }
 
-// export type SessionRouteProps = RouteComponentProps<SessionRouteParams>;
-
 // ENTITIES
 export interface SessionItemBase {
   id: API.IdType;
@@ -47,12 +46,6 @@ export type SessionItem = SessionItemBase & UnreadInfo;
 export type UnreadInfo =
   | (MessageCounts & { read?: undefined })
   | (ReadStatus & { message_counts?: undefined });
-
-/*export type SessionUpdateEventType = object & {
-  id?: API.IdType;
-};*/
-
-//export type SessionUpdateProperties = Partial<SessionItem>;
 
 export interface ReadStatus extends SessionItemBase {
   read: boolean;
@@ -74,4 +67,86 @@ export interface SessionStore<SessionT extends SessionType = SessionType>
   getSession: (id: API.IdType) => SessionT | undefined;
   getSessions: () => SessionT[];
   getActiveSessionId: () => API.IdType | null;
+}
+
+// LAYOUT
+
+export interface SessionLayoutLabels {
+  // Label for button that opens a new session
+  newCaption?: React.ReactNode;
+
+  // Label for button that opens a new session
+  newDescription?: React.ReactNode;
+
+  // Label for button that opens a new session
+  newIcon?: IconType;
+}
+
+export interface SessionLayoutManageProps<
+  SessionT extends SessionItemBase,
+  SessionApiT extends object = EmptyObject,
+  UIActionT extends ActionListType<SessionItemBase> = EmptyObject
+> {
+  // Unique ID of the section (used for storing and loading the previously open tab)
+  baseUrl: string;
+
+  // Array of the items to list
+  items: SessionT[];
+
+  // Session actions to show in the action menu
+  actionIds?: string[];
+
+  uiActions: ModuleActions<SessionT, UIActionT>;
+  sessionApi: SessionActions<SessionT> & SessionApiT;
+
+  // Item ID that is currently active (if any)
+  activeId: API.IdType | undefined;
+
+  // AccessConstant defining whether the user has edit permission
+  editAccess: API.AccessEnum;
+
+  unreadInfoStore: UnreadInfoStore;
+}
+
+/*export interface SessionMainLayoutProps<
+  SessionT extends SessionItemBase,
+  SessionApiT extends object = EmptyObject,
+  UIActionsT extends ActionListType<SessionItemBase> = EmptyObject
+> extends Pick<
+    SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
+    'unreadInfoStore'
+  > {
+  newButton: React.ReactElement<any> | null;
+  listActionMenuGetter: () => React.ReactNode;
+  itemHeaderTitle: React.ReactNode;
+  itemHeaderDescription: React.ReactNode;
+  itemHeaderIcon: IconType;
+
+  sessionMenuItems: React.ReactNode[];
+  activeItem: SessionT | null;
+  onKeyDown: (event: React.KeyboardEvent) => void;
+  children: React.ReactNode;
+
+  actions: SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>['uiActions'];
+}*/
+
+export type SessionChildProps<
+  SessionT extends SessionItemBase,
+  SessionApiT extends object = EmptyObject,
+  UIActionsT extends ActionListType<SessionItemBase> = EmptyObject
+> = Pick<
+  SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
+  'sessionApi' | 'uiActions'
+> &
+  RouteComponentProps & {
+    session: SessionT;
+    sessionT: ModuleTranslator;
+  };
+
+export interface NewSessionLayoutProps extends RouteComponentProps {
+  sessionT: ModuleTranslator;
+}
+
+export interface SessionLocationState {
+  pending?: boolean;
 }

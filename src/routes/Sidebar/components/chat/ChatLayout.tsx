@@ -29,9 +29,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
   session,
   chatAccess,
   chatApi,
-  // chatActions,
   messageStore,
-  // handleFileUpload,
   highlightRemoteMenuId,
   ...other
 }) => {
@@ -57,14 +55,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
         highlightRemoteMenuId={highlightRemoteMenuId}
       />
       {hasChatAccess && (
-        <MessageComposer
-          session={session}
-          chatApi={chatApi}
-          // chatActions={chatActions}
-          t={t}
-          // handleFileUpload={handleFileUpload}
-          {...other}
-        />
+        <MessageComposer session={session} chatApi={chatApi} t={t} {...other} />
       )}
     </div>
   );

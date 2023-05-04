@@ -6,8 +6,8 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate: UI.ActionHandler<void> = ({ location, navigate }) => {
-  navigate(`${location.pathname}/directories`);
+const handleCreate: UI.ActionHandler<void> = ({ navigate }) => {
+  navigate(`directories`);
 };
 
 const handleEdit: UI.ActionHandler<API.ShareRootEntry> = ({
@@ -15,7 +15,7 @@ const handleEdit: UI.ActionHandler<API.ShareRootEntry> = ({
   location,
   navigate,
 }) => {
-  navigate(`${location.pathname}/directories/${root.id}`);
+  navigate(`directories/${root.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.ShareRootEntry> = ({ data: root }) => {

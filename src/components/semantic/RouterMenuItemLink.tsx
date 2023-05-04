@@ -54,13 +54,13 @@ const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
         {!!unreadInfoStore && <CountLabel urgencies={urgencies} />}
       </NavLink>
     );
-  },
+  } /*,
   (prevProps, nextProps) => {
     return (
       // nextProps.location.key === prevProps.location.key &&
       nextProps.session === prevProps.session
     );
-  }
+  }*/
 );
 
 export default RouterMenuItemLink;

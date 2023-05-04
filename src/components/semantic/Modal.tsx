@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -14,7 +13,7 @@ import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
-import { useNavigate } from 'react-router-dom';
+import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 export type ModalProps = React.PropsWithChildren<{
   closable?: boolean;
@@ -26,7 +25,6 @@ export type ModalProps = React.PropsWithChildren<{
   fullHeight?: boolean;
   className?: string;
   dynamicHeight?: boolean;
-  returnTo?: string;
 
   // Header
   icon?: IconType;
@@ -37,77 +35,41 @@ export type ModalProps = React.PropsWithChildren<{
 const NODE_ID = 'modals-node';
 
 const Modal: React.FC<ModalProps> = (props) => {
-  /*static propTypes = {
-    // Close the modal when clicking outside its boundaries
-    closable: PropTypes.bool,
-
-    // Function to call when the dialog is approved
-    // If no handler is supplied, there will only be a plain close button
-    onApprove: PropTypes.func,
-
-    // Caption for the approve button
-    approveCaption: PropTypes.node,
-
-    // Use disabled style for the approve button
-    approveDisabled: PropTypes.bool,
-
-    // The modal will always use the maximum allowed width when set,
-    // instead of adjusting the height dynamically.
-    // Useful for modals with navigable, varying height content
-    fullHeight: PropTypes.bool,
-
-    dynamicHeight: PropTypes.bool,
-
-    showOverlay: PropTypes.func.isRequired,
-    hide: PropTypes.func.isRequired,
-  };*/
-
-  /*static defaultProps: Pick<
-    ModalProps,
-    'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'
-  > = {
-    closable: true,
-    fullHeight: false,
-    dynamicHeight: false,
-  };
-
-  state = {
-    saving: false,
-  };*/
-
-  // c: any;
-
-  // closing = false;
-  // returnOnClose = true;
-
   const ref = React.useRef<HTMLDivElement>(null);
   const [saving, setSaving] = React.useState(false);
-  const [closing, setClosing] = React.useState(false);
-  const [returnOnClose, setReturnOnClose] = React.useState(false);
-  const navigate = useNavigate();
+
+  // Needed when navigating from one modal to another (e.g. download dialog -> browse)
+  // We don't want to return to the previous page in those cases
+  const returnOnClose = React.useRef(true);
+
+  // Set to true when the modal is being closed cleanly (backdrop click/action buttons)
+  // We need to clean the DOM for non-clean closures
+  const closingCleanly = React.useRef(false);
+
+  const closeModalRoute = React.useContext(ModalRouteCloseContext);
 
   const show = () => {
-    setTimeout(() => $(ref).modal('show'));
+    setTimeout(() => {
+      $(ref.current!).modal('show');
+    });
   };
 
   const hide = () => {
-    $(ref).modal('hide');
+    if (ref.current) {
+      $(ref.current).modal('hide');
+    }
   };
 
   const onHide = () => {
-    setClosing(true);
-    // this.closing = true;
+    closingCleanly.current = true;
   };
 
   const onHidden = () => {
-    const { returnTo, onClose } = props;
-    if (returnOnClose && returnTo) {
-      navigate(returnTo);
+    if (closeModalRoute && returnOnClose.current) {
+      closeModalRoute();
     }
 
-    setReturnOnClose(true);
-    // this.returnOnClose = true;
-
+    const { onClose } = props;
     if (onClose) {
       onClose();
     }
@@ -128,9 +90,7 @@ const Modal: React.FC<ModalProps> = (props) => {
     return;
   };
 
-  React.useEffect(() => {
-    // this.returnOnClose = true;
-
+  React.useLayoutEffect(() => {
     const settings: SemanticUI.ModalSettings = {
       onHidden: onHidden,
       onHide: onHide,
@@ -149,27 +109,18 @@ const Modal: React.FC<ModalProps> = (props) => {
       //name: 'Modal',
     };
 
-    $(ref).modal(settings);
-
+    $(ref.current!).modal(settings);
     show();
 
     return () => {
-      if (!closing) {
-        // this.returnOnClose = false;
-        setReturnOnClose(true);
+      if (!closingCleanly.current) {
+        // History navigation event, we still need to clean up the dimmer
+        returnOnClose.current = false;
         hide();
       }
     };
   }, []);
 
-  /*componentWillUnmount() {
-    if (!this.closing) {
-      this.returnOnClose = false;
-      this.hide();
-    }
-  }*/
-
-  // const { saving } = this.state;
   const { approveDisabled, fullHeight, approveCaption, className, children } = props;
   const { icon, subHeader, title } = props;
 

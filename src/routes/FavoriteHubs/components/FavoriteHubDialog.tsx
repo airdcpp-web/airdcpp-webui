@@ -332,7 +332,6 @@ class FavoriteHubDialog extends Component<Props> {
         onApprove={this.save}
         closable={false}
         icon={IconConstants.FAVORITE}
-        {...this.props}
       >
         <Form<Entry>
           ref={(c) => (this.form = c!)}

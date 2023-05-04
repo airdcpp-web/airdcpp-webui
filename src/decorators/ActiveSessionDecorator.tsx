@@ -5,7 +5,7 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 import * as UI from 'types/ui';
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 type SessionType = UI.SessionItemBase;
 

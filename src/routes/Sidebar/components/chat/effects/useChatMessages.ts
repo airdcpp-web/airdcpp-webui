@@ -3,16 +3,6 @@ import { useEffect, useState } from 'react';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-/*export interface ChatSession extends UI.SessionItemBase {
-  hub_url?: string;
-}
-
-export interface ChatLayoutProps extends UI.ChatController {
-  chatAccess: string;
-  messageStore: UI.SessionMessageStore;
-  highlightRemoteMenuId: string;
-}*/
-
 export const useChatMessages = (
   session: UI.SessionItemBase,
   messageStore: UI.SessionMessageStore,

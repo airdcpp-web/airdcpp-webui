@@ -62,7 +62,6 @@ type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
 const DownloadDialog: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  // const modalRef = useRef<Modal>(null);
 
   const {
     downloadHandler,
@@ -77,7 +76,6 @@ const DownloadDialog: React.FC<Props> = (props) => {
     ...other
   } = props;
 
-  const path = '';
   const handleDownload: PathDownloadHandler = async (targetPath, targetFilename) => {
     try {
       await downloadHandler(
@@ -108,9 +106,6 @@ const DownloadDialog: React.FC<Props> = (props) => {
     );
 
     handleClose();
-    /*if (!!modalRef.current) {
-      modalRef.current.hide();
-    }*/
   };
 
   const getInitialBrowsePath = () => {
@@ -119,7 +114,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
   };
 
   const handleBrowse = () => {
-    navigate(`${path}/browse`);
+    navigate(`browse`);
   };
 
   const commonDialogProps: ModalProps = {
@@ -127,14 +122,13 @@ const DownloadDialog: React.FC<Props> = (props) => {
     title: translate('Download', t, UI.Modules.COMMON),
     icon: IconConstants.DOWNLOAD,
     closable: false,
-    returnTo: props.returnTo,
   };
 
   const hasFileBrowserAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
   return (
     <Routes>
       <Route
-        path={`${path}/browse`}
+        path={`browse`}
         element={
           <FileBrowserDialog
             onConfirm={(path, directoryPath, fileName) =>
@@ -153,10 +147,9 @@ const DownloadDialog: React.FC<Props> = (props) => {
         }
       />
       <Route
-        path={path}
+        index
         element={
           <Modal
-            // ref={modalRef}
             className="download-dialog"
             fullHeight={true}
             {...commonDialogProps}
@@ -191,5 +184,5 @@ export default ModalRouteDecorator<DownloadDialogProps>(
       },
     },
   }),
-  'download/:downloadItemId'
+  '/download/:downloadItemId'
 );

@@ -8,9 +8,9 @@ import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 import * as API from 'types/api';
 
-import { NewSessionLayoutProps } from 'routes/Sidebar/components/SessionLayout';
 import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
+import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
 
 const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
   const handleSubmit = (user: API.HintedUser) => {

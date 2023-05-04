@@ -26,7 +26,8 @@ export const useSidebarEffect = (sidebarRoutes: RouteItem[], location: Location)
       // Keep the previous location available
       setMainLayoutLocation(location);
     }
-  }, [location.pathname]);
+  }, [location]);
 
-  return showSidebar(sidebarRoutes, location) ? mainLayoutLocation : undefined;
+  const show = showSidebar(sidebarRoutes, location);
+  return show ? mainLayoutLocation : undefined;
 };

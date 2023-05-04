@@ -31,16 +31,6 @@ export type FormContext = {
   formT: ModuleTranslator;
 };
 
-/*export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = {
-  onChange: (values: ValueT) => void;
-  options: Array<FormOption<OptionValueT>>;
-  value: ValueT;
-  config: ConfigT;
-  context: FormContext;
-  label?: string;
-  attrs: any;
-};*/
-
 export type FormLocals<
   OptionValueT = any,
   ValueT = any,

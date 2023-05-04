@@ -23,7 +23,6 @@ interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {
     min_size: number | null;
     max_size: number | null;
   };
-  // excluded: string[] | null;
 }
 
 export interface SearchOptionsFormProps extends Pick<UI.RouteComponentProps, 'location'> {
@@ -65,13 +64,7 @@ const Fields: UI.FormFieldDefinition[] = [
         optional: true,
       },
     ],
-  } /*, {
-    key: 'excluded',
-    title: 'Excluded words',
-    type: API.SettingTypeEnum.LIST,
-    item_type: API.SettingTypeEnum.STRING,
-    optional: true,
-  }*/,
+  },
 ];
 
 const removeEmptyProperties = (formValue: Entry) => {
@@ -122,7 +115,6 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
       });
     } else if (id === 'min_size' || id === 'max_size') {
       Object.assign(fieldOptions, {
-        // factory: t.form.List,
         template: SizeField,
       });
     } else if (id === 'excluded') {

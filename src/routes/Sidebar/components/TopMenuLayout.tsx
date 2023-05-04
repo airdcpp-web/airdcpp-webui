@@ -6,15 +6,16 @@ import ActionButton from 'components/ActionButton';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import { MenuIcon } from 'components/icon/MenuIcon';
-import { SessionMainLayoutProps } from './SessionLayout';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+import { useTranslation } from 'react-i18next';
+import { SessionMainLayoutProps } from './types';
 
 type SessionDropdownProps<SessionT extends UI.SessionItemBase> = Pick<
   SessionMainLayoutProps<SessionT>,
-  'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter' | 't'
+  'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter'
 >;
 
 const SessionDropdown = <SessionT extends UI.SessionItemBase>({
@@ -22,24 +23,26 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
   newButton,
   unreadInfoStore,
   listActionMenuGetter,
-  t,
-}: SessionDropdownProps<SessionT>) => (
-  <SectionedDropdown
-    triggerIcon={
-      <MenuIcon
-        urgencies={unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null}
-      />
-    }
-  >
-    <MenuSection caption={translate('New', t, UI.Modules.COMMON)}>
-      {newButton}
-    </MenuSection>
-    <MenuSection caption={translate('Current sessions', t, UI.Modules.COMMON)}>
-      {sessionMenuItems}
-    </MenuSection>
-    <MenuSection>{listActionMenuGetter()}</MenuSection>
-  </SectionedDropdown>
-);
+}: SessionDropdownProps<SessionT>) => {
+  const { t } = useTranslation();
+  return (
+    <SectionedDropdown
+      triggerIcon={
+        <MenuIcon
+          urgencies={unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null}
+        />
+      }
+    >
+      <MenuSection caption={translate('New', t, UI.Modules.COMMON)}>
+        {newButton}
+      </MenuSection>
+      <MenuSection caption={translate('Current sessions', t, UI.Modules.COMMON)}>
+        {sessionMenuItems}
+      </MenuSection>
+      <MenuSection>{listActionMenuGetter()}</MenuSection>
+    </SectionedDropdown>
+  );
+};
 
 type CloseButtonProps<
   SessionT extends UI.SessionItemBase,

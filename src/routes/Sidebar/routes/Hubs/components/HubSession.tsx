@@ -20,11 +20,11 @@ import '../style.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import HubActions from 'actions/reflux/HubActions';
 import IconConstants from 'constants/IconConstants';
 import MenuConstants from 'constants/MenuConstants';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 const getStorageKey = (props: HubSessionProps) => {
   return `view_userlist_${props.session.id}`;

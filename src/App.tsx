@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
 //@ts-ignore
 import Reflux from 'reflux';
@@ -76,7 +76,7 @@ const App = () => {
                     >
                       <Routes>
                         <Route path="/login" element={<Login />} />
-                        {/*<Route path="/" element={<Navigate to="/home" replace />} />*/}
+                        <Route index element={<Navigate to="/home" replace />} />
                         <Route path="*" element={<AuthenticatedApp />} />
                       </Routes>
                     </div>

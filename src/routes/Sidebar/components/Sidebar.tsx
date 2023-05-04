@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 
 import {
   loadLocalProperty,
@@ -8,10 +8,11 @@ import {
 import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
 
-import '../style.css';
 import { RouteItem, parseRoutes } from 'routes/Routes';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
 import { Location, Routes, useNavigate } from 'react-router-dom';
+
+import '../style.css';
 
 const MIN_WIDTH = 500;
 
@@ -20,7 +21,6 @@ const showSidebar = (props: SidebarProps) => {
 };
 
 export interface SidebarProps {
-  // location: Location;
   previousLocation?: Location;
   routes: RouteItem[];
 }
@@ -47,28 +47,18 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   );
   const resizable = useRef<Resizable>(null);
 
-  useEffect(() => {
-    if (resizable.current) {
-      const shouldShow = showSidebar(props);
-      if (shouldShow && visibility === Visibility.HIDDEN) {
-        $(resizable.current).sidebar('show');
-      } else if (!shouldShow && visibility === Visibility.VISIBLE) {
-        $(resizable.current).sidebar('hide');
-      }
-    }
-  }, [showSidebar(props)]);
+  const previousLocation = useRef<any>();
+  previousLocation.current = props.previousLocation;
 
   useEffect(() => {
     const onHide = () => {
       setVisibility(Visibility.LOADING);
-
-      const { previousLocation } = props;
-      if (!previousLocation) {
+      if (!previousLocation.current) {
         return;
       }
 
-      navigate(previousLocation.pathname, {
-        state: previousLocation.state,
+      navigate(previousLocation.current.pathname, {
+        state: previousLocation.current.state,
       });
     };
 
@@ -84,8 +74,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
       setVisibility(Visibility.VISIBLE);
     };
 
-    if (resizable.current) {
-      $(resizable.current).sidebar({
+    if (resizable.current && resizable.current.resizable) {
+      $(resizable.current.resizable).sidebar({
         context: '.sidebar-context',
         transition: 'overlay',
         mobileTransition: 'overlay',
@@ -94,14 +84,22 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         onShow: onShow,
         onHidden: onHidden,
         onHide: onHide,
+        // debug: true,
+        // verbose: true,
       } as SemanticUI.SidebarSettings);
-
-      const active = showSidebar(props);
-      if (active) {
-        $(resizable.current).sidebar('show');
-      }
     }
   }, []);
+
+  useEffect(() => {
+    if (resizable.current && resizable.current.resizable) {
+      const shouldShow = showSidebar(props);
+      if (shouldShow && visibility === Visibility.HIDDEN) {
+        $(resizable.current.resizable).sidebar('show');
+      } else if (!shouldShow && visibility === Visibility.VISIBLE) {
+        $(resizable.current.resizable).sidebar('hide');
+      }
+    }
+  }, [showSidebar(props)]);
 
   const onResizeStop: ResizeCallback = (event, direction, element, delta) => {
     if (!delta.width) {
@@ -118,7 +116,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
       return null;
     }
 
-    // const { location } = props;
     return (
       <LayoutWidthContext.Provider value={width}>
         <div id="sidebar-container">
@@ -164,4 +161,4 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

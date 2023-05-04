@@ -6,16 +6,12 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import SearchConstants from 'constants/SearchConstants';
 
-const handleCreate: UI.ActionHandler<API.SearchType> = ({ location, navigate }) => {
-  navigate(`${location.pathname}/types`);
+const handleCreate: UI.ActionHandler<API.SearchType> = ({ navigate }) => {
+  navigate(`/types`);
 };
 
-const handleEdit: UI.ActionHandler<API.SearchType> = ({
-  data: type,
-  location,
-  navigate,
-}) => {
-  navigate(`${location.pathname}/types/${type.id}`);
+const handleEdit: UI.ActionHandler<API.SearchType> = ({ data: type, navigate }) => {
+  navigate(`types/${type.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.SearchType> = ({ data: type }) => {

@@ -6,16 +6,15 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate: UI.ActionHandler<undefined> = ({ location, navigate }) => {
-  navigate(`${location.pathname}/directories`);
+const handleCreate: UI.ActionHandler<undefined> = ({ navigate }) => {
+  navigate(`directories`);
 };
 
 const handleEdit: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
   data: directory,
-  location,
   navigate,
 }) => {
-  navigate(`${location.pathname}/directories/${directory.id}`);
+  navigate(`directories/${directory.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({

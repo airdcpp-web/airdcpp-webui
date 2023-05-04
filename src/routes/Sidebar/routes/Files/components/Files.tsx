@@ -19,7 +19,6 @@ import {
   SessionProviderDecoratorChildProps,
   SessionProviderDecorator,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
-import { toI18nKey } from 'utils/TranslationUtils';
 
 const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
   itemNameGetter(session) {
@@ -40,13 +39,13 @@ const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
 };
 
 const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props) => {
-  const { params, t, ...other } = props;
+  const { params, sessionT, ...other } = props;
   if (props.items.length === 0) {
     return (
       <Message
-        title={t(toI18nKey('noFiles', UI.Modules.VIEWED_FILES), 'No files to view')}
-        description={t<string>(
-          toI18nKey('noFilesDesc', UI.Modules.VIEWED_FILES),
+        title={sessionT.t('noFiles', 'No files to view')}
+        description={sessionT.t<string>(
+          'noFilesDesc',
           'You may open text or media files to be viewed here from search or filelists'
         )}
       />
@@ -63,11 +62,11 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props
       sessionApi={ViewFileAPIActions as UI.SessionActions<API.ViewFile>}
       unreadInfoStore={ViewFileStore}
       sessionItemLayout={FileSession}
-      t={t}
+      sessionT={sessionT}
       {...ItemHandler}
       {...other}
     />
   );
 };
 
-export default SessionProviderDecorator(Files, ViewFileStore);
+export default SessionProviderDecorator(Files, ViewFileStore, UI.Modules.VIEWED_FILES);

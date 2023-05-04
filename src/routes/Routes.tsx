@@ -224,5 +224,5 @@ export const parseMenuItems = (
 };
 
 export const isRouteActive = (route: RouteItem, location: Location): boolean => {
-  return !!matchPath(route.path, location.pathname);
+  return !!matchPath(`${route.path}/*`, location.pathname);
 };

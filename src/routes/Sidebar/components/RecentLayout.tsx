@@ -21,7 +21,6 @@ interface RecentLayoutProps {
   entryType: string;
   entryTitleRenderer: (entry: API.HistoryItem) => React.ReactNode;
   hasSession: (entry: API.HistoryItem) => boolean;
-  t: UI.TranslateF;
 }
 
 interface DataProps {

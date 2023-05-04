@@ -8,11 +8,12 @@ import {
   SubscriptionCallback,
   EntityId,
 } from 'airdcpp-apisocket';
+
 import { AccessEnum } from 'types/api';
-import { SessionBaseType } from 'routes/Sidebar/components/SessionLayout';
+import * as UI from 'types/ui';
 
 export interface SocketSubscriptionDecoratorProps {
-  session?: SessionBaseType;
+  session?: UI.SessionItemBase;
 }
 
 export type AddSocketListener = <
