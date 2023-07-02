@@ -172,9 +172,10 @@ class MessageComposer extends React.Component<
     // Trim only from end to allow chat messages such as " +help" to be
     // sent to other users
     // This will also prevent sending empty messages
-    const text = this.state.text.replace(/\s+$/, '');
+    const text = this.state.text;
+    const test = text.trim() !== '';
 
-    if (text) {
+    if (test) {
       if (text[0] === '/') {
         this.handleCommand(text);
       }
