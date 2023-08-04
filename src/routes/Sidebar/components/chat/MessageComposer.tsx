@@ -100,7 +100,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
     })
       .then((users: API.HubUser[]) => callback(users.map(userToMention)))
       .catch((error: ErrorResponse) =>
-        console.log(`Failed to fetch suggestions: ${error}`)
+        console.log(`Failed to fetch suggestions: ${error}`),
       );
   };
 

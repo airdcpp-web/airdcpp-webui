@@ -26,7 +26,7 @@ const buildMenuItem = (
   menuItem: UI.ActionMenuItem,
   index: number,
   hideMenu: DropdownCloseHandler | undefined,
-  showSubmenu: SubmenuSelectHandler
+  showSubmenu: SubmenuSelectHandler,
 ) => {
   const { id, item, children: subMenu } = menuItem;
   if (!item) {
@@ -67,7 +67,7 @@ const buildMenuItem = (
 const buildMenuList = (
   items: UI.ActionMenuItem[],
   hideMenu: DropdownCloseHandler | undefined,
-  showSubmenu: SubmenuSelectHandler
+  showSubmenu: SubmenuSelectHandler,
 ) => {
   return (
     <>{items.map((item, index) => buildMenuItem(item, index, hideMenu, showSubmenu))}</>
@@ -81,7 +81,7 @@ interface NestedMenuProps {
 
 const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
   const [activeSubmenu, setActiveSubmenu] = React.useState<UI.ActionMenuItem | null>(
-    null
+    null,
   );
 
   return (

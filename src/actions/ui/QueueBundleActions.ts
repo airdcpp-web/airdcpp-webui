@@ -31,7 +31,7 @@ const handleForceShare: UI.ActionHandler<API.QueueBundle> = ({ data: bundle }) =
 
 const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
   { data: bundle },
-  removeFinished
+  removeFinished,
 ) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, {
     remove_finished: removeFinished,

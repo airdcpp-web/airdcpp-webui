@@ -25,7 +25,7 @@ const handleForce: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
 
 const handleDisconnect: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
   return SocketService.post(
-    `${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`
+    `${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`,
   );
 };
 

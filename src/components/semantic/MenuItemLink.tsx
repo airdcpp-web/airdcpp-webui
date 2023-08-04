@@ -29,7 +29,7 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
     'link',
     className,
     { active: active },
-    { disabled: disabled }
+    { disabled: disabled },
   );
 
   return (

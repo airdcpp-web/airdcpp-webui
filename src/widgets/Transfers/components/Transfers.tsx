@@ -83,7 +83,7 @@ class Transfers extends PureComponent<
   initStats = async () => {
     try {
       const stats = await SocketService.get<API.TransferStats>(
-        TransferConstants.STATISTICS_URL
+        TransferConstants.STATISTICS_URL,
       );
       this.onStatsReceived(stats);
     } catch (error) {
@@ -95,7 +95,7 @@ class Transfers extends PureComponent<
     addSocketListener(
       TransferConstants.MODULE_URL,
       TransferConstants.STATISTICS,
-      this.onStatsUpdated
+      this.onStatsUpdated,
     );
 
     // Add zero values when there is no traffic
@@ -166,5 +166,5 @@ class Transfers extends PureComponent<
 }
 
 export default withContentRect('bounds')(
-  SocketSubscriptionDecorator<TransferProps>(Transfers)
+  SocketSubscriptionDecorator<TransferProps>(Transfers),
 );

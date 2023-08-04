@@ -17,7 +17,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
     const translate = (text: string) => {
       return moduleT.t(
         toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined),
-        text
+        text,
       );
     };
 
@@ -38,7 +38,7 @@ const PortsPage: React.FC<SettingPageProps> = ({ moduleT }) => (
     <Message
       description={moduleT.t<string>(
         'portsAutoValuesNote',
-        'Port numbers listed on this page can be overridden by port mappers (if enabled)'
+        'Port numbers listed on this page can be overridden by port mappers (if enabled)',
       )}
       icon={IconConstants.INFO}
     />

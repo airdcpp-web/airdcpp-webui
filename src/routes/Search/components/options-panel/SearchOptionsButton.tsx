@@ -60,7 +60,7 @@ const SearchOptionsButton: React.FC<Props> = ({ moduleT, onChange, value, hubs }
     if (!!value && !!value.hub_urls && !!value.hub_urls.length) {
       const selectedUrls = value.hub_urls;
       const selectedUrlsNew = selectedUrls.filter((url) =>
-        hubs.find((hub) => hub.hub_url === url)
+        hubs.find((hub) => hub.hub_url === url),
       );
       if (selectedUrlsNew.length !== selectedUrls.length) {
         onValueChanged({
@@ -127,7 +127,7 @@ const SearchOptionsButtonDecorated = DataProviderDecorator<
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_CREATED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener<Partial<API.Hub>>(
       HubConstants.MODULE_URL,
@@ -136,10 +136,10 @@ const SearchOptionsButtonDecorated = DataProviderDecorator<
         if (!!hub.connect_state) {
           refetchData();
         }
-      }
+      },
     );
     addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
   dataConverters: {

@@ -26,7 +26,7 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
     'header layout',
     { icon: !!icon },
     { sectioned: !!rightComponent },
-    className
+    className,
   );
 
   const headerClassName = classNames('ui header', { left: !!rightComponent }, size);

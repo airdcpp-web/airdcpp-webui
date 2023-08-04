@@ -131,8 +131,8 @@ class TextFilter extends React.PureComponent<
                     .map((key) =>
                       this.getFilterMethod(
                         API.FilterMethod[key as keyof typeof API.FilterMethod],
-                        t
-                      )
+                        t,
+                      ),
                     )}
                 </MenuSection>
               </SectionedDropdown>

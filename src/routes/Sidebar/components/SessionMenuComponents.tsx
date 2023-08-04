@@ -18,13 +18,13 @@ import { useTranslation } from 'react-i18next';
 export const useComponents = <
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object = UI.EmptyObject,
-  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
+  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 >(
   props: UI.SessionInfoGetter<SessionT> & {
     activeItem: SessionT | null;
     hasEditAccess: boolean;
   } & SessionLayoutLabels &
-    SessionLayoutManageProps<SessionT, SessionApiT, UIActionT>
+    SessionLayoutManageProps<SessionT, SessionApiT, UIActionT>,
 ) => {
   const location = useLocation();
   const { t } = useTranslation();

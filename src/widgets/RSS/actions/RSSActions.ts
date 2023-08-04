@@ -18,7 +18,7 @@ const hasTitle = ({ entry }: RSSItemData) => !!entry.title;
 
 const getLocation = (href: string) => {
   const match = href.match(
-    /^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/
+    /^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/,
   );
   return (
     match && {

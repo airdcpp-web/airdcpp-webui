@@ -48,7 +48,7 @@ const ServerSettingsPage: React.FC<SettingPageProps> = (props) => {
         <Message
           description={t<string>(
             'defaultCertNote',
-            'The default client certificate is used if the certificate paths are empty'
+            'The default client certificate is used if the certificate paths are empty',
           )}
           icon={IconConstants.INFO}
         />

@@ -70,7 +70,7 @@ class SearchTypeDialog extends Component<Props> {
 
     return SocketService.patch(
       `${SearchConstants.SEARCH_TYPES_URL}/${this.props.searchTypeEntry!.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -84,7 +84,7 @@ class SearchTypeDialog extends Component<Props> {
   render() {
     const { moduleT, searchTypeEntry } = this.props;
     const title = moduleT.translate(
-      this.isNew() ? 'Add search type' : 'Edit search type'
+      this.isNew() ? 'Add search type' : 'Edit search type',
     );
     return (
       <Modal
@@ -120,5 +120,5 @@ export default ModalRouteDecorator<SearchTypeDialogProps>(
       },
     },
   }),
-  'types/:searchTypeId?'
+  'types/:searchTypeId?',
 );

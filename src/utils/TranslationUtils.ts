@@ -21,7 +21,7 @@ export const parseTranslationModules = (moduleIds: string | string[]) => {
 export const toI18nKey = (
   key: string,
   moduleIds: string | string[],
-  reservedSubNamespaces?: string[]
+  reservedSubNamespaces?: string[],
 ) => {
   invariant(!key.includes(' '), 'Invalid i18key');
   if (
@@ -38,7 +38,7 @@ export const toI18nKey = (
 export const textToI18nKey = (
   text: string,
   moduleIds: string | string[],
-  reservedSubNamespaces?: string[]
+  reservedSubNamespaces?: string[],
 ) => {
   return toI18nKey(camelCase(text), moduleIds, reservedSubNamespaces);
 };
@@ -47,7 +47,7 @@ export const translate = (
   text: string,
   t: UI.TranslateF,
   moduleId: string | string[],
-  reservedSubNamespaces?: string[]
+  reservedSubNamespaces?: string[],
 ) => {
   return t(textToI18nKey(text, moduleId, reservedSubNamespaces), text);
 };
@@ -58,7 +58,7 @@ export const toArray = (moduleId: string | string[]) => {
 
 const concatModules = (
   toMerge: string | string[] | undefined,
-  moduleId: string | string[]
+  moduleId: string | string[],
 ): string | string[] => {
   if (!toMerge) {
     return moduleId;
@@ -70,7 +70,7 @@ const concatModules = (
 export const getModuleT = (
   plainT: UI.TranslateF,
   moduleId: string | string[],
-  reservedSubNamespaces?: string[]
+  reservedSubNamespaces?: string[],
 ): UI.ModuleTranslator => {
   const moduleT: UI.ModuleTranslator = {
     //@ts-ignore
@@ -84,7 +84,7 @@ export const getModuleT = (
         text,
         plainT,
         concatModules(subModuleIds, moduleId),
-        reservedSubNamespaces
+        reservedSubNamespaces,
       ),
     moduleId,
     plainT,
@@ -96,11 +96,11 @@ export const getModuleT = (
 export const getSubModuleT = (
   moduleT: UI.ModuleTranslator,
   moduleId: string | string[],
-  reservedSubNamespaces?: string[]
+  reservedSubNamespaces?: string[],
 ) => {
   return getModuleT(
     moduleT.plainT,
     [...toArray(moduleT.moduleId), ...toArray(moduleId)],
-    reservedSubNamespaces
+    reservedSubNamespaces,
   );
 };

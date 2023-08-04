@@ -53,7 +53,7 @@ class PriorityMenu extends Component<PriorityMenuProps> {
 
   getPriorityListItem = (
     priority: Omit<API.QueuePriority, 'auto'>,
-    t: UI.TranslateF
+    t: UI.TranslateF,
   ): UI.ActionMenuItem => {
     const currentPrio = this.props.item.priority.id;
     return {
@@ -74,7 +74,7 @@ class PriorityMenu extends Component<PriorityMenuProps> {
     const children = Object.keys(PriorityEnum)
       .map(Number)
       .map((prioKey) =>
-        this.getPriorityListItem(PriorityEnum[prioKey as keyof typeof PriorityEnum], t)
+        this.getPriorityListItem(PriorityEnum[prioKey as keyof typeof PriorityEnum], t),
       );
 
     children.push({ id: 'divider' });
@@ -97,7 +97,7 @@ class PriorityMenu extends Component<PriorityMenuProps> {
     let caption = translate(
       PriorityEnum[itemPrio.id as keyof typeof PriorityEnum].str,
       t,
-      UI.Modules.QUEUE
+      UI.Modules.QUEUE,
     );
     if (itemPrio.auto) {
       caption += ` (${translate('Auto', t, UI.Modules.QUEUE).toLocaleLowerCase()})`;

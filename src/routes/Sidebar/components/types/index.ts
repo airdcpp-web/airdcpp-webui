@@ -19,7 +19,7 @@ export interface SessionLayoutLabels {
 export interface SessionLayoutManageProps<
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object = UI.EmptyObject,
-  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
+  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > {
   // Unique ID of the section (used for storing and loading the previously open tab)
   baseUrl: string;
@@ -54,7 +54,7 @@ interface SessionMainLayoutComponents {
 export interface SessionMainLayoutProps<
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object = UI.EmptyObject,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > extends Pick<
       SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
       'unreadInfoStore'
@@ -70,7 +70,7 @@ export interface SessionMainLayoutProps<
 export type SessionChildProps<
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object = UI.EmptyObject,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > = Pick<
   SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
   'sessionApi' | 'uiActions'

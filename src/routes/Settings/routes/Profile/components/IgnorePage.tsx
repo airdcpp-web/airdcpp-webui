@@ -68,10 +68,10 @@ export default DataProviderDecorator<IgnorePageProps, IgnorePageDataProps>(Ignor
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_ADDED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

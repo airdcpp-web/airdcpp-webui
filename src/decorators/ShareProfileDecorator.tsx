@@ -35,11 +35,11 @@ const ShareProfileDecorator = function <PropsT extends object>(
     PropsT,
     ShareProfileDecoratorDataProps
   >,
-  addSize = true
+  addSize = true,
 ) {
   const convertProfile = (
     profile: API.ShareProfile,
-    t: UI.TranslateF
+    t: UI.TranslateF,
   ): API.ShareProfile => {
     let str = profile.str;
     if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
@@ -73,20 +73,20 @@ const ShareProfileDecorator = function <PropsT extends object>(
         addSocketListener(
           ShareProfileConstants.MODULE_URL,
           ShareProfileConstants.PROFILE_ADDED,
-          () => refetchData()
+          () => refetchData(),
         );
         addSocketListener(
           ShareProfileConstants.MODULE_URL,
           ShareProfileConstants.PROFILE_UPDATED,
-          () => refetchData()
+          () => refetchData(),
         );
         addSocketListener(
           ShareProfileConstants.MODULE_URL,
           ShareProfileConstants.PROFILE_REMOVED,
-          () => refetchData()
+          () => refetchData(),
         );
       },
-    } as DataProviderDecoratorSettings<PropsT, ShareProfileDecoratorDataProps>)
+    } as DataProviderDecoratorSettings<PropsT, ShareProfileDecoratorDataProps>),
   );
 };
 

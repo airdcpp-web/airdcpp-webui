@@ -19,7 +19,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
       fieldOptions.help = (
         <Trans
           i18nKey={moduleT.toI18nKey(
-            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
+            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined),
           )}
         >
           <div>

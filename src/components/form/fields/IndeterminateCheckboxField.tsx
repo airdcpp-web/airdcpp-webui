@@ -42,7 +42,7 @@ const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = ({ locals })
 
 type TCombTemplate = {
   renderCheckbox: (
-    locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>
+    locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>,
   ) => React.ReactNode;
 };
 
@@ -53,5 +53,5 @@ const IndeterminateCheckboxTemplate: TCombTemplate = {
 };
 
 export const IndeterminateCheckboxField = t.form.Form.templates.checkbox.clone(
-  IndeterminateCheckboxTemplate
+  IndeterminateCheckboxTemplate,
 );

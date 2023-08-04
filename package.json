@@ -110,7 +110,7 @@
     "moment": "^2.29.4",
     "pondjs": "^0.9.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^2.8.4",
+    "prettier": "^3.0.1",
     "promise": "^8.3.0",
     "prop-types": "^15.8.1",
     "re-resizable": "^6.9.9",

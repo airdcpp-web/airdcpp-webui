@@ -21,20 +21,20 @@ export interface MainLayoutProps {
   urgencies: UI.UrgencyCountMap | null;
 }
 
-const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(function AuthenticatedApp(
-  props
-) {
-  const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
-  useUrgencyPageTitle(urgencies);
+const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
+  function AuthenticatedApp(props) {
+    const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
+    useUrgencyPageTitle(urgencies);
 
-  const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
-  return (
-    <div id="authenticated-app">
-      <ActivityTracker />
-      <Notifications />
-      <MainLayout className="main-layout" urgencies={urgencies} />
-    </div>
-  );
-});
+    const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
+    return (
+      <div id="authenticated-app">
+        <ActivityTracker />
+        <Notifications />
+        <MainLayout className="main-layout" urgencies={urgencies} />
+      </div>
+    );
+  },
+);
 
 export default AuthenticationGuardDecorator(AuthenticatedApp);

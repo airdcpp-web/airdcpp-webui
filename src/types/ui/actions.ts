@@ -39,7 +39,7 @@ export interface ActionHandlerData<ItemDataT> {
 
 export type ActionHandler<ItemDataT> = (
   handlerData: ActionHandlerData<ItemDataT>,
-  confirmData?: boolean | string
+  confirmData?: boolean | string,
 ) => Promise<any> | void;
 
 export interface ActionType<ItemDataT> {
@@ -102,7 +102,7 @@ export type RefluxActionListType<ItemDataT = any> = {
 
 export interface ModuleActions<
   ItemDataT,
-  ActionsT extends ActionListType<ItemDataT> = ActionListType<ItemDataT>
+  ActionsT extends ActionListType<ItemDataT> = ActionListType<ItemDataT>,
 > {
   moduleId: string | string[];
   subId?: string;
@@ -127,5 +127,5 @@ export interface ActionMenuItem {
 
 export type ActionMenuComponentBuilder = (
   items: ActionMenuItem[],
-  onClickItem?: () => void
+  onClickItem?: () => void,
 ) => React.ReactNode;

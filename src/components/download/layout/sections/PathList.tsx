@@ -44,7 +44,7 @@ const PathListWithData = DataProviderDecorator<PathListProps, PathListDataProps>
       pathInfos: ({ paths }, socket) =>
         socket.post(FilesystemConstants.DISK_INFO_URL, { paths }),
     },
-  }
+  },
 );
 
 //PathList.PropTypes = {

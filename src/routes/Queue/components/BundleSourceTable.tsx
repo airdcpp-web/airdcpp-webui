@@ -112,8 +112,8 @@ export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDa
           if (data.id === props.bundle!.id) {
             refetchData();
           }
-        }
+        },
       );
     },
-  }
+  },
 );

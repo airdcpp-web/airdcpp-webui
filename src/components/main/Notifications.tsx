@@ -72,12 +72,12 @@ const Notifications: React.FC<NotificationsProps> = (props) => {
         interval: 3000,
         fireImmediately: true,
       }),
-    []
+    [],
   );
 
   const showNativeNotification = (
     level: NotificationLevel,
-    notificationInfo: UI.Notification
+    notificationInfo: UI.Notification,
   ) => {
     const options = {
       body: notificationInfo.message,
@@ -98,7 +98,7 @@ const Notifications: React.FC<NotificationsProps> = (props) => {
 
   const addNotification = async (
     level: NotificationLevel,
-    notification: UI.Notification
+    notification: UI.Notification,
   ) => {
     const remainingTokens = await limiter.removeTokens(1);
 
@@ -145,7 +145,7 @@ const Notifications: React.FC<NotificationsProps> = (props) => {
       <ToastContainer limit={3} hideProgressBar={true} pauseOnFocusLoss={false} />
       <SocketNotificationListener />
     </>,
-    document.getElementById('notifications-node')!
+    document.getElementById('notifications-node')!,
   );
 };
 

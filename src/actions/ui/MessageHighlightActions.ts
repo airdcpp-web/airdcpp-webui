@@ -23,7 +23,7 @@ const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({
       name: data.magnet ? data.magnet.searchString : data.text,
     },
     location,
-    navigate
+    navigate,
   );
 };
 

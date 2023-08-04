@@ -22,7 +22,7 @@ const ViewFileSessionStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(
       this.getSessions().length === 0,
-      'No viewed files should exist on socket connect'
+      'No viewed files should exist on socket connect',
     );
 
     const url = ViewFileConstants.MODULE_URL;
@@ -34,5 +34,5 @@ const ViewFileSessionStore = Reflux.createStore({
 
 export default SessionStoreDecorator(
   SocketSubscriptionDecorator(ViewFileSessionStore, AccessConstants.VIEW_FILE_VIEW),
-  ViewFileActions
+  ViewFileActions,
 );

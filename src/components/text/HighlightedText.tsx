@@ -23,7 +23,7 @@ interface HighlightProps {
 const getHighlightNode = (
   highlight: API.MessageHighlight,
   t: UI.TranslateF,
-  { user, menuProps }: HighlightProps
+  { user, menuProps }: HighlightProps,
 ): React.ReactNode => {
   const { start, end } = highlight.position;
   const key = `${start}-${end}`;
@@ -95,7 +95,7 @@ const decoder = new TextDecoder();
 
 const formatHighlights = (
   { text: text16, highlights, emojify, ...other }: HighlightedTextProps,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) => {
   if (!highlights.length) {
     return formatPlainText(text16, emojify);
@@ -110,7 +110,7 @@ const formatHighlights = (
   const pushText = (newStart: number) => {
     const textElement: React.ReactNode = formatPlainText(
       decoder.decode(text8.subarray(prevReplace, newStart)),
-      emojify
+      emojify,
     );
 
     elements.push(textElement);
@@ -136,5 +136,5 @@ export const HighlightedText: React.FC<HighlightedTextProps> = memo(
   function HighlightedText(props) {
     const { t } = useTranslation();
     return <>{formatHighlights(props, t)}</>;
-  }
+  },
 );

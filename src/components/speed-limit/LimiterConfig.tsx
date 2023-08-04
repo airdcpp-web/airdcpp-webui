@@ -46,7 +46,7 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({
         SocketService.post(SettingConstants.ITEMS_SET_URL, {
           [settingKey]: newLimit,
         }),
-      t
+      t,
     );
 
     hide();

@@ -16,7 +16,7 @@ export interface SessionInfoGetter<SessionT> {
   itemHeaderTitleGetter?: (
     session: SessionT,
     location: Location,
-    actionMenu: any
+    actionMenu: any,
   ) => React.ReactNode;
   itemHeaderDescriptionGetter: (session: SessionT) => React.ReactNode;
   itemHeaderIconGetter: (session: SessionT) => IconType;
@@ -24,7 +24,7 @@ export interface SessionInfoGetter<SessionT> {
 
 export type SessionActions<
   SessionT extends SessionItemBase,
-  ActionT = EmptyObject
+  ActionT = EmptyObject,
 > = RefluxActionListType<SessionItemBase> &
   ActionT & {
     removeSession: (session: SessionT) => void;
@@ -85,7 +85,7 @@ export interface SessionLayoutLabels {
 export interface SessionLayoutManageProps<
   SessionT extends SessionItemBase,
   SessionApiT extends object = EmptyObject,
-  UIActionT extends ActionListType<SessionItemBase> = EmptyObject
+  UIActionT extends ActionListType<SessionItemBase> = EmptyObject,
 > {
   // Unique ID of the section (used for storing and loading the previously open tab)
   baseUrl: string;
@@ -133,7 +133,7 @@ export interface SessionLayoutManageProps<
 export type SessionChildProps<
   SessionT extends SessionItemBase,
   SessionApiT extends object = EmptyObject,
-  UIActionsT extends ActionListType<SessionItemBase> = EmptyObject
+  UIActionsT extends ActionListType<SessionItemBase> = EmptyObject,
 > = Pick<
   SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
   'sessionApi' | 'uiActions'

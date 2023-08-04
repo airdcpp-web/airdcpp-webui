@@ -85,7 +85,7 @@ export default ModalRouteDecorator<ExtensionsConfigureDialogProps>(
           return socket.get(`${ExtensionConstants.EXTENSIONS_URL}/${params.extensionId}`);
         },
       },
-    }
+    },
   ),
-  'extensions/:extensionId'
+  'extensions/:extensionId',
 );

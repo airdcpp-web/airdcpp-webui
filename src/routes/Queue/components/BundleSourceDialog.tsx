@@ -58,5 +58,5 @@ export default ModalRouteDecorator<BundleSourceDialogProps>(
         socket.get(`${QueueConstants.BUNDLES_URL}/${params.bundleId}`),
     },
   }),
-  'sources/:bundleId'
+  'sources/:bundleId',
 );

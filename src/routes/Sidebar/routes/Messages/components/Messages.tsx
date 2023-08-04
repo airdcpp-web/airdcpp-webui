@@ -24,7 +24,7 @@ import '../style.css';
 const sessionActions = ['clear'];
 
 const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = (
-  props
+  props,
 ) => {
   const { params, sessionT, ...other } = props;
   return (
@@ -51,5 +51,5 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
 export default SessionProviderDecorator(
   Messages,
   PrivateChatSessionStore,
-  UI.Modules.MESSAGES
+  UI.Modules.MESSAGES,
 );

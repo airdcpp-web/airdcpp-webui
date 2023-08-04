@@ -4,7 +4,7 @@ export type BrowseHandler = (() => void) | undefined;
 
 export type PathDownloadHandler = (
   targetPath: string,
-  targetFilename?: string
+  targetFilename?: string,
 ) => Promise<any>;
 
 export type LayoutProps = React.PropsWithChildren<{

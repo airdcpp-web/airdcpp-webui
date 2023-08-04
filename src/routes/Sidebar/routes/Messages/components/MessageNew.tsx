@@ -36,7 +36,7 @@ const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
         onChange={handleSubmit}
         offlineMessage={sessionT.t<string>(
           'offlineMessage',
-          'You must to be connected to at least one hub in order to send private messages'
+          'You must to be connected to at least one hub in order to send private messages',
         )}
         isClearable={false}
         autoFocus={true}

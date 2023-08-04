@@ -26,7 +26,7 @@ export const useSyncFilelistLocation = ({
   const apiSendChangeDirectory = (directory: string) => {
     runBackgroundSocketAction(
       () => changeFilelistDirectory(session, directory),
-      sessionT.plainT
+      sessionT.plainT,
     );
   };
 

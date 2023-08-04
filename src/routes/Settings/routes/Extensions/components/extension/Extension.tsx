@@ -57,7 +57,7 @@ const Version: React.FC<VersionProps> = ({ title, packageInfo, className, module
 const formatAuthor = (
   moduleT: UI.ModuleTranslator,
   npmPackage?: UI.NpmPackage,
-  installedPackage?: API.Extension
+  installedPackage?: API.Extension,
 ) => {
   let author: string | undefined;
   if (installedPackage && installedPackage.author) {
@@ -83,7 +83,7 @@ const formatAuthor = (
 const formatNote = (
   moduleT: UI.ModuleTranslator,
   installedPackage?: API.Extension,
-  npmError?: DataFetchError | null
+  npmError?: DataFetchError | null,
 ) => {
   if (installedPackage && !installedPackage.managed) {
     return moduleT.translate('Unmanaged extension');
@@ -167,19 +167,19 @@ class Extension extends React.PureComponent<
       addSocketListener(
         ExtensionConstants.MODULE_URL,
         ExtensionConstants.INSTALLATION_STARTED,
-        this.onInstallationStarted
+        this.onInstallationStarted,
       );
       // eslint-disable-next-line max-len
       addSocketListener(
         ExtensionConstants.MODULE_URL,
         ExtensionConstants.INSTALLATION_SUCCEEDED,
-        this.onInstallationCompleted
+        this.onInstallationCompleted,
       );
       // eslint-disable-next-line max-len
       addSocketListener(
         ExtensionConstants.MODULE_URL,
         ExtensionConstants.INSTALLATION_FAILED,
-        this.onInstallationCompleted
+        this.onInstallationCompleted,
       );
     }
   }

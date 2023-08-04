@@ -37,7 +37,7 @@ interface CreateSessionProps {
 ViewFileActions.createSession.listen(function (
   this: UI.AsyncActionType<API.ViewFile>,
   { itemInfo, user }: RemoteViewFileData,
-  props: CreateSessionProps
+  props: CreateSessionProps,
 ) {
   const { sessionStore, isText } = props;
   const session = sessionStore.getSession(itemInfo.tth);
@@ -65,7 +65,7 @@ ViewFileActions.createSession.listen(function (
 ViewFileActions.openLocalFile.listen(function (
   this: UI.AsyncActionType<API.ViewFile>,
   tth: string,
-  props: CreateSessionProps
+  props: CreateSessionProps,
 ) {
   const { sessionStore, isText } = props;
   const session = sessionStore.getSession(tth);
@@ -92,7 +92,7 @@ const onSessionCreated = (file: API.ViewFile, navigate: NavigateFunction) => {
 
 ViewFileActions.createSession.completed.listen(function (
   file: API.ViewFile,
-  { navigate }: CreateSessionProps
+  { navigate }: CreateSessionProps,
 ) {
   onSessionCreated(file, navigate);
 });
@@ -103,7 +103,7 @@ ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
 
 ViewFileActions.openLocalFile.completed.listen(function (
   file: API.ViewFile,
-  { navigate }: CreateSessionProps
+  { navigate }: CreateSessionProps,
 ) {
   onSessionCreated(file, navigate);
 });
@@ -114,7 +114,7 @@ ViewFileActions.openLocalFile.failed.listen(function (error: ErrorResponse) {
 
 ViewFileActions.setRead.listen(function (
   this: UI.AsyncActionType<API.ViewFile>,
-  session: API.ViewFile
+  session: API.ViewFile,
 ) {
   const that = this;
   SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${session.id}/read`)
@@ -124,7 +124,7 @@ ViewFileActions.setRead.listen(function (
 
 const ViewFileActionsDecorated = SessionActionDecorator(
   ViewFileActions,
-  ViewFileConstants.SESSIONS_URL
+  ViewFileConstants.SESSIONS_URL,
 );
 
 export default ViewFileActionsDecorated as UI.RefluxActionListType<void>;

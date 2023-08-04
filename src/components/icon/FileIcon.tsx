@@ -55,7 +55,7 @@ const FileIcon: React.FC<FileIconProps> = ({ typeInfo, onClick, size = 'large' }
     'icon',
     size,
     { link: !!onClick },
-    fileItemTypeToIcon(typeInfo)
+    fileItemTypeToIcon(typeInfo),
   );
 
   return <i className={iconClass} />;

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 export interface RowWrapperCellChildProps<
   CellDataT,
-  RowDataT extends UI.ActionMenuItemDataValueType
+  RowDataT extends UI.ActionMenuItemDataValueType,
 > extends CellProps {
   cellData?: CellDataT;
   rowDataGetter?: () => RowDataT;
@@ -98,7 +98,7 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
     const className = classNames(
       'cell-wrapper',
       columnKey,
-      rowClassNameGetter ? rowClassNameGetter(rowData) : undefined
+      rowClassNameGetter ? rowClassNameGetter(rowData) : undefined,
     );
 
     return (

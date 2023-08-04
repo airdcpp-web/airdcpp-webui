@@ -69,7 +69,7 @@ class HubUserTable extends React.Component<HubUserTableProps> {
     const text = sessionT.translate(
       connectState !== API.HubConnectStateEnum.CONNECTED
         ? 'Connecting'
-        : 'Loading userlist'
+        : 'Loading userlist',
     );
 
     return (

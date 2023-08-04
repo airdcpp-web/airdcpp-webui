@@ -39,7 +39,7 @@ export interface ActionHandlerDecoratorChildProps<ItemDataT = any> {
 const toFieldI18nKey = (
   fieldName: string,
   actionData: ActionData,
-  subNameSpace: UI.SubNamespaces
+  subNameSpace: UI.SubNamespaces,
 ) => {
   let keyName = actionData.actionId;
   if (actionData.subId) {
@@ -58,14 +58,14 @@ const toFieldI18nKey = (
 const translateInput = (
   input: UI.ActionConfirmation,
   actionData: ActionData,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ): UI.ActionConfirmation => {
   const { approveCaption, rejectCaption, checkboxCaption, content } = input;
 
   const ret = {
     approveCaption: t(
       toFieldI18nKey('Approve', actionData, UI.SubNamespaces.PROMPTS),
-      approveCaption
+      approveCaption,
     ),
     rejectCaption: !rejectCaption
       ? undefined
@@ -74,7 +74,7 @@ const translateInput = (
       ? undefined
       : t(
           toFieldI18nKey('Checkbox', actionData, UI.SubNamespaces.PROMPTS),
-          checkboxCaption
+          checkboxCaption,
         ),
     content: t(toFieldI18nKey('Content', actionData, UI.SubNamespaces.PROMPTS), {
       defaultValue: content,
@@ -94,13 +94,13 @@ const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueTyp
   actionData: ActionData<ItemDataT>,
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ): Omit<ConfirmDialogProps, 'onApproved'> => {
   const { icon, displayName } = actionData.action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(
     confirmation!,
     actionData,
-    t
+    t,
   );
   return {
     approveCaption,
@@ -148,7 +148,7 @@ const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>({
     if (options.inputProps.placeholder) {
       options.inputProps.placeholder = t(
         toFieldI18nKey('Placeholder', actionData, UI.SubNamespaces.PROMPTS),
-        options.inputProps.placeholder
+        options.inputProps.placeholder,
       );
     }
 
@@ -206,7 +206,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
               item: itemData,
               result,
             },
-          }
+          },
         );
 
         NotificationActions.success({
@@ -226,7 +226,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
 type Props<ItemDataT> = ActionHandlerDecoratorProps<ItemDataT>;
 
 const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
-  props: Props<ItemDataT>
+  props: Props<ItemDataT>,
 ) => {
   const [confirmActionData, setConfirmActionData] =
     useState<ActionData<ItemDataT> | null>(null);

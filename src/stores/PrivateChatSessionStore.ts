@@ -22,7 +22,7 @@ const PrivateChatSessionStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(
       this.getSessions().length === 0,
-      'No existing private chat sessions should exist on socket connect'
+      'No existing private chat sessions should exist on socket connect',
     );
 
     const url = PrivateChatConstants.MODULE_URL;
@@ -36,5 +36,5 @@ export default SessionStoreDecorator<API.PrivateChat>(
   SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW),
   PrivateChatActions,
   (session) =>
-    session.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies
+    session.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies,
 );

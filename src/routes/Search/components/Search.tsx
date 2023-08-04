@@ -146,7 +146,7 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
     <OfflineHubMessageDecorator
       offlineMessage={searchT.t<string>(
         'searchOffline',
-        'You must to be connected to at least one hub in order to perform searches'
+        'You must to be connected to at least one hub in order to perform searches',
       )}
     >
       <div className="search-layout">
@@ -175,11 +175,11 @@ export default DataProviderDecorator<SearchProps, SearchDataProps>(Search, {
     instance: async (props, socket) => {
       // Try to use a previously created instance for this session
       const instances = await socket.get<API.SearchInstance[]>(
-        `${SearchConstants.INSTANCES_URL}`
+        `${SearchConstants.INSTANCES_URL}`,
       );
 
       const instance = instances.find(
-        (i) => i.owner === `session:${LoginStore.sessionId}:${OWNER_ID_SUFFIX}`
+        (i) => i.owner === `session:${LoginStore.sessionId}:${OWNER_ID_SUFFIX}`,
       );
       if (!!instance) {
         return instance;

@@ -7,7 +7,7 @@ import Icon from 'components/semantic/Icon';
 
 export type SelectedNameFormatter = (
   caption: React.ReactNode,
-  token: string
+  token: string,
 ) => React.ReactNode;
 
 interface SectionProps {

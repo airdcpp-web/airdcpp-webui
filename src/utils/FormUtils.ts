@@ -38,7 +38,7 @@ const typeToComponent = (
   type: API.SettingTypeEnum,
   min: number | undefined,
   max: number | undefined,
-  isEnum: boolean
+  isEnum: boolean,
 ) => {
   switch (type) {
     case API.SettingTypeEnum.NUMBER: {
@@ -75,7 +75,7 @@ const parseDefinitions = (definitions: UI.FormFieldDefinition[]): tcomb.Type<any
         reduced[def.key] = tcomb.list(parseDefinitions(def.definitions!));
       } else {
         reduced[def.key] = tcomb.list(
-          typeToComponent(def.item_type!, def.min, def.max, !!def.options)
+          typeToComponent(def.item_type!, def.min, def.max, !!def.options),
         );
       }
     } else {
@@ -105,14 +105,14 @@ const normalizeField = <T>(value?: FormSettingValue): API.SettingValue | T => {
       // Normalize object properties with value.id to plain id
       invariant(
         value.hasOwnProperty('id'),
-        'Invalid object supplied for normalizeField (id property is required)'
+        'Invalid object supplied for normalizeField (id property is required)',
       );
       return (value as IdItemValue).id;
     } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
       // Normalize each array item
       invariant(
         value[0]!.hasOwnProperty('id'),
-        'Invalid array supplied for form property (id property is required for values)'
+        'Invalid array supplied for form property (id property is required for values)',
       );
 
       const ret = (value as IdItemValue[]).map(normalizeField);
@@ -137,7 +137,7 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption): UI.FormOption => {
 // Normalize form values received from the API to a form value
 const normalizeSettingValueMap = (
   value: Partial<API.SettingValueMap<UI.FormValueBase>> | undefined,
-  valueDefinitions: UI.FormFieldDefinition[]
+  valueDefinitions: UI.FormFieldDefinition[],
 ): UI.FormValueMap => {
   return valueDefinitions.reduce(
     (reducedValue, { key, type, definitions, default_value, item_type }) => {
@@ -180,7 +180,7 @@ const normalizeSettingValueMap = (
 
       return reducedValue;
     },
-    {} as UI.FormValueMap
+    {} as UI.FormValueMap,
   );
 };
 
@@ -262,7 +262,7 @@ const parseFieldOptions = (
   definition: UI.FormFieldDefinition,
   formT: UI.ModuleTranslator,
   titleFormatter: UI.OptionTitleParser = parseTitle,
-  helpFormatter: (text: string) => React.ReactNode = (text) => text
+  helpFormatter: (text: string) => React.ReactNode = (text) => text,
 ): tcomb.form.TcombOptions => {
   const options = parseTypeOptions(definition.type);
 
@@ -271,15 +271,18 @@ const parseFieldOptions = (
     let itemOptions: tcomb.form.TcombStructOptions = {};
     if (definition.definitions) {
       // Struct item fields
-      itemOptions.fields = definition.definitions.reduce((reduced, itemDefinition) => {
-        reduced[itemDefinition.key] = parseFieldOptions(
-          itemDefinition,
-          formT,
-          titleFormatter,
-          helpFormatter
-        );
-        return reduced;
-      }, {} as Record<string, tcomb.form.TcombOptions>);
+      itemOptions.fields = definition.definitions.reduce(
+        (reduced, itemDefinition) => {
+          reduced[itemDefinition.key] = parseFieldOptions(
+            itemDefinition,
+            formT,
+            titleFormatter,
+            helpFormatter,
+          );
+          return reduced;
+        },
+        {} as Record<string, tcomb.form.TcombOptions>,
+      );
     } else {
       // Plain items
       itemOptions = parseTypeOptions(definition.item_type!);
@@ -298,7 +301,7 @@ const parseFieldOptions = (
   if (definition.options) {
     invariant(
       Array.isArray(definition.options) && definition.options.length > 0,
-      'Incorrect enum options supplied: ' + JSON.stringify(definition.options)
+      'Incorrect enum options supplied: ' + JSON.stringify(definition.options),
     );
 
     Object.assign(options, {
@@ -322,7 +325,7 @@ const parseFieldOptions = (
 
 const findFieldByKey = (
   options: tcomb.form.TcombStructOptions,
-  wantedKey: string
+  wantedKey: string,
 ): tcomb.form.TcombOptions | null => {
   if (options.fields) {
     for (const key of Object.keys(options.fields)) {
@@ -345,7 +348,7 @@ const findFieldByKey = (
 
 const findFieldValueByPath = (
   obj: Partial<UI.FormValueMap>,
-  path: tcomb.form.Path
+  path: tcomb.form.Path,
 ): any => {
   const value = obj[path[0]];
   if (value && typeof value === 'object' && path.length > 1) {
@@ -360,7 +363,7 @@ const findFieldValueByPath = (
 const setFieldValueByPath = (
   obj: Partial<UI.FormValueMap>,
   newValue: any,
-  path: tcomb.form.Path
+  path: tcomb.form.Path,
 ): any => {
   const curKey = path[0];
   if (path.length > 1) {
@@ -378,7 +381,7 @@ const reduceChangedFieldValues = (
   sourceValue: UI.FormValueMap | null,
   currentFormValue: Partial<UI.FormValueMap>,
   changedValues: Partial<UI.FormValueMap>,
-  valueKey: string
+  valueKey: string,
 ) => {
   if (
     !!sourceValue &&
@@ -391,9 +394,9 @@ const reduceChangedFieldValues = (
       reduceChangedFieldValues.bind(
         null,
         sourceValue[valueKey],
-        currentFormValue[valueKey]
+        currentFormValue[valueKey],
       ),
-      {}
+      {},
     );
 
     if (Object.keys(changedObjectValue).length > 0) {
@@ -415,7 +418,7 @@ const reduceChangedFieldValues = (
 const toFormI18nKey = (
   propName: UI.TranslatableFormDefinitionProperties,
   definitionKey: string,
-  extraKeyPostfix: string | undefined
+  extraKeyPostfix: string | undefined,
 ) => {
   let key = textToI18nKey(definitionKey, UI.SubNamespaces.FORM);
   key += propName;
@@ -428,12 +431,12 @@ const toFormI18nKey = (
 
 const translateDefinition = (
   def: UI.FormFieldDefinition,
-  moduleT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator,
 ): UI.FormFieldDefinition => {
   const translateProp = (
     propName: UI.TranslatableFormDefinitionProperties,
     value: string | undefined,
-    extraKeyPostfix?: string
+    extraKeyPostfix?: string,
   ) => {
     if (!value) {
       return undefined;
@@ -453,7 +456,7 @@ const translateDefinition = (
           name: translateProp(
             UI.TranslatableFormDefinitionProperties.OPTION,
             opt.name,
-            opt.id.toString()
+            opt.id.toString(),
           )!,
         }))
       : undefined,
@@ -469,7 +472,7 @@ const translateDefinition = (
 
 const translateForm = (
   definitions: UI.FormFieldDefinition[],
-  moduleT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator,
 ): UI.FormFieldDefinition[] => {
   const ret = definitions.map((def) => {
     return translateDefinition(def, moduleT);
@@ -481,7 +484,7 @@ const translateForm = (
 const updateMultiselectValues = <ValueT>(
   values: ValueT[],
   value: ValueT,
-  checked: boolean
+  checked: boolean,
 ) => {
   if (checked) {
     values = [...values, value];

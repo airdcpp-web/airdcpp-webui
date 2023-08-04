@@ -34,10 +34,10 @@ export type FormContext = {
 export type FormLocals<
   OptionValueT = any,
   ValueT = any,
-  ConfigT = undefined
+  ConfigT = undefined,
 > = tcomb.form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
 
 export type OptionTitleParser = (
   definition: FormFieldDefinition,
-  formT: ModuleTranslator
+  formT: ModuleTranslator,
 ) => React.ReactNode;

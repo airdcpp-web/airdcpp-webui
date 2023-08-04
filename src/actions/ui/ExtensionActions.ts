@@ -21,13 +21,13 @@ const handleConfigure: UI.ActionHandler<API.Extension> = ({
 
 const handleStart: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
   return SocketService.post(
-    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`
+    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`,
   );
 };
 
 const handleStop: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
   return SocketService.post(
-    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`
+    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`,
   );
 };
 
@@ -45,7 +45,7 @@ const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
 }) => {
   const data = await fetchCorsSafeData(
     ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest',
-    true
+    true,
   );
 
   const { tarball, shasum } = data.dist;

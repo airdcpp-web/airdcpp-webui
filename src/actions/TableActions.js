@@ -37,7 +37,7 @@ TableActions.setSort.listen(function (viewUrl, sortProperty, sortAscending) {
       sort_ascending: sortAscending,
     },
     viewUrl,
-    this
+    this,
   );
 });
 
@@ -49,7 +49,7 @@ TableActions.setRange.listen(function (viewUrl, rangeStart, maxRows) {
       max_count: maxRows,
     },
     viewUrl,
-    this
+    this,
   );
 });
 
@@ -59,7 +59,7 @@ TableActions.pause.listen(function (viewUrl, pause) {
       paused: pause,
     },
     viewUrl,
-    this
+    this,
   );
 });
 
@@ -70,7 +70,7 @@ TableActions.init.listen(function (viewUrl, entityId, filterData) {
         source_filter: filterData,
       },
       viewUrl,
-      this
+      this,
     );
   }
 });

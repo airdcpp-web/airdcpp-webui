@@ -14,7 +14,7 @@ const sendPassword = (hub: API.FavoriteHubEntry, password: string | null) => {
 
 const handleSetPassword: UI.ActionHandler<API.FavoriteHubEntry> = (
   { data: hub },
-  password: string
+  password: string,
 ) => {
   return sendPassword(hub, password);
 };

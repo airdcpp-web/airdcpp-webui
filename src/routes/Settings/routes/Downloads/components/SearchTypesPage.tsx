@@ -71,7 +71,7 @@ const SearchTypesPage: React.FC<Props> = ({ searchTypes, moduleT }) => (
       description={moduleT.t(
         'searchTypesNote',
         // eslint-disable-next-line max-len
-        'Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.'
+        'Note; Custom search types will only be applied to ADC hubs! On NMDC hubs, using a predefined search type will only search for a set of predefined, unconfigurable extensions; using a custom type will default to searching for any extension.',
       )}
     />
     <SearchTypeDialog moduleT={moduleT} />
@@ -86,7 +86,7 @@ export default DataProviderDecorator<SearchTypesPageProps, DataProps>(SearchType
     addSocketListener(
       SearchConstants.MODULE_URL,
       SearchConstants.SEARCH_TYPES_UPDATED,
-      () => refetchData()
+      () => refetchData(),
     );
   },
 });

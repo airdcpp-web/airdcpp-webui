@@ -46,7 +46,7 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
 
 type CloseButtonProps<
   SessionT extends UI.SessionItemBase,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 > = Pick<
   SessionMainLayoutProps<SessionT, UI.EmptyObject, UIActionsT>,
   'actions' | 'activeItem'
@@ -54,7 +54,7 @@ type CloseButtonProps<
 
 const CloseButton = <
   SessionT extends UI.SessionItemBase,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 >({
   actions,
   activeItem,
@@ -92,7 +92,7 @@ const SessionItemHeader: React.FC<SessionItemHeaderProps> = ({
 const TopMenuLayout = <
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 >({
   children,
   onKeyDown,

@@ -19,7 +19,7 @@ const handleSearch: UI.ActionHandler<API.QueueFile> = ({
 
 const handleRemoveFile: UI.ActionHandler<API.QueueFile> = (
   { data: file },
-  removeFinished: boolean
+  removeFinished: boolean,
 ) => {
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/remove`, {
     remove_finished: removeFinished,

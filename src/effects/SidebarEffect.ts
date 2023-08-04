@@ -9,7 +9,7 @@ const showSidebar = (routes: RouteItem[], location: Location) => {
 
 export const useSidebarEffect = (sidebarRoutes: RouteItem[], location: Location) => {
   const [mainLayoutLocation, setMainLayoutLocation] = useState<Location | undefined>(
-    undefined
+    undefined,
   );
 
   useEffect(() => {

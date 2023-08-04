@@ -46,14 +46,14 @@ const HubStatisticsPage: React.FC<
         title={translate('Unique users')}
         text={`${stats.unique_users} (${formatPercentage(
           stats.unique_users,
-          stats.total_users
+          stats.total_users,
         )})`}
       />
       <Row
         title={translate('Active users')}
         text={`${stats.active_users} (${formatPercentage(
           stats.active_users,
-          stats.unique_users
+          stats.unique_users,
         )})`}
       />
       <Row
@@ -64,7 +64,7 @@ const HubStatisticsPage: React.FC<
         title={translate('Average share per user')}
         text={formatSize(
           formatAverage(stats.total_share, stats.unique_users) as any as number,
-          moduleT.plainT
+          moduleT.plainT,
         )}
       />
       <Row
@@ -85,5 +85,5 @@ export default StatisticsDecorator(
   HubStatisticsPage,
   HubConstants.STATS_URL,
   (t, props) => props.moduleT.translate('No hubs online'),
-  10
+  10,
 );

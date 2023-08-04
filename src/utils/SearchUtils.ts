@@ -4,7 +4,7 @@ import { NavigateFunction, Location } from 'react-router-dom';
 export const doSearch = (
   searchString: string,
   location: Location,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
 ) => {
   pushUnique(
     '/search',
@@ -14,6 +14,6 @@ export const doSearch = (
       },
     },
     location,
-    navigate
+    navigate,
   );
 };

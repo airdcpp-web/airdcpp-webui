@@ -32,7 +32,7 @@ interface CreateSessionProps {
 HubActions.createSession.listen(function (
   this: UI.AsyncActionType<API.Hub>,
   hubUrl: string,
-  props: CreateSessionProps
+  props: CreateSessionProps,
 ) {
   const { sessionStore } = props;
   const session = sessionStore.getSessionByUrl(hubUrl);
@@ -51,7 +51,7 @@ HubActions.createSession.listen(function (
 
 HubActions.createSession.completed.listen(function (
   session: API.Hub,
-  { navigate }: CreateSessionProps
+  { navigate }: CreateSessionProps,
 ) {
   navigate(`/hubs/session/${session.id}`, {
     state: {
@@ -66,7 +66,7 @@ HubActions.createSession.failed.listen(function (error: ErrorResponse) {
 
 const HubActionsDecorated = SessionActionDecorator(
   ChatActionDecorator(HubActions, HubConstants.SESSIONS_URL),
-  HubConstants.SESSIONS_URL
+  HubConstants.SESSIONS_URL,
 );
 
 export default HubActionsDecorated as UI.RefluxActionListType<void>;

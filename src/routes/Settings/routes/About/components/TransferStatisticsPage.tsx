@@ -40,5 +40,5 @@ export default StatisticsDecorator(
   TransferStatisticsPage,
   TransferConstants.TRANSFERRED_BYTES_URL,
   null,
-  5
+  5,
 );

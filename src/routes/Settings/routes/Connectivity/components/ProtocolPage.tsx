@@ -63,7 +63,7 @@ class ProtocolPage extends Component<ProtocolPageProps> {
           <Message
             description={this.props.moduleT.t<string>(
               'protocolAutoValuesNote',
-              'Connectivity auto detection is currently enabled; setting values listed on this page are not being used'
+              'Connectivity auto detection is currently enabled; setting values listed on this page are not being used',
             )}
             icon={IconConstants.INFO}
           />

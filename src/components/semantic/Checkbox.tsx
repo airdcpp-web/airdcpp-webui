@@ -69,7 +69,7 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
       { disabled: disabled },
       { floating: floating },
       className,
-      type
+      type,
     );
 
     return (

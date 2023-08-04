@@ -36,7 +36,7 @@ export interface SettingsProps {}
 const childToRoute = (
   section: ChildSectionType,
   parent: RootSectionType,
-  settingsT: UI.ModuleTranslator
+  settingsT: UI.ModuleTranslator,
 ) => {
   const url = `${section.url}/*`;
   return (
@@ -65,7 +65,7 @@ const rootToRoute = (rootSection: RootSectionType, settingsT: UI.ModuleTranslato
     <Route key={rootSection.url} path={rootSection.url}>
       {rootSection.menuItems.map((child) => childToRoute(child, rootSection, settingsT))}
       {rootSection.advancedMenuItems?.map((child) =>
-        childToRoute(child, rootSection, settingsT)
+        childToRoute(child, rootSection, settingsT),
       )}
       <Route index element={<Navigate to={rootSection.menuItems[0].url} />} />
     </Route>

@@ -17,13 +17,13 @@ const handleCreate: UI.ActionHandler<void> = (data, name: string) => {
 
 const handleDefault: UI.ActionHandler<API.ShareProfile> = ({ data: profile }) => {
   return SocketService.post(
-    `${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`
+    `${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`,
   );
 };
 
 const handleEdit: UI.ActionHandler<API.ShareProfile> = (
   { data: profile },
-  name: string
+  name: string,
 ) => {
   return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, {
     name: name,

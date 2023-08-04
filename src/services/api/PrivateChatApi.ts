@@ -16,15 +16,15 @@ export const changePrivateChatHubUrl = (session: API.PrivateChat, hubUrl: string
 };
 
 export const sendPrivateChatMessage = sendChatMessageDecorator(
-  PrivateChatConstants.SESSIONS_URL
+  PrivateChatConstants.SESSIONS_URL,
 );
 export const clearPrivateChatMessages = clearMessagesDecorator(
-  PrivateChatConstants.SESSIONS_URL
+  PrivateChatConstants.SESSIONS_URL,
 );
 export const fetchPrivateChatMessages = fetchMessagesDecorator(
-  PrivateChatConstants.SESSIONS_URL
+  PrivateChatConstants.SESSIONS_URL,
 );
 
 export const setPrivateChatSessionRead = setReadDecorator(
-  PrivateChatConstants.SESSIONS_URL
+  PrivateChatConstants.SESSIONS_URL,
 );

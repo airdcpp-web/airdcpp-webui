@@ -90,7 +90,7 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
           onConfirm={(path) =>
             runBackgroundSocketAction(
               () => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }),
-              moduleT.plainT
+              moduleT.plainT,
             )
           }
           initialPath=""
@@ -109,10 +109,10 @@ export default DataProviderDecorator(ExcludePage, {
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

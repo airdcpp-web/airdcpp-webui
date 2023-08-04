@@ -31,7 +31,7 @@ import { useComponents } from './SessionMenuComponents';
 export interface SessionLayoutProps<
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object = UI.EmptyObject,
-  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject
+  UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > extends UI.SessionInfoGetter<SessionT>,
     SessionLayoutLabels,
     SessionLayoutManageProps<SessionT, SessionApiT, UIActionT> {
@@ -53,9 +53,9 @@ export interface SessionLayoutProps<
 const SessionLayout = <
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 >(
-  props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>
+  props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
 ) => {
   const layoutWidth = React.useContext(LayoutWidthContext);
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ const SessionLayout = <
             text={translate(
               'Waiting for server response',
               sessionT.plainT,
-              UI.Modules.COMMON
+              UI.Modules.COMMON,
             )}
           />
         );
@@ -132,7 +132,7 @@ const SessionLayout = <
         title={translate('No items to show', sessionT.plainT, UI.Modules.COMMON)}
         description={sessionT.plainT<string>(
           toI18nKey('noSessionEditAccess', UI.Modules.COMMON),
-          `You aren't allowed to open new sessions`
+          `You aren't allowed to open new sessions`,
         )}
       />
     );

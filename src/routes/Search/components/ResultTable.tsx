@@ -159,11 +159,11 @@ class ResultTable extends React.Component<ResultTableProps> {
 
   itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (
     itemId,
-    socket
+    socket,
   ) => {
     const { instance } = this.props;
     return socket.get(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`,
     );
   };
 

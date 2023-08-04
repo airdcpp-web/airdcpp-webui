@@ -17,7 +17,7 @@ const getStatusClass = (cellData: API.TransferStatus, rowData: API.Transfer) => 
     { red: statusId === API.TransferStatusEnum.RUNNING && !rowData.download },
     { green: statusId === API.TransferStatusEnum.FINISHED && rowData.download },
     { brown: statusId === API.TransferStatusEnum.FINISHED && !rowData.download },
-    { red: statusId === API.TransferStatusEnum.FAILED }
+    { red: statusId === API.TransferStatusEnum.FAILED },
   );
 };
 

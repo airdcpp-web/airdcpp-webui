@@ -5,7 +5,7 @@ import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 
 export const updateFavoriteHub = (
   hub: API.FavoriteHubEntry,
-  data: Partial<API.FavoriteHubEntryBase>
+  data: Partial<API.FavoriteHubEntryBase>,
 ) => {
   return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, data);
 };

@@ -42,7 +42,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
         <Message
           description={t<string>(
             toI18nKey('noChatAccess', UI.Modules.COMMON),
-            `You aren't allowed to send new messages`
+            `You aren't allowed to send new messages`,
           )}
         />
       )}

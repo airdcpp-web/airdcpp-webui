@@ -133,7 +133,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       this._removeMessageListener = SocketService.addViewUpdateListener(
         this._viewName,
         this._handleUpdate,
-        entityId
+        entityId,
       );
     },
 
@@ -187,7 +187,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 
       if (DEBUG) {
         console.log(
-          `Setting scroll position ${data} for view ${this.viewUrl} (view ID ${viewId})`
+          `Setting scroll position ${data} for view ${this.viewUrl} (view ID ${viewId})`,
         );
       }
 
@@ -201,7 +201,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 
       if (DEBUG) {
         console.log(
-          `Getting scroll position ${scrollPosition} for view ${this.viewUrl} (view ID ${viewId})`
+          `Getting scroll position ${scrollPosition} for view ${this.viewUrl} (view ID ${viewId})`,
         );
       }
 

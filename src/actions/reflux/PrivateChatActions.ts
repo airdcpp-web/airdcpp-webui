@@ -31,7 +31,7 @@ interface CreateSessionProps {
 PrivateChatActions.createSession.listen(function (
   this: UI.AsyncActionType<API.PrivateChat>,
   user: API.HintedUser,
-  props: CreateSessionProps
+  props: CreateSessionProps,
 ) {
   const { sessionStore } = props;
   const session = sessionStore.getSession(user.cid);
@@ -58,7 +58,7 @@ PrivateChatActions.createSession.listen(function (
 
 PrivateChatActions.createSession.completed.listen(function (
   session: API.PrivateChat,
-  { navigate }: CreateSessionProps
+  { navigate }: CreateSessionProps,
 ) {
   navigate(`/messages/session/${session.id}`, {
     state: {
@@ -73,7 +73,7 @@ PrivateChatActions.createSession.failed.listen(function (error: ErrorResponse) {
 
 const PrivateChatActionsDecorated = SessionActionDecorator(
   ChatActionDecorator(PrivateChatActions, PrivateChatConstants.SESSIONS_URL),
-  PrivateChatConstants.SESSIONS_URL
+  PrivateChatConstants.SESSIONS_URL,
 );
 
 export default PrivateChatActionsDecorated as UI.RefluxActionListType<void>;

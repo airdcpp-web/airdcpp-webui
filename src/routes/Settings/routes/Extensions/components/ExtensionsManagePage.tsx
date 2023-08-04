@@ -76,13 +76,13 @@ export default DataProviderDecorator<
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

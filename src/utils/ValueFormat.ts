@@ -42,7 +42,7 @@ export const formatUnit = (unit: string, t: UI.TranslateF) => {
       UI.Modules.COMMON,
       UI.SubNamespaces.UNITS,
     ]),
-    unit
+    unit,
   );
 };
 
@@ -65,7 +65,7 @@ const formatUnits = (
   initialValue: number,
   units: string[],
   threshold: number,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) => {
   const { unitIndex, value } = parseUnit(initialValue, units, threshold);
 

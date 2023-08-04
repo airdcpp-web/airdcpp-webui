@@ -24,7 +24,7 @@ const FileFooter: React.FC<FileFooterProps> = ({ item, sessionT }) => {
       <FooterItem
         label={sessionT.translate(downloadState ? 'Downloaded' : 'Opened')}
         text={formatRelativeTime(
-          downloadState ? downloadState.time_finished : item.time_opened
+          downloadState ? downloadState.time_finished : item.time_opened,
         )}
       />
     </SessionFooter>

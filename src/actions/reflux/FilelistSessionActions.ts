@@ -53,7 +53,7 @@ interface CreateSessionData {
 FilelistSessionActions.createSession.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
   { user, path = '/' }: CreateSessionData,
-  props: CreateSessionProps
+  props: CreateSessionProps,
 ) {
   const { sessionStore } = props;
   const directory = getFilePath(path);
@@ -85,7 +85,7 @@ FilelistSessionActions.createSession.listen(function (
 
 FilelistSessionActions.createSession.completed.listen(function (
   session: API.FilelistSession,
-  { navigate }: CreateSessionProps
+  { navigate }: CreateSessionProps,
 ) {
   openSession(navigate, session);
 });
@@ -97,7 +97,7 @@ FilelistSessionActions.createSession.failed.listen(function (error: ErrorRespons
 FilelistSessionActions.ownList.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
   shareProfileId: number,
-  props: CreateSessionProps
+  props: CreateSessionProps,
 ) {
   const { sessionStore } = props;
   const session = sessionStore.getSession(LoginStore.systemInfo.cid);
@@ -120,7 +120,7 @@ FilelistSessionActions.ownList.listen(function (
 
 FilelistSessionActions.ownList.completed.listen(function (
   session: API.FilelistSession,
-  { navigate }: CreateSessionProps
+  { navigate }: CreateSessionProps,
 ) {
   openSession(navigate, session);
 });
@@ -129,7 +129,7 @@ FilelistSessionActions.ownList.completed.listen(function (
 
 FilelistSessionActions.setRead.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
-  session: API.FilelistSession
+  session: API.FilelistSession,
 ) {
   const that = this;
   SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/read`)
@@ -139,7 +139,7 @@ FilelistSessionActions.setRead.listen(function (
 
 const FilelistSessionActionsDecorated = SessionActionDecorator(
   FilelistSessionActions,
-  FilelistConstants.SESSIONS_URL
+  FilelistConstants.SESSIONS_URL,
 );
 
 export default FilelistSessionActionsDecorated as UI.RefluxActionListType<void>;

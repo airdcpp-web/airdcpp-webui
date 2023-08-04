@@ -26,7 +26,7 @@ export type UserMenuDecoratorProps = Omit<
 type UserMenuDecoratorChildProps = ActionMenuDecoratorProps<ActionUserData>;
 
 export default function <DropdownPropsT extends object>(
-  Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>
+  Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>,
 ) {
   class UserMenu extends React.PureComponent<UserMenuDecoratorProps & DropdownPropsT> {
     static defaultProps: Pick<UserMenuDecoratorProps, 'directory'> = {
@@ -75,7 +75,7 @@ export default function <DropdownPropsT extends object>(
 
       invariant(
         false,
-        'Invalid user object in UserMenuDecorator: id and hub_url missing'
+        'Invalid user object in UserMenuDecorator: id and hub_url missing',
       );
     };
 

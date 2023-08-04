@@ -10,7 +10,7 @@ import { SessionMainLayoutProps } from './types';
 const SideMenuLayout = <
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 >({
   sessionMenuItems,
   newButton,

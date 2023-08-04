@@ -11,7 +11,7 @@ type SessionType = UI.SessionItemBase;
 
 export default function (
   actions: UI.RefluxActionConfigList<SessionType>[],
-  sessionsUrl: string
+  sessionsUrl: string,
 ) {
   const SessionActionConfig: UI.RefluxActionConfigList<SessionType> = [
     { fetchSessions: { asyncResult: true } },
@@ -32,7 +32,7 @@ export default function (
 
   SessionActions.removeSession.listen(function (
     this: UI.AsyncActionType<SessionType>,
-    session: SessionType
+    session: SessionType,
   ) {
     const that = this;
     SocketService.delete(`${sessionsUrl}/${session.id}`)
@@ -42,7 +42,7 @@ export default function (
 
   SessionActions.removeSession.failed.listen(function (
     session: SessionType,
-    error: ErrorResponse
+    error: ErrorResponse,
   ) {
     NotificationActions.apiError('Failed to remove session ' + session.id, error);
   });

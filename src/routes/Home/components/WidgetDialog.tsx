@@ -25,7 +25,7 @@ type FormValue = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
 
 const settingsToFormValue = (
   widgetId: string | undefined,
-  widgetInfo: UI.Widget
+  widgetInfo: UI.Widget,
 ): FormValue | undefined => {
   if (!widgetId) {
     return undefined;
@@ -49,7 +49,7 @@ const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslato
         optional: true,
       },
     ],
-    rootWidgetT
+    rootWidgetT,
   );
 
   if (widgetInfo.formSettings) {
@@ -136,7 +136,7 @@ const WidgetDialog: React.FC<Props> = (props) => {
       <Message
         description={t<string>(
           'widgetPositionHint',
-          'Widgets and their positions are browser-specific'
+          'Widgets and their positions are browser-specific',
         )}
         icon={IconConstants.INFO}
       />
@@ -146,5 +146,5 @@ const WidgetDialog: React.FC<Props> = (props) => {
 
 export default ModalRouteDecorator<WidgetDialogProps>(
   WidgetDialog,
-  '/widget/:typeId/:widgetId?'
+  '/widget/:typeId/:widgetId?',
 );

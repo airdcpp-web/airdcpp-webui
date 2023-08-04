@@ -86,7 +86,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   const translateNotification = (
     text: string,
     moduleId: UI.Modules,
-    isAction = false
+    isAction = false,
   ) => {
     const moduleIds = [moduleId, UI.SubNamespaces.NOTIFICATIONS];
     if (isAction) {
@@ -230,7 +230,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
             replace: {
               error: bundle.status.str,
             },
-          }
+          },
         );
         level = 'error';
         break;
@@ -253,7 +253,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
               error: str,
               hook: hook_name,
             },
-          }
+          },
         );
         level = 'error';
         break;
@@ -261,7 +261,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       case API.QueueBundleStatusEnum.COMPLETED: {
         text = translateNotification(
           'Bundle was completed successfully',
-          UI.Modules.QUEUE
+          UI.Modules.QUEUE,
         );
         level = 'info';
         break;
@@ -298,7 +298,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       PrivateChatConstants.MESSAGE,
       onPrivateMessage,
       undefined,
-      API.AccessEnum.PRIVATE_CHAT_VIEW
+      API.AccessEnum.PRIVATE_CHAT_VIEW,
     );
 
     // eslint-disable-next-line max-len
@@ -307,7 +307,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       HubConstants.HUB_MESSAGE,
       onHubMessage,
       undefined,
-      API.AccessEnum.HUBS_VIEW
+      API.AccessEnum.HUBS_VIEW,
     );
 
     // eslint-disable-next-line max-len
@@ -316,7 +316,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       QueueConstants.BUNDLE_ADDED,
       onBundleStatus,
       undefined,
-      API.AccessEnum.QUEUE_VIEW
+      API.AccessEnum.QUEUE_VIEW,
     );
     // eslint-disable-next-line max-len
     addSocketListener(
@@ -324,7 +324,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       QueueConstants.BUNDLE_STATUS,
       onBundleStatus,
       undefined,
-      API.AccessEnum.QUEUE_VIEW
+      API.AccessEnum.QUEUE_VIEW,
     );
 
     // eslint-disable-next-line max-len
@@ -333,7 +333,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       EventConstants.MESSAGE,
       onLogMessage,
       undefined,
-      API.AccessEnum.EVENTS_VIEW
+      API.AccessEnum.EVENTS_VIEW,
     );
     // eslint-disable-next-line max-len
     addSocketListener(
@@ -341,7 +341,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       ViewFileConstants.FILE_DOWNLOADED,
       onViewFileDownloaded,
       undefined,
-      API.AccessEnum.VIEW_FILE_VIEW
+      API.AccessEnum.VIEW_FILE_VIEW,
     );
   }, []);
 
@@ -349,5 +349,5 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
 };
 
 export default SocketSubscriptionDecorator<SocketNotificationListenerProps>(
-  SocketNotificationListener
+  SocketNotificationListener,
 );

@@ -141,7 +141,7 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
 const reducePermissionToOption = (
   options: API.SettingEnumOption[],
   key: keyof typeof AccessConstants,
-  moduleT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator,
 ) => {
   const captionEntry = AccessCaptions[key];
   if (typeof captionEntry === 'string') {
@@ -153,7 +153,7 @@ const reducePermissionToOption = (
     options.push({
       id: AccessConstants[key],
       name: `${moduleT.translate(captionEntry.title)} (${moduleT.translate(
-        captionEntry.action
+        captionEntry.action,
       )})`,
     });
   }
@@ -162,7 +162,7 @@ const reducePermissionToOption = (
 };
 
 const getEntry = (
-  isNew: boolean /*, moduleT: UI.ModuleTranslator*/
+  isNew: boolean /*, moduleT: UI.ModuleTranslator*/,
 ): UI.FormFieldDefinition[] => {
   return [
     {
@@ -220,9 +220,9 @@ class WebUserDialog extends Component<Props> {
           reducePermissionToOption(
             reduced,
             cur as keyof typeof AccessConstants,
-            permissionT
+            permissionT,
           ),
-        []
+        [],
       ),
     });
   }
@@ -242,7 +242,7 @@ class WebUserDialog extends Component<Props> {
 
     return SocketService.patch(
       `${WebUserConstants.USERS_URL}/${this.props.user.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -297,5 +297,5 @@ export default ModalRouteDecorator<WebUserDialogProps>(
       },
     },
   }),
-  'users/:userId?'
+  'users/:userId?',
 );

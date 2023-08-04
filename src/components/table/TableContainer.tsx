@@ -45,12 +45,12 @@ const formatColumnName = (
   column: React.ReactElement<ColumnProps>,
   store: any,
   moduleId: string | string[],
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) => {
   const { name, columnKey } = column.props;
   let displayName = t(
     textToI18nKey(columnKey as string, [...toArray(moduleId), UI.SubNamespaces.TABLE]),
-    name
+    name,
   );
 
   {
@@ -109,7 +109,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     ) {
       if (this.props.store.DEBUG) {
         console.log(
-          `Enabling initial scroll, entity/viewId changed (view ${this.props.viewId})`
+          `Enabling initial scroll, entity/viewId changed (view ${this.props.viewId})`,
         );
       }
 
@@ -133,7 +133,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       // eslint-disable-next-line max-len
       console.log(
         `Settings changed, start: ${startRows}, end: ${maxRows}, height: ${height}`,
-        store.viewName
+        store.viewName,
       );
     }
 
@@ -206,7 +206,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
         this.setState({
           isColumnResizing: undefined,
         });
-      }
+      },
     );
   };
 

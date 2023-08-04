@@ -85,13 +85,13 @@ export default DataProviderDecorator(WebUsersPage, {
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

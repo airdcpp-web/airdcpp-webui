@@ -6,7 +6,7 @@ import * as UI from 'types/ui';
 // Remove the oldest messages to match the maximum cache count
 const checkSplice = (
   messages: UI.MessageListItem[] | undefined,
-  maxCacheMessageCount: number
+  maxCacheMessageCount: number,
 ) => {
   if (messages) {
     const toRemove = messages.length - maxCacheMessageCount;
@@ -43,7 +43,7 @@ type KeysOfUnion<T> = T extends T ? keyof T : never;
 
 const checkUnreadCacheInfo = (
   counts: MessageCounts,
-  setRead: () => void
+  setRead: () => void,
 ): MessageCounts => {
   // Any unread messages?
   if (!Object.values(counts.unread).every((value) => value === 0)) {
@@ -51,12 +51,15 @@ const checkUnreadCacheInfo = (
     setRead();
 
     // Don't flash unread counts in the UI
-    const unreadCounts = Object.keys(counts.unread).reduce((reduced, messageType) => {
-      // type tmp = keyof UnreadMessageCounts
-      // type tmp2 = keyof MessageCounts['unread']
-      reduced[messageType as KeysOfUnion<UnreadMessageCounts>] = 0;
-      return reduced;
-    }, {} as Record<KeysOfUnion<UnreadMessageCounts>, number>);
+    const unreadCounts = Object.keys(counts.unread).reduce(
+      (reduced, messageType) => {
+        // type tmp = keyof UnreadMessageCounts
+        // type tmp2 = keyof MessageCounts['unread']
+        reduced[messageType as KeysOfUnion<UnreadMessageCounts>] = 0;
+        return reduced;
+      },
+      {} as Record<KeysOfUnion<UnreadMessageCounts>, number>,
+    );
 
     return {
       ...counts,
@@ -73,7 +76,7 @@ const checkUnreadCacheInfo = (
 // Marks the session as read also in the backend
 const checkUnreadSessionInfo = <SessionT extends UI.UnreadInfo>(
   unreadInfoItem: SessionT,
-  setRead: () => void
+  setRead: () => void,
 ): SessionT => {
   if (!unreadInfoItem.message_counts && unreadInfoItem.hasOwnProperty('read')) {
     // Non-message item
@@ -104,7 +107,7 @@ const checkUnreadSessionInfo = <SessionT extends UI.UnreadInfo>(
 // Append the received non-dupe messages to fetched list
 const mergeCacheMessages = (
   cacheMessages: UI.MessageListItem[],
-  existingMessages: UI.MessageListItem[] | undefined = []
+  existingMessages: UI.MessageListItem[] | undefined = [],
 ): UI.MessageListItem[] => {
   return [
     ...cacheMessages,
@@ -116,7 +119,7 @@ const mergeCacheMessages = (
 // Returns the updated message list
 const pushMessage = (
   message: UI.MessageListItem,
-  messages: UI.MessageListItem[] = []
+  messages: UI.MessageListItem[] = [],
 ) => {
   if (messages.length > 0) {
     // Messages can arrive simultaneously when the cached messages are fetched, don't add duplicates

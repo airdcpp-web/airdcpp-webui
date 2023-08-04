@@ -11,14 +11,14 @@ import { SessionLocationState } from '../types';
 
 const findItem = <SessionT extends UI.SessionItemBase>(
   items: SessionT[],
-  id: API.IdType | undefined
+  id: API.IdType | undefined,
 ): SessionT | undefined => {
   return items.find((item) => item.id === id);
 };
 
 export interface SessionManagerProps<
   SessionT extends UI.SessionItemBase,
-  SessionApiT extends object = UI.EmptyObject
+  SessionApiT extends object = UI.EmptyObject,
 > {
   // Item ID that is currently active (if any)
   activeId: API.IdType | undefined;
@@ -33,9 +33,9 @@ export interface SessionManagerProps<
 
 export const useSessionManager = <
   SessionT extends UI.SessionItemBase,
-  SessionApiT extends object = UI.EmptyObject
+  SessionApiT extends object = UI.EmptyObject,
 >(
-  props: SessionManagerProps<SessionT, SessionApiT>
+  props: SessionManagerProps<SessionT, SessionApiT>,
 ) => {
   const [activeItem, setActiveItem] = React.useState<SessionT | null>(null);
   const location = useLocation();

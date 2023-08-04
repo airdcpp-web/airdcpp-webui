@@ -35,7 +35,7 @@ const Statistics = StatisticsDecorator<any, StatisticsProps>(
   ),
   SystemConstants.STATS_URL,
   null,
-  10
+  10,
 );
 
 export type ApplicationProps = UI.WidgetProps;

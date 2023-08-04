@@ -14,13 +14,13 @@ import ActivityStore, { ActivityState } from 'stores/ActivityStore';
 import { IdType } from 'types/api';
 
 export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (
-  session: SessionT
+  session: SessionT,
 ) => UI.ChatMessageUrcencies | UI.StatusMessageUrcencies;
 
 const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
   store: any,
   actions: UI.RefluxActionListType<SessionT>,
-  messageUrgencyMappings: SessionUrgencyCountMapper<SessionT> | undefined = undefined
+  messageUrgencyMappings: SessionUrgencyCountMapper<SessionT> | undefined = undefined,
 ) {
   let sessions: Array<SessionT> = [];
   let activeSessionId: API.IdType | null = null;
@@ -42,7 +42,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
 
   const checkReadState = (
     id: IdType,
-    updatedProperties: Partial<SessionT>
+    updatedProperties: Partial<SessionT>,
   ): Partial<SessionT> => {
     // Active tab? Mark as read
     if (
@@ -51,7 +51,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
       isUnreadUpdate(updatedProperties)
     ) {
       const ret = checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () =>
-        actions.setRead({ id })
+        actions.setRead({ id }),
       );
 
       return ret as Partial<SessionT>;
@@ -65,7 +65,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
       if (messageUrgencyMappings) {
         return messageSessionMapper(
           item as UI.MessageCounts,
-          messageUrgencyMappings(item)
+          messageUrgencyMappings(item),
         );
       }
 
@@ -100,7 +100,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
 
     _onSessionUpdated: (
       updatedPropertiesInitial: Partial<SessionT>,
-      sessionId: API.IdType | undefined
+      sessionId: API.IdType | undefined,
     ) => {
       const id = updatedPropertiesInitial.id ? updatedPropertiesInitial.id : sessionId!;
 
@@ -109,7 +109,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
         // May happen before the sessions have been fetched
         console.warn(
           'Update received for a non-existing session',
-          updatedPropertiesInitial
+          updatedPropertiesInitial,
         );
         return;
       }

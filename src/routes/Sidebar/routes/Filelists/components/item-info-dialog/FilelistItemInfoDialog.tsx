@@ -79,7 +79,7 @@ const Decorated = ModalRouteDecorator<FilelistItemInfoDialogProps>(
         FilelistItemGetter(session)(params.itemId!, socket),
     },
   }),
-  'item/:itemId'
+  'item/:itemId',
 );
 
 export { Decorated as FilelistItemInfoDialog };

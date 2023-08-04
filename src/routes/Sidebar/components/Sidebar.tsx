@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   const [visibility, setVisibility] = useState(Visibility.HIDDEN);
 
   const [width, setWidth] = useState(
-    Math.max(MIN_WIDTH, loadLocalProperty<number>('sidebar_width', 1000))
+    Math.max(MIN_WIDTH, loadLocalProperty<number>('sidebar_width', 1000)),
   );
   const resizable = useRef<Resizable>(null);
 

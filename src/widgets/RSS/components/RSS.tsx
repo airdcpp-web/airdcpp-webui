@@ -85,7 +85,7 @@ class RSS extends PureComponent<RSSProps, State> {
 
   getCachedFeedInfo = (): StorageFeed | null => {
     const feedInfo = loadSessionProperty<StorageFeed>(
-      idToCacheKey(this.props.componentId)
+      idToCacheKey(this.props.componentId),
     );
     const { feed_url, feed_cache_minutes } = this.props.settings;
     if (feedInfo) {
@@ -97,7 +97,7 @@ class RSS extends PureComponent<RSSProps, State> {
           `RSS: cached feed will be used (expires in ${
             (lastValidDate - Date.now()) / 60 / 1000
           } minutes)`,
-          feed_url
+          feed_url,
         );
 
         return feedInfo;
@@ -106,7 +106,7 @@ class RSS extends PureComponent<RSSProps, State> {
           `RSS: cached feed had expired ${
             (Date.now() - lastValidDate) / 60 / 1000
           } minutes ago`,
-          feed_url
+          feed_url,
         );
       }
     } else {

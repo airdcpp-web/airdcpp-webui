@@ -7,7 +7,7 @@ import IconConstants from 'constants/IconConstants';
 
 const getCornerIcon = (
   installedPackage: API.Extension | undefined,
-  hasUpdate: boolean
+  hasUpdate: boolean,
 ) => {
   if (!installedPackage) {
     return null;

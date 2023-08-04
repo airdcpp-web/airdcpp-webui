@@ -15,7 +15,7 @@ export const setFilePriority = (file: API.QueueFile, priority: API.QueuePriority
 
 export const setBundlePriority = (
   bundle: API.QueueBundle,
-  priority: API.QueuePriorityEnum
+  priority: API.QueuePriorityEnum,
 ) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/priority`, {
     priority,

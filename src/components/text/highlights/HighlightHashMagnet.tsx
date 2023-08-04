@@ -14,7 +14,7 @@ import { TableDropdownProps } from 'components/semantic/TableDropdown';
 const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (
   itemInfo,
   user,
-  downloadData
+  downloadData,
 ) => {
   return createFileBundle({
     ...itemInfo,

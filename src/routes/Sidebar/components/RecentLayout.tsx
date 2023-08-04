@@ -87,5 +87,5 @@ export default DataProviderDecorator<RecentLayoutProps, DataProps>(
       entries: ({ entryType }, socket) =>
         socket.get(`${HistoryConstants.SESSIONS_URL}/${entryType}/0`),
     },
-  }
+  },
 );

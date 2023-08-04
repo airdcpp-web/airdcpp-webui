@@ -94,7 +94,7 @@ class ShareDirectoryDialog extends Component<Props> {
 
     // Share profiles shouldn't be translated...
     const shareProfileDefinitions = this.fieldDefinitions.find(
-      (def) => def.key === 'profiles'
+      (def) => def.key === 'profiles',
     )!;
     Object.assign(shareProfileDefinitions, {
       options: props.profiles.map(profileToEnumValue),
@@ -129,7 +129,7 @@ class ShareDirectoryDialog extends Component<Props> {
 
     return SocketService.patch(
       `${ShareRootConstants.ROOTS_URL}/${this.props.rootEntry!.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -151,7 +151,7 @@ class ShareDirectoryDialog extends Component<Props> {
   render() {
     const { rootEntry, shareT, ...other } = this.props;
     const title = shareT.translate(
-      this.isNew() ? 'Add share directory' : 'Edit share directory'
+      this.isNew() ? 'Add share directory' : 'Edit share directory',
     );
     return (
       <Modal
@@ -205,5 +205,5 @@ export default ModalRouteDecorator<ShareDirectoryDialogProps>(
       virtualNames: (data: API.GroupedPath[]) => data.map((item) => item.name, []),
     },
   }),
-  '/directories/:directoryId?'
+  '/directories/:directoryId?',
 );

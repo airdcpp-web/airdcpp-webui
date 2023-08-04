@@ -7,7 +7,6 @@ import Icon from 'components/semantic/Icon';
 import { SettingSectionLayoutProps } from 'routes/Settings/types';
 import { translateSettingSectionTitle } from './MenuItems';
 
-// eslint-disable-next-line max-len
 type TopSectionSelectionMenuProps = Pick<
   SettingSectionLayoutProps,
   'selectedRootMenuItem' | 'selectedChildMenuItem' | 'menu' | 'settingsT'

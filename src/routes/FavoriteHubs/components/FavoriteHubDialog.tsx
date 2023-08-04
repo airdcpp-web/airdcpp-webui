@@ -195,7 +195,7 @@ const toFormEntry = (entry?: API.FavoriteHubEntry): Entry | undefined => {
 };
 
 const toFavoriteHub = (
-  entry: RecursivePartial<Entry>
+  entry: RecursivePartial<Entry>,
 ): RecursivePartial<API.FavoriteHubEntry> => {
   return {
     ...entry.generic,
@@ -212,7 +212,7 @@ const isAdcHub = (hubUrl?: string) =>
 // Get selection values for the profiles field
 const getFieldProfiles = (
   profiles: API.SettingEnumOption[],
-  url?: string
+  url?: string,
 ): UI.FormOption[] => {
   return profiles
     .filter((p) => isAdcHub(url) || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
@@ -290,7 +290,7 @@ class FavoriteHubDialog extends Component<Props> {
 
     return SocketService.patch(
       `${FavoriteHubConstants.HUBS_URL}/${this.props.hubEntry!.id}`,
-      hubEntry
+      hubEntry,
     );
   };
 
@@ -359,5 +359,5 @@ export default ModalRouteDecorator<FavoriteHubDialogProps>(
       },
     },
   }),
-  'entries/:entryId?'
+  'entries/:entryId?',
 );

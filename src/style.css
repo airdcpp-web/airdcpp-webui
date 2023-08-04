@@ -204,7 +204,6 @@ section#container-main,
 
 /* Count label transitions end */
 
-
 /* Table dropdown transitions start */
 .mainmenu-transition-enter {
   transform: translateX(100%);
@@ -222,7 +221,6 @@ section#container-main,
 .mainmenu-transition-exit-active {
   display: none !important;
 }
-
 
 .submenu-transition-enter {
   transform: translateX(-100%);

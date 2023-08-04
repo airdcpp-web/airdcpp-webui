@@ -46,7 +46,7 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props
         title={sessionT.t('noFiles', 'No files to view')}
         description={sessionT.t<string>(
           'noFilesDesc',
-          'You may open text or media files to be viewed here from search or filelists'
+          'You may open text or media files to be viewed here from search or filelists',
         )}
       />
     );

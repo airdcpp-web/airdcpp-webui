@@ -127,7 +127,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   const approveStyle = classNames(
     'ui ok green basic button',
     { disabled: approveDisabled },
-    { loading: saving }
+    { loading: saving },
   );
 
   const mainClass = classNames('ui modal', { full: fullHeight }, className);
@@ -161,7 +161,7 @@ const Modal: React.FC<ModalProps> = (props) => {
         }
       </Translation>
     </div>,
-    document.getElementById(NODE_ID)!
+    document.getElementById(NODE_ID)!,
   );
 };
 

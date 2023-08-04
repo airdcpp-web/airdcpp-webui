@@ -29,7 +29,7 @@ export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({
       className={cx(
         'highlight text link',
         // Disable partial dupe coloring in messages to make the text more readable
-        dupeToStringType(dupe).replace('partial', 'full')
+        dupeToStringType(dupe).replace('partial', 'full'),
       )}
       actions={MessageHighlightActions}
       itemData={{

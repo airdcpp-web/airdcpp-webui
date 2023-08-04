@@ -8,13 +8,13 @@ import NotificationActions from 'actions/NotificationActions';
 
 export const actionFilter = <ItemDataT>(
   action: UI.ActionType<ItemDataT>,
-  itemData?: ItemDataT
+  itemData?: ItemDataT,
 ) => {
   return !itemData || !action.filter || action.filter(itemData);
 };
 
 export const actionAccess = <ItemDataT>(
-  action: Pick<UI.ActionType<ItemDataT>, 'access'>
+  action: Pick<UI.ActionType<ItemDataT>, 'access'>,
 ) => {
   //invariant(
   //  !action.hasOwnProperty('access') || action.access,
@@ -26,14 +26,14 @@ export const actionAccess = <ItemDataT>(
 
 export const showAction = <ItemDataT>(
   action: UI.ActionType<ItemDataT>,
-  itemData?: ItemDataT
+  itemData?: ItemDataT,
 ) => {
   return actionFilter(action, itemData) && actionAccess(action);
 };
 
 export const toActionI18nKey = <ItemDataT>(
   action: UI.ActionType<ItemDataT>,
-  moduleId: string | string[]
+  moduleId: string | string[],
 ) => {
   invariant(!!action.displayName, 'Invalid action');
   return textToI18nKey(action.displayName!, [
@@ -46,7 +46,7 @@ type SocketActionHandler = () => Promise<any>;
 
 export const runBackgroundSocketAction = (
   handler: SocketActionHandler,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ): Promise<any> => {
   return handler().catch((e) => {
     NotificationActions.apiError(translate('Action failed', t, UI.Modules.COMMON), e);

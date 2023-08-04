@@ -70,7 +70,7 @@ const Store = {
   onFetchMessagesCompleted(messages: API.StatusMessage[]) {
     this._logMessages = mergeCacheMessages(
       messages.map(toCacheMessage),
-      this._logMessages
+      this._logMessages,
     );
     (this as any).trigger(this._logMessages);
   },
@@ -91,7 +91,7 @@ const Store = {
   checkReadState(cacheInfoNew: API.StatusMessageCounts) {
     if (this._viewActive && ActivityStore.userActive) {
       cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () =>
-        EventActions.setRead()
+        EventActions.setRead(),
       ) as API.StatusMessageCounts;
     }
 
@@ -141,7 +141,7 @@ type EventStore = typeof Store;
 
 const EventStore: EventStore = SocketSubscriptionDecorator(
   Reflux.createStore(Store),
-  AccessConstants.EVENTS_VIEW
+  AccessConstants.EVENTS_VIEW,
 );
 
 export default EventStore;

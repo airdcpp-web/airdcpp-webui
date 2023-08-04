@@ -17,33 +17,33 @@ const HubMessageStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(
       !this.hasMessages(),
-      'No existing hub messages should exist on socket connect'
+      'No existing hub messages should exist on socket connect',
     );
     invariant(
       !this.hasInitializedSessions(),
-      'No initialized hub sessions should exist on socket connect'
+      'No initialized hub sessions should exist on socket connect',
     );
 
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.HUB_MESSAGE,
-      this._onChatMessage
+      this._onChatMessage,
     );
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.HUB_STATUS_MESSAGE,
-      this._onStatusMessage
+      this._onStatusMessage,
     );
 
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.SESSION_UPDATED,
-      this._onSessionUpdated
+      this._onSessionUpdated,
     );
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.SESSION_REMOVED,
-      this._onSessionRemoved
+      this._onSessionRemoved,
     );
   },
 });
@@ -51,5 +51,5 @@ const HubMessageStore = Reflux.createStore({
 export default MessageStoreDecorator(
   HubMessageStore,
   HubActions,
-  AccessConstants.HUBS_VIEW
+  AccessConstants.HUBS_VIEW,
 );

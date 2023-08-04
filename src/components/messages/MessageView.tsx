@@ -46,7 +46,7 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
   },
   (prevProps, nextProps) => {
     return prevProps.messages === nextProps.messages;
-  }
+  },
 );
 
 export default MessageView;

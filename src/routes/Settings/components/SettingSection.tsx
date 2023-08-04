@@ -35,7 +35,7 @@ const getMessage = (childMenuItem: ChildSectionType, settingsT: UI.ModuleTransla
       <Message
         description={settingsT.t<string>(
           'browserSpecificNote',
-          'Settings listed on this page are browser-specific'
+          'Settings listed on this page are browser-specific',
         )}
         icon={IconConstants.INFO}
       />
@@ -68,18 +68,18 @@ const SettingSection: React.FC<SettingSectionProps> = (props) => {
   const contentClassname = classNames(
     'section-content',
     selectedRootMenuItem.url,
-    selectedChildMenuItem.url
+    selectedChildMenuItem.url,
   );
 
   const menu = {
     rootMenuItems: rootMenuItems.map((item) =>
-      rootMenuItemToLinkComponent(item, settingsT, location)
+      rootMenuItemToLinkComponent(item, settingsT, location),
     ),
     childMenuItems: menuItems.map((item) =>
-      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT)
+      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT),
     ),
     childAdvancedMenuItems: advancedMenuItems?.map((item) =>
-      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT)
+      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT),
     ),
   };
 

@@ -9,7 +9,7 @@ import * as UI from 'types/ui';
 export const filelistDownloadHandler: UI.DownloadHandler<API.FilelistItem> = (
   itemInfo,
   user,
-  downloadData
+  downloadData,
 ) => {
   const data = {
     user,
@@ -43,7 +43,7 @@ export const changeFilelistHubUrl = (session: API.FilelistSession, hubUrl: strin
 
 export const changeFilelistShareProfile = (
   session: API.FilelistSession,
-  shareProfileId: number
+  shareProfileId: number,
 ) => {
   return SocketService.patch(`${FilelistConstants.SESSIONS_URL}/${session.id}`, {
     share_profile: shareProfileId,

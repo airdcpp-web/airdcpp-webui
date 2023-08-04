@@ -89,13 +89,13 @@ class FavoriteDirectoryDialog extends Component<Props> {
     if (this.isNew()) {
       return SocketService.post(
         FavoriteDirectoryConstants.DIRECTORIES_URL,
-        changedFields
+        changedFields,
       );
     }
 
     return SocketService.patch(
       `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${this.props.directoryEntry!.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -117,7 +117,7 @@ class FavoriteDirectoryDialog extends Component<Props> {
   render() {
     const { moduleT, directoryEntry } = this.props;
     const title = moduleT.translate(
-      this.isNew() ? 'Add favorite directory' : 'Edit favorite directory'
+      this.isNew() ? 'Add favorite directory' : 'Edit favorite directory',
     );
     return (
       <Modal
@@ -153,14 +153,14 @@ export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
           }
 
           return socket.get(
-            `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${params.directoryId}`
+            `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${params.directoryId}`,
           );
         },
       },
       dataConverters: {
         virtualNames: (data: API.GroupedPath[]) => data.map((item) => item.name, []),
       },
-    }
+    },
   ),
-  'directories/:directoryId?'
+  'directories/:directoryId?',
 );

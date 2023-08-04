@@ -56,7 +56,7 @@ const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
 };
 
 const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession>> = (
-  props
+  props,
 ) => {
   const { params, sessionT, ...other } = props;
   return (
@@ -83,5 +83,5 @@ const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession
 export default SessionProviderDecorator(
   Filelists,
   FilelistSessionStore,
-  UI.Modules.FILELISTS
+  UI.Modules.FILELISTS,
 );

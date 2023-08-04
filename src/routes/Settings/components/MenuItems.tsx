@@ -15,7 +15,7 @@ export const sectionToUrl = (section: SectionBase, parent?: RootSectionType) => 
 
 export const translateSettingSectionTitle = (
   title: string,
-  settingsT: UI.ModuleTranslator
+  settingsT: UI.ModuleTranslator,
 ) => {
   return settingsT.translate(title, [UI.SubNamespaces.NAVIGATION]);
 };
@@ -23,7 +23,7 @@ export const translateSettingSectionTitle = (
 const menuItemToLinkComponent = (
   url: string,
   menuItemInfo: SectionBase,
-  settingsT: UI.ModuleTranslator
+  settingsT: UI.ModuleTranslator,
 ) => {
   /*if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
     return null;
@@ -32,14 +32,6 @@ const menuItemToLinkComponent = (
   if (menuItemInfo.access && !LoginStore.hasAccess(menuItemInfo.access)) {
     return null;
   }
-
-  // const url = sectionToUrl(menuItemInfo, parent);
-
-  // Browsing is smoother when the child page is loaded directly
-  // Don't use the child URL for currently active parent so that the route is detected as active correctly
-  /*if (menuItemInfo.menuItems && location.pathname.indexOf(url) !== 0) {
-    url = sectionToUrl(menuItemInfo.menuItems[0], menuItemInfo);
-  }*/
 
   return (
     <RouterMenuItemLink
@@ -55,7 +47,7 @@ const menuItemToLinkComponent = (
 export const rootMenuItemToLinkComponent = (
   rootMenuItem: RootSectionType,
   settingsT: UI.ModuleTranslator,
-  location: Location
+  location: Location,
 ) => {
   // Browsing is smoother when the child page is loaded directly
   // Don't use the child URL for currently active parent so that the route is detected as active correctly
@@ -63,15 +55,14 @@ export const rootMenuItemToLinkComponent = (
   if (rootMenuItem.menuItems && location.pathname.indexOf(url) !== 0) {
     url = sectionToUrl(rootMenuItem.menuItems[0], rootMenuItem);
   }
-  //const child = rootMenuItem.menuItems[0];
-  //const url = sectionToUrl(child, rootMenuItem);
+
   return menuItemToLinkComponent(url, rootMenuItem, settingsT);
 };
 
 export const childMenuItemToLinkComponent = (
   childMenuItem: ChildSectionType,
   parent: RootSectionType | undefined,
-  settingsT: UI.ModuleTranslator
+  settingsT: UI.ModuleTranslator,
 ) => {
   const url = sectionToUrl(childMenuItem, parent);
   return menuItemToLinkComponent(url, childMenuItem, settingsT);
@@ -128,7 +119,7 @@ export const findMenuItem = (
 
 export const findMainSection = (
   mainSection: string | undefined,
-  rootMenuItems: RootSectionType[]
+  rootMenuItems: RootSectionType[],
 ) => {
   const item = rootMenuItems.find((rootMenuItem) => rootMenuItem.url === mainSection);
   return item || rootMenuItems[0];
@@ -136,10 +127,10 @@ export const findMainSection = (
 
 export const findChildSection = (
   childSection: string | undefined,
-  mainSection: RootSectionType
+  mainSection: RootSectionType,
 ) => {
   const item = [...mainSection.menuItems, ...(mainSection.advancedMenuItems || [])].find(
-    (childMenuItem) => childMenuItem.url === childSection
+    (childMenuItem) => childMenuItem.url === childSection,
   );
 
   return item || mainSection.menuItems[0];

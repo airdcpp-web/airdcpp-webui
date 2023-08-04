@@ -58,7 +58,7 @@ const ActionMenuNested = <ItemDataT extends UI.ActionMenuItemDataValueType>({
 };
 
 export interface ActionMenuDecoratorProps<
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 > extends UI.ActionMenuData<ItemDataT> {
   remoteMenuId?: string;
   remoteMenuNestingThreshold?: number;
@@ -74,16 +74,16 @@ export interface ActionMenuDecoratorChildProps {
 
 export default function <
   DropdownComponentPropsT extends object,
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 >(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>,
-  menuBuilder: UI.ActionMenuComponentBuilder
+  menuBuilder: UI.ActionMenuComponentBuilder,
 ) {
   type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT;
 
   const ActionMenuDecorator: React.FC<Props> = (props) => {
     const [formHandler, setFormHandler] = React.useState<MenuFormDialogProps | null>(
-      null
+      null,
     );
 
     return (

@@ -22,7 +22,7 @@ type Props = HubSelectFieldProps & DataProps;
 
 const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
   const onlineHubs = hubs.filter(
-    (hub) => hub.connect_state.id === API.HubConnectStateEnum.CONNECTED
+    (hub) => hub.connect_state.id === API.HubConnectStateEnum.CONNECTED,
   );
   const selectedUrls =
     !!value && !!value.length ? value : onlineHubs.map((hub) => hub.hub_url);
@@ -52,7 +52,7 @@ const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
               const newValue = updateMultiselectValues(
                 selectedUrls,
                 hub.hub_url,
-                checked
+                checked,
               );
               onChange(newValue.length === onlineHubs.length ? null : newValue);
             }}

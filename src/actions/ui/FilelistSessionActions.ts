@@ -10,7 +10,7 @@ const FilelistSessionActions: UI.ActionListType<API.FilelistSession> = {};
 const FilelistSessionActionsDecorated = SessionActionDecorator(
   FilelistSessionActions,
   FilelistConstants.SESSIONS_URL,
-  API.AccessEnum.FILELISTS_EDIT
+  API.AccessEnum.FILELISTS_EDIT,
 );
 
 export default {

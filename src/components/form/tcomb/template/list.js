@@ -31,7 +31,7 @@ function create(overrides = {}) {
         return item.buttons.length === 0
           ? list.renderRowWithoutButtons(item, locals)
           : list.renderRow(item, locals);
-      })
+      }),
     );
 
     if (locals.add) {

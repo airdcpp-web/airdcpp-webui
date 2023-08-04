@@ -48,7 +48,7 @@ export const EmptyWidgetSettings = {
 const getWidgetSettings = (id: string, widgetInfo?: UI.Widget): UI.WidgetSettings => {
   const settings = loadLocalProperty<UI.WidgetSettings>(
     widgetIdToSettingKey(id),
-    EmptyWidgetSettings
+    EmptyWidgetSettings,
   );
 
   // Add new default settings
@@ -72,7 +72,7 @@ const createWidget = (
   widgetInfo: UI.Widget,
   id: string,
   x?: number,
-  y?: number
+  y?: number,
 ) => {
   // Add the same widget for all layouts (we are lazy and use the same size for all layouts)
   return Object.keys(cols).reduce((reducedLayouts, key) => {
@@ -95,7 +95,7 @@ const createDefaultWidget = <SettingsT>(
   y: number,
   name?: string,
   settings?: SettingsT,
-  suffix = '_default'
+  suffix = '_default',
 ) => {
   const id = widgetInfo.typeId + suffix;
   const newLayout = createWidget(layouts, widgetInfo, id, x, y);
@@ -132,7 +132,7 @@ const Store = {
           layoutInfo.items,
           Extensions,
           Application.size.w + RSS.size.w,
-          0
+          0,
         );
       }
     }
@@ -156,20 +156,20 @@ const Store = {
       {
         feed_url: 'https://airdcpp-web.github.io/feed.xml',
       },
-      '_releases'
+      '_releases',
     );
 
     this.layouts = createDefaultWidget(
       this.layouts,
       Extensions,
       Application.size.w + RSS.size.w,
-      0
+      0,
     );
     this.layouts = createDefaultWidget(
       this.layouts,
       Transfers,
       Application.size.w + RSS.size.w + Extensions.size.w,
-      0
+      0,
     );
     this.layouts = createDefaultWidget(this.layouts, Notepad, 0, 5);
   },

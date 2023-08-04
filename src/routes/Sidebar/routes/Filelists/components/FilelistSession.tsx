@@ -31,7 +31,7 @@ const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
           title={sessionT.t('userOffline', 'User offline')}
           description={sessionT.t<string>(
             'userOfflineDesc',
-            'You will be able to continue browsing when the user comes back online'
+            'You will be able to continue browsing when the user comes back online',
           )}
         />
       </div>
@@ -56,5 +56,5 @@ const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
 };
 
 export default ActiveSessionDecorator<FilelistSessionProps, API.FilelistSession>(
-  FilelistSession
+  FilelistSession,
 );

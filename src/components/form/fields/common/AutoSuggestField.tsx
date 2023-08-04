@@ -14,7 +14,7 @@ interface AutoSuggestFieldConfig {
 
 type TCombTemplate = {
   renderInput: (
-    locals: UI.FormLocals<any, string, AutoSuggestFieldConfig>
+    locals: UI.FormLocals<any, string, AutoSuggestFieldConfig>,
   ) => React.ReactNode;
 };
 

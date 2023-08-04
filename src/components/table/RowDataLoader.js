@@ -72,7 +72,7 @@ class RowDataLoader {
           console.log(
             'onItemsUpdated, changed (updatedCount, rangeOffset)',
             updatedCount,
-            rangeOffset
+            rangeOffset,
           );
         }
 

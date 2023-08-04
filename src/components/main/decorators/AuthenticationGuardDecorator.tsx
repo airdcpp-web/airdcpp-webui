@@ -19,7 +19,7 @@ const getConnectStatusMessage = (lastError: string | null, t: UI.TranslateF) => 
   if (!!lastError) {
     const msg = t(
       toI18nKey('reestablishConnection', UI.Modules.LOGIN),
-      'Attempting to re-establish connection...'
+      'Attempting to re-establish connection...',
     );
     return `${lastError}. ${msg}`;
   }

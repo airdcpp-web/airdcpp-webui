@@ -48,5 +48,5 @@ export default DataProviderDecorator<HistoryInputProps, HistoryInputDataProps>(
         socket.get(HistoryConstants.STRINGS_URL + '/' + historyId),
     },
     loaderText: null,
-  }
+  },
 );

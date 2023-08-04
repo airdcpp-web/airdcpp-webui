@@ -40,7 +40,7 @@ import { PathDownloadHandler } from './types';
 import './style.css';
 
 export type DownloadDialogProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > = UI.ItemDownloadHandler<ItemT, Props<ItemT>>;
 
 /*type DownloadItemIdType = string;
@@ -52,7 +52,7 @@ interface RouteProps {
 type DownloadDialogRouteProps = ModalRouteDecoratorChildProps;
 
 interface DownloadDialogDataProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > extends DataProviderDecoratorChildProps,
     DownloadDataProps<ItemT> {}
 
@@ -86,7 +86,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
           target_directory: targetPath,
           priority: API.QueuePriorityEnum.DEFAULT,
         },
-        session
+        session,
       );
     } catch (e) {
       NotificationActions.error({
@@ -102,7 +102,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
 
     runBackgroundSocketAction(
       () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, targetPath),
-      t
+      t,
     );
 
     handleClose();
@@ -184,5 +184,5 @@ export default ModalRouteDecorator<DownloadDialogProps>(
       },
     },
   }),
-  '/download/:downloadItemId'
+  '/download/:downloadItemId',
 );

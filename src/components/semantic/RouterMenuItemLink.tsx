@@ -39,7 +39,7 @@ const getUrgencies = (props: RouterMenuItemLinkProps): UI.UrgencyCountMap | null
 const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
   function RouterMenuItemLink(props) {
     const urgencies = useStore<UI.UrgencyCountMap | null>(props.unreadInfoStore, () =>
-      getUrgencies(props)
+      getUrgencies(props),
     );
     const { onClick, className, icon, url, children, unreadInfoStore } = props;
     return (
@@ -60,7 +60,7 @@ const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
       // nextProps.location.key === prevProps.location.key &&
       nextProps.session === prevProps.session
     );
-  }*/
+  }*/,
 );
 
 export default RouterMenuItemLink;

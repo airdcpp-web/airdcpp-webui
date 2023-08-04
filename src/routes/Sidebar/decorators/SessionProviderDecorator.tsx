@@ -20,7 +20,7 @@ export interface SessionProviderDecoratorChildProps<SessionT extends UI.SessionT
 const SessionProviderDecorator = <SessionT extends UI.SessionType>(
   Component: React.ComponentType<SessionProviderDecoratorChildProps<SessionT>>,
   store: UI.SessionStore<SessionT>,
-  moduleId: UI.Modules
+  moduleId: UI.Modules,
 ) => {
   const Decorator = (props: SessionProviderDecoratorProps) => {
     const { t } = useTranslation();

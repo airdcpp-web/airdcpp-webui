@@ -21,7 +21,7 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
         navigate,
         location,
         sessionStore: FilelistSessionStore,
-      }
+      },
     );
   };
 
@@ -53,7 +53,7 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
         onChange={handleSubmit}
         offlineMessage={sessionT.t<string>(
           'offlineMessage',
-          'You must to be connected to at least one hub in order to download filelists from other users'
+          'You must to be connected to at least one hub in order to download filelists from other users',
         )}
         isClearable={false}
         autoFocus={true}

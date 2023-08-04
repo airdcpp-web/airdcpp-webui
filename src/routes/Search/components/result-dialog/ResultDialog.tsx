@@ -40,11 +40,11 @@ class ResultDialog extends Component<Props & DataProps> {
 
   itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (
     itemId,
-    socket
+    socket,
   ) => {
     const { instance } = this.props;
     return socket.get(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`,
     );
   };
 
@@ -81,11 +81,11 @@ const Decorated = ModalRouteDecorator<ResultDialogProps>(
     urls: {
       parentResult: ({ params, instance }, socket) =>
         socket.get(
-          `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${params.resultId}`
+          `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${params.resultId}`,
         ),
     },
   }),
-  '/result/:resultId'
+  '/result/:resultId',
 );
 
 export { Decorated as ResultDialog };

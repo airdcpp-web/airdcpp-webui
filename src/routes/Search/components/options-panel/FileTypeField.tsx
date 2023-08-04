@@ -42,7 +42,7 @@ const getCommonItems = (moduleT: UI.ModuleTranslator): UI.SearchTypeItem[] => [
 const typeToMenuItem = (
   type: UI.SearchTypeItem,
   onChange: OnChangeHandler,
-  selectedItem: UI.SearchTypeItem
+  selectedItem: UI.SearchTypeItem,
 ) => (
   <MenuItemLink
     key={type.id || SearchConstants.DEFAULT_SEARCH_TYPE}

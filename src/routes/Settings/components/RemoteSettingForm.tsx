@@ -52,7 +52,7 @@ const RemoteSettingForm: React.FC<Props> = ({
     }
 
     return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(
-      refetchValues
+      refetchValues,
     );
   };
 
@@ -94,7 +94,7 @@ export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDa
           {
             keys,
             value_mode: valueMode,
-          }
+          },
         );
 
         if (!!onSettingValuesReceived) {
@@ -104,5 +104,5 @@ export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDa
         return settings;
       },
     },
-  }
+  },
 );

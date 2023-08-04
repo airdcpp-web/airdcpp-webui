@@ -14,7 +14,7 @@ import IconConstants from 'constants/IconConstants';
 const appendBrowseItem = (
   menuItems: React.ReactNode[],
   handleBrowse: BrowseHandler,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) => {
   if (!handleBrowse) {
     return menuItems;

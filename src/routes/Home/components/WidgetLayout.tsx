@@ -23,7 +23,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 // Convert a layout entry to a component
 const mapWidget = (
   layoutItem: Layout,
-  rootWidgetT: UI.ModuleTranslator
+  rootWidgetT: UI.ModuleTranslator,
 ): React.ReactNode => {
   const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i!);
   invariant(widgetInfo, 'Widget info missing');
@@ -51,12 +51,12 @@ const WidgetLayout = React.memo(function WidgetLayout() {
   const rootWidgetT = getModuleT(
     t,
     UI.Modules.WIDGETS,
-    WidgetStore.widgets.map((w) => w.typeId)
+    WidgetStore.widgets.map((w) => w.typeId),
   );
   const layouts = useStore<Layouts>(
     WidgetStore /*, () => {
       WidgetStore.ensureDefaultWidgets(t);
-    }*/
+    }*/,
   );
 
   return (

@@ -15,7 +15,7 @@ export interface ModalCloseContextProps {
 }
 
 export const ModalRouteCloseContext = React.createContext<ModalCloseContext | undefined>(
-  undefined
+  undefined,
 );
 
 export interface ModalRouteDecoratorChildProps {
@@ -25,7 +25,7 @@ export interface ModalRouteDecoratorChildProps {
 
 export default function <PropsT>(
   Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>,
-  path: string
+  path: string,
 ) {
   type Props = PropsT;
 

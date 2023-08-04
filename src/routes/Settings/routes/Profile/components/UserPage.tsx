@@ -45,9 +45,9 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
           toFormI18nKey(
             UI.TranslatableFormDefinitionProperties.HELP,
             id,
-            profileId.toString()
+            profileId.toString(),
           ),
-          message
+          message,
         );
       }
     } else if (id === 'language_file') {
@@ -61,7 +61,11 @@ application into a new language, please see the \
           <p>
             <Trans
               i18nKey={moduleT.toI18nKey(
-                toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, 'Restart')
+                toFormI18nKey(
+                  UI.TranslatableFormDefinitionProperties.HELP,
+                  id,
+                  'Restart',
+                ),
               )}
               defaults="The application must be restarted for the new language to take effect."
             />
@@ -72,8 +76,8 @@ application into a new language, please see the \
                 toFormI18nKey(
                   UI.TranslatableFormDefinitionProperties.HELP,
                   id,
-                  'Translate'
-                )
+                  'Translate',
+                ),
               )}
               defaults={translateHelp}
               components={{

@@ -11,7 +11,7 @@ export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
   itemInfo: ItemT,
   user: DownloadSource | undefined,
   downloadData: API.DownloadData,
-  session: SessionItemBase | undefined
+  session: SessionItemBase | undefined,
 ) => Promise<any>;
 
 export interface DownloadableItemInfo {
@@ -26,7 +26,7 @@ export interface DownloadableItemInfo {
 }
 
 export interface DownloadableItemData<
-  ItemT extends DownloadableItemInfo = DownloadableItemInfo
+  ItemT extends DownloadableItemInfo = DownloadableItemInfo,
 > {
   id: API.IdType;
   itemInfo: ItemT;
@@ -39,17 +39,17 @@ type DownloadItemIdType = string;
 
 export type DownloadUserGetter<PropsT extends object> = (
   itemId: DownloadItemIdType,
-  props: PropsT
+  props: PropsT,
 ) => DownloadSource | undefined;
 
 export type DownloadItemDataGetter<ItemT extends DownloadableItemInfo> = (
   itemId: DownloadItemIdType,
-  socket: APISocket
+  socket: APISocket,
 ) => Promise<ItemT>;
 
 export interface ItemDownloadHandler<
   ItemT extends DownloadableItemInfo = DownloadableItemInfo,
-  PropsT extends object = EmptyObject
+  PropsT extends object = EmptyObject,
 > {
   downloadHandler: DownloadHandler<ItemT>;
   session: SessionItemBase | undefined;
@@ -59,5 +59,5 @@ export interface ItemDownloadHandler<
 
 export type AddItemDownload<
   ItemT extends DownloadableItemInfo = DownloadableItemInfo,
-  PropsT extends object = EmptyObject
+  PropsT extends object = EmptyObject,
 > = (itemId: string | number, handler: ItemDownloadHandler<ItemT, PropsT>) => void;

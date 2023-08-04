@@ -19,7 +19,7 @@ LoginActions.login.listen(function (
   this: UI.AsyncActionType<any>,
   username: string,
   password: string,
-  rememberMe: boolean
+  rememberMe: boolean,
 ) {
   const that = this;
 
@@ -30,7 +30,7 @@ LoginActions.login.listen(function (
 
 LoginActions.loginRefreshToken.listen(async function (
   this: UI.AsyncActionType<any>,
-  refreshToken: string
+  refreshToken: string,
 ) {
   try {
     await SocketService.waitDisconnected();
@@ -52,7 +52,7 @@ LoginActions.disconnect.listen(function (reason: string) {
 
 LoginActions.connect.listen(async function (
   this: UI.AsyncActionType<any>,
-  token: string
+  token: string,
 ) {
   try {
     await SocketService.waitDisconnected();

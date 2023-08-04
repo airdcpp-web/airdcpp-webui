@@ -38,7 +38,7 @@ type UnreadMessageCounts = API.UnreadChatMessageCounts | API.UnreadStatusMessage
 // Convert regular type -> count mapping to urgency -> count map
 const toUrgencyMap = (
   source: API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts,
-  urgencies: UI.ChatMessageUrcencies | UI.StatusMessageUrcencies
+  urgencies: UI.ChatMessageUrcencies | UI.StatusMessageUrcencies,
 ): UI.UrgencyCountMap | null => {
   const mapped = Object.keys(source).reduce((reduced, unreadType) => {
     const key = unreadType as keyof UnreadMessageCounts;
@@ -56,7 +56,7 @@ type UrgencyGetter = (session: UI.SessionItem) => UI.UrgencyCountMap | null;
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (
   item: UI.MessageCounts,
-  urgencyMappings: UI.ChatMessageUrcencies | UI.StatusMessageUrcencies
+  urgencyMappings: UI.ChatMessageUrcencies | UI.StatusMessageUrcencies,
 ): UI.UrgencyCountMap | null => {
   return toUrgencyMap(item.message_counts.unread, urgencyMappings);
 };

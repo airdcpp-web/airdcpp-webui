@@ -36,7 +36,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
         navigate(url);
       }
     },
-    [location]
+    [location],
   );
 
   const menuItems = parseMenuItems(secondaryRoutes, onClick);

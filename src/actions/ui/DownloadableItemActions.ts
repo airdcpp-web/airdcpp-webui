@@ -85,7 +85,7 @@ const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => 
     {
       target_name: itemInfo.name,
     },
-    session
+    session,
   );
 };
 
@@ -98,7 +98,7 @@ const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
 
 const handleViewFile = (
   { data, location }: UI.ActionHandlerData<UI.DownloadableItemData>,
-  isText: boolean
+  isText: boolean,
 ) => {
   const props = {
     isText,
@@ -141,7 +141,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
     SearchConstants.INSTANCES_URL,
     {
       expiration_minutes: 1,
-    }
+    },
   );
 
   // Post the search
@@ -157,7 +157,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
         path: data.itemInfo.path,
         max_results: 1,
       },
-    }
+    },
   );
 
   // Wait for the results to arrive
@@ -165,7 +165,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
     await sleep(500);
 
     instance = await SocketService.get<API.SearchInstance>(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}`,
     );
     if (instance.result_count > 0) {
       break;
@@ -175,7 +175,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
   if (instance.result_count > 0) {
     // Open the first result for viewing
     const results = await SocketService.get<API.GroupedSearchResult[]>(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`,
     );
 
     handleViewText({
@@ -191,7 +191,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
   } else {
     throw toErrorResponse(
       404,
-      translate('No NFO results were received', other.t, UI.Modules.COMMON)
+      translate('No NFO results were received', other.t, UI.Modules.COMMON),
     );
   }
 };

@@ -6,7 +6,7 @@ import * as UI from 'types/ui';
 export const useChatMessages = (
   session: UI.SessionItemBase,
   messageStore: UI.SessionMessageStore,
-  chatAPI: UI.ChatAPI
+  chatAPI: UI.ChatAPI,
 ) => {
   const [messages, setMessages] = useState<UI.MessageListItem[] | null>([]);
 
@@ -32,7 +32,7 @@ export const useChatMessages = (
         }
 
         setMessages(newMessages);
-      }
+      },
     );
 
     return unsubscribe;

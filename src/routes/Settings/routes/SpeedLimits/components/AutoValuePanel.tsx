@@ -43,7 +43,7 @@ class AutoValuePanel extends Component<AutoValuePanelProps> {
   onFieldSetting: FormFieldSettingHandler<any> = (
     settingKey,
     fieldOptions,
-    formValue
+    formValue,
   ) => {
     if (formValue[this.getAutoKey()] && settingKey !== this.getAutoKey()) {
       fieldOptions.disabled = true;

@@ -16,7 +16,7 @@ type ParamsType = string | undefined;
 type ChatCommandHandler = (
   params: ParamsType,
   chatController: UI.ChatController,
-  props: CommandProps
+  props: CommandProps,
 ) => void;
 
 interface ChatCommand {
@@ -36,7 +36,7 @@ const handleMe: ChatCommandHandler = (params, { chatApi, session }) => {
 const handleClear: ChatCommandHandler = (
   params,
   { chatActions, session },
-  { t, location, navigate }
+  { t, location, navigate },
 ) => {
   runBackgroundSocketAction(
     () =>
@@ -46,7 +46,7 @@ const handleClear: ChatCommandHandler = (
         navigate,
         t,
       }) as Promise<any>,
-    t
+    t,
   );
 };
 

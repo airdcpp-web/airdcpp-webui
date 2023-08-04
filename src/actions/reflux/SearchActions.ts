@@ -15,12 +15,12 @@ SearchActions.search.listen(
   (
     itemInfo: Pick<UI.DownloadableItemInfo, 'tth' | 'type' | 'name'>,
     location: Location,
-    navigate: NavigateFunction
+    navigate: NavigateFunction,
   ) => {
     const searchString =
       !itemInfo.tth || itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
     doSearch(searchString, location, navigate);
-  }
+  },
 );
 
 export default SearchActions as UI.RefluxActionListType<void>;

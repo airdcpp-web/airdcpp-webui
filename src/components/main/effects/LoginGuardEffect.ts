@@ -7,7 +7,7 @@ import { useNavigate, Location } from 'react-router-dom';
 
 export const useLoginGuard = (login: LoginState, location: Location) => {
   const [prevSocketAuthenticated, setPrevSocketAuthenticated] = useState(
-    LoginStore.getState().socketAuthenticated
+    LoginStore.getState().socketAuthenticated,
   );
 
   const navigate = useNavigate();

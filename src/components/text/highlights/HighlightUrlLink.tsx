@@ -11,7 +11,7 @@ import { useNavigate, useLocation, NavigateFunction, Location } from 'react-rout
 const onClickLink = (
   evt: React.MouseEvent,
   location: Location,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
 ) => {
   const uri: string = (evt.target as any).href;
   if (

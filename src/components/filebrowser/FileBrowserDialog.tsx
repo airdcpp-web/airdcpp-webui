@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
@@ -24,22 +23,8 @@ interface State {
   currentFileName: string;
 }
 
-export class FileBrowserDialog extends React.Component<
-  FileBrowserDialogProps /*& Omit<ModalRouteDecoratorChildProps, 'location'>*/,
-  State
-> {
+export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, State> {
   static displayName = 'FileBrowserDialog';
-
-  /*static propTypes = {
-		 // Function handling the path selection. Receives the selected path as argument.
-		 // Required
-    onConfirm: PropTypes.func,
-
-    // Information about the item to download
-    title: PropTypes.node,
-
-    initialPath: PropTypes.string,
-  };*/
 
   static defaultProps: Pick<FileBrowserDialogProps, 'title' | 'initialPath'> = {
     initialPath: '',
@@ -96,7 +81,7 @@ export class FileBrowserDialog extends React.Component<
 
   render() {
     const { currentFileName } = this.state;
-    const { title, initialPath, historyId, selectMode, icon, approveCaption } =
+    const { title, initialPath, historyId, selectMode, icon, approveCaption, ...other } =
       this.props;
 
     const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
@@ -105,6 +90,7 @@ export class FileBrowserDialog extends React.Component<
       <Translation>
         {(t) => (
           <Modal
+            {...other}
             className="file-browser-dialog"
             title={title || translate('Browse...', t, UI.Modules.COMMON)}
             onApprove={showApprove ? this.onConfirm : undefined}
@@ -131,5 +117,5 @@ export class FileBrowserDialog extends React.Component<
 
 export const FileBrowserRouteDialog = ModalRouteDecorator<FileBrowserDialogProps>(
   (props) => <FileBrowserDialog {...props} />,
-  'browse'
+  'browse',
 );

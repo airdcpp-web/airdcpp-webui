@@ -101,8 +101,8 @@ export default DataProviderDecorator<UserResultTableProps, UserResultTableDataPr
     urls: {
       results: ({ parentResult, instanceId }, socket) =>
         socket.get(
-          `${SearchConstants.INSTANCES_URL}/${instanceId}/results/${parentResult.id}/children`
+          `${SearchConstants.INSTANCES_URL}/${instanceId}/results/${parentResult.id}/children`,
         ),
     },
-  }
+  },
 );

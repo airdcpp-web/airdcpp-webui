@@ -23,6 +23,6 @@ export const getWidgetT = (widgetInfo: UI.Widget, t: UI.TranslateF) => {
 export const translateWidgetName = (widgetInfo: UI.Widget, t: UI.TranslateF) => {
   return t(
     toI18nKey('widgetName', [UI.Modules.WIDGETS, widgetInfo.typeId]),
-    widgetInfo.name
+    widgetInfo.name,
   );
 };

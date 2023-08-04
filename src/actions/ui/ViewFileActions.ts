@@ -10,7 +10,7 @@ const ViewFileActions: UI.ActionListType<API.ViewFile> = {};
 const ViewFileActionsDecorated = SessionActionDecorator(
   ViewFileActions,
   ViewFileConstants.SESSIONS_URL,
-  API.AccessEnum.VIEW_FILE_EDIT
+  API.AccessEnum.VIEW_FILE_EDIT,
 );
 
 export default {

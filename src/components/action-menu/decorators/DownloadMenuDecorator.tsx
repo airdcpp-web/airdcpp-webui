@@ -21,7 +21,7 @@ type DownloadMenuDecoratorChildProps<ItemDataT extends UI.DownloadableItemInfo> 
 export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemInfo>(
   Component: React.ComponentType<
     DownloadMenuDecoratorChildProps<ItemDataT> & DropdownPropsT
-  >
+  >,
 ) {
   class DownloadMenu extends React.PureComponent<
     DownloadMenuDecoratorProps<ItemDataT> & DropdownPropsT

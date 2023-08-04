@@ -27,7 +27,7 @@ export type SocketConnectHandler<DataT extends object, PropsT extends object> = 
     mergeData: (data: Partial<DataT>) => void;
     assignData: (data: Partial<DataT>) => void;
     props: PropsT;
-  }
+  },
 ) => void;
 
 export interface DataProviderDecoratorProps {}
@@ -40,18 +40,18 @@ export interface DataFetchError {
 
 export type DataConverter<PropsT extends object> = (
   data: any,
-  props: PropsT & { t: UI.TranslateF }
+  props: PropsT & { t: UI.TranslateF },
 ) => any;
 
 export interface DataProviderDecoratorSettings<
   PropsT extends object,
-  DataT extends object
+  DataT extends object,
 > {
   urls: {
     [key: string]:
       | ((
           props: PropsT & { params: UI.RouteParams },
-          socket: APISocket
+          socket: APISocket,
         ) => Promise<object | undefined>)
       | string;
   };
@@ -80,7 +80,7 @@ type DataProps<PropsT = UI.EmptyObject> = SocketSubscriptionDecoratorChildProps<
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>,
-  settings: DataProviderDecoratorSettings<PropsT, DataT>
+  settings: DataProviderDecoratorSettings<PropsT, DataT>,
 ) {
   const DataProviderDecorator: React.FC<
     DataProviderDecoratorProps & DataProps<PropsT> & PropsT
@@ -143,7 +143,7 @@ export default function <PropsT extends object, DataT extends object>(
       keys: string[],
       reducedData: Record<string, any>,
       newData: any,
-      index: number
+      index: number,
     ) => {
       const { dataConverters } = settings;
       const url = keys[index];
@@ -172,7 +172,7 @@ export default function <PropsT extends object, DataT extends object>(
 
       NotificationActions.apiError(
         translate('Failed to fetch data', t, UI.Modules.COMMON),
-        error
+        error,
       );
 
       setError(error);
@@ -205,7 +205,7 @@ export default function <PropsT extends object, DataT extends object>(
     const refetchData = (keys?: string[]) => {
       invariant(
         !keys || (Array.isArray(keys) && keys.every((key) => !!settings.urls[key])),
-        'Invalid keys supplied to refetchData'
+        'Invalid keys supplied to refetchData',
       );
       fetchData(keys);
     };
@@ -261,6 +261,6 @@ export default function <PropsT extends object, DataT extends object>(
   };
 
   return SocketSubscriptionDecorator<PropsT & DataProviderDecoratorProps>(
-    DataProviderDecorator
+    DataProviderDecorator,
   );
 }

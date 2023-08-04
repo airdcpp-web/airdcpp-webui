@@ -48,7 +48,7 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
             header={moduleT.translate('Files left')}
             description={`${stats.hash_files_left} (${formatSize(
               stats.hash_bytes_left,
-              moduleT.plainT
+              moduleT.plainT,
             )})`}
           />
         )}

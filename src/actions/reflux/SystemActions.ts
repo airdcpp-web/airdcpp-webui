@@ -24,7 +24,7 @@ SystemActions.fetchAway.listen(function (this: UI.AsyncActionType<void>) {
 SystemActions.setAway.listen(function (
   this: UI.AsyncActionType<void>,
   away: boolean,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) {
   SocketService.post(SystemConstants.MODULE_URL + '/away', {
     away,
@@ -38,7 +38,7 @@ SystemActions.setAway.completed.listen(function (away: boolean, t: UI.TranslateF
     title: translate(
       away ? 'Away mode was enabled' : 'Away mode was disabled',
       t,
-      UI.Modules.COMMON
+      UI.Modules.COMMON,
     ),
     //uid: 'away',
   });

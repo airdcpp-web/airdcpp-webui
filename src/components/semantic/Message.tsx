@@ -33,7 +33,7 @@ const Message: React.FC<MessageProps> = ({
     'ui message',
     { negative: isError },
     { icon: !!icon },
-    className
+    className,
   );
 
   if (description && typeof description !== 'string') {

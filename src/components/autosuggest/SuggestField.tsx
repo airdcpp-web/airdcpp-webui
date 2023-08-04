@@ -133,7 +133,7 @@ class SuggestField<SuggestionT = any> extends React.Component<
 
   onSuggestionSelected: Autosuggest.OnSuggestionSelected<SuggestionT> = (
     event,
-    { suggestion, suggestionValue, method }
+    { suggestion, suggestionValue, method },
   ) => {
     // No second 'Enter' event if the suggestion was selected
     event.preventDefault();

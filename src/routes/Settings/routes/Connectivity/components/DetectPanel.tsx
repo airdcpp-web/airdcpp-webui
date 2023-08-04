@@ -18,7 +18,7 @@ import * as UI from 'types/ui';
 const formatStatus = (
   protocolStatus: API.ConnectivityProtocolStatus,
   running: boolean,
-  moduleT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator,
 ) => {
   const { translate, t } = moduleT;
   if (running) {
@@ -95,7 +95,7 @@ export default DataProviderDecorator<DetectPanelProps, DetectPanelDataProps>(
         ConnectivityConstants.CONNECTIVITY_STARTED,
         (data) => {
           setDetectState(data.v6, true);
-        }
+        },
       );
 
       addSocketListener<API.ConnectivityDetectionFinished>(
@@ -104,8 +104,8 @@ export default DataProviderDecorator<DetectPanelProps, DetectPanelDataProps>(
         (data) => {
           setDetectState(data.v6, false);
           refetchData();
-        }
+        },
       );
     },
-  }
+  },
 );

@@ -22,7 +22,7 @@ const FilelistSessionStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(
       this.getSessions().length === 0,
-      'No existing filelist sessions should exist on socket connect'
+      'No existing filelist sessions should exist on socket connect',
     );
 
     const url = FilelistConstants.MODULE_URL;
@@ -34,5 +34,5 @@ const FilelistSessionStore = Reflux.createStore({
 
 export default SessionStoreDecorator(
   SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW),
-  FilelistSessionActions
+  FilelistSessionActions,
 );

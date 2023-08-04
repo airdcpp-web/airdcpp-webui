@@ -52,7 +52,7 @@ const SystemLog: React.FC = memo(
       </div>
     );
   },
-  () => true
+  () => true,
 );
 
 export default SystemLog;

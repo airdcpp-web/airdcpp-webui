@@ -34,7 +34,7 @@ const useAutoPlay = (item: API.ViewFile) => {
 };
 
 const getViewerElement = (
-  item: API.ViewFile
+  item: API.ViewFile,
 ): React.ComponentType<ViewerElementProps> | null => {
   if (item.text) {
     // eslint-disable-next-line react/display-name
@@ -85,7 +85,7 @@ const FileContent: React.FC<FileContentProps> = memo(function FileContent({
 }) {
   const { scrollable, restoreScrollPosition } = useRestoreScroll(
     scrollPositionHandler,
-    session
+    session,
   );
 
   const ViewerElement = getViewerElement(session);

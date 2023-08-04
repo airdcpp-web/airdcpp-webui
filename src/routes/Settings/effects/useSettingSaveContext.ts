@@ -18,7 +18,7 @@ export interface SettingSaveContext {
 }
 
 export const SettingSaveContext = React.createContext<SettingSaveContext | undefined>(
-  undefined
+  undefined,
 );
 
 export interface SettingSaveState {
@@ -110,7 +110,7 @@ export const useSettingSaveContext = ({
     if (c) {
       invariant(
         c.hasOwnProperty('save'),
-        'Invalid setting form component supplied for SaveDecorator (save property missing)'
+        'Invalid setting form component supplied for SaveDecorator (save property missing)',
       );
       forms.set(getFormId(keys), c);
     } else {

@@ -32,7 +32,7 @@ const loadLocalFile = (callback: RequestCallback, url: string) => {
     .catch((fetchError) => {
       callback(
         `Failed to download translation resource ${fullUrl} (fallback)`,
-        fetchError
+        fetchError,
       );
     });
 };
@@ -80,7 +80,7 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
   } catch (e) {
     console.warn(
       'Default translation file was not found, attempting to load a custom file',
-      e
+      e,
     );
     loadLocalFile(callback, url);
     return;
@@ -114,7 +114,7 @@ i18n
         nsMode: 'default',
       },
     },
-    undefined
+    undefined,
   )
   .then(() => {
     Moment.locale(i18n.language);

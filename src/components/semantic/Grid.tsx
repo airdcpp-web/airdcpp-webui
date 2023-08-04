@@ -69,7 +69,7 @@ export const Grid: React.FC<GridProps> = ({
       //`${columns} column`,
       { [`${columns} column`]: !!columns },
       { stackable: stackable },
-      className
+      className,
     )}
     {...other}
   >

@@ -76,7 +76,7 @@ const HashProgress = memo<HashProgressProps & HashProgressDataProps>(
         )}
       </>
     );
-  }
+  },
 );
 
 export default DataProviderDecorator<HashProgressProps, HashProgressDataProps>(
@@ -93,8 +93,8 @@ export default DataProviderDecorator<HashProgressProps, HashProgressDataProps>(
           mergeData({
             stats: data,
           });
-        }
+        },
       );
     },
-  }
+  },
 );

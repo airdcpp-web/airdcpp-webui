@@ -18,7 +18,7 @@ import { MobileDownloadLayout } from './MobileDownloadLayout';
 import { NormalDownloadLayout } from './NormalDownloadLayout';
 
 export interface DownloadDataProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
@@ -27,7 +27,7 @@ export interface DownloadDataProps<
 }
 
 export interface DownloadLayoutProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > extends DownloadDataProps<ItemT> {
   downloadHandler: PathDownloadHandler;
   handleBrowse: BrowseHandler;
@@ -37,7 +37,7 @@ const getMenuItem = (
   section: DownloadSection,
   activeSection: string,
   onClick: (key: string) => void,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) => (
   <MenuItemLink
     key={section.key}
@@ -77,7 +77,7 @@ export const DownloadLayout: React.FC<DownloadLayoutProps> = (props) => {
   }
 
   const menuItems = sections.map((s) =>
-    getMenuItem(s, activeSectionKey, setActiveSectionKey, t)
+    getMenuItem(s, activeSectionKey, setActiveSectionKey, t),
   );
 
   const Component = useMobileLayout() ? MobileDownloadLayout : NormalDownloadLayout;

@@ -21,7 +21,7 @@ const handleRemove: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
   data: directory,
 }) => {
   return SocketService.delete(
-    `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`
+    `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`,
   );
 };
 

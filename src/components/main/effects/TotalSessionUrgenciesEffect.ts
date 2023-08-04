@@ -9,7 +9,7 @@ import * as UI from 'types/ui';
 
 const reduceMenuItemUrgency = (
   urgencyCountMap: UI.UrgencyCountMap,
-  menuItem: RouteItem
+  menuItem: RouteItem,
 ) => {
   if (!menuItem.unreadInfoStore) {
     return urgencyCountMap;
@@ -34,22 +34,25 @@ const getTotalUrgencies = (routes: RouteItem[]) => {
 
 export const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
   const [urgencies, setUrgencies] = useState<UI.UrgencyCountMap | null>(
-    getTotalUrgencies(routes)
+    getTotalUrgencies(routes),
   );
 
   useEffect(() => {
     setUrgencies(getTotalUrgencies(routes));
-    const unsubscribe = routes.reduce((reduced, item) => {
-      if (!!item.unreadInfoStore) {
-        reduced.push(
-          (item.unreadInfoStore as any).listen(() => {
-            setUrgencies(getTotalUrgencies(routes));
-          })
-        );
-      }
+    const unsubscribe = routes.reduce(
+      (reduced, item) => {
+        if (!!item.unreadInfoStore) {
+          reduced.push(
+            (item.unreadInfoStore as any).listen(() => {
+              setUrgencies(getTotalUrgencies(routes));
+            }),
+          );
+        }
 
-      return reduced;
-    }, [] as Array<() => void>);
+        return reduced;
+      },
+      [] as Array<() => void>,
+    );
 
     return () => unsubscribe.forEach((u) => u());
   }, []);

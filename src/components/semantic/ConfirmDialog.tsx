@@ -172,7 +172,7 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps> {
           </div>
         </div>
       </div>,
-      document.getElementById(NODE_ID)!
+      document.getElementById(NODE_ID)!,
     );
   }
 }

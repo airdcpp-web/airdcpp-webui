@@ -68,7 +68,7 @@ class FavoriteHubs extends React.Component<WithTranslation> {
         updateFavoriteHub(rowData, {
           auto_connect: checked,
         }),
-      this.props.t
+      this.props.t,
     );
   };
 
