@@ -65,6 +65,8 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
     } catch (e) {
       callback(`Failed to post translation`, e);
     }
+
+    return;
   }
 
   // Load localization file

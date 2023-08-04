@@ -8,6 +8,7 @@ import Form, { FormFieldChangeHandler } from 'components/form/Form';
 import * as UI from 'types/ui';
 
 import { ChildSectionType } from '../types';
+// import { unstable_useBlocker, useLocation } from 'react-router';
 
 type SaveableRef = Pick<Form, 'save'>;
 
@@ -71,8 +72,8 @@ export const useSettingSaveContext = ({
   };
 
   const handleSave = async () => {
-    invariant(Object.keys(forms).length > 0, 'No forms exist in SaveDecorator');
-    const promises = Object.values(forms).map((c) => c.save());
+    invariant(forms.size > 0, 'No forms exist in SaveDecorator');
+    const promises = Array.from(forms.values()).map((c) => c.save());
 
     await Promise.all(promises);
     setChangedProperties([]);
@@ -82,29 +83,35 @@ export const useSettingSaveContext = ({
 
   const hasChanges = changedProperties.length > 0;
 
-  /*promptSave = (nextLocation: Location) => {
-    const { currentMenuItem, settingsT } = this.props;
-    if (currentMenuItem.noSave) {
+  /*const location = useLocation();
+  unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
+    if (selectedChildMenuItem.noSave) {
       return true;
     }
 
     // Closing/opening a modal?
     if (
-      this.props.location.pathname.includes(nextLocation.pathname) ||
-      nextLocation.pathname.includes(this.props.location.pathname)
+      location.pathname.includes(nextLocation.pathname) ||
+      nextLocation.pathname.includes(location.pathname)
     ) {
       return true;
     }
 
-    const hasChanges =
-      this.hasChanges() && LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
-    return !hasChanges
-      ? true
-      : settingsT.t(
-          'unsavedChangesPrompt',
-          'You have unsaved changes. Are you sure you want to leave?'
-        );
-  };*/
+    if (!hasChanges) {
+      true;
+    }
+
+    //const hasChanges =
+    //  this.hasChanges() && LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
+
+    const message = settingsT.t(
+      'unsavedChangesPrompt',
+      'You have unsaved changes. Are you sure you want to leave?'
+    );
+
+    const answer = window.confirm(message);
+    return !answer;
+  });*/
 
   const addFormRef = (keys: string[], c: SaveableRef | null) => {
     if (c) {

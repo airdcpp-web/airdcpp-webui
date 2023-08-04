@@ -39,6 +39,10 @@ const childToRoute = (
   settingsT: UI.ModuleTranslator,
 ) => {
   const url = `${section.url}/*`;
+  const moduleT = getSubModuleT(settingsT, [
+    camelCase(parent.url),
+    camelCase(section.url),
+  ]);
   return (
     <Route
       key={url}
@@ -50,10 +54,7 @@ const childToRoute = (
           rootMenuItems={SettingsMenu}
           selectedChildMenuItem={section}
         >
-          <section.component
-            settingsT={settingsT}
-            moduleT={getSubModuleT(settingsT, camelCase(section.url))}
-          />
+          <section.component settingsT={settingsT} moduleT={moduleT} />
         </SettingSection>
       }
     />
