@@ -7,11 +7,12 @@ import IconConstants from 'constants/IconConstants';
 
 import { IncomingConnectionModeEnum } from 'constants/SettingConstants';
 import { FormFieldSettingHandler } from 'components/form/Form';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-interface ProtocolPageProps extends SettingSectionChildProps, RemoteSettingFormProps {
+interface ProtocolPageProps extends RemoteSettingFormProps {
+  moduleT: UI.ModuleTranslator;
   protocol: string;
 }
 

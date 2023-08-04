@@ -1,5 +1,4 @@
-//import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
 
@@ -9,78 +8,56 @@ import Form, {
   FormFieldChangeHandler,
 } from 'components/form/Form';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { withSaveContext, SaveContextProps } from '../decorators/SaveDecorator';
 import { translateForm } from 'utils/FormUtils';
+import { useLocation } from 'react-router';
+import { SettingSaveContext } from '../effects/useSettingSaveContext';
 
 export interface LocalSettingFormProps
-  extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value'> {
+  extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value' | 'location'> {
   keys: string[];
   moduleT: UI.ModuleTranslator;
 }
 
-type Props = LocalSettingFormProps & SaveContextProps;
+const LocalSettingForm: React.FC<LocalSettingFormProps> = ({
+  moduleT,
+  keys,
+  onFieldChanged,
+}) => {
+  const [settings, setSettings] = useState(LocalSettingStore.getValues());
+  const definitions = useMemo(() => {
+    return translateForm(LocalSettingStore.getDefinitions(keys), moduleT);
+  }, []);
 
-class LocalSettingForm extends Component<Props> {
-  /*static propTypes = {
-    // Form items to list
-    keys: PropTypes.array.isRequired,
-  };*/
+  const location = useLocation();
+  const saveContext = useContext(SettingSaveContext)!;
 
-  definitions: UI.FormFieldDefinition[];
-  state: {
-    settings: API.SettingValueMap;
-  };
-
-  constructor(props: Props) {
-    super(props);
-
-    this.definitions = translateForm(
-      LocalSettingStore.getDefinitions(props.keys),
-      props.moduleT
-    );
-
-    this.state = {
-      settings: LocalSettingStore.getValues(),
-    };
-  }
-
-  onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray, allFields) => {
+  const onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray, allFields) => {
     LocalSettingStore.setValues(changedSettingArray);
-
-    this.setState({
-      settings: LocalSettingStore.getValues(),
-    });
-
+    setSettings(LocalSettingStore.getValues());
     return Promise.resolve();
   };
 
-  onFieldChanged: FormFieldChangeHandler = (id, value, hasChanges) => {
-    const { saveContext, onFieldChanged } = this.props;
+  const handleFieldChanged: FormFieldChangeHandler = (id, value, hasChanges) => {
     saveContext.onFieldChanged(id, value, hasChanges);
     if (onFieldChanged) {
       return onFieldChanged(id, value, hasChanges);
     }
   };
 
-  render() {
-    const { settings } = this.state;
-    const { saveContext, keys, ...other } = this.props;
-    return (
-      <div className="local setting-form">
-        <Form
-          {...other}
-          ref={(f) => saveContext.addFormRef(keys, f)}
-          onSave={this.onSave}
-          fieldDefinitions={this.definitions}
-          sourceValue={settings}
-          onFieldChanged={this.onFieldChanged}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="local setting-form">
+      <Form
+        ref={(f) => saveContext.addFormRef(keys, f)}
+        location={location}
+        onSave={onSave}
+        fieldDefinitions={definitions}
+        sourceValue={settings}
+        onFieldChanged={handleFieldChanged}
+      />
+    </div>
+  );
+};
 
-export default withSaveContext(LocalSettingForm);
+export default LocalSettingForm;

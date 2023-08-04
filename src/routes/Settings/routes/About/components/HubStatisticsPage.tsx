@@ -16,9 +16,9 @@ import StatisticsDecorator, {
 import { Grid, Row, Header } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
-interface HubStatisticsPageProps extends SettingSectionChildProps {}
+interface HubStatisticsPageProps extends SettingPageProps {}
 
 interface ClientInfo {
   name: string;

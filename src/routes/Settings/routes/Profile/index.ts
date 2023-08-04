@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const Profile: RootSectionType = {
   url: 'profile',
   title: 'Profile',
   icon: 'user',
@@ -29,3 +31,5 @@ module.exports = {
     },
   ],
 };
+
+export default Profile;

@@ -1,13 +1,11 @@
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 import LoginStore from 'stores/LoginStore';
-import { Route, Location } from 'react-router-dom';
-import { SectionType, RootSectionType } from '../decorators/SettingsMenuDecorator';
 
 import * as UI from 'types/ui';
-import { getSubModuleT } from 'utils/TranslationUtils';
-import { camelCase } from 'lodash';
+import { ChildSectionType, RootSectionType, SectionBase } from '../types';
+import { Location } from 'react-router';
 
-export const sectionToUrl = (section: SectionType, parent?: SectionType) => {
+export const sectionToUrl = (section: SectionBase, parent?: RootSectionType) => {
   if (typeof parent === 'object') {
     return `/settings/${parent.url}/${section.url}`;
   }
@@ -22,40 +20,64 @@ export const translateSettingSectionTitle = (
   return settingsT.translate(title, [UI.SubNamespaces.NAVIGATION]);
 };
 
-export const menuItemToLinkComponent = (
-  menuItemInfo: SectionType,
-  parent: RootSectionType | undefined,
-  settingsT: UI.ModuleTranslator,
-  location: Location
+const menuItemToLinkComponent = (
+  url: string,
+  menuItemInfo: SectionBase,
+  settingsT: UI.ModuleTranslator
 ) => {
-  if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
+  /*if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
     return null;
-  }
+  }*/
 
   if (menuItemInfo.access && !LoginStore.hasAccess(menuItemInfo.access)) {
     return null;
   }
 
-  let url = sectionToUrl(menuItemInfo, parent);
+  // const url = sectionToUrl(menuItemInfo, parent);
 
   // Browsing is smoother when the child page is loaded directly
   // Don't use the child URL for currently active parent so that the route is detected as active correctly
-  if (menuItemInfo.menuItems && location.pathname.indexOf(url) !== 0) {
+  /*if (menuItemInfo.menuItems && location.pathname.indexOf(url) !== 0) {
     url = sectionToUrl(menuItemInfo.menuItems[0], menuItemInfo);
-  }
+  }*/
 
   return (
     <RouterMenuItemLink
       key={url}
       url={url}
-      icon={!!menuItemInfo.icon ? `green ${menuItemInfo.icon}` : null}
+      icon={'icon' in menuItemInfo ? `green ${menuItemInfo.icon}` : null}
     >
       {translateSettingSectionTitle(menuItemInfo.title, settingsT)}
     </RouterMenuItemLink>
   );
 };
 
-export const menuItemsToRouteComponentArray = (
+export const rootMenuItemToLinkComponent = (
+  rootMenuItem: RootSectionType,
+  settingsT: UI.ModuleTranslator,
+  location: Location
+) => {
+  // Browsing is smoother when the child page is loaded directly
+  // Don't use the child URL for currently active parent so that the route is detected as active correctly
+  let url = sectionToUrl(rootMenuItem, undefined);
+  if (rootMenuItem.menuItems && location.pathname.indexOf(url) !== 0) {
+    url = sectionToUrl(rootMenuItem.menuItems[0], rootMenuItem);
+  }
+  //const child = rootMenuItem.menuItems[0];
+  //const url = sectionToUrl(child, rootMenuItem);
+  return menuItemToLinkComponent(url, rootMenuItem, settingsT);
+};
+
+export const childMenuItemToLinkComponent = (
+  childMenuItem: ChildSectionType,
+  parent: RootSectionType | undefined,
+  settingsT: UI.ModuleTranslator
+) => {
+  const url = sectionToUrl(childMenuItem, parent);
+  return menuItemToLinkComponent(url, childMenuItem, settingsT);
+};
+
+/*export const menuItemsToRouteComponentArray = (
   currentMenuItem: SectionType,
   menuItems: SectionType[] | undefined,
   settingsT: UI.ModuleTranslator,
@@ -82,10 +104,10 @@ export const menuItemsToRouteComponentArray = (
       }
     />
   ));
-};
+};*/
 
-export const isItemActive = (
-  item: SectionType,
+/*export const isItemActive = (
+  item: ChildSectionType,
   parent: RootSectionType | undefined,
   location: Location
 ) => {
@@ -93,7 +115,7 @@ export const isItemActive = (
 };
 
 export const findMenuItem = (
-  menuItems: SectionType[] | undefined,
+  menuItems: ChildSectionType[],
   parent: RootSectionType | undefined,
   location: Location
 ) => {
@@ -102,4 +124,23 @@ export const findMenuItem = (
   }
 
   return menuItems.find((item) => isItemActive(item, parent, location));
+};*/
+
+export const findMainSection = (
+  mainSection: string | undefined,
+  rootMenuItems: RootSectionType[]
+) => {
+  const item = rootMenuItems.find((rootMenuItem) => rootMenuItem.url === mainSection);
+  return item || rootMenuItems[0];
+};
+
+export const findChildSection = (
+  childSection: string | undefined,
+  mainSection: RootSectionType
+) => {
+  const item = [...mainSection.menuItems, ...(mainSection.advancedMenuItems || [])].find(
+    (childMenuItem) => childMenuItem.url === childSection
+  );
+
+  return item || mainSection.menuItems[0];
 };

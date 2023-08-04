@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SettingProfileEnum } from 'constants/SettingConstants';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { FormFieldSettingHandler } from 'components/form/Form';
 
 import * as UI from 'types/ui';
@@ -89,13 +89,9 @@ application into a new language, please see the \
   return onFieldSetting;
 };
 
-const UserPage: React.FC<SettingSectionChildProps> = (props) => (
+const UserPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <RemoteSettingForm
-      {...props}
-      keys={Entry}
-      onFieldSetting={FieldOptionGetter(props.moduleT)}
-    />
+    <RemoteSettingForm keys={Entry} onFieldSetting={FieldOptionGetter(moduleT)} />
   </div>
 );
 

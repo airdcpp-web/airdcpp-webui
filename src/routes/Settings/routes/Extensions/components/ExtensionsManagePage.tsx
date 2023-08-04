@@ -16,11 +16,11 @@ import LocalExtension from 'routes/Settings/routes/Extensions/components/LocalEx
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { Trans } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
 
-interface ExtensionsManagePageProps extends SettingSectionChildProps {}
+interface ExtensionsManagePageProps extends SettingPageProps {}
 
 interface ExtensionsManagePageDataProps extends DataProviderDecoratorChildProps {
   installedPackages: API.Extension[];

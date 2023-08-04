@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const SpeedLimits: RootSectionType = {
   url: 'speed-limits',
   title: 'Speed and limits',
   icon: 'dashboard',
@@ -33,3 +35,5 @@ module.exports = {
     },
   ],
 };
+
+export default SpeedLimits;

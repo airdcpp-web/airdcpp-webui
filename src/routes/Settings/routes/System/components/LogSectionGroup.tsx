@@ -3,9 +3,8 @@ import * as React from 'react';
 import Accordion from 'components/semantic/Accordion';
 
 import LogSection from 'routes/Settings/routes/System/components/LogSection';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
-interface LogSectionGroupProps extends SettingSectionChildProps {
+interface LogSectionGroupProps {
   sectionKeys: string[];
   title: string;
   simpleKeys?: string[];

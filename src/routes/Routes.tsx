@@ -89,6 +89,7 @@ export const configRoutes = [
   {
     title: 'Settings',
     path: '/settings',
+    // matchPath: '/settings/:mainSection?/:childSection?',
     icon: IconConstants.SETTINGS,
     access: API.AccessEnum.SETTINGS_VIEW,
     component: lazy(() => import(/* webpackChunkName: "settings" */ 'routes/Settings')),

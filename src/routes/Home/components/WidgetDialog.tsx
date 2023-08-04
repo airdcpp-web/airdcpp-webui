@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from 'react';
 
 import Message from 'components/semantic/Message';

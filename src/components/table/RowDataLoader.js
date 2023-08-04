@@ -4,7 +4,6 @@ import update from 'immutability-helper';
 import isEqual from 'lodash/isEqual';
 
 const NUMBER_OF_ROWS_PER_REQUEST = 10;
-const DEBUG = false;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
@@ -14,6 +13,7 @@ class RowDataLoader {
     this._data = [];
     this._pendingRequest = {};
     this._initialDataReceived = false;
+    this.DEBUG = store.DEBUG;
   }
 
   clear() {
@@ -50,7 +50,7 @@ class RowDataLoader {
 
       this._initialDataReceived = false;
 
-      if (DEBUG) {
+      if (this.DEBUG) {
         console.log('onItemsUpdated, cleared');
       }
     } else {
@@ -68,7 +68,7 @@ class RowDataLoader {
       // Update rows
       const updatedCount = items.reduce(this.updateItem.bind(this), 0);
       if (updatedCount > 0 || rangeOffset !== 0) {
-        if (DEBUG) {
+        if (this.DEBUG) {
           console.log(
             'onItemsUpdated, changed (updatedCount, rangeOffset)',
             updatedCount,
@@ -159,7 +159,7 @@ class RowDataLoader {
         if (this._pendingRequest[rowIndex]) {
           this._pendingRequest[rowIndex].forEach((f) => f(rows[i]));
         }
-      } else if (DEBUG) {
+      } else if (this.DEBUG) {
         console.log('onRowsReceived, row data equals', rowIndex);
       }
 

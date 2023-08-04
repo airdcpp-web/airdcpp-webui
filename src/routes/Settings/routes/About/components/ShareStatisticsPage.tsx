@@ -16,9 +16,9 @@ import StatisticsDecorator, {
 import { Row, Header, Grid } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
-type ShareStatisticsPageProps = SettingSectionChildProps;
+type ShareStatisticsPageProps = SettingPageProps;
 
 const ShareStatisticsPage: React.FC<
   ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>

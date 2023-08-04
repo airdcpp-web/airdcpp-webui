@@ -13,7 +13,8 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let entityId = null;
   let paused = false;
   let scrollPosition = 0;
-  // const DEBUG = false;
+
+  const DEBUG = true;
 
   let sortProperty = defaultSortProperty;
   let sortAscending = defaultSortAscending;
@@ -66,13 +67,14 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
 
   const ViewStoreMixin = {
     listenables: TableActions,
+    DEBUG,
 
     onClose(viewUrl) {
       if (viewUrl !== this.viewUrl) {
         return;
       }
 
-      if (this.DEBUG) {
+      if (DEBUG) {
         console.log(`Closing view ${this.viewUrl}`);
       }
 
@@ -110,7 +112,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       entityId = entity;
 
       this.addMessageListener();
-      if (this.DEBUG) {
+      if (DEBUG) {
         console.log(`Starting view ${this.viewUrl}`);
       }
 
@@ -183,7 +185,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
         return;
       }
 
-      if (this.DEBUG) {
+      if (DEBUG) {
         console.log(
           `Setting scroll position ${data} for view ${this.viewUrl} (view ID ${viewId})`
         );
@@ -197,7 +199,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
         return this._sessionStore.scroll.getScrollData(entityId, viewId);
       }
 
-      if (this.DEBUG) {
+      if (DEBUG) {
         console.log(
           `Getting scroll position ${scrollPosition} for view ${this.viewUrl} (view ID ${viewId})`
         );

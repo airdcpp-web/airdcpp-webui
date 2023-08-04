@@ -6,11 +6,11 @@ import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 import { Trans } from 'react-i18next';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import IconConstants from 'constants/IconConstants';
 
-const DetectionPage: React.FC<SettingSectionChildProps> = (props) => {
-  const { toI18nKey } = props.moduleT;
+const DetectionPage: React.FC<SettingPageProps> = ({ moduleT }) => {
+  const { toI18nKey } = moduleT;
   const defaults =
     "In case of file transfer connectivity issues, please confirm that \
 your TCP ports are really open by using <portChecker>an online port checker</portChecker>. \
@@ -19,7 +19,7 @@ For more information about different connectivity modes, please visit <faq>DC++'
 
   return (
     <div>
-      <DetectPanel moduleT={props.moduleT} />
+      <DetectPanel moduleT={moduleT} />
       <Message
         description={
           <Trans

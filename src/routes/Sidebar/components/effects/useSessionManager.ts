@@ -38,7 +38,6 @@ export const useSessionManager = <
   props: SessionManagerProps<SessionT, SessionApiT>
 ) => {
   const [activeItem, setActiveItem] = React.useState<SessionT | null>(null);
-  // const navigate = useNavigate();
   const location = useLocation();
 
   const { pushSession, replaceSession, newUrl, replaceNew } = useSessionRouteHelpers({
@@ -46,37 +45,9 @@ export const useSessionManager = <
   });
 
   // HELPERS
-  /*const getSessionUrl = (id: API.IdType) => {
-    invariant(!!id, 'Trying to get session URL without a session');
-    return `/${props.baseUrl}/session/${id}`;
-  };
-
-  const getNewUrl = () => {
-    return `/${props.baseUrl}/new`;
-  };*/
-
   const getStorageKey = () => {
     return `${props.baseUrl}_last_active`;
   };
-
-  /*const pushSession = (id: API.IdType) => {
-    // const { navigate } = this.props;
-    navigate(getSessionUrl(id));
-  };
-
-  const replaceSession = (id: API.IdType) => {
-    // const { navigate } = this.props;
-    navigate(getSessionUrl(id), { replace: true });
-  };*/
-
-  /*const pushNew = () => {
-    // const { navigate } = props;
-    navigate(getNewUrl());
-  };*/
-
-  /*const hasEditAccess = () => {
-    return LoginStore.hasAccess(editAccess);
-  };*/
 
   // Common logic for selecting the item to display (after mounting or session updates)
   // Returns true active item selection was handled
@@ -194,23 +165,6 @@ export const useSessionManager = <
       }
     }
   };
-
-  /*React.useEffect(() => {
-    // Opening an item directly? Or no items?
-    if (checkActiveItem()) {
-      return;
-    }
-
-    // See if we have something stored
-    const lastId = loadLocalProperty<API.IdType>(getStorageKey());
-    if (lastId && findItem(props.items, lastId)) {
-      // Previous session exists
-      replaceSession(lastId);
-    } else if (props.items.length > 0) {
-      // Load the first session
-      replaceSession(props.items[0].id);
-    }
-  }, []);*/
 
   return {
     onKeyDown,

@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const Extensions: RootSectionType = {
   url: 'extensions',
   title: 'Extensions',
   icon: 'puzzle',
@@ -30,3 +32,5 @@ module.exports = {
     },
   ],
 };
+
+export default Extensions;

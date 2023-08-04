@@ -1,6 +1,6 @@
 import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { FormFieldSettingHandler } from 'components/form/Form';
 import { toFormI18nKey } from 'utils/FormUtils';
 
@@ -33,19 +33,18 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   return onFieldSetting;
 };
 
-const PortsPage: React.FC<SettingSectionChildProps> = (props) => (
+const PortsPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
     <Message
-      description={props.moduleT.t<string>(
+      description={moduleT.t<string>(
         'portsAutoValuesNote',
         'Port numbers listed on this page can be overridden by port mappers (if enabled)'
       )}
       icon={IconConstants.INFO}
     />
     <RemoteSettingForm
-      {...props}
       keys={Entry}
-      onFieldSetting={FieldOptionGetter(props.moduleT)}
+      onFieldSetting={FieldOptionGetter(moduleT)}
       valueMode={API.SettingValueMode.FORCE_MANUAL}
     />
   </div>

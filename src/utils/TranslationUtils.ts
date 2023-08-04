@@ -1,6 +1,6 @@
 import { camelCase } from 'lodash';
 import invariant from 'invariant';
-import { StringMap, TOptions } from 'i18next';
+import { TOptions } from 'i18next';
 
 import * as UI from 'types/ui';
 
@@ -74,7 +74,7 @@ export const getModuleT = (
 ): UI.ModuleTranslator => {
   const moduleT: UI.ModuleTranslator = {
     //@ts-ignore
-    t: (key: string, options?: TOptions<StringMap> | string) => {
+    t: (key: string, options?: TOptions | string) => {
       return plainT(toI18nKey(key, moduleId, reservedSubNamespaces), options);
     },
     toI18nKey: (key, subModuleIds) =>

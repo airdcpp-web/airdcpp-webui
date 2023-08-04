@@ -1,20 +1,15 @@
 import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = ['dont_download_shared', 'dont_download_queued', 'download_dupe_min_size'];
 
 const Skiplist = ['download_skiplist', 'download_skiplist_regex'];
 
-const SkippingOptionsPage: React.FC<SettingSectionChildProps> = (props) => (
+const SkippingOptionsPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
-
-    <RemoteSettingForm
-      title={props.moduleT.translate('Skiplist')}
-      {...props}
-      keys={Skiplist}
-    />
+    <RemoteSettingForm keys={Entry} />
+    <RemoteSettingForm title={moduleT.translate('Skiplist')} keys={Skiplist} />
   </div>
 );
 

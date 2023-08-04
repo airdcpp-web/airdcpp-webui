@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const Downloads: RootSectionType = {
   url: 'downloads',
   title: 'Downloads',
   icon: 'download',
@@ -38,3 +40,5 @@ module.exports = {
     },
   ],
 };
+
+export default Downloads;

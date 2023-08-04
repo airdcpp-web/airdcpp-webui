@@ -4,7 +4,7 @@ import SystemActions from 'actions/ui/SystemActions';
 import ActionButton from 'components/ActionButton';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Generic = [
   'web_server_threads',
@@ -31,15 +31,15 @@ const Hooks = [
   'list_menuitems_hook_timeout',
 ];
 
-const ServerSettingsPage: React.FC<SettingSectionChildProps> = (props) => {
+const ServerSettingsPage: React.FC<SettingPageProps> = (props) => {
   const { translate } = props.moduleT;
   return (
     <div>
       <ActionButton actions={SystemActions} actionId="restartWeb" />
-      <RemoteSettingForm {...props} keys={Generic} />
+      <RemoteSettingForm keys={Generic} />
       <div className="ui header">{translate('Hook timeouts')}</div>
       <div className="ui segment">
-        <RemoteSettingForm {...props} keys={Hooks} />
+        <RemoteSettingForm keys={Hooks} />
       </div>
     </div>
   );

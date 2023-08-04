@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = ['history_search_max', 'history_download_max', 'history_chat_log_lines'];
 
@@ -17,19 +17,17 @@ const SessionEntry = [
   'history_filelist_sessions',
 ];
 
-const HistoryPage: React.FC<SettingSectionChildProps> = (props) => {
-  const { t } = props.moduleT;
+const HistoryPage: React.FC<SettingPageProps> = ({ moduleT }) => {
+  const { t } = moduleT;
   return (
     <div>
-      <RemoteSettingForm {...props} keys={Entry} />
+      <RemoteSettingForm keys={Entry} />
       <RemoteSettingForm
         title={t('maxMessageHistory', 'Maximum number of messages to cache')}
-        {...props}
         keys={MessageEntry}
       />
       <RemoteSettingForm
         title={t('maxSessionHistory', 'Maximum number of previously opened sessions')}
-        {...props}
         keys={SessionEntry}
       />
     </div>

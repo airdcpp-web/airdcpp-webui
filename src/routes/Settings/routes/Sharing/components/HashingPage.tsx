@@ -2,15 +2,15 @@ import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import HashDatabaseLayout from 'routes/Settings/routes/Sharing/components/HashDatabaseLayout';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = ['max_hash_speed', 'max_total_hashers', 'max_volume_hashers'];
 
-const HashingPage: React.FC<SettingSectionChildProps> = (props) => (
+const HashingPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
+    <RemoteSettingForm keys={Entry} />
 
-    <HashDatabaseLayout moduleT={props.moduleT} />
+    <HashDatabaseLayout moduleT={moduleT} />
   </div>
 );
 

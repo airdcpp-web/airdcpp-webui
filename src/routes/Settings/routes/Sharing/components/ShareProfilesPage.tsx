@@ -18,7 +18,7 @@ import '../style.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { Trans } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
 
@@ -42,7 +42,7 @@ const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
   </tr>
 );
 
-type ShareProfilesPageProps = SettingSectionChildProps;
+type ShareProfilesPageProps = SettingPageProps;
 
 const ShareProfilesPage: React.FC<
   ShareProfilesPageProps & ShareProfileDecoratorChildProps

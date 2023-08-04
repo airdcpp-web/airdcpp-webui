@@ -1,6 +1,7 @@
-const AccessConstants = require('constants/AccessConstants').default;
+import AccessConstants from 'constants/AccessConstants';
+import { RootSectionType } from 'routes/Settings/types';
 
-module.exports = {
+const System: RootSectionType = {
   url: 'system',
   title: 'System',
   icon: 'settings',
@@ -32,3 +33,5 @@ module.exports = {
     },
   ],
 };
+
+export default System;

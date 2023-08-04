@@ -16,7 +16,7 @@ import IconConstants from 'constants/IconConstants';
 import Message from 'components/semantic/Message';
 import FilesystemConstants from 'constants/FilesystemConstants';
 
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 import * as UI from 'types/ui';
@@ -40,7 +40,7 @@ const getRow = (path: string) => {
   return <Row key={path} path={path} />;
 };
 
-type ExcludePageProps = SettingSectionChildProps;
+type ExcludePageProps = SettingPageProps;
 
 interface ExcludePageDataProps extends DataProviderDecoratorChildProps {
   excludes: string[];

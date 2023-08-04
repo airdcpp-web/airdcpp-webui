@@ -1,37 +1,90 @@
-import { Component } from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
-
-import SettingsMenuDecorator from '../decorators/SettingsMenuDecorator';
-import { getModuleT } from 'utils/TranslationUtils';
-
 import * as UI from 'types/ui';
 
 import '../style.css';
 
-const menu = [
-  require('../routes/Profile'),
-  require('../routes/Connectivity'),
-  require('../routes/SpeedLimits'),
-  require('../routes/Downloads'),
-  require('../routes/Sharing'),
-  require('../routes/View'),
-  require('../routes/About'),
-  require('../routes/Extensions'),
-  require('../routes/System'),
+import Profile from '../routes/Profile';
+import Connectivity from '../routes/Connectivity';
+import SpeedLimits from '../routes/SpeedLimits';
+import Downloads from '../routes/Downloads';
+import Sharing from '../routes/Sharing';
+import View from '../routes/View';
+import About from '../routes/About';
+import Extensions from '../routes/Extensions';
+import System from '../routes/System';
+
+import { ChildSectionType, RootSectionType } from '../types';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import SettingSection from './SettingSection';
+import { getModuleT, getSubModuleT } from 'utils/TranslationUtils';
+import { useTranslation } from 'react-i18next';
+import { camelCase } from 'lodash';
+
+const SettingsMenu = [
+  Profile,
+  Connectivity,
+  SpeedLimits,
+  Downloads,
+  Sharing,
+  View,
+  About,
+  Extensions,
+  System,
 ];
 
-const MainLayout = SettingsMenuDecorator(({ children }) => {
-  return <div className="ui segment settings-layout">{children}</div>;
-});
+export interface SettingsProps {}
 
-export interface SettingsProps extends WithTranslation {}
+const childToRoute = (
+  section: ChildSectionType,
+  parent: RootSectionType,
+  settingsT: UI.ModuleTranslator
+) => {
+  const url = `${section.url}/*`;
+  return (
+    <Route
+      key={url}
+      path={url}
+      element={
+        <SettingSection
+          settingsT={settingsT}
+          selectedRootMenuItem={parent}
+          rootMenuItems={SettingsMenu}
+          selectedChildMenuItem={section}
+        >
+          <section.component
+            settingsT={settingsT}
+            moduleT={getSubModuleT(settingsT, camelCase(section.url))}
+          />
+        </SettingSection>
+      }
+    />
+  );
+};
+
+const rootToRoute = (rootSection: RootSectionType, settingsT: UI.ModuleTranslator) => {
+  return (
+    <Route key={rootSection.url} path={rootSection.url}>
+      {rootSection.menuItems.map((child) => childToRoute(child, rootSection, settingsT))}
+      {rootSection.advancedMenuItems?.map((child) =>
+        childToRoute(child, rootSection, settingsT)
+      )}
+      <Route index element={<Navigate to={rootSection.menuItems[0].url} />} />
+    </Route>
+  );
+};
 
 // Only to pass menu items to the decorated component
-class Settings extends Component<SettingsProps> {
-  settingsT = getModuleT(this.props.t, UI.Modules.SETTINGS);
-  render() {
-    return <MainLayout {...this.props} menuItems={menu} settingsT={this.settingsT} />;
-  }
-}
+const Settings: React.FC<SettingsProps> = (props) => {
+  const { t } = useTranslation();
+  const settingsT = getModuleT(t, UI.Modules.SETTINGS);
 
-export default withTranslation()(Settings);
+  return (
+    <div className="ui segment settings-layout">
+      <Routes>
+        <Route index element={<Navigate to={SettingsMenu[0].url} />} />
+        {SettingsMenu.map((rootMenuItem) => rootToRoute(rootMenuItem, settingsT))}
+      </Routes>
+    </div>
+  );
+};
+
+export default Settings;
