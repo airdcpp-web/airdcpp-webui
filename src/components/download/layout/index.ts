@@ -1,1 +1,1 @@
-export * from './DownloadLayout';
+export * from './DownloadView';

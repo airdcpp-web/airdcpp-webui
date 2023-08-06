@@ -53,7 +53,7 @@ const getMenuItem = (
   </MenuItemLink>
 );
 
-export const DownloadLayout: React.FC<DownloadLayoutProps> = (props) => {
+export const DownloadView: React.FC<DownloadLayoutProps> = (props) => {
   const { t } = useTranslation();
   const [activeSectionKey, setActiveSectionKey] = useState('history');
 

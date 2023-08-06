@@ -8,9 +8,9 @@ import Button from 'components/semantic/Button';
 import { Grid } from 'components/semantic/Grid';
 
 import * as UI from 'types/ui';
-import { LayoutProps } from '../types';
+import { DownloadLayoutProps } from '../types';
 
-export const NormalDownloadLayout: React.FC<LayoutProps> = ({
+export const NormalDownloadLayout: React.FC<DownloadLayoutProps> = ({
   menuItems,
   title,
   handleBrowse,

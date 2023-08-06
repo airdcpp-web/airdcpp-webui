@@ -7,7 +7,7 @@ export type PathDownloadHandler = (
   targetFilename?: string,
 ) => Promise<any>;
 
-export type LayoutProps = React.PropsWithChildren<{
+export type DownloadLayoutProps = React.PropsWithChildren<{
   menuItems: React.ReactNode[];
   title: string;
   handleBrowse: BrowseHandler;

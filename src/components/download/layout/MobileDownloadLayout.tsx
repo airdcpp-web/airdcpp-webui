@@ -8,7 +8,7 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 import * as UI from 'types/ui';
 
 import Icon from 'components/semantic/Icon';
-import { BrowseHandler, LayoutProps } from '../types';
+import { BrowseHandler, DownloadLayoutProps } from '../types';
 import IconConstants from 'constants/IconConstants';
 
 const appendBrowseItem = (
@@ -29,7 +29,7 @@ const appendBrowseItem = (
   ];
 };
 
-export const MobileDownloadLayout: React.FC<LayoutProps> = ({
+export const MobileDownloadLayout: React.FC<DownloadLayoutProps> = ({
   menuItems,
   title,
   handleBrowse,

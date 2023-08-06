@@ -1,6 +1,3 @@
-//import PropTypes from 'prop-types';
-// import { useRef } from 'react';
-
 import * as React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +28,7 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 import { addHistory } from 'services/api/HistoryApi';
 
-import { DownloadLayout, DownloadDataProps } from './layout';
+import { DownloadView, DownloadDataProps } from './layout';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -42,12 +39,6 @@ import './style.css';
 export type DownloadDialogProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > = UI.ItemDownloadHandler<ItemT, Props<ItemT>>;
-
-/*type DownloadItemIdType = string;
-
-interface RouteProps {
-  downloadItemId: DownloadItemIdType;
-}*/
 
 type DownloadDialogRouteProps = ModalRouteDecoratorChildProps;
 
@@ -155,7 +146,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
             {...commonDialogProps}
             {...other}
           >
-            <DownloadLayout
+            <DownloadView
               downloadHandler={handleDownload}
               handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
               historyPaths={historyPaths}

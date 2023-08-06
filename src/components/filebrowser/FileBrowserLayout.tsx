@@ -13,9 +13,9 @@ import BrowserBar, { SelectedNameFormatter } from 'components/browserbar';
 import Message from 'components/semantic/Message';
 import Loader from 'components/semantic/Loader';
 
-import FileItemList, { FileItemListProps } from './FileItemList';
-import { CreateDirectorySection } from './CreateDirectorySection';
-import { FileNameSection } from './FileNameSection';
+import FileItemList, { FileItemListProps } from './sections/FileItemList';
+import { CreateDirectorySection } from './sections/CreateDirectorySection';
+import { FileNameSection } from './sections/FileNameSection';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

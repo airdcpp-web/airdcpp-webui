@@ -97,7 +97,7 @@ const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
 };
 
 const handleViewFile = (
-  { data, location }: UI.ActionHandlerData<UI.DownloadableItemData>,
+  { data, location, navigate }: UI.ActionHandlerData<UI.DownloadableItemData>,
   isText: boolean,
 ) => {
   const props = {
@@ -105,6 +105,7 @@ const handleViewFile = (
     location,
     sessionStore: ViewFileStore,
     history,
+    navigate,
   };
 
   if (notSelf(data)) {

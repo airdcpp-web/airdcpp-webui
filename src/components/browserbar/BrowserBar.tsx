@@ -55,10 +55,6 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
   breadcrumb: HTMLDivElement;
   wrapper: HTMLDivElement;
 
-  //static defaultProps = {
-  //  rootName: 'Root',
-  //};
-
   state = {
     overflow: false,
   };

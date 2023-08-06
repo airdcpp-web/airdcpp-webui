@@ -1,5 +1,3 @@
-//import PropTypes from 'prop-types';
-
 import FilesystemConstants from 'constants/FilesystemConstants';
 
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
@@ -15,7 +13,10 @@ import { PathDownloadHandler } from '../../types';
 import { PathListItem } from './PathListItem';
 
 interface PathListProps {
+  // Function handling the path selection
   downloadHandler: PathDownloadHandler;
+
+  // Array of paths to list
   paths: string[];
   t: UI.TranslateF;
 }
@@ -46,14 +47,6 @@ const PathListWithData = DataProviderDecorator<PathListProps, PathListDataProps>
     },
   },
 );
-
-//PathList.PropTypes = {
-// Function handling the path selection. Receives the selected path as argument.
-//downloadHandler: PropTypes.func.isRequired,
-
-// Array of paths to list
-//paths: PropTypes.array.isRequired,
-//};
 
 const PathList: React.FC<PathListProps> = (props) => {
   if (props.paths.length === 0) {

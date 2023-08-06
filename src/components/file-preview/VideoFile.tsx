@@ -6,7 +6,7 @@ import MediaFileDecorator, {
 
 const VideoFile: React.FC<MediaFileDecoratorChildProps> = ({ mediaRef, mediaProps }) => (
   <video
-    ref={(c) => mediaRef(c!)}
+    ref={mediaRef as React.Ref<HTMLVideoElement>}
     style={{
       maxWidth: '100%',
       maxHeight: '100%',

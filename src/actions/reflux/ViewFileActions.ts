@@ -70,7 +70,7 @@ ViewFileActions.openLocalFile.listen(function (
   const { sessionStore, isText } = props;
   const session = sessionStore.getSession(tth);
   if (session) {
-    this.completed(location, session);
+    this.completed(session, props);
     return;
   }
 

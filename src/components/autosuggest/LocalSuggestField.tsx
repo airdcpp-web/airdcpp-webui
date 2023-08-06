@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 
-import SuggestionRenderer from './SuggestionRenderer';
-import SuggestField, { SuggestFieldProps } from './SuggestField';
+import SuggestionRenderer from './base/SuggestionRenderer';
+import SuggestField, { SuggestFieldProps } from './base/SuggestField';
 
 import escapeStringRegexp from 'escape-string-regexp';
 import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';

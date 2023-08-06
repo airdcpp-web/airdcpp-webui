@@ -93,8 +93,6 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
 
   return (
     <div className="browser">
-      {/*<Prompt message={routerWillLeave as any} />*/}
-
       <BrowserBar
         path={session.location!.path}
         separator="/"

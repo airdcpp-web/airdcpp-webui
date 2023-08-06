@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import * as React from 'react';
+import { Routes, useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';
 import SideMenu from 'components/main/navigation/SideMenu';
@@ -7,12 +8,11 @@ import SiteHeader from 'components/main/SiteHeader';
 
 import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
 
-import 'normal.css';
 import Sidebar from 'routes/Sidebar/components/Sidebar';
 import { useSidebarEffect } from 'effects';
 import { MainLayoutProps } from './AuthenticatedApp';
-import classNames from 'classnames';
-import { Routes, useLocation } from 'react-router-dom';
+
+import 'normal.css';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className } = props;

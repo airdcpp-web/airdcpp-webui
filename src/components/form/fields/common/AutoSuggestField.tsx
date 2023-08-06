@@ -5,8 +5,6 @@ import LocalSuggestField from 'components/autosuggest/LocalSuggestField';
 import * as UI from 'types/ui';
 import t from 'utils/tcomb-form';
 
-import 'components/autosuggest/style.css';
-
 interface AutoSuggestFieldConfig {
   alwaysList: boolean;
   suggestionGetter: () => string[];

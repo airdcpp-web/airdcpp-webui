@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-//import Moment from 'moment';
-
 const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
   const error: MediaError = (event.target as any).error;
   switch (error.code) {
@@ -20,7 +18,7 @@ const formatMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
 
 export interface MediaFileDecoratorChildProps
   extends Pick<MediaFileDecoratorProps, 'url'> {
-  mediaRef: (c: HTMLMediaElement) => void;
+  mediaRef: React.Ref<HTMLMediaElement>;
   mediaProps: {
     onError: (event: React.SyntheticEvent<HTMLMediaElement>) => void;
     autoPlay: boolean;
@@ -35,52 +33,37 @@ export interface MediaFileDecoratorProps {
 }
 
 export default function (Component: React.ComponentType<MediaFileDecoratorChildProps>) {
-  class MediaFileDecorator extends React.Component<MediaFileDecoratorProps> {
-    state = {
-      error: null,
-    };
+  const MediaFileDecorator = ({ url, autoPlay }: MediaFileDecoratorProps) => {
+    const [error, setError] = React.useState<null | string>(null);
 
-    media: HTMLMediaElement;
+    const mediaRef = React.useRef<HTMLMediaElement>(null);
 
-    componentDidUpdate(prevProps: MediaFileDecoratorProps) {
-      if (prevProps.url !== this.props.url) {
-        if (this.media) {
-          this.media.load();
-        }
-
-        // Reset the error when switching between items
-        this.setState({ error: null });
-      }
-    }
-
-    onMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
-      this.setState({
-        error: formatMediaError(event),
-      });
-    };
-
-    setMediaRef = (c: HTMLMediaElement) => {
-      this.media = c;
-    };
-
-    render() {
-      if (this.state.error) {
-        return <div>{this.state.error}</div>;
+    React.useEffect(() => {
+      if (mediaRef.current) {
+        mediaRef.current.load();
       }
 
-      const { url, autoPlay } = this.props;
-      const mediaProps = {
-        onError: this.onMediaError,
-        autoPlay,
-        controls: true,
-        src: url,
-      };
+      // Reset the error when switching between items
+      setError(null);
+    }, [url]);
 
-      return (
-        <Component {...this.props} mediaRef={this.setMediaRef} mediaProps={mediaProps} />
-      );
+    const onMediaError = (event: React.SyntheticEvent<HTMLMediaElement>) => {
+      setError(formatMediaError(event));
+    };
+
+    if (error) {
+      return <div>{error}</div>;
     }
-  }
+
+    const mediaProps = {
+      onError: onMediaError,
+      autoPlay,
+      controls: true,
+      src: url,
+    };
+
+    return <Component mediaRef={mediaRef} mediaProps={mediaProps} url={url} />;
+  };
 
   return MediaFileDecorator;
 }

@@ -3,8 +3,8 @@ import { Component } from 'react';
 
 import SocketService from 'services/SocketService';
 
-import SuggestField, { SuggestFieldProps } from './SuggestField';
-import SuggestionRenderer from './SuggestionRenderer';
+import SuggestField, { SuggestFieldProps } from './base/SuggestField';
+import SuggestionRenderer from './base/SuggestionRenderer';
 import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
