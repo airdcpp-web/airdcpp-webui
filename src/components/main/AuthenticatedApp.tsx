@@ -13,13 +13,14 @@ import { secondaryRoutes } from 'routes/Routes';
 import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
 import * as UI from 'types/ui';
+import { Outlet } from 'react-router';
 
 interface AuthenticatedAppProps {}
 
-export interface MainLayoutProps {
+export type MainLayoutProps = React.PropsWithChildren<{
   className?: string;
   urgencies: UI.UrgencyCountMap | null;
-}
+}>;
 
 const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
   function AuthenticatedApp(props) {
@@ -31,7 +32,9 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
       <div id="authenticated-app">
         <ActivityTracker />
         <Notifications />
-        <MainLayout className="main-layout" urgencies={urgencies} />
+        <MainLayout className="main-layout" urgencies={urgencies}>
+          <Outlet />
+        </MainLayout>
       </div>
     );
   },

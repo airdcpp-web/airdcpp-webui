@@ -1,23 +1,21 @@
 import { useCallback } from 'react';
 
 import IconPanel from 'components/main/navigation/IconPanel';
-import { matchPath, Location, useNavigate } from 'react-router-dom';
-import {
-  secondaryRoutes,
-  parseMenuItems,
-  RouteItemClickHandler,
-  HOME_URL,
-} from 'routes/Routes';
+import { matchPath, Location, useNavigate, useLocation } from 'react-router-dom';
+import { secondaryRoutes, parseMenuItems } from 'routes/Routes';
+import { HOME_URL } from 'routes/Home';
+
+import * as UI from 'types/ui';
 
 interface SideMenuProps {
-  location: Location;
   previousLocation?: Location;
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
+const SideMenu: React.FC<SideMenuProps> = ({ previousLocation }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const onClick: RouteItemClickHandler = useCallback(
+  const onClick: UI.RouteItemClickHandler = useCallback(
     (url, evt) => {
       evt.preventDefault();
 

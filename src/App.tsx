@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
+import { Navigate, createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 //@ts-ignore
 import Reflux from 'reflux';
@@ -30,6 +30,7 @@ import { useInstallPrompt } from 'components/main/effects/InstallPromptEffect';
 import { InstallPromptContext } from 'context/InstallPromptContext';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
 import { ErrorBoundary } from 'components/ErrorBoundary';
+import { configRoutes, mainRoutes, parseRoutes, secondaryRoutes } from 'routes/Routes';
 
 global.Promise = Promise as any;
 
@@ -53,6 +54,22 @@ const getBackgroundImageStyle = () => {
   return url ? `url(${url})` : undefined;
 };
 
+const router = createBrowserRouter([
+  {
+    path: '/login',
+    Component: Login,
+  },
+  {
+    index: true,
+    element: <Navigate to="/home" replace />,
+  },
+  {
+    path: '*',
+    Component: AuthenticatedApp,
+    children: parseRoutes([...mainRoutes, ...configRoutes, ...secondaryRoutes]),
+  },
+]);
+
 const App = () => {
   const prompt = useInstallPrompt();
   return (
@@ -60,30 +77,24 @@ const App = () => {
       <Suspense fallback={<Loader fullPage={true} text="" />}>
         <I18nextProvider i18n={i18n}>
           <InstallPromptContext.Provider value={prompt}>
-            <BrowserRouter basename={getBasePath()}>
-              <Measure bounds={true}>
-                {({ measureRef, contentRect }) => (
-                  <LayoutWidthContext.Provider
-                    value={!!contentRect.bounds ? contentRect.bounds.width : null}
+            <Measure bounds={true}>
+              {({ measureRef, contentRect }) => (
+                <LayoutWidthContext.Provider
+                  value={!!contentRect.bounds ? contentRect.bounds.width : null}
+                >
+                  <div
+                    ref={measureRef}
+                    id="background-wrapper"
+                    style={{
+                      backgroundImage: getBackgroundImageStyle(),
+                      height: '100%',
+                    }}
                   >
-                    <div
-                      ref={measureRef}
-                      id="background-wrapper"
-                      style={{
-                        backgroundImage: getBackgroundImageStyle(),
-                        height: '100%',
-                      }}
-                    >
-                      <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route index element={<Navigate to="/home" replace />} />
-                        <Route path="*" element={<AuthenticatedApp />} />
-                      </Routes>
-                    </div>
-                  </LayoutWidthContext.Provider>
-                )}
-              </Measure>
-            </BrowserRouter>
+                    <RouterProvider router={router} />
+                  </div>
+                </LayoutWidthContext.Provider>
+              )}
+            </Measure>
           </InstallPromptContext.Provider>
         </I18nextProvider>
       </Suspense>

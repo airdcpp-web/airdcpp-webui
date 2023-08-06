@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
-import { RouteItem } from 'routes/Routes';
 
 import 'mobile.css';
 
@@ -9,7 +8,7 @@ import * as UI from 'types/ui';
 
 const reduceMenuItemUrgency = (
   urgencyCountMap: UI.UrgencyCountMap,
-  menuItem: RouteItem,
+  menuItem: UI.RouteItem,
 ) => {
   if (!menuItem.unreadInfoStore) {
     return urgencyCountMap;
@@ -28,11 +27,11 @@ const reduceMenuItemUrgency = (
   return urgencyCountMap;
 };
 
-const getTotalUrgencies = (routes: RouteItem[]) => {
+const getTotalUrgencies = (routes: UI.RouteItem[]) => {
   return validateUrgencies(routes.reduce(reduceMenuItemUrgency, {}));
 };
 
-export const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
+export const useTotalSessionUrgenciesEffect = (routes: UI.RouteItem[]) => {
   const [urgencies, setUrgencies] = useState<UI.UrgencyCountMap | null>(
     getTotalUrgencies(routes),
   );

@@ -6,7 +6,6 @@ import {
   logoutItem,
   parseMenuItems,
   parseMenuItem,
-  RouteItemClickHandler,
 } from 'routes/Routes';
 
 import DropdownCaption from 'components/semantic/DropdownCaption';
@@ -52,11 +51,11 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onClick: RouteItemClickHandler = (url, evt) => {
+  const onClick: UI.RouteItemClickHandler = (url, evt) => {
     $(ref.current!).sidebar('hide');
   };
 
-  const onClickSecondary: RouteItemClickHandler = (url, evt) => {
+  const onClickSecondary: UI.RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
 
     // const { location, history } = this.props;

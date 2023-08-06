@@ -8,9 +8,10 @@ import {
 import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
 
-import { RouteItem, parseRoutes } from 'routes/Routes';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
-import { Location, Routes, useNavigate } from 'react-router-dom';
+import { Location, useNavigate } from 'react-router-dom';
+
+import * as UI from 'types/ui';
 
 import '../style.css';
 
@@ -20,10 +21,10 @@ const showSidebar = (props: SidebarProps) => {
   return !!props.previousLocation;
 };
 
-export interface SidebarProps {
+export type SidebarProps = React.PropsWithChildren<{
   previousLocation?: Location;
-  routes: RouteItem[];
-}
+  routes: UI.RouteItem[];
+}>;
 
 const enum Visibility {
   HIDDEN = 'hidden',
@@ -119,11 +120,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     return (
       <LayoutWidthContext.Provider value={width}>
         <div id="sidebar-container">
-          {visibility === Visibility.LOADING ? (
-            <Loader text="" />
-          ) : (
-            <Routes>{parseRoutes(props.routes)}</Routes>
-          )}
+          {visibility === Visibility.LOADING ? <Loader text="" /> : <>{props.children}</>}
         </div>
       </LayoutWidthContext.Provider>
     );

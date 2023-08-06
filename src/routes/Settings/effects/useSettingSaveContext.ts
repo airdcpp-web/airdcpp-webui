@@ -8,7 +8,7 @@ import Form, { FormFieldChangeHandler } from 'components/form/Form';
 import * as UI from 'types/ui';
 
 import { ChildSectionType } from '../types';
-// import { unstable_useBlocker, useLocation } from 'react-router';
+import { unstable_useBlocker, useLocation } from 'react-router';
 
 type SaveableRef = Pick<Form, 'save'>;
 
@@ -83,10 +83,10 @@ export const useSettingSaveContext = ({
 
   const hasChanges = changedProperties.length > 0;
 
-  /*const location = useLocation();
+  const location = useLocation();
   unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
     if (selectedChildMenuItem.noSave) {
-      return true;
+      return false;
     }
 
     // Closing/opening a modal?
@@ -94,24 +94,21 @@ export const useSettingSaveContext = ({
       location.pathname.includes(nextLocation.pathname) ||
       nextLocation.pathname.includes(location.pathname)
     ) {
-      return true;
+      return false;
     }
 
     if (!hasChanges) {
-      true;
+      return false;
     }
-
-    //const hasChanges =
-    //  this.hasChanges() && LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
 
     const message = settingsT.t(
       'unsavedChangesPrompt',
-      'You have unsaved changes. Are you sure you want to leave?'
+      'You have unsaved changes. Are you sure you want to leave?',
     );
 
     const answer = window.confirm(message);
     return !answer;
-  });*/
+  });
 
   const addFormRef = (keys: string[], c: SaveableRef | null) => {
     if (c) {
