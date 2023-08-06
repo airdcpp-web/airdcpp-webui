@@ -14,7 +14,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { translate, toI18nKey } from 'utils/TranslationUtils';
-import { LayoutWidthContext } from 'context/LayoutWidthContext';
+import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { useSessionManager } from './effects/useSessionManager';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -57,7 +57,7 @@ const SessionLayout = <
 >(
   props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
 ) => {
-  const layoutWidth = React.useContext(LayoutWidthContext);
+  const layoutWidth = useLayoutWidth();
   const navigate = useNavigate();
   const location = useLocation();
 

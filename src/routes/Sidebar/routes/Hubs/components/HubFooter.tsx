@@ -1,5 +1,5 @@
 //import PropTypes from 'prop-types';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as React from 'react';
 
@@ -20,7 +20,7 @@ import {
   SocketSubscriptionDecoratorChildProps,
 } from 'decorators/SocketSubscriptionDecorator';
 import { useMobileLayout } from 'utils/BrowserUtils';
-import { LayoutWidthContext } from 'context/LayoutWidthContext';
+import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { ActionMenu } from 'components/action-menu';
 import HubActions from 'actions/ui/HubActions';
 
@@ -59,7 +59,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
     return () => props.removeSocketListeners(props);
   }, [props.session]);
 
-  const layoutWidth = useContext(LayoutWidthContext);
+  const layoutWidth = useLayoutWidth();
 
   const { userlistToggle, session, sessionT } = props;
   const { user_count: users, share_size: shared } = counts;

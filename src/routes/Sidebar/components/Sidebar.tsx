@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import {
   loadLocalProperty,
@@ -9,10 +9,10 @@ import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
 
 import { RouteItem, parseRoutes } from 'routes/Routes';
-import { LayoutWidthContext } from 'context/LayoutWidthContext';
 import { Location, Routes, useNavigate } from 'react-router-dom';
 
 import '../style.css';
+import { LayoutWidthContext, useLayoutWidth } from 'context/LayoutWidthContext';
 
 const MIN_WIDTH = 500;
 
@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   const navigate = useNavigate();
 
   // Update the minimum width when the window is being resized
-  useContext(LayoutWidthContext);
+  useLayoutWidth();
 
   // Don't render the content while sidebar is animating
   // Avoids issues if there are router transitions while the sidebar is

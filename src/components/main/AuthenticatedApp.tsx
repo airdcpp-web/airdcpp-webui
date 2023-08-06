@@ -13,6 +13,7 @@ import { secondaryRoutes } from 'routes/Routes';
 import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
 import * as UI from 'types/ui';
+import { useLayoutWidth } from 'context/LayoutWidthContext';
 
 interface AuthenticatedAppProps {}
 
@@ -25,6 +26,7 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
   function AuthenticatedApp(props) {
     const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
     useUrgencyPageTitle(urgencies);
+    useLayoutWidth(); // Update the layout in case of resize
 
     const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
     return (

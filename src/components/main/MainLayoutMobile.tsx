@@ -9,6 +9,7 @@ import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/R
 import 'mobile.css';
 import { MainLayoutProps } from './AuthenticatedApp';
 import { MenuIcon } from 'components/action-menu';
+import { Routes } from 'react-router';
 
 const MainLayoutMobile: React.FC<MainLayoutProps> = memo(
   function MainLayoutMobile(props) {
@@ -36,7 +37,9 @@ const MainLayoutMobile: React.FC<MainLayoutProps> = memo(
             </div>
           </SiteHeader>
           <div className="site-content">
-            {parseRoutes([...mainRoutes, ...secondaryRoutes, ...configRoutes])}
+            <Routes>
+              {parseRoutes([...mainRoutes, ...secondaryRoutes, ...configRoutes])}
+            </Routes>
           </div>
         </div>
       </div>
