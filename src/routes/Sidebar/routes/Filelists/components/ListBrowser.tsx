@@ -14,9 +14,9 @@ import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
 import MenuConstants from 'constants/MenuConstants';
-import { Location /*, unstable_useBlocker*/ } from 'react-router-dom';
+import { Location, unstable_useBlocker } from 'react-router-dom';
 import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
-// import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from 'actions/NotificationActions';
 
 interface ListBrowserProps {
   session: API.FilelistSession;
@@ -38,25 +38,25 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
     updateLocationState(path, false);
   };
 
-  /*unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
+  unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
     if (
       historyAction === 'POP' &&
       hasClickedDirectory &&
-      nextLocation.pathname !== location.pathname
+      nextLocation.pathname !== currentLocation.pathname
     ) {
       setHasClickedDirectory(false);
       NotificationActions.info({
         title: sessionT.t('confirmLeave', 'Confirm action'),
         message: sessionT.t(
           'confirmLeaveDesc',
-          'Click the back button again to leave this filelist'
+          'Click the back button again to leave this filelist',
         ),
       });
-      return false;
+      return true;
     }
 
-    return true;
-  });*/
+    return false;
+  });
 
   const getCurrentDirectory = () => {
     return session.location;
